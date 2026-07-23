@@ -68,6 +68,9 @@ All notable project-record changes are listed here. No implementation exists.
 - Facility-stage availability for concepts, constrained seeded scenario
   instantiation, AI drafts confined to administration, and no live AI clinical
   generation
+- Long external or AI-generated design prompts are advisory inputs that must be
+  reconciled with accepted decisions and reviewed with Melissa before sweeping
+  changes
 
 ### Proposed, not approved
 
@@ -111,6 +114,7 @@ All notable project-record changes are listed here. No implementation exists.
   Variants, typed constrained templates, facility-stage and capability
   eligibility, frozen clinical instances, protected Draft-only AI assistance,
   and no live AI generation
+- Added the persistent external and AI-generated design-input review workflow
 - Expanded the unresolved first-phase queue after a full-document audit to
   include simulation authority, seeded randomness, physical data boundaries,
   hosted-pilot topology, session/log retention, content scope, pilot scope,
