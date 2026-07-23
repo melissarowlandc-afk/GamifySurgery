@@ -2,7 +2,7 @@
 
 Status: Accepted boundaries plus unapproved implementation details.
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Accepted privacy boundaries
 
@@ -24,6 +24,7 @@ Accepted account direction:
 - Invite-only access
 - Verified email
 - Chosen display name
+- One confirmed learning timezone
 - Hidden internal account ID
 - Cloud saves across devices
 - No institutional login requirement
@@ -34,29 +35,47 @@ Accepted account direction:
 
 Before account creation, plain language should explain:
 
-> Your email is used only to verify your account and help prevent duplicate pilot accounts. It will not be used for advertising or marketing.
+> Your email is used only for your pilot invitation, account verification,
+> sign-in, password recovery, important account-security notices, and helping
+> prevent duplicate pilot accounts. It will not be used for advertising or
+> marketing.
 
-This wording is not final because Melissa has currently authorized email for verification and duplicate-account control, but has not separately decided whether recovery email is allowed. The final notice must state only the approved purposes and identify retention and deletion behavior before the pilot begins.
+Melissa approved these email purposes by selecting verified-email and passphrase
+authentication. Final notice wording must also identify retention and deletion
+behavior before the pilot begins.
 
 Email can enforce one account per normalized address or single-use invitation, but it cannot prove one account per human. The system must not make a stronger promise.
 
-## Low-friction authentication proposal
+## Accepted player authentication
 
-The exact mechanism is still open. The recommended direction is:
+The accepted player mechanism is:
 
 - A single-use invitation linked to one verified email
-- Either passwordless email sign-in or a user-created sufficiently strong passphrase, after the permitted use of email is clarified
+- Supabase Auth
+- Verified email as the sign-in identifier
+- A user-created permanent passphrase
+- At least 15 characters for a single-factor passphrase
+- Support for long passphrases, spaces, password managers, and paste
+- No arbitrary uppercase, number, or symbol composition rules
+- Rejection of known-compromised or extremely common values when supported
+- No routine expiration; require a change when compromise is suspected
 - Long-lived but revocable sessions on trusted personal devices
-- Clear sign-out and device/session revocation
-- A separately approved recovery method
+- Clear sign-out and device/session revocation controls
+- Email-based password recovery
 - Generic login errors that do not reveal whether an email is registered
 - Rate limiting and progressive delays
 
-A short four-letter/four-digit secret is not recommended as a standalone internet password. It is vulnerable to automated guessing unless combined with strict single-use behavior, aggressive rate limits, expiration, and another verified factor.
+A short four-letter/four-digit secret is prohibited as a standalone internet
+password. Exact session lifetime remains open.
 
 ## Data separation
 
 Authentication records map email to an internal account ID. Player-facing systems use only the internal ID.
+
+The learning timezone is a required gameplay preference, not authentication or
+research data. It is used to calculate mastery dates and same-date educational
+limits. Historical reviews preserve the timezone and date actually applied;
+future preference changes do not rewrite learning history.
 
 Recommended permission boundaries:
 
@@ -70,14 +89,64 @@ Recommended permission boundaries:
 ## Administrator security
 
 - Individual administrator accounts; no shared credentials
-- MFA required
+- Supabase Auth with TOTP MFA required
 - Melissa-only clinical approval permission
+- Melissa-only pilot authority for clinical withdrawal, evidence-validity
+  classification, correction approval, and reactivation
 - Least-privilege editor and balance roles
-- Separate protected admin deployment
+- Local-only administrator application during the vertical slice
+- Separate protected administrator deployment behind an outer access gate
+  before a hosted pilot
 - Server-side publishing actions
 - Audit records for approval, publishing, rollback, role changes, and emergency withdrawal
 - Secrets in managed secret storage, never source files
 - Recovery factors stored separately from primary MFA
+- Permission tests that prove player accounts and lower-privilege roles cannot
+  perform protected actions
+
+This accepted security architecture is recorded in
+[ADR 0010](docs/adr/0010-staged-admin-security.md). Exact access-gate provider,
+administrator session lifetime, and incident-response procedures remain open.
+
+Withdrawal directives, review-validity annotations, learning-state repairs,
+availability waivers, and targeted player correction notices are permitted
+operational clinical-safety records. They must be access-controlled, limited to
+affected items and accounts, retained with the underlying immutable evidence,
+and excluded from research or behavioral-analytics exports.
+
+## Accepted AI-authoring boundary; provider unapproved
+
+AI assistance is limited to the protected administrator authoring workflow.
+The live player application sends no clinical prompt to an AI provider and
+receives no invented runtime clinical material.
+
+Before any provider is connected, Melissa must approve:
+
+- Owner-controlled provider account, billing, and API-secret storage
+- Exact source and draft fields permitted to leave the system
+- Provider retention, training-use, and deletion terms
+- Copyright and licensed-source handling
+- No-PHI checks and incident response
+- Model and prompt-version provenance
+- Cost limits and failure behavior
+
+AI output can create only a Draft revision. It has no clinical-approval,
+publishing, withdrawal, correction, or administrator-role authority.
+
+## Pilot gameplay-integrity boundary
+
+The active browser computes ordinary facility progress during the private
+pilot. The server still enforces identity, campaign ownership, one active
+writer, save revisions, protected publications, administrator permissions,
+clinical withdrawals, and cross-account isolation.
+
+A determined player could manipulate their own browser-computed facility state.
+The pilot therefore must not describe its facility results as tamper-resistant
+and must not use them for leaderboards, prizes, assessment, credentialing, or
+research-quality outcome measurement. Any such use requires a new RED
+architecture and privacy/research review. This limitation does not permit
+secrets, administrative authority, or access to another player's records in the
+browser.
 
 ## Security and error logging
 
@@ -109,10 +178,9 @@ Before future research collection:
 
 ## Open privacy/security decisions
 
-- Passwordless link versus passphrase login, including whether email may be used after initial verification
-- Authentication provider
 - Session duration and trusted-device behavior
-- Email recovery permission and account deletion workflow
+- Account deletion workflow and backup expiry
+- Transactional authentication-email provider
 - Security-log fields and retention
 - IP-address handling
 - Manual-feedback location and retention

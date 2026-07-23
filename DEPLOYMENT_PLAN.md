@@ -2,7 +2,7 @@
 
 Status: PROPOSED AND UNAPPROVED. No account, cloud resource, domain, or billing has been created.
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Stage 0: Documentation and approval
 
@@ -15,10 +15,13 @@ Recurring cost: $0.
 ## Stage 1: Private local vertical slice
 
 - Run the browser application only in the development environment.
+- Keep the administrator application local-only.
 - Use synthetic fictional content.
 - No external player accounts or data collection.
 - Test desktop and phone layouts on trusted local devices.
 - Demonstrate save/reopen, version pins, and real-world FSRS behavior.
+- Demonstrate deterministic browser-run facility behavior independent of
+  rendering frame rate.
 
 Recurring cost: $0, excluding any optional development tools Melissa explicitly approves.
 
@@ -33,12 +36,24 @@ Limitations:
 Proposed components:
 
 - Standards-based static web hosting for the player application
-- Managed PostgreSQL, authentication, and trusted API functions
+- Supabase-managed PostgreSQL and trusted server-side functions, as accepted in
+  ADR 0008
+- Supabase Auth with verified email and permanent passphrases, as accepted in
+  ADR 0009
 - Invite-only verified-email accounts
 - Separate staging and pilot environments
-- Administrator application kept local or placed behind a separate access gate
+- Separately deployed administrator application behind an outer access gate,
+  individual Supabase Auth accounts, TOTP MFA, and allowlisted roles
 - HTTPS supplied by the hosting provider
 - No custom domain required initially
+- Browser-authoritative facility execution; the backend validates and stores
+  revisions but no service continuously simulates each pilot facility
+
+ADR 0008 approves the backend architecture only. It does not authorize creating
+a Supabase account or project, selecting a paid plan, or enabling billing.
+ADR 0010 approves the staged administrator security architecture only. It does
+not authorize deploying the administrator application or creating an
+access-gate account.
 
 Expected recurring cost:
 
@@ -46,6 +61,11 @@ Expected recurring cost:
 - Pilot data worth preserving: approximately $25-$30 per month with a managed database plan and possibly a small function-hosting plan
 
 Costs and provider terms must be rechecked immediately before approval. No free tier should be treated as a backup strategy.
+
+This lower-cost topology is appropriate only for a private, single-player,
+nonresearch, noncompetitive pilot. A future use that depends on
+tamper-resistant facility results requires a new RED server-authority decision
+and revised hosting estimate.
 
 ## Stage 3: Installable PWA
 
@@ -139,10 +159,9 @@ Testers receive:
 
 - A private pilot URL
 - One single-use invitation
-- A verified-email account setup flow
+- A verified-email and passphrase account setup flow
 - Plain-language privacy and educational-use notice
 - Instructions for reporting problems without sharing patient information
 - A support route controlled by Melissa
 
 Testers never receive administrator access or database credentials.
-

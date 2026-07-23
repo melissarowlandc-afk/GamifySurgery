@@ -2,7 +2,7 @@
 
 Status: Living project record; implementation is not authorized.
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Authority and source hierarchy
 
@@ -29,6 +29,8 @@ The experience combines:
 - Full browser gameplay on desktop and phone
 - Private administration of clinical content and game balance
 - Persistent accounts and cloud saves
+- A dual-purpose Clinical Topic knowledge base and clinically approved
+  concept/case/question authoring system
 
 This is an educational game, not clinical decision support. It must never contain real patient information.
 
@@ -51,6 +53,12 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - Make operational decisions meaningful without random staff clinical incompetence.
 - Keep all important balance values configurable, validated, and versioned.
 - Allow safe content review, clinical approval, publishing, and rollback.
+- Let concepts become encounter-eligible at an explicit facility stage while
+  preserving separate FSRS scheduling and clinical-complexity dimensions.
+- Instantiate only approved constrained patient templates at runtime; keep AI
+  assistance in draft administration and out of live gameplay.
+- Stop withdrawn clinical items without rewriting history; correct them through
+  new approved revisions and audited learning-state repair when necessary.
 - Support reproducible testing through seeded randomness and headless simulation.
 - Deliver a small, complete vertical slice before expanding the full game.
 
@@ -76,9 +84,25 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - A new campaign starts a new FSRS schedule and new mastery progress.
 - Reopening an existing campaign preserves that campaign's FSRS state.
 - Facility, construction, money, XP, satisfaction, staff, patients, accomplishments, inspection results, and seed are campaign-specific.
-- Each campaign remains pinned to its clinical concept set, clinical release, and balance release.
+- Each campaign permanently retains its core-concept set and balance release.
+  Its clinical release may advance through a validated, recorded,
+  backward-compatible additive adoption without changing its mastery
+  denominator.
 - Pilot accounts use verified email, while gameplay and learning records use a hidden internal account ID.
-- The player is told that email is used for account verification and helping prevent duplicate pilot accounts, not for marketing.
+- Players sign in through Supabase Auth using verified email and a permanent
+  passphrase.
+- The player is told that email is used for invitations, account verification,
+  sign-in identification, password recovery, important account-security
+  notices, and helping prevent duplicate pilot accounts, never marketing.
+- The administrator application remains local during the vertical slice and is
+  separately deployed behind an outer access gate for the hosted pilot.
+- Every administrator uses an individual account with TOTP MFA and allowlisted
+  roles; only Melissa can clinically approve content.
+- A player can choose to start over at any time through at least two deliberate
+  interactions and a consequence-specific warning. The prior campaign becomes
+  a recoverable read-only archive, and a new campaign ID begins with the same
+  seed and pinned releases but fresh facility and campaign-specific learning
+  progress. Permanent deletion remains separate.
 - No implementation begins until the architecture, data/versioning plan, vertical-slice scope, and initial deployment target receive explicit approval.
 
 ## Current phase

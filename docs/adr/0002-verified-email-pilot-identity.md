@@ -1,6 +1,6 @@
 # ADR 0002: Verified-Email Pilot Identity
 
-Status: Accepted direction; exact authentication implementation remains open
+Status: Accepted; authentication mechanism completed by ADR 0009
 
 Date: 2026-07-22
 
@@ -22,7 +22,11 @@ The pilot needs secure cross-device accounts and duplicate-account controls. Mel
 - Email is not used for advertising, marketing, sale, institutional authentication, or research.
 - Administrators use MFA.
 
-Use of email for passwordless sign-in, security notifications, or account recovery remains open and requires a purpose statement consistent with the final privacy notice.
+ADR 0009 later selected invite-only Supabase Auth with verified email and a
+permanent passphrase. Email use now includes invitations, sign-in
+identification, password recovery, and important account-security notices in
+addition to verification and duplicate-account control. Marketing remains
+prohibited.
 
 Email uniqueness prevents creating two accounts with the same normalized address, but it cannot prove that one person has only one account. Single-use invitations and administrative review provide the stronger pilot control.
 
@@ -47,3 +51,9 @@ Email uniqueness prevents creating two accounts with the same normalized address
 ## Cost of changing later
 
 Expensive after launch. Changing the identity anchor requires account linking, login/recovery changes, possible user re-verification, privacy-notice changes, and careful preservation of save ownership.
+
+## Completion
+
+See [ADR 0009](0009-verified-email-passphrase-auth.md) for the accepted
+authentication provider, sign-in method, passphrase baseline, and expanded
+email-purpose statement.

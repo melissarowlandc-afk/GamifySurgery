@@ -1,8 +1,12 @@
 # Data Model Proposal
 
-Status: PROPOSED AND UNAPPROVED. This is a conceptual model, not a database schema.
+Status: PARTIALLY APPROVED. The Supabase-managed PostgreSQL foundation and
+protected logical-domain separation are accepted in ADR 0008. The hybrid
+relational and JSONB physical boundary is accepted in ADR 0019. The expanded
+clinical entity relationships are accepted conceptually in ADR 0020; exact
+tables, columns, indexes, and migrations remain unimplemented.
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Principles
 
@@ -12,9 +16,37 @@ Last updated: 2026-07-22
 - Distinguish mutable drafts from immutable releases.
 - Pin every campaign to explicit versions.
 - Use integer cents for money and explicit units for every duration and probability.
-- Store timestamps in UTC and record the timezone rule used for calendar-date mastery.
+- Store trusted timestamps in UTC and preserve the confirmed IANA timezone,
+  applied offset, and immutable derived learning date used for calendar-date
+  mastery.
 - Preserve provenance and approval history.
 - Do not provide fields intended for PHI.
+- Give every value one canonical owner; a JSONB snapshot may cache but may not
+  compete with normalized immutable evidence.
+
+The database implementation will use version-controlled PostgreSQL migrations,
+row-level security for player-accessible records, trusted server-side functions
+for sensitive transitions, and owner-controlled logical exports. Supabase Auth
+with verified email and a permanent passphrase is accepted in ADR 0009.
+
+Normalized PostgreSQL records own identity, authoring, releases, permissions,
+audit, ledgers, frozen clinical references, and educational evidence. One
+validated, versioned JSONB snapshot owns coherent rapidly changing operational
+facility state. This accepted physical boundary is defined by
+[ADR 0019](docs/adr/0019-hybrid-relational-and-jsonb-storage.md).
+
+## Accepted physical storage boundary
+
+Normalized tables hold every entity and relationship described in the
+identity, clinical authoring, publishing, learning-evidence, finance, audit,
+and frozen-runtime-clinical sections below. The JSONB campaign snapshot holds
+the facility grid, room and employee operational state, queues, active task
+progress, transient patient service state, clocks, random-stream state, and
+other coherent facility simulation values.
+
+When one operation affects both, a trusted transaction updates the snapshot and
+appends normalized evidence together. The snapshot may reference normalized
+IDs and cache reconciled totals, but it cannot rewrite their source records.
 
 ## Identity domain
 
@@ -37,49 +69,250 @@ Contains or references the verified email and authentication-provider state. It 
 
 ### Display profile
 
-Contains the chosen display name and non-sensitive preferences such as learning timezone and accessibility settings.
+Contains the chosen display name and non-sensitive preferences such as the
+confirmed IANA learning timezone and accessibility settings. Device detection
+may suggest the initial timezone, but the player confirms it and device or
+travel changes do not update it automatically.
+
+### Learning-timezone change
+
+Records the account, prior and new IANA timezone identifiers, trusted effective
+UTC time, and authorized actor. Changes apply prospectively; no prior review's
+derived learning date is recalculated. Self-service changes are rate-limited,
+with the exact threshold remaining a lower-level setting.
 
 ## Clinical authoring domain
 
-### Clinical concept
+The entity names and relationships in this section are accepted under ADR 0020.
+They implement separate but connected clinical knowledge-base and
+runtime-teaching domains.
 
-The stable educational unit and FSRS card identity within a campaign.
+### Clinical topic
 
-Potential attributes include category, objective, aliases, status, confusion relationships, and stable lineage.
+Stable parent identity for a diagnosis, procedure, complication, anatomy,
+screening topic, resuscitation topic, or general principle.
 
-### Fictional patient case
+Key normalized relationships:
 
-Defines a clinical scenario independent of a single wording or demographic presentation.
+- One current working revision pointer
+- Many immutable topic revisions
+- One primary topic type and many optional tags
+- Many aliases and optional external-code mappings
+- Many typed self-relationships to other topics
+- Many primary Tested Concepts
+- Many additional related concepts through a join record
 
-### Patient variant
+### Clinical topic revision
 
-Provides an approved variation in fictional demographics, symptoms, context, or presentation while preserving clinical truth.
+Exact revision containing the comprehensive narrative sections, provenance,
+workflow state, and approval. An approved or published revision is immutable.
+
+### Topic section
+
+One typed section within a topic revision, such as pathophysiology,
+epidemiology, presentations, evaluation, management, complications,
+differentials, prognosis, or pearls and pitfalls. Long-form content remains
+separate from runtime templates.
+
+### Structured clinical fact
+
+An exact revision-scoped claim with fact type, structured value or range, unit,
+precision, population, context, applicability, exceptions, approval, and an
+explicit flag distinguishing descriptive knowledge from scenario-approved use.
+
+### Topic relationship
+
+Typed many-to-many self-link between Clinical Topics. Examples include
+`differential_of`, `complication_of`, `procedure_for`, `anatomy_related_to`,
+and `screening_for`. Directionality and inverse display behavior are explicit.
+
+### Tested concept
+
+Stable FSRS-card identity with:
+
+- One primary Clinical Topic
+- One narrow learning objective
+- Required earliest facility-stage definition
+- Stable lineage
+- Many immutable revisions
+- Many related-topic links
+- Many typed confusion links to other concepts
+- Many Patient Presentation Variants through Concept Presentation Links
+- Zero or more core-concept-set memberships
+
+`earliest_facility_stage` is an unlock reference, not educational difficulty.
+It references a stable Facility Stage Definition from a compatible balance
+release. Once the concept has an FSRS card, later-stage presentation coverage
+must keep it reviewable.
+
+### Concept related-topic link
+
+Many-to-many join between a Tested Concept and additional Clinical Topics. It
+stores relation type such as related topic or differential and never changes
+the concept's one primary topic.
+
+### Concept confusion link
+
+Typed self-referential many-to-many link between Tested Concepts for authoring,
+selection, and contrast. It does not join their FSRS histories.
+
+### Case family
+
+Stable identity for a coherent fictional episode. It owns ordered Decision
+Nodes and Patient Presentation Variants and may link to several topics.
+
+### Patient presentation variant
+
+Stable clinically meaningful mastery-presentation identity within one Case
+Family. Its revisions preserve setting, presentation role, answer-essential
+facts, required findings, stage and capability eligibility, sources, review,
+and approval.
+
+Cosmetic runtime changes never create a new variant identity. A material change
+that represents a different mastery exposure creates a new stable variant
+instead of relabeling the old one.
+
+### Concept presentation link
+
+Many-to-many join between Tested Concept and Patient Presentation Variant. It
+stores presentation role, concept-specific rationale, mastery eligibility,
+remediation eligibility, approval, and exact compatible revisions.
+
+### Scenario template revision
+
+Immutable approved template belonging to one Patient Presentation Variant. It
+contains narrative fragments and references typed Template Slots. It contains
+no executable code or unrestricted runtime free text.
+
+### Template slot
+
+Stable slot identity within a template revision. Stores:
+
+- Cosmetic, clinically constrained, or locked safety class
+- Typed value kind
+- Unit, precision, and grammar metadata
+- Approved value-set or fixed value
+- Whether it participates in the noncosmetic repetition fingerprint
+
+### Approved value set and value
+
+Defines enumerated values or a bounded numeric domain. Individual values may
+carry author-approved scenario weights and rationale. These weights are
+separate from Structured Clinical Fact prevalence.
+
+### Clinical instantiation profile
+
+Finite approved bundle of linked clinical slot values and constraints. It is
+the preferred representation for clinically interdependent demographics,
+anatomy, pregnancy status, risk factors, findings, vital signs, and laboratory
+patterns.
+
+### Constraint rule
+
+Declarative, revisioned `requires`, `excludes`, `only_when`, range, membership,
+or paired-value rule. Stores a human-readable explanation and validator
+version. Arbitrary script text is prohibited.
+
+### Facility capability definition reference
+
+Stable balance-defined capability such as a service or operational ability.
+Patient Presentation Variants link many-to-many to required capabilities.
+Compatibility validation proves every reference exists in a supported
+campaign's pinned balance release.
 
 ### Decision node
 
-Presents a scored or unscored choice within a case. The recommended rule is one primary FSRS concept per scored node.
+Ordered scored or unscored decision within one Case Family. Every scored node
+references exactly one primary Tested Concept. Supporting tags never update
+another concept's card or mastery.
+
+### Question variant
+
+Stable alternative under one Decision Node. Its immutable revisions contain
+stem template, answer mode, explanation, shuffle policy, sources, approval, and
+recent-use metadata. It inherits exactly one primary concept through its node.
+
+### Question-presentation compatibility
+
+Many-to-many join between a Question Variant revision and compatible Patient
+Presentation Variant or Scenario Template revisions. It can add profile and
+slot restrictions so the runtime never combines independently valid but
+mutually incompatible content.
 
 ### Answer choice
 
-Belongs to a decision node and preserves correctness plus choice-specific rationale.
-
-### Explanation
-
-Provides the post-answer teaching explanation. It may reference several sources but does not create an additional review.
+Ordered child of one Question Variant revision. Stores exact wording,
+correctness, choice-specific rationale, and shuffle-group or fixed-position
+behavior.
 
 ### Source
 
-Preserves citation, link or identifier, date accessed, notes, and any relevant licensing information.
+Stable bibliographic identity with title, publisher or journal, link or
+identifier, edition or publication date, access date, source type, and relevant
+licensing notes. Full copyrighted source text is not presumed safe to store or
+send to an AI provider.
 
-### Content revision and approval
+### Citation
 
-Every edited record has revision history, provenance, AI-draft indication, workflow state, and clinical approval record. Only Melissa can provide clinical approval.
+Claim-specific many-to-many join from a Source to an exact topic section,
+structured fact, concept, patient-variant, question, answer, or explanation
+revision. Stores supported claim, locator, and author verification state.
+
+### Content revision
+
+Shared revision envelope or equivalent per-entity fields containing stable
+identity, revision ID, parent revision, author, trusted time, workflow state,
+change summary, provenance, and immutable status. Published relationships
+always reference exact revision IDs rather than `latest`.
+
+### Clinical approval
+
+Append-only approval or revocation record tied to one exact revision, reviewer,
+trusted time, checklist version, and scope. Topic approval never implicitly
+approves derived runtime items. Only Melissa can provide pilot clinical
+approval.
+
+### AI authoring job
+
+Append-only provenance for one administrative drafting request. Stores
+requester, provider/model and configuration, prompt-template version, exact
+input revision IDs, output, trusted times, and disposition. Its output can
+create only a Draft revision and has no approval or publishing authority.
 
 ## Published-content domain
 
 ### Clinical release
 
-An immutable numbered collection of exact clinical revisions with validation result, approver, timestamp, and checksum.
+An immutable numbered, logically complete manifest of exact clinical item
+revisions with schema version, validation result, approver, timestamp, and
+checksum. Several releases may reference the same unchanged immutable item
+revision without duplicating or editing it.
+
+The runtime bundle contains only approved player-required material. It does not
+automatically include comprehensive topic narratives, internal notes, rejected
+drafts, AI prompts, or licensed source text.
+
+### Clinical-release item membership
+
+Many-to-many join from a Clinical Release to exact approved revisions of
+concepts, case families, patient variants, templates, profiles, constraints,
+decision nodes, questions, answers, explanations, and allowed citations.
+Relationship rows preserve dependency role and manifest ordering where needed.
+
+### Publication validation report
+
+Immutable report containing validator versions and results for structural
+integrity, constraint satisfiability, profile and boundary coverage,
+answer-invariance checks, source and approval completeness, mastery-variant
+coverage, facility-stage availability, repetition simulation, dependency
+closure, and predecessor compatibility.
+
+### Clinical-release compatibility edge
+
+A directed record from one complete clinical release to a later release. Stores
+the compatibility classification, allowed adoption modes, validator report and
+version, migration version, approver, and checksums. Compatibility is never
+inferred merely because release numbers are consecutive.
 
 ### Core-concept set
 
@@ -87,7 +320,40 @@ The exact concept identifiers used for a campaign's mastery denominator. It rema
 
 ### Emergency withdrawal
 
-An audited overlay that prevents selection of a known incorrect item while preserving the historical release. Replacement and compatibility behavior remains an open decision.
+Append-only safety directive targeting exact release and item revisions. Stores
+reason, severity, trusted effective time, Melissa's approval, prior-scoring
+impact classification, directive version, status, and supersession history. It
+prevents new selection without altering the historical release.
+
+### Clinical correction package
+
+References the withdrawal, new approved item revisions, new complete clinical
+release, replacement or migration edge, affected releases and campaigns,
+historical-evidence classification, FSRS repair version, availability-waiver
+rules, player notice, validation report, approver, and checksums.
+
+### Review-validity annotation
+
+Append-only record associated with an immutable review. Classifies the original
+evidence as still valid, invalid, or affected by a concept redefinition and
+records the clinical authority, correction package, reason, and trusted time.
+It never changes the submitted answer or original scheduler transition.
+
+### Learning-state repair
+
+Versioned transaction that replays remaining valid review history through the
+campaign's pinned scheduler when invalid evidence contaminated current state.
+Stores excluded review identifiers, replay input checksum, prior and rebuilt
+card states, prior and recalculated mastery status, operation identifier,
+migration version, approver, and trusted time.
+
+### Core-concept availability waiver
+
+Audited temporary gate treatment used only when publisher withdrawal leaves a
+core concept with no valid presentation. It retains the concept in the fixed
+denominator, does not mark mastery or enable APP automation, identifies affected
+gates, and preserves previously completed outcomes when it closes
+prospectively.
 
 ## Balance domain
 
@@ -123,19 +389,74 @@ Defines eligibility, probability unit, cooldown, guarantees, outcomes, and wheth
 
 ### Campaign
 
-Owned by an account and pinned to:
+Owned by an account and permanently pinned to:
 
-- Clinical release
 - Core-concept set
 - Balance release
 - Save-schema version
-- FSRS integration/parameter version
-- Random-generator version
-- Campaign seed
+- FSRS integration version
+- FSRS package and algorithm versions
+- FSRS resolved parameter-set version
+- Randomness-contract version
+- 128-bit campaign root seed
+
+The campaign also stores an initial and current clinical release. The current
+clinical release can advance only through a validated compatibility edge and an
+audited adoption transaction; this does not alter any permanent pin above.
+
+A campaign has an explicit lifecycle state such as active or archived. Start
+Over archives the original read-only and creates a new campaign ID with the
+same seed and permanent pins but fresh operational and campaign-learning state.
+The retry uses the original campaign's current clinical release as its initial
+clinical release. Restoring an archive resumes that campaign and its adoption
+history; histories never merge. Permanent deletion is a separate
+retention-policy operation.
+
+### Campaign clinical-adoption record
+
+Immutable record of prior and new clinical releases, trusted adoption
+timestamp, automatic/player-approved/administrator-initiated mode, actor or
+protected process, campaign revision, unique operation identifier, and the
+compatibility validator and migration versions used.
+
+### Campaign concept membership
+
+Identifies whether a concept is part of the campaign's permanently pinned core
+set or was added later as supplemental content. A newly adopted supplemental
+concept begins with no FSRS history and cannot become a new mastery,
+progression, inspection, or victory requirement for that campaign.
 
 ### Campaign snapshot
 
-Captures current operational state and has an increasing revision number.
+Captures validated current operational state, save-schema version, and an
+increasing revision number. A snapshot is written transactionally with any new
+immutable review or money evidence. Tested sequential migrations preserve the
+previous snapshot if conversion fails.
+
+One device at a time holds a campaign writer lease. Expected-revision checks
+reject stale saves, explicit takeover revokes the prior writer, and automatic
+merge or last-write-wins behavior is prohibited. A bounded local recovery copy
+never supersedes acknowledged cloud state.
+
+During the private pilot, the active browser computes the proposed operational
+snapshot through the pinned deterministic simulation. The server validates
+ownership, writer lease, expected revision, idempotency, version references,
+shape, trusted evidence, and basic invariants before accepting it. The snapshot
+must preserve exact logical facility time and enough versioned simulation and
+randomness state to continue reproducibly. The server does not continuously
+run the facility or certify every ordinary client action.
+
+### Random stream state
+
+For each initialized stable stream, stores its randomness-contract version,
+stream identifier, exact four-word `xoshiro128**` state, draw counter, and
+snapshot revision. The root seed derives initial states through the contract's
+canonical SHA-256 procedure; it does not replace persisted current state.
+
+Durable generated entities store their selected outcomes rather than drawing
+again when reopened. Material random events may also store stream identifier
+and draw counter as operational save provenance. These fields support
+restoration and defect diagnosis and are not gameplay analytics.
 
 ### Room instance
 
@@ -145,9 +466,48 @@ References a room-type definition and records placement, construction, upgrade, 
 
 References a staff-role definition and records salary, morale, training, home room, work permissions, task queue, and current task.
 
-### Runtime patient episode
+### Runtime encounter instance
 
-References approved fictional content and records arrival, queue state, selected variants, services, scored decisions, and operational outcome.
+Represents one instantiated fictional patient encounter. At generation it
+freezes:
+
+- Current clinical release and exact item revision IDs
+- Tested Concept, Concept Presentation Link, Case Family, Patient Presentation
+  Variant, Scenario Template, Clinical Instantiation Profile, Decision Node,
+  Question Variant, Answer Choice, explanation, and constraint revisions
+- Every chosen slot value and its safety class
+- Exact rendered patient text, stem, answer-choice order, correct-answer
+  mapping, and explanation
+- Campaign randomness-contract version, relevant stream identifier and
+  counters, generation seed provenance, and canonical checksum
+- Noncosmetic repetition fingerprint
+- Facility stage, required-capability eligibility, and generation time
+
+The normalized instance owns frozen clinical identity and audit fields. The
+JSONB operational snapshot may reference the encounter ID and own transient
+queue, location, service-progress, and operational state.
+
+A later clinical adoption cannot mutate the instance. Withdrawal may mark it
+for unscored bypass or cancellation under ADR 0016 while preserving the frozen
+payload.
+
+### Runtime scored-decision instance
+
+One exact scored or unscored decision inside a Runtime Encounter Instance.
+Stores the single primary concept, displayed answer order, first submitted
+choice, correctness mapping, Again/Good mapping when scored, review-evidence
+identifier, answer timestamp, and publisher-correction status.
+
+Only the first scored submission updates its one Tested Concept. Practice,
+explanation viewing, and APP automation use distinct event types.
+
+### Concept-presentation exposure
+
+Operational learning record keyed by campaign, concept, Patient Presentation
+Variant, Question Variant, noncosmetic fingerprint, and time. It supports
+mastery-variant evidence and recent-repetition avoidance without treating
+cosmetic changes as new clinical exposures. It is gameplay state required for
+scheduling, not optional analytics.
 
 ### Runtime task
 
@@ -169,15 +529,40 @@ Records eligibility snapshot, scoring-rule version, component scores, recognitio
 
 ### Concept card
 
-One card per campaign and concept. Stores the FSRS state and pinned algorithm/parameter version.
+One card per campaign and concept. Stores a project-owned canonical card state,
+current due time, current interval, and the campaign-pinned scheduler
+integration reference. Library-specific state is contained at the scheduler
+adapter boundary rather than exposed throughout the game.
+
+A concept's required earliest facility stage controls when it may first create
+an encounter and active card. Once review history exists, stage progression
+cannot delete or reset the card; at least one later-stage-compatible
+presentation must remain available.
 
 ### Review record
 
-Immutable record of the first scored response, including concept, case and variant, correctness, Again/Good rating, UTC timestamp, and resulting card state.
+Immutable record of the first scored response, including concept, case and
+clinically meaningful Patient Presentation Variant, Runtime Encounter Instance,
+Runtime Scored-Decision Instance, correctness, Again/Good rating, UTC timestamp,
+pre-review and
+post-review card states, resulting due time, and the scheduler integration,
+package, algorithm, and parameter versions used. A unique operation identifier
+prevents a retried network request from applying the same review twice. A
+review-kind field distinguishes an ordinary eligible encounter from the one
+permitted same-date remediation encounter so the limit is reproducible and
+auditable. The record also preserves the confirmed IANA timezone identifier,
+UTC offset applied at the review instant, immutable derived learning date,
+clinical release active when the episode was generated, and exact scored
+decision, template, profile, question, answer-order, and explanation revisions
+seen.
 
 ### Mastery evidence
 
-Derived from review history, distinct calendar dates, distinct variants, and current interval. A cached mastery flag may exist but must be reproducible.
+Derived from review history, distinct calendar dates, distinct clinically
+meaningful Patient Presentation Variant identities, and current interval.
+Names, pronouns, ages within one approved profile, Question Variants, and other
+cosmetic instantiations do not manufacture distinct mastery variants. A cached
+mastery flag may exist but must be reproducible.
 
 ### Non-review educational event
 
@@ -189,14 +574,24 @@ Only essential security/error records are authorized. No gameplay telemetry is c
 
 Security/error records should minimize personal data, use a documented retention period, and not become a hidden playtest analytics system.
 
-## Expensive choices still open
+Runtime encounters, scored decisions, concept cards, review records, and
+presentation-exposure history are required game/save state rather than optional
+analytics. They are not authorized for research export or behavioral
+measurement.
 
-- Exact content-version compatibility model
-- One primary concept versus multi-concept scoring
-- Snapshot layout and normalized/runtime split
-- Hidden-tab facility-time semantics
-- Save takeover and conflict UX
-- Random generator and stream-state representation
-- Timezone changes and distinct mastery dates
-- Emergency clinical correction behavior
+## Accepted foundational clinical boundaries
 
+ADR 0020 accepts:
+
+- The dual-purpose clinical knowledge-base and runtime-teaching hierarchy
+- The stable meaning of Patient Presentation Variant for mastery
+- Typed slots, finite profiles, and declarative constraint representation
+- Facility-stage and capability availability relationships
+- The exact runtime-instantiation freeze and provenance boundary
+
+Exact physical table and column names, indexes, administrator presentation,
+import mappings, and migration mechanics remain lower-level design work. They
+must preserve these accepted identities and boundaries.
+
+Exact snapshot fields, writer-lease duration, connection-loss grace period, and
+wording of the already-approved takeover warning remain lower-level decisions.

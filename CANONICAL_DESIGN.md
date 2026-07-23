@@ -2,7 +2,7 @@
 
 Status: Accepted product rules plus clearly marked open proposals. No implementation authorization.
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Core experience
 
@@ -22,6 +22,36 @@ The player operates a fictional surgical facility that visibly grows from a foun
 - AI-generated content remains draft material.
 - Commercial question-bank wording must not be copied or closely paraphrased.
 - Sources, approval state, and provenance remain attached to content revisions.
+- The content system serves both as a comprehensive Clinical Topic knowledge
+  base and as the source of clinically approved runtime teaching material.
+- Every concept has an earliest facility stage at which appropriate patient
+  encounters may begin; this is separate from educational difficulty, room
+  upgrade level, employee training, and FSRS state.
+- Mastery patient variants are clinically meaningful presentations, not
+  cosmetic changes to name, exact age, pronouns, or wording.
+- Runtime patients use only approved typed slots, values, profiles, and
+  constraints instantiated through the campaign seed.
+- AI may assist administrative drafting but cannot clinically approve or
+  publish. The live game performs no AI clinical generation.
+
+The Clinical Topic, Tested Concept, case, Patient Presentation Variant,
+constrained-template, Question Variant, citation, facility-stage eligibility,
+and frozen runtime-instance relationships are accepted in
+[ADR 0020](docs/adr/0020-dual-purpose-clinical-content-model.md).
+
+### Scored-decision concept mapping
+
+Every scored clinical decision identifies exactly one primary concept.
+
+- Correct maps Good only to that concept's campaign card.
+- Incorrect maps Again only to that concept's campaign card.
+- Supporting concepts may be attached as non-scoring authoring or explanation
+  tags but receive no automatic FSRS or mastery change.
+- A case that needs to assess several concepts uses separate scored decision
+  nodes or separate encounters, each with its own visible answer opportunity,
+  feedback, review record, and primary concept.
+- Content validation must prevent feedback from an earlier node from
+  unintentionally revealing a later scored answer.
 
 ### Campaign-scoped scheduling
 
@@ -44,7 +74,18 @@ Current mastery requires all of the following within the campaign:
 - At least two patient variants
 - Current FSRS interval of at least 21 days
 
-UTC timestamps should be preserved. The timezone used to define a distinct real-world date remains an open decision.
+Each account has one confirmed learning timezone using a location-based IANA
+identifier such as `America/New_York`.
+
+- Device detection may suggest the initial value, but the player confirms it.
+- Traveling or changing devices does not automatically change it.
+- Every scored review preserves its trusted UTC instant, timezone identifier,
+  applied UTC offset, and immutable derived learning date.
+- Mastery-date counting and same-date remediation limits use that derived date.
+- A later timezone change affects future reviews only and never reclassifies
+  historical learning dates.
+- Timezone changes are recorded and rate-limited; the exact limit is a later
+  GREEN implementation setting.
 
 ### Review selection
 
@@ -58,6 +99,48 @@ Review selection should:
 - Guarantee progression-critical educational content once eligible
 
 FSRS determines when a concept is due. A separate selection layer determines which due concept and eligible variant appears in the facility.
+
+### Scheduler implementation
+
+The accepted scheduler foundation uses the official `ts-fsrs` package for
+FSRS-6 behind a project-owned adapter.
+
+- Campaigns pin the scheduler integration, package, algorithm, and resolved
+  parameter-set versions.
+- Existing campaigns do not silently change schedules when a dependency is
+  upgraded.
+- Library interval fuzz is disabled; reproducible campaign randomness belongs
+  to the game's seeded-randomness system.
+- The pilot begins with validated default model parameters and no individualized
+  optimizer.
+- The pilot uses a fixed 90% desired-retention target, stored in the immutable
+  balance release and pinned by each campaign.
+- Project-owned review evidence preserves the state needed to audit and test
+  every scheduling transition.
+
+### Same-date remediation
+
+After the first scored response in an encounter maps to Again:
+
+- Feedback and explanation appear immediately, but correction is not another
+  scored review.
+- The concept becomes eligible for one additional scored encounter after 30
+  real-world minutes.
+- The learning timer continues while the game is closed or facility operations
+  are paused.
+- The encounter must use a different approved patient or question variant.
+- The selector prefers an unrelated encounter in between when available.
+- The remediation never forces an extra patient arrival or interrupts facility
+  play.
+- No concept receives more than one additional scored remediation encounter on
+  the same learning date.
+- If a suitable encounter does not occur, the concept remains due for a later
+  session.
+- A correct initial response does not produce an unnecessary same-date repeat.
+- A remediation response updates FSRS normally but cannot create another
+  mastery date.
+- Reward rules must prevent deliberate incorrect-answer farming without making
+  honest mistakes punitive.
 
 ## Management loop
 
@@ -79,8 +162,32 @@ FSRS determines when a concept is due. A separate selection layer determines whi
 - FSRS uses real-world time and continues while the game is closed.
 - A clinical decision does not silently pause facility time.
 - The player must have an obvious Pause control.
+- The active browser holding the writer lease computes facility progress through
+  renderer-independent deterministic rules.
+- Fixed logical steps and scheduled events determine operational truth;
+  animation frames do not.
 
-The meaning of "open" when a browser tab is hidden, a phone locks, or the operating system suspends the page is not yet approved.
+For facility-time purposes, "open" means that the browser page is visible:
+
+- Facility operations automatically pause when the page becomes hidden,
+  including a tab switch, browser minimization, phone lock, or mobile
+  application switch.
+- Merely losing keyboard focus while the page remains visible does not
+  automatically pause the facility.
+- The game does not simulate or catch up hidden elapsed facility time.
+- On return, the facility remains paused until the player explicitly selects
+  Resume.
+- A large unobserved time gap, such as laptop sleep, is treated as paused time.
+- An unanswered clinical decision remains available across automatic pause.
+- The real-world FSRS clock continues while facility operations are paused.
+
+This accepted rule is recorded in
+[ADR 0007](docs/adr/0007-pause-when-hidden.md).
+
+The cloud validates and stores accepted save revisions for synchronization but
+does not continuously execute the pilot facility. This accepted private-pilot
+authority and integrity boundary is recorded in
+[ADR 0017](docs/adr/0017-browser-authoritative-facility-simulation.md).
 
 ## Progression
 
@@ -102,7 +209,17 @@ The meaning of "open" when a browser tab is hidden, a phone locks, or the operat
 - Progression-critical events are guaranteed once eligible.
 - Probabilities are evaluated per eligible task or unit of facility time, never per animation frame.
 
-The exact pseudorandom generator and stream model remain unapproved.
+The accepted implementation uses a permanently pinned, project-owned
+`xoshiro128**` randomness contract. One strong campaign root seed derives
+independent named streams for unrelated purposes; stream states and counters
+are saved. Candidate ordering and number mapping are stable and unbiased.
+`Math.random()` is prohibited in domain rules, and the game generator is never
+used for security.
+
+The same seed reproduces a sequence only when the pinned versions, adopted
+clinical content, prior state, eligibility, and player actions also match.
+This accepted design is recorded in
+[ADR 0018](docs/adr/0018-versioned-named-random-streams.md).
 
 ## Visual and interaction direction
 
@@ -118,9 +235,90 @@ The exact pseudorandom generator and stream model remain unapproved.
 
 No final mockup, pixel scale, font, layout, or control scheme has been approved.
 
+## Published clinical-content adoption
+
+- Clinical, core-concept, and balance releases are independently published as
+  complete, immutable, validated, recoverable versions.
+- A campaign permanently retains its core-concept mastery denominator, balance
+  release, scheduler integration and parameters, save-schema version, and
+  random-generator version.
+- A campaign records both its initial and current clinical release.
+- A later complete clinical release may enter an existing campaign through a
+  validated backward-compatible additive adoption.
+- Compatibility must preserve every existing item revision and concept meaning,
+  work with the campaign's pinned rules, leave its mastery denominator and
+  eligibility unchanged, and avoid starving core content.
+- Melissa controls whether a compatible release is distributed automatically,
+  offered for player approval, or applied by an administrator.
+- Every adoption preserves prior and new releases, trusted time, mode, actor,
+  campaign revision, and validator/migration version.
+- Newly added concepts begin with no FSRS history and remain supplemental for
+  that campaign. They may support ordinary learning and rewards but cannot
+  become new requirements for mastery, progression, inspection, or victory.
+- Existing generated episodes remain frozen to their original clinical release
+  and exact item revisions. New content affects newly generated material only
+  unless a separately validated migration exists.
+- Reviews retain the exact scored-decision revision the learner saw.
+- Incompatible corrections, withdrawals, replacements, deletions,
+  redefinitions, and schema changes require a separate controlled mechanism.
+
+### Clinical withdrawal and correction
+
+- Published items and historical reviews are never edited in place.
+- Melissa may issue an append-only withdrawal targeting exact item revisions.
+- The game stops newly selecting withdrawn material and fails closed for new
+  scored clinical generation when its withdrawal manifest is too stale.
+- Already-generated material remains version-frozen but may be bypassed or
+  disabled without scoring; already-submitted responses remain immutable.
+- Publisher-caused cancellation creates no penalty, reward, or exploitable
+  patient revenue.
+- Corrections require new approved item revisions, a new complete clinical
+  release, and a validated replacement or migration package.
+- A changed concept meaning requires a new concept identifier.
+- Historical scored evidence is classified as valid, invalid, or affected by a
+  redefinition. Invalid evidence is annotated, never deleted or silently
+  rescored.
+- A versioned repair may rebuild current FSRS state from remaining valid
+  reviews using the campaign's pinned scheduler. Current mastery then uses valid
+  evidence and may display Review Required After Content Correction.
+- Money, XP, facility progress, levels, inspection outcomes, recognition, and
+  victory already earned are never clawed back because of publisher error.
+- A required concept with no valid presentation receives an audited temporary
+  availability waiver for gates, without being marked mastered or enabling APP
+  automation.
+- Affected players receive a Melissa-approved correction notice. Clinical
+  safety records are operational data, not research telemetry.
+
 ## First playable experience
 
 The first minute should show a tiny facility, founder, entrance, one immediate objective, basic resources, and a visible time state. The two tutorial patients should separately teach a clinical decision and the management consequences around arrivals, time, queues, and construction.
 
 The exact clinical cases, costs, rewards, and tutorial script remain open and must not be invented without approval.
 
+## Starting over
+
+- The player can choose to start over at any time.
+- Starting over can never occur through one tap or click.
+- The flow requires at least one initial Start Over action followed by a clear,
+  consequence-specific confirmation action.
+- The final confirmation must distinguish campaign progress from the player
+  account and explain the effect on that campaign's educational schedule.
+- Starting over completes the current cloud save before changing campaign
+  lifecycle state.
+- The prior campaign becomes a recoverable, read-only archived campaign.
+- The retry receives a new campaign ID, fresh facility progress, and a fresh
+  campaign-specific FSRS schedule.
+- The retry keeps the same campaign seed, core-concept set, balance release,
+  FSRS integration version, and randomness version. Its initial clinical
+  release is the prior campaign's current adopted clinical release at the
+  restart transaction.
+- Starting a separate New Campaign is the route for a new seed and current
+  published releases.
+- Restoring an archived campaign resumes its original facility and learning
+  schedule; it never merges with the retry.
+- Permanent deletion is a separate, more strongly warned operation governed by
+  the later retention and deletion policy.
+
+The archive and new-campaign creation succeed atomically or leave the original
+campaign unchanged. This accepted rule is recorded in
+[ADR 0012](docs/adr/0012-recoverable-campaign-restart.md).
