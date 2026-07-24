@@ -1,49 +1,56 @@
 # Open Decisions
 
-Status: No item in this file is approved unless the Decision Log says otherwise.
+Status: Owner-facing choices and delegated delivery backlog. Technical impact
+severity no longer implies that Melissa must select the implementation.
 
 Last updated: 2026-07-23
 
-## Severity
+## Impact severity
 
 - GREEN: inexpensive and easy to change later
 - YELLOW: meaningful but manageable rework
-- RED: foundational; likely major refactoring, migration, redesign, or redeployment
+- RED: foundational; likely major refactoring, migration, redesign, or
+  redeployment
 
-## RED decisions
+Under ADR 0021, the lead agent resolves technical items and records costly
+choices. Melissa is asked only about player experience, clinical intent,
+privacy/research, external access, spending, licensing, or destructive actions.
 
-| ID | Decision | Recommended proposal | Serious alternatives | Required before |
-|---|---|---|---|---|
-| R-013 | Initial deployment target | Local vertical slice followed by private browser pilot | Hosted from the start | Implementation approval checkpoint |
-| R-014 | Vertical-slice scope | Founder, two tutorial patients, first room, one concept with variants, one queue/staff behavior, FSRS, saving, versioned data | Smaller technical proof; larger pilot build | Implementation approval checkpoint |
-| R-019 | Hosted-pilot provider and environment topology | Separate staging and private-pilot environments; standards-based static player/admin deployments; accepted Supabase backend; owner-controlled accounts and access gate | One shared environment; combined player/admin deployment | Before hosted-pilot resources are created |
+## Owner-level design decisions
 
-## YELLOW decisions
-
-| ID | Decision | Recommended default | Needed before |
+| ID | Decision | Recommended direction | Required before |
 |---|---|---|---|
-| Y-002 | Tutorial funding | Guarantee first room plus operating buffer despite wrong answers | Tutorial balance |
-| Y-003 | Phone orientation | Support portrait and landscape; use drawers and pan/zoom rather than force rotation | UI layout implementation |
-| Y-004 | Admin scope in vertical slice | Structured import, validation, preview, approval, publish, rollback | Vertical-slice scope approval |
-| Y-006 | Email retention and deletion | Retain while account exists; verified deletion process; define backup expiry | Hosted pilot privacy notice |
-| Y-007 | Pilot feedback | Optional manual feedback with no detailed clinical-answer export | Playtest plan approval |
-| Y-011 | Player session lifetime and device revocation | Long-lived revocable trusted-device sessions with visible device management | Hosted pilot authentication configuration |
-| Y-012 | Security/error log fields, IP handling, and retention | Strict allowlist, shortest useful retention, restricted access, and no clinical-answer payloads | Hosted pilot privacy and incident plan |
-| Y-013 | Pilot clinical-content scope | Melissa selects a small multi-concept clinically coherent set after the technical slice; every item follows approved review and source rules | Vertical-slice and pilot content approval |
-| Y-014 | Pilot participant count, recruitment, and duration | Melissa and husband first, then a small invited adult-resident group for approximately three to four weeks | Hosted pilot authorization |
-| Y-015 | Backup and recovery objectives | Owner-controlled exports plus managed backups once pilot saves matter; define acceptable loss and restoration time | Hosted pilot deployment approval |
-| Y-016 | Facility tick duration and visible speed controls | Keep exact fixed-step size and permitted speeds in versioned balance configuration after simulation testing | Management-loop implementation |
-| Y-017 | Initial clinical authoring workbook | Create a nontechnical multi-tab workbook and data dictionary matching ADR 0020; test it with one or two concepts before bulk entry | Bulk clinical authoring |
+| G-001 | First playable clinical interaction: guided staged choices, searchable action catalogs, or a hybrid | Begin with short guided staged choices; preserve searchable catalogs as a later expansion | First playable patient |
+| G-002 | First real clinical concept or small concept set | Melissa chooses only after the synthetic prototype proves the authoring and play flow | Real clinical-content integration |
+| G-003 | Opening tone and story, including whether to use the inheritance joke | Defer until the core loop is playable; use a minimal clinic opening first | Tutorial polish |
+| G-004 | Pilot participants, optional feedback, and any disclosed playtest metrics | Melissa and trusted family first; decide outside access and data fields later | Hosted tester invitations |
 
-## GREEN decisions
+## Delegated delivery backlog
 
-- Exact visible tile size
-- Grayscale palette
-- Placeholder sprites and animation cadence
-- Font selection, provided accessibility remains acceptable
-- Sound assets, provided the game remains fully usable without sound
-- Exact panel styling
-- Tutorial wording after mechanics are approved
+These items will be resolved by the lead agent when implementation evidence is
+available and will not be presented as serial owner decisions:
+
+| Item | Current working default |
+|---|---|
+| Exact vertical-slice technical scope | Smallest coherent loop after G-001: founder, patient, feedback, resources, first room, pause, and save |
+| Tutorial economy | Guarantee the first room and an operating buffer even after mistakes |
+| Phone layout | Support portrait and landscape with responsive drawers, pan, and zoom |
+| Early authoring tools | Private Google Sheets workbook plus validated exports; full admin application later |
+| Session and security logs | Revocable trusted-device sessions; minimal allowlisted logs with no clinical-answer payload |
+| Backups | Owner-controlled exports first; managed backups before valuable pilot saves |
+| Simulation step and visible speed | Versioned tunable values selected through tests and deterministic simulation |
+| Static hosting provider | Select just before the hosted pilot; preserve standards-based portability |
+
+Legacy items Y-002, Y-003, Y-004, Y-006, Y-011, Y-012, Y-015, and Y-016
+are represented in this delegated backlog. Owner-facing portions of Y-007,
+Y-013, and Y-014 are represented by G-002 and G-004.
+
+## External-action gates
+
+The lead agent may design these systems, but owner authorization is still
+required before creating paid resources, enabling billing, purchasing a domain,
+inviting outside testers, making a deployment public, collecting new telemetry,
+starting research, or destroying owner data.
 
 ## Resolved decisions
 
@@ -70,4 +77,8 @@ Last updated: 2026-07-23
 | R-017 | Seeded-randomness implementation | Versioned project-owned `xoshiro128**` contract; strong 128-bit root seed; SHA-256-derived independent named streams; persisted state/counters; stable unbiased selection; golden fixtures | ADR 0018; D-031 |
 | R-018 | Physical data boundary | Normalized PostgreSQL for independently related, protected, published, or audited records; one validated versioned JSONB snapshot for coherent operational facility state | ADR 0019; D-032 |
 | R-020 | Dual-purpose clinical knowledge-base and runtime-teaching model | Linked revisioned Clinical Topics, structured facts, Tested Concepts, meaningful many-to-many Patient Presentation Variants, typed constrained templates, one-concept Decision Nodes, Question Variants, facility-stage/capability eligibility, frozen instances, protected Draft-only AI assistance, and no live AI generation | ADR 0020; D-034 |
+| R-013 | Initial deployment target | Local playable prototype, coherent local vertical slice, staging, then invite-only private browser pilot | ADR 0022; D-037 |
+| R-019 | Hosted-pilot topology | Separate staging and pilot data plus separately deployed player and administrator applications; exact static host selected just-in-time by the lead agent | ADR 0022; D-037 |
+| Y-017 | Initial clinical authoring workbook | Private owner-controlled Google Sheets working source, protected stable identifiers, validated exports, one- or two-concept trial, and one-way handoff to the future admin database | D-038 |
+| R-014 | Vertical-slice scope | Lead agent selects the smallest coherent scope after the applicable owner-level interaction choice and expands only after a playable demonstration | ADR 0021; D-039 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

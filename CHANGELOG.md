@@ -69,12 +69,22 @@ All notable project-record changes are listed here. No implementation exists.
   instantiation, AI drafts confined to administration, and no live AI clinical
   generation
 - Long external or AI-generated design prompts are advisory inputs that must be
-  reconciled with accepted decisions and reviewed with Melissa before sweeping
-  changes
+  reconstructed chronologically and reconciled with accepted decisions before
+  use
+- Delegated technical decision-making and prototype-first delivery, with owner
+  gates retained for game and clinical intent, privacy/research, external
+  access, spending, legal, public, and destructive actions
+- Local playable prototype followed by a coherent local vertical slice,
+  staging, and an invite-only private browser pilot
+- Private Google Sheets as the temporary clinical authoring source, with
+  protected identifiers, validated GitHub export backups, a small trial, and a
+  one-way handoff to the future admin database
 
 ### Proposed, not approved
 
-- A nontechnical clinical authoring workbook matching ADR 0020
+- First playable clinical interaction style
+- First real clinical concept or small concept set
+- Opening story and later pilot participation details
 
 ### Documentation
 
@@ -115,6 +125,12 @@ All notable project-record changes are listed here. No implementation exists.
   eligibility, frozen clinical instances, protected Draft-only AI assistance,
   and no live AI generation
 - Added the persistent external and AI-generated design-input review workflow
+- Added ADR 0021 for delegated technical authority and prototype-first delivery
+- Added ADR 0022 for staged local-to-private-pilot delivery
+- Reconstructed the imported design history, distinguishing stable intent from
+  superseded or exploratory mechanics
+- Refactored the roadmap and open-decision queue so only owner-level design and
+  external-action gates require owner review
 - Expanded the unresolved first-phase queue after a full-document audit to
   include simulation authority, seeded randomness, physical data boundaries,
   hosted-pilot topology, session/log retention, content scope, pilot scope,

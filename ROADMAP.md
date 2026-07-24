@@ -1,97 +1,95 @@
 # Roadmap
 
-Status: PROPOSED. Dates and implementation estimates are intentionally deferred until architecture approval.
+Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. Dates remain flexible and
+each milestone ends in something the owner can inspect or play.
 
 Last updated: 2026-07-23
 
-## Phase 0: Reconcile and decide
+## Delivery rules
 
-- Review this documentation package.
-- Resolve RED decisions in small batches.
-- Select pilot clinical concepts without inventing content.
-- Approve the conceptual data and versioning approach.
-- Approve vertical-slice scope and acceptance criteria.
-- Approve the initial deployment target.
-- Record every accepted RED decision in an ADR.
-- Resolve Y-017, then create and test the nontechnical clinical authoring
-  workbook so Melissa can begin knowledge-base and content work before game
-  implementation finishes.
+- Combine the educational and management loops as early as possible.
+- Use synthetic, clearly unapproved fixture content until Melissa supplies and
+  approves real clinical material.
+- Keep tunable values and content outside source logic from the first build.
+- Prefer a small working experience over a broad empty framework.
+- Harden security, publishing, and cloud behavior before outside testing, not
+  before the first local play session.
 
-Gate: explicit four-part approval. No implementation before it.
+## Milestone 0: Reconcile and prepare
 
-## Phase 1: Foundation milestone
+- Preserve the reconstructed design intent and superseded explorations.
+- Resolve the first owner-level clinical-interaction choice.
+- Create the monorepo skeleton, shared validation, and deterministic test
+  harness.
+- Prepare the owner-controlled clinical authoring workbook and test its shape
+  with one or two concepts before bulk entry.
 
-Only after approval:
+Outcome: the project is ready for code and Melissa can begin structured
+clinical collection in parallel.
 
-- Establish owner-controlled version history.
-- Create the smallest monorepo structure.
-- Add shared data validation and version identifiers.
-- Add deterministic browser-authoritative simulation and seeded test harness.
-- Demonstrate a blank responsive shell on desktop and phone.
+## Milestone 1: Playable local prototype
 
-Demonstration gate: project structure, tests, and no buried tunable values.
+- One tiny room, founder, entrance, facility clock, Pause, and visible resources
+- One arriving fictional patient using synthetic fixture content
+- One short clinical decision sequence and immediate instructional feedback
+- Money, XP, and satisfaction reactions
+- Build and place the first examination room
+- Restart the prototype safely
+- Basic desktop and phone layouts
 
-In parallel, Melissa may populate the approved clinical workbook. Bulk
-authoring should begin only after one or two concepts successfully round-trip
-through validation and preview.
+This version may use local storage and omit accounts, cloud saves, full FSRS,
+the complete admin system, and production publication. Its purpose is to test
+whether the combined loop is understandable and enjoyable.
 
-## Phase 2: Educational loop milestone
+Demonstration gate: the owner can play from patient arrival through the first
+room construction without developer explanation.
 
-- Load approved structured clinical content.
-- Present one scored clinical decision.
-- Map first answer to Again or Good.
-- Show explanation and sources.
-- Persist campaign-specific FSRS state.
-- Reopen and reproduce due state using real-world time.
+## Milestone 2: Coherent vertical slice
 
-Demonstration gate: clinical accuracy review and scheduler tests.
+- Two guaranteed tutorial patients
+- At least one concept with meaningful patient and question variants
+- Campaign-scoped FSRS and real-world due behavior
+- Deterministic arrivals and one queue or automated staff behavior
+- Versioned clinical and balance fixtures
+- Save, close, reopen, and deterministic continuation
+- Worst-case tutorial funding that cannot softlock
 
-## Phase 3: Management loop milestone
+Demonstration gate: educational scheduling, management progression, and
+save/reload work together.
 
-- Founder and front desk
-- Facility clock and Pause
-- Guaranteed tutorial patients
-- Money, XP, and satisfaction
-- First examination-room construction
-- One staff role or queue behavior
-- Cleaning or another visible routine task
+## Milestone 3: Content and authoring pipeline
 
-Demonstration gate: worst-case tutorial cannot softlock.
+- Import structured workbook data as Draft content
+- Validate concepts, sources, variants, questions, and constrained templates
+- Preview seeded patient instances
+- Separate clinical approval from technical validation
+- Produce immutable local clinical and balance release artifacts
 
-## Phase 4: Versioning and administration milestone
+Demonstration gate: unapproved or invalid content cannot enter the playable
+release.
 
-- Separate clinical and balance drafts
-- Validate and preview release candidates
-- Require clinical approval
-- Publish immutable numbered releases
-- Pin campaign versions
-- Demonstrate rollback and rejected draft access
+## Milestone 4: Private cloud foundation
 
-Demonstration gate: live game cannot read unfinished drafts.
+- Invite-only verified-email accounts
+- Supabase persistence and cloud save revision checks
+- Cross-device reopen and explicit writer takeover
+- Separate staging and pilot environments
+- Protected administrator deployment, MFA, and permission tests
+- Backup, restore, rollback, and clinical withdrawal drills
 
-## Phase 5: Save and identity milestone
+Demonstration gate: no cross-account access, silent overwrite, exposed
+administrator surface, or unrecoverable save migration.
 
-- Invite-only verified-email account
-- Hidden internal identity
-- Cloud save and revision checks
-- Cross-device reopen
-- Stale-device conflict warning
-- Recoverable Start Over flow with an archived prior campaign
-- Administrator MFA and permission tests
+## Milestone 5: Private pilot readiness
 
-Demonstration gate: no cross-account access, no silent overwrite, and no
-one-action campaign loss.
-
-## Phase 6: Private pilot readiness
-
-- Desktop and phone polish
+- Desktop and phone usability polish
 - Sound-off verification
-- Backup and restore test
 - Privacy and educational-use notices
-- Optional manual feedback route
-- Owner and husband staging test
+- Optional approved feedback route
+- Owner and trusted-family staging test
+- Clinical-content review complete
 
-Gate: explicit permission to invite outside testers.
+Gate: explicit owner permission before inviting outside testers.
 
 ## Deferred expansion
 

@@ -1,12 +1,58 @@
 # Canonical Design
 
-Status: Accepted product rules plus clearly marked open proposals. No implementation authorization.
+Status: Accepted product rules plus clearly marked design questions. Technical
+implementation proceeds under ADR 0021.
 
 Last updated: 2026-07-23
 
 ## Core experience
 
 The player operates a fictional surgical facility that visibly grows from a founder-run desk clinic into an ambulatory surgery center. Clinical knowledge advances learning; operational judgment advances the facility. Neither loop should trivialize or corrupt the other.
+
+## Reconstructed design intent
+
+The imported design history shows a consistent creative center even as the
+mechanics became more disciplined:
+
+1. **Original idea:** make ABSITE and written-board study feel like a game
+   rather than a stream of disconnected questions. A fictional patient arrives,
+   the player works through clinical decisions, and correct care helps a tiny
+   clinic grow.
+2. **Management-game expression:** keep the facility visible, show resources
+   and their causes, let rooms be placed physically, automate routine staff
+   work, and make queues, delays, salaries, cleanliness, capacity, and
+   construction matter.
+3. **Session intent:** support satisfying sessions of roughly the length of a
+   short daily study period. The facility is active only while the player is
+   present; "idle-game style" means readable incremental management, not
+   background progress while closed.
+4. **Educational maturation:** schedule narrow concepts rather than whole
+   cases, test one concept per scored decision, return concepts through
+   clinically meaningful variants, and preserve sources, approval, exact
+   versions, and reproducible constrained generation.
+5. **Current delivery intent:** produce a small playable combination of patient
+   care and clinic growth early, then make design decisions from play rather
+   than completing the entire five-stage game on paper.
+
+Recent mockup descriptions support a central top-down facility with compact
+resource information and a patient chart or decision panel that overlays only
+part of the facility, leaving activity visible. Patient navigation and urgent
+alerts should remain easy to find. These are interaction intentions, not a
+pixel-perfect final screen specification.
+
+### Historical ideas that remain candidates
+
+The following appeared in early brainstorming but are not automatically
+canonical: the rich-grandfather opening joke and exact starting money;
+searchable catalogs for every test, diagnosis, and treatment; cash for every
+correct sub-answer; exact real-time-to-facility-time conversion; death,
+lawsuit, or other punitive event details; and eventual expansion into a full
+emergency department or hospital. The current accepted progression ends at an
+optimized ambulatory surgery center. Research use also remains outside the
+initial build unless separately authorized. The early idea of feeding
+commercial question-bank questions or explanations into AI is not accepted;
+clinical authoring must use permitted sources and original synthesis without
+copying or close paraphrase.
 
 ## Educational loop
 
@@ -233,7 +279,9 @@ This accepted design is recorded in
 - Full desktop and phone functionality through responsive layouts
 - Complete usability with sound disabled
 
-No final mockup, pixel scale, font, layout, or control scheme has been approved.
+No final pixel scale, font, exact layout, or control scheme is fixed. The lead
+agent may create and revise prototype layouts while preserving these
+interaction intentions and full phone usability.
 
 ## Published clinical-content adoption
 
@@ -293,7 +341,9 @@ No final mockup, pixel scale, font, layout, or control scheme has been approved.
 
 The first minute should show a tiny facility, founder, entrance, one immediate objective, basic resources, and a visible time state. The two tutorial patients should separately teach a clinical decision and the management consequences around arrivals, time, queues, and construction.
 
-The exact clinical cases, costs, rewards, and tutorial script remain open and must not be invented without approval.
+Exact real clinical cases and correct answers require Melissa's review.
+Prototype costs, rewards, timing, and tutorial wording may use clearly labeled
+tunable defaults selected by the lead agent and revised after play.
 
 ## Starting over
 

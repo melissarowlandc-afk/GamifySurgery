@@ -1,8 +1,9 @@
-# Architecture Proposal
+# Architecture
 
-Status: PARTIALLY APPROVED. Accepted choices are identified by their ADRs;
-remaining choices are explicitly marked proposed or open. This document does
-not authorize implementation.
+Status: TECHNICAL BASELINE. Accepted ADRs define the current foundation. The
+lead development agent may resolve or revise remaining implementation details
+under ADR 0021, with migration and validation proportional to the cost of
+change.
 
 Last updated: 2026-07-23
 
@@ -75,8 +76,12 @@ Accepted educational-scheduler foundation:
 This accepted choice is recorded in
 [ADR 0013](docs/adr/0013-pinned-fsrs-adapter.md).
 
-Static web hosting remains a proposed RED decision, provisionally using
-Cloudflare Pages or an equivalent standards-based host.
+The hosted pilot will use a standards-based static web host selected
+just-in-time by the lead agent using current compatibility, cost, rollback, and
+operational simplicity. Staged local-to-private delivery is accepted in
+[ADR 0022](docs/adr/0022-staged-local-to-private-pilot-delivery.md). Selecting a
+host does not authorize creating an account, enabling billing, or deploying
+publicly.
 
 ## Component boundaries
 
@@ -526,8 +531,14 @@ Benefits: maximum control.
 
 Costs: patching, TLS, firewalls, backups, monitoring, uptime, and incident response become the owner's ongoing responsibility.
 
-## Explicit approval checkpoint
+## Decision authority
 
-Before implementation begins, Melissa must confirm:
+Technical implementation choices follow
+[ADR 0021](docs/adr/0021-delegated-technical-authority-and-prototype-first-delivery.md).
+They no longer require a combined four-part owner approval checkpoint.
 
-> I approve the architecture, data/versioning plan, vertical-slice scope, and initial deployment target described in the approved documents.
+Owner review remains required before the affected action for high-level game
+experience, clinical truth or publication, research or new data collection,
+outside tester access, public deployment, spending or billing, licensing, and
+destructive data actions. Early local prototypes may use synthetic fixtures and
+tunable placeholder balance values.

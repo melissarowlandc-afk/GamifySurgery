@@ -16,7 +16,7 @@ Last updated: 2026-07-23
 | D-008 | 2026-07-22 | No gameplay telemetry or third-party behavioral tracking is authorized | Accepted | RED | Essential security/error logs and optional manual feedback only |
 | D-009 | 2026-07-22 | Game must remain fully usable with sound disabled | Accepted | GREEN | Important for accessibility and real-world study environments |
 | D-010 | 2026-07-22 | React, Phaser, TypeScript, PostgreSQL/Supabase, and Cloudflare form the current coherent technical recommendation | Partially superseded | RED | Client accepted in D-013, database/backend in D-017; static hosting remains open |
-| D-011 | 2026-07-22 | Use a logical tile grid, fixed simulation ticks, footprint-based rooms, and grid pathfinding | Superseded and separated | RED | Spatial model accepted in D-015; browser authority and fixed-step/event model accepted in D-030; exact step duration and speeds remain Y-016 |
+| D-011 | 2026-07-22 | Use a logical tile grid, fixed simulation ticks, footprint-based rooms, and grid pathfinding | Superseded and separated | RED | Spatial model accepted in D-015; browser authority and fixed-step/event model accepted in D-030; exact step duration and speeds are delegated implementation settings under D-036 |
 | D-012 | 2026-07-22 | Begin with a local vertical slice, then an invite-only hosted pilot | Proposed | RED | Requires deployment-target approval |
 | D-013 | 2026-07-23 | Use TypeScript, React, Phaser, and a renderer-independent pure TypeScript game-rules layer for the player client | Accepted | RED | Explicitly approved by Melissa; ADR 0004 |
 | D-014 | 2026-07-23 | Use one private monorepo with separately built player and administrator applications plus strongly bounded shared packages | Accepted | RED | Explicitly approved by Melissa; ADR 0005 |
@@ -40,13 +40,17 @@ Last updated: 2026-07-23
 | D-032 | 2026-07-23 | Use normalized PostgreSQL records for identity, authoring, releases, permissions, audit, ledgers, frozen clinical references, and learning evidence, plus one validated versioned JSONB snapshot for coherent operational facility state | Accepted | RED | Melissa approved Decision 13A Option A; ADR 0019; resolves R-018 |
 | D-033 | 2026-07-23 | Require the clinical system to serve as both a comprehensive Clinical Topic knowledge base and a source of clinically approved concept-level teaching content; gate concept encounters by facility stage, use constrained seeded templates, allow AI drafts only in administration, and prohibit live AI generation | Accepted requirement direction | RED | Supplied explicitly by Melissa; completed by D-034 and ADR 0020 |
 | D-034 | 2026-07-23 | Use a linked, revisioned dual-purpose Clinical Topic and runtime-teaching model with one-FSRS-card Tested Concepts, meaningful many-to-many Patient Presentation Variants, typed constrained templates, facility-stage and capability eligibility, frozen runtime instances, protected Draft-only AI assistance, and no live AI generation | Accepted | RED | Melissa approved Decision 13B Option A; ADR 0020; resolves R-020 |
-| D-035 | 2026-07-23 | Treat long externally supplied or AI-generated prompts as advisory input; reconcile them with the canonical record and review material recommendations, conflicts, and consequences with Melissa before sweeping changes | Accepted | GREEN | Explicitly directed by Melissa as a persistent working rule; existing approval gates remain mandatory |
+| D-035 | 2026-07-23 | Treat long externally supplied or AI-generated prompts as advisory input and reconcile them chronologically with the canonical record before acting | Accepted | GREEN | Explicitly directed by the owner; refined by D-036 so compatible technical advice may be adopted autonomously while owner-level consequences remain gated |
+| D-036 | 2026-07-23 | Delegate technical architecture, data, schema, framework, testing, and implementation decisions to the lead development agent; reserve owner review for high-level game and clinical intent, privacy/research, external access, spending, legal, public, and destructive actions; deliver prototype-first | Accepted | RED governance | Explicitly directed by the owner; ADR 0021; supersedes serial technical approval and the combined four-part implementation checkpoint |
+| D-037 | 2026-07-23 | Deliver a local playable prototype, then a coherent local vertical slice, staging, and an invite-only private browser pilot with separate player/admin deployments and a just-in-time static-host selection | Accepted | RED | Executive technical decision under ADR 0021; ADR 0022; resolves R-013 and R-019 without authorizing external resource creation |
+| D-038 | 2026-07-23 | Use a private owner-controlled Google Sheets workbook as the temporary clinical authoring source, with protected stable identifiers, validated exports backed up to GitHub, a one- or two-concept trial, and a one-way transition to the future admin database | Accepted | YELLOW | Executive technical decision under ADR 0021; resolves Y-017; external workbook creation remains a separate action |
+| D-039 | 2026-07-23 | Let the lead agent define and adjust the smallest coherent technical scope for each prototype milestone after the applicable owner-level interaction choice, expanding only after a playable demonstration | Accepted | RED delivery | Executive delivery decision under ADR 0021; resolves R-014 as a serial approval gate |
 
 ## Approval rule
 
-Discussion, continued planning, or approval to include a direction in a proposal is not final approval. Before implementation Melissa must explicitly approve:
-
-1. Overall architecture
-2. Data and versioning plan
-3. Vertical-slice scope
-4. Initial deployment target
+Under ADR 0021, technical decisions do not require serial owner approval. The
+lead agent records expensive decisions and demonstrates them incrementally.
+Explicit owner authorization remains required for the owner-level gates listed
+in ADR 0021, including clinical publication, research or new data collection,
+outside tester access, public deployment, spending or billing, licensing, and
+destructive owner-data actions.

@@ -736,7 +736,6 @@ review-evidence repair, and possibly reclassification of mastery history.
 
 ## Open content decisions
 
-- Y-017 initial clinical authoring workbook
 - Pilot concepts and categories
 - Exact number of cases and variants
 - Single-choice versus other answer modes

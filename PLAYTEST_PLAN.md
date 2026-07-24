@@ -1,6 +1,7 @@
 # Playtest Plan Proposal
 
-Status: PROPOSED AND UNAPPROVED. No recruitment or data collection is authorized.
+Status: OWNER-LEVEL PILOT PLAN REMAINS OPEN. No recruitment or new data
+collection is authorized.
 
 Last updated: 2026-07-22
 
@@ -55,7 +56,8 @@ Because telemetry is disabled, the pilot should not claim precise engagement or 
 
 ## Entry criteria
 
-- Architecture and vertical slice approved
+- Local vertical slice demonstrated and accepted for outside use
+- Explicit owner authorization to invite the selected testers
 - All clinical pilot content approved by Melissa
 - No-PHI warnings and privacy notice reviewed
 - Authentication and save-conflict tests pass

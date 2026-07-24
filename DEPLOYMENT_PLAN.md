@@ -1,18 +1,22 @@
-# Deployment Plan Proposal
+# Deployment Plan
 
-Status: PROPOSED AND UNAPPROVED. No account, cloud resource, domain, or billing has been created.
+Status: Staged technical direction accepted in ADR 0022. No account, cloud
+resource, domain, billing, public deployment, or tester invitation has been
+authorized.
 
 Last updated: 2026-07-23
 
-## Stage 0: Documentation and approval
+## Stage 0: Local playable prototype
 
-- Reconcile requirements and open decisions.
-- Approve architecture, data/versioning, vertical-slice scope, and initial deployment target.
-- Create owner-controlled source history only after approval.
+- Reconcile imported design intent with the canonical record.
+- Resolve only the owner-level experience question needed for the first loop.
+- Build and demonstrate a small local browser prototype with synthetic fixture
+  content and externalized balance values.
+- Keep authentication, cloud data, and outside testers out of this stage.
 
 Recurring cost: $0.
 
-## Stage 1: Private local vertical slice
+## Stage 1: Coherent local vertical slice
 
 - Run the browser application only in the development environment.
 - Keep the administrator application local-only.
@@ -49,8 +53,9 @@ Proposed components:
 - Browser-authoritative facility execution; the backend validates and stores
   revisions but no service continuously simulates each pilot facility
 
-ADR 0008 approves the backend architecture only. It does not authorize creating
-a Supabase account or project, selecting a paid plan, or enabling billing.
+ADR 0008 approves the backend architecture only. ADR 0021 delegates technical
+provider configuration, but neither decision authorizes creating a Supabase
+account or project, selecting a paid plan, or enabling billing.
 ADR 0010 approves the staged administrator security architecture only. It does
 not authorize deploying the administrator application or creating an
 access-gate account.
