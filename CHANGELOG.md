@@ -1,6 +1,6 @@
 # Changelog
 
-All notable project-record changes are listed here. No implementation exists.
+All notable implementation and project-record changes are listed here.
 
 ## 2026-07-24
 
@@ -37,10 +37,81 @@ All notable project-record changes are listed here. No implementation exists.
 - Added ADR 0029 and resolved G-001F for clinic workload and arrival backpressure
 - Added ADR 0030 and resolved G-001G for incorrect-answer case continuation and
   terminal clinical outcomes
+- Reconfirmed campaign-scoped FSRS with fresh learning state for every new
+  campaign and every newly adopted concept; no learning state carries between
+  campaigns
+- Clarified that the accepted Supabase mechanism is conventional verified
+  email and password with email verification and recovery; “passphrase” refers
+  only to using a long password
+- Marked the historical responsive-browser and staged-deployment proposals
+  complete through their later accepted ADRs without authorizing deployment
 
 ### Implementation
 
-- None
+- Created a private npm-workspace monorepo with a responsive React player,
+  Phaser facility renderer, renderer-independent TypeScript domain package,
+  validated clinical-content package, and validated balance package
+- Expanded the local-only grayscale candidate through facility Levels 0 and 1:
+  two guaranteed introductory patients, the examination-room and Level Up gate,
+  seeded routine arrivals, Level 1 rooms, staff hiring, operating expenses,
+  dependencies, queue pressure, and phone/desktop layouts
+- Added a pinned `ts-fsrs` 5.4.1 FSRS-6 adapter with campaign-owned card state,
+  immutable scheduler pins, Good/Again mapping, real review timestamps, and no
+  inherited learning history between campaigns
+- Added conspicuously synthetic or clinically unapproved original fixture
+  content for the interface tutorial, draft laceration, uncomplicated abscess,
+  postoperative escalation, and symptomatic cholelithiasis gameplay paths
+- Added Zod validation for prototype clinical content and balance configuration,
+  including one-correct-answer rules, one-to-three-node limits, unique concept
+  use, complete wrong-final-answer dispositions, result-route references,
+  facility-stage eligibility, room/staff dependencies, patience warnings,
+  satisfaction bounds, and worst-case tutorial funding
+- Added a pure deterministic reducer for Waiting, Active, pending-result,
+  summary-available, and Resolved states; scheduled FSRS reviews; frozen result
+  timing; idempotent commands; bounded patient settlement; routine arrivals,
+  patience and capacity; room placement; hiring; expenses; and level gates
+- Added a versioned browser-local profile with multiple switchable campaigns,
+  save/reopen, a deterministic unpublished-save migration, automatic hidden-tab
+  pause, explicit Resume, and a two-step recoverable same-seed Start over
+  action; opening its confirmation pauses facility time, cancellation restores
+  the prior pause state, and the separate Create fresh campaign action uses a
+  new seed
+- Added development fast-forward and campaign, review-count, and per-concept
+  FSRS card/due-time inspection controls for repeated balance testing
+- Bounded transient operation receipts and event notices to the latest 500
+  records so long local sessions do not grow those presentation logs without
+  limit
+- Added desktop and phone-width Playwright walkthroughs and expanded the
+  deterministic Vitest suite to 14 domain, validation, save, progression, and
+  scheduler tests
+
+### Prototype boundaries
+
+- The implementation contains synthetic placeholder content only; it is not
+  clinically approved, medical advice, or suitable for real patient data
+- No PHI, player accounts, backend, cloud save, administrator website,
+  telemetry, research collection, public deployment, or external pilot access
+  was added
+- The accepted Supabase verified-email/password identity and cloud-save model is
+  intentionally staged after the local slice under ADR 0022; browser-local
+  campaigns do not replace it
+- Real clinically approved content, broad content authoring, the Clinical
+  Content Workbench, Supabase, cross-device saves, and deployment remain
+  deferred
+- Full due-prioritized, interleaved, repetition-aware encounter selection is
+  deferred; card updates and due inspection are present
+- Level 2 and later management systems are not implemented
+
+### Verification
+
+- `npm test` passed 14 of 14 deterministic domain tests
+- `npm run typecheck` passed for the player, balance, clinical-content, and
+  game-domain workspaces
+- `npm run build` produced the local Vite build successfully
+- `npm run test:e2e` passed the desktop Level 0/1/save/campaign walkthrough and
+  desktop and phone-width layout checks: 3 passed, 1 intentionally skipped
+- Vite reported a non-blocking large-chunk warning for the Phaser-containing
+  JavaScript bundle; code splitting remains a pre-deployment optimization
 
 ## 2026-07-23
 
@@ -58,8 +129,9 @@ All notable project-record changes are listed here. No implementation exists.
   catch-up and explicit Resume on return
 - Supabase-managed PostgreSQL with protected logical domains, row-level
   security, trusted server functions, migrations, and owner-controlled exports
-- Invite-only Supabase Auth using verified email and a permanent passphrase,
-  with email-based recovery and hidden internal ownership identifiers
+- Invite-only Supabase Auth using verified email and a conventional permanent
+  password, with long passphrases encouraged, email-based recovery, and hidden
+  internal ownership identifiers
 - Local-only administration during the vertical slice, followed by a separate
   private deployment with an outer gate, TOTP MFA, roles, server enforcement,
   audit records, and Melissa-only clinical approval

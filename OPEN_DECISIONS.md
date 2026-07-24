@@ -62,7 +62,7 @@ starting research, or destroying owner data.
 | R-005 | Backend and database | Supabase-managed PostgreSQL, protected logical domains, row-level security, trusted server functions, migrations, and owner-controlled exports | ADR 0008; D-017 |
 | R-006 | Save representation | Versioned operational snapshot plus immutable learning and finance evidence, transactional writes, and tested sequential migrations | ADR 0011; D-020 |
 | R-007 | Cross-device conflict policy | One active writer, expected-revision checks, explicit takeover, no automatic merge, and bounded local recovery | ADR 0011; D-020 |
-| R-011 | Authentication mechanism | Invite-only Supabase Auth using verified email plus a permanent passphrase, with email-based recovery and hidden internal ownership IDs | ADR 0009; D-018 |
+| R-011 | Authentication mechanism | Invite-only Supabase Auth using verified email plus a conventional permanent password, with email verification, email-based recovery, and hidden internal ownership IDs | ADR 0009; D-018; D-049 |
 | R-012 | Administrator protection | Local-only during the vertical slice; then a separate private deployment with an outer gate, TOTP MFA, roles, server enforcement, and audit records | ADR 0010; D-019 |
 | Y-008 | Start Over campaign lifecycle | Save and archive the prior campaign read-only, then create a fresh campaign ID with the same seed and pinned releases; permanent deletion remains separate | ADR 0012; D-022 |
 | R-009 | FSRS implementation | FSRS-6 through pinned `ts-fsrs`, isolated behind a project-owned adapter, with campaign-pinned settings, fuzz disabled, default model parameters initially, no optimizer, and validated upgrades only | ADR 0013; D-023 |

@@ -27,7 +27,8 @@ Last updated: 2026-07-24
 The database implementation will use version-controlled PostgreSQL migrations,
 row-level security for player-accessible records, trusted server-side functions
 for sensitive transitions, and owner-controlled logical exports. Supabase Auth
-with verified email and a permanent passphrase is accepted in ADR 0009.
+with verified email and a conventional permanent password is accepted in ADR
+0009; a long passphrase is encouraged as password-strength guidance.
 
 Normalized PostgreSQL records own identity, authoring, releases, permissions,
 audit, ledgers, frozen clinical references, and educational evidence. One

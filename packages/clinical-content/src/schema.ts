@@ -1,0 +1,288 @@
+import { z } from "zod";
+
+const stableIdSchema = z
+  .string()
+  .min(3)
+  .max(120)
+  .regex(/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/, "Use a stable lowercase identifier.");
+
+export const answerChoiceSchema = z
+  .object({
+    id: stableIdSchema,
+    label: z.string().min(1).max(240),
+    isCorrect: z.boolean(),
+  })
+  .strict();
+
+export const terminalClinicalOutcomeSchema = z
+  .object({
+    id: stableIdSchema,
+    severity: z.enum(["minor", "major"]),
+    narrative: z.string().min(1).max(1_000),
+    causalFraming: z.enum(["possible_consequence", "expected_consequence"]),
+    clinicalRationale: z.string().min(1).max(1_000),
+    sourceLabels: z.array(z.string().min(1).max(240)).min(1),
+  })
+  .strict();
+
+export const terminalOutcomeDispositionSchema = z.discriminatedUnion("kind", [
+  z
+    .object({
+      answerChoiceId: stableIdSchema,
+      kind: z.literal("no_terminal_outcome"),
+    })
+    .strict(),
+  z
+    .object({
+      answerChoiceId: stableIdSchema,
+      kind: z.literal("terminal_outcome"),
+      outcome: terminalClinicalOutcomeSchema,
+    })
+    .strict(),
+]);
+
+export const resultGateSchema = z
+  .object({
+    id: stableIdSchema,
+    resultTypeId: stableIdSchema,
+    pendingLabel: z.string().min(1).max(240),
+    resultNarrative: z.string().min(1).max(1_000),
+    readiness: z.literal("all"),
+    allowedServiceRouteIds: z.array(stableIdSchema).min(1),
+  })
+  .strict();
+
+export const decisionNodeSchema = z
+  .object({
+    id: stableIdSchema,
+    questionVariantId: stableIdSchema,
+    primaryConceptId: stableIdSchema,
+    stem: z.string().min(1).max(2_000),
+    answerChoices: z.array(answerChoiceSchema).min(2).max(8),
+    shuffleAnswers: z.boolean(),
+    explanation: z.string().min(1).max(2_000),
+    sourceLabels: z.array(z.string().min(1).max(240)).min(1),
+    resultGateAfter: resultGateSchema.nullable(),
+    terminalDispositions: z.array(terminalOutcomeDispositionSchema),
+  })
+  .strict()
+  .superRefine((node, context) => {
+    const choiceIds = new Set<string>();
+    for (const choice of node.answerChoices) {
+      if (choiceIds.has(choice.id)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate answer choice ID: ${choice.id}`,
+          path: ["answerChoices"],
+        });
+      }
+      choiceIds.add(choice.id);
+    }
+
+    const correctCount = node.answerChoices.filter((choice) => choice.isCorrect).length;
+    if (correctCount !== 1) {
+      context.addIssue({
+        code: "custom",
+        message: "Every scored node must have exactly one correct answer.",
+        path: ["answerChoices"],
+      });
+    }
+  });
+
+export const testedConceptSchema = z
+  .object({
+    id: stableIdSchema,
+    displayName: z.string().min(1).max(160),
+    learningObjective: z.string().min(1).max(500),
+    earliestFacilityStage: z.number().int().min(0).max(1),
+    conceptType: z.enum([
+      "diagnosis",
+      "workup",
+      "management",
+      "disposition",
+      "complication",
+    ]),
+  })
+  .strict();
+
+export const syntheticClinicalCaseSchema = z
+  .object({
+    id: stableIdSchema,
+    displayName: z.string().min(1).max(160),
+    patientPresentationVariantId: stableIdSchema,
+    patientDisplayName: z.string().min(1).max(80),
+    presentation: z.string().min(1).max(2_000),
+    tutorialEligible: z.boolean(),
+    routineEligible: z.boolean(),
+    earliestFacilityStage: z.number().int().min(0).max(1),
+    requiredClinicalSetting: z.enum(["clinic", "ambulatory_surgery"]),
+    rewardTierId: stableIdSchema,
+    sourceLabels: z.array(z.string().min(1).max(240)).min(1),
+    decisionNodes: z.array(decisionNodeSchema).min(1).max(3),
+    learningSummary: z.string().min(1).max(3_000),
+  })
+  .strict()
+  .superRefine((clinicalCase, context) => {
+    const nodeIds = new Set<string>();
+    const conceptIds = new Set<string>();
+
+    clinicalCase.decisionNodes.forEach((node, index) => {
+      if (nodeIds.has(node.id)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate decision node ID: ${node.id}`,
+          path: ["decisionNodes", index, "id"],
+        });
+      }
+      nodeIds.add(node.id);
+
+      if (conceptIds.has(node.primaryConceptId)) {
+        context.addIssue({
+          code: "custom",
+          message: "The same concept cannot be scored twice in one encounter.",
+          path: ["decisionNodes", index, "primaryConceptId"],
+        });
+      }
+      conceptIds.add(node.primaryConceptId);
+
+      const isFinalNode = index === clinicalCase.decisionNodes.length - 1;
+      if (!isFinalNode && node.terminalDispositions.length > 0) {
+        context.addIssue({
+          code: "custom",
+          message: "Only the final scored node may define terminal outcomes.",
+          path: ["decisionNodes", index, "terminalDispositions"],
+        });
+      }
+      if (isFinalNode && node.resultGateAfter !== null) {
+        context.addIssue({
+          code: "custom",
+          message: "The final scored node cannot schedule another result gate.",
+          path: ["decisionNodes", index, "resultGateAfter"],
+        });
+      }
+
+      if (isFinalNode) {
+        const incorrectChoiceIds = new Set(
+          node.answerChoices
+            .filter((choice) => !choice.isCorrect)
+            .map((choice) => choice.id),
+        );
+        const dispositionIds = node.terminalDispositions.map(
+          (disposition) => disposition.answerChoiceId,
+        );
+        const uniqueDispositionIds = new Set(dispositionIds);
+
+        if (uniqueDispositionIds.size !== dispositionIds.length) {
+          context.addIssue({
+            code: "custom",
+            message: "Each wrong final answer may have only one disposition.",
+            path: ["decisionNodes", index, "terminalDispositions"],
+          });
+        }
+        if (
+          dispositionIds.length !== incorrectChoiceIds.size ||
+          dispositionIds.some((id) => !incorrectChoiceIds.has(id))
+        ) {
+          context.addIssue({
+            code: "custom",
+            message:
+              "Every wrong final answer must have exactly one explicit terminal disposition.",
+            path: ["decisionNodes", index, "terminalDispositions"],
+          });
+        }
+      }
+    });
+  });
+
+export const syntheticClinicalReleaseSchema = z
+  .object({
+    id: stableIdSchema,
+    schemaVersion: z.literal(1),
+    publicationStatus: z.literal("synthetic_unapproved_prototype"),
+    disclaimer: z
+      .string()
+      .min(1)
+      .refine(
+        (value) =>
+          value.toLowerCase().includes("synthetic") &&
+          value.toLowerCase().includes("not clinically approved"),
+        "The prototype disclaimer must identify synthetic, unapproved content.",
+      ),
+    concepts: z.array(testedConceptSchema).min(1),
+    cases: z.array(syntheticClinicalCaseSchema).min(1),
+  })
+  .strict()
+  .superRefine((release, context) => {
+    const conceptIds = new Set<string>();
+    release.concepts.forEach((concept, index) => {
+      if (conceptIds.has(concept.id)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate concept ID: ${concept.id}`,
+          path: ["concepts", index, "id"],
+        });
+      }
+      conceptIds.add(concept.id);
+    });
+
+    const caseIds = new Set<string>();
+    release.cases.forEach((clinicalCase, caseIndex) => {
+      if (caseIds.has(clinicalCase.id)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate case ID: ${clinicalCase.id}`,
+          path: ["cases", caseIndex, "id"],
+        });
+      }
+      caseIds.add(clinicalCase.id);
+
+      clinicalCase.decisionNodes.forEach((node, nodeIndex) => {
+        if (!conceptIds.has(node.primaryConceptId)) {
+          context.addIssue({
+            code: "custom",
+            message: `Unknown primary concept: ${node.primaryConceptId}`,
+            path: ["cases", caseIndex, "decisionNodes", nodeIndex, "primaryConceptId"],
+          });
+        }
+        const concept = release.concepts.find(
+          (candidate) => candidate.id === node.primaryConceptId,
+        );
+        if (
+          concept &&
+          concept.earliestFacilityStage > clinicalCase.earliestFacilityStage
+        ) {
+          context.addIssue({
+            code: "custom",
+            message:
+              "A case cannot become eligible before one of its scored concepts.",
+            path: ["cases", caseIndex, "earliestFacilityStage"],
+          });
+        }
+      });
+
+      if (clinicalCase.tutorialEligible && clinicalCase.earliestFacilityStage !== 0) {
+        context.addIssue({
+          code: "custom",
+          message: "Tutorial cases must be available at facility Level 0.",
+          path: ["cases", caseIndex, "earliestFacilityStage"],
+        });
+      }
+    });
+  });
+
+export type AnswerChoice = z.infer<typeof answerChoiceSchema>;
+export type TerminalClinicalOutcome = z.infer<typeof terminalClinicalOutcomeSchema>;
+export type TerminalOutcomeDisposition = z.infer<
+  typeof terminalOutcomeDispositionSchema
+>;
+export type ResultGate = z.infer<typeof resultGateSchema>;
+export type DecisionNode = z.infer<typeof decisionNodeSchema>;
+export type TestedConcept = z.infer<typeof testedConceptSchema>;
+export type SyntheticClinicalCase = z.infer<typeof syntheticClinicalCaseSchema>;
+export type SyntheticClinicalRelease = z.infer<typeof syntheticClinicalReleaseSchema>;
+
+export function validateSyntheticClinicalRelease(
+  candidate: unknown,
+): SyntheticClinicalRelease {
+  return syntheticClinicalReleaseSchema.parse(candidate);
+}

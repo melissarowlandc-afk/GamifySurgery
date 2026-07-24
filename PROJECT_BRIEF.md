@@ -1,8 +1,8 @@
 # Gamify Surgery Project Brief
 
-Status: Living project record. Prototype-first implementation is authorized
-under ADR 0021; external deployment, spending, tester access, and data
-collection retain their explicit gates.
+Status: Living project record. A local playable Level 0/1 implementation
+candidate now exists under ADR 0021. External deployment, spending, outside
+tester access, and data collection retain their explicit gates.
 
 Last updated: 2026-07-24
 
@@ -150,8 +150,8 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
   backward-compatible additive adoption without changing its mastery
   denominator.
 - Pilot accounts use verified email, while gameplay and learning records use a hidden internal account ID.
-- Players sign in through Supabase Auth using verified email and a permanent
-  passphrase.
+- Players sign in through Supabase Auth using verified email and a conventional
+  permanent password; a long passphrase is encouraged.
 - The player is told that email is used for invitations, account verification,
   sign-in identification, password recovery, important account-security
   notices, and helping prevent duplicate pilot accounts, never marketing.
@@ -170,8 +170,21 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 
 ## Current phase
 
-The project is moving from design reconciliation into prototype-first delivery.
-The repository still contains documentation only, but the next approved
-owner-level gameplay choice can be followed by a small local playable build.
-Technical delivery proceeds from local prototype to private browser pilot under
-[ADR 0022](docs/adr/0022-staged-local-to-private-pilot-delivery.md).
+The project is in local prototype walkthrough and balance iteration. The
+repository contains a playable browser candidate covering the Level 0 tutorial,
+the Level 0-to-Level 1 gate, and the first repeatable Level 1 clinic-management
+loop. It uses browser-local campaigns, campaign-scoped FSRS histories, synthetic
+or clinically unapproved fixture content, and temporary centralized balance
+values.
+
+The immediate gate is Melissa's and her husband's hands-on desktop and
+phone-width walkthrough. Findings from that walkthrough should drive focused
+usability, pacing, and balance changes before broader clinical authoring or
+cloud work.
+
+Verified-email/password authentication, password recovery, Supabase cloud
+saves, and cross-device synchronization remain accepted rather than reopened.
+They are intentionally the next hosted-foundation stage after the local slice,
+as sequenced by
+[ADR 0022](docs/adr/0022-staged-local-to-private-pilot-delivery.md). No
+deployment or outside tester access is authorized by the local build.

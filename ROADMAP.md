@@ -1,125 +1,171 @@
 # Roadmap
 
-Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. Dates remain flexible and
-each milestone ends in something the owner can inspect or play.
+Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The current working point is
+a local Level 0/1 implementation candidate awaiting owner walkthrough.
 
 Last updated: 2026-07-24
 
 ## Delivery rules
 
-- Combine the educational and management loops as early as possible.
-- Use synthetic, clearly unapproved fixture content until Melissa supplies and
-  approves real clinical material.
-- Keep tunable values and content outside source logic from the first build.
-- Prefer a small working experience over a broad empty framework.
-- Harden security, publishing, and cloud behavior before outside testing, not
-  before the first local play session.
+- Combine the educational and management loops in every playable increment.
+- Use synthetic or conspicuously unapproved fixture content until Melissa
+  supplies and clinically approves real material.
+- Keep balance values and content outside game logic.
+- Prefer a small playable loop and short feedback cycle over broad unfinished
+  infrastructure.
+- Complete security, publishing, cloud-save, and recovery work before outside
+  testing, not before the first local walkthrough.
+- Do not create paid infrastructure, deploy, or invite outside testers without
+  the applicable owner authorization.
 
 ## Milestone 0: Reconcile and prepare
 
-- Preserve the reconstructed design intent and superseded explorations.
-- Apply the accepted multiple-choice clinical-interaction rule.
-- Create the monorepo skeleton, shared validation, and deterministic test
-  harness.
-- Prepare the owner-controlled clinical authoring workbook and test its shape
-  with one or two concepts before bulk entry.
+Status: COMPLETE ENOUGH FOR PROTOTYPING.
 
-Outcome: the project is ready for code and Melissa can begin structured
-clinical collection in parallel.
+Completed:
 
-## Milestone 1: Playable local prototype
+- Reconstructed the accepted design and preserved superseded explorations.
+- Recorded the foundational client, save, FSRS, identity, content, balance, and
+  staged-delivery decisions.
+- Created the private npm-workspace monorepo, shared validation, deterministic
+  domain layer, and automated test structure.
 
-- One tiny room, founder, entrance, facility clock, Pause, and visible resources
-- One arriving fictional patient using synthetic fixture content
-- Waiting, Active, and Resolved chart tabs, including a pending-result step and
-  an action-required exclamation point
-- A transparent outsourced result wait with a visible facility-time ETA and no
-  progress while paused
-- A visible Waiting-patient patience warning, first-open protection, and a
-  guaranteed non-abandoning tutorial patient
-- A visible clinic-workload limit whose full state pauses routine arrivals
-  without blocking a Waiting chart from being opened
-- One short clinical decision sequence, instructional feedback, and an
-  approved final diagnosis-and-management summary with optional viewing
-- One synthetic wrong-final-answer terminal outcome demonstrating correction,
-  bounded management effects, and reproducible reopening
-- Money, XP, and satisfaction reactions
-- Build and place the first examination room
-- Restart the prototype safely
-- Basic desktop and phone layouts
+The owner-controlled clinical authoring workbook and Clinical Content Workbench
+remain a parallel future workstream. They are not blockers for evaluating the
+small synthetic local slice.
 
-This version may use local storage and omit accounts, cloud saves, full FSRS,
-the complete admin system, and production publication. Its purpose is to test
-whether the combined loop is understandable and enjoyable.
+## Milestone 1: First playable local loop
 
-Demonstration gate: the owner can play from patient arrival through the first
-room construction without developer explanation, and never loses track of
-whether the patient is waiting, pending a result, ready for action, or resolved.
+Status: IMPLEMENTED AND ABSORBED INTO THE LEVEL 0/1 CANDIDATE.
 
-## Milestone 2: Coherent vertical slice
+Completed:
 
-- Two guaranteed tutorial patients
-- At least one concept with meaningful patient and question variants
-- Campaign-scoped FSRS and real-world due behavior
-- Deterministic arrivals and one queue or automated staff behavior
-- At least one result route whose timing changes when an appropriate in-house
-  capability is available
-- Save/reload restoration of Active pending-result and action-required charts
-- Deterministic Waiting departure and capped Active delay consequences without
-  losing an educational question
-- Deterministic capacity backpressure, protected tutorial reserve, and
-  save/reload without duplicate or burst arrivals
-- Approved terminal-outcome and explicit-no-outcome fixtures with validation,
-  correct-forward continuation, and no extra FSRS evidence
-- Versioned clinical and balance fixtures
-- Save, close, reopen, and deterministic continuation
-- Worst-case tutorial funding that cannot softlock
+- Founder clinic, facility clock, pause/resume, resource display, chart folders,
+  clinical decisions, feedback, result delay, local save, and construction
+- Responsive grayscale desktop and phone-width presentation
+- Protected introductory patient behavior, workload capacity, waiting-patient
+  patience, and deterministic facility-time processing
+- Grid placement for the first examination room
 
-Demonstration gate: educational scheduling, management progression, and
-save/reload work together.
+## Milestone 2: Coherent local Level 0/1 slice
 
-## Milestone 3: Content and authoring pipeline
+Status: IMPLEMENTATION CANDIDATE BUILT; MELISSA/HUSBAND WALKTHROUGH AND BALANCE
+ITERATION ARE THE CURRENT GATE.
 
-- Import structured workbook data as Draft content
-- Validate concepts, sources, variants, questions, and constrained templates
-- Preview seeded patient instances
-- Separate clinical approval from technical validation
-- Produce immutable local clinical and balance release artifacts
+Implemented:
 
-Demonstration gate: unapproved or invalid content cannot enter the playable
-release.
+- Two guaranteed, separately introduced Level 0 tutorial patients
+- Exactly one primary concept and one FSRS update per scored decision
+- Campaign-scoped FSRS-6 histories with fresh state for every new campaign
+- Money, clinical XP, satisfaction, expenses, facility time, and explicit level
+  gates
+- Level 0 completion through two patients, the examination room, the XP
+  threshold, and satisfaction above 90%
+- Level 1 deterministic routine arrivals, waiting patience, workload
+  backpressure, Active tracking, and treatment/referral decisions
+- Level 1 rooms: bathroom, waiting room, X-ray room, imaging control room, and
+  minor-procedure room
+- Level 1 staff: receptionist and imaging technician, including dependency,
+  hiring-cost, and salary rules
+- Outsourced and capability-dependent in-house result timing
+- Multiple local campaigns, local save/reload, compatible save migration,
+  recoverable same-seed Start over, and a separate fresh learning history for
+  each campaign; creating a genuinely new campaign uses a new seed
+- Centralized validated clinical and balance fixtures
+- Development fast-forward plus visible campaign, review-count, and per-concept
+  FSRS card/due-time inspection
+- Automated domain and desktop/phone-width browser coverage
+
+Current demonstration gate:
+
+1. Melissa can complete Level 0 and enter Level 1 without developer
+   explanation.
+2. Melissa and her husband can understand the patient folders, facility clock,
+   goals, construction, staffing, and development controls.
+3. The loop remains usable at desktop and phone widths with sound off.
+4. A saved campaign survives reload, and a newly created campaign visibly has
+   no inherited FSRS history.
+5. The team records the first pacing, economy, queue, satisfaction, and fun
+   findings before adding breadth.
+
+This milestone is deliberately browser-local. It does not include accounts,
+cloud synchronization, real clinical approval, an admin application, or
+deployment.
+
+The adapter updates FSRS cards and exposes their due state, but the complete
+selection policy that prioritizes overdue concepts, interleaves categories,
+avoids recent repetition, and occasionally contrasts confused diagnoses is
+deferred until the approved content pool is large enough to exercise it.
+
+Latest local verification on 2026-07-24:
+
+- `npm test`: 14 of 14 deterministic domain tests passed
+- `npm run typecheck`: all four TypeScript workspaces passed
+- `npm run build`: local Vite build completed with a non-blocking Phaser bundle
+  size warning
+- `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough plus desktop
+  and phone-width layout checks passed (3 passed, 1 intentionally skipped)
+
+## Milestone 3: Iterate and prepare approved content
+
+Dependency: complete the local walkthrough first so content work is not built
+around a confusing or unfun loop.
+
+- Fix high-priority walkthrough defects and tune centralized temporary values.
+- Pilot the content workflow with one chapter and roughly 5-10 Clinical Topics.
+- Import structured drafts while preserving source references and conflicts.
+- Validate concepts, meaningful patient variants, question variants, and
+  constrained templates.
+- Separate technical validation from Melissa's clinical approval.
+- Produce immutable local clinical and balance release artifacts.
+- Do not ingest full textbooks, commercial question-bank text, or build the
+  complete Workbench yet.
+
+Demonstration gate: a small clinically reviewed content set can enter a sealed
+local release, while unapproved or invalid content cannot.
 
 ## Milestone 4: Private cloud foundation
 
-- Invite-only verified-email accounts
-- Supabase persistence and cloud save revision checks
-- Cross-device reopen and explicit writer takeover
-- Separate staging and pilot environments
-- Protected administrator deployment, MFA, and permission tests
-- Backup, restore, rollback, and clinical withdrawal drills
+Dependency: stabilize the local campaign/save shape and confirm that the loop
+is worth hosting.
 
-Demonstration gate: no cross-account access, silent overwrite, exposed
-administrator surface, or unrecoverable save migration.
+- Create the owner-controlled Supabase project only with explicit external
+  infrastructure authorization
+- Implement invite-only verified-email/password registration, email
+  verification, and password recovery
+- Move campaigns to revision-checked cloud saves without changing their
+  campaign-scoped FSRS ownership
+- Test same-account cross-device reopening and explicit writer takeover
+- Establish separate staging and pilot environments
+- Protect the administrator deployment with MFA, roles, server enforcement,
+  and an outer access gate
+- Test backup, restore, rollback, migration, and clinical withdrawal
+
+Demonstration gate: no cross-account access, silent overwrite, exposed admin
+surface, or unrecoverable save migration.
 
 ## Milestone 5: Private pilot readiness
 
-- Desktop and phone usability polish
-- Sound-off verification
-- Privacy and educational-use notices
-- Optional approved feedback route
-- Owner and trusted-family staging test
-- Clinical-content review complete
+Dependency: Milestones 3 and 4, then explicit owner authorization for outside
+tester access.
 
-Gate: explicit owner permission before inviting outside testers.
+- Complete clinical review of the small pilot set
+- Polish desktop and phone usability and verify sound-off operation
+- Add reviewed privacy and educational-use notices
+- Add only an explicitly approved feedback route or data fields
+- Conduct owner/trusted-family staging
+- Prepare tester invitations, recovery instructions, monitoring, backups, and
+  rollback
+
+Gate: explicit owner permission before inviting any outside learner.
 
 ## Deferred expansion
 
-- Additional concepts, cases, and variants
-- Facility stages two through five
-- Advanced rooms and staffing
-- Diagnostics, pharmacy, side businesses, and maintenance
+- Comprehensive ABSITE coverage and multi-textbook ingestion
+- Full Clinical Content Workbench and comprehensive administration suite
+- Facility Levels 2 through 5
+- Advanced rooms, staffing, diagnostics, maintenance, pharmacy, and side
+  businesses
 - Inspection week
-- Full admin usability suite
-- Public release
-- Native distribution
-- Research features
+- Public release, native distribution, and app stores
+- Gameplay telemetry and research features

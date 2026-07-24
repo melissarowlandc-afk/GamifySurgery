@@ -1,6 +1,6 @@
 # ADR 0003: Browser-First Responsive Delivery
 
-Status: Proposed; direction approved for inclusion in the architecture proposal only
+Status: Superseded and completed by ADR 0004 and ADR 0022
 
 Date: 2026-07-22
 
@@ -12,7 +12,7 @@ Severity: RED
 
 The game must provide full play on desktop and phone, cross-device saves, simple private distribution, and no initial app-store requirement.
 
-## Proposed decision
+## Historical proposed decision
 
 - Deliver one responsive browser application.
 - Provide full gameplay on desktop and phone rather than a reduced mobile companion.
@@ -44,7 +44,15 @@ The game must provide full play on desktop and phone, cross-device saves, simple
 
 Expensive. Rendering, input, layout, distribution, update mechanisms, and possibly the programming language would change.
 
-## Approval required
+## Resolution
 
-This ADR remains Proposed until Melissa explicitly approves the complete architecture package.
+The responsive browser client was accepted through
+[ADR 0004](0004-react-phaser-typescript-client.md), whose accepted context is
+one browser client with full desktop and phone gameplay. The staged
+local-to-private-browser delivery path was later accepted through
+[ADR 0022](0022-staged-local-to-private-pilot-delivery.md) under the delegated
+technical authority in ADR 0021.
 
+This record remains as the historical proposal. It is no longer an open
+approval gate, and neither later ADR authorizes public deployment, app-store
+distribution, paid infrastructure, or outside tester invitations.

@@ -10,6 +10,105 @@ Last updated: 2026-07-24
 
 Every important tunable value receives a stable identifier, explicit unit, documented meaning, safe default, validation rules, and release history. Tunable numbers should not be scattered through source code.
 
+## Current unpublished Level 0/1 fixture
+
+The currently playable values live in one object:
+
+- Editable prototype values:
+  `packages/balance-config/src/prototype-balance.ts`
+- Structural and cross-field validation:
+  `packages/balance-config/src/schema.ts`
+- Runtime game rules that consume those values:
+  `packages/game-domain`
+
+These values belong to `balance.synthetic.prototype.v1`, whose publication
+status is `prototype_unpublished`. They are temporary playtest defaults, not an
+approved immutable balance release. For a clean comparison after changing
+them, create a fresh local campaign; the local prototype does not yet provide
+the production release-pinning and migration behavior.
+
+### Current progression and timing values
+
+| Area | Current value | Unit or behavior |
+|---|---:|---|
+| Starting money | `$90` | Prototype whole-dollar display units |
+| Starting satisfaction | `95` | Points on a 0-100 scale |
+| Level 0 XP requirement | `5` | Clinical XP |
+| Level 0 completed encounters | `2` | Both introductory patients |
+| Level 0 satisfaction gate | `> 90` | Strictly above 90 |
+| Level 0 required room | Examination room | One placed room |
+| Level 1 XP requirement | `45` | Clinical XP |
+| Level 1 completed encounters | `6` | Resolved patients |
+| Level 1 satisfaction gate | `> 90` | Strictly above 90 |
+| Facility tick | `1` | One real second while visible and unpaused |
+| Level 0 recovery arrival interval | `5` | Facility ticks |
+| Level 1 routine arrival interval | `6` | Facility ticks |
+| Routine patience | `12` | Facility ticks before leaving unopened |
+| Patience warnings | `5, 2, 0` | Remaining facility ticks |
+| Expense interval | `10` | Facility ticks |
+| Development fast-forward | `10` | Normal facility ticks processed at once |
+| Base routine workload limit | `2` | Waiting plus unresolved Active patients |
+| Critical reserved capacity | `1` | Non-routine protected slot |
+
+Level 1 currently requires all five Level 1 rooms and both Level 1 staff roles.
+The playable slice stops there and does not advance to Level 2.
+
+### Current rooms and staff
+
+| Definition | Build or hire cost | Recurring cost per expense interval | Other current effect |
+|---|---:|---:|---|
+| Examination room | `$120` | `$2` | `+2` workload; faster synthetic analysis |
+| Bathroom | `$90` | `$1` | `+2` satisfaction on build |
+| Waiting room | `$150` | `$2` | `+2` satisfaction; `+2` workload |
+| Imaging control room | `$120` | `$2` | Required for X-ray room |
+| X-ray room | `$260` | `$4` | In-house X-ray capability when staffed |
+| Minor-procedure room | `$300` | `$4` | `+1` satisfaction; `+1` workload |
+| Receptionist | `$80` | `$3` | `+1` workload |
+| Imaging technician | `$120` | `$5` | Required for in-house X-ray |
+
+Room footprints, build dependencies, capability identifiers, and staff
+dependencies are in the same fixture rather than hard-coded in the player
+interface.
+
+### Current patient settlement and services
+
+| Stable area | Current value |
+|---|---:|
+| Tutorial completion revenue | `$55` |
+| Basic clinic completion revenue | `$95` |
+| Referral completion revenue | `$70` |
+| XP per first-attempt correct answer | `5` |
+| Maximum patient-level quality revenue bonus | `$15` |
+| Maximum incorrect financial consequence | `$5` |
+| Maximum correct satisfaction bonus | `+2` |
+| Maximum incorrect satisfaction consequence | `-2` |
+| Satisfaction penalty for leaving before being seen | `-2` |
+| Outsourced synthetic analysis | `3` facility ticks |
+| In-house synthetic analysis | `1` facility tick |
+| Outsourced X-ray | `6` facility ticks |
+| Functioning in-house X-ray | `2` facility ticks |
+
+The initial funding validator requires the starting money plus two worst-case
+tutorial settlements to cover the examination room and a `$20` operating
+buffer. Changing any related value without preserving this invariant is
+rejected.
+
+### Current prototype FSRS settings
+
+| Setting | Current value |
+|---|---:|
+| Adapter parameter-set identifier | `learning.prototype.fsrs6.v1` |
+| Desired retention | `0.90` |
+| Maximum interval | `36,500` days |
+| Minimum Again delay | `30` real-world minutes |
+| Interval fuzz | Disabled |
+
+Every scored answer creates evidence only in the active campaign. Creating a
+new campaign creates fresh histories; reopening an older campaign restores only
+that campaign's histories. The development panel can inspect current card
+state and due time. The later due-prioritized and repetition-aware encounter
+selector is not part of this fixture yet.
+
 ## Accepted initial learning setting
 
 | Stable identifier | Value | Unit and meaning | Scope |
@@ -235,9 +334,11 @@ No simulator results exist yet.
 
 ## Open balance decisions
 
-- All numerical defaults other than the accepted initial FSRS desired retention
-- Tutorial starting cash and guaranteed revenue
-- XP award rules after correct and incorrect answers
+- Which current Level 0/1 temporary values should change after the first
+  Melissa/husband walkthrough
+- Final pilot starting cash, room/staff costs, patient payments, arrival pacing,
+  expenses, and progression thresholds
+- Final XP award rules after correct and incorrect answers
 - Satisfaction calculation and rounding
 - Facility-time speed controls
 - Pay-cycle timing

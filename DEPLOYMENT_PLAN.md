@@ -44,7 +44,8 @@ Proposed components:
 - Standards-based static web hosting for the player application
 - Supabase-managed PostgreSQL and trusted server-side functions, as accepted in
   ADR 0008
-- Supabase Auth with verified email and permanent passphrases, as accepted in
+- Supabase Auth with verified email and conventional permanent passwords, with
+  long passphrases encouraged, as accepted in
   ADR 0009
 - Invite-only verified-email accounts
 - Separate staging and pilot environments

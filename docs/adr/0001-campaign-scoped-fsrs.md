@@ -16,11 +16,24 @@ The game can associate spaced-repetition history either with the learner account
 
 Each campaign owns its FSRS cards, review log, mastery evidence, and due dates.
 
-- A new campaign initializes a new educational schedule.
+- A new campaign initializes a new educational schedule with no inherited
+  concept mastery or FSRS history.
 - Reopening an existing campaign preserves and resumes that campaign's schedule.
 - An account may own multiple campaigns, but their FSRS states are not automatically merged.
+- The account may retain old campaigns and their results without allowing those
+  results to alter another campaign's learning state.
 - Prior campaign mastery does not satisfy a new campaign's XP, encounters, objectives, or facility requirements.
 - Each campaign remains pinned to its published core-concept set and content/balance versions.
+- A concept introduced through a later compatible clinical release begins with
+  no prior FSRS history in every campaign that adopts it.
+
+## Owner reconfirmation
+
+On 2026-07-24, the owner explicitly reconfirmed that FSRS history is
+campaign-scoped, every new campaign starts every concept with fresh scheduling
+and mastery state, and no learning history carries automatically between
+campaigns. This reconfirmation clarifies the existing accepted decision; it
+does not supersede it.
 
 ## Benefits
 
@@ -42,4 +55,3 @@ One account-wide FSRS profile shared by every campaign. This better represents l
 ## Cost of changing later
 
 Expensive. Moving to account-wide scheduling would require rules for merging card states and review histories, resolving conflicting content versions, recalculating mastery, adjusting APP automation, and migrating every existing save.
-

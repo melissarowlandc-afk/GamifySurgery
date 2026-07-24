@@ -7,6 +7,49 @@ change.
 
 Last updated: 2026-07-24
 
+## Current local implementation candidate
+
+The repository now implements the local Level 0/1 stage of ADR 0022:
+
+- `apps/player` contains the responsive React interface and Phaser facility
+  renderer.
+- `packages/game-domain` contains deterministic progression, economy, arrival,
+  patience, queue, result-routing, room/staff, save-migration, and FSRS adapter
+  rules without depending on React or Phaser.
+- `packages/clinical-content` contains only validated synthetic or clinically
+  unapproved prototype fixture content.
+- `packages/balance-config` contains the centralized, validated, unpublished
+  Level 0/1 tuning fixture.
+- `tests/e2e` exercises the core Level 0-to-Level 1 browser path and
+  desktop/phone-width layout.
+
+The local player keeps a versioned profile containing multiple campaigns in
+browser local storage. Each campaign owns its own facility and FSRS histories.
+Creating a genuinely new campaign produces a fresh campaign ID, seed, and empty
+learning state. Start Over instead creates a new campaign ID with the prior
+active campaign's seed and fresh facility and learning state. Switching back
+restores the selected campaign without transferring mastery. A deterministic
+unpublished-save migration supports the earlier local candidate.
+
+The scheduler adapter is the only domain module permitted to import
+`ts-fsrs`. The local candidate pins package `5.4.1`, FSRS-6, project adapter and
+parameter-set identifiers, 0.90 desired retention, and disabled fuzz in the
+campaign state. Correct answers map to Good and incorrect answers to Again.
+The development interface exposes each concept's current card state and due
+time. Full due-prioritized, interleaved, repetition-aware encounter selection
+remains a later domain layer; it should not be confused with the scheduler
+adapter itself.
+
+Local command idempotency receipts and presentation event notices are bounded
+to the latest 500 entries. Immutable scored-review evidence and FSRS history are
+not pruned by that transient-log limit.
+
+This is intentionally not the hosted architecture yet. It has no authentication
+screen, API, PostgreSQL connection, cloud synchronization, administrator
+application, or deployment. The accepted Supabase verified-email/password and
+cloud-save foundation below remains the next staged milestone; local storage is
+not a replacement for it.
+
 ## Recommended coherent architecture
 
 Accepted client foundation:
@@ -48,7 +91,8 @@ This accepted choice is recorded in
 Accepted player authentication foundation:
 
 - Use Supabase Auth for invite-only verified-email accounts.
-- Players sign in with their verified email address and a permanent passphrase.
+- Players sign in with their verified email address and a conventional
+  permanent password; a long passphrase is encouraged.
 - Gameplay, learning state, and campaigns remain keyed by a hidden internal
   account ID rather than email.
 - Email may be used for invitations, verification, sign-in identification,
@@ -72,6 +116,10 @@ Accepted educational-scheduler foundation:
 - Never silently upgrade an existing campaign's scheduler. Validate every
   proposed upgrade with golden histories and require an explicit migration
   before moving an existing campaign.
+- FSRS card state, review evidence, and mastery are owned by one campaign. A
+  new campaign and a newly adopted concept both begin with no inherited
+  learning history. Old campaigns remain reopenable but cannot contribute
+  learning evidence to another campaign.
 
 This accepted choice is recorded in
 [ADR 0013](docs/adr/0013-pinned-fsrs-adapter.md).
@@ -443,10 +491,12 @@ Exact lease and grace-period durations remain later configuration decisions.
 This accepted choice is recorded in
 [ADR 0011](docs/adr/0011-versioned-hybrid-saves.md).
 
-Start Over is implemented as one trusted transaction that saves and archives
-the current campaign and creates a new campaign ID with the same seed and
-pinned versions. The original is not overwritten or deleted. Failure leaves
-the original campaign active and unchanged. See
+In the hosted implementation, Start Over is one trusted transaction that saves
+and archives the current campaign and creates a new campaign ID with the same
+seed and pinned versions. The original is not overwritten or deleted. Failure
+leaves the original campaign active and unchanged. The local candidate mirrors
+the recoverable campaign lifecycle in browser storage; hosted transactional
+guarantees are not claimed. See
 [ADR 0012](docs/adr/0012-recoverable-campaign-restart.md).
 
 ## Content and balance publication

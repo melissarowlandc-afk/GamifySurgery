@@ -40,9 +40,9 @@ Before account creation, plain language should explain:
 > prevent duplicate pilot accounts. It will not be used for advertising or
 > marketing.
 
-Melissa approved these email purposes by selecting verified-email and passphrase
-authentication. Final notice wording must also identify retention and deletion
-behavior before the pilot begins.
+Melissa approved these email purposes by selecting conventional verified-email
+and password authentication. Final notice wording must also identify retention
+and deletion behavior before the pilot begins.
 
 Email can enforce one account per normalized address or single-use invitation, but it cannot prove one account per human. The system must not make a stronger promise.
 
@@ -53,9 +53,9 @@ The accepted player mechanism is:
 - A single-use invitation linked to one verified email
 - Supabase Auth
 - Verified email as the sign-in identifier
-- A user-created permanent passphrase
-- At least 15 characters for a single-factor passphrase
-- Support for long passphrases, spaces, password managers, and paste
+- A user-created permanent password, with a long passphrase encouraged
+- At least 15 characters for a single-factor password
+- Support for long passwords, spaces, password managers, and paste
 - No arbitrary uppercase, number, or symbol composition rules
 - Rejection of known-compromised or extremely common values when supported
 - No routine expiration; require a change when compromise is suspected

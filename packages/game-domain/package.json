@@ -1,0 +1,19 @@
+{
+  "name": "@gamify-surgery/game-domain",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@gamify-surgery/balance-config": "0.0.1",
+    "@gamify-surgery/clinical-content": "0.0.1",
+    "ts-fsrs": "5.4.1"
+  }
+}

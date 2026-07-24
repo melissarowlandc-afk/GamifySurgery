@@ -23,7 +23,8 @@ The pilot needs secure cross-device accounts and duplicate-account controls. Mel
 - Administrators use MFA.
 
 ADR 0009 later selected invite-only Supabase Auth with verified email and a
-permanent passphrase. Email use now includes invitations, sign-in
+conventional permanent password, for which a long passphrase is encouraged.
+Email use now includes invitations, sign-in
 identification, password recovery, and important account-security notices in
 addition to verification and duplicate-account control. Marketing remains
 prohibited.
