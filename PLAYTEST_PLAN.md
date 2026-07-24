@@ -3,7 +3,7 @@
 Status: OWNER-LEVEL PILOT PLAN REMAINS OPEN. No recruitment or new data
 collection is authorized.
 
-Last updated: 2026-07-22
+Last updated: 2026-07-24
 
 ## Purpose
 
@@ -31,6 +31,10 @@ The duration is open. Three to four weeks is recommended because it is long enou
 
 - Can a new player understand the first clinical decision without outside explanation?
 - Is facility time and pausing clear during clinical reading?
+- Can the player distinguish Waiting, Active pending, Active action-required,
+  and Resolved charts without explanation?
+- Is the exclamation point plus text cue noticeable with sound off, without
+  feeling like a disruptive pop-up?
 - Can the player afford and build the first room without a softlock?
 - Does the facility feel active rather than idle?
 - Are queues and staff automation understandable?

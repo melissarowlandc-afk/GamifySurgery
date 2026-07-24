@@ -55,6 +55,11 @@ playtesting. The structural relationship is accepted in ADR 0025.
 - Staff salaries, permitted work, morale, training costs, and modifiers
 - Task durations, priority, capacity, and failure conditions
 - Patient arrival and queue parameters
+- Diagnostic and other result turnaround times, facility-capability modifiers,
+  and whether an expected facility-time ETA is displayed
+- Waiting patience and consequences, Active-patient capacity, and Resolved-list
+  pagination or movement of older charts into an archive view; frozen encounter
+  records are not deleted by balance configuration
 - Revenue and expense reason codes
 - Satisfaction inputs, penalties, recovery, and threshold behavior
 - XP awards and progression requirements
@@ -161,5 +166,8 @@ No simulator results exist yet.
 - Facility-time speed controls
 - Pay-cycle timing
 - Construction placement correction rules
+- Result turnaround defaults and facility-capability speed modifiers
+- Patient patience, Active backlog limits, and the Resolved-list
+  pagination/archive display threshold, never underlying-record deletion
 - Bankruptcy trigger and recovery behavior
 - Inspection formula

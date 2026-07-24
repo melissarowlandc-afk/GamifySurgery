@@ -1,8 +1,10 @@
 # Gamify Surgery Project Brief
 
-Status: Living project record; implementation is not authorized.
+Status: Living project record. Prototype-first implementation is authorized
+under ADR 0021; external deployment, spending, tester access, and data
+collection retain their explicit gates.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Authority and source hierarchy
 
@@ -127,6 +129,9 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - A new campaign starts a new FSRS schedule and new mastery progress.
 - Reopening an existing campaign preserves that campaign's FSRS state.
 - Facility, construction, money, XP, satisfaction, staff, patients, accomplishments, inspection results, and seed are campaign-specific.
+- Patient charts move from Waiting to Active, show a visible and accessible
+  action-required indicator when the next player action is ready, and
+  close into a reopenable read-only Resolved folder after completion.
 - Each campaign permanently retains its core-concept set and balance release.
   Its clinical release may advance through a validated, recorded,
   backward-compatible additive adoption without changing its mastery

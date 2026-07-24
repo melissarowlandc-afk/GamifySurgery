@@ -141,6 +141,8 @@ It defines:
 - Approved instantiation profiles and variable slots
 - Clinical dependencies and prohibited combinations
 - Earliest facility stage and required facility capabilities
+- Required post-completion Patient Learning Summary for a scored clinical
+  presentation
 - Sources, review, approval, and revision history
 
 This stable variant identity—not the generated name, exact age, pronouns, or
@@ -151,6 +153,21 @@ same variant.
 Changing the clinical meaning or answer-essential profile enough to make it a
 meaningfully different mastery exposure requires a new Patient Presentation
 Variant identifier.
+
+### Patient Learning Summary
+
+A clinically approved, patient-level summary required for every publishable
+scored clinical presentation and available only after all required authored
+nodes are complete and the encounter is terminal. It covers the clinical
+conclusion; diagnosis and management or next steps when applicable; major
+pearls or pitfalls; and claim-linked sources. It complements question-specific
+explanations and never creates another scored review.
+
+The summary is revisioned like other runtime clinical content and may use only
+compatible approved template slots. The runtime freezes its exact rendered
+wording and source revision IDs with the encounter. Reopening a Resolved chart
+therefore cannot expose Draft Clinical Topic notes or silently change the
+historical patient after a later publication, correction, or withdrawal.
 
 ### Concept Presentation Link
 
@@ -226,9 +243,9 @@ A Source preserves title, publisher or journal, link or identifier, access
 date, edition or publication date, relevant licensing notes, and source type.
 
 A Citation is a many-to-many link from a source to an exact topic section,
-structured fact, concept, patient variant, question, answer rationale, or
-explanation revision. It identifies the claim or passage supported rather than
-merely attaching a bibliography to the topic.
+structured fact, concept, patient variant, Patient Learning Summary, question,
+answer rationale, or explanation revision. It identifies the claim or passage
+supported rather than merely attaching a bibliography to the topic.
 
 ## Accepted relationship summary
 
@@ -239,6 +256,7 @@ merely attaching a bibliography to the topic.
 | Clinical Topic to Clinical Topic | Typed many-to-many | Differentials, complications, procedures, and anatomy form a network rather than a strict tree |
 | Case Family to Clinical Topic | Many-to-many | One coherent episode may involve several topics and one topic supports many cases |
 | Case Family to Patient Presentation Variant | One-to-many | A variant is one meaningful presentation of a coherent case family |
+| Patient Presentation Variant revision to Patient Learning Summary revision | One-to-one for scored presentations | Every scored presentation has one exact approved post-completion summary; viewing it remains optional |
 | Patient Presentation Variant to Scenario Template Revision | One-to-many | One meaningful presentation may have several approved template wordings without creating new mastery variants |
 | Tested Concept to Patient Presentation Variant | Many-to-many through Concept Presentation Link | Concepts need several presentations, and one patient can support separate concept-specific decisions |
 | Decision Node to Tested Concept | Many-to-one | Each scored node updates exactly one concept |
@@ -421,11 +439,12 @@ Recommended authoring sequence:
 5. Define locked facts, instantiation profiles, slots, distributions, and
    constraints.
 6. Create Decision Nodes and Question Variants.
-7. Run structural validation, constraint analysis, and preview coverage.
-8. Clinically approve exact revisions.
-9. Assemble and validate a complete release candidate.
-10. Review compatibility, simulation, and dependency reports.
-11. Publish an immutable release.
+7. Create the patient-level diagnosis-and-management learning summary.
+8. Run structural validation, constraint analysis, and preview coverage.
+9. Clinically approve exact revisions.
+10. Assemble and validate a complete release candidate.
+11. Review compatibility, simulation, and dependency reports.
+12. Publish an immutable release.
 
 ### AI-assisted drafting boundary
 
@@ -525,6 +544,11 @@ general explanation, citations, AI provenance, and change history.
 Changing the primary concept after clinical approval creates a new draft and
 invalidates prior approval. A published revision is never edited.
 
+The Case and Patient Variant Studio also previews the patient-level learning
+summary that becomes available after the encounter is terminal. It displays the
+exact sources and approved revisions that will be frozen into the Resolved
+chart.
+
 ### AI Draft assistant
 
 An optional side panel lets the editor select exact approved context, request a
@@ -541,6 +565,7 @@ not treated as proof of safety. The report also includes:
 - Rare or low-weight combinations
 - Grammar and unresolved-slot warnings
 - Exact answer mapping and shuffled order
+- Exact rendered Patient Learning Summary for every scored presentation
 - Noncosmetic fingerprints and duplicate analysis
 - Facility-stage and capability eligibility
 - The source and revision chain
@@ -593,6 +618,9 @@ A clinical release candidate should fail validation when, at minimum:
   ordering-dependent choice.
 - Correctness is missing or internally inconsistent.
 - A required explanation is absent.
+- A scored clinical presentation's Patient Learning Summary is absent,
+  unapproved, references an incompatible slot, lacks required sources, or
+  exposes non-runtime Topic notes.
 - Any Question Variant does not genuinely test the concept's narrow learning
   objective.
 - Earlier-node feedback reveals the answer to a later scored node in the same
@@ -663,10 +691,11 @@ licensed source text, and AI prompts do not automatically ship to player
 browsers.
 
 Every runtime item retains its exact source, topic, concept, patient-variant,
-template, constraint, question, answer, and explanation revision dependencies.
-A later Topic Revision does not alter the item. Instead, a change-impact report
-flags dependent material for review when an underlying fact changes. A material
-correction follows the accepted withdrawal and correction process.
+template, constraint, question, answer, explanation, and Patient Learning
+Summary revision dependencies. A later Topic Revision does not alter the item.
+Instead, a change-impact report flags dependent material for review when an
+underlying fact changes. A material correction follows the accepted withdrawal
+and correction process.
 
 Campaigns keep one current complete clinical release rather than combining a
 base release with an ordered expansion stack. A validated adoption edge records

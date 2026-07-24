@@ -5,7 +5,7 @@ lead development agent may resolve or revise remaining implementation details
 under ADR 0021, with migration and validation proportional to the cost of
 change.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Recommended coherent architecture
 
@@ -92,6 +92,8 @@ Responsibilities:
 - Responsive desktop and phone presentation
 - Facility rendering and interaction
 - Clinical decision presentation
+- Waiting, Active, and Resolved chart navigation with derived action-required
+  indicators
 - Accessible text and controls
 - Local presentation state and brief connection-loss buffering
 - Authentication session handling
@@ -140,6 +142,15 @@ It owns:
 - Economy, XP, satisfaction, and objectives
 - Random-event eligibility and guarantees
 - Inspection state and scoring inputs
+
+The simulation, not React presentation state, owns each encounter's chart
+lifecycle. The states distinguish Waiting, Active with action required, Active
+pending a result, completed with its learning summary available, and Resolved.
+Folder placement and the exclamation point are derived from that one state so
+they cannot disagree. Opening a Waiting chart makes it logically Active even
+while the chart panel hides its list tab. Scheduled result completion updates
+the state without forcibly opening or replacing any chart the player is
+reading.
 
 Simulation uses fixed logical steps plus explicitly scheduled events rather
 than animation frames. Facility time and foundational quantities use integers
@@ -289,6 +300,9 @@ overwritten by the snapshot. This accepted physical boundary is recorded in
 - Full gameplay is available on both desktop and phone.
 - Desktop may show the facility and contextual panels together.
 - Phone uses drawers, tabs, and map pan/zoom rather than removing systems.
+- On desktop, opening a patient chart leaves the facility visible. On phone,
+  the chart retains facility context through a compact visible area or status
+  and keeps Waiting, Active, and Resolved navigation accessible.
 - Touch targets and normal interface text must meet accessibility needs.
 - Sound is optional and never the sole signal.
 - The game should not reward faster reading of clinical material.
@@ -298,6 +312,10 @@ elapsed time is never simulated afterward, and the player must explicitly
 resume after returning. Losing focus alone does not pause a page that remains
 visible. This accepted lifecycle rule is recorded in
 [ADR 0007](docs/adr/0007-pause-when-hidden.md).
+
+Opening a chart does not pause facility time. Ready work is signaled visually
+and textually; sound is never required. This patient-chart lifecycle is
+recorded in [ADR 0026](docs/adr/0026-patient-chart-lifecycle.md).
 
 ## Connectivity
 
@@ -325,6 +343,8 @@ Accepted campaign storage combines:
   FSRS integration and parameters, and randomness
 - Initial and current clinical-release references plus an immutable clinical
   adoption sequence
+- The exact encounter lifecycle, current authored node, pending result event
+  and facility-time due tick, and presentation-safe open-chart restoration
 
 The server writes a compatible snapshot and its new review or finance evidence
 atomically. Unique operation identifiers make retried requests idempotent.
@@ -499,6 +519,12 @@ and player actions. This accepted choice is recorded in
 - Golden tests for FSRS mapping and scheduler upgrades
 - Deterministic replay tests for seeds and saves
 - Save migration and round-trip tests
+- Patient-chart transition and reload tests, including result-ready events,
+  close-with-unanswered-action, terminal settlement exactly once, Resolved
+  read-only reopening, and no duplicate FSRS review
+- Concurrent and stale-event tests: refresh while the final summary is
+  available, results due while the same or another chart is open, simultaneous
+  patient results, double delivery, and `!` persisting until submission
 - Schema and publication validation tests
 - Database permission tests
 - Phone and desktop end-to-end tests

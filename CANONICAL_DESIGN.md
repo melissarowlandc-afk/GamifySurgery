@@ -145,6 +145,33 @@ Exact amounts remain tunable balance values. This accepted relationship is
 recorded in
 [ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md).
 
+### Patient chart lifecycle
+
+- A newly arrived patient appears as a chart tab in the Waiting list and does
+  not forcibly interrupt the player.
+- Selecting the chart opens a panel while leaving the facility visible and
+  moves the patient logically into Active for safe recovery. When the panel
+  closes, its Active tab becomes visible.
+- Closing a chart with a ready unanswered question leaves it in Active with an
+  exclamation point. The exclamation point always means player action is ready.
+- A patient awaiting a result or later authored step remains in Active without
+  the exclamation point and shows what is pending.
+- When the result or next question becomes ready, the Active tab gains its
+  exclamation point without stealing focus from another open chart.
+- After the final question, the player may flip or toggle the chart to an
+  unscored diagnosis-and-management summary that is required, clinically
+  approved content but optional for the player to view.
+- Closing the completed chart moves it into Resolved. Resolved charts remain
+  reopenable in read-only form without creating another answer, reward, or FSRS
+  review.
+- Encounter settlement occurs once at clinical completion, not when the player
+  chooses to view the summary or closes the chart.
+- Facility time continues while a chart is open unless the player manually
+  pauses.
+
+This accepted interaction and recovery behavior is recorded in
+[ADR 0026](docs/adr/0026-patient-chart-lifecycle.md).
+
 ### Campaign-scoped scheduling
 
 Each campaign owns its own concept cards, review log, mastery evidence, and next-due times.
@@ -386,6 +413,10 @@ interaction intentions and full phone usability.
 ## First playable experience
 
 The first minute should show a tiny facility, founder, entrance, one immediate objective, basic resources, and a visible time state. The two tutorial patients should separately teach a clinical decision and the management consequences around arrivals, time, queues, and construction.
+
+The tutorial must visibly teach that new charts begin in Waiting, opened charts
+move to Active, the exclamation point and text label mean action is ready, and
+completed charts file into the reopenable Resolved folder.
 
 Exact real clinical cases and correct answers require Melissa's review.
 Prototype costs, rewards, timing, and tutorial wording may use clearly labeled

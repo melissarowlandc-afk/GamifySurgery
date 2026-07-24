@@ -12,6 +12,9 @@ All notable project-record changes are listed here. No implementation exists.
   a different primary concept, with dependency-aware feedback timing
 - Basic patient revenue with modest capped correctness benefits, small bounded
   mistake consequences, anti-farming rules, and guaranteed tutorial funding
+- Waiting, Active, and Resolved patient-chart lifecycle with pending-result
+  status, action-required exclamation points, a required approved final
+  learning summary with optional viewing, and read-only reopening
 
 ### Documentation
 
@@ -19,6 +22,7 @@ All notable project-record changes are listed here. No implementation exists.
 - Added ADR 0024 and resolved G-001A for variable-length patient question
   sequences
 - Added ADR 0025 and resolved G-001B for bounded clinical-answer consequences
+- Added ADR 0026 and resolved G-001C for the patient-chart lifecycle
 
 ### Implementation
 

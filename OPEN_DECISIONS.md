@@ -31,7 +31,7 @@ available and will not be presented as serial owner decisions:
 
 | Item | Current working default |
 |---|---|
-| Exact vertical-slice technical scope | Smallest coherent loop under G-001: founder, multiple-choice patient decision, feedback, resources, first room, pause, and save |
+| Exact vertical-slice technical scope | Smallest coherent loop under G-001: founder, Waiting/Active/Resolved chart lifecycle, multiple-choice patient decision, result-ready signal, feedback, resources, first room, pause, and save |
 | Tutorial economy | Guarantee the first room and an operating buffer even after mistakes |
 | Phone layout | Support portrait and landscape with responsive drawers, pan, and zoom |
 | Early authoring tools | Private Google Sheets workbook plus validated exports; full admin application later |
@@ -83,4 +83,5 @@ starting research, or destroying owner data.
 | G-001 | Clinical assessment interaction | Every scored clinical concept uses single-select multiple choice with exactly one correct answer; searchable or free-text controls do not score clinical knowledge | ADR 0023; D-040 |
 | G-001A | Scored questions per patient | One to three sequential scored multiple-choice nodes per patient, each testing a different primary concept; defer feedback when needed to protect later answers | ADR 0024; D-041 |
 | G-001B | Clinical-answer management consequences | Basic operational revenue plus modest capped correctness benefits; incorrect answers lose the bonus and receive a small capped consequence without tutorial softlock | ADR 0025; D-042 |
+| G-001C | Patient chart lifecycle | Waiting tab, player-opened chart, Active pending or action-required state with an exclamation point, required final learning-summary content that the player may optionally flip to view, then a reopenable read-only Resolved chart | ADR 0026; D-043 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

@@ -48,6 +48,7 @@ Last updated: 2026-07-24
 | D-040 | 2026-07-24 | Test every scored clinical concept through a single-select multiple-choice Question Variant with exactly one clinically correct answer; searchable, free-text, matching, ordering, or multi-select controls do not score clinical knowledge | Accepted | RED game design | Owner selected Decision G-001 Option B; ADR 0023 |
 | D-041 | 2026-07-24 | Allow one to three sequential scored multiple-choice questions per patient encounter, each testing a different primary concept, with feedback deferred when necessary to protect later answers | Accepted | RED game design | Owner approved Decision G-001A Option A; ADR 0024 |
 | D-042 | 2026-07-24 | Give completed patients basic operational revenue, add modest capped XP and quality benefits for correct first submissions, and apply small capped consequences for incorrect submissions without negative XP or tutorial softlock | Accepted | YELLOW game design | Owner approved Decision G-001B Option A; ADR 0025 |
+| D-043 | 2026-07-24 | Use a Waiting-to-Active-to-Resolved patient-chart lifecycle: opening a Waiting chart leaves the facility visible; Active tabs distinguish pending results from action-required questions with an exclamation point; completion unlocks a required approved diagnosis-and-management summary that the player may optionally view; closing files a reopenable read-only Resolved chart | Accepted | RED game interaction | Owner approved Decision G-001C Option A with an explicit lifecycle modification; ADR 0026 |
 
 ## Approval rule
 

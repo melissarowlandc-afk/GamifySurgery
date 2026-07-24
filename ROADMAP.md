@@ -31,7 +31,10 @@ clinical collection in parallel.
 
 - One tiny room, founder, entrance, facility clock, Pause, and visible resources
 - One arriving fictional patient using synthetic fixture content
-- One short clinical decision sequence and immediate instructional feedback
+- Waiting, Active, and Resolved chart tabs, including a pending-result step and
+  an action-required exclamation point
+- One short clinical decision sequence, instructional feedback, and an
+  approved final diagnosis-and-management summary with optional viewing
 - Money, XP, and satisfaction reactions
 - Build and place the first examination room
 - Restart the prototype safely
@@ -42,7 +45,8 @@ the complete admin system, and production publication. Its purpose is to test
 whether the combined loop is understandable and enjoyable.
 
 Demonstration gate: the owner can play from patient arrival through the first
-room construction without developer explanation.
+room construction without developer explanation, and never loses track of
+whether the patient is waiting, pending a result, ready for action, or resolved.
 
 ## Milestone 2: Coherent vertical slice
 
@@ -50,6 +54,7 @@ room construction without developer explanation.
 - At least one concept with meaningful patient and question variants
 - Campaign-scoped FSRS and real-world due behavior
 - Deterministic arrivals and one queue or automated staff behavior
+- Save/reload restoration of Active pending-result and action-required charts
 - Versioned clinical and balance fixtures
 - Save, close, reopen, and deterministic continuation
 - Worst-case tutorial funding that cannot softlock

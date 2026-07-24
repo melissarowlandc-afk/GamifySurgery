@@ -172,6 +172,15 @@ Cosmetic runtime changes never create a new variant identity. A material change
 that represents a different mastery exposure creates a new stable variant
 instead of relabeling the old one.
 
+### Patient learning summary revision
+
+Required immutable post-completion summary for each scored clinical Patient
+Presentation Variant revision. Stores the clinical conclusion; diagnosis and
+management or next steps when applicable; pearls or pitfalls; compatible
+template-slot references; claim-level citations; clinical approval; and
+workflow state. It is unscored and is included in a runtime release only
+through exact revision membership.
+
 ### Concept presentation link
 
 Many-to-many join between Tested Concept and Patient Presentation Variant. It
@@ -256,8 +265,9 @@ send to an AI provider.
 ### Citation
 
 Claim-specific many-to-many join from a Source to an exact topic section,
-structured fact, concept, patient-variant, question, answer, or explanation
-revision. Stores supported claim, locator, and author verification state.
+structured fact, concept, patient-variant, Patient Learning Summary, question,
+answer, or explanation revision. Stores supported claim, locator, and author
+verification state.
 
 ### Content revision
 
@@ -297,8 +307,9 @@ drafts, AI prompts, or licensed source text.
 
 Many-to-many join from a Clinical Release to exact approved revisions of
 concepts, case families, patient variants, templates, profiles, constraints,
-decision nodes, questions, answers, explanations, and allowed citations.
-Relationship rows preserve dependency role and manifest ordering where needed.
+decision nodes, questions, answers, explanations, Patient Learning Summaries,
+and allowed citations. Relationship rows preserve dependency role and manifest
+ordering where needed.
 
 ### Publication validation report
 
@@ -475,7 +486,8 @@ freezes:
 - Current clinical release and exact item revision IDs
 - Tested Concept, Concept Presentation Link, Case Family, Patient Presentation
   Variant, Scenario Template, Clinical Instantiation Profile, Decision Node,
-  Question Variant, Answer Choice, explanation, and constraint revisions
+  Question Variant, Answer Choice, explanation, Patient Learning Summary, and
+  constraint revisions
 - Every chosen slot value and its safety class
 - Exact rendered patient text, stem, answer-choice order, correct-answer
   mapping, and explanation
@@ -491,6 +503,49 @@ queue, location, service-progress, and operational state.
 A later clinical adoption cannot mutate the instance. Withdrawal may mark it
 for unscored bypass or cancellation under ADR 0016 while preserving the frozen
 payload.
+
+The operational encounter snapshot has one canonical `workflow_state`:
+
+- `waiting_unopened`
+- `active_action_required`
+- `active_pending_result`
+- `resolved_summary_available`
+- `resolved`
+
+Opening a Waiting chart advances it to the appropriate Active state even while
+the panel remains open. The Waiting, Active, and Resolved lists and the
+action-required exclamation point are derived from `workflow_state`; they are
+not separately writable flags.
+
+The snapshot also preserves the current Decision Node, pending-result gate
+identifier, scheduled-result event IDs, statuses, and due facility-time ticks,
+deferred-feedback state, completion and resolution timestamps, and terminal
+resolution reason. A saved open-chart identifier is presentation state and
+cannot override encounter truth.
+
+The exact derived folder mapping is `waiting_unopened` to Waiting;
+`active_action_required`, `active_pending_result`, and
+`resolved_summary_available` to Active; and `resolved` to Resolved. Only
+`active_action_required` displays `!`. The summary-available state instead
+displays an accessible Complete or Summary Available label.
+
+A pending transition owns one result gate and zero or more scheduled result
+events. Each event stores a stable operation ID, originating encounter and
+node, due facility-time tick, delivery status and time, and expected-state
+guard. The authored gate defines whether all or a specified subset of results
+must arrive before the next node becomes ready. Event delivery and lifecycle
+advancement commit atomically.
+
+Node completion, reward settlement, and review creation are idempotent so
+refresh or retry cannot duplicate them. Settlement is uniquely keyed by
+encounter and settlement type; review evidence is uniquely keyed by
+scored-decision instance.
+
+The frozen payload includes the exact rendered, clinically approved
+post-completion diagnosis-and-management summary and its source revision IDs.
+It never reads mutable Draft topic notes. Summary viewing is an unscored,
+read-only educational event and remains available from a reopened Resolved
+chart.
 
 ### Runtime scored-decision instance
 
