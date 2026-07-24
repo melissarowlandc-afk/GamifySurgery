@@ -67,6 +67,28 @@ Exact turnaround numbers, costs, queue capacities, and upgrade modifiers remain
 agent-managed prototype defaults until simulation and playtesting support
 publication. The structural relationship is accepted in ADR 0027.
 
+## Accepted patient-patience relationship
+
+- Only unopened Waiting patients may leave because of patience.
+- Patience and warnings advance in facility time and remain visible without
+  relying on sound or color alone.
+- First chart opening cancels abandonment and protects the Active encounter.
+- Reading the open chart creates no response-delay consequence for that patient.
+- Operational delay and ignored action-ready charts may produce small, capped
+  satisfaction effects after visible grace thresholds. Operational thresholds
+  reference an explicit promised target or ETA rather than penalizing an
+  ordinary unavoidable wait.
+- Tutorial patients are exempt from abandonment and cannot cause an opening
+  softlock.
+- Leaving before being seen creates no review, clinical XP, completion revenue,
+  mastery evidence, or answer disclosure.
+- The final warning has observable facility-time grace at every supported speed,
+  and answer/delay satisfaction effects share one patient-level cap.
+
+Exact durations, warning bands, grace periods, satisfaction amounts, and caps
+remain agent-managed prototype defaults until simulation and playtesting
+support publication. The structural relationship is accepted in ADR 0028.
+
 ## Proposed balance areas
 
 - Facility-stage requirements and accomplishments
@@ -76,9 +98,10 @@ publication. The structural relationship is accepted in ADR 0027.
 - Patient arrival and queue parameters
 - Diagnostic and other result turnaround times and facility-capability
   modifiers
-- Waiting patience and consequences, Active-patient capacity, and Resolved-list
-  pagination or movement of older charts into an archive view; frozen encounter
-  records are not deleted by balance configuration
+- Numerical Waiting-patience and capped delay-consequence values,
+  Active-patient capacity, and Resolved-list pagination or movement of older
+  charts into an archive view; frozen encounter records are not deleted by
+  balance configuration
 - Revenue and expense reason codes
 - Satisfaction inputs, penalties, recovery, and threshold behavior
 - XP awards and progression requirements
@@ -186,7 +209,8 @@ No simulator results exist yet.
 - Pay-cycle timing
 - Construction placement correction rules
 - Numerical result turnaround defaults and facility-capability speed modifiers
-- Patient patience, Active backlog limits, and the Resolved-list
-  pagination/archive display threshold, never underlying-record deletion
+- Numerical patience and grace thresholds, Active backlog limits, and the
+  Resolved-list pagination/archive display threshold, never underlying-record
+  deletion
 - Bankruptcy trigger and recovery behavior
 - Inspection formula

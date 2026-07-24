@@ -135,6 +135,9 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - Meaningful clinical and operational result waits use transparent facility-time
   ETAs; approved outsourcing is slower, while functional in-house services are
   faster without changing clinical truth.
+- Only unopened Waiting patients may leave from impatience; opening protects
+  the educational case, delay effects remain capped, and tutorial patients are
+  guaranteed to stay.
 - Each campaign permanently retains its core-concept set and balance release.
   Its clinical release may advance through a validated, recorded,
   backward-compatible additive adoption without changing its mastery

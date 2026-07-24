@@ -546,14 +546,53 @@ not separately writable flags.
 The snapshot also preserves the current Decision Node, pending-result gate
 identifier, scheduled-result event IDs, statuses, and due facility-time ticks,
 deferred-feedback state, completion and resolution timestamps, and terminal
-resolution reason. A saved open-chart identifier is presentation state and
-cannot override encounter truth.
+resolution reason. Because chart attendance suppresses one delay consequence,
+the snapshot owns one `attended_encounter_id` as simulation interaction state;
+`open_chart_panel_id`, panel geometry, animation, and scroll position remain
+presentation/navigation state. At most one encounter is attended; it belongs
+to the campaign and is in an unresolved Active state. A Resolved/History chart
+never grants an attention exemption. Attendance cannot override encounter
+workflow truth.
 
 The exact derived folder mapping is `waiting_unopened` to Waiting;
 `active_action_required`, `active_pending_result`, and
 `resolved_summary_available` to Active; and `resolved` to Resolved. Only
 `active_action_required` displays `!`. The summary-available state instead
 displays an accessible Complete or Summary Available label.
+
+While `waiting_unopened`, the snapshot stores the patience start tick,
+departure due tick, stable departure-event ID, warning bands already emitted,
+and tutorial-exemption flag. First chart opening stores `first_opened_tick`,
+cancels the departure event, sets attendance, and advances atomically through a
+compare-and-set. If Open and departure share a tick, the documented event
+priority applies Open first; a stale Open after committed departure is rejected.
+The final warning due tick must precede departure by a positive, observable
+facility-time interval at every supported speed.
+
+Waiting abandonment transitions to `resolved` with
+`resolution_reason = left_before_seen`. The read-only entry preserves its
+operational arrival, warning, and departure history but renders no unanswered
+clinical payload, answer, explanation, or Patient Learning Summary. It creates
+no Concept Presentation Exposure, Review Record, Mastery Evidence, clinical XP,
+or completion-revenue entry. Departure, queue/resource release, and transition
+are idempotent and bypass generic encounter-completion settlement.
+
+Active state may store `action_ready_since_tick`, operational-delay and
+response-grace threshold IDs already applied,
+`response_delay_accrued_ticks`, `response_delay_unattended_since_tick`, and the
+patient-level satisfaction-consequence total and cap. Each threshold
+application has a unique operation ID. Open, close, and chart-switch commands
+atomically settle the prior patient's accrued unattended time and update the
+attended encounter under the writer lease; a switch has no intermediate gap.
+Attendance suppresses response-delay accrual for that patient only. If a result
+becomes action-ready while its chart is attended, response accrual begins
+suspended. Operational result-delay accrual remains independent and references
+the frozen service target or ETA. Refresh or device takeover restores and shows
+a valid attended chart while paused, or clears attendance at the unchanged
+facility tick before Resume. Stale-writer attention commands fail lease and
+revision checks. All delay accrual and attendance stop at
+`resolved_summary_available`, and answer-related plus delay-related
+satisfaction effects share the patient-level cap.
 
 A pending transition owns one result gate and one or more unresolved scheduled
 result/service events or queued service requests. A gate with no remaining
@@ -596,6 +635,10 @@ Variant, Question Variant, noncosmetic fingerprint, and time. It supports
 mastery-variant evidence and recent-repetition avoidance without treating
 cosmetic changes as new clinical exposures. It is gameplay state required for
 scheduling, not optional analytics.
+
+Creation occurs when the learner first opens and is actually shown the clinical
+presentation, not when the encounter is generated or enters Waiting. Therefore
+`left_before_seen` never creates exposure evidence.
 
 ### Runtime task
 

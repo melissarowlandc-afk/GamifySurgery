@@ -24,7 +24,8 @@ learning summary.
 Use this patient-chart lifecycle:
 
 1. **Waiting:** A newly arrived patient's card/chart appears as a tab in the
-   Waiting list. It does not forcibly open.
+   Waiting list. It does not forcibly open. Under ADR 0028, only this unopened
+   state can follow the ordinary patience-departure transition.
 2. **Open chart:** Selecting the tab opens the chart panel while leaving the
    facility visible. Facility time continues unless the player manually pauses.
 3. **Active - action required:** Opening a Waiting chart moves the patient
@@ -106,10 +107,12 @@ result and advancing the encounter commit atomically and idempotently.
 Encounter settlement has its own unique settlement key; review creation
 remains uniquely keyed to the scored-decision instance.
 
-The currently open chart is presentation state, separate from the patient's
-workflow state. A saved open chart should restore after refresh when safe; at
-minimum, refresh must return it to the correct Active or summary state without
-losing work or producing duplicate results, rewards, or reviews.
+The open chart remains separate from the patient's workflow state. Under ADR
+0028, however, the simulation persists the currently attended encounter because
+attendance suppresses one response-delay consequence. Panel geometry and
+animation remain presentation-only. Refresh must return the encounter to its
+correct Active or summary state without losing work or producing duplicate
+results, rewards, or reviews.
 
 ## Consequences
 
@@ -120,8 +123,10 @@ losing work or producing duplicate results, rewards, or reviews.
 - Resolved cases become a useful study reference without producing false recall
   evidence.
 - Transparent capability-based result timing is resolved by ADR 0027; exact
-  numerical turnaround remains balance tuning. Active-patient capacity,
-  waiting consequences, and Resolved-list organization remain separate rules.
+  numerical turnaround remains balance tuning.
+- Waiting-patient patience and Active-case protection are resolved by ADR 0028;
+  exact numerical thresholds remain balance tuning. Active-patient capacity
+  and Resolved-list organization remain separate rules.
 
 ## Cost of changing later
 

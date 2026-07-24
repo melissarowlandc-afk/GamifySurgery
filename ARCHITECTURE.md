@@ -94,6 +94,8 @@ Responsibilities:
 - Clinical decision presentation
 - Waiting, Active, and Resolved chart navigation with derived action-required
   indicators
+- Accessible Waiting-patience status and warnings derived from authoritative
+  facility-time state
 - Accessible pending-result status and facility-time ETA presentation
 - Accessible text and controls
 - Local presentation state and brief connection-loss buffering
@@ -152,6 +154,29 @@ they cannot disagree. Opening a Waiting chart makes it logically Active even
 while the chart panel hides its list tab. Scheduled result completion updates
 the state without forcibly opening or replacing any chart the player is
 reading.
+
+For a new Waiting patient, the simulation schedules one facility-time
+departure event and derives accessible patience status and warnings from the
+same authoritative timing. First chart opening atomically cancels that event
+and moves the patient to Active. A same-tick accepted Open action has stable
+priority over departure. Active encounters cannot follow the ordinary
+patience-departure transition.
+
+Active operational-delay and action-ready grace thresholds may write bounded,
+idempotent satisfaction events. Reading an open chart suppresses only that
+patient's response-delay threshold; it does not pause facility time, other
+patients, or operational result delay. Tutorial-exemption and consequence-cap
+rules come from the campaign-pinned balance release.
+
+Because attention affects that consequence, one simulation-owned
+`attended_encounter_id` is persisted. Open, close, and switch commands update it
+atomically; layout and animation remain presentation-only. Refresh or writer
+takeover leaves facility time paused while the attended chart is restored, or
+clears attention at the unchanged facility tick before Resume. A chart switch
+accrues the prior patient's unattended time and attends the new patient in one
+command, with no transient gap. Only an unresolved Active chart may be attended;
+a Resolved or History chart grants no exemption. Delay accrual stops when the
+encounter reaches `resolved_summary_available`.
 
 Authored result gates reference exact approved clinical result payloads and
 stable balance-defined result/service types. The pinned balance release
@@ -549,6 +574,11 @@ and player actions. This accepted choice is recorded in
 - Result scheduling fixtures for modifier resolution, equal-due-time ordering,
   one seeded draw at scheduling, staff or room changes after scheduling, and
   explicit audited rescheduling after a permitted interruption
+- Patience tests for warnings, Open-versus-departure tie priority, tutorial
+  exemption, save/reload, no Active abandonment, chart-open response grace,
+  chart switch and writer takeover, observable warnings at supported speeds,
+  capped once-only threshold application, departure cleanup and settlement
+  bypass, and no review or answer disclosure after leaving before being seen
 - Schema and publication validation tests
 - Database permission tests
 - Phone and desktop end-to-end tests

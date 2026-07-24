@@ -195,6 +195,29 @@ This accepted interaction and recovery behavior is recorded in
 This accepted pacing relationship is recorded in
 [ADR 0027](docs/adr/0027-transparent-capability-based-result-timing.md).
 
+### Patient patience and leaving
+
+- Only a patient whose chart remains unopened in Waiting may leave because of
+  patience.
+- Waiting patience uses facility time and has a generous visible status and
+  warning before departure.
+- First chart opening commits the patient to Active and cancels abandonment.
+- An Active patient cannot disappear during a required result wait or while an
+  unanswered clinical decision remains available.
+- Reading an open chart creates no response-delay consequence for that patient.
+  Other facility operations and other patients continue unless the player
+  selects Pause.
+- Long operational delays or ignored action-ready Active charts may cause
+  small, capped satisfaction effects after visible grace thresholds, but never
+  erase the question or change clinical truth, FSRS, XP, or mastery.
+- Tutorial patients cannot abandon the queue or create an opening softlock.
+- A patient who leaves before being seen produces no clinical review, mastery
+  evidence, clinical XP, or completion revenue. Their read-only history entry
+  does not reveal unanswered content or the learning summary.
+
+This accepted fairness rule is recorded in
+[ADR 0028](docs/adr/0028-fair-waiting-patient-patience.md).
+
 ### Campaign-scoped scheduling
 
 Each campaign owns its own concept cards, review log, mastery evidence, and next-due times.

@@ -39,6 +39,9 @@ The duration is open. Three to four weeks is recommended because it is long enou
   understandable?
 - Are outsourced waits long enough to make in-house capability valuable without
   creating boring dead time?
+- Are Waiting patience and departure warnings understandable and generous?
+- Does protecting Active patients remove clinical-reading pressure without
+  making queues feel consequence-free?
 - Can the player afford and build the first room without a softlock?
 - Does the facility feel active rather than idle?
 - Are queues and staff automation understandable?

@@ -35,6 +35,8 @@ clinical collection in parallel.
   an action-required exclamation point
 - A transparent outsourced result wait with a visible facility-time ETA and no
   progress while paused
+- A visible Waiting-patient patience warning, first-open protection, and a
+  guaranteed non-abandoning tutorial patient
 - One short clinical decision sequence, instructional feedback, and an
   approved final diagnosis-and-management summary with optional viewing
 - Money, XP, and satisfaction reactions
@@ -59,6 +61,8 @@ whether the patient is waiting, pending a result, ready for action, or resolved.
 - At least one result route whose timing changes when an appropriate in-house
   capability is available
 - Save/reload restoration of Active pending-result and action-required charts
+- Deterministic Waiting departure and capped Active delay consequences without
+  losing an educational question
 - Versioned clinical and balance fixtures
 - Save, close, reopen, and deterministic continuation
 - Worst-case tutorial funding that cannot softlock

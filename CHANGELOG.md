@@ -18,6 +18,8 @@ All notable project-record changes are listed here. No implementation exists.
 - Transparent, capability-based facility-time result delays with visible
   pending status and ETA, slower outsourcing, faster functioning in-house
   services, and deterministic prototype timing
+- Fair Waiting-patient patience with visible warnings, first-open Active-case
+  protection, capped delay consequences, and non-abandoning tutorial patients
 
 ### Documentation
 
@@ -27,6 +29,7 @@ All notable project-record changes are listed here. No implementation exists.
 - Added ADR 0025 and resolved G-001B for bounded clinical-answer consequences
 - Added ADR 0026 and resolved G-001C for the patient-chart lifecycle
 - Added ADR 0027 and resolved G-001D for transparent result timing
+- Added ADR 0028 and resolved G-001E for patient patience and abandonment
 
 ### Implementation
 
