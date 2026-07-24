@@ -200,6 +200,31 @@ case defines the count and order; the runtime does not append arbitrary scored
 questions. Publication preview must verify that feedback or state changes from
 one node do not reveal a later scored answer.
 
+### Result Gate
+
+An optional authored transition within a case before terminal completion, used
+when the patient must wait for one or more laboratory, imaging, consultation,
+procedure, or other operational results. Encounters do not receive automatic
+filler delays.
+
+Each immutable Result Gate revision defines:
+
+- Stable result-type references
+- Exact approved clinical result payloads or compatible constrained templates
+- Whether one result, every result, or an explicit subset makes the next node
+  ready
+- Permitted in-house and outsourced service routes
+- Capability policy: hard required, or in-house preferred with an approved
+  outsourced fallback
+- Whether completion requires a player action
+- Compatible presentations, profiles, stages, and capabilities
+- Sources, clinical review, and approval for the result meaning
+
+The clinical model never contains operational turnaround numbers. Stable
+result/service definitions in the balance release own time, cost, capacity,
+queue, and route modifiers. Operational differences cannot change the
+clinically approved result or correct answer.
+
 ### Question Variant
 
 An approved alternative question under one Decision Node and therefore exactly
@@ -243,9 +268,10 @@ A Source preserves title, publisher or journal, link or identifier, access
 date, edition or publication date, relevant licensing notes, and source type.
 
 A Citation is a many-to-many link from a source to an exact topic section,
-structured fact, concept, patient variant, Patient Learning Summary, question,
-answer rationale, or explanation revision. It identifies the claim or passage
-supported rather than merely attaching a bibliography to the topic.
+structured fact, concept, patient variant, Result Gate or Requirement, Patient
+Learning Summary, question, answer rationale, or explanation revision. It
+identifies the claim or passage supported rather than merely attaching a
+bibliography to the topic.
 
 ## Accepted relationship summary
 
@@ -260,6 +286,9 @@ supported rather than merely attaching a bibliography to the topic.
 | Patient Presentation Variant to Scenario Template Revision | One-to-many | One meaningful presentation may have several approved template wordings without creating new mastery variants |
 | Tested Concept to Patient Presentation Variant | Many-to-many through Concept Presentation Link | Concepts need several presentations, and one patient can support separate concept-specific decisions |
 | Decision Node to Tested Concept | Many-to-one | Each scored node updates exactly one concept |
+| Case Family to Result Gate | One-to-many ordered transitions | A case may contain several meaningful waits without inserting them between every node |
+| Result Gate to Result Requirement | One-to-many | A gate may wait for one or several exact approved results |
+| Result Requirement to balance Result/Service Definition | Many-to-one stable reference | Clinical content owns result meaning while the pinned balance release owns operational timing |
 | Decision Node to Question Variant | One-to-many | Several approved wordings may test the same node and concept |
 | Question Variant to compatible Patient Presentation Variant | Many-to-many | A question may work with several presentations, while a presentation may support several questions |
 | Exact content revisions to Sources | Many-to-many through Citation | One source supports several claims and one claim may require several sources |
@@ -369,16 +398,18 @@ For a new encounter, the runtime:
 1. Selects an eligible Tested Concept.
 2. Selects an eligible Concept Presentation Link and Patient Presentation
    Variant.
-3. Selects a compatible Decision Node and Question Variant.
+3. Instantiates the authored Decision Node and Result Gate sequence and selects
+   compatible Question Variants.
 4. Selects one approved Clinical Instantiation Profile.
 5. Fills only its approved slots through the campaign's named
    clinical-presentation random stream.
 6. Applies approved answer-order shuffling only when the Question Variant
    permits it.
 7. Validates the completed instance before display.
-8. Freezes and saves the exact revisions, slot values, rendered wording,
-   displayed answer order, correct-answer mapping, explanation, randomness
-   provenance, and a canonical checksum.
+8. Freezes and saves the exact revisions, Result Gates and approved result
+   payloads, slot values, rendered wording, displayed answer order,
+   correct-answer mapping, explanation, randomness provenance, and a canonical
+   checksum.
 
 The result is a Runtime Encounter Instance, not a new content revision.
 
@@ -535,6 +566,13 @@ A plain-language rules builder supports `requires`, `excludes`, `only when`,
 and boundary rules. The right panel shows compatible concepts, questions,
 facility stages, capabilities, sources, and approval status.
 
+A Result Flow panel lets the editor place a Result Gate within the authored
+case, select exact approved result payloads, define readiness and player-action
+behavior, and mark the capability policy as hard required or eligible for an
+approved outsourced fallback. It displays read-only turnaround previews from a
+selected compatible balance release; clinical content never stores those
+timing numbers.
+
 ### Question Variant editor
 
 Shows the single primary concept, compatible patient variants, templated stem,
@@ -566,6 +604,8 @@ not treated as proof of safety. The report also includes:
 - Grammar and unresolved-slot warnings
 - Exact answer mapping and shuffled order
 - Exact rendered Patient Learning Summary for every scored presentation
+- Result Gate readiness, hard-capability or fallback coverage, and route/ETA
+  previews against each supported balance release
 - Noncosmetic fingerprints and duplicate analysis
 - Facility-stage and capability eligibility
 - The source and revision chain
@@ -593,7 +633,7 @@ A clinical release candidate should fail validation when, at minimum:
 - A Tested Concept lacks one clear learning objective, primary topic, or
   earliest facility stage.
 - A referenced topic, case, variant, template, slot, profile, question, answer,
-  capability, source, or exact revision is missing.
+  Result Gate, result type, capability, source, or exact revision is missing.
 - Stable identifiers or revision identifiers are duplicated.
 - A published identity is reused for a changed concept meaning or materially
   different mastery presentation.
@@ -621,6 +661,11 @@ A clinical release candidate should fail validation when, at minimum:
 - A scored clinical presentation's Patient Learning Summary is absent,
   unapproved, references an incompatible slot, lacks required sources, or
   exposes non-runtime Topic notes.
+- A Result Gate is unsatisfiable, lacks an exact approved result payload,
+  references an unavailable route, has no valid readiness rule, or changes
+  clinical truth across permitted operational routes.
+- A required result has neither an available facility capability nor an
+  approved outsourced fallback for a supposedly eligible presentation.
 - Any Question Variant does not genuinely test the concept's narrow learning
   objective.
 - Earlier-node feedback reveals the answer to a later scored node in the same
@@ -691,11 +736,11 @@ licensed source text, and AI prompts do not automatically ship to player
 browsers.
 
 Every runtime item retains its exact source, topic, concept, patient-variant,
-template, constraint, question, answer, explanation, and Patient Learning
-Summary revision dependencies. A later Topic Revision does not alter the item.
-Instead, a change-impact report flags dependent material for review when an
-underlying fact changes. A material correction follows the accepted withdrawal
-and correction process.
+template, constraint, Result Gate, Result Requirement, question, answer,
+explanation, and Patient Learning Summary revision dependencies. A later Topic
+Revision does not alter the item. Instead, a change-impact report flags
+dependent material for review when an underlying fact changes. A material
+correction follows the accepted withdrawal and correction process.
 
 Campaigns keep one current complete clinical release rather than combining a
 base release with an ordered expansion stack. A validated adoption edge records
@@ -738,11 +783,13 @@ identifier. It cannot redefine the old identifier.
 
 - Stable identity versus immutable revision model
 - Clinical Topic, Tested Concept, Case Family, Patient Presentation Variant,
-  Decision Node, and Question Variant boundaries
+  Decision Node, Result Gate, and Question Variant boundaries
 - Meaning of Patient Presentation Variant for mastery evidence
 - Many-to-many Concept Presentation and question-compatibility relationships
 - Typed slot, finite profile, value-set, and declarative constraint contract
 - Earliest facility-stage and facility-capability eligibility model
+- Separation of clinical result meaning/readiness from balance-defined service
+  timing and route behavior
 - Exact frozen Runtime Encounter and Runtime Scored-Decision payload
 - Claim-level citation, provenance, approval, and release dependency model
 - Separation between authoring AI and the live runtime
@@ -783,5 +830,6 @@ review-evidence repair, and possibly reclassification of mastery history.
 - Variant difficulty labels and eligibility
 - Retired concept behavior in old campaigns
 - Source minimums and review cadence
-- Exact first facility-stage definitions and capability vocabulary
+- Exact first facility-stage definitions, capability vocabulary, and
+  result/service types
 - AI authoring provider, data handling, cost, and source-use policy

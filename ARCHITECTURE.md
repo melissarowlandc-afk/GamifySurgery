@@ -94,6 +94,7 @@ Responsibilities:
 - Clinical decision presentation
 - Waiting, Active, and Resolved chart navigation with derived action-required
   indicators
+- Accessible pending-result status and facility-time ETA presentation
 - Accessible text and controls
 - Local presentation state and brief connection-loss buffering
 - Authentication session handling
@@ -151,6 +152,22 @@ they cannot disagree. Opening a Waiting chart makes it logically Active even
 while the chart panel hides its list tab. Scheduled result completion updates
 the state without forcibly opening or replacing any chart the player is
 reading.
+
+Authored result gates reference exact approved clinical result payloads and
+stable balance-defined result/service types. The pinned balance release
+provides deterministic prototype turnaround and route modifiers. The
+simulation selects an eligible outsourced or in-house route, schedules its
+absolute facility-time due tick, and derives the ETA from that due tick and the
+current facility tick. It freezes the chosen route, applied modifier IDs,
+effective integer duration, scheduled tick, due tick, and any seeded draw
+provenance. It never derives clinical result values from those operational
+conditions or maintains a second ETA clock.
+
+Only a gate that makes a player action ready enters
+`active_action_required`. Partial or passive result delivery remains
+`active_pending_result`. Manual and automatic facility pause prevent due ticks
+from advancing. Later bounded seeded turnaround variation, if enabled by a
+published balance release, fixes and persists the due tick when scheduled.
 
 Simulation uses fixed logical steps plus explicitly scheduled events rather
 than animation frames. Facility time and foundational quantities use integers
@@ -343,8 +360,9 @@ Accepted campaign storage combines:
   FSRS integration and parameters, and randomness
 - Initial and current clinical-release references plus an immutable clinical
   adoption sequence
-- The exact encounter lifecycle, current authored node, pending result event
-  and facility-time due tick, and presentation-safe open-chart restoration
+- The exact encounter lifecycle, current authored node, pending result/service
+  events and facility-time due ticks, and presentation-safe open-chart
+  restoration
 
 The server writes a compatible snapshot and its new review or finance evidence
 atomically. Unique operation identifiers make retried requests idempotent.
@@ -525,6 +543,12 @@ and player actions. This accepted choice is recorded in
 - Concurrent and stale-event tests: refresh while the final summary is
   available, results due while the same or another chart is open, simultaneous
   patient results, double delivery, and `!` persisting until submission
+- Result-timing tests for pause/no-catch-up, outsourced and in-house routes,
+  queues and capacity, ETA labeling, multi-result gate readiness, and clinical
+  result invariance across every operational timing path
+- Result scheduling fixtures for modifier resolution, equal-due-time ordering,
+  one seeded draw at scheduling, staff or room changes after scheduling, and
+  explicit audited rescheduling after a permitted interruption
 - Schema and publication validation tests
 - Database permission tests
 - Phone and desktop end-to-end tests

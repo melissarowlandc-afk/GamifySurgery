@@ -132,6 +132,9 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - Patient charts move from Waiting to Active, show a visible and accessible
   action-required indicator when the next player action is ready, and
   close into a reopenable read-only Resolved folder after completion.
+- Meaningful clinical and operational result waits use transparent facility-time
+  ETAs; approved outsourcing is slower, while functional in-house services are
+  faster without changing clinical truth.
 - Each campaign permanently retains its core-concept set and balance release.
   Its clinical release may advance through a validated, recorded,
   backward-compatible additive adoption without changing its mastery

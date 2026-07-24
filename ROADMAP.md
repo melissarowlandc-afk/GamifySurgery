@@ -33,6 +33,8 @@ clinical collection in parallel.
 - One arriving fictional patient using synthetic fixture content
 - Waiting, Active, and Resolved chart tabs, including a pending-result step and
   an action-required exclamation point
+- A transparent outsourced result wait with a visible facility-time ETA and no
+  progress while paused
 - One short clinical decision sequence, instructional feedback, and an
   approved final diagnosis-and-management summary with optional viewing
 - Money, XP, and satisfaction reactions
@@ -54,6 +56,8 @@ whether the patient is waiting, pending a result, ready for action, or resolved.
 - At least one concept with meaningful patient and question variants
 - Campaign-scoped FSRS and real-world due behavior
 - Deterministic arrivals and one queue or automated staff behavior
+- At least one result route whose timing changes when an appropriate in-house
+  capability is available
 - Save/reload restoration of Active pending-result and action-required charts
 - Versioned clinical and balance fixtures
 - Save, close, reopen, and deterministic continuation

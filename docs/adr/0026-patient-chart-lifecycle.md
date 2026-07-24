@@ -90,13 +90,15 @@ The derived display mapping is:
   available" with no `!`.
 - `resolved` appears in Resolved.
 
-The state also preserves the current authored node, pending-result gate and
-zero or more scheduled result events when applicable, whether feedback is
-being withheld to protect a later answer, terminal resolution reason, and the
-exact frozen clinical instance. Each scheduled event has a stable operation ID,
+The state also preserves the current authored node, pending-result gate and its
+scheduled result or service events when applicable, whether feedback is being
+withheld to protect a later answer, terminal resolution reason, and the exact
+frozen clinical instance. `active_pending_result` always has at least one
+unresolved event or queued service request; a gate with no remaining work must
+advance rather than deadlock. Each scheduled event has a stable operation ID,
 originating encounter and node, due facility-time tick, delivery state and
-time, and an expected-state guard. An authored result gate defines which
-events must arrive before the next decision becomes ready.
+time, and an expected-state guard. An authored result gate defines which events
+must arrive before the next decision becomes ready.
 
 Folder membership and the exclamation point are derived from the lifecycle
 state rather than stored as separate flags that could disagree. Delivering a
@@ -117,8 +119,9 @@ losing work or producing duplicate results, rewards, or reviews.
 - The exclamation point has one stable meaning: player action is ready.
 - Resolved cases become a useful study reference without producing false recall
   evidence.
-- Result timing, active-patient capacity, waiting consequences, and resolved
-  chart retention require separate balance or game-design rules.
+- Transparent capability-based result timing is resolved by ADR 0027; exact
+  numerical turnaround remains balance tuning. Active-patient capacity,
+  waiting consequences, and Resolved-list organization remain separate rules.
 
 ## Cost of changing later
 

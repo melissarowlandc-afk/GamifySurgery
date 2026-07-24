@@ -35,6 +35,10 @@ The duration is open. Three to four weeks is recommended because it is long enou
   and Resolved charts without explanation?
 - Is the exclamation point plus text cue noticeable with sound off, without
   feeling like a disruptive pop-up?
+- Does pending-result status and its facility-time ETA make waiting
+  understandable?
+- Are outsourced waits long enough to make in-house capability valuable without
+  creating boring dead time?
 - Can the player afford and build the first room without a softlock?
 - Does the facility feel active rather than idle?
 - Are queues and staff automation understandable?

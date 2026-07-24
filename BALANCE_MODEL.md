@@ -48,6 +48,25 @@ same-date response.
 Exact amounts and formulas are balance values selected through simulation and
 playtesting. The structural relationship is accepted in ADR 0025.
 
+## Accepted result-timing relationship
+
+- Result delays advance in facility time only.
+- Clinical content supplies the exact result and gate meaning; balance supplies
+  operational turnaround and route behavior.
+- Approved outsourced routes are slower than a functioning appropriate
+  in-house service.
+- In-house staff, capacity, and queues affect the timing and ETA resolved when
+  the service is scheduled without changing the clinical result.
+- The pending chart shows the best current facility-time ETA, labeled as
+  approximate when appropriate.
+- Prototype delays are deterministic. Future variation must be bounded, seeded,
+  pinned, and persisted at scheduling.
+- The action-required indicator appears only when a player action is ready.
+
+Exact turnaround numbers, costs, queue capacities, and upgrade modifiers remain
+agent-managed prototype defaults until simulation and playtesting support
+publication. The structural relationship is accepted in ADR 0027.
+
 ## Proposed balance areas
 
 - Facility-stage requirements and accomplishments
@@ -55,8 +74,8 @@ playtesting. The structural relationship is accepted in ADR 0025.
 - Staff salaries, permitted work, morale, training costs, and modifiers
 - Task durations, priority, capacity, and failure conditions
 - Patient arrival and queue parameters
-- Diagnostic and other result turnaround times, facility-capability modifiers,
-  and whether an expected facility-time ETA is displayed
+- Diagnostic and other result turnaround times and facility-capability
+  modifiers
 - Waiting patience and consequences, Active-patient capacity, and Resolved-list
   pagination or movement of older charts into an archive view; frozen encounter
   records are not deleted by balance configuration
@@ -166,7 +185,7 @@ No simulator results exist yet.
 - Facility-time speed controls
 - Pay-cycle timing
 - Construction placement correction rules
-- Result turnaround defaults and facility-capability speed modifiers
+- Numerical result turnaround defaults and facility-capability speed modifiers
 - Patient patience, Active backlog limits, and the Resolved-list
   pagination/archive display threshold, never underlying-record deletion
 - Bankruptcy trigger and recovery behavior

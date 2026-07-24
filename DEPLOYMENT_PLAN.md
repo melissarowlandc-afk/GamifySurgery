@@ -4,7 +4,7 @@ Status: Staged technical direction accepted in ADR 0022. No account, cloud
 resource, domain, billing, public deployment, or tester invitation has been
 authorized.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Stage 0: Local playable prototype
 
@@ -26,6 +26,8 @@ Recurring cost: $0.
 - Demonstrate save/reopen, version pins, and real-world FSRS behavior.
 - Demonstrate deterministic browser-run facility behavior independent of
   rendering frame rate.
+- Demonstrate that result waits advance through browser-run facility time and
+  persist across saves; they do not require cloud timers or background jobs.
 
 Recurring cost: $0, excluding any optional development tools Melissa explicitly approves.
 
@@ -52,6 +54,8 @@ Proposed components:
 - No custom domain required initially
 - Browser-authoritative facility execution; the backend validates and stores
   revisions but no service continuously simulates each pilot facility
+- No cloud timer or background worker advances patient results while the game
+  is closed; the browser facility clock owns those scheduled events
 
 ADR 0008 approves the backend architecture only. ADR 0021 delegates technical
 provider configuration, but neither decision authorizes creating a Supabase

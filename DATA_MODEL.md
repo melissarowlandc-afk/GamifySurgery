@@ -236,6 +236,23 @@ references exactly one primary Tested Concept. A patient encounter contains one
 to three scored nodes, and no two scored nodes within it use the same primary
 concept. Supporting tags never update another concept's card or mastery.
 
+### Result gate revision
+
+Optional immutable authored transition within a case before terminal
+completion. Stores ordered Result Requirement revisions, readiness rule, the
+next node or terminal transition, whether completion needs player action,
+permitted service routes, capability policy (`hard_required` or
+`in_house_preferred_with_fallback`), compatible presentation/profile
+references, clinical approval, and sources. No operational duration is stored
+here.
+
+### Result requirement revision
+
+One exact approved result within a Result Gate. References a stable
+balance-defined result/service type and freezes its clinical payload or
+compatible constrained template. The same clinical result must be produced by
+every permitted operational route.
+
 ### Question variant
 
 Stable alternative under one Decision Node. Its immutable revisions contain
@@ -265,9 +282,9 @@ send to an AI provider.
 ### Citation
 
 Claim-specific many-to-many join from a Source to an exact topic section,
-structured fact, concept, patient-variant, Patient Learning Summary, question,
-answer, or explanation revision. Stores supported claim, locator, and author
-verification state.
+structured fact, concept, patient-variant, Result Gate or Requirement, Patient
+Learning Summary, question, answer, or explanation revision. Stores supported
+claim, locator, and author verification state.
 
 ### Content revision
 
@@ -307,9 +324,9 @@ drafts, AI prompts, or licensed source text.
 
 Many-to-many join from a Clinical Release to exact approved revisions of
 concepts, case families, patient variants, templates, profiles, constraints,
-decision nodes, questions, answers, explanations, Patient Learning Summaries,
-and allowed citations. Relationship rows preserve dependency role and manifest
-ordering where needed.
+decision nodes, Result Gates, Result Requirements, questions, answers,
+explanations, Patient Learning Summaries, and allowed citations. Relationship
+rows preserve dependency role and manifest ordering where needed.
 
 ### Publication validation report
 
@@ -392,6 +409,15 @@ Defines permitted tasks and work areas, salary rules, training track, capacity, 
 ### Task definition
 
 Defines requirements, duration, priority rules, outcomes, and eligible staff or rooms.
+
+### Result/service definition
+
+Stable operational definition referenced by clinical Result Requirements.
+Stores display label, facility-time base turnaround, approved outsourced and
+in-house routes, required capabilities, eligible tasks/staff/rooms, capacity
+and queue modifiers, cost or revenue effects, required ETA format/precision
+policy, and optional bounded seeded-variation settings. The pilot begins with
+variation disabled.
 
 ### Event definition
 
@@ -486,8 +512,8 @@ freezes:
 - Current clinical release and exact item revision IDs
 - Tested Concept, Concept Presentation Link, Case Family, Patient Presentation
   Variant, Scenario Template, Clinical Instantiation Profile, Decision Node,
-  Question Variant, Answer Choice, explanation, Patient Learning Summary, and
-  constraint revisions
+  Result Gate, Result Requirement, Question Variant, Answer Choice,
+  explanation, Patient Learning Summary, and constraint revisions
 - Every chosen slot value and its safety class
 - Exact rendered patient text, stem, answer-choice order, correct-answer
   mapping, and explanation
@@ -529,10 +555,16 @@ The exact derived folder mapping is `waiting_unopened` to Waiting;
 `active_action_required` displays `!`. The summary-available state instead
 displays an accessible Complete or Summary Available label.
 
-A pending transition owns one result gate and zero or more scheduled result
-events. Each event stores a stable operation ID, originating encounter and
-node, due facility-time tick, delivery status and time, and expected-state
-guard. The authored gate defines whether all or a specified subset of results
+A pending transition owns one result gate and one or more unresolved scheduled
+result/service events or queued service requests. A gate with no remaining
+work advances immediately rather than persisting in `active_pending_result`.
+Each event stores a stable operation ID, originating encounter and node, due
+facility-time tick, delivery status and time, and expected-state guard. It also
+stores the selected route, exact result/service-definition version, applied
+modifier IDs and resolved inputs, effective integer duration, scheduled tick,
+due tick, and any named-stream draw provenance. ETA is derived from the
+authoritative due and current facility ticks rather than stored as another
+clock. The authored gate defines whether all or a specified subset of results
 must arrive before the next node becomes ready. Event delivery and lifecycle
 advancement commit atomically.
 
@@ -643,6 +675,10 @@ ADR 0020 accepts:
 - The stable meaning of Patient Presentation Variant for mastery
 - Typed slots, finite profiles, and declarative constraint representation
 - Facility-stage and capability availability relationships
+- Result Gate and Result Requirement identities, including hard capability
+  versus approved outsourced-fallback semantics
+- Separation of clinical result truth from balance-defined service timing,
+  route, queue, capacity, and cost
 - The exact runtime-instantiation freeze and provenance boundary
 
 Exact physical table and column names, indexes, administrator presentation,

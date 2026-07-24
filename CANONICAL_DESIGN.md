@@ -172,6 +172,29 @@ recorded in
 This accepted interaction and recovery behavior is recorded in
 [ADR 0026](docs/adr/0026-patient-chart-lifecycle.md).
 
+### Result timing
+
+- A patient waits only for a clinically or operationally meaningful authored
+  result or step; the game does not insert delay between every question.
+- Result progress uses facility time, not real-world learning time.
+- The Active chart states what is pending and shows the best current
+  facility-time ETA. Approximate estimates are labeled.
+- Approved outsourced services are slower. A functional in-house capability
+  with eligible staff and capacity is faster, and the current internal queue
+  affects the estimate resolved at scheduling.
+- A passive result does not show `!`; the action-required indicator appears
+  only when the next player action is ready.
+- Manual Pause, hidden-page pause, closing the game, and device suspension stop
+  result progress with no catch-up.
+- Prototype delays are deterministic and versioned balance values. Any later
+  bounded seeded variation is pinned, persisted when scheduled, and cannot
+  change clinical truth or prevent essential content.
+- Clinical content owns result meaning and values. Balance configuration owns
+  turnaround, route, capacity, cost, and operational modifiers.
+
+This accepted pacing relationship is recorded in
+[ADR 0027](docs/adr/0027-transparent-capability-based-result-timing.md).
+
 ### Campaign-scoped scheduling
 
 Each campaign owns its own concept cards, review log, mastery evidence, and next-due times.

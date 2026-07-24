@@ -72,6 +72,11 @@ explicit rationale, constraints, approval, and revision.
 - A **Decision Node** is one scored or unscored decision within a case. Every
   scored Decision Node has exactly one primary Tested Concept and can update
   only that concept's FSRS state.
+- A **Result Gate** is an immutable authored transition that identifies exact
+  approved clinical Result Requirements, their readiness rule, and whether an
+  internal capability is hard required or has an approved outsourced fallback.
+  It contains no operational timing numbers; the pinned balance release owns
+  route, duration, capacity, cost, and staff or room modifiers under ADR 0027.
 - A **Question Variant** is an approved way to express a Decision Node. It may
   be compatible with one or more Patient Presentation Variants through an
   explicit many-to-many compatibility relationship.
@@ -93,7 +98,9 @@ level, or FSRS state.
 Patient Presentation Variants and their concept links may additionally require
 balance-defined facility capabilities, such as an available room or service.
 Runtime eligibility requires both the concept's earliest stage and a compatible
-presentation whose capability requirements are currently met.
+presentation whose hard requirements are currently met. A Result Gate whose
+capability policy permits an approved outsourced fallback does not become
+ineligible merely because the in-house capability is absent.
 
 Publishing validation must ensure that advancing the facility cannot strand an
 FSRS review. Once a concept has entered scheduling, at least one clinically
@@ -125,13 +132,18 @@ runtime data.
 
 The versioned campaign random contract selects an eligible concept,
 presentation link, Patient Presentation Variant, Question Variant, approved
-profile, slot values, and safe answer order.
+profile, slot values, and safe answer order. The authored Case Family supplies
+the exact Result Gate sequence; it is not invented randomly.
 
-When an episode or scored decision is generated, preserve:
+When an episode, scored decision, or result service is generated or scheduled,
+preserve the following as applicable:
 
 - The clinical release and exact immutable item revisions
 - The selected concept, presentation, question, profile, and constraint
   identities
+- Exact Result Gate and Result Requirement revisions, selected service route,
+  applied timing modifiers, effective duration, scheduled and due facility
+  ticks, and any seeded draw provenance
 - Every resolved value and its provenance
 - The exact rendered stem, answer choices, answer order, correct-answer
   mapping, and explanation needed for restoration
@@ -161,7 +173,8 @@ The protected administrator application will provide:
   related topics, earliest facility stage, FSRS identity, presentations,
   questions, and later-stage coverage
 - A **Case and Variant Studio** for fixed facts, required findings, typed slots,
-  approved profiles, dependencies, capability gates, and semantic identity
+  approved profiles, dependencies, capability gates, Result Gates, approved
+  result payloads, route policy, and semantic identity
 - A **Question Editor** that visibly identifies the one concept a scored answer
   updates and manages choices, distractors, explanations, citations, and safe
   shuffling
@@ -192,6 +205,9 @@ applicable:
 - Stable identities and exact revisions resolve without ambiguity
 - Every template field is defined, typed, classified, and used consistently
 - Required clinical constraints and capability rules are present
+- Every Result Gate has exact approved result payloads, a satisfiable readiness
+  rule, known pinned-balance service references, and a valid hard requirement
+  or approved fallback route
 - Finite profiles are exhaustively checked and numeric/range boundaries are
   tested
 - No prohibited combination can be generated

@@ -15,6 +15,9 @@ All notable project-record changes are listed here. No implementation exists.
 - Waiting, Active, and Resolved patient-chart lifecycle with pending-result
   status, action-required exclamation points, a required approved final
   learning summary with optional viewing, and read-only reopening
+- Transparent, capability-based facility-time result delays with visible
+  pending status and ETA, slower outsourcing, faster functioning in-house
+  services, and deterministic prototype timing
 
 ### Documentation
 
@@ -23,6 +26,7 @@ All notable project-record changes are listed here. No implementation exists.
   sequences
 - Added ADR 0025 and resolved G-001B for bounded clinical-answer consequences
 - Added ADR 0026 and resolved G-001C for the patient-chart lifecycle
+- Added ADR 0027 and resolved G-001D for transparent result timing
 
 ### Implementation
 
