@@ -3,7 +3,7 @@
 Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. Dates remain flexible and
 each milestone ends in something the owner can inspect or play.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Delivery rules
 

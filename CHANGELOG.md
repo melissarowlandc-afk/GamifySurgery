@@ -10,12 +10,15 @@ All notable project-record changes are listed here. No implementation exists.
   with exactly one correct answer per Question Variant
 - One to three sequential scored questions per patient encounter, each testing
   a different primary concept, with dependency-aware feedback timing
+- Basic patient revenue with modest capped correctness benefits, small bounded
+  mistake consequences, anti-farming rules, and guaranteed tutorial funding
 
 ### Documentation
 
 - Added ADR 0023 and resolved G-001 for multiple-choice clinical assessment
 - Added ADR 0024 and resolved G-001A for variable-length patient question
   sequences
+- Added ADR 0025 and resolved G-001B for bounded clinical-answer consequences
 
 ### Implementation
 

@@ -1,9 +1,10 @@
 # Balance Model Proposal
 
-Status: The initial FSRS desired-retention value below is accepted. All other
-numerical balance values remain proposed and unapproved.
+Status: The initial FSRS settings and the structural clinical-answer reward
+relationship below are accepted. Other numerical balance values remain
+agent-managed prototype defaults until validated and published.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Principle
 
@@ -26,8 +27,26 @@ at 85%, 90%, and 95% before a larger concept set is published.
 The accepted remediation rules also require a different approved presentation,
 do not force an extra patient arrival, prefer an unrelated encounter in between
 when the content pool permits, and never award an additional mastery date for a
-same-date response. Exact progression rewards remain open but must make
-intentional incorrect-answer farming unprofitable.
+same-date response.
+
+## Accepted clinical-answer reward relationship
+
+- Basic operational revenue is settled per completed patient and provided
+  services, not multiplied by the number of scored questions.
+- Correct first submissions award educational XP and contribute to a modest,
+  capped patient-level quality or satisfaction bonus.
+- Incorrect first submissions forfeit the correctness bonus, never remove
+  earned XP, and contribute to a small capped patient-level consequence.
+- Multi-question patient bonuses and penalties are normalized and capped.
+- Same-date remediation cannot award another clinical XP or quality bonus for
+  that concept.
+- Worst-case tutorial funding still covers the first examination room and an
+  operating buffer.
+- No intentional incorrect-answer strategy may have higher expected reward than
+  correct play.
+
+Exact amounts and formulas are balance values selected through simulation and
+playtesting. The structural relationship is accepted in ADR 0025.
 
 ## Proposed balance areas
 
@@ -101,6 +120,11 @@ Accepted release flow:
 - A progression-critical event has a deterministic guarantee rather than only
   a favorable probability.
 - Tutorial funding remains possible after worst-case clinical answers.
+- Base patient revenue is not multiplied by scored-node count.
+- Multi-question clinical bonuses and penalties obey their patient-level caps.
+- Same-date remediation cannot repeat clinical XP or quality bonuses.
+- Deliberately incorrect play never has greater expected value than correct
+  play.
 - A required task always has an eligible worker or approved fallback.
 - Satisfaction can recover above the level-up threshold.
 - A salary or construction cost cannot silently change units.

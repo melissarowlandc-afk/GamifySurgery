@@ -2,14 +2,14 @@
 
 Status: Living record.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 | ID | Risk | Likelihood | Impact | Mitigation | Status |
 |---|---|---:|---:|---|---|
 | RK-001 | Missing detail is invented and later conflicts with owner intent | Medium | High | Keep open questions explicit; require approval gates | Active |
 | RK-002 | Incorrect clinical content reaches players | Medium | Critical | Melissa-only approval, source requirements, immutable releases, refreshable fail-closed withdrawal directives, exact targeting, and correction notices | Mitigated by accepted architecture; clinical review process pending |
 | RK-003 | Commercial question-bank material is copied too closely | Medium | High | Original drafting, provenance, source review, copyright checks | Active |
-| RK-004 | Wrong tutorial answers cause financial or progression softlock | High without controls | High | Guaranteed base rewards and worst-case simulation | Active |
+| RK-004 | Wrong tutorial answers cause financial or progression softlock | High without controls | High | Guaranteed first-room funding and operating buffer, basic operational revenue, capped consequences, and worst-case simulation | Structurally mitigated by ADR 0025; exact values require simulation |
 | RK-005 | Satisfaction above 90% becomes opaque or luck-gated | Medium | High | Visible components, recoverability, bounded random effects | Active |
 | RK-006 | Phone interface is technically complete but unpleasant | High | High | Phone-specific layouts, touch testing, staged panels, sound-off testing | Active |
 | RK-007 | Browser suspension contradicts facility-time expectations | High without controls | Medium-High | Accepted automatic hidden-page pause, no hidden catch-up, explicit Resume, visible pause/save status, and cross-browser lifecycle tests | Mitigated by accepted architecture; implementation testing pending |
@@ -28,7 +28,7 @@ Last updated: 2026-07-23
 | RK-020 | Framework/provider lock-in becomes expensive | Medium | High | Pure domain layer, standard PostgreSQL, release bundles, adapter boundaries | Active |
 | RK-021 | A player accidentally erases a campaign while trying to inspect restart options | Medium without controls | High | At least two deliberate actions, consequence-specific warning, recoverable read-only archive, atomic replacement, and separate permanent deletion | Mitigated by accepted design |
 | RK-022 | An FSRS dependency update silently changes existing due dates or makes saved card state incompatible | Medium without controls | High | Project-owned adapter and card types, exact campaign version pins, immutable review evidence, golden histories, and explicit tested migrations | Mitigated by accepted architecture |
-| RK-023 | Same-day remediation becomes repetitive, manufactures profitable patient volume, or rewards intentional wrong answers | Medium without controls | Medium-High | One 30-minute alternate-variant remediation per concept/date, no forced arrival, interleaving preference, and later reward simulation with anti-farming invariants | Mitigated by accepted design; reward values open |
+| RK-023 | Same-day remediation becomes repetitive, manufactures profitable patient volume, or rewards intentional wrong answers | Medium without controls | Medium-High | One 30-minute alternate-variant remediation per concept/date, no forced arrival, no repeated clinical XP or quality bonus, interleaving preference, and reward simulation with anti-farming invariants | Structurally mitigated by ADRs 0013 and 0025; exact values require simulation |
 | RK-024 | Travel, device settings, daylight-saving changes, or later preference changes alter which reviews count as different mastery dates | Medium without controls | High | Confirm one IANA account timezone, use trusted UTC instants, preserve applied offset and derived date, prohibit retroactive recalculation, and test transitions | Mitigated by accepted design |
 | RK-025 | One clinical answer falsely credits or penalizes several concepts without showing which knowledge succeeded or failed | High with multi-concept scoring | High | Exactly one primary concept per scored decision, non-scoring supporting tags, and separate observable answers for additional concepts | Mitigated by accepted architecture |
 | RK-026 | Additive clinical releases crowd out required concepts, change eligibility, or create new reward exploits in existing campaigns | Medium without controls | High | Directional compatibility reports, pinned balance and core set, selection and reward simulations, owner-controlled distribution, and supplemental-only new concepts | Mitigated by accepted architecture; validation details pending |

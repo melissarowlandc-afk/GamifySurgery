@@ -3,7 +3,7 @@
 Status: Accepted product rules plus clearly marked design questions. Technical
 implementation proceeds under ADR 0021.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Core experience
 
@@ -123,6 +123,27 @@ Concepts still recur through different meaningful patient presentations,
 question wording, perspectives, distractors, and explanations rather than
 repeating one memorized item. This accepted game-design rule is recorded in
 [ADR 0023](docs/adr/0023-multiple-choice-clinical-assessment.md).
+
+### Clinical-answer consequences
+
+- A completed patient earns basic operational revenue independently of the
+  number of scored questions.
+- Correct first submissions earn educational XP and contribute to a modest,
+  capped patient-level quality or satisfaction bonus.
+- Incorrect first submissions earn no correctness bonus, never remove earned
+  XP, and contribute to a small capped patient-level consequence.
+- Multi-question patients receive one normalized patient-level settlement
+  rather than a full reward or penalty multiplied by question count.
+- Same-date remediation cannot award another clinical XP or quality bonus for
+  that concept.
+- Tutorial resources guarantee the first examination room and operating buffer
+  even if every tutorial answer is wrong.
+- Deliberately answering incorrectly must never have greater expected value
+  than answering correctly.
+
+Exact amounts remain tunable balance values. This accepted relationship is
+recorded in
+[ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md).
 
 ### Campaign-scoped scheduling
 

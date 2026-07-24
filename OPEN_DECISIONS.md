@@ -3,7 +3,7 @@
 Status: Owner-facing choices and delegated delivery backlog. Technical impact
 severity no longer implies that Melissa must select the implementation.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Impact severity
 
@@ -82,4 +82,5 @@ starting research, or destroying owner data.
 | R-014 | Vertical-slice scope | Lead agent selects the smallest coherent scope after the applicable owner-level interaction choice and expands only after a playable demonstration | ADR 0021; D-039 |
 | G-001 | Clinical assessment interaction | Every scored clinical concept uses single-select multiple choice with exactly one correct answer; searchable or free-text controls do not score clinical knowledge | ADR 0023; D-040 |
 | G-001A | Scored questions per patient | One to three sequential scored multiple-choice nodes per patient, each testing a different primary concept; defer feedback when needed to protect later answers | ADR 0024; D-041 |
+| G-001B | Clinical-answer management consequences | Basic operational revenue plus modest capped correctness benefits; incorrect answers lose the bonus and receive a small capped consequence without tutorial softlock | ADR 0025; D-042 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

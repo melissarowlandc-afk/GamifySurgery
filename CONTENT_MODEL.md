@@ -4,7 +4,7 @@ Status: Accepted educational rules and accepted dual-purpose knowledge-base and
 scenario-authoring architecture under ADR 0020. Exact implementation details
 remain unimplemented. No clinical content has been authored or approved.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Goals
 

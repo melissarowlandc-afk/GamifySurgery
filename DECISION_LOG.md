@@ -2,7 +2,7 @@
 
 Status: Living record. "Proposed" is not approval.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 | ID | Date | Decision | Status | Reversibility | Notes |
 |---|---|---|---|---|---|
@@ -47,6 +47,7 @@ Last updated: 2026-07-23
 | D-039 | 2026-07-23 | Let the lead agent define and adjust the smallest coherent technical scope for each prototype milestone after the applicable owner-level interaction choice, expanding only after a playable demonstration | Accepted | RED delivery | Executive delivery decision under ADR 0021; resolves R-014 as a serial approval gate |
 | D-040 | 2026-07-24 | Test every scored clinical concept through a single-select multiple-choice Question Variant with exactly one clinically correct answer; searchable, free-text, matching, ordering, or multi-select controls do not score clinical knowledge | Accepted | RED game design | Owner selected Decision G-001 Option B; ADR 0023 |
 | D-041 | 2026-07-24 | Allow one to three sequential scored multiple-choice questions per patient encounter, each testing a different primary concept, with feedback deferred when necessary to protect later answers | Accepted | RED game design | Owner approved Decision G-001A Option A; ADR 0024 |
+| D-042 | 2026-07-24 | Give completed patients basic operational revenue, add modest capped XP and quality benefits for correct first submissions, and apply small capped consequences for incorrect submissions without negative XP or tutorial softlock | Accepted | YELLOW game design | Owner approved Decision G-001B Option A; ADR 0025 |
 
 ## Approval rule
 

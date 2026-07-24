@@ -6,7 +6,7 @@ relational and JSONB physical boundary is accepted in ADR 0019. The expanded
 clinical entity relationships are accepted conceptually in ADR 0020; exact
 tables, columns, indexes, and migrations remain unimplemented.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Principles
 
