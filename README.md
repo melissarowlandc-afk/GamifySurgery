@@ -70,7 +70,14 @@ stop the manual server. Neither method deploys or publishes anything.
 - Browser-local save/reload, compatible save migration, hidden-tab pause, and a
   two-step recoverable **Start over** flow that preserves the prior campaign's
   seed while creating fresh facility and learning state
-- Development-only fast-forward and progression/FSRS inspection controls
+- An open-by-default desktop **Prototype tools** panel with **Add $100**,
+  fast-forward, two-step **Restart game**, tutorial, and FSRS inspection
+  controls
+- A bounded desktop workspace: patients and goals scroll inside the left
+  sidebar, construction cards use the wide main area, and the document does
+  not grow downward as either list expands
+- Newest-first Resolved charts while Waiting and Active charts retain their
+  operational ordering
 - A development-only per-concept FSRS card inspector showing card state and due
   time
 - Centralized, validated prototype balance settings at
@@ -118,6 +125,7 @@ deploy the game.
 - [In-game phone-width Help](artifacts/screenshots/help-phone.png)
 - [Level 1 desktop walkthrough](artifacts/screenshots/level-1-desktop.png)
 - [Level 1 desktop facility](artifacts/screenshots/level-1-facility-desktop.png)
+- [Compact desktop chart](artifacts/screenshots/level-0-compact-desktop.png)
 - [Level 0 phone-width chart](artifacts/screenshots/level-0-phone.png)
 
 ## Deliberately deferred

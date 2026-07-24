@@ -54,6 +54,7 @@ export function App() {
       onHireStaff={session.hireStaff}
       onLevelUp={session.levelUp}
       onFastForward={session.fastForward}
+      onAddMoney={session.addMoney}
       onCreateCampaign={session.createCampaign}
       onSwitchCampaign={session.switchCampaign}
       onOpenTutorialPatient={session.openTutorialPatient}

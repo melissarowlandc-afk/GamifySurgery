@@ -127,6 +127,12 @@ describe("validated synthetic prototype data", () => {
     invalidBalance.clinicalSettlement.patientSatisfactionDeltaMaximum = 101;
     expect(() => validatePrototypeBalanceRelease(invalidBalance)).toThrow();
 
+    const invalidDevelopmentBalance = cloneFixture(PROTOTYPE_BALANCE_RELEASE);
+    invalidDevelopmentBalance.development.addMoneyAmount = 0;
+    expect(() =>
+      validatePrototypeBalanceRelease(invalidDevelopmentBalance),
+    ).toThrow();
+
     const incompatibleContext = cloneFixture(PROTOTYPE_DOMAIN_CONTEXT);
     incompatibleContext.clinicalRelease.cases[0]!.decisionNodes[0]!
       .resultGateAfter!.allowedServiceRouteIds = ["route.synthetic.missing"];
@@ -537,6 +543,41 @@ function completePlayableLevelZero(): GameState {
 }
 
 describe("campaign learning, progression, and Level 1 management", () => {
+  it("adds the configured development cash amount once and persists its audit trail", () => {
+    const initial = createInitialGameState();
+    const command = {
+      type: "DEV_ADD_MONEY",
+      operationId: "money.add.100",
+    } as const;
+
+    const state = gameReducer(initial, command);
+    expect(PROTOTYPE_BALANCE_RELEASE.development.addMoneyAmount).toBe(100);
+    expect(state.cash).toBe(initial.cash + 100);
+    expect(state.operationReceipts[command.operationId]).toMatchObject({
+      commandType: "DEV_ADD_MONEY",
+      status: "applied",
+      message: "Development tool added $100.",
+    });
+    expect(state.events.at(-1)).toMatchObject({
+      id: `event.development-money-added.${command.operationId}`,
+      type: "development_money_added",
+      facilityTick: initial.facilityTick,
+      encounterId: null,
+      message: "Development tool added $100.",
+    });
+
+    const idempotentRetry = gameReducer(state, command);
+    expect(idempotentRetry).toBe(state);
+    expect(idempotentRetry.cash).toBe(initial.cash + 100);
+    expect(
+      idempotentRetry.events.filter(
+        (event) => event.type === "development_money_added",
+      ),
+    ).toHaveLength(1);
+
+    expect(deserializeGameState(serializeGameState(state))).toEqual(state);
+  });
+
   it("uses normal tick processing during development fast-forward", () => {
     let state = openTutorial(createInitialGameState(), "fast.open");
     state = answerEncounter(

@@ -231,9 +231,59 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
   };
 }
 
+function getResolutionTick(
+  state: GameState,
+  encounter: EncounterState,
+): number {
+  if (encounter.settlementId !== null) {
+    const settlement = state.settlements.find(
+      (candidate) => candidate.id === encounter.settlementId,
+    );
+    if (settlement) {
+      return settlement.settledAtFacilityTick;
+    }
+  }
+
+  let resolutionEventTick: number | null = null;
+  for (const event of state.events) {
+    if (
+      event.encounterId === encounter.id &&
+      (event.type === "encounter_settled" ||
+        event.type === "left_before_seen") &&
+      (resolutionEventTick === null ||
+        event.facilityTick > resolutionEventTick)
+    ) {
+      resolutionEventTick = event.facilityTick;
+    }
+  }
+  if (resolutionEventTick !== null) {
+    return resolutionEventTick;
+  }
+
+  const latestAnswerTick = encounter.answers.reduce(
+    (latest, answer) => Math.max(latest, answer.answeredAtFacilityTick),
+    Number.NEGATIVE_INFINITY,
+  );
+  if (Number.isFinite(latestAnswerTick)) {
+    return latestAnswerTick;
+  }
+
+  if (encounter.waiting.departureDueTick !== null) {
+    return encounter.waiting.departureDueTick + 1;
+  }
+  return encounter.waiting.arrivedAtTick;
+}
+
 export function getPatientLists(state: GameState): PatientLists {
   const byArrivalThenId = (left: EncounterState, right: EncounterState) =>
     left.waiting.arrivedAtTick - right.waiting.arrivedAtTick ||
+    left.id.localeCompare(right.id);
+  const byNewestResolution = (
+    left: EncounterState,
+    right: EncounterState,
+  ) =>
+    getResolutionTick(state, right) - getResolutionTick(state, left) ||
+    right.waiting.arrivedAtTick - left.waiting.arrivedAtTick ||
     left.id.localeCompare(right.id);
   const encounters = Object.values(state.encounters).sort(byArrivalThenId);
 
@@ -251,6 +301,7 @@ export function getPatientLists(state: GameState): PatientLists {
       .map((encounter) => toPatientListItem(state, encounter)),
     resolved: encounters
       .filter((encounter) => encounter.lifecycle === "resolved")
+      .sort(byNewestResolution)
       .map((encounter) => toPatientListItem(state, encounter)),
   };
 }

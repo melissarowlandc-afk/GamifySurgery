@@ -4,12 +4,16 @@ interface RestartDialogProps {
   paused: boolean;
   onTogglePause: () => void;
   onRestart: () => void;
+  triggerLabel?: string;
+  triggerClassName?: string;
 }
 
 export function RestartDialog({
   paused,
   onTogglePause,
   onRestart,
+  triggerLabel = "Start over",
+  triggerClassName = "text-button",
 }: RestartDialogProps) {
   const [open, setOpen] = useState(false);
   const [resumeAfterCancel, setResumeAfterCancel] = useState(false);
@@ -34,11 +38,11 @@ export function RestartDialog({
   return (
     <>
       <button
-        className="text-button"
+        className={triggerClassName}
         type="button"
         onClick={openDialog}
       >
-        Start over
+        {triggerLabel}
       </button>
       {open ? (
         <div className="dialog-backdrop" role="presentation">

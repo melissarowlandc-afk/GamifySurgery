@@ -33,5 +33,12 @@ export default defineConfig({
         channel: "chrome",
       },
     },
+    {
+      name: "compact-desktop-chrome",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1024, height: 768 },
+      },
+    },
   ],
 });

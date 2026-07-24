@@ -51,8 +51,11 @@ p {
 }
 
 .game-shell {
+  display: flex;
+  height: 100vh;
   min-height: 100vh;
-  padding-bottom: 64px;
+  overflow: hidden;
+  flex-direction: column;
 }
 
 .resource-bar {
@@ -65,6 +68,7 @@ p {
   padding: var(--space-2);
   border-bottom: var(--border);
   background: var(--panel);
+  flex: 0 0 auto;
 }
 
 .resource-grid {
@@ -111,34 +115,36 @@ p {
 
 .game-grid {
   display: grid;
-  grid-template-columns: minmax(210px, 0.7fr) minmax(420px, 2.3fr) minmax(
-      220px,
-      0.75fr
-    );
+  width: 100%;
+  min-height: 0;
   gap: var(--space-3);
-  max-width: 1600px;
+  grid-template-columns: minmax(270px, 320px) minmax(520px, 1fr);
+  max-width: 1800px;
   margin: 0 auto;
   padding: var(--space-3);
+  overflow: hidden;
+  flex: 1 1 auto;
 }
 
 .left-column,
-.right-column,
 .center-column {
   display: flex;
   min-width: 0;
+  min-height: 0;
   gap: var(--space-3);
   flex-direction: column;
+  overflow: hidden;
 }
 
 .facility-frame {
   position: relative;
   display: flex;
-  height: clamp(520px, calc(100vh - 145px), 720px);
-  min-height: 520px;
+  min-height: 360px;
   overflow: hidden;
   border: var(--border);
   background: var(--shade-2);
   box-shadow: var(--pixel-shadow);
+  flex: 3 1 58%;
   flex-direction: column;
 }
 
@@ -192,12 +198,29 @@ p {
 }
 
 .patient-lists {
-  max-height: calc(100vh - 120px);
-  overflow: auto;
+  display: flex;
+  min-height: 220px;
+  overflow: hidden;
+  flex: 1.15 1 38%;
+  flex-direction: column;
 }
 
 .patient-folder {
+  display: flex;
+  min-height: 72px;
   border-bottom: 2px dashed var(--shade-3);
+  flex: 1 1 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.patient-folder.is-empty {
+  min-height: 0;
+  flex: 0 0 auto;
+}
+
+.patient-folder.is-resolved {
+  flex-grow: 1.35;
 }
 
 .patient-folder:last-child {
@@ -234,7 +257,10 @@ p {
 
 .patient-tab-stack {
   display: flex;
+  min-height: 0;
+  overflow-y: auto;
   flex-direction: column;
+  overscroll-behavior: contain;
 }
 
 .patient-tab {
@@ -517,12 +543,26 @@ p {
 
 .build-panel,
 .goals-panel {
+  min-height: 0;
   padding-bottom: var(--space-2);
+  overflow-y: auto;
+}
+
+.build-panel > .panel-heading,
+.goals-panel > .panel-heading {
+  position: sticky;
+  z-index: 3;
+  top: 0;
 }
 
 .build-panel {
-  max-height: 58vh;
-  overflow-y: auto;
+  flex: 2 1 42%;
+  overscroll-behavior: contain;
+}
+
+.goals-panel {
+  flex: 1 1 27%;
+  overscroll-behavior: contain;
 }
 
 .build-section {
@@ -545,6 +585,7 @@ p {
 
 .build-option-list {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0.45rem;
   padding: 0 var(--space-2);
 }
@@ -682,10 +723,21 @@ p {
 }
 
 .development-panel summary {
+  position: sticky;
+  z-index: 3;
+  top: 0;
   padding: var(--space-2);
   background: var(--shade-1);
   font-weight: 900;
   cursor: pointer;
+}
+
+.development-panel {
+  min-height: 0;
+  max-height: 35%;
+  overflow-y: auto;
+  flex: 0 1 auto;
+  overscroll-behavior: contain;
 }
 
 .development-copy {
@@ -717,6 +769,25 @@ p {
   margin: 0;
   overflow-wrap: anywhere;
   text-align: right;
+}
+
+.development-actions {
+  display: grid;
+  margin-bottom: var(--space-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.development-actions .button {
+  width: 100%;
+  min-width: 0;
+  padding-right: 0.45rem;
+  padding-left: 0.45rem;
+  font-size: 0.68rem;
+}
+
+.development-actions .button-danger {
+  grid-column: 1 / -1;
 }
 
 .prototype-toggle {
@@ -780,11 +851,7 @@ p {
 }
 
 .footer-bar {
-  position: fixed;
   z-index: 60;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
   min-height: 54px;
   padding: var(--space-2) var(--space-3);
@@ -792,6 +859,7 @@ p {
   color: var(--ink-soft);
   background: var(--panel);
   font-size: 0.78rem;
+  flex: 0 0 auto;
   justify-content: flex-end;
 }
 
@@ -1037,23 +1105,25 @@ p {
   }
 
   .game-grid {
-    grid-template-columns: minmax(190px, 0.75fr) minmax(420px, 2fr);
+    grid-template-columns: minmax(240px, 280px) minmax(430px, 1fr);
   }
 
-  .right-column {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: 1fr 1fr;
+  .build-option-list {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   }
 
-  .development-panel {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 760px) {
   body {
     font-size: 14px;
+  }
+
+  .game-shell {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 0;
+    overflow: visible;
   }
 
   .resource-bar {
@@ -1071,25 +1141,26 @@ p {
 
   .game-grid {
     display: flex;
+    min-height: auto;
     padding: var(--space-2);
     flex-direction: column;
+    overflow: visible;
   }
 
   .center-column {
     order: 1;
+    overflow: visible;
   }
 
   .left-column {
     order: 2;
-  }
-
-  .right-column {
-    display: flex;
-    order: 3;
+    overflow: visible;
   }
 
   .build-panel {
     max-height: none;
+    overflow: visible;
+    flex: none;
   }
 
   .facility-frame {
@@ -1113,7 +1184,27 @@ p {
   }
 
   .patient-lists {
+    display: block;
+    min-height: 0;
     max-height: none;
+    overflow: visible;
+    flex: none;
+  }
+
+  .patient-folder {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .patient-tab-stack {
+    max-height: 320px;
+  }
+
+  .development-panel,
+  .goals-panel {
+    max-height: none;
+    overflow: visible;
+    flex: none;
   }
 
   .footer-bar {

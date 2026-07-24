@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { ProgressionView } from "./types";
 
 interface GoalsPanelProps {
@@ -13,8 +14,14 @@ export function GoalsPanel({
   workloadStatus,
   onLevelUp,
 }: GoalsPanelProps) {
+  const panelRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    panelRef.current?.scrollTo({ top: 0 });
+  }, [view.facilityLevelLabel]);
+
   return (
-    <aside className="panel goals-panel">
+    <aside className="panel goals-panel" ref={panelRef}>
       <div className="panel-heading">
         <span>{view.facilityLevelLabel} goals</span>
         <small>

@@ -88,6 +88,9 @@ export function FacilityCanvas({
     });
     gameRef.current = game;
 
+    let resizeFrame: number | null = null;
+    let observedWidth = width;
+    let observedHeight = height;
     const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
       if (!entry || gameRef.current !== game) {
@@ -97,16 +100,37 @@ export function FacilityCanvas({
       const nextWidth = Math.max(1, Math.floor(entry.contentRect.width));
       const nextHeight = Math.max(1, Math.floor(entry.contentRect.height));
       if (
-        game.scale.width !== nextWidth ||
-        game.scale.height !== nextHeight
+        observedWidth === nextWidth &&
+        observedHeight === nextHeight
       ) {
-        game.scale.resize(nextWidth, nextHeight);
+        return;
       }
+      observedWidth = nextWidth;
+      observedHeight = nextHeight;
+      if (resizeFrame !== null) {
+        window.cancelAnimationFrame(resizeFrame);
+      }
+      // Phaser changes its canvas dimensions during resize. Deferring that
+      // write prevents it from occurring inside ResizeObserver delivery and
+      // feeding a same-frame resize loop back into the host element.
+      resizeFrame = window.requestAnimationFrame(() => {
+        resizeFrame = null;
+        if (
+          gameRef.current === game &&
+          (game.scale.width !== observedWidth ||
+            game.scale.height !== observedHeight)
+        ) {
+          game.scale.resize(observedWidth, observedHeight);
+        }
+      });
     });
     resizeObserver.observe(host);
 
     return () => {
       resizeObserver.disconnect();
+      if (resizeFrame !== null) {
+        window.cancelAnimationFrame(resizeFrame);
+      }
       if (gameRef.current === game) {
         gameRef.current = null;
       }

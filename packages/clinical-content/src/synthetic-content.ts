@@ -45,7 +45,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       id: "concept.prototype.abscess.primary-treatment",
       displayName: "Uncomplicated abscess management",
       learningObjective:
-        "Identify drainage as the primary procedural treatment represented by this uncomplicated prototype vignette.",
+        "Identify drainage as the primary procedural treatment for an uncomplicated cutaneous abscess.",
       earliestFacilityStage: 1,
       conceptType: "management",
     },
@@ -61,7 +61,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       id: "concept.prototype.cholelithiasis.management",
       displayName: "Symptomatic cholelithiasis management",
       learningObjective:
-        "Recognize surgical referral as the represented next step for uncomplicated symptomatic gallstones.",
+        "Recognize surgical referral as the next step for uncomplicated symptomatic gallstones.",
       earliestFacilityStage: 1,
       conceptType: "management",
     },
@@ -86,7 +86,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.synthetic.signal.v1",
           primaryConceptId: "concept.synthetic.signal",
           stem:
-            "For this synthetic tutorial only, which signal is printed on the patient's card?",
+            "Which signal is printed on the patient's card?",
           answerChoices: [
             {
               id: "choice.signal.alpha",
@@ -111,9 +111,9 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           resultGateAfter: {
             id: "gate.synthetic.analysis",
             resultTypeId: "service.synthetic.analysis",
-            pendingLabel: "Synthetic analysis pending",
+            pendingLabel: "Analysis pending",
             resultNarrative:
-              "SYNTHETIC RESULT: The returned marker reads ACTION CIRCLE.",
+              "The returned marker reads ACTION CIRCLE.",
             readiness: "all",
             allowedServiceRouteIds: [
               "route.synthetic.in_house",
@@ -127,7 +127,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.synthetic.action.v1",
           primaryConceptId: "concept.synthetic.action",
           stem:
-            "The synthetic result reads ACTION CIRCLE. Which placeholder action completes this test case?",
+            "The result reads ACTION CIRCLE. Which matching action completes the chart?",
           answerChoices: [
             {
               id: "choice.action.circle",
@@ -255,7 +255,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       patientPresentationVariantId: "presentation.prototype.abscess-a",
       patientDisplayName: "Avery Pixel",
       presentation:
-        "An otherwise healthy, stable adult has one superficial, accessible, fluctuant and drainable skin abscess. This vignette explicitly excludes systemic illness, major host-risk factors, a special anatomic location, and concern for deeper infection.",
+        "An otherwise healthy, stable adult has one superficial, accessible, fluctuant and drainable skin abscess. There is no systemic illness, major host-risk factor, special anatomic location, or concern for deeper infection.",
       tutorialEligible: false,
       routineEligible: true,
       earliestFacilityStage: 1,
@@ -271,7 +271,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.prototype.abscess.primary-treatment.v1",
           primaryConceptId: "concept.prototype.abscess.primary-treatment",
           stem:
-            "Which management choice matches the primary treatment represented by this uncomplicated abscess vignette?",
+            "What is the primary treatment for this uncomplicated cutaneous abscess?",
           answerChoices: [
             {
               id: "choice.abscess.drainage",
@@ -291,7 +291,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "The cited IDSA guideline identifies incision and drainage as recommended treatment for cutaneous abscesses. This simplified scenario excludes important modifiers.",
+            "The cited IDSA guideline recommends incision and drainage for cutaneous abscesses. The presentation excludes features that would alter this narrow decision.",
           sourceLabels: [
             "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
             PROTOTYPE_REVIEW_NOTICE,
@@ -310,7 +310,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "This deliberately uncomplicated scenario represents drainage as primary treatment. It omits modifier-dependent decisions.",
+        "Incision and drainage is the primary treatment for this superficial, accessible cutaneous abscess. Systemic illness, host risk, special locations, and deeper infection require additional decisions.",
     },
     {
       id: "case.prototype.postoperative-symptoms",
@@ -337,7 +337,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           primaryConceptId:
             "concept.prototype.postoperative-symptoms.escalation",
           stem:
-            "What is the safest disposition represented by this limited outpatient clinic prototype?",
+            "What is the safest next step from this outpatient clinic?",
           answerChoices: [
             {
               id: "choice.ileus.hospital-evaluation",
@@ -358,7 +358,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "This scenario escalates the concerning postoperative symptom cluster because the small clinic cannot evaluate or support it. It deliberately avoids declaring a diagnosis.",
+            "Progressive postoperative vomiting, distension, and inability to tolerate oral intake exceed this clinic's evaluation and support capabilities and need prompt hospital-capable evaluation.",
           sourceLabels: [
             "https://www.ncbi.nlm.nih.gov/books/NBK560780/",
             PROTOTYPE_REVIEW_NOTICE,
@@ -390,7 +390,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "A postoperative patient with vomiting and progressive distension beyond the clinic's capabilities should be escalated promptly to the surgical team and a hospital-capable setting; this vignette does not establish a final diagnosis.",
+        "Progressive postoperative vomiting and distension beyond the clinic's capabilities require prompt surgical-team contact and hospital-capable evaluation.",
     },
     {
       id: "case.prototype.symptomatic-cholelithiasis",
@@ -398,7 +398,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       patientPresentationVariantId: "presentation.prototype.cholelithiasis-a",
       patientDisplayName: "Riley Mono",
       presentation:
-        "A stable adult has recurrent episodic postprandial right-upper-quadrant pain and previously documented gallstones. This simplified scenario explicitly excludes fever, jaundice, persistent pain, or other acute-complication features.",
+        "A stable adult has recurrent episodic postprandial right-upper-quadrant pain and previously documented gallstones. They have no fever, jaundice, persistent pain, or other acute-complication features.",
       tutorialEligible: false,
       routineEligible: true,
       earliestFacilityStage: 1,
@@ -415,7 +415,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.prototype.cholelithiasis.management.v1",
           primaryConceptId: "concept.prototype.cholelithiasis.management",
           stem:
-            "Which next step is represented for this uncomplicated symptomatic gallstone scenario?",
+            "What is the appropriate next step for these uncomplicated symptomatic gallstones?",
           answerChoices: [
             {
               id: "choice.chole.surgical-referral",
@@ -455,7 +455,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "This uncomplicated symptomatic gallstone scenario routes the patient to surgical evaluation. It excludes acute complications.",
+        "Uncomplicated symptomatic gallstones warrant surgical evaluation for cholecystectomy; acute-complication features would require a different pathway.",
     },
   ],
 });

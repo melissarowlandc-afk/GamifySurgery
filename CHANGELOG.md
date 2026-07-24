@@ -84,12 +84,25 @@ All notable implementation and project-record changes are listed here.
   new seed
 - Added development fast-forward and campaign, review-count, and per-concept
   FSRS card/due-time inspection controls for repeated balance testing
+- Added a reducer-owned, centrally configured **Add $100** development command,
+  an open-by-default left-side Prototype tools panel, and a two-step
+  **Restart game** control inside that panel
+- Reworked the desktop shell into a bounded full-window workspace with
+  internally scrolling sidebar and construction panels, width-aware room and
+  staff cards, sticky panel headings, and compact-desktop coverage
+- Ordered Resolved charts by most recent resolution while preserving the
+  existing Waiting and Active ordering
+- Removed repeated caveat language from player-visible case presentations,
+  questions, explanations, and summaries while retaining one striped chart
+  warning plus all source and clinical-review metadata
+- Deferred further phone-specific interface refinement until after the current
+  desktop walkthrough
 - Bounded transient operation receipts and event notices to the latest 500
   records so long local sessions do not grow those presentation logs without
   limit
-- Added desktop and phone-width Playwright walkthroughs and expanded the
-  deterministic Vitest suite to 14 domain, validation, save, progression, and
-  scheduler tests
+- Added desktop, compact-desktop, and phone-width Playwright walkthroughs and
+  expanded the deterministic Vitest suite to 17 domain, validation, save,
+  ordering, progression, and scheduler tests
 
 ### Prototype boundaries
 
@@ -110,12 +123,13 @@ All notable implementation and project-record changes are listed here.
 
 ### Verification
 
-- `npm test` passed 14 of 14 deterministic domain tests
+- `npm test` passed 17 of 17 deterministic domain tests
 - `npm run typecheck` passed for the player, balance, clinical-content, and
   game-domain workspaces
 - `npm run build` produced the local Vite build successfully
 - `npm run test:e2e` passed the desktop Level 0/1/save/campaign walkthrough and
-  desktop and phone-width layout checks: 3 passed, 1 intentionally skipped
+  large-desktop, compact-desktop, and retained phone-width regression checks:
+  7 passed, 5 intentionally skipped
 - Vite reported a non-blocking large-chunk warning for the Phaser-containing
   JavaScript bundle; code splitting remains a pre-deployment optimization
 

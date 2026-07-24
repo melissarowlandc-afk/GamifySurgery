@@ -74,6 +74,10 @@ Implemented:
 - Centralized validated clinical and balance fixtures
 - Development fast-forward plus visible campaign, review-count, and per-concept
   FSRS card/due-time inspection
+- Open-by-default left-side prototype controls for deterministic cash,
+  fast-forward, tutorial preference, FSRS inspection, and recoverable restart
+- A full-window desktop layout with internally scrolling patient/goals/build
+  panels, width-aware construction cards, and newest-first Resolved charts
 - One-click Windows dependency/start/browser launcher, automatic first-run
   chart coaching, persistent tutorial controls, and in-game beginner Help
 - Automated domain and desktop/phone-width browser coverage
@@ -84,7 +88,8 @@ Current demonstration gate:
    explanation.
 2. Melissa and her husband can understand the patient folders, facility clock,
    goals, construction, staffing, and development controls.
-3. The loop remains usable at desktop and phone widths with sound off.
+3. The loop remains usable at large and compact desktop browser sizes with
+   sound off.
 4. A saved campaign survives reload, and a newly created campaign visibly has
    no inherited FSRS history.
 5. The team records the first pacing, economy, queue, satisfaction, and fun
@@ -101,12 +106,13 @@ deferred until the approved content pool is large enough to exercise it.
 
 Latest local verification on 2026-07-24:
 
-- `npm test`: 14 of 14 deterministic domain tests passed
+- `npm test`: 17 of 17 deterministic domain tests passed
 - `npm run typecheck`: all four TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning
-- `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough plus desktop
-  and phone-width layout checks passed (3 passed, 1 intentionally skipped)
+- `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough plus large
+  desktop, compact desktop, and retained phone-width regression checks passed
+  (7 passed, 5 intentionally skipped)
 
 ## Milestone 3: Iterate and prepare approved content
 
@@ -114,6 +120,8 @@ Dependency: complete the local walkthrough first so content work is not built
 around a confusing or unfun loop.
 
 - Fix high-priority walkthrough defects and tune centralized temporary values.
+- Refine the phone-specific layout after the desktop walkthrough; phone
+  deployment is not part of the current local iteration.
 - Pilot the content workflow with one chapter and roughly 5-10 Clinical Topics.
 - Import structured drafts while preserving source references and conflicts.
 - Validate concepts, meaningful patient variants, question variants, and

@@ -50,6 +50,7 @@ interface AppShellProps {
   onHireStaff: (staffRoleDefinitionId: string) => void;
   onLevelUp: () => void;
   onFastForward: () => void;
+  onAddMoney: () => void;
   onCreateCampaign: () => void;
   onSwitchCampaign: (campaignId: string) => void;
   onOpenTutorialPatient: () => void;
@@ -91,6 +92,7 @@ export function AppShell({
   onHireStaff,
   onLevelUp,
   onFastForward,
+  onAddMoney,
   onCreateCampaign,
   onSwitchCampaign,
   onOpenTutorialPatient,
@@ -121,6 +123,22 @@ export function AppShell({
             showTutorialCallout={
               tutorialCoachMode === "callout" && !helpOpen
             }
+          />
+          <DevelopmentPanel
+            view={development}
+            paused={paused}
+            tutorialsEnabled={tutorialsEnabled}
+            onFastForward={onFastForward}
+            onAddMoney={onAddMoney}
+            onTogglePause={onTogglePause}
+            onRestart={onRestart}
+            onTutorialsEnabledChange={onTutorialsEnabledChange}
+          />
+          <GoalsPanel
+            view={progression}
+            paused={paused}
+            workloadStatus={workloadStatus}
+            onLevelUp={onLevelUp}
           />
         </div>
 
@@ -153,27 +171,12 @@ export function AppShell({
               onFileChart={onFileChart}
             />
           </section>
-        </div>
-
-        <div className="right-column">
-          <GoalsPanel
-            view={progression}
-            paused={paused}
-            workloadStatus={workloadStatus}
-            onLevelUp={onLevelUp}
-          />
           <BuildPanel
             roomOptions={roomOptions}
             staffOptions={staffOptions}
             onSelectRoom={onBeginPlacement}
             onCancelPlacement={onCancelPlacement}
             onHireStaff={onHireStaff}
-          />
-          <DevelopmentPanel
-            view={development}
-            tutorialsEnabled={tutorialsEnabled}
-            onFastForward={onFastForward}
-            onTutorialsEnabledChange={onTutorialsEnabledChange}
           />
         </div>
       </main>

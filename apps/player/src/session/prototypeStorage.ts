@@ -303,7 +303,7 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
     return {
       profile,
       notice: persisted
-        ? "New synthetic clinic started."
+        ? "New clinic started."
         : "New clinic started, but local saving is unavailable.",
     };
   } catch {
@@ -311,7 +311,7 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
     return {
       profile,
       notice:
-        "The local campaign data was incompatible, so a new synthetic clinic was started. Existing browser data was left untouched.",
+        "The local campaign data was incompatible, so a new clinic was started. Existing browser data was left untouched.",
     };
   }
 }

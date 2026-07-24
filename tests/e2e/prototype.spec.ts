@@ -113,7 +113,7 @@ test("plays Level 0, enters Level 1, saves, and isolates campaign FSRS", async (
   ).toHaveCount(0);
   await page.getByRole("button", { name: "SIGNAL ALPHA" }).click();
   await expect(
-    page.locator(".chart-panel").getByText(/Synthetic analysis pending/),
+    page.locator(".chart-panel").getByText(/Analysis pending/),
   ).toBeVisible();
 
   await fastForward(page);
@@ -178,7 +178,7 @@ test("plays Level 0, enters Level 1, saves, and isolates campaign FSRS", async (
   ).toBeVisible();
 
   const tools = page.locator("details.development-panel");
-  await tools.locator(":scope > summary").click();
+  await expect(tools).toHaveAttribute("open", "");
   await expect(tools.getByText(/0 reviewed \/ 6 available/)).toBeVisible();
   await expect(tools.getByText(/0 scored/)).toBeVisible();
   await tools.getByText("Inspect FSRS cards").click();
@@ -196,14 +196,14 @@ test("plays Level 0, enters Level 1, saves, and isolates campaign FSRS", async (
     await resumeButton.click();
   }
   await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
-  await page.getByRole("button", { name: "Start over" }).click();
+  await tools.getByRole("button", { name: "Restart game" }).click();
   await expect(
     page.getByRole("heading", { name: /Restart this local prototype/ }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Resume" })).toBeVisible();
   await page.getByRole("button", { name: "Keep playing" }).click();
   await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
-  await page.getByRole("button", { name: "Start over" }).click();
+  await tools.getByRole("button", { name: "Restart game" }).click();
   await expect(page.getByRole("button", { name: "Resume" })).toBeVisible();
   await page.getByRole("button", { name: "Confirm fresh start" }).click();
   await expect(page.getByText("Level 0", { exact: true }).first()).toBeVisible();
@@ -262,7 +262,7 @@ test("keeps the chart and facility usable at the configured viewport", async ({
   const chartSections = (await chart.locator(".chart-section").allTextContents())
     .join(" ");
   expect(chartSections).not.toMatch(
-    /\bunapproved\b|\bdraft\b|not medical advice|requires Melissa(?:'s)? review/i,
+    /\bunapproved\b|\bdraft\b|not medical advice|requires Melissa(?:'s)? review|\bvignette\b|\btentative\b|\bsimplified scenario\b|does not establish a (?:final )?diagnosis/i,
   );
   const [facilityBox, chartBox] = await Promise.all([
     facility.boundingBox(),
@@ -280,6 +280,22 @@ test("keeps the chart and facility usable at the configured viewport", async ({
   );
   expect(noHorizontalOverflow).toBe(true);
 
+  if (testInfo.project.name !== "phone-chrome") {
+    const noPageOverflow = await page.evaluate(
+      () => document.documentElement.scrollHeight <= window.innerHeight + 1,
+    );
+    expect(noPageOverflow).toBe(true);
+    await expect(
+      page.locator("details.development-panel"),
+    ).toHaveAttribute("open", "");
+    if (testInfo.project.name === "compact-desktop-chrome") {
+      await page.screenshot({
+        path: `${SCREENSHOT_DIRECTORY}/level-0-compact-desktop.png`,
+        fullPage: false,
+      });
+    }
+  }
+
   if (testInfo.project.name === "phone-chrome") {
     await page.screenshot({
       path: `${SCREENSHOT_DIRECTORY}/level-0-phone.png`,
@@ -287,7 +303,7 @@ test("keeps the chart and facility usable at the configured viewport", async ({
     });
     await page.getByRole("button", { name: "SIGNAL ALPHA" }).click();
     await expect(
-      chart.getByText(/Synthetic analysis pending/),
+      chart.getByText(/Analysis pending/),
     ).toBeVisible();
   }
 });
@@ -323,7 +339,7 @@ test("persists the prototype tutorial preference", async ({
   ).toBeVisible();
 
   const tools = page.locator("details.development-panel");
-  await tools.locator(":scope > summary").click();
+  await expect(tools).toHaveAttribute("open", "");
   const tutorialToggle = tools.getByRole("checkbox", {
     name: /Tutorial guidance/,
   });
@@ -341,6 +357,41 @@ test("persists the prototype tutorial preference", async ({
     page.locator(".patient-tab.is-tutorial-target"),
   ).toHaveCount(0);
 
-  await tools.locator(":scope > summary").click();
+  await expect(tools).toHaveAttribute("open", "");
   await expect(tutorialToggle).not.toBeChecked();
+});
+
+test("prototype tools add money and remain visible on desktop", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name === "phone-chrome",
+    "Desktop prototype tools are the current usability target.",
+  );
+
+  await page.goto("/");
+  const tools = page.locator("details.development-panel");
+  await expect(tools).toHaveAttribute("open", "");
+  await expect(
+    tools.getByRole("button", { name: "Restart game" }),
+  ).toBeVisible();
+  await expect(
+    tools.getByRole("button", { name: /Fast-forward/ }),
+  ).toBeVisible();
+
+  const moneyValue = page
+    .locator(".resource-chip")
+    .filter({ hasText: "Money" })
+    .locator("strong");
+  const before = Number(
+    (await moneyValue.innerText()).replace(/[$,]/g, ""),
+  );
+  await tools.getByRole("button", { name: "Add $100" }).click();
+  await expect(moneyValue).toHaveText(
+    `$${(before + 100).toLocaleString()}`,
+  );
+  await page.reload();
+  await expect(moneyValue).toHaveText(
+    `$${(before + 100).toLocaleString()}`,
+  );
 });

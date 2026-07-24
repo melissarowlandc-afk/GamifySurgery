@@ -471,6 +471,7 @@ export function createPrototypePlayerView(
       } available`,
       reviewCountLabel: `${state.reviewIntents.length} scored`,
       fastForwardLabel: `Fast-forward ${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.fastForwardTickCount} hours`,
+      addMoneyLabel: `Add $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount}`,
       learningCards:
         PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.map((concept) => ({
           conceptId: concept.id,

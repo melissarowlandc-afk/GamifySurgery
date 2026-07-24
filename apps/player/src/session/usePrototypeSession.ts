@@ -56,6 +56,7 @@ export interface PrototypeSession {
   hireStaff: (staffRoleDefinitionId: string) => void;
   levelUp: () => void;
   fastForward: () => void;
+  addMoney: () => void;
   createCampaign: () => void;
   switchCampaign: (campaignId: string) => void;
   openTutorialPatient: () => void;
@@ -376,6 +377,17 @@ export function usePrototypeSession(): PrototypeSession {
     );
   }, [execute]);
 
+  const addMoney = useCallback(() => {
+    execute(
+      {
+        type: "DEV_ADD_MONEY",
+      },
+      {
+        announcementOverride: `Added $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount} for prototype testing.`,
+      },
+    );
+  }, [execute]);
+
   const togglePause = useCallback(() => {
     const current = stateRef.current;
     execute({
@@ -604,6 +616,7 @@ export function usePrototypeSession(): PrototypeSession {
     hireStaff,
     levelUp,
     fastForward,
+    addMoney,
     createCampaign,
     switchCampaign,
     openTutorialPatient,

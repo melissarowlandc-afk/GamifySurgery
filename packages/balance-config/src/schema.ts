@@ -143,6 +143,7 @@ export const prototypeBalanceReleaseSchema = z
     development: z
       .object({
         fastForwardTickCount: z.number().int().positive(),
+        addMoneyAmount: z.number().int().positive(),
       })
       .strict(),
     learning: z

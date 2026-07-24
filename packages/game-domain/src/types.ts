@@ -176,7 +176,8 @@ export interface DomainEvent {
     | "staff_hired"
     | "facility_level_advanced"
     | "operating_expense"
-    | "patient_arrived";
+    | "patient_arrived"
+    | "development_money_added";
   facilityTick: number;
   encounterId: string | null;
   message: string;
@@ -264,6 +265,9 @@ export type GameCommand =
   | (CommandBase & {
       type: "DEV_FAST_FORWARD";
       tickCount?: number;
+    })
+  | (CommandBase & {
+      type: "DEV_ADD_MONEY";
     })
   | (CommandBase & {
       type: "ADMIT_PATIENT";

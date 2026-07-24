@@ -1220,6 +1220,24 @@ export function gameReducer(
         `Development fast-forward advanced ${requested} ticks.`,
       );
     }
+    case "DEV_ADD_MONEY": {
+      const amount = context.balanceRelease.development.addMoneyAmount;
+      const next = clonePlain(state);
+      next.cash += amount;
+      appendEvent(next, {
+        id: `event.development-money-added.${command.operationId}`,
+        type: "development_money_added",
+        facilityTick: next.facilityTick,
+        encounterId: null,
+        message: `Development tool added $${amount}.`,
+      });
+      return recordReceipt(
+        next,
+        command,
+        "applied",
+        `Development tool added $${amount}.`,
+      );
+    }
     case "ADMIT_PATIENT":
       return reduceAdmitPatient(state, command, context);
   }

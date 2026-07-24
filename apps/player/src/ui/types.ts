@@ -94,6 +94,7 @@ export interface DevelopmentView {
   learningHistoryLabel: string;
   reviewCountLabel: string;
   fastForwardLabel: string;
+  addMoneyLabel: string;
   learningCards: Array<{
     conceptId: string;
     conceptLabel: string;

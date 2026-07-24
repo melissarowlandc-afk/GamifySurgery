@@ -38,8 +38,13 @@ needed. Campaigns remain only in that browser.
 5. She reloads the page and confirms that the same campaign returns.
 6. She creates another campaign and verifies that its facility and FSRS
    histories are fresh, then reopens the first campaign.
-7. She repeats the most important interactions at a phone-width window.
+7. She resizes the desktop browser between a large window and approximately
+   1024 by 768 and confirms that panels remain legible and bounded.
 8. Her husband attempts the opening and Level 0 flow with minimal coaching.
+
+The open-by-default **Prototype tools** panel may be used to add $100,
+fast-forward ten hours, or start a two-step fresh restart. These controls are
+for shortening repeated balance passes, not for judging the normal economy.
 
 Use optional written notes or an owner-led conversation. Do not enter real
 patient information or copy commercial question-bank material into feedback.
@@ -86,14 +91,14 @@ The prototype sends no gameplay telemetry.
 - Does creating a fresh campaign visibly start at zero reviews while preserving
   the older campaign?
 
-### Desktop and phone
+### Desktop browser sizes
 
-- Are ordinary text, buttons, tabs, and room-placement targets comfortable at
-  both widths?
+- Are ordinary text, buttons, tabs, and room-placement targets comfortable in
+  both a large and compact desktop window?
 - Is any information hidden, clipped, or dependent on hover?
+- Do long Patient, Goals, and Clinic Development lists remain inside their
+  panels instead of extending the whole page?
 - Can the whole loop be used with sound off?
-- On phone width, does the facility retain enough context when the chart is
-  open?
 
 ### Fun and next investment
 
@@ -107,6 +112,7 @@ The prototype sends no gameplay telemetry.
 
 - Clinical accuracy or educational efficacy: fixture content is unapproved
 - Email registration, password recovery, cloud save, or cross-device behavior
+- Phone-layout refinement or phone deployment
 - Outside-user onboarding, monitoring, backup restoration, or deployment
 - Long-term FSRS workload, mastery, or 21-day scheduling
 - Comprehensive content variety

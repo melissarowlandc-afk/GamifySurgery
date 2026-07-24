@@ -188,6 +188,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   },
   development: {
     fastForwardTickCount: 10,
+    addMoneyAmount: 100,
   },
   learning: {
     parameterSetId: "learning.prototype.fsrs6.v1",

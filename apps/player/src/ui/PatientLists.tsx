@@ -30,7 +30,12 @@ export function PatientLists({
           (patient) => patient.folder === folder.id,
         );
         return (
-          <section className="patient-folder" key={folder.id}>
+          <section
+            className={`patient-folder is-${folder.id}${
+              folderPatients.length === 0 ? " is-empty" : ""
+            }`}
+            key={folder.id}
+          >
             <h2>
               {folder.label}
               <span aria-label={`${folderPatients.length} charts`}>
