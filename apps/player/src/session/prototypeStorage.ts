@@ -25,6 +25,8 @@ export interface LocalPrototypeProfile {
   schemaVersion: typeof PROFILE_SCHEMA_VERSION;
   activeCampaignId: string;
   nextCampaignNumber: number;
+  tutorialsEnabled: boolean;
+  tutorialIntroDismissedCampaignIds: string[];
   campaigns: LocalCampaignRecord[];
 }
 
@@ -46,6 +48,8 @@ interface PersistedPrototypeProfile {
   schemaVersion: typeof PROFILE_SCHEMA_VERSION;
   activeCampaignId: string;
   nextCampaignNumber: number;
+  tutorialsEnabled: boolean;
+  tutorialIntroDismissedCampaignIds: string[];
   campaigns: PersistedCampaignRecord[];
 }
 
@@ -104,6 +108,8 @@ function createFreshProfile(now = Date.now()): LocalPrototypeProfile {
     schemaVersion: PROFILE_SCHEMA_VERSION,
     activeCampaignId: campaign.campaignId,
     nextCampaignNumber: 2,
+    tutorialsEnabled: true,
+    tutorialIntroDismissedCampaignIds: [],
     campaigns: [campaign],
   };
 }
@@ -189,6 +195,22 @@ function parsePersistedProfile(serialized: string): {
       schemaVersion: PROFILE_SCHEMA_VERSION,
       activeCampaignId: activeCampaign.campaignId,
       nextCampaignNumber: candidate.nextCampaignNumber as number,
+      tutorialsEnabled:
+        typeof candidate.tutorialsEnabled === "boolean"
+          ? candidate.tutorialsEnabled
+          : true,
+      tutorialIntroDismissedCampaignIds: Array.isArray(
+        candidate.tutorialIntroDismissedCampaignIds,
+      )
+        ? Array.from(
+            new Set(
+              candidate.tutorialIntroDismissedCampaignIds.filter(
+                (campaignId): campaignId is string =>
+                  typeof campaignId === "string",
+              ),
+            ),
+          )
+        : [],
       campaigns: campaigns.map((campaign) => ({
         ...campaign,
         status:
@@ -218,6 +240,8 @@ function migrateLegacySave(serializedState: string): LocalPrototypeProfile {
     schemaVersion: PROFILE_SCHEMA_VERSION,
     activeCampaignId: campaign.campaignId,
     nextCampaignNumber: 2,
+    tutorialsEnabled: true,
+    tutorialIntroDismissedCampaignIds: [],
     campaigns: [campaign],
   };
 }
@@ -303,6 +327,9 @@ export function savePrototypeProfile(
     schemaVersion: PROFILE_SCHEMA_VERSION,
     activeCampaignId: profile.activeCampaignId,
     nextCampaignNumber: profile.nextCampaignNumber,
+    tutorialsEnabled: profile.tutorialsEnabled,
+    tutorialIntroDismissedCampaignIds:
+      profile.tutorialIntroDismissedCampaignIds,
     campaigns: profile.campaigns.map((campaign) => ({
       campaignId: campaign.campaignId,
       name: campaign.name,

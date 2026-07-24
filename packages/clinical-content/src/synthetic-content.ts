@@ -35,7 +35,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     },
     {
       id: "concept.prototype.laceration.tetanus",
-      displayName: "Draft laceration tetanus prevention",
+      displayName: "Laceration tetanus prevention",
       learningObjective:
         "Recognize that wound care and tetanus vaccination-history assessment are separate required considerations.",
       earliestFacilityStage: 0,
@@ -43,7 +43,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     },
     {
       id: "concept.prototype.abscess.primary-treatment",
-      displayName: "Draft uncomplicated abscess management",
+      displayName: "Uncomplicated abscess management",
       learningObjective:
         "Identify drainage as the primary procedural treatment represented by this uncomplicated prototype vignette.",
       earliestFacilityStage: 1,
@@ -51,7 +51,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     },
     {
       id: "concept.prototype.postoperative-symptoms.escalation",
-      displayName: "Draft postoperative vomiting/distension escalation",
+      displayName: "Postoperative vomiting/distension escalation",
       learningObjective:
         "Identify that a postoperative patient with vomiting and progressive distension needs prompt surgical-team and hospital-capable evaluation rather than routine clinic treatment.",
       earliestFacilityStage: 1,
@@ -59,7 +59,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     },
     {
       id: "concept.prototype.cholelithiasis.management",
-      displayName: "Draft symptomatic cholelithiasis management",
+      displayName: "Symptomatic cholelithiasis management",
       learningObjective:
         "Recognize surgical referral as the represented next step for uncomplicated symptomatic gallstones.",
       earliestFacilityStage: 1,
@@ -73,7 +73,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       patientPresentationVariantId: "presentation.synthetic.tutorial-a",
       patientDisplayName: "Pixel Patient",
       presentation:
-        "SYNTHETIC TEST CASE: Pixel Patient arrives carrying a card marked SIGNAL ALPHA. No real diagnosis or medical advice is represented.",
+        "Pixel Patient arrives carrying a card marked SIGNAL ALPHA.",
       tutorialEligible: true,
       routineEligible: false,
       earliestFacilityStage: 0,
@@ -106,7 +106,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "The synthetic presentation explicitly named SIGNAL ALPHA. This explanation contains no clinical claim.",
+            "The presentation explicitly named SIGNAL ALPHA.",
           sourceLabels: ["Synthetic prototype fixture; no clinical source"],
           resultGateAfter: {
             id: "gate.synthetic.analysis",
@@ -147,7 +147,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "The synthetic result explicitly named ACTION CIRCLE. This is placeholder teaching text, not clinical guidance.",
+            "The result explicitly named ACTION CIRCLE.",
           sourceLabels: ["Synthetic prototype fixture; no clinical source"],
           resultGateAfter: null,
           terminalDispositions: [
@@ -158,7 +158,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
                 id: "outcome.synthetic.square",
                 severity: "minor",
                 narrative:
-                  "SYNTHETIC OUTCOME: the square token jams the imaginary dispenser, causing a brief fictional delay.",
+                  "The square token jams the imaginary dispenser, causing a brief delay.",
                 causalFraming: "possible_consequence",
                 clinicalRationale:
                   "Software-test rationale only: this deterministic vignette verifies a minor terminal outcome.",
@@ -172,7 +172,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
                 id: "outcome.synthetic.triangle",
                 severity: "major",
                 narrative:
-                  "SYNTHETIC OUTCOME: the triangle token shuts down the imaginary machine for this fictional patient.",
+                  "The triangle token shuts down the imaginary machine for this patient.",
                 causalFraming: "possible_consequence",
                 clinicalRationale:
                   "Software-test rationale only: this deterministic vignette verifies a major terminal outcome.",
@@ -183,15 +183,15 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "SYNTHETIC LEARNING SUMMARY: read the explicitly labeled signal and result, then choose their matching tokens. This is not clinically approved content.",
+        "Read the explicitly labeled signal and result, then choose their matching tokens.",
     },
     {
       id: "case.prototype.tutorial-laceration",
-      displayName: "Intro Patient 2: Draft Laceration",
+      displayName: "Intro Patient 2: Laceration",
       patientPresentationVariantId: "presentation.prototype.laceration-a",
       patientDisplayName: "Morgan Thread",
       presentation:
-        "UNAPPROVED PROTOTYPE DRAFT: An adult presents to the small clinic with a recent uncomplicated laceration. The chart has not yet documented wound cleaning or tetanus vaccination history.",
+        "An adult presents to the small clinic with a recent uncomplicated laceration. The chart has not yet documented wound cleaning or tetanus vaccination history.",
       tutorialEligible: true,
       routineEligible: true,
       earliestFacilityStage: 0,
@@ -207,7 +207,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.prototype.laceration.tetanus.v1",
           primaryConceptId: "concept.prototype.laceration.tetanus",
           stem:
-            "For this unapproved draft vignette, which action best addresses tetanus prevention while routine wound care proceeds?",
+            "Which action best addresses tetanus prevention while routine wound care proceeds?",
           answerChoices: [
             {
               id: "choice.laceration.assess-history",
@@ -228,7 +228,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "CDC guidance separates wound care from vaccination/TIG assessment and states that antibiotics are not used to prevent tetanus. Melissa must clinically review this original draft before learner use.",
+            "CDC guidance separates wound care from vaccination/TIG assessment and states that antibiotics are not used to prevent tetanus.",
           sourceLabels: [
             "https://www.cdc.gov/tetanus/hcp/clinical-guidance/index.html",
             PROTOTYPE_REVIEW_NOTICE,
@@ -247,15 +247,15 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "UNAPPROVED DRAFT SUMMARY: first assess wound type and vaccination history; clean the wound and provide vaccination/TIG when indicated. Antibiotics do not prevent tetanus. Requires Melissa's review.",
+        "First assess wound type and vaccination history; clean the wound and provide vaccination/TIG when indicated. Antibiotics do not prevent tetanus.",
     },
     {
       id: "case.prototype.abscess",
-      displayName: "Draft Clinic Patient: Abscess",
+      displayName: "Clinic Patient: Abscess",
       patientPresentationVariantId: "presentation.prototype.abscess-a",
       patientDisplayName: "Avery Pixel",
       presentation:
-        "UNAPPROVED PROTOTYPE DRAFT: An otherwise healthy, stable adult has one superficial, accessible, fluctuant and drainable skin abscess. This vignette explicitly excludes systemic illness, major host-risk factors, a special anatomic location, and concern for deeper infection.",
+        "An otherwise healthy, stable adult has one superficial, accessible, fluctuant and drainable skin abscess. This vignette explicitly excludes systemic illness, major host-risk factors, a special anatomic location, and concern for deeper infection.",
       tutorialEligible: false,
       routineEligible: true,
       earliestFacilityStage: 1,
@@ -271,7 +271,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.prototype.abscess.primary-treatment.v1",
           primaryConceptId: "concept.prototype.abscess.primary-treatment",
           stem:
-            "Which management choice matches the primary treatment represented by this uncomplicated draft abscess vignette?",
+            "Which management choice matches the primary treatment represented by this uncomplicated abscess vignette?",
           answerChoices: [
             {
               id: "choice.abscess.drainage",
@@ -291,7 +291,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "The cited IDSA guideline identifies incision and drainage as recommended treatment for cutaneous abscesses. This simplified draft excludes important modifiers and requires Melissa's review.",
+            "The cited IDSA guideline identifies incision and drainage as recommended treatment for cutaneous abscesses. This simplified scenario excludes important modifiers.",
           sourceLabels: [
             "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
             PROTOTYPE_REVIEW_NOTICE,
@@ -310,16 +310,16 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "UNAPPROVED DRAFT SUMMARY: this deliberately uncomplicated prototype represents drainage as primary treatment. It omits modifier-dependent decisions and requires clinical review.",
+        "This deliberately uncomplicated scenario represents drainage as primary treatment. It omits modifier-dependent decisions.",
     },
     {
       id: "case.prototype.postoperative-symptoms",
-      displayName: "Draft Referral Patient: Postoperative Symptoms",
+      displayName: "Referral Patient: Postoperative Symptoms",
       patientPresentationVariantId:
         "presentation.prototype.postoperative-symptoms-a",
       patientDisplayName: "Jordan Grid",
       presentation:
-        "UNAPPROVED PROTOTYPE DRAFT: A postoperative adult presents to the clinic with progressive abdominal distension, vomiting, and inability to tolerate oral intake.",
+        "A postoperative adult presents to the clinic with progressive abdominal distension, vomiting, and inability to tolerate oral intake.",
       tutorialEligible: false,
       routineEligible: true,
       earliestFacilityStage: 1,
@@ -358,7 +358,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "This draft escalates the concerning postoperative symptom cluster because the small clinic cannot evaluate or support it. It deliberately avoids declaring a diagnosis and requires Melissa's review.",
+            "This scenario escalates the concerning postoperative symptom cluster because the small clinic cannot evaluate or support it. It deliberately avoids declaring a diagnosis.",
           sourceLabels: [
             "https://www.ncbi.nlm.nih.gov/books/NBK560780/",
             PROTOTYPE_REVIEW_NOTICE,
@@ -372,10 +372,10 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
                 id: "outcome.prototype.postoperative-symptoms.delay",
                 severity: "major",
                 narrative:
-                  "PROTOTYPE OUTCOME: delayed escalation could allow the condition to worsen before appropriate evaluation.",
+                  "Delayed escalation could allow the condition to worsen before appropriate evaluation.",
                 causalFraming: "possible_consequence",
                 clinicalRationale:
-                  "This educational draft links an unsafe delay to a possible adverse outcome; exact wording requires Melissa's clinical review.",
+                  "This scenario links an unsafe delay to a possible adverse outcome.",
                 sourceLabels: [
                   "https://www.ncbi.nlm.nih.gov/books/NBK560780/",
                   PROTOTYPE_REVIEW_NOTICE,
@@ -390,15 +390,15 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "UNAPPROVED DRAFT SUMMARY: a postoperative patient with vomiting and progressive distension beyond the clinic's capabilities should be escalated promptly to the surgical team and a hospital-capable setting; this vignette does not establish a final diagnosis.",
+        "A postoperative patient with vomiting and progressive distension beyond the clinic's capabilities should be escalated promptly to the surgical team and a hospital-capable setting; this vignette does not establish a final diagnosis.",
     },
     {
       id: "case.prototype.symptomatic-cholelithiasis",
-      displayName: "Draft Clinic Patient: Symptomatic Cholelithiasis",
+      displayName: "Clinic Patient: Symptomatic Cholelithiasis",
       patientPresentationVariantId: "presentation.prototype.cholelithiasis-a",
       patientDisplayName: "Riley Mono",
       presentation:
-        "UNAPPROVED PROTOTYPE DRAFT: A stable adult has recurrent episodic postprandial right-upper-quadrant pain and previously documented gallstones. This simplified scenario explicitly excludes fever, jaundice, persistent pain, or other acute-complication features.",
+        "A stable adult has recurrent episodic postprandial right-upper-quadrant pain and previously documented gallstones. This simplified scenario explicitly excludes fever, jaundice, persistent pain, or other acute-complication features.",
       tutorialEligible: false,
       routineEligible: true,
       earliestFacilityStage: 1,
@@ -415,7 +415,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           questionVariantId: "question.prototype.cholelithiasis.management.v1",
           primaryConceptId: "concept.prototype.cholelithiasis.management",
           stem:
-            "Which next step is represented for this uncomplicated symptomatic gallstone draft?",
+            "Which next step is represented for this uncomplicated symptomatic gallstone scenario?",
           answerChoices: [
             {
               id: "choice.chole.surgical-referral",
@@ -435,7 +435,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           shuffleAnswers: true,
           explanation:
-            "The cited SAGES guidance includes symptomatic cholelithiasis among indications for laparoscopic cholecystectomy. This simplified draft requires Melissa's review.",
+            "The cited SAGES guidance includes symptomatic cholelithiasis among indications for laparoscopic cholecystectomy.",
           sourceLabels: [
             "https://www.sages.org/publications/guidelines/guidelines-for-the-clinical-application-of-laparoscopic-biliary-tract-surgery/",
             "https://www.nice.org.uk/guidance/cg188/chapter/Recommendations",
@@ -455,7 +455,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         },
       ],
       learningSummary:
-        "UNAPPROVED DRAFT SUMMARY: this uncomplicated symptomatic gallstone prototype routes the patient to surgical evaluation. It excludes acute complications.",
+        "This uncomplicated symptomatic gallstone scenario routes the patient to surgical evaluation. It excludes acute complications.",
     },
   ],
 });

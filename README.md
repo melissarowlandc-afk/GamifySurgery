@@ -9,47 +9,45 @@ small, original prototype content that is clearly marked unapproved. It is not
 medical advice, is not ready for learners, and must never receive PHI or real
 patient information.
 
-## Run it on Windows
+## Start it on Windows
 
-You need Node.js `22.12.0` or newer. This project currently records Node.js
-`24.18.0` in `.node-version`. Installing a current Node.js LTS release also
-installs `npm`, which is the dependency and command runner used below.
+Double-click **`START_GAME.cmd`** in this project folder. The launcher will:
 
-1. Open PowerShell.
-2. Move into this project folder:
+- check that the required Node.js and npm tools are available;
+- install or refresh the project dependencies automatically;
+- start the local game;
+- wait until it is ready; and
+- open it in your default browser.
 
-   ```powershell
-   cd "C:\Users\Kyle Kent\Projects\GamifySurgery"
-   ```
+Keep the launcher window open while playing. Press Enter in that window when
+finished; it stops only the game server that it started. Campaign saves remain
+in the browser. Gameplay instructions are available from the fixed **Help**
+button inside the game.
 
-3. Confirm Node.js is available:
+Node.js `22.12.0` or newer remains the one system prerequisite. This project
+currently records Node.js `24.18.0` in `.node-version`. If Node.js is missing
+or outdated, the launcher explains what is needed instead of making system
+changes.
 
-   ```powershell
-   node --version
-   ```
+### Manual developer alternative
 
-4. Install the exact recorded dependencies:
+From PowerShell in this project folder:
 
-   ```powershell
-   npm install
-   ```
+```powershell
+npm install
+npm run dev
+```
 
-5. Start the game:
-
-   ```powershell
-   npm run dev
-   ```
-
-6. Open [http://127.0.0.1:4173](http://127.0.0.1:4173) in Chrome or another
-   modern browser.
-
-Keep PowerShell open while playing. Press `Ctrl+C` there to stop the local
-server. Nothing is deployed or published by these commands.
+Then open [http://127.0.0.1:4173](http://127.0.0.1:4173). Press `Ctrl+C` to
+stop the manual server. Neither method deploys or publishes anything.
 
 ## What is implemented
 
 - A responsive React interface and top-down Phaser facility on desktop and
   phone-width screens
+- Automatic first-run guidance with a direct **Open first chart** action, a
+  pulsing chart callout, a persistent tutorial toggle in Prototype tools, and
+  an always-available in-game beginner Help guide
 - A founder-operated Level 0 clinic with two protected introductory patients
 - Waiting, Active, pending-result, action-required, summary, and Resolved chart
   states
@@ -115,6 +113,9 @@ deploy the game.
 
 ## Screenshots
 
+- [Automatic desktop tutorial](artifacts/screenshots/tutorial-desktop.png)
+- [Highlighted first chart](artifacts/screenshots/tutorial-callout-desktop.png)
+- [In-game phone-width Help](artifacts/screenshots/help-phone.png)
 - [Level 1 desktop walkthrough](artifacts/screenshots/level-1-desktop.png)
 - [Level 1 desktop facility](artifacts/screenshots/level-1-facility-desktop.png)
 - [Level 0 phone-width chart](artifacts/screenshots/level-0-phone.png)
@@ -139,7 +140,7 @@ deploy the game.
 - `apps/player` - responsive React player interface and Phaser facility renderer
 - `packages/game-domain` - renderer-independent deterministic rules, FSRS
   adapter, progression, saves, queues, and economy
-- `packages/clinical-content` - validated synthetic/unapproved prototype fixture
+- `packages/clinical-content` - validated prototype clinical fixture
 - `packages/balance-config` - validated centralized prototype tuning values
 - `tests/e2e` - desktop and phone-width browser walkthroughs
 - `docs/adr` - accepted architecture and game-design decisions

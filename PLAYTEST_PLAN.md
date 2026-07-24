@@ -20,8 +20,10 @@ Participants:
 - Melissa's husband, primarily evaluating usability, clarity, and technical
   friction
 
-Use the local run instructions in [README.md](README.md). No account, invitation,
-or internet deployment is needed. Campaigns remain only in that browser.
+Double-click `START_GAME.cmd`; it installs or refreshes dependencies, starts
+the local game, and opens the browser. Use the in-game **Help** button for
+beginner instructions. No account, invitation, or internet deployment is
+needed. Campaigns remain only in that browser.
 
 ### Suggested sequence
 
@@ -48,6 +50,9 @@ The prototype sends no gameplay telemetry.
 ### First minutes and comprehension
 
 - Is it obvious which patient needs attention and why?
+- Does the automatic first-run coach make the first chart unmistakable without
+  getting in the way?
+- Is the in-game Help guide sufficient without referring to project files?
 - Can a new player distinguish Waiting, Active pending, Active
   action-required, summary available, and Resolved?
 - Does the chart leave enough of the facility visible while answering?

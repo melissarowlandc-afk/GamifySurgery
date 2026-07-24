@@ -2,12 +2,16 @@ import type { DevelopmentView } from "./types";
 
 interface DevelopmentPanelProps {
   view: DevelopmentView;
+  tutorialsEnabled: boolean;
   onFastForward: () => void;
+  onTutorialsEnabledChange: (enabled: boolean) => void;
 }
 
 export function DevelopmentPanel({
   view,
+  tutorialsEnabled,
   onFastForward,
+  onTutorialsEnabledChange,
 }: DevelopmentPanelProps) {
   return (
     <details className="panel development-panel">
@@ -38,6 +42,21 @@ export function DevelopmentPanel({
         >
           {view.fastForwardLabel}
         </button>
+        <label className="prototype-toggle">
+          <input
+            type="checkbox"
+            checked={tutorialsEnabled}
+            onChange={(event) =>
+              onTutorialsEnabledChange(event.currentTarget.checked)
+            }
+          />
+          <span>
+            <strong>Tutorial guidance</strong>
+            <small>
+              Show first-run coaching for untouched campaigns.
+            </small>
+          </span>
+        </label>
         <details className="learning-card-inspector">
           <summary>Inspect FSRS cards</summary>
           <ul>

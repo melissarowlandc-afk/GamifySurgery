@@ -37,6 +37,9 @@ interface ExecuteOptions {
 export interface PrototypeSession {
   state: GameState;
   campaigns: CampaignSummary[];
+  tutorialsEnabled: boolean;
+  tutorialCoachMode: "intro" | "callout" | null;
+  tutorialTargetEncounterId: string | null;
   selectedRoomDefinitionId: string | null;
   summaryVisible: boolean;
   announcement: string;
@@ -55,6 +58,9 @@ export interface PrototypeSession {
   fastForward: () => void;
   createCampaign: () => void;
   switchCampaign: (campaignId: string) => void;
+  openTutorialPatient: () => void;
+  dismissTutorialIntro: () => void;
+  setTutorialsEnabled: (enabled: boolean) => void;
   restart: () => void;
 }
 
@@ -473,6 +479,91 @@ export function usePrototypeSession(): PrototypeSession {
     );
   }, [activateNewCampaign]);
 
+  const tutorialTargetEncounter =
+    Object.values(state.encounters).find(
+      (encounter) =>
+        encounter.arrivalClass === "tutorial" &&
+        encounter.lifecycle === "waiting_unopened" &&
+        encounter.firstOpenedAtTick === null,
+    ) ?? null;
+  const anyChartHasBeenOpened = Object.values(state.encounters).some(
+    (encounter) => encounter.firstOpenedAtTick !== null,
+  );
+  const tutorialIntroDismissed =
+    profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
+  const tutorialCoachMode =
+    !profile.tutorialsEnabled ||
+    anyChartHasBeenOpened ||
+    tutorialTargetEncounter === null
+      ? null
+      : tutorialIntroDismissed
+        ? ("callout" as const)
+        : ("intro" as const);
+
+  const persistTutorialProfile = useCallback(
+    (
+      nextProfile: LocalPrototypeProfile,
+      successAnnouncement: string,
+    ) => {
+      profileRef.current = nextProfile;
+      setProfile(nextProfile);
+      const saved = savePrototypeProfile(nextProfile);
+      saveWarningShownRef.current = !saved;
+      setAnnouncement(
+        saved
+          ? successAnnouncement
+          : `${successAnnouncement} Local saving is unavailable.`,
+      );
+    },
+    [],
+  );
+
+  const dismissTutorialIntro = useCallback(() => {
+    const currentProfile = profileRef.current;
+    if (
+      currentProfile.tutorialIntroDismissedCampaignIds.includes(
+        stateRef.current.campaignId,
+      )
+    ) {
+      return;
+    }
+    persistTutorialProfile(
+      {
+        ...currentProfile,
+        tutorialIntroDismissedCampaignIds: [
+          ...currentProfile.tutorialIntroDismissedCampaignIds,
+          stateRef.current.campaignId,
+        ],
+      },
+      "Tutorial introduction dismissed. The patient chart remains highlighted.",
+    );
+  }, [persistTutorialProfile]);
+
+  const setTutorialsEnabled = useCallback(
+    (enabled: boolean) => {
+      const currentProfile = profileRef.current;
+      if (currentProfile.tutorialsEnabled === enabled) {
+        return;
+      }
+      persistTutorialProfile(
+        {
+          ...currentProfile,
+          tutorialsEnabled: enabled,
+        },
+        enabled
+          ? "Tutorial guidance enabled."
+          : "Tutorial guidance disabled. Help remains available.",
+      );
+    },
+    [persistTutorialProfile],
+  );
+
+  const openTutorialPatient = useCallback(() => {
+    if (tutorialTargetEncounter) {
+      openPatient(tutorialTargetEncounter.id);
+    }
+  }, [openPatient, tutorialTargetEncounter]);
+
   const campaigns = profile.campaigns
     .map((campaign) => ({
       campaignId: campaign.campaignId,
@@ -494,6 +585,9 @@ export function usePrototypeSession(): PrototypeSession {
   return {
     state,
     campaigns,
+    tutorialsEnabled: profile.tutorialsEnabled,
+    tutorialCoachMode,
+    tutorialTargetEncounterId: tutorialTargetEncounter?.id ?? null,
     selectedRoomDefinitionId,
     summaryVisible,
     announcement,
@@ -512,6 +606,9 @@ export function usePrototypeSession(): PrototypeSession {
     fastForward,
     createCampaign,
     switchCampaign,
+    openTutorialPatient,
+    dismissTutorialIntro,
+    setTutorialsEnabled,
     restart,
   };
 }

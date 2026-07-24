@@ -48,6 +48,12 @@ All notable implementation and project-record changes are listed here.
 
 ### Implementation
 
+- Added a one-click Windows launcher that refreshes dependencies, starts and
+  verifies the local server, opens the browser, and stops only its owned server
+- Added automatic first-run chart coaching, an animated chart callout,
+  persistent tutorial controls, and a responsive in-game beginner Help guide
+- Consolidated repeated visible clinical-status warnings into the existing
+  striped chart notice while preserving review and source metadata
 - Created a private npm-workspace monorepo with a responsive React player,
   Phaser facility renderer, renderer-independent TypeScript domain package,
   validated clinical-content package, and validated balance package

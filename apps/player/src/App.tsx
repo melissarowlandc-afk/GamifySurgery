@@ -34,6 +34,9 @@ export function App() {
       staffOptions={view.staffOptions}
       development={view.development}
       campaigns={session.campaigns}
+      tutorialsEnabled={session.tutorialsEnabled}
+      tutorialCoachMode={session.tutorialCoachMode}
+      tutorialTargetEncounterId={session.tutorialTargetEncounterId}
       workloadStatus={view.workloadStatus}
       announcement={session.announcement}
       onTogglePause={session.togglePause}
@@ -53,6 +56,9 @@ export function App() {
       onFastForward={session.fastForward}
       onCreateCampaign={session.createCampaign}
       onSwitchCampaign={session.switchCampaign}
+      onOpenTutorialPatient={session.openTutorialPatient}
+      onDismissTutorialIntro={session.dismissTutorialIntro}
+      onTutorialsEnabledChange={session.setTutorialsEnabled}
       onRestart={session.restart}
     />
   );

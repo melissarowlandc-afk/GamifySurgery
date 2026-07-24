@@ -93,7 +93,24 @@ test("plays Level 0, enters Level 1, saves, and isolates campaign FSRS", async (
     page.getByRole("button", { name: /Pixel Patient/ }),
   ).toBeVisible();
 
-  await page.getByRole("button", { name: /Pixel Patient/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Open your first patient chart" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/tutorial-desktop.png`,
+    fullPage: false,
+  });
+  await page.getByRole("button", { name: "Show me where" }).click();
+  const tutorialTarget = page.locator(".patient-tab.is-tutorial-target");
+  await expect(tutorialTarget).toContainText("Open this chart first");
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/tutorial-callout-desktop.png`,
+    fullPage: false,
+  });
+  await tutorialTarget.click();
+  await expect(
+    page.getByRole("heading", { name: "Open your first patient chart" }),
+  ).toHaveCount(0);
   await page.getByRole("button", { name: "SIGNAL ALPHA" }).click();
   await expect(
     page.locator(".chart-panel").getByText(/Synthetic analysis pending/),
@@ -202,10 +219,51 @@ test("keeps the chart and facility usable at the configured viewport", async ({
   await page.goto("/");
   const facility = page.locator(".facility-frame");
   await expect(facility).toBeVisible();
-  await page.getByRole("button", { name: /Pixel Patient/ }).click();
+
+  await page.getByRole("button", { name: "Help" }).click();
+  const helpHeading = page.getByRole("heading", {
+    name: "How this clinic works",
+  });
+  await expect(helpHeading).toBeVisible();
+  await expect(helpHeading).toBeFocused();
+  await expect(
+    page.getByRole("heading", { name: "Open your first patient chart" }),
+  ).toHaveCount(0);
+  expect(
+    await page.locator(".help-step-list").evaluate(
+      (element) => element.scrollTop,
+    ),
+  ).toBe(0);
+  if (testInfo.project.name === "phone-chrome") {
+    await page.screenshot({
+      path: `${SCREENSHOT_DIRECTORY}/help-phone.png`,
+      fullPage: false,
+    });
+  }
+  await expect(page.getByRole("button", { name: "Resume" })).toBeVisible();
+  const returnToClinic = page.getByRole("button", {
+    name: "Return to clinic",
+  });
+  await expect(returnToClinic).toBeVisible();
+  const returnButtonBox = await returnToClinic.boundingBox();
+  expect(returnButtonBox).not.toBeNull();
+  expect(returnButtonBox!.y + returnButtonBox!.height).toBeLessThanOrEqual(
+    page.viewportSize()!.height,
+  );
+  await returnToClinic.click();
+  await expect(page.getByRole("button", { name: "Help" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Open first chart" }).click();
 
   const chart = page.locator(".chart-panel");
   await expect(chart).toBeVisible();
+  await expect(page.getByText(/not clinically approved/)).toHaveCount(1);
+  const chartSections = (await chart.locator(".chart-section").allTextContents())
+    .join(" ");
+  expect(chartSections).not.toMatch(
+    /\bunapproved\b|\bdraft\b|not medical advice|requires Melissa(?:'s)? review/i,
+  );
   const [facilityBox, chartBox] = await Promise.all([
     facility.boundingBox(),
     chart.boundingBox(),
@@ -232,4 +290,57 @@ test("keeps the chart and facility usable at the configured viewport", async ({
       chart.getByText(/Synthetic analysis pending/),
     ).toBeVisible();
   }
+});
+
+test("persists the prototype tutorial preference", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-chrome",
+    "The preference persistence check runs once on desktop.",
+  );
+
+  await page.goto("/");
+  await page.evaluate(() => {
+    const key = "gamify-surgery.prototype.profile.v1";
+    const rawProfile = window.localStorage.getItem(key);
+    if (!rawProfile) {
+      throw new Error("Local campaign profile is missing.");
+    }
+    const legacyProfile = JSON.parse(rawProfile) as Record<string, unknown>;
+    delete legacyProfile.tutorialsEnabled;
+    delete legacyProfile.tutorialIntroDismissedCampaignIds;
+    window.localStorage.setItem(key, JSON.stringify(legacyProfile));
+  });
+  await page.reload();
+  await expect(
+    page.getByRole("heading", { name: "Open your first patient chart" }),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: "Show me where" }).click();
+  await expect(
+    page.locator(".patient-tab.is-tutorial-target"),
+  ).toBeVisible();
+
+  const tools = page.locator("details.development-panel");
+  await tools.locator(":scope > summary").click();
+  const tutorialToggle = tools.getByRole("checkbox", {
+    name: /Tutorial guidance/,
+  });
+  await expect(tutorialToggle).toBeChecked();
+  await tutorialToggle.uncheck();
+  await expect(
+    page.locator(".patient-tab.is-tutorial-target"),
+  ).toHaveCount(0);
+
+  await page.reload();
+  await expect(
+    page.getByRole("heading", { name: "Open your first patient chart" }),
+  ).toHaveCount(0);
+  await expect(
+    page.locator(".patient-tab.is-tutorial-target"),
+  ).toHaveCount(0);
+
+  await tools.locator(":scope > summary").click();
+  await expect(tutorialToggle).not.toBeChecked();
 });

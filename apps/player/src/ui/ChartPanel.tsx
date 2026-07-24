@@ -29,7 +29,7 @@ export function ChartPanel({
     >
       <div className="chart-titlebar">
         <div>
-          <span className="eyebrow">Synthetic patient chart</span>
+          <span className="eyebrow">Patient chart</span>
           <h2>{chart.patientName}</h2>
           <p>{chart.patientDetails}</p>
         </div>

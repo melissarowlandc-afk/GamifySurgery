@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FacilityCanvas, type FacilityViewModel } from "./facility";
 import {
   BuildPanel,
@@ -5,9 +6,11 @@ import {
   ChartPanel,
   DevelopmentPanel,
   GoalsPanel,
+  HelpDialog,
   PatientLists,
   ResourceBar,
   RestartDialog,
+  TutorialCoach,
   type CampaignListItemView,
   type ChartView,
   type DevelopmentView,
@@ -29,6 +32,9 @@ interface AppShellProps {
   staffOptions: StaffHireOptionView[];
   development: DevelopmentView;
   campaigns: CampaignListItemView[];
+  tutorialsEnabled: boolean;
+  tutorialCoachMode: "intro" | "callout" | null;
+  tutorialTargetEncounterId: string | null;
   workloadStatus: string;
   announcement: string;
   onTogglePause: () => void;
@@ -46,6 +52,9 @@ interface AppShellProps {
   onFastForward: () => void;
   onCreateCampaign: () => void;
   onSwitchCampaign: (campaignId: string) => void;
+  onOpenTutorialPatient: () => void;
+  onDismissTutorialIntro: () => void;
+  onTutorialsEnabledChange: (enabled: boolean) => void;
   onRestart: () => void;
 }
 
@@ -64,6 +73,9 @@ export function AppShell({
   staffOptions,
   development,
   campaigns,
+  tutorialsEnabled,
+  tutorialCoachMode,
+  tutorialTargetEncounterId,
   workloadStatus,
   announcement,
   onTogglePause,
@@ -81,8 +93,17 @@ export function AppShell({
   onFastForward,
   onCreateCampaign,
   onSwitchCampaign,
+  onOpenTutorialPatient,
+  onDismissTutorialIntro,
+  onTutorialsEnabledChange,
   onRestart,
 }: AppShellProps) {
+  const [helpOpen, setHelpOpen] = useState(false);
+  const tutorialTargetName =
+    patients.find(
+      (patient) => patient.id === tutorialTargetEncounterId,
+    )?.name ?? "the first patient";
+
   return (
     <div className="game-shell">
       <ResourceBar
@@ -93,7 +114,14 @@ export function AppShell({
 
       <main className="game-grid">
         <div className="left-column">
-          <PatientLists patients={patients} onOpen={onOpenPatient} />
+          <PatientLists
+            patients={patients}
+            onOpen={onOpenPatient}
+            tutorialTargetEncounterId={tutorialTargetEncounterId}
+            showTutorialCallout={
+              tutorialCoachMode === "callout" && !helpOpen
+            }
+          />
         </div>
 
         <div className="center-column">
@@ -143,17 +171,27 @@ export function AppShell({
           />
           <DevelopmentPanel
             view={development}
+            tutorialsEnabled={tutorialsEnabled}
             onFastForward={onFastForward}
+            onTutorialsEnabledChange={onTutorialsEnabledChange}
           />
         </div>
       </main>
 
+      <TutorialCoach
+        visible={tutorialCoachMode === "intro" && !helpOpen}
+        patientName={tutorialTargetName}
+        onOpenPatient={onOpenTutorialPatient}
+        onDismiss={onDismissTutorialIntro}
+      />
+
       <footer className="footer-bar">
-        <span>
-          Synthetic local prototype · no real patient information · no data
-          leaves this browser
-        </span>
         <div className="footer-actions">
+          <HelpDialog
+            paused={paused}
+            onTogglePause={onTogglePause}
+            onOpenChange={setHelpOpen}
+          />
           <CampaignManager
             campaigns={campaigns}
             onCreateCampaign={onCreateCampaign}

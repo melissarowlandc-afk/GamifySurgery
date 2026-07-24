@@ -3,6 +3,8 @@ import type { PatientFolder, PatientTabView } from "./types";
 interface PatientListsProps {
   patients: PatientTabView[];
   onOpen: (patientId: string) => void;
+  tutorialTargetEncounterId?: string | null;
+  showTutorialCallout?: boolean;
 }
 
 const FOLDERS: Array<{ id: PatientFolder; label: string }> = [
@@ -11,7 +13,12 @@ const FOLDERS: Array<{ id: PatientFolder; label: string }> = [
   { id: "resolved", label: "Resolved" },
 ];
 
-export function PatientLists({ patients, onOpen }: PatientListsProps) {
+export function PatientLists({
+  patients,
+  onOpen,
+  tutorialTargetEncounterId = null,
+  showTutorialCallout = false,
+}: PatientListsProps) {
   return (
     <nav className="patient-lists panel" aria-label="Patient charts">
       <div className="panel-heading">
@@ -34,32 +41,50 @@ export function PatientLists({ patients, onOpen }: PatientListsProps) {
               <p className="empty-state">No charts</p>
             ) : (
               <div className="patient-tab-stack">
-                {folderPatients.map((patient) => (
-                  <button
-                    className={`patient-tab${patient.selected ? " is-selected" : ""}`}
-                    type="button"
-                    key={patient.id}
-                    onClick={() => onOpen(patient.id)}
-                    aria-current={patient.selected ? "page" : undefined}
-                  >
-                    <span className="patient-tab-name">
-                      {patient.actionRequired ? (
-                        <strong
-                          className="action-marker"
-                          aria-label="Action required"
+                {folderPatients.map((patient) => {
+                  const tutorialTarget =
+                    showTutorialCallout &&
+                    patient.id === tutorialTargetEncounterId;
+                  const calloutId = `tutorial-patient-${patient.id}`;
+                  return (
+                    <button
+                      className={`patient-tab${patient.selected ? " is-selected" : ""}${tutorialTarget ? " is-tutorial-target" : ""}`}
+                      type="button"
+                      key={patient.id}
+                      onClick={() => onOpen(patient.id)}
+                      aria-current={patient.selected ? "page" : undefined}
+                      aria-describedby={
+                        tutorialTarget ? calloutId : undefined
+                      }
+                    >
+                      {tutorialTarget ? (
+                        <span
+                          className="tutorial-tab-callout"
+                          id={calloutId}
                         >
-                          !
-                        </strong>
+                          <span aria-hidden="true">→</span> Open this chart
+                          first
+                        </span>
                       ) : null}
-                      {patient.name}
-                    </span>
-                    <small>{patient.subtitle}</small>
-                    <span>{patient.statusLabel}</span>
-                    {patient.patienceLabel ? (
-                      <small>{patient.patienceLabel}</small>
-                    ) : null}
-                  </button>
-                ))}
+                      <span className="patient-tab-name">
+                        {patient.actionRequired ? (
+                          <strong
+                            className="action-marker"
+                            aria-label="Action required"
+                          >
+                            !
+                          </strong>
+                        ) : null}
+                        {patient.name}
+                      </span>
+                      <small>{patient.subtitle}</small>
+                      <span>{patient.statusLabel}</span>
+                      {patient.patienceLabel ? (
+                        <small>{patient.patienceLabel}</small>
+                      ) : null}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </section>

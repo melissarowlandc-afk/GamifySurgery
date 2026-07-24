@@ -231,7 +231,7 @@ describe("tutorial clinical lifecycle", () => {
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.lifecycle).toBe("resolved");
     expect(state.openChartEncounterId).toBeNull();
     expect(getLearningSummary(state, TUTORIAL_ENCOUNTER_ID)).toContain(
-      "SYNTHETIC LEARNING SUMMARY",
+      "Read the explicitly labeled signal",
     );
 
     state = gameReducer(state, {

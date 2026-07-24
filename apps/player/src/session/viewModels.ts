@@ -178,7 +178,10 @@ function createChartView(
   return {
     id: encounter.id,
     patientName: encounter.patientDisplayName,
-    patientDetails: "Synthetic tutorial patient",
+    patientDetails:
+      encounter.arrivalClass === "tutorial"
+        ? "Tutorial patient"
+        : "Clinic patient",
     statusLabel: question
       ? `Question ${question.questionNumber} of ${question.questionCount}`
       : encounterStatus(encounter),
@@ -206,9 +209,7 @@ function createChartView(
       })) ?? [],
     feedbackTitle,
     feedbackBody,
-    terminalOutcomeTitle: terminalOutcome
-      ? "Synthetic terminal outcome"
-      : undefined,
+    terminalOutcomeTitle: terminalOutcome ? "What happened" : undefined,
     terminalOutcomeBody: terminalOutcome?.narrative,
     terminalOutcomeSeverity: terminalOutcome?.severity,
     terminalFeedbackNeedsAcknowledgment,

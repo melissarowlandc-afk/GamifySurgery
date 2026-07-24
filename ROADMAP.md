@@ -74,6 +74,8 @@ Implemented:
 - Centralized validated clinical and balance fixtures
 - Development fast-forward plus visible campaign, review-count, and per-concept
   FSRS card/due-time inspection
+- One-click Windows dependency/start/browser launcher, automatic first-run
+  chart coaching, persistent tutorial controls, and in-game beginner Help
 - Automated domain and desktop/phone-width browser coverage
 
 Current demonstration gate:
