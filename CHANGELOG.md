@@ -22,6 +22,8 @@ All notable project-record changes are listed here. No implementation exists.
   protection, capped delay consequences, and non-abandoning tutorial patients
 - Total clinic-workload capacity with pre-Waiting routine-arrival backpressure,
   protected critical reserve, and no capacity-based patient eviction
+- Correction-forward nonfinal errors plus deterministic, clinically approved
+  terminal outcomes for appropriate wrong final answers
 
 ### Documentation
 
@@ -33,6 +35,8 @@ All notable project-record changes are listed here. No implementation exists.
 - Added ADR 0027 and resolved G-001D for transparent result timing
 - Added ADR 0028 and resolved G-001E for patient patience and abandonment
 - Added ADR 0029 and resolved G-001F for clinic workload and arrival backpressure
+- Added ADR 0030 and resolved G-001G for incorrect-answer case continuation and
+  terminal clinical outcomes
 
 ### Implementation
 

@@ -262,6 +262,39 @@ ordered choices, numeric ranges, paired choices, and phrases such as “all of
 the above” can become invalid when reordered. The runtime instance stores the
 exact displayed order.
 
+### Terminal Outcome Disposition and Terminal Clinical Outcome
+
+Every incorrect Answer Choice on the final scored Decision Node has an explicit
+reviewed Terminal Outcome Disposition for each compatible Patient Presentation
+Variant or finite Clinical Instantiation Profile. The disposition is exactly
+one of:
+
+- `no_terminal_outcome`, when no choice-specific adverse outcome is clinically
+  defensible
+- One exact Terminal Clinical Outcome Revision
+
+A Terminal Clinical Outcome is a short, unscored fictional vignette shown after
+an incorrect final answer and before corrective teaching, the Patient Learning
+Summary, and chart filing. It has a stable identity and immutable revisions and
+records:
+
+- Clinical severity: `minor` or `major`
+- Exact compatible final incorrect Answer Choice revisions
+- Compatible Patient Presentation Variants and finite profiles
+- Narrative template and typed compatible slots
+- Causal framing that distinguishes a direct case consequence from an
+  illustrative plausible risk
+- Clinical rationale and claim-linked citations
+- AI provenance, clinical review, Melissa's approval, and revision history
+
+For the pilot, one compatible wrong-choice tuple resolves to zero or one
+deterministic outcome; probability and weighted outcome selection are
+prohibited. A terminal outcome does not define money, satisfaction, FSRS, XP,
+or mastery effects. Those remain separate operational rules.
+
+This content-model extension is accepted in
+[ADR 0030](docs/adr/0030-correction-forward-with-terminal-clinical-outcomes.md).
+
 ### Source and Citation
 
 A Source preserves title, publisher or journal, link or identifier, access
@@ -269,9 +302,9 @@ date, edition or publication date, relevant licensing notes, and source type.
 
 A Citation is a many-to-many link from a source to an exact topic section,
 structured fact, concept, patient variant, Result Gate or Requirement, Patient
-Learning Summary, question, answer rationale, or explanation revision. It
-identifies the claim or passage supported rather than merely attaching a
-bibliography to the topic.
+Learning Summary, question, answer rationale, explanation, or Terminal
+Clinical Outcome revision. It identifies the claim or passage supported rather
+than merely attaching a bibliography to the topic.
 
 ## Accepted relationship summary
 
@@ -291,6 +324,8 @@ bibliography to the topic.
 | Result Requirement to balance Result/Service Definition | Many-to-one stable reference | Clinical content owns result meaning while the pinned balance release owns operational timing |
 | Decision Node to Question Variant | One-to-many | Several approved wordings may test the same node and concept |
 | Question Variant to compatible Patient Presentation Variant | Many-to-many | A question may work with several presentations, while a presentation may support several questions |
+| Final incorrect Answer Choice plus compatible presentation/profile to Terminal Outcome Disposition | Exactly one disposition per compatible tuple | Every final wrong choice deliberately resolves to no outcome or one exact approved outcome |
+| Terminal Clinical Outcome Revision to Sources | Many-to-many through Citation | Each clinical claim needs support, while one source may support several outcomes |
 | Exact content revisions to Sources | Many-to-many through Citation | One source supports several claims and one claim may require several sources |
 | Patient Presentation Variant to facility capabilities | Many-to-many | A presentation may require several services, and one capability supports many presentations |
 | Clinical Release to exact item revisions | Many-to-many through release membership | Unchanged immutable revisions may appear in several complete releases |
@@ -470,19 +505,21 @@ Recommended authoring sequence:
 5. Define locked facts, instantiation profiles, slots, distributions, and
    constraints.
 6. Create Decision Nodes and Question Variants.
-7. Create the patient-level diagnosis-and-management learning summary.
-8. Run structural validation, constraint analysis, and preview coverage.
-9. Clinically approve exact revisions.
-10. Assemble and validate a complete release candidate.
-11. Review compatibility, simulation, and dependency reports.
-12. Publish an immutable release.
+7. Review every final incorrect choice and author an approved Terminal Clinical
+   Outcome or explicitly select `no_terminal_outcome`.
+8. Create the patient-level diagnosis-and-management learning summary.
+9. Run structural validation, constraint analysis, and preview coverage.
+10. Clinically approve exact revisions.
+11. Assemble and validate a complete release candidate.
+12. Review compatibility, simulation, and dependency reports.
+13. Publish an immutable release.
 
 ### AI-assisted drafting boundary
 
 From the administrator application, an authorized editor may select approved
 topic sections, structured facts, concepts, and sources and request draft
-patient variants, templates, constraints, questions, distractors, or
-explanations.
+patient variants, templates, constraints, questions, distractors, explanations,
+or terminal clinical outcomes.
 
 Every AI authoring job records:
 
@@ -573,7 +610,7 @@ approved outsourced fallback. It displays read-only turnaround previews from a
 selected compatible balance release; clinical content never stores those
 timing numbers.
 
-### Question Variant editor
+### Question Variant and terminal-outcome editor
 
 Shows the single primary concept, compatible patient variants, templated stem,
 answer choices, correct mapping, shuffle policy, choice-specific rationales,
@@ -581,6 +618,13 @@ general explanation, citations, AI provenance, and change history.
 
 Changing the primary concept after clinical approval creates a new draft and
 invalidates prior approval. A published revision is never edited.
+
+For a final scored node, each incorrect choice opens a required disposition
+panel. Melissa selects explicit No terminal outcome or edits one minor/major
+outcome with its compatible profiles, causal framing, rationale, sources, and
+approval status. The preview shows the outcome, correction, and final summary
+together. Narrative severity cannot edit or override the read-only operational
+penalty preview from the selected balance release.
 
 The Case and Patient Variant Studio also previews the patient-level learning
 summary that becomes available after the encounter is terminal. It displays the
@@ -603,6 +647,8 @@ not treated as proof of safety. The report also includes:
 - Rare or low-weight combinations
 - Grammar and unresolved-slot warnings
 - Exact answer mapping and shuffled order
+- Every final wrong-choice disposition and its exact rendered outcome,
+  correction, causal framing, and compatible profile
 - Exact rendered Patient Learning Summary for every scored presentation
 - Result Gate readiness, hard-capability or fallback coverage, and route/ETA
   previews against each supported balance release
@@ -674,6 +720,19 @@ A clinical release candidate should fail validation when, at minimum:
   Decision Nodes.
 - Two scored Decision Nodes in one patient encounter use the same primary
   Tested Concept.
+- A Terminal Clinical Outcome is attached to a nonfinal scored node.
+- A final incorrect Answer Choice and compatible presentation/profile lacks an
+  explicit outcome or `no_terminal_outcome` disposition.
+- More than one terminal outcome is eligible for the same pilot tuple.
+- A terminal outcome lacks minor/major severity, causal framing, clinical
+  rationale, source coverage, Melissa's approval, or complete profile
+  compatibility.
+- A terminal outcome contains invalid slots, overstates causality, is
+  clinically implausible, or contradicts the correct explanation or Patient
+  Learning Summary.
+- A terminal outcome creates another score, concept exposure, FSRS update,
+  mastery event, clinical XP event, or operational effect outside the
+  patient-level cap.
 
 Automated checks can exhaust finite profiles and deterministic decision tables.
 They cannot prove the clinical meaning of arbitrary prose or an unrestricted
@@ -721,6 +780,8 @@ classification also fails when:
 - The predecessor campaign's core-concept denominator or eligibility changes.
 - Supplemental material can starve required reviews or create an obvious
   reward exploit.
+- A predecessor question's Terminal Outcome Disposition or outcome meaning
+  changes without validated replacement or migration behavior.
 - An already-generated episode would need to change.
 - The exact compatibility validator and migration versions are not recorded.
 
@@ -737,7 +798,8 @@ browsers.
 
 Every runtime item retains its exact source, topic, concept, patient-variant,
 template, constraint, Result Gate, Result Requirement, question, answer,
-explanation, and Patient Learning Summary revision dependencies. A later Topic
+explanation, Terminal Outcome Disposition, Terminal Clinical Outcome when
+applicable, and Patient Learning Summary revision dependencies. A later Topic
 Revision does not alter the item. Instead, a change-impact report flags
 dependent material for review when an underlying fact changes. A material
 correction follows the accepted withdrawal and correction process.
@@ -783,7 +845,8 @@ identifier. It cannot redefine the old identifier.
 
 - Stable identity versus immutable revision model
 - Clinical Topic, Tested Concept, Case Family, Patient Presentation Variant,
-  Decision Node, Result Gate, and Question Variant boundaries
+  Decision Node, Result Gate, Question Variant, and Terminal Clinical Outcome
+  boundaries
 - Meaning of Patient Presentation Variant for mastery evidence
 - Many-to-many Concept Presentation and question-compatibility relationships
 - Typed slot, finite profile, value-set, and declarative constraint contract

@@ -142,6 +142,9 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
   capacity. Full routine capacity pauses new routine admissions before they
   enter Waiting, while reserved slots protect tutorial and progression-critical
   cases.
+- Wrong nonfinal answers are corrected and continue from the correct clinical
+  state. A wrong final answer may show one approved minor or major fictional
+  terminal outcome, while operational penalties remain bounded and recoverable.
 - Each campaign permanently retains its core-concept set and balance release.
   Its clinical release may advance through a validated, recorded,
   backward-compatible additive adoption without changing its mastery

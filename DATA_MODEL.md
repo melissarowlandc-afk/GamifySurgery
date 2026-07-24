@@ -272,6 +272,22 @@ Ordered child of one Question Variant revision. Stores exact wording,
 correctness, choice-specific rationale, and shuffle-group or fixed-position
 behavior.
 
+### Terminal outcome disposition
+
+Immutable reviewed mapping for one incorrect Answer Choice on a final scored
+Decision Node plus one compatible Patient Presentation Variant or finite
+Clinical Instantiation Profile. It stores either
+`no_terminal_outcome` or one exact Terminal Clinical Outcome Revision. A unique
+constraint permits exactly one disposition per compatible tuple.
+
+### Terminal clinical outcome revision
+
+Exact sourced, clinically approved, unscored terminal vignette with stable
+parent identity, `minor` or `major` clinical severity, causal-framing type,
+clinical rationale, narrative template, compatible typed slots and profiles,
+citations, AI provenance, workflow state, and immutable revision history. It
+contains no balance amount, scheduler rating, XP rule, or mastery effect.
+
 ### Source
 
 Stable bibliographic identity with title, publisher or journal, link or
@@ -283,8 +299,8 @@ send to an AI provider.
 
 Claim-specific many-to-many join from a Source to an exact topic section,
 structured fact, concept, patient-variant, Result Gate or Requirement, Patient
-Learning Summary, question, answer, or explanation revision. Stores supported
-claim, locator, and author verification state.
+Learning Summary, question, answer, explanation, or Terminal Clinical Outcome
+revision. Stores supported claim, locator, and author verification state.
 
 ### Content revision
 
@@ -325,8 +341,9 @@ drafts, AI prompts, or licensed source text.
 Many-to-many join from a Clinical Release to exact approved revisions of
 concepts, case families, patient variants, templates, profiles, constraints,
 decision nodes, Result Gates, Result Requirements, questions, answers,
-explanations, Patient Learning Summaries, and allowed citations. Relationship
-rows preserve dependency role and manifest ordering where needed.
+explanations, Terminal Outcome Dispositions, Terminal Clinical Outcomes,
+Patient Learning Summaries, and allowed citations. Relationship rows preserve
+dependency role and manifest ordering where needed.
 
 ### Publication validation report
 
@@ -513,10 +530,12 @@ freezes:
 - Tested Concept, Concept Presentation Link, Case Family, Patient Presentation
   Variant, Scenario Template, Clinical Instantiation Profile, Decision Node,
   Result Gate, Result Requirement, Question Variant, Answer Choice,
-  explanation, Patient Learning Summary, and constraint revisions
+  explanation, Terminal Outcome Disposition, any Terminal Clinical Outcome,
+  Patient Learning Summary, and constraint revisions
 - Every chosen slot value and its safety class
 - Exact rendered patient text, stem, answer-choice order, correct-answer
-  mapping, and explanation
+  mapping, explanation, and applicable terminal-outcome text, severity, causal
+  framing, and citations
 - Campaign randomness-contract version, relevant stream identifier and
   counters, generation seed provenance, and canonical checksum
 - Noncosmetic repetition fingerprint
@@ -545,8 +564,12 @@ not separately writable flags.
 
 The snapshot also preserves the current Decision Node, pending-result gate
 identifier, scheduled-result event IDs, statuses, and due facility-time ticks,
-deferred-feedback state, completion and resolution timestamps, and terminal
-resolution reason. Because chart attendance suppresses one delay consequence,
+deferred-feedback state, terminal-feedback presentation state, completion and
+resolution timestamps, and terminal resolution reason. Terminal presentation
+state includes `terminal_feedback_required` and an idempotent
+`terminal_feedback_acknowledged` operation when an incorrect final answer has
+corrective or outcome content. Because chart attendance suppresses one delay
+consequence,
 the snapshot owns one `attended_encounter_id` as simulation interaction state;
 `open_chart_panel_id`, panel geometry, animation, and scroll position remain
 presentation/navigation state. At most one encounter is attended; it belongs
@@ -645,18 +668,28 @@ refresh or retry cannot duplicate them. Settlement is uniquely keyed by
 encounter and settlement type; review evidence is uniquely keyed by
 scored-decision instance.
 
+For an incorrect nonfinal node, the frozen correct transition determines the
+next state. For an incorrect final node, the frozen disposition
+deterministically provides `no_terminal_outcome` or one exact rendered outcome.
+The terminal view presents any outcome and correction before filing, releases
+safely deferred feedback, requires one persisted acknowledgment, and then
+offers the summary. The acknowledgment creates no second decision or
+educational evidence.
+
 The frozen payload includes the exact rendered, clinically approved
 post-completion diagnosis-and-management summary and its source revision IDs.
-It never reads mutable Draft topic notes. Summary viewing is an unscored,
-read-only educational event and remains available from a reopened Resolved
-chart.
+It never reads mutable Draft topic notes. Terminal outcome and summary viewing
+are unscored, read-only educational presentation and remain reproducible from a
+reopened Resolved chart.
 
 ### Runtime scored-decision instance
 
 One exact scored or unscored decision inside a Runtime Encounter Instance.
 Stores the single primary concept, displayed answer order, first submitted
 choice, correctness mapping, Again/Good mapping when scored, review-evidence
-identifier, answer timestamp, and publisher-correction status.
+identifier, answer timestamp, terminal-node flag, resolved Terminal Outcome
+Disposition and outcome revision when applicable, and publisher-correction
+status.
 
 Only the first scored submission updates its one Tested Concept. Practice,
 explanation viewing, and APP automation use distinct event types.
@@ -756,6 +789,10 @@ ADR 0020 accepts:
 - Separation of clinical result truth from balance-defined service timing,
   route, queue, capacity, and cost
 - The exact runtime-instantiation freeze and provenance boundary
+
+ADR 0030 additionally accepts Terminal Outcome Disposition and Terminal
+Clinical Outcome identities, deterministic final-wrong-choice mapping, and
+separation from operational penalties.
 
 Exact physical table and column names, indexes, administrator presentation,
 import mappings, and migration mechanics remain lower-level design work. They

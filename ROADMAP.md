@@ -41,6 +41,8 @@ clinical collection in parallel.
   without blocking a Waiting chart from being opened
 - One short clinical decision sequence, instructional feedback, and an
   approved final diagnosis-and-management summary with optional viewing
+- One synthetic wrong-final-answer terminal outcome demonstrating correction,
+  bounded management effects, and reproducible reopening
 - Money, XP, and satisfaction reactions
 - Build and place the first examination room
 - Restart the prototype safely
@@ -67,6 +69,8 @@ whether the patient is waiting, pending a result, ready for action, or resolved.
   losing an educational question
 - Deterministic capacity backpressure, protected tutorial reserve, and
   save/reload without duplicate or burst arrivals
+- Approved terminal-outcome and explicit-no-outcome fixtures with validation,
+  correct-forward continuation, and no extra FSRS evidence
 - Versioned clinical and balance fixtures
 - Save, close, reopen, and deterministic continuation
 - Worst-case tutorial funding that cannot softlock

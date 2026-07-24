@@ -50,6 +50,10 @@ The duration is open. Three to four weeks is recommended because it is long enou
 - Does the facility feel active rather than idle?
 - Are queues and staff automation understandable?
 - Does incorrect clinical feedback feel instructive rather than punitive?
+- Does an appropriate wrong-final-answer outcome feel clinically meaningful
+  without implying inevitability or making the learner afraid to engage?
+- Is the distinction between serious fictional harm and bounded game punishment
+  understandable?
 - Can a tester play comfortably on desktop and phone with sound off?
 - Does save/reopen and cross-device access behave predictably?
 - Do concepts return through variants without feeling repetitive or unfair?

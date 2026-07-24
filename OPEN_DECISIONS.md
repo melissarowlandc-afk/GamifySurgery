@@ -20,7 +20,7 @@ privacy/research, external access, spending, licensing, or destructive actions.
 
 | ID | Decision | Recommended direction | Required before |
 |---|---|---|---|
-| G-002 | First real clinical concept or small concept set | Melissa chooses only after the synthetic prototype proves the authoring and play flow | Real clinical-content integration |
+| G-002 | First real clinical validation set | After the synthetic prototype proves the flow, Melissa selects the smallest useful Level 0/1 topic and concept set; bulk authoring waits until that set validates the workflow | Real clinical-content integration |
 | G-003 | Opening tone and story, including whether to use the inheritance joke | Defer until the core loop is playable; use a minimal clinic opening first | Tutorial polish |
 | G-004 | Pilot participants, optional feedback, and any disclosed playtest metrics | Melissa and trusted family first; decide outside access and data fields later | Hosted tester invitations |
 
@@ -87,4 +87,5 @@ starting research, or destroying owner data.
 | G-001D | Clinical result timing | Transparent, capability-based facility-time delays; meaningful waits only; outsourced routes slower than functioning in-house services; visible pending status and ETA; deterministic prototype timing | ADR 0027; D-044 |
 | G-001E | Patient patience and leaving | Only unopened Waiting patients may abandon after generous visible warnings; opening protects the Active educational case; delay effects are small and capped; tutorial patients remain guaranteed | ADR 0028; D-045 |
 | G-001F | Patient workload capacity | Waiting plus unresolved Active patients consume visible clinic workload; full routine capacity pauses intake before Waiting; protected reserve guarantees tutorial and progression-critical cases; capacity changes never evict existing patients | ADR 0029; D-046 |
+| G-001G | Incorrect-answer patient path | Wrong nonfinal answers correct forward; a wrong final answer may show one deterministic approved minor/major terminal clinical outcome before correction and summary; narrative severity cannot bypass capped management consequences | ADR 0030; D-047 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

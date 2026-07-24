@@ -294,3 +294,4 @@ Patient Presentation Variant or Tested Concept identity changed.
 - ADR 0016: Clinical Withdrawal and Correction
 - ADR 0018: Versioned Named Random Streams
 - ADR 0019: Hybrid Relational and JSONB Storage
+- ADR 0030: Correction-Forward Cases with Terminal Clinical Outcomes

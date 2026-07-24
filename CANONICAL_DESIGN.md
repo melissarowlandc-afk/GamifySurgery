@@ -145,6 +145,29 @@ Exact amounts remain tunable balance values. This accepted relationship is
 recorded in
 [ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md).
 
+### Incorrect-answer case continuation
+
+- A wrong nonfinal answer is corrected, with feedback deferred only when needed
+  to protect a later scored question, and the patient continues from the
+  clinically correct state.
+- A wrong final answer may show one deterministic, clinically approved minor or
+  major fictional terminal outcome before correction, the Patient Learning
+  Summary, and chart closure.
+- The terminal feedback requires one unscored acknowledgment before filing;
+  viewing the full Patient Learning Summary remains optional.
+- Every final wrong choice has an explicit approved outcome or an explicit
+  `no_terminal_outcome` disposition. Harm is never invented only as punishment.
+- Terminal outcomes are choice- and presentation-specific, sourced, immutable,
+  frozen with the encounter, and written so a possible complication is not
+  falsely presented as inevitable.
+- The outcome is unscored and creates no additional concept exposure, FSRS
+  review, mastery evidence, or XP.
+- Narrative severity never bypasses the accepted patient-level management cap,
+  tutorial guarantee, or progression safeguards.
+
+This accepted authoring and runtime rule is recorded in
+[ADR 0030](docs/adr/0030-correction-forward-with-terminal-clinical-outcomes.md).
+
 ### Patient chart lifecycle
 
 - A newly arrived patient appears as a chart tab in the Waiting list and does
@@ -158,8 +181,9 @@ recorded in
   the exclamation point and shows what is pending.
 - When the result or next question becomes ready, the Active tab gains its
   exclamation point without stealing focus from another open chart.
-- After the final question, the player may flip or toggle the chart to an
-  unscored diagnosis-and-management summary that is required, clinically
+- After the final question, any approved wrong-answer terminal outcome and
+  corrective teaching appear before the player may flip or toggle the chart to
+  an unscored diagnosis-and-management summary that is required, clinically
   approved content but optional for the player to view.
 - Closing the completed chart moves it into Resolved. Resolved charts remain
   reopenable in read-only form without creating another answer, reward, or FSRS

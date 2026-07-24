@@ -48,6 +48,13 @@ same-date response.
 Exact amounts and formulas are balance values selected through simulation and
 playtesting. The structural relationship is accepted in ADR 0025.
 
+Terminal Clinical Outcome `minor` or `major` severity is clinical-content
+metadata, not a balance multiplier. A wrong final answer uses the same
+normalized patient-level consequence relationship as any other wrong answer.
+It cannot override the cap, tutorial funding guarantee, progression safeguards,
+basic completion-revenue rule, or one-review-per-node behavior. This separation
+is accepted in ADR 0030.
+
 ## Accepted result-timing relationship
 
 - Result delays advance in facility time only.
@@ -194,6 +201,8 @@ Accepted release flow:
   physical room, or a service/task queue.
 - Base patient revenue is not multiplied by scored-node count.
 - Multi-question clinical bonuses and penalties obey their patient-level caps.
+- Minor and major terminal clinical outcomes produce no automatic difference in
+  operational penalty.
 - Same-date remediation cannot repeat clinical XP or quality bonuses.
 - Deliberately incorrect play never has greater expected value than correct
   play.

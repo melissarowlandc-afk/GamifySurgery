@@ -39,10 +39,13 @@ Use this patient-chart lifecycle:
 5. **Result ready:** When the next authored result or decision becomes
    available, the Active tab gains an exclamation point. Opening it resumes the
    same frozen encounter at the correct node.
-6. **Final answer and learning summary:** After all required authored nodes are
-   complete and the encounter is terminal, the chart becomes eligible to flip
-   or toggle to its required, read-only diagnosis-and-management learning
-   summary. Choosing to view it is optional.
+6. **Final answer, terminal feedback, and learning summary:** After all required
+   authored nodes are complete, any approved wrong-final-answer terminal
+   outcome and corrective teaching appear under ADR 0030. The chart then
+   becomes eligible to flip or toggle to its required, read-only
+   diagnosis-and-management learning summary. One unscored terminal-feedback
+   acknowledgment is required before filing; choosing to view the summary is
+   optional.
 7. **Resolved:** Closing the chart after final completion files it in the
    Resolved folder.
 

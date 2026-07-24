@@ -47,10 +47,12 @@ Incorrect tutorial answers still receive normal teaching feedback and bounded
 consequences; the guarantee prevents a softlock rather than pretending the
 answers were correct.
 
-More serious fictional consequences may later appear as explicitly designed
-events, but the first pilot does not use a single wrong answer to cause an
-unrecoverable campaign loss, irreversible progression failure, or punitive
-learning-state clawback.
+ADR 0030 now permits one clinically approved minor or major fictional terminal
+outcome after an appropriate wrong final answer. Its narrative clinical
+severity is separate from the balance effect and cannot increase the accepted
+patient-level cap. The first pilot still does not use a single wrong answer to
+cause an unrecoverable campaign loss, irreversible progression failure,
+tutorial softlock, or punitive learning-state clawback.
 
 ## Consequences
 

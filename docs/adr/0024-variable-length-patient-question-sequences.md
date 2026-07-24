@@ -34,6 +34,10 @@ multiple-choice Decision Nodes.
 - Feedback appears promptly unless it would reveal or materially cue a later
   scored answer. Dependent feedback is then held until the affected later node
   is submitted or the encounter safely ends.
+- Under ADR 0030, an incorrect nonfinal answer then continues from the
+  clinically correct state. A wrong final answer may add one unscored,
+  clinically approved terminal outcome vignette; it does not add another node
+  or shorten a remaining sequence.
 - Unscored narrative, operational updates, and ordinary management actions do
   not count toward the three-question limit.
 - A clinical sequence needing more than three scored decisions must be divided

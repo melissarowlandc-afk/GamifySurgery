@@ -248,6 +248,17 @@ separate independently scored nodes or encounters.
 Explanation viewing, retry practice, and APP automation are separate event
 types.
 
+Incorrect nonfinal answers use the authored correct continuation; the runtime
+does not construct a wrong-care branch. An incorrect final answer resolves one
+exact, clinically approved Terminal Outcome Disposition for its frozen Answer
+Choice and presentation/profile. The disposition deterministically supplies
+either `no_terminal_outcome` or one Terminal Clinical Outcome Revision. The
+terminal feedback is unscored, appears before filing, and is frozen with the
+encounter. One persisted acknowledgment gates filing but creates no educational
+event. Clinical severity cannot alter FSRS evidence or bypass the patient-level
+operational cap. This rule is accepted in
+[ADR 0030](docs/adr/0030-correction-forward-with-terminal-clinical-outcomes.md).
+
 The project-owned scheduler adapter is the only educational-domain boundary
 permitted to import `ts-fsrs`. It maps the first scored answer to Again or Good
 and returns project-owned state. Review evidence preserves the pre-review and
@@ -584,6 +595,10 @@ and player actions. This accepted choice is recorded in
 - Patient-chart transition and reload tests, including result-ready events,
   close-with-unanswered-action, terminal settlement exactly once, Resolved
   read-only reopening, and no duplicate FSRS review
+- Correction-forward and terminal-outcome tests for every final wrong choice,
+  profile compatibility, `no_terminal_outcome`, deferred-feedback release,
+  refresh/reopen reproducibility, one Review Record only, and operational-cap
+  invariance across minor and major clinical severity
 - Concurrent and stale-event tests: refresh while the final summary is
   available, results due while the same or another chart is open, simultaneous
   patient results, double delivery, and `!` persisting until submission
