@@ -20,7 +20,6 @@ privacy/research, external access, spending, licensing, or destructive actions.
 
 | ID | Decision | Recommended direction | Required before |
 |---|---|---|---|
-| G-001 | First playable clinical interaction: guided staged choices, searchable action catalogs, or a hybrid | Begin with short guided staged choices; preserve searchable catalogs as a later expansion | First playable patient |
 | G-002 | First real clinical concept or small concept set | Melissa chooses only after the synthetic prototype proves the authoring and play flow | Real clinical-content integration |
 | G-003 | Opening tone and story, including whether to use the inheritance joke | Defer until the core loop is playable; use a minimal clinic opening first | Tutorial polish |
 | G-004 | Pilot participants, optional feedback, and any disclosed playtest metrics | Melissa and trusted family first; decide outside access and data fields later | Hosted tester invitations |
@@ -32,7 +31,7 @@ available and will not be presented as serial owner decisions:
 
 | Item | Current working default |
 |---|---|
-| Exact vertical-slice technical scope | Smallest coherent loop after G-001: founder, patient, feedback, resources, first room, pause, and save |
+| Exact vertical-slice technical scope | Smallest coherent loop under G-001: founder, multiple-choice patient decision, feedback, resources, first room, pause, and save |
 | Tutorial economy | Guarantee the first room and an operating buffer even after mistakes |
 | Phone layout | Support portrait and landscape with responsive drawers, pan, and zoom |
 | Early authoring tools | Private Google Sheets workbook plus validated exports; full admin application later |
@@ -81,4 +80,5 @@ starting research, or destroying owner data.
 | R-019 | Hosted-pilot topology | Separate staging and pilot data plus separately deployed player and administrator applications; exact static host selected just-in-time by the lead agent | ADR 0022; D-037 |
 | Y-017 | Initial clinical authoring workbook | Private owner-controlled Google Sheets working source, protected stable identifiers, validated exports, one- or two-concept trial, and one-way handoff to the future admin database | D-038 |
 | R-014 | Vertical-slice scope | Lead agent selects the smallest coherent scope after the applicable owner-level interaction choice and expands only after a playable demonstration | ADR 0021; D-039 |
+| G-001 | Clinical assessment interaction | Every scored clinical concept uses single-select multiple choice with exactly one correct answer; searchable or free-text controls do not score clinical knowledge | ADR 0023; D-040 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

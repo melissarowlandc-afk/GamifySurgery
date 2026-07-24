@@ -99,6 +99,25 @@ Every scored clinical decision identifies exactly one primary concept.
 - Content validation must prevent feedback from an earlier node from
   unintentionally revealing a later scored answer.
 
+### Multiple-choice clinical interaction
+
+Every scored clinical Decision Node uses single-select multiple choice with a
+finite answer set and exactly one clinically correct answer.
+
+- The first submitted choice is final for scoring.
+- Choice count may vary when clinically appropriate.
+- Distractors, the correct answer, and explanations receive clinical review.
+- Safe answer-order shuffling is declared per Question Variant.
+- A patient may contain several sequential questions, but each independently
+  scores one primary concept.
+- Search and menus may support management or administrative controls, but they
+  do not score clinical knowledge.
+
+Concepts still recur through different meaningful patient presentations,
+question wording, perspectives, distractors, and explanations rather than
+repeating one memorized item. This accepted game-design rule is recorded in
+[ADR 0023](docs/adr/0023-multiple-choice-clinical-assessment.md).
+
 ### Campaign-scoped scheduling
 
 Each campaign owns its own concept cards, review log, mastery evidence, and next-due times.

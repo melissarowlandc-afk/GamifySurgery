@@ -192,7 +192,7 @@ Each Question Variant has:
 
 - A permanent stable identifier and exact revisions
 - Compatible Patient Presentation Variants
-- Stem template and answer mode
+- Stem template; scored answer mode is single-select multiple choice
 - Answer choices, correct-answer mapping, and choice-specific rationales
 - General explanation
 - Answer-order shuffle policy
@@ -200,6 +200,13 @@ Each Question Variant has:
 - Recent-use and remediation eligibility metadata
 
 Question wording differences do not create a new patient mastery variant.
+
+Every scored Question Variant has a finite answer set with exactly one
+clinically correct choice. Choice count may vary. Searchable entry, free text,
+matching, ordering, and multi-select are not scored clinical modes in the
+current design. An unscored Decision Node may use another interaction only when
+it is clearly separated from clinical assessment and cannot update FSRS or
+mastery.
 
 ### Answer Choice
 
@@ -738,7 +745,6 @@ review-evidence repair, and possibly reclassification of mastery history.
 
 - Pilot concepts and categories
 - Exact number of cases and variants
-- Single-choice versus other answer modes
 - Whether a patient episode may contain several independently scored decisions
 - Variant difficulty labels and eligibility
 - Retired concept behavior in old campaigns

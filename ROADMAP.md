@@ -18,7 +18,7 @@ Last updated: 2026-07-23
 ## Milestone 0: Reconcile and prepare
 
 - Preserve the reconstructed design intent and superseded explorations.
-- Resolve the first owner-level clinical-interaction choice.
+- Apply the accepted multiple-choice clinical-interaction rule.
 - Create the monorepo skeleton, shared validation, and deterministic test
   harness.
 - Prepare the owner-controlled clinical authoring workbook and test its shape

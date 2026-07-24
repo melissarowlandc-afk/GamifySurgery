@@ -45,6 +45,7 @@ Last updated: 2026-07-23
 | D-037 | 2026-07-23 | Deliver a local playable prototype, then a coherent local vertical slice, staging, and an invite-only private browser pilot with separate player/admin deployments and a just-in-time static-host selection | Accepted | RED | Executive technical decision under ADR 0021; ADR 0022; resolves R-013 and R-019 without authorizing external resource creation |
 | D-038 | 2026-07-23 | Use a private owner-controlled Google Sheets workbook as the temporary clinical authoring source, with protected stable identifiers, validated exports backed up to GitHub, a one- or two-concept trial, and a one-way transition to the future admin database | Accepted | YELLOW | Executive technical decision under ADR 0021; resolves Y-017; external workbook creation remains a separate action |
 | D-039 | 2026-07-23 | Let the lead agent define and adjust the smallest coherent technical scope for each prototype milestone after the applicable owner-level interaction choice, expanding only after a playable demonstration | Accepted | RED delivery | Executive delivery decision under ADR 0021; resolves R-014 as a serial approval gate |
+| D-040 | 2026-07-24 | Test every scored clinical concept through a single-select multiple-choice Question Variant with exactly one clinically correct answer; searchable, free-text, matching, ordering, or multi-select controls do not score clinical knowledge | Accepted | RED game design | Owner selected Decision G-001 Option B; ADR 0023 |
 
 ## Approval rule
 
