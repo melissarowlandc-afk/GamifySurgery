@@ -37,6 +37,8 @@ clinical collection in parallel.
   progress while paused
 - A visible Waiting-patient patience warning, first-open protection, and a
   guaranteed non-abandoning tutorial patient
+- A visible clinic-workload limit whose full state pauses routine arrivals
+  without blocking a Waiting chart from being opened
 - One short clinical decision sequence, instructional feedback, and an
   approved final diagnosis-and-management summary with optional viewing
 - Money, XP, and satisfaction reactions
@@ -63,6 +65,8 @@ whether the patient is waiting, pending a result, ready for action, or resolved.
 - Save/reload restoration of Active pending-result and action-required charts
 - Deterministic Waiting departure and capped Active delay consequences without
   losing an educational question
+- Deterministic capacity backpressure, protected tutorial reserve, and
+  save/reload without duplicate or burst arrivals
 - Versioned clinical and balance fixtures
 - Save, close, reopen, and deterministic continuation
 - Worst-case tutorial funding that cannot softlock

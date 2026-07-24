@@ -96,6 +96,8 @@ Responsibilities:
   indicators
 - Accessible Waiting-patience status and warnings derived from authoritative
   facility-time state
+- Accessible clinic-workload current/limit and At capacity or Over capacity
+  status
 - Accessible pending-result status and facility-time ETA presentation
 - Accessible text and controls
 - Local presentation state and brief connection-loss buffering
@@ -177,6 +179,21 @@ accrues the prior patient's unattended time and attends the new patient in one
 command, with no transient gap. Only an unresolved Active chart may be attended;
 a Resolved or History chart grants no exemption. Delay accrual stops when the
 encounter reaches `resolved_summary_available`.
+
+The simulation derives `clinic_workload_occupancy` from Waiting and unresolved
+Active workflow states. It never maintains a second writable occupancy counter.
+Routine admissions require occupancy below the effective
+`routine_workload_limit`; protected cases may additionally use only the
+explicitly published `critical_reserved_slots`. Opening is count-neutral, while
+terminal completion or pre-open departure releases capacity atomically.
+
+At routine capacity, one persisted arrival gate pauses before content selection,
+instantiation, or random identity draws. It retains its remaining facility
+ticks and resumes once without catch-up when capacity returns. Capacity-release
+and recalculation events precede admission at the same tick, and each admission
+rechecks capacity idempotently. A capacity decrease never evicts an encounter;
+the clinic becomes Over capacity and blocks routine intake. These rules are
+accepted in [ADR 0029](docs/adr/0029-total-clinic-workload-capacity.md).
 
 Authored result gates reference exact approved clinical result payloads and
 stable balance-defined result/service types. The pinned balance release
@@ -388,6 +405,8 @@ Accepted campaign storage combines:
 - The exact encounter lifecycle, current authored node, pending result/service
   events and facility-time due ticks, and presentation-safe open-chart
   restoration
+- The routine-arrival gate, protected guarantee state, and inputs needed to
+  rederive clinic workload and effective capacity
 
 The server writes a compatible snapshot and its new review or finance evidence
 atomically. Unique operation identifiers make retried requests idempotent.
@@ -579,6 +598,10 @@ and player actions. This accepted choice is recorded in
   chart switch and writer takeover, observable warnings at supported speeds,
   capped once-only threshold application, departure cleanup and settlement
   bypass, and no review or answer disclosure after leaving before being seen
+- Workload-capacity tests for every workflow transition, count-neutral chart
+  opening, protected reserve isolation, capacity decreases without eviction,
+  pause/resume without arrival bursts, deterministic same-tick admission,
+  save/reload and takeover, and worst-case tutorial progress
 - Schema and publication validation tests
 - Database permission tests
 - Phone and desktop end-to-end tests

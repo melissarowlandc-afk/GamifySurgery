@@ -42,6 +42,10 @@ The duration is open. Three to four weeks is recommended because it is long enou
 - Are Waiting patience and departure warnings understandable and generous?
 - Does protecting Active patients remove clinical-reading pressure without
   making queues feel consequence-free?
+- Is clinic workload understandable, and does At capacity explain why routine
+  arrivals paused and how the player can increase capacity?
+- Can a player open every Waiting chart without creating an infinite Active
+  backlog, unfair abandonment, or a profitable exploit?
 - Can the player afford and build the first room without a softlock?
 - Does the facility feel active rather than idle?
 - Are queues and staff automation understandable?

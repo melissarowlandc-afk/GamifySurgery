@@ -218,6 +218,28 @@ This accepted pacing relationship is recorded in
 This accepted fairness rule is recorded in
 [ADR 0028](docs/adr/0028-fair-waiting-patient-patience.md).
 
+### Clinic workload capacity
+
+- One visible clinic-workload capacity counts Waiting patients plus unresolved
+  Active patients.
+- Opening a chart does not change occupancy. Terminal completion or leaving
+  before first opening releases one slot.
+- A completed patient whose optional learning summary remains available no
+  longer consumes workload capacity.
+- When the routine limit is full, routine arrivals pause before entering
+  Waiting; the game does not create an unreachable patient or accumulate a
+  hidden arrival burst.
+- Tutorial and progression-critical cases use protected reserved capacity and
+  remain deterministically guaranteed.
+- Rooms, functioning staff, and upgrades may raise capacity. If capacity later
+  falls below current occupancy, existing cases remain and new routine
+  admissions pause.
+- The workload display and At capacity or Over capacity status remain usable
+  without sound or color.
+
+This accepted backpressure rule is recorded in
+[ADR 0029](docs/adr/0029-total-clinic-workload-capacity.md).
+
 ### Campaign-scoped scheduling
 
 Each campaign owns its own concept cards, review log, mastery evidence, and next-due times.

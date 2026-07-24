@@ -20,6 +20,8 @@ All notable project-record changes are listed here. No implementation exists.
   services, and deterministic prototype timing
 - Fair Waiting-patient patience with visible warnings, first-open Active-case
   protection, capped delay consequences, and non-abandoning tutorial patients
+- Total clinic-workload capacity with pre-Waiting routine-arrival backpressure,
+  protected critical reserve, and no capacity-based patient eviction
 
 ### Documentation
 
@@ -30,6 +32,7 @@ All notable project-record changes are listed here. No implementation exists.
 - Added ADR 0026 and resolved G-001C for the patient-chart lifecycle
 - Added ADR 0027 and resolved G-001D for transparent result timing
 - Added ADR 0028 and resolved G-001E for patient patience and abandonment
+- Added ADR 0029 and resolved G-001F for clinic workload and arrival backpressure
 
 ### Implementation
 

@@ -138,6 +138,10 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - Only unopened Waiting patients may leave from impatience; opening protects
   the educational case, delay effects remain capped, and tutorial patients are
   guaranteed to stay.
+- Waiting plus unresolved Active patients consume one visible clinic-workload
+  capacity. Full routine capacity pauses new routine admissions before they
+  enter Waiting, while reserved slots protect tutorial and progression-critical
+  cases.
 - Each campaign permanently retains its core-concept set and balance release.
   Its clinical release may advance through a validated, recorded,
   backward-compatible additive adoption without changing its mastery

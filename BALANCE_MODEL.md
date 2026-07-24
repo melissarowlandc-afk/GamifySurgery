@@ -89,6 +89,25 @@ Exact durations, warning bands, grace periods, satisfaction amounts, and caps
 remain agent-managed prototype defaults until simulation and playtesting
 support publication. The structural relationship is accepted in ADR 0028.
 
+## Accepted clinic-workload relationship
+
+- Clinic workload counts Waiting plus unresolved Active encounters; opening a
+  chart is count-neutral.
+- Terminal completion and pre-open departure release capacity. Optional summary
+  viewing does not occupy a slot.
+- Routine arrivals pause before instantiation when the routine workload limit
+  is full and resume without a catch-up burst.
+- Protected reserved slots are unavailable to routine arrivals and guarantee
+  eligible tutorial or progression-critical cases.
+- Functioning rooms, staff, upgrades, and published modifiers may change the
+  effective limit. A capacity decrease never evicts existing cases.
+- Clinic workload, physical seats, room occupancy, and service/task throughput
+  use distinct stable identifiers and units.
+
+Exact limits, reserve counts, contribution formulas, and arrival intervals are
+agent-managed prototype defaults until simulation and playtesting support
+publication. The structural relationship is accepted in ADR 0029.
+
 ## Proposed balance areas
 
 - Facility-stage requirements and accomplishments
@@ -99,9 +118,9 @@ support publication. The structural relationship is accepted in ADR 0028.
 - Diagnostic and other result turnaround times and facility-capability
   modifiers
 - Numerical Waiting-patience and capped delay-consequence values,
-  Active-patient capacity, and Resolved-list pagination or movement of older
-  charts into an archive view; frozen encounter records are not deleted by
-  balance configuration
+  clinic-workload capacity and reserve values, and Resolved-list pagination or
+  movement of older charts into an archive view; frozen encounter records are
+  not deleted by balance configuration
 - Revenue and expense reason codes
 - Satisfaction inputs, penalties, recovery, and threshold behavior
 - XP awards and progression requirements
@@ -166,7 +185,13 @@ Accepted release flow:
   deterministic behavior when all weights are zero.
 - A progression-critical event has a deterministic guarantee rather than only
   a favorable probability.
+- Every tutorial or progression-critical patient guarantee has a valid
+  workload-reserve admission path, including after worst-case capacity changes.
 - Tutorial funding remains possible after worst-case clinical answers.
+- Routine arrivals cannot consume protected workload reserve.
+- Full-capacity pause and later release cannot create a catch-up arrival burst.
+- Every capacity modifier identifies whether it affects clinic workload, a
+  physical room, or a service/task queue.
 - Base patient revenue is not multiplied by scored-node count.
 - Multi-question clinical bonuses and penalties obey their patient-level caps.
 - Same-date remediation cannot repeat clinical XP or quality bonuses.
@@ -209,7 +234,7 @@ No simulator results exist yet.
 - Pay-cycle timing
 - Construction placement correction rules
 - Numerical result turnaround defaults and facility-capability speed modifiers
-- Numerical patience and grace thresholds, Active backlog limits, and the
+- Numerical patience and grace thresholds, clinic-workload limits/reserves, and the
   Resolved-list pagination/archive display threshold, never underlying-record
   deletion
 - Bankruptcy trigger and recovery behavior

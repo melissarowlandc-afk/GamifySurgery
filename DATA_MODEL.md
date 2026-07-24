@@ -594,6 +594,39 @@ revision checks. All delay accrual and attendance stop at
 `resolved_summary_available`, and answer-related plus delay-related
 satisfaction effects share the patient-level cap.
 
+### Clinic workload and arrival gate
+
+`clinic_workload_occupancy` is a derived count of encounters in
+`waiting_unopened`, `active_action_required`, or `active_pending_result`.
+`resolved_summary_available`, `resolved`, and `left_before_seen` do not count.
+Opening a chart is count-neutral; terminal completion or departure releases a
+slot in the same transaction as its workflow transition. If an effective
+capacity decrease puts occupancy above the limit, existing encounter records
+remain unchanged.
+
+The campaign-pinned balance release defines the stable
+`routine_workload_limit` inputs and `critical_reserved_slots`. Effective
+capacity is derived deterministically from current functioning rooms, staff,
+upgrades, and resolved modifier IDs. Routine admissions cannot consume the
+protected reserve. A protected guarantee that cannot yet be admitted remains
+pending; a progression-critical encounter that leaves unseen does not satisfy
+that guarantee.
+
+Each admitted encounter stores its arrival class
+(`routine`, `tutorial`, or `progression_critical`), any protected guarantee ID,
+and the admission operation ID. The campaign snapshot preserves the protected
+guarantee's pending or satisfied state so departure, retry, and reload cannot
+lose or duplicate it.
+
+The campaign snapshot stores one routine-arrival gate with remaining
+facility-time ticks, blocked status and start tick, stable event/operation ID,
+routine-arrival definition ID, and any already-consumed randomness provenance.
+The gate pauses before clinical selection or patient instantiation when
+routine capacity is full, resumes once when eligible, and cannot accumulate a
+catch-up backlog. Occupancy is rederived and capacity is revalidated on load.
+Admission uses writer-lease, expected-revision, capacity, and idempotency
+checks.
+
 A pending transition owns one result gate and one or more unresolved scheduled
 result/service events or queued service requests. A gate with no remaining
 work advances immediately rather than persisting in `active_pending_result`.

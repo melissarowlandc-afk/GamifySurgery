@@ -82,8 +82,8 @@ Response and operational-delay accrual stop at
 penalized. Answer-related and delay-related satisfaction consequences share
 one patient-level cap so penalties cannot stack beyond the accepted bound.
 
-Active-patient capacity and any policy for slowing new arrivals when the Active
-list grows remain separate rules.
+Total Waiting-plus-unresolved-Active workload capacity and routine-arrival
+backpressure are resolved separately by ADR 0029.
 
 ## Consequences
 

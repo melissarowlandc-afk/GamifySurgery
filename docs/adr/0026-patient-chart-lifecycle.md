@@ -125,8 +125,9 @@ results, rewards, or reviews.
 - Transparent capability-based result timing is resolved by ADR 0027; exact
   numerical turnaround remains balance tuning.
 - Waiting-patient patience and Active-case protection are resolved by ADR 0028;
-  exact numerical thresholds remain balance tuning. Active-patient capacity
-  and Resolved-list organization remain separate rules.
+  exact numerical thresholds remain balance tuning.
+- Total clinic-workload capacity and pre-Waiting arrival backpressure are
+  resolved by ADR 0029. Resolved-list organization remains separate.
 
 ## Cost of changing later
 
