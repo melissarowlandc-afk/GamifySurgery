@@ -108,10 +108,16 @@ finite answer set and exactly one clinically correct answer.
 - Choice count may vary when clinically appropriate.
 - Distractors, the correct answer, and explanations receive clinical review.
 - Safe answer-order shuffling is declared per Question Variant.
-- A patient may contain several sequential questions, but each independently
-  scores one primary concept.
+- A patient contains one to three sequential scored questions, each scoring a
+  different primary concept.
 - Search and menus may support management or administrative controls, but they
   do not score clinical knowledge.
+
+The authored case determines its question count and sequence. Feedback is
+deferred only when it would reveal or materially cue a later answer. Unscored
+narrative and operational steps do not count toward the three-question limit.
+This accepted game-design rule is recorded in
+[ADR 0024](docs/adr/0024-variable-length-patient-question-sequences.md).
 
 Concepts still recur through different meaningful patient presentations,
 question wording, perspectives, distractors, and explanations rather than

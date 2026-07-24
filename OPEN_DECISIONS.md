@@ -81,4 +81,5 @@ starting research, or destroying owner data.
 | Y-017 | Initial clinical authoring workbook | Private owner-controlled Google Sheets working source, protected stable identifiers, validated exports, one- or two-concept trial, and one-way handoff to the future admin database | D-038 |
 | R-014 | Vertical-slice scope | Lead agent selects the smallest coherent scope after the applicable owner-level interaction choice and expands only after a playable demonstration | ADR 0021; D-039 |
 | G-001 | Clinical assessment interaction | Every scored clinical concept uses single-select multiple choice with exactly one correct answer; searchable or free-text controls do not score clinical knowledge | ADR 0023; D-040 |
+| G-001A | Scored questions per patient | One to three sequential scored multiple-choice nodes per patient, each testing a different primary concept; defer feedback when needed to protect later answers | ADR 0024; D-041 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

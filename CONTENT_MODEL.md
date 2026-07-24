@@ -177,9 +177,11 @@ Accepted scoring rules remain:
 - APP automation is operational, not recall.
 - Supporting concept tags do not update FSRS or mastery.
 
-Several concepts require several independently scored nodes or encounters.
-Publication preview must verify that feedback or state changes from one node do
-not reveal a later scored answer.
+A patient encounter contains one to three independently scored nodes. Each node
+must use a different primary Tested Concept within that encounter. The authored
+case defines the count and order; the runtime does not append arbitrary scored
+questions. Publication preview must verify that feedback or state changes from
+one node do not reveal a later scored answer.
 
 ### Question Variant
 
@@ -595,6 +597,10 @@ A clinical release candidate should fail validation when, at minimum:
   objective.
 - Earlier-node feedback reveals the answer to a later scored node in the same
   case.
+- A scored patient encounter contains fewer than one or more than three scored
+  Decision Nodes.
+- Two scored Decision Nodes in one patient encounter use the same primary
+  Tested Concept.
 
 Automated checks can exhaust finite profiles and deterministic decision tables.
 They cannot prove the clinical meaning of arbitrary prose or an unrestricted
@@ -745,7 +751,6 @@ review-evidence repair, and possibly reclassification of mastery history.
 
 - Pilot concepts and categories
 - Exact number of cases and variants
-- Whether a patient episode may contain several independently scored decisions
 - Variant difficulty labels and eligibility
 - Retired concept behavior in old campaigns
 - Source minimums and review cadence

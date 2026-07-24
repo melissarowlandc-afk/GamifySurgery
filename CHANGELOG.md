@@ -2,6 +2,25 @@
 
 All notable project-record changes are listed here. No implementation exists.
 
+## 2026-07-24
+
+### Accepted
+
+- Single-select multiple-choice assessment for every scored clinical concept,
+  with exactly one correct answer per Question Variant
+- One to three sequential scored questions per patient encounter, each testing
+  a different primary concept, with dependency-aware feedback timing
+
+### Documentation
+
+- Added ADR 0023 and resolved G-001 for multiple-choice clinical assessment
+- Added ADR 0024 and resolved G-001A for variable-length patient question
+  sequences
+
+### Implementation
+
+- None
+
 ## 2026-07-23
 
 ### Accepted
@@ -79,8 +98,6 @@ All notable project-record changes are listed here. No implementation exists.
 - Private Google Sheets as the temporary clinical authoring source, with
   protected identifiers, validated GitHub export backups, a small trial, and a
   one-way handoff to the future admin database
-- Single-select multiple-choice assessment for every scored clinical concept,
-  with exactly one correct answer per Question Variant
 
 ### Proposed, not approved
 
@@ -132,7 +149,6 @@ All notable project-record changes are listed here. No implementation exists.
   superseded or exploratory mechanics
 - Refactored the roadmap and open-decision queue so only owner-level design and
   external-action gates require owner review
-- Added ADR 0023 and resolved G-001 for multiple-choice clinical assessment
 - Expanded the unresolved first-phase queue after a full-document audit to
   include simulation authority, seeded randomness, physical data boundaries,
   hosted-pilot topology, session/log retention, content scope, pilot scope,

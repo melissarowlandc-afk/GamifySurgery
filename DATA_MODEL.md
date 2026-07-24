@@ -223,8 +223,9 @@ campaign's pinned balance release.
 ### Decision node
 
 Ordered scored or unscored decision within one Case Family. Every scored node
-references exactly one primary Tested Concept. Supporting tags never update
-another concept's card or mastery.
+references exactly one primary Tested Concept. A patient encounter contains one
+to three scored nodes, and no two scored nodes within it use the same primary
+concept. Supporting tags never update another concept's card or mastery.
 
 ### Question variant
 
