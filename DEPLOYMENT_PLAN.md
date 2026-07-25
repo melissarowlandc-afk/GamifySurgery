@@ -1,10 +1,38 @@
 # Deployment Plan
 
-Status: Staged technical direction accepted in ADR 0022. No account, cloud
-resource, domain, billing, public deployment, or tester invitation has been
-authorized.
+Status: Staged technical direction accepted in ADR 0022. The public repository
+and GitHub Pages are enabled for an owner-authorized public prototype playtest.
+Pushes to `main` build and deploy the browser-local prototype automatically.
+This does not authorize a clinical pilot, paid infrastructure, a custom domain,
+or collection of tester data.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
+
+## GitHub Pages prototype playtest
+
+The current client is a static, browser-local prototype hosted at
+`https://melissarowlandc-afk.github.io/GamifySurgery/`. The Pages build uses
+the required `/GamifySurgery/` Vite base path, publishes only
+`apps/player/dist`, and does not require a backend. There are currently no
+client-side URL routes, so reloads at the project root do not require an SPA
+fallback.
+
+The workflow at `.github/workflows/deploy-pages.yml` deploys every push to
+`main` and can also be rerun manually from GitHub Actions. The source repository
+and the Pages site are public. The prototype provides no login gate, and
+browser-local campaigns remain isolated per browser/device. A campaign created
+locally does not appear on the Pages site, and a campaign created on one tester's
+browser does not appear on another computer or browser.
+
+Local deployment validation:
+
+```powershell
+npm run build:pages
+```
+
+That command type-checks the workspaces, builds with the repository subpath,
+and fails if generated root-relative asset links escape `/GamifySurgery/` or
+point to missing files. It does not publish anything.
 
 ## Stage 0: Local playable prototype
 

@@ -85,7 +85,7 @@ export function ResourceBar({
             <small>Current clinic experience</small>
           </section>
 
-          <section className="resource-chip">
+          <section className="resource-chip facility-time-chip">
             <span>Facility time</span>
             <strong>{dayTime}</strong>
             <small>{paused ? "Paused" : "Clinic open"}</small>

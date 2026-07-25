@@ -24,6 +24,7 @@ export type TutorialTarget =
   | "chart"
   | "answer-choices"
   | "existing-patient"
+  | "facility-clock"
   | "chart-feedback"
   | "resolve-chart"
   | "goals"
@@ -64,7 +65,12 @@ export interface TutorialStepView {
     | "exit-build-mode"
     | "remaining-goals"
     | "advance-level"
-    | "level-one-ready";
+    | "level-one-ready"
+    | "level-one-first-arrival"
+    | "level-one-service-drill"
+    | "level-one-sendout-wait"
+    | "level-one-result-ready"
+    | "level-one-returned-result";
   eyebrow: string;
   title: string;
   body: string;
@@ -72,6 +78,8 @@ export interface TutorialStepView {
   flavor?: string;
   target: TutorialTarget;
   targetSelector: string;
+  /** A larger interface region that the coach must not cover. */
+  avoidSelector?: string;
   patientEncounterId?: string;
   primaryAction?: TutorialActionView;
   secondaryAction?: TutorialActionView;
@@ -84,14 +92,6 @@ interface TutorialViewInput {
   acknowledgedStepIds: ReadonlySet<string>;
   buildMode: boolean;
   selectedRoomDefinitionId: string | null;
-}
-
-function hasAcknowledged(
-  state: GameState,
-  acknowledgedStepIds: ReadonlySet<string>,
-  stepId: TutorialStepView["id"],
-): boolean {
-  return acknowledgedStepIds.has(`${state.campaignId}:${stepId}`);
 }
 
 function step(
@@ -109,7 +109,6 @@ export function createTutorialStepView({
   state,
   tutorialsEnabled,
   introDismissed,
-  acknowledgedStepIds,
   buildMode,
   selectedRoomDefinitionId,
 }: TutorialViewInput): TutorialStepView | null {
@@ -118,29 +117,157 @@ export function createTutorialStepView({
   }
 
   if (state.facilityLevel >= 1) {
-    if (
-      hasAcknowledged(
-        state,
-        acknowledgedStepIds,
-        "level-one-ready",
+    const routineEncounters = Object.values(state.encounters)
+      .filter((encounter) => encounter.arrivalClass === "routine")
+      .sort(
+        (left, right) =>
+          left.waiting.arrivedAtTick - right.waiting.arrivedAtTick ||
+          left.id.localeCompare(right.id),
+      );
+    const firstRoutineEncounter = routineEncounters[0] ?? null;
+    const serviceTutorialEncounter = routineEncounters.find(
+      (encounter) =>
+        encounter.frozenCase.decisionNodes.some(
+          (node) => node.resultGateAfter !== null,
+        ),
+    );
+    const pendingSendout =
+      serviceTutorialEncounter?.lifecycle === "active_pending_result" &&
+      serviceTutorialEncounter.currentNodeIndex === 0
+        ? serviceTutorialEncounter
+        : null;
+    const returnedResult =
+      serviceTutorialEncounter?.lifecycle ===
+        "active_action_required" &&
+      serviceTutorialEncounter.currentNodeIndex === 1 &&
+      serviceTutorialEncounter.deliveredResultNarratives.length > 0
+        ? serviceTutorialEncounter
+        : null;
+    const openServiceDrill =
+      serviceTutorialEncounter?.id === state.openChartEncounterId &&
+      serviceTutorialEncounter.lifecycle === "active_action_required" &&
+      serviceTutorialEncounter.answers.length === 0 &&
+      serviceTutorialEncounter.frozenCase.id.startsWith(
+        "case.synthetic.",
       )
+        ? serviceTutorialEncounter
+        : null;
+
+    if (
+      pendingSendout
     ) {
+      const remaining = Math.max(
+        0,
+        (pendingSendout.pendingResult?.dueTick ?? state.facilityTick) -
+          state.facilityTick,
+      );
+      return step({
+        id: "level-one-sendout-wait",
+        eyebrow: "Level 1 guide · New mechanic",
+        title: "Send-out testing takes facility time",
+        body:
+          `${pendingSendout.patientDisplayName} moved to Existing Patients while the off-site service runs. Keep the clinic clock running; you may treat other patients while you wait.`,
+        note:
+          `${remaining} in-game hour${remaining === 1 ? "" : "s"} remain. At normal prototype speed, each in-game hour takes about 30 real seconds.`,
+        flavor:
+          "The patient has left the building. The chart, naturally, remains.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: pendingSendout.id,
+      });
+    }
+
+    if (returnedResult) {
+      if (state.openChartEncounterId !== returnedResult.id) {
+        return step({
+          id: "level-one-result-ready",
+          eyebrow: "Level 1 guide · Result returned",
+          title: "The send-out result is ready",
+          body:
+            `${returnedResult.patientDisplayName} now has an exclamation point in Existing Patients. Click that real patient tab to review the result and continue the encounter.`,
+          target: "existing-patient",
+          targetSelector:
+            ".patient-folder.is-active .patient-tab.is-tutorial-target",
+          patientEncounterId: returnedResult.id,
+        });
+      }
+      return step({
+        id: "level-one-returned-result",
+        eyebrow: "Level 1 guide · Result returned",
+        title: "The result added the next chart step",
+        body:
+          "The earlier decision stays visible, and the returned result appears beside the newly unlocked question. Answer using the real choices in the chart.",
+        flavor:
+          "The lab has converted waiting into another decision.",
+        target: "answer-choices",
+        targetSelector:
+          ".chart-step-column.is-current .answer-list",
+        avoidSelector: ".chart-panel",
+        patientEncounterId: returnedResult.id,
+      });
+    }
+
+    if (openServiceDrill) {
+      return step({
+        id: "level-one-service-drill",
+        eyebrow: "Level 1 guide · Practice workflow",
+        title: "This artificial patient demonstrates service routing",
+        body:
+          "The token wording is intentionally simple: this encounter exists to teach ordering a test, waiting for its return, and acting on the result. Test choices show their facility-time estimate.",
+        note:
+          "Choose through the real answer buttons. The guide will not select or fast-forward anything for you.",
+        target: "answer-choices",
+        targetSelector:
+          ".chart-step-column.is-current .answer-list",
+        avoidSelector: ".chart-panel",
+        patientEncounterId: openServiceDrill.id,
+      });
+    }
+
+    if (
+      firstRoutineEncounter?.lifecycle === "waiting_unopened" &&
+      firstRoutineEncounter.firstOpenedAtTick === null
+    ) {
+      return step({
+        id: "level-one-first-arrival",
+        eyebrow: "Level 1 guide · First routine patient",
+        title: "Level 1 patients arrive through the Waiting list",
+        body:
+          "This begins the repeatable clinic loop. Click the highlighted patient tab itself; after this first arrival, ordinary patient handling is up to you.",
+        target: "waiting-patient",
+        targetSelector:
+          ".patient-folder.is-waiting .patient-tab.is-tutorial-target",
+        patientEncounterId: firstRoutineEncounter.id,
+      });
+    }
+
+    if (firstRoutineEncounter) {
       return null;
     }
+
+    const remaining = Math.max(
+      0,
+      state.nextRoutineArrivalTick - state.facilityTick,
+    );
     return step({
       id: "level-one-ready",
       eyebrow: "Level 0 tutorial · Complete",
-      title: "Welcome to the actual clinic loop",
+      title: state.paused
+        ? "Resume facility time to begin Level 1"
+        : "Your first Level 1 patient is on the way",
       body:
-        "Level 1 adds repeatable patients, rooms, staffing, and queue pressure. The tutorial is finished; liability continues.",
+        state.paused
+          ? "Routine patients arrive only while facility time advances. Click the real Resume control above, then watch the Waiting list."
+          : "Facility time is running. A routine patient will appear in Waiting when the arrival interval elapses.",
+      note:
+        `${remaining} in-game hour${remaining === 1 ? "" : "s"} until the next planned arrival. Level 1 adds repeatable patients, queue pressure, rooms, and staffing.`,
       flavor:
         "You have leveled up. The patients did not become simpler.",
-      target: "goals",
-      targetSelector: ".goals-panel",
-      primaryAction: {
-        id: "acknowledge-step",
-        label: "Begin Level 1",
-      },
+      target: "facility-clock",
+      targetSelector: state.paused
+        ? ".pause-button"
+        : ".facility-time-chip",
     });
   }
 
@@ -166,12 +293,8 @@ export function createTutorialStepView({
         targetSelector: ".patient-folder.is-waiting .patient-tab",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
         primaryAction: {
-          id: "open-first-chart",
-          label: "Open first chart",
-        },
-        secondaryAction: {
           id: "focus-first-chart",
-          label: "Show me where",
+          label: "Show the patient tab",
         },
       });
     }
@@ -185,10 +308,6 @@ export function createTutorialStepView({
       targetSelector:
         ".patient-folder.is-waiting .patient-tab.is-tutorial-target",
       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-      primaryAction: {
-        id: "open-first-chart",
-        label: "Open Pixel Patient",
-      },
     });
   }
 
@@ -210,43 +329,22 @@ export function createTutorialStepView({
         targetSelector:
           ".patient-folder.is-active .patient-tab.is-tutorial-target",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "open-first-chart",
-          label: "Reopen chart",
-        },
-      });
-    }
-    if (
-      !hasAcknowledged(state, acknowledgedStepIds, "chart-tour")
-    ) {
-      return step({
-        id: "chart-tour",
-        eyebrow: "Level 0 tutorial · Step 2",
-        title: "This is the patient chart",
-        body:
-          "The portrait and identity are on the left, the presentation is in the middle, and the current decision is on the right. Read across the chart before choosing.",
-        note:
-          "This first patient is deliberately artificial so you can learn the interface without a clinical penalty.",
-        target: "chart",
-        targetSelector: ".chart-panel .chart-workspace",
-        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "acknowledge-step",
-          label: "Show me the decision",
-        },
       });
     }
     return step({
       id: "first-decision",
       eyebrow: "Level 0 tutorial · Step 3",
-      title: "Choose the answer supported by the chart",
+      title: "Read across the chart, then choose",
       body:
-        "Click one multiple-choice answer. The answer order changes, so read the labels instead of memorizing a button position.",
+        "The portrait is on the left, the presentation is in the middle, and the current decision is on the right. Click the real answer supported by the chart; answer order changes.",
+      note:
+        "This first patient is deliberately artificial so you can learn the interface without a clinical penalty.",
       flavor:
         "A bold new era of clicking the thing the chart explicitly says has begun.",
       target: "answer-choices",
       targetSelector:
         ".chart-step-column.is-current .answer-list",
+      avoidSelector: ".chart-panel",
       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
     });
   }
@@ -263,14 +361,12 @@ export function createTutorialStepView({
       title: "The patient left for an off-site result",
       body:
         "Pending patients move to Existing Patients while facility time passes. When the result returns, the chart receives a new exclamation point and the next decision unlocks.",
-      note: `${remaining} clinic hour${remaining === 1 ? "" : "s"} remain. Use the tutorial button below so you do not have to wait in real time.`,
+      note:
+        `${remaining} in-game hour${remaining === 1 ? "" : "s"} remain. This first training result returns automatically in about four real seconds; normal Level 1 send-outs follow facility time.`,
       target: "existing-patient",
-      targetSelector: ".patient-folder.is-active",
+      targetSelector:
+        ".patient-folder.is-active .patient-tab.is-tutorial-target",
       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-      primaryAction: {
-        id: "advance-first-result",
-        label: "Advance to result",
-      },
     });
   }
 
@@ -290,10 +386,6 @@ export function createTutorialStepView({
         targetSelector:
           ".patient-folder.is-active .patient-tab.is-tutorial-target",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "open-ready-chart",
-          label: "Open returned chart",
-        },
       });
     }
     return step({
@@ -305,6 +397,7 @@ export function createTutorialStepView({
       target: "answer-choices",
       targetSelector:
         ".chart-step-column.is-current .answer-list",
+      avoidSelector: ".chart-panel",
       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
     });
   }
@@ -321,36 +414,20 @@ export function createTutorialStepView({
         targetSelector:
           ".patient-folder.is-active .patient-tab.is-tutorial-target",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "open-first-chart",
-          label: "Review feedback",
-        },
       });
     }
-    if (
-      !first.terminalFeedback?.acknowledged ||
-      !hasAcknowledged(
-        state,
-        acknowledgedStepIds,
-        "first-feedback",
-      )
-    ) {
+    if (!first.terminalFeedback?.acknowledged) {
       return step({
         id: "first-feedback",
         eyebrow: "Level 0 tutorial · Step 7",
-        title: "Review the answer feedback",
+        title: "Read the feedback, then use the chart button",
         body:
-          "Correct or not, the explanation closes the learning loop. Continue once you have read it.",
+          "The explanation closes the learning loop. When you have read it, click the real Continue to summary button at the bottom of the chart.",
         target: "chart-feedback",
         targetSelector:
-          ".chart-step-column.is-current .chart-step-feedback",
+          ".chart-action-buttons .button.button-primary",
+        avoidSelector: ".chart-panel",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: first.terminalFeedback?.acknowledged
-            ? "acknowledge-step"
-            : "acknowledge-feedback",
-          label: "Continue",
-        },
       });
     }
     return step({
@@ -364,11 +441,8 @@ export function createTutorialStepView({
       target: "resolve-chart",
       targetSelector:
         ".chart-action-buttons .button.button-primary",
+      avoidSelector: ".chart-panel",
       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-      primaryAction: {
-        id: "resolve-chart",
-        label: "Resolve chart",
-      },
     });
   }
 
@@ -393,10 +467,6 @@ export function createTutorialStepView({
       targetSelector:
         ".patient-folder.is-waiting .patient-tab.is-tutorial-target",
       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-      primaryAction: {
-        id: "open-second-chart",
-        label: "Open second chart",
-      },
     });
   }
 
@@ -419,10 +489,6 @@ export function createTutorialStepView({
         targetSelector:
           ".patient-folder.is-active .patient-tab.is-tutorial-target",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "open-second-chart",
-          label: "Reopen chart",
-        },
       });
     }
     return step({
@@ -434,6 +500,7 @@ export function createTutorialStepView({
       target: "answer-choices",
       targetSelector:
         ".chart-step-column.is-current .answer-list",
+      avoidSelector: ".chart-panel",
       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
   }
@@ -452,36 +519,20 @@ export function createTutorialStepView({
         targetSelector:
           ".patient-folder.is-active .patient-tab.is-tutorial-target",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "open-second-chart",
-          label: "Review feedback",
-        },
       });
     }
-    if (
-      !second.terminalFeedback?.acknowledged ||
-      !hasAcknowledged(
-        state,
-        acknowledgedStepIds,
-        "second-feedback",
-      )
-    ) {
+    if (!second.terminalFeedback?.acknowledged) {
       return step({
         id: "second-feedback",
         eyebrow: "Level 0 tutorial · Step 11",
-        title: "Read the teaching feedback",
+        title: "Read the feedback, then continue in the chart",
         body:
-          "The feedback explains the tested point and records the result in this campaign's learning history.",
+          "The feedback explains the tested point and records it in this campaign's learning history. Click the real Continue to summary button when ready.",
         target: "chart-feedback",
         targetSelector:
-          ".chart-step-column.is-current .chart-step-feedback",
+          ".chart-action-buttons .button.button-primary",
+        avoidSelector: ".chart-panel",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: second.terminalFeedback?.acknowledged
-            ? "acknowledge-step"
-            : "acknowledge-feedback",
-          label: "Continue",
-        },
       });
     }
     return step({
@@ -495,11 +546,8 @@ export function createTutorialStepView({
       target: "resolve-chart",
       targetSelector:
         ".chart-action-buttons .button.button-primary",
+      avoidSelector: ".chart-panel",
       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-      primaryAction: {
-        id: "resolve-chart",
-        label: "Resolve chart",
-      },
     });
   }
 
@@ -513,39 +561,18 @@ export function createTutorialStepView({
   const progression = getFacilityProgressionStatus(state);
 
   if (!examRoomBuilt && !buildMode) {
-    if (
-      !hasAcknowledged(state, acknowledgedStepIds, "goals-tour")
-    ) {
-      return step({
-        id: "goals-tour",
-        eyebrow: "Level 0 tutorial · Step 13",
-        title: "Patient care funded your next objective",
-        body:
-          "The Goals panel is the source of truth for level progress. Level 0 requires enough Learning XP, satisfaction above 90%, two completed patients, and one examination room.",
-        note:
-          "Completed boxes stay checked. The next unfinished item tells you what to do.",
-        target: "goals",
-        targetSelector: ".goals-panel",
-        primaryAction: {
-          id: "acknowledge-step",
-          label: "Show me construction",
-        },
-      });
-    }
     return step({
       id: "enter-build-mode",
-      eyebrow: "Level 0 tutorial · Step 14",
-      title: "Enter Build Mode",
+      eyebrow: "Level 0 tutorial · Step 13",
+      title: "Your remaining goal needs an examination room",
       body:
-        "Build Mode pauses facility time so patients do not age into fossils while you remodel. Use the prominent mode button on the right.",
+        "The Goals panel tracks XP, satisfaction, completed patients, and construction. Your remaining objective is an examination room, so click the real Enter Build Mode button.",
+      note:
+        "Build Mode pauses facility time so patients do not age into fossils while you remodel.",
       flavor:
         "Architecture: medicine's least reimbursable procedure.",
       target: "build-mode",
       targetSelector: ".build-mode-trigger",
-      primaryAction: {
-        id: "enter-build-mode",
-        label: "Enter Build Mode",
-      },
     });
   }
 
@@ -560,10 +587,6 @@ export function createTutorialStepView({
         target: "exam-room-option",
         targetSelector:
           "[data-room-definition-id='room.examination']",
-        primaryAction: {
-          id: "select-exam-room",
-          label: "Select Examination Room",
-        },
       });
     }
     return step({
@@ -588,10 +611,6 @@ export function createTutorialStepView({
         "Use the same mode button to leave construction. Facility time returns to the pause state it had before you started building.",
       target: "exit-build-mode",
       targetSelector: ".build-mode-toggle",
-      primaryAction: {
-        id: "exit-build-mode",
-        label: "Exit Build Mode",
-      },
     });
   }
 
@@ -606,10 +625,6 @@ export function createTutorialStepView({
         "The bureaucracy accepts your progress. Try not to look surprised.",
       target: "level-up",
       targetSelector: ".goals-panel .level-up-button",
-      primaryAction: {
-        id: "level-up",
-        label: "Advance to Level 1",
-      },
     });
   }
 

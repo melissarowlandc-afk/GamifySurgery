@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "npm run dev --workspace @gamify-surgery/player",
     "build": "npm run typecheck && npm run build --workspace @gamify-surgery/player",
+    "build:pages": "npm run typecheck && npm run build --workspace @gamify-surgery/player -- --base=/GamifySurgery/ && node scripts/verify-pages-build.mjs /GamifySurgery/",
     "test": "npm run test --workspaces --if-present",
     "test:e2e": "playwright test",
     "test:watch": "npm run test:watch --workspace @gamify-surgery/game-domain",

@@ -1,8 +1,81 @@
-import { useEffect } from "react";
+import {
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import type {
   TutorialActionId,
+  TutorialActionView,
   TutorialStepView,
 } from "../session/tutorialViewModels";
+import {
+  positionTutorialCoach,
+  type TutorialPlacement,
+  type TutorialPosition,
+} from "./tutorialPositioning";
+
+interface TutorialTargetBeacon {
+  top: number;
+  left: number;
+  direction: TutorialPlacement;
+}
+
+function createTargetBeacon(
+  target: DOMRect,
+  placement: TutorialPlacement,
+): TutorialTargetBeacon {
+  const size = 36;
+  const viewportPadding = 4;
+  const centerX = target.left + target.width / 2 - size / 2;
+  const centerY = target.top + target.height / 2 - size / 2;
+
+  if (placement === "top") {
+    return {
+      top: Math.max(viewportPadding, target.top - size - 4),
+      left: Math.min(
+        Math.max(viewportPadding, centerX),
+        window.innerWidth - size - viewportPadding,
+      ),
+      direction: placement,
+    };
+  }
+  if (placement === "bottom") {
+    return {
+      top: Math.min(
+        target.bottom + 4,
+        window.innerHeight - size - viewportPadding,
+      ),
+      left: Math.min(
+        Math.max(viewportPadding, centerX),
+        window.innerWidth - size - viewportPadding,
+      ),
+      direction: placement,
+    };
+  }
+  if (placement === "left") {
+    return {
+      top: Math.min(
+        Math.max(viewportPadding, centerY),
+        window.innerHeight - size - viewportPadding,
+      ),
+      left: Math.max(viewportPadding, target.left - size - 4),
+      direction: placement,
+    };
+  }
+  return {
+    top: Math.min(
+      Math.max(viewportPadding, centerY),
+      window.innerHeight - size - viewportPadding,
+    ),
+    left: Math.min(
+      target.right + 4,
+      window.innerWidth - size - viewportPadding,
+    ),
+    direction: placement,
+  };
+}
 
 interface TutorialCoachProps {
   /** New deterministic tutorial bubble. */
@@ -25,28 +98,135 @@ export function TutorialCoach({
   onDisableTutorials,
   visible = false,
   patientName = "the first patient",
-  onOpenPatient,
-  onDismiss,
 }: TutorialCoachProps) {
   const shown = step !== null || visible;
+  const coachRef = useRef<HTMLElement>(null);
+  const coachDescriptionId = useId();
+  const coachTitleId = useId();
+  const [position, setPosition] =
+    useState<TutorialPosition | null>(null);
+  const [targetBeacon, setTargetBeacon] =
+    useState<TutorialTargetBeacon | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!shown || !step?.targetSelector) {
+      setPosition(null);
+      setTargetBeacon(null);
       return;
     }
     const target = document.querySelector<HTMLElement>(
       step.targetSelector,
     );
-    if (!target) {
+    const coach = coachRef.current;
+    if (!target || !coach) {
+      setPosition(null);
+      setTargetBeacon(null);
       return;
     }
+    const avoidance =
+      (step.avoidSelector
+        ? document.querySelector<HTMLElement>(step.avoidSelector)
+        : null) ?? target;
+
+    const previousDescription =
+      target.getAttribute("aria-describedby");
     target.classList.add("tutorial-target-highlight");
     target.dataset.tutorialTarget = step.target;
+    target.setAttribute(
+      "aria-describedby",
+      [previousDescription, coachDescriptionId]
+        .filter(Boolean)
+        .join(" "),
+    );
+
+    let animationFrame = 0;
+    const updatePosition = () => {
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(() => {
+        let targetRect = target.getBoundingClientRect();
+        const targetOutsideViewport =
+          targetRect.top < 12 ||
+          targetRect.left < 12 ||
+          targetRect.bottom > window.innerHeight - 12 ||
+          targetRect.right > window.innerWidth - 12;
+        if (targetOutsideViewport) {
+          target.scrollIntoView({
+            behavior: "auto",
+            block: "center",
+            inline: "nearest",
+          });
+          targetRect = target.getBoundingClientRect();
+        }
+        const avoidanceRect = avoidance.getBoundingClientRect();
+        const coachRect = coach.getBoundingClientRect();
+        const coachContent =
+          coach.querySelector<HTMLElement>(
+            ".tutorial-coach-content",
+          );
+        const nextPosition = positionTutorialCoach(
+            {
+              top: targetRect.top,
+              right: targetRect.right,
+              bottom: targetRect.bottom,
+              left: targetRect.left,
+              width: targetRect.width,
+              height: targetRect.height,
+            },
+            {
+              width: coachRect.width,
+              height:
+                (coachContent?.scrollHeight ??
+                  coach.scrollHeight) + 10,
+            },
+            {
+              width: window.innerWidth,
+              height: window.innerHeight,
+            },
+            {
+              top: avoidanceRect.top,
+              right: avoidanceRect.right,
+              bottom: avoidanceRect.bottom,
+              left: avoidanceRect.left,
+              width: avoidanceRect.width,
+              height: avoidanceRect.height,
+            },
+          );
+        setPosition(nextPosition);
+        setTargetBeacon(
+          nextPosition
+            ? createTargetBeacon(targetRect, nextPosition.placement)
+            : null,
+        );
+      });
+    };
+
+    updatePosition();
+    const resizeObserver = new ResizeObserver(updatePosition);
+    resizeObserver.observe(target);
+    if (avoidance !== target) {
+      resizeObserver.observe(avoidance);
+    }
+    resizeObserver.observe(coach);
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
     return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
       target.classList.remove("tutorial-target-highlight");
       delete target.dataset.tutorialTarget;
+      if (previousDescription) {
+        target.setAttribute(
+          "aria-describedby",
+          previousDescription,
+        );
+      } else {
+        target.removeAttribute("aria-describedby");
+      }
     };
-  }, [shown, step]);
+  }, [coachDescriptionId, shown, step]);
 
   if (!shown) {
     return null;
@@ -55,90 +235,118 @@ export function TutorialCoach({
   if (!step) {
     return (
       <aside
+        ref={coachRef}
         className="tutorial-coach"
         role="region"
-        aria-labelledby="tutorial-coach-title"
+        aria-labelledby={coachTitleId}
       >
-        <span className="eyebrow">Level 0 tutorial · Step 1</span>
-        <h2 id="tutorial-coach-title">Open your first patient chart</h2>
-        <p>
-          Patients arrive in the <strong>Waiting</strong> folder. Open{" "}
-          <strong>{patientName}</strong> to read the presentation and make
-          the first clinical decision.
-        </p>
-        <p className="tutorial-coach-note">
-          Facility time continues while this guide is visible. Pause whenever
-          you want more time.
-        </p>
-        <div className="tutorial-coach-actions">
-          <button
-            className="button button-primary"
-            type="button"
-            onClick={onOpenPatient}
-          >
-            Open first chart
-          </button>
-          <button
-            className="text-button"
-            type="button"
-            onClick={onDismiss}
-          >
-            Show me where
-          </button>
+        <div className="tutorial-coach-content">
+          <span className="eyebrow">Level 0 tutorial · Step 1</span>
+          <h2 id={coachTitleId}>Open your first patient chart</h2>
+          <p>
+            Patients arrive in the <strong>Waiting</strong> folder. Open{" "}
+            <strong>{patientName}</strong> to read the presentation and make
+            the first clinical decision.
+          </p>
+          <p className="tutorial-coach-note">
+            Facility time continues while this guide is visible. Pause
+            whenever you want more time.
+          </p>
+          <p className="tutorial-coach-instruction">
+            Click the patient tab itself to continue.
+          </p>
         </div>
       </aside>
     );
   }
 
+  // Tutorial cards can advance an explanation, but never perform the
+  // highlighted gameplay action on the player's behalf.
+  const tutorialOnlyActions = [
+    step.primaryAction,
+    step.secondaryAction,
+  ].filter(
+    (
+      action,
+    ): action is TutorialActionView =>
+      action?.id === "acknowledge-step",
+  );
+  const positionStyle = position
+    ? ({
+        top: `${position.top}px`,
+        left: `${position.left}px`,
+        width: `${position.width}px`,
+        maxHeight: `${position.maxHeight}px`,
+        "--tutorial-arrow-offset": `${position.arrowOffset}px`,
+        "--tutorial-content-max-height": `${Math.max(
+          96,
+          position.maxHeight - 10,
+        )}px`,
+      } as CSSProperties)
+    : ({ visibility: "hidden" } as CSSProperties);
+
   return (
-    <aside
-      className={`tutorial-coach tutorial-coach--${step.target}`}
-      data-tutorial-step={step.id}
-      role="region"
-      aria-labelledby="tutorial-coach-title"
-      aria-live="polite"
-    >
-      <span className="tutorial-coach-arrow" aria-hidden="true">
-        ➜
-      </span>
-      <span className="eyebrow">{step.eyebrow}</span>
-      <h2 id="tutorial-coach-title">{step.title}</h2>
-      <p>{step.body}</p>
-      {step.note ? (
-        <p className="tutorial-coach-note">{step.note}</p>
+    <>
+      {targetBeacon ? (
+        <span
+          className="tutorial-target-beacon"
+          data-direction={targetBeacon.direction}
+          aria-hidden="true"
+          style={{
+            top: `${targetBeacon.top}px`,
+            left: `${targetBeacon.left}px`,
+          }}
+        >
+          ➜
+        </span>
       ) : null}
-      {step.flavor ? (
-        <p className="tutorial-coach-flavor">{step.flavor}</p>
-      ) : null}
-      <div className="tutorial-coach-actions">
-        {step.primaryAction ? (
-          <button
-            className="button button-primary"
-            type="button"
-            onClick={() => onAction?.(step.primaryAction!.id)}
-          >
-            {step.primaryAction.label}
-          </button>
+      <aside
+        ref={coachRef}
+        className={`tutorial-coach tutorial-coach--${step.target}`}
+        data-tutorial-step={step.id}
+        data-placement={position?.placement}
+        data-target-positioned={position ? "true" : "false"}
+        role="region"
+        aria-labelledby={coachTitleId}
+        aria-live="polite"
+        style={positionStyle}
+      >
+        <span className="tutorial-coach-arrow" aria-hidden="true">
+          ➜
+        </span>
+        <div className="tutorial-coach-content">
+        <span className="eyebrow">{step.eyebrow}</span>
+        <h2 id={coachTitleId}>{step.title}</h2>
+        <p id={coachDescriptionId}>{step.body}</p>
+        {step.note ? (
+          <p className="tutorial-coach-note">{step.note}</p>
         ) : null}
-        {step.secondaryAction ? (
-          <button
-            className="button button-secondary"
-            type="button"
-            onClick={() => onAction?.(step.secondaryAction!.id)}
-          >
-            {step.secondaryAction.label}
-          </button>
+        {step.flavor ? (
+          <p className="tutorial-coach-flavor">{step.flavor}</p>
         ) : null}
-        {onDisableTutorials ? (
-          <button
-            className="text-button tutorial-disable-button"
-            type="button"
-            onClick={onDisableTutorials}
-          >
-            Turn off tutorials
-          </button>
-        ) : null}
-      </div>
-    </aside>
+        <div className="tutorial-coach-actions">
+          {tutorialOnlyActions.map((action) => (
+            <button
+              key={action.id}
+              className="button button-secondary"
+              type="button"
+              onClick={() => onAction?.(action.id)}
+            >
+              {action.label}
+            </button>
+          ))}
+          {onDisableTutorials ? (
+            <button
+              className="text-button tutorial-disable-button"
+              type="button"
+              onClick={onDisableTutorials}
+            >
+              Turn off tutorials
+            </button>
+          ) : null}
+        </div>
+        </div>
+      </aside>
+    </>
   );
 }

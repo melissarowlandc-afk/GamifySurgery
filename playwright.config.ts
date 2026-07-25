@@ -33,5 +33,12 @@ export default defineConfig({
         viewport: { width: 1024, height: 768 },
       },
     },
+    {
+      name: "laptop-chrome",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1280, height: 720 },
+      },
+    },
   ],
 });

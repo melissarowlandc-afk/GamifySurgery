@@ -161,9 +161,8 @@ test(
       animations: "disabled",
     });
 
-    await page.getByRole("button", { name: "Show me where" }).click();
     const tutorialTarget = page.locator(".patient-tab.is-tutorial-target");
-    await expect(tutorialTarget).toContainText("Open this chart first");
+    await expect(tutorialTarget).toHaveClass(/tutorial-target-highlight/);
     await page.screenshot({
       path: `${SCREENSHOT_DIRECTORY}/tutorial-callout-desktop.png`,
       fullPage: false,
@@ -171,22 +170,15 @@ test(
     });
     await tutorialTarget.click();
     await expect(
-      page.getByRole("heading", { name: "This is the patient chart" }),
+      page.getByRole("heading", {
+        name: "Read across the chart, then choose",
+      }),
     ).toBeVisible();
     await page.screenshot({
       path: `${SCREENSHOT_DIRECTORY}/tutorial-chart-tour-desktop.png`,
       fullPage: false,
       animations: "disabled",
     });
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Show me the decision" })
-      .click();
-    await expect(
-      page.getByRole("heading", {
-        name: "Choose the answer supported by the chart",
-      }),
-    ).toBeVisible();
     await page.getByRole("button", { name: "Close patient chart" }).click();
     await expect(
       page.getByRole("heading", {
@@ -194,12 +186,11 @@ test(
       }),
     ).toBeVisible();
     await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Reopen chart" })
+      .locator(".patient-folder.is-active .patient-tab.is-tutorial-target")
       .click();
     await expect(
       page.getByRole("heading", {
-        name: "Choose the answer supported by the chart",
+        name: "Read across the chart, then choose",
       }),
     ).toBeVisible();
 
@@ -238,21 +229,16 @@ test(
       fullPage: false,
       animations: "disabled",
     });
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Advance to result" })
-      .click();
-    await expect(pendingPatient).toContainText("Action required");
+    await expect(pendingPatient).toContainText("Action required", {
+      timeout: 10_000,
+    });
     await expect(pendingPatient.getByLabel("Action required")).toBeVisible();
     await expect(messageTitle(page, "Results ready")).toBeVisible();
 
     await expect(
       page.getByRole("heading", { name: "The result is ready" }),
     ).toBeVisible();
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Open returned chart" })
-      .click();
+    await pendingPatient.click();
     await expect(
       page
         .locator(".chart-result-card")
@@ -265,17 +251,10 @@ test(
     await expect(
       page.getByRole("button", { name: "Flip chart over" }),
     ).toBeVisible();
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Continue" })
-      .click();
     await expect(page.locator(".tutorial-coach")).toContainText(
       "Your clinical decision making is truly godlike.",
     );
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Resolve chart" })
-      .click();
+    await page.getByRole("button", { name: "Resolve chart" }).click();
 
     const secondTutorial = page
       .locator(".patient-folder.is-waiting .patient-tab")
@@ -286,10 +265,7 @@ test(
         name: "A second patient has arrived",
       }),
     ).toBeVisible();
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Open second chart" })
-      .click();
+    await secondTutorial.click();
     await page.getByRole("button", { name: "Close patient chart" }).click();
     await expect(
       page.getByRole("heading", {
@@ -297,8 +273,7 @@ test(
       }),
     ).toBeVisible();
     await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Reopen chart" })
+      .locator(".patient-folder.is-active .patient-tab.is-tutorial-target")
       .click();
     await page
       .getByRole("button", {
@@ -308,18 +283,11 @@ test(
     await expect(page.locator(".chart-reward-banner")).toContainText(
       "+5 Learning XP",
     );
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Continue" })
-      .click();
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Resolve chart" })
-      .click();
+    await page.getByRole("button", { name: "Resolve chart" }).click();
 
     await expect(
       page.getByRole("heading", {
-        name: "Patient care funded your next objective",
+        name: "Your remaining goal needs an examination room",
       }),
     ).toBeVisible();
     const goalsPanel = page.locator(".goals-panel");
@@ -343,14 +311,7 @@ test(
       fullPage: false,
       animations: "disabled",
     });
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Show me construction" })
-      .click();
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Enter Build Mode" })
-      .click();
+    await page.getByRole("button", { name: /Enter Build Mode/ }).click();
     await expect(
       page.getByRole("button", { name: "Paused for Build" }),
     ).toBeVisible();
@@ -361,8 +322,7 @@ test(
       "BUILD MODE",
     );
     await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Select Examination Room" })
+      .locator("[data-room-definition-id='room.examination']")
       .click();
     await expect(page.locator(".placement-orientation")).toContainText(
       "door faces south",
@@ -377,10 +337,7 @@ test(
     await expect(page.locator(".build-mode-panel")).toContainText(
       "1 built",
     );
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Exit Build Mode" })
-      .click();
+    await page.getByRole("button", { name: "Exit Build Mode" }).click();
     await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
     const recentEvents = page.locator("details.message-board-history");
     await recentEvents.locator("summary").click();
@@ -392,18 +349,14 @@ test(
         .getByRole("button", { name: "Advance to Level 1" }),
     ).toBeVisible();
     await page
-      .locator(".tutorial-coach")
+      .locator(".goals-panel")
       .getByRole("button", { name: "Advance to Level 1" })
       .click();
     await expect(
       page.getByRole("heading", {
-        name: "Welcome to the actual clinic loop",
+        name: /first Level 1 patient is on the way|Resume facility time to begin Level 1/,
       }),
     ).toBeVisible();
-    await page
-      .locator(".tutorial-coach")
-      .getByRole("button", { name: "Begin Level 1" })
-      .click();
     await expect(
       page.getByText("Level 1", { exact: true }).first(),
     ).toBeVisible();
@@ -454,7 +407,6 @@ test(
     await expect(
       page.getByText("Level 0", { exact: true }).first(),
     ).toBeVisible();
-    await page.getByRole("button", { name: "Show me where" }).click();
 
     const freshState = await getActiveState(page);
     expect(freshState.campaignSeed).not.toBe(originalState.campaignSeed);
@@ -497,7 +449,6 @@ test(
 
     await installDeterministicCampaignIds(page);
     await page.goto("/");
-    await page.getByRole("button", { name: "Show me where" }).click();
 
     const startingXp = Number(await xpValue(page).innerText());
     expect(startingXp).toBe(0);
@@ -614,7 +565,9 @@ test("keeps the clinic and chart usable at desktop widths", async ({
   await expect(
     page.getByRole("heading", { name: "Open your first patient chart" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Open first chart" }).click();
+  await page
+    .locator(".patient-folder.is-waiting .patient-tab.is-tutorial-target")
+    .click();
 
   const chart = page.locator(".chart-panel");
   await expect(chart).toBeVisible();

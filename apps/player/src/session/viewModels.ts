@@ -99,19 +99,36 @@ function toPatientTab(
   folder: PatientFolder,
   selectedEncounterId: string | null,
 ): PatientTabView {
+  const encounter = state.encounters[item.encounterId];
   const arrivalLabel =
     item.arrivalClass === "tutorial"
       ? "Tutorial patient"
       : item.arrivalClass === "progression_critical"
         ? "Progression patient"
         : "Routine patient";
+  const pendingHours =
+    encounter?.lifecycle === "active_pending_result" &&
+    encounter.pendingResult
+      ? Math.max(
+          0,
+          encounter.pendingResult.dueTick - state.facilityTick,
+        )
+      : null;
+  const pendingStatus =
+    pendingHours === null
+      ? null
+      : `${
+          encounter?.pendingResult?.pendingLabel ?? "Result pending"
+        } · returns in ${pendingHours} in-game hour${
+          pendingHours === 1 ? "" : "s"
+        }`;
 
   return {
     id: item.encounterId,
     folder,
     name: item.patientDisplayName,
     subtitle: arrivalLabel,
-    statusLabel: item.statusLabel,
+    statusLabel: pendingStatus ?? item.statusLabel,
     actionRequired: item.actionRequired,
     selected: selectedEncounterId === item.encounterId,
     patienceLabel:
@@ -120,8 +137,8 @@ function toPatientTab(
         : `Patience: ${item.patienceRemainingTicks} in-game hour${
             item.patienceRemainingTicks === 1 ? "" : "s"
           }`,
-    avatar: state.encounters[item.encounterId]?.patientAppearance,
-    sortKey: state.encounters[item.encounterId]?.waiting.arrivedAtTick,
+    avatar: encounter?.patientAppearance,
+    sortKey: encounter?.waiting.arrivedAtTick,
   };
 }
 
@@ -316,7 +333,7 @@ function createChartView(
     etaLabel:
       pendingEta === null
         ? undefined
-        : `${pendingEta} facility tick${pendingEta === 1 ? "" : "s"} remaining`,
+        : `${pendingEta} in-game hour${pendingEta === 1 ? "" : "s"} remaining`,
     questionPrompt: question?.node.stem,
     answerChoices:
       question?.node.answerChoices.map((choice) => ({

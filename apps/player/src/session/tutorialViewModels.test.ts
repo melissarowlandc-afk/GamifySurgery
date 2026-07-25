@@ -9,6 +9,7 @@ import {
 } from "@gamify-surgery/game-domain";
 import { describe, expect, it } from "vitest";
 import { createTutorialStepView } from "./tutorialViewModels";
+import { createPrototypePlayerView } from "./viewModels";
 
 let operationSequence = 0;
 
@@ -120,10 +121,7 @@ describe("Level 0 tutorial view model", () => {
       type: "OPEN_CHART",
       encounterId: TUTORIAL_ENCOUNTER_ID,
     });
-    expect(view(state)?.id).toBe("chart-tour");
-    expect(view(state, { acknowledged: ["chart-tour"] })?.id).toBe(
-      "first-decision",
-    );
+    expect(view(state)?.id).toBe("first-decision");
 
     state = answerCorrect(state, TUTORIAL_ENCOUNTER_ID);
     expect(view(state)?.id).toBe("off-site-result");
@@ -150,10 +148,7 @@ describe("Level 0 tutorial view model", () => {
     });
     expect(view(state)?.id).toBe("follow-up-decision");
     state = answerCorrect(state, TUTORIAL_ENCOUNTER_ID);
-    expect(view(state)?.id).toBe("first-feedback");
-    expect(
-      view(state, { acknowledged: ["first-feedback"] })?.id,
-    ).toBe("resolve-first-chart");
+    expect(view(state)?.id).toBe("resolve-first-chart");
     state = reduce(state, {
       type: "CLOSE_CHART",
       encounterId: TUTORIAL_ENCOUNTER_ID,
@@ -170,19 +165,13 @@ describe("Level 0 tutorial view model", () => {
     });
     expect(view(state)?.id).toBe("second-decision");
     state = answerCorrect(state, SECOND_TUTORIAL_ENCOUNTER_ID);
-    expect(view(state)?.id).toBe("second-feedback");
-    expect(
-      view(state, { acknowledged: ["second-feedback"] })?.id,
-    ).toBe("resolve-second-chart");
+    expect(view(state)?.id).toBe("resolve-second-chart");
     state = reduce(state, {
       type: "CLOSE_CHART",
       encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
 
-    expect(view(state)?.id).toBe("goals-tour");
-    expect(view(state, { acknowledged: ["goals-tour"] })?.id).toBe(
-      "enter-build-mode",
-    );
+    expect(view(state)?.id).toBe("enter-build-mode");
     expect(view(state, { buildMode: true })?.id).toBe(
       "select-exam-room",
     );
@@ -217,7 +206,94 @@ describe("Level 0 tutorial view model", () => {
     expect(view(state)?.id).toBe("level-one-ready");
     expect(
       view(state, { acknowledged: ["level-one-ready"] }),
-    ).toBeNull();
+    ).toMatchObject({
+      id: "level-one-ready",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
+  });
+
+  it("introduces Level 1 arrivals and send-out testing through real controls", () => {
+    let state: GameState = {
+      ...createInitialGameState(),
+      facilityLevel: 1,
+      encounters: {},
+      nextRoutineArrivalTick: 10,
+    };
+
+    expect(view(state)).toMatchObject({
+      id: "level-one-ready",
+      targetSelector: ".facility-time-chip",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
+
+    state = reduce(state, {
+      type: "ADMIT_PATIENT",
+      encounterId: "encounter.level-one.service-drill",
+      caseId: "case.synthetic.lab-routing",
+      patientDisplayName: "Tutorial Router",
+      arrivalClass: "routine",
+    });
+    expect(view(state)).toMatchObject({
+      id: "level-one-first-arrival",
+      patientEncounterId: "encounter.level-one.service-drill",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
+
+    state = reduce(state, {
+      type: "OPEN_CHART",
+      encounterId: "encounter.level-one.service-drill",
+    });
+    expect(view(state)).toMatchObject({
+      id: "level-one-service-drill",
+      target: "answer-choices",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
+
+    state = answerCorrect(
+      state,
+      "encounter.level-one.service-drill",
+    );
+    expect(view(state)).toMatchObject({
+      id: "level-one-sendout-wait",
+      patientEncounterId: "encounter.level-one.service-drill",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
+    const patientTab = createPrototypePlayerView(
+      state,
+      null,
+      false,
+      null,
+    ).patients.find(
+      (patient) =>
+        patient.id === "encounter.level-one.service-drill",
+    );
+    expect(patientTab?.statusLabel).toMatch(
+      /returns in \d+ in-game hours?/,
+    );
+    expect(patientTab?.statusLabel).not.toContain("tick");
+    const pending =
+      state.encounters["encounter.level-one.service-drill"]!
+        .pendingResult;
+    expect(pending).not.toBeNull();
+
+    state = reduce(state, {
+      type: "DEV_FAST_FORWARD",
+      tickCount: pending!.dueTick - state.facilityTick,
+    });
+    expect(view(state)).toMatchObject({
+      id: "level-one-result-ready",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
+
+    state = reduce(state, {
+      type: "OPEN_CHART",
+      encounterId: "encounter.level-one.service-drill",
+    });
+    expect(view(state)).toMatchObject({
+      id: "level-one-returned-result",
+      target: "answer-choices",
+    });
+    expect(view(state)?.primaryAction).toBeUndefined();
   });
 
   it("returns no tutorial when prototype tools disable guidance", () => {

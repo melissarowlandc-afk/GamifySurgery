@@ -1,8 +1,8 @@
 # Gamify Surgery
 
-Gamify Surgery is a private, early-stage, grayscale surgery-management learning
-game. The current repository contains a playable local browser candidate for
-facility Levels 0 and 1.
+Gamify Surgery is an early-stage, grayscale surgery-management learning game.
+The current repository contains a playable browser candidate for facility
+Levels 0 and 1.
 
 This build is for gameplay and balance evaluation. Its clinical material is
 small, original prototype content. One striped in-game banner carries the
@@ -46,10 +46,14 @@ stop the manual server. Neither method deploys or publishes anything.
 
 - A desktop-first React interface and top-down Phaser facility sized for both
   full and compact desktop browser windows; phone-specific polish is deferred
-- A state-driven Level 0 tutorial with contextual bubbles and animated target
-  arrows for charting, results, feedback, resolution, goals, construction, and
-  level advancement; Prototype tools can disable it and the beginner Help guide
-  remains available at all times
+- A state-driven Level 0 tutorial with collision-aware contextual bubbles,
+  direct target beacons, and animated arrows attached to the real controls for
+  charting, results, feedback, resolution, goals, construction, and level
+  advancement; the coach never performs the action for the player, Prototype
+  tools can disable it, and the beginner Help guide remains available
+- State-driven Level 1 guidance for the facility clock, first routine arrival,
+  service drill, off-site test wait and ETA, returned result, and follow-up
+  decision
 - A founder-operated Level 0 clinic with two protected introductory patients
 - A continuous 8 AM-6 PM facility day lasting about five real minutes, with
   Level 1 routine arrivals paced at roughly one patient per real minute
@@ -144,14 +148,29 @@ Run these from the project folder:
 
 | Command | Purpose |
 |---|---|
-| `npm test` | Run 52 deterministic unit tests: 41 game-domain and 11 player alert/tutorial-view-model tests |
+| `npm test` | Run 62 deterministic unit tests: 41 game-domain and 21 player alert/tutorial/positioning tests |
 | `npm run test:e2e` | Run the desktop browser walkthroughs and retained width regressions in installed Chrome |
 | `npm run typecheck` | Check every TypeScript workspace |
 | `npm run build` | Type-check and create the local production-style player build |
+| `npm run build:pages` | Type-check and verify a static build using the GitHub Pages repository base path |
 | `npm run test:watch` | Rerun domain tests while code changes |
 
 The built files are placed in `apps/player/dist`. Building them still does not
 deploy the game.
+
+### GitHub Pages playtest
+
+Run `npm run build:pages` to create and verify the static player with the
+`/GamifySurgery/` repository base path. The workflow at
+`.github/workflows/deploy-pages.yml` deploys every push to `main` and also
+supports manual reruns. The public playtest URL is:
+
+<https://melissarowlandc-afk.github.io/GamifySurgery/>
+
+The site and source repository are public, and this prototype has no login
+gate. Campaign data remains browser-local: it does not transfer from the local
+launcher to Pages or follow a tester to another computer/browser. See
+[`DEPLOYMENT_PLAN.md`](DEPLOYMENT_PLAN.md) for the deployment boundary.
 
 ## Screenshots
 
@@ -164,6 +183,7 @@ deploy the game.
 - [Rotated west-door placement preview](artifacts/screenshots/placement-preview-west.png)
 - [Level 0 desktop chart](artifacts/screenshots/level-0-desktop-chrome.png)
 - [Compact desktop chart](artifacts/screenshots/level-0-compact-desktop-chrome.png)
+- [Laptop desktop chart](artifacts/screenshots/level-0-laptop-chrome.png)
 - [Level 1 desktop walkthrough](artifacts/screenshots/level-1-desktop.png)
 
 ## Deliberately deferred
@@ -175,7 +195,7 @@ deploy the game.
 - The Clinical Content Workbench, textbook ingestion, and live administration
 - Supabase account creation, verified-email login, password recovery, cloud
   saves, and cross-device writer-conflict handling
-- Hosted staging, outside tester access, monitoring, backups, and deployment
+- Authenticated staging, private-pilot access, monitoring, and cloud backups
 - Levels 2 through 5, inspection week, advanced staffing, maintenance, pharmacy,
   and other later management systems
 - The automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing

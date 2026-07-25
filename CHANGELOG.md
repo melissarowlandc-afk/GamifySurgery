@@ -13,10 +13,22 @@ All notable implementation and project-record changes are listed here.
 - Added contextual target outlines and animated tutorial arrows, plus concise
   sarcastic tutorial flavor; the Prototype tools tutorial toggle still disables
   the full guided sequence
+- Replaced tutorial proxy actions with state-driven guidance attached to the
+  real game controls: the player now opens, answers, resolves, builds, and
+  advances through the actual interface instead of operating the game from the
+  coach bubble
+- Added runtime target measurement, collision-aware bubble placement, direct
+  target beacons, viewport updates, and chart-wide avoidance so tutorial
+  guidance remains visibly connected to its control without covering the chart
+  at large, compact, or laptop desktop widths
 - Reduced the artificial first result from three facility hours to one and
-  added an exact one-click tutorial advance so onboarding no longer requires a
-  90-second real-time wait; the second tutorial patient now arrives immediately
-  after the first chart is filed
+  made the first tutorial result return automatically after about four real
+  seconds; the second tutorial patient now arrives immediately after the first
+  chart is filed
+- Added state-driven Level 1 introductions for the facility clock, the first
+  routine arrival, synthetic service-drill decisions, off-site testing waits,
+  result return, and the next real decision, including plain-language
+  in-game-hour and approximate real-time estimates
 - Replaced the temporary Level-goals popover with an always-visible,
   internally bounded Goals panel whose complete checklist and advancement
   button remain available without covering the clinic
@@ -35,9 +47,12 @@ All notable implementation and project-record changes are listed here.
 - Increased key pause, zoom, chart, placement, and tutorial text sizes and
   updated the in-game Help guide to match the permanent goals and placement
   interfaces
-- Expanded deterministic tests to 52 unit tests: 41 game-domain and 11 player
-  tests, plus full and compact desktop browser checks and the complete Level
-  0-to-Level 1 walkthrough
+- Added an owner-authorized GitHub Pages deployment workflow for pushes to
+  `main`, a repository-base-path build, and generated-asset verification for
+  the public browser-local playtest
+- Expanded deterministic tests to 62 unit tests: 41 game-domain and 21 player
+  tests, plus full, compact, and laptop desktop tutorial-position checks and
+  the complete Level 0-to-Level 1 walkthrough
 
 ## 2026-07-24
 

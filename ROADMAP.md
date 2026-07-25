@@ -1,7 +1,8 @@
 # Roadmap
 
 Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The current working point is
-a local Level 0/1 implementation candidate awaiting owner walkthrough.
+an owner-authorized browser-hosted Level 0/1 playtest awaiting the next
+walkthrough and balance iteration.
 
 Last updated: 2026-07-25
 
@@ -13,8 +14,9 @@ Last updated: 2026-07-25
 - Keep balance values and content outside game logic.
 - Prefer a small playable loop and short feedback cycle over broad unfinished
   infrastructure.
-- Complete security, publishing, cloud-save, and recovery work before outside
-  testing, not before the first local walkthrough.
+- Complete security, clinical publishing, cloud-save, and recovery work before
+  a clinical pilot; the current public static playtest remains synthetic,
+  browser-local, and unauthenticated.
 - Do not create paid infrastructure, deploy, or invite outside testers without
   the applicable owner authorization.
 
@@ -104,10 +106,18 @@ Implemented:
   mapping, plus an explicit Level 1-complete/Level 2-locked state
 - One-click Windows dependency/start/browser launcher, a state-driven Level 0
   tutorial through charting, results, goals, construction, and level
-  advancement, persistent tutorial controls, and in-game beginner Help
+  advancement, persistent tutorial controls, and in-game beginner Help; coach
+  bubbles point to the actual controls and never perform gameplay actions
+- Collision-aware tutorial positioning across full, compact, and laptop
+  desktop widths, including protected chart space and direct target beacons
+- State-driven Level 1 guidance for the clock, first arrival, service drill,
+  off-site test wait, result return, and follow-up decision
 - One global striped clinical-content warning without repeated vignette caveats
-- A 52-test unit inventory: 41 game-domain tests and 11 player alert/tutorial
-  view-model tests, plus desktop and retained width-regression browser coverage
+- A 62-test unit inventory: 41 game-domain tests and 21 player alert/tutorial/
+  positioning tests, plus desktop and retained width-regression browser
+  coverage
+- An owner-authorized public GitHub Pages playtest that automatically rebuilds
+  from `main` while preserving browser-local saves and the no-backend boundary
 
 Current demonstration gate:
 
@@ -122,9 +132,9 @@ Current demonstration gate:
 5. The team records the first pacing, economy, queue, satisfaction, and fun
    findings before adding breadth.
 
-This milestone is deliberately browser-local. It does not include accounts,
-cloud synchronization, real clinical approval, an admin application, or
-deployment.
+This milestone remains browser-local even when served through GitHub Pages. It
+does not include accounts, cloud synchronization, real clinical approval, or
+an admin application.
 
 The adapter updates FSRS cards and exposes their due state, but the complete
 selection policy that prioritizes overdue concepts, interleaves categories,
@@ -133,14 +143,16 @@ deferred until the approved content pool is large enough to exercise it.
 
 Latest local verification on 2026-07-25:
 
-- `npm test`: 52 of 52 unit tests passed (41 game-domain and 11 player
-  tutorial/alert/view-model)
+- `npm test`: 62 of 62 unit tests passed (41 game-domain and 21 player
+  tutorial/alert/view-model/positioning)
 - `npm run typecheck`: all four TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning
-- `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough plus large
-  and compact desktop layout checks and storage-failure safety passed (5
-  passed, 3 intentionally skipped)
+- `npm run build:pages`: the `/GamifySurgery/` static build and generated asset
+  references passed deployment verification
+- `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough, storage
+  failure safety, and tutorial target/overlap checks at full, compact, and
+  laptop desktop widths passed (9 passed, 6 intentionally skipped)
 
 ## Milestone 3: Iterate and prepare approved content
 
@@ -148,8 +160,8 @@ Dependency: complete the local walkthrough first so content work is not built
 around a confusing or unfun loop.
 
 - Fix high-priority walkthrough defects and tune centralized temporary values.
-- Refine the phone-specific layout after the desktop walkthrough; phone
-  deployment is not part of the current local iteration.
+- Refine the phone-specific layout after the desktop walkthrough; current
+  Pages testing remains desktop-first.
 - Pilot the content workflow with one chapter and roughly 5-10 Clinical Topics.
 - Import structured drafts while preserving source references and conflicts.
 - Validate concepts, meaningful patient variants, question variants, and

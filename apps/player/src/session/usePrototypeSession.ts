@@ -780,7 +780,7 @@ export function usePrototypeSession(): PrototypeSession {
       },
       {
         announcementOverride:
-          "Tutorial time advanced to the result. Pixel Patient is ready in Existing Patients.",
+          "The short tutorial result returned. Pixel Patient is ready in Existing Patients.",
       },
     );
     if (restorePause) {
@@ -790,6 +790,33 @@ export function usePrototypeSession(): PrototypeSession {
       );
     }
   }, [execute]);
+
+  useEffect(() => {
+    const tutorialEncounter =
+      state.encounters[TUTORIAL_ENCOUNTER_ID];
+    if (
+      tutorialEncounter?.lifecycle !== "active_pending_result" ||
+      !tutorialEncounter.pendingResult
+    ) {
+      return;
+    }
+
+    const timerId = window.setTimeout(() => {
+      const currentTutorial =
+        stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID];
+      if (currentTutorial?.lifecycle === "active_pending_result") {
+        advanceTutorialResult();
+      }
+    }, 4_000);
+
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [
+    advanceTutorialResult,
+    state.campaignId,
+    state.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle,
+  ]);
 
   const addMoney = useCallback(() => {
     execute(

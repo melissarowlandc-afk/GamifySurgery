@@ -999,19 +999,31 @@ p {
 .tutorial-coach {
   position: fixed;
   z-index: 80;
-  top: 122px;
-  left: clamp(245px, 18vw, 315px);
+  top: 12px;
+  right: auto;
+  bottom: auto;
+  left: 12px;
   width: min(410px, calc(100vw - 32px));
-  padding: var(--space-3);
+  max-height: calc(100vh - 24px);
+  padding: 0;
   border: 5px solid var(--ink);
   background: var(--panel);
   box-shadow: 8px 8px 0 rgb(0 0 0 / 35%);
+  overflow: visible;
+}
+
+.tutorial-coach-content {
+  max-height: var(
+    --tutorial-content-max-height,
+    calc(100vh - 34px)
+  );
+  padding: var(--space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .tutorial-coach-arrow {
   position: absolute;
-  top: 22px;
-  left: -42px;
   display: grid;
   width: 36px;
   height: 36px;
@@ -1020,8 +1032,36 @@ p {
   color: var(--panel);
   font-size: 1.35rem;
   place-items: center;
+  animation-duration: 0.75s;
+  animation-timing-function: steps(2, end);
+  animation-iteration-count: infinite;
+}
+
+.tutorial-target-beacon {
+  position: fixed;
+  z-index: 82;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--panel);
+  background: var(--ink);
+  color: var(--panel);
+  font-size: 1.35rem;
+  pointer-events: none;
+  place-items: center;
+  animation: tutorial-target-beacon 0.75s steps(2, end) infinite;
+}
+
+.tutorial-target-beacon[data-direction="top"] {
+  transform: rotate(90deg);
+}
+
+.tutorial-target-beacon[data-direction="bottom"] {
+  transform: rotate(-90deg);
+}
+
+.tutorial-target-beacon[data-direction="right"] {
   transform: rotate(180deg);
-  animation: tutorial-arrow-nudge-left 0.75s steps(2, end) infinite;
 }
 
 .tutorial-coach h2 {
@@ -1052,46 +1092,29 @@ p {
   font-size: 0.74rem;
 }
 
-.tutorial-coach--goals,
-.tutorial-coach--build-mode,
-.tutorial-coach--exam-room-option,
-.tutorial-coach--exit-build-mode,
-.tutorial-coach--level-up {
-  right: clamp(270px, 21vw, 370px);
-  left: auto;
+.tutorial-coach[data-placement="right"] .tutorial-coach-arrow {
+  top: calc(var(--tutorial-arrow-offset) - 18px);
+  left: -42px;
+  transform: rotate(180deg);
+  animation-name: tutorial-arrow-nudge-left;
 }
 
-.tutorial-coach--goals .tutorial-coach-arrow,
-.tutorial-coach--build-mode .tutorial-coach-arrow,
-.tutorial-coach--exam-room-option .tutorial-coach-arrow,
-.tutorial-coach--exit-build-mode .tutorial-coach-arrow,
-.tutorial-coach--level-up .tutorial-coach-arrow {
+.tutorial-coach[data-placement="left"] .tutorial-coach-arrow {
+  top: calc(var(--tutorial-arrow-offset) - 18px);
   right: -42px;
-  left: auto;
-  transform: none;
   animation-name: tutorial-arrow-nudge;
 }
 
-.tutorial-coach--facility-placement {
-  top: 148px;
-  left: 10px;
-  width: min(228px, calc(100vw - 20px));
+.tutorial-coach[data-placement="bottom"] .tutorial-coach-arrow {
+  top: -42px;
+  left: calc(var(--tutorial-arrow-offset) - 18px);
+  transform: rotate(-90deg);
+  animation-name: tutorial-arrow-nudge-up;
 }
 
-.tutorial-coach--facility-placement .tutorial-coach-arrow {
-  right: -42px;
-  left: auto;
-  transform: none;
-  animation-name: tutorial-arrow-nudge;
-}
-
-.tutorial-coach--chart .tutorial-coach-arrow,
-.tutorial-coach--answer-choices .tutorial-coach-arrow,
-.tutorial-coach--chart-feedback .tutorial-coach-arrow,
-.tutorial-coach--resolve-chart .tutorial-coach-arrow {
-  top: auto;
+.tutorial-coach[data-placement="top"] .tutorial-coach-arrow {
   bottom: -42px;
-  left: calc(50% - 18px);
+  left: calc(var(--tutorial-arrow-offset) - 18px);
   transform: rotate(90deg);
   animation-name: tutorial-arrow-nudge-down;
 }
@@ -1099,7 +1122,15 @@ p {
 .tutorial-target-highlight {
   outline: 5px double var(--ink);
   outline-offset: 4px;
+  scroll-margin: 1rem;
   animation: tutorial-target-pulse 1.15s steps(2, end) infinite;
+}
+
+.tutorial-coach-instruction {
+  padding: 0.5rem;
+  border: 2px solid var(--ink);
+  background: var(--shade-1);
+  font-weight: 900;
 }
 
 .tutorial-coach-actions {
@@ -1191,6 +1222,12 @@ p {
   }
 }
 
+@keyframes tutorial-target-beacon {
+  50% {
+    margin: 3px;
+  }
+}
+
 @keyframes tutorial-arrow-nudge {
   0%,
   100% {
@@ -1221,6 +1258,17 @@ p {
 
   50% {
     transform: rotate(90deg) translateX(4px);
+  }
+}
+
+@keyframes tutorial-arrow-nudge-up {
+  0%,
+  100% {
+    transform: rotate(-90deg) translateX(0);
+  }
+
+  50% {
+    transform: rotate(-90deg) translateX(4px);
   }
 }
 
@@ -1430,12 +1478,9 @@ p {
   }
 
   .tutorial-coach {
-    top: auto;
-    bottom: 72px;
-    left: 8px;
-    width: calc(100vw - 16px);
-    max-height: min(480px, calc(100vh - 96px));
-    overflow-y: auto;
+    right: auto;
+    bottom: auto;
+    overflow: visible;
   }
 
   .tutorial-coach::after {
