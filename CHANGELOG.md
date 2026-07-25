@@ -2,6 +2,43 @@
 
 All notable implementation and project-record changes are listed here.
 
+## 2026-07-25
+
+### Implementation
+
+- Replaced the single first-chart prompt with a deterministic Level 0 tutorial
+  coach that explains the chart, scored decisions, off-site results, returned
+  charts, feedback, resolution, goals, Build Mode, room placement, and the
+  explicit Level 1 advancement action
+- Added contextual target outlines and animated tutorial arrows, plus concise
+  sarcastic tutorial flavor; the Prototype tools tutorial toggle still disables
+  the full guided sequence
+- Reduced the artificial first result from three facility hours to one and
+  added an exact one-click tutorial advance so onboarding no longer requires a
+  90-second real-time wait; the second tutorial patient now arrives immediately
+  after the first chart is filed
+- Replaced the temporary Level-goals popover with an always-visible,
+  internally bounded Goals panel whose complete checklist and advancement
+  button remain available without covering the clinic
+- Made the Build Mode control remain in one location while changing between
+  Enter and Exit, disabled the misleading Resume action during construction,
+  and added an unmistakable paused/build-state banner over the facility
+- Reworked the compact-desktop chart into a deliberate portrait/presentation
+  row plus full-width decision row, with visible scroll guidance and no silently
+  clipped answer column
+- Fixed room preview double-rotation, added a full high-contrast footprint,
+  explicit rotated door/approach markers, and domain-exact connectivity status
+  so a placement checkmark means the click can actually build
+- Fixed a React StrictMode/Phaser lifecycle race that could leave an inactive
+  canvas above the live facility and make apparently valid room clicks do
+  nothing
+- Increased key pause, zoom, chart, placement, and tutorial text sizes and
+  updated the in-game Help guide to match the permanent goals and placement
+  interfaces
+- Expanded deterministic tests to 52 unit tests: 41 game-domain and 11 player
+  tests, plus full and compact desktop browser checks and the complete Level
+  0-to-Level 1 walkthrough
+
 ## 2026-07-24
 
 ### Accepted

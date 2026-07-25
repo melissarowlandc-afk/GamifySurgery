@@ -3,7 +3,7 @@
 Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The current working point is
 a local Level 0/1 implementation candidate awaiting owner walkthrough.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 ## Delivery rules
 
@@ -50,8 +50,8 @@ Completed:
 
 ## Milestone 2: Coherent local Level 0/1 slice
 
-Status: IMPLEMENTATION CANDIDATE BUILT; MELISSA/HUSBAND WALKTHROUGH AND BALANCE
-ITERATION ARE THE CURRENT GATE.
+Status: IMPLEMENTATION CANDIDATE BUILT; FIRST TESTER ONBOARDING FEEDBACK
+INTEGRATED; THE NEXT WALKTHROUGH AND BALANCE ITERATION ARE THE CURRENT GATE.
 
 Implemented:
 
@@ -102,11 +102,12 @@ Implemented:
   charts
 - A responsive chart/facility split with accurate post-resize Phaser pointer
   mapping, plus an explicit Level 1-complete/Level 2-locked state
-- One-click Windows dependency/start/browser launcher, automatic first-run
-  chart coaching, persistent tutorial controls, and in-game beginner Help
+- One-click Windows dependency/start/browser launcher, a state-driven Level 0
+  tutorial through charting, results, goals, construction, and level
+  advancement, persistent tutorial controls, and in-game beginner Help
 - One global striped clinical-content warning without repeated vignette caveats
-- A 49-test unit inventory: 41 game-domain tests and 8 player alert/view-model
-  tests, plus desktop and retained width-regression browser coverage
+- A 52-test unit inventory: 41 game-domain tests and 11 player alert/tutorial
+  view-model tests, plus desktop and retained width-regression browser coverage
 
 Current demonstration gate:
 
@@ -130,10 +131,10 @@ selection policy that prioritizes overdue concepts, interleaves categories,
 avoids recent repetition, and occasionally contrasts confused diagnoses is
 deferred until the approved content pool is large enough to exercise it.
 
-Latest local verification on 2026-07-24:
+Latest local verification on 2026-07-25:
 
-- `npm test`: 49 of 49 unit tests passed (41 game-domain and 8 player
-  alert/view-model)
+- `npm test`: 52 of 52 unit tests passed (41 game-domain and 11 player
+  tutorial/alert/view-model)
 - `npm run typecheck`: all four TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning

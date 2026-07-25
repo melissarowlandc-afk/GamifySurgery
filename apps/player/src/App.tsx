@@ -49,6 +49,7 @@ export function App() {
       tutorialsEnabled={session.tutorialsEnabled}
       tutorialCoachMode={session.tutorialCoachMode}
       tutorialTargetEncounterId={session.tutorialTargetEncounterId}
+      tutorialStep={session.tutorialStep}
       workloadStatus={view.workloadStatus}
       announcement={session.announcement}
       onTogglePause={session.togglePause}
@@ -83,8 +84,7 @@ export function App() {
       }
       onCreateCampaign={session.createCampaign}
       onSwitchCampaign={session.switchCampaign}
-      onOpenTutorialPatient={session.openTutorialPatient}
-      onDismissTutorialIntro={session.dismissTutorialIntro}
+      onTutorialAction={session.performTutorialAction}
       onTutorialsEnabledChange={session.setTutorialsEnabled}
       onSaveAndPause={session.saveAndPause}
       onRestart={session.restart}

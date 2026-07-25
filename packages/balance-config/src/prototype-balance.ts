@@ -402,7 +402,9 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         {
           id: "route.synthetic.outsourced",
           displayName: "Outsourced synthetic analysis",
-          durationTicks: 3,
+          // The first interface tutorial should demonstrate a pending result
+          // without making a new player wait 90 real seconds.
+          durationTicks: 1,
           requiredCapabilityId: null,
           requiredCapabilityIds: [],
           preference: 1,

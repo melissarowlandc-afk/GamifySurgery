@@ -82,6 +82,20 @@ export function ChartPanel({
 
   const steps = getDecisionSteps(chart);
   const showingBack = chart.summaryAvailable && chart.summaryVisible;
+  const hasReward = Boolean(
+    chart.reward &&
+      (chart.reward.moneyLabel ||
+        chart.reward.xpLabel ||
+        chart.reward.satisfactionLabel),
+  );
+  const hasActionBar =
+    hasReward ||
+    chart.summaryAvailable ||
+    chart.terminalFeedbackNeedsAcknowledgment ||
+    chart.canFile ||
+    Boolean(chart.pendingLabel);
+  const hasQuestion = steps.some((step) => Boolean(step.questionPrompt));
+  const showTimelineGuide = steps.length > 1 || hasQuestion;
 
   return (
     <aside
@@ -158,91 +172,120 @@ export function ChartPanel({
                 ) : null}
               </section>
 
-              <div
-                className="chart-decision-timeline"
-                aria-label="Encounter decisions and results"
-              >
-                {steps.length === 0 ? (
-                  <section className="chart-step-column is-empty">
-                    <h3>Encounter complete</h3>
-                    <p>No further clinical decisions are waiting.</p>
-                  </section>
-                ) : (
-                  steps.map((step, index) => (
-                    <section
-                      className={`chart-step-column${
-                        step.current ? " is-current" : ""
-                      }${step.complete ? " is-complete" : ""}`}
-                      key={step.id}
-                    >
-                      <div className="chart-step-heading">
-                        <span>Step {index + 1}</span>
-                        {step.statusLabel ? (
-                          <small>{step.statusLabel}</small>
-                        ) : null}
-                      </div>
-                      <h3>{step.heading}</h3>
-
-                      {step.resultBody ? (
-                        <div className="chart-result-card">
-                          <strong>
-                            {step.resultHeading ?? "Result"}
-                          </strong>
-                          <p>{step.resultBody}</p>
-                          {step.etaLabel ? (
-                            <small>{step.etaLabel}</small>
+              <div className="chart-decision-region">
+                {showTimelineGuide ? (
+                  <p
+                    className={`chart-timeline-guide ${
+                      steps.length > 1
+                        ? "is-history-guide"
+                        : "is-option-guide"
+                    }`}
+                    id={`chart-timeline-guide-${chart.id}`}
+                  >
+                    {steps.length > 1
+                      ? "Decision history"
+                      : "Current decision"}
+                    <span aria-hidden="true">
+                      {steps.length > 1
+                        ? "← scroll between steps →"
+                        : "scroll for all options ↓"}
+                    </span>
+                  </p>
+                ) : null}
+                <div
+                  className={`chart-decision-timeline${
+                    steps.length > 1 ? " has-multiple-steps" : ""
+                  }`}
+                  aria-label="Encounter decisions and results"
+                  aria-describedby={
+                    showTimelineGuide
+                      ? `chart-timeline-guide-${chart.id}`
+                      : undefined
+                  }
+                  tabIndex={showTimelineGuide ? 0 : undefined}
+                >
+                  {steps.length === 0 ? (
+                    <section className="chart-step-column is-empty">
+                      <h3>Encounter complete</h3>
+                      <p>No further clinical decisions are waiting.</p>
+                    </section>
+                  ) : (
+                    steps.map((step, index) => (
+                      <section
+                        className={`chart-step-column${
+                          step.current ? " is-current" : ""
+                        }${step.complete ? " is-complete" : ""}`}
+                        key={step.id}
+                      >
+                        <div className="chart-step-heading">
+                          <span>Step {index + 1}</span>
+                          {step.statusLabel ? (
+                            <small>{step.statusLabel}</small>
                           ) : null}
                         </div>
-                      ) : null}
+                        <h3>{step.heading}</h3>
 
-                      {step.questionPrompt ? (
-                        <>
-                          <p className="question-prompt">
-                            {step.questionPrompt}
-                          </p>
-                          <div className="answer-list">
-                            {step.answerChoices.map((choice) => (
-                              <button
-                                className={`answer-choice${
-                                  choice.selected ? " is-selected" : ""
-                                }`}
-                                type="button"
-                                key={choice.id}
-                                onClick={() => onSubmitAnswer(choice.id)}
-                                disabled={choice.disabled}
-                              >
-                                <span
-                                  className="choice-box"
-                                  aria-hidden="true"
-                                />
-                                <span className="answer-choice-copy">
-                                  <strong>{choice.label}</strong>
-                                  {choice.detailLabel ? (
-                                    <small>{choice.detailLabel}</small>
-                                  ) : null}
-                                </span>
-                                {choice.etaLabel ? (
-                                  <span className="answer-choice-eta">
-                                    {choice.etaLabel}
-                                  </span>
-                                ) : null}
-                              </button>
-                            ))}
+                        {step.resultBody ? (
+                          <div className="chart-result-card">
+                            <strong>
+                              {step.resultHeading ?? "Result"}
+                            </strong>
+                            <p>{step.resultBody}</p>
+                            {step.etaLabel ? (
+                              <small>{step.etaLabel}</small>
+                            ) : null}
                           </div>
-                        </>
-                      ) : null}
+                        ) : null}
 
-                      {step.feedbackBody ? (
-                        <div className="chart-step-feedback">
-                          <strong>
-                            {step.feedbackTitle ?? "Teaching feedback"}
-                          </strong>
-                          <p>{step.feedbackBody}</p>
-                        </div>
-                      ) : null}
-                    </section>
-                  ))
-                )}
+                        {step.questionPrompt ? (
+                          <>
+                            <p className="question-prompt">
+                              {step.questionPrompt}
+                            </p>
+                            <div className="answer-list">
+                              {step.answerChoices.map((choice) => (
+                                <button
+                                  className={`answer-choice${
+                                    choice.selected ? " is-selected" : ""
+                                  }`}
+                                  type="button"
+                                  key={choice.id}
+                                  onClick={() => onSubmitAnswer(choice.id)}
+                                  disabled={choice.disabled}
+                                >
+                                  <span
+                                    className="choice-box"
+                                    aria-hidden="true"
+                                  />
+                                  <span className="answer-choice-copy">
+                                    <strong>{choice.label}</strong>
+                                    {choice.detailLabel ? (
+                                      <small>{choice.detailLabel}</small>
+                                    ) : null}
+                                  </span>
+                                  {choice.etaLabel ? (
+                                    <span className="answer-choice-eta">
+                                      {choice.etaLabel}
+                                    </span>
+                                  ) : null}
+                                </button>
+                              ))}
+                            </div>
+                          </>
+                        ) : null}
+
+                        {step.feedbackBody ? (
+                          <div className="chart-step-feedback">
+                            <strong>
+                              {step.feedbackTitle ?? "Teaching feedback"}
+                            </strong>
+                            <p>{step.feedbackBody}</p>
+                          </div>
+                        ) : null}
+                      </section>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -260,47 +303,49 @@ export function ChartPanel({
         </section>
       ) : null}
 
-      <footer className="chart-action-bar">
-        <RewardBanner chart={chart} />
-        <div className="chart-action-buttons">
-          {chart.summaryAvailable ? (
-            <button
-              className="button button-secondary"
-              type="button"
-              onClick={onToggleSummary}
-              aria-pressed={showingBack}
-            >
-              {showingBack ? "Return to chart front" : "Flip chart over"}
-            </button>
-          ) : null}
+      {hasActionBar ? (
+        <footer className="chart-action-bar">
+          <RewardBanner chart={chart} />
+          <div className="chart-action-buttons">
+            {chart.summaryAvailable ? (
+              <button
+                className="button button-secondary"
+                type="button"
+                onClick={onToggleSummary}
+                aria-pressed={showingBack}
+              >
+                {showingBack ? "Return to chart front" : "Flip chart over"}
+              </button>
+            ) : null}
 
-          {chart.terminalFeedbackNeedsAcknowledgment ? (
-            <button
-              className="button button-primary"
-              type="button"
-              onClick={onAcknowledgeTerminalFeedback}
-            >
-              {chart.primaryActionLabel ?? "Continue"}
-            </button>
-          ) : chart.canFile ? (
-            <button
-              className="button button-primary"
-              type="button"
-              onClick={onFileChart}
-            >
-              {chart.readOnly ? "Close resolved chart" : "Resolve chart"}
-            </button>
-          ) : chart.pendingLabel ? (
-            <button
-              className="button button-primary"
-              type="button"
-              onClick={onClose}
-            >
-              {chart.primaryActionLabel ?? "Return to clinic"}
-            </button>
-          ) : null}
-        </div>
-      </footer>
+            {chart.terminalFeedbackNeedsAcknowledgment ? (
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={onAcknowledgeTerminalFeedback}
+              >
+                {chart.primaryActionLabel ?? "Continue"}
+              </button>
+            ) : chart.canFile ? (
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={onFileChart}
+              >
+                {chart.readOnly ? "Close resolved chart" : "Resolve chart"}
+              </button>
+            ) : chart.pendingLabel ? (
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={onClose}
+              >
+                {chart.primaryActionLabel ?? "Return to clinic"}
+              </button>
+            ) : null}
+          </div>
+        </footer>
+      ) : null}
     </aside>
   );
 }

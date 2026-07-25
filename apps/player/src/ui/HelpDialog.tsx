@@ -29,7 +29,7 @@ const HELP_STEPS = [
   ],
   [
     "Build Mode",
-    "Enter Build Mode to pause the clinic. Select a room or hallway, rotate doors, place connected spaces, upgrade rooms, sell remodelled rooms, and zoom the map. Exit Build Mode to return to play.",
+    "Use the Enter Build Mode button to pause the clinic. The same button becomes Exit Build Mode. Select a room or hallway, follow its visible outline and door marker, rotate it, and place it only when the map says it is connected.",
   ],
   [
     "Rooms and hallways",
@@ -41,7 +41,7 @@ const HELP_STEPS = [
   ],
   [
     "Level Up",
-    "Watch the Learning XP bar and goal list. Complete every displayed patient, satisfaction, room, and staff goal, then select Level Up.",
+    "The always-visible Goals panel is the source of truth. Complete every displayed XP, patient, satisfaction, room, and staff goal, then select Advance to Level in that panel.",
   ],
   [
     "Time and alerts",

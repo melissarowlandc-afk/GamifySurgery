@@ -4,6 +4,8 @@ import {
 } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
+  SECOND_TUTORIAL_ENCOUNTER_ID,
+  TUTORIAL_ENCOUNTER_ID,
   gameReducer,
   getCurrentQuestion,
   getStaffRoleDefinition,
@@ -26,6 +28,11 @@ import {
   savePrototypeProfile,
   type LocalPrototypeProfile,
 } from "./prototypeStorage";
+import {
+  createTutorialStepView,
+  type TutorialActionId,
+  type TutorialStepView,
+} from "./tutorialViewModels";
 
 type GameCommandInput = {
   [CommandType in GameCommand["type"]]: Omit<
@@ -46,6 +53,7 @@ export interface PrototypeSession {
   tutorialsEnabled: boolean;
   tutorialCoachMode: "intro" | "callout" | null;
   tutorialTargetEncounterId: string | null;
+  tutorialStep: TutorialStepView | null;
   selectedRoomDefinitionId: string | null;
   selectedRoomInstanceId: string | null;
   placementOrientation: RoomOrientation;
@@ -80,12 +88,14 @@ export interface PrototypeSession {
   increaseEmployeeSalary: (employeeId: string) => void;
   levelUp: () => void;
   fastForward: () => void;
+  advanceTutorialResult: () => void;
   addMoney: () => void;
   runEmergencyGlp1Consultation: () => void;
   createCampaign: () => void;
   switchCampaign: (campaignId: string) => void;
   openTutorialPatient: () => void;
   dismissTutorialIntro: () => void;
+  performTutorialAction: (actionId: TutorialActionId) => void;
   setTutorialsEnabled: (enabled: boolean) => void;
   saveAndPause: () => boolean;
   restart: () => void;
@@ -178,6 +188,8 @@ export function usePrototypeSession(): PrototypeSession {
     });
   const preBuildPausedRef = useRef(true);
   const [summaryVisible, setSummaryVisible] = useState(false);
+  const [acknowledgedTutorialStepIds, setAcknowledgedTutorialStepIds] =
+    useState<ReadonlySet<string>>(() => new Set());
   const [announcement, setAnnouncement] = useState(loadedRef.current.notice);
   const [systemNotices, setSystemNotices] = useState<
     PrototypeSystemNotice[]
@@ -404,6 +416,43 @@ export function usePrototypeSession(): PrototypeSession {
     [execute],
   );
 
+  const advanceToSecondTutorialPatient = useCallback(
+    (encounterId: string) => {
+      if (
+        encounterId !== TUTORIAL_ENCOUNTER_ID ||
+        stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle !==
+          "resolved" ||
+        stateRef.current.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]
+      ) {
+        return;
+      }
+      const restorePause = stateRef.current.paused;
+      if (restorePause) {
+        execute(
+          { type: "SET_PAUSED", paused: false },
+          { announceReceipt: false },
+        );
+      }
+      execute(
+        {
+          type: "DEV_FAST_FORWARD",
+          tickCount: 1,
+        },
+        {
+          announcementOverride:
+            "First chart filed. A second tutorial patient has arrived.",
+        },
+      );
+      if (restorePause) {
+        execute(
+          { type: "SET_PAUSED", paused: true },
+          { announceReceipt: false },
+        );
+      }
+    },
+    [execute],
+  );
+
   const closeChart = useCallback(() => {
     const encounterId = stateRef.current.openChartEncounterId;
     if (encounterId === null) {
@@ -415,8 +464,13 @@ export function usePrototypeSession(): PrototypeSession {
     });
     if (status === "applied") {
       setSummaryVisible(false);
+      advanceToSecondTutorialPatient(encounterId);
     }
-  }, [execute]);
+  }, [advanceToSecondTutorialPatient, execute]);
+
+  const fileChart = useCallback(() => {
+    closeChart();
+  }, [closeChart]);
 
   const submitAnswer = useCallback(
     (choiceId: string) => {
@@ -683,6 +737,60 @@ export function usePrototypeSession(): PrototypeSession {
     }
   }, [execute, publishSystemNotice]);
 
+  const advanceTutorialResult = useCallback(() => {
+    const tutorialEncounter =
+      stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID];
+    const pendingResult = tutorialEncounter?.pendingResult;
+    if (
+      tutorialEncounter?.lifecycle !== "active_pending_result" ||
+      !pendingResult
+    ) {
+      setAnnouncement("The first tutorial result is not currently pending.");
+      return;
+    }
+
+    if (
+      stateRef.current.openChartEncounterId === TUTORIAL_ENCOUNTER_ID
+    ) {
+      execute(
+        {
+          type: "CLOSE_CHART",
+          encounterId: TUTORIAL_ENCOUNTER_ID,
+        },
+        { announceReceipt: false },
+      );
+      setSummaryVisible(false);
+    }
+
+    const tickCount = Math.max(
+      1,
+      pendingResult.dueTick - stateRef.current.facilityTick,
+    );
+    const restorePause = stateRef.current.paused;
+    if (restorePause) {
+      execute(
+        { type: "SET_PAUSED", paused: false },
+        { announceReceipt: false },
+      );
+    }
+    execute(
+      {
+        type: "DEV_FAST_FORWARD",
+        tickCount,
+      },
+      {
+        announcementOverride:
+          "Tutorial time advanced to the result. Pixel Patient is ready in Existing Patients.",
+      },
+    );
+    if (restorePause) {
+      execute(
+        { type: "SET_PAUSED", paused: true },
+        { announceReceipt: false },
+      );
+    }
+  }, [execute]);
+
   const addMoney = useCallback(() => {
     execute(
       {
@@ -858,26 +966,26 @@ export function usePrototypeSession(): PrototypeSession {
     );
   }, [activateNewCampaign]);
 
-  const tutorialTargetEncounter =
-    Object.values(state.encounters).find(
-      (encounter) =>
-        encounter.arrivalClass === "tutorial" &&
-        encounter.lifecycle === "waiting_unopened" &&
-        encounter.firstOpenedAtTick === null,
-    ) ?? null;
-  const anyChartHasBeenOpened = Object.values(state.encounters).some(
-    (encounter) => encounter.firstOpenedAtTick !== null,
-  );
   const tutorialIntroDismissed =
     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
+  const tutorialStep = createTutorialStepView({
+    state,
+    tutorialsEnabled: profile.tutorialsEnabled,
+    introDismissed: tutorialIntroDismissed,
+    acknowledgedStepIds: acknowledgedTutorialStepIds,
+    buildMode,
+    selectedRoomDefinitionId,
+  });
+  const tutorialTargetEncounter =
+    tutorialStep?.patientEncounterId
+      ? state.encounters[tutorialStep.patientEncounterId] ?? null
+      : null;
   const tutorialCoachMode =
-    !profile.tutorialsEnabled ||
-    anyChartHasBeenOpened ||
-    tutorialTargetEncounter === null
-      ? null
-      : tutorialIntroDismissed
+    tutorialStep?.id === "welcome"
+      ? ("intro" as const)
+      : tutorialStep?.id === "open-first-chart"
         ? ("callout" as const)
-        : ("intro" as const);
+        : null;
 
   const persistTutorialProfile = useCallback(
     (
@@ -943,6 +1051,79 @@ export function usePrototypeSession(): PrototypeSession {
     }
   }, [openPatient, tutorialTargetEncounter]);
 
+  const performTutorialAction = useCallback(
+    (actionId: TutorialActionId) => {
+      switch (actionId) {
+        case "open-first-chart":
+          openPatient(TUTORIAL_ENCOUNTER_ID);
+          return;
+        case "focus-first-chart":
+          dismissTutorialIntro();
+          return;
+        case "acknowledge-step":
+          if (!tutorialStep) {
+            return;
+          }
+          setAcknowledgedTutorialStepIds((current) => {
+            const key = `${stateRef.current.campaignId}:${tutorialStep.id}`;
+            if (current.has(key)) {
+              return current;
+            }
+            return new Set([...current, key]);
+          });
+          return;
+        case "advance-first-result":
+          advanceTutorialResult();
+          return;
+        case "open-ready-chart":
+          openPatient(TUTORIAL_ENCOUNTER_ID);
+          return;
+        case "acknowledge-feedback":
+          acknowledgeTerminalFeedback();
+          if (tutorialStep) {
+            setAcknowledgedTutorialStepIds((current) => {
+              const key = `${stateRef.current.campaignId}:${tutorialStep.id}`;
+              return current.has(key)
+                ? current
+                : new Set([...current, key]);
+            });
+          }
+          return;
+        case "resolve-chart":
+          fileChart();
+          return;
+        case "open-second-chart":
+          openPatient(SECOND_TUTORIAL_ENCOUNTER_ID);
+          return;
+        case "enter-build-mode":
+          enterBuildMode();
+          return;
+        case "select-exam-room":
+          beginPlacement("room.examination");
+          return;
+        case "exit-build-mode":
+          exitBuildMode();
+          return;
+        case "level-up":
+          levelUp();
+          return;
+      }
+    },
+    [
+      acknowledgeTerminalFeedback,
+      advanceTutorialResult,
+      beginPlacement,
+      closeChart,
+      dismissTutorialIntro,
+      enterBuildMode,
+      exitBuildMode,
+      fileChart,
+      levelUp,
+      openPatient,
+      tutorialStep,
+    ],
+  );
+
   const campaigns = profile.campaigns
     .map((campaign) => ({
       campaignId: campaign.campaignId,
@@ -967,6 +1148,7 @@ export function usePrototypeSession(): PrototypeSession {
     tutorialsEnabled: profile.tutorialsEnabled,
     tutorialCoachMode,
     tutorialTargetEncounterId: tutorialTargetEncounter?.id ?? null,
+    tutorialStep,
     selectedRoomDefinitionId,
     selectedRoomInstanceId,
     placementOrientation,
@@ -981,7 +1163,7 @@ export function usePrototypeSession(): PrototypeSession {
     submitAnswer,
     acknowledgeTerminalFeedback,
     toggleSummary,
-    fileChart: closeChart,
+    fileChart,
     beginPlacement,
     cancelPlacement,
     rotatePlacement,
@@ -997,12 +1179,14 @@ export function usePrototypeSession(): PrototypeSession {
     increaseEmployeeSalary,
     levelUp,
     fastForward,
+    advanceTutorialResult,
     addMoney,
     runEmergencyGlp1Consultation,
     createCampaign,
     switchCampaign,
     openTutorialPatient,
     dismissTutorialIntro,
+    performTutorialAction,
     setTutorialsEnabled,
     saveAndPause,
     restart,

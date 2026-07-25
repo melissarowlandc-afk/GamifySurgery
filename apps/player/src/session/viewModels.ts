@@ -18,6 +18,7 @@ import {
   getRoomResaleValue,
   getStaffRoleDefinition,
   getWorkloadSnapshot,
+  rotateDirection,
   type EncounterState,
   type GameState,
   type PatientListItem,
@@ -557,6 +558,13 @@ export function createPrototypePlayerView(
                   height: footprint?.height ?? definition.height,
                   kind: definition.kind,
                   orientation: placementOrientation,
+                  doorSide:
+                    definition.defaultDoorSide === null
+                      ? null
+                      : rotateDirection(
+                          definition.defaultDoorSide,
+                          placementOrientation,
+                        ),
                 }
               : null;
           })()

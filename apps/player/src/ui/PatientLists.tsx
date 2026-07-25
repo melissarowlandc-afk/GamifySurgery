@@ -49,8 +49,8 @@ export function PatientLists({
     compact = false,
   ) => {
     const tutorialTarget =
-      showTutorialCallout &&
       patient.id === tutorialTargetEncounterId;
+    const tutorialCallout = showTutorialCallout && tutorialTarget;
     const calloutId = `tutorial-patient-${patient.id}`;
 
     return (
@@ -64,9 +64,9 @@ export function PatientLists({
         key={patient.id}
         onClick={() => onOpen(patient.id)}
         aria-current={patient.selected ? "page" : undefined}
-        aria-describedby={tutorialTarget ? calloutId : undefined}
+        aria-describedby={tutorialCallout ? calloutId : undefined}
       >
-        {tutorialTarget ? (
+        {tutorialCallout ? (
           <span className="tutorial-tab-callout" id={calloutId}>
             <span aria-hidden="true">-&gt;</span> Open this chart first
           </span>

@@ -4,6 +4,7 @@ import type { ResourceBarView } from "./types";
 interface ResourceBarProps {
   view: ResourceBarView;
   paused: boolean;
+  pauseLocked?: boolean;
   onTogglePause: () => void;
   onSaveAndClose?: () => void;
   endControls?: ReactNode;
@@ -19,6 +20,7 @@ function clampPercent(value: number | undefined): number {
 export function ResourceBar({
   view,
   paused,
+  pauseLocked = false,
   onTogglePause,
   onSaveAndClose,
   endControls,
@@ -64,36 +66,9 @@ export function ResourceBar({
               value={xpProgressPercent}
               aria-label="Learning XP progress toward next level"
             />
-            <details className="resource-goals">
-              <summary>
-                Level goals
-                {goals.length > 0
-                  ? ` (${completeGoalCount}/${goals.length})`
-                  : ""}
-              </summary>
-              <div className="resource-goals-popover">
-                {goals.length === 0 ? (
-                  <p>Goals will appear here.</p>
-                ) : (
-                  <ul>
-                    {goals.map((goal) => (
-                      <li
-                        className={goal.complete ? "is-complete" : ""}
-                        key={goal.id}
-                      >
-                        <span aria-hidden="true">
-                          {goal.complete ? "[x]" : "[ ]"}
-                        </span>
-                        <span>
-                          {goal.label}
-                          <small>{goal.progressLabel}</small>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </details>
+            <span className="resource-goals-summary">
+              Goals {completeGoalCount}/{goals.length} · see Goals panel
+            </span>
           </section>
 
           <section className="resource-chip">
@@ -123,8 +98,14 @@ export function ResourceBar({
             type="button"
             onClick={onTogglePause}
             aria-pressed={paused}
+            disabled={pauseLocked}
+            title={
+              pauseLocked
+                ? "Build Mode controls the pause. Exit Build Mode to resume."
+                : undefined
+            }
           >
-            {paused ? "Resume" : "Pause"}
+            {pauseLocked ? "Paused for Build" : paused ? "Resume" : "Pause"}
           </button>
           {onSaveAndClose ? (
             <button

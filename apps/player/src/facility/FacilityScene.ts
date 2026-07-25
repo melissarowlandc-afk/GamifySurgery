@@ -1,5 +1,15 @@
 import Phaser from "phaser";
-import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
+import {
+  getRoomDefinition,
+  rotateDirection,
+  validateFacilityConnectivity,
+} from "@gamify-surgery/game-domain";
+import type {
+  CardinalDirection,
+  GridPoint,
+  PixelAppearanceDescriptor,
+  PlacedRoom,
+} from "@gamify-surgery/game-domain";
 
 import type {
   FacilityCameraChangeRequest,
@@ -30,6 +40,11 @@ interface PlacementGhost {
   tileX: number;
   tileY: number;
   valid: boolean;
+  invalidReason:
+    | "outside-grid"
+    | "overlap"
+    | "door-disconnected"
+    | null;
 }
 
 interface TileRectangle {
@@ -59,9 +74,29 @@ function rectanglesOverlap(a: TileRectangle, b: TileRectangle): boolean {
 function orientedSize(
   item: Pick<FacilityRoomView, "width" | "height" | "orientation">,
 ): { width: number; height: number } {
-  return item.orientation === 90 || item.orientation === 270
-    ? { width: item.height, height: item.width }
-    : { width: item.width, height: item.height };
+  // The facility projection already contains the rotated footprint. Rotating
+  // it again here made a 3x2 room render as 3x2 after a 90-degree rotation,
+  // which made the Rotate control appear to do nothing.
+  return { width: item.width, height: item.height };
+}
+
+function inferredPlacementDoorSide(
+  placement: NonNullable<FacilityViewModel["placement"]>,
+): CardinalDirection | null {
+  if (placement.kind === "hallway" || placement.doorSide === null) {
+    return null;
+  }
+  if (placement.doorSide !== undefined) {
+    return placement.doorSide;
+  }
+
+  const definition = getRoomDefinition(placement.definitionId);
+  return definition?.defaultDoorSide
+    ? rotateDirection(
+        definition.defaultDoorSide,
+        placement.orientation ?? 0,
+      )
+    : null;
 }
 
 function modelSignature(model: FacilityViewModel): string {
@@ -97,7 +132,7 @@ function modelSignature(model: FacilityViewModel): string {
     finiteCount(counts.actionReady),
     finiteCount(counts.resolved),
     placement
-      ? `${placement.definitionId}:${placement.width}x${placement.height}`
+      ? `${placement.definitionId}:${placement.width}x${placement.height}:${placement.orientation ?? 0}:${placement.doorSide ?? "inferred"}`
       : "-",
     rooms,
     staff,
@@ -119,6 +154,8 @@ export class FacilityScene extends Phaser.Scene {
   private characterGraphics?: Phaser.GameObjects.Graphics;
   private ghostGraphics?: Phaser.GameObjects.Graphics;
   private footerText?: Phaser.GameObjects.Text;
+  private ghostStatusText?: Phaser.GameObjects.Text;
+  private ghostDoorText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
 
   private layout: GridLayout = {
@@ -155,7 +192,7 @@ export class FacilityScene extends Phaser.Scene {
 
     this.worldGraphics = this.add.graphics();
     this.characterGraphics = this.add.graphics();
-    this.ghostGraphics = this.add.graphics();
+    this.ghostGraphics = this.add.graphics().setDepth(10);
 
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: "#111111",
@@ -172,6 +209,32 @@ export class FacilityScene extends Phaser.Scene {
         fontSize: "12px",
       })
       .setOrigin(0.5, 0);
+
+    this.ghostStatusText = this.add
+      .text(0, 0, "", {
+        ...textStyle,
+        align: "center",
+        backgroundColor: "#ffffff",
+        color: "#111111",
+        fontSize: "12px",
+        padding: { x: 6, y: 4 },
+      })
+      .setOrigin(0.5, 1)
+      .setDepth(20)
+      .setVisible(false);
+
+    this.ghostDoorText = this.add
+      .text(0, 0, "", {
+        ...textStyle,
+        align: "center",
+        backgroundColor: "#111111",
+        color: "#ffffff",
+        fontSize: "11px",
+        padding: { x: 4, y: 2 },
+      })
+      .setOrigin(0.5)
+      .setDepth(21)
+      .setVisible(false);
 
     this.input.on(
       "pointermove",
@@ -236,12 +299,13 @@ export class FacilityScene extends Phaser.Scene {
     if (!this.bridge.viewModel.placement) {
       this.placementGhost = null;
     } else if (this.placementGhost) {
+      const evaluation = this.evaluatePlacement(
+        this.placementGhost.tileX,
+        this.placementGhost.tileY,
+      );
       this.placementGhost = {
         ...this.placementGhost,
-        valid: this.isPlacementValid(
-          this.placementGhost.tileX,
-          this.placementGhost.tileY,
-        ),
+        ...evaluation,
       };
     }
 
@@ -997,7 +1061,7 @@ export class FacilityScene extends Phaser.Scene {
       ?.setFontSize(compact ? 10 : 12)
       .setText(
         model.placement
-          ? `BUILD: ${model.placement.displayName.toUpperCase()} ${model.placement.width}×${model.placement.height} • TAP A CLEAR AREA`
+          ? `BUILD: ${model.placement.displayName.toUpperCase()} ${model.placement.width}×${model.placement.height} • ROTATION ${model.placement.orientation ?? 0}° • MOVE OVER MAP`
           : `${model.facilityTitle.toUpperCase()} • SOUND-FREE`,
       )
       .setPosition(
@@ -1041,7 +1105,7 @@ export class FacilityScene extends Phaser.Scene {
       ? {
           tileX,
           tileY,
-          valid: this.isPlacementValid(tileX, tileY),
+          ...this.evaluatePlacement(tileX, tileY),
         }
       : null;
     this.drawPlacementGhost();
@@ -1126,10 +1190,13 @@ export class FacilityScene extends Phaser.Scene {
       });
   }
 
-  private isPlacementValid(tileX: number, tileY: number): boolean {
+  private evaluatePlacement(
+    tileX: number,
+    tileY: number,
+  ): Pick<PlacementGhost, "valid" | "invalidReason"> {
     const placement = this.bridge.viewModel.placement;
     if (!placement) {
-      return false;
+      return { valid: false, invalidReason: "outside-grid" };
     }
 
     const size = orientedSize(placement);
@@ -1146,17 +1213,113 @@ export class FacilityScene extends Phaser.Scene {
       tileX + size.width <= columns &&
       tileY + size.height <= rows;
 
-    return (
-      insideGrid &&
-      this.bridge.viewModel.rooms.every(
-        (room) =>
-          !rectanglesOverlap(candidate, {
-            tileX: room.tileX,
-            tileY: room.tileY,
-            ...orientedSize(room),
-          }),
-      )
+    if (!insideGrid) {
+      return { valid: false, invalidReason: "outside-grid" };
+    }
+
+    const overlaps = this.bridge.viewModel.rooms.some((room) =>
+      rectanglesOverlap(candidate, {
+        tileX: room.tileX,
+        tileY: room.tileY,
+        ...orientedSize(room),
+      }),
     );
+    if (overlaps) {
+      return { valid: false, invalidReason: "overlap" };
+    }
+
+    if (!this.isCandidateConnected(tileX, tileY)) {
+      return { valid: false, invalidReason: "door-disconnected" };
+    }
+
+    return { valid: true, invalidReason: null };
+  }
+
+  private roomDoorApproach(
+    room: Pick<
+      FacilityRoomView,
+      "tileX" | "tileY" | "width" | "height" | "doorSide"
+    >,
+  ): GridPoint | null {
+    const side = room.doorSide;
+    if (!side) {
+      return null;
+    }
+    const size = { width: room.width, height: room.height };
+    const door =
+      side === "north"
+        ? {
+            x: room.tileX + Math.floor((size.width - 1) / 2),
+            y: room.tileY,
+          }
+        : side === "south"
+          ? {
+              x: room.tileX + Math.floor((size.width - 1) / 2),
+              y: room.tileY + size.height - 1,
+            }
+          : side === "west"
+            ? {
+                x: room.tileX,
+                y: room.tileY + Math.floor((size.height - 1) / 2),
+              }
+            : {
+                x: room.tileX + size.width - 1,
+                y: room.tileY + Math.floor((size.height - 1) / 2),
+              };
+    const offset =
+      side === "north"
+        ? { x: 0, y: -1 }
+        : side === "east"
+          ? { x: 1, y: 0 }
+          : side === "south"
+            ? { x: 0, y: 1 }
+            : { x: -1, y: 0 };
+    return { x: door.x + offset.x, y: door.y + offset.y };
+  }
+
+  private isCandidateConnected(tileX: number, tileY: number): boolean {
+    const placement = this.bridge.viewModel.placement;
+    if (!placement) {
+      return false;
+    }
+    const definition = getRoomDefinition(placement.definitionId);
+    if (!definition) {
+      return false;
+    }
+
+    const candidate: PlacedRoom = {
+      id: "room.preview",
+      roomDefinitionId: placement.definitionId,
+      x: tileX,
+      y: tileY,
+      orientation: placement.orientation ?? 0,
+      doorSide: inferredPlacementDoorSide(placement),
+      upgradeLevel: 1,
+    };
+    const placedRooms: PlacedRoom[] = this.bridge.viewModel.rooms.map(
+      (room) => ({
+        id: room.instanceId,
+        roomDefinitionId: room.definitionId,
+        x: room.tileX,
+        y: room.tileY,
+        orientation: room.orientation ?? 0,
+        doorSide: room.doorSide ?? null,
+        upgradeLevel: room.upgradeLevel ?? 1,
+      }),
+    );
+    const protectedDefinitions = new Set(
+      this.bridge.viewModel.rooms
+        .filter((room) => room.isFounderRoom)
+        .map((room) => room.definitionId),
+    );
+    if (protectedDefinitions.size === 0) {
+      return true;
+    }
+    return validateFacilityConnectivity(
+      [...placedRooms, candidate],
+      (definitionId) => getRoomDefinition(definitionId),
+      protectedDefinitions,
+    ).connected;
   }
 
   private drawPlacementGhost(): void {
@@ -1169,17 +1332,29 @@ export class FacilityScene extends Phaser.Scene {
     const ghost = this.placementGhost;
     const placement = this.bridge.viewModel.placement;
     if (!ghost || !placement) {
+      this.ghostStatusText?.setVisible(false);
+      this.ghostDoorText?.setVisible(false);
+      if (placement) {
+        this.footerText?.setText(
+          `BUILD: ${placement.displayName.toUpperCase()} ${placement.width}×${placement.height} • ROTATION ${placement.orientation ?? 0}° • MOVE OVER MAP`,
+        );
+      }
       return;
     }
 
+    const size = orientedSize(placement);
     const rectangle = this.toPixels({
       tileX: ghost.tileX,
       tileY: ghost.tileY,
-      ...orientedSize(placement),
+      ...size,
     });
     const border = Math.max(2, Math.floor(this.layout.tileSize * 0.1));
+    const roomShade = ghost.valid ? 0xffffff : 0xc5c5c0;
 
-    graphics.fillStyle(ghost.valid ? 0xffffff : 0x777777, 0.65);
+    // Always draw the entire proposed footprint. A translucent fill keeps the
+    // grid and collisions legible while the heavy double border reads as the
+    // actual rotated room outline rather than a single selected tile.
+    graphics.fillStyle(roomShade, ghost.valid ? 0.72 : 0.82);
     graphics.fillRect(
       rectangle.x,
       rectangle.y,
@@ -1193,6 +1368,141 @@ export class FacilityScene extends Phaser.Scene {
       rectangle.width,
       rectangle.height,
     );
+    graphics.lineStyle(1, ghost.valid ? 0x777777 : 0xffffff, 1);
+    graphics.strokeRect(
+      rectangle.x + border + 1,
+      rectangle.y + border + 1,
+      Math.max(1, rectangle.width - (border + 1) * 2),
+      Math.max(1, rectangle.height - (border + 1) * 2),
+    );
+
+    const doorSide = inferredPlacementDoorSide(placement);
+    if (doorSide) {
+      this.drawDoor(graphics, rectangle, doorSide, roomShade);
+
+      const centerX = rectangle.x + rectangle.width / 2;
+      const centerY = rectangle.y + rectangle.height / 2;
+      const inset = Math.max(8, Math.floor(this.layout.tileSize * 0.62));
+      const doorPoint =
+        doorSide === "north"
+          ? { x: centerX, y: rectangle.y + inset }
+          : doorSide === "south"
+            ? {
+                x: centerX,
+                y: rectangle.y + rectangle.height - inset,
+              }
+            : doorSide === "west"
+              ? { x: rectangle.x + inset, y: centerY }
+              : {
+                  x: rectangle.x + rectangle.width - inset,
+                  y: centerY,
+                };
+      graphics.lineStyle(Math.max(2, border), 0x111111, 1);
+      graphics.lineBetween(centerX, centerY, doorPoint.x, doorPoint.y);
+      graphics.fillStyle(0x111111, 1);
+      const arrow = Math.max(5, Math.floor(this.layout.tileSize * 0.22));
+      if (doorSide === "north") {
+        graphics.fillTriangle(
+          doorPoint.x,
+          doorPoint.y - arrow,
+          doorPoint.x - arrow,
+          doorPoint.y + arrow,
+          doorPoint.x + arrow,
+          doorPoint.y + arrow,
+        );
+      } else if (doorSide === "south") {
+        graphics.fillTriangle(
+          doorPoint.x,
+          doorPoint.y + arrow,
+          doorPoint.x - arrow,
+          doorPoint.y - arrow,
+          doorPoint.x + arrow,
+          doorPoint.y - arrow,
+        );
+      } else if (doorSide === "west") {
+        graphics.fillTriangle(
+          doorPoint.x - arrow,
+          doorPoint.y,
+          doorPoint.x + arrow,
+          doorPoint.y - arrow,
+          doorPoint.x + arrow,
+          doorPoint.y + arrow,
+        );
+      } else {
+        graphics.fillTriangle(
+          doorPoint.x + arrow,
+          doorPoint.y,
+          doorPoint.x - arrow,
+          doorPoint.y - arrow,
+          doorPoint.x - arrow,
+          doorPoint.y + arrow,
+        );
+      }
+
+      const approach = this.roomDoorApproach({
+        tileX: ghost.tileX,
+        tileY: ghost.tileY,
+        width: size.width,
+        height: size.height,
+        doorSide,
+      });
+      if (approach) {
+        const approachRectangle = this.toPixels({
+          tileX: approach.x,
+          tileY: approach.y,
+          width: 1,
+          height: 1,
+        });
+        graphics.lineStyle(Math.max(2, border), 0x111111, 1);
+        graphics.strokeRect(
+          approachRectangle.x + 2,
+          approachRectangle.y + 2,
+          Math.max(1, approachRectangle.width - 4),
+          Math.max(1, approachRectangle.height - 4),
+        );
+      }
+
+      const arrowGlyph =
+        doorSide === "north"
+          ? "↑"
+          : doorSide === "east"
+            ? "→"
+            : doorSide === "south"
+              ? "↓"
+              : "←";
+      const doorLabelPosition =
+        doorSide === "north"
+          ? {
+              x: centerX,
+              y: rectangle.y + Math.max(11, this.layout.tileSize * 0.32),
+            }
+          : doorSide === "south"
+            ? {
+                x: centerX,
+                y:
+                  rectangle.y +
+                  rectangle.height -
+                  Math.max(11, this.layout.tileSize * 0.32),
+              }
+            : doorSide === "west"
+              ? {
+                  x: rectangle.x + Math.max(24, this.layout.tileSize * 0.6),
+                  y: centerY,
+                }
+              : {
+                  x:
+                    rectangle.x +
+                    rectangle.width -
+                    Math.max(24, this.layout.tileSize * 0.6),
+                  y: centerY,
+                };
+      this.ghostDoorText
+        ?.setText(`DOOR ${arrowGlyph}`)
+        .setPosition(doorLabelPosition.x, doorLabelPosition.y)
+        .setVisible(true);
+    } else {
+      this.ghostDoorText?.setVisible(false);
+    }
 
     if (ghost.valid) {
       graphics.lineStyle(border, 0x111111, 1);
@@ -1211,7 +1521,7 @@ export class FacilityScene extends Phaser.Scene {
       );
       graphics.strokePath();
     } else {
-      graphics.lineStyle(border, 0xffffff, 1);
+      graphics.lineStyle(border, 0x111111, 1);
       graphics.lineBetween(
         rectangle.x + border * 2,
         rectangle.y + border * 2,
@@ -1225,6 +1535,43 @@ export class FacilityScene extends Phaser.Scene {
         rectangle.y + rectangle.height - border * 2,
       );
     }
+
+    const invalidMessage =
+      ghost.invalidReason === "outside-grid"
+        ? "ROOM MUST FIT INSIDE THE MAP"
+        : ghost.invalidReason === "overlap"
+          ? "SPACE IS ALREADY OCCUPIED"
+          : placement.kind === "hallway"
+            ? "HALLWAY MUST TOUCH THE CONNECTED PATH"
+            : "DOOR MUST TOUCH A CONNECTED HALLWAY";
+    const statusMessage = ghost.valid
+      ? placement.kind === "hallway"
+        ? "✓ CONNECTED — CLICK TO BUILD"
+        : "✓ DOOR CONNECTED — CLICK TO BUILD"
+      : `✕ ${invalidMessage}`;
+    const statusAbove = rectangle.y > 54;
+    const statusX = Math.max(
+      110,
+      Math.min(this.scale.width - 110, rectangle.x + rectangle.width / 2),
+    );
+    this.ghostStatusText
+      ?.setText(
+        `${placement.displayName.toUpperCase()} • ${size.width}×${size.height} • ${placement.orientation ?? 0}°\n${statusMessage}`,
+      )
+      .setOrigin(0.5, statusAbove ? 1 : 0)
+      .setPosition(
+        statusX,
+        statusAbove
+          ? rectangle.y - 5
+          : rectangle.y + rectangle.height + 5,
+      )
+      .setVisible(true);
+
+    this.footerText?.setText(
+      `${ghost.valid ? "✓ READY" : "✕ NOT READY"} • ${placement.displayName.toUpperCase()} ${size.width}×${size.height} • ${
+        doorSide ? `DOOR ${doorSide.toUpperCase()}` : "CONNECTED HALLWAY"
+      }`,
+    );
   }
 
   private getFounderRoom(): FacilityRoomView | undefined {

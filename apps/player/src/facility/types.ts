@@ -53,10 +53,19 @@ export interface FacilityStaffView {
 export interface FacilityPlacementView {
   definitionId: string;
   displayName: string;
+  /**
+   * Width and height are the already-rotated footprint rendered on the grid.
+   * `orientation` is retained for the door marker and placement command.
+   */
   width: number;
   height: number;
   kind?: "room" | "hallway";
   orientation?: RoomOrientation;
+  /**
+   * The already-rotated door side. Undefined temporarily falls back to the
+   * prototype's south-facing room convention; hallways should use null.
+   */
+  doorSide?: CardinalDirection | null;
 }
 
 export interface FacilityCameraView {

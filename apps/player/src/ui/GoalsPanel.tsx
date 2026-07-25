@@ -3,15 +3,11 @@ import type { ProgressionView } from "./types";
 
 interface GoalsPanelProps {
   view: ProgressionView;
-  paused: boolean;
-  workloadStatus: string;
   onLevelUp: () => void;
 }
 
 export function GoalsPanel({
   view,
-  paused,
-  workloadStatus,
   onLevelUp,
 }: GoalsPanelProps) {
   const panelRef = useRef<HTMLElement>(null);
@@ -56,10 +52,6 @@ export function GoalsPanel({
           prototype.
         </p>
       ) : null}
-      <div className="status-note">
-        <strong>{paused ? "Facility paused" : "Facility running"}</strong>
-        <span>{workloadStatus}</span>
-      </div>
     </aside>
   );
 }

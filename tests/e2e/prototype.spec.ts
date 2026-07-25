@@ -134,16 +134,6 @@ async function placeRoomAt(
   });
 }
 
-async function resolveCorrectEncounter(page: Page): Promise<void> {
-  await expect(
-    page.getByRole("button", { name: /Continue to summary/i }),
-  ).toHaveCount(0);
-  await expect(
-    page.getByRole("button", { name: "Resolve chart" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Resolve chart" }).click();
-}
-
 test.beforeAll(() => {
   mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true });
 });
@@ -180,6 +170,38 @@ test(
       animations: "disabled",
     });
     await tutorialTarget.click();
+    await expect(
+      page.getByRole("heading", { name: "This is the patient chart" }),
+    ).toBeVisible();
+    await page.screenshot({
+      path: `${SCREENSHOT_DIRECTORY}/tutorial-chart-tour-desktop.png`,
+      fullPage: false,
+      animations: "disabled",
+    });
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Show me the decision" })
+      .click();
+    await expect(
+      page.getByRole("heading", {
+        name: "Choose the answer supported by the chart",
+      }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Close patient chart" }).click();
+    await expect(
+      page.getByRole("heading", {
+        name: "Reopen Pixel Patient's chart",
+      }),
+    ).toBeVisible();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Reopen chart" })
+      .click();
+    await expect(
+      page.getByRole("heading", {
+        name: "Choose the answer supported by the chart",
+      }),
+    ).toBeVisible();
 
     const firstDecision = page.locator(
       ".chart-step-column.is-current .answer-choice",
@@ -190,7 +212,7 @@ test(
       .allTextContents();
     expect(firstDecisionLabels.indexOf("SIGNAL ALPHA")).toBe(2);
     const correctSignal = page.getByRole("button", {
-      name: /SIGNAL ALPHA.*3 in-game hours/,
+      name: /SIGNAL ALPHA.*1 in-game hour/,
     });
     await expect(correctSignal).toBeVisible();
     await correctSignal.click();
@@ -206,12 +228,31 @@ test(
       page.getByRole("button", { name: /Pixel Patient.*Analysis pending/ }),
     ).toBeVisible();
 
-    await fastForward(page);
+    await expect(
+      page.getByRole("heading", {
+        name: "The patient left for an off-site result",
+      }),
+    ).toBeVisible();
+    await page.screenshot({
+      path: `${SCREENSHOT_DIRECTORY}/tutorial-result-wait-desktop.png`,
+      fullPage: false,
+      animations: "disabled",
+    });
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Advance to result" })
+      .click();
     await expect(pendingPatient).toContainText("Action required");
     await expect(pendingPatient.getByLabel("Action required")).toBeVisible();
     await expect(messageTitle(page, "Results ready")).toBeVisible();
 
-    await pendingPatient.click();
+    await expect(
+      page.getByRole("heading", { name: "The result is ready" }),
+    ).toBeVisible();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Open returned chart" })
+      .click();
     await expect(
       page
         .locator(".chart-result-card")
@@ -224,14 +265,41 @@ test(
     await expect(
       page.getByRole("button", { name: "Flip chart over" }),
     ).toBeVisible();
-    await resolveCorrectEncounter(page);
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Continue" })
+      .click();
+    await expect(page.locator(".tutorial-coach")).toContainText(
+      "Your clinical decision making is truly godlike.",
+    );
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Resolve chart" })
+      .click();
 
-    await fastForward(page);
     const secondTutorial = page
       .locator(".patient-folder.is-waiting .patient-tab")
       .filter({ hasText: "Morgan Thread" });
     await expect(secondTutorial).toBeVisible();
-    await secondTutorial.click();
+    await expect(
+      page.getByRole("heading", {
+        name: "A second patient has arrived",
+      }),
+    ).toBeVisible();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Open second chart" })
+      .click();
+    await page.getByRole("button", { name: "Close patient chart" }).click();
+    await expect(
+      page.getByRole("heading", {
+        name: "Reopen Morgan Thread's chart",
+      }),
+    ).toBeVisible();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Reopen chart" })
+      .click();
     await page
       .getByRole("button", {
         name: /Assess wound type and vaccine history/,
@@ -240,33 +308,102 @@ test(
     await expect(page.locator(".chart-reward-banner")).toContainText(
       "+5 Learning XP",
     );
-    await resolveCorrectEncounter(page);
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Continue" })
+      .click();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Resolve chart" })
+      .click();
 
-    await page.getByRole("button", { name: "Build Mode" }).click();
     await expect(
-      page.getByRole("button", { name: "Resume" }),
+      page.getByRole("heading", {
+        name: "Patient care funded your next objective",
+      }),
+    ).toBeVisible();
+    const goalsPanel = page.locator(".goals-panel");
+    await expect(goalsPanel).toBeVisible();
+    await expect(goalsPanel.locator(".goal-list li")).toHaveCount(4);
+    await expect(page.locator(".resource-goals-popover")).toHaveCount(0);
+    expect(
+      await goalsPanel.evaluate((panel) => {
+        const lastGoal = panel.querySelector(".goal-list li:last-child");
+        if (!lastGoal) {
+          return false;
+        }
+        return (
+          lastGoal.getBoundingClientRect().bottom <=
+          panel.getBoundingClientRect().bottom + 1
+        );
+      }),
+    ).toBe(true);
+    await page.screenshot({
+      path: `${SCREENSHOT_DIRECTORY}/tutorial-goals-desktop.png`,
+      fullPage: false,
+      animations: "disabled",
+    });
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Show me construction" })
+      .click();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Enter Build Mode" })
+      .click();
+    await expect(
+      page.getByRole("button", { name: "Paused for Build" }),
     ).toBeVisible();
     await expect(page.locator(".build-mode-panel")).toContainText(
-      "Facility paused",
+      "Time paused",
+    );
+    await expect(page.locator(".facility-pause-indicator")).toContainText(
+      "BUILD MODE",
     );
     await page
-      .locator(".build-mode-panel")
-      .getByRole("button", { name: /^Examination Room/ })
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Select Examination Room" })
       .click();
-    await placeRoomAt(page.getByTestId("facility-canvas"), 7, 2);
+    await expect(page.locator(".placement-orientation")).toContainText(
+      "door faces south",
+    );
+    await page
+      .getByRole("button", { name: "Rotate room 90°" })
+      .click();
+    await expect(page.locator(".placement-orientation")).toContainText(
+      "door faces west",
+    );
+    await placeRoomAt(page.getByTestId("facility-canvas"), 9, 3);
     await expect(page.locator(".build-mode-panel")).toContainText(
       "1 built",
     );
-    await page.getByRole("button", { name: "Exit Build Mode" }).click();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Exit Build Mode" })
+      .click();
     await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
     const recentEvents = page.locator("details.message-board-history");
     await recentEvents.locator("summary").click();
     await expect(recentEvents).toContainText("Construction complete");
 
     await expect(
-      page.getByRole("button", { name: "Advance to Level 1" }),
+      page
+        .locator(".goals-panel")
+        .getByRole("button", { name: "Advance to Level 1" }),
     ).toBeVisible();
-    await page.getByRole("button", { name: "Advance to Level 1" }).click();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Advance to Level 1" })
+      .click();
+    await expect(
+      page.getByRole("heading", {
+        name: "Welcome to the actual clinic loop",
+      }),
+    ).toBeVisible();
+    await page
+      .locator(".tutorial-coach")
+      .getByRole("button", { name: "Begin Level 1" })
+      .click();
     await expect(
       page.getByText("Level 1", { exact: true }).first(),
     ).toBeVisible();
@@ -374,7 +511,9 @@ test(
     await expect(messageTitle(page, "Emergency side business")).toBeVisible();
     await expect(page.locator(".emergency-glp1-panel")).toHaveCount(0);
 
-    await page.getByRole("button", { name: "Build Mode" }).click();
+    await page
+      .getByRole("button", { name: /Enter Build Mode/ })
+      .click();
     await page
       .locator(".build-mode-panel")
       .getByRole("button", { name: /^Hallway/ })

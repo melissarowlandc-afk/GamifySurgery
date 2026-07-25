@@ -46,9 +46,10 @@ stop the manual server. Neither method deploys or publishes anything.
 
 - A desktop-first React interface and top-down Phaser facility sized for both
   full and compact desktop browser windows; phone-specific polish is deferred
-- Automatic first-run guidance with a direct **Open first chart** action, a
-  pulsing chart callout, a persistent tutorial toggle in Prototype tools, and
-  an always-available in-game beginner Help guide
+- A state-driven Level 0 tutorial with contextual bubbles and animated target
+  arrows for charting, results, feedback, resolution, goals, construction, and
+  level advancement; Prototype tools can disable it and the beginner Help guide
+  remains available at all times
 - A founder-operated Level 0 clinic with two protected introductory patients
 - A continuous 8 AM-6 PM facility day lasting about five real minutes, with
   Level 1 routine arrivals paced at roughly one patient per real minute
@@ -71,9 +72,10 @@ stop the manual server. Neither method deploys or publishes anything.
   answers map to Good and incorrect answers map to Again
 - Separate money, XP, satisfaction, facility time, operating expenses, and
   level requirements
-- A paused **Build Mode** with a build-only grid, zoom/pan controls, repeatable
-  rooms and functional hallways, room rotation and explicit doors, upgrades,
-  and sale for a centrally configured 25% refund
+- A paused **Build Mode** with one consistent Enter/Exit control, a prominent
+  pause banner, build-only grid, zoom/pan controls, repeatable rooms and
+  functional hallways, domain-validated placement outlines, visible rotating
+  doors, upgrades, and sale for a centrally configured 25% refund
 - Examination-room construction and the explicit Level 0-to-Level 1 gate
 - Level 1 routine arrivals, patience, queue capacity, treatment or referral
   decisions, outsourced or in-house result timing, and bounded consequences
@@ -142,7 +144,7 @@ Run these from the project folder:
 
 | Command | Purpose |
 |---|---|
-| `npm test` | Run 49 deterministic unit tests: 41 game-domain and 8 player alert/view-model tests |
+| `npm test` | Run 52 deterministic unit tests: 41 game-domain and 11 player alert/tutorial-view-model tests |
 | `npm run test:e2e` | Run the desktop browser walkthroughs and retained width regressions in installed Chrome |
 | `npm run typecheck` | Check every TypeScript workspace |
 | `npm run build` | Type-check and create the local production-style player build |
@@ -155,6 +157,11 @@ deploy the game.
 
 - [Automatic desktop tutorial](artifacts/screenshots/tutorial-desktop.png)
 - [Highlighted first chart](artifacts/screenshots/tutorial-callout-desktop.png)
+- [Guided chart tour](artifacts/screenshots/tutorial-chart-tour-desktop.png)
+- [Guided off-site result](artifacts/screenshots/tutorial-result-wait-desktop.png)
+- [Guided Level 0 goals](artifacts/screenshots/tutorial-goals-desktop.png)
+- [South-door placement preview](artifacts/screenshots/placement-preview-south.png)
+- [Rotated west-door placement preview](artifacts/screenshots/placement-preview-west.png)
 - [Level 0 desktop chart](artifacts/screenshots/level-0-desktop-chrome.png)
 - [Compact desktop chart](artifacts/screenshots/level-0-compact-desktop-chrome.png)
 - [Level 1 desktop walkthrough](artifacts/screenshots/level-1-desktop.png)

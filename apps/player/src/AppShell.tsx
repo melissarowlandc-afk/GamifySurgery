@@ -11,6 +11,7 @@ import {
   DevelopmentPanel,
   EmergencyGlp1Panel,
   EventMessageBoard,
+  GoalsPanel,
   HelpDialog,
   PatientLists,
   ResourceBar,
@@ -32,6 +33,10 @@ import {
   type StaffRoleGroupView,
 } from "./ui";
 import type { RoomOrientation } from "@gamify-surgery/game-domain";
+import type {
+  TutorialActionId,
+  TutorialStepView,
+} from "./session";
 
 interface AppShellProps {
   resourceBar: ResourceBarView;
@@ -51,6 +56,7 @@ interface AppShellProps {
   tutorialsEnabled: boolean;
   tutorialCoachMode: "intro" | "callout" | null;
   tutorialTargetEncounterId: string | null;
+  tutorialStep: TutorialStepView | null;
   workloadStatus: string;
   announcement: string;
   buildMode: boolean;
@@ -85,8 +91,7 @@ interface AppShellProps {
   onRunEmergencyGlp1Consultation: () => void;
   onCreateCampaign: () => void;
   onSwitchCampaign: (campaignId: string) => void;
-  onOpenTutorialPatient: () => void;
-  onDismissTutorialIntro: () => void;
+  onTutorialAction: (actionId: TutorialActionId) => void;
   onTutorialsEnabledChange: (enabled: boolean) => void;
   onSaveAndPause: () => boolean;
   onRestart: () => void;
@@ -118,6 +123,7 @@ export function AppShell({
   tutorialsEnabled,
   tutorialCoachMode,
   tutorialTargetEncounterId,
+  tutorialStep,
   workloadStatus,
   announcement,
   buildMode,
@@ -148,17 +154,12 @@ export function AppShell({
   onRunEmergencyGlp1Consultation,
   onCreateCampaign,
   onSwitchCampaign,
-  onOpenTutorialPatient,
-  onDismissTutorialIntro,
+  onTutorialAction,
   onTutorialsEnabledChange,
   onSaveAndPause,
   onRestart,
 }: AppShellProps) {
   const [helpOpen, setHelpOpen] = useState(false);
-  const tutorialTargetName =
-    patients.find(
-      (patient) => patient.id === tutorialTargetEncounterId,
-    )?.name ?? "the first patient";
   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
 
   const handleMessageAction = (
@@ -183,13 +184,9 @@ export function AppShell({
       return;
     }
     if (target?.type === "goal") {
-      const goals = document.querySelector<HTMLDetailsElement>(
-        ".resource-goals",
-      );
-      if (goals) {
-        goals.open = true;
-        goals.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
+      document
+        .querySelector<HTMLElement>(".goals-panel")
+        ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
       return;
     }
     if (target?.type === "emergency_glp1") {
@@ -204,6 +201,7 @@ export function AppShell({
       <ResourceBar
         view={resourceBar}
         paused={paused}
+        pauseLocked={buildMode}
         onTogglePause={onTogglePause}
         endControls={
           <SaveCloseDialog onSaveAndPause={onSaveAndPause} />
@@ -308,6 +306,23 @@ export function AppShell({
                 onCameraChange={onFacilityCameraChange}
               />
             </div>
+            {paused ? (
+              <div
+                className={`facility-pause-indicator${
+                  buildMode ? " is-build-mode" : ""
+                }`}
+                role="status"
+              >
+                <strong>
+                  {buildMode ? "BUILD MODE" : "GAME PAUSED"}
+                </strong>
+                <span>
+                  {buildMode
+                    ? "Facility time is stopped while you remodel."
+                    : "Patients and facility time are waiting for you."}
+                </span>
+              </div>
+            ) : null}
           </section>
 
           {!buildMode ? (
@@ -339,6 +354,10 @@ export function AppShell({
             onUpgradeSelectedRoom={onUpgradeSelectedRoom}
             onSellSelectedRoom={onSellSelectedRoom}
           />
+          <GoalsPanel
+            view={progression}
+            onLevelUp={onLevelUp}
+          />
 
           {!buildMode ? (
             <>
@@ -359,10 +378,9 @@ export function AppShell({
       </main>
 
       <TutorialCoach
-        visible={tutorialCoachMode === "intro" && !helpOpen && !buildMode}
-        patientName={tutorialTargetName}
-        onOpenPatient={onOpenTutorialPatient}
-        onDismiss={onDismissTutorialIntro}
+        step={helpOpen ? null : tutorialStep}
+        onAction={onTutorialAction}
+        onDisableTutorials={() => onTutorialsEnabledChange(false)}
       />
 
       <footer className="footer-bar">
@@ -371,16 +389,7 @@ export function AppShell({
             {paused ? "Facility paused" : "Facility operating"}
           </strong>
           <span>{workloadStatus}</span>
-          {progression.canLevelUp ? (
-            <button
-              className="button button-primary"
-              type="button"
-              onClick={onLevelUp}
-              disabled={buildMode}
-            >
-              Advance to {progression.nextLevelLabel}
-            </button>
-          ) : progression.prototypeComplete ? (
+          {progression.prototypeComplete ? (
             <strong className="prototype-complete">
               Level 1 complete — Level 2 is locked in this prototype.
             </strong>

@@ -166,7 +166,7 @@ describe("tutorial clinical lifecycle", () => {
     expect(
       state.encounters[TUTORIAL_ENCOUNTER_ID]!.pendingResult?.routeId,
     ).toBe("route.synthetic.outsourced");
-    expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBe(3);
+    expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBe(1);
 
     state = gameReducer(state, {
       type: "SET_PAUSED",
@@ -179,14 +179,14 @@ describe("tutorial clinical lifecycle", () => {
       operationId: "op.paused-tick",
     });
     expect(state.facilityTick).toBe(pausedAtTick);
-    expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBe(3);
+    expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBe(1);
 
     state = gameReducer(state, {
       type: "SET_PAUSED",
       operationId: "op.resume",
       paused: false,
     });
-    state = advanceTicks(state, 3, "op.after-resume");
+    state = advanceTicks(state, 1, "op.after-resume");
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.lifecycle).toBe(
       "active_action_required",
     );
@@ -600,11 +600,11 @@ describe("campaign learning, progression, and Level 1 management", () => {
       "fast.answer",
       10_000,
     );
-    expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBe(3);
+    expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBe(1);
     state = gameReducer(state, {
       type: "DEV_FAST_FORWARD",
       operationId: "fast.advance",
-      tickCount: 3,
+      tickCount: 1,
     });
     expect(getPendingResultEta(state, TUTORIAL_ENCOUNTER_ID)).toBeNull();
     expect(

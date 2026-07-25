@@ -72,6 +72,15 @@ export function FacilityCanvas({
       return;
     }
 
+    // Phaser 4 schedules part of `destroy` through its game loop. React
+    // StrictMode immediately mounts effects twice in development, so the
+    // destroyed canvas could survive long enough for the replacement canvas
+    // to be appended beneath it. The player would then see and click an
+    // inactive map while the live map sat one full canvas-height below.
+    host.querySelectorAll(":scope > canvas").forEach((canvas) => {
+      canvas.remove();
+    });
+
     const scene = new FacilityScene(bridgeRef.current);
     const width = Math.max(1, Math.floor(host.clientWidth));
     const height = Math.max(1, Math.floor(host.clientHeight));
@@ -100,6 +109,7 @@ export function FacilityCanvas({
       },
       scene,
     });
+    const ownedCanvas = game.canvas;
     gameRef.current = game;
 
     let resizeFrame: number | null = null;
@@ -148,6 +158,9 @@ export function FacilityCanvas({
         gameRef.current = null;
       }
       game.destroy(true);
+      if (ownedCanvas.parentElement === host) {
+        ownedCanvas.remove();
+      }
     };
   }, []);
 
