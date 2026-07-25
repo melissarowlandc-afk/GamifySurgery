@@ -18,6 +18,14 @@ export function validateDomainContext(context: DomainContext): DomainContext {
       );
     }
     for (const node of clinicalCase.decisionNodes) {
+      for (const choice of node.answerChoices) {
+        const requestedServiceId = choice.serviceRequest?.serviceId;
+        if (requestedServiceId && !services.has(requestedServiceId)) {
+          throw new Error(
+            `Answer choice ${choice.id} references missing service ${requestedServiceId}.`,
+          );
+        }
+      }
       const gate = node.resultGateAfter;
       if (!gate) {
         continue;

@@ -11,18 +11,42 @@ import {
 } from "./context";
 import {
   canAdmitPatient,
-  getCurrentCapabilities,
+  getEligibleServiceRoute,
+  getEmergencyGlp1Status,
   getFacilityProgressionStatus,
   getRoomDefinition,
   getStaffRoleDefinition,
 } from "./selectors";
+import {
+  RANDOMNESS_CONTRACT_VERSION,
+  RANDOM_STREAMS,
+  deterministicShuffle,
+} from "./randomness";
 import {
   applyFsrsReview,
   createNewFsrsCard,
   createSchedulerPins,
   schedulerPinsMatch,
 } from "./fsrs-adapter";
+import {
+  createPatientDisplayName,
+  createPixelAppearance,
+  createStaffDisplayName,
+} from "./appearance";
+import {
+  getRotatedFootprint,
+  isInsideFacility,
+  roomsOverlap,
+  rotateDirection,
+  validateFacilityConnectivity,
+} from "./spatial";
+import {
+  advanceEmployeeMovement,
+  getEmployeeArrival,
+  getEffectiveEmployeeMorale,
+} from "./staff";
 import type {
+  AnswerRecord,
   DomainContext,
   DomainEvent,
   EmployeeState,
@@ -66,6 +90,11 @@ function assertPinnedContext(state: GameState, context: DomainContext): void {
   ) {
     throw new Error("Reducer context does not match the campaign's scheduler pins.");
   }
+  if (state.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error(
+      "Reducer context does not match the campaign's randomness contract.",
+    );
+  }
 }
 
 function createEncounter(
@@ -80,11 +109,27 @@ function createEncounter(
   },
 ): EncounterState {
   const patienceExempt = input.arrivalClass === "tutorial";
+  const frozenCase = clonePlain(input.clinicalCase);
+  for (const node of frozenCase.decisionNodes) {
+    if (node.shuffleAnswers) {
+      node.answerChoices = deterministicShuffle(
+        node.answerChoices,
+        state.campaignSeed,
+        RANDOM_STREAMS.answerOrder,
+        `${input.encounterId}|${node.id}`,
+      );
+    }
+  }
   return {
     id: input.encounterId,
     clinicalReleaseId: context.clinicalRelease.id,
-    frozenCase: clonePlain(input.clinicalCase),
+    frozenCase,
     patientDisplayName: input.patientDisplayName,
+    patientAppearance: createPixelAppearance(
+      state.campaignSeed,
+      "patient",
+      input.encounterId,
+    ),
     arrivalClass: input.arrivalClass,
     protectedGuaranteeId: input.protectedGuaranteeId,
     lifecycle: "waiting_unopened",
@@ -101,6 +146,15 @@ function createEncounter(
       warningThresholdsShown: [],
     },
     answers: [],
+    steps: frozenCase.decisionNodes.map((node, nodeIndex) => ({
+      nodeIndex,
+      decisionNodeId: node.id,
+      questionVariantId: node.questionVariantId,
+      primaryConceptId: node.primaryConceptId,
+      status: nodeIndex === 0 ? "action_required" : "locked",
+      answer: null,
+      result: null,
+    })),
     pendingResult: null,
     deliveredResultNarratives: [],
     terminalFeedback: null,
@@ -154,39 +208,6 @@ function getCurrentNode(encounter: EncounterState): DecisionNode | null {
   return encounter.frozenCase.decisionNodes[encounter.currentNodeIndex] ?? null;
 }
 
-function getEligibleResultRoute(
-  state: GameState,
-  context: DomainContext,
-  gate: ResultGate,
-) {
-  const service = context.balanceRelease.services.find(
-    (candidate) => candidate.id === gate.resultTypeId,
-  );
-  if (!service) {
-    return null;
-  }
-  const capabilities = getCurrentCapabilities(state, context);
-  const allowedRouteIds = new Set(gate.allowedServiceRouteIds);
-  const eligibleRoutes = service.routes
-    .filter(
-      (route) =>
-        allowedRouteIds.has(route.id) &&
-        (route.requiredCapabilityId === null ||
-          capabilities.has(route.requiredCapabilityId)) &&
-        route.requiredCapabilityIds.every((capabilityId) =>
-          capabilities.has(capabilityId),
-        ),
-    )
-    .sort(
-      (left, right) =>
-        left.preference - right.preference ||
-        left.durationTicks - right.durationTicks ||
-        left.id.localeCompare(right.id),
-    );
-  const route = eligibleRoutes[0];
-  return route ? { service, route } : null;
-}
-
 function scheduleResult(
   state: GameState,
   context: DomainContext,
@@ -194,7 +215,12 @@ function scheduleResult(
   node: DecisionNode,
   gate: ResultGate,
 ): PendingResult | null {
-  const selected = getEligibleResultRoute(state, context, gate);
+  const selected = getEligibleServiceRoute(
+    state,
+    gate.resultTypeId,
+    gate.allowedServiceRouteIds,
+    context,
+  );
   if (!selected) {
     return null;
   }
@@ -208,9 +234,11 @@ function scheduleResult(
     routeId: selected.route.id,
     routeDisplayName: selected.route.displayName,
     scheduledAtTick: state.facilityTick,
-    durationTicks: selected.route.durationTicks,
-    dueTick: state.facilityTick + selected.route.durationTicks,
+    serviceDurationTicks: selected.timing.serviceDurationTicks,
+    durationTicks: selected.timing.durationTicks,
+    dueTick: state.facilityTick + selected.timing.durationTicks,
     deliveredAtTick: null,
+    patientTravel: clonePlain(selected.timing.patientTravel),
   };
 }
 
@@ -302,7 +330,18 @@ function settleEncounter(
     type: "encounter_settled",
     facilityTick: state.facilityTick,
     encounterId: encounter.id,
-    message: "Patient settlement applied once.",
+    message: `Encounter complete: +$${netCashDelta} and +${clinicalXpAwarded} Learning XP.`,
+    priority: "informational",
+    definitionId: "alert.patient.complete",
+    target: {
+      kind: "encounter",
+      id: encounter.id,
+    },
+    reward: {
+      cashDelta: netCashDelta,
+      learningXpDelta: clinicalXpAwarded,
+      satisfactionDelta,
+    },
   });
 }
 
@@ -316,7 +355,10 @@ function resolveTerminalFeedback(
       kind: "completion",
       outcome: null,
       correction: null,
-      acknowledged: false,
+      // Only incorrect final decisions need the explicit corrective/outcome
+      // acknowledgement. A correct completion may be flipped or resolved
+      // immediately.
+      acknowledged: true,
     };
   }
   const disposition = node.terminalDispositions.find(
@@ -339,18 +381,6 @@ function resolveTerminalFeedback(
     correction: node.explanation,
     acknowledged: false,
   };
-}
-
-function roomsOverlap(
-  left: { x: number; y: number; width: number; height: number },
-  right: { x: number; y: number; width: number; height: number },
-): boolean {
-  return (
-    left.x < right.x + right.width &&
-    left.x + left.width > right.x &&
-    left.y < right.y + right.height &&
-    left.y + left.height > right.y
-  );
 }
 
 function reduceOpenChart(
@@ -507,7 +537,7 @@ function reduceSubmitAnswer(
     schedulerLog: scheduledReview.log,
   });
   next.learningHistories[node.primaryConceptId] = nextHistory;
-  nextEncounter.answers.push({
+  const answerRecord: AnswerRecord = {
     decisionNodeId: node.id,
     primaryConceptId: node.primaryConceptId,
     answerChoiceId: choice.id,
@@ -515,7 +545,14 @@ function reduceSubmitAnswer(
     ratingIntent: rating,
     answeredAtFacilityTick: next.facilityTick,
     explanation: node.explanation,
-  });
+    correctedForward: !choice.isCorrect && !isFinalNode,
+  };
+  nextEncounter.answers.push(answerRecord);
+  const currentStep = nextEncounter.steps[nextEncounter.currentNodeIndex];
+  if (!currentStep || currentStep.decisionNodeId !== node.id) {
+    throw new Error("Encounter step history does not match the current node.");
+  }
+  currentStep.answer = clonePlain(answerRecord);
   next.reviewIntents.push({
     id: `review-intent.${nextEncounter.id}.${node.id}`,
     encounterId: nextEncounter.id,
@@ -525,8 +562,26 @@ function reduceSubmitAnswer(
     facilityTick: next.facilityTick,
     reviewedAtMs,
   });
+  appendEvent(next, {
+    id: `event.clinical-decision.${nextEncounter.id}.${node.id}`,
+    type: "clinical_decision_recorded",
+    facilityTick: next.facilityTick,
+    encounterId: nextEncounter.id,
+    message: choice.isCorrect
+      ? `${nextEncounter.patientDisplayName}: correct decision recorded.`
+      : `${nextEncounter.patientDisplayName}: corrective teaching provided.`,
+    priority: "informational",
+    definitionId: choice.isCorrect
+      ? "event.clinical.decision-correct"
+      : "event.clinical.decision-corrective",
+    target: {
+      kind: "encounter",
+      id: nextEncounter.id,
+    },
+  });
 
   if (isFinalNode) {
+    currentStep.status = "completed";
     nextEncounter.terminalFeedback = resolveTerminalFeedback(
       node,
       choice.id,
@@ -545,10 +600,23 @@ function reduceSubmitAnswer(
     }
     settleEncounter(next, context, nextEncounter);
   } else if (scheduledResult) {
+    currentStep.status = "result_pending";
+    currentStep.result = clonePlain(scheduledResult);
     nextEncounter.pendingResult = scheduledResult;
     nextEncounter.lifecycle = "active_pending_result";
+    // A timed service sends the patient out of the open chart workflow. The
+    // Active tab remains the durable return point until the result is ready.
+    if (next.openChartEncounterId === nextEncounter.id) {
+      next.openChartEncounterId = null;
+    }
+    if (next.attendedEncounterId === nextEncounter.id) {
+      next.attendedEncounterId = null;
+    }
   } else {
+    currentStep.status = "completed";
     nextEncounter.currentNodeIndex += 1;
+    nextEncounter.steps[nextEncounter.currentNodeIndex]!.status =
+      "action_required";
     nextEncounter.lifecycle = "active_action_required";
   }
 
@@ -622,6 +690,12 @@ function maybeAdmitAutomaticPatient(
       facilityTick: state.facilityTick,
       encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
       message: `${secondTutorial.patientDisplayName} arrived for the second tutorial.`,
+      priority: "action_required",
+      definitionId: "alert.patient.arrived",
+      target: {
+        kind: "encounter",
+        id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      },
     });
     return;
   }
@@ -673,7 +747,10 @@ function maybeAdmitAutomaticPatient(
   state.encounters[encounterId] = createEncounter(state, context, {
     encounterId,
     clinicalCase,
-    patientDisplayName: `${clinicalCase.patientDisplayName} ${sequence + 1}`,
+    patientDisplayName: createPatientDisplayName(
+      state.campaignSeed,
+      encounterId,
+    ),
     arrivalClass: "routine",
     protectedGuaranteeId: null,
   });
@@ -688,7 +765,13 @@ function maybeAdmitAutomaticPatient(
     type: "patient_arrived",
     facilityTick: state.facilityTick,
     encounterId,
-    message: `${clinicalCase.patientDisplayName} arrived.`,
+    message: `${state.encounters[encounterId]!.patientDisplayName} arrived.`,
+    priority: "action_required",
+    definitionId: "alert.patient.arrived",
+    target: {
+      kind: "encounter",
+      id: encounterId,
+    },
   });
 }
 
@@ -702,15 +785,17 @@ function applyOperatingExpenses(
   }
   const roomExpense = state.rooms.reduce((total, room) => {
     const definition = getRoomDefinition(room.roomDefinitionId, context);
-    return total + (definition?.upkeepPerExpenseInterval ?? 0);
-  }, 0);
-  const staffExpense = state.employees.reduce((total, employee) => {
-    const definition = getStaffRoleDefinition(
-      employee.staffRoleDefinitionId,
-      context,
+    return (
+      total +
+      (definition?.upkeepPerExpenseInterval ?? 0) +
+      (definition?.upkeepPerUpgradeLevel ?? 0) *
+        Math.max(0, room.upgradeLevel - 1)
     );
-    return total + (definition?.salaryPerExpenseInterval ?? 0);
   }, 0);
+  const staffExpense = state.employees.reduce(
+    (total, employee) => total + employee.salaryPerExpenseInterval,
+    0,
+  );
   const expense = roomExpense + staffExpense;
   if (expense === 0) {
     return;
@@ -723,6 +808,12 @@ function applyOperatingExpenses(
     facilityTick: state.facilityTick,
     encounterId: null,
     message: `Operating expenses paid: $${expense}.`,
+    priority: "informational",
+    definitionId: "alert.finance.expense",
+    target: {
+      kind: "campaign",
+      id: state.campaignId,
+    },
   });
 }
 
@@ -741,6 +832,29 @@ function reduceAdvanceTick(
     );
   }
   next.facilityTick += 1;
+  const operatingTicksPerDay =
+    (context.balanceRelease.clock.dayEndHour -
+      context.balanceRelease.clock.dayStartHour) /
+    context.balanceRelease.clock.facilityHoursPerTick;
+  if (next.facilityTick % operatingTicksPerDay === 0) {
+    const dayNumber = Math.floor(next.facilityTick / operatingTicksPerDay) + 1;
+    next.emergencyGlp1.dayNumber = dayNumber;
+    next.emergencyGlp1.usesToday = 0;
+    next.emergencyGlp1.lastFlavorMessage = null;
+    appendEvent(next, {
+      id: `event.day-rollover.${dayNumber}`,
+      type: "day_rollover",
+      facilityTick: next.facilityTick,
+      encounterId: null,
+      message: `Day ${dayNumber} begins at 8 AM.`,
+      priority: "informational",
+      definitionId: "event.facility.day-rollover",
+      target: {
+        kind: "campaign",
+        id: next.campaignId,
+      },
+    });
+  }
 
   for (const encounter of Object.values(next.encounters)) {
     if (
@@ -750,17 +864,37 @@ function reduceAdvanceTick(
       encounter.pendingResult.dueTick <= next.facilityTick
     ) {
       encounter.pendingResult.deliveredAtTick = next.facilityTick;
+      const completedStep =
+        encounter.steps[encounter.pendingResult.originatingNodeIndex];
+      if (
+        !completedStep ||
+        completedStep.decisionNodeId !==
+          encounter.frozenCase.decisionNodes[
+            encounter.pendingResult.originatingNodeIndex
+          ]?.id
+      ) {
+        throw new Error("Pending result does not match encounter step history.");
+      }
+      completedStep.result = clonePlain(encounter.pendingResult);
+      completedStep.status = "completed";
       encounter.deliveredResultNarratives.push(
         encounter.pendingResult.resultNarrative,
       );
       encounter.currentNodeIndex += 1;
+      encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
       encounter.lifecycle = "active_action_required";
       appendEvent(next, {
         id: `event.${encounter.pendingResult.operationId}.ready`,
         type: "result_ready",
         facilityTick: next.facilityTick,
         encounterId: encounter.id,
-        message: `${encounter.pendingResult.pendingLabel} is ready.`,
+        message: `${encounter.patientDisplayName}: ${encounter.pendingResult.pendingLabel} is ready.`,
+        priority: "action_required",
+        definitionId: "alert.patient.result-ready",
+        target: {
+          kind: "encounter",
+          id: encounter.id,
+        },
       });
     }
   }
@@ -790,7 +924,13 @@ function reduceAdvanceTick(
           message:
             remaining === 0
               ? "Final waiting-patient warning."
-              : `Waiting-patient warning: ${remaining} ticks remain.`,
+              : `Waiting-patient warning: ${remaining} facility hours remain.`,
+          priority: remaining === 0 ? "critical" : "action_required",
+          definitionId: "alert.patient.patience",
+          target: {
+            kind: "encounter",
+            id: encounter.id,
+          },
         });
       }
     }
@@ -818,11 +958,18 @@ function reduceAdvanceTick(
         facilityTick: next.facilityTick,
         encounterId: encounter.id,
         message: "Patient left before being seen.",
+        priority: "critical",
+        definitionId: "alert.patient.left",
+        target: {
+          kind: "encounter",
+          id: encounter.id,
+        },
       });
     }
   }
 
   applyOperatingExpenses(next, context);
+  advanceEmployeeMovement(next, context);
   maybeAdmitAutomaticPatient(next, context);
 
   return recordReceipt(next, command, "applied", "Facility time advanced once.");
@@ -842,6 +989,19 @@ function reducePlaceRoom(
       state,
       command,
       `${definition.displayName} unlocks at Level ${definition.unlockFacilityLevel}.`,
+    );
+  }
+  const existingInstanceCount = state.rooms.filter(
+    (room) => room.roomDefinitionId === definition.id,
+  ).length;
+  if (
+    definition.maximumInstances !== null &&
+    existingInstanceCount >= definition.maximumInstances
+  ) {
+    return rejectCommand(
+      state,
+      command,
+      `${definition.displayName} has reached its maximum of ${definition.maximumInstances}.`,
     );
   }
   const placedRoomTypes = new Set(
@@ -869,29 +1029,66 @@ function reducePlaceRoom(
   if (state.rooms.some((room) => room.id === command.roomId)) {
     return rejectCommand(state, command, "That room instance ID already exists.");
   }
-  const facility = context.balanceRelease.facility;
+  const orientation = command.orientation ?? 0;
   if (
-    command.x + definition.width > facility.gridWidth ||
-    command.y + definition.height > facility.gridHeight
+    orientation !== 0 &&
+    orientation !== 90 &&
+    orientation !== 180 &&
+    orientation !== 270
+  ) {
+    return rejectCommand(
+      state,
+      command,
+      "Rooms may rotate only in 90-degree steps.",
+    );
+  }
+  const facility = context.balanceRelease.facility;
+  const placedRoom: PlacedRoom = {
+    id: command.roomId,
+    roomDefinitionId: command.roomDefinitionId,
+    x: command.x,
+    y: command.y,
+    orientation,
+    doorSide:
+      definition.defaultDoorSide === null
+        ? null
+        : rotateDirection(definition.defaultDoorSide, orientation),
+    upgradeLevel: 1,
+  };
+  if (
+    !isInsideFacility(
+      placedRoom,
+      definition,
+      facility.gridWidth,
+      facility.gridHeight,
+    )
   ) {
     return rejectCommand(state, command, "The room does not fit inside the facility.");
   }
-  const proposed = {
-    x: command.x,
-    y: command.y,
-    width: definition.width,
-    height: definition.height,
-  };
   const overlaps = state.rooms.some((placedRoom) => {
-    const placedDefinition = getRoomDefinition(placedRoom.roomDefinitionId, context);
+    const placedDefinition = getRoomDefinition(
+      placedRoom.roomDefinitionId,
+      context,
+    );
     return (
       placedDefinition !== null &&
-      roomsOverlap(proposed, {
-        x: placedRoom.x,
-        y: placedRoom.y,
-        width: placedDefinition.width,
-        height: placedDefinition.height,
-      })
+      roomsOverlap(
+        placedRoom,
+        placedDefinition,
+        {
+          id: command.roomId,
+          roomDefinitionId: command.roomDefinitionId,
+          x: command.x,
+          y: command.y,
+          orientation,
+          doorSide:
+            definition.defaultDoorSide === null
+              ? null
+              : rotateDirection(definition.defaultDoorSide, orientation),
+          upgradeLevel: 1,
+        },
+        definition,
+      )
     );
   });
   if (overlaps) {
@@ -900,14 +1097,24 @@ function reducePlaceRoom(
   if (state.cash < definition.constructionCost) {
     return rejectCommand(state, command, "There is not enough cash for this room.");
   }
+  const getDefinition = (definitionId: string) =>
+    getRoomDefinition(definitionId, context);
+  const connected = validateFacilityConnectivity(
+    [...state.rooms, placedRoom],
+    getDefinition,
+    new Set(facility.protectedRoomDefinitionIds),
+  );
+  if (!connected.connected) {
+    return rejectCommand(
+      state,
+      command,
+      definition.kind === "hallway"
+        ? "Connect this hallway to the Front Desk hallway."
+        : "The room door must connect to the Front Desk through a hallway.",
+    );
+  }
 
   const next = clonePlain(state);
-  const placedRoom: PlacedRoom = {
-    id: command.roomId,
-    roomDefinitionId: command.roomDefinitionId,
-    x: command.x,
-    y: command.y,
-  };
   next.rooms.push(placedRoom);
   next.cash -= definition.constructionCost;
   next.satisfaction = clamp(
@@ -921,8 +1128,178 @@ function reducePlaceRoom(
     facilityTick: next.facilityTick,
     encounterId: null,
     message: `${definition.displayName} placed.`,
+    priority: "informational",
+    definitionId: "alert.facility.room-placed",
+    target: {
+      kind: "room",
+      id: command.roomId,
+    },
   });
   return recordReceipt(next, command, "applied", "Room placed and cash deducted once.");
+}
+
+function reduceSellRoom(
+  state: GameState,
+  command: Extract<GameCommand, { type: "SELL_ROOM" }>,
+  context: DomainContext,
+): GameState {
+  const room = state.rooms.find((candidate) => candidate.id === command.roomId);
+  if (!room) {
+    return rejectCommand(state, command, "That room does not exist.");
+  }
+  const definition = getRoomDefinition(room.roomDefinitionId, context);
+  if (!definition) {
+    return rejectCommand(state, command, "The room definition does not exist.");
+  }
+  const facility = context.balanceRelease.facility;
+  if (facility.protectedRoomDefinitionIds.includes(room.roomDefinitionId)) {
+    return rejectCommand(state, command, "The Front Desk cannot be sold.");
+  }
+  if (
+    state.employees.some(
+      (employee) => employee.homeRoomInstanceId === room.id,
+    )
+  ) {
+    return rejectCommand(
+      state,
+      command,
+      "Reassign employees before selling their home room.",
+    );
+  }
+
+  const remainingRooms = state.rooms.filter(
+    (candidate) => candidate.id !== room.id,
+  );
+  const remainingDefinitionIds = new Set(
+    remainingRooms.map((candidate) => candidate.roomDefinitionId),
+  );
+  for (const remainingRoom of remainingRooms) {
+    const remainingDefinition = getRoomDefinition(
+      remainingRoom.roomDefinitionId,
+      context,
+    );
+    const missing = remainingDefinition?.requiredRoomDefinitionIds.find(
+      (requiredId) => !remainingDefinitionIds.has(requiredId),
+    );
+    if (missing) {
+      return rejectCommand(
+        state,
+        command,
+        `${remainingDefinition?.displayName ?? "Another room"} still depends on this room type.`,
+      );
+    }
+  }
+  for (const employee of state.employees) {
+    const role = getStaffRoleDefinition(employee.staffRoleDefinitionId, context);
+    const missing = role?.requiredRoomDefinitionIds.find(
+      (requiredId) => !remainingDefinitionIds.has(requiredId),
+    );
+    if (missing) {
+      return rejectCommand(
+        state,
+        command,
+        `${employee.displayName} still requires this room type.`,
+      );
+    }
+  }
+  const connectivity = validateFacilityConnectivity(
+    remainingRooms,
+    (definitionId) => getRoomDefinition(definitionId, context),
+    new Set(facility.protectedRoomDefinitionIds),
+  );
+  if (!connectivity.connected) {
+    return rejectCommand(
+      state,
+      command,
+      "Selling this room would disconnect part of the clinic.",
+    );
+  }
+
+  const upgradeInvestment = definition.upgradeCosts
+    .slice(0, Math.max(0, room.upgradeLevel - 1))
+    .reduce((total, cost) => total + cost, 0);
+  const refund = Math.floor(
+    ((definition.constructionCost + upgradeInvestment) *
+      facility.roomResalePercent) /
+      100,
+  );
+  const next = clonePlain(state);
+  next.rooms = remainingRooms;
+  next.cash += refund;
+  next.satisfaction = clamp(
+    next.satisfaction - definition.satisfactionOnBuild,
+    0,
+    100,
+  );
+  appendEvent(next, {
+    id: `event.room-sold.${room.id}.${command.operationId}`,
+    type: "room_sold",
+    facilityTick: next.facilityTick,
+    encounterId: null,
+    message: `${definition.displayName} sold for $${refund}.`,
+  });
+  return recordReceipt(
+    next,
+    command,
+    "applied",
+    `${definition.displayName} sold for 25% of invested construction costs.`,
+  );
+}
+
+function reduceUpgradeRoom(
+  state: GameState,
+  command: Extract<GameCommand, { type: "UPGRADE_ROOM" }>,
+  context: DomainContext,
+): GameState {
+  const room = state.rooms.find((candidate) => candidate.id === command.roomId);
+  if (!room) {
+    return rejectCommand(state, command, "That room does not exist.");
+  }
+  const definition = getRoomDefinition(room.roomDefinitionId, context);
+  if (!definition) {
+    return rejectCommand(state, command, "The room definition does not exist.");
+  }
+  if (room.upgradeLevel >= definition.maximumUpgradeLevel) {
+    return rejectCommand(
+      state,
+      command,
+      `${definition.displayName} is already at Upgrade Level ${room.upgradeLevel}.`,
+    );
+  }
+  const upgradeCost = definition.upgradeCosts[room.upgradeLevel - 1];
+  if (upgradeCost === undefined) {
+    return rejectCommand(
+      state,
+      command,
+      "The next upgrade cost is not configured.",
+    );
+  }
+  if (state.cash < upgradeCost) {
+    return rejectCommand(state, command, "There is not enough cash for this upgrade.");
+  }
+  const next = clonePlain(state);
+  const nextRoom = next.rooms.find((candidate) => candidate.id === room.id)!;
+  nextRoom.upgradeLevel = (nextRoom.upgradeLevel + 1) as PlacedRoom["upgradeLevel"];
+  next.cash -= upgradeCost;
+  appendEvent(next, {
+    id: `event.room-upgraded.${room.id}.${nextRoom.upgradeLevel}`,
+    type: "room_upgraded",
+    facilityTick: next.facilityTick,
+    encounterId: null,
+    message: `${definition.displayName} upgraded to Level ${nextRoom.upgradeLevel}.`,
+    priority: "informational",
+    definitionId: "event.facility.room-upgraded",
+    target: {
+      kind: "room",
+      id: room.id,
+    },
+  });
+  return recordReceipt(
+    next,
+    command,
+    "applied",
+    `${definition.displayName} upgraded for $${upgradeCost}.`,
+  );
 }
 
 function reduceAdmitPatient(
@@ -979,6 +1356,19 @@ function reduceAdmitPatient(
   if (guaranteeId) {
     next.criticalGuarantees[guaranteeId] = "in_progress";
   }
+  appendEvent(next, {
+    id: `event.patient-arrived.${command.encounterId}`,
+    type: "patient_arrived",
+    facilityTick: next.facilityTick,
+    encounterId: command.encounterId,
+    message: `${command.patientDisplayName} arrived.`,
+    priority: "action_required",
+    definitionId: "alert.patient.arrived",
+    target: {
+      kind: "encounter",
+      id: command.encounterId,
+    },
+  });
   return recordReceipt(next, command, "applied", "Patient admitted to Waiting.");
 }
 
@@ -1004,8 +1394,15 @@ function reduceHireStaff(
   if (state.employees.some((employee) => employee.id === command.employeeId)) {
     return rejectCommand(state, command, "That employee ID already exists.");
   }
-  if (!command.displayName.trim()) {
-    return rejectCommand(state, command, "An employee needs a display name.");
+  const employeesInRole = state.employees.filter(
+    (employee) => employee.staffRoleDefinitionId === definition.id,
+  );
+  if (employeesInRole.length >= definition.maximumEmployees) {
+    return rejectCommand(
+      state,
+      command,
+      `${definition.displayName} staffing is at its ${definition.maximumEmployees}/${definition.maximumEmployees} prototype maximum.`,
+    );
   }
   const placedRoomTypes = new Set(
     state.rooms.map((room) => room.roomDefinitionId),
@@ -1026,11 +1423,45 @@ function reduceHireStaff(
   }
 
   const next = clonePlain(state);
+  const generatedName = createStaffDisplayName(
+    next.campaignSeed,
+    command.employeeId,
+  );
+  const requestedName = command.displayName?.trim();
+  const baseName = requestedName || generatedName;
+  const duplicateNameCount = next.employees.filter(
+    (candidate) => candidate.displayName === baseName,
+  ).length;
+  const displayName =
+    duplicateNameCount === 0
+      ? baseName
+      : `${baseName} ${duplicateNameCount + 1}`;
+  const arrival = getEmployeeArrival(next, definition.id, context);
+  if (!arrival) {
+    return rejectCommand(
+      state,
+      command,
+      "The employee has no connected path from the Front Desk to the required room.",
+    );
+  }
   const employee: EmployeeState = {
     id: command.employeeId,
     staffRoleDefinitionId: definition.id,
-    displayName: command.displayName.trim(),
+    displayName,
+    appearance: createPixelAppearance(
+      next.campaignSeed,
+      "staff",
+      command.employeeId,
+    ),
     hiredAtFacilityTick: next.facilityTick,
+    salaryPerExpenseInterval: definition.salaryPerExpenseInterval,
+    morale: definition.baseMorale,
+    trainingLevel: 1,
+    homeRoomInstanceId: arrival.homeRoomInstanceId,
+    location: arrival.location,
+    path: arrival.path,
+    pathIndex: 0,
+    lastMovedAtFacilityTick: next.facilityTick,
   };
   next.employees.push(employee);
   next.cash -= definition.hiringCost;
@@ -1040,8 +1471,71 @@ function reduceHireStaff(
     facilityTick: next.facilityTick,
     encounterId: null,
     message: `${employee.displayName} hired as ${definition.displayName}.`,
+    priority: "informational",
+    definitionId: "alert.staff.hired",
+    target: {
+      kind: "employee",
+      id: employee.id,
+    },
   });
   return recordReceipt(next, command, "applied", "Employee hired.");
+}
+
+function reduceSetEmployeeSalary(
+  state: GameState,
+  command: Extract<GameCommand, { type: "SET_EMPLOYEE_SALARY" }>,
+  context: DomainContext,
+): GameState {
+  const employee = state.employees.find(
+    (candidate) => candidate.id === command.employeeId,
+  );
+  if (!employee) {
+    return rejectCommand(state, command, "That employee does not exist.");
+  }
+  const role = getStaffRoleDefinition(employee.staffRoleDefinitionId, context);
+  if (!role) {
+    return rejectCommand(state, command, "The staff role does not exist.");
+  }
+  const salary = command.salaryPerExpenseInterval;
+  if (
+    !Number.isInteger(salary) ||
+    salary < role.minimumSalaryPerExpenseInterval ||
+    salary > role.maximumSalaryPerExpenseInterval ||
+    (salary - role.minimumSalaryPerExpenseInterval) %
+      role.salaryAdjustmentStep !==
+      0
+  ) {
+    return rejectCommand(
+      state,
+      command,
+      `Salary must be $${role.minimumSalaryPerExpenseInterval}-$${role.maximumSalaryPerExpenseInterval} in $${role.salaryAdjustmentStep} steps.`,
+    );
+  }
+  const next = clonePlain(state);
+  const nextEmployee = next.employees.find(
+    (candidate) => candidate.id === employee.id,
+  )!;
+  nextEmployee.salaryPerExpenseInterval = salary;
+  nextEmployee.morale = getEffectiveEmployeeMorale(nextEmployee, context);
+  appendEvent(next, {
+    id: `event.staff-salary.${employee.id}.${command.operationId}`,
+    type: "staff_salary_changed",
+    facilityTick: next.facilityTick,
+    encounterId: null,
+    message: `${employee.displayName}'s salary is now $${salary} per expense cycle; morale is ${nextEmployee.morale}%.`,
+    priority: "informational",
+    definitionId: "event.staff.salary-changed",
+    target: {
+      kind: "employee",
+      id: employee.id,
+    },
+  });
+  return recordReceipt(
+    next,
+    command,
+    "applied",
+    "Employee salary and morale updated.",
+  );
 }
 
 function reduceLevelUp(
@@ -1075,8 +1569,78 @@ function reduceLevelUp(
     facilityTick: next.facilityTick,
     encounterId: null,
     message: `Facility advanced to Level ${next.facilityLevel}.`,
+    priority: "action_required",
+    definitionId: "alert.progress.level-complete",
+    target: {
+      kind: "campaign",
+      id: next.campaignId,
+    },
   });
   return recordReceipt(next, command, "applied", "Facility level advanced.");
+}
+
+function reduceEmergencyGlp1Consultation(
+  state: GameState,
+  command: Extract<
+    GameCommand,
+    { type: "RUN_EMERGENCY_GLP1_CONSULTATION" }
+  >,
+  context: DomainContext,
+): GameState {
+  const status = getEmergencyGlp1Status(state, context);
+  if (!status.eligible) {
+    return rejectCommand(
+      state,
+      command,
+      status.blockedReason ?? "Emergency consultation is unavailable.",
+    );
+  }
+
+  const config = context.balanceRelease.emergencyGlp1;
+  const next = clonePlain(state);
+  if (next.emergencyGlp1.dayNumber !== status.dayNumber) {
+    next.emergencyGlp1.dayNumber = status.dayNumber;
+    next.emergencyGlp1.usesToday = 0;
+    next.emergencyGlp1.lastFlavorMessage = null;
+  }
+
+  const useNumber = next.emergencyGlp1.usesToday + 1;
+  next.emergencyGlp1.usesToday = useNumber;
+  next.emergencyGlp1.totalUses += 1;
+  next.emergencyGlp1.lastUsedAtFacilityTick = next.facilityTick;
+  next.cash += status.payment;
+
+  let flavorMessage: string | null = null;
+  if (useNumber >= config.sarcasmStartsAtUse) {
+    const messageIndex =
+      next.emergencyGlp1.sarcasmMessagesShown % config.sarcasmLines.length;
+    flavorMessage = config.sarcasmLines[messageIndex]!;
+    next.emergencyGlp1.sarcasmMessagesShown += 1;
+  }
+  next.emergencyGlp1.lastFlavorMessage = flavorMessage;
+
+  const usefulMessage =
+    `Emergency GLP-1 consultation completed: +$${status.payment}.` +
+    (flavorMessage ? ` ${flavorMessage}` : "");
+  appendEvent(next, {
+    id: `event.emergency-glp1.${command.operationId}`,
+    type: "emergency_glp1_consultation",
+    facilityTick: next.facilityTick,
+    encounterId: null,
+    message: usefulMessage,
+    priority: "informational",
+    definitionId: "alert.finance.emergency-glp1-completed",
+    target: {
+      kind: "campaign",
+      id: next.campaignId,
+    },
+    reward: {
+      cashDelta: status.payment,
+      learningXpDelta: 0,
+      satisfactionDelta: 0,
+    },
+  });
+  return recordReceipt(next, command, "applied", usefulMessage);
 }
 
 export function createInitialGameState(
@@ -1089,9 +1653,10 @@ export function createInitialGameState(
     throw new Error("Campaign creation needs a valid real-world timestamp.");
   }
   const state: GameState = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     campaignId: options.campaignId ?? "campaign.local.prototype",
     campaignSeed: options.campaignSeed ?? "prototype-seed-0001",
+    randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     createdAtRealMs,
     clinicalReleaseId: context.clinicalRelease.id,
     balanceReleaseId: context.balanceRelease.id,
@@ -1111,6 +1676,9 @@ export function createInitialGameState(
       roomDefinitionId: room.roomDefinitionId,
       x: room.x,
       y: room.y,
+      orientation: room.orientation,
+      doorSide: room.doorSide,
+      upgradeLevel: room.upgradeLevel as PlacedRoom["upgradeLevel"],
     })),
     employees: [],
     encounters: {},
@@ -1133,6 +1701,14 @@ export function createInitialGameState(
       context.balanceRelease.arrivals.levelZeroRecoveryIntervalTicks,
     routineArrivalSequence: 0,
     totalOperatingExpenses: 0,
+    emergencyGlp1: {
+      dayNumber: 1,
+      usesToday: 0,
+      totalUses: 0,
+      lastUsedAtFacilityTick: null,
+      sarcasmMessagesShown: 0,
+      lastFlavorMessage: null,
+    },
   };
   const tutorialCases = context.clinicalRelease.cases.filter(
     (clinicalCase) => clinicalCase.tutorialEligible,
@@ -1187,8 +1763,14 @@ export function gameReducer(
       return reduceAdvanceTick(state, command, context);
     case "PLACE_ROOM":
       return reducePlaceRoom(state, command, context);
+    case "SELL_ROOM":
+      return reduceSellRoom(state, command, context);
+    case "UPGRADE_ROOM":
+      return reduceUpgradeRoom(state, command, context);
     case "HIRE_STAFF":
       return reduceHireStaff(state, command, context);
+    case "SET_EMPLOYEE_SALARY":
+      return reduceSetEmployeeSalary(state, command, context);
     case "LEVEL_UP":
       return reduceLevelUp(state, command, context);
     case "DEV_FAST_FORWARD": {
@@ -1238,6 +1820,8 @@ export function gameReducer(
         `Development tool added $${amount}.`,
       );
     }
+    case "RUN_EMERGENCY_GLP1_CONSULTATION":
+      return reduceEmergencyGlp1Consultation(state, command, context);
     case "ADMIT_PATIENT":
       return reduceAdmitPatient(state, command, context);
   }

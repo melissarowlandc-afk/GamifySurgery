@@ -14,9 +14,17 @@ export function App() {
         session.state.openChartEncounterId,
         session.summaryVisible,
         session.selectedRoomDefinitionId,
+        session.buildMode,
+        session.selectedRoomInstanceId,
+        session.placementOrientation,
+        session.facilityCamera,
       ),
     [
+      session.buildMode,
+      session.facilityCamera,
+      session.placementOrientation,
       session.selectedRoomDefinitionId,
+      session.selectedRoomInstanceId,
       session.state,
       session.summaryVisible,
     ],
@@ -31,8 +39,12 @@ export function App() {
       facility={view.facility}
       progression={view.progression}
       roomOptions={view.roomOptions}
-      staffOptions={view.staffOptions}
+      selectedRoomBuild={view.selectedRoomBuild}
+      staffRoles={view.staffRoles}
+      messages={view.messages}
+      systemNotices={session.systemNotices}
       development={view.development}
+      emergencyGlp1={view.emergencyGlp1}
       campaigns={session.campaigns}
       tutorialsEnabled={session.tutorialsEnabled}
       tutorialCoachMode={session.tutorialCoachMode}
@@ -50,16 +62,31 @@ export function App() {
       onFileChart={session.fileChart}
       onBeginPlacement={session.beginPlacement}
       onCancelPlacement={session.cancelPlacement}
+      onRotatePlacement={session.rotatePlacement}
       onPlaceRoom={session.placeRoom}
+      buildMode={session.buildMode}
+      placementOrientation={session.placementOrientation}
+      onEnterBuildMode={session.enterBuildMode}
+      onExitBuildMode={session.exitBuildMode}
+      onSelectRoom={session.selectRoom}
+      onSellSelectedRoom={session.sellSelectedRoom}
+      onUpgradeSelectedRoom={session.upgradeSelectedRoom}
+      onFacilityCameraChange={session.setFacilityCamera}
       onHireStaff={session.hireStaff}
+      onDecreaseEmployeeSalary={session.decreaseEmployeeSalary}
+      onIncreaseEmployeeSalary={session.increaseEmployeeSalary}
       onLevelUp={session.levelUp}
       onFastForward={session.fastForward}
       onAddMoney={session.addMoney}
+      onRunEmergencyGlp1Consultation={
+        session.runEmergencyGlp1Consultation
+      }
       onCreateCampaign={session.createCampaign}
       onSwitchCampaign={session.switchCampaign}
       onOpenTutorialPatient={session.openTutorialPatient}
       onDismissTutorialIntro={session.dismissTutorialIntro}
       onTutorialsEnabledChange={session.setTutorialsEnabled}
+      onSaveAndPause={session.saveAndPause}
       onRestart={session.restart}
     />
   );

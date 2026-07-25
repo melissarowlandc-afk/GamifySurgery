@@ -2,6 +2,7 @@ import type {
   ArrivalClass,
   CurrentQuestion,
   DomainContext,
+  EmergencyGlp1Status,
   EncounterState,
   FacilityProgressionStatus,
   GameState,
@@ -10,12 +11,76 @@ import type {
   WorkloadSnapshot,
 } from "./types";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+import {
+  getOccupiedTiles,
+  getRotatedFootprint,
+} from "./spatial";
+import {
+  createFrozenServiceRouteTiming,
+  getFrozenPatientTravelLocation,
+} from "./patient-travel";
 
 const CAPACITY_LIFECYCLES = new Set([
   "waiting_unopened",
   "active_action_required",
   "active_pending_result",
 ]);
+
+export function getFacilityDayNumber(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number {
+  const clock = context.balanceRelease.clock;
+  const operatingTicksPerDay =
+    (clock.dayEndHour - clock.dayStartHour) / clock.facilityHoursPerTick;
+  return Math.floor(state.facilityTick / operatingTicksPerDay) + 1;
+}
+
+export function getEmergencyGlp1Status(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): EmergencyGlp1Status {
+  const config = context.balanceRelease.emergencyGlp1;
+  const dayNumber = getFacilityDayNumber(state, context);
+  const usage =
+    state.emergencyGlp1.dayNumber === dayNumber
+      ? state.emergencyGlp1.usesToday
+      : 0;
+  const cooldownRemainingTicks =
+    state.emergencyGlp1.lastUsedAtFacilityTick === null
+      ? 0
+      : Math.max(
+          0,
+          state.emergencyGlp1.lastUsedAtFacilityTick +
+            config.cooldownTicks -
+            state.facilityTick,
+        );
+  const cashEligible = state.cash < config.cashEligibilityThreshold;
+  const nextUse = usage + 1;
+  const payment =
+    nextUse <= config.fullPaymentUseLimit
+      ? config.fullPayment
+      : config.reducedPayment;
+  const blockedReason = !cashEligible
+    ? `Available only below $${config.cashEligibilityThreshold}.`
+    : usage >= config.dailyUseCap
+      ? `Daily limit reached (${config.dailyUseCap}/${config.dailyUseCap}).`
+      : cooldownRemainingTicks > 0
+        ? `Available in ${cooldownRemainingTicks} facility hour${
+            cooldownRemainingTicks === 1 ? "" : "s"
+          }.`
+        : null;
+  return {
+    dayNumber,
+    usesToday: usage,
+    dailyUseCap: config.dailyUseCap,
+    payment,
+    cooldownRemainingTicks,
+    cashEligible,
+    eligible: blockedReason === null,
+    blockedReason,
+  };
+}
 
 export function getRoomDefinition(
   roomDefinitionId: string,
@@ -39,6 +104,32 @@ export function getStaffRoleDefinition(
   );
 }
 
+export function isEmployeeOperational(
+  state: GameState,
+  employeeId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): boolean {
+  const employee = state.employees.find(
+    (candidate) => candidate.id === employeeId,
+  );
+  const homeRoom = employee
+    ? state.rooms.find((room) => room.id === employee.homeRoomInstanceId)
+    : null;
+  const definition = homeRoom
+    ? getRoomDefinition(homeRoom.roomDefinitionId, context)
+    : null;
+  return Boolean(
+    employee &&
+      homeRoom &&
+      definition &&
+      getOccupiedTiles(homeRoom, definition).some(
+        (point) =>
+          point.x === employee.location.x &&
+          point.y === employee.location.y,
+      ),
+  );
+}
+
 export function getCurrentCapabilities(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -51,6 +142,9 @@ export function getCurrentCapabilities(
     }
   }
   for (const employee of state.employees) {
+    if (!isEmployeeOperational(state, employee.id, context)) {
+      continue;
+    }
     const definition = getStaffRoleDefinition(
       employee.staffRoleDefinitionId,
       context,
@@ -62,6 +156,119 @@ export function getCurrentCapabilities(
   return capabilities;
 }
 
+export function getEligibleServiceRoute(
+  state: GameState,
+  serviceId: string,
+  allowedRouteIds: readonly string[] | null = null,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+) {
+  const service = context.balanceRelease.services.find(
+    (candidate) => candidate.id === serviceId,
+  );
+  if (!service) {
+    return null;
+  }
+  const capabilities = getCurrentCapabilities(state, context);
+  const allowed =
+    allowedRouteIds === null ? null : new Set(allowedRouteIds);
+  const route =
+    service.routes
+      .flatMap((candidate) => {
+        if (
+          (allowed !== null && !allowed.has(candidate.id)) ||
+          (candidate.requiredCapabilityId !== null &&
+            !capabilities.has(candidate.requiredCapabilityId)) ||
+          !candidate.requiredCapabilityIds.every((capabilityId) =>
+            capabilities.has(capabilityId),
+          )
+        ) {
+          return [];
+        }
+        const timing = createFrozenServiceRouteTiming(
+          state,
+          context,
+          candidate,
+        );
+        return timing ? [{ route: candidate, timing }] : [];
+      })
+      .sort(
+        (left, right) =>
+          left.route.preference - right.route.preference ||
+          left.timing.durationTicks - right.timing.durationTicks ||
+          left.route.id.localeCompare(right.route.id),
+      )[0] ?? null;
+  return route ? { service, route: route.route, timing: route.timing } : null;
+}
+
+export function getAnswerChoiceServicePreview(
+  state: GameState,
+  encounterId: string,
+  answerChoiceId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+) {
+  const question = getCurrentQuestion(state, encounterId, context);
+  const choice = question?.node.answerChoices.find(
+    (candidate) => candidate.id === answerChoiceId,
+  );
+  const serviceId = choice?.serviceRequest?.serviceId;
+  if (!choice || !serviceId) {
+    return null;
+  }
+  const allowedRouteIds =
+    question?.node.resultGateAfter?.resultTypeId === serviceId
+      ? question.node.resultGateAfter.allowedServiceRouteIds
+      : null;
+  const selected = getEligibleServiceRoute(
+    state,
+    serviceId,
+    allowedRouteIds,
+    context,
+  );
+  if (!selected) {
+    return {
+      answerChoiceId,
+      serviceId,
+      serviceDisplayName: serviceId,
+      routeId: null,
+      routeDisplayName: null,
+      durationTicks: null,
+    };
+  }
+  return {
+    answerChoiceId,
+    serviceId,
+    serviceDisplayName: selected.service.displayName,
+    routeId: selected.route.id,
+    routeDisplayName: selected.route.displayName,
+    durationTicks: selected.timing.durationTicks,
+  };
+}
+
+export function getFacilityClock(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+) {
+  const clock = context.balanceRelease.clock;
+  const operatingHoursPerDay = clock.dayEndHour - clock.dayStartHour;
+  const elapsedFacilityHours =
+    state.facilityTick * clock.facilityHoursPerTick;
+  const dayNumber = Math.floor(elapsedFacilityHours / operatingHoursPerDay) + 1;
+  const hour24 =
+    clock.dayStartHour + (elapsedFacilityHours % operatingHoursPerDay);
+  const meridiem = hour24 >= 12 ? "PM" : "AM";
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+  return {
+    dayNumber,
+    hour24,
+    hour12,
+    meridiem,
+    displayLabel: `Day ${dayNumber} ${hour12} ${meridiem}`,
+    operatingHoursPerDay,
+    realMillisecondsPerFacilityHour:
+      clock.realMillisecondsPerFacilityHour,
+  };
+}
+
 export function getWorkloadSnapshot(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -71,9 +278,17 @@ export function getWorkloadSnapshot(
   ).length;
   const roomContribution = state.rooms.reduce((total, placedRoom) => {
     const definition = getRoomDefinition(placedRoom.roomDefinitionId, context);
-    return total + (definition?.workloadLimitContribution ?? 0);
+    return (
+      total +
+      (definition?.workloadLimitContribution ?? 0) +
+      (definition?.workloadLimitContributionPerUpgradeLevel ?? 0) *
+        Math.max(0, placedRoom.upgradeLevel - 1)
+    );
   }, 0);
   const staffContribution = state.employees.reduce((total, employee) => {
+    if (!isEmployeeOperational(state, employee.id, context)) {
+      return total;
+    }
     const definition = getStaffRoleDefinition(
       employee.staffRoleDefinitionId,
       context,
@@ -94,6 +309,111 @@ export function getWorkloadSnapshot(
     atRoutineCapacity: occupancy >= routineLimit,
     overRoutineCapacity: occupancy > routineLimit,
   };
+}
+
+export function getRoomInstanceFootprint(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): { width: number; height: number } | null {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room
+    ? getRoomDefinition(room.roomDefinitionId, context)
+    : null;
+  return room && definition
+    ? getRotatedFootprint(definition, room.orientation)
+    : null;
+}
+
+export function getEffectiveRoomUpkeep(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number | null {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room
+    ? getRoomDefinition(room.roomDefinitionId, context)
+    : null;
+  return room && definition
+    ? definition.upkeepPerExpenseInterval +
+        definition.upkeepPerUpgradeLevel *
+          Math.max(0, room.upgradeLevel - 1)
+    : null;
+}
+
+export function getNextRoomUpgradeCost(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number | null {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room
+    ? getRoomDefinition(room.roomDefinitionId, context)
+    : null;
+  if (
+    !room ||
+    !definition ||
+    room.upgradeLevel >= definition.maximumUpgradeLevel
+  ) {
+    return null;
+  }
+  return definition.upgradeCosts[room.upgradeLevel - 1] ?? null;
+}
+
+export function getRoomResaleValue(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number | null {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room
+    ? getRoomDefinition(room.roomDefinitionId, context)
+    : null;
+  if (!room || !definition) {
+    return null;
+  }
+  const upgradeInvestment = definition.upgradeCosts
+    .slice(0, Math.max(0, room.upgradeLevel - 1))
+    .reduce((total, cost) => total + cost, 0);
+  return Math.floor(
+    ((definition.constructionCost + upgradeInvestment) *
+      context.balanceRelease.facility.roomResalePercent) /
+      100,
+  );
+}
+
+export function getStaffRoleCount(
+  state: GameState,
+  staffRoleDefinitionId: string,
+): number {
+  return state.employees.filter(
+    (employee) =>
+      employee.staffRoleDefinitionId === staffRoleDefinitionId,
+  ).length;
+}
+
+export function getBestServiceDurationReductionPercent(
+  state: GameState,
+  requiredCapabilityIds: readonly string[],
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number {
+  const required = new Set(requiredCapabilityIds);
+  return state.rooms.reduce((best, room) => {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (
+      !definition ||
+      !definition.capabilityIds.some((capabilityId) =>
+        required.has(capabilityId),
+      )
+    ) {
+      return best;
+    }
+    return Math.max(
+      best,
+      definition.serviceDurationReductionPercentPerUpgradeLevel *
+        Math.max(0, room.upgradeLevel - 1),
+    );
+  }, 0);
 }
 
 export function getCompletedEncounterCount(state: GameState): number {
@@ -341,6 +661,54 @@ export function getPendingResultEta(
     return null;
   }
   return Math.max(0, pendingResult.dueTick - state.facilityTick);
+}
+
+export function getPendingPatientLocation(
+  state: GameState,
+  encounterId: string,
+) {
+  const travel = state.encounters[encounterId]?.pendingResult?.patientTravel;
+  return travel
+    ? getFrozenPatientTravelLocation(travel, state.facilityTick)
+    : null;
+}
+
+export function getEncounterSettlement(
+  state: GameState,
+  encounterId: string,
+) {
+  const settlementId = state.encounters[encounterId]?.settlementId;
+  return settlementId
+    ? (state.settlements.find(
+        (settlement) => settlement.id === settlementId,
+      ) ?? null)
+    : null;
+}
+
+export function getOperatingExpensePerFacilityHour(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number {
+  const roomExpense = state.rooms.reduce((total, room) => {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition) {
+      return total;
+    }
+    return (
+      total +
+      definition.upkeepPerExpenseInterval +
+      (room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel
+    );
+  }, 0);
+  const staffExpense = state.employees.reduce(
+    (total, employee) => total + employee.salaryPerExpenseInterval,
+    0,
+  );
+  return (
+    -(roomExpense + staffExpense) /
+    (context.balanceRelease.economy.expenseIntervalTicks *
+      context.balanceRelease.clock.facilityHoursPerTick)
+  );
 }
 
 export function getLearningSummary(

@@ -60,7 +60,40 @@ All notable implementation and project-record changes are listed here.
 - Expanded the local-only grayscale candidate through facility Levels 0 and 1:
   two guaranteed introductory patients, the examination-room and Level Up gate,
   seeded routine arrivals, Level 1 rooms, staff hiring, operating expenses,
-  dependencies, queue pressure, and phone/desktop layouts
+  dependencies, queue pressure, and full and compact desktop layouts
+- Changed facility pacing to a continuous 8 AM-6 PM operating day lasting five
+  real minutes, with one facility hour every 30 seconds and Level 1 routine
+  arrivals no faster than about one patient per real minute
+- Added reproducible, independently seeded patient identities and pixel
+  appearances plus frozen answer-order shuffling that survives save/reload and
+  can be disabled for an authored question when order is meaningful
+- Rebuilt the chart as a large multi-column workspace showing the patient,
+  presentation, prior decisions, results, and next question together; completed
+  charts flip to the learning summary before explicit resolution
+- Expanded result routing so multi-step patients visibly leave for off-site
+  testing and return action-ready, while a staffed and connected Level 1 X-ray
+  capability provides route-aware in-house service whose displayed duration
+  includes the patient's frozen round-trip hallway travel
+- Added an explicitly entered, automatically paused Build Mode with a build-only
+  grid, camera zoom/pan, repeatable rotatable rooms, explicit doors, functional
+  hallways, upgrades, and safe sale for a 25% refund
+- Added generated employee names and appearances, role caps, salary adjustment,
+  morale response, room assignment, reachability checks, and visible staff
+  movement; new hires remain unavailable until their persisted entrance route
+  reaches the assigned room
+- Added a data-driven four-priority alert system with clickable actionable
+  alerts, a lower-priority ticker/recent-event log, escalation consolidation,
+  cooldowns, deterministic flavor selection, accessibility distinctions that
+  do not rely on color, and humor suppression during active critical alerts;
+  visible system notices now cover saves, campaign creation/restoration/reset,
+  hidden-tab pause, and accelerated testing
+- Preserved the complete future alert and flavor bank in
+  `docs/features/alert-notification-flavor-system.md` while activating only
+  definitions connected to current Level 0/1 mechanics
+- Added a bounded manual emergency GLP-1 cash action that appears below $100,
+  enforces a facility-hour cooldown and configurable daily cap/diminishing
+  payment, rotates the approved sarcasm after repeated daily use, and grants no
+  XP, FSRS update, concept mastery, or ordinary patient-care reward
 - Added a pinned `ts-fsrs` 5.4.1 FSRS-6 adapter with campaign-owned card state,
   immutable scheduler pins, Good/Again mapping, real review timestamps, and no
   inherited learning history between campaigns
@@ -90,6 +123,10 @@ All notable implementation and project-record changes are listed here.
 - Reworked the desktop shell into a bounded full-window workspace with
   internally scrolling sidebar and construction panels, width-aware room and
   staff cards, sticky panel headings, and compact-desktop coverage
+- Kept the live clinic visible above an open chart and synchronized Phaser's
+  backing bitmap with responsive host resizing so build clicks remain mapped
+  to the correct logical tile
+- Added an explicit Level 1-complete, Level 2-locked prototype state
 - Ordered Resolved charts by most recent resolution while preserving the
   existing Waiting and Active ordering
 - Removed repeated caveat language from player-visible case presentations,
@@ -100,9 +137,12 @@ All notable implementation and project-record changes are listed here.
 - Bounded transient operation receipts and event notices to the latest 500
   records so long local sessions do not grow those presentation logs without
   limit
-- Added desktop, compact-desktop, and phone-width Playwright walkthroughs and
-  expanded the deterministic Vitest suite to 17 domain, validation, save,
-  ordering, progression, and scheduler tests
+- Focused the active Playwright walkthroughs on full and compact desktop
+  widths; phone-specific regression and polish remain deferred
+- Expanded the deterministic Vitest inventory to 49 unit tests: 41
+  game-domain tests covering rules, timing, saves, FSRS, randomness,
+  construction, staffing, and the emergency action, plus 8 player tests for
+  alert data, routing, consolidation, cooldowns, and flavor selection
 
 ### Prototype boundaries
 
@@ -120,16 +160,23 @@ All notable implementation and project-record changes are listed here.
 - Full due-prioritized, interleaved, repetition-aware encounter selection is
   deferred; card updates and due inspection are present
 - Level 2 and later management systems are not implemented
+- The automated Level 2 GLP-1 suite and GLP-1 NP staffing are not implemented;
+  only the bounded founder-run emergency action is present
+- Alert definitions tied to maintenance, inspections, later rooms, or other
+  unimplemented mechanics remain documentation-only
+- Phone-specific usability polish remains deferred; current implementation
+  work targets full and compact desktop browser windows
 
 ### Verification
 
-- `npm test` passed 17 of 17 deterministic domain tests
+- `npm test` passed all 49 unit tests: 41 game-domain and 8 player
+  alert/view-model tests
 - `npm run typecheck` passed for the player, balance, clinical-content, and
   game-domain workspaces
 - `npm run build` produced the local Vite build successfully
 - `npm run test:e2e` passed the desktop Level 0/1/save/campaign walkthrough and
-  large-desktop, compact-desktop, and retained phone-width regression checks:
-  7 passed, 5 intentionally skipped
+  storage-failure safety check plus large- and compact-desktop layout checks:
+  5 passed, 3 intentionally skipped
 - Vite reported a non-blocking large-chunk warning for the Phaser-containing
   JavaScript bundle; code splitting remains a pre-deployment optimization
 

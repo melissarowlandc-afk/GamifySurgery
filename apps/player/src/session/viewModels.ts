@@ -1,26 +1,42 @@
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
+  getAnswerChoiceServicePreview,
   getFacilityProgressionStatus,
+  getFacilityClock,
   getCurrentQuestion,
+  getEmergencyGlp1Status,
+  getEncounterSettlement,
   getLearningSummary,
+  getNextRoomUpgradeCost,
+  getOperatingExpensePerFacilityHour,
   getPatientLists,
+  getPendingPatientLocation,
   getPendingResultEta,
+  getRotatedFootprint,
   getRoomDefinition,
+  getRoomInstanceFootprint,
+  getRoomResaleValue,
   getStaffRoleDefinition,
   getWorkloadSnapshot,
   type EncounterState,
   type GameState,
   type PatientListItem,
+  type RoomOrientation,
 } from "@gamify-surgery/game-domain";
 import type { FacilityViewModel } from "../facility";
+import { createMessageBoardView } from "./alertViewModels";
 import type {
   ChartView,
   DevelopmentView,
+  EmergencyGlp1View,
+  MessageBoardItemView,
   PatientFolder,
   PatientTabView,
   ProgressionView,
   ResourceBarView,
   RoomBuildOptionView,
+  SelectedRoomBuildView,
+  StaffRoleGroupView,
   StaffHireOptionView,
 } from "../ui";
 
@@ -32,6 +48,10 @@ export interface PrototypePlayerView {
   progression: ProgressionView;
   roomOptions: RoomBuildOptionView[];
   staffOptions: StaffHireOptionView[];
+  staffRoles: StaffRoleGroupView[];
+  messages: MessageBoardItemView[];
+  selectedRoomBuild: SelectedRoomBuildView | null;
+  emergencyGlp1: EmergencyGlp1View;
   development: DevelopmentView;
   workloadStatus: string;
 }
@@ -39,6 +59,15 @@ export interface PrototypePlayerView {
 function signedCurrency(value: number): string {
   const sign = value >= 0 ? "+" : "-";
   return `${sign}$${Math.abs(value).toLocaleString()}`;
+}
+
+function signedPercent(value: number): string {
+  const sign = value >= 0 ? "+" : "";
+  return `${sign}${value}% satisfaction`;
+}
+
+function formatFacilityHours(value: number): string {
+  return `${value} in-game hour${value === 1 ? "" : "s"}`;
 }
 
 function formatLearningCardStatus(
@@ -64,6 +93,7 @@ function formatLearningCardStatus(
 }
 
 function toPatientTab(
+  state: GameState,
   item: PatientListItem,
   folder: PatientFolder,
   selectedEncounterId: string | null,
@@ -86,7 +116,11 @@ function toPatientTab(
     patienceLabel:
       item.patienceRemainingTicks === null
         ? undefined
-        : `Patience: ${item.patienceRemainingTicks} ticks`,
+        : `Patience: ${item.patienceRemainingTicks} in-game hour${
+            item.patienceRemainingTicks === 1 ? "" : "s"
+          }`,
+    avatar: state.encounters[item.encounterId]?.patientAppearance,
+    sortKey: state.encounters[item.encounterId]?.waiting.arrivedAtTick,
   };
 }
 
@@ -147,10 +181,6 @@ function createChartView(
         (answer) => answer.decisionNodeId === question.node.id,
       )
     : undefined;
-  const resultCopy =
-    encounter.deliveredResultNarratives.length === 0
-      ? ""
-      : ` ${encounter.deliveredResultNarratives.join(" ")}`;
   const terminalFeedback = encounter.terminalFeedback;
   const showInterimFeedback =
     encounter.lifecycle === "active_pending_result" && lastAnswer !== undefined;
@@ -175,6 +205,96 @@ function createChartView(
     (encounter.lifecycle === "resolved_summary_available" &&
       terminalFeedback?.acknowledged === true);
 
+  const decisionSteps = encounter.steps
+    .filter((step) => step.status !== "locked")
+    .map((step) => {
+      const node = encounter.frozenCase.decisionNodes[step.nodeIndex];
+      if (!node) {
+        return null;
+      }
+      const isCurrent =
+        step.nodeIndex === encounter.currentNodeIndex &&
+        encounter.lifecycle !== "resolved";
+      const answer = step.answer;
+      const result = step.result;
+      const resultDelivered = result?.deliveredAtTick !== null;
+      return {
+        id: step.decisionNodeId,
+        heading:
+          step.nodeIndex === 0
+            ? "Initial decision"
+            : `Follow-up decision ${step.nodeIndex}`,
+        statusLabel:
+          step.status === "result_pending"
+            ? "Patient off-site"
+            : step.status === "action_required"
+              ? "Action required"
+              : "Complete",
+        questionPrompt: node.stem,
+        answerChoices: node.answerChoices.map((choice) => {
+          const preview =
+            isCurrent && answer === null
+              ? getAnswerChoiceServicePreview(
+                  state,
+                  encounter.id,
+                  choice.id,
+                )
+              : null;
+          return {
+            id: choice.id,
+            label: choice.label,
+            selected: answer?.answerChoiceId === choice.id,
+            disabled:
+              answer !== null ||
+              !isCurrent ||
+              terminalFeedbackNeedsAcknowledgment ||
+              readOnly,
+            etaLabel:
+              preview?.durationTicks === null ||
+              preview?.durationTicks === undefined
+                ? undefined
+                : formatFacilityHours(preview.durationTicks),
+            detailLabel:
+              preview?.routeDisplayName ??
+              (choice.serviceRequest
+                ? "Service route unavailable"
+                : undefined),
+          };
+        }),
+        resultHeading:
+          result === null
+            ? undefined
+            : resultDelivered
+              ? "Result returned"
+              : result.pendingLabel,
+        resultBody:
+          result === null
+            ? undefined
+            : resultDelivered
+              ? result.resultNarrative
+              : `${result.routeDisplayName}. The patient will return when the result is ready.`,
+        etaLabel:
+          result && !resultDelivered
+            ? `${Math.max(0, result.dueTick - state.facilityTick)} in-game hour${
+                Math.max(0, result.dueTick - state.facilityTick) === 1
+                  ? ""
+                  : "s"
+              } remaining`
+            : undefined,
+        feedbackTitle:
+          answer === null
+            ? undefined
+            : answer.correct
+              ? "Correct"
+              : "Corrective feedback",
+        feedbackBody: answer?.explanation,
+        current: isCurrent,
+        complete: step.status === "completed",
+      };
+    })
+    .filter((step) => step !== null);
+  const settlement = getEncounterSettlement(state, encounter.id);
+
   return {
     id: encounter.id,
     patientName: encounter.patientDisplayName,
@@ -185,7 +305,7 @@ function createChartView(
     statusLabel: question
       ? `Question ${question.questionNumber} of ${question.questionCount}`
       : encounterStatus(encounter),
-    presentation: `${encounter.frozenCase.presentation}${resultCopy}`,
+    presentation: encounter.frozenCase.presentation,
     pendingLabel:
       encounter.lifecycle === "active_pending_result"
         ? `${encounter.pendingResult?.pendingLabel ?? "Result pending"} via ${
@@ -218,6 +338,22 @@ function createChartView(
     summaryBody: learningSummary ?? undefined,
     canFile,
     readOnly,
+    avatar: encounter.patientAppearance,
+    presentationHeading: "Presentation",
+    decisionSteps,
+    reward: settlement
+      ? {
+          heading: "Encounter rewards",
+          moneyLabel: signedCurrency(settlement.netCashDelta),
+          xpLabel: `+${settlement.clinicalXpAwarded} Learning XP`,
+          satisfactionLabel: signedPercent(settlement.satisfactionDelta),
+        }
+      : undefined,
+    primaryActionLabel: terminalFeedbackNeedsAcknowledgment
+      ? "Continue to summary"
+      : encounter.lifecycle === "active_pending_result"
+        ? "Return to clinic"
+        : undefined,
   };
 }
 
@@ -226,6 +362,14 @@ export function createPrototypePlayerView(
   selectedEncounterId: string | null,
   summaryVisible: boolean,
   selectedRoomDefinitionId: string | null,
+  buildMode = false,
+  selectedRoomInstanceId: string | null = null,
+  placementOrientation: RoomOrientation = 0,
+  camera: FacilityViewModel["camera"] = {
+    zoom: 1,
+    panX: 0,
+    panY: 0,
+  },
 ): PrototypePlayerView {
   const lists = getPatientLists(state);
   const workload = getWorkloadSnapshot(state);
@@ -238,10 +382,18 @@ export function createPrototypePlayerView(
   const placedRoomDefinitionIds = new Set(
     state.rooms.map((room) => room.roomDefinitionId),
   );
-  const hiredStaffRoleIds = new Set(
-    state.employees.map((employee) => employee.staffRoleDefinitionId),
+  const clock = getFacilityClock(state);
+  const emergencyGlp1Status = getEmergencyGlp1Status(state);
+  const hourlyOperatingDelta = getOperatingExpensePerFacilityHour(state);
+  const xpRequirement = progressionStatus.requirements.find(
+    (requirement) => requirement.id === "progression.clinical_xp",
   );
-  const lastSettlement = state.settlements.at(-1);
+  const xpProgressPercent = xpRequirement
+    ? Math.min(
+        100,
+        (xpRequirement.current / Math.max(1, xpRequirement.required)) * 100,
+      )
+    : 100;
   const workloadStatus = workload.overRoutineCapacity
     ? "Routine workload is above its target."
     : workload.atRoutineCapacity
@@ -252,30 +404,60 @@ export function createPrototypePlayerView(
 
   const patients = [
     ...lists.waiting.map((item) =>
-      toPatientTab(item, "waiting", selectedEncounterId),
+      toPatientTab(state, item, "waiting", selectedEncounterId),
     ),
     ...lists.active.map((item) =>
-      toPatientTab(item, "active", selectedEncounterId),
+      toPatientTab(state, item, "active", selectedEncounterId),
     ),
     ...lists.resolved.map((item) =>
-      toPatientTab(item, "resolved", selectedEncounterId),
+      toPatientTab(state, item, "resolved", selectedEncounterId),
     ),
   ];
 
   return {
+    emergencyGlp1: {
+      visible: emergencyGlp1Status.cashEligible,
+      enabled: emergencyGlp1Status.eligible,
+      paymentLabel: `+$${emergencyGlp1Status.payment}`,
+      statusLabel:
+        emergencyGlp1Status.blockedReason ??
+        "Ready now; does not advance facility time.",
+      useCountLabel: `Today: ${emergencyGlp1Status.usesToday}/${emergencyGlp1Status.dailyUseCap}`,
+      flavorMessage:
+        state.emergencyGlp1.lastFlavorMessage ?? undefined,
+    },
     resourceBar: {
       moneyLabel: `$${state.cash.toLocaleString()}`,
-      moneyDeltaLabel: lastSettlement
-        ? `Last case ${signedCurrency(lastSettlement.netCashDelta)}`
-        : "No settlement yet",
+      moneyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
       xpLabel: state.clinicalXp.toLocaleString(),
       satisfactionLabel: `${state.satisfaction}%`,
-      facilityTimeLabel: `Hour ${state.facilityTick}`,
+      facilityTimeLabel: clock.displayLabel,
       workloadLabel: `${workload.occupancy}/${workload.routineLimit}`,
       workloadStatusLabel: workload.atRoutineCapacity
         ? "At routine capacity"
         : "Capacity available",
       facilityLevelLabel: `Level ${state.facilityLevel}`,
+      levelLabel: `Level ${state.facilityLevel}`,
+      xpProgressLabel: xpRequirement
+        ? `${Math.min(
+            xpRequirement.current,
+            xpRequirement.required,
+          )}/${xpRequirement.required} XP`
+        : "Maximum prototype level",
+      xpProgressPercent,
+      moneyHourlyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
+      dayTimeLabel: clock.displayLabel,
+      goals: progressionStatus.requirements.map((requirement) => ({
+        id: requirement.id,
+        label: requirement.label,
+        complete: requirement.met,
+        progressLabel: `${Math.min(
+          requirement.current,
+          requirement.required,
+        )}/${requirement.required}`,
+      })),
+      contentNoticeLabel:
+        "DEMONSTRATION CONTENT ONLY — not clinically approved or medical advice.",
     },
     patients,
     chart: createChartView(
@@ -287,6 +469,9 @@ export function createPrototypePlayerView(
       facilityTitle: progressionStatus.displayName,
       facilityTick: state.facilityTick,
       paused: state.paused,
+      buildMode,
+      selectedRoomInstanceId,
+      camera,
       gridColumns: facilityBalance.gridWidth,
       gridRows: facilityBalance.gridHeight,
       patientCounts: {
@@ -295,8 +480,28 @@ export function createPrototypePlayerView(
         actionReady: lists.active.filter((item) => item.actionRequired).length,
         resolved: lists.resolved.length,
       },
+      patients: Object.values(state.encounters)
+        .filter((encounter) => encounter.lifecycle !== "resolved")
+        .map((encounter) => {
+          const location = getPendingPatientLocation(state, encounter.id);
+          return {
+            instanceId: encounter.id,
+            displayName: encounter.patientDisplayName,
+            status:
+              encounter.lifecycle === "waiting_unopened"
+                ? ("waiting" as const)
+                : encounter.lifecycle === "active_pending_result"
+                  ? ("off-site" as const)
+                  : encounter.lifecycle === "active_action_required"
+                    ? ("action-ready" as const)
+                    : ("active" as const),
+            appearance: encounter.patientAppearance,
+            ...(location ? { location } : {}),
+          };
+        }),
       rooms: state.rooms.flatMap((room) => {
         const definition = getRoomDefinition(room.roomDefinitionId);
+        const footprint = getRoomInstanceFootprint(state, room.id);
         return definition
           ? [
               {
@@ -305,9 +510,13 @@ export function createPrototypePlayerView(
                 displayName: definition.displayName,
                 tileX: room.x,
                 tileY: room.y,
-                width: definition.width,
-                height: definition.height,
+                width: footprint?.width ?? definition.width,
+                height: footprint?.height ?? definition.height,
                 isFounderRoom: initialRoomInstanceIds.has(room.id),
+                kind: definition.kind,
+                orientation: room.orientation,
+                doorSide: room.doorSide,
+                upgradeLevel: room.upgradeLevel,
               },
             ]
           : [];
@@ -316,20 +525,20 @@ export function createPrototypePlayerView(
         const role = getStaffRoleDefinition(
           employee.staffRoleDefinitionId,
         );
-        const requiredHomeRoom = role?.requiredRoomDefinitionIds
-          .map((requiredDefinitionId) =>
-            state.rooms.find(
-              (room) =>
-                room.roomDefinitionId === requiredDefinitionId,
-            ),
-          )
-          .find((room) => room !== undefined);
         return {
           instanceId: employee.id,
           displayName: employee.displayName,
           roleDisplayName:
             role?.displayName ?? employee.staffRoleDefinitionId,
-          homeRoomInstanceId: requiredHomeRoom?.id ?? null,
+          homeRoomInstanceId: employee.homeRoomInstanceId,
+          appearance: employee.appearance,
+          salaryPerExpenseInterval:
+            employee.salaryPerExpenseInterval,
+          morale: employee.morale,
+          trainingLevel: employee.trainingLevel,
+          location: employee.location,
+          path: employee.path,
+          pathIndex: employee.pathIndex,
         };
       }),
       placement: selectedRoomDefinitionId
@@ -337,12 +546,17 @@ export function createPrototypePlayerView(
             const definition = getRoomDefinition(
               selectedRoomDefinitionId,
             );
+            const footprint = definition
+              ? getRotatedFootprint(definition, placementOrientation)
+              : null;
             return definition
               ? {
                   definitionId: definition.id,
                   displayName: definition.displayName,
-                  width: definition.width,
-                  height: definition.height,
+                  width: footprint?.width ?? definition.width,
+                  height: footprint?.height ?? definition.height,
+                  kind: definition.kind,
+                  orientation: placementOrientation,
                 }
               : null;
           })()
@@ -377,14 +591,20 @@ export function createPrototypePlayerView(
           definition.unlockFacilityLevel <= state.facilityLevel,
       )
       .map((definition) => {
-        const owned = placedRoomDefinitionIds.has(definition.id);
+        const ownedCount = state.rooms.filter(
+          (room) => room.roomDefinitionId === definition.id,
+        ).length;
+        const owned = ownedCount > 0;
+        const atMaximum =
+          definition.maximumInstances !== null &&
+          ownedCount >= definition.maximumInstances;
         const requirementsMet =
           definition.requiredRoomDefinitionIds.every((requiredId) =>
             placedRoomDefinitionIds.has(requiredId),
           );
         const affordable = state.cash >= definition.constructionCost;
-        const blockedReason = owned
-          ? undefined
+        const blockedReason = atMaximum
+          ? `Maximum ${definition.maximumInstances} built.`
           : !requirementsMet
             ? `Requires ${definition.requiredRoomDefinitionIds
                 .filter(
@@ -407,11 +627,11 @@ export function createPrototypePlayerView(
           displayName: definition.displayName,
           footprintLabel: `${definition.width} × ${definition.height} tiles`,
           costLabel: `$${definition.constructionCost.toLocaleString()}`,
-          upkeepLabel: `$${definition.upkeepPerExpenseInterval.toLocaleString()} upkeep / expense cycle`,
+          upkeepLabel: `$${definition.upkeepPerExpenseInterval.toLocaleString()} upkeep / clinic day · ${ownedCount} built`,
           owned,
           selected: selectedRoomDefinitionId === definition.id,
           enabled:
-            !owned &&
+            !atMaximum &&
             requirementsMet &&
             affordable,
           blockedReason,
@@ -422,13 +642,60 @@ export function createPrototypePlayerView(
         (role) => role.unlockFacilityLevel <= state.facilityLevel,
       )
       .map((role) => {
-        const hired = hiredStaffRoleIds.has(role.id);
+        const hiredCount = state.employees.filter(
+          (employee) => employee.staffRoleDefinitionId === role.id,
+        ).length;
+        const hired = hiredCount > 0;
+        const atMaximum = hiredCount >= role.maximumEmployees;
         const requirementsMet = role.requiredRoomDefinitionIds.every(
           (requiredId) => placedRoomDefinitionIds.has(requiredId),
         );
         const affordable = state.cash >= role.hiringCost;
-        const blockedReason = hired
-          ? undefined
+        const blockedReason = atMaximum
+          ? `Maximum ${role.maximumEmployees} hired.`
+          : !requirementsMet
+            ? `Requires ${role.requiredRoomDefinitionIds
+                .filter(
+                  (requiredId) =>
+                    !placedRoomDefinitionIds.has(requiredId),
+                )
+                .map(
+                  (requiredId) =>
+                    getRoomDefinition(requiredId)?.displayName ??
+                    requiredId,
+                )
+                .join(", ")}.`
+            : !affordable
+              ? `Need $${(
+                  role.hiringCost - state.cash
+                ).toLocaleString()} more.`
+              : undefined;
+        return {
+          id: role.id,
+          displayName: `${role.displayName} ${hiredCount}/${role.maximumEmployees}`,
+          costLabel: `$${role.hiringCost.toLocaleString()} hire`,
+          salaryLabel: `$${role.salaryPerExpenseInterval.toLocaleString()} salary / clinic day`,
+          hired,
+          enabled:
+            !atMaximum &&
+            requirementsMet &&
+            affordable,
+          blockedReason,
+        };
+      }),
+    staffRoles: facilityBalance.staffRoleDefinitions
+      .filter((role) => role.unlockFacilityLevel <= state.facilityLevel)
+      .map((role) => {
+        const employees = state.employees.filter(
+          (employee) => employee.staffRoleDefinitionId === role.id,
+        );
+        const requirementsMet = role.requiredRoomDefinitionIds.every(
+          (requiredId) => placedRoomDefinitionIds.has(requiredId),
+        );
+        const affordable = state.cash >= role.hiringCost;
+        const atMaximum = employees.length >= role.maximumEmployees;
+        const blockedReason = atMaximum
+          ? `Maximum ${role.maximumEmployees} hired.`
           : !requirementsMet
             ? `Requires ${role.requiredRoomDefinitionIds
                 .filter(
@@ -449,16 +716,72 @@ export function createPrototypePlayerView(
         return {
           id: role.id,
           displayName: role.displayName,
-          costLabel: `$${role.hiringCost.toLocaleString()} hire`,
-          salaryLabel: `$${role.salaryPerExpenseInterval.toLocaleString()} salary / expense cycle`,
-          hired,
-          enabled:
-            !hired &&
-            requirementsMet &&
-            affordable,
+          currentCount: employees.length,
+          maximumCount: role.maximumEmployees,
+          hiringCostLabel: `$${role.hiringCost.toLocaleString()}`,
+          employees: employees.map((employee) => ({
+            id: employee.id,
+            displayName: employee.displayName,
+            roleDisplayName: role.displayName,
+            salaryLabel: `$${employee.salaryPerExpenseInterval.toLocaleString()}/day`,
+            moraleLabel: `${employee.morale}%`,
+            moralePercent: employee.morale,
+            avatar: employee.appearance,
+            canDecreaseSalary:
+              employee.salaryPerExpenseInterval >
+              role.minimumSalaryPerExpenseInterval,
+            canIncreaseSalary:
+              employee.salaryPerExpenseInterval <
+              role.maximumSalaryPerExpenseInterval,
+          })),
+          canHire: !atMaximum && requirementsMet && affordable,
           blockedReason,
         };
       }),
+    messages: createMessageBoardView(state),
+    selectedRoomBuild: (() => {
+      if (!selectedRoomInstanceId) {
+        return null;
+      }
+      const room = state.rooms.find(
+        (candidate) => candidate.id === selectedRoomInstanceId,
+      );
+      const definition = room
+        ? getRoomDefinition(room.roomDefinitionId)
+        : null;
+      if (!room || !definition) {
+        return null;
+      }
+      const upgradeCost = getNextRoomUpgradeCost(state, room.id);
+      const resaleValue = getRoomResaleValue(state, room.id);
+      const protectedRoom =
+        facilityBalance.protectedRoomDefinitionIds.includes(
+          room.roomDefinitionId,
+        );
+      return {
+        id: room.id,
+        displayName: definition.displayName,
+        upgradeLevel: room.upgradeLevel,
+        upgradeCostLabel:
+          upgradeCost === null
+            ? undefined
+            : `$${upgradeCost.toLocaleString()}`,
+        resaleValueLabel:
+          resaleValue === null
+            ? undefined
+            : `$${resaleValue.toLocaleString()} refund`,
+        canUpgrade:
+          upgradeCost !== null && state.cash >= upgradeCost,
+        canSell: !protectedRoom,
+        blockedReason: protectedRoom
+          ? "The Front Desk is the clinic's permanent entrance and cannot be sold."
+          : upgradeCost !== null && state.cash < upgradeCost
+            ? `Need $${(
+                upgradeCost - state.cash
+              ).toLocaleString()} more to upgrade.`
+            : undefined,
+      };
+    })(),
     development: {
       campaignIdLabel:
         state.campaignId.length > 20

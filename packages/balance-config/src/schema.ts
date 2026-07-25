@@ -6,6 +6,20 @@ const stableIdSchema = z
   .max(120)
   .regex(/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/, "Use a stable lowercase identifier.");
 
+export const roomOrientationSchema = z.union([
+  z.literal(0),
+  z.literal(90),
+  z.literal(180),
+  z.literal(270),
+]);
+
+export const cardinalDirectionSchema = z.enum([
+  "north",
+  "east",
+  "south",
+  "west",
+]);
+
 export const serviceRouteDefinitionSchema = z
   .object({
     id: stableIdSchema,
@@ -14,6 +28,15 @@ export const serviceRouteDefinitionSchema = z
     requiredCapabilityId: stableIdSchema.nullable(),
     requiredCapabilityIds: z.array(stableIdSchema).default([]),
     preference: z.number().int().nonnegative(),
+    patientTravel: z
+      .object({
+        originRoomDefinitionId: stableIdSchema,
+        destinationRoomDefinitionId: stableIdSchema,
+        roundTrip: z.literal(true),
+      })
+      .strict()
+      .nullable()
+      .default(null),
   })
   .strict();
 
@@ -42,17 +65,49 @@ export const roomDefinitionSchema = z
   .object({
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
+    kind: z.enum(["room", "hallway"]),
     unlockFacilityLevel: z.number().int().min(0).max(1),
     width: z.number().int().positive(),
     height: z.number().int().positive(),
+    defaultDoorSide: cardinalDirectionSchema.nullable(),
     constructionCost: z.number().int().nonnegative(),
     upkeepPerExpenseInterval: z.number().int().nonnegative(),
     satisfactionOnBuild: z.number().int().min(0).max(20),
     workloadLimitContribution: z.number().int().nonnegative(),
+    maximumInstances: z.number().int().positive().nullable(),
+    maximumUpgradeLevel: z.number().int().min(1).max(5),
+    upgradeCosts: z.array(z.number().int().nonnegative()).max(4),
+    upkeepPerUpgradeLevel: z.number().int().nonnegative(),
+    workloadLimitContributionPerUpgradeLevel: z
+      .number()
+      .int()
+      .nonnegative(),
+    serviceDurationReductionPercentPerUpgradeLevel: z
+      .number()
+      .int()
+      .min(0)
+      .max(20),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
     capabilityIds: z.array(stableIdSchema),
   })
-  .strict();
+  .strict()
+  .superRefine((room, context) => {
+    if (room.upgradeCosts.length !== room.maximumUpgradeLevel - 1) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "A room needs exactly one upgrade cost for every level after Level 1.",
+        path: ["upgradeCosts"],
+      });
+    }
+    if (room.kind === "hallway" && room.defaultDoorSide !== null) {
+      context.addIssue({
+        code: "custom",
+        message: "Hallway tiles do not have a door side.",
+        path: ["defaultDoorSide"],
+      });
+    }
+  });
 
 export const staffRoleDefinitionSchema = z
   .object({
@@ -61,11 +116,32 @@ export const staffRoleDefinitionSchema = z
     unlockFacilityLevel: z.number().int().min(1).max(1),
     hiringCost: z.number().int().nonnegative(),
     salaryPerExpenseInterval: z.number().int().nonnegative(),
+    minimumSalaryPerExpenseInterval: z.number().int().nonnegative(),
+    maximumSalaryPerExpenseInterval: z.number().int().nonnegative(),
+    salaryAdjustmentStep: z.number().int().positive(),
+    moralePerSalaryStep: z.number().int().positive(),
+    baseMorale: z.number().int().min(0).max(100),
+    maximumEmployees: z.number().int().positive(),
+    maximumTrainingLevel: z.number().int().min(1).max(5),
     workloadLimitContribution: z.number().int().nonnegative(),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
     capabilityIds: z.array(stableIdSchema),
   })
-  .strict();
+  .strict()
+  .superRefine((role, context) => {
+    if (
+      role.minimumSalaryPerExpenseInterval >
+        role.salaryPerExpenseInterval ||
+      role.salaryPerExpenseInterval > role.maximumSalaryPerExpenseInterval
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "The default salary must be between the role's minimum and maximum salary.",
+        path: ["salaryPerExpenseInterval"],
+      });
+    }
+  });
 
 export const patientRewardTierSchema = z
   .object({
@@ -93,6 +169,9 @@ export const initialRoomSchema = z
     roomDefinitionId: stableIdSchema,
     x: z.number().int().nonnegative(),
     y: z.number().int().nonnegative(),
+    orientation: roomOrientationSchema,
+    doorSide: cardinalDirectionSchema.nullable(),
+    upgradeLevel: z.number().int().min(1).max(5),
   })
   .strict();
 
@@ -105,6 +184,11 @@ export const prototypeBalanceReleaseSchema = z
       .object({
         gridWidth: z.number().int().positive(),
         gridHeight: z.number().int().positive(),
+        hallwayRoomDefinitionId: stableIdSchema,
+        protectedRoomDefinitionIds: z.array(stableIdSchema).min(1),
+        roomResalePercent: z.number().int().min(0).max(99),
+        staffMovementIntervalTicks: z.number().int().positive(),
+        patientTravelTilesPerTick: z.number().int().positive(),
         startingCash: z.number().int().nonnegative(),
         startingSatisfaction: z.number().int().min(0).max(100),
         maximumPlayableLevel: z.literal(1),
@@ -122,6 +206,30 @@ export const prototypeBalanceReleaseSchema = z
         criticalReservedSlots: z.number().int().nonnegative(),
       })
       .strict(),
+    clock: z
+      .object({
+        facilityHoursPerTick: z.literal(1),
+        realMillisecondsPerFacilityHour: z.number().int().positive(),
+        dayStartHour: z.number().int().min(0).max(23),
+        dayEndHour: z.number().int().min(1).max(24),
+      })
+      .strict()
+      .superRefine((clock, context) => {
+        if (clock.dayEndHour <= clock.dayStartHour) {
+          context.addIssue({
+            code: "custom",
+            message: "The facility day must end after it starts.",
+            path: ["dayEndHour"],
+          });
+        }
+        if (clock.dayEndHour - clock.dayStartHour !== 10) {
+          context.addIssue({
+            code: "custom",
+            message: "The prototype facility day must contain ten operating hours.",
+            path: ["dayEndHour"],
+          });
+        }
+      }),
     patientPatience: z
       .object({
         routineDurationTicks: z.number().int().positive(),
@@ -140,6 +248,41 @@ export const prototypeBalanceReleaseSchema = z
         expenseIntervalTicks: z.number().int().positive(),
       })
       .strict(),
+    emergencyGlp1: z
+      .object({
+        cashEligibilityThreshold: z.number().int().positive(),
+        cooldownTicks: z.number().int().positive(),
+        dailyUseCap: z.number().int().positive(),
+        fullPayment: z.number().int().positive(),
+        reducedPayment: z.number().int().nonnegative(),
+        fullPaymentUseLimit: z.number().int().positive(),
+        sarcasmStartsAtUse: z.number().int().positive(),
+        sarcasmLines: z.array(z.string().min(1).max(240)).min(4),
+      })
+      .strict()
+      .superRefine((config, context) => {
+        if (config.fullPaymentUseLimit > config.dailyUseCap) {
+          context.addIssue({
+            code: "custom",
+            message: "The full-payment use limit cannot exceed the daily cap.",
+            path: ["fullPaymentUseLimit"],
+          });
+        }
+        if (config.sarcasmStartsAtUse > config.dailyUseCap) {
+          context.addIssue({
+            code: "custom",
+            message: "Sarcasm must begin on or before the daily cap.",
+            path: ["sarcasmStartsAtUse"],
+          });
+        }
+        if (config.reducedPayment > config.fullPayment) {
+          context.addIssue({
+            code: "custom",
+            message: "The reduced emergency payment cannot exceed the full payment.",
+            path: ["reducedPayment"],
+          });
+        }
+      }),
     development: z
       .object({
         fastForwardTickCount: z.number().int().positive(),
@@ -184,6 +327,27 @@ export const prototypeBalanceReleaseSchema = z
         path: ["facility", "tutorialRequiredRoomDefinitionId"],
       });
     }
+    const hallwayDefinition = roomDefinitions.get(
+      release.facility.hallwayRoomDefinitionId,
+    );
+    if (!hallwayDefinition || hallwayDefinition.kind !== "hallway") {
+      context.addIssue({
+        code: "custom",
+        message: "The facility hallway definition is missing or is not a hallway.",
+        path: ["facility", "hallwayRoomDefinitionId"],
+      });
+    }
+    release.facility.protectedRoomDefinitionIds.forEach(
+      (roomDefinitionId, index) => {
+        if (!roomDefinitions.has(roomDefinitionId)) {
+          context.addIssue({
+            code: "custom",
+            message: `Protected room definition does not exist: ${roomDefinitionId}`,
+            path: ["facility", "protectedRoomDefinitionIds", index],
+          });
+        }
+      },
+    );
 
     const roomDefinitionIds = new Set<string>();
     release.facility.roomDefinitions.forEach((room, index) => {
@@ -216,8 +380,16 @@ export const prototypeBalanceReleaseSchema = z
           path: ["facility", "initialRooms", index, "roomDefinitionId"],
         });
       } else if (
-        room.x + definition.width > release.facility.gridWidth ||
-        room.y + definition.height > release.facility.gridHeight
+        room.x +
+            (room.orientation === 90 || room.orientation === 270
+              ? definition.height
+              : definition.width) >
+          release.facility.gridWidth ||
+        room.y +
+            (room.orientation === 90 || room.orientation === 270
+              ? definition.width
+              : definition.height) >
+          release.facility.gridHeight
       ) {
         context.addIssue({
           code: "custom",
@@ -243,12 +415,28 @@ export const prototypeBalanceReleaseSchema = z
       ) {
         const right = release.facility.initialRooms[rightIndex]!;
         const rightDefinition = roomDefinitions.get(right.roomDefinitionId);
+        const leftWidth =
+          left.orientation === 90 || left.orientation === 270
+            ? leftDefinition.height
+            : leftDefinition.width;
+        const leftHeight =
+          left.orientation === 90 || left.orientation === 270
+            ? leftDefinition.width
+            : leftDefinition.height;
+        const rightWidth =
+          right.orientation === 90 || right.orientation === 270
+            ? (rightDefinition?.height ?? 0)
+            : (rightDefinition?.width ?? 0);
+        const rightHeight =
+          right.orientation === 90 || right.orientation === 270
+            ? (rightDefinition?.width ?? 0)
+            : (rightDefinition?.height ?? 0);
         if (
           rightDefinition &&
-          left.x < right.x + rightDefinition.width &&
-          left.x + leftDefinition.width > right.x &&
-          left.y < right.y + rightDefinition.height &&
-          left.y + leftDefinition.height > right.y
+          left.x < right.x + rightWidth &&
+          left.x + leftWidth > right.x &&
+          left.y < right.y + rightHeight &&
+          left.y + leftHeight > right.y
         ) {
           context.addIssue({
             code: "custom",
@@ -388,6 +576,44 @@ export const prototypeBalanceReleaseSchema = z
         });
       }
       serviceIds.add(service.id);
+      service.routes.forEach((route, routeIndex) => {
+        if (
+          route.patientTravel &&
+          !roomDefinitions.has(route.patientTravel.originRoomDefinitionId)
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: `Service route ${route.id} references a missing travel origin room.`,
+            path: [
+              "services",
+              index,
+              "routes",
+              routeIndex,
+              "patientTravel",
+              "originRoomDefinitionId",
+            ],
+          });
+        }
+        if (
+          route.patientTravel &&
+          !roomDefinitions.has(
+            route.patientTravel.destinationRoomDefinitionId,
+          )
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: `Service route ${route.id} references a missing travel destination room.`,
+            path: [
+              "services",
+              index,
+              "routes",
+              routeIndex,
+              "patientTravel",
+              "destinationRoomDefinitionId",
+            ],
+          });
+        }
+      });
     });
 
     const rewardTierIds = new Set<string>();

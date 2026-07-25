@@ -9,35 +9,43 @@ interface HelpDialogProps {
 const HELP_STEPS = [
   [
     "Patient folders",
-    "New charts begin in Waiting. Opened or pending charts stay in Active. Finished charts move to Resolved.",
+    "New charts arrive as tabs in Waiting. Open a tab to pull out its chart. Opened or pending charts stay in Existing Patients; finished charts go into the Resolved filing cabinet.",
   ],
   [
     "Action marker (!)",
-    "An exclamation point means that chart needs your decision now.",
+    "An exclamation point means a patient has arrived or returned and needs your decision.",
   ],
   [
-    "Clinical answers",
-    "Choose one multiple-choice answer. Each scored decision updates exactly one concept in this campaign.",
+    "Chart decisions",
+    "Read from left to right: patient, presentation, then the current multiple-choice decision. Each scored decision updates exactly one learning concept in this campaign.",
   ],
   [
-    "Pending results",
-    "Close the chart while a result is pending. Return when its exclamation point appears.",
+    "Tests and results",
+    "A test choice shows its facility-hour turnaround. The chart slides into Existing Patients while the patient travels for the test, then shows ! when the patient returns.",
   ],
   [
-    "Feedback and filing",
-    "Read corrective feedback, acknowledge any final outcome, optionally flip the chart for its summary, then file it in Resolved.",
+    "Completion and rewards",
+    "After the final decision, review the money and Learning XP earned. Flip the whole chart for the brief topic summary, then Resolve it.",
   ],
   [
-    "Construction",
-    "Choose an affordable room, then tap or click a clear footprint on the facility grid.",
+    "Build Mode",
+    "Enter Build Mode to pause the clinic. Select a room or hallway, rotate doors, place connected spaces, upgrade rooms, sell remodelled rooms, and zoom the map. Exit Build Mode to return to play.",
+  ],
+  [
+    "Rooms and hallways",
+    "A room works only when its door has a hallway path back to the Front Desk. Patients and employees visibly walk these routes, so layout affects task time.",
+  ],
+  [
+    "Employees",
+    "Unlocked roles appear on the right. Each employee has a name, salary, and morale. Staffing and connected rooms determine which on-site services can operate.",
   ],
   [
     "Level Up",
-    "Complete every displayed XP, patient, satisfaction, room, and staff goal; then use the Level Up button.",
+    "Watch the Learning XP bar and goal list. Complete every displayed patient, satisfaction, room, and staff goal, then select Level Up.",
   ],
   [
-    "Pause",
-    "Pause at any time. A hidden browser tab also pauses and requires you to resume.",
+    "Time and alerts",
+    "A clinic day runs from 8 AM to 6 PM. Pause at any time and read the message board for patient needs, employee feelings, results, and occasional clinic jokes.",
   ],
   [
     "Campaigns and Start over",
@@ -45,7 +53,7 @@ const HELP_STEPS = [
   ],
   [
     "Prototype tools",
-    "Use fast-forward and FSRS inspection for balance testing. Tutorial guidance can also be turned on or off there.",
+    "Use Add $100, fast-forward, restart, and FSRS inspection for balance testing. Tutorial guidance can also be turned on or off there.",
   ],
 ] as const;
 

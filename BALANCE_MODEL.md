@@ -239,7 +239,10 @@ publication. The structural relationship is accepted in ADR 0029.
 - Complication effects that do not change clinical truth
 - Inspection scoring and recognition tiers
 - Bankruptcy-recovery rules
-- Vending, coffee, pharmacy, and limited GLP-1 side-business values
+- Vending, coffee, and pharmacy values
+- Limited GLP-1 side-business values: low-cash threshold, manual payment,
+  once-per-hour cooldown, per-day cap or diminishing returns, sarcasm
+  threshold/message pool, and future Level 2 suite staffing and throughput
 
 ## Stable balance key
 

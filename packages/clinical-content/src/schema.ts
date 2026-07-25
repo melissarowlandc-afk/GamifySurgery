@@ -11,6 +11,20 @@ export const answerChoiceSchema = z
     id: stableIdSchema,
     label: z.string().min(1).max(240),
     isCorrect: z.boolean(),
+    /**
+     * Optional operational preview for a choice that requests a timed service.
+     *
+     * Clinical content identifies the service, while the pinned balance
+     * release owns routes and durations. The runtime still corrects a wrong
+     * nonfinal answer forward to the node's approved result gate.
+     */
+    serviceRequest: z
+      .object({
+        serviceId: stableIdSchema,
+      })
+      .strict()
+      .nullable()
+      .default(null),
   })
   .strict();
 
@@ -86,6 +100,23 @@ export const decisionNodeSchema = z
         message: "Every scored node must have exactly one correct answer.",
         path: ["answerChoices"],
       });
+    }
+
+    if (node.resultGateAfter !== null) {
+      const correctChoice = node.answerChoices.find(
+        (choice) => choice.isCorrect,
+      );
+      if (
+        correctChoice?.serviceRequest?.serviceId !==
+        node.resultGateAfter.resultTypeId
+      ) {
+        context.addIssue({
+          code: "custom",
+          message:
+            "The correct choice for a timed result gate must request that gate's service.",
+          path: ["answerChoices"],
+        });
+      }
     }
   });
 

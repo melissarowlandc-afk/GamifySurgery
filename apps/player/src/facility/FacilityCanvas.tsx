@@ -10,11 +10,18 @@ import {
   FacilityScene,
   type FacilitySceneBridge,
 } from "./FacilityScene";
-import type { FacilityViewModel, PlaceRoomRequest } from "./types";
+import type {
+  FacilityCameraChangeRequest,
+  FacilityViewModel,
+  PlaceRoomRequest,
+  SelectRoomRequest,
+} from "./types";
 
 export interface FacilityCanvasProps {
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
+  onSelectRoom?: SelectRoomRequest;
+  onCameraChange?: FacilityCameraChangeRequest;
   className?: string;
   style?: CSSProperties;
   ariaLabel?: string;
@@ -39,6 +46,8 @@ const DEFAULT_STYLE: CSSProperties = {
 export function FacilityCanvas({
   viewModel,
   onPlaceRoom,
+  onSelectRoom,
+  onCameraChange,
   className,
   style,
   ariaLabel,
@@ -54,6 +63,8 @@ export function FacilityCanvas({
   // commit and the next Phaser frame without rebuilding the Phaser game.
   bridgeRef.current.viewModel = viewModel;
   bridgeRef.current.onPlaceRoom = onPlaceRoom;
+  bridgeRef.current.onSelectRoom = onSelectRoom;
+  bridgeRef.current.onCameraChange = onCameraChange;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -80,7 +91,10 @@ export function FacilityCanvas({
         roundPixels: true,
       },
       scale: {
-        mode: Phaser.Scale.RESIZE,
+        // React owns the host box and the ResizeObserver below owns Phaser's
+        // backing bitmap. NONE avoids Scale.RESIZE racing the observer and
+        // leaving pointer coordinates mapped to a stale canvas height.
+        mode: Phaser.Scale.NONE,
         width,
         height,
       },
@@ -115,11 +129,10 @@ export function FacilityCanvas({
       // feeding a same-frame resize loop back into the host element.
       resizeFrame = window.requestAnimationFrame(() => {
         resizeFrame = null;
-        if (
-          gameRef.current === game &&
-          (game.scale.width !== observedWidth ||
-            game.scale.height !== observedHeight)
-        ) {
+        if (gameRef.current === game) {
+          // Scale.RESIZE can update the displayed CSS box before the backing
+          // canvas bitmap. Always synchronize both dimensions after the host
+          // observer fires so pointer-to-tile mapping remains exact.
           game.scale.resize(observedWidth, observedHeight);
         }
       });

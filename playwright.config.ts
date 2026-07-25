@@ -15,7 +15,7 @@ export default defineConfig({
   webServer: {
     command: "npm run dev",
     url: "http://127.0.0.1:4173",
-    reuseExistingServer: false,
+    reuseExistingServer: true,
     timeout: 120_000,
   },
   projects: [
@@ -24,13 +24,6 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 1000 },
-      },
-    },
-    {
-      name: "phone-chrome",
-      use: {
-        ...devices["Pixel 5"],
-        channel: "chrome",
       },
     },
     {

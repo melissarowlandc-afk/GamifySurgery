@@ -23,6 +23,7 @@ privacy/research, external access, spending, licensing, or destructive actions.
 | G-002 | First real clinical validation set | After the synthetic prototype proves the flow, Melissa selects the smallest useful Level 0/1 topic and concept set; bulk authoring waits until that set validates the workflow | Real clinical-content integration |
 | G-003 | Opening tone and story, including whether to use the inheritance joke | Defer until the core loop is playable; use a minimal clinic opening first | Tutorial polish |
 | G-004 | Pilot participants, optional feedback, and any disclosed playtest metrics | Melissa and trusted family first; decide outside access and data fields later | Hosted tester invitations |
+| G-005 | Remaining GLP-1 payment curve, sarcastic message pool, and automated Level 2 suite values | Preserve the accepted below-$100, once-per-hour emergency action and tune a bounded recovery payment through playtesting; design the staff-operated suite with Level 2 | Final GLP-1 balance and Level 2 implementation |
 
 ## Delegated delivery backlog
 
@@ -88,4 +89,6 @@ starting research, or destroying owner data.
 | G-001E | Patient patience and leaving | Only unopened Waiting patients may abandon after generous visible warnings; opening protects the Active educational case; delay effects are small and capped; tutorial patients remain guaranteed | ADR 0028; D-045 |
 | G-001F | Patient workload capacity | Waiting plus unresolved Active patients consume visible clinic workload; full routine capacity pauses intake before Waiting; protected reserve guarantees tutorial and progression-critical cases; capacity changes never evict existing patients | ADR 0029; D-046 |
 | G-001G | Incorrect-answer patient path | Wrong nonfinal answers correct forward; a wrong final answer may show one deterministic approved minor/major terminal clinical outcome before correction and summary; narrative severity cannot bypass capped management consequences | ADR 0030; D-047 |
+| G-001H | Facility-day pacing and on-site X-ray | Five-minute 8 AM-6 PM days with continuous rollover, approximately one routine patient per minute, and faster on-site X-ray only after the complete connected imaging capability exists | ADR 0031; D-050; D-051 |
+| G-001I | Build Mode and navigation | Explicit paused Build Mode, rotatable rooms and doors, functional hallways, reachability-dependent services, and visible route time for staff and patients | ADR 0032; D-053 |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

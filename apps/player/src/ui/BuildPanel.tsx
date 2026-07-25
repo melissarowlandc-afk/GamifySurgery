@@ -1,32 +1,130 @@
 import type {
   RoomBuildOptionView,
-  StaffHireOptionView,
+  SelectedRoomBuildView,
 } from "./types";
 
 interface BuildPanelProps {
+  buildMode: boolean;
+  cashLabel: string;
   roomOptions: RoomBuildOptionView[];
-  staffOptions: StaffHireOptionView[];
+  selectedRoom: SelectedRoomBuildView | null;
+  placementOrientation: number;
+  onEnterBuildMode: () => void;
+  onExitBuildMode: () => void;
   onSelectRoom: (roomDefinitionId: string) => void;
   onCancelPlacement: () => void;
-  onHireStaff: (staffRoleDefinitionId: string) => void;
+  onRotatePlacement: () => void;
+  onUpgradeSelectedRoom: () => void;
+  onSellSelectedRoom: () => void;
 }
 
 export function BuildPanel({
+  buildMode,
+  cashLabel,
   roomOptions,
-  staffOptions,
+  selectedRoom,
+  placementOrientation,
+  onEnterBuildMode,
+  onExitBuildMode,
   onSelectRoom,
   onCancelPlacement,
-  onHireStaff,
+  onRotatePlacement,
+  onUpgradeSelectedRoom,
+  onSellSelectedRoom,
 }: BuildPanelProps) {
+  if (!buildMode) {
+    return (
+      <button
+        className="button button-primary build-mode-trigger"
+        type="button"
+        onClick={onEnterBuildMode}
+      >
+        Build Mode
+      </button>
+    );
+  }
+
+  const selectedPlacement = roomOptions.find((room) => room.selected);
+
   return (
-    <section className="panel build-panel">
+    <section className="panel build-panel build-mode-panel">
       <div className="panel-heading">
-        <span>Clinic development</span>
-        <small>Rooms &amp; staff</small>
+        <span>Build Mode</span>
+        <small>Facility paused</small>
       </div>
 
+      <div className="build-cash-banner">
+        <span>Available money</span>
+        <strong>{cashLabel}</strong>
+      </div>
+
+      <button
+        className="button button-primary button-wide"
+        type="button"
+        onClick={onExitBuildMode}
+      >
+        Exit Build Mode
+      </button>
+
+      {selectedPlacement ? (
+        <div className="build-tool-controls">
+          <strong>Placing {selectedPlacement.displayName}</strong>
+          <span>Orientation: {placementOrientation}°</span>
+          <div>
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={onRotatePlacement}
+            >
+              Rotate 90°
+            </button>
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={onCancelPlacement}
+            >
+              Cancel tool
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {selectedRoom ? (
+        <div className="selected-room-inspector">
+          <span className="eyebrow">Selected room</span>
+          <h2>{selectedRoom.displayName}</h2>
+          <p>Upgrade Level {selectedRoom.upgradeLevel}</p>
+          {selectedRoom.blockedReason ? (
+            <p className="blocked-reason">{selectedRoom.blockedReason}</p>
+          ) : null}
+          <div className="selected-room-actions">
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={onUpgradeSelectedRoom}
+              disabled={!selectedRoom.canUpgrade}
+            >
+              {selectedRoom.upgradeCostLabel
+                ? `Upgrade · ${selectedRoom.upgradeCostLabel}`
+                : "Maximum upgrade"}
+            </button>
+            <button
+              className="button button-danger"
+              type="button"
+              onClick={onSellSelectedRoom}
+              disabled={!selectedRoom.canSell}
+            >
+              Sell
+              {selectedRoom.resaleValueLabel
+                ? ` · ${selectedRoom.resaleValueLabel}`
+                : ""}
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="build-section">
-        <h2>Construction</h2>
+        <h2>Rooms &amp; hallways</h2>
         <div className="build-option-list">
           {roomOptions.map((room) => (
             <button
@@ -41,10 +139,7 @@ export function BuildPanel({
             >
               <span className="pixel-room-icon" aria-hidden="true" />
               <span>
-                <strong>
-                  {room.owned ? "✓ " : ""}
-                  {room.displayName}
-                </strong>
+                <strong>{room.displayName}</strong>
                 <small>
                   {room.footprintLabel} · {room.costLabel}
                 </small>
@@ -55,52 +150,11 @@ export function BuildPanel({
                   </small>
                 ) : null}
               </span>
-              <span>
-                {room.owned
-                  ? "Built"
-                  : room.selected
-                    ? "Cancel"
-                    : "Place"}
-              </span>
+              <span>{room.selected ? "Selected" : "Place"}</span>
             </button>
           ))}
         </div>
       </div>
-
-      {staffOptions.length > 0 ? (
-        <div className="build-section">
-          <h2>Employees</h2>
-          <div className="build-option-list">
-            {staffOptions.map((staff) => (
-              <button
-                className="build-card staff-card"
-                type="button"
-                key={staff.id}
-                disabled={!staff.enabled}
-                onClick={() => onHireStaff(staff.id)}
-                title={staff.blockedReason}
-              >
-                <span className="pixel-staff-icon" aria-hidden="true" />
-                <span>
-                  <strong>
-                    {staff.hired ? "✓ " : ""}
-                    {staff.displayName}
-                  </strong>
-                  <small>
-                    {staff.costLabel} · {staff.salaryLabel}
-                  </small>
-                  {staff.blockedReason ? (
-                    <small className="blocked-reason">
-                      {staff.blockedReason}
-                    </small>
-                  ) : null}
-                </span>
-                <span>{staff.hired ? "Hired" : "Hire"}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }

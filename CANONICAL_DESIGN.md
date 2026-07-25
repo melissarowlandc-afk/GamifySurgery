@@ -363,7 +363,16 @@ After the first scored response in an encounter maps to Again:
 - Medication stockouts lose dispensing revenue and may slightly reduce satisfaction; they do not block care.
 - Outsourced diagnostic or repair fallbacks may exist.
 - Vending machines and coffee kiosks are enclosed buildable rooms.
-- The GLP-1 telehealth suite is a limited comedic side business, not the dominant strategy.
+- The Cash-Only GLP-1 Telehealth Suite is a limited comedic side business, not
+  the dominant strategy. Before its future Level 2 automation, a founder may
+  use a low-cash-only, once-per-facility-hour emergency consultation that
+  awards only a small configurable cash payment and no XP or learning evidence.
+  See `docs/features/cash-only-glp1-telehealth.md`.
+- Alerts use Critical, Action required, Informational, and Flavor priorities.
+  Useful information always appears plainly, humor never obscures a critical
+  alert, and flavor is suppressed while a critical alert is active. The
+  complete message bank and activation boundary are in
+  `docs/features/alert-notification-flavor-system.md`.
 - Bankruptcy recovery does not require loans.
 
 ## Time

@@ -1,44 +1,143 @@
+import type { ReactNode } from "react";
 import type { ResourceBarView } from "./types";
 
 interface ResourceBarProps {
   view: ResourceBarView;
   paused: boolean;
   onTogglePause: () => void;
+  onSaveAndClose?: () => void;
+  endControls?: ReactNode;
+}
+
+function clampPercent(value: number | undefined): number {
+  if (!Number.isFinite(value)) {
+    return 0;
+  }
+  return Math.max(0, Math.min(100, value ?? 0));
 }
 
 export function ResourceBar({
   view,
   paused,
   onTogglePause,
+  onSaveAndClose,
+  endControls,
 }: ResourceBarProps) {
-  const resources = [
-    ["Money", view.moneyLabel, view.moneyDeltaLabel],
-    ["Learning XP", view.xpLabel, "Campaign progress"],
-    ["Satisfaction", view.satisfactionLabel, "Patient experience"],
-    ["Facility time", view.facilityTimeLabel, paused ? "Paused" : "Running"],
-    ["Workload", view.workloadLabel, view.workloadStatusLabel],
-    ["Facility", view.facilityLevelLabel, "Prototype stage"],
-  ];
+  const levelLabel = view.levelLabel ?? view.facilityLevelLabel;
+  const xpProgressPercent = clampPercent(view.xpProgressPercent);
+  const moneyDelta =
+    view.moneyHourlyDeltaLabel ?? view.moneyDeltaLabel;
+  const dayTime = view.dayTimeLabel ?? view.facilityTimeLabel;
+  const goals = view.goals ?? [];
+  const completeGoalCount = goals.filter((goal) => goal.complete).length;
 
   return (
-    <header className="resource-bar" aria-label="Clinic resources">
-      <div className="resource-grid">
-        {resources.map(([label, value, detail]) => (
-          <div className="resource-chip" key={label} title={detail}>
-            <span>{label}</span>
-            <strong>{value}</strong>
-            <small>{detail}</small>
-          </div>
-        ))}
+    <header
+      className="resource-bar resource-bar-redesign"
+      aria-label="Clinic resources"
+    >
+      {view.contentNoticeLabel ? (
+        <div className="global-content-notice" role="note">
+          {view.contentNoticeLabel}
+        </div>
+      ) : null}
+
+      <div className="resource-bar-main">
+        <div className="resource-grid resource-grid-primary">
+          <section
+            className="resource-chip resource-level-chip"
+            aria-label={`${levelLabel}, ${view.xpLabel} learning XP`}
+          >
+            <div className="resource-chip-heading">
+              <span>Learning XP</span>
+              <strong>{levelLabel}</strong>
+            </div>
+            <div className="resource-xp-row">
+              <strong>{view.xpLabel}</strong>
+              <small>
+                {view.xpProgressLabel ?? "Progress toward next level"}
+              </small>
+            </div>
+            <progress
+              className="xp-progress"
+              max={100}
+              value={xpProgressPercent}
+              aria-label="Learning XP progress toward next level"
+            />
+            <details className="resource-goals">
+              <summary>
+                Level goals
+                {goals.length > 0
+                  ? ` (${completeGoalCount}/${goals.length})`
+                  : ""}
+              </summary>
+              <div className="resource-goals-popover">
+                {goals.length === 0 ? (
+                  <p>Goals will appear here.</p>
+                ) : (
+                  <ul>
+                    {goals.map((goal) => (
+                      <li
+                        className={goal.complete ? "is-complete" : ""}
+                        key={goal.id}
+                      >
+                        <span aria-hidden="true">
+                          {goal.complete ? "[x]" : "[ ]"}
+                        </span>
+                        <span>
+                          {goal.label}
+                          <small>{goal.progressLabel}</small>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </details>
+          </section>
+
+          <section className="resource-chip">
+            <span>Money</span>
+            <strong className="resource-money-value">
+              {view.moneyLabel} <small>({moneyDelta})</small>
+            </strong>
+            <small>Recurring operating change per hour</small>
+          </section>
+
+          <section className="resource-chip">
+            <span>Patient satisfaction</span>
+            <strong>{view.satisfactionLabel}</strong>
+            <small>Current clinic experience</small>
+          </section>
+
+          <section className="resource-chip">
+            <span>Facility time</span>
+            <strong>{dayTime}</strong>
+            <small>{paused ? "Paused" : "Clinic open"}</small>
+          </section>
+        </div>
+
+        <div className="resource-controls">
+          <button
+            className="button button-primary pause-button"
+            type="button"
+            onClick={onTogglePause}
+            aria-pressed={paused}
+          >
+            {paused ? "Resume" : "Pause"}
+          </button>
+          {onSaveAndClose ? (
+            <button
+              className="button button-secondary save-close-button"
+              type="button"
+              onClick={onSaveAndClose}
+            >
+              Save &amp; Close
+            </button>
+          ) : null}
+          {endControls}
+        </div>
       </div>
-      <button
-        className="button button-primary pause-button"
-        type="button"
-        onClick={onTogglePause}
-        aria-pressed={paused}
-      >
-        {paused ? "Resume" : "Pause"}
-      </button>
     </header>
   );
 }

@@ -65,6 +65,38 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       earliestFacilityStage: 1,
       conceptType: "management",
     },
+    {
+      id: "concept.synthetic.service.xray",
+      displayName: "Synthetic X-ray service selection",
+      learningObjective:
+        "Select the X-ray service when an artificial training token explicitly requests X-RAY.",
+      earliestFacilityStage: 1,
+      conceptType: "workup",
+    },
+    {
+      id: "concept.synthetic.service.basic-labs",
+      displayName: "Synthetic laboratory service selection",
+      learningObjective:
+        "Select basic laboratory testing when an artificial training token explicitly requests BASIC LABS.",
+      earliestFacilityStage: 1,
+      conceptType: "workup",
+    },
+    {
+      id: "concept.synthetic.result.clear-grid",
+      displayName: "Synthetic clear-grid result recognition",
+      learningObjective:
+        "Recognize the explicitly labeled CLEAR GRID result in an artificial training case.",
+      earliestFacilityStage: 1,
+      conceptType: "diagnosis",
+    },
+    {
+      id: "concept.synthetic.disposition.routine-return",
+      displayName: "Synthetic routine-return selection",
+      learningObjective:
+        "Select ROUTINE RETURN when that artificial disposition token is explicitly provided.",
+      earliestFacilityStage: 1,
+      conceptType: "disposition",
+    },
   ],
   cases: [
     {
@@ -92,6 +124,9 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
               id: "choice.signal.alpha",
               label: "SIGNAL ALPHA",
               isCorrect: true,
+              serviceRequest: {
+                serviceId: "service.synthetic.analysis",
+              },
             },
             {
               id: "choice.signal.beta",
@@ -457,6 +492,349 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       learningSummary:
         "Uncomplicated symptomatic gallstones warrant surgical evaluation for cholecystectomy; acute-complication features would require a different pathway.",
     },
+    {
+      id: "case.synthetic.xray-routing",
+      displayName: "Practice Patient: X-ray Routing Drill",
+      patientPresentationVariantId: "presentation.synthetic.xray-routing-a",
+      patientDisplayName: "Cameron Dither",
+      presentation:
+        "Cameron carries a software-test card marked REQUEST: X-RAY. The card contains no real clinical findings.",
+      tutorialEligible: false,
+      routineEligible: true,
+      earliestFacilityStage: 1,
+      requiredClinicalSetting: "clinic",
+      rewardTierId: "reward.clinic_basic",
+      sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+      decisionNodes: [
+        {
+          id: "node.synthetic.xray-routing.order",
+          questionVariantId: "question.synthetic.xray-routing.order.v1",
+          primaryConceptId: "concept.synthetic.service.xray",
+          stem: "Which service matches the X-RAY request token?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.xray-routing.xray",
+              label: "Order the X-ray token service",
+              isCorrect: true,
+              serviceRequest: {
+                serviceId: "service.xray",
+              },
+            },
+            {
+              id: "choice.synthetic.xray-routing.wait",
+              label: "Wait without requesting a token service",
+              isCorrect: false,
+            },
+            {
+              id: "choice.synthetic.xray-routing.labs",
+              label: "Order the basic-labs token service",
+              isCorrect: false,
+              serviceRequest: {
+                serviceId: "service.basic_labs",
+              },
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The artificial card explicitly requests the X-RAY token service.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: {
+            id: "gate.synthetic.xray-routing.result",
+            resultTypeId: "service.xray",
+            pendingLabel: "Training X-ray pending",
+            resultNarrative: "Training X-ray token result: CLEAR GRID.",
+            readiness: "all",
+            allowedServiceRouteIds: [
+              "route.xray.in_house",
+              "route.xray.outsourced",
+            ],
+          },
+          terminalDispositions: [],
+        },
+        {
+          id: "node.synthetic.xray-routing.result",
+          questionVariantId: "question.synthetic.xray-routing.result.v1",
+          primaryConceptId: "concept.synthetic.result.clear-grid",
+          stem: "Which result token was returned?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.xray-routing.clear",
+              label: "CLEAR GRID",
+              isCorrect: true,
+            },
+            {
+              id: "choice.synthetic.xray-routing.dark",
+              label: "DARK GRID",
+              isCorrect: false,
+            },
+            {
+              id: "choice.synthetic.xray-routing.striped",
+              label: "STRIPED GRID",
+              isCorrect: false,
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The returned artificial result explicitly reads CLEAR GRID.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: null,
+          terminalDispositions: [
+            {
+              answerChoiceId: "choice.synthetic.xray-routing.dark",
+              kind: "no_terminal_outcome",
+            },
+            {
+              answerChoiceId: "choice.synthetic.xray-routing.striped",
+              kind: "no_terminal_outcome",
+            },
+          ],
+        },
+      ],
+      learningSummary:
+        "Software-test summary: an X-RAY request token produced the artificial CLEAR GRID result.",
+    },
+    {
+      id: "case.synthetic.lab-routing",
+      displayName: "Practice Patient: Laboratory Routing Drill",
+      patientPresentationVariantId: "presentation.synthetic.lab-routing-a",
+      patientDisplayName: "Devon Sprite",
+      presentation:
+        "Devon carries a software-test card marked REQUEST: BASIC LABS and FINAL TOKEN: ROUTINE RETURN.",
+      tutorialEligible: false,
+      routineEligible: true,
+      earliestFacilityStage: 1,
+      requiredClinicalSetting: "clinic",
+      rewardTierId: "reward.clinic_basic",
+      sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+      decisionNodes: [
+        {
+          id: "node.synthetic.lab-routing.order",
+          questionVariantId: "question.synthetic.lab-routing.order.v1",
+          primaryConceptId: "concept.synthetic.service.basic-labs",
+          stem: "Which service matches the BASIC LABS request token?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.lab-routing.labs",
+              label: "Order the basic-labs token service",
+              isCorrect: true,
+              serviceRequest: {
+                serviceId: "service.basic_labs",
+              },
+            },
+            {
+              id: "choice.synthetic.lab-routing.xray",
+              label: "Order the X-ray token service",
+              isCorrect: false,
+              serviceRequest: {
+                serviceId: "service.xray",
+              },
+            },
+            {
+              id: "choice.synthetic.lab-routing.none",
+              label: "Request no token service",
+              isCorrect: false,
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The artificial card explicitly requests the BASIC LABS token service.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: {
+            id: "gate.synthetic.lab-routing.result",
+            resultTypeId: "service.basic_labs",
+            pendingLabel: "Training laboratory result pending",
+            resultNarrative: "Training laboratory token result: STABLE PIXELS.",
+            readiness: "all",
+            allowedServiceRouteIds: ["route.basic_labs.outsourced"],
+          },
+          terminalDispositions: [],
+        },
+        {
+          id: "node.synthetic.lab-routing.disposition",
+          questionVariantId: "question.synthetic.lab-routing.disposition.v1",
+          primaryConceptId: "concept.synthetic.disposition.routine-return",
+          stem: "Which final token is printed on Devon's card?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.lab-routing.routine",
+              label: "ROUTINE RETURN",
+              isCorrect: true,
+            },
+            {
+              id: "choice.synthetic.lab-routing.urgent",
+              label: "URGENT RETURN",
+              isCorrect: false,
+            },
+            {
+              id: "choice.synthetic.lab-routing.archive",
+              label: "ARCHIVE ONLY",
+              isCorrect: false,
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The artificial presentation explicitly names ROUTINE RETURN.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: null,
+          terminalDispositions: [
+            {
+              answerChoiceId: "choice.synthetic.lab-routing.urgent",
+              kind: "no_terminal_outcome",
+            },
+            {
+              answerChoiceId: "choice.synthetic.lab-routing.archive",
+              kind: "no_terminal_outcome",
+            },
+          ],
+        },
+      ],
+      learningSummary:
+        "Software-test summary: BASIC LABS returned STABLE PIXELS and the card specified ROUTINE RETURN.",
+    },
+    {
+      id: "case.synthetic.three-step-routing",
+      displayName: "Practice Patient: Three-Step Routing Drill",
+      patientPresentationVariantId:
+        "presentation.synthetic.three-step-routing-a",
+      patientDisplayName: "Harper Bitmap",
+      presentation:
+        "Harper's artificial workflow card reads BASIC LABS, then X-RAY, then ROUTINE RETURN.",
+      tutorialEligible: false,
+      routineEligible: true,
+      earliestFacilityStage: 1,
+      requiredClinicalSetting: "clinic",
+      rewardTierId: "reward.clinic_basic",
+      sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+      decisionNodes: [
+        {
+          id: "node.synthetic.three-step.labs",
+          questionVariantId: "question.synthetic.three-step.labs.v1",
+          primaryConceptId: "concept.synthetic.service.basic-labs",
+          stem: "Which first service does the workflow card request?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.three-step.labs",
+              label: "Order the basic-labs token service",
+              isCorrect: true,
+              serviceRequest: {
+                serviceId: "service.basic_labs",
+              },
+            },
+            {
+              id: "choice.synthetic.three-step.labs-xray",
+              label: "Order the X-ray token service first",
+              isCorrect: false,
+              serviceRequest: {
+                serviceId: "service.xray",
+              },
+            },
+            {
+              id: "choice.synthetic.three-step.labs-none",
+              label: "Request no token service",
+              isCorrect: false,
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The first service printed on the artificial card is BASIC LABS.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: {
+            id: "gate.synthetic.three-step.labs",
+            resultTypeId: "service.basic_labs",
+            pendingLabel: "First training result pending",
+            resultNarrative: "First token result: LAB GRID READY.",
+            readiness: "all",
+            allowedServiceRouteIds: ["route.basic_labs.outsourced"],
+          },
+          terminalDispositions: [],
+        },
+        {
+          id: "node.synthetic.three-step.xray",
+          questionVariantId: "question.synthetic.three-step.xray.v1",
+          primaryConceptId: "concept.synthetic.service.xray",
+          stem: "Which second service does the workflow card request?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.three-step.xray",
+              label: "Order the X-ray token service",
+              isCorrect: true,
+              serviceRequest: {
+                serviceId: "service.xray",
+              },
+            },
+            {
+              id: "choice.synthetic.three-step.xray-repeat-labs",
+              label: "Repeat the basic-labs token service",
+              isCorrect: false,
+              serviceRequest: {
+                serviceId: "service.basic_labs",
+              },
+            },
+            {
+              id: "choice.synthetic.three-step.xray-stop",
+              label: "Stop the artificial workflow",
+              isCorrect: false,
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The second service printed on the artificial card is X-RAY.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: {
+            id: "gate.synthetic.three-step.xray",
+            resultTypeId: "service.xray",
+            pendingLabel: "Second training result pending",
+            resultNarrative: "Second token result: IMAGE GRID READY.",
+            readiness: "all",
+            allowedServiceRouteIds: [
+              "route.xray.in_house",
+              "route.xray.outsourced",
+            ],
+          },
+          terminalDispositions: [],
+        },
+        {
+          id: "node.synthetic.three-step.disposition",
+          questionVariantId: "question.synthetic.three-step.disposition.v1",
+          primaryConceptId: "concept.synthetic.disposition.routine-return",
+          stem: "Which final token completes Harper's workflow?",
+          answerChoices: [
+            {
+              id: "choice.synthetic.three-step.routine",
+              label: "ROUTINE RETURN",
+              isCorrect: true,
+            },
+            {
+              id: "choice.synthetic.three-step.urgent",
+              label: "URGENT RETURN",
+              isCorrect: false,
+            },
+            {
+              id: "choice.synthetic.three-step.repeat",
+              label: "REPEAT FOREVER",
+              isCorrect: false,
+            },
+          ],
+          shuffleAnswers: true,
+          explanation:
+            "The final token printed on the artificial workflow card is ROUTINE RETURN.",
+          sourceLabels: ["Synthetic prototype fixture; no clinical source"],
+          resultGateAfter: null,
+          terminalDispositions: [
+            {
+              answerChoiceId: "choice.synthetic.three-step.urgent",
+              kind: "no_terminal_outcome",
+            },
+            {
+              answerChoiceId: "choice.synthetic.three-step.repeat",
+              kind: "no_terminal_outcome",
+            },
+          ],
+        },
+      ],
+      learningSummary:
+        "Software-test summary: the three-step artificial workflow was BASIC LABS, X-RAY, then ROUTINE RETURN.",
+    },
   ],
 });
 
@@ -467,4 +845,7 @@ export const LEVEL_ONE_ROUTINE_CASE_IDS = [
   "case.prototype.abscess",
   "case.prototype.postoperative-symptoms",
   "case.prototype.symptomatic-cholelithiasis",
+  "case.synthetic.xray-routing",
+  "case.synthetic.lab-routing",
+  "case.synthetic.three-step-routing",
 ] as const;

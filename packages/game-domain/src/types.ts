@@ -19,6 +19,25 @@ export type EncounterLifecycle =
 
 export type ArrivalClass = "routine" | "tutorial" | "progression_critical";
 export type ReviewRatingIntent = "Good" | "Again";
+export type RoomOrientation = 0 | 90 | 180 | 270;
+export type CardinalDirection = "north" | "east" | "south" | "west";
+export type RoomUpgradeLevel = 1 | 2 | 3 | 4 | 5;
+
+export interface GridPoint {
+  x: number;
+  y: number;
+}
+
+export interface PixelAppearanceDescriptor {
+  version: "pixel-avatar.v1";
+  bodyShape: "compact" | "average" | "broad" | "tall";
+  hairStyle: "none" | "short" | "parted" | "curly" | "bun";
+  hairShade: 0 | 1 | 2 | 3;
+  faceStyle: "round" | "square" | "long";
+  outfitStyle: "plain" | "striped" | "checked" | "coat";
+  outfitShade: 0 | 1 | 2 | 3;
+  accessory: "none" | "glasses" | "badge" | "headband";
+}
 
 export interface DomainContext {
   clinicalRelease: SyntheticClinicalRelease;
@@ -46,6 +65,8 @@ export interface AnswerRecord {
   ratingIntent: ReviewRatingIntent;
   answeredAtFacilityTick: number;
   explanation: string;
+  /** True when a wrong nonfinal answer continued through the approved path. */
+  correctedForward: boolean;
 }
 
 export interface SchedulerReviewIntent {
@@ -97,9 +118,52 @@ export interface PendingResult {
   routeId: string;
   routeDisplayName: string;
   scheduledAtTick: number;
+  /** The frozen service time before any facility travel is added. */
+  serviceDurationTicks: number;
   durationTicks: number;
   dueTick: number;
   deliveredAtTick: number | null;
+  /**
+   * Exact facility route and timing selected when the service was scheduled.
+   * Null means the route is off-site or otherwise has no simulated facility
+   * travel.
+   */
+  patientTravel: FrozenPatientTravel | null;
+}
+
+export interface FrozenPatientTravel {
+  version: "patient-travel.v1";
+  originRoomInstanceId: string;
+  destinationRoomInstanceId: string;
+  outboundPath: GridPoint[];
+  returnPath: GridPoint[];
+  tilesPerTick: number;
+  outboundStartTick: number;
+  outboundArrivalTick: number;
+  serviceCompletionTick: number;
+  returnArrivalTick: number;
+}
+
+export type EncounterStepStatus =
+  | "locked"
+  | "action_required"
+  | "result_pending"
+  | "completed";
+
+/**
+ * Persisted, presentation-ready structure for a multi-step chart.
+ *
+ * The frozen case owns authored wording and answer order. This record owns
+ * what the learner selected and the exact result route/timing that occurred.
+ */
+export interface EncounterStepState {
+  nodeIndex: number;
+  decisionNodeId: string;
+  questionVariantId: string;
+  primaryConceptId: string;
+  status: EncounterStepStatus;
+  answer: AnswerRecord | null;
+  result: PendingResult | null;
 }
 
 export interface TerminalFeedback {
@@ -129,6 +193,7 @@ export interface EncounterState {
   clinicalReleaseId: string;
   frozenCase: SyntheticClinicalCase;
   patientDisplayName: string;
+  patientAppearance: PixelAppearanceDescriptor;
   arrivalClass: ArrivalClass;
   protectedGuaranteeId: string | null;
   lifecycle: EncounterLifecycle;
@@ -137,6 +202,7 @@ export interface EncounterState {
   firstOpenedAtTick: number | null;
   waiting: WaitingState;
   answers: AnswerRecord[];
+  steps: EncounterStepState[];
   pendingResult: PendingResult | null;
   deliveredResultNarratives: string[];
   terminalFeedback: TerminalFeedback | null;
@@ -148,13 +214,45 @@ export interface PlacedRoom {
   roomDefinitionId: string;
   x: number;
   y: number;
+  orientation: RoomOrientation;
+  doorSide: CardinalDirection | null;
+  upgradeLevel: RoomUpgradeLevel;
 }
 
 export interface EmployeeState {
   id: string;
   staffRoleDefinitionId: string;
   displayName: string;
+  appearance: PixelAppearanceDescriptor;
   hiredAtFacilityTick: number;
+  salaryPerExpenseInterval: number;
+  morale: number;
+  trainingLevel: RoomUpgradeLevel;
+  homeRoomInstanceId: string | null;
+  location: GridPoint;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+}
+
+export interface EmergencyGlp1State {
+  dayNumber: number;
+  usesToday: number;
+  totalUses: number;
+  lastUsedAtFacilityTick: number | null;
+  sarcasmMessagesShown: number;
+  lastFlavorMessage: string | null;
+}
+
+export interface EmergencyGlp1Status {
+  dayNumber: number;
+  usesToday: number;
+  dailyUseCap: number;
+  payment: number;
+  cooldownRemainingTicks: number;
+  cashEligible: boolean;
+  eligible: boolean;
+  blockedReason: string | null;
 }
 
 export interface OperationReceipt {
@@ -170,23 +268,41 @@ export interface DomainEvent {
   type:
     | "patience_warning"
     | "left_before_seen"
+    | "clinical_decision_recorded"
     | "result_ready"
     | "encounter_settled"
     | "room_placed"
+    | "room_sold"
+    | "room_upgraded"
     | "staff_hired"
+    | "staff_salary_changed"
     | "facility_level_advanced"
+    | "day_rollover"
     | "operating_expense"
     | "patient_arrived"
-    | "development_money_added";
+    | "development_money_added"
+    | "emergency_glp1_consultation";
   facilityTick: number;
   encounterId: string | null;
   message: string;
+  priority?: "critical" | "action_required" | "informational" | "flavor";
+  definitionId?: string;
+  target?: {
+    kind: "campaign" | "encounter" | "room" | "employee";
+    id: string;
+  } | null;
+  reward?: {
+    cashDelta: number;
+    learningXpDelta: number;
+    satisfactionDelta: number;
+  };
 }
 
 export interface GameState {
-  schemaVersion: 2;
+  schemaVersion: 3;
   campaignId: string;
   campaignSeed: string;
+  randomGeneratorVersion: "randomness.xoshiro128ss.v1";
   createdAtRealMs: number;
   clinicalReleaseId: string;
   balanceReleaseId: string;
@@ -213,6 +329,7 @@ export interface GameState {
   nextRoutineArrivalTick: number;
   routineArrivalSequence: number;
   totalOperatingExpenses: number;
+  emergencyGlp1: EmergencyGlp1State;
 }
 
 interface CommandBase {
@@ -252,12 +369,26 @@ export type GameCommand =
       roomDefinitionId: string;
       x: number;
       y: number;
+      orientation?: RoomOrientation;
+    })
+  | (CommandBase & {
+      type: "SELL_ROOM";
+      roomId: string;
+    })
+  | (CommandBase & {
+      type: "UPGRADE_ROOM";
+      roomId: string;
     })
   | (CommandBase & {
       type: "HIRE_STAFF";
       employeeId: string;
       staffRoleDefinitionId: string;
-      displayName: string;
+      displayName?: string;
+    })
+  | (CommandBase & {
+      type: "SET_EMPLOYEE_SALARY";
+      employeeId: string;
+      salaryPerExpenseInterval: number;
     })
   | (CommandBase & {
       type: "LEVEL_UP";
@@ -268,6 +399,9 @@ export type GameCommand =
     })
   | (CommandBase & {
       type: "DEV_ADD_MONEY";
+    })
+  | (CommandBase & {
+      type: "RUN_EMERGENCY_GLP1_CONSULTATION";
     })
   | (CommandBase & {
       type: "ADMIT_PATIENT";

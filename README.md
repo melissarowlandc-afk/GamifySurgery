@@ -5,8 +5,9 @@ game. The current repository contains a playable local browser candidate for
 facility Levels 0 and 1.
 
 This build is for gameplay and balance evaluation. Its clinical material is
-small, original prototype content that is clearly marked unapproved. It is not
-medical advice, is not ready for learners, and must never receive PHI or real
+small, original prototype content. One striped in-game banner carries the
+demonstration-content warning instead of repeating caveats throughout every
+chart. The build is not ready for learners and must never receive PHI or real
 patient information.
 
 ## Start it on Windows
@@ -43,27 +44,54 @@ stop the manual server. Neither method deploys or publishes anything.
 
 ## What is implemented
 
-- A responsive React interface and top-down Phaser facility on desktop and
-  phone-width screens
+- A desktop-first React interface and top-down Phaser facility sized for both
+  full and compact desktop browser windows; phone-specific polish is deferred
 - Automatic first-run guidance with a direct **Open first chart** action, a
   pulsing chart callout, a persistent tutorial toggle in Prototype tools, and
   an always-available in-game beginner Help guide
 - A founder-operated Level 0 clinic with two protected introductory patients
-- Waiting, Active, pending-result, action-required, summary, and Resolved chart
-  states
+- A continuous 8 AM-6 PM facility day lasting about five real minutes, with
+  Level 1 routine arrivals paced at roughly one patient per real minute
+- Left-edge Waiting and Existing Patient chart tabs, exclamation-point action
+  badges, and a collapsed filing-cabinet control for newest-first Resolved
+  charts
+- A large lower-workspace chart with patient portrait, presentation, and
+  sequential decision/result columns; completed charts can flip to an authored
+  learning summary before explicit resolution
+- Deterministically varied synthetic patient names and pixel appearances, plus
+  frozen seeded answer-order randomization so the correct choice is not tied to
+  one position
 - Single-select questions, concise correction-forward feedback, and one primary
   educational concept per scored decision
+- Multi-step encounters with visible test turnaround estimates, off-site
+  departure and return, and route-aware in-house X-ray only after the room,
+  control room, and imaging technician are operational; hallway travel is
+  included in the displayed timing
 - Campaign-scoped FSRS-6 scheduling through a pinned `ts-fsrs` adapter: correct
   answers map to Good and incorrect answers map to Again
 - Separate money, XP, satisfaction, facility time, operating expenses, and
   level requirements
-- Examination-room placement and the explicit Level 0-to-Level 1 gate
+- A paused **Build Mode** with a build-only grid, zoom/pan controls, repeatable
+  rooms and functional hallways, room rotation and explicit doors, upgrades,
+  and sale for a centrally configured 25% refund
+- Examination-room construction and the explicit Level 0-to-Level 1 gate
 - Level 1 routine arrivals, patience, queue capacity, treatment or referral
   decisions, outsourced or in-house result timing, and bounded consequences
 - Level 1 construction options for the bathroom, waiting room, X-ray room,
   imaging control room, and minor-procedure room
-- Hiring options for the receptionist and imaging technician, including room
-  dependencies, hiring costs, and salaries
+- Named receptionist and imaging-technician employees with generated pixel
+  appearances, role caps, room dependencies, hiring costs, adjustable salaries,
+  morale, visible entry routes, and delayed capability until they reach their
+  assigned room
+- A right-side message board with persistent actionable alerts, nonurgent
+  ticker messages, a recent-event log, duplicate consolidation, and critical
+  alert suppression of humor; save, campaign, hidden-tab pause, and accelerated
+  testing notices also enter the visible log. The larger future message bank is
+  preserved in
+  [`docs/features/alert-notification-flavor-system.md`](docs/features/alert-notification-flavor-system.md)
+- A bounded emergency cash-only GLP-1 consultation action below $100, limited by
+  facility-hour cooldown, configurable daily cap and diminishing payment, with
+  no XP or FSRS benefit; the automated suite remains a Level 2 feature
 - Multiple browser-local campaigns. Each new campaign starts with fresh FSRS
   histories and a new campaign seed, while prior local campaigns can be
   reopened
@@ -73,11 +101,15 @@ stop the manual server. Neither method deploys or publishes anything.
 - An open-by-default desktop **Prototype tools** panel with **Add $100**,
   fast-forward, two-step **Restart game**, tutorial, and FSRS inspection
   controls
-- A bounded desktop workspace: patients and goals scroll inside the left
-  sidebar, construction cards use the wide main area, and the document does
-  not grow downward as either list expands
-- Newest-first Resolved charts while Waiting and Active charts retain their
-  operational ordering
+- A bounded desktop workspace: patient tabs, goals, staffing, building tools,
+  and events scroll within their panels instead of extending the document
+  indefinitely
+- A chart/facility split that keeps the live clinic visible while a large chart
+  occupies the lower workspace, plus a synchronized Phaser backing canvas so
+  room placement remains accurate after resizing
+- An explicit Level 1-complete notice with Level 2 locked for this prototype
+- Newest-first Resolved charts while Waiting and Existing Patients retain
+  their operational ordering
 - A development-only per-concept FSRS card inspector showing card state and due
   time
 - Centralized, validated prototype balance settings at
@@ -95,13 +127,14 @@ verification and password recovery, with cloud saves shared across devices.
 ADR 0022 intentionally places that work after this playable local slice. This
 prototype therefore does not show a substitute or temporary login screen.
 
-## Clinical-content warning
+## Clinical-content boundary
 
 The fixture at `packages/clinical-content/src/synthetic-content.ts` contains an
-interface tutorial plus a few original draft examples used only to exercise
-gameplay. They are conspicuously marked synthetic or clinically unapproved.
-They are not a curriculum, have not been clinically approved by Melissa, and
-must not be used for teaching or patient care.
+interface tutorial plus a few original examples used only to exercise gameplay.
+The player shows one global striped demonstration-content warning rather than
+repeating that wording inside each vignette. The fixture is not a curriculum,
+has not been clinically approved by Melissa, and must not be used for teaching
+or patient care.
 
 ## Checks
 
@@ -109,8 +142,8 @@ Run these from the project folder:
 
 | Command | Purpose |
 |---|---|
-| `npm test` | Run deterministic game-domain and save/FSRS tests |
-| `npm run test:e2e` | Run desktop and phone-width browser walkthroughs in installed Chrome |
+| `npm test` | Run 49 deterministic unit tests: 41 game-domain and 8 player alert/view-model tests |
+| `npm run test:e2e` | Run the desktop browser walkthroughs and retained width regressions in installed Chrome |
 | `npm run typecheck` | Check every TypeScript workspace |
 | `npm run build` | Type-check and create the local production-style player build |
 | `npm run test:watch` | Rerun domain tests while code changes |
@@ -122,11 +155,9 @@ deploy the game.
 
 - [Automatic desktop tutorial](artifacts/screenshots/tutorial-desktop.png)
 - [Highlighted first chart](artifacts/screenshots/tutorial-callout-desktop.png)
-- [In-game phone-width Help](artifacts/screenshots/help-phone.png)
+- [Level 0 desktop chart](artifacts/screenshots/level-0-desktop-chrome.png)
+- [Compact desktop chart](artifacts/screenshots/level-0-compact-desktop-chrome.png)
 - [Level 1 desktop walkthrough](artifacts/screenshots/level-1-desktop.png)
-- [Level 1 desktop facility](artifacts/screenshots/level-1-facility-desktop.png)
-- [Compact desktop chart](artifacts/screenshots/level-0-compact-desktop.png)
-- [Level 0 phone-width chart](artifacts/screenshots/level-0-phone.png)
 
 ## Deliberately deferred
 
@@ -140,6 +171,11 @@ deploy the game.
 - Hosted staging, outside tester access, monitoring, backups, and deployment
 - Levels 2 through 5, inspection week, advanced staffing, maintenance, pharmacy,
   and other later management systems
+- The automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing
+- Alerts and flavor definitions tied to maintenance, inspections, later rooms,
+  or other mechanics that do not yet exist
+- Phone-specific interface polish and phone deployment; current work targets
+  full and compact desktop windows
 - Gameplay telemetry, research data collection, public release, native apps,
   billing, and paid infrastructure
 
@@ -150,6 +186,6 @@ deploy the game.
   adapter, progression, saves, queues, and economy
 - `packages/clinical-content` - validated prototype clinical fixture
 - `packages/balance-config` - validated centralized prototype tuning values
-- `tests/e2e` - desktop and phone-width browser walkthroughs
+- `tests/e2e` - full and compact desktop browser walkthroughs
 - `docs/adr` - accepted architecture and game-design decisions
 - Root Markdown files - the living canonical project record

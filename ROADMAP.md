@@ -42,7 +42,8 @@ Completed:
 
 - Founder clinic, facility clock, pause/resume, resource display, chart folders,
   clinical decisions, feedback, result delay, local save, and construction
-- Responsive grayscale desktop and phone-width presentation
+- Grayscale full and compact desktop presentation; early phone-width regression
+  coverage is retained, but phone-specific polish is deferred
 - Protected introductory patient behavior, workload capacity, waiting-patient
   patience, and deterministic facility-time processing
 - Grid placement for the first examination room
@@ -59,15 +60,35 @@ Implemented:
 - Campaign-scoped FSRS-6 histories with fresh state for every new campaign
 - Money, clinical XP, satisfaction, expenses, facility time, and explicit level
   gates
+- Continuous five-minute operating days from 8 AM to 6 PM, with one facility
+  hour every 30 real seconds and routine arrivals paced at roughly one per real
+  minute
 - Level 0 completion through two patients, the examination room, the XP
   threshold, and satisfaction above 90%
 - Level 1 deterministic routine arrivals, waiting patience, workload
-  backpressure, Active tracking, and treatment/referral decisions
+  backpressure, Existing Patients tracking, and treatment/referral decisions
 - Level 1 rooms: bathroom, waiting room, X-ray room, imaging control room, and
   minor-procedure room
 - Level 1 staff: receptionist and imaging technician, including dependency,
-  hiring-cost, and salary rules
-- Outsourced and capability-dependent in-house result timing
+  hiring-cost, generated identity/appearance, role-cap, salary, morale,
+  reachability, persisted entrance routes, capability gating until arrival,
+  and visible movement rules
+- Large multi-column charts with portraits, decision/result history, visible
+  test timing, action-ready return, whole-chart learning-summary flip, and
+  explicit resolution
+- Reproducible patient identity/avatar generation and frozen seeded answer
+  shuffling
+- Outsourced patient departure/return and capability-dependent in-house X-ray
+  timing, including frozen round-trip hallway travel
+- Paused Build Mode with a build-only grid, zoom/pan, repeatable rotatable
+  rooms, explicit doors, functional hallways, upgrades, and 25% resale
+- Four-priority actionable alerts plus a nonurgent ticker/recent-event log,
+  deterministic nonrepeating flavor, duplicate consolidation, critical alert
+  suppression of humor, and visible current-system save/campaign/testing
+  notices
+- Bounded founder-run emergency GLP-1 consultations below $100, with a
+  facility-hour cooldown, configurable daily cap/diminishing payment, and no
+  XP or FSRS benefit
 - Multiple local campaigns, local save/reload, compatible save migration,
   recoverable same-seed Start over, and a separate fresh learning history for
   each campaign; creating a genuinely new campaign uses a new seed
@@ -76,18 +97,23 @@ Implemented:
   FSRS card/due-time inspection
 - Open-by-default left-side prototype controls for deterministic cash,
   fast-forward, tutorial preference, FSRS inspection, and recoverable restart
-- A full-window desktop layout with internally scrolling patient/goals/build
-  panels, width-aware construction cards, and newest-first Resolved charts
+- A full-window desktop layout with internally scrolling patient/goals/build/
+  staff/event panels, width-aware construction cards, and newest-first Resolved
+  charts
+- A responsive chart/facility split with accurate post-resize Phaser pointer
+  mapping, plus an explicit Level 1-complete/Level 2-locked state
 - One-click Windows dependency/start/browser launcher, automatic first-run
   chart coaching, persistent tutorial controls, and in-game beginner Help
-- Automated domain and desktop/phone-width browser coverage
+- One global striped clinical-content warning without repeated vignette caveats
+- A 49-test unit inventory: 41 game-domain tests and 8 player alert/view-model
+  tests, plus desktop and retained width-regression browser coverage
 
 Current demonstration gate:
 
 1. Melissa can complete Level 0 and enter Level 1 without developer
    explanation.
 2. Melissa and her husband can understand the patient folders, facility clock,
-   goals, construction, staffing, and development controls.
+   goals, Build Mode, staffing, alerts, and development controls.
 3. The loop remains usable at large and compact desktop browser sizes with
    sound off.
 4. A saved campaign survives reload, and a newly created campaign visibly has
@@ -106,13 +132,14 @@ deferred until the approved content pool is large enough to exercise it.
 
 Latest local verification on 2026-07-24:
 
-- `npm test`: 17 of 17 deterministic domain tests passed
+- `npm test`: 49 of 49 unit tests passed (41 game-domain and 8 player
+  alert/view-model)
 - `npm run typecheck`: all four TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning
 - `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough plus large
-  desktop, compact desktop, and retained phone-width regression checks passed
-  (7 passed, 5 intentionally skipped)
+  and compact desktop layout checks and storage-failure safety passed (5
+  passed, 3 intentionally skipped)
 
 ## Milestone 3: Iterate and prepare approved content
 
@@ -174,6 +201,11 @@ Gate: explicit owner permission before inviting any outside learner.
 - Comprehensive ABSITE coverage and multi-textbook ingestion
 - Full Clinical Content Workbench and comprehensive administration suite
 - Facility Levels 2 through 5
+- Automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing;
+  the bounded pre-suite founder emergency action is already available without
+  expanding the Level 0-1 clinical scope
+- Alert and flavor definitions tied to maintenance, inspections, future rooms,
+  or other systems that do not yet exist
 - Advanced rooms, staffing, diagnostics, maintenance, pharmacy, and side
   businesses
 - Inspection week

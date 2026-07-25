@@ -266,10 +266,22 @@ describe("tutorial clinical lifecycle", () => {
     expect(
       state.encounters[TUTORIAL_ENCOUNTER_ID]!.terminalFeedback?.outcome,
     ).toBeNull();
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.terminalFeedback?.acknowledged,
+    ).toBe(true);
     expect(state.settlements).toHaveLength(1);
     expect(state.cash).toBe(160);
     expect(state.satisfaction).toBe(97);
     expect(state.clinicalXp).toBe(10);
+
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "op.good.close",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.lifecycle).toBe(
+      "resolved",
+    );
   });
 });
 
@@ -278,6 +290,7 @@ describe("facility, capacity, and patience primitives", () => {
     let state = completeTutorialIncorrectly();
     expect(state.cash).toBe(140);
     expect(getWorkloadSnapshot(state).routineLimit).toBe(2);
+    const initialRoomCount = state.rooms.length;
 
     const placement = {
       type: "PLACE_ROOM" as const,
@@ -290,12 +303,12 @@ describe("facility, capacity, and patience primitives", () => {
     state = gameReducer(state, placement);
     expect(state.cash).toBe(20);
     expect(getWorkloadSnapshot(state).routineLimit).toBe(4);
-    expect(state.rooms).toHaveLength(2);
+    expect(state.rooms).toHaveLength(initialRoomCount + 1);
 
     const duplicatePlacement = gameReducer(state, placement);
     expect(duplicatePlacement).toBe(state);
     expect(duplicatePlacement.cash).toBe(20);
-    expect(duplicatePlacement.rooms).toHaveLength(2);
+    expect(duplicatePlacement.rooms).toHaveLength(initialRoomCount + 1);
 
     state = gameReducer(state, {
       type: "PLACE_ROOM",
@@ -398,16 +411,16 @@ describe("facility, capacity, and patience primitives", () => {
       patientDisplayName: "Patient Waiting",
       arrivalClass: "routine",
     });
-    state = advanceTicks(state, 12, "op.patience-to-deadline");
+    state = advanceTicks(state, 16, "op.patience-to-deadline");
     const waiting = state.encounters["encounter.routine.patience"]!;
     expect(waiting.lifecycle).toBe("waiting_unopened");
-    expect(waiting.waiting.warningThresholdsShown).toEqual([5, 2, 0]);
+    expect(waiting.waiting.warningThresholdsShown).toEqual([8, 4, 0]);
     expect(
       state.events.some(
         (event) =>
           event.type === "patience_warning" &&
           event.encounterId === "encounter.routine.patience" &&
-          event.facilityTick === 12,
+          event.facilityTick === 16,
       ),
     ).toBe(true);
 
@@ -432,7 +445,7 @@ describe("facility, capacity, and patience primitives", () => {
       patientDisplayName: "Patient Departure",
       arrivalClass: "routine",
     });
-    state = advanceTicks(state, 13, "op.departure-ticks");
+    state = advanceTicks(state, 17, "op.departure-ticks");
     const departed = state.encounters["encounter.routine.departure"]!;
 
     expect(departed.lifecycle).toBe("resolved");
@@ -688,14 +701,51 @@ describe("campaign learning, progression, and Level 1 management", () => {
       "rejected",
     );
 
-    const placements = [
-      ["bathroom", "room.bathroom", 0, 7],
-      ["waiting", "room.waiting", 3, 7],
-      ["control", "room.imaging_control", 11, 2],
-      ["xray", "room.xray", 10, 5],
-      ["procedure", "room.minor_procedure", 13, 5],
+    const hallwayCoordinates = [
+      [6, 4],
+      [5, 4],
+      [4, 4],
+      [3, 4],
+      [2, 4],
+      [1, 4],
+      [0, 4],
+      [9, 4],
+      [10, 4],
+      [11, 4],
+      [12, 4],
+      [13, 4],
+      [14, 4],
+      [15, 4],
+      [6, 5],
+      [5, 5],
+      [4, 5],
+      [3, 5],
+      [2, 5],
+      [1, 5],
     ] as const;
-    for (const [suffix, roomDefinitionId, x, y] of placements) {
+    for (const [x, y] of hallwayCoordinates) {
+      const suffix = `${x}.${y}`;
+      state = gameReducer(state, {
+        type: "PLACE_ROOM",
+        operationId: `level1.place.hallway.${suffix}`,
+        roomId: `room.instance.hallway.${suffix}`,
+        roomDefinitionId: "room.hallway",
+        x,
+        y,
+      });
+      expect(
+        state.operationReceipts[`level1.place.hallway.${suffix}`]?.status,
+      ).toBe("applied");
+    }
+
+    const placements = [
+      ["bathroom", "room.bathroom", 4, 2, 0],
+      ["waiting", "room.waiting", 0, 1, 0],
+      ["control", "room.imaging_control", 10, 2, 0],
+      ["xray", "room.xray", 13, 1, 0],
+      ["procedure", "room.minor_procedure", 0, 6, 180],
+    ] as const;
+    for (const [suffix, roomDefinitionId, x, y, orientation] of placements) {
       state = gameReducer(state, {
         type: "PLACE_ROOM",
         operationId: `level1.place.${suffix}`,
@@ -703,6 +753,7 @@ describe("campaign learning, progression, and Level 1 management", () => {
         roomDefinitionId,
         x,
         y,
+        orientation,
       });
       expect(state.operationReceipts[`level1.place.${suffix}`]?.status).toBe(
         "applied",
@@ -741,7 +792,7 @@ describe("campaign learning, progression, and Level 1 management", () => {
     expect(getWorkloadSnapshot(state).routineLimit).toBe(8);
   });
 
-  it("migrates the unpublished v1 local save to schema v2 and rebuilds its review evidence", () => {
+  it("migrates the unpublished v1 local save to the current schema and rebuilds its review evidence", () => {
     let state = openTutorial(
       createInitialGameState(undefined, {
         campaignId: "campaign.to-legacy",
@@ -781,7 +832,7 @@ describe("campaign learning, progression, and Level 1 management", () => {
     ).map(({ reviewedAtMs: _removed, ...intent }) => intent);
 
     const migrated = deserializeGameState(JSON.stringify(legacy));
-    expect(migrated.schemaVersion).toBe(2);
+    expect(migrated.schemaVersion).toBe(3);
     expect(migrated.campaignId).toBe("campaign.migrated.local-v1");
     expect(
       migrated.learningHistories["concept.synthetic.signal"]?.reviews,
