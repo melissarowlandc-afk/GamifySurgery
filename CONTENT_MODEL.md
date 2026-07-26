@@ -1,10 +1,12 @@
 # Clinical Content Model Proposal
 
 Status: Accepted educational rules and accepted dual-purpose knowledge-base and
-scenario-authoring architecture under ADR 0020. Exact implementation details
-remain unimplemented. No clinical content has been authored or approved.
+scenario-authoring architecture under ADR 0020. A reversible local beta
+validation contract now exercises the normalized authoring records; the
+production database and administration interface remain unimplemented. No
+clinical content has been authored or approved.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 ## Goals
 
@@ -42,6 +44,38 @@ from becoming a generation probability merely because it appears in the topic
 record.
 
 ## Accepted hierarchy and entity names
+
+### Coverage Framework and Coverage Framework Node
+
+A Coverage Framework identifies one exact official curriculum-outline snapshot,
+such as an ABSITE or SCORE outline. Its immutable Coverage Framework Nodes
+preserve the source-defined hierarchy, order, category path, and citations.
+A framework node describes what the external outline says; it is not itself a
+Clinical Topic and does not claim that project coverage is complete.
+
+Framework-node classifications use controlled-vocabulary identifiers rather
+than free-text labels, but the beta does not give those imports a clinical
+review state. A parent reference may organize the source hierarchy, but
+validation rejects missing parents, cycles, cross-framework parents, and
+category paths that do not extend their parent's path. Until exact per-node
+import provenance exists, extraction batches cannot claim framework nodes as
+outputs.
+
+### Topic Coverage Mapping
+
+A Topic Coverage Mapping is the project-owned join between one Coverage
+Framework Node and one Clinical Topic. In the local beta it stores a mutable
+Draft coverage status, game-eligibility proposal, optional deferred-scope
+reference, author, update time, and notes. It is not a reviewed or publishable
+classification; the future administrator must add reviewed immutable lineage
+before these mappings can participate in a release.
+The relationship is many-to-many: one official category may require several
+Clinical Topics, while one Clinical Topic may support several ABSITE or SCORE
+categories.
+
+Approved concept and question totals, source coverage, and other progress
+counts are derived from current normalized records. They are not copied into
+the mapping, where they could become stale or disagree with the source data.
 
 ### Clinical Topic
 
@@ -104,7 +138,8 @@ Each concept has:
 - A permanent stable identifier and immutable lineage
 - One narrow, plainly stated learning objective
 - Exactly one primary Clinical Topic for organization
-- Optional related-topic and differential-topic links
+- Optional typed related-topic and differential-topic links. Each link stores
+  both the related Clinical Topic ID and a controlled relationship-type ID.
 - Optional typed confusion relationships to other concepts
 - A required earliest facility stage at which it may first generate an
   encounter
@@ -297,26 +332,52 @@ This content-model extension is accepted in
 
 ### Source and Citation
 
-A Source preserves title, publisher or journal, link or identifier, access
-date, edition or publication date, relevant licensing notes, and source type.
+A Source preserves stable bibliographic identity: title, publisher or journal,
+link or identifier, edition or publication date, relevant licensing notes, and
+source type. Access time belongs to the exact Source Snapshot rather than the
+source itself.
+Its explicit human rights review records the reviewer, time, basis, and
+separate permissions for private storage, local processing, external-AI
+transfer, public source-text reuse, and publication of project paraphrases.
+An unresolved rights review is default-deny for every use.
+The schema-v2 beta treats this embedded review as immutable and requires every
+permission-dependent content citation, Practice Inbox capture, AI suggestion,
+or started extraction to occur no earlier than the review. This is a safe
+collection-stage constraint, not the final historical model. Append-only
+versioned rights decisions with stable IDs, effective times, revocations, and
+exact operation bindings are required before substantial extraction or
+publication. A snapshot may be registered before the review so its provenance
+is not lost, but registration grants no permission to process or reuse its
+content.
 
 Each retrieval is retained as an immutable Source Snapshot with its exact URL,
 retrieval time, upstream modification signal when available, format, access
 scope, and checksum. This prevents a versionless source from silently changing
-the provenance of older claims.
+the provenance of older claims. Any actual retrieved artifact, whether public
+or owner-local, requires a SHA-256 checksum; a metadata-only record is not
+misrepresented as a retained artifact.
 
 A Citation is a many-to-many link from an exact source snapshot to an exact
 topic section, structured fact, concept, patient variant, Result Gate or
 Requirement, Patient Learning Summary, question, answer rationale,
 explanation, or Terminal Clinical Outcome revision. It identifies the claim or
 passage supported rather than merely attaching a bibliography to the topic.
+Each Citation classifies its use as bibliographic metadata, project
+paraphrase, source excerpt, or synthetic content so public-safe validation can
+apply the corresponding rights permission. Human verification or conflict
+identification records both the reviewer ID and verification time. Clinical
+approval requires at least one human-verified content-bearing citation created
+and verified no later than the approval; bibliographic metadata alone cannot
+establish clinical support.
 
 ## Accepted relationship summary
 
 | Relationship | Shape | Reason |
 |---|---|---|
+| Coverage Framework to Coverage Framework Node | One-to-many hierarchy | Nodes preserve one exact official outline without becoming project-owned Clinical Topics |
+| Coverage Framework Node to Clinical Topic | Many-to-many through Topic Coverage Mapping | One category can require several topics and one topic can support several official categories |
 | Clinical Topic to its primary Tested Concepts | One-to-many | Every concept has one organizing topic |
-| Tested Concept to related or differential Clinical Topics | Many-to-many | A concept may involve several related subjects without changing its primary topic |
+| Tested Concept to related or differential Clinical Topics | Typed many-to-many | Each link names a controlled relationship type without changing the concept's primary topic |
 | Clinical Topic to Clinical Topic | Typed many-to-many | Differentials, complications, procedures, and anatomy form a network rather than a strict tree |
 | Case Family to Clinical Topic | Many-to-many | One coherent episode may involve several topics and one topic supports many cases |
 | Case Family to Patient Presentation Variant | One-to-many | A variant is one meaningful presentation of a coherent case family |
@@ -500,6 +561,31 @@ Topic does not automatically approve a concept, patient variant, template,
 question, answer, or explanation derived from it. Only Melissa may provide
 clinical approval for the pilot.
 
+Every revision records its `authorId`, creation time, provenance, workflow
+state, change summary, and parent revision when applicable. Topic revisions,
+Structured Clinical Facts, Tested Concepts, and Practice Question Inbox items
+form auditable parent-linked lineages. For each stable entity with any
+non-archived revision, validation requires exactly one non-archived leaf. This
+prevents two competing "current" branches while preserving archived history.
+Runtime and release records still reference exact revision IDs rather than
+implicitly selecting that active leaf.
+
+The beta validator checks that audit IDs are present and internally
+consistent, but it does not authenticate people or enforce Melissa's approver
+role. Identity, role, and clinical-approver enforcement remain mandatory in the
+protected administration and publishing service; validation alone cannot
+authorize publication.
+
+### Controlled vocabularies
+
+The authoring workspace resolves classification IDs against explicit,
+version-controlled definitions for educational difficulty, clinical setting,
+concept-to-topic relationship type, facility stage, deferred scope, source
+format, structured-fact type, distribution type, and coverage classification.
+Stable IDs are stored in content records; labels and descriptions remain
+editable presentation metadata. Unknown IDs, duplicate definitions, and
+inconsistent deferred-scope classifications fail validation.
+
 Recommended authoring sequence:
 
 1. Create or revise a Clinical Topic and its structured facts.
@@ -510,6 +596,11 @@ Recommended authoring sequence:
 5. Define locked facts, instantiation profiles, slots, distributions, and
    constraints.
 6. Create Decision Nodes and Question Variants.
+
+The beta represents conflict resolution through successor fact revisions and
+current-leaf reporting. A separate append-only resolution record containing
+the reviewer, rationale, and selected evidence is deliberately deferred and is
+required before substantial source extraction or publication.
 7. Review every final incorrect choice and author an approved Terminal Clinical
    Outcome or explicitly select `no_terminal_outcome`.
 8. Create the patient-level diagnosis-and-management learning summary.
@@ -849,6 +940,8 @@ identifier. It cannot redefine the old identifier.
 ### RED: expensive to change after authoring begins
 
 - Stable identity versus immutable revision model
+- Separation of official Coverage Framework Nodes from project-owned
+  many-to-many Topic Coverage Mappings
 - Clinical Topic, Tested Concept, Case Family, Patient Presentation Variant,
   Decision Node, Result Gate, Question Variant, and Terminal Clinical Outcome
   boundaries
@@ -860,6 +953,7 @@ identifier. It cannot redefine the old identifier.
   timing and route behavior
 - Exact frozen Runtime Encounter and Runtime Scored-Decision payload
 - Claim-level citation, provenance, approval, and release dependency model
+- Stable controlled-vocabulary identifiers and typed related-topic links
 - Separation between authoring AI and the live runtime
 
 Changing these later would require workbook conversion, database migration,

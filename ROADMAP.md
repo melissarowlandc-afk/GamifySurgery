@@ -143,8 +143,8 @@ deferred until the approved content pool is large enough to exercise it.
 
 Latest local verification on 2026-07-25:
 
-- `npm test`: 73 of 73 unit tests passed (41 game-domain, 21 player
-  tutorial/alert/view-model/positioning, and 11 clinical-authoring)
+- `npm test`: 143 of 143 unit tests passed (41 game-domain, 21 player
+  tutorial/alert/view-model/positioning, and 81 clinical-authoring)
 - `npm run typecheck`: all five TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning
@@ -165,9 +165,22 @@ Beta foundation started:
   Draft content into gameplay.
 - Registered exact public metadata snapshots for the currently listed ABSITE
   and SCORE General Surgery outlines.
-- Added a blank private-workspace template, a synthetic end-to-end example,
-  immutable source-snapshot provenance, claim-level citations, workflow
-  safeguards, conflict tracking, and resumable extraction-batch records.
+- Replaced the short-lived beta-v1 shape with a normalized schema-v2 contract:
+  immutable framework nodes are separate from many-to-many Draft topic
+  mappings, controlled values use stable IDs, revisions have authors and
+  validated active leaves, and current coverage counts are derived.
+- Added explicit source-rights decisions, artifact SHA-256 identity,
+  citation-use and human-verification audit fields, exact snapshot/locator
+  provenance, current-versus-historical conflict handling, and public-fixture
+  safeguards.
+- Added a strict 17-table local manual-authoring CSV interchange
+  initializer/compiler with
+  staged no-clobber initialization, exact row diagnostics, optional validated
+  base-registry merging, canonical JSON output, and a local source-fingerprint
+  command. This proves the initial import subset; it is not the final
+  owner-facing Google Sheet and does not author extraction jobs or AI output.
+- Retained the blank canonical-JSON template, synthetic end-to-end example,
+  workflow safeguards, and resumable extraction-batch records.
 - Kept raw sources, commercial question-bank material, private notes, and PHI
   outside tracked paths.
 

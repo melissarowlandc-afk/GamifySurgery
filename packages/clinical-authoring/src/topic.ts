@@ -150,21 +150,16 @@ export const structuredFactValueSchema = z.discriminatedUnion("kind", [
 
 export const factConflictSchema = z
   .object({
-    state: z.enum(["none", "unresolved", "resolved"]),
+    state: z.enum(["none", "unresolved"]),
     conflictGroupId: stableIdSchema.nullable(),
-    resolutionNote: z.string().min(1).max(2_000).nullable(),
   })
   .strict()
   .superRefine((conflict, context) => {
     if (conflict.state === "none") {
-      if (
-        conflict.conflictGroupId !== null ||
-        conflict.resolutionNote !== null
-      ) {
+      if (conflict.conflictGroupId !== null) {
         context.addIssue({
           code: "custom",
-          message:
-            "A fact without a conflict cannot carry a conflict group or resolution.",
+          message: "A fact without a conflict cannot carry a conflict group.",
         });
       }
       return;
@@ -178,26 +173,6 @@ export const factConflictSchema = z
       });
     }
 
-    if (
-      conflict.state === "unresolved" &&
-      conflict.resolutionNote !== null
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "An unresolved conflict cannot carry a resolution.",
-        path: ["resolutionNote"],
-      });
-    }
-    if (
-      conflict.state === "resolved" &&
-      conflict.resolutionNote === null
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "A resolved conflict must explain its resolution.",
-        path: ["resolutionNote"],
-      });
-    }
   });
 
 export const structuredClinicalFactSchema = z
@@ -205,7 +180,7 @@ export const structuredClinicalFactSchema = z
     id: stableIdSchema,
     topicRevisionId: stableIdSchema,
     revision: revisionEnvelopeSchema,
-    factType: stableIdSchema,
+    factTypeId: stableIdSchema,
     value: structuredFactValueSchema,
     population: z.string().min(1).max(1_000),
     clinicalContext: z.string().min(1).max(1_000),

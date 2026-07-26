@@ -9,7 +9,8 @@ export const extractionOutputReferenceSchema = z
       "topic_revision",
       "structured_fact",
       "tested_concept",
-      "coverage_entry",
+      "coverage_framework_node",
+      "topic_coverage_mapping",
       "practice_inbox_item",
     ]),
     id: stableIdSchema,
@@ -92,12 +93,16 @@ export const extractionBatchSchema = z
       batch.status === "queued" &&
       (batch.completedUnits !== 0 ||
         batch.lastCompletedLocator !== null ||
-        batch.startedAt !== null)
+        batch.startedAt !== null ||
+        batch.outputReferences.length > 0 ||
+        batch.unresolvedConflictGroupIds.length > 0 ||
+        batch.errors.length > 0 ||
+        batch.humanReviewState !== "not_started")
     ) {
       context.addIssue({
         code: "custom",
         message:
-          "A queued batch cannot contain progress, a checkpoint, or a start time.",
+          "A queued batch cannot contain progress, outputs, conflicts, errors, review activity, a checkpoint, or a start time.",
       });
     }
 

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "workspace.synthetic.pilot.v1",
   "label": "Synthetic clinical-authoring pilot",
   "createdAt": "2026-07-25T23:55:00Z",
@@ -18,6 +18,13 @@
       "description": "Project-owned fixture setting without clinical meaning."
     }
   ],
+  "conceptTopicRelationshipDefinitions": [
+    {
+      "id": "topic-link.synthetic-related",
+      "label": "Synthetic related topic",
+      "description": "Project-owned relationship type without clinical meaning."
+    }
+  ],
   "facilityStageDefinitions": [
     {
       "id": "facility-stage.synthetic",
@@ -27,6 +34,34 @@
     }
   ],
   "deferredScopeDefinitions": [],
+  "sourceFormatDefinitions": [
+    {
+      "id": "format.inline-json",
+      "label": "Inline JSON fixture",
+      "description": "Project-owned inline fixture representation."
+    }
+  ],
+  "factTypeDefinitions": [
+    {
+      "id": "operational.ready-chart-delay",
+      "label": "Synthetic ready-chart delay",
+      "description": "Project-owned fixture fact type without clinical meaning."
+    }
+  ],
+  "distributionTypeDefinitions": [
+    {
+      "id": "distribution.synthetic",
+      "label": "Synthetic distribution",
+      "description": "Placeholder distribution type for validator coverage."
+    }
+  ],
+  "coverageClassificationDefinitions": [
+    {
+      "id": "coverage-classification.synthetic",
+      "label": "Synthetic classification",
+      "description": "Project-owned fixture classification without clinical meaning."
+    }
+  ],
   "sources": [
     {
       "id": "source.synthetic.learning-loop",
@@ -40,8 +75,14 @@
       "rightsReview": {
         "status": "synthetic_or_owner_authored",
         "note": "Project-owned synthetic content safe for tests and public fixtures.",
-        "aiProcessingPermitted": true,
-        "publicTextReusePermitted": true
+        "reviewedBy": "reviewer.system.synthetic",
+        "reviewedAt": "2026-07-25T23:55:00Z",
+        "basis": "Entire source is project-owned synthetic fixture content.",
+        "privateStoragePermitted": true,
+        "localProcessingPermitted": true,
+        "externalAiTransferPermitted": true,
+        "publicSourceTextReusePermitted": true,
+        "projectParaphrasePublicationPermitted": true
       }
     }
   ],
@@ -61,15 +102,18 @@
     {
       "id": "citation.synthetic.coverage.v1",
       "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
-      "targetKind": "coverage_entry",
-      "targetId": "coverage.synthetic.queue-triage",
+      "targetKind": "coverage_framework_node",
+      "targetId": "coverage-node.synthetic.queue-triage",
       "locator": {
         "kind": "synthetic_marker",
         "label": "Synthetic coverage marker",
         "secondaryLabel": null
       },
       "supportedClaim": "This synthetic topic partially exercises the authoring workflow.",
+      "usageKind": "synthetic_content",
       "verificationState": "human_verified",
+      "verificationReviewerId": "reviewer.system.synthetic",
+      "verificationRecordedAt": "2026-07-25T23:55:00Z",
       "recordedAt": "2026-07-25T23:55:00Z"
     },
     {
@@ -83,7 +127,10 @@
         "secondaryLabel": null
       },
       "supportedClaim": "A ready synthetic chart represents an available tutorial action.",
+      "usageKind": "synthetic_content",
       "verificationState": "human_verified",
+      "verificationReviewerId": "reviewer.system.synthetic",
+      "verificationRecordedAt": "2026-07-25T23:55:00Z",
       "recordedAt": "2026-07-25T23:55:00Z"
     },
     {
@@ -97,7 +144,10 @@
         "secondaryLabel": null
       },
       "supportedClaim": "The fixture uses ten synthetic minutes as an example value.",
+      "usageKind": "synthetic_content",
       "verificationState": "human_verified",
+      "verificationReviewerId": "reviewer.system.synthetic",
+      "verificationRecordedAt": "2026-07-25T23:55:00Z",
       "recordedAt": "2026-07-25T23:55:00Z"
     },
     {
@@ -111,7 +161,10 @@
         "secondaryLabel": null
       },
       "supportedClaim": "The fixture concept tests one synthetic next action.",
+      "usageKind": "synthetic_content",
       "verificationState": "human_verified",
+      "verificationReviewerId": "reviewer.system.synthetic",
+      "verificationRecordedAt": "2026-07-25T23:55:00Z",
       "recordedAt": "2026-07-25T23:55:00Z"
     },
     {
@@ -121,11 +174,14 @@
       "targetId": "inbox-rev.synthetic.queue-triage.v1",
       "locator": {
         "kind": "synthetic_marker",
-        "label": "Synthetic inbox marker",
+        "label": "Synthetic inbox example",
         "secondaryLabel": null
       },
       "supportedClaim": "The inbox item is a project-owned synthetic example.",
+      "usageKind": "synthetic_content",
       "verificationState": "human_verified",
+      "verificationReviewerId": "reviewer.system.synthetic",
+      "verificationRecordedAt": "2026-07-25T23:55:00Z",
       "recordedAt": "2026-07-25T23:55:00Z"
     }
   ],
@@ -138,25 +194,34 @@
       "recordedAt": "2026-07-25T23:55:00Z"
     }
   ],
-  "coverageEntries": [
+  "coverageFrameworkNodes": [
     {
-      "id": "coverage.synthetic.queue-triage",
+      "id": "coverage-node.synthetic.queue-triage",
       "frameworkId": "framework.synthetic.learning-loop.v1",
       "externalCategoryId": "synthetic.queue-triage",
+      "parentNodeId": null,
+      "ordinal": 0,
       "categoryPath": [
-        "Synthetic training",
-        "Queue triage"
+        "Synthetic queue triage"
       ],
-      "topicId": "topic.synthetic.queue-triage",
-      "coverageStatus": "partial",
-      "sourceCoverageCount": 1,
-      "approvedConceptCount": 0,
-      "approvedQuestionVariantCount": 0,
-      "currentGameEligibility": "eligible",
-      "deferredScopeId": null,
+      "sourceDefinedClassificationId": null,
       "citationIds": [
         "citation.synthetic.coverage.v1"
       ],
+      "note": "Synthetic framework node used only to validate coverage relationships."
+    }
+  ],
+  "topicCoverageMappings": [
+    {
+      "id": "coverage-map.synthetic.queue-triage",
+      "coverageNodeId": "coverage-node.synthetic.queue-triage",
+      "topicId": "topic.synthetic.queue-triage",
+      "coverageStatus": "partial",
+      "currentGameEligibility": "eligible",
+      "deferredScopeId": null,
+      "authorId": "author.system.synthetic",
+      "updatedAt": "2026-07-25T23:55:00Z",
+      "workflowState": "draft",
       "note": "Draft fixture content exists, but nothing is clinically approved."
     }
   ],
@@ -175,6 +240,7 @@
       "revision": {
         "revisionId": "topic-rev.synthetic.queue-triage.v1",
         "parentRevisionId": null,
+        "authorId": "author.system.synthetic",
         "workflowState": "draft",
         "provenance": {
           "kind": "manual",
@@ -203,6 +269,7 @@
       "revision": {
         "revisionId": "fact-rev.synthetic.queue-triage.clock.v1",
         "parentRevisionId": null,
+        "authorId": "author.system.synthetic",
         "workflowState": "draft",
         "provenance": {
           "kind": "manual",
@@ -212,7 +279,7 @@
         "changeSummary": "Add one synthetic structured value.",
         "clinicalApproval": null
       },
-      "factType": "operational.ready-chart-delay",
+      "factTypeId": "operational.ready-chart-delay",
       "value": {
         "kind": "number",
         "value": 10,
@@ -226,8 +293,7 @@
       "scenarioUseStatus": "descriptive_only",
       "conflict": {
         "state": "none",
-        "conflictGroupId": null,
-        "resolutionNote": null
+        "conflictGroupId": null
       },
       "citationIds": [
         "citation.synthetic.fact.v1"
@@ -240,6 +306,7 @@
       "revision": {
         "revisionId": "concept-rev.synthetic.queue-triage.next-action.v1",
         "parentRevisionId": null,
+        "authorId": "author.system.synthetic",
         "workflowState": "draft",
         "provenance": {
           "kind": "manual",
@@ -252,7 +319,7 @@
       "displayName": "Select the ready chart",
       "learningObjective": "Select the ready chart as the next action in a project-owned synthetic queue example.",
       "primaryTopicId": "topic.synthetic.queue-triage",
-      "relatedTopicIds": [],
+      "relatedTopics": [],
       "conceptType": "synthetic_training",
       "classification": {
         "educationalDifficultyId": "difficulty.synthetic",
@@ -274,6 +341,7 @@
       "revision": {
         "revisionId": "inbox-rev.synthetic.queue-triage.v1",
         "parentRevisionId": null,
+        "authorId": "author.system.synthetic",
         "workflowState": "draft",
         "provenance": {
           "kind": "manual",
@@ -325,8 +393,8 @@
       "extractorVersion": "fixture-builder.v1",
       "inputFingerprint": "fixture:synthetic-v1",
       "status": "completed",
-      "totalUnits": 5,
-      "completedUnits": 5,
+      "totalUnits": 6,
+      "completedUnits": 6,
       "lastCompletedLocator": {
         "kind": "synthetic_marker",
         "label": "Fixture end",
@@ -344,10 +412,6 @@
         {
           "kind": "tested_concept",
           "id": "concept-rev.synthetic.queue-triage.next-action.v1"
-        },
-        {
-          "kind": "coverage_entry",
-          "id": "coverage.synthetic.queue-triage"
         },
         {
           "kind": "practice_inbox_item",

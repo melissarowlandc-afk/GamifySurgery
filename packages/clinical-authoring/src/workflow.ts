@@ -29,6 +29,7 @@ export const revisionEnvelopeSchema = z
   .object({
     revisionId: stableIdSchema,
     parentRevisionId: stableIdSchema.nullable(),
+    authorId: stableIdSchema,
     workflowState: workflowStateSchema,
     provenance: provenanceSchema,
     createdAt: isoTimestampSchema,

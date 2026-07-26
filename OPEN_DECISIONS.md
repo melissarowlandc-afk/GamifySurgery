@@ -3,7 +3,7 @@
 Status: Owner-facing choices and delegated delivery backlog. Technical impact
 severity no longer implies that Melissa must select the implementation.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 ## Impact severity
 
@@ -37,7 +37,7 @@ available and will not be presented as serial owner decisions:
 | Phone layout | Support portrait and landscape with responsive drawers, pan, and zoom |
 | Early authoring tools | Private Google Sheets workbook plus validated exports; full admin application later |
 | Session and security logs | Revocable trusted-device sessions; minimal allowlisted logs with no clinical-answer payload |
-| Backups | Owner-controlled exports first; managed backups before valuable pilot saves |
+| Backups | Separate owner-controlled private encrypted workbook/source backups first; managed backups before valuable pilot saves; never place private clinical material in the public repository |
 | Simulation step and visible speed | Versioned tunable values selected through tests and deterministic simulation |
 | Static hosting provider | Select just before the hosted pilot; preserve standards-based portability |
 
@@ -79,7 +79,7 @@ starting research, or destroying owner data.
 | R-020 | Dual-purpose clinical knowledge-base and runtime-teaching model | Linked revisioned Clinical Topics, structured facts, Tested Concepts, meaningful many-to-many Patient Presentation Variants, typed constrained templates, one-concept Decision Nodes, Question Variants, facility-stage/capability eligibility, frozen instances, protected Draft-only AI assistance, and no live AI generation | ADR 0020; D-034 |
 | R-013 | Initial deployment target | Local playable prototype, coherent local vertical slice, staging, then invite-only private browser pilot | ADR 0022; D-037 |
 | R-019 | Hosted-pilot topology | Separate staging and pilot data plus separately deployed player and administrator applications; exact static host selected just-in-time by the lead agent | ADR 0022; D-037 |
-| Y-017 | Initial clinical authoring workbook | Private owner-controlled Google Sheets working source, protected stable identifiers, validated exports, one- or two-concept trial, and one-way handoff to the future admin database | D-038 |
+| Y-017 | Initial clinical authoring workbook | Private owner-controlled Google Sheets working source, protected stable identifiers, validated exports with a separate owner-controlled private encrypted backup, one- or two-concept trial, and one-way handoff to the future admin database; public GitHub retains only schemas, sanitized metadata, and synthetic fixtures | D-038, including the 2026-07-25 public-repository safety clarification |
 | R-014 | Vertical-slice scope | Lead agent selects the smallest coherent scope after the applicable owner-level interaction choice and expands only after a playable demonstration | ADR 0021; D-039 |
 | G-001 | Clinical assessment interaction | Every scored clinical concept uses single-select multiple choice with exactly one correct answer; searchable or free-text controls do not score clinical knowledge | ADR 0023; D-040 |
 | G-001A | Scored questions per patient | One to three sequential scored multiple-choice nodes per patient, each testing a different primary concept; defer feedback when needed to protect later answers | ADR 0024; D-041 |

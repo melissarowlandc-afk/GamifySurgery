@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { currentGameEligibilitySchema } from "./concept.js";
 import { isoTimestampSchema, stableIdSchema } from "./identifiers.js";
 
 export const coverageFrameworkSchema = z
@@ -12,82 +13,78 @@ export const coverageFrameworkSchema = z
   })
   .strict();
 
-export const coverageEntrySchema = z
+/**
+ * An immutable node copied by reference from one exact official-framework
+ * snapshot. Nodes describe the source hierarchy; they do not themselves claim
+ * that one project-owned Clinical Topic exists or is complete.
+ */
+export const coverageFrameworkNodeSchema = z
   .object({
     id: stableIdSchema,
     frameworkId: stableIdSchema,
     externalCategoryId: z.string().min(1).max(240),
+    parentNodeId: stableIdSchema.nullable(),
+    ordinal: z.number().int().min(0),
     categoryPath: z.array(z.string().min(1).max(240)).min(1),
-    topicId: stableIdSchema.nullable(),
-    coverageStatus: z.enum(["missing", "partial", "complete"]),
-    sourceCoverageCount: z.number().int().min(0),
-    approvedConceptCount: z.number().int().min(0),
-    approvedQuestionVariantCount: z.number().int().min(0),
-    currentGameEligibility: z.enum([
-      "unclassified",
-      "eligible",
-      "deferred",
-      "excluded",
-    ]),
-    deferredScopeId: stableIdSchema.nullable(),
+    sourceDefinedClassificationId: stableIdSchema.nullable(),
     citationIds: z.array(stableIdSchema).min(1),
     note: z.string().min(1).max(1_000),
   })
   .strict()
-  .superRefine((entry, context) => {
-    if (new Set(entry.citationIds).size !== entry.citationIds.length) {
+  .superRefine((node, context) => {
+    if (new Set(node.citationIds).size !== node.citationIds.length) {
       context.addIssue({
         code: "custom",
-        message: "Coverage citation IDs must be unique.",
+        message: "Coverage-node citation IDs must be unique.",
         path: ["citationIds"],
       });
     }
+    if (node.parentNodeId === node.id) {
+      context.addIssue({
+        code: "custom",
+        message: "A coverage node cannot be its own parent.",
+        path: ["parentNodeId"],
+      });
+    }
+  });
 
-    if (entry.coverageStatus !== "missing" && entry.topicId === null) {
-      context.addIssue({
-        code: "custom",
-        message: "Partial or complete coverage must identify a Clinical Topic.",
-        path: ["topicId"],
-      });
-    }
-    if (
-      entry.coverageStatus === "missing" &&
-      (entry.sourceCoverageCount !== 0 ||
-        entry.approvedConceptCount !== 0 ||
-        entry.approvedQuestionVariantCount !== 0)
-    ) {
-      context.addIssue({
-        code: "custom",
-        message: "Missing coverage cannot report completed source or content counts.",
-        path: ["coverageStatus"],
-      });
-    }
-    if (
-      entry.coverageStatus === "complete" &&
-      (entry.sourceCoverageCount === 0 ||
-        entry.approvedConceptCount === 0 ||
-        entry.approvedQuestionVariantCount === 0)
-    ) {
-      context.addIssue({
-        code: "custom",
-        message:
-          "Complete coverage must include source coverage, an approved concept, and an approved question variant.",
-        path: ["coverageStatus"],
-      });
-    }
-
+/**
+ * Project-owned many-to-many mapping from one official framework node to one
+ * Clinical Topic. Progress counts are derived from authored records instead
+ * of being copied into this mutable mapping.
+ */
+export const topicCoverageMappingSchema = z
+  .object({
+    id: stableIdSchema,
+    coverageNodeId: stableIdSchema,
+    topicId: stableIdSchema,
+    coverageStatus: z.enum(["missing", "partial", "complete"]),
+    currentGameEligibility: currentGameEligibilitySchema,
+    deferredScopeId: stableIdSchema.nullable(),
+    authorId: stableIdSchema,
+    updatedAt: isoTimestampSchema,
+    workflowState: z.literal("draft"),
+    note: z.string().min(1).max(1_000),
+  })
+  .strict()
+  .superRefine((mapping, context) => {
     const requiresDeferredScope =
-      entry.currentGameEligibility === "deferred" ||
-      entry.currentGameEligibility === "excluded";
-    if (requiresDeferredScope !== (entry.deferredScopeId !== null)) {
+      mapping.currentGameEligibility === "deferred" ||
+      mapping.currentGameEligibility === "excluded";
+    if (requiresDeferredScope !== (mapping.deferredScopeId !== null)) {
       context.addIssue({
         code: "custom",
         message:
-          "Deferred or excluded coverage must identify its deferred scope; unclassified or eligible coverage must not.",
+          "Deferred or excluded mappings must identify their deferred scope; unclassified or eligible mappings must not.",
         path: ["deferredScopeId"],
       });
     }
   });
 
 export type CoverageFramework = z.infer<typeof coverageFrameworkSchema>;
-export type CoverageEntry = z.infer<typeof coverageEntrySchema>;
+export type CoverageFrameworkNode = z.infer<
+  typeof coverageFrameworkNodeSchema
+>;
+export type TopicCoverageMapping = z.infer<
+  typeof topicCoverageMappingSchema
+>;

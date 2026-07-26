@@ -58,7 +58,14 @@ export const testedConceptSchema = z
     displayName: z.string().min(1).max(240),
     learningObjective: z.string().min(1).max(1_000),
     primaryTopicId: stableIdSchema,
-    relatedTopicIds: z.array(stableIdSchema),
+    relatedTopics: z.array(
+      z
+        .object({
+          topicId: stableIdSchema,
+          relationshipTypeId: stableIdSchema,
+        })
+        .strict(),
+    ),
     conceptType: z.enum([
       "diagnosis",
       "workup",
@@ -82,20 +89,28 @@ export const testedConceptSchema = z
       });
     }
 
-    if (concept.relatedTopicIds.includes(concept.primaryTopicId)) {
+    if (
+      concept.relatedTopics.some(
+        (relationship) => relationship.topicId === concept.primaryTopicId,
+      )
+    ) {
       context.addIssue({
         code: "custom",
         message:
           "The primary topic must not be duplicated among related topics.",
-        path: ["relatedTopicIds"],
+        path: ["relatedTopics"],
       });
     }
 
-    if (new Set(concept.relatedTopicIds).size !== concept.relatedTopicIds.length) {
+    const relatedTopicKeys = concept.relatedTopics.map(
+      (relationship) =>
+        `${relationship.relationshipTypeId}:${relationship.topicId}`,
+    );
+    if (new Set(relatedTopicKeys).size !== relatedTopicKeys.length) {
       context.addIssue({
         code: "custom",
-        message: "Related topic IDs must be unique.",
-        path: ["relatedTopicIds"],
+        message: "Related-topic links must be unique.",
+        path: ["relatedTopics"],
       });
     }
   });

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "workspace.official-framework-metadata.beta1",
   "label": "Official framework metadata",
   "createdAt": "2026-07-25T23:55:00Z",
@@ -18,6 +18,13 @@
       "description": "Temporary value for records not yet classified."
     }
   ],
+  "conceptTopicRelationshipDefinitions": [
+    {
+      "id": "topic-link.unclassified",
+      "label": "Unclassified relationship",
+      "description": "Temporary value pending owner review."
+    }
+  ],
   "facilityStageDefinitions": [
     {
       "id": "facility-stage.unassigned",
@@ -27,6 +34,34 @@
     }
   ],
   "deferredScopeDefinitions": [],
+  "sourceFormatDefinitions": [
+    {
+      "id": "format.pdf",
+      "label": "PDF",
+      "description": "Portable Document Format retrieval."
+    }
+  ],
+  "factTypeDefinitions": [
+    {
+      "id": "fact-type.unclassified",
+      "label": "Unclassified fact type",
+      "description": "Temporary value pending authoring-pilot review."
+    }
+  ],
+  "distributionTypeDefinitions": [
+    {
+      "id": "distribution.unclassified",
+      "label": "Unclassified distribution",
+      "description": "Temporary value pending authoring-pilot review."
+    }
+  ],
+  "coverageClassificationDefinitions": [
+    {
+      "id": "coverage-classification.unclassified",
+      "label": "Unclassified source category",
+      "description": "Temporary value pending framework-node import."
+    }
+  ],
   "sources": [
     {
       "id": "source.abs.absite-outline",
@@ -40,8 +75,14 @@
       "rightsReview": {
         "status": "metadata_only",
         "note": "Retain links, bibliographic metadata, retrieval metadata, and project-authored mappings only.",
-        "aiProcessingPermitted": false,
-        "publicTextReusePermitted": false
+        "reviewedBy": "reviewer.system.metadata-registry",
+        "reviewedAt": "2026-07-25T23:55:00Z",
+        "basis": "No open redistribution or external-AI-transfer permission was established; this tracked record is metadata only.",
+        "privateStoragePermitted": true,
+        "localProcessingPermitted": true,
+        "externalAiTransferPermitted": false,
+        "publicSourceTextReusePermitted": false,
+        "projectParaphrasePublicationPermitted": false
       }
     },
     {
@@ -56,8 +97,14 @@
       "rightsReview": {
         "status": "metadata_only",
         "note": "Retain links, bibliographic metadata, retrieval metadata, and project-authored mappings only.",
-        "aiProcessingPermitted": false,
-        "publicTextReusePermitted": false
+        "reviewedBy": "reviewer.system.metadata-registry",
+        "reviewedAt": "2026-07-25T23:55:00Z",
+        "basis": "No open redistribution or external-AI-transfer permission was established; this tracked record is metadata only.",
+        "privateStoragePermitted": true,
+        "localProcessingPermitted": true,
+        "externalAiTransferPermitted": false,
+        "publicSourceTextReusePermitted": false,
+        "projectParaphrasePublicationPermitted": false
       }
     }
   ],
@@ -100,7 +147,8 @@
       "recordedAt": "2026-07-25T23:55:00Z"
     }
   ],
-  "coverageEntries": [],
+  "coverageFrameworkNodes": [],
+  "topicCoverageMappings": [],
   "topics": [],
   "topicRevisions": [],
   "structuredFacts": [],

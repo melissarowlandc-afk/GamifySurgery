@@ -13,6 +13,42 @@ export const sourceTypeSchema = z.enum([
   "synthetic_fixture",
 ]);
 
+export const sourceRightsReviewSchema = z
+  .object({
+    status: z.enum([
+      "synthetic_or_owner_authored",
+      "metadata_only",
+      "review_required",
+      "documented_permission",
+    ]),
+    note: z.string().min(1).max(1_000),
+    reviewedBy: stableIdSchema,
+    reviewedAt: isoTimestampSchema,
+    basis: z.string().min(1).max(2_000),
+    privateStoragePermitted: z.boolean(),
+    localProcessingPermitted: z.boolean(),
+    externalAiTransferPermitted: z.boolean(),
+    publicSourceTextReusePermitted: z.boolean(),
+    projectParaphrasePublicationPermitted: z.boolean(),
+  })
+  .strict()
+  .superRefine((review, context) => {
+    if (
+      review.status === "review_required" &&
+      (review.privateStoragePermitted ||
+        review.localProcessingPermitted ||
+        review.externalAiTransferPermitted ||
+        review.publicSourceTextReusePermitted ||
+        review.projectParaphrasePublicationPermitted)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "An unresolved rights review is default-deny for every source use.",
+      });
+    }
+  });
+
 export const sourceSchema = z
   .object({
     id: stableIdSchema,
@@ -21,21 +57,17 @@ export const sourceSchema = z
     edition: z.string().min(1).max(120).nullable(),
     publicationYear: z.number().int().min(1800).max(2200).nullable(),
     publisherOrOrganization: z.string().min(1).max(240).nullable(),
-    canonicalUrlOrIdentifier: z.string().min(1).max(1_000).nullable(),
+    canonicalUrlOrIdentifier: z
+      .string()
+      .min(1)
+      .max(1_000)
+      .refine(
+        (value) => value === value.trim(),
+        "A Source URL or identifier cannot contain leading or trailing whitespace.",
+      )
+      .nullable(),
     scopeNote: z.string().min(1).max(1_000),
-    rightsReview: z
-      .object({
-        status: z.enum([
-          "synthetic_or_owner_authored",
-          "metadata_only",
-          "review_required",
-          "documented_permission",
-        ]),
-        note: z.string().min(1).max(1_000),
-        aiProcessingPermitted: z.boolean(),
-        publicTextReusePermitted: z.boolean(),
-      })
-      .strict(),
+    rightsReview: sourceRightsReviewSchema,
   })
   .strict();
 
@@ -77,6 +109,29 @@ export const sourceSnapshotSchema = z
       });
     }
     if (
+      snapshot.accessScope === "public_web" &&
+      snapshot.retrievedUrl !== null &&
+      !["http:", "https:"].includes(new URL(snapshot.retrievedUrl).protocol)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "A public-web snapshot must use an HTTP(S) retrieval URL.",
+        path: ["retrievedUrl"],
+      });
+    }
+    if (
+      snapshot.accessScope !== "metadata_only" &&
+      snapshot.accessScope !== "synthetic_fixture" &&
+      snapshot.sha256 === null
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "A retrieved source artifact must record its SHA-256 checksum.",
+        path: ["sha256"],
+      });
+    }
+    if (
       snapshot.upstreamLastModified !== null &&
       Date.parse(snapshot.upstreamLastModified) >
         Date.parse(snapshot.retrievedAt)
@@ -111,8 +166,15 @@ export const citationTargetKindSchema = z.enum([
   "topic_section",
   "structured_fact",
   "tested_concept",
-  "coverage_entry",
+  "coverage_framework_node",
   "practice_inbox_item",
+]);
+
+export const citationUsageKindSchema = z.enum([
+  "bibliographic_metadata",
+  "project_paraphrase",
+  "source_excerpt",
+  "synthetic_content",
 ]);
 
 export const citationSchema = z
@@ -123,16 +185,48 @@ export const citationSchema = z
     targetId: stableIdSchema,
     locator: claimLocatorSchema,
     supportedClaim: z.string().min(1).max(1_000),
+    usageKind: citationUsageKindSchema,
     verificationState: z.enum([
       "unverified",
       "human_verified",
       "conflict_identified",
     ]),
+    verificationReviewerId: stableIdSchema.nullable(),
+    verificationRecordedAt: isoTimestampSchema.nullable(),
     recordedAt: isoTimestampSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((citation, context) => {
+    const requiresVerificationAudit =
+      citation.verificationState !== "unverified";
+    if (
+      requiresVerificationAudit !==
+      (citation.verificationReviewerId !== null &&
+        citation.verificationRecordedAt !== null)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Verified or conflict-identified Citations require a reviewer and verification time; unverified Citations must not carry them.",
+        path: ["verificationReviewerId"],
+      });
+    }
+    if (
+      citation.verificationRecordedAt !== null &&
+      Date.parse(citation.verificationRecordedAt) <
+        Date.parse(citation.recordedAt)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Citation verification cannot predate Citation creation.",
+        path: ["verificationRecordedAt"],
+      });
+    }
+  });
 
 export type Source = z.infer<typeof sourceSchema>;
+export type SourceRightsReview = z.infer<typeof sourceRightsReviewSchema>;
 export type SourceSnapshot = z.infer<typeof sourceSnapshotSchema>;
 export type ClaimLocator = z.infer<typeof claimLocatorSchema>;
+export type CitationUsageKind = z.infer<typeof citationUsageKindSchema>;
 export type Citation = z.infer<typeof citationSchema>;

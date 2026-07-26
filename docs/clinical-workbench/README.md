@@ -1,7 +1,8 @@
 # Clinical Content Pilot Workspace
 
-Status: local beta foundation. This is not the full administrator application,
-a clinical release publisher, or an AI ingestion service.
+Status: local beta schema-v2 foundation. This is not the owner-facing Google
+Sheet, full administrator application, clinical release publisher, or AI
+ingestion service.
 
 ## Purpose
 
@@ -55,8 +56,42 @@ deliberately safe to publish.
 6. Run structural validation after every batch.
 7. Export or checkpoint only sanitized metadata and project-owned drafts.
 
+## CSV interchange boundary
+
+The local initializer creates 17 normalized CSV tables. They are a strict,
+auditable interchange subset for proving the manual-authoring import mapping;
+they are not the nontechnical authoring interface promised by D-038. They
+intentionally expose IDs, revision lineage, timestamps, provenance, and
+relationship rows.
+
+CSV v1 authors manual Sources, snapshots, citations, framework records, topic
+mappings, Topic/fact/concept revisions, and Practice Inbox captures. It does
+not author AI suggestions, extraction batches, patient variants, questions, or
+releases. A validated base workspace may preserve existing extraction records,
+but the CSV compiler cannot create or edit them.
+
+The future owner-controlled Google Sheet should place readable authoring tabs
+in front of this interchange, protect or auto-generate technical fields, use
+dropdowns for controlled values, and export the same validated records. Do not
+ask Melissa to maintain revision graphs or generic relationship fields by hand
+as the normal long-term workflow.
+
 ## Local commands
 
+- `npm run clinical:workbook:init` creates a new ignored
+  `.clinical-workbench/pilot` CSV workspace and refuses to replace an existing
+  path.
+- `npm run clinical:workbook:compile` compiles that workspace to a new ignored
+  canonical JSON file only after complete schema validation. It refuses to
+  overwrite an existing output.
+- `npm run clinical:workbook -- compile <directory> <output.json> --base <base-workspace.json>`
+  compiles a custom directory while merging a validated base workspace without
+  rewriting it. The tracked official-source registry is a suitable base:
+  `clinical-data/public/official-frameworks.json`.
+- `npm run clinical:fingerprint-source -- <local-source-file>` prints the
+  file's SHA-256 for a Source Snapshot record and its byte length as a local
+  integrity diagnostic. The current schema stores the checksum, not the byte
+  length. The command does not copy or retain the source contents.
 - `npm run clinical:validate:example` validates the complete synthetic
   end-to-end example.
 - `npm run clinical:validate:frameworks` validates the tracked official-source
@@ -66,10 +101,16 @@ deliberately safe to publish.
   Add `--public-safe` before the path only when the file is deliberately safe
   to track publicly.
 
-The blank starter is
-`clinical-data/templates/authoring-workspace.template.json`. Copy it into the
-ignored `.clinical-workbench/` directory before entering private source
-references or study notes.
+The blank canonical-JSON starter remains
+`clinical-data/templates/authoring-workspace.template.json`. The safer default
+for new local work is the initializer above because it creates the complete
+manual-authoring CSV subset through staged, no-clobber writes and refuses to
+replace an existing path.
+
+Authoring schema v2 replaces the short-lived local beta v1 shape. No real
+clinical workspace was migrated. If an early v1 template copy exists, retain
+it as a private audit artifact and create a fresh v2 workspace rather than
+silently editing its version number.
 
 The first contract deliberately separates a stable bibliographic Source from
 an immutable Source Snapshot. Citations, framework records, inbox captures,
@@ -86,6 +127,11 @@ clinically approved or enters the game merely because it validates.
 - AI provider selection or paid API use
 - Patient Presentation Variants and Question Variant authoring
 - Clinical approval, immutable releases, and publishing
+- Authenticated author/reviewer identities and role enforcement
+- Append-only structured conflict-resolution records
+- Append-only versioned Source-rights decisions with stable decision IDs,
+  effective times, revocations, and exact operation bindings
+- Owner-friendly protected Google Sheet tabs and dropdowns
 - Database migrations and Supabase storage
 - The complete protected browser administration application
 

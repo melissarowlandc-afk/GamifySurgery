@@ -35,7 +35,7 @@ async function main(): Promise<void> {
 
     console.log(`Valid clinical-authoring workspace: ${summary.workspaceId}`);
     console.log(
-      `Sources ${summary.sourceCount} (${summary.sourceSnapshotCount} snapshots); frameworks ${summary.frameworkCount}; coverage nodes ${summary.coverageEntryCount}.`,
+      `Sources ${summary.sourceCount} (${summary.sourceSnapshotCount} snapshots); frameworks ${summary.frameworkCount}; coverage nodes ${summary.coverageNodeCount}; topic mappings ${summary.topicCoverageMappingCount}.`,
     );
     console.log(
       `Topics ${summary.topicCount}; facts ${summary.structuredFactCount}; concepts ${summary.conceptCount}; inbox ${summary.practiceInboxCount}; batches ${summary.extractionBatchCount}.`,

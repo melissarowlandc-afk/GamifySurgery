@@ -6,7 +6,7 @@ relational and JSONB physical boundary is accepted in ADR 0019. The expanded
 clinical entity relationships are accepted conceptually in ADR 0020; exact
 tables, columns, indexes, and migrations remain unimplemented.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 ## Principles
 
@@ -88,6 +88,53 @@ The entity names and relationships in this section are accepted under ADR 0020.
 They implement separate but connected clinical knowledge-base and
 runtime-teaching domains.
 
+### Controlled vocabulary definition
+
+Stable project-owned definition with an opaque ID, display label, and
+description. The local authoring contract keeps separate definition sets for:
+
+- Educational difficulty
+- Clinical setting
+- Concept-to-topic relationship type
+- Facility stage, including an ordinal
+- Deferred scope
+- Source format
+- Structured-fact type
+- Distribution type
+- Coverage classification
+
+Authoring records store definition IDs rather than repeating mutable labels.
+Foreign-key validation rejects unknown IDs, and definition IDs are unique
+within each vocabulary.
+
+### Coverage framework
+
+Stable identity for one official curriculum outline and version, bound to one
+exact Source Snapshot. It records the framework name, version label, and
+trusted recording time; it does not own project coverage claims.
+
+### Coverage framework node
+
+Immutable source-defined node within one Coverage Framework. Stores the
+external category ID, parent node when applicable, sibling ordinal, complete
+category path, optional controlled source classification, exact citations, and
+a note. Parent references must remain within the same framework and form an
+acyclic hierarchy whose paths extend correctly.
+
+### Topic coverage mapping
+
+Project-owned many-to-many join between one Coverage Framework Node and one
+Clinical Topic. The local beta stores a mutable Draft `missing`, `partial`, or
+`complete` proposal, current-game eligibility proposal, optional deferred-scope
+ID, author ID, update time, and note. A node/topic pair is unique. Review,
+approval, and immutable mapping history remain required in the future
+administrator before a mapping can enter a release.
+
+Coverage reports derive only values represented by the current normalized
+records. Question-Variant counts cannot be produced until that later authoring
+layer exists. No counts are stored on this mapping because stored totals would
+drift from their canonical records.
+
 ### Clinical topic
 
 Stable parent identity for a diagnosis, procedure, complication, anatomy,
@@ -95,7 +142,8 @@ screening topic, resuscitation topic, or general principle.
 
 Key normalized relationships:
 
-- One current working revision pointer
+- One stored current-working-revision pointer validated to equal the unique
+  non-archived leaf
 - Many immutable topic revisions
 - One primary topic type and many optional tags
 - Many aliases and optional external-code mappings
@@ -149,8 +197,10 @@ must keep it reviewable.
 ### Concept related-topic link
 
 Many-to-many join between a Tested Concept and additional Clinical Topics. It
-stores relation type such as related topic or differential and never changes
-the concept's one primary topic.
+stores both the related Topic ID and a controlled relationship-type ID, such as
+related topic or differential, and never changes the concept's one primary
+topic. The primary topic cannot be repeated as a related-topic link, and each
+relationship-type/topic pair is unique for the concept.
 
 ### Concept confusion link
 
@@ -292,9 +342,26 @@ contains no balance amount, scheduler rating, XP rule, or mastery effect.
 ### Source
 
 Stable bibliographic identity with title, publisher or journal, link or
-identifier, edition or publication date, access date, source type, and relevant
-licensing notes. Full copyrighted source text is not presumed safe to store or
-send to an AI provider.
+identifier, edition or publication date, source type, and relevant licensing
+notes. Retrieval/access time belongs to each exact Source Snapshot. Full
+copyrighted source text is not presumed safe to store or send to an AI
+provider.
+
+Each Source owns one explicit rights-review record containing status, note,
+reviewer, review time, basis, and independent permission booleans for private
+storage, local processing, external-AI transfer, public source-text reuse, and
+publication of project paraphrases. `review_required` is default-deny for all
+five uses; permissions are never inferred from a source type or URL.
+
+In the schema-v2 beta, this embedded review is treated as immutable and every
+permission-dependent content citation, Practice Inbox capture, AI suggestion,
+or started extraction must occur no earlier than its `reviewedAt`. The
+production authoring model still requires append-only rights-decision records
+with stable IDs, effective times, grants/revocations, and an exact decision
+reference on each authorized operation. That work is required before
+substantial extraction or publication. Snapshot acquisition or metadata
+registration may predate the review, but that earlier timestamp grants no
+processing, transfer, reuse, or publication permission.
 
 ### Source snapshot
 
@@ -304,7 +371,20 @@ format, access scope, and content checksum. Citations, coverage frameworks,
 capture-inbox items, and extraction batches bind this exact snapshot rather
 than a mutable versionless URL. The snapshot stores provenance metadata, not a
 presumption that the retrieved copyrighted artifact may be committed or
-redistributed.
+redistributed. Every actual retrieved artifact requires a lowercase SHA-256;
+only metadata-only and explicitly synthetic-fixture snapshots may omit it.
+
+### Extraction batch
+
+Resumable processing record for one exact Source Snapshot and bounded source
+range. It records method and tool version, input fingerprint, unit counts,
+checkpoint, outputs, contemporaneous conflicts, errors, start/update/completion
+times, and human-review state. A batch cannot predate its snapshot. Every
+listed revision output must be created within the batch window, cite the exact
+processed snapshot, and point back to the batch when its provenance is not
+manual. A listed conflict must occur on at least one Structured Fact revision
+emitted by that batch. Framework nodes and Topic Coverage Mappings remain
+ineligible as batch outputs until they gain exact import provenance.
 
 ### Citation
 
@@ -312,14 +392,34 @@ Claim-specific many-to-many join from an exact Source snapshot to an exact
 topic section, structured fact, concept, patient-variant, Result Gate or
 Requirement, Patient Learning Summary, question, answer, explanation, or
 Terminal Clinical Outcome revision. Stores supported claim, locator, and
-author verification state.
+author verification state. It also records whether the target uses
+bibliographic metadata, project paraphrase, source excerpt, or synthetic
+content. Human verification and conflict-identification states require a
+verifier ID and time. A Citation cannot predate its Source Snapshot. Clinical
+approval requires a human-verified content-bearing citation recorded and
+verified no later than approval; bibliographic metadata alone is insufficient.
+These fields support audit and rights validation; the local beta still cannot
+authenticate those IDs or enforce approver roles.
 
 ### Content revision
 
 Shared revision envelope or equivalent per-entity fields containing stable
-identity, revision ID, parent revision, author, trusted time, workflow state,
-change summary, provenance, and immutable status. Published relationships
-always reference exact revision IDs rather than `latest`.
+identity, revision ID, parent revision, `authorId`, trusted time, workflow
+state, change summary, provenance, and immutable status. Parent references
+must belong to the same stable entity, cannot form cycles, and cannot point
+from an older child to a newer parent.
+
+For Topic revisions, Structured Clinical Facts, Tested Concepts, and Practice
+Question Inbox items, every stable entity that has a non-archived revision has
+exactly one non-archived leaf. This gives the editor one unambiguous current
+working branch without discarding archived history. Published relationships
+always reference exact revision IDs rather than `latest` or the current leaf.
+
+Current conflict reporting uses only the unique active Structured Clinical Fact
+leaves, while historical extraction batches retain the conflicts that were
+unresolved when that batch completed. A separate append-only
+conflict-resolution record with reviewer, rationale, and selected evidence is
+deferred and required before substantial extraction or publication.
 
 ### Clinical approval
 
@@ -327,6 +427,10 @@ Append-only approval or revocation record tied to one exact revision, reviewer,
 trusted time, checklist version, and scope. Topic approval never implicitly
 approves derived runtime items. Only Melissa can provide pilot clinical
 approval.
+
+The local beta validates approval-record shape and references only; it has no
+authenticated identity or role registry. The protected administrator and
+publisher must enforce Melissa's role before any approval has authority.
 
 ### AI authoring job
 

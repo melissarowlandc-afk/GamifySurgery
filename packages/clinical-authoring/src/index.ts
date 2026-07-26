@@ -4,6 +4,8 @@ export * from "./extraction-batch.js";
 export * from "./identifiers.js";
 export * from "./practice-inbox.js";
 export * from "./source.js";
+export * from "./source-fingerprint.js";
 export * from "./topic.js";
 export * from "./workflow.js";
 export * from "./workspace.js";
+export * from "./workbook/index.js";

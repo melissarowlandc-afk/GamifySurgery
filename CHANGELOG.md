@@ -11,13 +11,27 @@ All notable implementation and project-record changes are listed here.
   coverage frameworks, Clinical Topics and exact sections, structured facts,
   Tested Concepts, practice-question capture, citations, and resumable
   extraction batches
-- Added public-fixture safety checks, revision-lineage and approval safeguards,
-  a complete synthetic authoring example, a blank local-workspace template,
-  and a metadata-only registry for the currently listed ABSITE and SCORE
-  General Surgery outline snapshots
-- Added clinical workspace validation commands and 11 focused unit tests;
-  textbook ingestion, real clinical drafting, patient/question authoring,
-  publishing, database migrations, and paid AI remain deferred
+- Replaced the short-lived local beta-v1 authoring shape with schema v2:
+  immutable coverage-framework nodes are separate from many-to-many Draft
+  topic mappings, controlled values use stable IDs, related-topic links are
+  typed, revisions record authors, and validated active leaves drive current
+  reporting without losing historical extraction evidence
+- Added explicit source-rights decisions, artifact SHA-256 identity,
+  citation-use and human-verification audit fields, exact snapshot/locator
+  provenance, current-versus-historical conflict handling, and stronger
+  public-fixture safety checks
+- Added a strict 17-table local manual-authoring CSV interchange initializer
+  and compiler with
+  staged no-clobber initialization, exact file/line diagnostics, validated
+  base-workspace merging, canonical JSON output, and an offline source
+  fingerprint command; extraction jobs, AI suggestions, patient/question
+  records, and releases remain outside this initial CSV subset
+- Clarified that the CSV layout is technical interchange rather than the final
+  owner-friendly Google Sheet, and that private copyrighted source artifacts
+  require a separate encrypted backup rather than this public repository
+- Expanded clinical-authoring validation coverage; textbook ingestion, real
+  clinical drafting, patient/question authoring, publishing, database
+  migrations, owner authentication, and paid AI remain deferred
 - Replaced the single first-chart prompt with a deterministic Level 0 tutorial
   coach that explains the chart, scored decisions, off-site results, returned
   charts, feedback, resolution, goals, Build Mode, room placement, and the

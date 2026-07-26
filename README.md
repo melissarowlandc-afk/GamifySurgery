@@ -144,11 +144,22 @@ or patient care.
 
 The local `beta` workstream also contains a separate
 `packages/clinical-authoring` validation contract. It registers exact source
-snapshots, coverage frameworks, draft topic knowledge, structured facts,
-Tested Concepts, practice-question takeaways, citations, and resumable
-extraction batches without importing drafts into the player. The tracked
-official-framework registry stores metadata and checksums only; it does not
-copy the ABSITE or SCORE outline taxonomy or source documents.
+snapshots, coverage frameworks and their source-defined nodes, many-to-many
+Topic Coverage Mappings, controlled vocabularies, draft topic knowledge,
+structured facts, Tested Concepts, practice-question takeaways, citations, and
+resumable extraction batches without importing drafts into the player.
+Available coverage and content summaries are derived from normalized records
+rather than stored as editable counters; Question-Variant reporting waits for
+that later authoring layer. The tracked official-framework registry stores
+metadata and checksums only; it does not copy the ABSITE or SCORE outline
+taxonomy or source documents.
+
+The repository and GitHub Pages site are public. Raw sources, private workbook
+exports, owner notes, and extraction outputs must remain in ignored local
+directories and be backed up separately to an owner-controlled private,
+encrypted location. They must never be committed here. Every registered Source
+has an explicit rights review; unresolved rights are default-deny, including
+for transfer to an external AI provider.
 
 ## Checks
 
@@ -165,6 +176,9 @@ Run these from the project folder:
 | `npm run clinical:validate:example` | Validate the synthetic clinical-authoring round trip |
 | `npm run clinical:validate:frameworks` | Validate the public-safe ABSITE/SCORE source registry |
 | `npm run clinical:validate -- <path>` | Validate a private local authoring workspace |
+| `npm run clinical:workbook:init` | Create the ignored schema-v2 manual-authoring CSV subset with staged, no-clobber writes |
+| `npm run clinical:workbook:compile` | Compile the local CSV interchange to new canonical JSON after full validation |
+| `npm run clinical:fingerprint-source -- <path>` | Calculate an owner-local source SHA-256 plus a nonstored byte-length diagnostic without retaining its contents |
 
 The built files are placed in `apps/player/dist`. Building them still does not
 deploy the game.

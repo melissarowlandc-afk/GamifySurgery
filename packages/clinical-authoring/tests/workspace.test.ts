@@ -33,7 +33,8 @@ describe("clinical-authoring workspace", () => {
       sourceCount: 1,
       sourceSnapshotCount: 1,
       frameworkCount: 1,
-      coverageEntryCount: 1,
+      coverageNodeCount: 1,
+      topicCoverageMappingCount: 1,
       topicCount: 1,
       structuredFactCount: 1,
       conceptCount: 1,
@@ -168,7 +169,7 @@ describe("clinical-authoring workspace", () => {
     fixture.extractionBatches[0].status = "queued";
 
     expect(validationMessages(fixture)).toContain(
-      "A queued batch cannot contain progress, a checkpoint, or a start time.",
+      "A queued batch cannot contain progress, outputs, conflicts, errors, review activity, a checkpoint, or a start time.",
     );
   });
 });
