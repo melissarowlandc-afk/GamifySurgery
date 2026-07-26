@@ -1,10 +1,11 @@
 # Roadmap
 
 Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The browser-hosted Level
-0/1 playtest remains stable on `main`; a separate local `beta` branch has begun
-the bounded clinical-authoring and source-provenance foundation.
+0/1 playtest remains stable on `main`; a separate local `beta` branch contains
+the bounded clinical-authoring foundation and is adding an isolated clinical
+evidence-gap and literature-review pipeline.
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 ## Delivery rules
 
@@ -32,9 +33,9 @@ Completed:
 - Created the private npm-workspace monorepo, shared validation, deterministic
   domain layer, and automated test structure.
 
-The owner-controlled clinical authoring workbook and Clinical Content Workbench
-remain a parallel future workstream. They are not blockers for evaluating the
-small synthetic local slice.
+The owner-controlled clinical authoring workbook and local Clinical Context
+Workbench are a parallel workstream. They do not import Draft content into or
+block evaluation of the small synthetic player slice.
 
 ## Milestone 1: First playable local loop
 
@@ -183,6 +184,28 @@ Beta foundation started:
   workflow safeguards, and resumable extraction-batch records.
 - Kept raw sources, commercial question-bank material, private notes, and PHI
   outside tracked paths.
+- Added an isolated Clinical Context Workbench track for Evidence Gaps,
+  canonical metadata-only literature Candidates, immutable Search Runs and
+  Candidate Observations, per-gap append-only screening and rights decisions,
+  verified evidence contributions, explicit expert opinion, synthesis review,
+  and content-change proposals.
+- Added free PubMed/Crossref metadata scouting with literal query provenance,
+  due-search cadence, conservative provider limits, and no abstract/full-text
+  retrieval. Live scouting remains disabled until an ignored local developer
+  contact email is configured.
+- Added a rights-gated, resumable private-source intake foundation with
+  streaming hashes, byte-format checks, duplicate/quarantine states, immutable
+  extraction identities, bounded isolated PDF/DOCX parsing, and no silent
+  overwrite.
+- Added stable server-resolved reviewer profiles and retained a separate
+  automation actor for metadata scouting.
+- Added a deterministic queue of synced authoring targets not yet linked to an
+  Evidence Gap, with review-before-save PubMed strategy prefill so ordinary
+  gap setup does not require copying stable IDs or writing filter syntax.
+- Added complete human-recorded written-permission and fair-use review inputs;
+  no rights or clinical conclusion is inferred automatically.
+- Added dependency, tracked-path, Vite-chunk, and Pages-artifact boundary checks
+  so the local Workbench and private source paths cannot enter the game build.
 
 - Fix high-priority walkthrough defects and tune centralized temporary values.
 - Refine the phone-specific layout after the desktop walkthrough; current
@@ -193,8 +216,11 @@ Beta foundation started:
   constrained templates.
 - Separate technical validation from Melissa's clinical approval.
 - Produce immutable local clinical and balance release artifacts.
-- Do not ingest full textbooks, commercial question-bank text, or build the
-  complete Workbench yet.
+- Pilot the Workbench with one bounded chapter or guideline and roughly 5-10
+  Topics before broad extraction or multiple textbooks.
+- Do not ingest commercial question-bank text or enable external-AI source
+  transfer. Any later model provider and paid infrastructure remain separate
+  explicit gates.
 
 Demonstration gate: a small clinically reviewed content set can enter a sealed
 local release, while unapproved or invalid content cannot.
@@ -237,7 +263,9 @@ Gate: explicit owner permission before inviting any outside learner.
 ## Deferred expansion
 
 - Comprehensive ABSITE coverage and multi-textbook ingestion
-- Full Clinical Content Workbench and comprehensive administration suite
+- Hosted multiuser Clinical Content administration, direct publishing, and
+  comprehensive multi-textbook automation; the isolated local evidence queue
+  and metadata scout are being built in Milestone 3
 - Facility Levels 2 through 5
 - Automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing;
   the bounded pre-suite founder emergency action is already available without

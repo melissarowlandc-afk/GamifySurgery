@@ -36,6 +36,20 @@ Create records in this order:
 11. **Extraction Batch** - resumable processing range, input fingerprint,
     checkpoint, output records, conflicts, and review state. The canonical
     schema supports this record, but CSV v1 does not author or edit it.
+12. **Evidence Gap** - one exact clinical question, why the answer is needed,
+    target record IDs, acceptance criteria, preferred source types, literal
+    provider queries, and search-refresh cadence. This is maintained in the
+    separate local Clinical Context Workbench.
+13. **Search Run and Candidate** - an immutable metadata-search receipt and
+    unscreened bibliographic result. A Candidate is not a Source, Citation,
+    clinical conclusion, or approval.
+14. **Evidence Contribution** - a reviewed project-authored statement linked
+    to exact human-verified Citations and classified as supporting,
+    challenging, qualifying, or contextual. Explicit clinician opinion uses a
+    separate record type.
+15. **Synthesis Decision and Content Change Proposal** - the reviewer accepts,
+    narrows, rejects, defers, or requests more evidence before a separate
+    proposal enters ordinary clinical authoring. Neither record publishes.
 
 Create claim-specific **Citation** records alongside their target records.
 Each Citation binds an exact Source Snapshot to an exact target and locator.
@@ -122,13 +136,21 @@ separate yes/no permissions for:
 
 `review_required` means no to every use until a human records a different
 review. Permission in one category never implies permission in another.
-The beta treats the one embedded review as immutable and fail-closed:
-permission-dependent citations, captures, AI suggestions, and started
-extractions cannot predate it. Before substantial extraction or publication,
-replace this beta shortcut with append-only rights-decision records carrying
-stable decision IDs, effective times, grants/revocations, and exact bindings
-from each operation to the decision that authorized it. Snapshot acquisition
-may predate this review, but it grants no processing or reuse permission.
+
+The embedded Source review remains the schema-v2 registration summary. The
+Clinical Context Workbench now adds an append-only operation ledger with stable
+decision IDs, effective/expiration times, supersession, a fingerprint of the
+exact decision used, legal/license conditions, and distinct permissions for
+metadata, private storage, extraction, indexing, external AI, derived content,
+paraphrase publication, source-text reuse, runtime redistribution, and
+commercial distribution. Effective permissions default to deny. Revoking or
+narrowing a decision appends a successor; it never edits history or revives an
+older grant after a later decision expires.
+
+Snapshot metadata may predate a rights decision, but it grants no storage,
+processing, reuse, clinical approval, or publication permission. Every private
+intake operation also requires an affirmative no-PHI/local-processing
+acknowledgment and binds its manifest to the exact rights-decision hash.
 
 Raw textbook files, commercial question-bank references, workbook exports,
 owner notes, and extraction outputs belong only in ignored local/private
@@ -141,15 +163,21 @@ public-safe metadata, and deliberately synthetic fixtures belong in Git.
 
 1. Run `npm run clinical:workbook:init` to create the ignored CSV interchange,
    or copy the blank canonical-JSON template into `.clinical-workbench/`.
-2. Register one legitimately obtained source and one exact chapter or section
-   snapshot.
-3. Create 5-10 Topic shells, but fully develop only one or two.
-4. Capture Melissa's paraphrased takeaways while she studies.
-5. Resolve duplicates and source conflicts before drafting scenarios.
-6. Validate after every small batch and retain the last completed locator.
-7. Make a private encrypted backup of the workbook and source checkpoint.
-8. Review whether the fields are comfortable before adding patient and
-   question authoring.
+2. Open the local Clinical Context Workbench and create one or two precise
+   Evidence Gaps for the bounded pilot.
+3. Scout bibliographic metadata, screen Candidates, and register only Sources
+   that warrant full review.
+4. Register one legitimately obtained source and one exact chapter or section
+   snapshot; record the operation-specific rights decision before private
+   intake or extraction.
+5. Create 5-10 Topic shells, but fully develop only one or two.
+6. Capture Melissa's original paraphrased takeaways while she studies.
+7. Verify exact Citations, preserve conflicts, and accept or reject Evidence
+   Contributions before drafting scenarios.
+8. Validate after every small batch and retain the last completed locator.
+9. Make a private encrypted backup of the workbook and source checkpoint.
+10. Review whether the fields, queues, and Known-versus-needed brief are
+    comfortable before adding patient and question authoring.
 
 G-002 remains the only owner choice needed before real Level 0/1 integration:
 which first topic and smallest concept set should validate the full workflow.

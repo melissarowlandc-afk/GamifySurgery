@@ -154,12 +154,31 @@ that later authoring layer. The tracked official-framework registry stores
 metadata and checksums only; it does not copy the ABSITE or SCORE outline
 taxonomy or source documents.
 
+The isolated, loopback-only **Clinical Context Workbench** adds an evidence
+queue in front of that authoring contract. It records evidence gaps and exact
+search strategies, scouts PubMed and Crossref bibliographic metadata, screens
+candidates independently per evidence gap, collapses exact DOI/PMID/provider
+matches while retaining every immutable search observation, registers operation-specific source rights, captures reviewed
+evidence contributions and expert opinions, and derives conservative
+**Known / Needed / Blocked / Next actions** briefs. Search results are
+candidates, not evidence; only reviewed contributions and opinions may appear
+under **Known**, and neither the Workbench nor its metadata scouts clinically
+approve or publish game content.
+
 The repository and GitHub Pages site are public. Raw sources, private workbook
 exports, owner notes, and extraction outputs must remain in ignored local
 directories and be backed up separately to an owner-controlled private,
 encrypted location. They must never be committed here. Every registered Source
 has an explicit rights review; unresolved rights are default-deny, including
 for transfer to an external AI provider.
+
+To start the local Workbench on Windows, double-click
+`START_CLINICAL_WORKBENCH.cmd`. Its private state stays under the ignored
+`.clinical-workbench/` and `.private-clinical-data/` roots. Literature scouting
+is metadata-only and remains disabled until a real contact address is supplied
+locally in `.env.local`; no key or contact value belongs in Git. See
+[`docs/clinical-workbench/CLINICAL_CONTEXT_WORKBENCH.md`](docs/clinical-workbench/CLINICAL_CONTEXT_WORKBENCH.md)
+for the queue and safety model.
 
 ## Checks
 
@@ -179,6 +198,9 @@ Run these from the project folder:
 | `npm run clinical:workbook:init` | Create the ignored schema-v2 manual-authoring CSV subset with staged, no-clobber writes |
 | `npm run clinical:workbook:compile` | Compile the local CSV interchange to new canonical JSON after full validation |
 | `npm run clinical:fingerprint-source -- <path>` | Calculate an owner-local source SHA-256 plus a nonstored byte-length diagnostic without retaining its contents |
+| `npm run clinical:context` | Start the loopback-only Clinical Context Workbench |
+| `npm run clinical:context:test` | Test the Workbench API, storage, security, and presentation boundary |
+| `npm run clinical:research:test` | Test evidence provenance, intake, extraction, scouting, review, and synthesis rules |
 
 The built files are placed in `apps/player/dist`. Building them still does not
 deploy the game.
@@ -217,7 +239,10 @@ launcher to Pages or follow a tester to another computer/browser. See
 - Full due-prioritized review selection, category interleaving, confused-topic
   contrasts, and repetition avoidance; FSRS cards and due-time inspection are
   implemented, but the complete review queue is not
-- The Clinical Content Workbench, textbook ingestion, and live administration
+- Automated full-text acquisition, OCR, unrestricted textbook ingestion, and
+  commercial question-bank ingestion
+- A hosted multi-user Clinical Content administration and publishing system;
+  the local Context Workbench is an evidence-review sidecar only
 - Supabase account creation, verified-email login, password recovery, cloud
   saves, and cross-device writer-conflict handling
 - Authenticated staging, private-pilot access, monitoring, and cloud backups
@@ -238,6 +263,9 @@ launcher to Pages or follow a tester to another computer/browser. See
   adapter, progression, saves, queues, and economy
 - `packages/clinical-content` - validated prototype clinical fixture
 - `packages/clinical-authoring` - draft knowledge/source contract and validator
+- `packages/clinical-research` - evidence-gap, rights, provenance, intake,
+  metadata-scouting, review, synthesis, and authoring-handoff contracts
+- `apps/clinical-context-workbench` - loopback-only evidence queue and review UI
 - `packages/balance-config` - validated centralized prototype tuning values
 - `clinical-data` - public-safe metadata plus blank authoring templates
 - `tests/e2e` - full and compact desktop browser walkthroughs

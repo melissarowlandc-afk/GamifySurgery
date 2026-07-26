@@ -2,7 +2,7 @@
 
 Status: Accepted boundaries plus unapproved implementation details.
 
-Last updated: 2026-07-23
+Last updated: 2026-07-26
 
 ## Accepted privacy boundaries
 
@@ -132,6 +132,50 @@ Before any provider is connected, Melissa must approve:
 
 AI output can create only a Draft revision. It has no clinical-approval,
 publishing, withdrawal, correction, or administrator-role authority.
+
+## Local clinical-evidence boundary
+
+The Clinical Context Workbench is an authoring tool, not player telemetry or a
+research-data system. It binds only to the local loopback interface, has no
+production or Pages build, and stores its revisions under ignored local paths.
+Its browser API rejects unexpected Host and Origin values, does not enable
+CORS, accepts no browser-supplied filesystem path, bounds request bodies, and
+uses expected-revision checks for mutations.
+
+Bibliographic scouting uses only the free PubMed and Crossref metadata
+interfaces. It requires an ignored local developer contact email, keeps
+provider calls serial and rate-limited, and sanitizes contact values, API keys,
+and authenticated query parameters from errors. It does not retrieve or store
+abstracts, full text, search snippets, or clinical recommendations.
+
+Private source intake is allowed only under `.private-clinical-data/` and
+requires:
+
+- an exact streamed SHA-256 and byte-format check;
+- an affirmative no-PHI/local-processing acknowledgment;
+- an effective operation-specific rights decision before storing, extracting,
+  indexing, transferring, or publishing source-derived material; and
+- immutable manifests and extraction identities with duplicate, quarantine,
+  and rights-blocked outcomes.
+
+Default PDF and DOCX parsing runs in an isolated worker with an execution
+deadline, V8 heap/stack limits, and hard page, block, and extracted-character
+caps. The parent validates the bounded result before accepting it. This reduces
+resource-exhaustion and event-loop risk but is not an operating-system malware
+sandbox; only trusted, legitimately obtained files belong in the pilot.
+
+Manual decisions are stamped with a stable server-resolved local reviewer
+profile. Browser commands cannot select or impersonate that identity.
+Automated scouts use a separate automation actor. Only the `owner` and
+`clinical_reviewer` roles may accept a clearly labeled Expert Opinion into
+Known; other roles cannot promote it into Known. This narrow authorization gate
+does not confer clinical content approval or publication authority.
+
+External-AI processing remains disabled. Bibliographic discovery does not
+authorize source storage, extraction, clinical use, publication, or commercial
+redistribution. The player and GitHub Pages build contain only separately
+approved runtime content and are checked for private/authoring paths before
+deployment.
 
 ## Pilot gameplay-integrity boundary
 

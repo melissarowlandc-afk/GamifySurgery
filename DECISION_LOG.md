@@ -2,7 +2,7 @@
 
 Status: Living record. "Proposed" is not approval.
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 | ID | Date | Decision | Status | Reversibility | Notes |
 |---|---|---|---|---|---|
@@ -61,6 +61,7 @@ Last updated: 2026-07-25
 | D-053 | 2026-07-24 | Use explicit paused Build Mode with rotatable rooms and doors, functional hallways, reachability-dependent room operation, and visible deterministic staff/patient walking that contributes to task time | Accepted | YELLOW implementation of RED spatial model | Owner approved functional hallways and route time; ADR 0032; underlying grid/path model remains ADR 0006 |
 | D-054 | 2026-07-24 | Use a deliberately limited Cash-Only GLP-1 Telehealth side business: a below-$100 founder emergency action limited to once per facility hour with no learning rewards, daily use tracking and escalating sarcasm after the fifth use, followed by a modest staff-operated Level 2 suite | Accepted feature direction | YELLOW game design | Exact payment, cap/diminishing curve, further jokes, and Level 2 automation values remain configurable/deferred; `docs/features/cash-only-glp1-telehealth.md` |
 | D-055 | 2026-07-24 | Organize alerts into Critical, Action required, Informational, and Flavor priorities; keep response alerts targetable and persistent, keep humor nonblocking and subordinate to useful text, suppress flavor during critical alerts, consolidate duplicates, and activate only messages backed by implemented mechanics | Accepted | YELLOW interaction design | Full functional and flavor bank preserved in `docs/features/alert-notification-flavor-system.md`; future-system triggers remain inactive |
+| D-056 | 2026-07-26 | Build an isolated local Clinical Context Workbench that queues evidence gaps, scouts free bibliographic metadata, preserves source rights and exact provenance, distinguishes candidates from reviewed evidence and approval, derives conservative Known-versus-needed briefs, and hands only reviewed proposals into the existing clinical-authoring workflow | Accepted implementation direction | YELLOW authoring infrastructure | Owner explicitly authorized the PsychSim-informed adaptation sequence and queue pipeline; no paid API, external-AI source transfer, clinical approval, runtime publication, or Pages deployment is included |
 
 ## Approval rule
 

@@ -439,6 +439,52 @@ requester, provider/model and configuration, prompt-template version, exact
 input revision IDs, output, trusted times, and disposition. Its output can
 create only a Draft revision and has no approval or publishing authority.
 
+## Local clinical-evidence research domain
+
+This authoring-only domain feeds reviewed context into clinical authoring. It
+is never included in player or GitHub Pages artifacts.
+
+### Evidence gap and revision
+
+An Evidence Gap has a stable identity and append-only revisions containing the
+population-level question, why it matters, target clinical content, acceptance
+criteria, preferred source types, literal provider strategies, refresh cadence,
+and current queue status.
+
+### Search run
+
+An immutable execution record stores exact query, filters, provider totals,
+records inspected, candidates observed, search-through date, tool/policy
+fingerprints, completion status, and a sanitized partial/failure note.
+
+### Evidence candidate and candidate observation
+
+An Evidence Candidate is the immutable first-seen canonical bibliographic
+lead. Exact DOI, PMID, provider-record, or exact manual-metadata identity may
+reuse one Candidate; title/author fuzzy matching is intentionally prohibited.
+A Candidate Observation records every immutable Search Run in which that
+Candidate appeared, including provider identity, observed identifiers,
+metadata fingerprint, and time. Screening is a separate append-only series for
+each Candidate and Evidence Gap.
+
+### Source currentness and verification
+
+Operation-specific rights decisions default deny and supersede rather than
+rewrite. Typed source relationships record updates, corrections, retractions,
+supersession, companions, summaries, and translations. Citation verification
+is an immutable signal chain; a current conflict quarantines current use
+without erasing historical synthesis.
+
+### Contribution, opinion, synthesis, and handoff
+
+Reviewed Evidence Contributions state what an exact verified Citation
+supports, challenges, qualifies, or contextualizes. Expert Opinion remains a
+separate reviewed series. A deterministic Known-versus-Needed projection uses
+only currently eligible reviewed records. Synthesis and content-change
+handoffs are append-only; a handoff outside the Evidence Gap target set
+requires an explicit reviewed cross-target rationale and never confers
+clinical approval.
+
 ## Published-content domain
 
 ### Clinical release

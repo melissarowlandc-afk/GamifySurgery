@@ -9,6 +9,8 @@ $prototypeMarker = "Private synthetic prototype of a surgery-management learning
 $minimumNodeVersion = [Version]"22.12.0"
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Split-Path -Parent $scriptDirectory
+. (Join-Path $scriptDirectory "Repair-LauncherEnvironment.ps1")
+Repair-LauncherProcessEnvironment
 $logDirectory = Join-Path $projectRoot ".local-dev\logs"
 $installLog = Join-Path $logDirectory "npm-install.log"
 $serverOutputLog = Join-Path $logDirectory "prototype-server-output.log"

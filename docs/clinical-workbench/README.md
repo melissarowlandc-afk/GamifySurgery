@@ -1,139 +1,144 @@
-# Clinical Content Pilot Workspace
+# Clinical Workbench
 
-Status: local beta schema-v2 foundation. This is not the owner-facing Google
-Sheet, full administrator application, clinical release publisher, or AI
-ingestion service.
+Status: local beta authoring foundation plus an isolated, loopback-only
+evidence-review Workbench. This is not a hosted administrator application,
+clinical release publisher, clinical-approval service, or unrestricted AI
+ingestion system.
 
-## Purpose
+## Purpose and boundaries
 
-This workspace begins the approved clinical-authoring workflow without mixing
-draft knowledge, source material, or private notes into the player runtime. It
-supports four early jobs:
+This workstream supports two linked but separate jobs:
 
-1. Register public and legitimately obtained sources by metadata and exact
-   locator.
-2. Track curriculum coverage without pretending there is one definitive list
-   of every ABSITE diagnosis.
-3. Collect draft Clinical Topics, structured facts, Tested Concepts, and
-   owner-paraphrased practice-question takeaways.
-4. Validate references, stable identities, workflow state, and resumable batch
-   progress before any clinical publication work begins.
+1. `packages/clinical-research` and `apps/clinical-context-workbench` collect
+   evidence gaps, exact search provenance, metadata candidates, rights
+   decisions, reviewed contributions, expert opinions, syntheses, and proposed
+   authoring changes.
+2. `packages/clinical-authoring` registers exact source snapshots, official
+   coverage frameworks, Clinical Topics, structured facts, Tested Concepts,
+   and owner-paraphrased Practice Question Inbox captures.
 
-The authoring contract lives in `packages/clinical-authoring`. The existing
-`packages/clinical-content` package remains the small player-safe runtime
-fixture. The player and game-domain packages must not import the authoring
-package.
+`packages/clinical-content` remains the small player-safe runtime fixture.
+Build-time boundary checks prevent the player and game-domain packages from
+importing the research, authoring, or Workbench code. Nothing becomes
+clinically approved, published, or player-visible merely because it validates
+in either private workspace.
 
 ## Public-repository boundary
 
-This repository is public. Never place any of the following in a tracked path
-or a GitHub branch:
+This repository and its GitHub Pages site are public. Never commit:
 
-- Textbooks, chapters, page images, or extracted source passages
-- Commercial question-bank stems, answer choices, or explanations
-- Real patient details or PHI
-- Private study notes that reproduce protected material
-- API keys, provider credentials, or AI prompt payloads containing source text
+- textbooks, chapters, page images, or extracted source passages;
+- commercial question-bank stems, answer choices, or explanations;
+- PHI or real patient details;
+- private notes reproducing protected material;
+- API keys, contact addresses, credentials, or source-bearing AI prompts; or
+- Workbench state, provider artifacts, private imports, or exports.
 
-Use `.private-clinical-data/` for local source files and working notes. That
-directory, `.clinical-workbench/`, and the private/import/export directories
-under `clinical-data/` are ignored by Git.
+Raw legitimately obtained sources belong under `.private-clinical-data/`.
+Workbench state and immutable local artifacts belong under
+`.clinical-workbench/`. Those roots and the private/import/export directories
+under `clinical-data/` are ignored by Git. Back them up only to an
+owner-controlled private encrypted location.
 
-Tracked files may contain schemas, blank templates, synthetic examples,
-public bibliographic metadata, and short project-owned paraphrases that are
-deliberately safe to publish.
+Tracked files may contain schemas, blank templates, synthetic examples, public
+bibliographic metadata, official links and checksums, and deliberately
+public-safe project-owned paraphrases.
 
-## First pilot workflow
+## Evidence queue
 
-1. Register one source and its edition/date, scope, rights note, and retrieval
-   metadata.
-2. Create a small set of coverage nodes from an official framework.
-3. Select roughly 5–10 Clinical Topic shells from one chapter or bounded
-   source section.
-4. Fully exercise only one or two topics through facts and Tested Concepts.
-5. Record competing claims separately and leave their conflict unresolved
-   until Melissa reviews them.
-6. Run structural validation after every batch.
-7. Export or checkpoint only sanitized metadata and project-owned drafts.
+The Workbench deliberately separates:
 
-## CSV interchange boundary
+`Evidence Gap → Search Run → Metadata Candidate → Screening → Source/Rights → Reviewed Contribution or Expert Opinion → Synthesis Review → Content Change Proposal`
 
-The local initializer creates 17 normalized CSV tables. They are a strict,
-auditable interchange subset for proving the manual-authoring import mapping;
-they are not the nontechnical authoring interface promised by D-038. They
-intentionally expose IDs, revision lineage, timestamps, provenance, and
-relationship rows.
+A search hit is not evidence. Candidate titles and citations never appear
+under **Known**. The derived brief uses only reviewed contributions and current
+expert opinions, and displays separate **Known**, **Needed**, **Blocked**, and
+**Next actions** sections. Conflicts and uncertainty remain visible until a
+reviewer resolves them.
 
-CSV v1 authors manual Sources, snapshots, citations, framework records, topic
-mappings, Topic/fact/concept revisions, and Practice Inbox captures. It does
-not author AI suggestions, extraction batches, patient variants, questions, or
-releases. A validated base workspace may preserve existing extraction records,
-but the CSV compiler cannot create or edit them.
+PubMed and Crossref adapters retrieve bibliographic metadata only. They do not
+request or retain abstracts or full text. Scout strategies store literal
+queries, filters, provider, cadence, result counts, timestamps, and failures.
+No live scout runs until a real contact address is supplied locally.
 
-The future owner-controlled Google Sheet should place readable authoring tabs
-in front of this interchange, protect or auto-generate technical fields, use
-dropdowns for controlled values, and export the same validated records. Do not
-ask Melissa to maintain revision graphs or generic relationship fields by hand
-as the normal long-term workflow.
+## First pilot
 
-## Local commands
+1. Register one legitimate source and its edition/date, scope, retrieval
+   metadata, checksum, and operation-specific rights.
+2. Select roughly 5–10 Clinical Topic shells from one bounded source section
+   and map them to official coverage nodes.
+3. Fully exercise only one or two topics through evidence gaps, reviewed facts,
+   and narrow Tested Concepts.
+4. Run literal metadata searches, then screen candidates. Promote an included
+   candidate only by linking it to a stable Source.
+5. Create reviewed evidence contributions with exact locators. Keep competing
+   claims distinct and unresolved until Melissa reviews them.
+6. Review a synthesis and explicitly hand an accepted or narrowed result to a
+   content-change proposal.
+7. Validate after each resumable batch and checkpoint only sanitized metadata
+   and project-owned drafts.
 
-- `npm run clinical:workbook:init` creates a new ignored
-  `.clinical-workbench/pilot` CSV workspace and refuses to replace an existing
-  path.
+## Starting the tools
+
+- Double-click `START_CLINICAL_WORKBENCH.cmd` to install dependencies if
+  needed, start the Workbench on `127.0.0.1`, wait for its health endpoint, and
+  open a browser.
+- `npm run clinical:context` starts the same loopback-only application without
+  the Windows launcher.
+- `npm run clinical:context:test` verifies its API, immutable storage,
+  optimistic concurrency, and local-request boundary.
+- `npm run clinical:research:test` verifies the canonical evidence model,
+  conservative brief, private intake/extraction, metadata providers, scout
+  coordination, and sanitized authoring bridge.
+- `npm run clinical:workbook:init` creates an ignored schema-v2 17-table CSV
+  interchange workspace and refuses to replace an existing path.
 - `npm run clinical:workbook:compile` compiles that workspace to a new ignored
-  canonical JSON file only after complete schema validation. It refuses to
-  overwrite an existing output.
+  canonical JSON file after validation.
 - `npm run clinical:workbook -- compile <directory> <output.json> --base <base-workspace.json>`
-  compiles a custom directory while merging a validated base workspace without
-  rewriting it. The tracked official-source registry is a suitable base:
-  `clinical-data/public/official-frameworks.json`.
-- `npm run clinical:fingerprint-source -- <local-source-file>` prints the
-  file's SHA-256 for a Source Snapshot record and its byte length as a local
-  integrity diagnostic. The current schema stores the checksum, not the byte
-  length. The command does not copy or retain the source contents.
-- `npm run clinical:validate:example` validates the complete synthetic
-  end-to-end example.
-- `npm run clinical:validate:frameworks` validates the tracked official-source
-  registry with the additional public-fixture guardrails.
-- `npm run clinical:validate:template` validates the blank starter workspace.
-- `npm run clinical:validate -- <path>` validates a private local workspace.
-  Add `--public-safe` before the path only when the file is deliberately safe
-  to track publicly.
+  merges a validated base workspace without rewriting it.
+- `npm run clinical:fingerprint-source -- <local-source-file>` prints SHA-256
+  and byte length without copying or retaining source contents.
+- `npm run clinical:validate -- <path>` validates a private authoring
+  workspace. Use `--public-safe` only for deliberately trackable fixtures.
 
-The blank canonical-JSON starter remains
-`clinical-data/templates/authoring-workspace.template.json`. The safer default
-for new local work is the initializer above because it creates the complete
-manual-authoring CSV subset through staged, no-clobber writes and refuses to
-replace an existing path.
+The normalized CSVs are a technical interchange boundary, not the eventual
+nontechnical authoring interface. Melissa should not have to maintain revision
+graphs, IDs, or generic relationship tables manually.
 
-Authoring schema v2 replaces the short-lived local beta v1 shape. No real
-clinical workspace was migrated. If an early v1 template copy exists, retain
-it as a private audit artifact and create a fresh v2 workspace rather than
-silently editing its version number.
+## Local private intake
 
-The first contract deliberately separates a stable bibliographic Source from
-an immutable Source Snapshot. Citations, framework records, inbox captures,
-and extraction batches reference the exact snapshot so a versionless PDF can
-change later without corrupting historical provenance.
+The intake pipeline scans only its fixed ignored inbox. It uses bounded
+streaming checksums, byte-level file identification, explicit no-PHI and rights
+acknowledgments, an exclusive lock, per-file atomic checkpoints, immutable
+extraction artifacts, and a hash-chained audit trail. PDF, DOCX, Markdown, and
+text extractors create deterministic bounded chunks with parser/chunker
+versions and locators. Image-only PDFs are marked as requiring OCR; OCR is not
+performed and those files remain visibly action-required. Routine status reads
+do not rehash the complete corpus; the Workbench provides a separate deep
+integrity audit.
 
-Selecting the first real Level 0/1 topic and concept set remains owner decision
-G-002. The framework can be built before that choice, but no draft becomes
-clinically approved or enters the game merely because it validates.
+The current 25 MiB ceiling is for the small pilot, not permission for broad
+textbook ingestion. PDF/DOCX parsers now run on an isolated worker event loop
+with time, V8 memory/stack, page/block, and extracted-character limits.
+This is still not an operating-system malware sandbox, so use one trusted,
+legitimately obtained bounded chapter first and review resource behavior before
+larger batches.
+
+Source rights are append-only, operation-specific, time-aware decisions. An
+unresolved operation is denied by default. Permission to store or process a
+source locally does not imply permission to send it to an external AI, quote it
+publicly, or publish a paraphrase.
 
 ## Deliberately deferred
 
-- Textbook ingestion and commercial question-bank ingestion
-- AI provider selection or paid API use
-- Patient Presentation Variants and Question Variant authoring
-- Clinical approval, immutable releases, and publishing
-- Authenticated author/reviewer identities and role enforcement
-- Append-only structured conflict-resolution records
-- Append-only versioned Source-rights decisions with stable decision IDs,
-  effective times, revocations, and exact operation bindings
-- Owner-friendly protected Google Sheet tabs and dropdowns
-- Database migrations and Supabase storage
-- The complete protected browser administration application
+- automated source acquisition, OCR, unrestricted textbook ingestion, and all
+  commercial question-bank ingestion;
+- AI provider selection, paid API use, or external transfer of source text;
+- Patient Presentation Variant and Question Variant authoring;
+- clinical approval, immutable clinical releases, and publication;
+- authenticated multi-user roles and hosted administration;
+- Supabase migrations, cloud storage, or external deployment; and
+- the final owner-friendly protected spreadsheet/database interface.
 
-These remain later increments after the basic collection and validation round
-trip proves usable.
+The local Workbench is review infrastructure. It does not authorize any of
+those deferred actions.

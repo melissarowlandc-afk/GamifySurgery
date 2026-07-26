@@ -8,7 +8,10 @@
 
 Raw textbooks, commercial question-bank text, PHI, private source excerpts,
 signed download links, and credentials never belong in a tracked directory.
-The recommended local working directory is `.clinical-workbench/`.
+Place legitimately obtained raw source files only in the fixed ignored
+`.private-clinical-data/` intake tree. Canonical Workbench state, immutable
+extraction artifacts, metadata-provider artifacts, and private authoring output
+belong under the ignored `.clinical-workbench/` tree.
 
 Use `npm run clinical:workbook:init` to create the ignored schema-v2
 manual-authoring CSV interchange subset with staged, no-clobber writes. These
@@ -17,3 +20,10 @@ batches, AI suggestions, patient/question records, or releases, and they are
 not the final owner-facing Google Sheet. Use
 `npm run clinical:fingerprint-source -- <path>` to calculate an exact checksum
 without copying the source into this repository.
+
+The local Clinical Context Workbench is an evidence-review sidecar rather than
+a public clinical-data directory. Start it with
+`START_CLINICAL_WORKBENCH.cmd` or `npm run clinical:context`. It keeps
+bibliographic search candidates distinct from reviewed evidence, enforces
+operation-specific rights, and sends only reviewed proposals—not raw source
+text—toward the clinical-authoring workspace.

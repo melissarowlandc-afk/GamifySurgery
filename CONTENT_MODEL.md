@@ -644,6 +644,40 @@ The live game performs no AI generation. Any later live-AI proposal is a new
 RED decision covering clinical safety, reproducibility, versioning, privacy,
 cost, outage behavior, and correction.
 
+## Local evidence-context workstream
+
+The Clinical Context Workbench helps a clinician or developer determine what
+is known, disputed, stale, blocked, or still needed before authoring changes.
+It does not become a second clinical knowledge base.
+
+Its hierarchy is:
+
+```text
+Evidence Gap
+  -> immutable Search Runs
+     -> canonical Evidence Candidates
+        -> immutable per-run Candidate Observations
+        -> independent per-Gap Screening Decisions
+  -> operation-specific Source Rights and Source Relations
+  -> verified Citations
+  -> reviewed Evidence Contributions or labeled Expert Opinions
+  -> reviewed Synthesis
+  -> authoring handoff
+```
+
+The Known-versus-Needed brief is derived from current reviewed records. It
+cannot treat a candidate title, result rank, publication count, publication
+type, or source reputation as a clinical conclusion. A content handoff never
+approves or publishes content and normally targets only the clinical items
+named by the Evidence Gap. A reviewed cross-target rationale is required when
+that boundary must be crossed.
+
+Exact DOI, PMID, provider-record, and exact manual-metadata matches reuse one
+Candidate while retaining every search observation. Screening remains
+question-specific. Source corrections, retractions, rights changes, citation
+conflicts, opinion revisions, and synthesis decisions are corrective-forward;
+they quarantine current use without rewriting the historical audit trail.
+
 ## Accepted administrator workflow and interface structure
 
 ### Clinical Library

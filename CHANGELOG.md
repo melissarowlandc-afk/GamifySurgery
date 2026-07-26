@@ -2,6 +2,51 @@
 
 All notable implementation and project-record changes are listed here.
 
+## 2026-07-26
+
+### Clinical evidence infrastructure
+
+- Added a player-isolated `clinical-research` contract for append-only evidence
+  gaps and revisions, exact literature-search runs, metadata candidates,
+  screening, source relationships, operation-specific rights, reviewed
+  evidence contributions, expert opinions, synthesis review, and
+  content-change proposals
+- Added conservative derived **Known / Needed / Blocked / Next actions** briefs;
+  unreviewed candidates and unaccepted synthesis text cannot appear as known
+  clinical information
+- Added metadata-only PubMed and Crossref scouts with literal strategy
+  provenance, bounded serial requests, contact identification, caching,
+  backoff, sanitized failures, and no abstract or full-text retrieval
+- Added canonical publication deduplication for DOI, PMID, provider-record,
+  and exact manual-metadata identities while preserving immutable per-run
+  Candidate Observations and independent screening decisions for every
+  Evidence Gap
+- Added a resumable private intake pipeline with ignored-root confinement,
+  byte-level type checks, streaming fingerprints, explicit rights/no-PHI
+  acknowledgment, locks, atomic checkpoints, immutable extraction artifacts,
+  deterministic PDF/DOCX/text chunks and locators, and OCR-required detection
+- Isolated default PDF/DOCX parsing behind a bounded worker with timeout,
+  memory/stack, page/block, and extracted-character limits
+- Added a sanitized bridge that reads a fixed validated authoring workspace and
+  exposes only IDs, labels, and human-verified citation metadata to the
+  evidence queue
+- Added the loopback-only Clinical Context Workbench with immutable
+  content-addressed revisions, optimistic concurrency, queue-oriented review
+  commands, local evidence briefs, server-resolved reviewer identities, and
+  development launch support
+- Added deterministic suggestions for synced authoring targets that lack an
+  Evidence Gap, with one-click prefill of a reviewable authoritative-metadata
+  PubMed strategy; suggestions never create or approve a record automatically
+- Completed human rights-review forms for written permission and narrow
+  fair-use assessment, and restricted acceptance of Expert Opinion into Known
+  to owner or clinical-reviewer profiles
+- Added build-time dependency and generated-bundle guards preventing the
+  player, GitHub Pages build, and runtime packages from importing private
+  Workbench, authoring, research, source, or credential material
+- Recorded the official ABSITE/SCORE coverage-source provenance and the
+  copyrighted-source boundary; no textbook, commercial question-bank,
+  clinical approval, paid API, or runtime publication was introduced
+
 ## 2026-07-25
 
 ### Implementation

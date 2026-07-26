@@ -5,7 +5,7 @@ lead development agent may resolve or revise remaining implementation details
 under ADR 0021, with migration and validation proportional to the cost of
 change.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-26
 
 ## Current local implementation candidate
 
@@ -50,6 +50,48 @@ application, or deployment. The accepted Supabase verified-email/password and
 cloud-save foundation below remains the next staged milestone; local storage is
 not a replacement for it.
 
+## Current local clinical-evidence workstream
+
+The local `beta` branch adds an authoring-only evidence pipeline without
+changing the player, synthetic runtime content, campaign saves, or GitHub Pages
+artifact:
+
+- `packages/clinical-authoring` remains the canonical contract for Sources,
+  immutable Source Snapshots, exact Citations, coverage, Topics, facts,
+  Concepts, and practice-inbox captures.
+- `packages/clinical-research` owns Evidence Gaps, literal and immutable Search
+  Runs, canonical bibliographic Candidates, per-run Candidate Observations,
+  per-gap append-only screening and rights decisions,
+  evidence contributions, explicit expert opinion, synthesis review, and
+  content-change proposals.
+- `apps/clinical-context-workbench` is a loopback-only local review queue. It
+  has no production build or deployment route and persists immutable workspace
+  revisions only in ignored local storage.
+- Private document bytes, extracted text, raw provider responses, reviewer
+  notes, and release packets remain under `.private-clinical-data/` or
+  `.clinical-workbench/`, never under player assets or tracked public data.
+- PubMed and Crossref adapters collect bibliographic metadata only. They do not
+  retrieve abstracts or full text, do not assign clinical authority, and do not
+  make or publish recommendations.
+
+A Candidate is not a Source; a Source is not a Citation; a Citation is not a
+reviewed Evidence Contribution; and none of those records is clinical approval
+or runtime publication. The deterministic **Known versus needed** brief uses
+only reviewed contributions and explicitly labeled clinician opinion for
+`Known`. Unscreened candidates appear only as work still needing review.
+
+The Workbench may automatically run a due metadata search while its local
+process is open, but only after a developer contact email is configured. Every
+provider call is serial, rate-limited, and recorded with its literal query and
+date. Exact DOI, PMID, and provider-record matches reuse one Candidate without
+discarding run-specific observations. There is no paid API, external-AI transfer, or
+unrestricted source ingestion in this stage.
+
+Runtime isolation is enforced by dependency checks, tracked-private-path
+checks, a player-build import/chunk guard, and a recursive Pages-artifact scan.
+Only a separately validated, clinically approved, immutable clinical release
+may cross the authoring-to-player boundary.
+
 ## Recommended coherent architecture
 
 Accepted client foundation:
@@ -64,7 +106,10 @@ This accepted choice is recorded in
 
 Accepted repository organization:
 
-- Use this one private repository as a monorepo.
+- Use this one repository as a monorepo. The current GitHub repository is
+  public, so every tracked artifact must be public-safe; private source files,
+  extracted text, credentials, and local Workbench state stay only in ignored
+  local storage.
 - Keep the player application, separately deployed administrator application,
   shared deterministic rules, data contracts, publishing validators, database
   migrations, tests, simulations, and documentation in clearly separated
@@ -72,8 +117,10 @@ Accepted repository organization:
 - Enforce dependency and security boundaries so the player build cannot import
   administrator-only code, draft content, or secrets.
 
-This accepted choice is recorded in
-[ADR 0005](docs/adr/0005-private-monorepo.md).
+The original monorepo choice is recorded in
+[ADR 0005](docs/adr/0005-private-monorepo.md); its historical private-repository
+assumption is corrected by
+[ADR 0038](docs/adr/0038-public-repository-safety-clarification.md).
 
 Accepted backend and database foundation:
 
