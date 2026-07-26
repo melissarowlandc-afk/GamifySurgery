@@ -1,9 +1,10 @@
 # Roadmap
 
 Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The browser-hosted Level
-0/1 playtest remains stable on `main`; a separate local `beta` branch contains
-the bounded clinical-authoring foundation and is adding an isolated clinical
-evidence-gap and literature-review pipeline.
+0/1 playtest on `main` remains the public checkpoint. The local `beta` branch
+contains the isolated clinical-authoring/evidence pipeline plus the next
+founder-opening, Level 0/1 progression, onboarding, and visual-playtest
+candidate.
 
 Last updated: 2026-07-26
 
@@ -66,8 +67,8 @@ Implemented:
 - Continuous five-minute operating days from 8 AM to 6 PM, with one facility
   hour every 30 real seconds and routine arrivals paced at roughly one per real
   minute
-- Level 0 completion through two patients, the examination room, the XP
-  threshold, and satisfaction above 90%
+- Two introductory patients teach the opening loop; the formal Level 0 gate is
+  the examination room, XP threshold, and satisfaction above 90%
 - Level 1 deterministic routine arrivals, waiting patience, workload
   backpressure, Existing Patients tracking, and treatment/referral decisions
 - Level 1 rooms: bathroom, waiting room, X-ray room, imaging control room, and
@@ -89,7 +90,7 @@ Implemented:
   deterministic nonrepeating flavor, duplicate consolidation, critical alert
   suppression of humor, and visible current-system save/campaign/testing
   notices
-- Bounded founder-run emergency GLP-1 consultations below $100, with a
+- Bounded founder-run emergency GLP-1 consultations below $200, with a
   facility-hour cooldown, configurable daily cap/diminishing payment, and no
   XP or FSRS benefit
 - Multiple local campaigns, local save/reload, compatible save migration,
@@ -114,9 +115,8 @@ Implemented:
 - State-driven Level 1 guidance for the clock, first arrival, service drill,
   off-site test wait, result return, and follow-up decision
 - One global striped clinical-content warning without repeated vignette caveats
-- A 62-test unit inventory: 41 game-domain tests and 21 player alert/tutorial/
-  positioning tests, plus desktop and retained width-regression browser
-  coverage
+- Automated domain, player, opening, persistence, visual-component, tutorial-
+  geometry, desktop, and retained phone-width regression coverage
 - An owner-authorized public GitHub Pages playtest that automatically rebuilds
   from `main` while preserving browser-local saves and the no-backend boundary
 
@@ -142,18 +142,20 @@ selection policy that prioritizes overdue concepts, interleaves categories,
 avoids recent repetition, and occasionally contrasts confused diagnoses is
 deferred until the approved content pool is large enough to exercise it.
 
-Latest local verification on 2026-07-25:
+Latest local verification on 2026-07-26:
 
-- `npm test`: 143 of 143 unit tests passed (41 game-domain, 21 player
-  tutorial/alert/view-model/positioning, and 81 clinical-authoring)
-- `npm run typecheck`: all five TypeScript workspaces passed
+- `npm test`: 296 of 296 tests passed (43 Clinical Context Workbench, 31
+  player, 81 clinical-authoring, 83 clinical-research, and 58 game-domain)
+- `npm run typecheck`: all seven TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning
 - `npm run build:pages`: the `/GamifySurgery/` static build and generated asset
   references passed deployment verification
-- `npm run test:e2e`: desktop Level 0/1/save/campaign walkthrough, storage
-  failure safety, and tutorial target/overlap checks at full, compact, and
-  laptop desktop widths passed (9 passed, 6 intentionally skipped)
+- `npm run test:e2e`: 22 applicable browser checks passed and 26
+  project-specific viewport checks were intentionally skipped; coverage
+  includes both opening branches, one-time initialization, pause authority,
+  the Level 0/1 walkthrough, tutorial geometry, persistence safety, the stable
+  facility/desk composition, and focused phone-width opening/chart behavior
 
 ## Milestone 3: Iterate and prepare approved content
 

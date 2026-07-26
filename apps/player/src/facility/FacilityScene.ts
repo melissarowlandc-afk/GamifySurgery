@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import {
   getRoomDefinition,
+  isPlacementAttachedThroughOwnEntrance,
   rotateDirection,
   validateFacilityConnectivity,
 } from "@gamify-surgery/game-domain";
@@ -20,6 +21,10 @@ import type {
   PlaceRoomRequest,
   SelectRoomRequest,
 } from "./types";
+import {
+  getWaitingPatientQueueIndices,
+  getWaitingPatientRoomLocations,
+} from "./patientPlacement";
 
 export interface FacilitySceneBridge {
   viewModel: FacilityViewModel;
@@ -53,6 +58,9 @@ interface TileRectangle {
   width: number;
   height: number;
 }
+
+const DEFAULT_VISIBLE_GRID_COLUMNS = 16;
+const DEFAULT_VISIBLE_GRID_ROWS = 6;
 
 function finiteCount(value: number): number {
   return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
@@ -322,9 +330,17 @@ export class FacilityScene extends Phaser.Scene {
     const footerHeight = Math.max(32, Math.min(44, Math.floor(height * 0.1)));
     const usableWidth = Math.max(1, width - horizontalPadding * 2);
     const usableHeight = Math.max(1, height - headerHeight - footerHeight);
+    // Zoom 1 frames the working clinic instead of shrinking the entire future
+    // building footprint into view. As the player zooms out, genuinely new
+    // buildable rows and columns enter the viewport.
     const fittedTileSize = Math.max(
       10,
-      Math.floor(Math.min(usableWidth / columns, usableHeight / rows)),
+      Math.floor(
+        Math.min(
+          usableWidth / Math.min(columns, DEFAULT_VISIBLE_GRID_COLUMNS),
+          usableHeight / Math.min(rows, DEFAULT_VISIBLE_GRID_ROWS),
+        ),
+      ),
     );
     const requestedCamera = this.bridge.viewModel.camera;
     const requestedCameraSignature = requestedCamera
@@ -347,12 +363,25 @@ export class FacilityScene extends Phaser.Scene {
     );
     const gridWidth = tileSize * columns;
     const gridHeight = tileSize * rows;
+    const founderRoom = this.getFounderRoom();
+    const founderSize = founderRoom
+      ? orientedSize(founderRoom)
+      : undefined;
+    const focusTileX = founderRoom
+      ? founderRoom.tileX + (founderSize?.width ?? 0) / 2
+      : columns / 2;
+    const focusTileY = founderRoom
+      ? founderRoom.tileY + (founderSize?.height ?? 0) / 2
+      : rows / 2;
+    const focusScreenY =
+      headerHeight + Math.floor(usableHeight * (founderRoom ? 0.48 : 0.5));
 
     return {
       originX:
-        Math.floor((width - gridWidth) / 2) + this.cameraView.panX,
+        Math.floor(width / 2 - focusTileX * tileSize) +
+        this.cameraView.panX,
       originY:
-        Math.floor(headerHeight + (usableHeight - gridHeight) / 2) +
+        Math.floor(focusScreenY - focusTileY * tileSize) +
         this.cameraView.panY,
       tileSize,
       width: gridWidth,
@@ -395,7 +424,7 @@ export class FacilityScene extends Phaser.Scene {
     model.rooms.forEach((room, index) => {
       this.drawRoom(graphics, room, index);
     });
-    this.drawPatients(graphics);
+    this.drawExterior(graphics);
   }
 
   private drawRoom(
@@ -450,6 +479,7 @@ export class FacilityScene extends Phaser.Scene {
       rectangle.width,
       rectangle.height,
     );
+    this.drawRoomFloor(graphics, rectangle, shade);
     graphics.lineStyle(3, 0x111111, 1);
     graphics.strokeRect(
       rectangle.x,
@@ -477,6 +507,139 @@ export class FacilityScene extends Phaser.Scene {
         rectangle.width - inset * 2 - 4,
         rectangle.height - inset * 2 - 4,
       );
+    }
+  }
+
+  private drawRoomFloor(
+    graphics: Phaser.GameObjects.Graphics,
+    rectangle: { x: number; y: number; width: number; height: number },
+    shade: number,
+  ): void {
+    const tile = Math.max(8, Math.floor(this.layout.tileSize * 0.7));
+    const floorLine = shade === 0xe6e6e1 ? 0xc5c5bf : 0xb5b5af;
+    graphics.lineStyle(1, floorLine, 0.58);
+    for (
+      let x = rectangle.x + tile;
+      x < rectangle.x + rectangle.width;
+      x += tile
+    ) {
+      graphics.lineBetween(
+        x,
+        rectangle.y + 3,
+        x,
+        rectangle.y + rectangle.height - 3,
+      );
+    }
+    for (
+      let y = rectangle.y + tile;
+      y < rectangle.y + rectangle.height;
+      y += tile
+    ) {
+      graphics.lineBetween(
+        rectangle.x + 3,
+        y,
+        rectangle.x + rectangle.width - 3,
+        y,
+      );
+    }
+
+    const baseboard = Math.max(2, Math.floor(this.layout.tileSize * 0.08));
+    graphics.fillStyle(0x777772, 0.9);
+    graphics.fillRect(
+      rectangle.x + 3,
+      rectangle.y + 3,
+      rectangle.width - 6,
+      baseboard,
+    );
+  }
+
+  private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
+    const { originX, originY, width, height, tileSize } = this.layout;
+    const mapBottom = originY + height;
+    const sidewalkTop = mapBottom + 3;
+    const sidewalkHeight = Math.max(
+      18,
+      Math.min(34, this.scale.height - sidewalkTop - 2),
+    );
+
+    graphics.fillStyle(0xd8d8d1, 1);
+    graphics.fillRect(originX, sidewalkTop, width, sidewalkHeight);
+    graphics.lineStyle(2, 0x555551, 1);
+    graphics.lineBetween(originX, sidewalkTop, originX + width, sidewalkTop);
+    graphics.lineBetween(
+      originX,
+      sidewalkTop + sidewalkHeight,
+      originX + width,
+      sidewalkTop + sidewalkHeight,
+    );
+    graphics.lineStyle(1, 0xa0a09a, 0.85);
+    for (let x = originX + tileSize; x < originX + width; x += tileSize) {
+      graphics.lineBetween(
+        x,
+        sidewalkTop + 2,
+        x,
+        sidewalkTop + sidewalkHeight - 2,
+      );
+    }
+
+    const founder = this.getFounderRoom();
+    if (!founder) {
+      return;
+    }
+    const founderPixels = this.toPixels({
+      tileX: founder.tileX,
+      tileY: founder.tileY,
+      ...orientedSize(founder),
+    });
+    const entranceX = Math.floor(
+      founderPixels.x + founderPixels.width / 2,
+    );
+    const entranceWidth = Math.max(12, tileSize);
+    const entranceLeft = entranceX - Math.floor(entranceWidth / 2);
+
+    // The room retains its saved internal door while receiving a fixed
+    // exterior entrance against the public sidewalk.
+    graphics.fillStyle(0xf2f2ec, 1);
+    graphics.fillRect(
+      entranceLeft,
+      founderPixels.y + founderPixels.height - 4,
+      entranceWidth,
+      8,
+    );
+    graphics.lineStyle(3, 0x111111, 1);
+    graphics.lineBetween(
+      entranceLeft,
+      founderPixels.y + founderPixels.height,
+      entranceLeft + entranceWidth,
+      founderPixels.y + founderPixels.height - entranceWidth,
+    );
+    graphics.fillStyle(0xb9b9b2, 1);
+    graphics.fillRect(
+      entranceLeft - 3,
+      mapBottom,
+      entranceWidth + 6,
+      sidewalkHeight + 3,
+    );
+    graphics.lineStyle(1, 0x666662, 1);
+    graphics.strokeRect(
+      entranceLeft - 3,
+      mapBottom,
+      entranceWidth + 6,
+      sidewalkHeight + 3,
+    );
+
+    const planterY = mapBottom - Math.max(7, Math.floor(tileSize * 0.22));
+    for (const direction of [-1, 1]) {
+      const planterX =
+        entranceX +
+        direction * Math.max(tileSize, Math.floor(entranceWidth * 1.25));
+      graphics.fillStyle(0x444441, 1);
+      graphics.fillRect(planterX - 5, planterY, 10, 7);
+      graphics.fillStyle(0x777772, 1);
+      graphics.fillCircle(planterX, planterY - 5, 6);
+      graphics.fillStyle(0xb3b3ac, 1);
+      graphics.fillCircle(planterX - 5, planterY - 3, 4);
+      graphics.fillCircle(planterX + 5, planterY - 3, 4);
     }
   }
 
@@ -514,6 +677,25 @@ export class FacilityScene extends Phaser.Scene {
         pixel * 2,
         pixel,
       );
+      graphics.fillStyle(0x777777, 1);
+      graphics.fillRect(
+        rectangle.x + Math.floor(rectangle.width * 0.18),
+        rectangle.y + Math.floor(rectangle.height * 0.28),
+        pixel * 2,
+        pixel * 3,
+      );
+      graphics.fillStyle(0x222222, 1);
+      graphics.fillCircle(
+        rectangle.x + Math.floor(rectangle.width * 0.72),
+        rectangle.y + Math.floor(rectangle.height * 0.46),
+        pixel,
+      );
+      graphics.lineStyle(1, 0x222222, 1);
+      graphics.strokeCircle(
+        rectangle.x + Math.floor(rectangle.width * 0.72),
+        rectangle.y + Math.floor(rectangle.height * 0.46),
+        pixel * 2,
+      );
       return;
     }
 
@@ -534,6 +716,20 @@ export class FacilityScene extends Phaser.Scene {
         left + Math.max(pixel * 4, Math.floor(usableWidth * 0.58)),
         top + pixel * 3,
         pixel,
+        pixel * 2,
+      );
+      graphics.fillStyle(0xeeeeee, 1);
+      graphics.fillRect(
+        rectangle.x + rectangle.width - inset - pixel * 3,
+        rectangle.y + inset,
+        pixel * 3,
+        pixel * 2,
+      );
+      graphics.lineStyle(1, 0x555555, 1);
+      graphics.strokeRect(
+        rectangle.x + rectangle.width - inset - pixel * 3,
+        rectangle.y + inset,
+        pixel * 3,
         pixel * 2,
       );
       if (room.definitionId === "room.minor_procedure") {
@@ -568,6 +764,13 @@ export class FacilityScene extends Phaser.Scene {
         pixel * 3,
         pixel * 2,
       );
+      graphics.fillStyle(0xeeeeee, 1);
+      graphics.fillRect(
+        rectangle.x + Math.floor(rectangle.width * 0.62),
+        rectangle.y + Math.floor(rectangle.height * 0.28),
+        pixel * 3,
+        pixel,
+      );
       return;
     }
 
@@ -587,6 +790,18 @@ export class FacilityScene extends Phaser.Scene {
           pixel * 2,
         );
       }
+      graphics.fillStyle(0xeeeeee, 1);
+      graphics.fillCircle(
+        rectangle.x + Math.floor(rectangle.width * 0.5),
+        rectangle.y + Math.floor(rectangle.height * 0.68),
+        pixel * 2,
+      );
+      graphics.lineStyle(1, 0x555555, 1);
+      graphics.strokeCircle(
+        rectangle.x + Math.floor(rectangle.width * 0.5),
+        rectangle.y + Math.floor(rectangle.height * 0.68),
+        pixel * 2,
+      );
       return;
     }
 
@@ -673,103 +888,6 @@ export class FacilityScene extends Phaser.Scene {
     );
   }
 
-  private drawPatients(graphics: Phaser.GameObjects.Graphics): void {
-    if ((this.bridge.viewModel.patients?.length ?? 0) > 0) {
-      return;
-    }
-    const anchor = this.getFounderRoom() ?? this.bridge.viewModel.rooms[0];
-    if (!anchor) {
-      return;
-    }
-
-    const counts = this.bridge.viewModel.patientCounts;
-    const markerSize = Math.max(5, Math.floor(this.layout.tileSize * 0.34));
-    const gap = Math.max(3, Math.floor(markerSize * 0.45));
-    const anchorSize = orientedSize(anchor);
-    const room = this.toPixels({
-      tileX: anchor.tileX,
-      tileY: anchor.tileY,
-      ...anchorSize,
-    });
-    const outsideY =
-      room.y + room.height + Math.floor(this.layout.tileSize * 0.42);
-    const insideY = room.y + Math.floor(this.layout.tileSize * 1.45);
-
-    this.drawPatientGroup(
-      graphics,
-      finiteCount(counts.waiting),
-      room.x,
-      outsideY,
-      markerSize,
-      gap,
-      "waiting",
-    );
-    this.drawPatientGroup(
-      graphics,
-      finiteCount(counts.active),
-      room.x + Math.floor(this.layout.tileSize * 0.4),
-      insideY,
-      markerSize,
-      gap,
-      "active",
-    );
-    this.drawPatientGroup(
-      graphics,
-      finiteCount(counts.actionReady),
-      room.x + room.width - Math.floor(this.layout.tileSize * 0.4),
-      insideY,
-      markerSize,
-      gap,
-      "action-ready",
-      true,
-    );
-  }
-
-  private drawPatientGroup(
-    graphics: Phaser.GameObjects.Graphics,
-    count: number,
-    startX: number,
-    y: number,
-    size: number,
-    gap: number,
-    kind: "waiting" | "active" | "action-ready",
-    rightAligned = false,
-  ): void {
-    const visibleCount = Math.min(count, 5);
-
-    for (let index = 0; index < visibleCount; index += 1) {
-      const offset = index * (size + gap);
-      const x = rightAligned ? startX - size - offset : startX + offset;
-
-      if (kind === "waiting") {
-        graphics.fillStyle(0xffffff, 1);
-        graphics.fillRect(x, y, size, size);
-        graphics.lineStyle(2, 0x222222, 1);
-        graphics.strokeRect(x, y, size, size);
-      } else {
-        graphics.fillStyle(kind === "action-ready" ? 0x111111 : 0x666666, 1);
-        graphics.fillRect(x, y, size, size);
-      }
-
-      if (kind === "action-ready") {
-        graphics.fillStyle(0xffffff, 1);
-        const stroke = Math.max(1, Math.floor(size * 0.15));
-        graphics.fillRect(
-          x + Math.floor(size / 2) - Math.floor(stroke / 2),
-          y + Math.floor(size * 0.18),
-          stroke,
-          Math.max(2, Math.floor(size * 0.42)),
-        );
-        graphics.fillRect(
-          x + Math.floor(size / 2) - Math.floor(stroke / 2),
-          y + Math.floor(size * 0.76),
-          stroke,
-          stroke,
-        );
-      }
-    }
-  }
-
   private drawCharacters(): void {
     const graphics = this.characterGraphics;
     if (!graphics) {
@@ -779,7 +897,13 @@ export class FacilityScene extends Phaser.Scene {
     graphics.clear();
     const founderRoom = this.getFounderRoom() ?? this.bridge.viewModel.rooms[0];
     if (founderRoom) {
-      this.drawPerson(graphics, founderRoom, 0, 0x111111);
+      this.drawPerson(
+        graphics,
+        founderRoom,
+        0,
+        0x111111,
+        this.bridge.viewModel.founder.appearance,
+      );
     }
 
     this.bridge.viewModel.staff.forEach((employee, index) => {
@@ -816,8 +940,23 @@ export class FacilityScene extends Phaser.Scene {
         }
       }
     });
+    const waitingPatientIds = (this.bridge.viewModel.patients ?? [])
+      .filter((patient) => patient.status === "waiting")
+      .map((patient) => patient.instanceId);
+    const waitingLocations = getWaitingPatientRoomLocations(
+      waitingPatientIds,
+      this.bridge.viewModel.rooms,
+    );
+    const waitingQueueIndices =
+      getWaitingPatientQueueIndices(waitingPatientIds);
     this.bridge.viewModel.patients?.forEach((patient, index) => {
-      this.drawFacilityPatient(graphics, patient, index);
+      this.drawFacilityPatient(
+        graphics,
+        patient,
+        index,
+        waitingLocations.get(patient.instanceId),
+        waitingQueueIndices.get(patient.instanceId),
+      );
     });
   }
 
@@ -825,35 +964,113 @@ export class FacilityScene extends Phaser.Scene {
     graphics: Phaser.GameObjects.Graphics,
     patient: FacilityPatientView,
     index: number,
+    waitingRoomLocation?: GridPoint,
+    waitingQueueIndex?: number,
   ): void {
     const founderRoom = this.getFounderRoom() ?? this.bridge.viewModel.rooms[0];
     if (!founderRoom) {
       return;
     }
-    const fallback = orientedSize(founderRoom);
-    const location =
-      patient.location ??
-      (patient.status === "waiting" || patient.status === "off-site"
-        ? {
-            x: founderRoom.tileX + (index % Math.max(1, fallback.width)),
-            y: founderRoom.tileY + fallback.height + 1,
-          }
-        : {
-            x:
-              founderRoom.tileX +
-              Math.min(
-                fallback.width - 1,
-                index % Math.max(1, fallback.width),
-              ),
-            y: founderRoom.tileY + Math.floor(fallback.height / 2),
-          });
+    const founderSize = orientedSize(founderRoom);
+    const appearanceColor =
+      patient.status === "action-ready" ? 0x111111 : 0x666666;
+
+    if (patient.location) {
+      this.drawPixelPerson(
+        graphics,
+        this.layout.originX +
+          (patient.location.x + 0.5) * this.layout.tileSize,
+        this.layout.originY +
+          (patient.location.y + 0.72) * this.layout.tileSize,
+        100 + index,
+        patient.appearance,
+        appearanceColor,
+      );
+      return;
+    }
+
+    const entranceX =
+      this.layout.originX +
+      (founderRoom.tileX + founderSize.width / 2) * this.layout.tileSize;
+    const sidewalkY =
+      this.layout.originY +
+      this.layout.height +
+      Math.max(12, Math.min(25, this.layout.tileSize * 0.45));
+
+    if (patient.status === "waiting") {
+      if (waitingRoomLocation) {
+        this.drawPixelPerson(
+          graphics,
+          this.layout.originX +
+            (waitingRoomLocation.x + 0.5) * this.layout.tileSize,
+          this.layout.originY +
+            (waitingRoomLocation.y + 0.72) * this.layout.tileSize,
+          100 + index,
+          patient.appearance,
+          appearanceColor,
+        );
+        return;
+      }
+      const stableQueueIndex = waitingQueueIndex ?? 0;
+      const queueIndex = Math.floor(stableQueueIndex / 2) + 1;
+      const queueDirection = stableQueueIndex % 2 === 0 ? -1 : 1;
+      this.drawPixelPerson(
+        graphics,
+        entranceX +
+          queueDirection *
+            queueIndex *
+            Math.max(16, this.layout.tileSize * 0.72),
+        sidewalkY,
+        100 + index,
+        patient.appearance,
+        appearanceColor,
+      );
+      return;
+    }
+
+    if (patient.status === "off-site") {
+      const travel = patient.offsiteTravel;
+      if (!travel || travel.phase === "away") {
+        return;
+      }
+      const excursion =
+        travel.phase === "departing"
+          ? travel.progress
+          : 1 - travel.progress;
+      const travelDistance = Math.min(
+        this.layout.width * 0.34,
+        this.layout.tileSize * 6,
+      );
+      this.drawPixelPerson(
+        graphics,
+        entranceX + travel.direction * excursion * travelDistance,
+        sidewalkY,
+        100 + index,
+        patient.appearance,
+        appearanceColor,
+      );
+      return;
+    }
+
+    const careRoom =
+      this.bridge.viewModel.rooms.find(
+        (room) => room.definitionId === "room.examination",
+      ) ?? founderRoom;
+    const careSize = orientedSize(careRoom);
+    const offset =
+      ((index % Math.max(1, careSize.width)) -
+        (Math.max(1, careSize.width) - 1) / 2) *
+      Math.min(this.layout.tileSize * 0.38, 18);
     this.drawPixelPerson(
       graphics,
-      this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
-      this.layout.originY + (location.y + 0.72) * this.layout.tileSize,
+      this.layout.originX +
+        (careRoom.tileX + careSize.width / 2) * this.layout.tileSize +
+        offset,
+      this.layout.originY +
+        (careRoom.tileY + careSize.height * 0.72) * this.layout.tileSize,
       100 + index,
       patient.appearance,
-      patient.status === "action-ready" ? 0x111111 : 0x666666,
+      appearanceColor,
     );
   }
 
@@ -951,6 +1168,34 @@ export class FacilityScene extends Phaser.Scene {
         );
       }
     }
+    const featurePixel = Math.max(1, Math.floor(pixel * 0.55));
+    graphics.fillStyle(0x222222, 1);
+    graphics.fillRect(
+      centerX - pixel,
+      baseY - pixel * 3,
+      featurePixel,
+      featurePixel,
+    );
+    graphics.fillRect(
+      centerX + pixel - featurePixel,
+      baseY - pixel * 3,
+      featurePixel,
+      featurePixel,
+    );
+    graphics.fillStyle(0x777777, 1);
+    graphics.fillRect(
+      centerX - Math.floor(featurePixel / 2),
+      baseY - pixel * 2,
+      featurePixel,
+      featurePixel,
+    );
+    graphics.fillStyle(0x333333, 1);
+    graphics.fillRect(
+      centerX - pixel,
+      baseY - pixel,
+      pixel * 2,
+      featurePixel,
+    );
     graphics.fillStyle(outfitColor, 1);
     graphics.fillRect(
       centerX - Math.floor((pixel * bodyWidth) / 2),
@@ -970,6 +1215,20 @@ export class FacilityScene extends Phaser.Scene {
       graphics.fillStyle(0xffffff, 0.8);
       graphics.fillRect(centerX - pixel, baseY, pixel, pixel);
       graphics.fillRect(centerX, baseY + pixel, pixel, pixel);
+    } else if (appearance?.outfitStyle === "coat") {
+      graphics.lineStyle(featurePixel, 0xffffff, 1);
+      graphics.lineBetween(
+        centerX - pixel,
+        baseY - pixel,
+        centerX,
+        baseY + pixel * 2,
+      );
+      graphics.lineBetween(
+        centerX + pixel,
+        baseY - pixel,
+        centerX,
+        baseY + pixel * 2,
+      );
     }
     graphics.fillStyle(outfitColor, 1);
     graphics.fillRect(centerX - pixel * 3, baseY, pixel * 2, pixel);
@@ -1062,7 +1321,7 @@ export class FacilityScene extends Phaser.Scene {
       .setText(
         model.placement
           ? `BUILD: ${model.placement.displayName.toUpperCase()} ${model.placement.width}×${model.placement.height} • ROTATION ${model.placement.orientation ?? 0}° • MOVE OVER MAP`
-          : `${model.facilityTitle.toUpperCase()} • SOUND-FREE`,
+          : "",
       )
       .setPosition(
         originX + width / 2,
@@ -1315,11 +1574,21 @@ export class FacilityScene extends Phaser.Scene {
     if (protectedDefinitions.size === 0) {
       return true;
     }
-    return validateFacilityConnectivity(
-      [...placedRooms, candidate],
-      (definitionId) => getRoomDefinition(definitionId),
-      protectedDefinitions,
-    ).connected;
+    const definitionFor = (definitionId: string) =>
+      getRoomDefinition(definitionId);
+    return (
+      isPlacementAttachedThroughOwnEntrance(
+        candidate,
+        definition,
+        placedRooms,
+        definitionFor,
+      ) &&
+      validateFacilityConnectivity(
+        [...placedRooms, candidate],
+        definitionFor,
+        protectedDefinitions,
+      ).connected
+    );
   }
 
   private drawPlacementGhost(): void {
@@ -1543,7 +1812,7 @@ export class FacilityScene extends Phaser.Scene {
           ? "SPACE IS ALREADY OCCUPIED"
           : placement.kind === "hallway"
             ? "HALLWAY MUST TOUCH THE CONNECTED PATH"
-            : "DOOR MUST TOUCH A CONNECTED HALLWAY";
+            : "DOOR MUST TOUCH THE CONNECTED CLINIC";
     const statusMessage = ghost.valid
       ? placement.kind === "hallway"
         ? "✓ CONNECTED — CLICK TO BUILD"

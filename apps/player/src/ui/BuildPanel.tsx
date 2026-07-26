@@ -96,8 +96,8 @@ export function BuildPanel({
             </span>
             <p>
               {selectedPlacementIsHallway
-                ? "Move over the map to see the hallway outline. Place it against the Front Desk or the existing connected path."
-                : "Move over the map to see the room outline. The marked door must meet the Front Desk or a connected hallway."}
+                ? "Move over the map to see the hallway outline. Place it against the Front Desk, a connected room, or the existing hallway path."
+                : "Move over the map to see the room outline. Its marked door must open into any connected room or hallway."}
             </p>
             <div>
               {!selectedPlacementIsHallway ? (

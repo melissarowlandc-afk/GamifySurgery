@@ -4,7 +4,7 @@ Status: The initial FSRS settings and the structural clinical-answer reward
 relationship below are accepted. Other numerical balance values remain
 agent-managed prototype defaults until validated and published.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-26
 
 ## Principle
 
@@ -33,38 +33,45 @@ the production release-pinning and migration behavior.
 |---|---:|---|
 | Starting money | `$90` | Prototype whole-dollar display units |
 | Starting satisfaction | `95` | Points on a 0-100 scale |
-| Level 0 XP requirement | `5` | Clinical XP |
-| Level 0 completed encounters | `2` | Both introductory patients |
+| Level 0 XP requirement | `10` | Clinical XP |
+| Level 0 completed encounters | `0` | Intro patients teach the loop but are not a formal count gate |
 | Level 0 satisfaction gate | `> 90` | Strictly above 90 |
 | Level 0 required room | Examination room | One placed room |
-| Level 1 XP requirement | `45` | Clinical XP |
-| Level 1 completed encounters | `6` | Resolved patients |
+| Level 1 XP requirement | `60` | Clinical XP |
+| Level 1 completed encounters | `0` | No separate encounter-count gate |
 | Level 1 satisfaction gate | `> 90` | Strictly above 90 |
-| Facility tick | `1` | One real second while visible and unpaused |
-| Level 0 recovery arrival interval | `5` | Facility ticks |
-| Level 1 routine arrival interval | `6` | Facility ticks |
-| Routine patience | `12` | Facility ticks before leaving unopened |
-| Patience warnings | `5, 2, 0` | Remaining facility ticks |
+| Facility tick | `30` | Real seconds per one-hour facility tick while visible and unpaused |
+| Operating day | `10` | Facility ticks, 8 AM through 6 PM |
+| Level 0 recovery arrival interval | `2` | Facility ticks |
+| Level 1 routine arrival interval | `2` | Facility ticks |
+| Routine patience | `16` | Facility ticks before leaving unopened |
+| Level 0 recovery patience | Exempt | Anti-softlock patients remain until opened |
+| Patience warnings | `8, 4, 0` | Remaining facility ticks |
+| Waiting-warning satisfaction | `0, -1, -1` | One-time durable changes at the corresponding warnings |
 | Expense interval | `10` | Facility ticks |
 | Development fast-forward | `10` | Normal facility ticks processed at once |
 | Base routine workload limit | `2` | Waiting plus unresolved Active patients |
 | Critical reserved capacity | `1` | Non-routine protected slot |
 
-Level 1 currently requires all five Level 1 rooms and both Level 1 staff roles.
+The locked Level 2 preview requires the Imaging Control, X-ray, and
+Minor-Procedure rooms plus one Imaging Technician. Bathroom, Waiting Room, and
+Receptionist are useful Level 1 options rather than formal completion gates.
 The playable slice stops there and does not advance to Level 2.
 
 ### Current rooms and staff
 
 | Definition | Build or hire cost | Recurring cost per expense interval | Other current effect |
 |---|---:|---:|---|
-| Examination room | `$120` | `$2` | `+2` workload; faster synthetic analysis |
-| Bathroom | `$90` | `$1` | `+2` satisfaction on build |
-| Waiting room | `$150` | `$2` | `+2` satisfaction; `+2` workload |
-| Imaging control room | `$120` | `$2` | Required for X-ray room |
-| X-ray room | `$260` | `$4` | In-house X-ray capability when staffed |
-| Minor-procedure room | `$300` | `$4` | `+1` satisfaction; `+1` workload |
-| Receptionist | `$80` | `$3` | `+1` workload |
-| Imaging technician | `$120` | `$5` | Required for in-house X-ray |
+| Front Desk | `$0` | `$10` | Protected starting room |
+| Hallway tile | `$30` | `$0` | Repeatable walkable connection |
+| Examination Room | `$130` | `$12` | `+2` workload; in-house synthetic analysis |
+| Bathroom | `$180` | `$8` | `+2` satisfaction on build |
+| Waiting Room | `$280` | `$14` | `+2` satisfaction; `+2` workload; visible waiting occupancy |
+| Imaging Control Room | `$350` | `$18` | Required for functioning in-house X-ray |
+| X-ray Room | `$600` | `$28` | In-house X-ray capability when staffed |
+| Minor-Procedure Room | `$650` | `$30` | `+1` satisfaction; `+1` workload |
+| Receptionist | `$180` | `$18` salary | `+1` workload |
+| Imaging Technician | `$300` | `$26` salary | Required for in-house X-ray |
 
 Room footprints, build dependencies, capability identifiers, and staff
 dependencies are in the same fixture rather than hard-coded in the player
@@ -74,24 +81,27 @@ interface.
 
 | Stable area | Current value |
 |---|---:|
-| Tutorial completion revenue | `$55` |
-| Basic clinic completion revenue | `$95` |
-| Referral completion revenue | `$70` |
+| Tutorial completion revenue | `$45` |
+| Basic clinic completion revenue | `$75` |
+| Referral completion revenue | `$60` |
 | XP per first-attempt correct answer | `5` |
 | Maximum patient-level quality revenue bonus | `$15` |
 | Maximum incorrect financial consequence | `$5` |
-| Maximum correct satisfaction bonus | `+2` |
-| Maximum incorrect satisfaction consequence | `-2` |
+| Answer-driven base satisfaction change | `0` |
+| Patient confidence per correct / incorrect decision | `+10 / -10` |
+| Same-day satisfaction modifier per correct / incorrect decision | `+1 / -1`, capped at `+/-3`, reset daily |
 | Satisfaction penalty for leaving before being seen | `-2` |
-| Outsourced synthetic analysis | `3` facility ticks |
+| Outsourced synthetic analysis | `1` facility tick; onboarding presentation is accelerated only while running |
 | In-house synthetic analysis | `1` facility tick |
 | Outsourced X-ray | `6` facility ticks |
-| Functioning in-house X-ray | `2` facility ticks |
+| Functioning in-house X-ray | `2` service ticks plus frozen travel; `+1` satisfaction when the result returns |
 
-The initial funding validator requires the starting money plus two worst-case
-tutorial settlements to cover the examination room and a `$20` operating
-buffer. Changing any related value without preserving this invariant is
-rejected.
+The initial funding validator requires starting money plus one minimum
+completion payment after the maximum incorrect financial consequence to cover
+the Examination Room. The current configured operating buffer is `$0`; there
+is no formal minimum-cash progression gate. Recovery patients remain available
+when incorrect tutorial answers leave the player below the XP gate and remain
+patience-exempt until opened.
 
 ### Current prototype FSRS settings
 
@@ -132,20 +142,23 @@ same-date response.
 
 - Basic operational revenue is settled per completed patient and provided
   services, not multiplied by the number of scored questions.
-- Correct first submissions award educational XP and contribute to a modest,
-  capped patient-level quality or satisfaction bonus.
-- Incorrect first submissions forfeit the correctness bonus, never remove
-  earned XP, and contribute to a small capped patient-level consequence.
+- Correct first submissions award educational XP immediately and increase
+  patient confidence. Incorrect first submissions award no XP, never remove
+  earned XP, and reduce patient confidence.
+- Each scored decision also changes a small same-day satisfaction modifier
+  (`+1` or `-1`, capped at `+/-3`) that resets at day rollover. It does not
+  directly ratchet durable facility satisfaction.
 - Multi-question patient bonuses and penalties are normalized and capped.
 - Same-date remediation cannot award another clinical XP or quality bonus for
   that concept.
-- Worst-case tutorial funding still covers the first examination room and an
-  operating buffer.
+- Worst-case tutorial funding still covers the first Examination Room at the
+  currently configured zero-dollar buffer.
 - No intentional incorrect-answer strategy may have higher expected reward than
   correct play.
 
 Exact amounts and formulas are balance values selected through simulation and
-playtesting. The structural relationship is accepted in ADR 0025.
+playtesting. ADR 0033 refines ADR 0025 for the current immediate-XP,
+patient-confidence, and daily-modifier behavior.
 
 Terminal Clinical Outcome `minor` or `major` severity is clinical-content
 metadata, not a balance multiplier. A wrong final answer uses the same

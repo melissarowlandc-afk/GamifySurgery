@@ -52,6 +52,7 @@ export interface TutorialStepView {
     | "reopen-first-feedback"
     | "first-feedback"
     | "resolve-first-chart"
+    | "between-tutorial-patients"
     | "second-patient"
     | "reopen-second-chart"
     | "second-decision"
@@ -109,6 +110,7 @@ export function createTutorialStepView({
   state,
   tutorialsEnabled,
   introDismissed,
+  acknowledgedStepIds,
   buildMode,
   selectedRoomDefinitionId,
 }: TutorialViewInput): TutorialStepView | null {
@@ -166,9 +168,9 @@ export function createTutorialStepView({
         eyebrow: "Level 1 guide · New mechanic",
         title: "Send-out testing takes facility time",
         body:
-          `${pendingSendout.patientDisplayName} moved to Existing Patients while the off-site service runs. Keep the clinic clock running; you may treat other patients while you wait.`,
+          `${pendingSendout.patientDisplayName} moved to Existing Patients while the off-site service runs. Keep the clinic clock running; you may treat someone else while you wait.`,
         note:
-          `${remaining} in-game hour${remaining === 1 ? "" : "s"} remain. At normal prototype speed, each in-game hour takes about 30 real seconds.`,
+          `${remaining} hour${remaining === 1 ? "" : "s"} remain. Facility hours pass on the clinic clock, not in real time.`,
         flavor:
           "The patient has left the building. The chart, naturally, remains.",
         target: "existing-patient",
@@ -250,6 +252,13 @@ export function createTutorialStepView({
       0,
       state.nextRoutineArrivalTick - state.facilityTick,
     );
+    if (
+      acknowledgedStepIds.has(
+        `${state.campaignId}:level-one-ready`,
+      )
+    ) {
+      return null;
+    }
     return step({
       id: "level-one-ready",
       eyebrow: "Level 0 tutorial · Complete",
@@ -261,13 +270,17 @@ export function createTutorialStepView({
           ? "Routine patients arrive only while facility time advances. Click the real Resume control above, then watch the Waiting list."
           : "Facility time is running. A routine patient will appear in Waiting when the arrival interval elapses.",
       note:
-        `${remaining} in-game hour${remaining === 1 ? "" : "s"} until the next planned arrival. Level 1 adds repeatable patients, queue pressure, rooms, and staffing.`,
+        `${remaining} hour${remaining === 1 ? "" : "s"} until the next planned arrival.`,
       flavor:
         "You have leveled up. The patients did not become simpler.",
       target: "facility-clock",
       targetSelector: state.paused
         ? ".pause-button"
         : ".facility-time-chip",
+      primaryAction: {
+        id: "acknowledge-step",
+        label: "Close tutorial",
+      },
     });
   }
 
@@ -285,25 +298,17 @@ export function createTutorialStepView({
         id: "welcome",
         eyebrow: "Level 0 tutorial · Step 1",
         title: "Open your first patient chart",
-        body:
-          "The patient tab is not decoration. Open it to see the presentation and make the first scored decision. Each scored decision updates exactly one learning concept.",
-        note:
-          "Facility time continues unless you pause it. Tutorial patients will not leave while you read.",
+        body: "",
         target: "waiting-patient",
         targetSelector: ".patient-folder.is-waiting .patient-tab",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-        primaryAction: {
-          id: "focus-first-chart",
-          label: "Show the patient tab",
-        },
       });
     }
     return step({
       id: "open-first-chart",
       eyebrow: "Level 0 tutorial · Step 1",
-      title: "Click the highlighted patient tab",
-      body:
-        "New arrivals wait on the left. The exclamation point means the chart needs your attention.",
+      title: "Open your first patient chart",
+      body: "",
       target: "waiting-patient",
       targetSelector:
         ".patient-folder.is-waiting .patient-tab.is-tutorial-target",
@@ -335,10 +340,7 @@ export function createTutorialStepView({
       id: "first-decision",
       eyebrow: "Level 0 tutorial · Step 3",
       title: "Read across the chart, then choose",
-      body:
-        "The portrait is on the left, the presentation is in the middle, and the current decision is on the right. Click the real answer supported by the chart; answer order changes.",
-      note:
-        "This first patient is deliberately artificial so you can learn the interface without a clinical penalty.",
+      body: "",
       flavor:
         "A bold new era of clicking the thing the chart explicitly says has begun.",
       target: "answer-choices",
@@ -362,7 +364,7 @@ export function createTutorialStepView({
       body:
         "Pending patients move to Existing Patients while facility time passes. When the result returns, the chart receives a new exclamation point and the next decision unlocks.",
       note:
-        `${remaining} in-game hour${remaining === 1 ? "" : "s"} remain. This first training result returns automatically in about four real seconds; normal Level 1 send-outs follow facility time.`,
+        `${remaining} hour${remaining === 1 ? "" : "s"} remain. This short training result returns after a brief pause.`,
       target: "existing-patient",
       targetSelector:
         ".patient-folder.is-active .patient-tab.is-tutorial-target",
@@ -393,7 +395,7 @@ export function createTutorialStepView({
       eyebrow: "Level 0 tutorial · Step 6",
       title: "The new result created a second decision",
       body:
-        "The chart keeps the earlier presentation and decision visible, then adds the next step to the right. Choose the action that matches the returned result.",
+        "The returned result appears beside the earlier decision. Choose the next action.",
       target: "answer-choices",
       targetSelector:
         ".chart-step-column.is-current .answer-list",
@@ -448,7 +450,17 @@ export function createTutorialStepView({
 
   const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
   if (!second) {
-    return null;
+    return step({
+      id: "between-tutorial-patients",
+      eyebrow: "Level 0 tutorial · Between patients",
+      title: "The clinic is quiet for a moment",
+      body:
+        "Wait for the next patient to walk into the clinic. Facility time continues while the game is running.",
+      flavor:
+        "Enjoy this rare operational condition while it remains available.",
+      target: "facility-clock",
+      targetSelector: ".facility-time-chip",
+    });
   }
 
   if (
@@ -459,8 +471,7 @@ export function createTutorialStepView({
       id: "second-patient",
       eyebrow: "Level 0 tutorial · Step 9",
       title: "A second patient has arrived",
-      body:
-        "This patient repeats the same chart workflow with prototype clinical content: open, decide, read feedback, and resolve.",
+      body: "Open the highlighted patient chart.",
       flavor:
         "Repetition is how expertise forms and how software demos become suspiciously long.",
       target: "waiting-patient",
@@ -495,8 +506,7 @@ export function createTutorialStepView({
       id: "second-decision",
       eyebrow: "Level 0 tutorial · Step 10",
       title: "Make the scored clinical decision",
-      body:
-        "Choose one answer. This decision updates only the single concept named by this question, not every idea mentioned in the case.",
+      body: "Choose the answer supported by the chart.",
       target: "answer-choices",
       targetSelector:
         ".chart-step-column.is-current .answer-list",
@@ -566,7 +576,7 @@ export function createTutorialStepView({
       eyebrow: "Level 0 tutorial · Step 13",
       title: "Your remaining goal needs an examination room",
       body:
-        "The Goals panel tracks XP, satisfaction, completed patients, and construction. Your remaining objective is an examination room, so click the real Enter Build Mode button.",
+        "A patient would prefer not to discuss private health information at the front desk. Check the Goals panel, then enter Build Mode and add an Examination Room.",
       note:
         "Build Mode pauses facility time so patients do not age into fossils while you remodel.",
       flavor:
@@ -594,7 +604,7 @@ export function createTutorialStepView({
       eyebrow: "Level 0 tutorial · Step 16",
       title: "Connect the room door to the clinic",
       body:
-        "Move the outlined room beside the Front Desk. The marked door must touch a connected doorway or hallway. Rotate changes both the footprint and the door side.",
+        "Move the outlined room beside the Front Desk. Its marked door may open into a connected room or hallway. Rotate changes the footprint and door side.",
       note:
         "A valid outline confirms the room can be built. Click the facility to place it.",
       target: "facility-placement",
@@ -634,7 +644,7 @@ export function createTutorialStepView({
       eyebrow: "Level 0 tutorial · Goals",
       title: "One or more goals still need attention",
       body:
-        "Check the always-visible Goals panel. If XP or completed encounters remain, continue treating arriving patients; if satisfaction is low, avoid additional delays and mistakes.",
+        "Check the Goals panel. Continue answering questions for XP, and keep satisfaction above the requirement.",
       target: "goals",
       targetSelector: ".goals-panel",
     });

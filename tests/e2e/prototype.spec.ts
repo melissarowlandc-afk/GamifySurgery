@@ -23,6 +23,11 @@ interface PersistedGameState {
   cash: number;
   clinicalXp: number;
   facilityLevel: number;
+  founder: {
+    displayName: string;
+    appearance: unknown;
+  };
+  rooms: unknown[];
   reviewIntents: unknown[];
   learningHistories: Record<string, PersistedLearningHistory>;
 }
@@ -63,6 +68,31 @@ async function getActiveState(page: Page): Promise<PersistedGameState> {
   }, PROFILE_KEY);
 }
 
+async function completeClinicOpening(
+  page: Page,
+  founderName = "Test Founder",
+): Promise<void> {
+  await expect(
+    page.getByRole("heading", { name: "Create Your Founder" }),
+  ).toBeVisible();
+  await page.getByLabel("Founder name").fill(founderName);
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(page.getByText("Your rich grandpa died.")).toBeVisible();
+  await expect(page.getByText("He left you $1,000,000.")).toBeVisible();
+  await page
+    .getByRole("button", { name: "Build a Surgery Clinic" })
+    .click();
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+}
+
+async function startClinic(
+  page: Page,
+  founderName = "Test Founder",
+): Promise<void> {
+  await page.goto("/");
+  await completeClinicOpening(page, founderName);
+}
+
 async function fastForward(page: Page): Promise<void> {
   const tools = page.locator("details.development-panel");
   await expect(tools).toHaveAttribute("open", "");
@@ -93,8 +123,9 @@ function messageTitle(page: Page, title: string): Locator {
 }
 
 /**
- * Phaser calculates its grid directly from the canvas host dimensions. This
- * mirrors that public layout contract so a click targets a meaningful tile.
+ * Phaser keeps the founder's front desk centered while zooming expands the
+ * usable 24x10 grid around it. This mirrors the zoom-one camera contract so a
+ * click targets a meaningful world tile rather than an obsolete fit-all grid.
  */
 async function placeRoomAt(
   facility: Locator,
@@ -119,11 +150,13 @@ async function placeRoomAt(
   );
   const tileSize = Math.max(
     10,
-    Math.floor(Math.min(usableWidth / 16, usableHeight / 10)),
+    Math.floor(Math.min(usableWidth / 16, usableHeight / 6)),
   );
-  const originX = Math.floor((box.width - tileSize * 16) / 2);
+  const founderFocusX = 11.5;
+  const founderFocusY = 8;
+  const originX = Math.floor(box.width / 2 - founderFocusX * tileSize);
   const originY = Math.floor(
-    headerHeight + (usableHeight - tileSize * 10) / 2,
+    headerHeight + usableHeight * 0.48 - founderFocusY * tileSize,
   );
 
   await facility.click({
@@ -138,6 +171,128 @@ test.beforeAll(() => {
   mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true });
 });
 
+test("the rich-and-happy branch creates no clinic campaign", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(
+    page.getByRole("heading", { name: "Create Your Founder" }),
+  ).toBeVisible();
+  await page.getByLabel("Founder name").fill("Happy Founder");
+  await page.getByRole("button", { name: "Next head" }).click();
+  await page.getByRole("button", { name: "Next body" }).click();
+  await page.getByRole("button", { name: "Continue" }).click();
+  await page.getByRole("button", { name: "Be Rich and Happy" }).click();
+
+  await expect(page.getByText("You are rich and happy.")).toBeVisible();
+  const persisted = await page.evaluate((profileKey) => {
+    const raw = window.localStorage.getItem(profileKey);
+    return raw
+      ? (JSON.parse(raw) as {
+          activeCampaignId: string | null;
+          campaigns: unknown[];
+        })
+      : null;
+  }, PROFILE_KEY);
+  expect(persisted?.activeCampaignId).toBeNull();
+  expect(persisted?.campaigns).toHaveLength(0);
+
+  await page
+    .getByRole("button", { name: "Return to Main Screen" })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "New Campaign" }),
+  ).toBeVisible();
+  await expect(page.getByTestId("facility-canvas")).toHaveCount(0);
+});
+
+test("the clinic branch initializes Level 0 once and survives reload", async ({
+  page,
+}) => {
+  await installDeterministicCampaignIds(page);
+  await page.goto("/");
+  await page.getByLabel("Founder name").fill("Clinic Founder");
+  await page.getByRole("button", { name: "Next head" }).click();
+  await page.getByRole("button", { name: "Next body" }).click();
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  const clinicChoice = page.getByRole("button", {
+    name: "Build a Surgery Clinic",
+  });
+  await clinicChoice.evaluate((button) => {
+    (button as HTMLButtonElement).click();
+    (button as HTMLButtonElement).click();
+  });
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+
+  const first = await page.evaluate((profileKey) => {
+    const profile = JSON.parse(
+      window.localStorage.getItem(profileKey) ?? "null",
+    ) as PersistedProfile;
+    const active = profile.campaigns.find(
+      (campaign) => campaign.campaignId === profile.activeCampaignId,
+    );
+    return {
+      campaignCount: profile.campaigns.length,
+      state: JSON.parse(active?.serializedState ?? "null") as PersistedGameState,
+    };
+  }, PROFILE_KEY);
+  expect(first.campaignCount).toBe(1);
+  expect(first.state.founder.displayName).toBe("Clinic Founder");
+  expect(first.state.rooms).toHaveLength(1);
+  expect(first.state.cash).not.toBe(1_000_000);
+  expect(first.state.facilityLevel).toBe(0);
+  expect(
+    Object.values(first.state.learningHistories).every(
+      (history) => history.reviews.length === 0,
+    ),
+  ).toBe(true);
+
+  await page.reload();
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Create Your Founder" }),
+  ).toHaveCount(0);
+  const restored = await getActiveState(page);
+  expect(restored.rooms).toHaveLength(1);
+  expect(restored.founder.displayName).toBe("Clinic Founder");
+});
+
+test("an explicit pause freezes the accelerated tutorial result timer", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-chrome",
+    "The real-time pause regression runs once at the primary desktop size.",
+  );
+
+  await startClinic(page, "Pause Founder");
+  await page.locator(".patient-tab.is-tutorial-target").click();
+  await page
+    .getByRole("button", { name: /SIGNAL ALPHA.*1 hour/ })
+    .click();
+  const pendingPatient = page
+    .locator(".patient-folder.is-active .patient-tab")
+    .filter({ hasText: "Pixel Patient" });
+  await expect(pendingPatient).toContainText("Analysis pending");
+
+  await page
+    .getByRole("button", { name: "Pause facility time" })
+    .click();
+  await expect(page.locator(".facility-pause-indicator")).toContainText(
+    "PAUSED",
+  );
+  await page.waitForTimeout(4_500);
+  await expect(pendingPatient).toContainText("Analysis pending");
+
+  await page
+    .getByRole("button", { name: "Resume facility time" })
+    .click();
+  await expect(pendingPatient).toContainText("Action required", {
+    timeout: 7_000,
+  });
+});
+
 test(
   "plays Level 0 through Level 1, saves, and isolates campaign FSRS",
   async ({ page }, testInfo) => {
@@ -147,9 +302,8 @@ test(
     );
 
     await installDeterministicCampaignIds(page);
-    await page.goto("/");
+    await startClinic(page);
 
-    await expect(page.getByTestId("facility-canvas")).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Open your first patient chart" }),
     ).toBeVisible();
@@ -203,12 +357,13 @@ test(
       .allTextContents();
     expect(firstDecisionLabels.indexOf("SIGNAL ALPHA")).toBe(2);
     const correctSignal = page.getByRole("button", {
-      name: /SIGNAL ALPHA.*1 in-game hour/,
+      name: /SIGNAL ALPHA.*1 hour/,
     });
     await expect(correctSignal).toBeVisible();
     await correctSignal.click();
 
     await expect(page.locator(".chart-panel")).toHaveCount(0);
+    await expect(xpValue(page)).toHaveText("5");
     await expect(messageTitle(page, "Decision recorded")).toBeVisible();
     await expect(messageTitle(page, "Corrective review")).toHaveCount(0);
     const pendingPatient = page
@@ -245,11 +400,17 @@ test(
         .getByText("The returned marker reads ACTION CIRCLE."),
     ).toBeVisible();
     await page.getByRole("button", { name: "ACTION CIRCLE" }).click();
-    await expect(page.locator(".chart-reward-banner")).toContainText(
-      "+10 Learning XP",
-    );
+    const decisionRewards = page.locator(".chart-decision-reward");
+    await expect(decisionRewards).toHaveCount(2);
+    expect(await decisionRewards.allTextContents()).toEqual([
+      "+5 Learning XP",
+      "+5 Learning XP",
+    ]);
+    await expect(xpValue(page)).toHaveText("10");
     await expect(
-      page.getByRole("button", { name: "Flip chart over" }),
+      page.getByRole("button", {
+        name: "Flip for more disease information",
+      }),
     ).toBeVisible();
     await expect(page.locator(".tutorial-coach")).toContainText(
       "Your clinical decision making is truly godlike.",
@@ -259,7 +420,13 @@ test(
     const secondTutorial = page
       .locator(".patient-folder.is-waiting .patient-tab")
       .filter({ hasText: "Morgan Thread" });
-    await expect(secondTutorial).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: "The clinic is quiet for a moment",
+      }),
+    ).toBeVisible();
+    await expect(secondTutorial).toHaveCount(0);
+    await expect(secondTutorial).toBeVisible({ timeout: 8_000 });
     await expect(
       page.getByRole("heading", {
         name: "A second patient has arrived",
@@ -280,9 +447,10 @@ test(
         name: /Assess wound type and vaccine history/,
       })
       .click();
-    await expect(page.locator(".chart-reward-banner")).toContainText(
+    await expect(page.locator(".chart-decision-reward")).toContainText(
       "+5 Learning XP",
     );
+    await expect(xpValue(page)).toHaveText("15");
     await page.getByRole("button", { name: "Resolve chart" }).click();
 
     await expect(
@@ -292,7 +460,7 @@ test(
     ).toBeVisible();
     const goalsPanel = page.locator(".goals-panel");
     await expect(goalsPanel).toBeVisible();
-    await expect(goalsPanel.locator(".goal-list li")).toHaveCount(4);
+    await expect(goalsPanel.locator(".goal-list li")).toHaveCount(3);
     await expect(page.locator(".resource-goals-popover")).toHaveCount(0);
     expect(
       await goalsPanel.evaluate((panel) => {
@@ -313,8 +481,11 @@ test(
     });
     await page.getByRole("button", { name: /Enter Build Mode/ }).click();
     await expect(
-      page.getByRole("button", { name: "Paused for Build" }),
-    ).toBeVisible();
+      page.getByRole("button", { name: "Pause facility time" }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: "Resume facility time" }),
+    ).toBeDisabled();
     await expect(page.locator(".build-mode-panel")).toContainText(
       "Time paused",
     );
@@ -328,17 +499,19 @@ test(
       "door faces south",
     );
     await page
-      .getByRole("button", { name: "Rotate room 90°" })
+      .getByRole("button", { name: /Rotate room 90/ })
       .click();
     await expect(page.locator(".placement-orientation")).toContainText(
       "door faces west",
     );
-    await placeRoomAt(page.getByTestId("facility-canvas"), 9, 3);
+    await placeRoomAt(page.getByTestId("facility-canvas"), 14, 6);
     await expect(page.locator(".build-mode-panel")).toContainText(
       "1 built",
     );
     await page.getByRole("button", { name: "Exit Build Mode" }).click();
-    await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Pause facility time" }),
+    ).toBeVisible();
     const recentEvents = page.locator("details.message-board-history");
     await recentEvents.locator("summary").click();
     await expect(recentEvents).toContainText("Construction complete");
@@ -377,7 +550,9 @@ test(
     await page
       .getByRole("button", { name: "Return to paused clinic" })
       .click();
-    await expect(page.getByRole("button", { name: "Resume" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Resume facility time" }),
+    ).toBeVisible();
     const originalState = await getActiveState(page);
     expect(originalState.facilityLevel).toBe(1);
     expect(originalState.reviewIntents).toHaveLength(3);
@@ -386,7 +561,9 @@ test(
     await expect(
       page.getByText("Level 1", { exact: true }).first(),
     ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Resume" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Resume facility time" }),
+    ).toBeVisible();
 
     const resolvedCabinet = page.getByRole("button", {
       name: /Resolved 2 filed charts/,
@@ -404,6 +581,7 @@ test(
     await page
       .getByRole("button", { name: "Create fresh campaign" })
       .click();
+    await completeClinicOpening(page, "Fresh Founder");
     await expect(
       page.getByText("Level 0", { exact: true }).first(),
     ).toBeVisible();
@@ -448,7 +626,7 @@ test(
     );
 
     await installDeterministicCampaignIds(page);
-    await page.goto("/");
+    await startClinic(page);
 
     const startingXp = Number(await xpValue(page).innerText());
     expect(startingXp).toBe(0);
@@ -460,7 +638,11 @@ test(
     await expect(moneyValue(page)).toContainText("$110");
     await expect(xpValue(page)).toHaveText("0");
     await expect(messageTitle(page, "Emergency side business")).toBeVisible();
-    await expect(page.locator(".emergency-glp1-panel")).toHaveCount(0);
+    const emergencyPanel = page.locator(".emergency-glp1-panel");
+    await expect(emergencyPanel).toContainText("Available in 1 hour.");
+    await expect(
+      emergencyPanel.getByRole("button", { name: /Complete consult/ }),
+    ).toBeDisabled();
 
     await page
       .getByRole("button", { name: /Enter Build Mode/ })
@@ -472,9 +654,8 @@ test(
     await placeRoomAt(page.getByTestId("facility-canvas"), 9, 5);
     await page.getByRole("button", { name: "Exit Build Mode" }).click();
 
-    const emergencyPanel = page.locator(".emergency-glp1-panel");
     await expect(emergencyPanel).toContainText(
-      "Available in 1 facility hour.",
+      "Available in 1 hour.",
     );
     await expect(
       emergencyPanel.getByRole("button", { name: /Complete consult/ }),
@@ -515,6 +696,10 @@ test(
     ).toBeVisible();
     await page.getByRole("button", { name: "Confirm fresh start" }).click();
     await expect(
+      page.getByRole("heading", { name: "Create Your Founder" }),
+    ).toBeVisible();
+    await completeClinicOpening(page, "Restarted Founder");
+    await expect(
       page.getByText("Level 0", { exact: true }).first(),
     ).toBeVisible();
     await expect(moneyValue(page)).toContainText("$90");
@@ -533,7 +718,7 @@ test(
       "The storage-failure behavior is viewport-independent.",
     );
 
-    await page.goto("/");
+    await startClinic(page);
     await page.evaluate(() => {
       Storage.prototype.setItem = () => {
         throw new DOMException("Synthetic storage failure", "QuotaExceededError");
@@ -554,14 +739,21 @@ test(
   },
 );
 
-test("keeps the clinic and chart usable at desktop widths", async ({
+test("keeps the upper clinic stable and the chart usable on its desktop desk", async ({
   page,
 }, testInfo) => {
+  test.skip(
+    testInfo.project.name === "phone-chrome",
+    "Phone chart usability has a focused interaction test without desktop geometry assertions.",
+  );
+
   await installDeterministicCampaignIds(page);
-  await page.goto("/");
+  await startClinic(page);
 
   const facility = page.locator(".facility-frame");
   await expect(facility).toBeVisible();
+  const facilityBeforeChart = await facility.boundingBox();
+  expect(facilityBeforeChart).not.toBeNull();
   await expect(
     page.getByRole("heading", { name: "Open your first patient chart" }),
   ).toBeVisible();
@@ -579,24 +771,38 @@ test("keeps the clinic and chart usable at desktop widths", async ({
   );
 
   const workspace = page.locator(".clinic-workspace");
-  const [workspaceBox, facilityBox, chartBox] = await Promise.all([
+  const desk = page.getByRole("region", { name: "Clinical desk" });
+  const [workspaceBox, facilityBox, deskBox, chartBox] = await Promise.all([
     workspace.boundingBox(),
     facility.boundingBox(),
+    desk.boundingBox(),
     chart.boundingBox(),
   ]);
   expect(workspaceBox).not.toBeNull();
   expect(facilityBox).not.toBeNull();
+  expect(deskBox).not.toBeNull();
   expect(chartBox).not.toBeNull();
   expect(facilityBox!.height).toBeGreaterThan(150);
-  expect(chartBox!.x).toBeGreaterThanOrEqual(workspaceBox!.x);
+  expect(facilityBox!.x).toBeCloseTo(facilityBeforeChart!.x, 0);
+  expect(facilityBox!.y).toBeCloseTo(facilityBeforeChart!.y, 0);
+  expect(facilityBox!.width).toBeCloseTo(
+    facilityBeforeChart!.width,
+    0,
+  );
+  expect(facilityBox!.height).toBeCloseTo(
+    facilityBeforeChart!.height,
+    0,
+  );
+  expect(deskBox!.y).toBeGreaterThanOrEqual(
+    facilityBox!.y + facilityBox!.height,
+  );
+  expect(chartBox!.x).toBeGreaterThanOrEqual(deskBox!.x);
   expect(chartBox!.x + chartBox!.width).toBeLessThanOrEqual(
-    workspaceBox!.x + workspaceBox!.width + 1,
+    deskBox!.x + deskBox!.width + 1,
   );
-  expect(chartBox!.y).toBeGreaterThanOrEqual(
-    facilityBox!.y + facilityBox!.height - 12,
-  );
+  expect(chartBox!.y).toBeGreaterThanOrEqual(deskBox!.y);
   expect(chartBox!.y + chartBox!.height).toBeLessThanOrEqual(
-    workspaceBox!.y + workspaceBox!.height + 1,
+    deskBox!.y + deskBox!.height + 1,
   );
 
   expect(
@@ -625,3 +831,75 @@ test("keeps the clinic and chart usable at desktop widths", async ({
       .filter({ hasText: "Analysis pending" }),
   ).toBeVisible();
 });
+
+test(
+  "keeps both opening branches and the clinic chart usable at phone width",
+  async ({ page }, testInfo) => {
+    test.skip(
+      testInfo.project.name !== "phone-chrome",
+      "This is the focused phone-width opening and chart walkthrough.",
+    );
+
+    await page.goto("/");
+    await page.getByLabel("Founder name").fill("Pocket Founder");
+    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByRole("button", { name: "Be Rich and Happy" }).click();
+    await expect(page.getByText("You are rich and happy.")).toBeVisible();
+    await page
+      .getByRole("button", { name: "Return to Main Screen" })
+      .click();
+
+    await page.getByRole("button", { name: "New Campaign" }).click();
+    await completeClinicOpening(page, "Pocket Surgeon");
+    await expect(
+      page.getByRole("heading", { name: "Open your first patient chart" }),
+    ).toBeVisible();
+
+    await page.locator(".patient-tab.is-tutorial-target").click();
+    const chart = page.locator(".chart-panel");
+    await expect(chart).toBeVisible();
+    const coach = page.locator(".tutorial-coach");
+    const answerList = page.locator(
+      ".chart-step-column.is-current .answer-list",
+    );
+    await expect(coach).toBeVisible();
+    await expect(coach).toHaveAttribute(
+      "data-target-positioned",
+      "true",
+    );
+    expect(
+      await page.evaluate(() => {
+        const coachElement =
+          document.querySelector<HTMLElement>(".tutorial-coach");
+        const answerElement = document.querySelector<HTMLElement>(
+          ".chart-step-column.is-current .answer-list",
+        );
+        if (!coachElement || !answerElement) {
+          return true;
+        }
+        const coachRect = coachElement.getBoundingClientRect();
+        const answerRect = answerElement.getBoundingClientRect();
+        return !(
+          coachRect.right <= answerRect.left ||
+          coachRect.left >= answerRect.right ||
+          coachRect.bottom <= answerRect.top ||
+          coachRect.top >= answerRect.bottom
+        );
+      }),
+    ).toBe(false);
+    await expect(answerList).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /SIGNAL ALPHA.*1 hour/ }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Close patient chart" }),
+    ).toBeVisible();
+    await expect(page.getByTestId("facility-canvas")).toBeAttached();
+    expect(
+      await page.evaluate(
+        () =>
+          document.documentElement.scrollWidth <= window.innerWidth + 1,
+      ),
+    ).toBe(true);
+  },
+);

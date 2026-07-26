@@ -25,6 +25,7 @@ export const serviceRouteDefinitionSchema = z
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
     durationTicks: z.number().int().positive(),
+    satisfactionOnResult: z.number().int().min(-20).max(20).default(0),
     requiredCapabilityId: stableIdSchema.nullable(),
     requiredCapabilityIds: z.array(stableIdSchema).default([]),
     preference: z.number().int().nonnegative(),
@@ -234,6 +235,15 @@ export const prototypeBalanceReleaseSchema = z
       .object({
         routineDurationTicks: z.number().int().positive(),
         warningAtRemainingTicks: z.array(z.number().int().nonnegative()).min(1),
+        satisfactionPenaltyAtWarningTicks: z
+          .array(z.number().int().nonnegative())
+          .default([]),
+        satisfactionPenaltyPerWarning: z
+          .number()
+          .int()
+          .nonnegative()
+          .max(20)
+          .default(0),
         leftBeforeSeenSatisfactionPenalty: z.number().int().nonnegative().max(20),
       })
       .strict(),
@@ -552,6 +562,28 @@ export const prototypeBalanceReleaseSchema = z
         message:
           "A zero-remaining-tick warning is required so the final warning is visible before departure.",
         path: ["patientPatience", "warningAtRemainingTicks"],
+      });
+    }
+    const satisfactionPenaltyThresholds =
+      release.patientPatience.satisfactionPenaltyAtWarningTicks;
+    const uniquePenaltyThresholds = new Set(satisfactionPenaltyThresholds);
+    if (uniquePenaltyThresholds.size !== satisfactionPenaltyThresholds.length) {
+      context.addIssue({
+        code: "custom",
+        message: "Patience satisfaction-penalty thresholds must be unique.",
+        path: ["patientPatience", "satisfactionPenaltyAtWarningTicks"],
+      });
+    }
+    if (
+      satisfactionPenaltyThresholds.some(
+        (threshold) => !warningThresholds.includes(threshold),
+      )
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Every patience satisfaction-penalty threshold must also be a warning threshold.",
+        path: ["patientPatience", "satisfactionPenaltyAtWarningTicks"],
       });
     }
 

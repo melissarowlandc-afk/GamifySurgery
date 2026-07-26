@@ -3,7 +3,7 @@
 Status: Owner-facing choices and delegated delivery backlog. Technical impact
 severity no longer implies that Melissa must select the implementation.
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 ## Impact severity
 
@@ -21,9 +21,8 @@ privacy/research, external access, spending, licensing, or destructive actions.
 | ID | Decision | Recommended direction | Required before |
 |---|---|---|---|
 | G-002 | First real clinical validation set | After the synthetic prototype proves the flow, Melissa selects the smallest useful Level 0/1 topic and concept set; bulk authoring waits until that set validates the workflow | Real clinical-content integration |
-| G-003 | Opening tone and story, including whether to use the inheritance joke | Defer until the core loop is playable; use a minimal clinic opening first | Tutorial polish |
 | G-004 | Pilot participants, optional feedback, and any disclosed playtest metrics | Melissa and trusted family first; decide outside access and data fields later | Hosted tester invitations |
-| G-005 | Remaining GLP-1 payment curve, sarcastic message pool, and automated Level 2 suite values | Preserve the accepted below-$100, once-per-hour emergency action and tune a bounded recovery payment through playtesting; design the staff-operated suite with Level 2 | Final GLP-1 balance and Level 2 implementation |
+| G-005 | Remaining GLP-1 payment curve, sarcastic message pool, and automated Level 2 suite values | Preserve the once-per-hour, no-learning-reward emergency action; use the current below-$200 beta threshold as a tunable playtest value and design the staff-operated suite with Level 2 | Final GLP-1 balance and Level 2 implementation |
 
 ## Delegated delivery backlog
 
@@ -77,6 +76,7 @@ starting research, or destroying owner data.
 | R-017 | Seeded-randomness implementation | Versioned project-owned `xoshiro128**` contract; strong 128-bit root seed; SHA-256-derived independent named streams; persisted state/counters; stable unbiased selection; golden fixtures | ADR 0018; D-031 |
 | R-018 | Physical data boundary | Normalized PostgreSQL for independently related, protected, published, or audited records; one validated versioned JSONB snapshot for coherent operational facility state | ADR 0019; D-032 |
 | R-020 | Dual-purpose clinical knowledge-base and runtime-teaching model | Linked revisioned Clinical Topics, structured facts, Tested Concepts, meaningful many-to-many Patient Presentation Variants, typed constrained templates, one-concept Decision Nodes, Question Variants, facility-stage/capability eligibility, frozen instances, protected Draft-only AI assistance, and no live AI generation | ADR 0020; D-034 |
+| R-021 | Founder opening tone and inheritance choice | Minimal founder name/head/body selection, a sparse genuine rich-and-happy non-game ending, and a one-time clinic branch that begins the existing Level 0 tutorial | D-057; `docs/features/founder-inheritance-opening.md` |
 | R-013 | Initial deployment target | Local playable prototype, coherent local vertical slice, staging, then invite-only private browser pilot | ADR 0022; D-037 |
 | R-019 | Hosted-pilot topology | Separate staging and pilot data plus separately deployed player and administrator applications; exact static host selected just-in-time by the lead agent | ADR 0022; D-037 |
 | Y-017 | Initial clinical authoring workbook | Private owner-controlled Google Sheets working source, protected stable identifiers, validated exports with a separate owner-controlled private encrypted backup, one- or two-concept trial, and one-way handoff to the future admin database; public GitHub retains only schemas, sanitized metadata, and synthetic fixtures | D-038, including the 2026-07-25 public-repository safety clarification |

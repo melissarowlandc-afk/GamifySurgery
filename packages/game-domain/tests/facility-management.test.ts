@@ -48,7 +48,16 @@ function place(
 describe("facility remodeling and upgrades", () => {
   it("supports connected duplicate rooms, rotation, upgrades, and safe resale", () => {
     let state = levelOneSandbox("facility-rules");
-    state = place(state, "room.exam.1", "room.examination", 7, 2);
+    for (const x of [11, 12, 13, 14, 15, 16]) {
+      state = place(
+        state,
+        `room.hallway.${x}.5`,
+        "room.hallway",
+        x,
+        5,
+      );
+    }
+    state = place(state, "room.exam.1", "room.examination", 10, 3);
     expect(state.operationReceipts["place.room.exam.1"]?.status).toBe(
       "applied",
     );
@@ -63,16 +72,7 @@ describe("facility remodeling and upgrades", () => {
       target: { kind: "room", id: "room.exam.1" },
     });
 
-    for (const x of [9, 10, 11, 12]) {
-      state = place(
-        state,
-        `room.hallway.${x}.4`,
-        "room.hallway",
-        x,
-        4,
-      );
-    }
-    state = place(state, "room.exam.2", "room.examination", 11, 2);
+    state = place(state, "room.exam.2", "room.examination", 15, 3);
 
     expect(state.operationReceipts["place.room.exam.2"]?.status).toBe(
       "applied",
@@ -107,9 +107,9 @@ describe("facility remodeling and upgrades", () => {
       state.rooms.find((room) => room.id === "room.exam.2")?.upgradeLevel,
     ).toBe(2);
     expect(state.cash).toBe(cashBeforeUpgrade - 90);
-    expect(getEffectiveRoomUpkeep(state, "room.exam.2")).toBe(3);
+    expect(getEffectiveRoomUpkeep(state, "room.exam.2")).toBe(13);
     expect(getNextRoomUpgradeCost(state, "room.exam.2")).toBe(140);
-    expect(getRoomResaleValue(state, "room.exam.2")).toBe(52);
+    expect(getRoomResaleValue(state, "room.exam.2")).toBe(55);
     expect(getWorkloadSnapshot(state).routineLimit).toBe(7);
 
     const cashBeforeSale = state.cash;
@@ -121,12 +121,12 @@ describe("facility remodeling and upgrades", () => {
     expect(state.operationReceipts["sell.room.exam.1"]?.status).toBe(
       "applied",
     );
-    expect(state.cash).toBe(cashBeforeSale + 30);
+    expect(state.cash).toBe(cashBeforeSale + 32);
 
     const rejectedHallwaySale = gameReducer(state, {
       type: "SELL_ROOM",
       operationId: "sell.disconnecting.hallway",
-      roomId: "room.hallway.10.4",
+      roomId: "room.hallway.14.5",
     });
     expect(
       rejectedHallwaySale.operationReceipts["sell.disconnecting.hallway"]
@@ -140,6 +140,33 @@ describe("facility remodeling and upgrades", () => {
     });
     expect(
       rejectedFrontDeskSale.operationReceipts["sell.front.desk"]?.status,
+    ).toBe("rejected");
+  });
+
+  it("uses the placed room's rotated door for a direct room connection", () => {
+    const state = levelOneSandbox("direct-room-connection");
+    const connected = place(
+      state,
+      "room.exam.direct",
+      "room.examination",
+      7,
+      7,
+      270,
+    );
+    expect(
+      connected.operationReceipts["place.room.exam.direct"]?.status,
+    ).toBe("applied");
+
+    const rotatedAway = place(
+      state,
+      "room.exam.rotated-away",
+      "room.examination",
+      7,
+      7,
+      90,
+    );
+    expect(
+      rotatedAway.operationReceipts["place.room.exam.rotated-away"]?.status,
     ).toBe("rejected");
   });
 
@@ -169,7 +196,7 @@ describe("prototype staff rules", () => {
     expect(employee?.displayName.length).toBeGreaterThan(0);
     expect(employee?.appearance.version).toBe("pixel-avatar.v1");
     expect(employee?.homeRoomInstanceId).toBe("room.instance.founder_desk");
-    expect(employee?.salaryPerExpenseInterval).toBe(3);
+    expect(employee?.salaryPerExpenseInterval).toBe(18);
     expect(employee?.morale).toBe(75);
     expect(getStaffRoleCount(state, "staff.receptionist")).toBe(1);
     expect(
@@ -200,12 +227,12 @@ describe("prototype staff rules", () => {
       type: "SET_EMPLOYEE_SALARY",
       operationId: "salary.receptionist.raise",
       employeeId: "employee.receptionist.1",
-      salaryPerExpenseInterval: 8,
+      salaryPerExpenseInterval: 30,
     });
     expect(
       state.operationReceipts["salary.receptionist.raise"]?.status,
     ).toBe("applied");
-    expect(state.employees[0]?.salaryPerExpenseInterval).toBe(8);
+    expect(state.employees[0]?.salaryPerExpenseInterval).toBe(30);
     expect(state.employees[0]?.morale).toBe(100);
 
     const initialLocation = { ...state.employees[0]!.location };

@@ -55,15 +55,21 @@ export function PixelAvatar({
       <span className="pixel-avatar-body" aria-hidden="true">
         <span className="pixel-avatar-neck" />
         <span className="pixel-avatar-shirt" />
+        <span className="pixel-avatar-collar" />
         <span className="pixel-avatar-arm is-left" />
         <span className="pixel-avatar-arm is-right" />
+        <span className="pixel-avatar-leg is-left" />
+        <span className="pixel-avatar-leg is-right" />
       </span>
       <span className="pixel-avatar-head" aria-hidden="true">
         <span className="pixel-avatar-hair" />
         <span className="pixel-avatar-ear is-left" />
         <span className="pixel-avatar-ear is-right" />
+        <span className="pixel-avatar-brow is-left" />
+        <span className="pixel-avatar-brow is-right" />
         <span className="pixel-avatar-eye is-left" />
         <span className="pixel-avatar-eye is-right" />
+        <span className="pixel-avatar-nose" />
         <span className="pixel-avatar-mouth" />
         <span className="pixel-avatar-accessory" />
       </span>

@@ -36,6 +36,7 @@ import {
 import {
   getRotatedFootprint,
   isInsideFacility,
+  isPlacementAttachedThroughOwnEntrance,
   roomsOverlap,
   rotateDirection,
   validateFacilityConnectivity,
@@ -106,9 +107,11 @@ function createEncounter(
     patientDisplayName: string;
     arrivalClass: EncounterState["arrivalClass"];
     protectedGuaranteeId: string | null;
+    patienceExempt?: boolean;
   },
 ): EncounterState {
-  const patienceExempt = input.arrivalClass === "tutorial";
+  const patienceExempt =
+    input.arrivalClass === "tutorial" || input.patienceExempt === true;
   const frozenCase = clonePlain(input.clinicalCase);
   for (const node of frozenCase.decisionNodes) {
     if (node.shuffleAnswers) {
@@ -130,6 +133,7 @@ function createEncounter(
       "patient",
       input.encounterId,
     ),
+    patientConfidence: 50,
     arrivalClass: input.arrivalClass,
     protectedGuaranteeId: input.protectedGuaranteeId,
     lifecycle: "waiting_unopened",
@@ -323,14 +327,12 @@ function settleEncounter(
   encounter.settlementId = settlementId;
   state.settlements.push(settlement);
   state.cash += netCashDelta;
-  state.satisfaction = clamp(state.satisfaction + satisfactionDelta, 0, 100);
-  state.clinicalXp += clinicalXpAwarded;
   appendEvent(state, {
     id: `event.${settlementId}`,
     type: "encounter_settled",
     facilityTick: state.facilityTick,
     encounterId: encounter.id,
-    message: `Encounter complete: +$${netCashDelta} and +${clinicalXpAwarded} Learning XP.`,
+    message: `Encounter complete: +$${netCashDelta}.`,
     priority: "informational",
     definitionId: "alert.patient.complete",
     target: {
@@ -339,7 +341,7 @@ function settleEncounter(
     },
     reward: {
       cashDelta: netCashDelta,
-      learningXpDelta: clinicalXpAwarded,
+      learningXpDelta: 0,
       satisfactionDelta,
     },
   });
@@ -548,6 +550,23 @@ function reduceSubmitAnswer(
     correctedForward: !choice.isCorrect && !isFinalNode,
   };
   nextEncounter.answers.push(answerRecord);
+  const confidenceDelta = choice.isCorrect ? 10 : -10;
+  nextEncounter.patientConfidence = clamp(
+    nextEncounter.patientConfidence + confidenceDelta,
+    0,
+    100,
+  );
+  const dailyModifierDelta = choice.isCorrect ? 1 : -1;
+  next.dailyConfidenceSatisfactionModifier = clamp(
+    next.dailyConfidenceSatisfactionModifier + dailyModifierDelta,
+    -3,
+    3,
+  );
+  const learningXpAwarded = choice.isCorrect
+    ? context.balanceRelease.clinicalSettlement
+        .clinicalXpPerCorrectFirstAnswer
+    : 0;
+  next.clinicalXp += learningXpAwarded;
   const currentStep = nextEncounter.steps[nextEncounter.currentNodeIndex];
   if (!currentStep || currentStep.decisionNodeId !== node.id) {
     throw new Error("Encounter step history does not match the current node.");
@@ -568,7 +587,7 @@ function reduceSubmitAnswer(
     facilityTick: next.facilityTick,
     encounterId: nextEncounter.id,
     message: choice.isCorrect
-      ? `${nextEncounter.patientDisplayName}: correct decision recorded.`
+      ? `${nextEncounter.patientDisplayName}: correct decision recorded. +${learningXpAwarded} Learning XP.`
       : `${nextEncounter.patientDisplayName}: corrective teaching provided.`,
     priority: "informational",
     definitionId: choice.isCorrect
@@ -577,6 +596,11 @@ function reduceSubmitAnswer(
     target: {
       kind: "encounter",
       id: nextEncounter.id,
+    },
+    reward: {
+      cashDelta: 0,
+      learningXpDelta: learningXpAwarded,
+      satisfactionDelta: 0,
     },
   });
 
@@ -753,6 +777,10 @@ function maybeAdmitAutomaticPatient(
     ),
     arrivalClass: "routine",
     protectedGuaranteeId: null,
+    // Level 0 recovery patients exist specifically to prevent an incorrect
+    // tutorial from blocking progression. They may wait indefinitely until
+    // the player is ready; ordinary Level 1 patients retain normal patience.
+    patienceExempt: state.facilityLevel === 0,
   });
   state.routineArrivalSequence += 1;
   state.nextRoutineArrivalTick =
@@ -841,6 +869,7 @@ function reduceAdvanceTick(
     next.emergencyGlp1.dayNumber = dayNumber;
     next.emergencyGlp1.usesToday = 0;
     next.emergencyGlp1.lastFlavorMessage = null;
+    next.dailyConfidenceSatisfactionModifier = 0;
     appendEvent(next, {
       id: `event.day-rollover.${dayNumber}`,
       type: "day_rollover",
@@ -883,6 +912,21 @@ function reduceAdvanceTick(
       encounter.currentNodeIndex += 1;
       encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
       encounter.lifecycle = "active_action_required";
+      const completedRoute = context.balanceRelease.services
+        .flatMap((service) => service.routes)
+        .find((route) => route.id === encounter.pendingResult?.routeId);
+      const configuredResultSatisfactionDelta =
+        completedRoute?.satisfactionOnResult ?? 0;
+      const satisfactionBeforeResult = next.satisfaction;
+      if (configuredResultSatisfactionDelta !== 0) {
+        next.satisfaction = clamp(
+          next.satisfaction + configuredResultSatisfactionDelta,
+          0,
+          100,
+        );
+      }
+      const resultSatisfactionDelta =
+        next.satisfaction - satisfactionBeforeResult;
       appendEvent(next, {
         id: `event.${encounter.pendingResult.operationId}.ready`,
         type: "result_ready",
@@ -895,6 +939,15 @@ function reduceAdvanceTick(
           kind: "encounter",
           id: encounter.id,
         },
+        ...(resultSatisfactionDelta === 0
+          ? {}
+          : {
+              reward: {
+                cashDelta: 0,
+                learningXpDelta: 0,
+                satisfactionDelta: resultSatisfactionDelta,
+              },
+            }),
       });
     }
   }
@@ -916,6 +969,20 @@ function reduceAdvanceTick(
         !encounter.waiting.warningThresholdsShown.includes(threshold)
       ) {
         encounter.waiting.warningThresholdsShown.push(threshold);
+        const configuredWarningSatisfactionDelta =
+          patience.satisfactionPenaltyAtWarningTicks.includes(threshold)
+            ? -patience.satisfactionPenaltyPerWarning
+            : 0;
+        const satisfactionBeforeWarning = next.satisfaction;
+        if (configuredWarningSatisfactionDelta !== 0) {
+          next.satisfaction = clamp(
+            next.satisfaction + configuredWarningSatisfactionDelta,
+            0,
+            100,
+          );
+        }
+        const warningSatisfactionDelta =
+          next.satisfaction - satisfactionBeforeWarning;
         appendEvent(next, {
           id: `event.patience-warning.${encounter.id}.${threshold}`,
           type: "patience_warning",
@@ -931,6 +998,15 @@ function reduceAdvanceTick(
             kind: "encounter",
             id: encounter.id,
           },
+          ...(warningSatisfactionDelta === 0
+            ? {}
+            : {
+                reward: {
+                  cashDelta: 0,
+                  learningXpDelta: 0,
+                  satisfactionDelta: warningSatisfactionDelta,
+                },
+              }),
         });
       }
     }
@@ -1099,6 +1175,22 @@ function reducePlaceRoom(
   }
   const getDefinition = (definitionId: string) =>
     getRoomDefinition(definitionId, context);
+  if (
+    !isPlacementAttachedThroughOwnEntrance(
+      placedRoom,
+      definition,
+      state.rooms,
+      getDefinition,
+    )
+  ) {
+    return rejectCommand(
+      state,
+      command,
+      definition.kind === "hallway"
+        ? "Connect this hallway to the Front Desk, another room, or its hallway network."
+        : "Rotate and place the room so its visible door opens into a connected room or hallway.",
+    );
+  }
   const connected = validateFacilityConnectivity(
     [...state.rooms, placedRoom],
     getDefinition,
@@ -1109,8 +1201,8 @@ function reducePlaceRoom(
       state,
       command,
       definition.kind === "hallway"
-        ? "Connect this hallway to the Front Desk hallway."
-        : "The room door must connect to the Front Desk through a hallway.",
+        ? "Connect this hallway to the Front Desk, another room, or its hallway network."
+        : "The room must remain reachable from the Front Desk.",
     );
   }
 
@@ -1652,12 +1744,23 @@ export function createInitialGameState(
   if (!Number.isSafeInteger(createdAtRealMs) || createdAtRealMs < 0) {
     throw new Error("Campaign creation needs a valid real-world timestamp.");
   }
+  const campaignSeed = options.campaignSeed ?? "prototype-seed-0001";
+  const founderName = options.founder?.displayName.trim() ?? "Founder";
+  if (founderName.length === 0 || founderName.length > 60) {
+    throw new Error("The founder name must contain between 1 and 60 characters.");
+  }
   const state: GameState = {
-    schemaVersion: 3,
+    schemaVersion: 4,
     campaignId: options.campaignId ?? "campaign.local.prototype",
-    campaignSeed: options.campaignSeed ?? "prototype-seed-0001",
+    campaignSeed,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     createdAtRealMs,
+    founder: {
+      displayName: founderName,
+      appearance:
+        options.founder?.appearance ??
+        createPixelAppearance(campaignSeed, "staff", "founder"),
+    },
     clinicalReleaseId: context.clinicalRelease.id,
     balanceReleaseId: context.balanceRelease.id,
     schedulerPins: createSchedulerPins(
@@ -1668,6 +1771,7 @@ export function createInitialGameState(
     paused: false,
     cash: context.balanceRelease.facility.startingCash,
     satisfaction: context.balanceRelease.facility.startingSatisfaction,
+    dailyConfidenceSatisfactionModifier: 0,
     clinicalXp: 0,
     openChartEncounterId: null,
     attendedEncounterId: null,

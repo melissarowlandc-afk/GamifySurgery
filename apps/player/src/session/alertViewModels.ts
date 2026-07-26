@@ -4,6 +4,7 @@ import {
 } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
+  SECOND_TUTORIAL_ENCOUNTER_ID,
   deterministicInteger,
   getFacilityProgressionStatus,
   type DomainEvent,
@@ -318,19 +319,56 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
 
 function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
   const messages: MessageBoardItemView[] = [];
-  if (state.cash < 100) {
+  const lowCashThreshold =
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
+      .cashEligibilityThreshold;
+  if (state.cash < lowCashThreshold) {
     const definition = PROTOTYPE_ALERT_DEFINITIONS.find(
       (candidate) => candidate.id === "alert.finance.low-cash",
+    );
+    const configuredCopy = configuredAlertCopy(
+      "alert.finance.low-cash",
+      { threshold: String(lowCashThreshold) },
+      definition?.titleTemplate ?? "Low cash",
+      `Less than $${lowCashThreshold} remains.`,
     );
     messages.push({
       id: "persistent.finance.low-cash",
       priority: "action_required",
-      title: definition?.titleTemplate ?? "Low cash",
-      message: definition?.bodyTemplate ?? "Less than $100 remains.",
+      title: configuredCopy.title,
+      message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "emergency_glp1",
       actionLabel: "Open emergency cash option",
       sortKey: state.facilityTick + 0.6,
+      persistent: true,
+    });
+  }
+  const secondTutorial =
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+  const hasExaminationRoom = state.rooms.some(
+    (room) => room.roomDefinitionId === "room.examination",
+  );
+  if (
+    state.facilityLevel === 0 &&
+    secondTutorial?.lifecycle === "resolved" &&
+    !hasExaminationRoom
+  ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.facility.private-exam-needed",
+      { patient_name: secondTutorial.patientDisplayName },
+      "Private exam space needed",
+      `${secondTutorial.patientDisplayName} would prefer not to discuss protected health information at the Front Desk. Build an Examination Room.`,
+    );
+    messages.push({
+      id: "persistent.facility.private-exam-needed",
+      priority: "action_required",
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "goal",
+      actionLabel: "View goal",
+      sortKey: state.facilityTick + 0.65,
       persistent: true,
     });
   }

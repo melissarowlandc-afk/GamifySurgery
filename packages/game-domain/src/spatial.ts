@@ -180,31 +180,142 @@ export function getHallwayTileKeys(
   return hallwayTileKeys(rooms, getDefinition);
 }
 
-function floodConnectedTiles(
-  allowed: ReadonlySet<string>,
-  starts: readonly GridPoint[],
+function roomNodeKey(roomId: string): string {
+  return `room:${roomId}`;
+}
+
+function hallwayNodeKey(point: GridPoint | string): string {
+  return `hallway:${typeof point === "string" ? point : pointKey(point)}`;
+}
+
+function connectNodes(
+  adjacency: Map<string, Set<string>>,
+  left: string,
+  right: string,
+): void {
+  const leftNeighbors = adjacency.get(left) ?? new Set<string>();
+  const rightNeighbors = adjacency.get(right) ?? new Set<string>();
+  leftNeighbors.add(right);
+  rightNeighbors.add(left);
+  adjacency.set(left, leftNeighbors);
+  adjacency.set(right, rightNeighbors);
+}
+
+function floodConnectedNodes(
+  adjacency: ReadonlyMap<string, ReadonlySet<string>>,
+  starts: readonly string[],
 ): Set<string> {
   const visited = new Set<string>();
-  const queue: GridPoint[] = [];
+  const queue: string[] = [];
   for (const start of starts) {
-    const key = pointKey(start);
-    if (allowed.has(key) && !visited.has(key)) {
-      visited.add(key);
+    if (adjacency.has(start) && !visited.has(start)) {
+      visited.add(start);
       queue.push(start);
     }
   }
   while (queue.length > 0) {
     const current = queue.shift()!;
-    for (const step of CARDINAL_STEPS) {
-      const next = { x: current.x + step.x, y: current.y + step.y };
-      const key = pointKey(next);
-      if (allowed.has(key) && !visited.has(key)) {
-        visited.add(key);
+    for (const next of adjacency.get(current) ?? []) {
+      if (!visited.has(next)) {
+        visited.add(next);
         queue.push(next);
       }
     }
   }
   return visited;
+}
+
+function pointIsInsideRoom(
+  point: GridPoint,
+  room: PlacedRoom,
+  definition: RoomDefinition,
+): boolean {
+  const { width, height } = getRotatedFootprint(
+    definition,
+    room.orientation,
+  );
+  return (
+    point.x >= room.x &&
+    point.x < room.x + width &&
+    point.y >= room.y &&
+    point.y < room.y + height
+  );
+}
+
+/**
+ * Placement-time entrance rule.
+ *
+ * Existing rooms may remain reachable through an entrance cut by a newer
+ * neighboring room or hallway. A newly placed clinical room, however, must
+ * use its own visible, rotated door to join the existing facility. Keeping
+ * this separate from whole-facility validation makes rotation meaningful
+ * without making later remodeling unnecessarily brittle.
+ */
+export function isPlacementAttachedThroughOwnEntrance(
+  candidate: PlacedRoom,
+  candidateDefinition: RoomDefinition,
+  existingRooms: readonly PlacedRoom[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): boolean {
+  if (candidateDefinition.kind !== "hallway") {
+    const approach = getRoomDoorApproachCell(candidate, candidateDefinition);
+    if (!approach) {
+      return false;
+    }
+    return existingRooms.some((room) => {
+      const definition = getDefinition(room.roomDefinitionId);
+      if (!definition) {
+        return false;
+      }
+      return definition.kind === "hallway"
+        ? getOccupiedTiles(room, definition).some(
+            (tile) => pointKey(tile) === pointKey(approach),
+          )
+        : pointIsInsideRoom(approach, room, definition);
+    });
+  }
+
+  const existingHallways = hallwayTileKeys(existingRooms, getDefinition);
+  const existingClinicalRooms = existingRooms.flatMap((room) => {
+    const definition = getDefinition(room.roomDefinitionId);
+    return definition && definition.kind !== "hallway"
+      ? [{ room, definition }]
+      : [];
+  });
+  return getOccupiedTiles(candidate, candidateDefinition).some((tile) =>
+    CARDINAL_STEPS.some((step) => {
+      const neighbor = { x: tile.x + step.x, y: tile.y + step.y };
+      return (
+        existingHallways.has(pointKey(neighbor)) ||
+        existingClinicalRooms.some(({ room, definition }) =>
+          pointIsInsideRoom(neighbor, room, definition),
+        )
+      );
+    }),
+  );
+}
+
+/**
+ * A placed room owns one author-controlled, rotatable door. That door may
+ * open into an adjacent room without requiring the host room to spend its own
+ * door on the same threshold. This lets an existing room accept several
+ * future connections while every newly placed room still has an explicit,
+ * visible entrance.
+ */
+function roomsConnectDirectly(
+  left: PlacedRoom,
+  leftDefinition: RoomDefinition,
+  right: PlacedRoom,
+  rightDefinition: RoomDefinition,
+): boolean {
+  const leftApproach = getRoomDoorApproachCell(left, leftDefinition);
+  const rightApproach = getRoomDoorApproachCell(right, rightDefinition);
+  return (
+    (leftApproach !== null &&
+      pointIsInsideRoom(leftApproach, right, rightDefinition)) ||
+    (rightApproach !== null &&
+      pointIsInsideRoom(rightApproach, left, leftDefinition))
+  );
 }
 
 export interface FacilityConnectivityResult {
@@ -219,20 +330,82 @@ export function validateFacilityConnectivity(
   protectedRoomDefinitionIds: ReadonlySet<string>,
 ): FacilityConnectivityResult {
   const hallwayKeys = hallwayTileKeys(rooms, getDefinition);
-  const protectedDoorApproaches = rooms.flatMap((room) => {
+  const adjacency = new Map<string, Set<string>>();
+  for (const hallwayKey of hallwayKeys) {
+    const hallwayNode = hallwayNodeKey(hallwayKey);
+    adjacency.set(hallwayNode, adjacency.get(hallwayNode) ?? new Set());
+    const hallwayPoint = parsePointKey(hallwayKey);
+    for (const step of CARDINAL_STEPS) {
+      const neighbor = {
+        x: hallwayPoint.x + step.x,
+        y: hallwayPoint.y + step.y,
+      };
+      if (hallwayKeys.has(pointKey(neighbor))) {
+        connectNodes(adjacency, hallwayNode, hallwayNodeKey(neighbor));
+      }
+    }
+  }
+
+  const doorRooms = rooms.flatMap((room) => {
     const definition = getDefinition(room.roomDefinitionId);
-    if (
-      !definition ||
-      !protectedRoomDefinitionIds.has(room.roomDefinitionId)
-    ) {
+    if (!definition || definition.kind === "hallway") {
       return [];
     }
+    const node = roomNodeKey(room.id);
+    adjacency.set(node, adjacency.get(node) ?? new Set());
     const approach = getRoomDoorApproachCell(room, definition);
-    return approach ? [approach] : [];
+    if (approach && hallwayKeys.has(pointKey(approach))) {
+      connectNodes(adjacency, node, hallwayNodeKey(approach));
+    }
+    // A hallway placed against a room cuts an inbound threshold at that
+    // shared wall. This keeps hallways useful after rooms have already been
+    // connected directly and permits later branching/remodeling.
+    for (const tile of getOccupiedTiles(room, definition)) {
+      for (const step of CARDINAL_STEPS) {
+        const neighborKey = pointKey({
+          x: tile.x + step.x,
+          y: tile.y + step.y,
+        });
+        if (hallwayKeys.has(neighborKey)) {
+          connectNodes(adjacency, node, hallwayNodeKey(neighborKey));
+        }
+      }
+    }
+    return [{ room, definition }];
   });
-  const connectedHallways = floodConnectedTiles(
-    hallwayKeys,
-    protectedDoorApproaches,
+
+  for (let leftIndex = 0; leftIndex < doorRooms.length; leftIndex += 1) {
+    const left = doorRooms[leftIndex]!;
+    for (
+      let rightIndex = leftIndex + 1;
+      rightIndex < doorRooms.length;
+      rightIndex += 1
+    ) {
+      const right = doorRooms[rightIndex]!;
+      if (
+        roomsConnectDirectly(
+          left.room,
+          left.definition,
+          right.room,
+          right.definition,
+        )
+      ) {
+        connectNodes(
+          adjacency,
+          roomNodeKey(left.room.id),
+          roomNodeKey(right.room.id),
+        );
+      }
+    }
+  }
+
+  const connectedNodes = floodConnectedNodes(
+    adjacency,
+    doorRooms
+      .filter(({ room }) =>
+        protectedRoomDefinitionIds.has(room.roomDefinitionId),
+      )
+      .map(({ room }) => roomNodeKey(room.id)),
   );
   const disconnectedRoomIds: string[] = [];
 
@@ -245,14 +418,13 @@ export function validateFacilityConnectivity(
     ) {
       continue;
     }
-    const approach = getRoomDoorApproachCell(room, definition);
-    if (!approach || !connectedHallways.has(pointKey(approach))) {
+    if (!connectedNodes.has(roomNodeKey(room.id))) {
       disconnectedRoomIds.push(room.id);
     }
   }
 
   const disconnectedHallwayTiles = [...hallwayKeys]
-    .filter((key) => !connectedHallways.has(key))
+    .filter((key) => !connectedNodes.has(hallwayNodeKey(key)))
     .map(parsePointKey);
   return {
     connected:
@@ -299,49 +471,138 @@ export function findDeterministicPath(
   return [];
 }
 
-function appendWithoutDuplicate(
-  target: GridPoint[],
-  points: readonly GridPoint[],
-): void {
-  for (const point of points) {
-    const previous = target.at(-1);
-    if (!previous || previous.x !== point.x || previous.y !== point.y) {
-      target.push({ ...point });
+function tileAdjacencyForFacility(
+  rooms: readonly PlacedRoom[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): Map<string, Set<string>> {
+  const adjacency = new Map<string, Set<string>>();
+  const roomTiles = new Map<
+    string,
+    { room: PlacedRoom; definition: RoomDefinition }
+  >();
+  const hallways = new Set<string>();
+
+  for (const room of rooms) {
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition) {
+      continue;
+    }
+    for (const tile of getOccupiedTiles(room, definition)) {
+      const key = pointKey(tile);
+      adjacency.set(key, adjacency.get(key) ?? new Set());
+      if (definition.kind === "hallway") {
+        hallways.add(key);
+      } else {
+        roomTiles.set(key, { room, definition });
+      }
     }
   }
+
+  // Every tile within the same room is traversable. Hallway tiles connect to
+  // one another and cut an inbound threshold where they touch a room wall.
+  for (const [key, owner] of roomTiles) {
+    const point = parsePointKey(key);
+    for (const step of CARDINAL_STEPS) {
+      const neighborKey = pointKey({
+        x: point.x + step.x,
+        y: point.y + step.y,
+      });
+      if (roomTiles.get(neighborKey)?.room.id === owner.room.id) {
+        connectNodes(adjacency, key, neighborKey);
+      }
+    }
+  }
+  for (const key of hallways) {
+    const point = parsePointKey(key);
+    for (const step of CARDINAL_STEPS) {
+      const neighborKey = pointKey({
+        x: point.x + step.x,
+        y: point.y + step.y,
+      });
+      if (hallways.has(neighborKey)) {
+        connectNodes(adjacency, key, neighborKey);
+      } else if (roomTiles.has(neighborKey)) {
+        connectNodes(adjacency, key, neighborKey);
+      }
+    }
+  }
+
+  // A room crosses its wall only at its own door. The outside cell may be a
+  // hallway or any tile inside another non-overlapping room.
+  for (const room of rooms) {
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition || definition.kind === "hallway") {
+      continue;
+    }
+    const door = getRoomDoorCell(room, definition);
+    const approach = getRoomDoorApproachCell(room, definition);
+    if (!door || !approach) {
+      continue;
+    }
+    const approachKey = pointKey(approach);
+    if (hallways.has(approachKey) || roomTiles.has(approachKey)) {
+      connectNodes(adjacency, pointKey(door), approachKey);
+    }
+  }
+
+  return adjacency;
 }
 
-function findOpenGridPath(start: GridPoint, goal: GridPoint): GridPoint[] {
-  const path: GridPoint[] = [{ ...start }];
-  let cursor = { ...start };
-  while (cursor.x !== goal.x) {
-    cursor = {
-      x: cursor.x + Math.sign(goal.x - cursor.x),
-      y: cursor.y,
-    };
-    path.push(cursor);
+function findDeterministicAdjacencyPath(
+  start: GridPoint,
+  goal: GridPoint,
+  adjacency: ReadonlyMap<string, ReadonlySet<string>>,
+): GridPoint[] {
+  const startKey = pointKey(start);
+  const goalKey = pointKey(goal);
+  if (!adjacency.has(startKey) || !adjacency.has(goalKey)) {
+    return [];
   }
-  while (cursor.y !== goal.y) {
-    cursor = {
-      x: cursor.x,
-      y: cursor.y + Math.sign(goal.y - cursor.y),
-    };
-    path.push(cursor);
+  const queue: GridPoint[] = [{ ...start }];
+  const parent = new Map<string, string | null>([[startKey, null]]);
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+    const currentKey = pointKey(current);
+    if (currentKey === goalKey) {
+      const reversed: GridPoint[] = [];
+      let cursor: string | null = currentKey;
+      while (cursor !== null) {
+        reversed.push(parsePointKey(cursor));
+        cursor = parent.get(cursor) ?? null;
+      }
+      return reversed.reverse();
+    }
+    const neighbors = adjacency.get(currentKey);
+    for (const step of CARDINAL_STEPS) {
+      const next = {
+        x: current.x + step.x,
+        y: current.y + step.y,
+      };
+      const nextKey = pointKey(next);
+      if (neighbors?.has(nextKey) && !parent.has(nextKey)) {
+        parent.set(nextKey, currentKey);
+        queue.push(next);
+      }
+    }
   }
-  return path;
+  return [];
 }
 
 /**
- * Finds a stable door-to-hallway route between two room instances.
+ * Finds a stable route between two room instances.
  *
- * Room interiors are traversed only between their center and explicit door;
- * the portion between door approaches is restricted to placed hallway tiles.
+ * Room interiors, room-owned thresholds, and hallways form one deterministic
+ * tile graph. A route may therefore cross intermediate rooms or hallways, but
+ * it can never pass through an arbitrary wall.
  */
 export function findDeterministicRoomPath(
   origin: PlacedRoom,
   destination: PlacedRoom,
   getDefinition: (definitionId: string) => RoomDefinition | null,
   rooms: readonly PlacedRoom[],
+  protectedRoomDefinitionIds: ReadonlySet<string> = new Set([
+    origin.roomDefinitionId,
+  ]),
 ): GridPoint[] {
   const originDefinition = getDefinition(origin.roomDefinitionId);
   const destinationDefinition = getDefinition(
@@ -353,49 +614,20 @@ export function findDeterministicRoomPath(
   if (origin.id === destination.id) {
     return [getRoomCenter(origin, originDefinition)];
   }
-  const originDoor = getRoomDoorCell(origin, originDefinition);
-  const originApproach = getRoomDoorApproachCell(origin, originDefinition);
-  const destinationDoor = getRoomDoorCell(
-    destination,
-    destinationDefinition,
-  );
-  const destinationApproach = getRoomDoorApproachCell(
-    destination,
-    destinationDefinition,
-  );
   if (
-    !originDoor ||
-    !originApproach ||
-    !destinationDoor ||
-    !destinationApproach
+    !validateFacilityConnectivity(
+      rooms,
+      getDefinition,
+      protectedRoomDefinitionIds,
+    ).connected
   ) {
     return [];
   }
-  const hallwayPath = findDeterministicPath(
-    originApproach,
-    destinationApproach,
-    hallwayTileKeys(rooms, getDefinition),
+  return findDeterministicAdjacencyPath(
+    getRoomCenter(origin, originDefinition),
+    getRoomCenter(destination, destinationDefinition),
+    tileAdjacencyForFacility(rooms, getDefinition),
   );
-  if (hallwayPath.length === 0) {
-    return [];
-  }
-  const path: GridPoint[] = [];
-  appendWithoutDuplicate(
-    path,
-    findOpenGridPath(
-      getRoomCenter(origin, originDefinition),
-      originDoor,
-    ),
-  );
-  appendWithoutDuplicate(path, hallwayPath);
-  appendWithoutDuplicate(
-    path,
-    findOpenGridPath(
-      destinationDoor,
-      getRoomCenter(destination, destinationDefinition),
-    ),
-  );
-  return path;
 }
 
 export function getFacilityWalkableTileKeys(

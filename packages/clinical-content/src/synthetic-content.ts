@@ -104,6 +104,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       displayName: "Intro Patient 1: Interface Tutorial",
       patientPresentationVariantId: "presentation.synthetic.tutorial-a",
       patientDisplayName: "Pixel Patient",
+      prototypeDemographics: {
+        ageYears: 42,
+        sexLabel: "Not specified",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 72,
+        systolicBloodPressureMmHg: 118,
+        diastolicBloodPressureMmHg: 74,
+        temperatureF: 98.6,
+        oxygenSaturationPercent: 99,
+      },
+      chiefComplaint: "A card marked SIGNAL ALPHA",
       presentation:
         "Pixel Patient arrives carrying a card marked SIGNAL ALPHA.",
       tutorialEligible: true,
@@ -132,11 +144,17 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
               id: "choice.signal.beta",
               label: "SIGNAL BETA",
               isCorrect: false,
+              serviceRequest: {
+                serviceId: "service.synthetic.analysis",
+              },
             },
             {
               id: "choice.signal.gamma",
               label: "SIGNAL GAMMA",
               isCorrect: false,
+              serviceRequest: {
+                serviceId: "service.synthetic.analysis",
+              },
             },
           ],
           shuffleAnswers: true,
@@ -225,6 +243,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       displayName: "Intro Patient 2: Laceration",
       patientPresentationVariantId: "presentation.prototype.laceration-a",
       patientDisplayName: "Morgan Thread",
+      prototypeDemographics: {
+        ageYears: 34,
+        sexLabel: "Female",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 78,
+        systolicBloodPressureMmHg: 122,
+        diastolicBloodPressureMmHg: 76,
+        temperatureF: 98.4,
+        oxygenSaturationPercent: 99,
+      },
+      chiefComplaint: "Recent uncomplicated laceration",
       presentation:
         "An adult presents to the small clinic with a recent uncomplicated laceration. The chart has not yet documented wound cleaning or tetanus vaccination history.",
       tutorialEligible: true,
@@ -289,6 +319,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       displayName: "Clinic Patient: Abscess",
       patientPresentationVariantId: "presentation.prototype.abscess-a",
       patientDisplayName: "Avery Pixel",
+      prototypeDemographics: {
+        ageYears: 39,
+        sexLabel: "Male",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 80,
+        systolicBloodPressureMmHg: 124,
+        diastolicBloodPressureMmHg: 78,
+        temperatureF: 98.8,
+        oxygenSaturationPercent: 98,
+      },
+      chiefComplaint: "Painful fluctuant skin lesion",
       presentation:
         "An otherwise healthy, stable adult has one superficial, accessible, fluctuant and drainable skin abscess. There is no systemic illness, major host-risk factor, special anatomic location, or concern for deeper infection.",
       tutorialEligible: false,
@@ -353,6 +395,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       patientPresentationVariantId:
         "presentation.prototype.postoperative-symptoms-a",
       patientDisplayName: "Jordan Grid",
+      prototypeDemographics: {
+        ageYears: 58,
+        sexLabel: "Female",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 96,
+        systolicBloodPressureMmHg: 108,
+        diastolicBloodPressureMmHg: 68,
+        temperatureF: 99.1,
+        oxygenSaturationPercent: 97,
+      },
+      chiefComplaint: "Postoperative vomiting and distension",
       presentation:
         "A postoperative adult presents to the clinic with progressive abdominal distension, vomiting, and inability to tolerate oral intake.",
       tutorialEligible: false,
@@ -432,6 +486,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       displayName: "Clinic Patient: Symptomatic Cholelithiasis",
       patientPresentationVariantId: "presentation.prototype.cholelithiasis-a",
       patientDisplayName: "Riley Mono",
+      prototypeDemographics: {
+        ageYears: 46,
+        sexLabel: "Female",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 74,
+        systolicBloodPressureMmHg: 126,
+        diastolicBloodPressureMmHg: 80,
+        temperatureF: 98.5,
+        oxygenSaturationPercent: 99,
+      },
+      chiefComplaint: "Recurrent postprandial right-upper-quadrant pain",
       presentation:
         "A stable adult has recurrent episodic postprandial right-upper-quadrant pain and previously documented gallstones. They have no fever, jaundice, persistent pain, or other acute-complication features.",
       tutorialEligible: false,
@@ -497,6 +563,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       displayName: "Practice Patient: X-ray Routing Drill",
       patientPresentationVariantId: "presentation.synthetic.xray-routing-a",
       patientDisplayName: "Cameron Dither",
+      prototypeDemographics: {
+        ageYears: 29,
+        sexLabel: "Male",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 70,
+        systolicBloodPressureMmHg: 116,
+        diastolicBloodPressureMmHg: 72,
+        temperatureF: 98.6,
+        oxygenSaturationPercent: 99,
+      },
+      chiefComplaint: "A card marked REQUEST: X-RAY",
       presentation:
         "Cameron carries a software-test card marked REQUEST: X-RAY. The card contains no real clinical findings.",
       tutorialEligible: false,
@@ -598,6 +676,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       displayName: "Practice Patient: Laboratory Routing Drill",
       patientPresentationVariantId: "presentation.synthetic.lab-routing-a",
       patientDisplayName: "Devon Sprite",
+      prototypeDemographics: {
+        ageYears: 51,
+        sexLabel: "Not specified",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 76,
+        systolicBloodPressureMmHg: 120,
+        diastolicBloodPressureMmHg: 76,
+        temperatureF: 98.7,
+        oxygenSaturationPercent: 98,
+      },
+      chiefComplaint: "A card marked REQUEST: BASIC LABS",
       presentation:
         "Devon carries a software-test card marked REQUEST: BASIC LABS and FINAL TOKEN: ROUTINE RETURN.",
       tutorialEligible: false,
@@ -697,6 +787,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       patientPresentationVariantId:
         "presentation.synthetic.three-step-routing-a",
       patientDisplayName: "Harper Bitmap",
+      prototypeDemographics: {
+        ageYears: 44,
+        sexLabel: "Female",
+      },
+      prototypeVitalSigns: {
+        heartRateBpm: 82,
+        systolicBloodPressureMmHg: 128,
+        diastolicBloodPressureMmHg: 78,
+        temperatureF: 98.9,
+        oxygenSaturationPercent: 99,
+      },
+      chiefComplaint: "A three-step workflow card",
       presentation:
         "Harper's artificial workflow card reads BASIC LABS, then X-RAY, then ROUTINE RETURN.",
       tutorialEligible: false,

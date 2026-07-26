@@ -616,6 +616,7 @@ Owned by an account and permanently pinned to:
 - FSRS resolved parameter-set version
 - Randomness-contract version
 - 128-bit campaign root seed
+- Founder display name and immutable pixel-appearance descriptor
 
 The campaign also stores an initial and current clinical release. The current
 clinical release can advance only through a validated compatibility edge and an
@@ -662,6 +663,11 @@ shape, trusted evidence, and basic invariants before accepting it. The snapshot
 must preserve exact logical facility time and enough versioned simulation and
 randomness state to continue reproducibly. The server does not continuously
 run the facility or certify every ordinary client action.
+
+The current Level 0-1 snapshot separately stores base facility satisfaction
+and the capped same-day clinical-confidence satisfaction modifier. Effective
+satisfaction is derived from those values. The modifier resets at the next
+facility-day rollover; it is not folded permanently into the base value.
 
 ### Random stream state
 
@@ -776,8 +782,15 @@ the frozen service target or ETA. Refresh or device takeover restores and shows
 a valid attended chart while paused, or clears attendance at the unchanged
 facility tick before Resume. Stale-writer attention commands fail lease and
 revision checks. All delay accrual and attendance stop at
-`resolved_summary_available`, and answer-related plus delay-related
-satisfaction effects share the patient-level cap.
+`resolved_summary_available`. Future delay-related satisfaction effects remain
+patient-capped. In the current Level 0-1 prototype, answer correctness uses the
+separate same-day campaign modifier from ADR 0033 rather than this delay cap.
+
+Each runtime encounter also stores its bounded patient-confidence value. The
+Level 0-1 prototype initializes it to 50 and applies idempotent +10/-10 changes
+from correct/incorrect first scored decisions. The corresponding correct
+decision awards Learning XP in the same atomic command; encounter settlement
+later pays cash without awarding that XP a second time.
 
 ### Clinic workload and arrival gate
 

@@ -24,6 +24,7 @@ export interface PrototypeAlertDefinition {
     | "learning_review_scheduled"
     | "room_placed"
     | "room_unreachable"
+    | "private_exam_needed"
     | "staff_hired"
     | "staff_unreachable"
     | "operating_expense"
@@ -182,13 +183,27 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     trigger: "room_unreachable",
     priority: "action_required",
     titleTemplate: "Room cannot operate",
-    bodyTemplate: "{{room_name}} has no hallway path to the Front Desk.",
+    bodyTemplate: "{{room_name}} has no connected path to the Front Desk.",
     targetKind: "room",
     clickAction: "open_room",
     persistent: true,
     tickerEligible: false,
     eligibleFacilityLevels: [0, 1],
     consolidationKeyTemplate: "room:{{room_id}}:unreachable",
+  },
+  {
+    id: "alert.facility.private-exam-needed",
+    trigger: "private_exam_needed",
+    priority: "action_required",
+    titleTemplate: "Private exam space needed",
+    bodyTemplate:
+      "{{patient_name}} would prefer not to discuss protected health information at the Front Desk. Build an Examination Room.",
+    targetKind: "task",
+    clickAction: "open_task",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [0],
+    consolidationKeyTemplate: "facility:private-exam-needed",
   },
   {
     id: "alert.staff.hired",
@@ -234,7 +249,7 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     trigger: "low_cash",
     priority: "action_required",
     titleTemplate: "Low cash",
-    bodyTemplate: "Less than $100 remains.",
+    bodyTemplate: "Less than ${{threshold}} remains.",
     targetKind: "system",
     clickAction: "open_system",
     persistent: true,

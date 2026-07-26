@@ -26,8 +26,13 @@ pathfinding model already accepted in ADR 0006.
   facility that was already paused does not silently resume.
 - Rooms have saved orientations and explicit door locations. Rotation changes
   both the footprint orientation and door side.
-- Hallways are functional walkable tiles. A placed room that has no valid door
-  path to the Front Desk/entrance remains visibly inactive until connected.
+- A newly placed room must use its own visible, rotated door to open into an
+  already connected room or hallway. Existing rooms may accept more than one
+  inbound connection, so rooms may connect directly to rooms and hallways are
+  not mandatory between every pair.
+- Hallways are functional walkable tiles. Placement is rejected when the
+  candidate cannot join the connected Front Desk/entrance network; selling is
+  rejected when it would strand a remaining room or hallway.
 - Staff and patients follow deterministic logical paths. Walking between
   interaction points is visible and contributes to operational task time.
 - The player may build multiple instances of an unlocked room definition.
@@ -44,6 +49,8 @@ than decorative claims.
 ## Consequences
 
 - Layout and door choices have understandable operational meaning.
+- Separating placement-time entrance validation from whole-facility
+  reachability keeps rotation meaningful while allowing safe later remodeling.
 - The build interface can grow independently from the ordinary play layout.
 - Save data must retain room orientation, doors, hallways, connectivity, and
   agent route state.

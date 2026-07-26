@@ -16,6 +16,7 @@ import {
   deserializeGameState,
   gameReducer,
   getCurrentQuestion,
+  getEffectiveSatisfaction,
   getLearningSummary,
   getFacilityProgressionStatus,
   getPatientLists,
@@ -116,6 +117,77 @@ describe("validated synthetic prototype data", () => {
     expect(PROTOTYPE_BALANCE_RELEASE.publicationStatus).toBe(
       "prototype_unpublished",
     );
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.startingCash).toBe(90);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.startingSatisfaction).toBe(95);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.gridWidth).toBe(24);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.staffMovementIntervalTicks,
+    ).toBe(1);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.initialRooms).toHaveLength(1);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.initialRooms[0]).toMatchObject({
+      id: "room.instance.founder_desk",
+      roomDefinitionId: "room.front_desk",
+      x: 9,
+      y: 6,
+      orientation: 0,
+      doorSide: "north",
+    });
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.initialRooms.some(
+        (room) => room.roomDefinitionId === "room.hallway",
+      ),
+    ).toBe(false);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+        (room) => room.id === "room.hallway",
+      )?.constructionCost,
+    ).toBe(30);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+        (room) => room.id === "room.examination",
+      )?.constructionCost,
+    ).toBe(130);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map((role) => [
+        role.id,
+        role.hiringCost,
+        role.salaryPerExpenseInterval,
+      ]),
+    ).toEqual([
+      ["staff.receptionist", 180, 18],
+      ["staff.imaging_technician", 300, 26],
+    ]);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions).toEqual([
+      expect.objectContaining({
+        level: 0,
+        minimumClinicalXp: 10,
+        minimumCompletedEncounters: 0,
+        requiredRoomDefinitionIds: ["room.examination"],
+        requiredStaffRoleIds: [],
+        nextFacilityLevel: 1,
+      }),
+      expect.objectContaining({
+        level: 1,
+        minimumClinicalXp: 60,
+        minimumCompletedEncounters: 0,
+        requiredRoomDefinitionIds: [
+          "room.xray",
+          "room.imaging_control",
+          "room.minor_procedure",
+        ],
+        requiredStaffRoleIds: ["staff.imaging_technician"],
+        nextFacilityLevel: null,
+      }),
+    ]);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.clinicalSettlement.patientRewardTiers.map(
+        (tier) => [tier.id, tier.completionRevenue],
+      ),
+    ).toEqual([
+      ["reward.tutorial", 45],
+      ["reward.clinic_basic", 75],
+      ["reward.referral", 60],
+    ]);
 
     const invalid = cloneFixture(SYNTHETIC_CLINICAL_RELEASE);
     invalid.cases[0]!.decisionNodes[1]!.terminalDispositions.pop();
@@ -157,7 +229,15 @@ describe("tutorial clinical lifecycle", () => {
     expect(state.openChartEncounterId).toBe(TUTORIAL_ENCOUNTER_ID);
     expect(state.attendedEncounterId).toBe(TUTORIAL_ENCOUNTER_ID);
 
+    const cashBeforeFirstDecision = state.cash;
     state = answer(state, "choice.signal.beta", "op.first-wrong");
+    expect(state.cash).toBe(cashBeforeFirstDecision);
+    expect(state.clinicalXp).toBe(0);
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientConfidence,
+    ).toBe(40);
+    expect(state.dailyConfidenceSatisfactionModifier).toBe(-1);
+    expect(getEffectiveSatisfaction(state)).toBe(94);
     expect(state.reviewIntents).toHaveLength(1);
     expect(state.reviewIntents[0]!.rating).toBe("Again");
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.lifecycle).toBe(
@@ -215,14 +295,24 @@ describe("tutorial clinical lifecycle", () => {
       "Again",
     ]);
     expect(state.settlements).toHaveLength(1);
-    expect(state.cash).toBe(140);
-    expect(state.satisfaction).toBe(93);
+    expect(state.cash).toBe(cashBeforeFirstDecision + 40);
+    expect(state.satisfaction).toBe(95);
+    expect(state.dailyConfidenceSatisfactionModifier).toBe(-2);
+    expect(getEffectiveSatisfaction(state)).toBe(93);
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientConfidence,
+    ).toBe(30);
     expect(state.clinicalXp).toBe(0);
 
     const idempotentRetry = gameReducer(state, finalAnswerCommand);
     expect(idempotentRetry).toBe(state);
     expect(idempotentRetry.settlements).toHaveLength(1);
     expect(idempotentRetry.reviewIntents).toHaveLength(2);
+    expect(idempotentRetry.clinicalXp).toBe(0);
+    expect(idempotentRetry.dailyConfidenceSatisfactionModifier).toBe(-2);
+    expect(
+      idempotentRetry.encounters[TUTORIAL_ENCOUNTER_ID]!.patientConfidence,
+    ).toBe(30);
 
     state = gameReducer(state, {
       type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
@@ -252,7 +342,40 @@ describe("tutorial clinical lifecycle", () => {
 
   it("maps correct answers to Good and applies one normalized all-correct settlement", () => {
     let state = openTutorial(createInitialGameState());
-    state = answer(state, "choice.signal.alpha", "op.good.signal");
+    const firstAnswerCommand = {
+      type: "SUBMIT_ANSWER" as const,
+      operationId: "op.good.signal",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+      decisionNodeId: "node.synthetic.signal",
+      answerChoiceId: "choice.signal.alpha",
+    };
+    state = gameReducer(state, firstAnswerCommand);
+    expect(state.cash).toBe(90);
+    expect(state.clinicalXp).toBe(5);
+    expect(state.dailyConfidenceSatisfactionModifier).toBe(1);
+    expect(getEffectiveSatisfaction(state)).toBe(96);
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientConfidence,
+    ).toBe(60);
+    expect(
+      state.events.find(
+        (event) =>
+          event.type === "clinical_decision_recorded" &&
+          event.encounterId === TUTORIAL_ENCOUNTER_ID,
+      )?.reward,
+    ).toEqual({
+      cashDelta: 0,
+      learningXpDelta: 5,
+      satisfactionDelta: 0,
+    });
+
+    const idempotentRetry = gameReducer(state, firstAnswerCommand);
+    expect(idempotentRetry).toBe(state);
+    expect(idempotentRetry.cash).toBe(90);
+    expect(idempotentRetry.clinicalXp).toBe(5);
+    expect(
+      idempotentRetry.learningHistories["concept.synthetic.signal"]!.reviews,
+    ).toHaveLength(1);
     state = advanceTicks(state, 3, "op.good.result");
     state = answer(state, "choice.action.circle", "op.good.action");
 
@@ -270,9 +393,28 @@ describe("tutorial clinical lifecycle", () => {
       state.encounters[TUTORIAL_ENCOUNTER_ID]!.terminalFeedback?.acknowledged,
     ).toBe(true);
     expect(state.settlements).toHaveLength(1);
-    expect(state.cash).toBe(160);
-    expect(state.satisfaction).toBe(97);
+    expect(state.cash).toBe(150);
+    expect(state.satisfaction).toBe(95);
+    expect(state.dailyConfidenceSatisfactionModifier).toBe(2);
+    expect(getEffectiveSatisfaction(state)).toBe(97);
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientConfidence,
+    ).toBe(70);
     expect(state.clinicalXp).toBe(10);
+    expect(
+      state.events.find(
+        (event) =>
+          event.type === "encounter_settled" &&
+          event.encounterId === TUTORIAL_ENCOUNTER_ID,
+      ),
+    ).toMatchObject({
+      message: "Encounter complete: +$60.",
+      reward: {
+        cashDelta: 60,
+        learningXpDelta: 0,
+        satisfactionDelta: 0,
+      },
+    });
 
     state = gameReducer(state, {
       type: "CLOSE_CHART",
@@ -283,12 +425,108 @@ describe("tutorial clinical lifecycle", () => {
       "resolved",
     );
   });
+
+  it("caps the daily confidence effect and clears it at day rollover", () => {
+    function completeSingleDecision(
+      input: GameState,
+      sequence: number,
+      answerChoiceId: string,
+    ): GameState {
+      const encounterId = `encounter.confidence.${sequence}`;
+      let next = gameReducer(input, {
+        type: "ADMIT_PATIENT",
+        operationId: `confidence.admit.${sequence}`,
+        encounterId,
+        caseId: "case.prototype.abscess",
+        patientDisplayName: `Confidence Patient ${sequence}`,
+        arrivalClass: "routine",
+      });
+      next = gameReducer(next, {
+        type: "OPEN_CHART",
+        operationId: `confidence.open.${sequence}`,
+        encounterId,
+      });
+      const question = getCurrentQuestion(next, encounterId);
+      if (!question) {
+        throw new Error("Expected a confidence-test question.");
+      }
+      next = gameReducer(next, {
+        type: "SUBMIT_ANSWER",
+        operationId: `confidence.answer.${sequence}`,
+        encounterId,
+        decisionNodeId: question.node.id,
+        answerChoiceId,
+        reviewedAtMs: 10_000 + sequence,
+      });
+      if (!next.encounters[encounterId]!.terminalFeedback?.acknowledged) {
+        next = gameReducer(next, {
+          type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+          operationId: `confidence.ack.${sequence}`,
+          encounterId,
+        });
+      }
+      return gameReducer(next, {
+        type: "CLOSE_CHART",
+        operationId: `confidence.close.${sequence}`,
+        encounterId,
+      });
+    }
+
+    let positive = withoutIntroPatients();
+    positive.facilityLevel = 1;
+    positive.nextRoutineArrivalTick = 999;
+    for (let sequence = 1; sequence <= 4; sequence += 1) {
+      positive = completeSingleDecision(
+        positive,
+        sequence,
+        "choice.abscess.drainage",
+      );
+      expect(
+        positive.encounters[`encounter.confidence.${sequence}`]!
+          .patientConfidence,
+      ).toBe(60);
+      expect(positive.dailyConfidenceSatisfactionModifier).toBe(
+        Math.min(sequence, 3),
+      );
+    }
+    expect(getEffectiveSatisfaction(positive)).toBe(98);
+
+    let negative = withoutIntroPatients();
+    negative.facilityLevel = 1;
+    negative.nextRoutineArrivalTick = 999;
+    for (let sequence = 1; sequence <= 4; sequence += 1) {
+      negative = completeSingleDecision(
+        negative,
+        10 + sequence,
+        "choice.abscess.observe-only",
+      );
+      expect(
+        negative.encounters[`encounter.confidence.${10 + sequence}`]!
+          .patientConfidence,
+      ).toBe(40);
+      expect(negative.dailyConfidenceSatisfactionModifier).toBe(
+        Math.max(-sequence, -3),
+      );
+    }
+    expect(getEffectiveSatisfaction(negative)).toBe(92);
+
+    negative = advanceTicks(negative, 10, "confidence.day-rollover");
+    expect(negative.dailyConfidenceSatisfactionModifier).toBe(0);
+    expect(getEffectiveSatisfaction(negative)).toBe(95);
+    expect(negative.events.at(-1)?.type).not.toBe("clinical_decision_recorded");
+    expect(
+      negative.events.some(
+        (event) =>
+          event.type === "day_rollover" && event.facilityTick === 10,
+      ),
+    ).toBe(true);
+  });
 });
 
 describe("facility, capacity, and patience primitives", () => {
   it("places the exam room locally, deducts once, rejects overlap, and enables the fast route", () => {
     let state = completeTutorialIncorrectly();
-    expect(state.cash).toBe(140);
+    expect(state.cash).toBe(130);
     expect(getWorkloadSnapshot(state).routineLimit).toBe(2);
     const initialRoomCount = state.rooms.length;
 
@@ -297,17 +535,17 @@ describe("facility, capacity, and patience primitives", () => {
       operationId: "op.place-exam",
       roomId: "room.instance.exam-1",
       roomDefinitionId: EXAMINATION_ROOM_DEFINITION_ID,
-      x: 7,
-      y: 2,
+      x: 10,
+      y: 4,
     };
     state = gameReducer(state, placement);
-    expect(state.cash).toBe(20);
+    expect(state.cash).toBe(0);
     expect(getWorkloadSnapshot(state).routineLimit).toBe(4);
     expect(state.rooms).toHaveLength(initialRoomCount + 1);
 
     const duplicatePlacement = gameReducer(state, placement);
     expect(duplicatePlacement).toBe(state);
-    expect(duplicatePlacement.cash).toBe(20);
+    expect(duplicatePlacement.cash).toBe(0);
     expect(duplicatePlacement.rooms).toHaveLength(initialRoomCount + 1);
 
     state = gameReducer(state, {
@@ -315,24 +553,24 @@ describe("facility, capacity, and patience primitives", () => {
       operationId: "op.place-overlap",
       roomId: "room.instance.exam-overlap",
       roomDefinitionId: EXAMINATION_ROOM_DEFINITION_ID,
-      x: 4,
-      y: 3,
+      x: 8,
+      y: 4,
     });
     expect(state.operationReceipts["op.place-overlap"]?.status).toBe("rejected");
-    expect(state.cash).toBe(20);
+    expect(state.cash).toBe(0);
 
     state = gameReducer(state, {
       type: "PLACE_ROOM",
       operationId: "op.place-outside-grid",
       roomId: "room.instance.exam-outside",
       roomDefinitionId: EXAMINATION_ROOM_DEFINITION_ID,
-      x: 14,
+      x: 22,
       y: 9,
     });
     expect(state.operationReceipts["op.place-outside-grid"]?.status).toBe(
       "rejected",
     );
-    expect(state.cash).toBe(20);
+    expect(state.cash).toBe(0);
 
     state = gameReducer(state, {
       type: "ADMIT_PATIENT",
@@ -454,7 +692,8 @@ describe("facility, capacity, and patience primitives", () => {
     expect(departed.settlementId).toBeNull();
     expect(state.reviewIntents).toHaveLength(0);
     expect(state.settlements).toHaveLength(0);
-    expect(state.satisfaction).toBe(93);
+    // Two late-wait warnings cost one point each, then leaving costs two.
+    expect(state.satisfaction).toBe(91);
     expect(getLearningSummary(state, departed.id)).toBeNull();
     expect(getPatientLists(state).resolved[0]?.statusLabel).toBe(
       "Left before being seen",
@@ -549,8 +788,8 @@ function completePlayableLevelZero(): GameState {
     operationId: "level0.place.exam",
     roomId: "room.instance.exam.level0",
     roomDefinitionId: EXAMINATION_ROOM_DEFINITION_ID,
-    x: 7,
-    y: 2,
+    x: 10,
+    y: 4,
   });
   return state;
 }
@@ -663,11 +902,14 @@ describe("campaign learning, progression, and Level 1 management", () => {
     const progression = getFacilityProgressionStatus(state);
     expect(progression.facilityLevel).toBe(0);
     expect(progression.eligible).toBe(true);
-    expect(
-      progression.requirements.find(
-        (requirement) => requirement.id === "progression.completed_encounters",
-      )?.current,
-    ).toBe(2);
+    expect(progression.requirements.map((requirement) => requirement.id)).toEqual([
+      "progression.clinical_xp",
+      "progression.satisfaction",
+      "progression.room.room.examination",
+    ]);
+    expect(progression.requirements.every((requirement) => requirement.met)).toBe(
+      true,
+    );
     expect(state.facilityLevel).toBe(0);
 
     state = gameReducer(state, {
@@ -681,20 +923,159 @@ describe("campaign learning, progression, and Level 1 management", () => {
     ).toBe("satisfied");
   });
 
+  it("admits recovery patients until Level 0 remains reachable after both tutorials are answered incorrectly", () => {
+    let state = createInitialGameState(undefined, {
+      campaignId: "campaign.test.level-zero-recovery",
+      campaignSeed: "seed-level-zero-recovery",
+      createdAtRealMs: 1_000_000,
+    });
+
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "recovery.open.first",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    state = answerEncounter(
+      state,
+      TUTORIAL_ENCOUNTER_ID,
+      "choice.signal.beta",
+      "recovery.answer.first.1",
+      1_000_001,
+    );
+    state = advanceTicks(state, 1, "recovery.first.result");
+    state = answerEncounter(
+      state,
+      TUTORIAL_ENCOUNTER_ID,
+      "choice.action.square",
+      "recovery.answer.first.2",
+      1_000_002,
+    );
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      operationId: "recovery.ack.first",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "recovery.close.first",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+
+    state = advanceTicks(state, 1, "recovery.second.arrival");
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "recovery.open.second",
+      encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+    });
+    state = answerEncounter(
+      state,
+      SECOND_TUTORIAL_ENCOUNTER_ID,
+      "choice.laceration.antibiotics-only",
+      "recovery.answer.second",
+      1_000_003,
+    );
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      operationId: "recovery.ack.second",
+      encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "recovery.close.second",
+      encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(state.clinicalXp).toBe(0);
+
+    for (let sequence = 0; sequence < 2; sequence += 1) {
+      const encounterId = `encounter.auto.0.${sequence}`;
+      for (
+        let waitIndex = 0;
+        !state.encounters[encounterId] && waitIndex < 4;
+        waitIndex += 1
+      ) {
+        state = advanceTicks(
+          state,
+          1,
+          `recovery.patient.${sequence}.wait.${waitIndex}`,
+        );
+      }
+      expect(state.encounters[encounterId]?.arrivalClass).toBe("routine");
+      expect(
+        state.encounters[encounterId]?.waiting.patienceExempt,
+      ).toBe(true);
+
+      if (sequence === 0) {
+        state = advanceTicks(
+          state,
+          20,
+          "recovery.patience-proof",
+        );
+        expect(state.encounters[encounterId]?.lifecycle).toBe(
+          "waiting_unopened",
+        );
+        expect(state.satisfaction).toBe(95);
+        expect(
+          state.encounters["encounter.auto.0.1"]?.waiting
+            .patienceExempt,
+        ).toBe(true);
+      }
+
+      state = gameReducer(state, {
+        type: "OPEN_CHART",
+        operationId: `recovery.patient.${sequence}.open`,
+        encounterId,
+      });
+      const question = getCurrentQuestion(state, encounterId);
+      const correctChoice = question?.node.answerChoices.find(
+        (choice) => choice.isCorrect,
+      );
+      expect(correctChoice).toBeDefined();
+      state = answerEncounter(
+        state,
+        encounterId,
+        correctChoice!.id,
+        `recovery.patient.${sequence}.answer`,
+        1_000_010 + sequence,
+      );
+      state = gameReducer(state, {
+        type: "CLOSE_CHART",
+        operationId: `recovery.patient.${sequence}.close`,
+        encounterId,
+      });
+    }
+
+    expect(state.clinicalXp).toBe(
+      PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions[0]!
+        .minimumClinicalXp,
+    );
+    state = gameReducer(state, {
+      type: "PLACE_ROOM",
+      operationId: "recovery.place.exam",
+      roomId: "room.instance.exam.recovery",
+      roomDefinitionId: EXAMINATION_ROOM_DEFINITION_ID,
+      x: 10,
+      y: 4,
+    });
+    expect(getFacilityProgressionStatus(state)).toMatchObject({
+      facilityLevel: 0,
+      eligible: true,
+    });
+  });
+
   it("enforces Level 1 build and staff dependencies, pays expenses, and admits a seeded routine patient", () => {
     let state = completePlayableLevelZero();
     state = gameReducer(state, {
       type: "LEVEL_UP",
       operationId: "level1.advance",
     });
-    state.cash = 2_000;
+    state.cash = 5_000;
 
     state = gameReducer(state, {
       type: "PLACE_ROOM",
       operationId: "level1.xray.too-early",
       roomId: "room.instance.xray.too-early",
       roomDefinitionId: "room.xray",
-      x: 10,
+      x: 14,
       y: 5,
     });
     expect(state.operationReceipts["level1.xray.too-early"]?.status).toBe(
@@ -702,26 +1083,20 @@ describe("campaign learning, progression, and Level 1 management", () => {
     );
 
     const hallwayCoordinates = [
+      [9, 4],
+      [8, 4],
+      [7, 4],
       [6, 4],
       [5, 4],
       [4, 4],
-      [3, 4],
-      [2, 4],
-      [1, 4],
-      [0, 4],
-      [9, 4],
-      [10, 4],
-      [11, 4],
-      [12, 4],
       [13, 4],
       [14, 4],
       [15, 4],
-      [6, 5],
+      [16, 4],
+      [17, 4],
+      [18, 4],
+      [19, 4],
       [5, 5],
-      [4, 5],
-      [3, 5],
-      [2, 5],
-      [1, 5],
     ] as const;
     for (const [x, y] of hallwayCoordinates) {
       const suffix = `${x}.${y}`;
@@ -739,11 +1114,11 @@ describe("campaign learning, progression, and Level 1 management", () => {
     }
 
     const placements = [
-      ["bathroom", "room.bathroom", 4, 2, 0],
-      ["waiting", "room.waiting", 0, 1, 0],
-      ["control", "room.imaging_control", 10, 2, 0],
-      ["xray", "room.xray", 13, 1, 0],
-      ["procedure", "room.minor_procedure", 0, 6, 180],
+      ["bathroom", "room.bathroom", 8, 2, 0],
+      ["waiting", "room.waiting", 4, 1, 0],
+      ["control", "room.imaging_control", 14, 2, 0],
+      ["xray", "room.xray", 17, 1, 0],
+      ["procedure", "room.minor_procedure", 4, 6, 180],
     ] as const;
     for (const [suffix, roomDefinitionId, x, y, orientation] of placements) {
       state = gameReducer(state, {
@@ -775,6 +1150,28 @@ describe("campaign learning, progression, and Level 1 management", () => {
       displayName: "Taylor Imaging",
     });
     expect(state.employees).toHaveLength(2);
+
+    let progression = getFacilityProgressionStatus(state);
+    expect(progression.requirements.map((requirement) => requirement.id)).toEqual([
+      "progression.clinical_xp",
+      "progression.satisfaction",
+      "progression.room.room.xray",
+      "progression.room.room.imaging_control",
+      "progression.room.room.minor_procedure",
+      "progression.staff.staff.imaging_technician",
+    ]);
+    expect(
+      progression.requirements
+        .filter((requirement) => !requirement.met)
+        .map((requirement) => requirement.id),
+    ).toEqual(["progression.clinical_xp"]);
+    state.clinicalXp = 60;
+    progression = getFacilityProgressionStatus(state);
+    expect(progression.requirements.every((requirement) => requirement.met)).toBe(
+      true,
+    );
+    expect(progression.eligible).toBe(false);
+    expect(progression.nextFacilityLevel).toBeNull();
 
     const beforeTick = state.facilityTick;
     const beforeCash = state.cash;
@@ -832,7 +1229,7 @@ describe("campaign learning, progression, and Level 1 management", () => {
     ).map(({ reviewedAtMs: _removed, ...intent }) => intent);
 
     const migrated = deserializeGameState(JSON.stringify(legacy));
-    expect(migrated.schemaVersion).toBe(3);
+    expect(migrated.schemaVersion).toBe(4);
     expect(migrated.campaignId).toBe("campaign.migrated.local-v1");
     expect(
       migrated.learningHistories["concept.synthetic.signal"]?.reviews,

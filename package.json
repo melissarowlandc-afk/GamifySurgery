@@ -17,7 +17,7 @@
     "build:pages": "npm run test:boundaries && npm run typecheck && npm run build --workspace @gamify-surgery/player -- --base=/GamifySurgery/ && node scripts/verify-pages-build.mjs /GamifySurgery/",
     "test": "npm run test:boundaries && npm run test --workspaces --if-present",
     "test:boundaries": "node scripts/verify-app-boundaries.mjs",
-    "test:e2e": "playwright test",
+    "test:e2e": "node scripts/run-e2e.mjs",
     "test:watch": "npm run test:watch --workspace @gamify-surgery/game-domain",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "clinical:context": "npm run dev --workspace @gamify-surgery/clinical-context-workbench",

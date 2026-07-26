@@ -45,6 +45,9 @@ Use the following patient-patience model:
 7. Designated tutorial patients are exempt from abandonment. Tutorial waiting
    and delay consequences cannot prevent the first examination room or create
    another progression softlock.
+   The current prototype applies the same exemption to automatic Level 0
+   recovery patients while the campaign remains below its XP gate; ordinary
+   Level 1 routine patients remain subject to patience.
 8. A patient who leaves before first opening receives no completion revenue,
    clinical XP, correctness consequence, review record, mastery evidence, or
    concept-presentation exposure. The concept remains eligible to return

@@ -6,10 +6,12 @@ import {
   getCurrentQuestion,
   getEmergencyGlp1Status,
   getEncounterSettlement,
+  getEffectiveSatisfaction,
   getLearningSummary,
   getNextRoomUpgradeCost,
   getOperatingExpensePerFacilityHour,
   getPatientLists,
+  getPendingOffsitePatientTravel,
   getPendingPatientLocation,
   getPendingResultEta,
   getRotatedFootprint,
@@ -68,7 +70,7 @@ function signedPercent(value: number): string {
 }
 
 function formatFacilityHours(value: number): string {
-  return `${value} in-game hour${value === 1 ? "" : "s"}`;
+  return `${value} hour${value === 1 ? "" : "s"}`;
 }
 
 function formatLearningCardStatus(
@@ -119,7 +121,7 @@ function toPatientTab(
       ? null
       : `${
           encounter?.pendingResult?.pendingLabel ?? "Result pending"
-        } · returns in ${pendingHours} in-game hour${
+        } · returns in ${pendingHours} hour${
           pendingHours === 1 ? "" : "s"
         }`;
 
@@ -134,7 +136,7 @@ function toPatientTab(
     patienceLabel:
       item.patienceRemainingTicks === null
         ? undefined
-        : `Patience: ${item.patienceRemainingTicks} in-game hour${
+        : `Patience: ${item.patienceRemainingTicks} hour${
             item.patienceRemainingTicks === 1 ? "" : "s"
           }`,
     avatar: encounter?.patientAppearance,
@@ -293,7 +295,7 @@ function createChartView(
               : `${result.routeDisplayName}. The patient will return when the result is ready.`,
         etaLabel:
           result && !resultDelivered
-            ? `${Math.max(0, result.dueTick - state.facilityTick)} in-game hour${
+            ? `${Math.max(0, result.dueTick - state.facilityTick)} hour${
                 Math.max(0, result.dueTick - state.facilityTick) === 1
                   ? ""
                   : "s"
@@ -306,6 +308,10 @@ function createChartView(
               ? "Correct"
               : "Corrective feedback",
         feedbackBody: answer?.explanation,
+        rewardLabel:
+          answer?.correct === true
+            ? `+${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clinicalSettlement.clinicalXpPerCorrectFirstAnswer} Learning XP`
+            : undefined,
         current: isCurrent,
         complete: step.status === "completed",
       };
@@ -320,9 +326,42 @@ function createChartView(
       encounter.arrivalClass === "tutorial"
         ? "Tutorial patient"
         : "Clinic patient",
-    statusLabel: question
-      ? `Question ${question.questionNumber} of ${question.questionCount}`
-      : encounterStatus(encounter),
+    ageLabel: encounter.frozenCase.prototypeDemographics
+      ? `${encounter.frozenCase.prototypeDemographics.ageYears} years`
+      : undefined,
+    sexLabel:
+      encounter.frozenCase.prototypeDemographics?.sexLabel,
+    chiefComplaint: encounter.frozenCase.chiefComplaint,
+    patientConfidenceLabel: `${encounter.patientConfidence}%`,
+    vitals: encounter.frozenCase.prototypeVitalSigns
+      ? [
+          {
+            id: "heart-rate",
+            label: "HR",
+            value: `${encounter.frozenCase.prototypeVitalSigns.heartRateBpm}`,
+            icon: "heart" as const,
+          },
+          {
+            id: "blood-pressure",
+            label: "BP",
+            value: `${encounter.frozenCase.prototypeVitalSigns.systolicBloodPressureMmHg}/${encounter.frozenCase.prototypeVitalSigns.diastolicBloodPressureMmHg}`,
+            icon: "pressure" as const,
+          },
+          {
+            id: "temperature",
+            label: "Temp",
+            value: `${encounter.frozenCase.prototypeVitalSigns.temperatureF.toFixed(1)} °F`,
+            icon: "temperature" as const,
+          },
+          {
+            id: "oxygen",
+            label: "SpO₂",
+            value: `${encounter.frozenCase.prototypeVitalSigns.oxygenSaturationPercent}%`,
+            icon: "oxygen" as const,
+          },
+        ]
+      : undefined,
+    statusLabel: encounterStatus(encounter),
     presentation: encounter.frozenCase.presentation,
     pendingLabel:
       encounter.lifecycle === "active_pending_result"
@@ -333,7 +372,7 @@ function createChartView(
     etaLabel:
       pendingEta === null
         ? undefined
-        : `${pendingEta} in-game hour${pendingEta === 1 ? "" : "s"} remaining`,
+        : `${pendingEta} hour${pendingEta === 1 ? "" : "s"} remaining`,
     questionPrompt: question?.node.stem,
     answerChoices:
       question?.node.answerChoices.map((choice) => ({
@@ -357,14 +396,12 @@ function createChartView(
     canFile,
     readOnly,
     avatar: encounter.patientAppearance,
-    presentationHeading: "Presentation",
+    presentationHeading: "History of present illness",
     decisionSteps,
     reward: settlement
       ? {
-          heading: "Encounter rewards",
+          heading: "Encounter payment",
           moneyLabel: signedCurrency(settlement.netCashDelta),
-          xpLabel: `+${settlement.clinicalXpAwarded} Learning XP`,
-          satisfactionLabel: signedPercent(settlement.satisfactionDelta),
         }
       : undefined,
     primaryActionLabel: terminalFeedbackNeedsAcknowledgment
@@ -402,6 +439,7 @@ export function createPrototypePlayerView(
   );
   const clock = getFacilityClock(state);
   const emergencyGlp1Status = getEmergencyGlp1Status(state);
+  const effectiveSatisfaction = getEffectiveSatisfaction(state);
   const hourlyOperatingDelta = getOperatingExpensePerFacilityHour(state);
   const xpRequirement = progressionStatus.requirements.find(
     (requirement) => requirement.id === "progression.clinical_xp",
@@ -448,7 +486,12 @@ export function createPrototypePlayerView(
       moneyLabel: `$${state.cash.toLocaleString()}`,
       moneyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
       xpLabel: state.clinicalXp.toLocaleString(),
-      satisfactionLabel: `${state.satisfaction}%`,
+      satisfactionLabel:
+        state.dailyConfidenceSatisfactionModifier === 0
+          ? `${effectiveSatisfaction}%`
+          : `${effectiveSatisfaction}% (${
+              state.dailyConfidenceSatisfactionModifier > 0 ? "+" : ""
+            }${state.dailyConfidenceSatisfactionModifier} today)`,
       facilityTimeLabel: clock.displayLabel,
       workloadLabel: `${workload.occupancy}/${workload.routineLimit}`,
       workloadStatusLabel: workload.atRoutineCapacity
@@ -498,10 +541,18 @@ export function createPrototypePlayerView(
         actionReady: lists.active.filter((item) => item.actionRequired).length,
         resolved: lists.resolved.length,
       },
+      founder: {
+        displayName: state.founder.displayName,
+        appearance: state.founder.appearance,
+      },
       patients: Object.values(state.encounters)
         .filter((encounter) => encounter.lifecycle !== "resolved")
         .map((encounter) => {
           const location = getPendingPatientLocation(state, encounter.id);
+          const offsiteTravel = getPendingOffsitePatientTravel(
+            state,
+            encounter.id,
+          );
           return {
             instanceId: encounter.id,
             displayName: encounter.patientDisplayName,
@@ -515,6 +566,7 @@ export function createPrototypePlayerView(
                     : ("active" as const),
             appearance: encounter.patientAppearance,
             ...(location ? { location } : {}),
+            ...(offsiteTravel ? { offsiteTravel } : {}),
           };
         }),
       rooms: state.rooms.flatMap((room) => {

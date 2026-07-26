@@ -1,5 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const usesExternallyManagedServer =
+  process.env.GAMIFY_E2E_EXTERNAL_SERVER === "1";
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: false,
@@ -12,12 +15,18 @@ export default defineConfig({
     channel: "chrome",
     trace: "retain-on-failure",
   },
-  webServer: {
-    command: "npm run dev",
-    url: "http://127.0.0.1:4173",
-    reuseExistingServer: true,
-    timeout: 120_000,
-  },
+  ...(usesExternallyManagedServer
+    ? {}
+    : {
+        webServer: {
+          command:
+            "node ../../node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
+          cwd: "apps/player",
+          url: "http://127.0.0.1:4173",
+          reuseExistingServer: true,
+          timeout: 120_000,
+        },
+      }),
   projects: [
     {
       name: "desktop-chrome",
@@ -38,6 +47,12 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
+      name: "phone-chrome",
+      use: {
+        ...devices["Pixel 7"],
       },
     },
   ],

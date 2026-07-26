@@ -4,6 +4,61 @@ All notable implementation and project-record changes are listed here.
 
 ## 2026-07-26
 
+### Level 0/1 opening
+
+- Added the minimal founder creator, sparse inheritance decision, genuine
+  rich-and-happy non-game ending, and guarded one-time clinic initialization
+- Persisted founder identity and appearance in save schema v4 with a
+  deterministic migration for earlier local campaigns
+- Changed a fresh browser profile to contain no placeholder campaign or FSRS
+  state before the player selects the clinic path
+
+### Level 0/1 playthrough and visual refinement
+
+- Rebuilt the gameplay composition around a stable upper facility and a
+  dedicated lower desk that holds either the paper patient chart or Build Mode
+  tools without moving the clinic whenever a chart opens
+- Applied the current monochrome pixel-art direction with a segmented HUD,
+  tactile controls, consistent founder/patient portraits, recognizable room
+  interiors, a full-width sidewalk and entrance, landscaping, staff/patient
+  occupancy, and a full-screen phone chart
+- Expanded the buildable site to 24 columns: the ordinary camera stays centered
+  on the tiny founder clinic, while zooming out in Build Mode reveals additional
+  construction space without changing the facility viewport
+- Added candidate-door validation, direct room-to-room attachment, functional
+  hallway branching, deterministic route validation, visible door rotation,
+  safe selling checks, and south-entrance employee arrival
+- Reconciled Level 0 and Level 1 progression with the latest owner checklist:
+  Level 0 requires XP, satisfaction above 90%, and one Examination Room; the
+  Level 1 completion preview requires XP, satisfaction, the Minor-Procedure,
+  Imaging Control, and X-ray rooms, plus an Imaging Technician
+- Separated immediate per-decision Learning XP from encounter-completion money;
+  answer correctness now changes patient confidence and a small daily
+  satisfaction modifier that resets at day rollover rather than permanently
+  ratcheting satisfaction
+- Slowed the prototype to a five-minute ten-hour clinic day and approximately
+  one routine arrival per real minute, while keeping the first tutorial result
+  and the quiet beat between tutorial patients short enough for onboarding;
+  those onboarding timers now respect explicit pause state
+- Added bounded delay pressure at the late and final waiting warnings, plus a
+  one-point satisfaction benefit when an enabled in-house X-ray result returns
+- Protected Level 0 recovery arrivals from waiting abandonment so repeated
+  tutorial mistakes or neglect cannot permanently lock the strict
+  satisfaction gate
+- Simplified the first and third tutorial prompts, added the PHI/examination-room
+  alert, preserved tutorial-off controls, and made callouts wait for chart
+  animations before positioning beside the actual control
+- Raised the temporary emergency GLP-1 availability threshold to less than $200,
+  kept its hourly cooldown and no-XP behavior, and increased early construction,
+  salary, and staffing pressure through centralized balance values
+- Added desktop, compact-desktop, and laptop browser coverage for the opening
+  branches, one-time initialization, save/reload, campaign-scoped FSRS, the
+  full Level 0-to-Level 1 path, tutorial geometry, Build Mode, and chart
+  usability, with retained Pixel 7 chart/workspace regression coverage
+- Added a Windows-safe E2E runner that owns the Vite test server lifecycle,
+  closes it deterministically after Playwright completes, and still permits an
+  already-running local server to be reused
+
 ### Clinical evidence infrastructure
 
 - Added a player-isolated `clinical-research` contract for append-only evidence

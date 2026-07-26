@@ -142,6 +142,24 @@ export const syntheticClinicalCaseSchema = z
     displayName: z.string().min(1).max(160),
     patientPresentationVariantId: stableIdSchema,
     patientDisplayName: z.string().min(1).max(80),
+    prototypeDemographics: z
+      .object({
+        ageYears: z.number().int().min(0).max(120),
+        sexLabel: z.enum(["Female", "Male", "Not specified"]),
+      })
+      .strict()
+      .optional(),
+    prototypeVitalSigns: z
+      .object({
+        heartRateBpm: z.number().int().min(20).max(240),
+        systolicBloodPressureMmHg: z.number().int().min(40).max(280),
+        diastolicBloodPressureMmHg: z.number().int().min(20).max(180),
+        temperatureF: z.number().min(85).max(110),
+        oxygenSaturationPercent: z.number().int().min(50).max(100),
+      })
+      .strict()
+      .optional(),
+    chiefComplaint: z.string().min(1).max(160).optional(),
     presentation: z.string().min(1).max(2_000),
     tutorialEligible: z.boolean(),
     routineEligible: z.boolean(),

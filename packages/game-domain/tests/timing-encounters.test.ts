@@ -12,6 +12,7 @@ import {
   getCurrentQuestion,
   getEncounterSettlement,
   getFacilityClock,
+  getPendingOffsitePatientTravel,
   getPendingPatientLocation,
   serializeGameState,
   type DomainContext,
@@ -109,10 +110,19 @@ function addInHouseXrayFacility(
   includeStaff = true,
 ): GameState {
   const next = deserializeGameState(serializeGameState(state));
-  const hallwayXs = new Set<number>([9]);
-  for (let x = xrayX + 1; x <= 7; x += 1) {
+  const hallwayXs = new Set<number>([13]);
+  for (let x = xrayX + 1; x <= 9; x += 1) {
     hallwayXs.add(x);
   }
+  next.rooms.push({
+    id: "room.test.examination",
+    roomDefinitionId: "room.examination",
+    x: 10,
+    y: 4,
+    orientation: 0,
+    doorSide: "south",
+    upgradeLevel: 1,
+  });
   for (const x of [...hallwayXs].sort((left, right) => left - right)) {
     if (
       next.rooms.some(
@@ -135,7 +145,7 @@ function addInHouseXrayFacility(
     {
       id: "room.test.imaging-control",
       roomDefinitionId: "room.imaging_control",
-      x: 9,
+      x: 13,
       y: 2,
       orientation: 0,
       doorSide: "south",
@@ -322,7 +332,7 @@ describe("service routing and structured multi-step encounters", () => {
       durationTicks: 6,
     });
 
-    state = addInHouseXrayFacility(state, 6);
+    state = addInHouseXrayFacility(state, 10);
 
     expect(
       getAnswerChoiceServicePreview(
@@ -337,16 +347,211 @@ describe("service routing and structured multi-step encounters", () => {
     });
   });
 
+  it("derives outsourced departure, absence, and return from persisted result timing", () => {
+    const encounterId = "encounter.xray-outsourced-travel";
+    let state = createEmptyLevelOneState("xray-outsourced-travel");
+    state.nextRoutineArrivalTick = 999;
+    state = admitAndOpen(state, encounterId, XRAY_CASE_ID);
+    state = submitAnswer(
+      state,
+      encounterId,
+      "choice.synthetic.xray-routing.xray",
+      "op.answer.xray-outsourced-travel",
+      1_000,
+    );
+
+    const pending = state.encounters[encounterId]!.pendingResult!;
+    expect(pending).toMatchObject({
+      routeId: "route.xray.outsourced",
+      scheduledAtTick: 0,
+      durationTicks: 6,
+      dueTick: 6,
+      patientTravel: null,
+    });
+    const initialPresentation = getPendingOffsitePatientTravel(
+      state,
+      encounterId,
+    );
+    expect(initialPresentation).toMatchObject({
+      phase: "departing",
+      progress: 0,
+    });
+
+    state = advanceTicks(state, 1, "op.xray-outsourced.departing");
+    expect(getPendingOffsitePatientTravel(state, encounterId)).toEqual({
+      phase: "departing",
+      progress: 0.5,
+      direction: initialPresentation!.direction,
+    });
+
+    state = advanceTicks(state, 1, "op.xray-outsourced.away");
+    const awayPresentation = getPendingOffsitePatientTravel(
+      state,
+      encounterId,
+    );
+    expect(awayPresentation).toEqual({
+      phase: "away",
+      progress: 1,
+      direction: initialPresentation!.direction,
+    });
+
+    const restoredAway = deserializeGameState(serializeGameState(state));
+    expect(getPendingOffsitePatientTravel(restoredAway, encounterId)).toEqual(
+      awayPresentation,
+    );
+
+    state = advanceTicks(state, 2, "op.xray-outsourced.returning");
+    expect(getPendingOffsitePatientTravel(state, encounterId)).toEqual({
+      phase: "returning",
+      progress: 1 / 3,
+      direction: initialPresentation!.direction,
+    });
+
+    state = advanceTicks(state, 1, "op.xray-outsourced.nearly-home");
+    expect(getPendingOffsitePatientTravel(state, encounterId)).toEqual({
+      phase: "returning",
+      progress: 2 / 3,
+      direction: initialPresentation!.direction,
+    });
+
+    state = advanceTicks(state, 1, "op.xray-outsourced.ready");
+    expect(getPendingOffsitePatientTravel(state, encounterId)).toBeNull();
+    expect(state.encounters[encounterId]!.lifecycle).toBe(
+      "active_action_required",
+    );
+  });
+
+  it("adds the in-house X-ray satisfaction bonus exactly once when the result returns", () => {
+    const encounterId = "encounter.xray-in-house-satisfaction";
+    let state = addInHouseXrayFacility(
+      createEmptyLevelOneState("xray-in-house-satisfaction"),
+      10,
+    );
+    state.nextRoutineArrivalTick = 999;
+    state = admitAndOpen(state, encounterId, XRAY_CASE_ID);
+    const startingSatisfaction = state.satisfaction;
+
+    state = submitAnswer(
+      state,
+      encounterId,
+      "choice.synthetic.xray-routing.xray",
+      "op.answer.xray-in-house-satisfaction",
+      1_000,
+    );
+    const dueTick = state.encounters[encounterId]!.pendingResult!.dueTick;
+    expect(
+      state.encounters[encounterId]!.pendingResult!.routeId,
+    ).toBe("route.xray.in_house");
+    expect(state.satisfaction).toBe(startingSatisfaction);
+
+    state = advanceTicks(
+      state,
+      dueTick - state.facilityTick,
+      "op.xray-in-house-satisfaction.result",
+    );
+    expect(state.satisfaction).toBe(startingSatisfaction + 1);
+    expect(
+      state.events.filter(
+        (event) =>
+          event.type === "result_ready" &&
+          event.encounterId === encounterId &&
+          event.reward?.satisfactionDelta === 1,
+      ),
+    ).toHaveLength(1);
+
+    state = advanceTicks(
+      state,
+      1,
+      "op.xray-in-house-satisfaction.after-result",
+    );
+    expect(state.satisfaction).toBe(startingSatisfaction + 1);
+    expect(
+      state.events.filter(
+        (event) =>
+          event.type === "result_ready" &&
+          event.encounterId === encounterId &&
+          event.reward?.satisfactionDelta === 1,
+      ),
+    ).toHaveLength(1);
+  });
+
+  it("does not add a route satisfaction bonus for an outsourced X-ray result", () => {
+    const encounterId = "encounter.xray-outsourced-satisfaction";
+    let state = createEmptyLevelOneState("xray-outsourced-satisfaction");
+    state.nextRoutineArrivalTick = 999;
+    state = admitAndOpen(state, encounterId, XRAY_CASE_ID);
+    const startingSatisfaction = state.satisfaction;
+
+    state = submitAnswer(
+      state,
+      encounterId,
+      "choice.synthetic.xray-routing.xray",
+      "op.answer.xray-outsourced-satisfaction",
+      1_000,
+    );
+    const dueTick = state.encounters[encounterId]!.pendingResult!.dueTick;
+    expect(
+      state.encounters[encounterId]!.pendingResult!.routeId,
+    ).toBe("route.xray.outsourced");
+
+    state = advanceTicks(
+      state,
+      dueTick - state.facilityTick,
+      "op.xray-outsourced-satisfaction.result",
+    );
+    expect(state.satisfaction).toBe(startingSatisfaction);
+    expect(
+      state.events.find(
+        (event) =>
+          event.type === "result_ready" &&
+          event.encounterId === encounterId,
+      )?.reward?.satisfactionDelta,
+    ).toBeUndefined();
+  });
+
+  it("records only the X-ray satisfaction actually applied at the upper bound", () => {
+    const encounterId = "encounter.xray-satisfaction-clamp";
+    let state = addInHouseXrayFacility(
+      createEmptyLevelOneState("xray-satisfaction-clamp"),
+      10,
+    );
+    state.nextRoutineArrivalTick = 999;
+    state.satisfaction = 100;
+    state = admitAndOpen(state, encounterId, XRAY_CASE_ID);
+    state = submitAnswer(
+      state,
+      encounterId,
+      "choice.synthetic.xray-routing.xray",
+      "op.answer.xray-satisfaction-clamp",
+      1_000,
+    );
+    const dueTick = state.encounters[encounterId]!.pendingResult!.dueTick;
+
+    state = advanceTicks(
+      state,
+      dueTick - state.facilityTick,
+      "op.xray-satisfaction-clamp.result",
+    );
+    expect(state.satisfaction).toBe(100);
+    expect(
+      state.events.find(
+        (event) =>
+          event.type === "result_ready" &&
+          event.encounterId === encounterId,
+      )?.reward,
+    ).toBeUndefined();
+  });
+
   it("freezes a longer in-house path into a longer ETA and preserves it across reload", () => {
     const shortEncounterId = "encounter.xray-short-route";
     const longEncounterId = "encounter.xray-long-route";
     let shortState = addInHouseXrayFacility(
       createEmptyLevelOneState("xray-short-route"),
-      6,
+      10,
     );
     let longState = addInHouseXrayFacility(
       createEmptyLevelOneState("xray-long-route"),
-      0,
+      4,
     );
     shortState = admitAndOpen(shortState, shortEncounterId, XRAY_CASE_ID);
     longState = admitAndOpen(longState, longEncounterId, XRAY_CASE_ID);
@@ -381,7 +586,7 @@ describe("service routing and structured multi-step encounters", () => {
       dueTick: 6,
       patientTravel: {
         version: "patient-travel.v1",
-        originRoomInstanceId: "room.instance.founder_desk",
+        originRoomInstanceId: "room.test.examination",
         destinationRoomInstanceId: "room.test.xray",
         tilesPerTick: 6,
         outboundStartTick: 0,
@@ -394,6 +599,9 @@ describe("service routing and structured multi-step encounters", () => {
     expect(getPendingPatientLocation(longState, longEncounterId)).toEqual(
       pending.patientTravel!.outboundPath[0],
     );
+    expect(
+      getPendingOffsitePatientTravel(longState, longEncounterId),
+    ).toBeNull();
     const movingState = advanceTicks(
       longState,
       1,
@@ -415,7 +623,7 @@ describe("service routing and structured multi-step encounters", () => {
   it("keeps staff capability offline during the persisted entrance walk", () => {
     let state = addInHouseXrayFacility(
       createEmptyLevelOneState("staff-arrival-route"),
-      6,
+      10,
       false,
     );
     state.cash = 5_000;
@@ -431,6 +639,8 @@ describe("service routing and structured multi-step encounters", () => {
     const hired = state.employees[0]!;
     expect(hired.homeRoomInstanceId).toBe("room.test.xray");
     expect(hired.path.length).toBeGreaterThan(1);
+    expect(hired.path[0]).toEqual({ x: 11, y: 10 });
+    expect(hired.path[1]).toEqual({ x: 11, y: 9 });
     expect(hired.location).toEqual(hired.path[0]);
     expect(
       getCurrentCapabilities(state).has(
@@ -438,7 +648,7 @@ describe("service routing and structured multi-step encounters", () => {
       ),
     ).toBe(false);
 
-    state = advanceTicks(state, 4, "op.staff-arrival.first-step");
+    state = advanceTicks(state, 1, "op.staff-arrival.first-step");
     expect(state.employees[0]!.pathIndex).toBe(1);
     expect(
       getCurrentCapabilities(state).has(
@@ -453,7 +663,16 @@ describe("service routing and structured multi-step encounters", () => {
     );
     expect(restored.employees[0]!.pathIndex).toBe(1);
 
-    state = advanceTicks(restored, 4, "op.staff-arrival.reach-room");
+    const remainingMovementTicks =
+      (restored.employees[0]!.path.length -
+        1 -
+        restored.employees[0]!.pathIndex) *
+      PROTOTYPE_BALANCE_RELEASE.facility.staffMovementIntervalTicks;
+    state = advanceTicks(
+      restored,
+      remainingMovementTicks,
+      "op.staff-arrival.reach-room",
+    );
     expect(
       getCurrentCapabilities(state).has(
         "capability.staff.imaging_technician",
@@ -573,6 +792,10 @@ describe("service routing and structured multi-step encounters", () => {
       "op.three-step.answer.labs",
       1_000,
     );
+    expect(state.cash).toBe(
+      PROTOTYPE_BALANCE_RELEASE.facility.startingCash,
+    );
+    expect(state.clinicalXp).toBe(5);
     state = advanceTicks(state, 4, "op.three-step.wait.labs");
     state = gameReducer(state, {
       type: "OPEN_CHART",
@@ -586,6 +809,10 @@ describe("service routing and structured multi-step encounters", () => {
       "op.three-step.answer.xray",
       2_000,
     );
+    expect(state.cash).toBe(
+      PROTOTYPE_BALANCE_RELEASE.facility.startingCash,
+    );
+    expect(state.clinicalXp).toBe(10);
     state = advanceTicks(state, 6, "op.three-step.wait.xray");
     state = gameReducer(state, {
       type: "OPEN_CHART",
@@ -599,6 +826,13 @@ describe("service routing and structured multi-step encounters", () => {
       "op.three-step.answer.disposition",
       3_000,
     );
+    expect(state.totalOperatingExpenses).toBe(10);
+    expect(state.cash).toBe(
+      PROTOTYPE_BALANCE_RELEASE.facility.startingCash -
+        state.totalOperatingExpenses +
+        90,
+    );
+    expect(state.clinicalXp).toBe(15);
 
     const encounter = state.encounters[encounterId]!;
     expect(encounter.lifecycle).toBe("resolved_summary_available");
@@ -627,11 +861,11 @@ describe("service routing and structured multi-step encounters", () => {
 
     const settlement = getEncounterSettlement(state, encounterId);
     expect(settlement).toMatchObject({
-      completionRevenue: 95,
+      completionRevenue: 75,
       qualityRevenueBonus: 15,
       incorrectFinancialConsequence: 0,
-      netCashDelta: 110,
-      satisfactionDelta: 2,
+      netCashDelta: 90,
+      satisfactionDelta: 0,
       clinicalXpAwarded: 15,
       correctAnswers: 3,
       incorrectAnswers: 0,
@@ -643,13 +877,109 @@ describe("service routing and structured multi-step encounters", () => {
           event.encounterId === encounterId,
       ),
     ).toMatchObject({
-      message: "Encounter complete: +$110 and +15 Learning XP.",
+      message: "Encounter complete: +$90.",
       reward: {
-        cashDelta: 110,
-        learningXpDelta: 15,
-        satisfactionDelta: 2,
+        cashDelta: 90,
+        learningXpDelta: 0,
+        satisfactionDelta: 0,
       },
     });
+  });
+});
+
+describe("waiting-patient satisfaction pressure", () => {
+  it("keeps the eight-tick warning informational and applies each later one-point penalty once", () => {
+    const encounterId = "encounter.waiting-satisfaction";
+    let state = createEmptyLevelOneState("waiting-satisfaction");
+    state.nextRoutineArrivalTick = 999;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT",
+      operationId: "op.admit.waiting-satisfaction",
+      encounterId,
+      caseId: XRAY_CASE_ID,
+      patientDisplayName: "Waiting Test Patient",
+      arrivalClass: "routine",
+    });
+    const startingSatisfaction = state.satisfaction;
+    const dueTick = state.encounters[encounterId]!.waiting.departureDueTick;
+    expect(dueTick).toBe(16);
+
+    state = advanceTicks(state, 8, "op.waiting-satisfaction.early");
+    expect(state.satisfaction).toBe(startingSatisfaction);
+    expect(
+      state.events.find(
+        (event) =>
+          event.id === `event.patience-warning.${encounterId}.8`,
+      )?.reward,
+    ).toBeUndefined();
+
+    state = advanceTicks(state, 4, "op.waiting-satisfaction.sustained");
+    expect(state.satisfaction).toBe(startingSatisfaction - 1);
+    expect(
+      state.events.find(
+        (event) =>
+          event.id === `event.patience-warning.${encounterId}.4`,
+      )?.reward?.satisfactionDelta,
+    ).toBe(-1);
+
+    state = advanceTicks(state, 4, "op.waiting-satisfaction.final");
+    expect(state.satisfaction).toBe(startingSatisfaction - 2);
+    expect(
+      state.events.find(
+        (event) =>
+          event.id === `event.patience-warning.${encounterId}.0`,
+      )?.reward?.satisfactionDelta,
+    ).toBe(-1);
+    expect(
+      state.events.filter(
+        (event) =>
+          event.type === "patience_warning" &&
+          event.encounterId === encounterId,
+      ),
+    ).toHaveLength(3);
+    expect(
+      state.encounters[encounterId]!.waiting.warningThresholdsShown,
+    ).toEqual([8, 4, 0]);
+
+    state = advanceTicks(state, 1, "op.waiting-satisfaction.departure");
+    expect(
+      state.events.filter(
+        (event) =>
+          event.type === "patience_warning" &&
+          event.encounterId === encounterId,
+      ),
+    ).toHaveLength(3);
+  });
+
+  it("records no waiting satisfaction reward when the lower bound prevents a deduction", () => {
+    const encounterId = "encounter.waiting-satisfaction-clamp";
+    let state = createEmptyLevelOneState("waiting-satisfaction-clamp");
+    state.nextRoutineArrivalTick = 999;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT",
+      operationId: "op.admit.waiting-satisfaction-clamp",
+      encounterId,
+      caseId: XRAY_CASE_ID,
+      patientDisplayName: "Waiting Clamp Patient",
+      arrivalClass: "routine",
+    });
+    state.satisfaction = 0;
+    state = advanceTicks(
+      state,
+      16,
+      "op.waiting-satisfaction-clamp.warning",
+    );
+
+    expect(state.satisfaction).toBe(0);
+    for (const threshold of [4, 0]) {
+      expect(
+        state.events.find(
+          (event) =>
+            event.id ===
+            `event.patience-warning.${encounterId}.${threshold}`,
+        )?.reward,
+      ).toBeUndefined();
+    }
   });
 });
 
@@ -737,7 +1067,7 @@ describe("campaign learning isolation and legacy save migration", () => {
     }
 
     const migrated = deserializeGameState(JSON.stringify(legacy));
-    expect(migrated.schemaVersion).toBe(3);
+    expect(migrated.schemaVersion).toBe(4);
     expect(migrated.randomGeneratorVersion).toBe(
       "randomness.xoshiro128ss.v1",
     );

@@ -127,6 +127,8 @@ export function TutorialCoach({
       (step.avoidSelector
         ? document.querySelector<HTMLElement>(step.avoidSelector)
         : null) ?? target;
+    const animationRoot =
+      target.closest<HTMLElement>(".chart-panel") ?? target;
 
     const previousDescription =
       target.getAttribute("aria-describedby");
@@ -135,12 +137,42 @@ export function TutorialCoach({
     target.setAttribute(
       "aria-describedby",
       [previousDescription, coachDescriptionId]
-        .filter(Boolean)
-        .join(" "),
+      .filter(Boolean)
+      .join(" "),
     );
 
     let animationFrame = 0;
+    let animationWaitPending = false;
+    let cancelled = false;
+    setPosition(null);
+    setTargetBeacon(null);
     const updatePosition = () => {
+      if (cancelled) {
+        return;
+      }
+      const runningAnimations = animationRoot
+        .getAnimations({ subtree: true })
+        .filter((animation) => {
+          const iterations = animation.effect?.getTiming().iterations;
+          return (
+            animation.playState === "running" &&
+            iterations !== Infinity
+          );
+        });
+      if (runningAnimations.length > 0) {
+        setPosition(null);
+        setTargetBeacon(null);
+        if (!animationWaitPending) {
+          animationWaitPending = true;
+          void Promise.allSettled(
+            runningAnimations.map((animation) => animation.finished),
+          ).then(() => {
+            animationWaitPending = false;
+            updatePosition();
+          });
+        }
+        return;
+      }
       window.cancelAnimationFrame(animationFrame);
       animationFrame = window.requestAnimationFrame(() => {
         let targetRect = target.getBoundingClientRect();
@@ -157,7 +189,17 @@ export function TutorialCoach({
           });
           targetRect = target.getBoundingClientRect();
         }
-        const avoidanceRect = avoidance.getBoundingClientRect();
+        // A phone chart is intentionally a full-screen sheet, so treating the
+        // entire chart as forbidden space would hide the tutorial. At that
+        // width, protect the real target itself and allow the compact coach to
+        // use another part of the sheet without blocking the required action.
+        const effectiveAvoidance =
+          window.innerWidth <= 760 &&
+          target.closest(".paper-chart") !== null
+            ? target
+            : avoidance;
+        const avoidanceRect =
+          effectiveAvoidance.getBoundingClientRect();
         const coachRect = coach.getBoundingClientRect();
         const coachContent =
           coach.querySelector<HTMLElement>(
@@ -211,6 +253,7 @@ export function TutorialCoach({
     window.addEventListener("scroll", updatePosition, true);
 
     return () => {
+      cancelled = true;
       window.cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updatePosition);
@@ -317,7 +360,13 @@ export function TutorialCoach({
         <div className="tutorial-coach-content">
         <span className="eyebrow">{step.eyebrow}</span>
         <h2 id={coachTitleId}>{step.title}</h2>
-        <p id={coachDescriptionId}>{step.body}</p>
+        {step.body ? (
+          <p id={coachDescriptionId}>{step.body}</p>
+        ) : (
+          <span id={coachDescriptionId} className="screen-reader-only">
+            Follow the highlighted control.
+          </span>
+        )}
         {step.note ? (
           <p className="tutorial-coach-note">{step.note}</p>
         ) : null}

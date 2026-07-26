@@ -30,12 +30,15 @@ operational purpose rather than acting only as progression checkboxes.
 - In Level 1, X-ray remains off-site until the campaign has a functioning
   X-ray room, imaging control room, and eligible imaging technician. Once all
   requirements are present and accessible, X-ray uses the faster on-site
-  route and may improve operational satisfaction.
+  route. The current tunable prototype awards one durable satisfaction point
+  when that in-house result returns; the outsourced route awards no route
+  satisfaction bonus.
 - Freeze the selected service route and due facility tick when the service is
   scheduled, consistent with ADR 0027.
 
 Exact costs, route durations, satisfaction effects, and capacity values remain
-centralized prototype balance settings.
+centralized prototype balance settings. The one-point in-house result bonus is
+therefore a current test value, not a permanent balance promise.
 
 ## Consequences
 

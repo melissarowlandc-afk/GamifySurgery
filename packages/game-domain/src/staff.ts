@@ -3,9 +3,8 @@ import { getRoomDefinition, getStaffRoleDefinition } from "./selectors";
 import {
   findDeterministicRoomPath,
   getOccupiedTiles,
+  getRotatedFootprint,
   getRoomCenter,
-  getRoomDoorApproachCell,
-  getRoomDoorCell,
 } from "./spatial";
 import type { DomainContext, EmployeeState, GameState, GridPoint } from "./types";
 
@@ -166,32 +165,42 @@ export function getEmployeeArrival(
   if (!entryRoom || !entryDefinition || !homeRoom || !homeDefinition) {
     return null;
   }
-  const entryApproach = getRoomDoorApproachCell(
-    entryRoom,
+  const entrySize = getRotatedFootprint(
     entryDefinition,
+    entryRoom.orientation,
   );
-  const entryDoor = getRoomDoorCell(entryRoom, entryDefinition);
-  if (!entryApproach || !entryDoor) {
-    return null;
-  }
+  // The protected Front Desk has a fixed exterior entrance centered on its
+  // south wall. Its saved rotatable door remains available for internal
+  // construction, so staff visibly arrive from the sidewalk instead of
+  // materializing at an internal doorway.
+  const entryDoor = {
+    x: entryRoom.x + Math.floor((entrySize.width - 1) / 2),
+    y: entryRoom.y + entrySize.height - 1,
+  };
+  const entryApproach = { x: entryDoor.x, y: entryDoor.y + 1 };
+  const entryCenter = getRoomCenter(entryRoom, entryDefinition);
+  const exteriorPath = [
+    { ...entryApproach },
+    ...openGridPath(entryDoor, entryCenter),
+  ];
 
   let path: GridPoint[];
   if (entryRoom.id === homeRoom.id) {
-    path = [
-      { ...entryApproach },
-      ...openGridPath(entryDoor, getRoomCenter(homeRoom, homeDefinition)),
-    ];
+    path = exteriorPath;
   } else {
-    const fullPath = findDeterministicRoomPath(
+    const internalPath = findDeterministicRoomPath(
       entryRoom,
       homeRoom,
       (definitionId) => getRoomDefinition(definitionId, context),
       state.rooms,
+      new Set(
+        context.balanceRelease.facility.protectedRoomDefinitionIds,
+      ),
     );
-    const entryIndex = fullPath.findIndex(
-      (point) => samePoint(point, entryApproach),
-    );
-    path = entryIndex >= 0 ? fullPath.slice(entryIndex) : [];
+    path =
+      internalPath.length === 0
+        ? []
+        : [...exteriorPath, ...internalPath.slice(1)];
   }
   if (path.length === 0) {
     return null;

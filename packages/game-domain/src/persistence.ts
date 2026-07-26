@@ -16,6 +16,7 @@ import type {
   EmergencyGlp1State,
   EncounterState,
   EmployeeState,
+  FounderIdentity,
   GameState,
   FrozenPatientTravel,
   PendingResult,
@@ -234,6 +235,70 @@ function isGridPoint(value: unknown): value is { x: number; y: number } {
     typeof value.y === "number" &&
     Number.isFinite(value.y)
   );
+}
+
+function isPixelAppearance(
+  value: unknown,
+): value is FounderIdentity["appearance"] {
+  if (!isRecord(value) || value.version !== "pixel-avatar.v1") {
+    return false;
+  }
+  return (
+    (value.bodyShape === "compact" ||
+      value.bodyShape === "average" ||
+      value.bodyShape === "broad" ||
+      value.bodyShape === "tall") &&
+    (value.hairStyle === "none" ||
+      value.hairStyle === "short" ||
+      value.hairStyle === "parted" ||
+      value.hairStyle === "curly" ||
+      value.hairStyle === "bun") &&
+    (value.hairShade === 0 ||
+      value.hairShade === 1 ||
+      value.hairShade === 2 ||
+      value.hairShade === 3) &&
+    (value.faceStyle === "round" ||
+      value.faceStyle === "square" ||
+      value.faceStyle === "long") &&
+    (value.outfitStyle === "plain" ||
+      value.outfitStyle === "striped" ||
+      value.outfitStyle === "checked" ||
+      value.outfitStyle === "coat") &&
+    (value.outfitShade === 0 ||
+      value.outfitShade === 1 ||
+      value.outfitShade === 2 ||
+      value.outfitShade === 3) &&
+    (value.accessory === "none" ||
+      value.accessory === "glasses" ||
+      value.accessory === "badge" ||
+      value.accessory === "headband")
+  );
+}
+
+function normalizeFounder(
+  candidate: unknown,
+  campaignSeed: string,
+): FounderIdentity {
+  if (isRecord(candidate)) {
+    const displayName =
+      typeof candidate.displayName === "string"
+        ? candidate.displayName.trim()
+        : "";
+    if (
+      displayName.length > 0 &&
+      displayName.length <= 60 &&
+      isPixelAppearance(candidate.appearance)
+    ) {
+      return {
+        displayName,
+        appearance: candidate.appearance,
+      };
+    }
+  }
+  return {
+    displayName: "Founder",
+    appearance: createPixelAppearance(campaignSeed, "staff", "founder"),
+  };
 }
 
 function normalizeEmergencyGlp1State(
@@ -587,6 +652,11 @@ function normalizeEncounter(
       candidate.patientAppearance.version === "pixel-avatar.v1"
         ? (candidate.patientAppearance as unknown as EncounterState["patientAppearance"])
         : createPixelAppearance(campaignSeed, "patient", encounterId),
+    patientConfidence:
+      typeof candidate.patientConfidence === "number" &&
+      Number.isFinite(candidate.patientConfidence)
+        ? Math.max(0, Math.min(100, candidate.patientConfidence))
+        : 50,
     answers,
     steps,
     pendingResult,
@@ -633,8 +703,17 @@ function migrateVersionTwo(
   const next: GameState = {
     ...baseline,
     ...(parsed as unknown as GameState),
-    schemaVersion: 3 as const,
+    schemaVersion: 4 as const,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
+    founder: normalizeFounder(parsed.founder, campaignSeed),
+    dailyConfidenceSatisfactionModifier:
+      typeof parsed.dailyConfidenceSatisfactionModifier === "number" &&
+      Number.isFinite(parsed.dailyConfidenceSatisfactionModifier)
+        ? Math.max(
+            -3,
+            Math.min(3, parsed.dailyConfidenceSatisfactionModifier),
+          )
+        : 0,
   };
   next.rooms = normalizeRooms(parsed, baseline, context);
 
@@ -755,6 +834,17 @@ function validateVersionThree(
   return state;
 }
 
+function validateVersionFour(
+  parsed: Record<string, unknown>,
+  context: DomainContext,
+): GameState {
+  const state = migrateVersionTwo(parsed, context);
+  if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error("The saved campaign uses an incompatible randomness contract.");
+  }
+  return state;
+}
+
 export function deserializeGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -771,6 +861,9 @@ export function deserializeGameState(
   }
   if (parsed.schemaVersion === 3) {
     return validateVersionThree(parsed, context);
+  }
+  if (parsed.schemaVersion === 4) {
+    return validateVersionFour(parsed, context);
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }

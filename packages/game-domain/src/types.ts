@@ -39,6 +39,11 @@ export interface PixelAppearanceDescriptor {
   accessory: "none" | "glasses" | "badge" | "headband";
 }
 
+export interface FounderIdentity {
+  displayName: string;
+  appearance: PixelAppearanceDescriptor;
+}
+
 export interface DomainContext {
   clinicalRelease: SyntheticClinicalRelease;
   balanceRelease: PrototypeBalanceRelease;
@@ -48,6 +53,7 @@ export interface CreateCampaignOptions {
   campaignId?: string;
   campaignSeed?: string;
   createdAtRealMs?: number;
+  founder?: FounderIdentity;
 }
 
 export interface WaitingState {
@@ -194,6 +200,11 @@ export interface EncounterState {
   frozenCase: SyntheticClinicalCase;
   patientDisplayName: string;
   patientAppearance: PixelAppearanceDescriptor;
+  /**
+   * Encounter-local trust signal. Clinical answers move it by ten points;
+   * it never substitutes for facility-wide satisfaction.
+   */
+  patientConfidence: number;
   arrivalClass: ArrivalClass;
   protectedGuaranteeId: string | null;
   lifecycle: EncounterLifecycle;
@@ -299,11 +310,12 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 3;
+  schemaVersion: 4;
   campaignId: string;
   campaignSeed: string;
   randomGeneratorVersion: "randomness.xoshiro128ss.v1";
   createdAtRealMs: number;
+  founder: FounderIdentity;
   clinicalReleaseId: string;
   balanceReleaseId: string;
   schedulerPins: SchedulerPins;
@@ -311,7 +323,10 @@ export interface GameState {
   facilityTick: number;
   paused: boolean;
   cash: number;
+  /** Durable facility experience, excluding the short-lived daily modifier. */
   satisfaction: number;
+  /** Capped answer-confidence effect, cleared at the next operating day. */
+  dailyConfidenceSatisfactionModifier: number;
   clinicalXp: number;
   /** Presentation state: the chart panel currently displayed, including read-only charts. */
   openChartEncounterId: string | null;

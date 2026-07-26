@@ -96,23 +96,42 @@ export function ChartPanel({
     Boolean(chart.pendingLabel);
   const hasQuestion = steps.some((step) => Boolean(step.questionPrompt));
   const showTimelineGuide = steps.length > 1 || hasQuestion;
+  const visibleStatusLabel = /^Question \d+ of \d+$/i.test(
+    chart.statusLabel,
+  )
+    ? "Clinical decision"
+    : chart.statusLabel;
+  const confidenceLabel = chart.patientConfidenceLabel
+    ? /^confidence\b/i.test(chart.patientConfidenceLabel)
+      ? chart.patientConfidenceLabel
+      : `Confidence ${chart.patientConfidenceLabel}`
+    : undefined;
 
   return (
     <aside
-      className={`chart-panel chart-drawer${
+      className={`chart-panel chart-drawer paper-chart${
         showingBack ? " is-showing-back" : ""
       }`}
       aria-label={`${chart.patientName} chart`}
       aria-live="polite"
     >
+      <span className="paper-chart-stack is-left" aria-hidden="true" />
+      <span className="paper-chart-stack is-right" aria-hidden="true" />
+      <span className="paper-chart-clip" aria-hidden="true">
+        <span />
+      </span>
       <div className="chart-titlebar chart-drawer-titlebar">
         <div>
           <span className="eyebrow">Patient chart</span>
           <h2>{chart.patientName}</h2>
-          <p>{chart.patientDetails}</p>
+          <p className="chart-demographic-line">
+            {[chart.ageLabel, chart.sexLabel, chart.patientDetails]
+              .filter(Boolean)
+              .join(" · ")}
+          </p>
         </div>
         <div className="chart-title-actions">
-          <span className="chart-title-status">{chart.statusLabel}</span>
+          <span className="chart-title-status">{visibleStatusLabel}</span>
           <button
             className="icon-button"
             type="button"
@@ -152,15 +171,48 @@ export function ChartPanel({
                   size="large"
                 />
                 <h3>{chart.patientName}</h3>
-                <p>{chart.patientDetails}</p>
+                <p>
+                  {[chart.ageLabel, chart.sexLabel, chart.patientDetails]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
                 <span className="chart-state-badge">
-                  {chart.statusLabel}
+                  {visibleStatusLabel}
                 </span>
+                {confidenceLabel ? (
+                  <span className="chart-confidence-badge">
+                    {confidenceLabel}
+                  </span>
+                ) : null}
               </section>
 
               <section className="chart-presentation-column">
+                {chart.vitals && chart.vitals.length > 0 ? (
+                  <dl className="chart-vitals" aria-label="Vital signs">
+                    {chart.vitals.map((vital) => (
+                      <div key={vital.id}>
+                        <dt>
+                          <span
+                            className={`chart-vital-icon is-${
+                              vital.icon ?? "pressure"
+                            }`}
+                            aria-hidden="true"
+                          />
+                          {vital.label}
+                        </dt>
+                        <dd>{vital.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
+                {chart.chiefComplaint ? (
+                  <div className="chart-clinical-section">
+                    <span className="eyebrow">Chief complaint</span>
+                    <p>{chart.chiefComplaint}</p>
+                  </div>
+                ) : null}
                 <span className="eyebrow">
-                  {chart.presentationHeading ?? "Presentation"}
+                  {chart.presentationHeading ?? "HPI & presentation"}
                 </span>
                 <p>{chart.presentation}</p>
                 {chart.pendingLabel ? (
@@ -210,7 +262,7 @@ export function ChartPanel({
                       <p>No further clinical decisions are waiting.</p>
                     </section>
                   ) : (
-                    steps.map((step, index) => (
+                    steps.map((step) => (
                       <section
                         className={`chart-step-column${
                           step.current ? " is-current" : ""
@@ -218,7 +270,13 @@ export function ChartPanel({
                         key={step.id}
                       >
                         <div className="chart-step-heading">
-                          <span>Step {index + 1}</span>
+                          <span>
+                            {step.current
+                              ? "Current decision"
+                              : step.complete
+                                ? "Completed"
+                                : "Decision"}
+                          </span>
                           {step.statusLabel ? (
                             <small>{step.statusLabel}</small>
                           ) : null}
@@ -280,6 +338,11 @@ export function ChartPanel({
                               {step.feedbackTitle ?? "Teaching feedback"}
                             </strong>
                             <p>{step.feedbackBody}</p>
+                            {step.rewardLabel ? (
+                              <span className="chart-decision-reward">
+                                {step.rewardLabel}
+                              </span>
+                            ) : null}
                           </div>
                         ) : null}
                       </section>
@@ -314,7 +377,9 @@ export function ChartPanel({
                 onClick={onToggleSummary}
                 aria-pressed={showingBack}
               >
-                {showingBack ? "Return to chart front" : "Flip chart over"}
+                {showingBack
+                  ? "Return to chart front"
+                  : "Flip for more disease information"}
               </button>
             ) : null}
 

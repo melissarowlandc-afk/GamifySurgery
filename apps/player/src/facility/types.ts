@@ -1,6 +1,7 @@
 import type {
   CardinalDirection,
   GridPoint,
+  OffsitePatientTravelPresentation,
   PixelAppearanceDescriptor,
   RoomOrientation,
   RoomUpgradeLevel,
@@ -19,6 +20,7 @@ export interface FacilityPatientView {
   status: "waiting" | "active" | "action-ready" | "off-site";
   appearance: PixelAppearanceDescriptor;
   location?: GridPoint;
+  offsiteTravel?: OffsitePatientTravelPresentation;
 }
 
 export interface FacilityRoomView {
@@ -48,6 +50,11 @@ export interface FacilityStaffView {
   location?: GridPoint;
   path?: GridPoint[];
   pathIndex?: number;
+}
+
+export interface FacilityFounderView {
+  displayName: string;
+  appearance: PixelAppearanceDescriptor;
 }
 
 export interface FacilityPlacementView {
@@ -87,6 +94,7 @@ export interface FacilityViewModel {
   gridColumns: number;
   gridRows: number;
   patientCounts: FacilityPatientCounts;
+  founder: FacilityFounderView;
   patients?: FacilityPatientView[];
   rooms: FacilityRoomView[];
   staff: FacilityStaffView[];

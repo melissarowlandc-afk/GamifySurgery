@@ -29,7 +29,9 @@ a rapid cash-pay GLP-1 telehealth consultation.
 
 Accepted rules:
 
-- The action is available only while campaign cash is below $100.
+- The threshold is a centralized balance value. The original feature concept
+  used below $100; the current Level 0-1 balance-test build temporarily uses
+  below $200 so the recovery mechanic appears often enough to evaluate.
 - It may be used at most once per facility hour.
 - It provides a small immediate cash payment.
 - It provides no Learning XP, FSRS review, concept mastery, ordinary

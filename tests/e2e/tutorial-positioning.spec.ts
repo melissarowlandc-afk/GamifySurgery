@@ -59,8 +59,19 @@ async function expectCoachBesideTarget(
 
 test("keeps tutorial guidance beside real controls at variable widths", async ({
   page,
-}) => {
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name === "phone-chrome",
+    "Phone tutorial usability is covered through interactions rather than desktop callout geometry.",
+  );
+
   await page.goto("/");
+  await page.getByLabel("Founder name").fill("Tutorial Founder");
+  await page.getByRole("button", { name: "Continue" }).click();
+  await page
+    .getByRole("button", { name: "Build a Surgery Clinic" })
+    .click();
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
 
   const coach = page.locator(".tutorial-coach");
   await expect(

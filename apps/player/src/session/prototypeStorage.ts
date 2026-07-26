@@ -3,6 +3,7 @@ import {
   createInitialGameState,
   deserializeGameState,
   serializeGameState,
+  type FounderIdentity,
   type GameState,
 } from "@gamify-surgery/game-domain";
 
@@ -23,7 +24,7 @@ export interface LocalCampaignRecord {
 
 export interface LocalPrototypeProfile {
   schemaVersion: typeof PROFILE_SCHEMA_VERSION;
-  activeCampaignId: string;
+  activeCampaignId: string | null;
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
   tutorialIntroDismissedCampaignIds: string[];
@@ -46,7 +47,7 @@ interface PersistedCampaignRecord {
 
 interface PersistedPrototypeProfile {
   schemaVersion: typeof PROFILE_SCHEMA_VERSION;
-  activeCampaignId: string;
+  activeCampaignId: string | null;
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
   tutorialIntroDismissedCampaignIds: string[];
@@ -78,6 +79,7 @@ export function createLocalCampaign(
   existingCampaignIds: ReadonlySet<string> = new Set(),
   now = Date.now(),
   campaignSeed?: string,
+  founder?: FounderIdentity,
 ): LocalCampaignRecord {
   let token = createUniqueToken();
   let campaignId = `campaign.local.${token}`;
@@ -90,6 +92,7 @@ export function createLocalCampaign(
     campaignId,
     campaignSeed: campaignSeed ?? `prototype-seed.${token}`,
     createdAtRealMs: now,
+    ...(founder ? { founder } : {}),
   });
 
   return {
@@ -102,15 +105,47 @@ export function createLocalCampaign(
   };
 }
 
-function createFreshProfile(now = Date.now()): LocalPrototypeProfile {
-  const campaign = createLocalCampaign(1, new Set(), now);
+export function createFreshProfile(): LocalPrototypeProfile {
   return {
     schemaVersion: PROFILE_SCHEMA_VERSION,
-    activeCampaignId: campaign.campaignId,
-    nextCampaignNumber: 2,
+    activeCampaignId: null,
+    nextCampaignNumber: 1,
     tutorialsEnabled: true,
     tutorialIntroDismissedCampaignIds: [],
-    campaigns: [campaign],
+    campaigns: [],
+  };
+}
+
+export function appendLocalCampaign(
+  profile: LocalPrototypeProfile,
+  founder: FounderIdentity,
+  now = Date.now(),
+  campaignSeed?: string,
+): {
+  profile: LocalPrototypeProfile;
+  campaign: LocalCampaignRecord;
+} {
+  const campaign = createLocalCampaign(
+    profile.nextCampaignNumber,
+    new Set(profile.campaigns.map((existing) => existing.campaignId)),
+    now,
+    campaignSeed,
+    founder,
+  );
+  return {
+    campaign,
+    profile: {
+      ...profile,
+      activeCampaignId: campaign.campaignId,
+      nextCampaignNumber: profile.nextCampaignNumber + 1,
+      campaigns: [
+        ...profile.campaigns.map((existing) => ({
+          ...existing,
+          status: "archived" as const,
+        })),
+        campaign,
+      ],
+    },
   };
 }
 
@@ -134,7 +169,8 @@ function parsePersistedProfile(serialized: string): {
   if (
     !isRecord(candidate) ||
     candidate.schemaVersion !== PROFILE_SCHEMA_VERSION ||
-    typeof candidate.activeCampaignId !== "string" ||
+    (candidate.activeCampaignId !== null &&
+      typeof candidate.activeCampaignId !== "string") ||
     !Number.isSafeInteger(candidate.nextCampaignNumber) ||
     (candidate.nextCampaignNumber as number) < 1 ||
     !Array.isArray(candidate.campaigns)
@@ -178,22 +214,21 @@ function parsePersistedProfile(serialized: string): {
     }
   }
 
-  if (campaigns.length === 0) {
-    throw new Error("No compatible campaigns remain in the local profile.");
-  }
-
-  const requestedActiveCampaign = campaigns.find(
-    (campaign) => campaign.campaignId === candidate.activeCampaignId,
-  );
-  const activeCampaign = requestedActiveCampaign ?? campaigns[0];
-  if (!activeCampaign) {
-    throw new Error("No active local campaign is available.");
-  }
+  const requestedActiveCampaign =
+    candidate.activeCampaignId === null
+      ? undefined
+      : campaigns.find(
+          (campaign) => campaign.campaignId === candidate.activeCampaignId,
+        );
+  const activeCampaign =
+    candidate.activeCampaignId === null
+      ? undefined
+      : (requestedActiveCampaign ?? campaigns[0]);
 
   return {
     profile: {
       schemaVersion: PROFILE_SCHEMA_VERSION,
-      activeCampaignId: activeCampaign.campaignId,
+      activeCampaignId: activeCampaign?.campaignId ?? null,
       nextCampaignNumber: candidate.nextCampaignNumber as number,
       tutorialsEnabled:
         typeof candidate.tutorialsEnabled === "boolean"
@@ -214,7 +249,7 @@ function parsePersistedProfile(serialized: string): {
       campaigns: campaigns.map((campaign) => ({
         ...campaign,
         status:
-          campaign.campaignId === activeCampaign.campaignId
+          campaign.campaignId === activeCampaign?.campaignId
             ? "active"
             : "archived",
       })),
@@ -248,10 +283,17 @@ function migrateLegacySave(serializedState: string): LocalPrototypeProfile {
 
 export function getActiveCampaign(
   profile: LocalPrototypeProfile,
-): LocalCampaignRecord {
+): LocalCampaignRecord | null {
   const activeCampaign = profile.campaigns.find(
     (campaign) => campaign.campaignId === profile.activeCampaignId,
   );
+  return activeCampaign ?? null;
+}
+
+export function requireActiveCampaign(
+  profile: LocalPrototypeProfile,
+): LocalCampaignRecord {
+  const activeCampaign = getActiveCampaign(profile);
   if (!activeCampaign) {
     throw new Error("The local profile has no active campaign.");
   }

@@ -80,6 +80,7 @@ export interface ChartDecisionStepView {
   etaLabel?: string;
   feedbackTitle?: string;
   feedbackBody?: string;
+  rewardLabel?: string;
   current: boolean;
   complete: boolean;
 }
@@ -95,6 +96,18 @@ export interface ChartView {
   id: string;
   patientName: string;
   patientDetails: string;
+  /** Optional approved demographics for the paper-chart header. */
+  ageLabel?: string;
+  sexLabel?: string;
+  chiefComplaint?: string;
+  patientConfidenceLabel?: string;
+  /** Optional approved vital signs. Omitted values are never invented by UI. */
+  vitals?: Array<{
+    id: string;
+    label: string;
+    value: string;
+    icon?: "heart" | "pressure" | "temperature" | "oxygen";
+  }>;
   statusLabel: string;
   presentation: string;
   pendingLabel?: string;

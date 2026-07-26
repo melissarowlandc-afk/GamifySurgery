@@ -1,12 +1,32 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { AppShell } from "./AppShell";
 import {
+  appendLocalCampaign,
   createPrototypePlayerView,
+  getActiveCampaign,
+  loadPrototypeProfile,
+  savePrototypeProfile,
+  type LoadedPrototypeProfile,
+  type LocalPrototypeProfile,
   usePrototypeSession,
 } from "./session";
+import { OpeningSequence } from "./ui";
 
-export function App() {
-  const session = usePrototypeSession();
+interface ActivePrototypeGameProps {
+  loadedProfile: LoadedPrototypeProfile;
+  onRequestNewCampaign: (profile: LocalPrototypeProfile) => void;
+  onRequestRestart: (
+    profile: LocalPrototypeProfile,
+    campaignSeed: string,
+  ) => void;
+}
+
+function ActivePrototypeGame({
+  loadedProfile,
+  onRequestNewCampaign,
+  onRequestRestart,
+}: ActivePrototypeGameProps) {
+  const session = usePrototypeSession(loadedProfile);
   const view = useMemo(
     () =>
       createPrototypePlayerView(
@@ -82,12 +102,134 @@ export function App() {
       onRunEmergencyGlp1Consultation={
         session.runEmergencyGlp1Consultation
       }
-      onCreateCampaign={session.createCampaign}
+      onCreateCampaign={() => onRequestNewCampaign(session.profile)}
       onSwitchCampaign={session.switchCampaign}
       onTutorialAction={session.performTutorialAction}
       onTutorialsEnabledChange={session.setTutorialsEnabled}
       onSaveAndPause={session.saveAndPause}
-      onRestart={session.restart}
+      onRestart={() =>
+        onRequestRestart(session.profile, session.state.campaignSeed)
+      }
+    />
+  );
+}
+
+interface OpeningLaunchState {
+  mode: "opening";
+  profile: LocalPrototypeProfile;
+  campaignSeed?: string;
+  sequence: number;
+}
+
+interface GameLaunchState {
+  mode: "game";
+  loadedProfile: LoadedPrototypeProfile;
+}
+
+type LaunchState = OpeningLaunchState | GameLaunchState;
+
+function initialLaunchState(): LaunchState {
+  const loadedProfile = loadPrototypeProfile();
+  return getActiveCampaign(loadedProfile.profile)
+    ? {
+        mode: "game",
+        loadedProfile,
+      }
+    : {
+        mode: "opening",
+        profile: loadedProfile.profile,
+        sequence: 0,
+      };
+}
+
+export function App() {
+  const [launch, setLaunch] = useState<LaunchState>(initialLaunchState);
+
+  const requestOpening = (
+    profile: LocalPrototypeProfile,
+    campaignSeed?: string,
+  ) => {
+    setLaunch((current) => ({
+      mode: "opening",
+      profile,
+      ...(campaignSeed ? { campaignSeed } : {}),
+      sequence: current.mode === "opening" ? current.sequence + 1 : 1,
+    }));
+  };
+
+  if (launch.mode === "opening") {
+    return (
+      <OpeningSequence
+        key={launch.sequence}
+        profile={launch.profile}
+        campaignSeed={launch.campaignSeed}
+        onBeginClinic={(founder, campaignSeed) => {
+          const next = appendLocalCampaign(
+            launch.profile,
+            founder,
+            Date.now(),
+            campaignSeed,
+          );
+          const saved = savePrototypeProfile(next.profile);
+          setLaunch({
+            mode: "game",
+            loadedProfile: {
+              profile: next.profile,
+              notice: saved
+                ? "New clinic campaign created with fresh learning histories."
+                : "New clinic campaign created, but local saving is unavailable.",
+            },
+          });
+        }}
+        onResumeCampaign={() => {
+          if (!getActiveCampaign(launch.profile)) {
+            return;
+          }
+          setLaunch({
+            mode: "game",
+            loadedProfile: {
+              profile: launch.profile,
+              notice: "Local campaign restored.",
+            },
+          });
+        }}
+      />
+    );
+  }
+
+  const activeCampaign = getActiveCampaign(launch.loadedProfile.profile);
+  if (!activeCampaign) {
+    return (
+      <OpeningSequence
+        profile={launch.loadedProfile.profile}
+        onBeginClinic={(founder) => {
+          const next = appendLocalCampaign(
+            launch.loadedProfile.profile,
+            founder,
+          );
+          savePrototypeProfile(next.profile);
+          setLaunch({
+            mode: "game",
+            loadedProfile: {
+              profile: next.profile,
+              notice:
+                "New clinic campaign created with fresh learning histories.",
+            },
+          });
+        }}
+        onResumeCampaign={() => undefined}
+      />
+    );
+  }
+
+  return (
+    <ActivePrototypeGame
+      key={activeCampaign.campaignId}
+      loadedProfile={launch.loadedProfile}
+      onRequestNewCampaign={(profile) => requestOpening(profile)}
+      onRequestRestart={(profile, campaignSeed) =>
+        requestOpening(profile, campaignSeed)
+      }
     />
   );
 }

@@ -66,19 +66,18 @@ export function PatientLists({
         aria-current={patient.selected ? "page" : undefined}
         aria-describedby={tutorialCallout ? calloutId : undefined}
       >
+        <span className="patient-tab-notch" aria-hidden="true" />
         {tutorialCallout ? (
           <span className="tutorial-tab-callout" id={calloutId}>
             <span aria-hidden="true">-&gt;</span> Open this chart first
           </span>
         ) : null}
         <span className="patient-tab-row">
-          {patient.avatar ? (
-            <PixelAvatar
-              avatar={patient.avatar}
-              label={`${patient.name} portrait`}
-              size="small"
-            />
-          ) : null}
+          <PixelAvatar
+            avatar={patient.avatar}
+            label={`${patient.name} portrait`}
+            size="small"
+          />
           <span className="patient-tab-copy">
             <span className="patient-tab-name">
               {patient.actionRequired || patient.folder === "waiting" ? (

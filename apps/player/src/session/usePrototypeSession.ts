@@ -22,10 +22,10 @@ import {
 } from "react";
 import type { FacilityCameraView } from "../facility";
 import {
-  createLocalCampaign,
-  getActiveCampaign,
   loadPrototypeProfile,
+  requireActiveCampaign,
   savePrototypeProfile,
+  type LoadedPrototypeProfile,
   type LocalPrototypeProfile,
 } from "./prototypeStorage";
 import {
@@ -48,6 +48,7 @@ interface ExecuteOptions {
 }
 
 export interface PrototypeSession {
+  profile: LocalPrototypeProfile;
   state: GameState;
   campaigns: CampaignSummary[];
   tutorialsEnabled: boolean;
@@ -91,14 +92,12 @@ export interface PrototypeSession {
   advanceTutorialResult: () => void;
   addMoney: () => void;
   runEmergencyGlp1Consultation: () => void;
-  createCampaign: () => void;
   switchCampaign: (campaignId: string) => void;
   openTutorialPatient: () => void;
   dismissTutorialIntro: () => void;
   performTutorialAction: (actionId: TutorialActionId) => void;
   setTutorialsEnabled: (enabled: boolean) => void;
   saveAndPause: () => boolean;
-  restart: () => void;
 }
 
 export interface PrototypeSystemNotice {
@@ -155,12 +154,14 @@ function alertDefinition(definitionId: string) {
   );
 }
 
-export function usePrototypeSession(): PrototypeSession {
+export function usePrototypeSession(
+  initialLoadedProfile?: LoadedPrototypeProfile,
+): PrototypeSession {
   const loadedRef = useRef<ReturnType<typeof loadPrototypeProfile> | null>(
     null,
   );
   if (loadedRef.current === null) {
-    loadedRef.current = loadPrototypeProfile();
+    loadedRef.current = initialLoadedProfile ?? loadPrototypeProfile();
   }
 
   const [profile, setProfile] = useState<LocalPrototypeProfile>(
@@ -168,7 +169,7 @@ export function usePrototypeSession(): PrototypeSession {
   );
   const profileRef = useRef(profile);
   const [state, setState] = useState<GameState>(
-    getActiveCampaign(loadedRef.current.profile).state,
+    requireActiveCampaign(loadedRef.current.profile).state,
   );
   const stateRef = useRef(state);
   const [
@@ -194,7 +195,9 @@ export function usePrototypeSession(): PrototypeSession {
   const [systemNotices, setSystemNotices] = useState<
     PrototypeSystemNotice[]
   >(() => {
-    const initialState = getActiveCampaign(loadedRef.current!.profile).state;
+    const initialState = requireActiveCampaign(
+      loadedRef.current!.profile,
+    ).state;
     const isNewCampaign = loadedRef.current!.notice.startsWith("New clinic");
     const definitionId = isNewCampaign
       ? "alert.system.campaign-created"
@@ -422,16 +425,10 @@ export function usePrototypeSession(): PrototypeSession {
         encounterId !== TUTORIAL_ENCOUNTER_ID ||
         stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle !==
           "resolved" ||
-        stateRef.current.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]
+        stateRef.current.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] ||
+        stateRef.current.paused
       ) {
         return;
-      }
-      const restorePause = stateRef.current.paused;
-      if (restorePause) {
-        execute(
-          { type: "SET_PAUSED", paused: false },
-          { announceReceipt: false },
-        );
       }
       execute(
         {
@@ -443,15 +440,31 @@ export function usePrototypeSession(): PrototypeSession {
             "First chart filed. A second tutorial patient has arrived.",
         },
       );
-      if (restorePause) {
-        execute(
-          { type: "SET_PAUSED", paused: true },
-          { announceReceipt: false },
-        );
-      }
     },
     [execute],
   );
+
+  useEffect(() => {
+    const first = state.encounters[TUTORIAL_ENCOUNTER_ID];
+    const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+    if (first?.lifecycle !== "resolved" || second || state.paused) {
+      return;
+    }
+
+    const timerId = window.setTimeout(() => {
+      advanceToSecondTutorialPatient(TUTORIAL_ENCOUNTER_ID);
+    }, 5_000);
+
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [
+    advanceToSecondTutorialPatient,
+    state.campaignId,
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID],
+    state.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle,
+    state.paused,
+  ]);
 
   const closeChart = useCallback(() => {
     const encounterId = stateRef.current.openChartEncounterId;
@@ -464,9 +477,8 @@ export function usePrototypeSession(): PrototypeSession {
     });
     if (status === "applied") {
       setSummaryVisible(false);
-      advanceToSecondTutorialPatient(encounterId);
     }
-  }, [advanceToSecondTutorialPatient, execute]);
+  }, [execute]);
 
   const fileChart = useCallback(() => {
     closeChart();
@@ -743,9 +755,9 @@ export function usePrototypeSession(): PrototypeSession {
     const pendingResult = tutorialEncounter?.pendingResult;
     if (
       tutorialEncounter?.lifecycle !== "active_pending_result" ||
-      !pendingResult
+      !pendingResult ||
+      stateRef.current.paused
     ) {
-      setAnnouncement("The first tutorial result is not currently pending.");
       return;
     }
 
@@ -766,13 +778,6 @@ export function usePrototypeSession(): PrototypeSession {
       1,
       pendingResult.dueTick - stateRef.current.facilityTick,
     );
-    const restorePause = stateRef.current.paused;
-    if (restorePause) {
-      execute(
-        { type: "SET_PAUSED", paused: false },
-        { announceReceipt: false },
-      );
-    }
     execute(
       {
         type: "DEV_FAST_FORWARD",
@@ -783,12 +788,6 @@ export function usePrototypeSession(): PrototypeSession {
           "The short tutorial result returned. Pixel Patient is ready in Existing Patients.",
       },
     );
-    if (restorePause) {
-      execute(
-        { type: "SET_PAUSED", paused: true },
-        { announceReceipt: false },
-      );
-    }
   }, [execute]);
 
   useEffect(() => {
@@ -796,7 +795,8 @@ export function usePrototypeSession(): PrototypeSession {
       state.encounters[TUTORIAL_ENCOUNTER_ID];
     if (
       tutorialEncounter?.lifecycle !== "active_pending_result" ||
-      !tutorialEncounter.pendingResult
+      !tutorialEncounter.pendingResult ||
+      state.paused
     ) {
       return;
     }
@@ -816,6 +816,7 @@ export function usePrototypeSession(): PrototypeSession {
     advanceTutorialResult,
     state.campaignId,
     state.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle,
+    state.paused,
   ]);
 
   const addMoney = useCallback(() => {
@@ -881,63 +882,6 @@ export function usePrototypeSession(): PrototypeSession {
     return saved;
   }, [execute, persistActiveState, publishSystemNotice]);
 
-  const activateNewCampaign = useCallback(
-    (
-      announcementText: string,
-      campaignSeed?: string,
-      noticeDefinitionId = "alert.system.campaign-created",
-    ) => {
-      const currentProfile = profileRef.current;
-      const campaign = createLocalCampaign(
-        currentProfile.nextCampaignNumber,
-        new Set(
-          currentProfile.campaigns.map(
-            (existingCampaign) => existingCampaign.campaignId,
-          ),
-        ),
-        Date.now(),
-        campaignSeed,
-      );
-      const nextProfile: LocalPrototypeProfile = {
-        ...currentProfile,
-        activeCampaignId: campaign.campaignId,
-        nextCampaignNumber: currentProfile.nextCampaignNumber + 1,
-        campaigns: [
-          ...currentProfile.campaigns.map((existingCampaign) => ({
-            ...existingCampaign,
-            status: "archived" as const,
-          })),
-          campaign,
-        ],
-      };
-      profileRef.current = nextProfile;
-      setProfile(nextProfile);
-      stateRef.current = campaign.state;
-      setState(campaign.state);
-      setSelectedRoomDefinitionId(null);
-      setSelectedRoomInstanceId(null);
-      setPlacementOrientation(0);
-      setBuildMode(false);
-      setFacilityCamera({ zoom: 1, panX: 0, panY: 0 });
-      setSummaryVisible(false);
-      const saved = savePrototypeProfile(nextProfile);
-      saveWarningShownRef.current = !saved;
-      publishSystemNotice(
-        saved ? noticeDefinitionId : "alert.system.save-failed",
-        saved
-          ? announcementText
-          : `${announcementText} Local saving is unavailable.`,
-      );
-    },
-    [publishSystemNotice],
-  );
-
-  const createCampaign = useCallback(() => {
-    activateNewCampaign(
-      "New clinic campaign created with fresh learning histories.",
-    );
-  }, [activateNewCampaign]);
-
   const switchCampaign = useCallback((campaignId: string) => {
     const currentProfile = profileRef.current;
     const selectedCampaign = currentProfile.campaigns.find(
@@ -984,14 +928,6 @@ export function usePrototypeSession(): PrototypeSession {
         : `${selectedCampaign.name} opened, but local saving is unavailable.`,
     );
   }, [publishSystemNotice]);
-
-  const restart = useCallback(() => {
-    activateNewCampaign(
-      "Fresh clinic campaign started. The previous campaign remains available in Campaigns.",
-      stateRef.current.campaignSeed,
-      "alert.system.campaign-restarted",
-    );
-  }, [activateNewCampaign]);
 
   const tutorialIntroDismissed =
     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
@@ -1170,6 +1106,7 @@ export function usePrototypeSession(): PrototypeSession {
     );
 
   return {
+    profile,
     state,
     campaigns,
     tutorialsEnabled: profile.tutorialsEnabled,
@@ -1209,13 +1146,11 @@ export function usePrototypeSession(): PrototypeSession {
     advanceTutorialResult,
     addMoney,
     runEmergencyGlp1Consultation,
-    createCampaign,
     switchCampaign,
     openTutorialPatient,
     dismissTutorialIntro,
     performTutorialAction,
     setTutorialsEnabled,
     saveAndPause,
-    restart,
   };
 }

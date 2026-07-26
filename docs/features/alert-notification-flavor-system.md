@@ -113,7 +113,8 @@ their corresponding mechanics exist.
 
 ## Functional finance, progression, and inspection messages
 
-- Low cash: less than `$100` remains.
+- Low cash: less than the configured emergency-cash threshold remains
+  (temporarily `$200` in the current Level 0-1 balance build).
 - Emergency GLP-1 consultation is available.
 - Emergency consultation unavailable for another `{{time_remaining}}`.
 - Insufficient funds: `${{additional_amount}}` more is required.

@@ -206,10 +206,11 @@ describe("Level 0 tutorial view model", () => {
     expect(view(state)?.id).toBe("level-one-ready");
     expect(
       view(state, { acknowledged: ["level-one-ready"] }),
-    ).toMatchObject({
-      id: "level-one-ready",
+    ).toBeNull();
+    expect(view(state)?.primaryAction).toEqual({
+      id: "acknowledge-step",
+      label: "Close tutorial",
     });
-    expect(view(state)?.primaryAction).toBeUndefined();
   });
 
   it("introduces Level 1 arrivals and send-out testing through real controls", () => {
@@ -224,7 +225,10 @@ describe("Level 0 tutorial view model", () => {
       id: "level-one-ready",
       targetSelector: ".facility-time-chip",
     });
-    expect(view(state)?.primaryAction).toBeUndefined();
+    expect(view(state)?.primaryAction).toEqual({
+      id: "acknowledge-step",
+      label: "Close tutorial",
+    });
 
     state = reduce(state, {
       type: "ADMIT_PATIENT",
@@ -268,7 +272,7 @@ describe("Level 0 tutorial view model", () => {
         patient.id === "encounter.level-one.service-drill",
     );
     expect(patientTab?.statusLabel).toMatch(
-      /returns in \d+ in-game hours?/,
+      /returns in \d+ hours?/,
     );
     expect(patientTab?.statusLabel).not.toContain("tick");
     const pending =

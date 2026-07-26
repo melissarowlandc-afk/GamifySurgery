@@ -44,8 +44,8 @@ stop the manual server. Neither method deploys or publishes anything.
 
 ## What is implemented
 
-- A desktop-first React interface and top-down Phaser facility sized for both
-  full and compact desktop browser windows; phone-specific polish is deferred
+- A responsive React interface and top-down Phaser facility with bounded
+  desktop layouts and a readable phone-width chart/workspace treatment
 - A state-driven Level 0 tutorial with collision-aware contextual bubbles,
   direct target beacons, and animated arrows attached to the real controls for
   charting, results, feedback, resolution, goals, construction, and level
@@ -60,9 +60,11 @@ stop the manual server. Neither method deploys or publishes anything.
 - Left-edge Waiting and Existing Patient chart tabs, exclamation-point action
   badges, and a collapsed filing-cabinet control for newest-first Resolved
   charts
-- A large lower-workspace chart with patient portrait, presentation, and
-  sequential decision/result columns; completed charts can flip to an authored
-  learning summary before explicit resolution
+- A stable upper facility and tactile lower desk. The desk holds a paper-chart
+  presentation with consistent patient portrait, demographics, vital signs,
+  chief complaint, HPI, and sequential decision/result columns, or the Build
+  Mode tools; completed charts can flip to an authored learning summary before
+  explicit resolution
 - Deterministically varied synthetic patient names and pixel appearances, plus
   frozen seeded answer-order randomization so the correct choice is not tied to
   one position
@@ -71,18 +73,21 @@ stop the manual server. Neither method deploys or publishes anything.
 - Multi-step encounters with visible test turnaround estimates, off-site
   departure and return, and route-aware in-house X-ray only after the room,
   control room, and imaging technician are operational; hallway travel is
-  included in the displayed timing
+  included in the displayed timing, and the current in-house result grants a
+  tunable one-point satisfaction benefit
 - Campaign-scoped FSRS-6 scheduling through a pinned `ts-fsrs` adapter: correct
   answers map to Good and incorrect answers map to Again
 - Separate money, XP, satisfaction, facility time, operating expenses, and
   level requirements
 - A paused **Build Mode** with one consistent Enter/Exit control, a prominent
   pause banner, build-only grid, zoom/pan controls, repeatable rooms and
-  functional hallways, domain-validated placement outlines, visible rotating
-  doors, upgrades, and sale for a centrally configured 25% refund
+  functional hallways, direct room-to-room connections, domain-validated
+  placement outlines, visible rotating doors, upgrades, and sale for a
+  centrally configured 25% refund
 - Examination-room construction and the explicit Level 0-to-Level 1 gate
-- Level 1 routine arrivals, patience, queue capacity, treatment or referral
-  decisions, outsourced or in-house result timing, and bounded consequences
+- Level 1 routine arrivals, waiting-room occupancy, patience, queue capacity,
+  treatment or referral decisions, outsourced or in-house result timing, and
+  bounded one-time delay consequences
 - Level 1 construction options for the bathroom, waiting room, X-ray room,
   imaging control room, and minor-procedure room
 - Named receptionist and imaging-technician employees with generated pixel
@@ -95,12 +100,15 @@ stop the manual server. Neither method deploys or publishes anything.
   testing notices also enter the visible log. The larger future message bank is
   preserved in
   [`docs/features/alert-notification-flavor-system.md`](docs/features/alert-notification-flavor-system.md)
-- A bounded emergency cash-only GLP-1 consultation action below $100, limited by
+- A bounded emergency cash-only GLP-1 consultation action below $200, limited by
   facility-hour cooldown, configurable daily cap and diminishing payment, with
   no XP or FSRS benefit; the automated suite remains a Level 2 feature
 - Multiple browser-local campaigns. Each new campaign starts with fresh FSRS
   histories and a new campaign seed, while prior local campaigns can be
   reopened
+- A sparse founder creator and inheritance decision before a clinic campaign
+  exists, including the non-game rich-and-happy ending and one-time Level 0
+  initialization with a persisted founder appearance
 - Browser-local save/reload, compatible save migration, hidden-tab pause, and a
   two-step recoverable **Start over** flow that preserves the prior campaign's
   seed while creating fresh facility and learning state
@@ -120,6 +128,8 @@ stop the manual server. Neither method deploys or publishes anything.
   time
 - Centralized, validated prototype balance settings at
   `packages/balance-config/src/prototype-balance.ts`
+- The current formal Level 0-1 gates documented in
+  [`docs/features/level-0-1-progression.md`](docs/features/level-0-1-progression.md)
 
 ## Important local-only limitation
 
@@ -186,7 +196,7 @@ Run these from the project folder:
 
 | Command | Purpose |
 |---|---|
-| `npm test` | Run deterministic tests across the game, player, and clinical-authoring packages |
+| `npm test` | Run deterministic tests across the player, game-domain, clinical-authoring, clinical-research, and Clinical Context Workbench workspaces |
 | `npm run test:e2e` | Run the desktop browser walkthroughs and retained width regressions in installed Chrome |
 | `npm run typecheck` | Check every TypeScript workspace |
 | `npm run build` | Type-check and create the local production-style player build |
@@ -221,6 +231,9 @@ launcher to Pages or follow a tester to another computer/browser. See
 
 ## Screenshots
 
+- [Stable clinic and paper chart](artifacts/screenshots/visual-stable-desk-desktop.png)
+- [Expanded Build Mode workspace](artifacts/screenshots/visual-build-mode-desktop.png)
+- [Phone-width patient chart](artifacts/screenshots/visual-chart-phone.png)
 - [Automatic desktop tutorial](artifacts/screenshots/tutorial-desktop.png)
 - [Highlighted first chart](artifacts/screenshots/tutorial-callout-desktop.png)
 - [Guided chart tour](artifacts/screenshots/tutorial-chart-tour-desktop.png)
@@ -251,8 +264,8 @@ launcher to Pages or follow a tester to another computer/browser. See
 - The automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing
 - Alerts and flavor definitions tied to maintenance, inspections, later rooms,
   or other mechanics that do not yet exist
-- Phone-specific interface polish and phone deployment; current work targets
-  full and compact desktop windows
+- Complete phone-specific polish and a full phone gameplay walkthrough;
+  focused phone-width opening and chart/workspace support is already retained
 - Gameplay telemetry, research data collection, public release, native apps,
   billing, and paid infrastructure
 

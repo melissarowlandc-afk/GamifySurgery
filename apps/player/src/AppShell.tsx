@@ -197,7 +197,11 @@ export function AppShell({
   };
 
   return (
-    <div className={`game-shell${buildMode ? " is-build-mode" : ""}`}>
+    <div
+      className={`game-shell${buildMode ? " is-build-mode" : ""}${
+        chart ? " has-open-chart" : ""
+      }`}
+    >
       <ResourceBar
         view={resourceBar}
         paused={paused}
@@ -230,8 +234,8 @@ export function AppShell({
               <span className="eyebrow">Build Mode</span>
               <h2>Remodel while time is paused</h2>
               <p>
-                Use the tools on the right. Room doors must meet a connected
-                hallway path back to the Front Desk.
+                Use the construction tools on the desk. The map shows the
+                room footprint, door, and connection before you place it.
               </p>
             </section>
           )}
@@ -266,8 +270,9 @@ export function AppShell({
                     })
                   }
                   aria-label="Zoom facility out"
+                  title="Zoom out"
                 >
-                  Zoom -
+                  −
                 </button>
                 <strong>{Math.round(camera.zoom * 100)}%</strong>
                 <button
@@ -280,8 +285,9 @@ export function AppShell({
                     })
                   }
                   aria-label="Zoom facility in"
+                  title="Zoom in"
                 >
-                  Zoom +
+                  +
                 </button>
                 <button
                   className="text-button"
@@ -325,54 +331,72 @@ export function AppShell({
             ) : null}
           </section>
 
-          {!buildMode ? (
-            <ChartPanel
-              chart={chart}
-              onClose={onCloseChart}
-              onSubmitAnswer={onSubmitAnswer}
-              onAcknowledgeTerminalFeedback={
-                onAcknowledgeTerminalFeedback
-              }
-              onToggleSummary={onToggleSummary}
-              onFileChart={onFileChart}
+          <section
+            className={`desk-workspace${chart ? " has-chart" : ""}${
+              buildMode ? " is-build-desk" : ""
+            }`}
+            aria-label={buildMode ? "Construction desk" : "Clinical desk"}
+          >
+            <div className="desk-surface-details" aria-hidden="true">
+              <span className="desk-pencil" />
+              <span className="desk-paper-corner" />
+            </div>
+            <BuildPanel
+              buildMode={buildMode}
+              cashLabel={resourceBar.moneyLabel}
+              roomOptions={roomOptions}
+              selectedRoom={selectedRoomBuild}
+              placementOrientation={placementOrientation}
+              onEnterBuildMode={onEnterBuildMode}
+              onExitBuildMode={onExitBuildMode}
+              onSelectRoom={onBeginPlacement}
+              onCancelPlacement={onCancelPlacement}
+              onRotatePlacement={onRotatePlacement}
+              onUpgradeSelectedRoom={onUpgradeSelectedRoom}
+              onSellSelectedRoom={onSellSelectedRoom}
             />
-          ) : null}
+            {!buildMode ? (
+              chart ? (
+                <ChartPanel
+                  chart={chart}
+                  onClose={onCloseChart}
+                  onSubmitAnswer={onSubmitAnswer}
+                  onAcknowledgeTerminalFeedback={
+                    onAcknowledgeTerminalFeedback
+                  }
+                  onToggleSummary={onToggleSummary}
+                  onFileChart={onFileChart}
+                />
+              ) : (
+                <div className="empty-desk-message">
+                  <span className="empty-desk-paper" aria-hidden="true" />
+                  <strong>Clinical desk</strong>
+                  <span>Open a patient chart to place it here.</span>
+                </div>
+              )
+            ) : null}
+          </section>
         </section>
 
         <aside className="right-column operations-column">
-          <BuildPanel
-            buildMode={buildMode}
-            cashLabel={resourceBar.moneyLabel}
-            roomOptions={roomOptions}
-            selectedRoom={selectedRoomBuild}
-            placementOrientation={placementOrientation}
-            onEnterBuildMode={onEnterBuildMode}
-            onExitBuildMode={onExitBuildMode}
-            onSelectRoom={onBeginPlacement}
-            onCancelPlacement={onCancelPlacement}
-            onRotatePlacement={onRotatePlacement}
-            onUpgradeSelectedRoom={onUpgradeSelectedRoom}
-            onSellSelectedRoom={onSellSelectedRoom}
-          />
           <GoalsPanel
             view={progression}
             onLevelUp={onLevelUp}
           />
 
+          <StaffPanel
+            roles={staffRoles}
+            onHire={onHireStaff}
+            onDecreaseSalary={onDecreaseEmployeeSalary}
+            onIncreaseSalary={onIncreaseEmployeeSalary}
+          />
+
           {!buildMode ? (
-            <>
-              <StaffPanel
-                roles={staffRoles}
-                onHire={onHireStaff}
-                onDecreaseSalary={onDecreaseEmployeeSalary}
-                onIncreaseSalary={onIncreaseEmployeeSalary}
-              />
-              <EventMessageBoard
-                items={[...messages, ...systemNotices]}
-                onAction={handleMessageAction}
-                mode="ticker"
-              />
-            </>
+            <EventMessageBoard
+              items={[...messages, ...systemNotices]}
+              onAction={handleMessageAction}
+              mode="ticker"
+            />
           ) : null}
         </aside>
       </main>

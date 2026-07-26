@@ -34,18 +34,18 @@ mechanics became more disciplined:
    care and clinic growth early, then make design decisions from play rather
    than completing the entire five-stage game on paper.
 
-Recent mockup descriptions support a central top-down facility with compact
-resource information and a patient chart or decision panel that overlays only
-part of the facility, leaving activity visible. Patient navigation and urgent
-alerts should remain easy to find. These are interaction intentions, not a
-pixel-perfect final screen specification.
+The Level 0-1 desktop composition keeps the top-down facility stable in the
+upper center and reserves a tactile desk below it. Patient charts and Build
+Mode tools occupy that desk rather than resizing or moving the facility.
+Phone-width layouts may turn the chart into a readable full-screen sheet.
+Patient navigation and urgent alerts remain easy to find.
 
 ### Historical ideas that remain candidates
 
 The following appeared in early brainstorming but are not automatically
-canonical: the rich-grandfather opening joke and exact starting money;
-searchable catalogs for every test, diagnosis, and treatment; cash for every
-correct sub-answer; exact real-time-to-facility-time conversion; death,
+canonical: final starting money; searchable catalogs for every test, diagnosis,
+and treatment; cash for every
+correct sub-answer; death,
 lawsuit, or other punitive event details; and eventual expansion into a full
 emergency department or hospital. The current accepted progression ends at an
 optimized ambulatory surgery center. Research use also remains outside the
@@ -53,6 +53,18 @@ initial build unless separately authorized. The early idea of feeding
 commercial question-bank questions or explanations into AI is not accepted;
 clinical authoring must use permitted sources and original synthesis without
 copying or close paraphrase.
+
+### Founder and inheritance opening
+
+Every new campaign begins with a tiny founder creator followed by the sparse
+rich-grandfather decision. **Be Rich and Happy** is a genuine non-game ending
+that creates no clinic campaign or learning history. **Build a Surgery Clinic**
+initializes the existing Level 0 state exactly once, stores the selected founder
+with that campaign, and uses configured starting cash rather than making the
+inherited $1,000,000 spendable. Existing campaigns resume past the opening.
+Start Over reuses this flow while retaining the accepted same-seed,
+recoverable-restart rules. The exact implementation boundary is recorded in
+[Founder and Inheritance Opening](docs/features/founder-inheritance-opening.md).
 
 ## Educational loop
 
@@ -128,12 +140,15 @@ repeating one memorized item. This accepted game-design rule is recorded in
 
 - A completed patient earns basic operational revenue independently of the
   number of scored questions.
-- Correct first submissions earn educational XP and contribute to a modest,
-  capped patient-level quality or satisfaction bonus.
-- Incorrect first submissions earn no correctness bonus, never remove earned
-  XP, and contribute to a small capped patient-level consequence.
+- Correct first submissions award educational XP immediately and raise that
+  encounter's patient-confidence value by ten points.
+- Incorrect first submissions award no educational XP and lower that
+  encounter's patient-confidence value by ten points.
+- Correctness contributes only a mild, capped same-day satisfaction modifier;
+  the modifier resets at the next continuous facility-day rollover so clinical
+  answers cannot permanently snowball facility satisfaction.
 - Multi-question patients receive one normalized patient-level settlement
-  rather than a full reward or penalty multiplied by question count.
+  after completion. Clinical decisions do not pay cash individually.
 - Same-date remediation cannot award another clinical XP or quality bonus for
   that concept.
 - Tutorial resources guarantee the first examination room and operating buffer
@@ -142,8 +157,9 @@ repeating one memorized item. This accepted game-design rule is recorded in
   than answering correctly.
 
 Exact amounts remain tunable balance values. This accepted relationship is
-recorded in
-[ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md).
+recorded in [ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md)
+and refined by
+[ADR 0033](docs/adr/0033-immediate-xp-and-daily-confidence-modifier.md).
 
 ### Incorrect-answer case continuation
 
@@ -415,6 +431,19 @@ authority and integrity boundary is recorded in
 - Level advancement uses defined accomplishments, XP, and satisfaction above 90% at the moment the player selects Level Up.
 - No separate cash-balance condition is required for level advancement.
 - Construction costs create the financial constraint.
+- Level 0 begins with only the founder-operated Front Desk and exterior door.
+  Its formal Level 1 gate is the configured XP target, satisfaction above 90%,
+  and one Examination Room; the two protected tutorial patients teach the loop
+  but are not a separate encounter-count requirement.
+- Level 1 unlocks the Bathroom, Waiting Room, Imaging Control Room, X-ray Room,
+  Minor-Procedure Room, Receptionist, and Imaging Technician. Its prototype
+  completion gate is the configured XP target, satisfaction above 90%, the
+  Imaging Control Room, X-ray Room, Minor-Procedure Room, and an Imaging
+  Technician. Bathroom, Waiting Room, and Receptionist remain useful optional
+  purchases rather than formal gate items.
+- The laboratory and APP are later-level systems and are not Level 0-1 unlocks.
+- The complete current prototype checklist is maintained in
+  [Level 0-1 Prototype Progression](docs/features/level-0-1-progression.md).
 - Facility stage, educational difficulty, clinical complexity, room upgrade level, and employee training level are separate concepts.
 - Room and employee upgrade/training tracks each use Levels 1-5.
 - The end-game challenge is an elective inspection week with a score and recognition tier.

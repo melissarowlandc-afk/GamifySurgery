@@ -6,6 +6,7 @@ export { EmergencyGlp1Panel } from "./EmergencyGlp1Panel";
 export { EventMessageBoard } from "./EventMessageBoard";
 export { GoalsPanel } from "./GoalsPanel";
 export { HelpDialog } from "./HelpDialog";
+export { OpeningSequence } from "./OpeningSequence";
 export { PatientLists } from "./PatientLists";
 export { PixelAvatar } from "./PixelAvatar";
 export { ResourceBar } from "./ResourceBar";

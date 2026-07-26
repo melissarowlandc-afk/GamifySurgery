@@ -5,12 +5,24 @@ import type {
   FrozenPatientTravel,
   GameState,
   GridPoint,
+  PendingResult,
 } from "./types";
 
 export interface FrozenServiceRouteTiming {
   serviceDurationTicks: number;
   durationTicks: number;
   patientTravel: FrozenPatientTravel | null;
+}
+
+export interface OffsitePatientTravelPresentation {
+  phase: "departing" | "away" | "returning";
+  /**
+   * Progress through the visible leg. Departing runs from the entrance toward
+   * the edge of the map; returning runs from the edge back to the entrance.
+   */
+  progress: number;
+  /** A stable sidewalk direction chosen from the encounter identity. */
+  direction: -1 | 1;
 }
 
 function getDefinition(context: DomainContext, definitionId: string) {
@@ -63,6 +75,9 @@ export function createFrozenServiceRouteTiming(
         destination,
         (definitionId) => getDefinition(context, definitionId),
         state.rooms,
+        new Set(
+          context.balanceRelease.facility.protectedRoomDefinitionIds,
+        ),
       );
       return outboundPath.length === 0
         ? []
@@ -147,4 +162,84 @@ export function getFrozenPatientTravelLocation(
     facilityTick - travel.serviceCompletionTick,
     travel.tilesPerTick,
   );
+}
+
+function stableSidewalkDirection(stableId: string): -1 | 1 {
+  let hash = 2166136261;
+  for (let index = 0; index < stableId.length; index += 1) {
+    hash ^= stableId.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) % 2 === 0 ? -1 : 1;
+}
+
+/**
+ * Creates the purely presentational sidewalk phase for an outsourced result.
+ *
+ * The phase is derived only from the pending result's frozen scheduling
+ * fields and the persisted facility tick. It therefore survives reload
+ * exactly and cannot drift with render-frame timing. In-facility routes keep
+ * using their frozen grid path instead.
+ */
+export function getOffsitePatientTravelPresentation(
+  pendingResult: PendingResult,
+  facilityTick: number,
+  stableId: string,
+): OffsitePatientTravelPresentation | null {
+  if (
+    pendingResult.patientTravel !== null ||
+    pendingResult.deliveredAtTick !== null
+  ) {
+    return null;
+  }
+
+  const totalTicks = Math.max(
+    1,
+    pendingResult.dueTick - pendingResult.scheduledAtTick,
+  );
+  const elapsedTicks = Math.max(
+    0,
+    Math.min(totalTicks, facilityTick - pendingResult.scheduledAtTick),
+  );
+  const direction = stableSidewalkDirection(stableId);
+
+  if (elapsedTicks === 0) {
+    return {
+      phase: "departing",
+      progress: 0,
+      direction,
+    };
+  }
+
+  // Reserve roughly the first and final thirds for visible sidewalk travel,
+  // while ensuring ordinary 4- and 6-hour send-outs have an absent midpoint.
+  const legTicks = Math.max(1, Math.floor(totalTicks / 3));
+  const returnStartTick = Math.max(legTicks, totalTicks - legTicks);
+
+  if (elapsedTicks < legTicks) {
+    return {
+      phase: "departing",
+      progress: elapsedTicks / legTicks,
+      direction,
+    };
+  }
+
+  if (elapsedTicks < returnStartTick) {
+    return {
+      phase: "away",
+      progress: 1,
+      direction,
+    };
+  }
+
+  // The +1 makes the patient visibly partway home on the first returning
+  // facility tick instead of lingering motionless at the edge until ready.
+  return {
+    phase: "returning",
+    progress: Math.min(
+      1,
+      (elapsedTicks - returnStartTick + 1) / (legTicks + 1),
+    ),
+    direction,
+  };
 }

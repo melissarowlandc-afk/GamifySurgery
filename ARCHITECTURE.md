@@ -25,7 +25,10 @@ The repository now implements the local Level 0/1 stage of ADR 0022:
 
 The local player keeps a versioned profile containing multiple campaigns in
 browser local storage. Each campaign owns its own facility and FSRS histories.
-Creating a genuinely new campaign produces a fresh campaign ID, seed, and empty
+An empty profile contains no placeholder clinic. Founder creation and the
+inheritance choice run outside the simulation; only the clinic choice creates
+and persists the self-contained campaign state. Creating a genuinely new
+campaign produces a fresh campaign ID, seed, founder identity, and empty
 learning state. Start Over instead creates a new campaign ID with the prior
 active campaign's seed and fresh facility and learning state. Switching back
 restores the selected campaign without transferring mastery. A deterministic

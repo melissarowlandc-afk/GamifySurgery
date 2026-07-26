@@ -18,6 +18,7 @@ import {
 import {
   createFrozenServiceRouteTiming,
   getFrozenPatientTravelLocation,
+  getOffsitePatientTravelPresentation,
 } from "./patient-travel";
 
 const CAPACITY_LIFECYCLES = new Set([
@@ -66,7 +67,7 @@ export function getEmergencyGlp1Status(
     : usage >= config.dailyUseCap
       ? `Daily limit reached (${config.dailyUseCap}/${config.dailyUseCap}).`
       : cooldownRemainingTicks > 0
-        ? `Available in ${cooldownRemainingTicks} facility hour${
+        ? `Available in ${cooldownRemainingTicks} hour${
             cooldownRemainingTicks === 1 ? "" : "s"
           }.`
         : null;
@@ -422,6 +423,16 @@ export function getCompletedEncounterCount(state: GameState): number {
   ).length;
 }
 
+export function getEffectiveSatisfaction(state: GameState): number {
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      state.satisfaction + state.dailyConfidenceSatisfactionModifier,
+    ),
+  );
+}
+
 export function getFacilityProgressionStatus(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -441,6 +452,7 @@ export function getFacilityProgressionStatus(
     state.employees.map((employee) => employee.staffRoleDefinitionId),
   );
   const completedEncounters = getCompletedEncounterCount(state);
+  const effectiveSatisfaction = getEffectiveSatisfaction(state);
   const requirements = [
     {
       id: "progression.clinical_xp",
@@ -449,18 +461,26 @@ export function getFacilityProgressionStatus(
       current: state.clinicalXp,
       required: definition.minimumClinicalXp,
     },
-    {
-      id: "progression.completed_encounters",
-      label: "Completed patients",
-      met: completedEncounters >= definition.minimumCompletedEncounters,
-      current: completedEncounters,
-      required: definition.minimumCompletedEncounters,
-    },
+    ...(definition.minimumCompletedEncounters > 0
+      ? [
+          {
+            id: "progression.completed_encounters",
+            label: "Completed patients",
+            met:
+              completedEncounters >=
+              definition.minimumCompletedEncounters,
+            current: completedEncounters,
+            required: definition.minimumCompletedEncounters,
+          },
+        ]
+      : []),
     {
       id: "progression.satisfaction",
       label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
-      met: state.satisfaction > definition.satisfactionMustBeGreaterThan,
-      current: state.satisfaction,
+      met:
+        effectiveSatisfaction >
+        definition.satisfactionMustBeGreaterThan,
+      current: effectiveSatisfaction,
       required: definition.satisfactionMustBeGreaterThan + 1,
     },
     ...definition.requiredRoomDefinitionIds.map((roomDefinitionId) => {
@@ -670,6 +690,20 @@ export function getPendingPatientLocation(
   const travel = state.encounters[encounterId]?.pendingResult?.patientTravel;
   return travel
     ? getFrozenPatientTravelLocation(travel, state.facilityTick)
+    : null;
+}
+
+export function getPendingOffsitePatientTravel(
+  state: GameState,
+  encounterId: string,
+) {
+  const pendingResult = state.encounters[encounterId]?.pendingResult;
+  return pendingResult
+    ? getOffsitePatientTravelPresentation(
+        pendingResult,
+        state.facilityTick,
+        encounterId,
+      )
     : null;
 }
 

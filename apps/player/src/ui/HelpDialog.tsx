@@ -33,7 +33,7 @@ const HELP_STEPS = [
   ],
   [
     "Rooms and hallways",
-    "A room works only when its door has a hallway path back to the Front Desk. Patients and employees visibly walk these routes, so layout affects task time.",
+    "A new room's marked door must open into a connected room or hallway. Hallways may branch directly from room walls. Patients and employees visibly walk the resulting routes, so layout affects task time.",
   ],
   [
     "Employees",
