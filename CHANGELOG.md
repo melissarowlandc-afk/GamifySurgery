@@ -6,6 +6,18 @@ All notable implementation and project-record changes are listed here.
 
 ### Implementation
 
+- Began the local `beta` clinical-authoring workstream with a standalone,
+  runtime-isolated Zod contract for Sources and immutable Source Snapshots,
+  coverage frameworks, Clinical Topics and exact sections, structured facts,
+  Tested Concepts, practice-question capture, citations, and resumable
+  extraction batches
+- Added public-fixture safety checks, revision-lineage and approval safeguards,
+  a complete synthetic authoring example, a blank local-workspace template,
+  and a metadata-only registry for the currently listed ABSITE and SCORE
+  General Surgery outline snapshots
+- Added clinical workspace validation commands and 11 focused unit tests;
+  textbook ingestion, real clinical drafting, patient/question authoring,
+  publishing, database migrations, and paid AI remain deferred
 - Replaced the single first-chart prompt with a deterministic Level 0 tutorial
   coach that explains the chart, scored decisions, off-site results, returned
   charts, feedback, resolution, goals, Build Mode, room placement, and the

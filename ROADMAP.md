@@ -1,8 +1,8 @@
 # Roadmap
 
-Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The current working point is
-an owner-authorized browser-hosted Level 0/1 playtest awaiting the next
-walkthrough and balance iteration.
+Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The browser-hosted Level
+0/1 playtest remains stable on `main`; a separate local `beta` branch has begun
+the bounded clinical-authoring and source-provenance foundation.
 
 Last updated: 2026-07-25
 
@@ -143,9 +143,9 @@ deferred until the approved content pool is large enough to exercise it.
 
 Latest local verification on 2026-07-25:
 
-- `npm test`: 62 of 62 unit tests passed (41 game-domain and 21 player
-  tutorial/alert/view-model/positioning)
-- `npm run typecheck`: all four TypeScript workspaces passed
+- `npm test`: 73 of 73 unit tests passed (41 game-domain, 21 player
+  tutorial/alert/view-model/positioning, and 11 clinical-authoring)
+- `npm run typecheck`: all five TypeScript workspaces passed
 - `npm run build`: local Vite build completed with a non-blocking Phaser bundle
   size warning
 - `npm run build:pages`: the `/GamifySurgery/` static build and generated asset
@@ -158,6 +158,18 @@ Latest local verification on 2026-07-25:
 
 Dependency: complete the local walkthrough first so content work is not built
 around a confusing or unfun loop.
+
+Beta foundation started:
+
+- Added a separate clinical-authoring contract and validator without wiring
+  Draft content into gameplay.
+- Registered exact public metadata snapshots for the currently listed ABSITE
+  and SCORE General Surgery outlines.
+- Added a blank private-workspace template, a synthetic end-to-end example,
+  immutable source-snapshot provenance, claim-level citations, workflow
+  safeguards, conflict tracking, and resumable extraction-batch records.
+- Kept raw sources, commercial question-bank material, private notes, and PHI
+  outside tracked paths.
 
 - Fix high-priority walkthrough defects and tune centralized temporary values.
 - Refine the phone-specific layout after the desktop walkthrough; current

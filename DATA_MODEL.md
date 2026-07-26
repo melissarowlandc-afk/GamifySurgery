@@ -296,12 +296,23 @@ identifier, edition or publication date, access date, source type, and relevant
 licensing notes. Full copyrighted source text is not presumed safe to store or
 send to an AI provider.
 
+### Source snapshot
+
+Immutable retrieval of one Source, identified by stable snapshot ID, exact
+retrieved URL, retrieval time, upstream modification signal when available,
+format, access scope, and content checksum. Citations, coverage frameworks,
+capture-inbox items, and extraction batches bind this exact snapshot rather
+than a mutable versionless URL. The snapshot stores provenance metadata, not a
+presumption that the retrieved copyrighted artifact may be committed or
+redistributed.
+
 ### Citation
 
-Claim-specific many-to-many join from a Source to an exact topic section,
-structured fact, concept, patient-variant, Result Gate or Requirement, Patient
-Learning Summary, question, answer, explanation, or Terminal Clinical Outcome
-revision. Stores supported claim, locator, and author verification state.
+Claim-specific many-to-many join from an exact Source snapshot to an exact
+topic section, structured fact, concept, patient-variant, Result Gate or
+Requirement, Patient Learning Summary, question, answer, explanation, or
+Terminal Clinical Outcome revision. Stores supported claim, locator, and
+author verification state.
 
 ### Content revision
 

@@ -300,11 +300,16 @@ This content-model extension is accepted in
 A Source preserves title, publisher or journal, link or identifier, access
 date, edition or publication date, relevant licensing notes, and source type.
 
-A Citation is a many-to-many link from a source to an exact topic section,
-structured fact, concept, patient variant, Result Gate or Requirement, Patient
-Learning Summary, question, answer rationale, explanation, or Terminal
-Clinical Outcome revision. It identifies the claim or passage supported rather
-than merely attaching a bibliography to the topic.
+Each retrieval is retained as an immutable Source Snapshot with its exact URL,
+retrieval time, upstream modification signal when available, format, access
+scope, and checksum. This prevents a versionless source from silently changing
+the provenance of older claims.
+
+A Citation is a many-to-many link from an exact source snapshot to an exact
+topic section, structured fact, concept, patient variant, Result Gate or
+Requirement, Patient Learning Summary, question, answer rationale,
+explanation, or Terminal Clinical Outcome revision. It identifies the claim or
+passage supported rather than merely attaching a bibliography to the topic.
 
 ## Accepted relationship summary
 
@@ -325,8 +330,8 @@ than merely attaching a bibliography to the topic.
 | Decision Node to Question Variant | One-to-many | Several approved wordings may test the same node and concept |
 | Question Variant to compatible Patient Presentation Variant | Many-to-many | A question may work with several presentations, while a presentation may support several questions |
 | Final incorrect Answer Choice plus compatible presentation/profile to Terminal Outcome Disposition | Exactly one disposition per compatible tuple | Every final wrong choice deliberately resolves to no outcome or one exact approved outcome |
-| Terminal Clinical Outcome Revision to Sources | Many-to-many through Citation | Each clinical claim needs support, while one source may support several outcomes |
-| Exact content revisions to Sources | Many-to-many through Citation | One source supports several claims and one claim may require several sources |
+| Terminal Clinical Outcome Revision to Source Snapshots | Many-to-many through Citation | Each clinical claim needs exact support, while one retrieved snapshot may support several outcomes |
+| Exact content revisions to Source Snapshots | Many-to-many through Citation | One retrieved snapshot supports several claims and one claim may require several exact snapshots |
 | Patient Presentation Variant to facility capabilities | Many-to-many | A presentation may require several services, and one capability supports many presentations |
 | Clinical Release to exact item revisions | Many-to-many through release membership | Unchanged immutable revisions may appear in several complete releases |
 

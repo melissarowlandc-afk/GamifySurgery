@@ -18,7 +18,11 @@
     "test": "npm run test --workspaces --if-present",
     "test:e2e": "playwright test",
     "test:watch": "npm run test:watch --workspace @gamify-surgery/game-domain",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "clinical:validate": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js",
+    "clinical:validate:example": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js --public-safe packages/clinical-authoring/examples/synthetic-workspace.json",
+    "clinical:validate:frameworks": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js --public-safe clinical-data/public/official-frameworks.json",
+    "clinical:validate:template": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js clinical-data/templates/authoring-workspace.template.json"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",

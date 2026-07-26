@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 1,
+  "id": "workspace.synthetic.pilot.v1",
+  "label": "Synthetic clinical-authoring pilot",
+  "createdAt": "2026-07-25T23:55:00Z",
+  "updatedAt": "2026-07-25T23:55:00Z",
+  "educationalDifficultyDefinitions": [
+    {
+      "id": "difficulty.synthetic",
+      "label": "Synthetic",
+      "description": "Project-owned fixture difficulty without clinical meaning."
+    }
+  ],
+  "clinicalSettingDefinitions": [
+    {
+      "id": "setting.synthetic",
+      "label": "Synthetic setting",
+      "description": "Project-owned fixture setting without clinical meaning."
+    }
+  ],
+  "facilityStageDefinitions": [
+    {
+      "id": "facility-stage.synthetic",
+      "label": "Synthetic stage",
+      "description": "Project-owned fixture stage without gameplay meaning.",
+      "ordinal": 0
+    }
+  ],
+  "deferredScopeDefinitions": [],
+  "sources": [
+    {
+      "id": "source.synthetic.learning-loop",
+      "title": "Project-owned synthetic learning-loop fixture",
+      "sourceType": "synthetic_fixture",
+      "edition": "Fixture v1",
+      "publicationYear": 2026,
+      "publisherOrOrganization": "Gamify Surgery project",
+      "canonicalUrlOrIdentifier": null,
+      "scopeNote": "Entirely synthetic material used only to validate the authoring workflow.",
+      "rightsReview": {
+        "status": "synthetic_or_owner_authored",
+        "note": "Project-owned synthetic content safe for tests and public fixtures.",
+        "aiProcessingPermitted": true,
+        "publicTextReusePermitted": true
+      }
+    }
+  ],
+  "sourceSnapshots": [
+    {
+      "id": "snapshot.synthetic.learning-loop.v1",
+      "sourceId": "source.synthetic.learning-loop",
+      "formatId": "format.inline-json",
+      "accessScope": "synthetic_fixture",
+      "retrievedUrl": null,
+      "retrievedAt": "2026-07-25T23:55:00Z",
+      "upstreamLastModified": null,
+      "sha256": null
+    }
+  ],
+  "citations": [
+    {
+      "id": "citation.synthetic.coverage.v1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "targetKind": "coverage_entry",
+      "targetId": "coverage.synthetic.queue-triage",
+      "locator": {
+        "kind": "synthetic_marker",
+        "label": "Synthetic coverage marker",
+        "secondaryLabel": null
+      },
+      "supportedClaim": "This synthetic topic partially exercises the authoring workflow.",
+      "verificationState": "human_verified",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    },
+    {
+      "id": "citation.synthetic.topic-section.v1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "targetKind": "topic_section",
+      "targetId": "section.synthetic.queue-triage.definition.v1",
+      "locator": {
+        "kind": "synthetic_marker",
+        "label": "Synthetic topic marker",
+        "secondaryLabel": null
+      },
+      "supportedClaim": "A ready synthetic chart represents an available tutorial action.",
+      "verificationState": "human_verified",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    },
+    {
+      "id": "citation.synthetic.fact.v1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "targetKind": "structured_fact",
+      "targetId": "fact-rev.synthetic.queue-triage.clock.v1",
+      "locator": {
+        "kind": "synthetic_marker",
+        "label": "Synthetic fact marker",
+        "secondaryLabel": null
+      },
+      "supportedClaim": "The fixture uses ten synthetic minutes as an example value.",
+      "verificationState": "human_verified",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    },
+    {
+      "id": "citation.synthetic.concept.v1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "targetKind": "tested_concept",
+      "targetId": "concept-rev.synthetic.queue-triage.next-action.v1",
+      "locator": {
+        "kind": "synthetic_marker",
+        "label": "Synthetic concept marker",
+        "secondaryLabel": null
+      },
+      "supportedClaim": "The fixture concept tests one synthetic next action.",
+      "verificationState": "human_verified",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    },
+    {
+      "id": "citation.synthetic.inbox.v1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "targetKind": "practice_inbox_item",
+      "targetId": "inbox-rev.synthetic.queue-triage.v1",
+      "locator": {
+        "kind": "synthetic_marker",
+        "label": "Synthetic inbox marker",
+        "secondaryLabel": null
+      },
+      "supportedClaim": "The inbox item is a project-owned synthetic example.",
+      "verificationState": "human_verified",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    }
+  ],
+  "coverageFrameworks": [
+    {
+      "id": "framework.synthetic.learning-loop.v1",
+      "name": "Synthetic learning-loop framework",
+      "versionLabel": "1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    }
+  ],
+  "coverageEntries": [
+    {
+      "id": "coverage.synthetic.queue-triage",
+      "frameworkId": "framework.synthetic.learning-loop.v1",
+      "externalCategoryId": "synthetic.queue-triage",
+      "categoryPath": [
+        "Synthetic training",
+        "Queue triage"
+      ],
+      "topicId": "topic.synthetic.queue-triage",
+      "coverageStatus": "partial",
+      "sourceCoverageCount": 1,
+      "approvedConceptCount": 0,
+      "approvedQuestionVariantCount": 0,
+      "currentGameEligibility": "eligible",
+      "deferredScopeId": null,
+      "citationIds": [
+        "citation.synthetic.coverage.v1"
+      ],
+      "note": "Draft fixture content exists, but nothing is clinically approved."
+    }
+  ],
+  "topics": [
+    {
+      "id": "topic.synthetic.queue-triage",
+      "preferredName": "Synthetic queue triage",
+      "topicType": "synthetic_training_topic",
+      "aliases": [],
+      "currentWorkingRevisionId": "topic-rev.synthetic.queue-triage.v1"
+    }
+  ],
+  "topicRevisions": [
+    {
+      "topicId": "topic.synthetic.queue-triage",
+      "revision": {
+        "revisionId": "topic-rev.synthetic.queue-triage.v1",
+        "parentRevisionId": null,
+        "workflowState": "draft",
+        "provenance": {
+          "kind": "manual",
+          "reference": "batch.synthetic.seed.v1"
+        },
+        "createdAt": "2026-07-25T23:55:00Z",
+        "changeSummary": "Create the synthetic topic.",
+        "clinicalApproval": null
+      },
+      "sections": [
+        {
+          "id": "section.synthetic.queue-triage.definition.v1",
+          "sectionType": "definition",
+          "narrative": "A synthetic tutorial topic used to validate chart-ready workflow records.",
+          "citationIds": [
+            "citation.synthetic.topic-section.v1"
+          ]
+        }
+      ]
+    }
+  ],
+  "structuredFacts": [
+    {
+      "id": "fact.synthetic.queue-triage.clock",
+      "topicRevisionId": "topic-rev.synthetic.queue-triage.v1",
+      "revision": {
+        "revisionId": "fact-rev.synthetic.queue-triage.clock.v1",
+        "parentRevisionId": null,
+        "workflowState": "draft",
+        "provenance": {
+          "kind": "manual",
+          "reference": "batch.synthetic.seed.v1"
+        },
+        "createdAt": "2026-07-25T23:55:00Z",
+        "changeSummary": "Add one synthetic structured value.",
+        "clinicalApproval": null
+      },
+      "factType": "operational.ready-chart-delay",
+      "value": {
+        "kind": "number",
+        "value": 10,
+        "unit": "synthetic_minutes",
+        "precision": 0
+      },
+      "population": "Synthetic tutorial actors only.",
+      "clinicalContext": "Authoring validation only.",
+      "applicability": "This value has no clinical or gameplay authority.",
+      "exceptions": [],
+      "scenarioUseStatus": "descriptive_only",
+      "conflict": {
+        "state": "none",
+        "conflictGroupId": null,
+        "resolutionNote": null
+      },
+      "citationIds": [
+        "citation.synthetic.fact.v1"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "concept.synthetic.queue-triage.next-action",
+      "revision": {
+        "revisionId": "concept-rev.synthetic.queue-triage.next-action.v1",
+        "parentRevisionId": null,
+        "workflowState": "draft",
+        "provenance": {
+          "kind": "manual",
+          "reference": "batch.synthetic.seed.v1"
+        },
+        "createdAt": "2026-07-25T23:55:00Z",
+        "changeSummary": "Add one synthetic tested concept.",
+        "clinicalApproval": null
+      },
+      "displayName": "Select the ready chart",
+      "learningObjective": "Select the ready chart as the next action in a project-owned synthetic queue example.",
+      "primaryTopicId": "topic.synthetic.queue-triage",
+      "relatedTopicIds": [],
+      "conceptType": "synthetic_training",
+      "classification": {
+        "educationalDifficultyId": "difficulty.synthetic",
+        "earliestFacilityStageId": "facility-stage.synthetic",
+        "requiredClinicalSettingIds": [
+          "setting.synthetic"
+        ],
+        "currentGameEligibility": "eligible",
+        "deferredScope": null
+      },
+      "citationIds": [
+        "citation.synthetic.concept.v1"
+      ]
+    }
+  ],
+  "practiceInbox": [
+    {
+      "id": "inbox.synthetic.queue-triage",
+      "revision": {
+        "revisionId": "inbox-rev.synthetic.queue-triage.v1",
+        "parentRevisionId": null,
+        "workflowState": "draft",
+        "provenance": {
+          "kind": "manual",
+          "reference": "batch.synthetic.seed.v1"
+        },
+        "createdAt": "2026-07-25T23:55:00Z",
+        "changeSummary": "Add one synthetic capture-inbox item.",
+        "clinicalApproval": null
+      },
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "sourceLocator": {
+        "kind": "synthetic_marker",
+        "label": "Synthetic inbox example",
+        "secondaryLabel": null
+      },
+      "contentOrigin": "owner_paraphrase",
+      "paraphrasedTestedPoint": "A ready chart should be opened before an unavailable chart.",
+      "paraphrasedAnswerOptions": [
+        "Open the ready chart",
+        "Ignore the ready chart"
+      ],
+      "correctAnswerSummary": "Open the ready chart.",
+      "ownerNotes": "Synthetic workflow example with no clinical meaning.",
+      "uncertaintyToInvestigate": null,
+      "citationIds": [
+        "citation.synthetic.inbox.v1"
+      ],
+      "aiSuggestions": []
+    }
+  ],
+  "extractionBatches": [
+    {
+      "id": "batch.synthetic.seed.v1",
+      "sourceSnapshotId": "snapshot.synthetic.learning-loop.v1",
+      "sourceRange": {
+        "start": {
+          "kind": "synthetic_marker",
+          "label": "Fixture start",
+          "secondaryLabel": null
+        },
+        "end": {
+          "kind": "synthetic_marker",
+          "label": "Fixture end",
+          "secondaryLabel": null
+        }
+      },
+      "processingMethod": "manual",
+      "schemaVersion": 1,
+      "extractorVersion": "fixture-builder.v1",
+      "inputFingerprint": "fixture:synthetic-v1",
+      "status": "completed",
+      "totalUnits": 5,
+      "completedUnits": 5,
+      "lastCompletedLocator": {
+        "kind": "synthetic_marker",
+        "label": "Fixture end",
+        "secondaryLabel": null
+      },
+      "outputReferences": [
+        {
+          "kind": "topic_revision",
+          "id": "topic-rev.synthetic.queue-triage.v1"
+        },
+        {
+          "kind": "structured_fact",
+          "id": "fact-rev.synthetic.queue-triage.clock.v1"
+        },
+        {
+          "kind": "tested_concept",
+          "id": "concept-rev.synthetic.queue-triage.next-action.v1"
+        },
+        {
+          "kind": "coverage_entry",
+          "id": "coverage.synthetic.queue-triage"
+        },
+        {
+          "kind": "practice_inbox_item",
+          "id": "inbox-rev.synthetic.queue-triage.v1"
+        }
+      ],
+      "unresolvedConflictGroupIds": [],
+      "errors": [],
+      "startedAt": "2026-07-25T23:55:00Z",
+      "updatedAt": "2026-07-25T23:55:00Z",
+      "completedAt": "2026-07-25T23:55:00Z",
+      "humanReviewState": "complete"
+    }
+  ]
+}

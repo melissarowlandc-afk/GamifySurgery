@@ -142,18 +142,29 @@ repeating that wording inside each vignette. The fixture is not a curriculum,
 has not been clinically approved by Melissa, and must not be used for teaching
 or patient care.
 
+The local `beta` workstream also contains a separate
+`packages/clinical-authoring` validation contract. It registers exact source
+snapshots, coverage frameworks, draft topic knowledge, structured facts,
+Tested Concepts, practice-question takeaways, citations, and resumable
+extraction batches without importing drafts into the player. The tracked
+official-framework registry stores metadata and checksums only; it does not
+copy the ABSITE or SCORE outline taxonomy or source documents.
+
 ## Checks
 
 Run these from the project folder:
 
 | Command | Purpose |
 |---|---|
-| `npm test` | Run 62 deterministic unit tests: 41 game-domain and 21 player alert/tutorial/positioning tests |
+| `npm test` | Run deterministic tests across the game, player, and clinical-authoring packages |
 | `npm run test:e2e` | Run the desktop browser walkthroughs and retained width regressions in installed Chrome |
 | `npm run typecheck` | Check every TypeScript workspace |
 | `npm run build` | Type-check and create the local production-style player build |
 | `npm run build:pages` | Type-check and verify a static build using the GitHub Pages repository base path |
 | `npm run test:watch` | Rerun domain tests while code changes |
+| `npm run clinical:validate:example` | Validate the synthetic clinical-authoring round trip |
+| `npm run clinical:validate:frameworks` | Validate the public-safe ABSITE/SCORE source registry |
+| `npm run clinical:validate -- <path>` | Validate a private local authoring workspace |
 
 The built files are placed in `apps/player/dist`. Building them still does not
 deploy the game.
@@ -212,7 +223,9 @@ launcher to Pages or follow a tester to another computer/browser. See
 - `packages/game-domain` - renderer-independent deterministic rules, FSRS
   adapter, progression, saves, queues, and economy
 - `packages/clinical-content` - validated prototype clinical fixture
+- `packages/clinical-authoring` - draft knowledge/source contract and validator
 - `packages/balance-config` - validated centralized prototype tuning values
+- `clinical-data` - public-safe metadata plus blank authoring templates
 - `tests/e2e` - full and compact desktop browser walkthroughs
 - `docs/adr` - accepted architecture and game-design decisions
 - Root Markdown files - the living canonical project record

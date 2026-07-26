@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "workspace.official-framework-metadata.beta1",
+  "label": "Official framework metadata",
+  "createdAt": "2026-07-25T23:55:00Z",
+  "updatedAt": "2026-07-25T23:55:00Z",
+  "educationalDifficultyDefinitions": [
+    {
+      "id": "difficulty.unclassified",
+      "label": "Unclassified",
+      "description": "Temporary value for records not yet classified."
+    }
+  ],
+  "clinicalSettingDefinitions": [
+    {
+      "id": "setting.unclassified",
+      "label": "Unclassified",
+      "description": "Temporary value for records not yet classified."
+    }
+  ],
+  "facilityStageDefinitions": [
+    {
+      "id": "facility-stage.unassigned",
+      "label": "Unassigned",
+      "description": "Temporary value for records not yet mapped to facility progression.",
+      "ordinal": 0
+    }
+  ],
+  "deferredScopeDefinitions": [],
+  "sources": [
+    {
+      "id": "source.abs.absite-outline",
+      "title": "General Surgery In-Training Examination (ABSITE) Content Outline",
+      "sourceType": "official_outline",
+      "edition": "Updated 01/2021",
+      "publicationYear": 2021,
+      "publisherOrOrganization": "American Board of Surgery",
+      "canonicalUrlOrIdentifier": "https://www.absurgery.org/resources/exam-content-outlines/general-surgery-in-training-examination-absite-content-outline/",
+      "scopeNote": "Public official coverage-outline metadata only; source text and examination items are not stored in this repository.",
+      "rightsReview": {
+        "status": "metadata_only",
+        "note": "Retain links, bibliographic metadata, retrieval metadata, and project-authored mappings only.",
+        "aiProcessingPermitted": false,
+        "publicTextReusePermitted": false
+      }
+    },
+    {
+      "id": "source.score.general-surgery-outline",
+      "title": "SCORE Curriculum Outline for General Surgery",
+      "sourceType": "official_outline",
+      "edition": null,
+      "publicationYear": null,
+      "publisherOrOrganization": "Surgical Council on Resident Education / American Board of Surgery",
+      "canonicalUrlOrIdentifier": "https://www.absurgery.org/resources/score-curriculum-outlines/score-curriculum-outline-for-general-surgery/",
+      "scopeNote": "Public official coverage-outline metadata only; the versionless source is identified by retrieval metadata and checksum.",
+      "rightsReview": {
+        "status": "metadata_only",
+        "note": "Retain links, bibliographic metadata, retrieval metadata, and project-authored mappings only.",
+        "aiProcessingPermitted": false,
+        "publicTextReusePermitted": false
+      }
+    }
+  ],
+  "sourceSnapshots": [
+    {
+      "id": "snapshot.abs.absite-outline.2026-07-25.1df9fca9",
+      "sourceId": "source.abs.absite-outline",
+      "formatId": "format.pdf",
+      "accessScope": "public_web",
+      "retrievedUrl": "https://www.absurgery.org/wp-content/uploads/2023/01/GS-ITE.pdf",
+      "retrievedAt": "2026-07-25T23:50:33Z",
+      "upstreamLastModified": null,
+      "sha256": "1df9fca970d5d6307b57d76e54f784c4e3763197b851bfcb960d2939354754c5"
+    },
+    {
+      "id": "snapshot.score.general-surgery.2026-07-25.2b98112b",
+      "sourceId": "source.score.general-surgery-outline",
+      "formatId": "format.pdf",
+      "accessScope": "public_web",
+      "retrievedUrl": "https://absprodeus2scorestor.blob.core.windows.net/score/curriculumoutline_gs.pdf",
+      "retrievedAt": "2026-07-25T23:50:34Z",
+      "upstreamLastModified": "2026-05-22T13:04:31Z",
+      "sha256": "2b98112b218e0b612fe6ea2f8ad5cf7c6f4555d79289c2f569234aa6b5748c09"
+    }
+  ],
+  "citations": [],
+  "coverageFrameworks": [
+    {
+      "id": "framework.abs.absite.updated-2021-01",
+      "name": "ABSITE Content Outline",
+      "versionLabel": "Updated 01/2021",
+      "sourceSnapshotId": "snapshot.abs.absite-outline.2026-07-25.1df9fca9",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    },
+    {
+      "id": "framework.score.general-surgery.snapshot-2026-07-25",
+      "name": "SCORE Curriculum Outline for General Surgery",
+      "versionLabel": "Snapshot retrieved 2026-07-25",
+      "sourceSnapshotId": "snapshot.score.general-surgery.2026-07-25.2b98112b",
+      "recordedAt": "2026-07-25T23:55:00Z"
+    }
+  ],
+  "coverageEntries": [],
+  "topics": [],
+  "topicRevisions": [],
+  "structuredFacts": [],
+  "concepts": [],
+  "practiceInbox": [],
+  "extractionBatches": []
+}
