@@ -2,6 +2,18 @@
 
 All notable implementation and project-record changes are listed here.
 
+## 2026-07-27
+
+### Desktop launcher reliability
+
+- Replaced the mutable page-description fingerprint with a dedicated
+  machine-readable launcher health contract
+- Added an explicit loopback TCP preflight so HTTP-error, unresponsive, and
+  non-HTTP occupants of port 4173 are reported as port conflicts before npm
+  installation or Vite startup
+- Added launcher-contract and Pages-build verification to prevent the health
+  endpoint from silently drifting again
+
 ## 2026-07-26
 
 ### Level 0/1 opening

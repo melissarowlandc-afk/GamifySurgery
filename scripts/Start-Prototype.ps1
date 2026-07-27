@@ -1,22 +1,27 @@
 [CmdletBinding()]
-param()
+param(
+    [switch]$NoBrowser,
+    [switch]$ExitAfterReady
+)
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $prototypeUrl = "http://127.0.0.1:4173"
-$prototypeMarker = "Private synthetic prototype of a surgery-management learning game."
+$prototypeHealthUrl = "$prototypeUrl/gamify-surgery-launcher-health.json"
 $minimumNodeVersion = [Version]"22.12.0"
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Split-Path -Parent $scriptDirectory
 . (Join-Path $scriptDirectory "Repair-LauncherEnvironment.ps1")
 Repair-LauncherProcessEnvironment
+$healthContractPath = Join-Path $projectRoot "apps\player\public\gamify-surgery-launcher-health.json"
 $logDirectory = Join-Path $projectRoot ".local-dev\logs"
 $installLog = Join-Path $logDirectory "npm-install.log"
 $serverOutputLog = Join-Path $logDirectory "prototype-server-output.log"
 $serverErrorLog = Join-Path $logDirectory "prototype-server-error.log"
 $watcherScript = Join-Path $scriptDirectory "Watch-PrototypeServer.ps1"
 $ownedServer = $null
+$expectedHealthContract = $null
 
 function Write-Step {
     param([Parameter(Mandatory = $true)][string]$Message)
@@ -26,24 +31,68 @@ function Write-Step {
 }
 
 function Get-PrototypeEndpointState {
-    try {
-        $response = Invoke-WebRequest -Uri $prototypeUrl -UseBasicParsing -TimeoutSec 2
-        if (
-            $response.StatusCode -ge 200 -and
-            $response.StatusCode -lt 400 -and
-            $response.Content.Contains($prototypeMarker)
-        ) {
-            return "Prototype"
-        }
+    $response = $null
 
-        return "Other"
+    try {
+        $probeUrl = "{0}?launcher_probe={1}" -f $prototypeHealthUrl, ([Guid]::NewGuid().ToString("N"))
+        $response = Invoke-WebRequest `
+            -Uri $probeUrl `
+            -UseBasicParsing `
+            -TimeoutSec 2 `
+            -Headers @{ "Cache-Control" = "no-cache" }
     }
     catch {
+        if ($null -ne $_.Exception.Response) {
+            return "Other"
+        }
+
         return "Unavailable"
+    }
+
+    try {
+        $actualHealthContract = $response.Content | ConvertFrom-Json
+    }
+    catch {
+        return "Other"
+    }
+
+    if (
+        $response.StatusCode -eq 200 -and
+        [string]$actualHealthContract.applicationId -eq [string]$expectedHealthContract.applicationId -and
+        [string]$actualHealthContract.launcherProtocol -eq [string]$expectedHealthContract.launcherProtocol
+    ) {
+        return "Prototype"
+    }
+
+    return "Other"
+}
+
+function Test-PrototypePortInUse {
+    $prototypeUri = [Uri]$prototypeUrl
+    $tcpClient = New-Object System.Net.Sockets.TcpClient
+
+    try {
+        $connectTask = $tcpClient.ConnectAsync($prototypeUri.Host, $prototypeUri.Port)
+        if (-not $connectTask.Wait(500)) {
+            return $false
+        }
+
+        return $tcpClient.Connected
+    }
+    catch {
+        return $false
+    }
+    finally {
+        $tcpClient.Dispose()
     }
 }
 
 function Open-PrototypeBrowser {
+    if ($NoBrowser) {
+        Write-Step "Browser launch skipped for this readiness check."
+        return
+    }
+
     Write-Step "Opening the game in your default web browser..."
     try {
         Start-Process -FilePath $prototypeUrl
@@ -91,12 +140,35 @@ try {
     Set-Location -LiteralPath $projectRoot
     New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
 
+    if (-not (Test-Path -LiteralPath $healthContractPath -PathType Leaf)) {
+        throw "The local launcher health contract is missing: $healthContractPath"
+    }
+
+    try {
+        $expectedHealthContract = Get-Content -LiteralPath $healthContractPath -Raw |
+            ConvertFrom-Json
+    }
+    catch {
+        throw "The local launcher health contract is not valid JSON: $healthContractPath"
+    }
+
+    if (
+        [string]::IsNullOrWhiteSpace([string]$expectedHealthContract.applicationId) -or
+        $null -eq $expectedHealthContract.launcherProtocol
+    ) {
+        throw "The local launcher health contract is missing its application ID or protocol."
+    }
+
     Write-Step "Checking whether this project's game server is already running..."
     $initialEndpointState = Get-PrototypeEndpointState
 
     if ($initialEndpointState -eq "Prototype") {
         Write-Host "The correct Gamify Surgery server is already available." -ForegroundColor Green
         Write-Host "This launcher did not start it, so this window will not stop it."
+        if ($ExitAfterReady) {
+            Write-Host "Launcher readiness check passed; the existing server remains running." -ForegroundColor Green
+            exit 0
+        }
         Open-PrototypeBrowser
         Write-Host ""
         Read-Host "Press Enter to close this launcher (the existing game server will stay running)"
@@ -104,6 +176,16 @@ try {
     }
 
     if ($initialEndpointState -eq "Other") {
+        throw ((
+                "Another website or program is already using {0}. " +
+                "Close that program, then double-click START_GAME.cmd again."
+            ) -f $prototypeUrl)
+    }
+
+    if (
+        $initialEndpointState -eq "Unavailable" -and
+        (Test-PrototypePortInUse)
+    ) {
         throw ((
                 "Another website or program is already using {0}. " +
                 "Close that program, then double-click START_GAME.cmd again."
@@ -208,6 +290,12 @@ try {
         if ($ownedServer.HasExited) {
             Show-LogTail -Path $serverErrorLog
             Show-LogTail -Path $serverOutputLog
+            if (Test-PrototypePortInUse) {
+                throw ((
+                        "Another website or program began using {0} while the game was starting. " +
+                        "Close that program, then double-click START_GAME.cmd again."
+                    ) -f $prototypeUrl)
+            }
             throw ("The local game server stopped unexpectedly with exit code {0}." -f $ownedServer.ExitCode)
         }
 
@@ -227,6 +315,13 @@ try {
     }
 
     Write-Host "The game is ready." -ForegroundColor Green
+
+    if ($ExitAfterReady) {
+        Stop-OwnedPrototypeServer
+        Write-Host "Launcher readiness check passed and the test server was stopped." -ForegroundColor Green
+        exit 0
+    }
+
     Open-PrototypeBrowser
     Write-Host ""
     Write-Host "Keep this launcher window open while you play."

@@ -20,6 +20,10 @@ Double-click **`START_GAME.cmd`** in this project folder. The launcher will:
 - wait until it is ready; and
 - open it in your default browser.
 
+The launcher identifies the game through a dedicated local health contract,
+not user-facing page copy. If another HTTP or non-HTTP program already owns
+port `4173`, it reports the conflict without stopping that unrelated process.
+
 Keep the launcher window open while playing. Press Enter in that window when
 finished; it stops only the game server that it started. Campaign saves remain
 in the browser. Gameplay instructions are available from the fixed **Help**

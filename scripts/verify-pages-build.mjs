@@ -12,6 +12,21 @@ if (!expectedBase.startsWith("/") || !expectedBase.endsWith("/")) {
 const outputDirectory = resolve("apps/player/dist");
 const indexPath = resolve(outputDirectory, "index.html");
 const html = await readFile(indexPath, "utf8");
+const launcherHealthPath = resolve(
+  outputDirectory,
+  "gamify-surgery-launcher-health.json",
+);
+const launcherHealth = JSON.parse(await readFile(launcherHealthPath, "utf8"));
+
+if (
+  launcherHealth.applicationId !== "gamify-surgery-player" ||
+  launcherHealth.launcherProtocol !== 1
+) {
+  throw new Error(
+    "The Pages build does not contain the expected desktop-launcher health contract.",
+  );
+}
+
 const attributePattern = /(?:href|src)="([^"]+)"/g;
 const localReferences = [...html.matchAll(attributePattern)]
   .map((match) => match[1])
