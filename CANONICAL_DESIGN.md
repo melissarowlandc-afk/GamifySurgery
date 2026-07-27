@@ -43,8 +43,8 @@ Patient navigation and urgent alerts remain easy to find.
 ### Historical ideas that remain candidates
 
 The following appeared in early brainstorming but are not automatically
-canonical: final starting money; searchable catalogs for every test, diagnosis,
-and treatment; cash for every
+canonical: final starting money; searchable scored catalogs for every test,
+diagnosis, and treatment; cash for every
 correct sub-answer; death,
 lawsuit, or other punitive event details; and eventual expansion into a full
 emergency department or hospital. The current accepted progression ends at an
@@ -62,8 +62,8 @@ that creates no clinic campaign or learning history. **Build a Surgery Clinic**
 initializes the existing Level 0 state exactly once, stores the selected founder
 with that campaign, and uses configured starting cash rather than making the
 inherited $1,000,000 spendable. Existing campaigns resume past the opening.
-Start Over reuses this flow while retaining the accepted same-seed,
-recoverable-restart rules. The exact implementation boundary is recorded in
+Restart Campaign reuses this flow while retaining the accepted same-seed,
+recoverable archive-and-restart rules. The exact implementation boundary is recorded in
 [Founder and Inheritance Opening](docs/features/founder-inheritance-opening.md).
 
 ## Educational loop
@@ -120,14 +120,16 @@ finite answer set and exactly one clinically correct answer.
 - Choice count may vary when clinically appropriate.
 - Distractors, the correct answer, and explanations receive clinical review.
 - Safe answer-order shuffling is declared per Question Variant.
-- A patient contains one to three sequential scored questions, each scoring a
-  different primary concept.
+- A patient ordinarily contains one to three sequential scored questions,
+  each scoring a different primary concept.
+- A rare Level 3-or-later patient may contain four scored questions; four is
+  the absolute authored maximum.
 - Search and menus may support management or administrative controls, but they
   do not score clinical knowledge.
 
 The authored case determines its question count and sequence. Feedback is
 deferred only when it would reveal or materially cue a later answer. Unscored
-narrative and operational steps do not count toward the three-question limit.
+narrative and operational steps do not count toward the scored-question limit.
 This accepted game-design rule is recorded in
 [ADR 0024](docs/adr/0024-variable-length-patient-question-sequences.md).
 
@@ -138,17 +140,21 @@ repeating one memorized item. This accepted game-design rule is recorded in
 
 ### Clinical-answer consequences
 
-- A completed patient earns basic operational revenue independently of the
-  number of scored questions.
-- Correct first submissions award educational XP immediately and raise that
-  encounter's patient-confidence value by ten points.
-- Incorrect first submissions award no educational XP and lower that
-  encounter's patient-confidence value by ten points.
-- Correctness contributes only a mild, capped same-day satisfaction modifier;
-  the modifier resets at the next continuous facility-day rollover so clinical
-  answers cannot permanently snowball facility satisfaction.
-- Multi-question patients receive one normalized patient-level settlement
-  after completion. Clinical decisions do not pay cash individually.
+- Every first scored submission immediately awards current-level Learning XP:
+  `10` for correct and `2` for incorrect. The HUD does not display lifetime XP.
+- Every patient begins at `100%` individual satisfaction. Correct care may
+  restore a configured amount; incorrect care, unnecessary delay, missing
+  facilities, poor room condition, and unhappy staff may reduce it.
+- The campaign-wide Patient Confidence and same-day answer modifier no longer
+  exist. The HUD instead reports a rolling window of completed-encounter final
+  satisfaction values.
+- Level 0 encounter cash is
+  `$15 + ($10 * question count) + ($50 * correct count)`.
+- Level 1 encounter cash is
+  `$20 + ($15 * question count) + ($65 * correct count)`.
+- Cash is settled once at encounter completion. Direct service, supply, and
+  adverse-outcome expenses remain separate and the summary shows gross,
+  expenses, and net change when applicable.
 - Same-date remediation cannot award another clinical XP or quality bonus for
   that concept.
 - Tutorial resources guarantee the first examination room and operating buffer
@@ -157,18 +163,24 @@ repeating one memorized item. This accepted game-design rule is recorded in
   than answering correctly.
 
 Exact amounts remain tunable balance values. This accepted relationship is
-recorded in [ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md)
-and refined by
-[ADR 0033](docs/adr/0033-immediate-xp-and-daily-confidence-modifier.md).
+recorded historically in
+[ADR 0025](docs/adr/0025-bounded-clinical-answer-consequences.md) and
+[ADR 0033](docs/adr/0033-immediate-xp-and-daily-confidence-modifier.md), then
+amended by [ADR 0034](docs/adr/0034-july-27-clinical-encounter-amendments.md)
+and [ADR 0035](docs/adr/0035-minute-simulation-and-patient-satisfaction.md).
 
 ### Incorrect-answer case continuation
 
 - A wrong nonfinal answer is corrected, with feedback deferred only when needed
   to protect a later scored question, and the patient continues from the
   clinically correct state.
-- A wrong final answer may show one deterministic, clinically approved minor or
-  major fictional terminal outcome before correction, the Patient Learning
-  Summary, and chart closure.
+- A wrong final answer is the action that occurs in that encounter. It uses one
+  deterministic, clinically authored consequence, then shows the preferred
+  answer and explanation before the Patient Learning Summary and chart closure.
+- A no-immediate-harm, unnecessary-referral, delay, expense, or unresolved-
+  symptom result is still authored consequence data; a bare runtime placeholder
+  is not publishable.
+- Runtime code never invents a complication, harm, or clinical correction.
 - The terminal feedback requires one unscored acknowledgment before filing;
   viewing the full Patient Learning Summary remains optional.
 - Every final wrong choice has an explicit approved outcome or an explicit
@@ -438,9 +450,11 @@ authority and integrity boundary is recorded in
 - Level 1 unlocks the Bathroom, Waiting Room, Imaging Control Room, X-ray Room,
   Minor-Procedure Room, Receptionist, and Imaging Technician. Its prototype
   completion gate is the configured XP target, satisfaction above 90%, the
-  Imaging Control Room, X-ray Room, Minor-Procedure Room, and an Imaging
-  Technician. Bathroom, Waiting Room, and Receptionist remain useful optional
-  purchases rather than formal gate items.
+  functioning X-ray Room, Minor-Procedure Room, and an Imaging Technician.
+  X-ray functionality implicitly validates its adjacent Imaging Control Room
+  and required doors, so the control room is not a redundant separate goal.
+  Bathroom, Waiting Room, and Receptionist remain useful optional purchases
+  rather than formal gate items.
 - The laboratory and APP are later-level systems and are not Level 0-1 unlocks.
 - The complete current prototype checklist is maintained in
   [Level 0-1 Prototype Progression](docs/features/level-0-1-progression.md).
@@ -552,15 +566,15 @@ Exact real clinical cases and correct answers require Melissa's review.
 Prototype costs, rewards, timing, and tutorial wording may use clearly labeled
 tunable defaults selected by the lead agent and revised after play.
 
-## Starting over
+## Restarting a campaign
 
-- The player can choose to start over at any time.
-- Starting over can never occur through one tap or click.
-- The flow requires at least one initial Start Over action followed by a clear,
+- The player can choose Restart Campaign at any time.
+- Restarting can never occur through one tap or click.
+- The flow requires the initial Restart Campaign action followed by a clear,
   consequence-specific confirmation action.
 - The final confirmation must distinguish campaign progress from the player
   account and explain the effect on that campaign's educational schedule.
-- Starting over completes the current cloud save before changing campaign
+- Restarting completes the current cloud save before changing campaign
   lifecycle state.
 - The prior campaign becomes a recoverable, read-only archived campaign.
 - The retry receives a new campaign ID, fresh facility progress, and a fresh

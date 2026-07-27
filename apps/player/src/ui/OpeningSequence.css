@@ -33,7 +33,27 @@
 }
 
 .happy-founder-avatar {
-  animation-duration: 0.75s;
+  animation: founder-star-jump 0.9s steps(4, jump-none) infinite;
+}
+
+.happy-founder-avatar .pixel-avatar-arm.is-left {
+  transform-origin: 100% 15%;
+  animation: founder-star-jump-left-arm 0.9s steps(4, jump-none) infinite;
+}
+
+.happy-founder-avatar .pixel-avatar-arm.is-right {
+  transform-origin: 0 15%;
+  animation: founder-star-jump-right-arm 0.9s steps(4, jump-none) infinite;
+}
+
+.happy-founder-avatar .pixel-avatar-leg.is-left {
+  transform-origin: 50% 0;
+  animation: founder-star-jump-left-leg 0.9s steps(4, jump-none) infinite;
+}
+
+.happy-founder-avatar .pixel-avatar-leg.is-right {
+  transform-origin: 50% 0;
+  animation: founder-star-jump-right-leg 0.9s steps(4, jump-none) infinite;
 }
 
 .founder-name-field {
@@ -169,6 +189,119 @@
   width: min(100%, 24rem);
 }
 
+.opening-wordmark {
+  border: 2px solid #35382f;
+  padding: 0.35rem 0.55rem;
+  background: #e8e7d6;
+  box-shadow: 3px 3px 0 #9b9c86;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.opening-choice-primary {
+  background: #30342d;
+  color: #f5f3de;
+}
+
+.opening-campaign-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.opening-campaign-list h2 {
+  margin: 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.archived-campaigns {
+  width: min(100%, 24rem);
+  border: 2px solid #747665;
+  padding: 0.75rem;
+  background: #efeedf;
+}
+
+.archived-campaigns summary {
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.archived-campaigns .opening-campaign-list {
+  margin-top: 0.75rem;
+}
+
+.opening-form-error {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border-left: 4px solid #2f322c;
+  padding: 0.55rem 0.7rem;
+  background: #dddcc9;
+  font-weight: 800;
+}
+
+.auth-gate-card,
+.auth-form {
+  display: grid;
+  width: min(100%, 430px);
+  gap: 0.85rem;
+}
+
+.auth-gate-card {
+  justify-items: center;
+  border: 3px solid #30352c;
+  padding: 1.5rem;
+  background: #f2eed5;
+  box-shadow: 8px 8px 0 #a8aa8f;
+  text-align: center;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.auth-form input {
+  min-height: 46px;
+  box-sizing: border-box;
+  padding: 0.65rem 0.75rem;
+  border: 3px solid #30352c;
+  border-radius: 0;
+  background: #f7f3dc;
+  color: #30352c;
+  font: inherit;
+}
+
+.auth-mode-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+}
+
+.auth-message {
+  margin: 0;
+  padding: 0.65rem;
+  border: 2px solid currentColor;
+  background: #e4e3c7;
+}
+
+.auth-signout-button {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 100;
+  min-height: 34px;
+  border: 2px solid #30352c;
+  background: #eee9cf;
+  color: #30352c;
+  font: 700 0.7rem/1 monospace;
+}
+
 @keyframes founder-idle-bounce {
   0%,
   100% {
@@ -176,6 +309,62 @@
   }
   50% {
     transform: translateY(-5px);
+  }
+}
+
+@keyframes founder-star-jump {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(-4deg) scaleX(1.08);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0deg) scaleX(1.18);
+  }
+  75% {
+    transform: translateY(-8px) rotate(4deg) scaleX(1.08);
+  }
+}
+
+@keyframes founder-star-jump-left-arm {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(118deg) translate(-1px, 1px);
+  }
+}
+
+@keyframes founder-star-jump-right-arm {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-118deg) translate(1px, 1px);
+  }
+}
+
+@keyframes founder-star-jump-left-leg {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(34deg) translate(-1px, 0);
+  }
+}
+
+@keyframes founder-star-jump-right-leg {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-34deg) translate(1px, 0);
   }
 }
 
@@ -197,7 +386,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .founder-preview-avatar,
-  .happy-founder-avatar {
+  .happy-founder-avatar,
+  .happy-founder-avatar .pixel-avatar-arm,
+  .happy-founder-avatar .pixel-avatar-leg {
     animation: none;
   }
 }

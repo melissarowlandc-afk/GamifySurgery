@@ -1,4 +1,7 @@
 import type {
+  CardinalDirection,
+} from "@gamify-surgery/game-domain";
+import type {
   RoomBuildOptionView,
   SelectedRoomBuildView,
 } from "./types";
@@ -16,6 +19,16 @@ interface BuildPanelProps {
   onRotatePlacement: () => void;
   onUpgradeSelectedRoom: () => void;
   onSellSelectedRoom: () => void;
+  onRotateSelectedRoom: () => void;
+  onBeginMoveSelectedRoom: () => void;
+  onPlaceDoorForSelectedRoom: (
+    side: CardinalDirection,
+    offset: number,
+  ) => void;
+  onRemoveDoor: (doorId: string) => void;
+  onUndoBuildAction: () => void;
+  undoCount: number;
+  exitBlockedReason: string | null;
 }
 
 export function BuildPanel({
@@ -31,6 +44,13 @@ export function BuildPanel({
   onRotatePlacement,
   onUpgradeSelectedRoom,
   onSellSelectedRoom,
+  onRotateSelectedRoom,
+  onBeginMoveSelectedRoom,
+  onPlaceDoorForSelectedRoom,
+  onRemoveDoor,
+  onUndoBuildAction,
+  undoCount,
+  exitBlockedReason,
 }: BuildPanelProps) {
   if (!buildMode) {
     return (
@@ -49,14 +69,6 @@ export function BuildPanel({
   const selectedPlacement = roomOptions.find((room) => room.selected);
   const selectedPlacementIsHallway =
     selectedPlacement?.id === "room.hallway";
-  const doorDirection =
-    placementOrientation === 0
-      ? "south"
-      : placementOrientation === 90
-        ? "west"
-        : placementOrientation === 180
-          ? "north"
-          : "east";
 
   return (
     <>
@@ -65,9 +77,13 @@ export function BuildPanel({
         type="button"
         onClick={onExitBuildMode}
         aria-label="Exit Build Mode"
+        disabled={exitBlockedReason !== null}
       >
-        Exit Build Mode
-        <small>Return to the clinic and resume time</small>
+        Done / Save and Return
+        <small>
+          {exitBlockedReason ??
+            "Validate the clinic and resume facility time"}
+        </small>
       </button>
 
       <section className="panel build-panel build-mode-panel">
@@ -81,23 +97,38 @@ export function BuildPanel({
           <strong>{cashLabel}</strong>
         </div>
 
+        <div className="build-session-actions">
+          <button
+            className="button button-secondary"
+            type="button"
+            onClick={onUndoBuildAction}
+            disabled={undoCount === 0}
+          >
+            Undo ({undoCount})
+          </button>
+          {exitBlockedReason ? (
+            <p className="blocked-reason build-exit-reason" role="alert">
+              Cannot return to play: {exitBlockedReason}
+            </p>
+          ) : null}
+        </div>
+
         {selectedPlacement ? (
           <div className="build-tool-controls">
             <strong>Placing {selectedPlacement.displayName}</strong>
             <span className="placement-orientation">
               {selectedPlacementIsHallway ? (
-                "Hallways connect on every side"
+                "Hallway footprint"
               ) : (
                 <>
-                  Orientation: {placementOrientation}° · door faces{" "}
-                  <strong>{doorDirection}</strong>
+                  Orientation: {placementOrientation}°
                 </>
               )}
             </span>
             <p>
               {selectedPlacementIsHallway
-                ? "Move over the map to see the hallway outline. Place it against the Front Desk, a connected room, or the existing hallway path."
-                : "Move over the map to see the room outline. Its marked door must open into any connected room or hallway."}
+                ? "Move over the map to see the hallway outline."
+                : "Place the room footprint first. Then select the room and add one or more zero-cost doors on valid wall slots."}
             </p>
             <div>
               {!selectedPlacementIsHallway ? (
@@ -132,6 +163,22 @@ export function BuildPanel({
               <button
                 className="button button-secondary"
                 type="button"
+                onClick={onBeginMoveSelectedRoom}
+                disabled={!selectedRoom.canMove}
+              >
+                Move
+              </button>
+              <button
+                className="button button-secondary"
+                type="button"
+                onClick={onRotateSelectedRoom}
+                disabled={!selectedRoom.canRotate}
+              >
+                Rotate 90°
+              </button>
+              <button
+                className="button button-secondary"
+                type="button"
                 onClick={onUpgradeSelectedRoom}
                 disabled={!selectedRoom.canUpgrade}
               >
@@ -150,6 +197,52 @@ export function BuildPanel({
                   ? ` · ${selectedRoom.resaleValueLabel}`
                   : ""}
               </button>
+            </div>
+            <div className="door-tool">
+              <h3>Doors · $0</h3>
+              <p>
+                Rooms need reachable doors. Imaging rooms also need a
+                separate internal door to an adjacent Imaging Control Room.
+              </p>
+              {selectedRoom.doors.length > 0 ? (
+                <ul className="door-list">
+                  {selectedRoom.doors.map((door) => (
+                    <li key={door.id}>
+                      <span>{door.label}</span>
+                      {door.removable ? (
+                        <button
+                          className="text-button"
+                          type="button"
+                          onClick={() => onRemoveDoor(door.id)}
+                        >
+                          Remove
+                        </button>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="blocked-reason">Needs Door</p>
+              )}
+              <div className="door-slot-grid">
+                {selectedRoom.doorSlots.map((slot) => (
+                  <button
+                    className="button button-secondary"
+                    type="button"
+                    key={slot.id}
+                    disabled={!slot.enabled}
+                    title={slot.blockedReason}
+                    onClick={() =>
+                      onPlaceDoorForSelectedRoom(
+                        slot.side,
+                        slot.offset,
+                      )
+                    }
+                  >
+                    {slot.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         ) : null}

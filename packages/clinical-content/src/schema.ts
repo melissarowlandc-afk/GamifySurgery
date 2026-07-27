@@ -44,6 +44,9 @@ export const terminalOutcomeDispositionSchema = z.discriminatedUnion("kind", [
     .object({
       answerChoiceId: stableIdSchema,
       kind: z.literal("no_terminal_outcome"),
+      consequenceNarrative: z.string().min(1).max(1_000),
+      clinicalRationale: z.string().min(1).max(1_000),
+      sourceLabels: z.array(z.string().min(1).max(240)).min(1),
     })
     .strict(),
   z
@@ -125,7 +128,7 @@ export const testedConceptSchema = z
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
     learningObjective: z.string().min(1).max(500),
-    earliestFacilityStage: z.number().int().min(0).max(1),
+    earliestFacilityStage: z.number().int().min(0).max(5),
     conceptType: z.enum([
       "diagnosis",
       "workup",
@@ -167,11 +170,22 @@ export const syntheticClinicalCaseSchema = z
     requiredClinicalSetting: z.enum(["clinic", "ambulatory_surgery"]),
     rewardTierId: stableIdSchema,
     sourceLabels: z.array(z.string().min(1).max(240)).min(1),
-    decisionNodes: z.array(decisionNodeSchema).min(1).max(3),
+    decisionNodes: z.array(decisionNodeSchema).min(1).max(4),
     learningSummary: z.string().min(1).max(3_000),
   })
   .strict()
   .superRefine((clinicalCase, context) => {
+    if (
+      clinicalCase.decisionNodes.length === 4 &&
+      clinicalCase.earliestFacilityStage < 3
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Four-decision encounters are reserved for rare Level 3-or-later content.",
+        path: ["decisionNodes"],
+      });
+    }
     const nodeIds = new Set<string>();
     const conceptIds = new Set<string>();
 

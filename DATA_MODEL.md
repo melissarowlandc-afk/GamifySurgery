@@ -283,9 +283,10 @@ campaign's pinned balance release.
 ### Decision node
 
 Ordered scored or unscored decision within one Case Family. Every scored node
-references exactly one primary Tested Concept. A patient encounter contains one
-to three scored nodes, and no two scored nodes within it use the same primary
-concept. Supporting tags never update another concept's card or mastery.
+references exactly one primary Tested Concept. A patient encounter ordinarily
+contains one to three scored nodes, and no two scored nodes within it use the
+same primary concept. A rare four-node encounter is permitted only at Level 3
+or later. Supporting tags never update another concept's card or mastery.
 
 ### Result gate revision
 
@@ -327,17 +328,20 @@ behavior.
 
 Immutable reviewed mapping for one incorrect Answer Choice on a final scored
 Decision Node plus one compatible Patient Presentation Variant or finite
-Clinical Instantiation Profile. It stores either
-`no_terminal_outcome` or one exact Terminal Clinical Outcome Revision. A unique
-constraint permits exactly one disposition per compatible tuple.
+Clinical Instantiation Profile. It stores one exact authored consequence
+revision. A no-immediate-harm result is represented by explicit consequence
+text and rationale, not a bare null placeholder. A unique constraint permits
+exactly one disposition per compatible tuple.
 
 ### Terminal clinical outcome revision
 
-Exact sourced, clinically approved, unscored terminal vignette with stable
-parent identity, `minor` or `major` clinical severity, causal-framing type,
-clinical rationale, narrative template, compatible typed slots and profiles,
-citations, AI provenance, workflow state, and immutable revision history. It
-contains no balance amount, scheduler rating, XP rule, or mastery effect.
+Exact sourced, clinically approved, unscored final-choice consequence with
+stable parent identity, outcome/disposition category, clinical severity when
+applicable, causal-framing type, preferred answer, clinical rationale,
+narrative template, compatible typed slots and profiles, citations, AI
+provenance, workflow state, and immutable revision history. It may reference
+explicit operational-effect definitions but contains no scheduler rating or
+mastery effect.
 
 ### Source
 
@@ -617,16 +621,20 @@ Owned by an account and permanently pinned to:
 - Randomness-contract version
 - 128-bit campaign root seed
 - Founder display name and immutable pixel-appearance descriptor
+- Required player-facing clinic name and account-scoped normalized-name key
 
 The campaign also stores an initial and current clinical release. The current
 clinical release can advance only through a validated compatibility edge and an
 audited adoption transaction; this does not alter any permanent pin above.
 
-A campaign has an explicit lifecycle state such as active or archived. Start
-Over archives the original read-only and creates a new campaign ID with the
-same seed and permanent pins but fresh operational and campaign-learning state.
-The retry uses the original campaign's current clinical release as its initial
-clinical release. Restoring an archive resumes that campaign and its adoption
+A campaign has an explicit lifecycle state of resumable or archived. Multiple
+campaigns may remain resumable; a separately stored selected ID identifies the
+open one. Clinic-name uniqueness trims and collapses whitespace and case-folds
+across both states, so restart never frees a prior name. Restart Campaign
+archives the original read-only and creates a new campaign ID with the same seed
+and permanent pins but fresh operational and campaign-learning state. The retry
+uses the original campaign's current clinical release as its initial clinical
+release. Restoring an archive resumes only that campaign and its adoption
 history; histories never merge. Permanent deletion is a separate
 retention-policy operation.
 
@@ -664,10 +672,13 @@ must preserve exact logical facility time and enough versioned simulation and
 randomness state to continue reproducibly. The server does not continuously
 run the facility or certify every ordinary client action.
 
-The current Level 0-1 snapshot separately stores base facility satisfaction
-and the capped same-day clinical-confidence satisfaction modifier. Effective
-satisfaction is derived from those values. The modifier resets at the next
-facility-day rollover; it is not folded permanently into the base value.
+The current Level 0-1 snapshot stores authoritative facility time in simulated
+minutes, selected speed, fixed-point operating-cost accrual, the next financial
+posting boundary, the exact next routine-arrival timestamp, and current-level
+Learning XP. It does not store a lifetime-XP counter or a campaign-wide
+clinical-confidence modifier. Clinic satisfaction is derived from the final
+individual satisfaction values in the configured rolling window of completed
+encounters and walkouts.
 
 ### Random stream state
 
@@ -751,52 +762,49 @@ The exact derived folder mapping is `waiting_unopened` to Waiting;
 `active_action_required` displays `!`. The summary-available state instead
 displays an accessible Complete or Summary Available label.
 
-While `waiting_unopened`, the snapshot stores the patience start tick,
-departure due tick, stable departure-event ID, warning bands already emitted,
-and tutorial-exemption flag. First chart opening stores `first_opened_tick`,
-cancels the departure event, sets attendance, and advances atomically through a
-compare-and-set. If Open and departure share a tick, the documented event
-priority applies Open first; a stale Open after committed departure is rejected.
-The final warning due tick must precede departure by a positive, observable
-facility-time interval at every supported speed.
+Each encounter stores individual patient satisfaction beginning at `100`, the
+start of its current idle wait, the last applied decay boundary, emitted warning
+thresholds, a persisted hidden walkout threshold from `0` through `59`, final
+satisfaction, and the terminal reason. Tutorial/progression protection is also
+persisted and never inferred from display order.
 
-Waiting abandonment transitions to `resolved` with
-`resolution_reason = left_before_seen`. The read-only entry preserves its
-operational arrival, warning, and departure history but renders no unanswered
-clinical payload, answer, explanation, or Patient Learning Summary. It creates
-no Concept Presentation Exposure, Review Record, Mastery Evidence, clinical XP,
-or completion-revenue entry. Departure, queue/resource release, and transition
-are idempotent and bypass generic encounter-completion settlement.
+Satisfaction decay is eligible only during a genuine idle wait. Normal walking,
+active care, an expected service timer, off-site travel, and the currently open
+chart suppress decay. Correctness, room cleanliness and upgrades, amenities,
+staff morale, missing capabilities, and service efficiency apply only explicit
+versioned effects. Below `60`, an ordinary patient decides to leave when the
+saved score reaches the saved threshold; no refresh or pause can reroll it.
 
-Active state may store `action_ready_since_tick`, operational-delay and
-response-grace threshold IDs already applied,
-`response_delay_accrued_ticks`, `response_delay_unattended_since_tick`, and the
-patient-level satisfaction-consequence total and cap. Each threshold
-application has a unique operation ID. Open, close, and chart-switch commands
-atomically settle the prior patient's accrued unattended time and update the
-attended encounter under the writer lease; a switch has no intermediate gap.
-Attendance suppresses response-delay accrual for that patient only. If a result
-becomes action-ready while its chart is attended, response accrual begins
-suspended. Operational result-delay accrual remains independent and references
-the frozen service target or ETA. Refresh or device takeover restores and shows
-a valid attended chart while paused, or clears attendance at the unchanged
-facility tick before Resume. Stale-writer attention commands fail lease and
-revision checks. All delay accrual and attendance stop at
-`resolved_summary_available`. Future delay-related satisfaction effects remain
-patient-capped. In the current Level 0-1 prototype, answer correctness uses the
-separate same-day campaign modifier from ADR 0033 rather than this delay cap.
+A walkout cancels pending care and begins the persisted
+`leaving_after_walkout` route. The encounter becomes terminal only after the
+patient reaches the exterior departure boundary. Previously submitted answers,
+review evidence, direct expenses, and provenance remain immutable; no encounter
+completion payment is awarded.
 
-Each runtime encounter also stores its bounded patient-confidence value. The
-Level 0-1 prototype initializes it to 50 and applies idempotent +10/-10 changes
-from correct/incorrect first scored decisions. The corresponding correct
-decision awards Learning XP in the same atomic command; encounter settlement
-later pays cash without awarding that XP a second time.
+Logical movement is save state rather than animation state. Each in-facility
+patient stores its exact grid position and optional movement kind, full path,
+path index, last movement minute, and destination room. Movement kinds cover
+arrival/check-in, care, off-site departure and return, bounded room idle
+behavior, ordinary resolution, and walkout. The reducer—not Phaser—commits the
+clinical or operational transition when the saved route reaches its
+destination.
+
+Off-site testing additionally freezes outbound and return paths, movement rate,
+outbound start/arrival, service completion, and return-arrival timestamps. The
+service timer starts only after exterior departure, and the next clinical
+decision becomes actionable only after the patient physically returns.
+
+Each first scored submission atomically stores its answer, exactly one
+campaign-scoped review, the `10`-or-`2` current-level XP award, and the explicit
+individual-satisfaction effect. Encounter settlement later pays cash without
+awarding XP a second time.
 
 ### Clinic workload and arrival gate
 
 `clinic_workload_occupancy` is a derived count of encounters in
 `waiting_unopened`, `active_action_required`, or `active_pending_result`.
-`resolved_summary_available`, `resolved`, and `left_before_seen` do not count.
+`resolved_summary_available` and `resolved` do not count; a walkout is a
+`resolved` encounter with `resolution_reason = walkout`.
 Opening a chart is count-neutral; terminal completion or departure releases a
 slot in the same transaction as its workflow transition. If an effective
 capacity decrease puts occupancy above the limit, existing encounter records
@@ -816,9 +824,12 @@ and the admission operation ID. The campaign snapshot preserves the protected
 guarantee's pending or satisfied state so departure, retry, and reload cannot
 lose or duplicate it.
 
-The campaign snapshot stores one routine-arrival gate with remaining
-facility-time ticks, blocked status and start tick, stable event/operation ID,
-routine-arrival definition ID, and any already-consumed randomness provenance.
+The campaign snapshot stores one routine-arrival gate with an exact next
+facility-minute timestamp, blocked status and start minute, stable
+event/operation ID, routine-arrival definition ID, and any already-consumed
+randomness provenance. The first and subsequent randomized intervals are
+persisted and are not rounded to financial posting boundaries or rerolled on
+reload.
 The gate pauses before clinical selection or patient instantiation when
 routine capacity is full, resumes once when eligible, and cannot accumulate a
 catch-up backlog. Occupancy is rederived and capacity is revalidated on load.
@@ -844,12 +855,13 @@ encounter and settlement type; review evidence is uniquely keyed by
 scored-decision instance.
 
 For an incorrect nonfinal node, the frozen correct transition determines the
-next state. For an incorrect final node, the frozen disposition
-deterministically provides `no_terminal_outcome` or one exact rendered outcome.
-The terminal view presents any outcome and correction before filing, releases
-safely deferred feedback, requires one persisted acknowledgment, and then
-offers the summary. The acknowledgment creates no second decision or
-educational evidence.
+next state. For an incorrect final node, the frozen disposition provides one
+exact authored consequence and explanation. That consequence may state that no
+immediate harm occurred, but a bare `no_terminal_outcome` placeholder is not
+publishable. The terminal view presents what occurred and the preferred answer
+before filing, releases safely deferred feedback, requires one persisted
+acknowledgment, and then offers the summary. The acknowledgment creates no
+second decision or educational evidence.
 
 The frozen payload includes the exact rendered, clinically approved
 post-completion diagnosis-and-management summary and its source revision IDs.
@@ -879,7 +891,8 @@ scheduling, not optional analytics.
 
 Creation occurs when the learner first opens and is actually shown the clinical
 presentation, not when the encounter is generated or enters Waiting. Therefore
-`left_before_seen` never creates exposure evidence.
+a walkout before the first clinical presentation never creates exposure
+evidence.
 
 ### Runtime task
 
@@ -891,7 +904,9 @@ Records each economic change with integer amount, reason code, facility time, an
 
 ### Progression state
 
-Records XP, satisfaction, objectives, facility stage, accomplishments, unlocks, and level-up attempts.
+Records current-level XP, the derived rolling satisfaction result, objectives,
+facility stage, accomplishments, unlocks, and level-up attempts. No lifetime-XP
+counter is required.
 
 ### Inspection attempt
 

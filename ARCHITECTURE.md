@@ -23,16 +23,19 @@ The repository now implements the local Level 0/1 stage of ADR 0022:
 - `tests/e2e` exercises the core Level 0-to-Level 1 browser path and
   desktop/phone-width layout.
 
-The local player keeps a versioned profile containing multiple campaigns in
-browser local storage. Each campaign owns its own facility and FSRS histories.
-An empty profile contains no placeholder clinic. Founder creation and the
-inheritance choice run outside the simulation; only the clinic choice creates
-and persists the self-contained campaign state. Creating a genuinely new
-campaign produces a fresh campaign ID, seed, founder identity, and empty
-learning state. Start Over instead creates a new campaign ID with the prior
-active campaign's seed and fresh facility and learning state. Switching back
-restores the selected campaign without transferring mastery. A deterministic
-unpublished-save migration supports the earlier local candidate.
+The local player keeps a versioned profile containing multiple named,
+independently resumable or archived campaigns in browser local storage. Each
+campaign owns its own facility and FSRS histories. Normalized clinic names are
+reserved across both lifecycle states while stable campaign IDs remain the true
+identity. An empty profile contains no placeholder clinic. Founder creation and
+the inheritance choice run outside the simulation; only the clinic choice and
+valid clinic name create and persist the self-contained campaign state.
+Creating a genuinely new campaign produces a fresh campaign ID, seed, founder
+identity, and empty learning state. Restart Campaign instead archives the
+selected campaign and creates a new campaign ID with the prior seed and fresh
+facility and learning state. Reopening another clinic restores only its saved
+state without transferring mastery. A deterministic unpublished-save migration
+supports earlier local candidates.
 
 The scheduler adapter is the only domain module permitted to import
 `ts-fsrs`. The local candidate pins package `5.4.1`, FSRS-6, project adapter and
@@ -47,11 +50,13 @@ Local command idempotency receipts and presentation event notices are bounded
 to the latest 500 entries. Immutable scored-review evidence and FSRS history are
 not pruned by that transient-log limit.
 
-This is intentionally not the hosted architecture yet. It has no authentication
-screen, API, PostgreSQL connection, cloud synchronization, administrator
-application, or deployment. The accepted Supabase verified-email/password and
-cloud-save foundation below remains the next staged milestone; local storage is
-not a replacement for it.
+This is intentionally not the hosted architecture yet. It includes the branded
+authentication screens and provider boundary, but the unconfigured local and
+Pages builds use a clearly labeled non-authenticating Local Prototype adapter
+that stores no password. It has no Supabase project, API, PostgreSQL connection,
+cloud synchronization, or administrator application. The accepted Supabase
+verified-email/password and cloud-save foundation below remains the next staged
+milestone; local storage is not a replacement for it.
 
 ## Current local clinical-evidence workstream
 
@@ -255,39 +260,40 @@ while the chart panel hides its list tab. Scheduled result completion updates
 the state without forcibly opening or replacing any chart the player is
 reading.
 
-For a new Waiting patient, the simulation schedules one facility-time
-departure event and derives accessible patience status and warnings from the
-same authoritative timing. First chart opening atomically cancels that event
-and moves the patient to Active. A same-tick accepted Open action has stable
-priority over departure. Active encounters cannot follow the ordinary
-patience-departure transition.
+Every encounter owns individual patient satisfaction beginning at 100, the
+start and last-applied boundary of its current genuine idle wait, emitted
+warnings, and one persisted hidden walkout threshold. Satisfaction does not
+decay during normal walking, active care, an expected service timer, off-site
+travel, or while that patient's chart is open. Care, cleanliness, upgrades,
+amenities, staff morale, missing capabilities, and service efficiency write
+only explicit idempotent effects.
 
-Active operational-delay and action-ready grace thresholds may write bounded,
-idempotent satisfaction events. Reading an open chart suppresses only that
-patient's response-delay threshold; it does not pause facility time, other
-patients, or operational result delay. Tutorial-exemption and consequence-cap
-rules come from the campaign-pinned balance release.
+Below 60%, an ordinary patient leaves when satisfaction reaches the saved
+threshold; zero guarantees departure. Tutorial protection remains explicit. A
+walkout cancels pending work and begins a persisted route to the exterior. The
+patient disappears and the encounter becomes terminal only after reaching the
+departure boundary. Existing answers and review evidence remain immutable, but
+no completion payment is created.
 
-Because attention affects that consequence, one simulation-owned
+Because chart attendance affects waiting decay, one simulation-owned
 `attended_encounter_id` is persisted. Open, close, and switch commands update it
 atomically; layout and animation remain presentation-only. Refresh or writer
 takeover leaves facility time paused while the attended chart is restored, or
-clears attention at the unchanged facility tick before Resume. A chart switch
-accrues the prior patient's unattended time and attends the new patient in one
-command, with no transient gap. Only an unresolved Active chart may be attended;
-a Resolved or History chart grants no exemption. Delay accrual stops when the
-encounter reaches `resolved_summary_available`.
+clears attention at the unchanged facility minute before Resume. Only an
+unresolved Active chart may be attended; a Resolved or History chart grants no
+exemption.
 
 The simulation derives `clinic_workload_occupancy` from Waiting and unresolved
 Active workflow states. It never maintains a second writable occupancy counter.
 Routine admissions require occupancy below the effective
 `routine_workload_limit`; protected cases may additionally use only the
 explicitly published `critical_reserved_slots`. Opening is count-neutral, while
-terminal completion or pre-open departure releases capacity atomically.
+terminal completion or a completed walkout releases capacity atomically.
 
 At routine capacity, one persisted arrival gate pauses before content selection,
-instantiation, or random identity draws. It retains its remaining facility
-ticks and resumes once without catch-up when capacity returns. Capacity-release
+instantiation, or random identity draws. It retains its exact next
+facility-minute timestamp and resumes once without catch-up when capacity
+returns. Capacity-release
 and recalculation events precede admission at the same tick, and each admission
 rechecks capacity idempotently. A capacity decrease never evicts an encounter;
 the clinic becomes Over capacity and blocks routine intake. These rules are
@@ -308,6 +314,13 @@ Only a gate that makes a player action ready enters
 `active_pending_result`. Manual and automatic facility pause prevent due ticks
 from advancing. Later bounded seeded turnaround variation, if enabled by a
 published balance release, fixes and persists the due tick when scheduled.
+
+Patient and staff routes are logical save state, not animation callbacks.
+Persisted movement includes kind, path, index, position, destination, and last
+movement minute. Phaser renders that state but never commits check-in, care,
+service departure/return, task completion, resolution, or walkout. Off-site
+testing freezes outbound and return paths and begins its service timer only
+after the patient reaches the exterior boundary.
 
 Simulation uses fixed logical steps plus explicitly scheduled events rather
 than animation frames. Facility time and foundational quantities use integers
@@ -349,13 +362,13 @@ types.
 Incorrect nonfinal answers use the authored correct continuation; the runtime
 does not construct a wrong-care branch. An incorrect final answer resolves one
 exact, clinically approved Terminal Outcome Disposition for its frozen Answer
-Choice and presentation/profile. The disposition deterministically supplies
-either `no_terminal_outcome` or one Terminal Clinical Outcome Revision. The
-terminal feedback is unscored, appears before filing, and is frozen with the
-encounter. One persisted acknowledgment gates filing but creates no educational
-event. Clinical severity cannot alter FSRS evidence or bypass the patient-level
-operational cap. This rule is accepted in
-[ADR 0030](docs/adr/0030-correction-forward-with-terminal-clinical-outcomes.md).
+Choice and presentation/profile. The disposition deterministically supplies one
+authored consequence, preferred answer, explanation, and sources. An explicit
+no-immediate-harm consequence is valid; a bare null marker is not publishable.
+The terminal feedback is unscored, appears before filing, and is frozen with
+the encounter. One persisted acknowledgment gates filing but creates no
+educational event. Runtime code does not invent clinical harm. This rule is
+accepted in ADR 0030 as amended by ADR 0034.
 
 The project-owned scheduler adapter is the only educational-domain boundary
 permitted to import `ts-fsrs`. It maps the first scored answer to Again or Good
@@ -541,7 +554,7 @@ Exact lease and grace-period durations remain later configuration decisions.
 This accepted choice is recorded in
 [ADR 0011](docs/adr/0011-versioned-hybrid-saves.md).
 
-In the hosted implementation, Start Over is one trusted transaction that saves
+In the hosted implementation, Restart Campaign is one trusted transaction that saves
 and archives the current campaign and creates a new campaign ID with the same
 seed and pinned versions. The original is not overwritten or deleted. Failure
 leaves the original campaign active and unchanged. The local candidate mirrors
@@ -696,9 +709,9 @@ and player actions. This accepted choice is recorded in
   close-with-unanswered-action, terminal settlement exactly once, Resolved
   read-only reopening, and no duplicate FSRS review
 - Correction-forward and terminal-outcome tests for every final wrong choice,
-  profile compatibility, `no_terminal_outcome`, deferred-feedback release,
-  refresh/reopen reproducibility, one Review Record only, and operational-cap
-  invariance across minor and major clinical severity
+  profile compatibility, authored no-immediate-harm consequences,
+  deferred-feedback release, refresh/reopen reproducibility, one Review Record
+  only, and operational-effect invariance across clinical severity
 - Concurrent and stale-event tests: refresh while the final summary is
   available, results due while the same or another chart is open, simultaneous
   patient results, double delivery, and `!` persisting until submission

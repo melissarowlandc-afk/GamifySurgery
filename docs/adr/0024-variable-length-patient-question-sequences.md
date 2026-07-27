@@ -64,3 +64,9 @@ ordering dependencies, or feedback that reveals a later correct answer.
 Moderate to expensive after content authoring. The limit affects case design,
 runtime state, feedback timing, reward calculations, patient queues, frozen
 instances, validators, previews, and save compatibility.
+
+## Current amendment
+
+[ADR 0034](0034-july-27-clinical-encounter-amendments.md) raises the absolute
+maximum to four only for rare encounters eligible at Level 3 or later.
+Levels 0 through 2 remain capped at three.

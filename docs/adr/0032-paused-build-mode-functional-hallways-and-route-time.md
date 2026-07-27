@@ -62,3 +62,10 @@ than decorative claims.
 Moderate within the already accepted grid architecture. Removing functional
 connectivity later would simplify play but invalidate layout balance and task
 timing. Replacing the grid/path model itself remains RED under ADR 0006.
+
+## Current amendment
+
+[ADR 0037](0037-explicit-doors-fixed-site-and-room-cleanliness.md) replaces
+room-owned doors with explicit zero-cost door objects and adds build-session
+Undo and exit validation. Paused renovation and functional route time remain
+current.

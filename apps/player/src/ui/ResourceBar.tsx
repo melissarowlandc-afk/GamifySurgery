@@ -1,11 +1,14 @@
 import type { ReactNode } from "react";
+import type { SimulationSpeed } from "@gamify-surgery/game-domain";
 import type { ResourceBarView } from "./types";
 
 interface ResourceBarProps {
   view: ResourceBarView;
   paused: boolean;
   pauseLocked?: boolean;
+  simulationSpeed?: SimulationSpeed;
   onTogglePause: () => void;
+  onSimulationSpeedChange?: (speed: SimulationSpeed) => void;
   onSaveAndClose?: () => void;
   endControls?: ReactNode;
 }
@@ -19,7 +22,10 @@ function clampPercent(value: number | undefined): number {
 
 function satisfactionExpression(label: string): "happy" | "steady" | "sad" {
   const value = Number.parseInt(label, 10);
-  if (!Number.isFinite(value) || value >= 90) {
+  if (!Number.isFinite(value)) {
+    return "steady";
+  }
+  if (value >= 90) {
     return "happy";
   }
   return value >= 70 ? "steady" : "sad";
@@ -46,7 +52,9 @@ export function ResourceBar({
   view,
   paused,
   pauseLocked = false,
+  simulationSpeed = 1,
   onTogglePause,
+  onSimulationSpeedChange,
   onSaveAndClose,
   endControls,
 }: ResourceBarProps) {
@@ -118,7 +126,7 @@ export function ResourceBar({
             <div className="resource-chip-content">
               <span>Patient satisfaction</span>
               <strong>{view.satisfactionLabel}</strong>
-              <small>Current clinic experience</small>
+              <small>Last 10 completed encounters</small>
             </div>
           </section>
 
@@ -182,6 +190,22 @@ export function ResourceBar({
             >
               <span className="play-glyph" aria-hidden="true" />
             </button>
+            {([1, 2, 4] as const).map((speed) => (
+              <button
+                key={speed}
+                className={`pixel-control-button speed-button${
+                  simulationSpeed === speed ? " is-selected" : ""
+                }`}
+                type="button"
+                onClick={() => onSimulationSpeedChange?.(speed)}
+                aria-label={`Set facility speed to ${speed}x`}
+                aria-pressed={simulationSpeed === speed}
+                disabled={pauseLocked}
+                title={`${speed}x facility speed`}
+              >
+                {speed}×
+              </button>
+            ))}
           </div>
           {onSaveAndClose ? (
             <button

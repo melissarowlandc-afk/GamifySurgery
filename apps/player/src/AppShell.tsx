@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FacilityCanvas,
   type FacilityCameraView,
@@ -32,7 +32,11 @@ import {
   type SelectedRoomBuildView,
   type StaffRoleGroupView,
 } from "./ui";
-import type { RoomOrientation } from "@gamify-surgery/game-domain";
+import type {
+  CardinalDirection,
+  RoomOrientation,
+  SimulationSpeed,
+} from "@gamify-surgery/game-domain";
 import type {
   TutorialActionId,
   TutorialStepView,
@@ -41,6 +45,7 @@ import type {
 interface AppShellProps {
   resourceBar: ResourceBarView;
   paused: boolean;
+  simulationSpeed: SimulationSpeed;
   patients: PatientTabView[];
   chart: ChartView | null;
   facility: FacilityViewModel;
@@ -60,8 +65,11 @@ interface AppShellProps {
   workloadStatus: string;
   announcement: string;
   buildMode: boolean;
+  buildUndoCount: number;
+  buildExitBlockedReason: string | null;
   placementOrientation: RoomOrientation;
   onTogglePause: () => void;
+  onSimulationSpeedChange: (speed: SimulationSpeed) => void;
   onOpenPatient: (patientId: string) => void;
   onCloseChart: () => void;
   onSubmitAnswer: (choiceId: string) => void;
@@ -81,10 +89,21 @@ interface AppShellProps {
   onSelectRoom: (roomInstanceId: string) => void;
   onSellSelectedRoom: () => void;
   onUpgradeSelectedRoom: () => void;
+  onRotateSelectedRoom: () => void;
+  onBeginMoveSelectedRoom: () => void;
+  onPlaceDoorForSelectedRoom: (
+    side: CardinalDirection,
+    offset: number,
+  ) => void;
+  onRemoveDoor: (doorId: string) => void;
+  onUndoBuildAction: () => void;
   onFacilityCameraChange: (camera: FacilityCameraView) => void;
   onHireStaff: (staffRoleDefinitionId: string) => void;
   onDecreaseEmployeeSalary: (employeeId: string) => void;
   onIncreaseEmployeeSalary: (employeeId: string) => void;
+  onCollectLitter: (litterId: string) => void;
+  onRefillWaterCooler: () => void;
+  onPraiseEmployee: (employeeId: string) => void;
   onLevelUp: () => void;
   onFastForward: () => void;
   onAddMoney: () => void;
@@ -98,7 +117,7 @@ interface AppShellProps {
 }
 
 function clampZoom(value: number): number {
-  return Math.max(0.6, Math.min(2.2, Math.round(value * 10) / 10));
+  return Math.max(0.1, Math.min(2.5, Math.round(value * 10) / 10));
 }
 
 /**
@@ -108,6 +127,7 @@ function clampZoom(value: number): number {
 export function AppShell({
   resourceBar,
   paused,
+  simulationSpeed,
   patients,
   chart,
   facility,
@@ -127,8 +147,11 @@ export function AppShell({
   workloadStatus,
   announcement,
   buildMode,
+  buildUndoCount,
+  buildExitBlockedReason,
   placementOrientation,
   onTogglePause,
+  onSimulationSpeedChange,
   onOpenPatient,
   onCloseChart,
   onSubmitAnswer,
@@ -144,10 +167,18 @@ export function AppShell({
   onSelectRoom,
   onSellSelectedRoom,
   onUpgradeSelectedRoom,
+  onRotateSelectedRoom,
+  onBeginMoveSelectedRoom,
+  onPlaceDoorForSelectedRoom,
+  onRemoveDoor,
+  onUndoBuildAction,
   onFacilityCameraChange,
   onHireStaff,
   onDecreaseEmployeeSalary,
   onIncreaseEmployeeSalary,
+  onCollectLitter,
+  onRefillWaterCooler,
+  onPraiseEmployee,
   onLevelUp,
   onFastForward,
   onAddMoney,
@@ -160,14 +191,40 @@ export function AppShell({
   onRestart,
 }: AppShellProps) {
   const [helpOpen, setHelpOpen] = useState(false);
+  const [locatedPatientId, setLocatedPatientId] = useState<string | null>(
+    null,
+  );
+  const [praiseCandidateId, setPraiseCandidateId] = useState<
+    string | null
+  >(null);
   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
+
+  useEffect(() => {
+    if (!locatedPatientId) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setLocatedPatientId(null);
+    }, 2_500);
+    return () => window.clearTimeout(timer);
+  }, [locatedPatientId]);
+
+  const openAndLocatePatient = (patientId: string) => {
+    setLocatedPatientId(patientId);
+    onOpenPatient(patientId);
+  };
+  const praiseCandidate = praiseCandidateId
+    ? facility.staff.find(
+        (employee) => employee.instanceId === praiseCandidateId,
+      )
+    : null;
 
   const handleMessageAction = (
     _itemId: string,
     target?: { type: MessageBoardTargetType; id?: string },
   ) => {
     if (target?.type === "patient" && target.id) {
-      onOpenPatient(target.id);
+      openAndLocatePatient(target.id);
       return;
     }
     if (target?.type === "room" && target.id) {
@@ -206,7 +263,9 @@ export function AppShell({
         view={resourceBar}
         paused={paused}
         pauseLocked={buildMode}
+        simulationSpeed={simulationSpeed}
         onTogglePause={onTogglePause}
+        onSimulationSpeedChange={onSimulationSpeedChange}
         endControls={
           <SaveCloseDialog onSaveAndPause={onSaveAndPause} />
         }
@@ -222,7 +281,7 @@ export function AppShell({
               />
               <PatientLists
                 patients={patients}
-                onOpen={onOpenPatient}
+                onOpen={openAndLocatePatient}
                 tutorialTargetEncounterId={tutorialTargetEncounterId}
                 showTutorialCallout={
                   tutorialCoachMode === "callout" && !helpOpen
@@ -234,8 +293,9 @@ export function AppShell({
               <span className="eyebrow">Build Mode</span>
               <h2>Remodel while time is paused</h2>
               <p>
-                Use the construction tools on the desk. The map shows the
-                room footprint, door, and connection before you place it.
+                Use the construction tools on the desk. Place a room
+                footprint, then select it to add zero-cost doors and validate
+                access.
               </p>
             </section>
           )}
@@ -266,9 +326,10 @@ export function AppShell({
                   onClick={() =>
                     onFacilityCameraChange({
                       ...camera,
-                      zoom: clampZoom(camera.zoom - 0.2),
+                      zoom: clampZoom(camera.zoom - 0.1),
                     })
                   }
+                  disabled={camera.zoom <= 0.1}
                   aria-label="Zoom facility out"
                   title="Zoom out"
                 >
@@ -281,37 +342,60 @@ export function AppShell({
                   onClick={() =>
                     onFacilityCameraChange({
                       ...camera,
-                      zoom: clampZoom(camera.zoom + 0.2),
+                      zoom: clampZoom(camera.zoom + 0.1),
                     })
                   }
+                  disabled={camera.zoom >= 2.5}
                   aria-label="Zoom facility in"
                   title="Zoom in"
                 >
                   +
                 </button>
-                <button
-                  className="text-button"
-                  type="button"
-                  onClick={() =>
-                    onFacilityCameraChange({
-                      zoom: 1,
-                      panX: 0,
-                      panY: 0,
-                    })
-                  }
-                >
-                  Center
-                </button>
               </div>
             </div>
             <div className="facility-host">
               <FacilityCanvas
-                viewModel={facility}
+                viewModel={{
+                  ...facility,
+                  selectedPatientInstanceId: locatedPatientId,
+                }}
                 onPlaceRoom={onPlaceRoom}
                 onSelectRoom={onSelectRoom}
+                onCollectLitter={onCollectLitter}
+                onRefillWaterCooler={onRefillWaterCooler}
+                onPraiseEmployee={setPraiseCandidateId}
                 onCameraChange={onFacilityCameraChange}
               />
             </div>
+            {praiseCandidate ? (
+              <div
+                className="map-interaction-menu"
+                role="dialog"
+                aria-label={`Interact with ${praiseCandidate.displayName}`}
+              >
+                <strong>{praiseCandidate.displayName}</strong>
+                <span>{praiseCandidate.roleDisplayName}</span>
+                <div>
+                  <button
+                    className="button button-primary"
+                    type="button"
+                    onClick={() => {
+                      onPraiseEmployee(praiseCandidate.instanceId);
+                      setPraiseCandidateId(null);
+                    }}
+                  >
+                    Praise Employee
+                  </button>
+                  <button
+                    className="text-button"
+                    type="button"
+                    onClick={() => setPraiseCandidateId(null)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : null}
             {paused ? (
               <div
                 className={`facility-pause-indicator${
@@ -354,6 +438,15 @@ export function AppShell({
               onRotatePlacement={onRotatePlacement}
               onUpgradeSelectedRoom={onUpgradeSelectedRoom}
               onSellSelectedRoom={onSellSelectedRoom}
+              onRotateSelectedRoom={onRotateSelectedRoom}
+              onBeginMoveSelectedRoom={onBeginMoveSelectedRoom}
+              onPlaceDoorForSelectedRoom={
+                onPlaceDoorForSelectedRoom
+              }
+              onRemoveDoor={onRemoveDoor}
+              onUndoBuildAction={onUndoBuildAction}
+              undoCount={buildUndoCount}
+              exitBlockedReason={buildExitBlockedReason}
             />
             {!buildMode ? (
               chart ? (
@@ -396,6 +489,7 @@ export function AppShell({
               items={[...messages, ...systemNotices]}
               onAction={handleMessageAction}
               mode="ticker"
+              maximumVisibleItems={7}
             />
           ) : null}
         </aside>

@@ -211,6 +211,16 @@ export const prototypeBalanceReleaseSchema = z
       .object({
         facilityHoursPerTick: z.literal(1),
         realMillisecondsPerFacilityHour: z.number().int().positive(),
+        simulatedMinutesPerTick: z.literal(1),
+        realMillisecondsPerFacilityMinuteAt1x: z
+          .number()
+          .int()
+          .positive(),
+        supportedSpeeds: z.tuple([
+          z.literal(1),
+          z.literal(2),
+          z.literal(4),
+        ]),
         dayStartHour: z.number().int().min(0).max(23),
         dayEndHour: z.number().int().min(1).max(24),
       })
@@ -247,21 +257,121 @@ export const prototypeBalanceReleaseSchema = z
         leftBeforeSeenSatisfactionPenalty: z.number().int().nonnegative().max(20),
       })
       .strict(),
+    patientSatisfaction: z
+      .object({
+        startingValue: z.literal(100),
+        idleGraceMinutes: z.number().int().nonnegative(),
+        decayIntervalMinutes: z.number().int().positive(),
+        decayPerInterval: z.number().int().positive().max(20),
+        sidewalkDecayMultiplierPercent: z.number().int().min(100).max(400),
+        warningThresholds: z
+          .array(z.number().int().min(0).max(99))
+          .min(1),
+        walkoutThresholdMinimum: z.literal(0),
+        walkoutThresholdMaximum: z.literal(59),
+        correctCareRecovery: z.number().int().nonnegative().max(20),
+        incorrectCarePenalty: z.number().int().nonnegative().max(20),
+        cleanRoomThreshold: z.number().int().min(1).max(100),
+        dirtyRoomThreshold: z.number().int().min(0).max(99),
+        cleanRoomCompletionBonus: z.number().int().nonnegative().max(20),
+        dirtyRoomCompletionPenalty: z.number().int().nonnegative().max(20),
+        roomUpgradeBonusPerLevel: z.number().int().nonnegative().max(10),
+        maximumRoomUpgradeBonus: z.number().int().nonnegative().max(20),
+        happyStaffMoraleThreshold: z.number().int().min(0).max(100),
+        unhappyStaffMoraleThreshold: z.number().int().min(0).max(100),
+        happyStaffCompletionBonus: z.number().int().nonnegative().max(20),
+        unhappyStaffCompletionPenalty: z.number().int().nonnegative().max(20),
+        maximumAmenityCompletionBonus: z.number().int().nonnegative().max(20),
+        roomCleanlinessLossPerEncounter: z.number().int().nonnegative().max(20),
+        rollingWindowSize: z.number().int().positive().max(100),
+      })
+      .strict(),
+    environment: z
+      .object({
+        litterSpawnMinimumMinutes: z.number().int().positive(),
+        litterSpawnMaximumMinutes: z.number().int().positive(),
+        maximumLitterItems: z.number().int().positive().max(12),
+        litterCleanupRestore: z.number().int().positive().max(100),
+        litterCleanupSatisfactionBonus: z.number().int().nonnegative().max(10),
+        waterCoolerDrainIntervalMinutes: z.number().int().positive(),
+        waterCoolerDrainPerInterval: z.number().int().positive().max(100),
+        waterCoolerLowThreshold: z.number().int().min(0).max(99),
+        waterRefillSatisfactionBonus: z.number().int().nonnegative().max(10),
+        praiseMoraleBonus: z.number().int().positive().max(25),
+        praiseCooldownMinutes: z.number().int().positive(),
+        founderInteractionMinutes: z.number().int().positive().max(30),
+        idleActionMinimumMinutes: z.number().int().positive(),
+        idleActionMaximumMinutes: z.number().int().positive(),
+        idleActionChancePercent: z.number().int().min(0).max(100),
+      })
+      .strict()
+      .superRefine((environment, context) => {
+        if (
+          environment.litterSpawnMaximumMinutes <
+          environment.litterSpawnMinimumMinutes
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: "The litter spawn range is inverted.",
+            path: ["litterSpawnMaximumMinutes"],
+          });
+        }
+        if (
+          environment.idleActionMaximumMinutes <
+          environment.idleActionMinimumMinutes
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: "The idle-action interval range is inverted.",
+            path: ["idleActionMaximumMinutes"],
+          });
+        }
+      }),
     arrivals: z
       .object({
         levelZeroRecoveryIntervalTicks: z.number().int().positive(),
         levelOneRoutineIntervalTicks: z.number().int().positive(),
+        firstArrivalMinimumMinutes: z.number().int().positive(),
+        firstArrivalMaximumMinutes: z.number().int().positive(),
+        routineBaseIntervalMinutes: z.number().int().positive(),
+        routineVariationMinutes: z.number().int().nonnegative(),
       })
-      .strict(),
+      .strict()
+      .superRefine((arrivals, context) => {
+        if (
+          arrivals.firstArrivalMaximumMinutes <
+          arrivals.firstArrivalMinimumMinutes
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: "The first-arrival range is inverted.",
+            path: ["firstArrivalMaximumMinutes"],
+          });
+        }
+        if (
+          arrivals.routineVariationMinutes >=
+          arrivals.routineBaseIntervalMinutes
+        ) {
+          context.addIssue({
+            code: "custom",
+            message:
+              "Arrival variation must be smaller than the base interval.",
+            path: ["routineVariationMinutes"],
+          });
+        }
+      }),
     economy: z
       .object({
         expenseIntervalTicks: z.number().int().positive(),
+        postingIntervalMinutes: z.literal(15),
       })
       .strict(),
     emergencyGlp1: z
       .object({
         cashEligibilityThreshold: z.number().int().positive(),
         cooldownTicks: z.number().int().positive(),
+        cooldownMinutes: z.number().int().positive(),
+        visibleRegardlessOfCash: z.literal(true),
         dailyUseCap: z.number().int().positive(),
         fullPayment: z.number().int().positive(),
         reducedPayment: z.number().int().nonnegative(),
@@ -314,6 +424,13 @@ export const prototypeBalanceReleaseSchema = z
         maximumQualityRevenueBonus: z.number().int().nonnegative(),
         maximumIncorrectFinancialConsequence: z.number().int().nonnegative(),
         clinicalXpPerCorrectFirstAnswer: z.number().int().nonnegative(),
+        clinicalXpPerIncorrectFirstAnswer: z.number().int().nonnegative(),
+        levelZeroBasePayment: z.number().int().nonnegative(),
+        levelZeroPerQuestionPayment: z.number().int().nonnegative(),
+        levelZeroPerCorrectPayment: z.number().int().nonnegative(),
+        levelOneBasePayment: z.number().int().nonnegative(),
+        levelOnePerQuestionPayment: z.number().int().nonnegative(),
+        levelOnePerCorrectPayment: z.number().int().nonnegative(),
         maximumCorrectSatisfactionBonus: z.number().int().nonnegative(),
         maximumIncorrectSatisfactionConsequence: z.number().int().nonnegative(),
         patientSatisfactionDeltaMinimum: z.number().int().min(-100).max(0),

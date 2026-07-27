@@ -3,6 +3,21 @@ import { validateSyntheticClinicalRelease } from "./schema";
 const PROTOTYPE_REVIEW_NOTICE =
   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
 
+function authoredFinalConsequenceWithoutOutcomeVignette(
+  answerChoiceId: string,
+  consequenceNarrative: string,
+  clinicalRationale: string,
+  sourceLabels: string[],
+) {
+  return {
+    answerChoiceId,
+    kind: "no_terminal_outcome" as const,
+    consequenceNarrative,
+    clinicalRationale,
+    sourceLabels,
+  };
+}
+
 /**
  * Small original prototype fixture.
  *
@@ -300,14 +315,24 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           resultGateAfter: null,
           terminalDispositions: [
-            {
-              answerChoiceId: "choice.laceration.antibiotics-only",
-              kind: "no_terminal_outcome",
-            },
-            {
-              answerChoiceId: "choice.laceration.ignore-history",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.laceration.antibiotics-only",
+              "Antibiotics were used as a substitute for the authored tetanus-prevention assessment, leaving vaccination and TIG needs unaddressed.",
+              "Antibiotics do not replace wound assessment and indicated vaccination or TIG.",
+              [
+                "https://www.cdc.gov/tetanus/hcp/clinical-guidance/index.html",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.laceration.ignore-history",
+              "Vaccination history was not assessed, so indicated prophylaxis could be missed.",
+              "The authored decision requires wound type and vaccination history before selecting prophylaxis.",
+              [
+                "https://www.cdc.gov/tetanus/hcp/clinical-guidance/index.html",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
           ],
         },
       ],
@@ -375,14 +400,24 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           resultGateAfter: null,
           terminalDispositions: [
-            {
-              answerChoiceId: "choice.abscess.observe-only",
-              kind: "no_terminal_outcome",
-            },
-            {
-              answerChoiceId: "choice.abscess.imaging-only",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.abscess.observe-only",
+              "The drainable abscess was left without the authored definitive treatment.",
+              "Observation alone does not perform incision and drainage for this explicitly uncomplicated drainable abscess.",
+              [
+                "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.abscess.imaging-only",
+              "Imaging did not treat the drainable abscess, so the clinical problem remained unresolved.",
+              "An X-ray is not the definitive treatment for the narrow presentation in this case.",
+              [
+                "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
           ],
         },
       ],
@@ -471,10 +506,15 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
                 ],
               },
             },
-            {
-              answerChoiceId: "choice.ileus.minor-procedure",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.ileus.minor-procedure",
+              "The patient was directed toward a clinic procedure that did not provide the hospital-capable evaluation required by the case.",
+              "The authored presentation exceeds the clinic's evaluation and support capabilities.",
+              [
+                "https://www.ncbi.nlm.nih.gov/books/NBK560780/",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
           ],
         },
       ],
@@ -544,14 +584,26 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           ],
           resultGateAfter: null,
           terminalDispositions: [
-            {
-              answerChoiceId: "choice.chole.no-followup",
-              kind: "no_terminal_outcome",
-            },
-            {
-              answerChoiceId: "choice.chole.clinic-drainage",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.chole.no-followup",
+              "The recurrent symptomatic gallstone disease was left without surgical follow-up.",
+              "Symptom resolution during the visit does not remove the authored indication for surgical evaluation.",
+              [
+                "https://www.sages.org/publications/guidelines/guidelines-for-the-clinical-application-of-laparoscopic-biliary-tract-surgery/",
+                "https://www.nice.org.uk/guidance/cg188/chapter/Recommendations",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.chole.clinic-drainage",
+              "A clinic drainage plan did not address the authored gallstone disease.",
+              "The narrow uncomplicated presentation calls for surgical evaluation rather than a minor-procedure-room drainage.",
+              [
+                "https://www.sages.org/publications/guidelines/guidelines-for-the-clinical-application-of-laparoscopic-biliary-tract-surgery/",
+                "https://www.nice.org.uk/guidance/cg188/chapter/Recommendations",
+                PROTOTYPE_REVIEW_NOTICE,
+              ],
+            ),
           ],
         },
       ],
@@ -657,14 +709,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           sourceLabels: ["Synthetic prototype fixture; no clinical source"],
           resultGateAfter: null,
           terminalDispositions: [
-            {
-              answerChoiceId: "choice.synthetic.xray-routing.dark",
-              kind: "no_terminal_outcome",
-            },
-            {
-              answerChoiceId: "choice.synthetic.xray-routing.striped",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.synthetic.xray-routing.dark",
+              "DARK GRID was recorded even though the artificial result read CLEAR GRID.",
+              "This software fixture requires the exact returned token.",
+              ["Synthetic prototype fixture; no clinical source"],
+            ),
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.synthetic.xray-routing.striped",
+              "STRIPED GRID was recorded even though the artificial result read CLEAR GRID.",
+              "This software fixture requires the exact returned token.",
+              ["Synthetic prototype fixture; no clinical source"],
+            ),
           ],
         },
       ],
@@ -767,14 +823,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           sourceLabels: ["Synthetic prototype fixture; no clinical source"],
           resultGateAfter: null,
           terminalDispositions: [
-            {
-              answerChoiceId: "choice.synthetic.lab-routing.urgent",
-              kind: "no_terminal_outcome",
-            },
-            {
-              answerChoiceId: "choice.synthetic.lab-routing.archive",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.synthetic.lab-routing.urgent",
+              "URGENT RETURN was selected even though the artificial instruction read ROUTINE RETURN.",
+              "This software fixture requires the exact returned instruction.",
+              ["Synthetic prototype fixture; no clinical source"],
+            ),
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.synthetic.lab-routing.archive",
+              "The artificial follow-up instruction was archived instead of being carried forward as ROUTINE RETURN.",
+              "This software fixture requires the exact returned instruction.",
+              ["Synthetic prototype fixture; no clinical source"],
+            ),
           ],
         },
       ],
@@ -923,14 +983,18 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
           sourceLabels: ["Synthetic prototype fixture; no clinical source"],
           resultGateAfter: null,
           terminalDispositions: [
-            {
-              answerChoiceId: "choice.synthetic.three-step.urgent",
-              kind: "no_terminal_outcome",
-            },
-            {
-              answerChoiceId: "choice.synthetic.three-step.repeat",
-              kind: "no_terminal_outcome",
-            },
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.synthetic.three-step.urgent",
+              "URGENT RETURN was selected even though the workflow card ended with ROUTINE RETURN.",
+              "This software fixture requires the exact final token.",
+              ["Synthetic prototype fixture; no clinical source"],
+            ),
+            authoredFinalConsequenceWithoutOutcomeVignette(
+              "choice.synthetic.three-step.repeat",
+              "The artificial workflow was set to repeat indefinitely instead of ending with ROUTINE RETURN.",
+              "This software fixture requires the exact final token.",
+              ["Synthetic prototype fixture; no clinical source"],
+            ),
           ],
         },
       ],

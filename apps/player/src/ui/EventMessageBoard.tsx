@@ -101,7 +101,7 @@ export function EventMessageBoard({
 
     const visibleLimit =
       mode === "ticker"
-        ? Math.min(5, Math.max(1, maximumVisibleItems))
+        ? Math.min(7, Math.max(1, maximumVisibleItems))
         : Math.max(1, maximumVisibleItems);
     return {
       liveItems: candidates.slice(0, visibleLimit).map(({ item }) => item),
@@ -139,6 +139,37 @@ export function EventMessageBoard({
               item.targetType === undefined
                 ? undefined
                 : { type: item.targetType, id: item.targetId };
+            if (mode === "ticker") {
+              return (
+                <article
+                  className={`message-board-item is-${priority}${
+                    item.persistent ? " is-persistent" : ""
+                  }`}
+                  key={item.id}
+                  role={priority === "critical" ? "alert" : undefined}
+                >
+                  <span
+                    className="message-board-priority-icon"
+                    aria-hidden="true"
+                  >
+                    {PRIORITY_ICONS[priority]}
+                  </span>
+                  {item.actionLabel && onAction ? (
+                    <button
+                      className="message-board-compact-action"
+                      type="button"
+                      onClick={() => onAction(item.id, target)}
+                    >
+                      {item.message}
+                    </button>
+                  ) : (
+                    <span className="message-board-compact-copy">
+                      {item.message}
+                    </span>
+                  )}
+                </article>
+              );
+            }
             return (
               <article
                 className={`message-board-item is-${priority}${
@@ -189,7 +220,6 @@ export function EventMessageBoard({
                     {PRIORITY_LABELS[priority]}
                   </span>
                   <span>{item.title ?? item.message}</span>
-                  {item.timeLabel ? <time>{item.timeLabel}</time> : null}
                 </li>
               );
             })}

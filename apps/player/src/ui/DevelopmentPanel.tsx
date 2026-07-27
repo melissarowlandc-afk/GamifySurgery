@@ -23,7 +23,8 @@ export function DevelopmentPanel({
   onRestart,
   onTutorialsEnabledChange,
 }: DevelopmentPanelProps) {
-  const [open, setOpen] = useState(true);
+  // Pilot utilities remain available without occupying the normal game UI.
+  const [open, setOpen] = useState(false);
 
   return (
     <details
@@ -52,7 +53,7 @@ export function DevelopmentPanel({
             paused={paused}
             onTogglePause={onTogglePause}
             onRestart={onRestart}
-            triggerLabel="Restart game"
+            triggerLabel="Restart Campaign"
             triggerClassName="button button-danger"
           />
         </div>

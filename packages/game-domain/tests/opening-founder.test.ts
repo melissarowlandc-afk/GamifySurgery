@@ -8,6 +8,8 @@ import {
 
 const FOUNDER: FounderIdentity = {
   displayName: "Dr. Rowan Vale",
+  headId: "head.test",
+  bodyId: "body.test",
   appearance: {
     version: "pixel-avatar.v1",
     bodyShape: "tall",
@@ -29,7 +31,7 @@ describe("campaign founder persistence", () => {
       founder: FOUNDER,
     });
 
-    expect(state.schemaVersion).toBe(4);
+    expect(state.schemaVersion).toBe(5);
     expect(state.founder).toEqual(FOUNDER);
 
     const restored = deserializeGameState(serializeGameState(state));
@@ -53,7 +55,7 @@ describe("campaign founder persistence", () => {
     const firstRestore = deserializeGameState(JSON.stringify(legacy));
     const replayedRestore = deserializeGameState(JSON.stringify(legacy));
 
-    expect(firstRestore.schemaVersion).toBe(4);
+    expect(firstRestore.schemaVersion).toBe(5);
     expect(firstRestore.founder.displayName).toBe("Founder");
     expect(firstRestore.founder).toEqual(replayedRestore.founder);
   });

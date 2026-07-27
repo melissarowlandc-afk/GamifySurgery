@@ -21,7 +21,7 @@ const HELP_STEPS = [
   ],
   [
     "Tests and results",
-    "A test choice shows its facility-hour turnaround. The chart slides into Existing Patients while the patient travels for the test, then shows ! when the patient returns.",
+    "A test choice shows its turnaround time. The chart slides into Existing Patients while the patient travels for the test, then shows ! when the patient returns.",
   ],
   [
     "Completion and rewards",
@@ -29,11 +29,11 @@ const HELP_STEPS = [
   ],
   [
     "Build Mode",
-    "Use the Enter Build Mode button to pause the clinic. The same button becomes Exit Build Mode. Select a room or hallway, follow its visible outline and door marker, rotate it, and place it only when the map says it is connected.",
+    "Enter Build Mode to pause the clinic. Place a room footprint, select it, then add zero-cost doors on valid wall segments. The same control becomes Done / Save and Return and explains any access problem that blocks it.",
   ],
   [
-    "Rooms and hallways",
-    "A new room's marked door must open into a connected room or hallway. Hallways may branch directly from room walls. Patients and employees visibly walk the resulting routes, so layout affects task time.",
+    "Rooms, doors, and hallways",
+    "Rooms may connect directly to rooms or hallways. Imaging rooms also need a separate shared-wall door to an Imaging Control Room. Patients and employees visibly walk the resulting routes, so layout affects task time.",
   ],
   [
     "Employees",
@@ -48,8 +48,8 @@ const HELP_STEPS = [
     "A clinic day runs from 8 AM to 6 PM. Pause at any time and read the message board for patient needs, employee feelings, results, and occasional clinic jokes.",
   ],
   [
-    "Campaigns and Start over",
-    "Campaigns keep separate facilities and FSRS histories. Start over creates a fresh campaign and keeps the previous one available.",
+    "Campaigns and Restart",
+    "Campaigns keep separate facilities and FSRS histories. Restart Campaign archives the current clinic and begins a fresh founder flow.",
   ],
   [
     "Prototype tools",

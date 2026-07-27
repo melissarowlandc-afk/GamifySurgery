@@ -51,3 +51,11 @@ ADR 0025 remains the historical source for bounded clinical consequences and
 one normalized patient settlement. Where ADR 0025 describes XP as part of the
 later patient settlement or a lasting answer-driven satisfaction change, this
 ADR is the current rule.
+
+## Current amendment
+
+[ADR 0034](0034-july-27-clinical-encounter-amendments.md) changes decision XP
+to ten for correct and two for incorrect answers.
+[ADR 0035](0035-minute-simulation-and-patient-satisfaction.md) removes Patient
+Confidence and the daily campaign modifier in favor of individual patient
+satisfaction and a rolling completed-encounter clinic score.

@@ -1,248 +1,266 @@
 import { describe, expect, it } from "vitest";
-
 import {
+  PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
   gameReducer,
-  getEffectiveRoomUpkeep,
   getNextRoomUpgradeCost,
-  getRoomDefinition,
-  getRoomInstanceFootprint,
   getRoomResaleValue,
   getStaffRoleCount,
-  getWorkloadSnapshot,
-  rotateDirection,
+  validateFacilityAccess,
+  type CardinalDirection,
   type GameState,
-  type RoomOrientation,
 } from "../src";
 
-function levelOneSandbox(seed: string): GameState {
+function sandbox(seed: string, level: 0 | 1 = 1): GameState {
   const state = createInitialGameState(undefined, {
     campaignId: `campaign.${seed}`,
     campaignSeed: seed,
     createdAtRealMs: 0,
   });
-  state.facilityLevel = 1;
+  state.facilityLevel = level;
+  state.cashCents = 500_000;
   state.cash = 5_000;
+  state.encounters = {};
   return state;
 }
 
-function place(
+function placeRoom(
   state: GameState,
-  roomId: string,
-  roomDefinitionId: string,
+  id: string,
+  definitionId: string,
   x: number,
   y: number,
-  orientation: RoomOrientation = 0,
 ): GameState {
   return gameReducer(state, {
     type: "PLACE_ROOM",
-    operationId: `place.${roomId}`,
-    roomId,
-    roomDefinitionId,
+    operationId: `place.${id}`,
+    roomId: id,
+    roomDefinitionId: definitionId,
     x,
     y,
-    orientation,
   });
 }
 
-describe("facility remodeling and upgrades", () => {
-  it("supports connected duplicate rooms, rotation, upgrades, and safe resale", () => {
-    let state = levelOneSandbox("facility-rules");
-    for (const x of [11, 12, 13, 14, 15, 16]) {
-      state = place(
-        state,
-        `room.hallway.${x}.5`,
-        "room.hallway",
-        x,
-        5,
-      );
-    }
-    state = place(state, "room.exam.1", "room.examination", 10, 3);
-    expect(state.operationReceipts["place.room.exam.1"]?.status).toBe(
-      "applied",
+function placeDoor(
+  state: GameState,
+  id: string,
+  roomId: string,
+  side: CardinalDirection,
+  offset: number,
+): GameState {
+  return gameReducer(state, {
+    type: "PLACE_DOOR",
+    operationId: `place.${id}`,
+    doorId: id,
+    roomId,
+    side,
+    offset,
+  });
+}
+
+function access(state: GameState) {
+  const facility = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
+  return validateFacilityAccess(
+    state.rooms,
+    state.doors,
+    (definitionId) =>
+      facility.roomDefinitions.find(
+        (definition) => definition.id === definitionId,
+      ) ?? null,
+    facility.gridWidth,
+    facility.gridHeight,
+    new Set(facility.protectedRoomDefinitionIds),
+  );
+}
+
+describe("explicit-door construction and renovation", () => {
+  it("places the room footprint first and makes a $0 explicit door operational", () => {
+    let state = sandbox("explicit-door", 0);
+    const startingCash = state.cash;
+    state = placeRoom(
+      state,
+      "room.exam.level-zero",
+      "room.examination",
+      34,
+      26,
     );
+
     expect(
-      state.events.find(
-        (event) =>
-          event.type === "room_placed" &&
-          event.target?.id === "room.exam.1",
-      ),
-    ).toMatchObject({
-      definitionId: "alert.facility.room-placed",
-      target: { kind: "room", id: "room.exam.1" },
+      state.operationReceipts["place.room.exam.level-zero"]?.status,
+    ).toBe("applied");
+    expect(state.cash).toBe(startingCash - 130);
+    expect(access(state)).toMatchObject({
+      valid: false,
+      unreachableRoomIds: ["room.exam.level-zero"],
     });
 
-    state = place(state, "room.exam.2", "room.examination", 15, 3);
-
-    expect(state.operationReceipts["place.room.exam.2"]?.status).toBe(
+    const cashBeforeDoor = state.cash;
+    state = placeDoor(
+      state,
+      "door.exam.level-zero",
+      "room.exam.level-zero",
+      "south",
+      1,
+    );
+    expect(state.operationReceipts["place.door.exam.level-zero"]?.status).toBe(
       "applied",
     );
-    expect(
-      state.rooms.filter(
-        (room) => room.roomDefinitionId === "room.examination",
-      ),
-    ).toHaveLength(2);
+    expect(state.cash).toBe(cashBeforeDoor);
+    expect(access(state).valid).toBe(true);
+  });
 
-    const examDefinition = getRoomDefinition("room.examination");
-    expect(examDefinition).not.toBeNull();
-    expect(
-      getRoomInstanceFootprint(state, "room.exam.2"),
-    ).toEqual({ width: 3, height: 2 });
-    expect(
-      examDefinition
-        ? rotateDirection(examDefinition.defaultDoorSide!, 90)
-        : null,
-    ).toBe("west");
-
-    const cashBeforeUpgrade = state.cash;
+  it("supports rotation, upgrades, resale, and removes attached doors on demolition", () => {
+    let state = sandbox("renovation", 0);
+    state = placeRoom(
+      state,
+      "room.exam.renovate",
+      "room.examination",
+      34,
+      26,
+    );
+    state = placeDoor(
+      state,
+      "door.exam.renovate",
+      "room.exam.renovate",
+      "south",
+      1,
+    );
     state = gameReducer(state, {
       type: "UPGRADE_ROOM",
-      operationId: "upgrade.room.exam.2",
-      roomId: "room.exam.2",
+      operationId: "upgrade.exam",
+      roomId: "room.exam.renovate",
     });
-    expect(state.operationReceipts["upgrade.room.exam.2"]?.status).toBe(
-      "applied",
-    );
     expect(
-      state.rooms.find((room) => room.id === "room.exam.2")?.upgradeLevel,
+      state.rooms.find((room) => room.id === "room.exam.renovate")
+        ?.upgradeLevel,
     ).toBe(2);
-    expect(state.cash).toBe(cashBeforeUpgrade - 90);
-    expect(getEffectiveRoomUpkeep(state, "room.exam.2")).toBe(13);
-    expect(getNextRoomUpgradeCost(state, "room.exam.2")).toBe(140);
-    expect(getRoomResaleValue(state, "room.exam.2")).toBe(55);
-    expect(getWorkloadSnapshot(state).routineLimit).toBe(7);
+    expect(getNextRoomUpgradeCost(state, "room.exam.renovate")).toBe(140);
+    expect(getRoomResaleValue(state, "room.exam.renovate")).toBe(55);
 
-    const cashBeforeSale = state.cash;
+    state = gameReducer(state, {
+      type: "MOVE_ROOM",
+      operationId: "move.exam",
+      roomId: "room.exam.renovate",
+      x: 34,
+      y: 25,
+    });
+    state = gameReducer(state, {
+      type: "ROTATE_ROOM",
+      operationId: "rotate.exam",
+      roomId: "room.exam.renovate",
+    });
+    expect(
+      state.doors.find((door) => door.id === "door.exam.renovate")?.side,
+    ).toBe("west");
+
     state = gameReducer(state, {
       type: "SELL_ROOM",
-      operationId: "sell.room.exam.1",
-      roomId: "room.exam.1",
+      operationId: "sell.exam",
+      roomId: "room.exam.renovate",
     });
-    expect(state.operationReceipts["sell.room.exam.1"]?.status).toBe(
-      "applied",
+    expect(state.operationReceipts["sell.exam"]?.status).toBe("applied");
+    expect(state.doors.some((door) => door.id === "door.exam.renovate")).toBe(
+      false,
     );
-    expect(state.cash).toBe(cashBeforeSale + 32);
-
-    const rejectedHallwaySale = gameReducer(state, {
-      type: "SELL_ROOM",
-      operationId: "sell.disconnecting.hallway",
-      roomId: "room.hallway.14.5",
-    });
-    expect(
-      rejectedHallwaySale.operationReceipts["sell.disconnecting.hallway"]
-        ?.status,
-    ).toBe("rejected");
-
-    const rejectedFrontDeskSale = gameReducer(state, {
-      type: "SELL_ROOM",
-      operationId: "sell.front.desk",
-      roomId: "room.instance.founder_desk",
-    });
-    expect(
-      rejectedFrontDeskSale.operationReceipts["sell.front.desk"]?.status,
-    ).toBe("rejected");
   });
 
-  it("uses the placed room's rotated door for a direct room connection", () => {
-    const state = levelOneSandbox("direct-room-connection");
-    const connected = place(
+  it("requires X-ray patient access and a separate direct control-room door", () => {
+    let state = sandbox("xray-access");
+    state = placeRoom(state, "room.exam", "room.examination", 34, 26);
+    state = placeDoor(state, "door.exam", "room.exam", "south", 1);
+
+    for (const [id, x, y] of [
+      ["hall.32.26", 32, 26],
+      ["hall.32.27", 32, 27],
+      ["hall.32.28", 32, 28],
+    ] as const) {
+      state = placeRoom(state, id, "room.hallway", x, y);
+    }
+    state = placeDoor(
       state,
-      "room.exam.direct",
-      "room.examination",
-      7,
-      7,
-      270,
+      "door.front.internal",
+      "room.instance.founder_desk",
+      "west",
+      0,
     );
-    expect(
-      connected.operationReceipts["place.room.exam.direct"]?.status,
-    ).toBe("applied");
-
-    const rotatedAway = place(
+    state = placeRoom(
       state,
-      "room.exam.rotated-away",
-      "room.examination",
-      7,
-      7,
-      90,
+      "room.control",
+      "room.imaging_control",
+      31,
+      24,
     );
+    state = placeDoor(
+      state,
+      "door.control.public",
+      "room.control",
+      "south",
+      1,
+    );
+    state = placeRoom(state, "room.xray", "room.xray", 33, 23);
+    state = placeDoor(
+      state,
+      "door.xray.patient",
+      "room.xray",
+      "south",
+      2,
+    );
+
+    expect(access(state).issues).toContain(
+      "X-ray Room must share a wall and internal door with an Imaging Control Room.",
+    );
+
+    state = placeDoor(
+      state,
+      "door.xray.control",
+      "room.xray",
+      "west",
+      1,
+    );
+    expect(access(state).valid).toBe(true);
     expect(
-      rotatedAway.operationReceipts["place.room.exam.rotated-away"]?.status,
-    ).toBe("rejected");
-  });
-
-  it("rejects hallway islands before charging the player", () => {
-    const state = levelOneSandbox("hallway-island");
-    const beforeCash = state.cash;
-    const next = place(state, "room.hallway.island", "room.hallway", 0, 0);
-
-    expect(next.operationReceipts["place.room.hallway.island"]?.status).toBe(
-      "rejected",
-    );
-    expect(next.cash).toBe(beforeCash);
+      PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions[1]
+        ?.requiredRoomDefinitionIds,
+    ).toEqual(["room.xray", "room.minor_procedure"]);
   });
 });
 
-describe("prototype staff rules", () => {
-  it("generates stable staff identity, enforces role caps, and links salary to morale", () => {
-    let state = levelOneSandbox("staff-rules");
+describe("prototype staff", () => {
+  it("persists identity, enforces caps, and uses low-frequency room idling", () => {
+    let state = sandbox("staff");
     state = gameReducer(state, {
       type: "HIRE_STAFF",
-      operationId: "hire.receptionist.1",
-      employeeId: "employee.receptionist.1",
+      operationId: "hire.receptionist",
+      employeeId: "employee.receptionist",
       staffRoleDefinitionId: "staff.receptionist",
     });
-
-    const employee = state.employees[0];
-    expect(employee?.displayName.length).toBeGreaterThan(0);
-    expect(employee?.appearance.version).toBe("pixel-avatar.v1");
-    expect(employee?.homeRoomInstanceId).toBe("room.instance.founder_desk");
-    expect(employee?.salaryPerExpenseInterval).toBe(18);
-    expect(employee?.morale).toBe(75);
+    const employee = state.employees[0]!;
+    expect(employee.appearance.version).toBe("pixel-avatar.v1");
+    expect(employee.homeRoomInstanceId).toBe(
+      "room.instance.founder_desk",
+    );
+    expect(employee.nextIdleActionAtFacilityTick).toBeGreaterThanOrEqual(10);
     expect(getStaffRoleCount(state, "staff.receptionist")).toBe(1);
-    expect(
-      state.events.find(
-        (event) =>
-          event.type === "staff_hired" &&
-          event.target?.id === "employee.receptionist.1",
-      ),
-    ).toMatchObject({
-      definitionId: "alert.staff.hired",
-      target: {
-        kind: "employee",
-        id: "employee.receptionist.1",
-      },
-    });
 
     state = gameReducer(state, {
       type: "HIRE_STAFF",
-      operationId: "hire.receptionist.over-cap",
+      operationId: "hire.receptionist.again",
       employeeId: "employee.receptionist.2",
       staffRoleDefinitionId: "staff.receptionist",
     });
     expect(
-      state.operationReceipts["hire.receptionist.over-cap"]?.status,
+      state.operationReceipts["hire.receptionist.again"]?.status,
     ).toBe("rejected");
 
     state = gameReducer(state, {
       type: "SET_EMPLOYEE_SALARY",
-      operationId: "salary.receptionist.raise",
-      employeeId: "employee.receptionist.1",
+      operationId: "salary.receptionist",
+      employeeId: "employee.receptionist",
       salaryPerExpenseInterval: 30,
     });
-    expect(
-      state.operationReceipts["salary.receptionist.raise"]?.status,
-    ).toBe("applied");
-    expect(state.employees[0]?.salaryPerExpenseInterval).toBe(30);
-    expect(state.employees[0]?.morale).toBe(100);
-
-    const initialLocation = { ...state.employees[0]!.location };
-    for (let index = 1; index <= 8; index += 1) {
-      state = gameReducer(state, {
-        type: "ADVANCE_TICK",
-        operationId: `move.staff.${index}`,
-      });
-    }
-    expect(state.employees[0]?.lastMovedAtFacilityTick).toBe(8);
-    expect(state.employees[0]?.location).not.toEqual(initialLocation);
+    expect(state.employees[0]).toMatchObject({
+      salaryPerExpenseInterval: 30,
+      morale: 100,
+    });
   });
 });

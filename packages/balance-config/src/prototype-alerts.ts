@@ -411,7 +411,7 @@ export interface PrototypeFlavorPool {
 export const PROTOTYPE_FLAVOR_POOLS = [
   {
     id: "patient_arrival",
-    cooldownTicks: 2,
+    cooldownTicks: 30,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -426,7 +426,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "waiting",
-    cooldownTicks: 2,
+    cooldownTicks: 20,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -441,7 +441,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "result",
-    cooldownTicks: 2,
+    cooldownTicks: 20,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -458,7 +458,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "staff",
-    cooldownTicks: 4,
+    cooldownTicks: 45,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -476,7 +476,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "construction",
-    cooldownTicks: 3,
+    cooldownTicks: 20,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -496,7 +496,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "finance",
-    cooldownTicks: 3,
+    cooldownTicks: 30,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -514,7 +514,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "progression",
-    cooldownTicks: 3,
+    cooldownTicks: 20,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [
@@ -532,7 +532,7 @@ export const PROTOTYPE_FLAVOR_POOLS = [
   },
   {
     id: "saving_testing",
-    cooldownTicks: 2,
+    cooldownTicks: 30,
     permittedDuringCritical: false,
     eligibleFacilityLevels: [0, 1],
     messages: [

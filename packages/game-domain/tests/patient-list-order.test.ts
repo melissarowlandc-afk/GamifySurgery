@@ -46,7 +46,7 @@ describe("patient-list ordering", () => {
         id: "encounter.departed-middle",
         lifecycle: "resolved",
         arrivedAtTick: 3,
-        resolutionReason: "left_before_seen",
+        resolutionReason: "walkout",
       }),
       "encounter.completed-earlier": createEncounter(template, {
         id: "encounter.completed-earlier",

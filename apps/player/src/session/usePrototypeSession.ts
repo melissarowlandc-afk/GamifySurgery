@@ -8,11 +8,17 @@ import {
   TUTORIAL_ENCOUNTER_ID,
   gameReducer,
   getCurrentQuestion,
+  getFacilityAccessValidation,
+  getRoomDefinition,
   getStaffRoleDefinition,
+  getDefaultDoorOffset,
+  getRotatedFootprint,
+  type CardinalDirection,
   type GameCommand,
   type GameState,
   type OperationReceipt,
   type RoomOrientation,
+  type SimulationSpeed,
 } from "@gamify-surgery/game-domain";
 import {
   useCallback,
@@ -25,6 +31,7 @@ import {
   loadPrototypeProfile,
   requireActiveCampaign,
   savePrototypeProfile,
+  selectLocalCampaign,
   type LoadedPrototypeProfile,
   type LocalPrototypeProfile,
 } from "./prototypeStorage";
@@ -59,11 +66,14 @@ export interface PrototypeSession {
   selectedRoomInstanceId: string | null;
   placementOrientation: RoomOrientation;
   buildMode: boolean;
+  buildUndoCount: number;
+  buildExitBlockedReason: string | null;
   facilityCamera: FacilityCameraView;
   summaryVisible: boolean;
   announcement: string;
   systemNotices: PrototypeSystemNotice[];
   togglePause: () => void;
+  setSimulationSpeed: (speed: SimulationSpeed) => void;
   openPatient: (encounterId: string) => void;
   closeChart: () => void;
   submitAnswer: (choiceId: string) => void;
@@ -83,10 +93,21 @@ export interface PrototypeSession {
   selectRoom: (roomInstanceId: string) => void;
   sellSelectedRoom: () => void;
   upgradeSelectedRoom: () => void;
+  rotateSelectedRoom: () => void;
+  beginMoveSelectedRoom: () => void;
+  placeDoorForSelectedRoom: (
+    side: CardinalDirection,
+    offset: number,
+  ) => void;
+  removeDoor: (doorId: string) => void;
+  undoBuildAction: () => void;
   setFacilityCamera: (camera: FacilityCameraView) => void;
   hireStaff: (staffRoleDefinitionId: string) => void;
   decreaseEmployeeSalary: (employeeId: string) => void;
   increaseEmployeeSalary: (employeeId: string) => void;
+  collectLitter: (litterId: string) => void;
+  refillWaterCooler: () => void;
+  praiseEmployee: (employeeId: string) => void;
   levelUp: () => void;
   fastForward: () => void;
   advanceTutorialResult: () => void;
@@ -118,6 +139,7 @@ export interface CampaignSummary {
   facilityLevel: number;
   fsrsReviewCount: number;
   active: boolean;
+  status: "resumable" | "archived";
 }
 
 function createSessionId(): string {
@@ -140,12 +162,17 @@ function nextInstanceId(prefix: string, existingIds: readonly string[]): string 
 
 function facilityTimeLabel(tick: number): string {
   const clock = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock;
-  const hoursPerDay = clock.dayEndHour - clock.dayStartHour;
-  const elapsedHours = tick * clock.facilityHoursPerTick;
-  const day = Math.floor(elapsedHours / hoursPerDay) + 1;
-  const hour24 = clock.dayStartHour + (elapsedHours % hoursPerDay);
+  const minutesPerDay =
+    (clock.dayEndHour - clock.dayStartHour) * 60;
+  const day = Math.floor(tick / minutesPerDay) + 1;
+  const minuteOfDay = tick % minutesPerDay;
+  const hour24 =
+    clock.dayStartHour + Math.floor(minuteOfDay / 60);
+  const minute = minuteOfDay % 60;
   const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
-  return `Day ${day}, ${hour12} ${hour24 >= 12 ? "PM" : "AM"}`;
+  return `Day ${day}, ${hour12}:${minute
+    .toString()
+    .padStart(2, "0")} ${hour24 >= 12 ? "PM" : "AM"}`;
 }
 
 function alertDefinition(definitionId: string) {
@@ -181,6 +208,12 @@ export function usePrototypeSession(
   const [placementOrientation, setPlacementOrientation] =
     useState<RoomOrientation>(0);
   const [buildMode, setBuildMode] = useState(false);
+  const [movingRoomInstanceId, setMovingRoomInstanceId] =
+    useState<string | null>(null);
+  const [buildUndoCount, setBuildUndoCount] = useState(0);
+  const [buildExitBlockedReason, setBuildExitBlockedReason] =
+    useState<string | null>(null);
+  const buildHistoryRef = useRef<GameState[]>([]);
   const [facilityCamera, setFacilityCamera] =
     useState<FacilityCameraView>({
       zoom: 1,
@@ -340,6 +373,54 @@ export function usePrototypeSession(
     [persistActiveState, publishSystemNotice],
   );
 
+  const executeBuildCommand = useCallback(
+    (commandInput: GameCommandInput): OperationReceipt["status"] => {
+      const before = stateRef.current;
+      const status = execute(commandInput);
+      if (status === "applied") {
+        buildHistoryRef.current = [
+          ...buildHistoryRef.current,
+          before,
+        ];
+        setBuildUndoCount(buildHistoryRef.current.length);
+        setBuildExitBlockedReason(null);
+      }
+      return status;
+    },
+    [execute],
+  );
+
+  const undoBuildAction = useCallback(() => {
+    if (!buildMode || buildHistoryRef.current.length === 0) {
+      setAnnouncement("There is no build action to undo.");
+      return;
+    }
+    const previous = buildHistoryRef.current.at(-1)!;
+    buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
+    stateRef.current = previous;
+    setState(previous);
+    persistActiveState(previous);
+    setBuildUndoCount(buildHistoryRef.current.length);
+    setBuildExitBlockedReason(null);
+    setSelectedRoomDefinitionId(null);
+    setMovingRoomInstanceId(null);
+    setAnnouncement("The last build action was undone.");
+  }, [buildMode, persistActiveState]);
+
+  useEffect(() => {
+    if (!buildMode) {
+      return;
+    }
+    const validation = getFacilityAccessValidation(state);
+    const nextReason = validation.valid
+      ? null
+      : validation.reason ??
+        "Every required room needs a valid reachable door.";
+    setBuildExitBlockedReason((current) =>
+      current === nextReason ? current : nextReason,
+    );
+  }, [buildMode, state]);
+
   useEffect(() => {
     if (!savePrototypeProfile(profileRef.current)) {
       saveWarningShownRef.current = true;
@@ -399,12 +480,12 @@ export function usePrototypeSession(
       );
     },
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock
-      .realMillisecondsPerFacilityHour);
+      .realMillisecondsPerFacilityMinuteAt1x / state.simulationSpeed);
 
     return () => {
       window.clearInterval(timerId);
     };
-  }, [documentVisible, execute, state.paused]);
+  }, [documentVisible, execute, state.paused, state.simulationSpeed]);
 
   const openPatient = useCallback(
     (encounterId: string) => {
@@ -513,6 +594,17 @@ export function usePrototypeSession(
     if (encounterId === null) {
       return;
     }
+    const encounter = stateRef.current.encounters[encounterId];
+    const step =
+      encounter?.steps[encounter.currentNodeIndex];
+    if (step?.status === "feedback_pending") {
+      execute({
+        type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+        encounterId,
+        decisionNodeId: step.decisionNodeId,
+      });
+      return;
+    }
     execute({
       type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
       encounterId,
@@ -535,15 +627,17 @@ export function usePrototypeSession(
       return;
     }
     setSelectedRoomDefinitionId(roomDefinitionId);
+    setMovingRoomInstanceId(null);
     setSelectedRoomInstanceId(null);
     setPlacementOrientation(0);
     setAnnouncement(
-      "Placement tool ready. Rotate if needed, then choose a clear connected area.",
+      "Placement tool ready. Choose a clear area; add its doors separately.",
     );
   }, [buildMode]);
 
   const cancelPlacement = useCallback(() => {
     setSelectedRoomDefinitionId(null);
+    setMovingRoomInstanceId(null);
     setPlacementOrientation(0);
     setAnnouncement("Room placement canceled.");
   }, []);
@@ -570,19 +664,47 @@ export function usePrototypeSession(
         setAnnouncement("Select a room before choosing its location.");
         return;
       }
-      execute({
+      if (movingRoomInstanceId) {
+        const status = executeBuildCommand({
+          type: "MOVE_ROOM",
+          roomId: movingRoomInstanceId,
+          x: tileX,
+          y: tileY,
+        });
+        if (status === "applied") {
+          setSelectedRoomDefinitionId(null);
+          setMovingRoomInstanceId(null);
+          setSelectedRoomInstanceId(movingRoomInstanceId);
+        }
+        return;
+      }
+      const roomId = nextInstanceId(
+        "room.instance",
+        stateRef.current.rooms.map((room) => room.id),
+      );
+      const status = executeBuildCommand({
         type: "PLACE_ROOM",
-        roomId: nextInstanceId(
-          "room.instance",
-          stateRef.current.rooms.map((room) => room.id),
-        ),
+        roomId,
         roomDefinitionId,
         x: tileX,
         y: tileY,
         orientation: requestedOrientation ?? placementOrientation,
       });
+      if (status === "applied") {
+        setSelectedRoomDefinitionId(null);
+        setSelectedRoomInstanceId(roomId);
+        setPlacementOrientation(0);
+        setAnnouncement(
+          "Room placed and selected. Add a valid zero-cost door before returning to play.",
+        );
+      }
     },
-    [execute, placementOrientation, selectedRoomDefinitionId],
+    [
+      executeBuildCommand,
+      movingRoomInstanceId,
+      placementOrientation,
+      selectedRoomDefinitionId,
+    ],
   );
 
   const enterBuildMode = useCallback(() => {
@@ -591,6 +713,9 @@ export function usePrototypeSession(
     }
     const current = stateRef.current;
     preBuildPausedRef.current = current.paused;
+    buildHistoryRef.current = [];
+    setBuildUndoCount(0);
+    setBuildExitBlockedReason(null);
     if (current.openChartEncounterId !== null) {
       execute(
         {
@@ -609,6 +734,7 @@ export function usePrototypeSession(
     }
     setBuildMode(true);
     setSelectedRoomDefinitionId(null);
+    setMovingRoomInstanceId(null);
     setSelectedRoomInstanceId(null);
     setPlacementOrientation(0);
     setAnnouncement(
@@ -620,8 +746,21 @@ export function usePrototypeSession(
     if (!buildMode) {
       return;
     }
+    const validation = getFacilityAccessValidation(stateRef.current);
+    if (!validation.valid) {
+      const reason =
+        validation.reason ??
+        "Every required room needs a valid reachable door.";
+      setBuildExitBlockedReason(reason);
+      setAnnouncement(`Cannot return to play: ${reason}`);
+      return;
+    }
     setBuildMode(false);
+    buildHistoryRef.current = [];
+    setBuildUndoCount(0);
+    setBuildExitBlockedReason(null);
     setSelectedRoomDefinitionId(null);
+    setMovingRoomInstanceId(null);
     setSelectedRoomInstanceId(null);
     setPlacementOrientation(0);
     if (!preBuildPausedRef.current && stateRef.current.paused) {
@@ -640,6 +779,7 @@ export function usePrototypeSession(
   const selectRoom = useCallback((roomInstanceId: string) => {
     setSelectedRoomInstanceId(roomInstanceId);
     setSelectedRoomDefinitionId(null);
+    setMovingRoomInstanceId(null);
     setAnnouncement("Room selected. Upgrade or sell it from Build Mode.");
   }, []);
 
@@ -648,25 +788,86 @@ export function usePrototypeSession(
       setAnnouncement("Select a room to sell.");
       return;
     }
-    const status = execute({
+    const status = executeBuildCommand({
       type: "SELL_ROOM",
       roomId: selectedRoomInstanceId,
     });
     if (status === "applied") {
       setSelectedRoomInstanceId(null);
     }
-  }, [execute, selectedRoomInstanceId]);
+  }, [executeBuildCommand, selectedRoomInstanceId]);
 
   const upgradeSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
       setAnnouncement("Select a room to upgrade.");
       return;
     }
-    execute({
+    executeBuildCommand({
       type: "UPGRADE_ROOM",
       roomId: selectedRoomInstanceId,
     });
-  }, [execute, selectedRoomInstanceId]);
+  }, [executeBuildCommand, selectedRoomInstanceId]);
+
+  const rotateSelectedRoom = useCallback(() => {
+    if (!selectedRoomInstanceId) {
+      setAnnouncement("Select a room to rotate.");
+      return;
+    }
+    executeBuildCommand({
+      type: "ROTATE_ROOM",
+      roomId: selectedRoomInstanceId,
+    });
+  }, [executeBuildCommand, selectedRoomInstanceId]);
+
+  const beginMoveSelectedRoom = useCallback(() => {
+    if (!selectedRoomInstanceId) {
+      setAnnouncement("Select a room to move.");
+      return;
+    }
+    const room = stateRef.current.rooms.find(
+      (candidate) => candidate.id === selectedRoomInstanceId,
+    );
+    if (!room) {
+      setAnnouncement("That room is no longer available.");
+      return;
+    }
+    setMovingRoomInstanceId(room.id);
+    setSelectedRoomDefinitionId(room.roomDefinitionId);
+    setPlacementOrientation(room.orientation);
+    setAnnouncement(
+      "Move tool ready. Choose a clear destination for the room.",
+    );
+  }, [selectedRoomInstanceId]);
+
+  const placeDoorForSelectedRoom = useCallback(
+    (side: CardinalDirection, offset: number) => {
+      if (!selectedRoomInstanceId) {
+        setAnnouncement("Select a room before placing a door.");
+        return;
+      }
+      executeBuildCommand({
+        type: "PLACE_DOOR",
+        doorId: nextInstanceId(
+          "door.instance",
+          stateRef.current.doors.map((door) => door.id),
+        ),
+        roomId: selectedRoomInstanceId,
+        side,
+        offset,
+      });
+    },
+    [executeBuildCommand, selectedRoomInstanceId],
+  );
+
+  const removeDoor = useCallback(
+    (doorId: string) => {
+      executeBuildCommand({
+        type: "REMOVE_DOOR",
+        doorId,
+      });
+    },
+    [executeBuildCommand],
+  );
 
   const hireStaff = useCallback(
     (staffRoleDefinitionId: string) => {
@@ -717,6 +918,24 @@ export function usePrototypeSession(
   const increaseEmployeeSalary = useCallback(
     (employeeId: string) => changeEmployeeSalary(employeeId, 1),
     [changeEmployeeSalary],
+  );
+
+  const collectLitter = useCallback(
+    (litterId: string) => {
+      execute({ type: "COLLECT_LITTER", litterId });
+    },
+    [execute],
+  );
+
+  const refillWaterCooler = useCallback(() => {
+    execute({ type: "REFILL_WATER_COOLER" });
+  }, [execute]);
+
+  const praiseEmployee = useCallback(
+    (employeeId: string) => {
+      execute({ type: "PRAISE_EMPLOYEE", employeeId });
+    },
+    [execute],
   );
 
   const levelUp = useCallback(() => {
@@ -854,6 +1073,16 @@ export function usePrototypeSession(
     });
   }, [buildMode, execute]);
 
+  const setSimulationSpeed = useCallback(
+    (speed: SimulationSpeed) => {
+      execute({
+        type: "SET_SIMULATION_SPEED",
+        speed,
+      });
+    },
+    [execute],
+  );
+
   const saveAndPause = useCallback((): boolean => {
     if (!stateRef.current.paused) {
       execute(
@@ -887,7 +1116,7 @@ export function usePrototypeSession(
     const selectedCampaign = currentProfile.campaigns.find(
       (campaign) => campaign.campaignId === campaignId,
     );
-    if (!selectedCampaign) {
+    if (!selectedCampaign || selectedCampaign.status !== "resumable") {
       setAnnouncement("That local campaign could not be found.");
       return;
     }
@@ -896,25 +1125,22 @@ export function usePrototypeSession(
       return;
     }
 
-    const nextProfile: LocalPrototypeProfile = {
-      ...currentProfile,
-      activeCampaignId: campaignId,
-      campaigns: currentProfile.campaigns.map((campaign) => ({
-        ...campaign,
-        status:
-          campaign.campaignId === campaignId
-            ? ("active" as const)
-            : ("archived" as const),
-      })),
-    };
+    const nextProfile = selectLocalCampaign(
+      currentProfile,
+      campaignId,
+    );
     profileRef.current = nextProfile;
     setProfile(nextProfile);
     stateRef.current = selectedCampaign.state;
     setState(selectedCampaign.state);
     setSelectedRoomDefinitionId(null);
     setSelectedRoomInstanceId(null);
+    setMovingRoomInstanceId(null);
     setPlacementOrientation(0);
     setBuildMode(false);
+    buildHistoryRef.current = [];
+    setBuildUndoCount(0);
+    setBuildExitBlockedReason(null);
     setFacilityCamera({ zoom: 1, panX: 0, panY: 0 });
     setSummaryVisible(false);
     const saved = savePrototypeProfile(nextProfile);
@@ -938,6 +1164,7 @@ export function usePrototypeSession(
     acknowledgedStepIds: acknowledgedTutorialStepIds,
     buildMode,
     selectedRoomDefinitionId,
+    selectedRoomInstanceId,
   });
   const tutorialTargetEncounter =
     tutorialStep?.patientEncounterId
@@ -1098,6 +1325,7 @@ export function usePrototypeSession(
         0,
       ),
       active: campaign.campaignId === profile.activeCampaignId,
+      status: campaign.status,
     }))
     .sort(
       (left, right) =>
@@ -1117,11 +1345,14 @@ export function usePrototypeSession(
     selectedRoomInstanceId,
     placementOrientation,
     buildMode,
+    buildUndoCount,
+    buildExitBlockedReason,
     facilityCamera,
     summaryVisible,
     announcement,
     systemNotices,
     togglePause,
+    setSimulationSpeed,
     openPatient,
     closeChart,
     submitAnswer,
@@ -1137,10 +1368,18 @@ export function usePrototypeSession(
     selectRoom,
     sellSelectedRoom,
     upgradeSelectedRoom,
+    rotateSelectedRoom,
+    beginMoveSelectedRoom,
+    placeDoorForSelectedRoom,
+    removeDoor,
+    undoBuildAction,
     setFacilityCamera,
     hireStaff,
     decreaseEmployeeSalary,
     increaseEmployeeSalary,
+    collectLitter,
+    refillWaterCooler,
+    praiseEmployee,
     levelUp,
     fastForward,
     advanceTutorialResult,

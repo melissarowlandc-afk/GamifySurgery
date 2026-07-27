@@ -1,6 +1,7 @@
 import {
   SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
+  getFacilityAccessValidation,
   getFacilityProgressionStatus,
   type GameState,
 } from "@gamify-surgery/game-domain";
@@ -31,6 +32,8 @@ export type TutorialTarget =
   | "build-mode"
   | "exam-room-option"
   | "facility-placement"
+  | "room-selection"
+  | "door-tool"
   | "exit-build-mode"
   | "level-up";
 
@@ -42,7 +45,9 @@ export interface TutorialActionView {
 export interface TutorialStepView {
   id:
     | "welcome"
+    | "first-patient-arriving"
     | "open-first-chart"
+    | "first-patient-walking-to-care"
     | "reopen-first-chart"
     | "chart-tour"
     | "first-decision"
@@ -63,6 +68,8 @@ export interface TutorialStepView {
     | "enter-build-mode"
     | "select-exam-room"
     | "place-exam-room"
+    | "select-exam-room-for-door"
+    | "place-exam-room-door"
     | "exit-build-mode"
     | "remaining-goals"
     | "advance-level"
@@ -93,12 +100,25 @@ interface TutorialViewInput {
   acknowledgedStepIds: ReadonlySet<string>;
   buildMode: boolean;
   selectedRoomDefinitionId: string | null;
+  selectedRoomInstanceId?: string | null;
 }
 
 function step(
   value: TutorialStepView,
 ): TutorialStepView {
   return value;
+}
+
+function formatMinutes(minutes: number): string {
+  const safe = Math.max(0, Math.round(minutes));
+  if (safe < 60) {
+    return `${safe} min`;
+  }
+  const hours = Math.floor(safe / 60);
+  const remainder = safe % 60;
+  return remainder === 0
+    ? `${hours} hr`
+    : `${hours} hr ${remainder} min`;
 }
 
 /**
@@ -113,6 +133,7 @@ export function createTutorialStepView({
   acknowledgedStepIds,
   buildMode,
   selectedRoomDefinitionId,
+  selectedRoomInstanceId = null,
 }: TutorialViewInput): TutorialStepView | null {
   if (!tutorialsEnabled) {
     return null;
@@ -154,6 +175,40 @@ export function createTutorialStepView({
       )
         ? serviceTutorialEncounter
         : null;
+    const serviceFeedbackPending =
+      serviceTutorialEncounter?.steps[
+        serviceTutorialEncounter.currentNodeIndex
+      ]?.status === "feedback_pending"
+        ? serviceTutorialEncounter
+        : null;
+
+    if (serviceFeedbackPending) {
+      if (state.openChartEncounterId !== serviceFeedbackPending.id) {
+        return step({
+          id: "level-one-service-drill",
+          eyebrow: "Level 1 guide · Decision feedback",
+          title: "Reopen the chart to continue the service plan",
+          body:
+            "The scored answer is locked. Reopen the highlighted Existing Patient chart to review the explanation.",
+          target: "existing-patient",
+          targetSelector:
+            ".patient-folder.is-active .patient-tab.is-tutorial-target",
+          patientEncounterId: serviceFeedbackPending.id,
+        });
+      }
+      return step({
+        id: "level-one-service-drill",
+        eyebrow: "Level 1 guide · Decision feedback",
+        title: "Review the result before care continues",
+        body:
+          "The chart shows whether the decision was correct, the XP earned, and the plan that will occur next. Click the real chart button when you are ready.",
+        target: "chart-feedback",
+        targetSelector:
+          ".chart-action-buttons .button.button-primary",
+        avoidSelector: ".chart-panel",
+        patientEncounterId: serviceFeedbackPending.id,
+      });
+    }
 
     if (
       pendingSendout
@@ -169,8 +224,8 @@ export function createTutorialStepView({
         title: "Send-out testing takes facility time",
         body:
           `${pendingSendout.patientDisplayName} moved to Existing Patients while the off-site service runs. Keep the clinic clock running; you may treat someone else while you wait.`,
-        note:
-          `${remaining} hour${remaining === 1 ? "" : "s"} remain. Facility hours pass on the clinic clock, not in real time.`,
+      note:
+          `${formatMinutes(remaining)} remain on the facility clock.`,
         flavor:
           "The patient has left the building. The chart, naturally, remains.",
         target: "existing-patient",
@@ -231,6 +286,37 @@ export function createTutorialStepView({
       firstRoutineEncounter?.lifecycle === "waiting_unopened" &&
       firstRoutineEncounter.firstOpenedAtTick === null
     ) {
+      if (
+        firstRoutineEncounter.patientMovement?.kind ===
+        "arriving_for_check_in"
+      ) {
+        return step({
+          id: "level-one-first-arrival",
+          eyebrow: "Level 1 guide · First routine patient",
+          title: "A patient is walking to check-in",
+          body:
+            "Patients now enter through the sidewalk and front door. The Waiting chart becomes actionable after check-in.",
+          target: "facility-clock",
+          targetSelector: ".facility-time-chip",
+          patientEncounterId: firstRoutineEncounter.id,
+        });
+      }
+      if (
+        firstRoutineEncounter.patientMovement?.kind ===
+        "walking_to_care"
+      ) {
+        return step({
+          id: "level-one-service-drill",
+          eyebrow: "Level 1 guide · Patient movement",
+          title: "The patient is walking to the care area",
+          body:
+            "The chart remains open, but the first decision unlocks only after the patient reaches care.",
+          target: "chart",
+          targetSelector: ".chart-panel",
+          avoidSelector: ".chart-panel",
+          patientEncounterId: firstRoutineEncounter.id,
+        });
+      }
       return step({
         id: "level-one-first-arrival",
         eyebrow: "Level 1 guide · First routine patient",
@@ -270,7 +356,7 @@ export function createTutorialStepView({
           ? "Routine patients arrive only while facility time advances. Click the real Resume control above, then watch the Waiting list."
           : "Facility time is running. A routine patient will appear in Waiting when the arrival interval elapses.",
       note:
-        `${remaining} hour${remaining === 1 ? "" : "s"} until the next planned arrival.`,
+        `${formatMinutes(remaining)} until the next planned arrival.`,
       flavor:
         "You have leveled up. The patients did not become simpler.",
       target: "facility-clock",
@@ -287,6 +373,41 @@ export function createTutorialStepView({
   const first = state.encounters[TUTORIAL_ENCOUNTER_ID];
   if (!first) {
     return null;
+  }
+
+  if (
+    first.patientMovement?.kind === "arriving_for_check_in"
+  ) {
+    return step({
+      id: "first-patient-arriving",
+      eyebrow: "Level 0 tutorial · Arrival",
+      title: "Your first patient is walking to check-in",
+      body:
+        "Watch the patient enter at the front desk. The chart becomes available after check-in.",
+      flavor:
+        "The clinic has acquired both a patient and a reason to look busy.",
+      target: "facility-clock",
+      targetSelector: ".facility-time-chip",
+      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+  }
+
+  if (
+    first.patientMovement?.kind === "walking_to_care"
+  ) {
+    return step({
+      id: "first-patient-walking-to-care",
+      eyebrow: "Level 0 tutorial · Patient movement",
+      title: "The patient is walking to the care area",
+      body:
+        "The clinical decision unlocks when the patient reaches the destination. Normal walking does not reduce patient satisfaction.",
+      flavor:
+        "Healthcare has briefly become a pathfinding problem.",
+      target: "chart",
+      targetSelector: ".chart-panel",
+      avoidSelector: ".chart-panel",
+      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+    });
   }
 
   if (
@@ -351,6 +472,37 @@ export function createTutorialStepView({
     });
   }
 
+  if (
+    first.steps[first.currentNodeIndex]?.status ===
+    "feedback_pending"
+  ) {
+    if (state.openChartEncounterId !== TUTORIAL_ENCOUNTER_ID) {
+      return step({
+        id: "reopen-first-feedback",
+        eyebrow: "Level 0 tutorial · Decision feedback",
+        title: "Reopen the chart to continue",
+        body:
+          "The submitted decision is saved. Reopen Pixel Patient from Existing Patients to review the result.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    return step({
+      id: "first-feedback",
+      eyebrow: "Level 0 tutorial · Decision feedback",
+      title: "Read what your decision did",
+      body:
+        "The result, explanation, XP, and next step are shown in the chart. Click the real Continue button when you are ready.",
+      target: "chart-feedback",
+      targetSelector:
+        ".chart-action-buttons .button.button-primary",
+      avoidSelector: ".chart-panel",
+      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+  }
+
   if (first.lifecycle === "active_pending_result") {
     const remaining = Math.max(
       0,
@@ -364,7 +516,7 @@ export function createTutorialStepView({
       body:
         "Pending patients move to Existing Patients while facility time passes. When the result returns, the chart receives a new exclamation point and the next decision unlocks.",
       note:
-        `${remaining} hour${remaining === 1 ? "" : "s"} remain. This short training result returns after a brief pause.`,
+        `${formatMinutes(remaining)} remain. This short training result returns after a brief pause.`,
       target: "existing-patient",
       targetSelector:
         ".patient-folder.is-active .patient-tab.is-tutorial-target",
@@ -460,6 +612,35 @@ export function createTutorialStepView({
         "Enjoy this rare operational condition while it remains available.",
       target: "facility-clock",
       targetSelector: ".facility-time-chip",
+    });
+  }
+
+  if (second.patientMovement?.kind === "arriving_for_check_in") {
+    return step({
+      id: "second-patient",
+      eyebrow: "Level 0 tutorial · Between patients",
+      title: "The next patient is walking to check-in",
+      body:
+        "Watch the patient enter. Their chart becomes actionable after check-in.",
+      flavor:
+        "The quiet interval has concluded due to incoming healthcare.",
+      target: "facility-clock",
+      targetSelector: ".facility-time-chip",
+      patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+    });
+  }
+
+  if (second.patientMovement?.kind === "walking_to_care") {
+    return step({
+      id: "second-decision",
+      eyebrow: "Level 0 tutorial · Patient movement",
+      title: "Morgan Thread is walking to care",
+      body:
+        "The chart remains open. The decision unlocks when the patient reaches the destination.",
+      target: "chart",
+      targetSelector: ".chart-panel",
+      avoidSelector: ".chart-panel",
+      patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
   }
 
@@ -565,10 +746,12 @@ export function createTutorialStepView({
     return null;
   }
 
-  const examRoomBuilt = state.rooms.some(
+  const examRoom = state.rooms.find(
     (room) => room.roomDefinitionId === "room.examination",
   );
+  const examRoomBuilt = examRoom !== undefined;
   const progression = getFacilityProgressionStatus(state);
+  const facilityAccess = getFacilityAccessValidation(state);
 
   if (!examRoomBuilt && !buildMode) {
     return step({
@@ -602,20 +785,54 @@ export function createTutorialStepView({
     return step({
       id: "place-exam-room",
       eyebrow: "Level 0 tutorial · Step 16",
-      title: "Connect the room door to the clinic",
+      title: "Place the room beside the clinic",
       body:
-        "Move the outlined room beside the Front Desk. Its marked door may open into a connected room or hallway. Rotate changes the footprint and door side.",
+        "Move the outlined room beside the Front Desk. Rooms may connect directly to other rooms or to hallways.",
       note:
-        "A valid outline confirms the room can be built. Click the facility to place it.",
+        "A valid outline confirms the footprint can be built. Click the facility to place it; you will add its door next.",
       target: "facility-placement",
       targetSelector: ".facility-host",
+    });
+  }
+
+  if (
+    examRoom &&
+    buildMode &&
+    facilityAccess.unreachableRoomIds.includes(examRoom.id)
+  ) {
+    if (selectedRoomInstanceId !== examRoom.id) {
+      return step({
+        id: "select-exam-room-for-door",
+        eyebrow: "Level 0 tutorial · Step 17",
+        title: "Select the new Examination Room",
+        body:
+          "Click the room you just placed. Its renovation tools will open on the desk.",
+        flavor:
+          "Four walls have been acquired. Access remains aspirational.",
+        target: "room-selection",
+        targetSelector: ".facility-host",
+      });
+    }
+    return step({
+      id: "place-exam-room-door",
+      eyebrow: "Level 0 tutorial · Step 18",
+      title: "Add a zero-cost door",
+      body:
+        "Choose an enabled wall slot in Doors. The door must connect the Examination Room to the Front Desk, another reachable room, or a hallway.",
+      note:
+        "If every slot is blocked, move the room until one wall touches a reachable space. The exact reason Build Mode cannot close appears beside Done / Save and Return.",
+      flavor:
+        "The clinic has discovered that walls are excellent at preventing healthcare.",
+      target: "door-tool",
+      targetSelector: ".selected-room-inspector .door-tool",
+      avoidSelector: ".door-slot-grid",
     });
   }
 
   if (examRoomBuilt && buildMode) {
     return step({
       id: "exit-build-mode",
-      eyebrow: "Level 0 tutorial · Step 17",
+      eyebrow: "Level 0 tutorial · Step 19",
       title: "Construction complete — exit Build Mode",
       body:
         "Use the same mode button to leave construction. Facility time returns to the pause state it had before you started building.",

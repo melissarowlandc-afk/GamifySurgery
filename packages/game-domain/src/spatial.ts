@@ -1,6 +1,7 @@
 import type { RoomDefinition } from "@gamify-surgery/balance-config";
 import type {
   CardinalDirection,
+  DoorState,
   GridPoint,
   PlacedRoom,
   RoomOrientation,
@@ -474,6 +475,7 @@ export function findDeterministicPath(
 function tileAdjacencyForFacility(
   rooms: readonly PlacedRoom[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
+  doors: readonly DoorState[] = [],
 ): Map<string, Set<string>> {
   const adjacency = new Map<string, Set<string>>();
   const roomTiles = new Map<
@@ -499,7 +501,8 @@ function tileAdjacencyForFacility(
   }
 
   // Every tile within the same room is traversable. Hallway tiles connect to
-  // one another and cut an inbound threshold where they touch a room wall.
+  // one another. Legacy layouts without explicit doors retain their old
+  // inbound-threshold behavior until persistence migrates them.
   for (const [key, owner] of roomTiles) {
     const point = parsePointKey(key);
     for (const step of CARDINAL_STEPS) {
@@ -521,27 +524,83 @@ function tileAdjacencyForFacility(
       });
       if (hallways.has(neighborKey)) {
         connectNodes(adjacency, key, neighborKey);
-      } else if (roomTiles.has(neighborKey)) {
+      } else if (doors.length === 0 && roomTiles.has(neighborKey)) {
         connectNodes(adjacency, key, neighborKey);
       }
     }
   }
 
-  // A room crosses its wall only at its own door. The outside cell may be a
-  // hallway or any tile inside another non-overlapping room.
-  for (const room of rooms) {
-    const definition = getDefinition(room.roomDefinitionId);
-    if (!definition || definition.kind === "hallway") {
-      continue;
+  if (doors.length > 0) {
+    for (const door of doors) {
+      if (door.exterior) {
+        continue;
+      }
+      const room = rooms.find((candidate) => candidate.id === door.roomId);
+      const definition = room
+        ? getDefinition(room.roomDefinitionId)
+        : null;
+      if (!room || !definition || definition.kind === "hallway") {
+        continue;
+      }
+      const footprint = getRotatedFootprint(
+        definition,
+        room.orientation,
+      );
+      const wallLength =
+        door.side === "north" || door.side === "south"
+          ? footprint.width
+          : footprint.height;
+      if (door.offset < 0 || door.offset >= wallLength) {
+        continue;
+      }
+      const inside =
+        door.side === "north"
+          ? { x: room.x + door.offset, y: room.y }
+          : door.side === "south"
+            ? {
+                x: room.x + door.offset,
+                y: room.y + footprint.height - 1,
+              }
+            : door.side === "west"
+              ? { x: room.x, y: room.y + door.offset }
+              : {
+                  x: room.x + footprint.width - 1,
+                  y: room.y + door.offset,
+                };
+      const step =
+        door.side === "north"
+          ? { x: 0, y: -1 }
+          : door.side === "east"
+            ? { x: 1, y: 0 }
+            : door.side === "south"
+              ? { x: 0, y: 1 }
+              : { x: -1, y: 0 };
+      const outside = {
+        x: inside.x + step.x,
+        y: inside.y + step.y,
+      };
+      const insideKey = pointKey(inside);
+      const outsideKey = pointKey(outside);
+      if (adjacency.has(insideKey) && adjacency.has(outsideKey)) {
+        connectNodes(adjacency, insideKey, outsideKey);
+      }
     }
-    const door = getRoomDoorCell(room, definition);
-    const approach = getRoomDoorApproachCell(room, definition);
-    if (!door || !approach) {
-      continue;
-    }
-    const approachKey = pointKey(approach);
-    if (hallways.has(approachKey) || roomTiles.has(approachKey)) {
-      connectNodes(adjacency, pointKey(door), approachKey);
+  } else {
+    // Embedded-door compatibility for historical fixtures and old tests.
+    for (const room of rooms) {
+      const definition = getDefinition(room.roomDefinitionId);
+      if (!definition || definition.kind === "hallway") {
+        continue;
+      }
+      const door = getRoomDoorCell(room, definition);
+      const approach = getRoomDoorApproachCell(room, definition);
+      if (!door || !approach) {
+        continue;
+      }
+      const approachKey = pointKey(approach);
+      if (hallways.has(approachKey) || roomTiles.has(approachKey)) {
+        connectNodes(adjacency, pointKey(door), approachKey);
+      }
     }
   }
 
@@ -588,6 +647,20 @@ function findDeterministicAdjacencyPath(
   return [];
 }
 
+export function findDeterministicFacilityPath(
+  start: GridPoint,
+  goal: GridPoint,
+  rooms: readonly PlacedRoom[],
+  doors: readonly DoorState[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): GridPoint[] {
+  return findDeterministicAdjacencyPath(
+    start,
+    goal,
+    tileAdjacencyForFacility(rooms, getDefinition, doors),
+  );
+}
+
 /**
  * Finds a stable route between two room instances.
  *
@@ -603,6 +676,7 @@ export function findDeterministicRoomPath(
   protectedRoomDefinitionIds: ReadonlySet<string> = new Set([
     origin.roomDefinitionId,
   ]),
+  doors: readonly DoorState[] = [],
 ): GridPoint[] {
   const originDefinition = getDefinition(origin.roomDefinitionId);
   const destinationDefinition = getDefinition(
@@ -615,6 +689,7 @@ export function findDeterministicRoomPath(
     return [getRoomCenter(origin, originDefinition)];
   }
   if (
+    doors.length === 0 &&
     !validateFacilityConnectivity(
       rooms,
       getDefinition,
@@ -626,7 +701,7 @@ export function findDeterministicRoomPath(
   return findDeterministicAdjacencyPath(
     getRoomCenter(origin, originDefinition),
     getRoomCenter(destination, destinationDefinition),
-    tileAdjacencyForFacility(rooms, getDefinition),
+    tileAdjacencyForFacility(rooms, getDefinition, doors),
   );
 }
 

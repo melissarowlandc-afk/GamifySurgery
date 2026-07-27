@@ -135,16 +135,18 @@ The tester count, recruitment process, and pilot duration remain open. A three-t
 - Meaningful clinical and operational result waits use transparent facility-time
   ETAs; approved outsourcing is slower, while functional in-house services are
   faster without changing clinical truth.
-- Only unopened Waiting patients may leave from impatience; opening protects
-  the educational case, delay effects remain capped, and tutorial patients are
-  guaranteed to stay.
+- Every patient owns individual satisfaction. Only genuine idle waiting causes
+  decay; ordinary patients use a persisted walkout threshold below 60%, chart
+  reading and active care are protected, and tutorial patients are guaranteed
+  to stay.
 - Waiting plus unresolved Active patients consume one visible clinic-workload
   capacity. Full routine capacity pauses new routine admissions before they
   enter Waiting, while reserved slots protect tutorial and progression-critical
   cases.
 - Wrong nonfinal answers are corrected and continue from the correct clinical
-  state. A wrong final answer may show one approved minor or major fictional
-  terminal outcome, while operational penalties remain bounded and recoverable.
+  state. Every wrong final answer shows one approved authored consequence and
+  preferred answer; no-immediate-harm results remain explicit, and runtime code
+  never invents a complication.
 - Each campaign permanently retains its core-concept set and balance release.
   Its clinical release may advance through a validated, recorded,
   backward-compatible additive adoption without changing its mastery

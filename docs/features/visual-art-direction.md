@@ -78,7 +78,8 @@ remaining a semantic, accessible web interface. It should provide:
 - age and approved sex/demographic label;
 - compact vital signs when the case supplies them;
 - chief complaint, HPI/presentation, results, and current decision;
-- the prior decision path without visible “Question 2 of 2” bookkeeping;
+- one active `Decision n of m` at a time, with completed decisions collapsed
+  into reviewable rows and no separate floating question-count badge;
 - tactile, readable answer controls;
 - immediate decision feedback and XP when earned;
 - encounter-completion money separately;

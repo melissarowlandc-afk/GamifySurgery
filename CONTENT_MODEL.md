@@ -229,11 +229,12 @@ Accepted scoring rules remain:
 - APP automation is operational, not recall.
 - Supporting concept tags do not update FSRS or mastery.
 
-A patient encounter contains one to three independently scored nodes. Each node
-must use a different primary Tested Concept within that encounter. The authored
-case defines the count and order; the runtime does not append arbitrary scored
-questions. Publication preview must verify that feedback or state changes from
-one node do not reveal a later scored answer.
+A patient encounter ordinarily contains one to three independently scored
+nodes. A rare encounter eligible only at Level 3 or later may contain four.
+Each node must use a different primary Tested Concept within that encounter.
+The authored case defines the count and order; the runtime does not append
+arbitrary scored questions. Publication preview must verify that feedback or
+state changes from one node do not reveal a later scored answer.
 
 ### Result Gate
 
@@ -301,17 +302,17 @@ exact displayed order.
 
 Every incorrect Answer Choice on the final scored Decision Node has an explicit
 reviewed Terminal Outcome Disposition for each compatible Patient Presentation
-Variant or finite Clinical Instantiation Profile. The disposition is exactly
-one of:
+Variant or finite Clinical Instantiation Profile. The disposition references
+one exact authored final-choice consequence. If no immediate adverse clinical
+outcome is defensible, the author still records what happened—for example an
+unnecessary referral, delay, expense, unresolved symptoms, or explicitly no
+immediate harm—plus its rationale, preferred answer, explanation, and sources.
+A bare `no_terminal_outcome` placeholder is not publishable.
 
-- `no_terminal_outcome`, when no choice-specific adverse outcome is clinically
-  defensible
-- One exact Terminal Clinical Outcome Revision
-
-A Terminal Clinical Outcome is a short, unscored fictional vignette shown after
-an incorrect final answer and before corrective teaching, the Patient Learning
-Summary, and chart filing. It has a stable identity and immutable revisions and
-records:
+A Terminal Clinical Outcome is the clinically adverse form of this short,
+unscored fictional consequence. It is shown after an incorrect final answer and
+before corrective teaching, the Patient Learning Summary, and chart filing. It
+has a stable identity and immutable revisions and records:
 
 - Clinical severity: `minor` or `major`
 - Exact compatible final incorrect Answer Choice revisions
@@ -322,10 +323,10 @@ records:
 - Clinical rationale and claim-linked citations
 - AI provenance, clinical review, Melissa's approval, and revision history
 
-For the pilot, one compatible wrong-choice tuple resolves to zero or one
-deterministic outcome; probability and weighted outcome selection are
-prohibited. A terminal outcome does not define money, satisfaction, FSRS, XP,
-or mastery effects. Those remain separate operational rules.
+For the pilot, one compatible wrong-choice tuple resolves to exactly one
+deterministic authored consequence; probability and weighted outcome selection
+are prohibited. The consequence may reference explicit operational effects but
+does not define FSRS or mastery behavior.
 
 This content-model extension is accepted in
 [ADR 0030](docs/adr/0030-correction-forward-with-terminal-clinical-outcomes.md).
@@ -601,8 +602,8 @@ The beta represents conflict resolution through successor fact revisions and
 current-leaf reporting. A separate append-only resolution record containing
 the reviewer, rationale, and selected evidence is deliberately deferred and is
 required before substantial source extraction or publication.
-7. Review every final incorrect choice and author an approved Terminal Clinical
-   Outcome or explicitly select `no_terminal_outcome`.
+7. Review every final incorrect choice and author one approved consequence,
+   including explicit no-immediate-harm text and rationale when appropriate.
 8. Create the patient-level diagnosis-and-management learning summary.
 9. Run structural validation, constraint analysis, and preview coverage.
 10. Clinically approve exact revisions.
@@ -846,13 +847,15 @@ A clinical release candidate should fail validation when, at minimum:
   objective.
 - Earlier-node feedback reveals the answer to a later scored node in the same
   case.
-- A scored patient encounter contains fewer than one or more than three scored
-  Decision Nodes.
+- A scored patient encounter contains fewer than one or more than four scored
+  Decision Nodes, or contains four before Level 3.
 - Two scored Decision Nodes in one patient encounter use the same primary
   Tested Concept.
 - A Terminal Clinical Outcome is attached to a nonfinal scored node.
-- A final incorrect Answer Choice and compatible presentation/profile lacks an
-  explicit outcome or `no_terminal_outcome` disposition.
+- A final incorrect Answer Choice and compatible presentation/profile lacks one
+  explicit authored consequence, preferred answer, explanation, and sources.
+- A final disposition uses a bare `no_terminal_outcome` marker without authored
+  consequence text and rationale.
 - More than one terminal outcome is eligible for the same pilot tuple.
 - A terminal outcome lacks minor/major severity, causal framing, clinical
   rationale, source coverage, Melissa's approval, or complete profile

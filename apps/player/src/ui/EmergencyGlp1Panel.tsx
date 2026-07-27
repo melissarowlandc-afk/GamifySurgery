@@ -25,6 +25,18 @@ export function EmergencyGlp1Panel({
       >
         Complete consult ({view.paymentLabel})
       </button>
+      <div
+        className="glp1-cooldown-meter"
+        role="progressbar"
+        aria-label="GLP-1 consultation cooldown"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(view.cooldownProgressPercent)}
+      >
+        <span
+          style={{ width: `${view.cooldownProgressPercent}%` }}
+        />
+      </div>
       <div className="emergency-glp1-status">
         <span>{view.statusLabel}</span>
         <span>{view.useCountLabel}</span>

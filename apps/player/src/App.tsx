@@ -2,15 +2,19 @@ import { useMemo, useState } from "react";
 import { AppShell } from "./AppShell";
 import {
   appendLocalCampaign,
+  archiveLocalCampaign,
   createPrototypePlayerView,
   getActiveCampaign,
   loadPrototypeProfile,
+  restoreLocalCampaign,
   savePrototypeProfile,
+  selectLocalCampaign,
   type LoadedPrototypeProfile,
   type LocalPrototypeProfile,
   usePrototypeSession,
 } from "./session";
 import { OpeningSequence } from "./ui";
+import { AuthGate } from "./auth/AuthGate";
 
 interface ActivePrototypeGameProps {
   loadedProfile: LoadedPrototypeProfile;
@@ -54,6 +58,7 @@ function ActivePrototypeGame({
     <AppShell
       resourceBar={view.resourceBar}
       paused={session.state.paused}
+      simulationSpeed={session.state.simulationSpeed}
       patients={view.patients}
       chart={view.chart}
       facility={view.facility}
@@ -73,6 +78,7 @@ function ActivePrototypeGame({
       workloadStatus={view.workloadStatus}
       announcement={session.announcement}
       onTogglePause={session.togglePause}
+      onSimulationSpeedChange={session.setSimulationSpeed}
       onOpenPatient={session.openPatient}
       onCloseChart={session.closeChart}
       onSubmitAnswer={session.submitAnswer}
@@ -86,16 +92,28 @@ function ActivePrototypeGame({
       onRotatePlacement={session.rotatePlacement}
       onPlaceRoom={session.placeRoom}
       buildMode={session.buildMode}
+      buildUndoCount={session.buildUndoCount}
+      buildExitBlockedReason={session.buildExitBlockedReason}
       placementOrientation={session.placementOrientation}
       onEnterBuildMode={session.enterBuildMode}
       onExitBuildMode={session.exitBuildMode}
       onSelectRoom={session.selectRoom}
       onSellSelectedRoom={session.sellSelectedRoom}
       onUpgradeSelectedRoom={session.upgradeSelectedRoom}
+      onRotateSelectedRoom={session.rotateSelectedRoom}
+      onBeginMoveSelectedRoom={session.beginMoveSelectedRoom}
+      onPlaceDoorForSelectedRoom={
+        session.placeDoorForSelectedRoom
+      }
+      onRemoveDoor={session.removeDoor}
+      onUndoBuildAction={session.undoBuildAction}
       onFacilityCameraChange={session.setFacilityCamera}
       onHireStaff={session.hireStaff}
       onDecreaseEmployeeSalary={session.decreaseEmployeeSalary}
       onIncreaseEmployeeSalary={session.increaseEmployeeSalary}
+      onCollectLitter={session.collectLitter}
+      onRefillWaterCooler={session.refillWaterCooler}
+      onPraiseEmployee={session.praiseEmployee}
       onLevelUp={session.levelUp}
       onFastForward={session.fastForward}
       onAddMoney={session.addMoney}
@@ -118,6 +136,7 @@ interface OpeningLaunchState {
   mode: "opening";
   profile: LocalPrototypeProfile;
   campaignSeed?: string;
+  initialStep: "main" | "founder";
   sequence: number;
 }
 
@@ -130,31 +149,45 @@ type LaunchState = OpeningLaunchState | GameLaunchState;
 
 function initialLaunchState(): LaunchState {
   const loadedProfile = loadPrototypeProfile();
-  return getActiveCampaign(loadedProfile.profile)
-    ? {
-        mode: "game",
-        loadedProfile,
-      }
-    : {
-        mode: "opening",
-        profile: loadedProfile.profile,
-        sequence: 0,
-      };
+  return {
+    mode: "opening",
+    profile: loadedProfile.profile,
+    initialStep: "main",
+    sequence: 0,
+  };
 }
 
-export function App() {
+function AuthenticatedPrototype() {
   const [launch, setLaunch] = useState<LaunchState>(initialLaunchState);
 
   const requestOpening = (
     profile: LocalPrototypeProfile,
     campaignSeed?: string,
+    initialStep: "main" | "founder" = "founder",
   ) => {
     setLaunch((current) => ({
       mode: "opening",
       profile,
       ...(campaignSeed ? { campaignSeed } : {}),
+      initialStep,
       sequence: current.mode === "opening" ? current.sequence + 1 : 1,
     }));
+  };
+
+  const openCampaign = (
+    profile: LocalPrototypeProfile,
+    campaignId: string,
+    notice = "Local campaign restored.",
+  ) => {
+    const selected = selectLocalCampaign(profile, campaignId);
+    savePrototypeProfile(selected);
+    setLaunch({
+      mode: "game",
+      loadedProfile: {
+        profile: selected,
+        notice,
+      },
+    });
   };
 
   if (launch.mode === "opening") {
@@ -163,10 +196,12 @@ export function App() {
         key={launch.sequence}
         profile={launch.profile}
         campaignSeed={launch.campaignSeed}
-        onBeginClinic={(founder, campaignSeed) => {
+        initialStep={launch.initialStep}
+        onBeginClinic={(founder, clinicName, campaignSeed) => {
           const next = appendLocalCampaign(
             launch.profile,
             founder,
+            clinicName,
             Date.now(),
             campaignSeed,
           );
@@ -181,17 +216,20 @@ export function App() {
             },
           });
         }}
-        onResumeCampaign={() => {
-          if (!getActiveCampaign(launch.profile)) {
-            return;
-          }
-          setLaunch({
-            mode: "game",
-            loadedProfile: {
-              profile: launch.profile,
-              notice: "Local campaign restored.",
-            },
-          });
+        onResumeCampaign={(campaignId) => {
+          openCampaign(launch.profile, campaignId);
+        }}
+        onRestoreCampaign={(campaignId) => {
+          const restored = restoreLocalCampaign(
+            launch.profile,
+            campaignId,
+          );
+          savePrototypeProfile(restored);
+          openCampaign(
+            restored,
+            campaignId,
+            "Archived clinic restored with its original learning history.",
+          );
         }}
       />
     );
@@ -202,10 +240,12 @@ export function App() {
     return (
       <OpeningSequence
         profile={launch.loadedProfile.profile}
-        onBeginClinic={(founder) => {
+        initialStep="main"
+        onBeginClinic={(founder, clinicName) => {
           const next = appendLocalCampaign(
             launch.loadedProfile.profile,
             founder,
+            clinicName,
           );
           savePrototypeProfile(next.profile);
           setLaunch({
@@ -217,7 +257,17 @@ export function App() {
             },
           });
         }}
-        onResumeCampaign={() => undefined}
+        onResumeCampaign={(campaignId) =>
+          openCampaign(launch.loadedProfile.profile, campaignId)
+        }
+        onRestoreCampaign={(campaignId) => {
+          const restored = restoreLocalCampaign(
+            launch.loadedProfile.profile,
+            campaignId,
+          );
+          savePrototypeProfile(restored);
+          openCampaign(restored, campaignId);
+        }}
       />
     );
   }
@@ -226,10 +276,25 @@ export function App() {
     <ActivePrototypeGame
       key={activeCampaign.campaignId}
       loadedProfile={launch.loadedProfile}
-      onRequestNewCampaign={(profile) => requestOpening(profile)}
-      onRequestRestart={(profile, campaignSeed) =>
-        requestOpening(profile, campaignSeed)
+      onRequestNewCampaign={(profile) =>
+        requestOpening(profile, undefined, "founder")
       }
+      onRequestRestart={(profile, campaignSeed) => {
+        const archived = archiveLocalCampaign(
+          profile,
+          activeCampaign.campaignId,
+        );
+        savePrototypeProfile(archived);
+        requestOpening(archived, campaignSeed, "founder");
+      }}
     />
+  );
+}
+
+export function App() {
+  return (
+    <AuthGate>
+      <AuthenticatedPrototype />
+    </AuthGate>
   );
 }

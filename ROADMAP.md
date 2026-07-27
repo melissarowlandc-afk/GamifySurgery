@@ -62,11 +62,11 @@ Implemented:
 - Two guaranteed, separately introduced Level 0 tutorial patients
 - Exactly one primary concept and one FSRS update per scored decision
 - Campaign-scoped FSRS-6 histories with fresh state for every new campaign
-- Money, clinical XP, satisfaction, expenses, facility time, and explicit level
-  gates
-- Continuous five-minute operating days from 8 AM to 6 PM, with one facility
-  hour every 30 real seconds and routine arrivals paced at roughly one per real
-  minute
+- Money, current-level clinical XP, individual and rolling satisfaction,
+  expenses, minute-resolution facility time, and explicit level gates
+- Continuous 8 AM-6 PM operating days with 1x/2x/4x controls, one facility hour
+  every 60/30/15 real seconds, irregular persisted arrivals, and quarter-hour
+  fixed-point operating-cost postings
 - Two introductory patients teach the opening loop; the formal Level 0 gate is
   the examination room, XP threshold, and satisfaction above 90%
 - Level 1 deterministic routine arrivals, waiting patience, workload
@@ -84,22 +84,23 @@ Implemented:
   shuffling
 - Outsourced patient departure/return and capability-dependent in-house X-ray
   timing, including frozen round-trip hallway travel
-- Paused Build Mode with a build-only grid, zoom/pan, repeatable rotatable
-  rooms, explicit doors, functional hallways, upgrades, and 25% resale
+- Paused Build/Renovate Mode with a build-only grid, bounded zoom/pan,
+  repeatable rotatable rooms, explicit zero-cost doors, functional hallways and
+  room-to-room access, fixed-fixture upgrades, stepwise Undo, and 25% resale
 - Four-priority actionable alerts plus a nonurgent ticker/recent-event log,
   deterministic nonrepeating flavor, duplicate consolidation, critical alert
   suppression of humor, and visible current-system save/campaign/testing
   notices
-- Bounded founder-run emergency GLP-1 consultations below $200, with a
-  facility-hour cooldown, configurable daily cap/diminishing payment, and no
-  XP or FSRS benefit
-- Multiple local campaigns, local save/reload, compatible save migration,
-  recoverable same-seed Start over, and a separate fresh learning history for
-  each campaign; creating a genuinely new campaign uses a new seed
+- Founder-run emergency GLP-1 consultations visible until the future room is
+  built, with a persisted facility-hour cooldown, configurable daily
+  cap/diminishing payment, and no XP or FSRS benefit
+- Multiple named local campaigns, local save/reload, compatible save migration,
+  recoverable same-seed Restart Campaign, and a separate fresh learning history
+  for each campaign; creating a genuinely new campaign uses a new seed
 - Centralized validated clinical and balance fixtures
 - Development fast-forward plus visible campaign, review-count, and per-concept
   FSRS card/due-time inspection
-- Open-by-default left-side prototype controls for deterministic cash,
+- Collapsed-by-default left-side prototype controls for deterministic cash,
   fast-forward, tutorial preference, FSRS inspection, and recoverable restart
 - A full-window desktop layout with internally scrolling patient/goals/build/
   staff/event panels, width-aware construction cards, and newest-first Resolved

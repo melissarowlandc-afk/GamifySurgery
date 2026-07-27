@@ -3,7 +3,7 @@
 Status: Accepted feature direction; implementation split between the early
 emergency action and a future Level 2 automated suite
 
-Last updated: 2026-07-24
+Last updated: 2026-07-27
 
 ## Purpose and tone
 
@@ -29,24 +29,21 @@ a rapid cash-pay GLP-1 telehealth consultation.
 
 Accepted rules:
 
-- The threshold is a centralized balance value. The original feature concept
-  used below $100; the current Level 0-1 balance-test build temporarily uses
-  below $200 so the recovery mechanic appears often enough to evaluate.
+- The action remains visible and usable throughout active gameplay until the
+  future GLP-1 room is built, regardless of current cash. This supersedes the
+  original below-$100 and temporary below-$200 eligibility rules.
 - It may be used at most once per facility hour.
 - It provides a small immediate cash payment.
 - It provides no Learning XP, FSRS review, concept mastery, ordinary
   patient-care reward, patient episode, or progression credit.
-- It disappears or becomes disabled when cash is no longer below the
-  threshold.
 - Manual uses are counted separately for each facility day.
 - After the fifth manual consultation in one day, messages become
   increasingly pointed. An accepted example is:
   “Your commitment to comprehensive metabolic care has been noted.”
 
-The low-cash threshold, payment, daily cap, diminishing-return curve, cooldown,
-message threshold, and flavor-text pool are stable balance/configuration
-values. The runtime must not bury these numbers or messages in unrelated
-gameplay code.
+Payment, daily cap, diminishing-return curve, cooldown, message threshold, and
+flavor-text pool are stable balance/configuration values. The runtime must not
+bury these numbers or messages in unrelated gameplay code.
 
 The first tuning should restore a struggling clinic without making deliberate
 cash depletion or repetitive clicking attractive. The initial implementation
@@ -55,14 +52,15 @@ values remain easy to change after playtesting.
 
 ## Player interface
 
-When eligible, the manual action appears above the Waiting patient tabs on the
-upper-left side of ordinary play. It is not a patient chart and does not enter
-Waiting, Active, or Resolved.
+The manual action appears above the Waiting patient tabs on the upper-left side
+of ordinary play until its future room is constructed. It is not a patient
+chart and does not enter Waiting, Active, or Resolved.
 
 The control shows:
 
 - The immediate payment
-- Whether it is ready or has already been used this facility hour
+- A persisted cooldown bar that advances with simulation time, freezes on
+  pause, and shows when the next facility-hour use is ready
 - Today's use count when relevant
 - Sarcastic feedback after use
 

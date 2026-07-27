@@ -59,8 +59,9 @@ stop the manual server. Neither method deploys or publishes anything.
   service drill, off-site test wait and ETA, returned result, and follow-up
   decision
 - A founder-operated Level 0 clinic with two protected introductory patients
-- A continuous 8 AM-6 PM facility day lasting about five real minutes, with
-  Level 1 routine arrivals paced at roughly one patient per real minute
+- A minute-resolution continuous 8 AM-6 PM facility day with 1x/2x/4x controls;
+  one game hour takes about 60/30/15 real seconds and routine arrivals use
+  persisted irregular intervals around one game hour
 - Left-edge Waiting and Existing Patient chart tabs, exclamation-point action
   badges, and a collapsed filing-cabinet control for newest-first Resolved
   charts
@@ -72,8 +73,9 @@ stop the manual server. Neither method deploys or publishes anything.
 - Deterministically varied synthetic patient names and pixel appearances, plus
   frozen seeded answer-order randomization so the correct choice is not tied to
   one position
-- Single-select questions, concise correction-forward feedback, and one primary
-  educational concept per scored decision
+- Single-select sequential questions, prominent Correct/Incorrect feedback,
+  authored final-choice consequences, shuffled safe answer order, and one
+  primary educational concept per scored decision
 - Multi-step encounters with visible test turnaround estimates, off-site
   departure and return, and route-aware in-house X-ray only after the room,
   control room, and imaging technician are operational; hallway travel is
@@ -81,13 +83,16 @@ stop the manual server. Neither method deploys or publishes anything.
   tunable one-point satisfaction benefit
 - Campaign-scoped FSRS-6 scheduling through a pinned `ts-fsrs` adapter: correct
   answers map to Good and incorrect answers map to Again
-- Separate money, XP, satisfaction, facility time, operating expenses, and
-  level requirements
-- A paused **Build Mode** with one consistent Enter/Exit control, a prominent
-  pause banner, build-only grid, zoom/pan controls, repeatable rooms and
-  functional hallways, direct room-to-room connections, domain-validated
-  placement outlines, visible rotating doors, upgrades, and sale for a
-  centrally configured 25% refund
+- Separate money, current-level XP, rolling clinic satisfaction, minute-level
+  facility time, quarter-hour operating-cost postings, and level requirements
+- Individual patient satisfaction driven by genuine waiting and modeled care,
+  cleanliness, room, staff, amenity, and service effects, with persisted
+  walkout thresholds and physical exit routes
+- A paused **Build/Renovate Mode** with one consistent Enter/Exit control, a
+  prominent pause banner, build-only grid, bounded 10%-250% zoom and panning,
+  repeatable rooms and functional hallways, direct room-to-room connections,
+  explicit zero-cost doors, stepwise session Undo, domain-validated placement
+  outlines, room upgrades, and sale for a centrally configured 25% refund
 - Examination-room construction and the explicit Level 0-to-Level 1 gate
 - Level 1 routine arrivals, waiting-room occupancy, patience, queue capacity,
   treatment or referral decisions, outsourced or in-house result timing, and
@@ -104,20 +109,25 @@ stop the manual server. Neither method deploys or publishes anything.
   testing notices also enter the visible log. The larger future message bank is
   preserved in
   [`docs/features/alert-notification-flavor-system.md`](docs/features/alert-notification-flavor-system.md)
-- A bounded emergency cash-only GLP-1 consultation action below $200, limited by
-  facility-hour cooldown, configurable daily cap and diminishing payment, with
-  no XP or FSRS benefit; the automated suite remains a Level 2 feature
-- Multiple browser-local campaigns. Each new campaign starts with fresh FSRS
-  histories and a new campaign seed, while prior local campaigns can be
-  reopened
+- A manual cash-only GLP-1 consultation action that remains visible before its
+  future room, with a persisted facility-hour cooldown, configurable daily cap
+  and diminishing payment, and no XP or FSRS benefit; the automated suite
+  remains a Level 2 feature
+- A staged authentication shell that preserves the accepted verified
+  email/password provider boundary while using an explicit non-authenticating
+  Local Prototype path until owner-controlled Supabase credentials exist
+- Multiple named browser-local campaigns. Each new campaign starts with fresh
+  campaign-scoped FSRS histories and a new campaign seed, while prior resumable
+  clinics remain independently available
 - A sparse founder creator and inheritance decision before a clinic campaign
   exists, including the non-game rich-and-happy ending and one-time Level 0
   initialization with a persisted founder appearance
 - Browser-local save/reload, compatible save migration, hidden-tab pause, and a
-  two-step recoverable **Start over** flow that preserves the prior campaign's
-  seed while creating fresh facility and learning state
-- An open-by-default desktop **Prototype tools** panel with **Add $100**,
-  fast-forward, two-step **Restart game**, tutorial, and FSRS inspection
+  two-step recoverable **Restart Campaign** flow that archives the prior clinic,
+  preserves its seed and release pins for the retry, and creates fresh facility
+  and campaign learning state
+- A collapsed-by-default desktop **Prototype tools** panel with **Add $100**,
+  fast-forward, two-step **Restart Campaign**, tutorial, and FSRS inspection
   controls
 - A bounded desktop workspace: patient tabs, goals, staffing, building tools,
   and events scroll within their panels instead of extending the document

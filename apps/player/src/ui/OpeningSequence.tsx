@@ -1,76 +1,75 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type {
   FounderIdentity,
   PixelAppearanceDescriptor,
 } from "@gamify-surgery/game-domain";
-import type { LocalPrototypeProfile } from "../session/prototypeStorage";
+import {
+  clinicNameExists,
+  normalizeClinicName,
+  type LocalPrototypeProfile,
+} from "../session/prototypeStorage";
 import { PixelAvatar } from "./PixelAvatar";
 import "./OpeningSequence.css";
 
 interface OpeningSequenceProps {
   profile: LocalPrototypeProfile;
   campaignSeed?: string;
-  onBeginClinic: (founder: FounderIdentity, campaignSeed?: string) => void;
-  onResumeCampaign: () => void;
+  initialStep?: "main" | "founder";
+  onBeginClinic: (
+    founder: FounderIdentity,
+    clinicName: string,
+    campaignSeed?: string,
+  ) => void;
+  onResumeCampaign: (campaignId: string) => void;
+  onRestoreCampaign: (campaignId: string) => void;
 }
 
-type OpeningStep = "founder" | "inheritance" | "happy" | "main";
+type OpeningStep =
+  | "main"
+  | "founder"
+  | "inheritance"
+  | "clinic-name"
+  | "happy";
 
-const HEAD_PRESETS = [
-  {
-    hairStyle: "short",
-    hairShade: 3,
-    faceStyle: "round",
-    accessory: "none",
-  },
-  {
-    hairStyle: "parted",
-    hairShade: 2,
-    faceStyle: "square",
-    accessory: "glasses",
-  },
-  {
-    hairStyle: "curly",
-    hairShade: 1,
-    faceStyle: "long",
-    accessory: "none",
-  },
-  {
-    hairStyle: "bun",
-    hairShade: 3,
-    faceStyle: "round",
-    accessory: "headband",
-  },
-] as const satisfies readonly Pick<
+type HeadPreset = {
+  id: string;
+} & Pick<
   PixelAppearanceDescriptor,
   "hairStyle" | "hairShade" | "faceStyle" | "accessory"
->[];
+>;
 
-const BODY_PRESETS = [
-  {
-    bodyShape: "average",
-    outfitStyle: "plain",
-    outfitShade: 1,
-  },
-  {
-    bodyShape: "compact",
-    outfitStyle: "striped",
-    outfitShade: 2,
-  },
-  {
-    bodyShape: "broad",
-    outfitStyle: "checked",
-    outfitShade: 3,
-  },
-  {
-    bodyShape: "tall",
-    outfitStyle: "coat",
-    outfitShade: 2,
-  },
-] as const satisfies readonly Pick<
+type BodyPreset = {
+  id: string;
+} & Pick<
   PixelAppearanceDescriptor,
   "bodyShape" | "outfitStyle" | "outfitShade"
->[];
+>;
+
+const HEAD_PRESETS = [
+  { id: "head.01", hairStyle: "short", hairShade: 3, faceStyle: "round", accessory: "none" },
+  { id: "head.02", hairStyle: "parted", hairShade: 2, faceStyle: "square", accessory: "glasses" },
+  { id: "head.03", hairStyle: "curly", hairShade: 1, faceStyle: "long", accessory: "none" },
+  { id: "head.04", hairStyle: "bun", hairShade: 3, faceStyle: "round", accessory: "headband" },
+  { id: "head.05", hairStyle: "none", hairShade: 0, faceStyle: "square", accessory: "glasses" },
+  { id: "head.06", hairStyle: "short", hairShade: 1, faceStyle: "long", accessory: "badge" },
+  { id: "head.07", hairStyle: "parted", hairShade: 3, faceStyle: "round", accessory: "none" },
+  { id: "head.08", hairStyle: "curly", hairShade: 2, faceStyle: "square", accessory: "headband" },
+  { id: "head.09", hairStyle: "bun", hairShade: 1, faceStyle: "long", accessory: "glasses" },
+  { id: "head.10", hairStyle: "none", hairShade: 0, faceStyle: "round", accessory: "badge" },
+] as const satisfies readonly HeadPreset[];
+
+const BODY_PRESETS = [
+  { id: "body.01", bodyShape: "average", outfitStyle: "plain", outfitShade: 1 },
+  { id: "body.02", bodyShape: "compact", outfitStyle: "striped", outfitShade: 2 },
+  { id: "body.03", bodyShape: "broad", outfitStyle: "checked", outfitShade: 3 },
+  { id: "body.04", bodyShape: "tall", outfitStyle: "coat", outfitShade: 2 },
+  { id: "body.05", bodyShape: "compact", outfitStyle: "plain", outfitShade: 3 },
+  { id: "body.06", bodyShape: "average", outfitStyle: "coat", outfitShade: 1 },
+  { id: "body.07", bodyShape: "broad", outfitStyle: "striped", outfitShade: 1 },
+  { id: "body.08", bodyShape: "tall", outfitStyle: "checked", outfitShade: 2 },
+  { id: "body.09", bodyShape: "average", outfitStyle: "checked", outfitShade: 3 },
+  { id: "body.10", bodyShape: "compact", outfitStyle: "coat", outfitShade: 2 },
+] as const satisfies readonly BodyPreset[];
 
 function wrapIndex(index: number, length: number): number {
   return (index + length) % length;
@@ -82,38 +81,141 @@ function createAppearance(
 ): PixelAppearanceDescriptor {
   return {
     version: "pixel-avatar.v1",
-    ...HEAD_PRESETS[headIndex]!,
-    ...BODY_PRESETS[bodyIndex]!,
+    hairStyle: HEAD_PRESETS[headIndex]!.hairStyle,
+    hairShade: HEAD_PRESETS[headIndex]!.hairShade,
+    faceStyle: HEAD_PRESETS[headIndex]!.faceStyle,
+    accessory: HEAD_PRESETS[headIndex]!.accessory,
+    bodyShape: BODY_PRESETS[bodyIndex]!.bodyShape,
+    outfitStyle: BODY_PRESETS[bodyIndex]!.outfitStyle,
+    outfitShade: BODY_PRESETS[bodyIndex]!.outfitShade,
   };
 }
 
 export function OpeningSequence({
   profile,
   campaignSeed,
+  initialStep = "main",
   onBeginClinic,
   onResumeCampaign,
+  onRestoreCampaign,
 }: OpeningSequenceProps) {
-  const [step, setStep] = useState<OpeningStep>("founder");
+  const [step, setStep] = useState<OpeningStep>(initialStep);
   const [founderName, setFounderName] = useState("");
+  const [clinicName, setClinicName] = useState("");
   const [headIndex, setHeadIndex] = useState(0);
   const [bodyIndex, setBodyIndex] = useState(0);
   const initializingRef = useRef(false);
   const [initializing, setInitializing] = useState(false);
   const appearance = createAppearance(headIndex, bodyIndex);
-  const trimmedName = founderName.trim();
+  const trimmedFounderName = founderName.trim();
+  const normalizedClinicName = normalizeClinicName(clinicName);
+  const duplicateClinicName =
+    normalizedClinicName.length > 0 &&
+    clinicNameExists(profile, normalizedClinicName);
   const founder: FounderIdentity = {
-    displayName: trimmedName,
+    displayName: trimmedFounderName,
+    headId: HEAD_PRESETS[headIndex]!.id,
+    bodyId: BODY_PRESETS[bodyIndex]!.id,
     appearance,
   };
+  const resumableCampaigns = useMemo(
+    () =>
+      profile.campaigns
+        .filter((campaign) => campaign.status === "resumable")
+        .sort((left, right) => right.updatedAtRealMs - left.updatedAtRealMs),
+    [profile.campaigns],
+  );
+  const archivedCampaigns = useMemo(
+    () =>
+      profile.campaigns
+        .filter((campaign) => campaign.status === "archived")
+        .sort((left, right) => right.updatedAtRealMs - left.updatedAtRealMs),
+    [profile.campaigns],
+  );
 
   const beginClinic = () => {
-    if (initializingRef.current || trimmedName.length === 0) {
+    if (
+      initializingRef.current ||
+      trimmedFounderName.length === 0 ||
+      normalizedClinicName.length === 0 ||
+      duplicateClinicName
+    ) {
       return;
     }
     initializingRef.current = true;
     setInitializing(true);
-    onBeginClinic(founder, campaignSeed);
+    onBeginClinic(founder, normalizedClinicName, campaignSeed);
   };
+
+  const beginFreshFounder = () => {
+    setFounderName("");
+    setClinicName("");
+    setHeadIndex(0);
+    setBodyIndex(0);
+    initializingRef.current = false;
+    setInitializing(false);
+    setStep("founder");
+  };
+
+  if (step === "main") {
+    return (
+      <main className="opening-screen prototype-main-screen">
+        <span className="opening-wordmark">Gamify Surgery</span>
+        <h1>Clinic Campaigns</h1>
+        <div className="prototype-main-actions">
+          {resumableCampaigns.length === 1 ? (
+            <button
+              className="opening-choice"
+              type="button"
+              onClick={() =>
+                onResumeCampaign(resumableCampaigns[0]!.campaignId)
+              }
+            >
+              Resume {resumableCampaigns[0]!.name}
+            </button>
+          ) : resumableCampaigns.length > 1 ? (
+            <section className="opening-campaign-list" aria-label="Clinics">
+              <h2>Resume Clinic</h2>
+              {resumableCampaigns.map((campaign) => (
+                <button
+                  className="opening-choice"
+                  type="button"
+                  key={campaign.campaignId}
+                  onClick={() => onResumeCampaign(campaign.campaignId)}
+                >
+                  {campaign.name}
+                </button>
+              ))}
+            </section>
+          ) : null}
+          <button
+            className="opening-choice opening-choice-primary"
+            type="button"
+            onClick={beginFreshFounder}
+          >
+            New Campaign
+          </button>
+        </div>
+        {archivedCampaigns.length > 0 ? (
+          <details className="archived-campaigns">
+            <summary>Archived Clinics ({archivedCampaigns.length})</summary>
+            <div className="opening-campaign-list">
+              {archivedCampaigns.map((campaign) => (
+                <button
+                  className="opening-choice"
+                  type="button"
+                  key={campaign.campaignId}
+                  onClick={() => onRestoreCampaign(campaign.campaignId)}
+                >
+                  Restore {campaign.name}
+                </button>
+              ))}
+            </div>
+          </details>
+        ) : null}
+      </main>
+    );
+  }
 
   if (step === "inheritance") {
     return (
@@ -134,7 +236,7 @@ export function OpeningSequence({
           <button
             className="opening-choice"
             type="button"
-            onClick={beginClinic}
+            onClick={() => setStep("clinic-name")}
             disabled={initializing}
           >
             Build a Surgery Clinic
@@ -144,12 +246,58 @@ export function OpeningSequence({
     );
   }
 
+  if (step === "clinic-name") {
+    return (
+      <main className="opening-screen clinic-name-screen">
+        <section className="founder-creator" aria-labelledby="clinic-name-title">
+          <span className="eyebrow">An irreversible commitment to overhead</span>
+          <h1 id="clinic-name-title">Name Your Clinic</h1>
+          <label className="founder-name-field">
+            <span>Clinic name</span>
+            <input
+              autoFocus
+              maxLength={80}
+              value={clinicName}
+              onChange={(event) => setClinicName(event.target.value)}
+              onKeyDown={(event) => {
+                if (
+                  event.key === "Enter" &&
+                  normalizedClinicName.length > 0 &&
+                  !duplicateClinicName
+                ) {
+                  beginClinic();
+                }
+              }}
+            />
+          </label>
+          {duplicateClinicName ? (
+            <p className="opening-form-error" role="alert">
+              That clinic name already exists in town.
+            </p>
+          ) : null}
+          <button
+            className="opening-choice founder-continue"
+            type="button"
+            disabled={
+              initializing ||
+              normalizedClinicName.length === 0 ||
+              duplicateClinicName
+            }
+            onClick={beginClinic}
+          >
+            {initializing ? "Opening clinic..." : "Open the Clinic"}
+          </button>
+        </section>
+      </main>
+    );
+  }
+
   if (step === "happy") {
     return (
       <main className="opening-screen happy-ending-screen">
         <PixelAvatar
           avatar={appearance}
-          label={`${trimmedName}, rich and happy`}
+          label={`${trimmedFounderName}, rich and happy`}
           size="large"
           className="happy-founder-avatar"
         />
@@ -159,44 +307,8 @@ export function OpeningSequence({
           type="button"
           onClick={() => setStep("main")}
         >
-          Return to Main Screen
+          Return to Campaigns
         </button>
-      </main>
-    );
-  }
-
-  if (step === "main") {
-    const activeCampaign = profile.campaigns.find(
-      (campaign) => campaign.campaignId === profile.activeCampaignId,
-    );
-    return (
-      <main className="opening-screen prototype-main-screen">
-        <h1>Gamify Surgery</h1>
-        <div className="prototype-main-actions">
-          {activeCampaign ? (
-            <button
-              className="opening-choice"
-              type="button"
-              onClick={onResumeCampaign}
-            >
-              Resume {activeCampaign.name}
-            </button>
-          ) : null}
-          <button
-            className="opening-choice"
-            type="button"
-            onClick={() => {
-              setFounderName("");
-              setHeadIndex(0);
-              setBodyIndex(0);
-              initializingRef.current = false;
-              setInitializing(false);
-              setStep("founder");
-            }}
-          >
-            New Campaign
-          </button>
-        </div>
       </main>
     );
   }
@@ -208,8 +320,8 @@ export function OpeningSequence({
         <PixelAvatar
           avatar={appearance}
           label={
-            trimmedName.length > 0
-              ? `${trimmedName}, founder preview`
+            trimmedFounderName.length > 0
+              ? `${trimmedFounderName}, founder preview`
               : "Founder preview"
           }
           size="large"
@@ -223,7 +335,10 @@ export function OpeningSequence({
             value={founderName}
             onChange={(event) => setFounderName(event.target.value)}
             onKeyDown={(event) => {
-              if (event.key === "Enter" && trimmedName.length > 0) {
+              if (
+                event.key === "Enter" &&
+                trimmedFounderName.length > 0
+              ) {
                 setStep("inheritance");
               }
             }}
@@ -240,9 +355,9 @@ export function OpeningSequence({
               )
             }
           >
-            ←
+            &larr;
           </button>
-          <span>Head {headIndex + 1}</span>
+          <span>Head {headIndex + 1} of 10</span>
           <button
             type="button"
             className="founder-arrow"
@@ -253,7 +368,7 @@ export function OpeningSequence({
               )
             }
           >
-            →
+            &rarr;
           </button>
         </div>
         <div className="founder-preset-row">
@@ -267,9 +382,9 @@ export function OpeningSequence({
               )
             }
           >
-            ←
+            &larr;
           </button>
-          <span>Body {bodyIndex + 1}</span>
+          <span>Body {bodyIndex + 1} of 10</span>
           <button
             type="button"
             className="founder-arrow"
@@ -280,13 +395,13 @@ export function OpeningSequence({
               )
             }
           >
-            →
+            &rarr;
           </button>
         </div>
         <button
           className="opening-choice founder-continue"
           type="button"
-          disabled={trimmedName.length === 0}
+          disabled={trimmedFounderName.length === 0}
           onClick={() => setStep("inheritance")}
         >
           Continue

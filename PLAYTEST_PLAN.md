@@ -4,7 +4,7 @@ Status: MELISSA/HUSBAND LOCAL WALKTHROUGH IS THE CURRENT INTERNAL STEP. Outside
 tester recruitment, deployment, new data collection, and research remain
 unauthorized.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-27
 
 ## Purpose
 
@@ -27,12 +27,13 @@ needed. Campaigns remain only in that browser.
 
 ### Suggested sequence
 
-1. Melissa starts a fresh campaign without developer explanation.
+1. Melissa enters through Local Prototype access, creates a founder, chooses the
+   clinic branch, names the clinic, and starts without developer explanation.
 2. She completes both introductory patients, builds the examination room, and
    advances to Level 1.
 3. She plays the routine Level 1 loop long enough to see patient waiting, an
-   Active chart, one result delay, one expense interval, and at least one new
-   arrival.
+   Active chart, one result delay, one quarter-hour financial posting, and at
+   least one new arrival.
 4. She places or attempts several Level 1 rooms and hires or attempts the
    available staff so dependency messages can be evaluated.
 5. She reloads the page and confirms that the same campaign returns.
@@ -42,8 +43,8 @@ needed. Campaigns remain only in that browser.
    1024 by 768 and confirms that panels remain legible and bounded.
 8. Her husband attempts the opening and Level 0 flow with minimal coaching.
 
-The open-by-default **Prototype tools** panel may be used to add $100,
-fast-forward ten hours, or start a two-step fresh restart. These controls are
+The collapsed **Prototype tools** panel may be used to add $100, fast-forward
+ten game minutes, or start a two-step Restart Campaign flow. These controls are
 for shortening repeated balance passes, not for judging the normal economy.
 
 Use optional written notes or an owner-led conversation. Do not enter real
@@ -75,7 +76,8 @@ The prototype sends no gameplay telemetry.
 - Does the Level 0 progress display make every requirement understandable?
 - At Level 1, are arrivals and waits frequent enough to create clinic pressure
   without producing an unmanageable chart pile?
-- Are patience warnings fair and noticeable with sound off?
+- Are patient-satisfaction warnings and walkout pressure fair and noticeable
+  with sound off?
 - Are outsourced waits meaningful without creating boring dead time?
 - Do room and staff prerequisites teach a sensible build order?
 - Are ongoing expenses noticeable and understandable?

@@ -1,4 +1,8 @@
-import { deterministicInteger } from "./randomness";
+import {
+  RANDOM_STREAMS,
+  deterministicInteger,
+} from "./randomness";
+import { getDoorCells } from "./doors";
 import { getRoomDefinition, getStaffRoleDefinition } from "./selectors";
 import {
   findDeterministicRoomPath,
@@ -38,6 +42,32 @@ export function advanceEmployeeMovement(
       employee.lastMovedAtFacilityTick = state.facilityTick;
       continue;
     }
+    if (state.facilityTick < employee.nextIdleActionAtFacilityTick) {
+      continue;
+    }
+    const idleConfig = context.balanceRelease.environment;
+    const idleSpread =
+      idleConfig.idleActionMaximumMinutes -
+      idleConfig.idleActionMinimumMinutes +
+      1;
+    employee.nextIdleActionAtFacilityTick =
+      state.facilityTick +
+      idleConfig.idleActionMinimumMinutes +
+      deterministicInteger(
+        state.campaignSeed,
+        RANDOM_STREAMS.environment,
+        `${employee.id}:next-idle:${state.facilityTick}`,
+        idleSpread,
+      );
+    const activityRoll = deterministicInteger(
+      state.campaignSeed,
+      RANDOM_STREAMS.environment,
+      `${employee.id}:idle-roll:${state.facilityTick}`,
+      100,
+    );
+    if (activityRoll >= idleConfig.idleActionChancePercent) {
+      continue;
+    }
 
     const homeRoom = state.rooms.find(
       (room) => room.id === employee.homeRoomInstanceId,
@@ -51,15 +81,26 @@ export function advanceEmployeeMovement(
       continue;
     }
 
+    const blockedDoorTiles = new Set(
+      state.doors
+        .filter((door) => door.roomId === homeRoom.id)
+        .flatMap((door) => {
+          const cells = getDoorCells(door, homeRoom, definition);
+          return cells ? [`${cells.inside.x},${cells.inside.y}`] : [];
+        }),
+    );
     const candidates = getOccupiedTiles(homeRoom, definition)
       .filter((point) => !samePoint(point, employee.location))
+      .filter(
+        (point) => !blockedDoorTiles.has(`${point.x},${point.y}`),
+      )
       .sort((left, right) => left.y - right.y || left.x - right.x);
     if (candidates.length === 0) {
       continue;
     }
     const candidateIndex = deterministicInteger(
       state.campaignSeed,
-      "staff_movement",
+      RANDOM_STREAMS.environment,
       `${employee.id}:waypoint:${state.facilityTick}`,
       candidates.length,
     );
@@ -196,6 +237,7 @@ export function getEmployeeArrival(
       new Set(
         context.balanceRelease.facility.protectedRoomDefinitionIds,
       ),
+      state.doors,
     );
     path =
       internalPath.length === 0

@@ -78,6 +78,7 @@ export function createFrozenServiceRouteTiming(
         new Set(
           context.balanceRelease.facility.protectedRoomDefinitionIds,
         ),
+        state.doors,
       );
       return outboundPath.length === 0
         ? []
@@ -188,7 +189,8 @@ export function getOffsitePatientTravelPresentation(
 ): OffsitePatientTravelPresentation | null {
   if (
     pendingResult.patientTravel !== null ||
-    pendingResult.deliveredAtTick !== null
+    pendingResult.deliveredAtTick !== null ||
+    pendingResult.offsiteReturnStartedAtTick !== null
   ) {
     return null;
   }

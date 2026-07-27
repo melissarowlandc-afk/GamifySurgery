@@ -12,7 +12,7 @@ export function RestartDialog({
   paused,
   onTogglePause,
   onRestart,
-  triggerLabel = "Start over",
+  triggerLabel = "Restart Campaign",
   triggerClassName = "text-button",
 }: RestartDialogProps) {
   const [open, setOpen] = useState(false);
@@ -53,7 +53,7 @@ export function RestartDialog({
             aria-labelledby="restart-title"
           >
             <span className="eyebrow">Confirmation required</span>
-            <h2 id="restart-title">Restart this local prototype?</h2>
+            <h2 id="restart-title">Restart this campaign?</h2>
             <p>
               This creates a new clinic with fresh FSRS histories and returns
               to the beginning. Your current campaign remains available in
@@ -76,7 +76,7 @@ export function RestartDialog({
                   onRestart();
                 }}
               >
-                Confirm fresh start
+                Archive and restart
               </button>
             </div>
           </section>

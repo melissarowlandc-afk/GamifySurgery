@@ -164,7 +164,7 @@ describe("createMessageBoardView", () => {
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     state.facilityTick = 5;
     encounter.lifecycle = "resolved";
-    encounter.resolutionReason = "left_before_seen";
+    encounter.resolutionReason = "walkout";
     state.events = [
       event({
         id: "event.patience-warning.stale",
@@ -203,7 +203,7 @@ describe("createMessageBoardView", () => {
     expect(items.some((item) => item.priority === "flavor")).toBe(true);
   });
 
-  it("applies cooldowns and chooses reproducible, nonrepeating adjacent flavor lines", () => {
+  it("applies minute cooldowns and chooses reproducible flavor lines", () => {
     const state = createInitialGameState();
     state.encounters = {};
     state.facilityTick = 4;
@@ -235,15 +235,13 @@ describe("createMessageBoardView", () => {
       (item) => item.priority === "flavor",
     );
 
-    expect(first).toHaveLength(2);
+    expect(first).toHaveLength(1);
     expect(first.map((item) => item.id)).toEqual([
       "flavor.event.room.1.construction",
-      "flavor.event.room.3.construction",
     ]);
     expect(first.map((item) => item.message)).toEqual(
       second.map((item) => item.message),
     );
-    expect(first[0]?.message).not.toBe(first[1]?.message);
   });
 
   it("uses stable click targets for room and employee events", () => {

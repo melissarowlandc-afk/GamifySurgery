@@ -19,6 +19,7 @@ export type EncounterLifecycle =
 
 export type ArrivalClass = "routine" | "tutorial" | "progression_critical";
 export type ReviewRatingIntent = "Good" | "Again";
+export type SimulationSpeed = 1 | 2 | 4;
 export type RoomOrientation = 0 | 90 | 180 | 270;
 export type CardinalDirection = "north" | "east" | "south" | "west";
 export type RoomUpgradeLevel = 1 | 2 | 3 | 4 | 5;
@@ -41,6 +42,8 @@ export interface PixelAppearanceDescriptor {
 
 export interface FounderIdentity {
   displayName: string;
+  headId: string;
+  bodyId: string;
   appearance: PixelAppearanceDescriptor;
 }
 
@@ -130,6 +133,11 @@ export interface PendingResult {
   dueTick: number;
   deliveredAtTick: number | null;
   /**
+   * Set when an off-site patient reaches the clinic entrance and begins the
+   * persisted in-building return route. Null before that transition.
+   */
+  offsiteReturnStartedAtTick: number | null;
+  /**
    * Exact facility route and timing selected when the service was scheduled.
    * Null means the route is off-site or otherwise has no simulated facility
    * travel.
@@ -150,9 +158,34 @@ export interface FrozenPatientTravel {
   returnArrivalTick: number;
 }
 
+export type PatientMovementKind =
+  | "arriving_for_check_in"
+  | "walking_to_care"
+  | "departing_for_offsite_testing"
+  | "returning_from_offsite_testing"
+  | "idle_within_room"
+  | "leaving_after_resolution"
+  | "leaving_after_walkout";
+
+/**
+ * Persisted route progress for ordinary patient movement.
+ *
+ * Clinical and operational transitions are completed by the reducer when the
+ * patient reaches the end of this route. Phaser only visualizes the saved
+ * position; it never owns task completion.
+ */
+export interface PatientMovementState {
+  kind: PatientMovementKind;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  destinationRoomInstanceId: string | null;
+}
+
 export type EncounterStepStatus =
   | "locked"
   | "action_required"
+  | "feedback_pending"
   | "result_pending"
   | "completed";
 
@@ -175,6 +208,8 @@ export interface EncounterStepState {
 export interface TerminalFeedback {
   kind: "completion" | "correction" | "terminal_outcome";
   outcome: TerminalClinicalOutcome | null;
+  /** Authored final-choice consequence, including explicit no-immediate-harm results. */
+  consequence: string | null;
   correction: string | null;
   acknowledged: boolean;
 }
@@ -200,15 +235,25 @@ export interface EncounterState {
   frozenCase: SyntheticClinicalCase;
   patientDisplayName: string;
   patientAppearance: PixelAppearanceDescriptor;
-  /**
-   * Encounter-local trust signal. Clinical answers move it by ten points;
-   * it never substitutes for facility-wide satisfaction.
-   */
-  patientConfidence: number;
+  /** Live patient experience score used for waiting pressure and walkouts. */
+  patientSatisfaction: number;
+  idleWaitingSinceTick: number | null;
+  lastSatisfactionDecayAtTick: number;
+  walkoutThreshold: number;
+  satisfactionWarningsShown: number[];
+  finalPatientSatisfaction: number | null;
+  resolvedAtFacilityTick: number | null;
   arrivalClass: ArrivalClass;
   protectedGuaranteeId: string | null;
   lifecycle: EncounterLifecycle;
-  resolutionReason: "completed" | "left_before_seen" | null;
+  resolutionReason: "completed" | "walkout" | null;
+  /** Current persisted map position; null means the patient is off-site. */
+  patientLocation: GridPoint | null;
+  /** Persisted route used for arrivals, care, send-outs, returns, and exits. */
+  patientMovement: PatientMovementState | null;
+  /** Last in-facility room assigned to this patient. */
+  assignedRoomInstanceId: string | null;
+  nextIdleActionAtFacilityTick: number;
   currentNodeIndex: number;
   firstOpenedAtTick: number | null;
   waiting: WaitingState;
@@ -228,6 +273,17 @@ export interface PlacedRoom {
   orientation: RoomOrientation;
   doorSide: CardinalDirection | null;
   upgradeLevel: RoomUpgradeLevel;
+  /** Version-5 saves always persist this; optional only for legacy fixtures/imports. */
+  cleanliness?: number;
+}
+
+export interface DoorState {
+  id: string;
+  roomId: string;
+  side: CardinalDirection;
+  /** Zero-based position along the selected wall. */
+  offset: number;
+  exterior: boolean;
 }
 
 export interface EmployeeState {
@@ -244,6 +300,34 @@ export interface EmployeeState {
   path: GridPoint[];
   pathIndex: number;
   lastMovedAtFacilityTick: number;
+  lastPraisedAtFacilityTick: number | null;
+  nextIdleActionAtFacilityTick: number;
+}
+
+export interface LitterState {
+  id: string;
+  roomId: string;
+  location: GridPoint;
+  spawnedAtFacilityTick: number;
+}
+
+export interface FounderActivityState {
+  kind: "collect_litter" | "refill_water" | "praise_employee";
+  targetId: string;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  workMinutesRemaining: number;
+}
+
+export interface FacilityEnvironmentState {
+  founderLocation: GridPoint;
+  founderActivity: FounderActivityState | null;
+  litterItems: LitterState[];
+  litterSequence: number;
+  nextLitterSpawnTick: number;
+  waterCoolerFillPercent: number;
+  nextWaterCoolerDrainTick: number;
 }
 
 export interface EmergencyGlp1State {
@@ -285,6 +369,10 @@ export interface DomainEvent {
     | "room_placed"
     | "room_sold"
     | "room_upgraded"
+    | "room_moved"
+    | "room_rotated"
+    | "door_placed"
+    | "door_removed"
     | "staff_hired"
     | "staff_salary_changed"
     | "facility_level_advanced"
@@ -292,7 +380,12 @@ export interface DomainEvent {
     | "operating_expense"
     | "patient_arrived"
     | "development_money_added"
-    | "emergency_glp1_consultation";
+    | "emergency_glp1_consultation"
+    | "litter_appeared"
+    | "litter_collected"
+    | "water_cooler_low"
+    | "water_cooler_refilled"
+    | "employee_praised";
   facilityTick: number;
   encounterId: string | null;
   message: string;
@@ -310,7 +403,7 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 4;
+  schemaVersion: 5;
   campaignId: string;
   campaignSeed: string;
   randomGeneratorVersion: "randomness.xoshiro128ss.v1";
@@ -322,17 +415,20 @@ export interface GameState {
   facilityLevel: 0 | 1;
   facilityTick: number;
   paused: boolean;
+  simulationSpeed: SimulationSpeed;
   cash: number;
-  /** Durable facility experience, excluding the short-lived daily modifier. */
-  satisfaction: number;
-  /** Capped answer-confidence effect, cleared at the next operating day. */
-  dailyConfidenceSatisfactionModifier: number;
+  /** Integer cents are authoritative; cash is a synchronized display value. */
+  cashCents: number;
+  /** Accrued operating cost in one-sixtieth-of-a-cent units. */
+  operatingAccrualSixtiethCents: number;
+  nextFinancialPostingTick: number;
   clinicalXp: number;
   /** Presentation state: the chart panel currently displayed, including read-only charts. */
   openChartEncounterId: string | null;
   /** Simulation state: only an unresolved Active patient receives reading-time protection. */
   attendedEncounterId: string | null;
   rooms: PlacedRoom[];
+  doors: DoorState[];
   employees: EmployeeState[];
   encounters: Record<string, EncounterState>;
   learningHistories: Record<string, ConceptLearningHistory>;
@@ -345,6 +441,7 @@ export interface GameState {
   routineArrivalSequence: number;
   totalOperatingExpenses: number;
   emergencyGlp1: EmergencyGlp1State;
+  environment: FacilityEnvironmentState;
 }
 
 interface CommandBase {
@@ -372,8 +469,17 @@ export type GameCommand =
       encounterId: string;
     })
   | (CommandBase & {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK";
+      encounterId: string;
+      decisionNodeId: string;
+    })
+  | (CommandBase & {
       type: "SET_PAUSED";
       paused: boolean;
+    })
+  | (CommandBase & {
+      type: "SET_SIMULATION_SPEED";
+      speed: SimulationSpeed;
     })
   | (CommandBase & {
       type: "ADVANCE_TICK";
@@ -395,6 +501,28 @@ export type GameCommand =
       roomId: string;
     })
   | (CommandBase & {
+      type: "MOVE_ROOM";
+      roomId: string;
+      x: number;
+      y: number;
+    })
+  | (CommandBase & {
+      type: "ROTATE_ROOM";
+      roomId: string;
+    })
+  | (CommandBase & {
+      type: "PLACE_DOOR";
+      doorId: string;
+      roomId: string;
+      side: CardinalDirection;
+      offset: number;
+      exterior?: boolean;
+    })
+  | (CommandBase & {
+      type: "REMOVE_DOOR";
+      doorId: string;
+    })
+  | (CommandBase & {
       type: "HIRE_STAFF";
       employeeId: string;
       staffRoleDefinitionId: string;
@@ -404,6 +532,17 @@ export type GameCommand =
       type: "SET_EMPLOYEE_SALARY";
       employeeId: string;
       salaryPerExpenseInterval: number;
+    })
+  | (CommandBase & {
+      type: "COLLECT_LITTER";
+      litterId: string;
+    })
+  | (CommandBase & {
+      type: "REFILL_WATER_COOLER";
+    })
+  | (CommandBase & {
+      type: "PRAISE_EMPLOYEE";
+      employeeId: string;
     })
   | (CommandBase & {
       type: "LEVEL_UP";
@@ -435,6 +574,9 @@ export interface PatientListItem {
   statusLabel: string;
   actionRequired: boolean;
   pendingLabel: string | null;
+  patientSatisfaction: number;
+  waitingMinutes: number;
+  /** @deprecated Kept for save/UI compatibility during the minute migration. */
   patienceRemainingTicks: number | null;
   patienceWarning: boolean;
 }

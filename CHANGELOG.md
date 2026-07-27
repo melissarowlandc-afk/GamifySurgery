@@ -4,6 +4,42 @@ All notable implementation and project-record changes are listed here.
 
 ## 2026-07-27
 
+### July 27 Level 0/1 integration
+
+- Added the staged login shell, named multiple-clinic campaign screen,
+  normalized-name protection, rich-and-happy no-save branch, and recoverable
+  archive-and-restart flow with fresh campaign-specific FSRS histories
+- Expanded the founder creator to ten interchangeable heads and bodies and
+  reused the same persisted appearance definition for creator, map, portrait,
+  walking, and happy-ending animation
+- Replaced hourly ticks with persisted simulated minutes, 1x/2x/4x controls,
+  irregular arrivals, quarter-hour fixed-point operating-cost postings, and
+  reload-safe GLP-1 cooldown progress
+- Completed the unpublished save-schema-v5 normalizer for movement,
+  satisfaction, timing, environment, explicit doors, and current-level XP while
+  retaining deterministic migrations from schemas 1-4
+- Replaced Patient Confidence and the daily modifier with individual patient
+  satisfaction, configured care/environment/staff effects, save-stable walkout
+  thresholds, physical departures, and rolling completed-encounter clinic
+  satisfaction
+- Added persisted patient routes for arrival, check-in, care, off-site testing,
+  return, room-bounded idle behavior, normal exit, and walkout; gameplay state,
+  not Phaser animation callbacks, owns task completion
+- Added sequential reviewable single-select decisions, prominent answer
+  feedback, 10/2 current-level XP, Level 0/1 payment formulas, and required
+  authored consequence text for every wrong final choice
+- Raised the rare absolute encounter maximum to four only from Level 3 onward
+  and changed the Level 1 XP gate to 150 current-level XP
+- Added explicit zero-cost doors, fixed-fixture room upgrades, build-session
+  Undo, room movement/rotation/sale, exact access-blocking explanations, a
+  fixed bounded site, and a functioning-X-ray goal whose control-room
+  prerequisite is validated without a redundant checklist item
+- Added event-driven compact alerts, live litter/water/praise interactions,
+  consistent patient locators, a 10%-250% bounded facility camera, and the
+  current detailed monochrome pixel-art chart/HUD/facility treatment
+- Rebuilt the browser test suite around the current opening and routing flow;
+  the final matrix passes 39 scenarios with 13 intentional profile skips
+
 ### Desktop launcher reliability
 
 - Replaced the mutable page-description fingerprint with a dedicated

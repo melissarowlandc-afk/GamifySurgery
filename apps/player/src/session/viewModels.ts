@@ -1,18 +1,18 @@
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   getAnswerChoiceServicePreview,
+  getClinicSatisfaction,
   getFacilityProgressionStatus,
   getFacilityClock,
   getCurrentQuestion,
   getEmergencyGlp1Status,
   getEncounterSettlement,
-  getEffectiveSatisfaction,
+  getEncounterPatientLocation,
   getLearningSummary,
   getNextRoomUpgradeCost,
   getOperatingExpensePerFacilityHour,
   getPatientLists,
   getPendingOffsitePatientTravel,
-  getPendingPatientLocation,
   getPendingResultEta,
   getRotatedFootprint,
   getRoomDefinition,
@@ -20,7 +20,8 @@ import {
   getRoomResaleValue,
   getStaffRoleDefinition,
   getWorkloadSnapshot,
-  rotateDirection,
+  validateDoorPlacement,
+  type CardinalDirection,
   type EncounterState,
   type GameState,
   type PatientListItem,
@@ -69,8 +70,12 @@ function signedPercent(value: number): string {
   return `${sign}${value}% satisfaction`;
 }
 
-function formatFacilityHours(value: number): string {
-  return `${value} hour${value === 1 ? "" : "s"}`;
+function formatFacilityDuration(value: number): string {
+  if (value >= 60 && value % 60 === 0) {
+    const hours = value / 60;
+    return `${hours} hour${hours === 1 ? "" : "s"}`;
+  }
+  return `${value} min`;
 }
 
 function formatLearningCardStatus(
@@ -108,22 +113,21 @@ function toPatientTab(
       : item.arrivalClass === "progression_critical"
         ? "Progression patient"
         : "Routine patient";
-  const pendingHours =
+  const pendingMinutes =
     encounter?.lifecycle === "active_pending_result" &&
-    encounter.pendingResult
+    encounter.pendingResult &&
+    encounter.patientMovement === null
       ? Math.max(
           0,
           encounter.pendingResult.dueTick - state.facilityTick,
         )
       : null;
   const pendingStatus =
-    pendingHours === null
+    pendingMinutes === null
       ? null
       : `${
           encounter?.pendingResult?.pendingLabel ?? "Result pending"
-        } · returns in ${pendingHours} hour${
-          pendingHours === 1 ? "" : "s"
-        }`;
+        } · returns in ${formatFacilityDuration(pendingMinutes)}`;
 
   return {
     id: item.encounterId,
@@ -133,18 +137,30 @@ function toPatientTab(
     statusLabel: pendingStatus ?? item.statusLabel,
     actionRequired: item.actionRequired,
     selected: selectedEncounterId === item.encounterId,
-    patienceLabel:
-      item.patienceRemainingTicks === null
-        ? undefined
-        : `Patience: ${item.patienceRemainingTicks} hour${
-            item.patienceRemainingTicks === 1 ? "" : "s"
-          }`,
+    patienceLabel: `Satisfaction: ${item.patientSatisfaction}% · Waiting: ${item.waitingMinutes} min`,
     avatar: encounter?.patientAppearance,
     sortKey: encounter?.waiting.arrivedAtTick,
   };
 }
 
 function encounterStatus(encounter: EncounterState): string {
+  if (encounter.patientMovement) {
+    switch (encounter.patientMovement.kind) {
+      case "arriving_for_check_in":
+        return "Walking to Check-In";
+      case "walking_to_care":
+        return "Walking to Examination";
+      case "departing_for_offsite_testing":
+        return "Leaving for Testing";
+      case "returning_from_offsite_testing":
+        return "Returning to Clinic";
+      case "idle_within_room":
+        break;
+      case "leaving_after_resolution":
+      case "leaving_after_walkout":
+        return "Leaving Clinic";
+    }
+  }
   switch (encounter.lifecycle) {
     case "waiting_unopened":
       return "Waiting";
@@ -155,8 +171,8 @@ function encounterStatus(encounter: EncounterState): string {
     case "resolved_summary_available":
       return "Encounter complete";
     case "resolved":
-      return encounter.resolutionReason === "left_before_seen"
-        ? "Left before being seen"
+      return encounter.resolutionReason === "walkout"
+        ? "Walked out"
         : "Resolved";
   }
 }
@@ -176,13 +192,13 @@ function createChartView(
 
   // A patient who was never opened must not reveal the unseen question,
   // answers, explanation, outcome, or learning summary.
-  if (encounter.resolutionReason === "left_before_seen") {
+  if (encounter.resolutionReason === "walkout") {
     return {
       id: encounter.id,
       patientName: encounter.patientDisplayName,
-      patientDetails: "No encounter content was opened.",
-      statusLabel: "Left before being seen",
-      presentation: "Patient left before being seen.",
+      patientDetails: `Final satisfaction: ${encounter.finalPatientSatisfaction ?? encounter.patientSatisfaction}%`,
+      statusLabel: "Walked out",
+      presentation: "The patient left before the encounter was completed.",
       answerChoices: [],
       terminalFeedbackNeedsAcknowledgment: false,
       summaryAvailable: false,
@@ -202,8 +218,11 @@ function createChartView(
       )
     : undefined;
   const terminalFeedback = encounter.terminalFeedback;
+  const currentStep =
+    encounter.steps[encounter.currentNodeIndex] ?? null;
   const showInterimFeedback =
-    encounter.lifecycle === "active_pending_result" && lastAnswer !== undefined;
+    currentStep?.status === "feedback_pending" &&
+    lastAnswer !== undefined;
   const feedbackBody = terminalFeedback
     ? (terminalFeedback.correction ?? lastAnswer?.explanation)
     : showInterimFeedback
@@ -213,11 +232,16 @@ function createChartView(
     lastAnswer?.correct === true
       ? "Correct"
       : lastAnswer
-        ? "Corrective feedback"
+        ? "Incorrect"
         : undefined;
   const terminalOutcome = terminalFeedback?.outcome ?? null;
+  const terminalConsequence =
+    terminalOutcome?.narrative ?? terminalFeedback?.consequence ?? null;
+  const intermediateFeedbackNeedsAcknowledgment =
+    currentStep?.status === "feedback_pending";
   const terminalFeedbackNeedsAcknowledgment =
-    terminalFeedback !== null && !terminalFeedback.acknowledged;
+    (terminalFeedback !== null && !terminalFeedback.acknowledged) ||
+    intermediateFeedbackNeedsAcknowledgment;
   const summaryAvailable = learningSummary !== null;
   const readOnly = encounter.lifecycle === "resolved";
   const canFile =
@@ -232,26 +256,40 @@ function createChartView(
       if (!node) {
         return null;
       }
+      const isCurrentNode =
+        step.nodeIndex === encounter.currentNodeIndex;
       const isCurrent =
-        step.nodeIndex === encounter.currentNodeIndex &&
-        encounter.lifecycle !== "resolved";
+        isCurrentNode &&
+        encounter.lifecycle !== "resolved" &&
+        (encounter.lifecycle === "resolved_summary_available" ||
+          (encounter.lifecycle === "active_action_required" &&
+            encounter.patientMovement === null));
+      const questionIsVisible =
+        step.status !== "action_required" || isCurrent;
       const answer = step.answer;
       const result = step.result;
-      const resultDelivered = result?.deliveredAtTick !== null;
+      const visibleResult =
+        step.status === "feedback_pending" ? null : result;
+      const resultDelivered =
+        visibleResult !== null &&
+        visibleResult.deliveredAtTick !== null;
       return {
         id: step.decisionNodeId,
-        heading:
-          step.nodeIndex === 0
-            ? "Initial decision"
-            : `Follow-up decision ${step.nodeIndex}`,
+        heading: `Decision ${step.nodeIndex + 1} of ${
+          encounter.frozenCase.decisionNodes.length
+        }`,
         statusLabel:
-          step.status === "result_pending"
+          step.status === "action_required" && !isCurrent
+            ? "Patient en route"
+            : step.status === "result_pending"
             ? "Patient off-site"
+            : step.status === "feedback_pending"
+              ? "Review feedback"
             : step.status === "action_required"
               ? "Action required"
               : "Complete",
-        questionPrompt: node.stem,
-        answerChoices: node.answerChoices.map((choice) => {
+        questionPrompt: questionIsVisible ? node.stem : undefined,
+        answerChoices: questionIsVisible ? node.answerChoices.map((choice) => {
           const preview =
             isCurrent && answer === null
               ? getAnswerChoiceServicePreview(
@@ -273,44 +311,63 @@ function createChartView(
               preview?.durationTicks === null ||
               preview?.durationTicks === undefined
                 ? undefined
-                : formatFacilityHours(preview.durationTicks),
+                : formatFacilityDuration(preview.durationTicks),
             detailLabel:
               preview?.routeDisplayName ??
               (choice.serviceRequest
                 ? "Service route unavailable"
                 : undefined),
           };
-        }),
+        }) : [],
         resultHeading:
-          result === null
+          visibleResult === null
             ? undefined
             : resultDelivered
               ? "Result returned"
-              : result.pendingLabel,
+              : visibleResult.pendingLabel,
         resultBody:
-          result === null
+          visibleResult === null
             ? undefined
             : resultDelivered
-              ? result.resultNarrative
-              : `${result.routeDisplayName}. The patient will return when the result is ready.`,
+              ? visibleResult.resultNarrative
+              : `${visibleResult.routeDisplayName}. The patient will return when the result is ready.`,
         etaLabel:
-          result && !resultDelivered
-            ? `${Math.max(0, result.dueTick - state.facilityTick)} hour${
-                Math.max(0, result.dueTick - state.facilityTick) === 1
-                  ? ""
-                  : "s"
-              } remaining`
+          visibleResult && !resultDelivered
+            ? `${formatFacilityDuration(
+                Math.max(
+                  0,
+                  visibleResult.dueTick - state.facilityTick,
+                ),
+              )} remaining`
             : undefined,
         feedbackTitle:
           answer === null
             ? undefined
             : answer.correct
               ? "Correct"
-              : "Corrective feedback",
+              : "Incorrect",
         feedbackBody: answer?.explanation,
-        rewardLabel:
-          answer?.correct === true
-            ? `+${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clinicalSettlement.clinicalXpPerCorrectFirstAnswer} Learning XP`
+        rewardLabel: answer
+          ? `Decision XP: +${
+              answer.correct
+                ? PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
+                    .clinicalSettlement
+                    .clinicalXpPerCorrectFirstAnswer
+                : PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
+                    .clinicalSettlement
+                    .clinicalXpPerIncorrectFirstAnswer
+            }`
+          : undefined,
+        nextActionLabel:
+          answer && step.status === "feedback_pending"
+            ? result
+              ? `${
+                  answer.correct ? "Next" : "Corrected plan"
+                }: ${result.routeDisplayName} will begin after you continue.`
+              : step.nodeIndex ===
+                  encounter.frozenCase.decisionNodes.length - 1
+                ? "Next: review the encounter outcome, then close the chart."
+                : "Next: continue to the following clinical decision."
             : undefined,
         current: isCurrent,
         complete: step.status === "completed",
@@ -332,7 +389,7 @@ function createChartView(
     sexLabel:
       encounter.frozenCase.prototypeDemographics?.sexLabel,
     chiefComplaint: encounter.frozenCase.chiefComplaint,
-    patientConfidenceLabel: `${encounter.patientConfidence}%`,
+    patientSatisfactionLabel: `${encounter.patientSatisfaction}%`,
     vitals: encounter.frozenCase.prototypeVitalSigns
       ? [
           {
@@ -372,7 +429,7 @@ function createChartView(
     etaLabel:
       pendingEta === null
         ? undefined
-        : `${pendingEta} hour${pendingEta === 1 ? "" : "s"} remaining`,
+        : `${formatFacilityDuration(pendingEta)} remaining`,
     questionPrompt: question?.node.stem,
     answerChoices:
       question?.node.answerChoices.map((choice) => ({
@@ -386,8 +443,8 @@ function createChartView(
       })) ?? [],
     feedbackTitle,
     feedbackBody,
-    terminalOutcomeTitle: terminalOutcome ? "What happened" : undefined,
-    terminalOutcomeBody: terminalOutcome?.narrative,
+    terminalOutcomeTitle: terminalConsequence ? "What happened" : undefined,
+    terminalOutcomeBody: terminalConsequence ?? undefined,
     terminalOutcomeSeverity: terminalOutcome?.severity,
     terminalFeedbackNeedsAcknowledgment,
     summaryAvailable,
@@ -400,12 +457,23 @@ function createChartView(
     decisionSteps,
     reward: settlement
       ? {
-          heading: "Encounter payment",
-          moneyLabel: signedCurrency(settlement.netCashDelta),
+          heading: `Decisions correct: ${settlement.correctAnswers}/${
+            settlement.correctAnswers + settlement.incorrectAnswers
+          }`,
+          moneyLabel: `Encounter Payment: ${signedCurrency(
+            settlement.netCashDelta,
+          )}`,
+          xpLabel: `Encounter XP: +${settlement.clinicalXpAwarded}`,
         }
       : undefined,
     primaryActionLabel: terminalFeedbackNeedsAcknowledgment
-      ? "Continue to summary"
+      ? intermediateFeedbackNeedsAcknowledgment
+        ? encounter.pendingResult
+          ? lastAnswer?.correct
+            ? "Begin plan"
+            : "Begin corrected plan"
+          : "Continue care"
+        : "Continue to summary"
       : encounter.lifecycle === "active_pending_result"
         ? "Return to clinic"
         : undefined,
@@ -439,7 +507,7 @@ export function createPrototypePlayerView(
   );
   const clock = getFacilityClock(state);
   const emergencyGlp1Status = getEmergencyGlp1Status(state);
-  const effectiveSatisfaction = getEffectiveSatisfaction(state);
+  const effectiveSatisfaction = getClinicSatisfaction(state);
   const hourlyOperatingDelta = getOperatingExpensePerFacilityHour(state);
   const xpRequirement = progressionStatus.requirements.find(
     (requirement) => requirement.id === "progression.clinical_xp",
@@ -479,19 +547,32 @@ export function createPrototypePlayerView(
         emergencyGlp1Status.blockedReason ??
         "Ready now; does not advance facility time.",
       useCountLabel: `Today: ${emergencyGlp1Status.usesToday}/${emergencyGlp1Status.dailyUseCap}`,
+      cooldownProgressPercent: Math.max(
+        0,
+        Math.min(
+          100,
+          100 -
+            (emergencyGlp1Status.cooldownRemainingTicks /
+              Math.max(
+                1,
+                PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
+                  .cooldownMinutes,
+              )) *
+              100,
+        ),
+      ),
       flavorMessage:
         state.emergencyGlp1.lastFlavorMessage ?? undefined,
     },
     resourceBar: {
-      moneyLabel: `$${state.cash.toLocaleString()}`,
+      moneyLabel: `$${state.cash.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`,
       moneyDeltaLabel: `${signedCurrency(hourlyOperatingDelta)}/hr`,
       xpLabel: state.clinicalXp.toLocaleString(),
       satisfactionLabel:
-        state.dailyConfidenceSatisfactionModifier === 0
-          ? `${effectiveSatisfaction}%`
-          : `${effectiveSatisfaction}% (${
-              state.dailyConfidenceSatisfactionModifier > 0 ? "+" : ""
-            }${state.dailyConfidenceSatisfactionModifier} today)`,
+        effectiveSatisfaction === null ? "—" : `${effectiveSatisfaction}%`,
       facilityTimeLabel: clock.displayLabel,
       workloadLabel: `${workload.occupancy}/${workload.routineLimit}`,
       workloadStatusLabel: workload.atRoutineCapacity
@@ -544,11 +625,50 @@ export function createPrototypePlayerView(
       founder: {
         displayName: state.founder.displayName,
         appearance: state.founder.appearance,
+        location: state.environment.founderLocation,
+        activityLabel:
+          state.environment.founderActivity?.kind === "collect_litter"
+            ? "Picking up litter"
+            : state.environment.founderActivity?.kind === "refill_water"
+              ? "Refilling water cooler"
+              : state.environment.founderActivity?.kind ===
+                  "praise_employee"
+                ? "Praising employee"
+                : undefined,
+      },
+      litterItems: state.environment.litterItems.map((item) => ({
+        instanceId: item.id,
+        roomInstanceId: item.roomId,
+        location: item.location,
+      })),
+      waterCooler: {
+        location: (() => {
+          const front = state.rooms.find((room) =>
+            facilityBalance.protectedRoomDefinitionIds.includes(
+              room.roomDefinitionId,
+            ),
+          );
+          return front
+            ? { x: front.x, y: front.y + 1 }
+            : state.environment.founderLocation;
+        })(),
+        fillPercent: state.environment.waterCoolerFillPercent,
+        needsRefill:
+          state.environment.waterCoolerFillPercent <=
+          PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
+            .waterCoolerLowThreshold,
       },
       patients: Object.values(state.encounters)
-        .filter((encounter) => encounter.lifecycle !== "resolved")
+        .filter(
+          (encounter) =>
+            encounter.lifecycle !== "resolved" ||
+            encounter.patientMovement !== null,
+        )
         .map((encounter) => {
-          const location = getPendingPatientLocation(state, encounter.id);
+          const location = getEncounterPatientLocation(
+            state,
+            encounter.id,
+          );
           const offsiteTravel = getPendingOffsitePatientTravel(
             state,
             encounter.id,
@@ -557,7 +677,12 @@ export function createPrototypePlayerView(
             instanceId: encounter.id,
             displayName: encounter.patientDisplayName,
             status:
-              encounter.lifecycle === "waiting_unopened"
+              encounter.patientMovement?.kind ===
+                  "leaving_after_resolution" ||
+                encounter.patientMovement?.kind ===
+                  "leaving_after_walkout"
+                ? ("active" as const)
+                : encounter.lifecycle === "waiting_unopened"
                 ? ("waiting" as const)
                 : encounter.lifecycle === "active_pending_result"
                   ? ("off-site" as const)
@@ -591,6 +716,13 @@ export function createPrototypePlayerView(
             ]
           : [];
       }),
+      doors: state.doors.map((door) => ({
+        instanceId: door.id,
+        roomInstanceId: door.roomId,
+        side: door.side,
+        offset: door.offset,
+        exterior: door.exterior,
+      })),
       staff: state.employees.map((employee) => {
         const role = getStaffRoleDefinition(
           employee.staffRoleDefinitionId,
@@ -627,13 +759,8 @@ export function createPrototypePlayerView(
                   height: footprint?.height ?? definition.height,
                   kind: definition.kind,
                   orientation: placementOrientation,
-                  doorSide:
-                    definition.defaultDoorSide === null
-                      ? null
-                      : rotateDirection(
-                          definition.defaultDoorSide,
-                          placementOrientation,
-                        ),
+                  // Doors are placed separately after the room footprint.
+                  doorSide: null,
                 }
               : null;
           })()
@@ -704,7 +831,7 @@ export function createPrototypePlayerView(
           displayName: definition.displayName,
           footprintLabel: `${definition.width} × ${definition.height} tiles`,
           costLabel: `$${definition.constructionCost.toLocaleString()}`,
-          upkeepLabel: `$${definition.upkeepPerExpenseInterval.toLocaleString()} upkeep / clinic day · ${ownedCount} built`,
+          upkeepLabel: `$${definition.upkeepPerExpenseInterval.toLocaleString()} upkeep / hr · ${ownedCount} built`,
           owned,
           selected: selectedRoomDefinitionId === definition.id,
           enabled:
@@ -751,7 +878,7 @@ export function createPrototypePlayerView(
           id: role.id,
           displayName: `${role.displayName} ${hiredCount}/${role.maximumEmployees}`,
           costLabel: `$${role.hiringCost.toLocaleString()} hire`,
-          salaryLabel: `$${role.salaryPerExpenseInterval.toLocaleString()} salary / clinic day`,
+          salaryLabel: `$${role.salaryPerExpenseInterval.toLocaleString()} salary / hr`,
           hired,
           enabled:
             !atMaximum &&
@@ -800,7 +927,7 @@ export function createPrototypePlayerView(
             id: employee.id,
             displayName: employee.displayName,
             roleDisplayName: role.displayName,
-            salaryLabel: `$${employee.salaryPerExpenseInterval.toLocaleString()}/day`,
+            salaryLabel: `$${employee.salaryPerExpenseInterval.toLocaleString()}/hr`,
             moraleLabel: `${employee.morale}%`,
             moralePercent: employee.morale,
             avatar: employee.appearance,
@@ -835,6 +962,54 @@ export function createPrototypePlayerView(
         facilityBalance.protectedRoomDefinitionIds.includes(
           room.roomDefinitionId,
         );
+      const footprint =
+        getRoomInstanceFootprint(state, room.id) ?? {
+          width: definition.width,
+          height: definition.height,
+        };
+      const sideLengths: Record<CardinalDirection, number> = {
+        north: footprint.width,
+        east: footprint.height,
+        south: footprint.width,
+        west: footprint.height,
+      };
+      const sides: CardinalDirection[] = [
+        "north",
+        "east",
+        "south",
+        "west",
+      ];
+      const doorSlots = sides.flatMap((side) =>
+        Array.from({ length: sideLengths[side] }, (_, offset) => {
+          const validation = validateDoorPlacement(
+            {
+              id: `door.preview.${room.id}.${side}.${offset}`,
+              roomId: room.id,
+              side,
+              offset,
+              exterior: false,
+            },
+            state.rooms,
+            state.doors,
+            (definitionId) => getRoomDefinition(definitionId),
+            facilityBalance.gridWidth,
+            facilityBalance.gridHeight,
+            new Set(
+              facilityBalance.protectedRoomDefinitionIds,
+            ),
+          );
+          return {
+            id: `${side}.${offset}`,
+            side,
+            offset,
+            label: `${side[0]!.toUpperCase()}${side.slice(1)} ${
+              offset + 1
+            }/${sideLengths[side]}`,
+            enabled: validation.valid,
+            blockedReason: validation.reason ?? undefined,
+          };
+        }),
+      );
       return {
         id: room.id,
         displayName: definition.displayName,
@@ -850,6 +1025,20 @@ export function createPrototypePlayerView(
         canUpgrade:
           upgradeCost !== null && state.cash >= upgradeCost,
         canSell: !protectedRoom,
+        canMove: !protectedRoom,
+        canRotate: !protectedRoom,
+        doors: state.doors
+          .filter((door) => door.roomId === room.id)
+          .map((door) => ({
+            id: door.id,
+            label: door.exterior
+              ? "Public entrance"
+              : `${door.side[0]!.toUpperCase()}${door.side.slice(
+                  1,
+                )} wall · slot ${door.offset + 1}`,
+            removable: !door.exterior,
+          })),
+        doorSlots,
         blockedReason: protectedRoom
           ? "The Front Desk is the clinic's permanent entrance and cannot be sold."
           : upgradeCost !== null && state.cash < upgradeCost
@@ -870,7 +1059,7 @@ export function createPrototypePlayerView(
         Object.keys(state.learningHistories).length
       } available`,
       reviewCountLabel: `${state.reviewIntents.length} scored`,
-      fastForwardLabel: `Fast-forward ${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.fastForwardTickCount} hours`,
+      fastForwardLabel: `Fast-forward ${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.fastForwardTickCount} min`,
       addMoneyLabel: `Add $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount}`,
       learningCards:
         PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.map((concept) => ({

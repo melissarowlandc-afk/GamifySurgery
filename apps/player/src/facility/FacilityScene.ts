@@ -1,24 +1,21 @@
 import Phaser from "phaser";
-import {
-  getRoomDefinition,
-  isPlacementAttachedThroughOwnEntrance,
-  rotateDirection,
-  validateFacilityConnectivity,
-} from "@gamify-surgery/game-domain";
 import type {
   CardinalDirection,
   GridPoint,
   PixelAppearanceDescriptor,
-  PlacedRoom,
 } from "@gamify-surgery/game-domain";
 
 import type {
   FacilityCameraChangeRequest,
   FacilityCameraView,
+  CollectLitterRequest,
+  FacilityDoorView,
   FacilityPatientView,
   FacilityRoomView,
   FacilityViewModel,
   PlaceRoomRequest,
+  PraiseEmployeeRequest,
+  RefillWaterCoolerRequest,
   SelectRoomRequest,
 } from "./types";
 import {
@@ -30,6 +27,9 @@ export interface FacilitySceneBridge {
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
   onSelectRoom?: SelectRoomRequest;
+  onCollectLitter?: CollectLitterRequest;
+  onRefillWaterCooler?: RefillWaterCoolerRequest;
+  onPraiseEmployee?: PraiseEmployeeRequest;
   onCameraChange?: FacilityCameraChangeRequest;
 }
 
@@ -48,7 +48,6 @@ interface PlacementGhost {
   invalidReason:
     | "outside-grid"
     | "overlap"
-    | "door-disconnected"
     | null;
 }
 
@@ -60,7 +59,9 @@ interface TileRectangle {
 }
 
 const DEFAULT_VISIBLE_GRID_COLUMNS = 16;
-const DEFAULT_VISIBLE_GRID_ROWS = 6;
+const DEFAULT_VISIBLE_GRID_ROWS = 7;
+const MINIMUM_CAMERA_ZOOM = 0.1;
+const MAXIMUM_CAMERA_ZOOM = 2.5;
 
 function finiteCount(value: number): number {
   return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
@@ -91,20 +92,9 @@ function orientedSize(
 function inferredPlacementDoorSide(
   placement: NonNullable<FacilityViewModel["placement"]>,
 ): CardinalDirection | null {
-  if (placement.kind === "hallway" || placement.doorSide === null) {
-    return null;
-  }
-  if (placement.doorSide !== undefined) {
-    return placement.doorSide;
-  }
-
-  const definition = getRoomDefinition(placement.definitionId);
-  return definition?.defaultDoorSide
-    ? rotateDirection(
-        definition.defaultDoorSide,
-        placement.orientation ?? 0,
-      )
-    : null;
+  // New rooms no longer receive an embedded door. Doors are placed as
+  // separate zero-cost build objects after the room footprint is accepted.
+  return placement.kind === "hallway" ? null : placement.doorSide ?? null;
 }
 
 function modelSignature(model: FacilityViewModel): string {
@@ -114,6 +104,12 @@ function modelSignature(model: FacilityViewModel): string {
     .map(
       (room) =>
         `${room.instanceId}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.upgradeLevel ?? 1}`,
+    )
+    .join("|");
+  const doors = (model.doors ?? [])
+    .map(
+      (door) =>
+        `${door.instanceId}:${door.roomInstanceId}:${door.side}:${door.offset}:${door.exterior ? 1 : 0}`,
     )
     .join("|");
   const staff = model.staff
@@ -128,6 +124,20 @@ function modelSignature(model: FacilityViewModel): string {
         `${patient.instanceId}:${patient.status}:${patient.location?.x ?? "-"},${patient.location?.y ?? "-"}`,
     )
     .join("|");
+  const environment = [
+    model.founder.location
+      ? `${model.founder.location.x},${model.founder.location.y}`
+      : "-",
+    ...(model.litterItems ?? []).map(
+      (item) =>
+        `${item.instanceId}:${item.location.x},${item.location.y}`,
+    ),
+    model.waterCooler
+      ? `water:${model.waterCooler.fillPercent}:${
+          model.waterCooler.needsRefill ? 1 : 0
+        }`
+      : "water:-",
+  ].join("|");
 
   return [
     model.facilityTick,
@@ -143,8 +153,11 @@ function modelSignature(model: FacilityViewModel): string {
       ? `${placement.definitionId}:${placement.width}x${placement.height}:${placement.orientation ?? 0}:${placement.doorSide ?? "inferred"}`
       : "-",
     rooms,
+    doors,
     staff,
     patients,
+    environment,
+    model.selectedPatientInstanceId ?? "-",
     model.camera
       ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`
       : "camera.default",
@@ -195,7 +208,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.cameras.main.setBackgroundColor("#f7f7f3");
+    this.cameras.main.setBackgroundColor("#e8e4cf");
     this.cameras.main.setRoundPixels(true);
 
     this.worldGraphics = this.add.graphics();
@@ -325,20 +338,26 @@ export class FacilityScene extends Phaser.Scene {
   private calculateLayout(width: number, height: number): GridLayout {
     const columns = positiveGridSize(this.bridge.viewModel.gridColumns, 16);
     const rows = positiveGridSize(this.bridge.viewModel.gridRows, 10);
-    const horizontalPadding = 12;
-    const headerHeight = 14;
-    const footerHeight = Math.max(32, Math.min(44, Math.floor(height * 0.1)));
-    const usableWidth = Math.max(1, width - horizontalPadding * 2);
-    const usableHeight = Math.max(1, height - headerHeight - footerHeight);
-    // Zoom 1 frames the working clinic instead of shrinking the entire future
-    // building footprint into view. As the player zooms out, genuinely new
-    // buildable rows and columns enter the viewport.
-    const fittedTileSize = Math.max(
-      10,
+    const sidewalkHeight = Math.max(
+      20,
+      Math.min(36, Math.floor(height * 0.08)),
+    );
+    const usableWidth = Math.max(1, width);
+    const usableHeight = Math.max(1, height - sidewalkHeight);
+    const fullSiteTileSize = Math.max(
+      1,
+      Math.floor(
+        Math.min(usableWidth / columns, usableHeight / rows),
+      ),
+    );
+    const workingTileSize = Math.max(
+      fullSiteTileSize,
       Math.floor(
         Math.min(
-          usableWidth / Math.min(columns, DEFAULT_VISIBLE_GRID_COLUMNS),
-          usableHeight / Math.min(rows, DEFAULT_VISIBLE_GRID_ROWS),
+          usableWidth /
+            Math.min(columns, DEFAULT_VISIBLE_GRID_COLUMNS),
+          usableHeight /
+            Math.min(rows, DEFAULT_VISIBLE_GRID_ROWS),
         ),
       ),
     );
@@ -351,16 +370,36 @@ export class FacilityScene extends Phaser.Scene {
       requestedCameraSignature !== this.lastRequestedCameraSignature
     ) {
       this.cameraView = {
-        zoom: Math.max(0.5, Math.min(2.5, requestedCamera.zoom)),
+        zoom: Math.max(
+          MINIMUM_CAMERA_ZOOM,
+          Math.min(MAXIMUM_CAMERA_ZOOM, requestedCamera.zoom),
+        ),
         panX: requestedCamera.panX,
         panY: requestedCamera.panY,
       };
       this.lastRequestedCameraSignature = requestedCameraSignature;
     }
-    const tileSize = Math.max(
-      6,
-      Math.floor(fittedTileSize * this.cameraView.zoom),
+    const normalizedZoom = Math.max(
+      0,
+      Math.min(
+        1,
+        (this.cameraView.zoom - MINIMUM_CAMERA_ZOOM) / 0.9,
+      ),
     );
+    const tileSize =
+      this.cameraView.zoom <= 1
+        ? Math.max(
+            1,
+            Math.round(
+              fullSiteTileSize +
+                (workingTileSize - fullSiteTileSize) *
+                  normalizedZoom,
+            ),
+          )
+        : Math.max(
+            1,
+            Math.round(workingTileSize * this.cameraView.zoom),
+          );
     const gridWidth = tileSize * columns;
     const gridHeight = tileSize * rows;
     const founderRoom = this.getFounderRoom();
@@ -370,19 +409,26 @@ export class FacilityScene extends Phaser.Scene {
     const focusTileX = founderRoom
       ? founderRoom.tileX + (founderSize?.width ?? 0) / 2
       : columns / 2;
-    const focusTileY = founderRoom
-      ? founderRoom.tileY + (founderSize?.height ?? 0) / 2
-      : rows / 2;
-    const focusScreenY =
-      headerHeight + Math.floor(usableHeight * (founderRoom ? 0.48 : 0.5));
+    const defaultOriginX = Math.floor(
+      width / 2 - focusTileX * tileSize,
+    );
+    const defaultOriginY = usableHeight - gridHeight;
+    const requestedOriginX = defaultOriginX + this.cameraView.panX;
+    const requestedOriginY = defaultOriginY + this.cameraView.panY;
+    const minimumOriginX = Math.min(0, width - gridWidth);
+    const maximumOriginX = Math.max(0, width - gridWidth);
+    const minimumOriginY = Math.min(0, usableHeight - gridHeight);
+    const maximumOriginY = Math.max(0, usableHeight - gridHeight);
 
     return {
-      originX:
-        Math.floor(width / 2 - focusTileX * tileSize) +
-        this.cameraView.panX,
-      originY:
-        Math.floor(focusScreenY - focusTileY * tileSize) +
-        this.cameraView.panY,
+      originX: Math.max(
+        minimumOriginX,
+        Math.min(maximumOriginX, requestedOriginX),
+      ),
+      originY: Math.max(
+        minimumOriginY,
+        Math.min(maximumOriginY, requestedOriginY),
+      ),
       tileSize,
       width: gridWidth,
       height: gridHeight,
@@ -401,10 +447,10 @@ export class FacilityScene extends Phaser.Scene {
     const rows = positiveGridSize(model.gridRows, 10);
 
     graphics.clear();
-    graphics.fillStyle(0xf7f7f3, 1);
+    graphics.fillStyle(0xe8e4cf, 1);
     graphics.fillRect(0, 0, this.scale.width, this.scale.height);
 
-    graphics.fillStyle(0xffffff, 1);
+    graphics.fillStyle(0xe8e4cf, 1);
     graphics.fillRect(originX, originY, width, height);
     if (model.buildMode || model.placement) {
       graphics.lineStyle(1, 0xd1d1cc, 1);
@@ -418,13 +464,82 @@ export class FacilityScene extends Phaser.Scene {
       }
     }
 
-    graphics.lineStyle(2, 0x111111, 1);
-    graphics.strokeRect(originX, originY, width, height);
+    if (model.buildMode || model.placement) {
+      graphics.lineStyle(2, 0x3c4335, 1);
+      graphics.strokeRect(originX, originY, width, height);
+    }
 
     model.rooms.forEach((room, index) => {
       this.drawRoom(graphics, room, index);
     });
+    (model.doors ?? []).forEach((door) => {
+      this.drawExplicitDoor(graphics, door);
+    });
+    this.drawEnvironment(graphics);
     this.drawExterior(graphics);
+  }
+
+  private drawEnvironment(
+    graphics: Phaser.GameObjects.Graphics,
+  ): void {
+    const pixel = Math.max(2, Math.floor(this.layout.tileSize / 10));
+    for (const litter of this.bridge.viewModel.litterItems ?? []) {
+      const x =
+        this.layout.originX +
+        (litter.location.x + 0.5) * this.layout.tileSize;
+      const y =
+        this.layout.originY +
+        (litter.location.y + 0.65) * this.layout.tileSize;
+      graphics.fillStyle(0x3c4335, 1);
+      graphics.fillRect(x - pixel * 2, y - pixel, pixel * 2, pixel);
+      graphics.fillRect(x, y, pixel * 2, pixel);
+      graphics.lineStyle(1, 0xf6f1dc, 1);
+      graphics.lineBetween(
+        x - pixel * 2,
+        y - pixel,
+        x + pixel * 2,
+        y + pixel,
+      );
+    }
+    const cooler = this.bridge.viewModel.waterCooler;
+    if (!cooler) {
+      return;
+    }
+    const x =
+      this.layout.originX +
+      (cooler.location.x + 0.5) * this.layout.tileSize;
+    const y =
+      this.layout.originY +
+      (cooler.location.y + 0.72) * this.layout.tileSize;
+    graphics.fillStyle(0xf6f1dc, 1);
+    graphics.fillRect(
+      x - pixel * 2,
+      y - pixel * 5,
+      pixel * 4,
+      pixel * 5,
+    );
+    graphics.lineStyle(1, 0x3c4335, 1);
+    graphics.strokeRect(
+      x - pixel * 2,
+      y - pixel * 5,
+      pixel * 4,
+      pixel * 5,
+    );
+    const fillHeight = Math.round(
+      (pixel * 3 * cooler.fillPercent) / 100,
+    );
+    graphics.fillStyle(
+      cooler.needsRefill ? 0x8b8d79 : 0x59614d,
+      1,
+    );
+    graphics.fillRect(
+      x - pixel,
+      y - pixel * 4 + (pixel * 3 - fillHeight),
+      pixel * 2,
+      fillHeight,
+    );
+    graphics.fillStyle(0x3c4335, 1);
+    graphics.fillRect(x - pixel, y, pixel * 2, pixel * 2);
   }
 
   private drawRoom(
@@ -490,7 +605,6 @@ export class FacilityScene extends Phaser.Scene {
 
     this.drawRoomFixtures(graphics, room, rectangle, furnitureInset);
 
-    this.drawDoor(graphics, rectangle, room.doorSide ?? "south", shade);
     if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
       const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
       graphics.lineStyle(2, 0xffffff, 1);
@@ -507,6 +621,62 @@ export class FacilityScene extends Phaser.Scene {
         rectangle.width - inset * 2 - 4,
         rectangle.height - inset * 2 - 4,
       );
+    }
+  }
+
+  private drawExplicitDoor(
+    graphics: Phaser.GameObjects.Graphics,
+    door: FacilityDoorView,
+  ): void {
+    if (door.exterior) {
+      return;
+    }
+    const room = this.bridge.viewModel.rooms.find(
+      (candidate) => candidate.instanceId === door.roomInstanceId,
+    );
+    if (!room) {
+      return;
+    }
+    const rectangle = this.toPixels({
+      tileX: room.tileX,
+      tileY: room.tileY,
+      width: room.width,
+      height: room.height,
+    });
+    const slotCenter =
+      (door.offset + 0.5) * this.layout.tileSize;
+    const opening = Math.max(
+      7,
+      Math.min(this.layout.tileSize - 2, this.layout.tileSize * 0.65),
+    );
+    const half = opening / 2;
+    const center =
+      door.side === "north"
+        ? { x: rectangle.x + slotCenter, y: rectangle.y }
+        : door.side === "south"
+          ? {
+              x: rectangle.x + slotCenter,
+              y: rectangle.y + rectangle.height,
+            }
+          : door.side === "west"
+            ? { x: rectangle.x, y: rectangle.y + slotCenter }
+            : {
+                x: rectangle.x + rectangle.width,
+                y: rectangle.y + slotCenter,
+              };
+    graphics.lineStyle(Math.max(5, this.layout.tileSize * 0.18), 0xe8e4cf, 1);
+    if (door.side === "north" || door.side === "south") {
+      graphics.lineBetween(center.x - half, center.y, center.x + half, center.y);
+    } else {
+      graphics.lineBetween(center.x, center.y - half, center.x, center.y + half);
+    }
+    graphics.lineStyle(Math.max(1, this.layout.tileSize * 0.06), 0x3c4335, 1);
+    if (door.side === "north" || door.side === "south") {
+      graphics.lineBetween(center.x - half, center.y, center.x - half, center.y + (door.side === "north" ? 5 : -5));
+      graphics.lineBetween(center.x + half, center.y, center.x + half, center.y + (door.side === "north" ? 5 : -5));
+    } else {
+      graphics.lineBetween(center.x, center.y - half, center.x + (door.side === "west" ? 5 : -5), center.y - half);
+      graphics.lineBetween(center.x, center.y + half, center.x + (door.side === "west" ? 5 : -5), center.y + half);
     }
   }
 
@@ -897,13 +1067,27 @@ export class FacilityScene extends Phaser.Scene {
     graphics.clear();
     const founderRoom = this.getFounderRoom() ?? this.bridge.viewModel.rooms[0];
     if (founderRoom) {
-      this.drawPerson(
-        graphics,
-        founderRoom,
-        0,
-        0x111111,
-        this.bridge.viewModel.founder.appearance,
-      );
+      const founderLocation = this.bridge.viewModel.founder.location;
+      if (founderLocation) {
+        this.drawPixelPerson(
+          graphics,
+          this.layout.originX +
+            (founderLocation.x + 0.5) * this.layout.tileSize,
+          this.layout.originY +
+            (founderLocation.y + 0.72) * this.layout.tileSize,
+          0,
+          this.bridge.viewModel.founder.appearance,
+          0x111111,
+        );
+      } else {
+        this.drawPerson(
+          graphics,
+          founderRoom,
+          0,
+          0x111111,
+          this.bridge.viewModel.founder.appearance,
+        );
+      }
     }
 
     this.bridge.viewModel.staff.forEach((employee, index) => {
@@ -986,6 +1170,14 @@ export class FacilityScene extends Phaser.Scene {
         patient.appearance,
         appearanceColor,
       );
+      this.drawPatientLocator(
+        graphics,
+        this.layout.originX +
+          (patient.location.x + 0.5) * this.layout.tileSize,
+        this.layout.originY +
+          (patient.location.y + 0.72) * this.layout.tileSize,
+        patient,
+      );
       return;
     }
 
@@ -1009,6 +1201,14 @@ export class FacilityScene extends Phaser.Scene {
           patient.appearance,
           appearanceColor,
         );
+        this.drawPatientLocator(
+          graphics,
+          this.layout.originX +
+            (waitingRoomLocation.x + 0.5) * this.layout.tileSize,
+          this.layout.originY +
+            (waitingRoomLocation.y + 0.72) * this.layout.tileSize,
+          patient,
+        );
         return;
       }
       const stableQueueIndex = waitingQueueIndex ?? 0;
@@ -1024,6 +1224,15 @@ export class FacilityScene extends Phaser.Scene {
         100 + index,
         patient.appearance,
         appearanceColor,
+      );
+      this.drawPatientLocator(
+        graphics,
+        entranceX +
+          queueDirection *
+            queueIndex *
+            Math.max(16, this.layout.tileSize * 0.72),
+        sidewalkY,
+        patient,
       );
       return;
     }
@@ -1049,6 +1258,12 @@ export class FacilityScene extends Phaser.Scene {
         patient.appearance,
         appearanceColor,
       );
+      this.drawPatientLocator(
+        graphics,
+        entranceX + travel.direction * excursion * travelDistance,
+        sidewalkY,
+        patient,
+      );
       return;
     }
 
@@ -1071,6 +1286,53 @@ export class FacilityScene extends Phaser.Scene {
       100 + index,
       patient.appearance,
       appearanceColor,
+    );
+    this.drawPatientLocator(
+      graphics,
+      this.layout.originX +
+        (careRoom.tileX + careSize.width / 2) * this.layout.tileSize +
+        offset,
+      this.layout.originY +
+        (careRoom.tileY + careSize.height * 0.72) * this.layout.tileSize,
+      patient,
+    );
+  }
+
+  private drawPatientLocator(
+    graphics: Phaser.GameObjects.Graphics,
+    centerX: number,
+    baseY: number,
+    patient: FacilityPatientView,
+  ): void {
+    if (
+      this.bridge.viewModel.selectedPatientInstanceId !==
+      patient.instanceId
+    ) {
+      return;
+    }
+    const pixel = Math.max(2, Math.floor(this.layout.tileSize / 9));
+    const pulse =
+      this.bridge.viewModel.paused
+        ? 0
+        : Math.round((Math.sin(this.characterPhase * 2) + 1) * pixel);
+    const arrowY = baseY - pixel * 9 - pulse;
+    graphics.fillStyle(0x111111, 1);
+    graphics.fillTriangle(
+      centerX,
+      arrowY + pixel * 3,
+      centerX - pixel * 2,
+      arrowY,
+      centerX + pixel * 2,
+      arrowY,
+    );
+    graphics.lineStyle(1, 0xf6f1dc, 1);
+    graphics.strokeTriangle(
+      centerX,
+      arrowY + pixel * 3,
+      centerX - pixel * 2,
+      arrowY,
+      centerX + pixel * 2,
+      arrowY,
     );
   }
 
@@ -1370,6 +1632,25 @@ export class FacilityScene extends Phaser.Scene {
     this.drawPlacementGhost();
   }
 
+  private gridPointAtPointer(
+    pointer: Phaser.Input.Pointer,
+  ): GridPoint | null {
+    const x = Math.floor(
+      (pointer.x - this.layout.originX) / this.layout.tileSize,
+    );
+    const y = Math.floor(
+      (pointer.y - this.layout.originY) / this.layout.tileSize,
+    );
+    const columns = positiveGridSize(
+      this.bridge.viewModel.gridColumns,
+      16,
+    );
+    const rows = positiveGridSize(this.bridge.viewModel.gridRows, 10);
+    return x >= 0 && y >= 0 && x < columns && y < rows
+      ? { x, y }
+      : null;
+  }
+
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
     if (pointer.button !== 0) {
       return;
@@ -1396,6 +1677,38 @@ export class FacilityScene extends Phaser.Scene {
       return;
     }
 
+    if (!this.bridge.viewModel.buildMode) {
+      const point = this.gridPointAtPointer(pointer);
+      if (point) {
+        const litter = (this.bridge.viewModel.litterItems ?? []).find(
+          (item) =>
+            item.location.x === point.x && item.location.y === point.y,
+        );
+        if (litter) {
+          this.bridge.onCollectLitter?.(litter.instanceId);
+          return;
+        }
+        const cooler = this.bridge.viewModel.waterCooler;
+        if (
+          cooler &&
+          cooler.location.x === point.x &&
+          cooler.location.y === point.y
+        ) {
+          this.bridge.onRefillWaterCooler?.();
+          return;
+        }
+        const employee = this.bridge.viewModel.staff.find(
+          (candidate) =>
+            candidate.location?.x === point.x &&
+            candidate.location?.y === point.y,
+        );
+        if (employee) {
+          this.bridge.onPraiseEmployee?.(employee.instanceId);
+          return;
+        }
+      }
+    }
+
     this.dragStart = {
       pointerX: pointer.x,
       pointerY: pointer.y,
@@ -1409,9 +1722,9 @@ export class FacilityScene extends Phaser.Scene {
     this.applyCamera({
       ...this.cameraView,
       zoom: Math.max(
-        0.5,
+        MINIMUM_CAMERA_ZOOM,
         Math.min(
-          2.5,
+          MAXIMUM_CAMERA_ZOOM,
           Math.round((this.cameraView.zoom + direction * 0.1) * 10) / 10,
         ),
       ),
@@ -1487,10 +1800,6 @@ export class FacilityScene extends Phaser.Scene {
       return { valid: false, invalidReason: "overlap" };
     }
 
-    if (!this.isCandidateConnected(tileX, tileY)) {
-      return { valid: false, invalidReason: "door-disconnected" };
-    }
-
     return { valid: true, invalidReason: null };
   }
 
@@ -1504,91 +1813,18 @@ export class FacilityScene extends Phaser.Scene {
     if (!side) {
       return null;
     }
-    const size = { width: room.width, height: room.height };
-    const door =
-      side === "north"
-        ? {
-            x: room.tileX + Math.floor((size.width - 1) / 2),
-            y: room.tileY,
-          }
-        : side === "south"
-          ? {
-              x: room.tileX + Math.floor((size.width - 1) / 2),
-              y: room.tileY + size.height - 1,
-            }
-          : side === "west"
-            ? {
-                x: room.tileX,
-                y: room.tileY + Math.floor((size.height - 1) / 2),
-              }
-            : {
-                x: room.tileX + size.width - 1,
-                y: room.tileY + Math.floor((size.height - 1) / 2),
-              };
-    const offset =
-      side === "north"
-        ? { x: 0, y: -1 }
-        : side === "east"
-          ? { x: 1, y: 0 }
-          : side === "south"
-            ? { x: 0, y: 1 }
-            : { x: -1, y: 0 };
-    return { x: door.x + offset.x, y: door.y + offset.y };
-  }
-
-  private isCandidateConnected(tileX: number, tileY: number): boolean {
-    const placement = this.bridge.viewModel.placement;
-    if (!placement) {
-      return false;
+    const alongX = room.tileX + Math.floor((room.width - 1) / 2);
+    const alongY = room.tileY + Math.floor((room.height - 1) / 2);
+    if (side === "north") {
+      return { x: alongX, y: room.tileY - 1 };
     }
-    const definition = getRoomDefinition(placement.definitionId);
-    if (!definition) {
-      return false;
+    if (side === "south") {
+      return { x: alongX, y: room.tileY + room.height };
     }
-
-    const candidate: PlacedRoom = {
-      id: "room.preview",
-      roomDefinitionId: placement.definitionId,
-      x: tileX,
-      y: tileY,
-      orientation: placement.orientation ?? 0,
-      doorSide: inferredPlacementDoorSide(placement),
-      upgradeLevel: 1,
-    };
-    const placedRooms: PlacedRoom[] = this.bridge.viewModel.rooms.map(
-      (room) => ({
-        id: room.instanceId,
-        roomDefinitionId: room.definitionId,
-        x: room.tileX,
-        y: room.tileY,
-        orientation: room.orientation ?? 0,
-        doorSide: room.doorSide ?? null,
-        upgradeLevel: room.upgradeLevel ?? 1,
-      }),
-    );
-    const protectedDefinitions = new Set(
-      this.bridge.viewModel.rooms
-        .filter((room) => room.isFounderRoom)
-        .map((room) => room.definitionId),
-    );
-    if (protectedDefinitions.size === 0) {
-      return true;
+    if (side === "west") {
+      return { x: room.tileX - 1, y: alongY };
     }
-    const definitionFor = (definitionId: string) =>
-      getRoomDefinition(definitionId);
-    return (
-      isPlacementAttachedThroughOwnEntrance(
-        candidate,
-        definition,
-        placedRooms,
-        definitionFor,
-      ) &&
-      validateFacilityConnectivity(
-        [...placedRooms, candidate],
-        definitionFor,
-        protectedDefinitions,
-      ).connected
-    );
+    return { x: room.tileX + room.width, y: alongY };
   }
 
   private drawPlacementGhost(): void {
@@ -1808,15 +2044,9 @@ export class FacilityScene extends Phaser.Scene {
     const invalidMessage =
       ghost.invalidReason === "outside-grid"
         ? "ROOM MUST FIT INSIDE THE MAP"
-        : ghost.invalidReason === "overlap"
-          ? "SPACE IS ALREADY OCCUPIED"
-          : placement.kind === "hallway"
-            ? "HALLWAY MUST TOUCH THE CONNECTED PATH"
-            : "DOOR MUST TOUCH THE CONNECTED CLINIC";
+        : "SPACE IS ALREADY OCCUPIED";
     const statusMessage = ghost.valid
-      ? placement.kind === "hallway"
-        ? "✓ CONNECTED — CLICK TO BUILD"
-        : "✓ DOOR CONNECTED — CLICK TO BUILD"
+      ? "✓ SPACE CLEAR — CLICK TO BUILD"
       : `✕ ${invalidMessage}`;
     const statusAbove = rectangle.y > 54;
     const statusX = Math.max(
@@ -1837,9 +2067,7 @@ export class FacilityScene extends Phaser.Scene {
       .setVisible(true);
 
     this.footerText?.setText(
-      `${ghost.valid ? "✓ READY" : "✕ NOT READY"} • ${placement.displayName.toUpperCase()} ${size.width}×${size.height} • ${
-        doorSide ? `DOOR ${doorSide.toUpperCase()}` : "CONNECTED HALLWAY"
-      }`,
+      `${ghost.valid ? "✓ READY" : "✕ NOT READY"} • ${placement.displayName.toUpperCase()} ${size.width}×${size.height} • PLACE DOORS SEPARATELY`,
     );
   }
 

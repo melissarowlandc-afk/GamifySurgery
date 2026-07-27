@@ -15,7 +15,7 @@ describe("paper chart presentation", () => {
       ageLabel: "42 years",
       sexLabel: "Female",
       chiefComplaint: "Painful swelling",
-      patientConfidenceLabel: "+10",
+      patientSatisfactionLabel: "94%",
       vitals: [
         {
           id: "temperature",
@@ -70,7 +70,7 @@ describe("paper chart presentation", () => {
     expect(markup).toContain("Morgan Reyes");
     expect(markup).toContain("Chief complaint");
     expect(markup).toContain("38.1 C");
-    expect(markup).toContain("Confidence +10");
+    expect(markup).toContain("Satisfaction 94%");
     expect(markup).toContain("+10 learning XP");
     expect(markup).toContain("Flip for more disease information");
     expect(markup).toContain("Clinical decision");

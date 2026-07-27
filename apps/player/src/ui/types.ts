@@ -81,6 +81,7 @@ export interface ChartDecisionStepView {
   feedbackTitle?: string;
   feedbackBody?: string;
   rewardLabel?: string;
+  nextActionLabel?: string;
   current: boolean;
   complete: boolean;
 }
@@ -100,7 +101,7 @@ export interface ChartView {
   ageLabel?: string;
   sexLabel?: string;
   chiefComplaint?: string;
-  patientConfidenceLabel?: string;
+  patientSatisfactionLabel?: string;
   /** Optional approved vital signs. Omitted values are never invented by UI. */
   vitals?: Array<{
     id: string;
@@ -160,6 +161,7 @@ export interface EmergencyGlp1View {
   paymentLabel: string;
   statusLabel: string;
   useCountLabel: string;
+  cooldownProgressPercent: number;
   flavorMessage?: string;
 }
 
@@ -183,6 +185,21 @@ export interface SelectedRoomBuildView {
   resaleValueLabel?: string;
   canUpgrade: boolean;
   canSell: boolean;
+  canMove: boolean;
+  canRotate: boolean;
+  doors: Array<{
+    id: string;
+    label: string;
+    removable: boolean;
+  }>;
+  doorSlots: Array<{
+    id: string;
+    side: "north" | "east" | "south" | "west";
+    offset: number;
+    label: string;
+    enabled: boolean;
+    blockedReason?: string;
+  }>;
   blockedReason?: string;
 }
 
@@ -254,6 +271,7 @@ export interface CampaignListItemView {
   facilityLevel: number;
   fsrsReviewCount: number;
   active: boolean;
+  status: "resumable" | "archived";
 }
 
 export type MessageBoardItemKind =

@@ -1,5 +1,6 @@
 export * from "./appearance";
 export * from "./context";
+export * from "./doors";
 export * from "./fsrs-adapter";
 export * from "./persistence";
 export * from "./patient-travel";

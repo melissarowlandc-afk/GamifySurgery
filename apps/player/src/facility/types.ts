@@ -38,6 +38,14 @@ export interface FacilityRoomView {
   upgradeLevel?: RoomUpgradeLevel;
 }
 
+export interface FacilityDoorView {
+  instanceId: string;
+  roomInstanceId: string;
+  side: CardinalDirection;
+  offset: number;
+  exterior: boolean;
+}
+
 export interface FacilityStaffView {
   instanceId: string;
   displayName: string;
@@ -55,6 +63,20 @@ export interface FacilityStaffView {
 export interface FacilityFounderView {
   displayName: string;
   appearance: PixelAppearanceDescriptor;
+  location?: GridPoint;
+  activityLabel?: string;
+}
+
+export interface FacilityLitterView {
+  instanceId: string;
+  roomInstanceId: string;
+  location: GridPoint;
+}
+
+export interface FacilityWaterCoolerView {
+  location: GridPoint;
+  fillPercent: number;
+  needsRefill: boolean;
 }
 
 export interface FacilityPlacementView {
@@ -95,12 +117,17 @@ export interface FacilityViewModel {
   gridRows: number;
   patientCounts: FacilityPatientCounts;
   founder: FacilityFounderView;
+  litterItems?: FacilityLitterView[];
+  waterCooler?: FacilityWaterCoolerView;
   patients?: FacilityPatientView[];
   rooms: FacilityRoomView[];
+  doors?: FacilityDoorView[];
   staff: FacilityStaffView[];
   placement: FacilityPlacementView | null;
   buildMode?: boolean;
   selectedRoomInstanceId?: string | null;
+  /** Brief visual locator requested after opening a visible patient's chart. */
+  selectedPatientInstanceId?: string | null;
   camera?: FacilityCameraView;
 }
 
@@ -110,4 +137,7 @@ export type PlaceRoomRequest = (
   orientation?: RoomOrientation,
 ) => void;
 export type SelectRoomRequest = (roomInstanceId: string) => void;
+export type CollectLitterRequest = (litterId: string) => void;
+export type RefillWaterCoolerRequest = () => void;
+export type PraiseEmployeeRequest = (employeeId: string) => void;
 export type FacilityCameraChangeRequest = (camera: FacilityCameraView) => void;

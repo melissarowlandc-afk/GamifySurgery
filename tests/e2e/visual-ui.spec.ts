@@ -1,23 +1,30 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
+import {
+  setFastFacilitySpeed,
+  startClinic,
+  waitForDecisionChoices,
+  waitForFirstPatientReady,
+} from "./helpers";
 
 const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
 
-async function startClinic(page: Page): Promise<void> {
-  await page.goto("/");
-  await page.getByLabel("Founder name").fill("Visual Test Founder");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page
-    .getByRole("button", { name: "Build a Surgery Clinic" })
-    .click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
-
+async function startVisualClinic(page: Page): Promise<void> {
+  await startClinic(
+    page,
+    "Visual Test Founder",
+    "Visual Test Surgical Clinic",
+  );
   const tutorialToggle = page.getByRole("checkbox", {
     name: /Tutorial guidance/,
   });
-  if (await tutorialToggle.isChecked()) {
+  const tools = page.locator("details.development-panel");
+  await tools.locator(":scope > summary").click();
+  if (await tutorialToggle.isChecked({ timeout: 2_000 })) {
     await tutorialToggle.uncheck();
   }
+  await setFastFacilitySpeed(page);
+  await waitForFirstPatientReady(page);
 }
 
 test.beforeAll(() => {
@@ -32,12 +39,16 @@ test("the facility stays fixed above the clinical desk", async ({
     "The stable desktop composition only needs one viewport check.",
   );
 
-  await startClinic(page);
+  await startVisualClinic(page);
   const facility = page.locator(".facility-frame");
   const before = await facility.boundingBox();
   expect(before).not.toBeNull();
 
-  await page.locator(".patient-folder.is-waiting .patient-tab").first().click();
+  await page
+    .locator(".patient-folder.is-waiting .patient-tab")
+    .first()
+    .click();
+  await waitForDecisionChoices(page);
   const chart = page.locator(".paper-chart");
   await expect(chart).toBeVisible();
 
@@ -65,7 +76,7 @@ test("Build Mode replaces the desk while keeping clinic and staff visible", asyn
     "The construction composition only needs one desktop check.",
   );
 
-  await startClinic(page);
+  await startVisualClinic(page);
   const facility = page.locator(".facility-frame");
   const before = await facility.boundingBox();
   expect(before).not.toBeNull();
@@ -80,9 +91,13 @@ test("Build Mode replaces the desk while keeping clinic and staff visible", asyn
     0,
   );
 
-  await page.getByRole("button", { name: "Zoom facility out" }).click();
-  await page.getByRole("button", { name: "Zoom facility out" }).click();
-  await expect(page.locator(".facility-heading-actions")).toContainText("60%");
+  for (let step = 0; step < 9; step += 1) {
+    await page.getByRole("button", { name: "Zoom facility out" }).click();
+  }
+  await expect(page.locator(".facility-heading-actions")).toContainText("10%");
+  await expect(
+    page.getByRole("button", { name: "Zoom facility out" }),
+  ).toBeDisabled();
   const after = await facility.boundingBox();
   expect(after).not.toBeNull();
   expect(Math.abs(after!.height - before!.height)).toBeLessThanOrEqual(1);
@@ -103,8 +118,12 @@ test("the paper chart becomes a readable phone-width sheet", async ({
   );
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await startClinic(page);
-  await page.locator(".patient-folder.is-waiting .patient-tab").first().click();
+  await startVisualClinic(page);
+  await page
+    .locator(".patient-folder.is-waiting .patient-tab")
+    .first()
+    .click();
+  await waitForDecisionChoices(page);
 
   const chart = page.locator(".paper-chart");
   await expect(chart).toBeVisible();

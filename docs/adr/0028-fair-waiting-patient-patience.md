@@ -115,3 +115,9 @@ backpressure are resolved separately by ADR 0029.
 Moderate. Changing this policy would affect patient state transitions,
 scheduled events, queue UI, satisfaction, tutorial guarantees, save
 restoration, balance simulations, and end-to-end tests.
+
+## Current amendment
+
+[ADR 0035](0035-minute-simulation-and-patient-satisfaction.md) replaces
+unopened-only patience with persisted individual satisfaction and
+state-qualified walkouts. Tutorial patients remain protected.

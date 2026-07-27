@@ -7,15 +7,15 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   facility: {
     // Zoom 1 frames roughly the central 16 columns. Zooming out reveals the
     // full 24-column buildable site so expansion adds usable grid space.
-    gridWidth: 24,
-    gridHeight: 10,
+    gridWidth: 72,
+    gridHeight: 32,
     hallwayRoomDefinitionId: "room.hallway",
     protectedRoomDefinitionIds: ["room.front_desk"],
     roomResalePercent: 25,
-    // One visible grid step per facility hour keeps hiring travel meaningful
-    // without leaving a new employee unusable for several real clinic days.
+    // Two visible grid steps per simulated minute keeps ordinary movement
+    // legible without turning short clinic routes into long real-time waits.
     staffMovementIntervalTicks: 1,
-    patientTravelTilesPerTick: 6,
+    patientTravelTilesPerTick: 2,
     startingCash: 90,
     startingSatisfaction: 95,
     maximumPlayableLevel: 1,
@@ -23,12 +23,12 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       {
         id: "room.instance.founder_desk",
         roomDefinitionId: "room.front_desk",
-        x: 9,
-        y: 6,
+        x: 33,
+        y: 28,
         orientation: 0,
-        // This north door connects future rooms. The renderer gives the
-        // founder room a separate south-facing exterior entrance.
-        doorSide: "north",
+        // Doors are explicit build objects. The reducer creates only the
+        // protected south-facing public entrance for a new campaign.
+        doorSide: null,
         upgradeLevel: 1,
       },
     ],
@@ -255,12 +255,11 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       {
         level: 1,
         displayName: "Level 1 - First Clinic",
-        minimumClinicalXp: 60,
+        minimumClinicalXp: 150,
         minimumCompletedEncounters: 0,
         satisfactionMustBeGreaterThan: 90,
         requiredRoomDefinitionIds: [
           "room.xray",
-          "room.imaging_control",
           "room.minor_procedure",
         ],
         requiredStaffRoleIds: ["staff.imaging_technician"],
@@ -276,7 +275,10 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   },
   clock: {
     facilityHoursPerTick: 1,
-    realMillisecondsPerFacilityHour: 30_000,
+    realMillisecondsPerFacilityHour: 60_000,
+    simulatedMinutesPerTick: 1,
+    realMillisecondsPerFacilityMinuteAt1x: 1_000,
+    supportedSpeeds: [1, 2, 4],
     dayStartHour: 8,
     dayEndHour: 18,
   },
@@ -289,16 +291,65 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     satisfactionPenaltyPerWarning: 1,
     leftBeforeSeenSatisfactionPenalty: 2,
   },
+  patientSatisfaction: {
+    startingValue: 100,
+    idleGraceMinutes: 20,
+    decayIntervalMinutes: 5,
+    decayPerInterval: 1,
+    sidewalkDecayMultiplierPercent: 150,
+    warningThresholds: [75, 60, 40, 20, 0],
+    walkoutThresholdMinimum: 0,
+    walkoutThresholdMaximum: 59,
+    correctCareRecovery: 3,
+    incorrectCarePenalty: 8,
+    cleanRoomThreshold: 80,
+    dirtyRoomThreshold: 45,
+    cleanRoomCompletionBonus: 2,
+    dirtyRoomCompletionPenalty: 4,
+    roomUpgradeBonusPerLevel: 1,
+    maximumRoomUpgradeBonus: 3,
+    happyStaffMoraleThreshold: 80,
+    unhappyStaffMoraleThreshold: 45,
+    happyStaffCompletionBonus: 2,
+    unhappyStaffCompletionPenalty: 3,
+    maximumAmenityCompletionBonus: 3,
+    roomCleanlinessLossPerEncounter: 1,
+    rollingWindowSize: 10,
+  },
+  environment: {
+    litterSpawnMinimumMinutes: 45,
+    litterSpawnMaximumMinutes: 90,
+    maximumLitterItems: 3,
+    litterCleanupRestore: 12,
+    litterCleanupSatisfactionBonus: 1,
+    waterCoolerDrainIntervalMinutes: 60,
+    waterCoolerDrainPerInterval: 25,
+    waterCoolerLowThreshold: 25,
+    waterRefillSatisfactionBonus: 1,
+    praiseMoraleBonus: 5,
+    praiseCooldownMinutes: 600,
+    founderInteractionMinutes: 2,
+    idleActionMinimumMinutes: 10,
+    idleActionMaximumMinutes: 25,
+    idleActionChancePercent: 35,
+  },
   arrivals: {
     levelZeroRecoveryIntervalTicks: 2,
     levelOneRoutineIntervalTicks: 2,
+    firstArrivalMinimumMinutes: 35,
+    firstArrivalMaximumMinutes: 75,
+    routineBaseIntervalMinutes: 60,
+    routineVariationMinutes: 15,
   },
   economy: {
     expenseIntervalTicks: 10,
+    postingIntervalMinutes: 15,
   },
   emergencyGlp1: {
     cashEligibilityThreshold: 200,
     cooldownTicks: 1,
+    cooldownMinutes: 60,
+    visibleRegardlessOfCash: true,
     dailyUseCap: 8,
     fullPayment: 20,
     reducedPayment: 10,
@@ -349,9 +400,16 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     ],
     maximumQualityRevenueBonus: 15,
     maximumIncorrectFinancialConsequence: 5,
-    clinicalXpPerCorrectFirstAnswer: 5,
-    // Correctness affects a short-lived daily confidence modifier in the
-    // domain. It does not permanently ratchet facility satisfaction.
+    clinicalXpPerCorrectFirstAnswer: 10,
+    clinicalXpPerIncorrectFirstAnswer: 2,
+    levelZeroBasePayment: 15,
+    levelZeroPerQuestionPayment: 10,
+    levelZeroPerCorrectPayment: 50,
+    levelOneBasePayment: 20,
+    levelOnePerQuestionPayment: 15,
+    levelOnePerCorrectPayment: 65,
+    // Individual patient-satisfaction effects now live in patientSatisfaction.
+    // These legacy structural bounds remain zero in the unpublished fixture.
     maximumCorrectSatisfactionBonus: 0,
     maximumIncorrectSatisfactionConsequence: 0,
     patientSatisfactionDeltaMinimum: 0,
@@ -365,7 +423,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         {
           id: "route.synthetic.in_house",
           displayName: "In-house synthetic analysis",
-          durationTicks: 1,
+          durationTicks: 10,
           requiredCapabilityId: "capability.synthetic.in_house_analysis",
           requiredCapabilityIds: [],
           preference: 0,
@@ -375,7 +433,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           displayName: "Outsourced synthetic analysis",
           // The first interface tutorial should demonstrate a pending result
           // without making a new player wait 90 real seconds.
-          durationTicks: 1,
+          durationTicks: 10,
           requiredCapabilityId: null,
           requiredCapabilityIds: [],
           preference: 1,
@@ -389,7 +447,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         {
           id: "route.xray.in_house",
           displayName: "In-house X-ray",
-          durationTicks: 2,
+          durationTicks: 15,
           satisfactionOnResult: 1,
           requiredCapabilityId: "capability.xray_machine",
           requiredCapabilityIds: [
@@ -406,7 +464,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         {
           id: "route.xray.outsourced",
           displayName: "Outsourced X-ray",
-          durationTicks: 6,
+          durationTicks: 60,
           requiredCapabilityId: null,
           requiredCapabilityIds: [],
           preference: 1,
@@ -420,7 +478,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         {
           id: "route.basic_labs.outsourced",
           displayName: "Off-site basic laboratory testing",
-          durationTicks: 4,
+          durationTicks: 45,
           requiredCapabilityId: null,
           requiredCapabilityIds: [],
           preference: 1,

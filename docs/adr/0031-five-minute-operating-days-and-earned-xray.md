@@ -55,3 +55,9 @@ therefore a current test value, not a permanent balance promise.
 Moderate. Values are configurable, but a different day rhythm would require
 new balance testing, tutorial timing, alert pacing, result timing, animation
 speed, and player-expectation work.
+
+## Current amendment
+
+[ADR 0035](0035-minute-simulation-and-patient-satisfaction.md) replaces the
+hourly clock with simulated minutes and 1x/2x/4x controls. The five-minute day
+is now the 2x pace. The earned on-site X-ray rule remains current.

@@ -17,12 +17,17 @@ import type {
 
 function facilityTimeLabel(tick: number): string {
   const clock = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock;
-  const hoursPerDay = clock.dayEndHour - clock.dayStartHour;
-  const elapsedHours = tick * clock.facilityHoursPerTick;
-  const day = Math.floor(elapsedHours / hoursPerDay) + 1;
-  const hour24 = clock.dayStartHour + (elapsedHours % hoursPerDay);
+  const minutesPerDay =
+    (clock.dayEndHour - clock.dayStartHour) * 60;
+  const day = Math.floor(tick / minutesPerDay) + 1;
+  const minuteOfDay = tick % minutesPerDay;
+  const hour24 =
+    clock.dayStartHour + Math.floor(minuteOfDay / 60);
+  const minute = minuteOfDay % 60;
   const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
-  return `Day ${day}, ${hour12} ${hour24 >= 12 ? "PM" : "AM"}`;
+  return `Day ${day}, ${hour12}:${minute
+    .toString()
+    .padStart(2, "0")} ${hour24 >= 12 ? "PM" : "AM"}`;
 }
 
 function configuredAlertCopy(
@@ -98,6 +103,14 @@ function eventTitle(event: DomainEvent): string {
       return "Encounter complete";
     case "room_placed":
       return "Construction complete";
+    case "room_moved":
+      return "Room moved";
+    case "room_rotated":
+      return "Room rotated";
+    case "door_placed":
+      return "Door placed";
+    case "door_removed":
+      return "Door removed";
     case "room_sold":
       return "Room sold";
     case "room_upgraded":
@@ -116,6 +129,16 @@ function eventTitle(event: DomainEvent): string {
       return "Prototype tool";
     case "emergency_glp1_consultation":
       return "Emergency side business";
+    case "litter_appeared":
+      return "Facility update";
+    case "litter_collected":
+      return "Clean-up complete";
+    case "water_cooler_low":
+      return "Water cooler";
+    case "water_cooler_refilled":
+      return "Water cooler refilled";
+    case "employee_praised":
+      return "Staff update";
   }
 }
 

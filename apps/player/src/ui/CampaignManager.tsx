@@ -21,6 +21,12 @@ export function CampaignManager({
 }: CampaignManagerProps) {
   const [open, setOpen] = useState(false);
   const activeCampaign = campaigns.find((campaign) => campaign.active);
+  const resumableCampaigns = campaigns.filter(
+    (campaign) => campaign.status === "resumable",
+  );
+  const archivedCampaigns = campaigns.filter(
+    (campaign) => campaign.status === "archived",
+  );
 
   return (
     <>
@@ -47,7 +53,7 @@ export function CampaignManager({
             </p>
 
             <div className="campaign-list">
-              {campaigns.map((campaign) => (
+              {resumableCampaigns.map((campaign) => (
                 <article
                   className={`campaign-card${
                     campaign.active ? " is-active" : ""
@@ -117,9 +123,15 @@ export function CampaignManager({
               {activeCampaign
                 ? `${activeCampaign.name} is open.`
                 : "No campaign is currently open."}{" "}
-              Email login and cloud synchronization are intentionally deferred
-              from this local slice.
+              Prototype access currently stores these clinics in this browser.
             </p>
+            {archivedCampaigns.length > 0 ? (
+              <p className="campaign-dialog-footnote">
+                {archivedCampaigns.length} archived clinic
+                {archivedCampaigns.length === 1 ? "" : "s"} can be restored
+                from the Campaign screen.
+              </p>
+            ) : null}
           </section>
         </div>
       ) : null}

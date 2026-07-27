@@ -4,7 +4,7 @@ Status: The initial FSRS settings and the structural clinical-answer reward
 relationship below are accepted. Other numerical balance values remain
 agent-managed prototype defaults until validated and published.
 
-Last updated: 2026-07-26
+Last updated: 2026-07-27
 
 ## Principle
 
@@ -32,38 +32,43 @@ the production release-pinning and migration behavior.
 | Area | Current value | Unit or behavior |
 |---|---:|---|
 | Starting money | `$90` | Prototype whole-dollar display units |
-| Starting satisfaction | `95` | Points on a 0-100 scale |
+| Patient starting satisfaction | `100` | Per encounter; clinic satisfaction is unmeasured until an encounter ends |
 | Level 0 XP requirement | `10` | Clinical XP |
 | Level 0 completed encounters | `0` | Intro patients teach the loop but are not a formal count gate |
 | Level 0 satisfaction gate | `> 90` | Strictly above 90 |
 | Level 0 required room | Examination room | One placed room |
-| Level 1 XP requirement | `60` | Clinical XP |
+| Level 1 XP requirement | `150` | Current-level Clinical XP toward Level 2 |
 | Level 1 completed encounters | `0` | No separate encounter-count gate |
 | Level 1 satisfaction gate | `> 90` | Strictly above 90 |
-| Facility tick | `30` | Real seconds per one-hour facility tick while visible and unpaused |
-| Operating day | `10` | Facility ticks, 8 AM through 6 PM |
-| Level 0 recovery arrival interval | `2` | Facility ticks |
-| Level 1 routine arrival interval | `2` | Facility ticks |
-| Routine patience | `16` | Facility ticks before leaving unopened |
-| Level 0 recovery patience | Exempt | Anti-softlock patients remain until opened |
-| Patience warnings | `8, 4, 0` | Remaining facility ticks |
-| Waiting-warning satisfaction | `0, -1, -1` | One-time durable changes at the corresponding warnings |
-| Expense interval | `10` | Facility ticks |
-| Development fast-forward | `10` | Normal facility ticks processed at once |
+| Authoritative simulation tick | `1` | Simulated minute |
+| Facility speeds | `1x / 2x / 4x` | One game hour in about `60 / 30 / 15` real seconds |
+| Operating day | `8 AM-6 PM` | About 10 real minutes at 1x; continuous rollover |
+| First routine arrival | `35-75` | Irregular persisted game minutes after start |
+| Later routine arrivals | `60 +/- 15` | Persisted game minutes; not quarter-hour aligned |
+| Idle-wait grace | `20` | Game minutes before satisfaction decay |
+| Idle-wait decay | `-1 / 5` | Satisfaction per five game minutes; sidewalk multiplier `150%` |
+| Walkout threshold | `0-59` | Persisted hidden value; tutorial patients exempt |
+| Clinic satisfaction window | `10` | Most recent completed encounters and walkouts |
+| Financial posting | `15` | Game minutes, with fixed-point prorated accrual |
+| Development fast-forward | `10` | Game minutes processed by one developer action |
 | Base routine workload limit | `2` | Waiting plus unresolved Active patients |
 | Critical reserved capacity | `1` | Non-routine protected slot |
 
-The locked Level 2 preview requires the Imaging Control, X-ray, and
-Minor-Procedure rooms plus one Imaging Technician. Bathroom, Waiting Room, and
-Receptionist are useful Level 1 options rather than formal completion gates.
-The playable slice stops there and does not advance to Level 2.
+The locked Level 2 preview requires a functioning X-ray installation, one
+Minor-Procedure Room, and one Imaging Technician. X-ray functionality
+implicitly validates its directly connected Imaging Control Room and both door
+types; Imaging Control is not repeated as a separate goal. Bathroom, Waiting
+Room, and Receptionist remain useful Level 1 options rather than formal
+completion gates. The playable slice stops there and does not advance to
+Level 2.
 
 ### Current rooms and staff
 
-| Definition | Build or hire cost | Recurring cost per expense interval | Other current effect |
+| Definition | Build or hire cost | Recurring hourly rate | Other current effect |
 |---|---:|---:|---|
 | Front Desk | `$0` | `$10` | Protected starting room |
 | Hallway tile | `$30` | `$0` | Repeatable walkable connection |
+| Door | `$0` | `$0` | Explicit valid wall access; no sale refund |
 | Examination Room | `$130` | `$12` | `+2` workload; in-house synthetic analysis |
 | Bathroom | `$180` | `$8` | `+2` satisfaction on build |
 | Waiting Room | `$280` | `$14` | `+2` satisfaction; `+2` workload; visible waiting occupancy |
@@ -81,27 +86,25 @@ interface.
 
 | Stable area | Current value |
 |---|---:|
-| Tutorial completion revenue | `$45` |
-| Basic clinic completion revenue | `$75` |
-| Referral completion revenue | `$60` |
-| XP per first-attempt correct answer | `5` |
-| Maximum patient-level quality revenue bonus | `$15` |
-| Maximum incorrect financial consequence | `$5` |
-| Answer-driven base satisfaction change | `0` |
-| Patient confidence per correct / incorrect decision | `+10 / -10` |
-| Same-day satisfaction modifier per correct / incorrect decision | `+1 / -1`, capped at `+/-3`, reset daily |
-| Satisfaction penalty for leaving before being seen | `-2` |
-| Outsourced synthetic analysis | `1` facility tick; onboarding presentation is accelerated only while running |
-| In-house synthetic analysis | `1` facility tick |
-| Outsourced X-ray | `6` facility ticks |
-| Functioning in-house X-ray | `2` service ticks plus frozen travel; `+1` satisfaction when the result returns |
+| Level 0 gross encounter payment | `$15 + ($10 * questions) + ($50 * correct)` |
+| Level 1 gross encounter payment | `$20 + ($15 * questions) + ($65 * correct)` |
+| XP per correct / incorrect first submission | `10 / 2` current-level XP |
+| Correct / incorrect care satisfaction | `+3 / -8` per scored decision |
+| Clean / dirty room completion effect | `+2 / -4` satisfaction |
+| Happy / unhappy staff completion effect | `+2 / -3` satisfaction |
+| Maximum amenity completion benefit | `+3` satisfaction |
+| Outsourced synthetic analysis | `10` game minutes |
+| In-house synthetic analysis | `10` game minutes |
+| Outsourced X-ray | `60` game minutes |
+| Functioning in-house X-ray | `15` service minutes plus frozen travel; `+1` satisfaction on result |
+| Outsourced basic laboratory testing | `45` game minutes |
+| Manual GLP-1 action | Always visible before its future room; `60`-minute cooldown; no XP/FSRS |
 
-The initial funding validator requires starting money plus one minimum
-completion payment after the maximum incorrect financial consequence to cover
-the Examination Room. The current configured operating buffer is `$0`; there
-is no formal minimum-cash progression gate. Recovery patients remain available
-when incorrect tutorial answers leave the player below the XP gate and remain
-patience-exempt until opened.
+The initial funding validator and tutorial fixtures preserve a worst-case route
+to the Examination Room after the protected introductory patients. The current
+configured operating buffer is `$0`; there is no formal minimum-cash
+progression gate. Recovery patients remain available when incorrect tutorial
+answers leave the player below the XP gate and remain abandonment-exempt.
 
 ### Current prototype FSRS settings
 
@@ -140,15 +143,19 @@ same-date response.
 
 ## Accepted clinical-answer reward relationship
 
-- Basic operational revenue is settled per completed patient and provided
-  services, not multiplied by the number of scored questions.
-- Correct first submissions award educational XP immediately and increase
-  patient confidence. Incorrect first submissions award no XP, never remove
-  earned XP, and reduce patient confidence.
-- Each scored decision also changes a small same-day satisfaction modifier
-  (`+1` or `-1`, capped at `+/-3`) that resets at day rollover. It does not
-  directly ratchet durable facility satisfaction.
-- Multi-question patient bonuses and penalties are normalized and capped.
+- Correct first submissions award `10` current-level Learning XP immediately;
+  incorrect first submissions award `2`. Both update only the decision's one
+  primary concept, and neither can remove previously earned XP.
+- The game has no lifetime-XP counter. Current-level XP resets only after the
+  player advances to the next facility level.
+- Gross encounter payment is calculated from facility level, authored question
+  count, and first-submission correctness using the formulas above. Cash is
+  settled once at encounter completion.
+- Direct service, supply, and authored outcome expenses remain separate from
+  gross payment and are shown separately when present.
+- Answer quality changes that encounter's individual patient satisfaction
+  through configured care effects. There is no Patient Confidence meter or
+  same-day campaign-wide correctness modifier.
 - Same-date remediation cannot award another clinical XP or quality bonus for
   that concept.
 - Worst-case tutorial funding still covers the first Examination Room at the
@@ -157,15 +164,16 @@ same-date response.
   correct play.
 
 Exact amounts and formulas are balance values selected through simulation and
-playtesting. ADR 0033 refines ADR 0025 for the current immediate-XP,
-patient-confidence, and daily-modifier behavior.
+playtesting. ADR 0034 defines the current XP and payment formulas; ADR 0035
+defines individual and rolling satisfaction. They amend the historical reward
+relationships in ADRs 0025 and 0033.
 
 Terminal Clinical Outcome `minor` or `major` severity is clinical-content
-metadata, not a balance multiplier. A wrong final answer uses the same
-normalized patient-level consequence relationship as any other wrong answer.
-It cannot override the cap, tutorial funding guarantee, progression safeguards,
-basic completion-revenue rule, or one-review-per-node behavior. This separation
-is accepted in ADR 0030.
+metadata, not an automatic balance multiplier. Each wrong final choice freezes
+its authored consequence and explicit operational effects; runtime code cannot
+invent a complication. It cannot override the tutorial funding guarantee,
+progression safeguards, or one-review-per-node behavior. This separation is
+accepted in ADRs 0030 and 0034.
 
 ## Accepted result-timing relationship
 
@@ -188,25 +196,26 @@ publication. The structural relationship is accepted in ADR 0027.
 
 ## Accepted patient-patience relationship
 
-- Only unopened Waiting patients may leave because of patience.
-- Patience and warnings advance in facility time and remain visible without
-  relying on sound or color alone.
-- First chart opening cancels abandonment and protects the Active encounter.
-- Reading the open chart creates no response-delay consequence for that patient.
-- Operational delay and ignored action-ready charts may produce small, capped
-  satisfaction effects after visible grace thresholds. Operational thresholds
-  reference an explicit promised target or ETA rather than penalizing an
-  ordinary unavoidable wait.
+- Every patient starts at `100%` individual satisfaction.
+- Satisfaction decays only during genuine idle waiting after a configured grace
+  period. It does not decay during normal walking, active care, an expected
+  service timer, off-site travel, or while that patient's chart is open.
+- Care quality, cleanliness, room upgrades, amenities, staff morale, and service
+  efficiency may apply explicit bounded effects.
+- Below `60%`, each ordinary encounter's persisted hidden threshold determines
+  when that patient decides to leave. The threshold is never rerolled on pause
+  or reload, and zero satisfaction guarantees departure.
 - Tutorial patients are exempt from abandonment and cannot cause an opening
   softlock.
-- Leaving before being seen creates no review, clinical XP, completion revenue,
-  mastery evidence, or answer disclosure.
-- The final warning has observable facility-time grace at every supported speed,
-  and answer/delay satisfaction effects share one patient-level cap.
+- A patient who decides to leave cancels pending care and physically routes to
+  the exterior boundary. Already submitted answers and reviews remain; no
+  encounter-completion payment is awarded.
+- Clinic satisfaction is the rolling mean of the configured number of completed
+  encounters and walkouts. Active patients do not enter the HUD value.
 
 Exact durations, warning bands, grace periods, satisfaction amounts, and caps
 remain agent-managed prototype defaults until simulation and playtesting
-support publication. The structural relationship is accepted in ADR 0028.
+support publication. ADR 0035 supersedes the abandonment scope of ADR 0028.
 
 ## Accepted clinic-workload relationship
 

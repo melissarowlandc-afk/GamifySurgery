@@ -12,8 +12,11 @@ import {
 } from "./FacilityScene";
 import type {
   FacilityCameraChangeRequest,
+  CollectLitterRequest,
   FacilityViewModel,
   PlaceRoomRequest,
+  PraiseEmployeeRequest,
+  RefillWaterCoolerRequest,
   SelectRoomRequest,
 } from "./types";
 
@@ -21,6 +24,9 @@ export interface FacilityCanvasProps {
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
   onSelectRoom?: SelectRoomRequest;
+  onCollectLitter?: CollectLitterRequest;
+  onRefillWaterCooler?: RefillWaterCoolerRequest;
+  onPraiseEmployee?: PraiseEmployeeRequest;
   onCameraChange?: FacilityCameraChangeRequest;
   className?: string;
   style?: CSSProperties;
@@ -47,6 +53,9 @@ export function FacilityCanvas({
   viewModel,
   onPlaceRoom,
   onSelectRoom,
+  onCollectLitter,
+  onRefillWaterCooler,
+  onPraiseEmployee,
   onCameraChange,
   className,
   style,
@@ -64,6 +73,9 @@ export function FacilityCanvas({
   bridgeRef.current.viewModel = viewModel;
   bridgeRef.current.onPlaceRoom = onPlaceRoom;
   bridgeRef.current.onSelectRoom = onSelectRoom;
+  bridgeRef.current.onCollectLitter = onCollectLitter;
+  bridgeRef.current.onRefillWaterCooler = onRefillWaterCooler;
+  bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
   bridgeRef.current.onCameraChange = onCameraChange;
 
   useEffect(() => {

@@ -1,4 +1,10 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import {
+  setFastFacilitySpeed,
+  startClinic,
+  waitForDecisionChoices,
+  waitForFirstPatientReady,
+} from "./helpers";
 
 async function expectCoachBesideTarget(
   page: Page,
@@ -11,50 +17,51 @@ async function expectCoachBesideTarget(
   await expect(beacon).toBeVisible();
   await expect(target).toHaveClass(/tutorial-target-highlight/);
 
-  const [coachBox, targetBox, protectedBox, beaconBox] = await Promise.all([
-    coach.boundingBox(),
-    target.boundingBox(),
-    protectedRegion.boundingBox(),
-    beacon.boundingBox(),
-  ]);
-  expect(coachBox).not.toBeNull();
-  expect(targetBox).not.toBeNull();
-  expect(protectedBox).not.toBeNull();
-  expect(beaconBox).not.toBeNull();
-  if (!coachBox || !targetBox || !protectedBox || !beaconBox) {
-    return;
-  }
-
-  const overlaps = !(
-    coachBox.x + coachBox.width <= protectedBox.x ||
-    coachBox.x >= protectedBox.x + protectedBox.width ||
-    coachBox.y + coachBox.height <= protectedBox.y ||
-    coachBox.y >= protectedBox.y + protectedBox.height
-  );
-  expect(overlaps).toBe(false);
-
-  const beaconHorizontalGap = Math.max(
-    targetBox.x - (beaconBox.x + beaconBox.width),
-    beaconBox.x - (targetBox.x + targetBox.width),
-    0,
-  );
-  const beaconVerticalGap = Math.max(
-    targetBox.y - (beaconBox.y + beaconBox.height),
-    beaconBox.y - (targetBox.y + targetBox.height),
-    0,
-  );
-  expect(
-    Math.hypot(beaconHorizontalGap, beaconVerticalGap),
-  ).toBeLessThanOrEqual(12);
-
-  expect(coachBox.x).toBeGreaterThanOrEqual(0);
-  expect(coachBox.y).toBeGreaterThanOrEqual(0);
-  expect(coachBox.x + coachBox.width).toBeLessThanOrEqual(
-    await page.evaluate(() => window.innerWidth),
-  );
-  expect(coachBox.y + coachBox.height).toBeLessThanOrEqual(
-    await page.evaluate(() => window.innerHeight),
-  );
+  await expect
+    .poll(
+      async () => {
+        const [coachBox, targetBox, protectedBox, beaconBox] =
+          await Promise.all([
+            coach.boundingBox(),
+            target.boundingBox(),
+            protectedRegion.boundingBox(),
+            beacon.boundingBox(),
+          ]);
+        if (!coachBox || !targetBox || !protectedBox || !beaconBox) {
+          return false;
+        }
+        const overlaps = !(
+          coachBox.x + coachBox.width <= protectedBox.x ||
+          coachBox.x >= protectedBox.x + protectedBox.width ||
+          coachBox.y + coachBox.height <= protectedBox.y ||
+          coachBox.y >= protectedBox.y + protectedBox.height
+        );
+        const beaconHorizontalGap = Math.max(
+          targetBox.x - (beaconBox.x + beaconBox.width),
+          beaconBox.x - (targetBox.x + targetBox.width),
+          0,
+        );
+        const beaconVerticalGap = Math.max(
+          targetBox.y - (beaconBox.y + beaconBox.height),
+          beaconBox.y - (targetBox.y + targetBox.height),
+          0,
+        );
+        const viewport = await page.evaluate(() => ({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }));
+        return (
+          !overlaps &&
+          Math.hypot(beaconHorizontalGap, beaconVerticalGap) <= 12 &&
+          coachBox.x >= 0 &&
+          coachBox.y >= 0 &&
+          coachBox.x + coachBox.width <= viewport.width &&
+          coachBox.y + coachBox.height <= viewport.height
+        );
+      },
+      { timeout: 5_000 },
+    )
+    .toBe(true);
 }
 
 test("keeps tutorial guidance beside real controls at variable widths", async ({
@@ -65,13 +72,13 @@ test("keeps tutorial guidance beside real controls at variable widths", async ({
     "Phone tutorial usability is covered through interactions rather than desktop callout geometry.",
   );
 
-  await page.goto("/");
-  await page.getByLabel("Founder name").fill("Tutorial Founder");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page
-    .getByRole("button", { name: "Build a Surgery Clinic" })
-    .click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await startClinic(
+    page,
+    "Tutorial Founder",
+    `Tutorial Positioning ${testInfo.project.name}`,
+  );
+  await setFastFacilitySpeed(page);
+  await waitForFirstPatientReady(page);
 
   const coach = page.locator(".tutorial-coach");
   await expect(
@@ -90,6 +97,7 @@ test("keeps tutorial guidance beside real controls at variable widths", async ({
 
   // The tutorial advances only when the player uses the highlighted control.
   await firstPatient.click();
+  await waitForDecisionChoices(page);
   await expect(
     coach.getByRole("heading", {
       name: "Read across the chart, then choose",

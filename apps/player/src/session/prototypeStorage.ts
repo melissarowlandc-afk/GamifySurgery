@@ -9,9 +9,9 @@ import {
 
 const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
 const PROTOTYPE_PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
-const PROFILE_SCHEMA_VERSION = 1;
+const PROFILE_SCHEMA_VERSION = 2;
 
-export type LocalCampaignStatus = "active" | "archived";
+export type LocalCampaignStatus = "resumable" | "archived";
 
 export interface LocalCampaignRecord {
   campaignId: string;
@@ -25,6 +25,7 @@ export interface LocalCampaignRecord {
 export interface LocalPrototypeProfile {
   schemaVersion: typeof PROFILE_SCHEMA_VERSION;
   activeCampaignId: string | null;
+  /** Retained only to migrate historical automatically named local saves. */
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
   tutorialIntroDismissedCampaignIds: string[];
@@ -75,7 +76,7 @@ function createUniqueToken(): string {
 }
 
 export function createLocalCampaign(
-  campaignNumber: number,
+  clinicName: string,
   existingCampaignIds: ReadonlySet<string> = new Set(),
   now = Date.now(),
   campaignSeed?: string,
@@ -97,10 +98,10 @@ export function createLocalCampaign(
 
   return {
     campaignId,
-    name: `Clinic ${campaignNumber}`,
+    name: normalizeClinicName(clinicName),
     createdAtRealMs: now,
     updatedAtRealMs: now,
-    status: "active",
+    status: "resumable",
     state,
   };
 }
@@ -119,14 +120,22 @@ export function createFreshProfile(): LocalPrototypeProfile {
 export function appendLocalCampaign(
   profile: LocalPrototypeProfile,
   founder: FounderIdentity,
+  clinicName: string,
   now = Date.now(),
   campaignSeed?: string,
 ): {
   profile: LocalPrototypeProfile;
   campaign: LocalCampaignRecord;
 } {
+  const normalizedName = normalizeClinicName(clinicName);
+  if (normalizedName.length === 0) {
+    throw new Error("Clinic name is required.");
+  }
+  if (clinicNameExists(profile, normalizedName)) {
+    throw new Error("That clinic name already exists in town.");
+  }
   const campaign = createLocalCampaign(
-    profile.nextCampaignNumber,
+    normalizedName,
     new Set(profile.campaigns.map((existing) => existing.campaignId)),
     now,
     campaignSeed,
@@ -138,14 +147,87 @@ export function appendLocalCampaign(
       ...profile,
       activeCampaignId: campaign.campaignId,
       nextCampaignNumber: profile.nextCampaignNumber + 1,
-      campaigns: [
-        ...profile.campaigns.map((existing) => ({
-          ...existing,
-          status: "archived" as const,
-        })),
-        campaign,
-      ],
+      campaigns: [...profile.campaigns, campaign],
     },
+  };
+}
+
+export function normalizeClinicName(value: string): string {
+  return value.trim().replace(/\s+/g, " ");
+}
+
+export function clinicNameKey(value: string): string {
+  return normalizeClinicName(value).toLocaleLowerCase();
+}
+
+export function clinicNameExists(
+  profile: Pick<LocalPrototypeProfile, "campaigns">,
+  value: string,
+): boolean {
+  const candidate = clinicNameKey(value);
+  return profile.campaigns.some(
+    (campaign) => clinicNameKey(campaign.name) === candidate,
+  );
+}
+
+export function selectLocalCampaign(
+  profile: LocalPrototypeProfile,
+  campaignId: string,
+): LocalPrototypeProfile {
+  const campaign = profile.campaigns.find(
+    (candidate) => candidate.campaignId === campaignId,
+  );
+  if (!campaign || campaign.status !== "resumable") {
+    throw new Error("That clinic is not available to resume.");
+  }
+  return {
+    ...profile,
+    activeCampaignId: campaignId,
+  };
+}
+
+export function archiveLocalCampaign(
+  profile: LocalPrototypeProfile,
+  campaignId: string,
+): LocalPrototypeProfile {
+  const campaign = profile.campaigns.find(
+    (candidate) => candidate.campaignId === campaignId,
+  );
+  if (!campaign) {
+    throw new Error("That clinic could not be found.");
+  }
+  return {
+    ...profile,
+    activeCampaignId:
+      profile.activeCampaignId === campaignId
+        ? null
+        : profile.activeCampaignId,
+    campaigns: profile.campaigns.map((candidate) =>
+      candidate.campaignId === campaignId
+        ? { ...candidate, status: "archived" as const }
+        : candidate,
+    ),
+  };
+}
+
+export function restoreLocalCampaign(
+  profile: LocalPrototypeProfile,
+  campaignId: string,
+): LocalPrototypeProfile {
+  const campaign = profile.campaigns.find(
+    (candidate) => candidate.campaignId === campaignId,
+  );
+  if (!campaign || campaign.status !== "archived") {
+    throw new Error("That archived clinic could not be found.");
+  }
+  return {
+    ...profile,
+    activeCampaignId: campaignId,
+    campaigns: profile.campaigns.map((candidate) =>
+      candidate.campaignId === campaignId
+        ? { ...candidate, status: "resumable" as const }
+        : candidate,
+    ),
   };
 }
 
@@ -168,7 +250,8 @@ function parsePersistedProfile(serialized: string): {
   const candidate: unknown = JSON.parse(serialized);
   if (
     !isRecord(candidate) ||
-    candidate.schemaVersion !== PROFILE_SCHEMA_VERSION ||
+    (candidate.schemaVersion !== 1 &&
+      candidate.schemaVersion !== PROFILE_SCHEMA_VERSION) ||
     (candidate.activeCampaignId !== null &&
       typeof candidate.activeCampaignId !== "string") ||
     !Number.isSafeInteger(candidate.nextCampaignNumber) ||
@@ -191,6 +274,7 @@ function parsePersistedProfile(serialized: string): {
         !isSafeTimestamp(rawCampaign.createdAtRealMs) ||
         !isSafeTimestamp(rawCampaign.updatedAtRealMs) ||
         (rawCampaign.status !== "active" &&
+          rawCampaign.status !== "resumable" &&
           rawCampaign.status !== "archived") ||
         typeof rawCampaign.serializedState !== "string"
       ) {
@@ -201,12 +285,18 @@ function parsePersistedProfile(serialized: string): {
       if (state.campaignId !== rawCampaign.campaignId) {
         throw new Error("Campaign identity mismatch.");
       }
+      const migratedStatus: LocalCampaignStatus =
+        candidate.schemaVersion === 1
+          ? "resumable"
+          : rawCampaign.status === "archived"
+            ? "archived"
+            : "resumable";
       campaigns.push({
         campaignId: rawCampaign.campaignId,
         name: rawCampaign.name,
         createdAtRealMs: rawCampaign.createdAtRealMs,
         updatedAtRealMs: rawCampaign.updatedAtRealMs,
-        status: rawCampaign.status,
+        status: migratedStatus,
         state,
       });
     } catch {
@@ -214,16 +304,19 @@ function parsePersistedProfile(serialized: string): {
     }
   }
 
+  const resumableCampaigns = campaigns.filter(
+    (campaign) => campaign.status === "resumable",
+  );
   const requestedActiveCampaign =
     candidate.activeCampaignId === null
       ? undefined
-      : campaigns.find(
+      : resumableCampaigns.find(
           (campaign) => campaign.campaignId === candidate.activeCampaignId,
         );
   const activeCampaign =
     candidate.activeCampaignId === null
       ? undefined
-      : (requestedActiveCampaign ?? campaigns[0]);
+      : (requestedActiveCampaign ?? resumableCampaigns[0]);
 
   return {
     profile: {
@@ -246,13 +339,7 @@ function parsePersistedProfile(serialized: string): {
             ),
           )
         : [],
-      campaigns: campaigns.map((campaign) => ({
-        ...campaign,
-        status:
-          campaign.campaignId === activeCampaign?.campaignId
-            ? "active"
-            : "archived",
-      })),
+      campaigns,
     },
     skippedCampaignCount,
   };
@@ -268,7 +355,7 @@ function migrateLegacySave(serializedState: string): LocalPrototypeProfile {
     name: "Clinic 1",
     createdAtRealMs,
     updatedAtRealMs: now,
-    status: "active",
+    status: "resumable",
     state,
   };
   return {

@@ -12,6 +12,8 @@ const PROFILE_STORAGE_KEY = "gamify-surgery.prototype.profile.v1";
 
 const FOUNDER: FounderIdentity = {
   displayName: "Avery",
+  headId: "head.test",
+  bodyId: "body.test",
   appearance: {
     version: "pixel-avatar.v1",
     bodyShape: "broad",
@@ -55,6 +57,7 @@ describe("new-campaign opening storage", () => {
     const created = appendLocalCampaign(
       untouchedProfile,
       FOUNDER,
+      "Kent Surgical",
       123,
       "opening-test-seed",
     );
@@ -77,6 +80,7 @@ describe("new-campaign opening storage", () => {
     const created = appendLocalCampaign(
       createFreshProfile(),
       FOUNDER,
+      "Archived Surgical",
       123,
       "archived-campaign-seed",
     );
@@ -103,6 +107,7 @@ describe("new-campaign opening storage", () => {
     const created = appendLocalCampaign(
       createFreshProfile(),
       FOUNDER,
+      "Compatible Surgical",
       123,
       "compatible-archived-seed",
     );

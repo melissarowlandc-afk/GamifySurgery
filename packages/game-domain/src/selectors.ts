@@ -6,6 +6,7 @@ import type {
   EncounterState,
   FacilityProgressionStatus,
   GameState,
+  GridPoint,
   PatientListItem,
   PatientLists,
   WorkloadSnapshot,
@@ -20,6 +21,10 @@ import {
   getFrozenPatientTravelLocation,
   getOffsitePatientTravelPresentation,
 } from "./patient-travel";
+import {
+  validateFacilityAccess,
+  type FacilityAccessValidation,
+} from "./doors";
 
 const CAPACITY_LIFECYCLES = new Set([
   "waiting_unopened",
@@ -33,7 +38,7 @@ export function getFacilityDayNumber(
 ): number {
   const clock = context.balanceRelease.clock;
   const operatingTicksPerDay =
-    (clock.dayEndHour - clock.dayStartHour) / clock.facilityHoursPerTick;
+    (clock.dayEndHour - clock.dayStartHour) * 60;
   return Math.floor(state.facilityTick / operatingTicksPerDay) + 1;
 }
 
@@ -53,21 +58,19 @@ export function getEmergencyGlp1Status(
       : Math.max(
           0,
           state.emergencyGlp1.lastUsedAtFacilityTick +
-            config.cooldownTicks -
+            config.cooldownMinutes -
             state.facilityTick,
         );
-  const cashEligible = state.cash < config.cashEligibilityThreshold;
+  const cashEligible = true;
   const nextUse = usage + 1;
   const payment =
     nextUse <= config.fullPaymentUseLimit
       ? config.fullPayment
       : config.reducedPayment;
-  const blockedReason = !cashEligible
-    ? `Available only below $${config.cashEligibilityThreshold}.`
-    : usage >= config.dailyUseCap
+  const blockedReason = usage >= config.dailyUseCap
       ? `Daily limit reached (${config.dailyUseCap}/${config.dailyUseCap}).`
       : cooldownRemainingTicks > 0
-        ? `Available in ${cooldownRemainingTicks} hour${
+        ? `Available in ${cooldownRemainingTicks} minute${
             cooldownRemainingTicks === 1 ? "" : "s"
           }.`
         : null;
@@ -251,22 +254,32 @@ export function getFacilityClock(
 ) {
   const clock = context.balanceRelease.clock;
   const operatingHoursPerDay = clock.dayEndHour - clock.dayStartHour;
-  const elapsedFacilityHours =
-    state.facilityTick * clock.facilityHoursPerTick;
-  const dayNumber = Math.floor(elapsedFacilityHours / operatingHoursPerDay) + 1;
+  const operatingMinutesPerDay = operatingHoursPerDay * 60;
+  const elapsedFacilityMinutes = state.facilityTick;
+  const dayNumber =
+    Math.floor(elapsedFacilityMinutes / operatingMinutesPerDay) + 1;
+  const minuteOfDay =
+    elapsedFacilityMinutes % operatingMinutesPerDay;
   const hour24 =
-    clock.dayStartHour + (elapsedFacilityHours % operatingHoursPerDay);
+    clock.dayStartHour + Math.floor(minuteOfDay / 60);
+  const minute = minuteOfDay % 60;
   const meridiem = hour24 >= 12 ? "PM" : "AM";
   const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
   return {
     dayNumber,
     hour24,
     hour12,
+    minute,
     meridiem,
-    displayLabel: `Day ${dayNumber} ${hour12} ${meridiem}`,
+    displayLabel: `Day ${dayNumber} ${hour12}:${minute
+      .toString()
+      .padStart(2, "0")} ${meridiem}`,
     operatingHoursPerDay,
+    operatingMinutesPerDay,
     realMillisecondsPerFacilityHour:
       clock.realMillisecondsPerFacilityHour,
+    realMillisecondsPerFacilityMinuteAt1x:
+      clock.realMillisecondsPerFacilityMinuteAt1x,
   };
 }
 
@@ -423,13 +436,60 @@ export function getCompletedEncounterCount(state: GameState): number {
   ).length;
 }
 
-export function getEffectiveSatisfaction(state: GameState): number {
-  return Math.max(
-    0,
-    Math.min(
-      100,
-      state.satisfaction + state.dailyConfidenceSatisfactionModifier,
-    ),
+export function getClinicSatisfaction(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number | null {
+  const completed = Object.values(state.encounters)
+    .filter(
+      (encounter) =>
+        encounter.finalPatientSatisfaction !== null &&
+        encounter.resolvedAtFacilityTick !== null &&
+        (encounter.resolutionReason === "completed" ||
+          encounter.resolutionReason === "walkout"),
+    )
+    .sort(
+      (left, right) =>
+        (right.resolvedAtFacilityTick ?? 0) -
+          (left.resolvedAtFacilityTick ?? 0) ||
+        right.id.localeCompare(left.id),
+    )
+    .slice(
+      0,
+      context.balanceRelease.patientSatisfaction.rollingWindowSize,
+    );
+  if (completed.length === 0) {
+    return null;
+  }
+  return Math.round(
+    completed.reduce(
+      (total, encounter) =>
+        total + (encounter.finalPatientSatisfaction ?? 0),
+      0,
+    ) / completed.length,
+  );
+}
+
+/** @deprecated Use getClinicSatisfaction when the unmeasured state matters. */
+export function getEffectiveSatisfaction(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number {
+  return getClinicSatisfaction(state, context) ?? 0;
+}
+
+export function getFacilityAccessValidation(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): FacilityAccessValidation {
+  const facility = context.balanceRelease.facility;
+  return validateFacilityAccess(
+    state.rooms,
+    state.doors,
+    (definitionId) => getRoomDefinition(definitionId, context),
+    facility.gridWidth,
+    facility.gridHeight,
+    new Set(facility.protectedRoomDefinitionIds),
   );
 }
 
@@ -452,7 +512,8 @@ export function getFacilityProgressionStatus(
     state.employees.map((employee) => employee.staffRoleDefinitionId),
   );
   const completedEncounters = getCompletedEncounterCount(state);
-  const effectiveSatisfaction = getEffectiveSatisfaction(state);
+  const effectiveSatisfaction = getClinicSatisfaction(state, context);
+  const accessValidation = getFacilityAccessValidation(state, context);
   const requirements = [
     {
       id: "progression.clinical_xp",
@@ -478,18 +539,37 @@ export function getFacilityProgressionStatus(
       id: "progression.satisfaction",
       label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
       met:
+        effectiveSatisfaction !== null &&
         effectiveSatisfaction >
         definition.satisfactionMustBeGreaterThan,
-      current: effectiveSatisfaction,
+      current: effectiveSatisfaction ?? 0,
       required: definition.satisfactionMustBeGreaterThan + 1,
     },
     ...definition.requiredRoomDefinitionIds.map((roomDefinitionId) => {
       const room = getRoomDefinition(roomDefinitionId, context);
+      const instances = state.rooms.filter(
+        (candidate) =>
+          candidate.roomDefinitionId === roomDefinitionId,
+      );
+      const functioning = instances.some(
+        (instance) =>
+          !accessValidation.unreachableRoomIds.includes(instance.id) &&
+          !(
+            roomDefinitionId === "room.xray" &&
+            accessValidation.issues.some(
+              (issue) =>
+                issue.startsWith("X-ray Room requires") ||
+                issue.startsWith(
+                  "X-ray Room must share a wall",
+                ),
+            )
+          ),
+      );
       return {
         id: `progression.room.${roomDefinitionId}`,
         label: `Build ${room?.displayName ?? roomDefinitionId}`,
-        met: placedRoomTypes.has(roomDefinitionId),
-        current: placedRoomTypes.has(roomDefinitionId) ? 1 : 0,
+        met: functioning,
+        current: functioning ? 1 : 0,
         required: 1,
       };
     }),
@@ -530,17 +610,34 @@ export function canAdmitPatient(
 }
 
 function toPatientListItem(state: GameState, encounter: EncounterState): PatientListItem {
-  const remaining =
-    encounter.lifecycle === "waiting_unopened" &&
-    encounter.waiting.departureDueTick !== null
-      ? Math.max(0, encounter.waiting.departureDueTick - state.facilityTick)
-      : null;
+  const waitingMinutes =
+    encounter.idleWaitingSinceTick === null
+      ? 0
+      : Math.max(0, state.facilityTick - encounter.idleWaitingSinceTick);
+  const remaining = null;
   const patienceWarning =
     encounter.lifecycle === "waiting_unopened" &&
     encounter.waiting.warningThresholdsShown.length > 0;
 
   let statusLabel: string;
-  if (encounter.lifecycle === "waiting_unopened") {
+  if (encounter.patientMovement) {
+    statusLabel =
+      encounter.patientMovement.kind === "arriving_for_check_in"
+        ? "Walking to Check-In"
+        : encounter.patientMovement.kind === "walking_to_care"
+          ? "Walking to Examination"
+          : encounter.patientMovement.kind ===
+                "departing_for_offsite_testing"
+            ? "Leaving for Testing"
+            : encounter.patientMovement.kind ===
+                  "returning_from_offsite_testing"
+              ? "Returning to Clinic"
+              : encounter.patientMovement.kind === "idle_within_room"
+                ? encounter.lifecycle === "waiting_unopened"
+                  ? "Waiting"
+                  : "Awaiting decision"
+                : "Leaving Clinic";
+  } else if (encounter.lifecycle === "waiting_unopened") {
     statusLabel = patienceWarning ? "Waiting - patience warning" : "Waiting";
   } else if (encounter.lifecycle === "active_action_required") {
     statusLabel = "Action required";
@@ -550,8 +647,8 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     statusLabel = "Complete - summary available";
   } else {
     statusLabel =
-      encounter.resolutionReason === "left_before_seen"
-        ? "Left before being seen"
+      encounter.resolutionReason === "walkout"
+        ? "Walked out"
         : "Resolved";
   }
 
@@ -561,11 +658,15 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     lifecycle: encounter.lifecycle,
     arrivalClass: encounter.arrivalClass,
     statusLabel,
-    actionRequired: encounter.lifecycle === "active_action_required",
+    actionRequired:
+      encounter.lifecycle === "active_action_required" &&
+      encounter.patientMovement === null,
     pendingLabel:
       encounter.lifecycle === "active_pending_result"
         ? (encounter.pendingResult?.pendingLabel ?? null)
         : null,
+    patientSatisfaction: encounter.patientSatisfaction,
+    waitingMinutes,
     patienceRemainingTicks: remaining,
     patienceWarning,
   };
@@ -652,7 +753,17 @@ export function getCurrentQuestion(
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): CurrentQuestion | null {
   const encounter = state.encounters[encounterId];
-  if (!encounter || encounter.lifecycle !== "active_action_required") {
+  if (
+    !encounter ||
+    encounter.lifecycle !== "active_action_required" ||
+    encounter.patientMovement !== null
+  ) {
+    return null;
+  }
+  if (
+    encounter.steps[encounter.currentNodeIndex]?.status !==
+    "action_required"
+  ) {
     return null;
   }
   const node = encounter.frozenCase.decisionNodes[encounter.currentNodeIndex];
@@ -691,6 +802,27 @@ export function getPendingPatientLocation(
   return travel
     ? getFrozenPatientTravelLocation(travel, state.facilityTick)
     : null;
+}
+
+export function getEncounterPatientLocation(
+  state: GameState,
+  encounterId: string,
+): GridPoint | null {
+  const encounter = state.encounters[encounterId];
+  if (!encounter) {
+    return null;
+  }
+  if (encounter.patientMovement !== null) {
+    return encounter.patientLocation
+      ? { ...encounter.patientLocation }
+      : null;
+  }
+  return (
+    getPendingPatientLocation(state, encounterId) ??
+    (encounter.patientLocation
+      ? { ...encounter.patientLocation }
+      : null)
+  );
 }
 
 export function getPendingOffsitePatientTravel(
@@ -738,11 +870,7 @@ export function getOperatingExpensePerFacilityHour(
     (total, employee) => total + employee.salaryPerExpenseInterval,
     0,
   );
-  return (
-    -(roomExpense + staffExpense) /
-    (context.balanceRelease.economy.expenseIntervalTicks *
-      context.balanceRelease.clock.facilityHoursPerTick)
-  );
+  return -(roomExpense + staffExpense);
 }
 
 export function getLearningSummary(
@@ -752,7 +880,7 @@ export function getLearningSummary(
   const encounter = state.encounters[encounterId];
   if (
     !encounter ||
-    encounter.resolutionReason === "left_before_seen" ||
+    encounter.resolutionReason === "walkout" ||
     (encounter.lifecycle !== "resolved_summary_available" &&
       encounter.lifecycle !== "resolved")
   ) {

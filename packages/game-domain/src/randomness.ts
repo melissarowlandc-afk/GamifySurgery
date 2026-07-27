@@ -13,6 +13,10 @@ export const RANDOM_STREAMS = {
   patientIdentity: "patient_identity",
   patientAppearance: "patient_appearance",
   staffAppearance: "staff_appearance",
+  patientWalkout: "patient_walkout",
+  routineArrivalTiming: "routine_arrival_timing",
+  flavorEvents: "flavor_events",
+  environment: "environment",
 } as const;
 
 const SHA_256_INITIAL = [

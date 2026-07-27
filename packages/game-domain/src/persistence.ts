@@ -5,23 +5,32 @@ import {
   schedulerPinsMatch,
 } from "./fsrs-adapter";
 import { createPixelAppearance } from "./appearance";
-import { RANDOMNESS_CONTRACT_VERSION } from "./randomness";
+import {
+  RANDOMNESS_CONTRACT_VERSION,
+  RANDOM_STREAMS,
+  deterministicInteger,
+} from "./randomness";
 import { createInitialGameState } from "./reducer";
 import { getRoomDefinition, getStaffRoleDefinition } from "./selectors";
 import { getEmployeeHomeLocation } from "./staff";
+import { getDefaultDoorOffset } from "./doors";
 import type {
   AnswerRecord,
   ConceptLearningHistory,
   DomainContext,
+  DoorState,
   EmergencyGlp1State,
   EncounterState,
+  EncounterStepState,
   EmployeeState,
   FounderIdentity,
   GameState,
   FrozenPatientTravel,
   PendingResult,
+  PatientMovementState,
   PlacedRoom,
   ReviewRatingIntent,
+  TerminalFeedback,
 } from "./types";
 
 export function serializeGameState(state: GameState): string {
@@ -42,6 +51,39 @@ function validatePins(
   ) {
     throw new Error("The save uses incompatible pinned releases.");
   }
+}
+
+function scaleLegacyFacilityTicks(
+  value: unknown,
+  key = "",
+): unknown {
+  if (Array.isArray(value)) {
+    return value.map((item) => scaleLegacyFacilityTicks(item));
+  }
+  if (isRecord(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([childKey, childValue]) => [
+        childKey,
+        scaleLegacyFacilityTicks(childValue, childKey),
+      ]),
+    );
+  }
+  const isFacilityTickField =
+    key === "facilityTick" ||
+    key === "nextRoutineArrivalTick" ||
+    key === "lastUsedAtFacilityTick" ||
+    key.endsWith("AtTick") ||
+    key.endsWith("DueTick") ||
+    key.endsWith("DurationTicks") ||
+    key.endsWith("StartTick") ||
+    key.endsWith("ArrivalTick") ||
+    key.endsWith("CompletionTick");
+  return isFacilityTickField &&
+    key !== "tilesPerTick" &&
+    typeof value === "number" &&
+    Number.isFinite(value)
+    ? value * 60
+    : value;
 }
 
 /**
@@ -178,11 +220,6 @@ function migrateVersionOne(
       typeof parsed.cash === "number" && Number.isFinite(parsed.cash)
         ? parsed.cash
         : baseline.cash,
-    satisfaction:
-      typeof parsed.satisfaction === "number" &&
-      Number.isFinite(parsed.satisfaction)
-        ? parsed.satisfaction
-        : baseline.satisfaction,
     clinicalXp:
       typeof parsed.clinicalXp === "number" &&
       Number.isFinite(parsed.clinicalXp)
@@ -222,7 +259,9 @@ function migrateVersionOne(
       context.balanceRelease.arrivals.levelZeroRecoveryIntervalTicks,
   };
   return migrateVersionTwo(
-    versionTwoLike as unknown as Record<string, unknown>,
+    scaleLegacyFacilityTicks(
+      versionTwoLike,
+    ) as Record<string, unknown>,
     context,
   );
 }
@@ -291,12 +330,24 @@ function normalizeFounder(
     ) {
       return {
         displayName,
+        headId:
+          typeof candidate.headId === "string" &&
+          candidate.headId.trim().length > 0
+            ? candidate.headId
+            : "head.legacy",
+        bodyId:
+          typeof candidate.bodyId === "string" &&
+          candidate.bodyId.trim().length > 0
+            ? candidate.bodyId
+            : "body.legacy",
         appearance: candidate.appearance,
       };
     }
   }
   return {
     displayName: "Founder",
+    headId: "head.generated",
+    bodyId: "body.generated",
     appearance: createPixelAppearance(campaignSeed, "staff", "founder"),
   };
 }
@@ -309,7 +360,7 @@ function normalizeEmergencyGlp1State(
   const raw = isRecord(candidate) ? candidate : {};
   const clock = context.balanceRelease.clock;
   const operatingTicksPerDay =
-    (clock.dayEndHour - clock.dayStartHour) / clock.facilityHoursPerTick;
+    (clock.dayEndHour - clock.dayStartHour) * 60;
   const currentDayNumber =
     Math.floor(state.facilityTick / operatingTicksPerDay) + 1;
   const storedDayNumber =
@@ -413,9 +464,85 @@ function normalizeRooms(
         orientation,
         doorSide,
         upgradeLevel,
+        cleanliness:
+          typeof candidate.cleanliness === "number" &&
+          Number.isFinite(candidate.cleanliness)
+            ? Math.max(0, Math.min(100, candidate.cleanliness))
+            : 100,
       },
     ];
   });
+}
+
+function normalizeDoors(
+  parsed: Record<string, unknown>,
+  rooms: readonly PlacedRoom[],
+  context: DomainContext,
+): DoorState[] {
+  if (Array.isArray(parsed.doors)) {
+    return parsed.doors.flatMap((candidate) => {
+      if (
+        !isRecord(candidate) ||
+        typeof candidate.id !== "string" ||
+        typeof candidate.roomId !== "string" ||
+        (candidate.side !== "north" &&
+          candidate.side !== "east" &&
+          candidate.side !== "south" &&
+          candidate.side !== "west") ||
+        typeof candidate.offset !== "number" ||
+        !Number.isSafeInteger(candidate.offset)
+      ) {
+        return [];
+      }
+      return [
+        {
+          id: candidate.id,
+          roomId: candidate.roomId,
+          side: candidate.side,
+          offset: candidate.offset,
+          exterior: candidate.exterior === true,
+        },
+      ];
+    });
+  }
+
+  const migrated: DoorState[] = rooms.flatMap((room) => {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition || definition.kind === "hallway" || room.doorSide === null) {
+      return [];
+    }
+    return [
+      {
+        id: `door.migrated.${room.id}.embedded`,
+        roomId: room.id,
+        side: room.doorSide,
+        offset: getDefaultDoorOffset(room, definition, room.doorSide),
+        exterior: false,
+      } satisfies DoorState,
+    ];
+  });
+  const frontRoom = rooms.find((room) =>
+    context.balanceRelease.facility.protectedRoomDefinitionIds.includes(
+      room.roomDefinitionId,
+    ),
+  );
+  const frontDefinition = frontRoom
+    ? getRoomDefinition(frontRoom.roomDefinitionId, context)
+    : null;
+  if (frontRoom && frontDefinition) {
+    migrated.push({
+      id: "door.instance.front_entrance",
+      roomId: frontRoom.id,
+      side: "south",
+      offset: getDefaultDoorOffset(
+        frontRoom,
+        frontDefinition,
+        "south",
+      ),
+      exterior: true,
+    });
+  }
+  return migrated;
 }
 
 function normalizeAnswers(
@@ -540,6 +667,12 @@ function normalizePendingResult(candidate: unknown): PendingResult | null {
     ...(JSON.parse(JSON.stringify(candidate)) as PendingResult),
     serviceDurationTicks,
     durationTicks,
+    offsiteReturnStartedAtTick:
+      typeof candidate.offsiteReturnStartedAtTick === "number" &&
+      Number.isSafeInteger(candidate.offsiteReturnStartedAtTick) &&
+      candidate.offsiteReturnStartedAtTick >= 0
+        ? candidate.offsiteReturnStartedAtTick
+        : null,
     patientTravel: normalizeFrozenPatientTravel(candidate.patientTravel),
   };
 }
@@ -548,6 +681,8 @@ function normalizeEncounter(
   encounterId: string,
   candidate: Record<string, unknown>,
   campaignSeed: string,
+  facilityTick: number,
+  context: DomainContext,
 ): EncounterState | null {
   if (!isRecord(candidate.frozenCase)) {
     return null;
@@ -589,7 +724,97 @@ function normalizeEncounter(
       ? candidate.currentNodeIndex
       : 0;
   const pendingResult = normalizePendingResult(candidate.pendingResult);
+  const patientLocation = isGridPoint(candidate.patientLocation)
+    ? { ...candidate.patientLocation }
+    : null;
+  const rawMovement = isRecord(candidate.patientMovement)
+    ? candidate.patientMovement
+    : null;
+  const movementPath =
+    rawMovement && Array.isArray(rawMovement.path)
+      ? rawMovement.path
+          .filter(isGridPoint)
+          .map((point) => ({ ...point }))
+      : [];
+  const movementKinds = new Set<PatientMovementState["kind"]>([
+    "arriving_for_check_in",
+    "walking_to_care",
+    "departing_for_offsite_testing",
+    "returning_from_offsite_testing",
+    "idle_within_room",
+    "leaving_after_resolution",
+    "leaving_after_walkout",
+  ]);
+  const patientMovement: PatientMovementState | null =
+    rawMovement &&
+    typeof rawMovement.kind === "string" &&
+    movementKinds.has(rawMovement.kind as PatientMovementState["kind"]) &&
+    movementPath.length > 0
+      ? {
+          kind: rawMovement.kind as PatientMovementState["kind"],
+          path: movementPath,
+          pathIndex:
+            typeof rawMovement.pathIndex === "number" &&
+            Number.isSafeInteger(rawMovement.pathIndex)
+              ? Math.max(
+                  0,
+                  Math.min(
+                    movementPath.length - 1,
+                    rawMovement.pathIndex,
+                  ),
+                )
+              : 0,
+          lastMovedAtFacilityTick:
+            typeof rawMovement.lastMovedAtFacilityTick === "number" &&
+            Number.isSafeInteger(
+              rawMovement.lastMovedAtFacilityTick,
+            )
+              ? rawMovement.lastMovedAtFacilityTick
+              : facilityTick,
+          destinationRoomInstanceId:
+            typeof rawMovement.destinationRoomInstanceId === "string"
+              ? rawMovement.destinationRoomInstanceId
+              : null,
+        }
+      : null;
   const lifecycle = candidate.lifecycle as EncounterState["lifecycle"];
+  const legacyResolutionReason = candidate.resolutionReason;
+  const resolutionReason =
+    legacyResolutionReason === "completed"
+      ? ("completed" as const)
+      : legacyResolutionReason === "walkout" ||
+          legacyResolutionReason === "left_before_seen"
+        ? ("walkout" as const)
+        : null;
+  const patientSatisfactionSource =
+    typeof candidate.patientSatisfaction === "number" &&
+    Number.isFinite(candidate.patientSatisfaction)
+      ? candidate.patientSatisfaction
+      : typeof candidate.patientConfidence === "number" &&
+          Number.isFinite(candidate.patientConfidence)
+        ? candidate.patientConfidence
+        : context.balanceRelease.patientSatisfaction.startingValue;
+  const patientSatisfaction = Math.max(
+    0,
+    Math.min(100, patientSatisfactionSource),
+  );
+  const waiting = isRecord(candidate.waiting) ? candidate.waiting : {};
+  const arrivedAtTick =
+    typeof waiting.arrivedAtTick === "number" &&
+    Number.isSafeInteger(waiting.arrivedAtTick)
+      ? waiting.arrivedAtTick
+      : 0;
+  const defaultIdleWaitingSinceTick =
+    lifecycle === "waiting_unopened" || lifecycle === "active_action_required"
+      ? arrivedAtTick
+      : null;
+  const idleWaitingSinceTick =
+    candidate.idleWaitingSinceTick === null
+      ? null
+      : typeof candidate.idleWaitingSinceTick === "number" &&
+          Number.isSafeInteger(candidate.idleWaitingSinceTick)
+        ? candidate.idleWaitingSinceTick
+        : defaultIdleWaitingSinceTick;
   const existingSteps = Array.isArray(candidate.steps)
     ? candidate.steps.filter(isRecord)
     : [];
@@ -606,9 +831,10 @@ function normalizeEncounter(
         ? JSON.parse(JSON.stringify(pendingResult))
         : null;
     const existingStatus = existingStep?.status;
-    const status =
+    const status: EncounterStepState["status"] =
       existingStatus === "locked" ||
       existingStatus === "action_required" ||
+      existingStatus === "feedback_pending" ||
       existingStatus === "result_pending" ||
       existingStatus === "completed"
         ? existingStatus
@@ -652,11 +878,81 @@ function normalizeEncounter(
       candidate.patientAppearance.version === "pixel-avatar.v1"
         ? (candidate.patientAppearance as unknown as EncounterState["patientAppearance"])
         : createPixelAppearance(campaignSeed, "patient", encounterId),
-    patientConfidence:
-      typeof candidate.patientConfidence === "number" &&
-      Number.isFinite(candidate.patientConfidence)
-        ? Math.max(0, Math.min(100, candidate.patientConfidence))
-        : 50,
+    patientSatisfaction,
+    idleWaitingSinceTick,
+    lastSatisfactionDecayAtTick:
+      typeof candidate.lastSatisfactionDecayAtTick === "number" &&
+      Number.isSafeInteger(candidate.lastSatisfactionDecayAtTick)
+        ? candidate.lastSatisfactionDecayAtTick
+        : (idleWaitingSinceTick ?? facilityTick),
+    walkoutThreshold:
+      typeof candidate.walkoutThreshold === "number" &&
+      Number.isSafeInteger(candidate.walkoutThreshold) &&
+      candidate.walkoutThreshold >= 0 &&
+      candidate.walkoutThreshold <= 59
+        ? candidate.walkoutThreshold
+        : deterministicInteger(
+            campaignSeed,
+            RANDOM_STREAMS.patientWalkout,
+            `${encounterId}:threshold.v1`,
+            context.balanceRelease.patientSatisfaction
+              .walkoutThresholdMaximum + 1,
+          ),
+    satisfactionWarningsShown: Array.isArray(
+      candidate.satisfactionWarningsShown,
+    )
+      ? candidate.satisfactionWarningsShown.filter(
+          (threshold): threshold is number =>
+            typeof threshold === "number" &&
+            Number.isSafeInteger(threshold),
+        )
+      : [],
+    finalPatientSatisfaction:
+      typeof candidate.finalPatientSatisfaction === "number" &&
+      Number.isFinite(candidate.finalPatientSatisfaction)
+        ? Math.max(
+            0,
+            Math.min(100, candidate.finalPatientSatisfaction),
+          )
+        : resolutionReason === null
+          ? null
+          : patientSatisfaction,
+    resolvedAtFacilityTick:
+      typeof candidate.resolvedAtFacilityTick === "number" &&
+      Number.isSafeInteger(candidate.resolvedAtFacilityTick)
+        ? candidate.resolvedAtFacilityTick
+        : resolutionReason === null
+          ? null
+          : facilityTick,
+    resolutionReason,
+    patientLocation:
+      patientMovement?.path[patientMovement.pathIndex] ??
+      patientLocation,
+    patientMovement,
+    terminalFeedback: isRecord(candidate.terminalFeedback)
+      ? ({
+          ...candidate.terminalFeedback,
+          consequence:
+            typeof candidate.terminalFeedback.consequence === "string"
+              ? candidate.terminalFeedback.consequence
+              : isRecord(candidate.terminalFeedback.outcome) &&
+                  typeof candidate.terminalFeedback.outcome.narrative ===
+                    "string"
+                ? candidate.terminalFeedback.outcome.narrative
+                : null,
+        } as unknown as TerminalFeedback)
+      : null,
+    assignedRoomInstanceId:
+      typeof candidate.assignedRoomInstanceId === "string"
+        ? candidate.assignedRoomInstanceId
+        : null,
+    nextIdleActionAtFacilityTick:
+      typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+      Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+      candidate.nextIdleActionAtFacilityTick >= facilityTick
+        ? candidate.nextIdleActionAtFacilityTick
+        : facilityTick +
+          context.balanceRelease.environment.idleActionMinimumMinutes,
     answers,
     steps,
     pendingResult,
@@ -700,28 +996,67 @@ function migrateVersionTwo(
     campaignSeed,
     createdAtRealMs,
   });
+  const parsedFacilityTick =
+    typeof parsed.facilityTick === "number" &&
+    Number.isSafeInteger(parsed.facilityTick) &&
+    parsed.facilityTick >= 0
+      ? parsed.facilityTick
+      : 0;
+  const parsedCash =
+    typeof parsed.cash === "number" && Number.isFinite(parsed.cash)
+      ? parsed.cash
+      : baseline.cash;
+  const parsedCashCents =
+    typeof parsed.cashCents === "number" &&
+    Number.isSafeInteger(parsed.cashCents)
+      ? parsed.cashCents
+      : Math.round(parsedCash * 100);
+  const postingInterval =
+    context.balanceRelease.economy.postingIntervalMinutes;
   const next: GameState = {
     ...baseline,
     ...(parsed as unknown as GameState),
-    schemaVersion: 4 as const,
+    schemaVersion: 5 as const,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     founder: normalizeFounder(parsed.founder, campaignSeed),
-    dailyConfidenceSatisfactionModifier:
-      typeof parsed.dailyConfidenceSatisfactionModifier === "number" &&
-      Number.isFinite(parsed.dailyConfidenceSatisfactionModifier)
-        ? Math.max(
-            -3,
-            Math.min(3, parsed.dailyConfidenceSatisfactionModifier),
-          )
+    facilityTick: parsedFacilityTick,
+    simulationSpeed:
+      parsed.simulationSpeed === 2 || parsed.simulationSpeed === 4
+        ? parsed.simulationSpeed
+        : 1,
+    cashCents: parsedCashCents,
+    cash: parsedCashCents / 100,
+    operatingAccrualSixtiethCents:
+      typeof parsed.operatingAccrualSixtiethCents === "number" &&
+      Number.isSafeInteger(parsed.operatingAccrualSixtiethCents) &&
+      parsed.operatingAccrualSixtiethCents >= 0
+        ? parsed.operatingAccrualSixtiethCents
         : 0,
+    nextFinancialPostingTick:
+      typeof parsed.nextFinancialPostingTick === "number" &&
+      Number.isSafeInteger(parsed.nextFinancialPostingTick) &&
+      parsed.nextFinancialPostingTick > parsedFacilityTick
+        ? parsed.nextFinancialPostingTick
+        : Math.floor(parsedFacilityTick / postingInterval + 1) *
+          postingInterval,
   };
+  delete (next as unknown as Record<string, unknown>).satisfaction;
+  delete (next as unknown as Record<string, unknown>)
+    .dailyConfidenceSatisfactionModifier;
   next.rooms = normalizeRooms(parsed, baseline, context);
+  next.doors = normalizeDoors(parsed, next.rooms, context);
 
   const rawEncounters = parsed.encounters as Record<string, unknown>;
   next.encounters = Object.fromEntries(
     Object.entries(rawEncounters).flatMap(([encounterId, encounter]) => {
       const normalized = isRecord(encounter)
-        ? normalizeEncounter(encounterId, encounter, campaignSeed)
+        ? normalizeEncounter(
+            encounterId,
+            encounter,
+            campaignSeed,
+            next.facilityTick,
+            context,
+          )
         : null;
       return normalized ? [[encounterId, normalized]] : [];
     }),
@@ -812,6 +1147,18 @@ function migrateVersionTwo(
         typeof candidate.lastMovedAtFacilityTick === "number"
           ? candidate.lastMovedAtFacilityTick
           : 0,
+      lastPraisedAtFacilityTick:
+        typeof candidate.lastPraisedAtFacilityTick === "number" &&
+        Number.isSafeInteger(candidate.lastPraisedAtFacilityTick)
+          ? candidate.lastPraisedAtFacilityTick
+          : null,
+      nextIdleActionAtFacilityTick:
+        typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+        Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+        candidate.nextIdleActionAtFacilityTick >= next.facilityTick
+          ? candidate.nextIdleActionAtFacilityTick
+          : next.facilityTick +
+            context.balanceRelease.environment.idleActionMinimumMinutes,
     };
     return [employee];
   });
@@ -820,6 +1167,113 @@ function migrateVersionTwo(
     next,
     context,
   );
+  const rawEnvironment = isRecord(parsed.environment)
+    ? parsed.environment
+    : {};
+  const rawLitter = Array.isArray(rawEnvironment.litterItems)
+    ? rawEnvironment.litterItems
+    : [];
+  const rawFounderActivity = isRecord(
+    rawEnvironment.founderActivity,
+  )
+    ? rawEnvironment.founderActivity
+    : null;
+  next.environment = {
+    founderLocation: isGridPoint(rawEnvironment.founderLocation)
+      ? { ...rawEnvironment.founderLocation }
+      : { ...baseline.environment.founderLocation },
+    founderActivity:
+      rawFounderActivity &&
+      (rawFounderActivity.kind === "collect_litter" ||
+        rawFounderActivity.kind === "refill_water" ||
+        rawFounderActivity.kind === "praise_employee") &&
+      typeof rawFounderActivity.targetId === "string" &&
+      Array.isArray(rawFounderActivity.path)
+        ? {
+            kind: rawFounderActivity.kind,
+            targetId: rawFounderActivity.targetId,
+            path: rawFounderActivity.path
+              .filter(isGridPoint)
+              .map((point) => ({ ...point })),
+            pathIndex:
+              typeof rawFounderActivity.pathIndex === "number" &&
+              Number.isSafeInteger(rawFounderActivity.pathIndex)
+                ? rawFounderActivity.pathIndex
+                : 0,
+            lastMovedAtFacilityTick:
+              typeof rawFounderActivity.lastMovedAtFacilityTick ===
+                "number" &&
+              Number.isSafeInteger(
+                rawFounderActivity.lastMovedAtFacilityTick,
+              )
+                ? rawFounderActivity.lastMovedAtFacilityTick
+                : next.facilityTick,
+            workMinutesRemaining:
+              typeof rawFounderActivity.workMinutesRemaining ===
+                "number" &&
+              Number.isSafeInteger(
+                rawFounderActivity.workMinutesRemaining,
+              )
+                ? rawFounderActivity.workMinutesRemaining
+                : context.balanceRelease.environment
+                    .founderInteractionMinutes,
+          }
+        : null,
+    litterItems: rawLitter.flatMap((candidate) =>
+      isRecord(candidate) &&
+      typeof candidate.id === "string" &&
+      typeof candidate.roomId === "string" &&
+      isGridPoint(candidate.location) &&
+      typeof candidate.spawnedAtFacilityTick === "number"
+        ? [
+            {
+              id: candidate.id,
+              roomId: candidate.roomId,
+              location: { ...candidate.location },
+              spawnedAtFacilityTick:
+                candidate.spawnedAtFacilityTick,
+            },
+          ]
+        : [],
+    ),
+    litterSequence:
+      typeof rawEnvironment.litterSequence === "number" &&
+      Number.isSafeInteger(rawEnvironment.litterSequence)
+        ? rawEnvironment.litterSequence
+        : 0,
+    nextLitterSpawnTick:
+      typeof rawEnvironment.nextLitterSpawnTick === "number" &&
+      Number.isSafeInteger(rawEnvironment.nextLitterSpawnTick) &&
+      rawEnvironment.nextLitterSpawnTick > next.facilityTick
+        ? rawEnvironment.nextLitterSpawnTick
+        : next.facilityTick +
+          context.balanceRelease.environment
+            .litterSpawnMinimumMinutes,
+    waterCoolerFillPercent:
+      typeof rawEnvironment.waterCoolerFillPercent === "number" &&
+      Number.isFinite(rawEnvironment.waterCoolerFillPercent)
+        ? Math.max(
+            0,
+            Math.min(100, rawEnvironment.waterCoolerFillPercent),
+          )
+        : 100,
+    nextWaterCoolerDrainTick:
+      typeof rawEnvironment.nextWaterCoolerDrainTick === "number" &&
+      Number.isSafeInteger(rawEnvironment.nextWaterCoolerDrainTick) &&
+      rawEnvironment.nextWaterCoolerDrainTick > next.facilityTick
+        ? rawEnvironment.nextWaterCoolerDrainTick
+        : next.facilityTick +
+          context.balanceRelease.environment
+            .waterCoolerDrainIntervalMinutes,
+  };
+  if (
+    next.openChartEncounterId &&
+    next.encounters[next.openChartEncounterId]
+  ) {
+    next.encounters[next.openChartEncounterId]!.idleWaitingSinceTick = null;
+    next.encounters[next.openChartEncounterId]!.lastSatisfactionDecayAtTick =
+      next.facilityTick;
+  }
   return next;
 }
 
@@ -827,7 +1281,10 @@ function validateVersionThree(
   parsed: Record<string, unknown>,
   context: DomainContext,
 ): GameState {
-  const state = migrateVersionTwo(parsed, context);
+  const state = migrateVersionTwo(
+    scaleLegacyFacilityTicks(parsed) as Record<string, unknown>,
+    context,
+  );
   if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
     throw new Error("The saved campaign uses an incompatible randomness contract.");
   }
@@ -835,6 +1292,20 @@ function validateVersionThree(
 }
 
 function validateVersionFour(
+  parsed: Record<string, unknown>,
+  context: DomainContext,
+): GameState {
+  const state = migrateVersionTwo(
+    scaleLegacyFacilityTicks(parsed) as Record<string, unknown>,
+    context,
+  );
+  if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error("The saved campaign uses an incompatible randomness contract.");
+  }
+  return state;
+}
+
+function validateVersionFive(
   parsed: Record<string, unknown>,
   context: DomainContext,
 ): GameState {
@@ -857,13 +1328,19 @@ export function deserializeGameState(
     return migrateVersionOne(parsed, context);
   }
   if (parsed.schemaVersion === 2) {
-    return migrateVersionTwo(parsed, context);
+    return migrateVersionTwo(
+      scaleLegacyFacilityTicks(parsed) as Record<string, unknown>,
+      context,
+    );
   }
   if (parsed.schemaVersion === 3) {
     return validateVersionThree(parsed, context);
   }
   if (parsed.schemaVersion === 4) {
     return validateVersionFour(parsed, context);
+  }
+  if (parsed.schemaVersion === 5) {
+    return validateVersionFive(parsed, context);
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }
