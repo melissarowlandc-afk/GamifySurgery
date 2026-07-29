@@ -29,26 +29,26 @@ a rapid cash-pay GLP-1 telehealth consultation.
 
 Accepted rules:
 
-- The action remains visible and usable throughout active gameplay until the
-  future GLP-1 room is built, regardless of current cash. This supersedes the
-  original below-$100 and temporary below-$200 eligibility rules.
+- During the Level 0-1 pilot, the action is available only when clinic cash is
+  below the centrally configured low-cash threshold (currently $200).
 - It may be used at most once per facility hour.
-- It provides a small immediate cash payment.
+- It provides a fixed $25 immediate cash payment.
 - It provides no Learning XP, FSRS review, concept mastery, ordinary
   patient-care reward, patient episode, or progression credit.
 - Manual uses are counted separately for each facility day.
+- There is no daily usage cap and no diminishing payout. Daily counts exist
+  only to select escalating sarcastic copy.
 - After the fifth manual consultation in one day, messages become
   increasingly pointed. An accepted example is:
   “Your commitment to comprehensive metabolic care has been noted.”
 
-Payment, daily cap, diminishing-return curve, cooldown, message threshold, and
-flavor-text pool are stable balance/configuration values. The runtime must not
-bury these numbers or messages in unrelated gameplay code.
+Payment, cash threshold, cooldown, message threshold, and flavor-text pool are
+stable balance/configuration values. The runtime must not bury these numbers or
+messages in unrelated gameplay code.
 
 The first tuning should restore a struggling clinic without making deliberate
-cash depletion or repetitive clicking attractive. The initial implementation
-may combine a hard daily cap with sharply reduced later payments, provided the
-values remain easy to change after playtesting.
+cash depletion or repetitive clicking attractive. The low-cash gate and
+facility-hour cooldown provide those bounds in the current pilot.
 
 ## Player interface
 
@@ -61,7 +61,6 @@ The control shows:
 - The immediate payment
 - A persisted cooldown bar that advances with simulation time, freezes on
   pause, and shows when the next facility-hour use is ready
-- Today's use count when relevant
 - Sarcastic feedback after use
 
 It is unavailable during Build Mode and does not advance facility time by
@@ -93,14 +92,14 @@ Tests must confirm:
 - Day-use counts reset only at the next facility day
 - No XP, FSRS, mastery, patient settlement, or ordinary encounter reward is
   created
-- Payments and limits cannot exceed configured bounds
+- Every eligible consultation pays the same configured amount
+- There is no daily cap or diminishing-return branch
 - The action cannot become a superior sustained-income strategy in simulated
   play
 - Sarcastic messaging starts at the configured use count
 
 ## Deferred details
 
-- Exact payment, hard cap, and diminishing-return curve
 - Remaining sarcastic message text
 - Complete Level 2 room and GLP-1 NP rules
 - Upgrade track and events

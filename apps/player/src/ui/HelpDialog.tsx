@@ -29,7 +29,7 @@ const HELP_STEPS = [
   ],
   [
     "Build Mode",
-    "Enter Build Mode to pause the clinic. Place a room footprint, select it, then add zero-cost doors on valid wall segments. The same control becomes Done / Save and Return and explains any access problem that blocks it.",
+    "Enter Build Mode to pause the clinic. Its toolbar provides Rotate, Build Hallway, Place Door, Remove Door, Undo, and Done / Save and Return. If a layout is invalid, Done lists every access problem while renovation stays paused.",
   ],
   [
     "Rooms, doors, and hallways",

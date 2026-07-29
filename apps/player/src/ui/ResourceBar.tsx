@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { SimulationSpeed } from "@gamify-surgery/game-domain";
 import type { ResourceBarView } from "./types";
+import { PixelIcon } from "./PixelIcon";
 
 interface ResourceBarProps {
   view: ResourceBarView;
@@ -38,12 +39,20 @@ function HudIcon({
   kind: "learning" | "money" | "satisfaction" | "time";
   mood?: "happy" | "steady" | "sad";
 }) {
+  const iconName =
+    kind === "satisfaction"
+      ? mood === "happy"
+        ? "satisfactionHappy"
+        : mood === "sad"
+          ? "satisfactionSad"
+          : "satisfactionSteady"
+      : kind;
   return (
     <span
       className={`pixel-hud-icon is-${kind}${mood ? ` is-${mood}` : ""}`}
       aria-hidden="true"
     >
-      {kind === "learning" ? "XP" : kind === "money" ? "$" : null}
+      <PixelIcon name={iconName} />
     </span>
   );
 }

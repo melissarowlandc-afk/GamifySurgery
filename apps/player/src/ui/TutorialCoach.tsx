@@ -7,7 +7,6 @@ import {
 } from "react";
 import type {
   TutorialActionId,
-  TutorialActionView,
   TutorialStepView,
 } from "../session/tutorialViewModels";
 import {
@@ -251,10 +250,16 @@ export function TutorialCoach({
     resizeObserver.observe(coach);
     window.addEventListener("resize", updatePosition);
     window.addEventListener("scroll", updatePosition, true);
+    // Flex and grid siblings can move a target without changing the target's
+    // own size (for example, when a new alert enters the feed). Recheck the
+    // anchored geometry while a tutorial is visible so the bubble never
+    // remains attached to a stale screen position.
+    const positionInterval = window.setInterval(updatePosition, 400);
 
     return () => {
       cancelled = true;
       window.cancelAnimationFrame(animationFrame);
+      window.clearInterval(positionInterval);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updatePosition);
       window.removeEventListener("scroll", updatePosition, true);
@@ -303,17 +308,6 @@ export function TutorialCoach({
     );
   }
 
-  // Tutorial cards can advance an explanation, but never perform the
-  // highlighted gameplay action on the player's behalf.
-  const tutorialOnlyActions = [
-    step.primaryAction,
-    step.secondaryAction,
-  ].filter(
-    (
-      action,
-    ): action is TutorialActionView =>
-      action?.id === "acknowledge-step",
-  );
   const positionStyle = position
     ? ({
         top: `${position.top}px`,
@@ -326,7 +320,12 @@ export function TutorialCoach({
           position.maxHeight - 10,
         )}px`,
       } as CSSProperties)
-    : ({ visibility: "hidden" } as CSSProperties);
+    : ({
+        top: "1rem",
+        right: "1rem",
+        width: "min(22rem, calc(100vw - 2rem))",
+        maxHeight: "calc(100vh - 2rem)",
+      } as CSSProperties);
 
   return (
     <>
@@ -354,9 +353,11 @@ export function TutorialCoach({
         aria-live="polite"
         style={positionStyle}
       >
-        <span className="tutorial-coach-arrow" aria-hidden="true">
-          ➜
-        </span>
+        {position ? (
+          <span className="tutorial-coach-arrow" aria-hidden="true">
+            ➜
+          </span>
+        ) : null}
         <div className="tutorial-coach-content">
         <span className="eyebrow">{step.eyebrow}</span>
         <h2 id={coachTitleId}>{step.title}</h2>
@@ -374,16 +375,13 @@ export function TutorialCoach({
           <p className="tutorial-coach-flavor">{step.flavor}</p>
         ) : null}
         <div className="tutorial-coach-actions">
-          {tutorialOnlyActions.map((action) => (
-            <button
-              key={action.id}
-              className="button button-secondary"
-              type="button"
-              onClick={() => onAction?.(action.id)}
-            >
-              {action.label}
-            </button>
-          ))}
+          <button
+            className="button button-secondary"
+            type="button"
+            onClick={() => onAction?.("acknowledge-step")}
+          >
+            Got It
+          </button>
           {onDisableTutorials ? (
             <button
               className="text-button tutorial-disable-button"

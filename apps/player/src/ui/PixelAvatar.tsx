@@ -1,4 +1,11 @@
-import type { CSSProperties } from "react";
+import type { PixelRoleStyle } from "@gamify-surgery/game-domain";
+import {
+  getCharacterPixelFrame,
+  getCharacterPortraitFrame,
+  type CharacterDirection,
+  type CharacterPose,
+} from "../art/characterArt";
+import { PIXEL_PALETTE } from "../art/pixelPalette";
 import type { PixelAvatarView } from "./types";
 
 interface PixelAvatarProps {
@@ -6,73 +13,124 @@ interface PixelAvatarProps {
   label: string;
   size?: "small" | "medium" | "large";
   className?: string;
+  representation?: "portrait" | "full";
+  direction?: CharacterDirection;
+  pose?: CharacterPose;
+  animation?: "idle" | "star-jump";
+  roleStyle?: PixelRoleStyle;
 }
 
 const FALLBACK_AVATAR: PixelAvatarView = {
   version: "pixel-avatar.v1",
   bodyShape: "average",
   hairStyle: "short",
+  skinTone: 1,
   hairShade: 3,
   faceStyle: "round",
   outfitStyle: "plain",
   outfitShade: 1,
   accessory: "none",
+  headVariant: 0,
+  bodyVariant: 0,
+  roleStyle: "patient",
 };
 
-const HAIR_TONES = ["#e6e6e0", "#a6a6a0", "#60605c", "#191918"];
-const CLOTHING_TONES = ["#f2f2ed", "#c8c8c2", "#777772", "#252523"];
+function PixelFrameSvg({
+  avatar,
+  representation,
+  direction,
+  pose,
+  className,
+  roleStyle,
+}: {
+  avatar: PixelAvatarView;
+  representation: "portrait" | "full";
+  direction: CharacterDirection;
+  pose: CharacterPose;
+  className: string;
+  roleStyle?: PixelRoleStyle;
+}) {
+  const portrait = representation === "portrait";
+  const frame = portrait
+    ? getCharacterPortraitFrame(avatar, roleStyle)
+    : getCharacterPixelFrame(avatar, {
+        direction,
+        pose,
+        roleStyle,
+      });
+  return (
+    <svg
+      className={className}
+      viewBox={`0 0 ${frame.width} ${frame.height}`}
+      preserveAspectRatio="xMidYMid meet"
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {frame.cells.map((cell) => (
+        <rect
+          key={`${cell.x}:${cell.y}`}
+          x={cell.x}
+          y={cell.y}
+          width={1}
+          height={1}
+          fill={PIXEL_PALETTE[cell.color]}
+        />
+      ))}
+    </svg>
+  );
+}
 
 /**
- * Reusable large-pixel portrait assembled from CSS shapes. The same persisted
- * descriptor can be projected into Phaser so a person remains recognizable
- * in the chart and on the facility map.
+ * Canonical character representation.
+ *
+ * Portraits, founder previews, the happy ending, visual QA, and Phaser map
+ * sprites all consume the exact same persisted descriptor. Portraits use a
+ * dedicated higher-detail bust renderer, while map sprites use directional
+ * full-body frames; neither path invents a second identity.
  */
 export function PixelAvatar({
   avatar = FALLBACK_AVATAR,
   label,
   size = "medium",
   className = "",
+  representation = "portrait",
+  direction = "front",
+  pose = "idle",
+  animation = "idle",
+  roleStyle,
 }: PixelAvatarProps) {
-  const style = {
-    "--avatar-face": "#d8d8d2",
-    "--avatar-hair": HAIR_TONES[avatar.hairShade],
-    "--avatar-clothes": CLOTHING_TONES[avatar.outfitShade],
-  } as CSSProperties;
-
+  const starJump = animation === "star-jump";
   return (
     <span
-      className={`pixel-avatar pixel-avatar-${size} ${className}`.trim()}
-      style={style}
-      data-hair={avatar.hairStyle}
-      data-accessory={avatar.accessory}
-      data-body={avatar.bodyShape}
-      data-face={avatar.faceStyle}
-      data-outfit={avatar.outfitStyle}
+      className={`pixel-avatar pixel-avatar-${size} is-${representation}${
+        starJump ? " is-star-jump" : " is-idle"
+      } ${className}`.trim()}
+      data-role={roleStyle ?? avatar.roleStyle ?? "patient"}
+      data-appearance={`${avatar.skinTone ?? "legacy"}-${
+        avatar.headVariant ?? "legacy"
+      }-${avatar.bodyVariant ?? "legacy"}`}
       role="img"
       aria-label={label}
     >
-      <span className="pixel-avatar-shadow" aria-hidden="true" />
-      <span className="pixel-avatar-body" aria-hidden="true">
-        <span className="pixel-avatar-neck" />
-        <span className="pixel-avatar-shirt" />
-        <span className="pixel-avatar-collar" />
-        <span className="pixel-avatar-arm is-left" />
-        <span className="pixel-avatar-arm is-right" />
-        <span className="pixel-avatar-leg is-left" />
-        <span className="pixel-avatar-leg is-right" />
-      </span>
-      <span className="pixel-avatar-head" aria-hidden="true">
-        <span className="pixel-avatar-hair" />
-        <span className="pixel-avatar-ear is-left" />
-        <span className="pixel-avatar-ear is-right" />
-        <span className="pixel-avatar-brow is-left" />
-        <span className="pixel-avatar-brow is-right" />
-        <span className="pixel-avatar-eye is-left" />
-        <span className="pixel-avatar-eye is-right" />
-        <span className="pixel-avatar-nose" />
-        <span className="pixel-avatar-mouth" />
-        <span className="pixel-avatar-accessory" />
-      </span>
+      <PixelFrameSvg
+        avatar={avatar}
+        representation={representation}
+        direction={direction}
+        pose={starJump ? "idle" : pose}
+        className="pixel-avatar-svg pixel-avatar-frame-a"
+        roleStyle={roleStyle}
+      />
+      {starJump ? (
+        <PixelFrameSvg
+          avatar={avatar}
+          representation={representation}
+          direction={direction}
+          pose="star-jump"
+          className="pixel-avatar-svg pixel-avatar-frame-b"
+          roleStyle={roleStyle}
+        />
+      ) : null}
     </span>
   );
 }

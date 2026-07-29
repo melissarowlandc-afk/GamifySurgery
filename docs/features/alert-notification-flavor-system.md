@@ -30,7 +30,8 @@ Priorities:
 4. **Flavor:** humor only; never interrupts play or creates a penalty.
 
 Priority must never depend on color alone. Use a plain-language label plus
-icons, borders, motion, or shape appropriate to the black-and-white style.
+icons, borders, motion, or shape appropriate to the limited cream, olive,
+muted-green, gray, and charcoal pixel-art style.
 Useful content always appears plainly. Humor may accompany a noncritical alert
 but never replaces a name, problem, timer, consequence, or action.
 

@@ -366,43 +366,42 @@ export const prototypeBalanceReleaseSchema = z
         postingIntervalMinutes: z.literal(15),
       })
       .strict(),
+    advertising: z
+      .object({
+        levels: z
+          .array(
+            z
+              .object({
+                level: z.number().int().nonnegative(),
+                displayName: z.string().min(1).max(80),
+                hourlyCost: z.number().int().nonnegative(),
+                arrivalIntervalMultiplierPercent: z
+                  .number()
+                  .int()
+                  .min(50)
+                  .max(100),
+              })
+              .strict(),
+          )
+          .min(1),
+      })
+      .strict(),
+    insolvency: z
+      .object({
+        moraleDecayPerPosting: z.number().int().positive().max(25),
+        employeeQuittingThreshold: z.number().int().min(0).max(99),
+      })
+      .strict(),
     emergencyGlp1: z
       .object({
         cashEligibilityThreshold: z.number().int().positive(),
         cooldownTicks: z.number().int().positive(),
         cooldownMinutes: z.number().int().positive(),
-        visibleRegardlessOfCash: z.literal(true),
-        dailyUseCap: z.number().int().positive(),
-        fullPayment: z.number().int().positive(),
-        reducedPayment: z.number().int().nonnegative(),
-        fullPaymentUseLimit: z.number().int().positive(),
+        payment: z.number().int().positive(),
         sarcasmStartsAtUse: z.number().int().positive(),
         sarcasmLines: z.array(z.string().min(1).max(240)).min(4),
       })
-      .strict()
-      .superRefine((config, context) => {
-        if (config.fullPaymentUseLimit > config.dailyUseCap) {
-          context.addIssue({
-            code: "custom",
-            message: "The full-payment use limit cannot exceed the daily cap.",
-            path: ["fullPaymentUseLimit"],
-          });
-        }
-        if (config.sarcasmStartsAtUse > config.dailyUseCap) {
-          context.addIssue({
-            code: "custom",
-            message: "Sarcasm must begin on or before the daily cap.",
-            path: ["sarcasmStartsAtUse"],
-          });
-        }
-        if (config.reducedPayment > config.fullPayment) {
-          context.addIssue({
-            code: "custom",
-            message: "The reduced emergency payment cannot exceed the full payment.",
-            path: ["reducedPayment"],
-          });
-        }
-      }),
+      .strict(),
     development: z
       .object({
         fastForwardTickCount: z.number().int().positive(),
@@ -425,6 +424,7 @@ export const prototypeBalanceReleaseSchema = z
         maximumIncorrectFinancialConsequence: z.number().int().nonnegative(),
         clinicalXpPerCorrectFirstAnswer: z.number().int().nonnegative(),
         clinicalXpPerIncorrectFirstAnswer: z.number().int().nonnegative(),
+        firstTutorialCorrectDecisionXp: z.number().int().nonnegative(),
         levelZeroBasePayment: z.number().int().nonnegative(),
         levelZeroPerQuestionPayment: z.number().int().nonnegative(),
         levelZeroPerCorrectPayment: z.number().int().nonnegative(),

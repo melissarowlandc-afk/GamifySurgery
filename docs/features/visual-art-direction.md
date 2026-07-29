@@ -1,122 +1,299 @@
 # Visual art direction
 
-Status: Current Level 0–1 prototype direction
-Recorded: 2026-07-26
+Status: **Controlling visual source of truth for the current prototype**
 
-## Intent
+Recorded: 2026-07-28
 
-Gamify Surgery should feel like a polished monochrome, old-school hospital
-management game rather than a wireframe. The current local visual reference is
-`Photos for Codex/Visual Example.png`. That image is design inspiration only:
-it is not a runtime asset, is not copied into the game, and must not be required
-to build or deploy the repository.
+This document supersedes older language that described the intended result as
+merely simple, large-pixel, strictly black-and-white, or grayscale. Historical
+architecture records still explain why the facility uses a logical tile grid;
+they do not lower the quality bar for the art rendered on that grid.
 
-The reference contributes a cohesive visual language:
+## Target
 
-- warm off-white, charcoal, and a small number of intermediate gray values;
-- crisp, hard-edged original pixel art with recognizable characters;
-- detailed but readable top-down rooms;
-- tactile segmented HUD controls, paper tabs, and clipboard-like charts;
-- compact icons, restrained texture, and small cast shadows;
-- a clear entrance, sidewalk, and limited landscaping;
-- dry, understated humor.
+**Stitchin' Time** is the player-facing name of this cohesive, illustrated
+hospital-management game. The repository and stable technical identifiers
+retain the historical `GamifySurgery` name so saves, launchers, and deployment
+paths remain compatible. Its art is crisp, detailed, and Game Boy-inspired; it
+is not a wireframe decorated with a pixel font.
 
-The game remains predominantly black, white, and grayscale. “More detailed”
-means using a finer and more descriptive pixel scale, not abandoning pixel art
-or introducing photorealism.
+The controlling local comparisons are:
 
-## Current desktop composition
+- `Photos for Codex/Current prototype.png`, the rejected placeholder baseline;
+- `Photos for Codex/Visual Example.png`, the approved reference for
+  atmosphere, density, depth, palette, and cohesion.
 
-The newest play-through direction controls when earlier mockup language
-conflicts:
+The visual example is inspiration only. It is not a runtime asset, must not be
+copied or flattened into the game, and is not required to build or deploy the
+repository. All shipped art must be original.
 
-1. The facility remains stable in the upper-middle workspace. Opening a chart
-   must not resize, move, or re-zoom the map.
-2. A lightly decorated desk surface occupies the lower-middle workspace.
-3. A selected paper chart rests on that desk.
-4. Build Mode pauses facility time and replaces the chart with construction
-   tools on the same desk surface.
-5. The Build Mode toggle stays in one predictable location near the boundary
-   between the map and desk.
-6. Patient folders remain on the left. Goals, staffing, action-required alerts,
-   and the nonurgent ticker use the existing information architecture without
-   becoming a copied permanent action rail.
+The controlling palette is a low-chroma stone-and-olive neutral range modeled
+on the local visual reference: soft ivory paper, weathered light stone,
+gray-green, muted moss, deep gray-olive, and charcoal. It must not drift into a
+blue/slate wash, and it must not become bright yellow, saturated green, or
+sepia. Warm paper surfaces and subdued botanical tones make the clinic
+inviting while charcoal provides structure. Skin tones retain the limited
+warmth necessary to depict people. Pure black is reserved for the strongest
+outlines and contrast. Hard pixel edges, nearest-neighbor rendering, and
+pixel-aligned output are required; smoothing and anti-aliasing are not the
+solution to coarse art.
 
-The large bottom toolbar and permanent right-side action-card rail in the
-reference are explicitly excluded.
+The current core swatches are:
 
-## Facility and characters
+- paper highlight `#FAF7E8`;
+- neutral ivory `#F0EDDD`;
+- weathered paper `#E0DED0`;
+- light stone `#CAC8BB`;
+- pale gray-sage `#B6B9AA`;
+- gray-green `#999E91`;
+- muted moss `#7E8476`;
+- deep gray-olive `#4C5449`;
+- charcoal `#343A32`;
+- outline ink `#232720`.
 
-- The tiny starting clinic contains only the founder/front-desk room.
-- A separate exterior front door anchors the room to a full-width sidewalk at
-  the bottom of the map.
-- The map grid is hidden during normal play and visible in Build Mode.
-- Rooms remain recognizable from original furniture and equipment even without
-  their labels.
-- Patients, the founder, and employees use stable appearance descriptors. The
-  same patient must remain recognizable in the patient tab, chart, alerts, and
-  facility.
-- Waiting patients occupy deterministic, non-overlapping positions in built
-  Waiting Rooms. If configured workload exceeds available visual room slots,
-  overflow remains on the sidewalk rather than drawing patients on top of one
-  another.
-- Characters may use a few slow idle and walking frames. Movement should
-  communicate arrivals, waiting, service travel, and room occupancy.
-- Outsourced patients derive their sidewalk departure, off-site absence, and
-  return from the pending result's saved facility-clock timing. Reloading does
-  not restart or randomize that travel. In-house services continue to use
-  their frozen room-to-room route.
-- Zooming out should reveal additional usable facility area rather than merely
-  shrinking the same small drawing.
+Pixel art does not permit a person to remain a few rectangles or a piece of
+medical equipment to remain a generic circle or block.
 
-## Chart and clinical information
+## Level 1 golden-slice gate
 
-The chart should resemble a physical clipboard or stack of paper while
-remaining a semantic, accessible web interface. It should provide:
+The current milestone is one complete visual golden slice containing every
+representation encountered in the playable Level 1 clinic:
 
-- consistent patient portrait and identity;
-- age and approved sex/demographic label;
-- compact vital signs when the case supplies them;
-- chief complaint, HPI/presentation, results, and current decision;
-- one active `Decision n of m` at a time, with completed decisions collapsed
-  into reviewable rows and no separate floating question-count badge;
-- tactile, readable answer controls;
-- immediate decision feedback and XP when earned;
-- encounter-completion money separately;
-- an explicit `Flip for more disease information` action;
-- bounded internal scrolling rather than viewport overflow.
+- exterior, landscaping strip, sidewalk, and bottom-center entrance;
+- Front Desk;
+- Waiting Room;
+- Examination Room;
+- Bathroom;
+- X-ray Room;
+- Imaging Control Room;
+- Minor-Procedure Room;
+- founder, receptionist, imaging technician, and current patients;
+- patient tabs and chart portraits;
+- employee cards and portraits;
+- founder creator preview, map sprite, portrait, and star-jump pose;
+- relevant HUD, goals, staffing, chart, construction, and event panels.
 
-The approved multiple-choice and one-primary-concept scoring rules remain
-unchanged.
+Later-level rooms must not receive partial artwork until the Level 1 slice is
+reviewed and approved. This gate changes presentation only: it does not
+authorize new clinical content, mechanics, balance, rooms, or progression.
 
-## HUD and controls
+## Interactive art architecture
 
-Use one coherent segmented strip for the already-approved resources and
-controls. Money, Learning XP, satisfaction, and facility time remain distinct.
-Satisfaction includes a pixel face and its exact percentage. Level and Learning
-XP share a compact, squared progress meter. Pause/play and existing speed
-controls use tactile square buttons with clear selected and disabled states.
-Icons never replace accessible text, and alert priority never relies on color
-alone.
+The facility remains a real interactive Phaser scene. Rooms, doors, fixtures,
+characters, litter, the water cooler, and clickable objects remain separate
+functional elements. A flattened clinic screenshot is prohibited.
+
+Repo-native art uses reusable deterministic pixel cells:
+
+- one shared limited palette;
+- reusable drawing and matrix primitives;
+- fixture sprites for furniture, equipment, and environmental details;
+- a shared icon family for HUD and construction UI;
+- a canonical layered character generator consumed by both Phaser and React.
+
+CSS rectangles may still define structural panel boxes, hit areas, shadows, or
+layout, but they are not final furniture, medical equipment, people, or room
+illustrations. Emoji and unrelated generic character icons are prohibited.
+
+## Rooms and environment
+
+Every completed Level 1 room must be identifiable without its text label.
+Rooms use:
+
+- visibly thick walls and finished edges;
+- a shallow dollhouse cutaway, with roughly the lower 20-25% of a
+  full-height rear wall represented as a vertical face, short side returns,
+  low front edges, baseboards, recesses, and directional contact shadows;
+- rear-wall faces only on exposed northern building-envelope segments. When a
+  room or hallway touches immediately north, the southern/front room loses the
+  covered portion of its dollhouse rear wall. This never expands, shrinks, or
+  reinterprets either room's floor. Every room's saved construction footprint
+  remains its exact floor area; the visible rear wall is a bonus cutaway face
+  projected outside and immediately north of that footprint. Partial-width
+  contacts preserve only the genuinely exposed wall runs;
+- explicit doorframes, open wall passages, jambs, and thresholds: a rear-wall
+  doorway is an upright opening cut from the wall/floor contact line upward
+  into the visible exterior wall face, never a floating mark descending from
+  the room's top edge. A north doorway on a shared interior floor boundary
+  becomes a grounded opening and threshold instead. Ordinary passages do not
+  display decorative door leaves standing ajar;
+- subtle room-specific flooring or tiles that do not resemble the logical
+  placement grid;
+- small cast shadows and consistent depth;
+- recognizable original furniture and equipment;
+- counters, screens, seating, sinks, cabinetry, supplies, and restrained decor
+  appropriate to the room. Furniture follows plausible real-world room
+  planning: desks, storage, equipment, and seating may sit against usable walls
+  rather than being mechanically centered, while required paths and work
+  clearances remain readable;
+- enough density to feel occupied without obscuring paths or interactions;
+- native-pixel signature equipment with controls, seams, handles, cushions,
+  cabinetry, tubing, supplies, and contact shadows rather than enlarged
+  geometric symbols;
+- moderately light landscaped exterior grounds that preserve strong room and
+  character contrast, plus irregularly spaced shrubs, flower beds, trees, and
+  a sidewalk/entrance composition that visually situates the clinic without
+  forming obvious vertical planting columns.
+
+Room footprints, routing, build rules, rotations, upgrades, and explicit-door
+behavior remain domain-owned and unchanged. Visual art adapts to those rules.
+Room upgrade level must be visually legible: later tiers use cleaner finish
+inlays, modernized room-specific equipment, upgraded furnishings, and
+restrained additional decor while preserving the original footprint and
+routes. Upgrades do not merely add the same generic plant to every room.
+
+The map is the primary visual focus during facility play. Its normal-play grid
+is completely hidden. A clear translucent logical grid overlays the textured
+floors only while Build/Renovate Mode or an active placement is open, then
+disappears again. The exterior entrance remains the bottom-center anchor
+against a full-width sidewalk, and the camera must preserve the established
+10% minimum, map boundaries, panning, and entrance-oriented zoom behavior.
+The illustrated land and sidewalk fill the available map zone: aspect-ratio
+gutters read as continuous land, and the sidewalk reaches the lower viewport
+edge without an unexplained blank strip.
+
+Characters and floor objects use baseline-Y visual occlusion. A character
+whose feet are south/in front of an object's floor contact appears in front of
+it; a character whose feet are north/behind that object is partially obscured
+by it. Wall art remains behind room occupants. This depth ordering changes
+presentation only and never changes collision, routing, hit targets, or
+logical task state.
+
+## Canonical people
+
+Every person has one persisted appearance identity. The canonical descriptor
+drives, at minimum:
+
+- skin tone;
+- hair style and hair color;
+- face/head choice;
+- body/outfit choice;
+- role-specific clothing;
+- supported accessories.
+
+The approved ten interchangeable head choices and ten body choices use this
+same system without gender restrictions.
+
+At the normal Level 1 camera scale, map characters are presented approximately
+50% larger than the original 24x36 render, with a crisp pixel-aligned
+nearest-neighbor projection and a restrained contrast keyline. Presentation
+size follows map zoom so characters do not become oversized at overview zoom.
+Their logical location remains anchored at the feet, and cutaway-wall clamping
+uses the wall segment at the character's actual room column.
+
+For one person, hairstyle, face, skin tone, clothing, and distinguishing
+features must remain recognizable in:
+
+- creator preview;
+- front, side, and back map sprites;
+- idle and walking poses;
+- portrait or thumbnail;
+- happy-ending star jump;
+- patient tabs, charts, staff cards, and locator-related representations.
+
+A portrait is a dedicated higher-detail bust rendering rather than an enlarged
+map frame, but both renderers must consume the same descriptor and preserve
+the same hair, skin, face, clothing, accessory, and role identity. It may not
+be randomized or illustrated independently. Appearance identity persists
+through save/reload. Old saves are deterministically enriched rather than
+rerolled.
+
+A developer-only character QA gallery must compare each current character
+across these representations. It is never part of ordinary gameplay.
+
+## Interface composition
+
+The facility stays stable in the upper-middle workspace. Opening a chart must
+not resize, move, or re-zoom it. The Clinical Desk occupies the lower-middle
+workspace and holds either the current paper chart or paused construction
+tools.
+
+Panels use layered paper-like surfaces, limited-palette shadows, strong
+hierarchy, tactile pixel controls, and readable clinical typography. Heavy
+solid bars are used sparingly. The Prototype Tools and other developer-facing
+controls are hidden during ordinary gameplay.
+
+The top HUD is intentionally quieter than the facility. Learning XP, Money,
+Patient Satisfaction, and Facility Time use clean, immediately recognizable,
+outline-only pixel pictograms with consistent scale and stroke weight: scalpel,
+money bag, changing smiley face, and clock from left to right. The symbols have
+no individual box, fill texture, or decorative illustration.
+Pause, play, and speed controls follow the same restrained treatment. They do
+not receive the texture, shading, or miniature illustrative detail used in
+rooms, equipment, characters, and portraits.
+
+Patient folders remain on the left. Goals, staffing, action-required alerts,
+and the compact event feed retain the approved information architecture.
+Neither the reference's permanent bottom toolbar nor its large permanent
+right-action rail is copied.
+
+The chart remains a semantic, accessible web interface styled as a physical
+chart. It keeps readable text, vertical scrolling, the canonical portrait,
+demographics, vitals, presentation, one active scored decision, feedback,
+rewards, and disease-information flip behavior. Art must not change the
+approved single-select multiple-choice or one-primary-concept scoring rules.
 
 ## Responsive behavior
 
-Desktop is the primary composition. At narrow widths the chart may become a
-full-screen sheet, patient folders may become a compact selector or drawer,
-and HUD segments may wrap or condense. Clinical text and touch targets must not
-be scaled down to preserve a desktop screenshot. Both layouts retain the same
-art, portraits, hierarchy, and state.
+Desktop is the primary visual composition, but phone width uses the same live
+art and state. The desktop interface is reorganized rather than uniformly
+shrunk. The Phaser bitmap must occupy a real resolved facility viewport at
+every supported width.
 
-When that full-screen chart is open, the tutorial coach may use another part
-of the sheet but must remain visible and must not cover the highlighted answer
-or chart control.
+At narrow widths:
 
-## Guardrails
+- HUD segments wrap into readable groups;
+- the facility remains a visible primary gameplay surface;
+- patient navigation may condense;
+- a chart may become a full-screen sheet;
+- clinical text and touch targets retain readable minimum sizes.
 
-- Use only original artwork and code-native assets.
-- Preserve functional decisions, state management, clinical rules, and
-  responsive behavior when visual inspiration conflicts with them.
-- Do not introduce new gameplay solely because the reference depicts it.
-- Keep palette, border, spacing, typography, shadow, chart, portrait, HUD, and
-  icon treatments reusable.
-- Keep rendering lightweight and pixel-aligned at supported browser sizes.
+Nearest-neighbor rendering and pixel alignment remain required at both desktop
+and phone widths.
+
+## Visual acceptance
+
+The Level 1 slice is ready for owner review only when:
+
+1. every listed room is recognizable without its label;
+2. furnishings and medical equipment are illustrated assets, not geometric
+   placeholders;
+3. people have recognizable hair, face/skin, clothing, and role detail;
+4. every portrait visibly matches its map sprite;
+5. walls, floors, doorframes, fixtures, shading, and environment create visual
+   depth;
+6. the result is substantially closer to the approved reference in density,
+   cohesion, and atmosphere—not merely palette or font;
+7. debug presentation is hidden during ordinary play;
+8. existing gameplay and saves continue to function;
+9. actual desktop, phone, and character-QA renders have been inspected.
+10. the screen uses the low-chroma stone/ivory/gray-olive range without a
+    dominant blue cast, saturated green, or bright yellow cast;
+11. rear-wall cutaways add volume without obscuring routes, characters, or
+    interactions;
+12. the live clinic has no placement grid, while Build/Renovate Mode clearly
+    overlays one over the same room textures;
+13. portraits use more native detail than map sprites while visibly preserving
+    the canonical identity;
+14. HUD and time-control icons remain minimal visual-rest elements;
+15. character heads remain proportionate to their bodies and fully contained
+    below the cutaway wall line while inside a room;
+16. every rear-wall doorway is visibly grounded at the floor-contact line and
+    ordinary room passages do not show an ajar decorative leaf;
+17. a front/southern room does not retain a dollhouse rear wall wherever
+    another room or hallway touches immediately north, while its logical floor
+    remains exactly its saved build footprint;
+18. Level 2+ room finishes and room-specific equipment visibly improve over
+    their Level 1 presentation without changing footprints;
+19. the small player-facing title reads `Stitchin' Time`, while technical
+    identifiers remain backward-compatible.
+20. characters pass visually behind or in front of floor objects according to
+    their baseline Y without changing routes;
+21. room furniture uses plausible wall-oriented layouts rather than defaulting
+    to the room center;
+22. lighter irregular landscaping and a full-height map/sidewalk composition
+    leave no unexplained blank strip below the sidewalk.
+
+Automated tests support this gate but cannot establish visual acceptance. The
+owner approves the rendered Level 1 screenshot before the art system expands
+to later levels.

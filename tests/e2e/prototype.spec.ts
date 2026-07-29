@@ -233,11 +233,7 @@ test("restart archives the selected campaign and returns to a fresh founder flow
 }) => {
   await startClinic(page, "Restart Founder", "Restartable Surgery");
   const original = await getActiveState(page);
-  const tools = page.locator("details.development-panel");
-  await tools.locator(":scope > summary").click();
-  await tools
-    .getByRole("button", { name: "Restart Campaign" })
-    .click();
+  await page.getByRole("button", { name: "Restart Campaign" }).click();
   await expect(
     page.getByRole("heading", {
       name: "Restart this campaign?",
@@ -264,7 +260,7 @@ test("restart archives the selected campaign and returns to a fresh founder flow
   );
   const restarted = await getActiveState(page);
   expect(restarted.campaignId).not.toBe(original.campaignId);
-  expect(restarted.cash).toBe(90);
+  expect(restarted.cash).toBe(120);
   expect(restarted.clinicalXp).toBe(0);
   expect(
     Object.values(restarted.learningHistories).every(
@@ -293,6 +289,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
     }),
   ).toBeVisible();
   const firstPatient = await waitForFirstPatientReady(page);
+  await page.getByRole("button", { name: "Got It" }).click();
   await expect(
     page.getByRole("heading", { name: "Open your first patient chart" }),
   ).toBeVisible();
@@ -301,43 +298,150 @@ test("movement, sequential feedback, off-site return, and settlement are visible
   await expect(
     page.locator(".chart-title-status"),
   ).toBeVisible();
+  // At 4x, a busy parallel browser run may complete the short exam-room
+  // route between the tab click and this assertion. Both labels represent
+  // the same valid forward-only transition; the earlier check-in tutorial
+  // heading already proves that visible movement began.
   await expect(page.locator(".chart-title-status")).toHaveText(
-    "Walking to Examination",
+    /Walking to Examination|Action required/,
   );
+  await expect(
+    page.getByRole("heading", {
+      name: "Read across the chart, then choose",
+    }),
+  ).toBeVisible();
   const choices = await waitForDecisionChoices(page);
   await expect(choices).toHaveCount(3);
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/july28-tutorial-desktop.png`,
+    fullPage: false,
+    animations: "disabled",
+  });
+  await page.getByRole("button", { name: "Got It" }).click();
 
   await page
-    .getByRole("button", { name: /^SIGNAL ALPHA/ })
+    .getByRole("button", {
+      name: /Assess wound type and vaccine history/i,
+    })
     .click();
   await expect(page.locator(".chart-step-feedback")).toContainText(
     "Correct",
   );
   await expect(page.locator(".chart-step-feedback")).toContainText(
-    "Decision XP: +10",
+    "Decision XP: +20",
   );
-  await expect(xpValue(page)).toHaveText("10");
+  await expect(xpValue(page)).toHaveText("20");
+  await expect(
+    page.getByRole("heading", { name: "Review the decision result" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
+  await expect(page.locator(".chart-reward-banner")).toContainText(
+    "Decisions Correct: 1/1",
+  );
+  await expect(page.locator(".chart-reward-banner")).toContainText(
+    "Encounter Payment: +$75",
+  );
+  await expect(page.locator(".chart-reward-banner")).toContainText(
+    "Encounter XP: +20",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Review the encounter summary" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
+  await expect(
+    page.getByRole("heading", {
+      name: "Flip for More Disease Information",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
   await page
-    .getByRole("button", { name: /Begin .*plan/ })
+    .getByRole("button", { name: "Flip for More Disease Information" })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Resolve Completed Chart" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
+  await page
+    .getByRole("button", { name: "Resolve Completed Chart" })
     .click();
 
+  await expect(
+    page.getByRole("heading", {
+      name: "Use quiet moments around the clinic",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
+  await expect(
+    page.getByRole("heading", {
+      name: "Pixel Patient is walking to check-in",
+    }),
+  ).toBeVisible({ timeout: 15_000 });
+  await page.getByRole("button", { name: "Got It" }).click();
+  const secondPatient = page
+    .locator(".patient-folder.is-waiting .patient-tab")
+    .filter({ hasText: "Pixel Patient" });
+  await expect(secondPatient).toBeVisible({ timeout: 15_000 });
+  await expect(
+    page.getByRole("heading", { name: "Open the second patient chart" }),
+  ).toBeVisible();
+  await secondPatient.click();
+  await expect(
+    page.getByRole("heading", { name: "Choose the first plan" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
+  await page.getByRole("button", { name: /^SIGNAL ALPHA/ }).click();
+  await expect(page.locator(".chart-step-feedback")).toContainText(
+    "Decision XP: +10",
+  );
+  await expect(
+    page.getByRole("heading", {
+      name: "Review the answer before care begins",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
+  await page.getByRole("button", { name: "Enact Plan" }).click();
+  const returnToClinic = page.getByRole("button", {
+    name: "Return to clinic",
+  });
+  if (await returnToClinic.isVisible({ timeout: 2_000 })) {
+    await returnToClinic.click();
+  }
   const existingPatient = page
     .locator(".patient-folder.is-active .patient-tab")
     .filter({ hasText: "Pixel Patient" });
-  await expect(existingPatient).toContainText(
-    /Leaving for Testing|Analysis pending|Result pending/,
-    { timeout: 10_000 },
-  );
-  await expect(existingPatient).toContainText("Action required", {
+  const sendoutCoach = page.getByRole("heading", {
+    name: "The patient is away for the timed service",
+  });
+  if (await sendoutCoach.isVisible({ timeout: 5_000 })) {
+    await page.getByRole("button", { name: "Got It" }).click();
+  }
+  await expect(existingPatient).toHaveAccessibleName(/Action required/, {
     timeout: 30_000,
   });
+  await expect(
+    page.getByRole("heading", {
+      name: "The returning patient is ready",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
   await existingPatient.click();
+  await expect(
+    page.getByRole("heading", {
+      name: "The result unlocked the next decision",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Got It" }).click();
   await expect(
     page.locator(".chart-completed-decision"),
   ).toHaveCount(1);
   await expect(
     page.getByText("Decision 2 of 2", { exact: true }),
   ).toBeVisible();
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/july28-multistep-desktop.png`,
+    fullPage: false,
+    animations: "disabled",
+  });
   await page
     .getByRole("button", { name: "ACTION CIRCLE" })
     .click();
@@ -348,7 +452,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
   await expect(finalFeedback).toContainText("Correct");
   await expect(finalFeedback).toContainText("Decision XP: +10");
   await expect(page.locator(".chart-reward-banner")).toContainText(
-    "Decisions correct: 2/2",
+    "Decisions Correct: 2/2",
   );
   await expect(page.locator(".chart-reward-banner")).toContainText(
     "Encounter Payment: +$135",
@@ -378,7 +482,7 @@ test("pause freezes the GLP-1 cooldown and facility time advances it", async ({
   await panel
     .getByRole("button", { name: /Complete consult/ })
     .click();
-  await expect(moneyValue(page)).toContainText(`$${before + 20}`);
+  await expect(moneyValue(page)).toContainText(`$${before + 25}`);
   await expect(xpValue(page)).toHaveText("0");
   await expect(
     page
@@ -404,12 +508,10 @@ test("pause freezes the GLP-1 cooldown and facility time advances it", async ({
     .getByRole("button", { name: "Resume facility time" })
     .click();
 
-  const tools = page.locator("details.development-panel");
-  await tools.locator(":scope > summary").click();
-  for (let interval = 0; interval < 6; interval += 1) {
-    await tools.getByRole("button", { name: /Fast-forward/ }).click();
-  }
-  await expect(consult).toBeEnabled();
+  await page
+    .getByRole("button", { name: "Set facility speed to 4x" })
+    .click();
+  await expect(consult).toBeEnabled({ timeout: 20_000 });
   await page.reload();
   await page
     .getByRole("button", { name: "Resume GLP Surgical Clinic" })

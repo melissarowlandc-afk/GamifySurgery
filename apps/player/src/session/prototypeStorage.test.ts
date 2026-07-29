@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { FounderIdentity } from "@gamify-surgery/game-domain";
+import {
+  normalizePixelAppearance,
+  type FounderIdentity,
+} from "@gamify-surgery/game-domain";
 import {
   appendLocalCampaign,
   createFreshProfile,
@@ -65,7 +68,13 @@ describe("new-campaign opening storage", () => {
     expect(untouchedProfile.campaigns).toEqual([]);
     expect(created.profile.campaigns).toHaveLength(1);
     expect(created.profile.nextCampaignNumber).toBe(2);
-    expect(created.campaign.state.founder).toEqual(FOUNDER);
+    expect(created.campaign.state.founder).toEqual({
+      ...FOUNDER,
+      appearance: normalizePixelAppearance(
+        FOUNDER.appearance,
+        "founder",
+      ),
+    });
     expect(created.campaign.state.facilityTick).toBe(0);
     expect(created.campaign.state.clinicalXp).toBe(0);
     expect(

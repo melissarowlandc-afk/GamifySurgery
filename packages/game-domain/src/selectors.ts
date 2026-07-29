@@ -61,24 +61,18 @@ export function getEmergencyGlp1Status(
             config.cooldownMinutes -
             state.facilityTick,
         );
-  const cashEligible = true;
-  const nextUse = usage + 1;
-  const payment =
-    nextUse <= config.fullPaymentUseLimit
-      ? config.fullPayment
-      : config.reducedPayment;
-  const blockedReason = usage >= config.dailyUseCap
-      ? `Daily limit reached (${config.dailyUseCap}/${config.dailyUseCap}).`
-      : cooldownRemainingTicks > 0
-        ? `Available in ${cooldownRemainingTicks} minute${
-            cooldownRemainingTicks === 1 ? "" : "s"
-          }.`
-        : null;
+  const cashEligible = state.cash < config.cashEligibilityThreshold;
+  const blockedReason = !cashEligible
+    ? `Available below $${config.cashEligibilityThreshold}.`
+    : cooldownRemainingTicks > 0
+      ? `Available in ${cooldownRemainingTicks} minute${
+          cooldownRemainingTicks === 1 ? "" : "s"
+        }.`
+      : null;
   return {
     dayNumber,
     usesToday: usage,
-    dailyUseCap: config.dailyUseCap,
-    payment,
+    payment: config.payment,
     cooldownRemainingTicks,
     cashEligible,
     eligible: blockedReason === null,
@@ -175,6 +169,23 @@ export function getEligibleServiceRoute(
   const capabilities = getCurrentCapabilities(state, context);
   const allowed =
     allowedRouteIds === null ? null : new Set(allowedRouteIds);
+  const activeInHouseXrays = Object.values(state.encounters).filter(
+    (encounter) =>
+      encounter.pendingResult?.routeId === "route.xray.in_house" &&
+      encounter.pendingResult.deliveredAtTick === null,
+  ).length;
+  const xrayRoomCount = state.rooms.filter(
+    (room) => room.roomDefinitionId === "room.xray",
+  ).length;
+  const availableImagingTechnicians = state.employees.filter(
+    (employee) =>
+      employee.staffRoleDefinitionId === "staff.imaging_technician" &&
+      isEmployeeOperational(state, employee.id, context),
+  ).length;
+  const inHouseXrayCapacity = Math.min(
+    xrayRoomCount,
+    availableImagingTechnicians,
+  );
   const route =
     service.routes
       .flatMap((candidate) => {
@@ -184,7 +195,9 @@ export function getEligibleServiceRoute(
             !capabilities.has(candidate.requiredCapabilityId)) ||
           !candidate.requiredCapabilityIds.every((capabilityId) =>
             capabilities.has(capabilityId),
-          )
+          ) ||
+          (candidate.id === "route.xray.in_house" &&
+            activeInHouseXrays >= inHouseXrayCapacity)
         ) {
           return [];
         }
@@ -624,7 +637,9 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     statusLabel =
       encounter.patientMovement.kind === "arriving_for_check_in"
         ? "Walking to Check-In"
-        : encounter.patientMovement.kind === "walking_to_care"
+        : encounter.patientMovement.kind === "walking_to_waiting"
+          ? "Waiting"
+          : encounter.patientMovement.kind === "walking_to_care"
           ? "Walking to Examination"
           : encounter.patientMovement.kind ===
                 "departing_for_offsite_testing"
@@ -660,7 +675,8 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     statusLabel,
     actionRequired:
       encounter.lifecycle === "active_action_required" &&
-      encounter.patientMovement === null,
+      (encounter.patientMovement === null ||
+        encounter.patientMovement.kind === "walking_to_care"),
     pendingLabel:
       encounter.lifecycle === "active_pending_result"
         ? (encounter.pendingResult?.pendingLabel ?? null)
@@ -730,7 +746,11 @@ export function getPatientLists(state: GameState): PatientLists {
 
   return {
     waiting: encounters
-      .filter((encounter) => encounter.lifecycle === "waiting_unopened")
+      .filter(
+        (encounter) =>
+          encounter.lifecycle === "waiting_unopened" &&
+          encounter.patientMovement?.kind !== "arriving_for_check_in",
+      )
       .map((encounter) => toPatientListItem(state, encounter)),
     active: encounters
       .filter(
@@ -756,7 +776,8 @@ export function getCurrentQuestion(
   if (
     !encounter ||
     encounter.lifecycle !== "active_action_required" ||
-    encounter.patientMovement !== null
+    (encounter.patientMovement !== null &&
+      encounter.patientMovement.kind !== "walking_to_care")
   ) {
     return null;
   }
@@ -825,6 +846,41 @@ export function getEncounterPatientLocation(
   );
 }
 
+/**
+ * Exposes the persisted in-facility service route to the renderer.
+ *
+ * Encounter state remains authoritative; this projection only gives the
+ * presentation layer enough information to interpolate between logical route
+ * nodes instead of visibly teleporting on each simulation tick.
+ */
+export function getPendingPatientRoutePresentation(
+  state: GameState,
+  encounterId: string,
+): { path: GridPoint[]; pathIndex: number } | null {
+  const travel =
+    state.encounters[encounterId]?.pendingResult?.patientTravel;
+  if (!travel) {
+    return null;
+  }
+  const outbound = state.facilityTick <= travel.serviceCompletionTick;
+  const path = outbound ? travel.outboundPath : travel.returnPath;
+  if (path.length === 0) {
+    return null;
+  }
+  const phaseStartTick = outbound
+    ? travel.outboundStartTick
+    : travel.serviceCompletionTick;
+  const pathIndex = Math.min(
+    path.length - 1,
+    Math.max(0, state.facilityTick - phaseStartTick) *
+      travel.tilesPerTick,
+  );
+  return {
+    path: path.map((point) => ({ ...point })),
+    pathIndex,
+  };
+}
+
 export function getPendingOffsitePatientTravel(
   state: GameState,
   encounterId: string,
@@ -870,7 +926,11 @@ export function getOperatingExpensePerFacilityHour(
     (total, employee) => total + employee.salaryPerExpenseInterval,
     0,
   );
-  return -(roomExpense + staffExpense);
+  const advertisingExpense =
+    context.balanceRelease.advertising.levels.find(
+      (level) => level.level === state.advertisingLevel,
+    )?.hourlyCost ?? 0;
+  return -(roomExpense + staffExpense + advertisingExpense);
 }
 
 export function getLearningSummary(

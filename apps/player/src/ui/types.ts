@@ -38,11 +38,19 @@ export interface PixelAvatarView {
   version: "pixel-avatar.v1";
   bodyShape: PixelAvatarBodyShape;
   hairStyle: PixelAvatarHairStyle;
+  skinTone?: 0 | 1 | 2 | 3;
   hairShade: 0 | 1 | 2 | 3;
   faceStyle: PixelAvatarFaceStyle;
   outfitStyle: PixelAvatarOutfitStyle;
   outfitShade: 0 | 1 | 2 | 3;
   accessory: PixelAvatarAccessory;
+  headVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  bodyVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  roleStyle?:
+    | "founder"
+    | "patient"
+    | "receptionist"
+    | "imaging_technician";
 }
 
 export interface PatientTabView {
@@ -53,6 +61,7 @@ export interface PatientTabView {
   statusLabel: string;
   actionRequired: boolean;
   selected: boolean;
+  satisfactionPercent: number;
   patienceLabel?: string;
   avatar?: PixelAvatarView;
   /** Optional stable order key. Resolved charts use descending order. */
@@ -82,6 +91,7 @@ export interface ChartDecisionStepView {
   feedbackBody?: string;
   rewardLabel?: string;
   nextActionLabel?: string;
+  collapsedResultLabel?: string;
   current: boolean;
   complete: boolean;
 }
@@ -160,9 +170,27 @@ export interface EmergencyGlp1View {
   enabled: boolean;
   paymentLabel: string;
   statusLabel: string;
-  useCountLabel: string;
+  cooldownLabel: string;
   cooldownProgressPercent: number;
   flavorMessage?: string;
+}
+
+export interface AdvertisingLevelView {
+  level: number;
+  displayName: string;
+  hourlyCostLabel: string;
+  arrivalFrequencyLabel: string;
+  selected: boolean;
+}
+
+export interface AdvertisingView {
+  currentLevel: number;
+  currentDisplayName: string;
+  hourlyCostLabel: string;
+  arrivalFrequencyLabel: string;
+  canDecrease: boolean;
+  canIncrease: boolean;
+  levels: AdvertisingLevelView[];
 }
 
 export interface RoomBuildOptionView {
@@ -181,7 +209,9 @@ export interface SelectedRoomBuildView {
   id: string;
   displayName: string;
   upgradeLevel: number;
+  nextUpgradeLevel?: number;
   upgradeCostLabel?: string;
+  upgradeImprovements: string[];
   resaleValueLabel?: string;
   canUpgrade: boolean;
   canSell: boolean;
@@ -290,6 +320,7 @@ export type MessageBoardTargetType =
   | "patient"
   | "employee"
   | "room"
+  | "water_cooler"
   | "build_mode"
   | "goal"
   | "emergency_glp1";

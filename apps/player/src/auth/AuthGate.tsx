@@ -193,7 +193,7 @@ export function AuthGate({ children }: AuthGateProps) {
     return (
       <main className="opening-screen auth-gate-screen">
         <section className="founder-creator auth-gate-card" role="status">
-          <span className="opening-wordmark">Gamify Surgery</span>
+          <span className="opening-wordmark">Stitchin&apos; Time</span>
           <h1>Checking account…</h1>
         </section>
       </main>
@@ -203,7 +203,7 @@ export function AuthGate({ children }: AuthGateProps) {
   return (
     <main className="opening-screen auth-gate-screen">
       <section className="founder-creator auth-gate-card">
-        <span className="opening-wordmark">Gamify Surgery</span>
+        <span className="opening-wordmark">Stitchin&apos; Time</span>
         <h1>
           {screen === "register"
             ? "Create Invited Account"

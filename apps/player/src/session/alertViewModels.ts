@@ -7,6 +7,7 @@ import {
   SECOND_TUTORIAL_ENCOUNTER_ID,
   deterministicInteger,
   getFacilityProgressionStatus,
+  getRoomDefinition,
   type DomainEvent,
   type GameState,
 } from "@gamify-surgery/game-domain";
@@ -58,6 +59,12 @@ function configuredAlertCopy(
 function eventTarget(
   event: DomainEvent,
 ): Pick<MessageBoardItemView, "targetType" | "targetId" | "actionLabel"> {
+  if (event.type === "water_cooler_low") {
+    return {
+      targetType: "water_cooler",
+      actionLabel: "Show water cooler",
+    };
+  }
   if (event.target?.kind === "encounter" || event.encounterId) {
     return {
       targetType: "patient",
@@ -117,6 +124,10 @@ function eventTitle(event: DomainEvent): string {
       return "Upgrade complete";
     case "staff_hired":
       return "Employee hired";
+    case "staff_fired":
+      return "Employee fired";
+    case "staff_quit":
+      return "Employee quit";
     case "staff_salary_changed":
       return "Salary updated";
     case "facility_level_advanced":
@@ -177,6 +188,8 @@ function poolForEvent(
             event.type === "encounter_settled"
           ? "result"
           : event.type === "staff_hired" ||
+              event.type === "staff_fired" ||
+              event.type === "staff_quit" ||
               event.type === "staff_salary_changed"
             ? "staff"
             : event.type === "room_placed" ||
@@ -247,39 +260,44 @@ function createFlavorMessages(
 function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
   return Object.values(state.encounters).flatMap((encounter) => {
     if (encounter.lifecycle === "waiting_unopened") {
-      const warned = encounter.waiting.warningThresholdsShown.length > 0;
-      const departureImminent =
-        encounter.waiting.departureDueTick !== null &&
-        state.facilityTick >= encounter.waiting.departureDueTick;
+      if (
+        state.openChartEncounterId === encounter.id ||
+        encounter.patientMovement?.kind === "arriving_for_check_in" ||
+        encounter.patientMovement?.kind === "leaving_after_walkout"
+      ) {
+        return [];
+      }
+      const leaveWarningActive =
+        !encounter.waiting.patienceExempt &&
+        encounter.patientSatisfaction < 75;
       const configuredCopy = configuredAlertCopy(
-        warned
+        leaveWarningActive
           ? "alert.patient.patience"
           : "alert.patient.arrived",
         {
           patient_name: encounter.patientDisplayName,
         },
-        warned ? "Patient may leave soon" : "New patient",
-        warned
+        leaveWarningActive ? "Patient may leave soon" : "New patient",
+        leaveWarningActive
           ? `${encounter.patientDisplayName} may leave soon.`
           : `${encounter.patientDisplayName} has checked in.`,
       );
       return [
         {
-          id: `persistent.patient.${encounter.id}.waiting`,
-          priority: departureImminent ? "critical" : "action_required",
-          title: departureImminent
-            ? "Patient may leave now"
-            : configuredCopy.title,
-          message: departureImminent
+          id: leaveWarningActive
+            ? `persistent.patient.${encounter.id}.leave-warning`
+            : `persistent.patient.${encounter.id}.waiting`,
+          priority: leaveWarningActive ? "critical" : "action_required",
+          title: configuredCopy.title,
+          message: leaveWarningActive
             ? `${encounter.patientDisplayName} may leave without being seen unless the chart is opened now.`
-            : warned
-              ? `${encounter.patientDisplayName} has waited long enough that satisfaction may fall.`
-              : configuredCopy.message,
+            : configuredCopy.message,
           timeLabel: facilityTimeLabel(encounter.waiting.arrivedAtTick),
           actionLabel: "Open chart",
           targetType: "patient",
           targetId: encounter.id,
-          sortKey: state.facilityTick + (warned ? 0.9 : 0.5),
+          sortKey:
+            state.facilityTick + (leaveWarningActive ? 0.9 : 0.5),
           persistent: true,
         } satisfies MessageBoardItemView,
       ];
@@ -395,6 +413,204 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       persistent: true,
     });
   }
+
+  const checkedInWaiting = Object.values(state.encounters).filter(
+    (encounter) =>
+      encounter.lifecycle === "waiting_unopened" &&
+      encounter.patientMovement?.kind !== "arriving_for_check_in" &&
+      encounter.patientMovement?.kind !== "leaving_after_walkout",
+  );
+  const hasReceptionist = state.employees.some(
+    (employee) =>
+      employee.staffRoleDefinitionId === "staff.receptionist",
+  );
+  if (
+    state.facilityLevel === 1 &&
+    checkedInWaiting.length > 0 &&
+    !hasReceptionist
+  ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.staff.receptionist-recommended",
+      {},
+      "Front-desk help recommended",
+      "A receptionist adds front-desk capacity and lets the surgeon concentrate on care.",
+    );
+    messages.push({
+      id: "persistent.staff.receptionist-recommended",
+      priority: "action_required",
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "employee",
+      actionLabel: "View employees",
+      sortKey: state.facilityTick + 0.54,
+      persistent: true,
+    });
+  }
+
+  const pendingOffsiteXray = Object.values(state.encounters).find(
+    (encounter) =>
+      encounter.lifecycle === "active_pending_result" &&
+      encounter.pendingResult?.resultTypeId === "service.xray" &&
+      encounter.pendingResult.routeId === "route.xray.outsourced" &&
+      encounter.pendingResult.deliveredAtTick === null,
+  );
+  if (pendingOffsiteXray) {
+    const hasXrayRoom = state.rooms.some(
+      (room) => room.roomDefinitionId === "room.xray",
+    );
+    const hasImagingTechnician = state.employees.some(
+      (employee) =>
+        employee.staffRoleDefinitionId ===
+        "staff.imaging_technician",
+    );
+    if (!hasXrayRoom) {
+      const configuredCopy = configuredAlertCopy(
+        "alert.facility.onsite-imaging-requested",
+        { patient_name: pendingOffsiteXray.patientDisplayName },
+        "Patient requests onsite imaging",
+        `${pendingOffsiteXray.patientDisplayName} wishes X-ray were available onsite.`,
+      );
+      messages.push({
+        id: "persistent.facility.onsite-imaging-requested",
+        priority: "informational",
+        title: configuredCopy.title,
+        message: configuredCopy.message,
+        timeLabel: facilityTimeLabel(state.facilityTick),
+        targetType: "build_mode",
+        actionLabel: "Open Build Mode",
+        sortKey: state.facilityTick + 0.43,
+        persistent: true,
+      });
+    } else if (!hasImagingTechnician) {
+      const configuredCopy = configuredAlertCopy(
+        "alert.staff.imaging-technician-needed",
+        { patient_name: pendingOffsiteXray.patientDisplayName },
+        "Imaging staff needed",
+        `${pendingOffsiteXray.patientDisplayName} can see the X-ray room, but it cannot operate without an Imaging Technician.`,
+      );
+      messages.push({
+        id: "persistent.staff.imaging-technician-needed",
+        priority: "action_required",
+        title: configuredCopy.title,
+        message: configuredCopy.message,
+        timeLabel: facilityTimeLabel(state.facilityTick),
+        targetType: "employee",
+        actionLabel: "View employees",
+        sortKey: state.facilityTick + 0.55,
+        persistent: true,
+      });
+    }
+  }
+
+  const firstWaitingPatient = checkedInWaiting[0];
+  if (
+    state.facilityLevel === 1 &&
+    firstWaitingPatient &&
+    !state.rooms.some(
+      (room) => room.roomDefinitionId === "room.waiting",
+    )
+  ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.facility.waiting-room-needed",
+      { patient_name: firstWaitingPatient.patientDisplayName },
+      "Waiting space requested",
+      `${firstWaitingPatient.patientDisplayName} would prefer to wait somewhere designed for waiting.`,
+    );
+    messages.push({
+      id: "persistent.facility.waiting-room-needed",
+      priority: "informational",
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "build_mode",
+      actionLabel: "Open Build Mode",
+      sortKey: state.facilityTick + 0.41,
+      persistent: true,
+    });
+  }
+  if (
+    state.facilityLevel === 1 &&
+    firstWaitingPatient &&
+    state.facilityTick - firstWaitingPatient.waiting.arrivedAtTick >=
+      30 &&
+    !state.rooms.some(
+      (room) => room.roomDefinitionId === "room.bathroom",
+    )
+  ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.facility.bathroom-needed",
+      { patient_name: firstWaitingPatient.patientDisplayName },
+      "Patient amenity requested",
+      `${firstWaitingPatient.patientDisplayName} has begun wondering whether the clinic has a bathroom.`,
+    );
+    messages.push({
+      id: "persistent.facility.bathroom-needed",
+      priority: "informational",
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "build_mode",
+      actionLabel: "Open Build Mode",
+      sortKey: state.facilityTick + 0.4,
+      persistent: true,
+    });
+  }
+
+  const litterRoomId = state.environment.litterItems[0]?.roomId;
+  const dirtiestRoom = [...state.rooms].sort(
+    (left, right) =>
+      (left.cleanliness ?? 100) - (right.cleanliness ?? 100),
+  )[0];
+  const cleanlinessRoom =
+    (litterRoomId
+      ? state.rooms.find((room) => room.id === litterRoomId)
+      : null) ??
+    ((dirtiestRoom?.cleanliness ?? 100) <=
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction
+      .dirtyRoomThreshold
+      ? dirtiestRoom
+      : null);
+  if (cleanlinessRoom) {
+    const roomName =
+      getRoomDefinition(cleanlinessRoom.roomDefinitionId)
+        ?.displayName ?? "A clinic room";
+    const configuredCopy = configuredAlertCopy(
+      "alert.facility.cleanliness-low",
+      { room_name: roomName },
+      "Cleanliness needs attention",
+      `${roomName} is looking untidy. Select visible litter to send the founder to clean it.`,
+    );
+    messages.push({
+      id: "persistent.facility.cleanliness-low",
+      priority: "informational",
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      sortKey: state.facilityTick + 0.39,
+      persistent: true,
+    });
+  }
+
+  if (
+    state.environment.waterCoolerFillPercent <=
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
+      .waterCoolerLowThreshold
+  ) {
+    messages.push({
+      id: "persistent.environment.water-cooler-low",
+      priority: "informational",
+      title: "Water cooler needs attention",
+      message:
+        "The water cooler is low. Select this update to find it, then click the cooler to refill it.",
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "water_cooler",
+      actionLabel: "Show water cooler",
+      sortKey: state.facilityTick + 0.38,
+      persistent: true,
+    });
+  }
+
   const progression = getFacilityProgressionStatus(state);
   if (progression.eligible) {
     const configuredCopy = configuredAlertCopy(
@@ -428,7 +644,8 @@ function isRepresentedByPersistentCondition(event: DomainEvent): boolean {
   return (
     event.type === "patient_arrived" ||
     event.type === "patience_warning" ||
-    event.type === "result_ready"
+    event.type === "result_ready" ||
+    event.type === "water_cooler_low"
   );
 }
 

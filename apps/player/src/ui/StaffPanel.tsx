@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { PixelAvatar } from "./PixelAvatar";
 import type { StaffRoleGroupView } from "./types";
 
@@ -6,13 +7,7 @@ interface StaffPanelProps {
   onHire: (staffRoleDefinitionId: string) => void;
   onDecreaseSalary: (employeeId: string) => void;
   onIncreaseSalary: (employeeId: string) => void;
-}
-
-function clampPercent(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 0;
-  }
-  return Math.max(0, Math.min(100, value));
+  onFire: (employeeId: string) => void;
 }
 
 /**
@@ -24,7 +19,12 @@ export function StaffPanel({
   onHire,
   onDecreaseSalary,
   onIncreaseSalary,
+  onFire,
 }: StaffPanelProps) {
+  const [fireCandidateId, setFireCandidateId] = useState<string | null>(
+    null,
+  );
+
   return (
     <aside className="panel staff-panel" aria-labelledby="staff-panel-title">
       <div className="panel-heading">
@@ -73,16 +73,18 @@ export function StaffPanel({
                   <div className="staff-member-details">
                     <h4>{employee.displayName}</h4>
                     <small>{employee.roleDisplayName}</small>
-                    <label>
-                      <span>
-                        Morale <strong>{employee.moraleLabel}</strong>
-                      </span>
-                      <progress
-                        max={100}
-                        value={clampPercent(employee.moralePercent)}
-                      />
-                    </label>
+                    <div className="staff-morale">
+                      <span>Morale</span>
+                      <strong>{employee.moraleLabel}</strong>
+                    </div>
                     <div className="staff-salary-control">
+                      <button
+                        className="staff-fire-button"
+                        type="button"
+                        onClick={() => setFireCandidateId(employee.id)}
+                      >
+                        Fire
+                      </button>
                       <span>
                         Salary <strong>{employee.salaryLabel}</strong>
                       </span>
@@ -109,6 +111,37 @@ export function StaffPanel({
                         </button>
                       </span>
                     </div>
+                    {fireCandidateId === employee.id ? (
+                      <div
+                        className="staff-fire-confirmation"
+                        role="alertdialog"
+                        aria-label={`Confirm firing ${employee.displayName}`}
+                      >
+                        <strong>Fire {employee.displayName}?</strong>
+                        <span>
+                          They will leave this clinic immediately.
+                        </span>
+                        <div>
+                          <button
+                            className="button button-danger"
+                            type="button"
+                            onClick={() => {
+                              onFire(employee.id);
+                              setFireCandidateId(null);
+                            }}
+                          >
+                            Confirm Fire
+                          </button>
+                          <button
+                            className="text-button"
+                            type="button"
+                            onClick={() => setFireCandidateId(null)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </article>
               ))}

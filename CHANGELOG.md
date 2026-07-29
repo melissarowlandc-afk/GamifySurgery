@@ -2,6 +2,129 @@
 
 All notable implementation and project-record changes are listed here.
 
+## 2026-07-28
+
+### July 28 tutorial, clinic loop, and balance pass
+
+- Rebuilt the first protected tutorial encounter as one immediate scored
+  decision worth 20 Learning XP, followed by manually acknowledged guidance
+  for settlement, disease information, and chart resolution; the second
+  protected encounter now teaches a visible ten-minute result delay and
+  follow-up decision
+- Made tutorial guidance remain anchored after responsive reflow, kept its
+  controls above the phone-width full-screen chart, and added explicit
+  Alerts-and-Events, waiting-time, GLP-1, Build Mode, and progression coaching
+  without letting the coach perform the highlighted action
+- Delayed patient-chart creation until physical Front Desk check-in, routed
+  checked-in patients to the Waiting Room, Front Desk, or sidewalk as capacity
+  permits, and reused the same chart only after a returning patient physically
+  checks in with results
+- Kept the current chart decision immediately readable while a selected patient
+  walks to the one available Examination Room; prior decisions collapse into
+  reviewable summaries and the full chart scrolls vertically
+- Replaced render-time tile jumps with persisted waypoint routes and
+  frame-interpolated founder, patient, employee, and onsite-service movement;
+  logical routes still own completion so pause, reload, and 1x/2x/4x remain
+  deterministic
+- Centralized laboratory, outsourced X-ray, and staffed onsite X-ray service
+  times at 60, 120, and 60 facility minutes and limited concurrent onsite
+  X-rays to the number of both functioning rooms and available technicians
+- Completed the Build/Renovate toolbar, centered room-upgrade controls,
+  exact upgrade confirmation, zero-cost door placement/removal, session Undo,
+  and a blocking invalid-layout dialog that lists every correction beside
+  Done/Save and Return
+- Added persistent advertising tiers, contextual receptionist/imaging/amenity
+  guidance, visible water-cooler and litter interactions, cleanliness scuffs,
+  mock walkout reviews, and cooldown-aware compact alert behavior
+- Added confirmed employee firing, percentage-only morale, unpaid-expense morale
+  decline and quitting, cash clamping at zero, and a $25 low-cash GLP-1 action
+  whose only usage limit is its persisted one-facility-hour cooldown
+- Retuned Level 0 starting cash to $120 and shifted the room economy toward
+  higher construction prices with lower upkeep while retaining the accepted
+  Level 0/1 payment formulas and 150-XP Level 1 gate
+- Added focused domain, UI, launcher-boundary, responsive tutorial, chart,
+  Build Mode, movement, service-capacity, save/reload, and browser-walkthrough
+  regression coverage plus current desktop and phone handoff captures
+
+### Level 1 visual golden slice
+
+- Corrected the cutaway projection so each saved room footprint remains the
+  exact immutable floor area while exposed rear-wall faces project as a
+  north-side visual bonus outside that footprint
+- Replaced decorative ajar door leaves with grounded wall openings, jambs, and
+  thresholds appropriate to shared interior boundaries and exposed rear walls
+- Added baseline-Y room occlusion so people render in front of furniture when
+  south of it and behind furniture when north of it, without changing routing
+  or interaction state
+- Repositioned room furnishings around plausible real-world walls, work areas,
+  and clearances rather than mechanically centering every object
+- Lightened the surrounding land, irregularized landscaping placement to avoid
+  visible planting columns, and extended the illustrated ground and sidewalk
+  through the available map zone without blank space beneath the sidewalk
+- Adopted **Stitchin' Time** as the player-facing title while preserving
+  `GamifySurgery` technical identifiers for launcher, Pages, and save
+  compatibility
+- Made rear dollhouse walls building-envelope aware: north/south room contacts
+  now preserve each room's independent floor footprint and grounded interior
+  thresholds, while partial contacts retain only the exposed northern wall
+  segments
+- Enlarged map characters by roughly 50% at the normal camera scale, added a
+  restrained contrast keyline, and made presentation size follow camera zoom
+  without changing canonical identities, logical routes, or foot anchors
+- Reworked HUD resource symbols into boxless outline pictograms for the
+  scalpel, money bag, satisfaction face, and facility clock
+- Added higher-detail secondary furniture and equipment plus deterministic
+  room-upgrade finish and equipment layers so upgraded rooms look more modern
+  without changing footprints or gameplay
+- Corrected the over-blue refinement toward the visual reference's
+  low-chroma ivory/stone/gray-olive range, coordinated and landscaped the
+  clinic grounds, and retained restrained skin warmth and minimal HUD symbols
+- Rebuilt the room projection as a grounded dollhouse cutaway: rear wall
+  faces now have caps and floor-contact lines, side walls step down to low
+  returns, front walls form a cutaway lip, and rear-wall doors are upright
+  openings that begin at the floor rather than floating from the top edge
+- Reduced and contained map-character proportions below the rear-wall line,
+  added more visibly distinct head/body treatment, and expanded signature
+  room furniture into higher-native-detail pixel assets
+- Increased Level 1 room density with wall fixtures, clinical controls,
+  cabinetry, supplies, rugs, contact shadows, trees, shrubs, and flower beds
+  while keeping every room, fixture, door, and character independently
+  interactive
+- Replaced the facility's geometric room and furniture placeholders with a
+  reusable repo-native pixel-cell art system, coordinated low-chroma
+  ivory/stone/gray-olive/moss/charcoal palette, room-specific floors,
+  thick walls, detailed
+  doors, shadows, equipment, furnishings, exterior, and landscaping
+- Refined the golden slice with shallow rear-wall cutaways and side returns,
+  distinct low-contrast floor materials, a completely hidden live-play grid,
+  and a translucent construction-only grid over the same persisted clinic
+- Increased the canonical map renderer from 20x30 to 24x36 native cells,
+  introduced a separate 38x42 identity-linked portrait renderer, and enlarged
+  the underlying fixture drawings with controls, seams, handles, cushions,
+  supplies, highlights, and contact detail rather than smoothing or scaling
+- Kept the Learning XP, Money, Patient Satisfaction, Facility Time, pause,
+  play, and speed symbols deliberately simple one- or two-tone pictograms
+- Added illustrated Level 1 interiors for the Front Desk, Waiting Room,
+  Examination Room, Bathroom, X-ray Room, Imaging Control Room, and
+  Minor-Procedure Room without changing footprints, routing, build rules, or
+  gameplay
+- Replaced separate CSS portrait shapes and Phaser character blocks with one
+  persisted layered character renderer shared by creator previews, map
+  sprites, front/side/back and walking poses, portraits, staff and patient
+  cards, and the founder star jump
+- Deterministically enriched older saved appearances with skin, head/body
+  variant, and role-clothing fields while preserving legacy campaign identity
+- Added original pixel icon assets for the HUD and build cards, refined
+  paper-like panels and tactile controls, and hid Prototype Tools during
+  ordinary gameplay
+- Added a developer-only canonical character QA gallery and actual-app
+  desktop, phone, and identity-comparison screenshot coverage
+- Fixed stable desktop map sizing, the collapsed one-pixel phone facility
+  canvas, and dialog stacking so phone tutorial copy cannot trap restart or
+  campaign controls
+- Replaced older simple-grayscale wording with the controlling visual
+  source-of-truth and an explicit owner-approval gate before later-level art
+
 ## 2026-07-27
 
 ### July 27 Level 0/1 integration

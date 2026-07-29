@@ -73,6 +73,10 @@ describe("prototype alert data", () => {
 describe("createMessageBoardView", () => {
   it("creates one clickable persistent alert for a waiting patient", () => {
     const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 34, y: 29 };
+    encounter.assignedRoomInstanceId = "room.instance.founder_desk";
     state.events = [
       event({
         id: "event.patient-arrived.test",
@@ -111,13 +115,35 @@ describe("createMessageBoardView", () => {
     });
   });
 
-  it("consolidates escalating patience warnings and suppresses flavor while critical", () => {
+  it("does not claim a patient checked in while the patient is still approaching the Front Desk", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    expect(encounter.patientMovement?.kind).toBe("arriving_for_check_in");
+
+    const items = createMessageBoardView(state);
+    expect(
+      items.some(
+        (item) =>
+          item.targetId === encounter.id &&
+          item.actionLabel === "Open chart",
+      ),
+    ).toBe(false);
+    expect(
+      items.some((item) => item.message.includes("has checked in")),
+    ).toBe(false);
+  });
+
+  it("shows one leave warning only below 75% and ignores the obsolete countdown", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     state.facilityTick = 4;
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 34, y: 29 };
+    encounter.assignedRoomInstanceId = "room.instance.founder_desk";
     encounter.waiting.patienceExempt = false;
-    encounter.waiting.departureDueTick = 4;
-    encounter.waiting.warningThresholdsShown = [2, 0];
+    encounter.waiting.departureDueTick = 0;
+    encounter.waiting.warningThresholdsShown = [8, 4, 0];
+    encounter.patientSatisfaction = 75;
     state.events = [
       event({
         id: "event.patient-arrived.test",
@@ -144,6 +170,13 @@ describe("createMessageBoardView", () => {
       }),
     ];
 
+    const atThreshold = createMessageBoardView(state);
+    expect(
+      atThreshold.some((item) => item.priority === "critical"),
+    ).toBe(false);
+
+    encounter.patientSatisfaction = 74;
+    encounter.satisfactionWarningsShown = [75];
     const items = createMessageBoardView(state);
     const patientAlerts = items.filter(
       (item) => item.targetId === encounter.id && item.priority !== "flavor",
@@ -151,12 +184,131 @@ describe("createMessageBoardView", () => {
 
     expect(patientAlerts).toHaveLength(1);
     expect(patientAlerts[0]).toMatchObject({
-      id: `persistent.patient.${encounter.id}.waiting`,
+      id: `persistent.patient.${encounter.id}.leave-warning`,
       priority: "critical",
       persistent: true,
     });
     expect(patientAlerts[0]?.message).toContain(encounter.patientDisplayName);
     expect(items.some((item) => item.priority === "flavor")).toBe(false);
+  });
+
+  it("provides stable receptionist, amenity, and cleanliness guidance without stacking copies", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    state.facilityLevel = 1;
+    state.facilityTick = 31;
+    state.cash = 1_000;
+    state.cashCents = 100_000;
+    encounter.waiting.patienceExempt = false;
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 34, y: 29 };
+    state.environment.litterItems = [
+      {
+        id: "litter.guidance",
+        roomId: "room.instance.founder_desk",
+        location: { x: 34, y: 29 },
+        spawnedAtFacilityTick: 30,
+      },
+    ];
+
+    const first = createMessageBoardView(state);
+    const second = createMessageBoardView(cloneState(state));
+    const guidanceIds = [
+      "persistent.staff.receptionist-recommended",
+      "persistent.facility.waiting-room-needed",
+      "persistent.facility.bathroom-needed",
+      "persistent.facility.cleanliness-low",
+    ];
+
+    for (const id of guidanceIds) {
+      expect(first.filter((item) => item.id === id)).toHaveLength(1);
+      expect(second.filter((item) => item.id === id)).toHaveLength(1);
+    }
+    expect(
+      first.find(
+        (item) =>
+          item.id === "persistent.staff.receptionist-recommended",
+      ),
+    ).toMatchObject({
+      targetType: "employee",
+      actionLabel: "View employees",
+    });
+    expect(
+      first.find(
+        (item) =>
+          item.id === "persistent.facility.waiting-room-needed",
+      ),
+    ).toMatchObject({
+      targetType: "build_mode",
+      actionLabel: "Open Build Mode",
+    });
+  });
+
+  it("distinguishes missing onsite X-ray from a built X-ray without a technician", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    state.facilityLevel = 1;
+    state.cash = 1_000;
+    state.cashCents = 100_000;
+    encounter.lifecycle = "active_pending_result";
+    encounter.patientMovement = null;
+    encounter.pendingResult = {
+      operationId: "result.guidance",
+      gateId: "gate.guidance",
+      originatingNodeIndex: 0,
+      resultTypeId: "service.xray",
+      pendingLabel: "Chest X-ray",
+      resultNarrative: "Result",
+      routeId: "route.xray.outsourced",
+      routeDisplayName: "Offsite X-ray",
+      scheduledAtTick: 0,
+      serviceDurationTicks: 120,
+      durationTicks: 120,
+      dueTick: 120,
+      deliveredAtTick: null,
+      offsiteReturnStartedAtTick: null,
+      patientTravel: null,
+    };
+
+    expect(
+      createMessageBoardView(state).find(
+        (item) =>
+          item.id ===
+          "persistent.facility.onsite-imaging-requested",
+      ),
+    ).toMatchObject({
+      targetType: "build_mode",
+      message: expect.stringContaining("available onsite"),
+    });
+
+    state.rooms.push({
+      id: "room.xray.guidance",
+      roomDefinitionId: "room.xray",
+      x: 20,
+      y: 20,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    const withRoom = createMessageBoardView(state);
+    expect(
+      withRoom.some(
+        (item) =>
+          item.id ===
+          "persistent.facility.onsite-imaging-requested",
+      ),
+    ).toBe(false);
+    expect(
+      withRoom.find(
+        (item) =>
+          item.id ===
+          "persistent.staff.imaging-technician-needed",
+      ),
+    ).toMatchObject({
+      targetType: "employee",
+      message: expect.stringContaining("Imaging Technician"),
+    });
   });
 
   it("expires stale critical patience alerts and treats a completed departure as informational", () => {
@@ -277,6 +429,48 @@ describe("createMessageBoardView", () => {
       targetId: "employee.target",
       actionLabel: "Show employee",
     });
+  });
+
+  it("routes a low-water alert to the visible refill interaction", () => {
+    const state = createInitialGameState();
+    state.encounters = {};
+    state.environment.waterCoolerFillPercent = 10;
+    state.events = [
+      event({
+        id: "event.water-cooler.low",
+        type: "water_cooler_low",
+        facilityTick: 12,
+        message: "The water cooler needs refilling.",
+        target: {
+          kind: "room",
+          id: "room.instance.founder_desk",
+        },
+      }),
+    ];
+
+    expect(
+      createMessageBoardView(state).find(
+        (item) =>
+          item.id === "persistent.environment.water-cooler-low",
+      ),
+    ).toMatchObject({
+      targetType: "water_cooler",
+      actionLabel: "Show water cooler",
+      persistent: true,
+    });
+    expect(
+      createMessageBoardView(state).some(
+        (item) => item.id === "event.water-cooler.low",
+      ),
+    ).toBe(false);
+
+    state.environment.waterCoolerFillPercent = 100;
+    expect(
+      createMessageBoardView(state).some(
+        (item) =>
+          item.id === "persistent.environment.water-cooler-low",
+      ),
+    ).toBe(false);
   });
 
   it("keeps the bounded emergency consultation update informational and useful", () => {

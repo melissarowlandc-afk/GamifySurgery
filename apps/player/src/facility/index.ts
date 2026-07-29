@@ -9,5 +9,6 @@ export type {
   FacilityStaffView,
   FacilityViewModel,
   PlaceRoomRequest,
+  RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";

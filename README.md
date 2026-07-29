@@ -1,6 +1,9 @@
-# Gamify Surgery
+# Stitchin' Time
 
-Gamify Surgery is an early-stage, grayscale surgery-management learning game.
+Stitchin' Time (repository identifier: Gamify Surgery) is an early-stage
+surgery-management learning game with a
+coordinated low-chroma ivory, stone, gray-olive, moss, and charcoal pixel-art
+direction with restrained muted accents.
 The current repository contains a playable browser candidate for facility
 Levels 0 and 1.
 
@@ -64,7 +67,8 @@ stop the manual server. Neither method deploys or publishes anything.
   persisted irregular intervals around one game hour
 - Left-edge Waiting and Existing Patient chart tabs, exclamation-point action
   badges, and a collapsed filing-cabinet control for newest-first Resolved
-  charts
+  charts; charts appear only after physical Front Desk check-in and returning
+  patients reactivate the same chart only after walking back to check in
 - A stable upper facility and tactile lower desk. The desk holds a paper-chart
   presentation with consistent patient portrait, demographics, vital signs,
   chief complaint, HPI, and sequential decision/result columns, or the Build
@@ -87,7 +91,8 @@ stop the manual server. Neither method deploys or publishes anything.
   facility time, quarter-hour operating-cost postings, and level requirements
 - Individual patient satisfaction driven by genuine waiting and modeled care,
   cleanliness, room, staff, amenity, and service effects, with persisted
-  walkout thresholds and physical exit routes
+  walkout thresholds, physical exit routes, mock walkout reviews, and
+  discoverable litter-cleaning and water-cooler interactions
 - A paused **Build/Renovate Mode** with one consistent Enter/Exit control, a
   prominent pause banner, build-only grid, bounded 10%-250% zoom and panning,
   repeatable rooms and functional hallways, direct room-to-room connections,
@@ -109,10 +114,13 @@ stop the manual server. Neither method deploys or publishes anything.
   testing notices also enter the visible log. The larger future message bank is
   preserved in
   [`docs/features/alert-notification-flavor-system.md`](docs/features/alert-notification-flavor-system.md)
-- A manual cash-only GLP-1 consultation action that remains visible before its
-  future room, with a persisted facility-hour cooldown, configurable daily cap
-  and diminishing payment, and no XP or FSRS benefit; the automated suite
-  remains a Level 2 feature
+- A manual cash-only GLP-1 consultation action available below the configured
+  low-cash threshold, with a persisted facility-hour cooldown, fixed $25 pilot
+  payment, no daily cap or diminishing payout, and no XP or FSRS benefit; the
+  automated suite remains a Level 2 feature
+- Persistent configurable Advertising tiers beneath the GLP-1 action, with a
+  visible hourly expense and modest routine-arrival increase; changing tiers
+  rescales the saved next arrival rather than rerolling it
 - A staged authentication shell that preserves the accepted verified
   email/password provider boundary while using an explicit non-authenticating
   Local Prototype path until owner-controlled Supabase credentials exist
@@ -126,9 +134,9 @@ stop the manual server. Neither method deploys or publishes anything.
   two-step recoverable **Restart Campaign** flow that archives the prior clinic,
   preserves its seed and release pins for the retry, and creates fresh facility
   and campaign learning state
-- A collapsed-by-default desktop **Prototype tools** panel with **Add $100**,
-  fast-forward, two-step **Restart Campaign**, tutorial, and FSRS inspection
-  controls
+- Developer-only prototype controls kept out of ordinary gameplay, with
+  accelerated testing, campaign restart, tutorial, and FSRS inspection tools
+  available in the explicit development surface
 - A bounded desktop workspace: patient tabs, goals, staffing, building tools,
   and events scroll within their panels instead of extending the document
   indefinitely
@@ -245,6 +253,11 @@ launcher to Pages or follow a tester to another computer/browser. See
 
 ## Screenshots
 
+- [July 28 anchored desktop tutorial](artifacts/screenshots/july28-tutorial-desktop.png)
+- [July 28 active multistep chart](artifacts/screenshots/july28-multistep-desktop.png)
+- [July 28 desktop Build Mode](artifacts/screenshots/july28-build-mode-desktop.png)
+- [July 28 phone tutorial](artifacts/screenshots/july28-tutorial-phone.png)
+- [July 28 phone Build Mode](artifacts/screenshots/july28-build-mode-phone.png)
 - [Stable clinic and paper chart](artifacts/screenshots/visual-stable-desk-desktop.png)
 - [Expanded Build Mode workspace](artifacts/screenshots/visual-build-mode-desktop.png)
 - [Phone-width patient chart](artifacts/screenshots/visual-chart-phone.png)

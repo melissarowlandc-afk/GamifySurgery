@@ -70,6 +70,7 @@ function ActivePrototypeGame({
       systemNotices={session.systemNotices}
       development={view.development}
       emergencyGlp1={view.emergencyGlp1}
+      advertising={view.advertising}
       campaigns={session.campaigns}
       tutorialsEnabled={session.tutorialsEnabled}
       tutorialCoachMode={session.tutorialCoachMode}
@@ -94,6 +95,7 @@ function ActivePrototypeGame({
       buildMode={session.buildMode}
       buildUndoCount={session.buildUndoCount}
       buildExitBlockedReason={session.buildExitBlockedReason}
+      buildExitBlockedIssues={session.buildExitBlockedIssues}
       placementOrientation={session.placementOrientation}
       onEnterBuildMode={session.enterBuildMode}
       onExitBuildMode={session.exitBuildMode}
@@ -111,6 +113,7 @@ function ActivePrototypeGame({
       onHireStaff={session.hireStaff}
       onDecreaseEmployeeSalary={session.decreaseEmployeeSalary}
       onIncreaseEmployeeSalary={session.increaseEmployeeSalary}
+      onFireEmployee={session.fireEmployee}
       onCollectLitter={session.collectLitter}
       onRefillWaterCooler={session.refillWaterCooler}
       onPraiseEmployee={session.praiseEmployee}
@@ -120,6 +123,7 @@ function ActivePrototypeGame({
       onRunEmergencyGlp1Consultation={
         session.runEmergencyGlp1Consultation
       }
+      onAdvertisingLevelChange={session.setAdvertisingLevel}
       onCreateCampaign={() => onRequestNewCampaign(session.profile)}
       onSwitchCampaign={session.switchCampaign}
       onTutorialAction={session.performTutorialAction}

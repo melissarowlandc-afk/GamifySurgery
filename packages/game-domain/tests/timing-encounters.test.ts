@@ -7,7 +7,9 @@ import {
   getClinicSatisfaction,
   getCurrentQuestion,
   getFacilityClock,
+  getEligibleServiceRoute,
   getPendingOffsitePatientTravel,
+  getPatientLists,
   serializeGameState,
   type GameState,
 } from "../src";
@@ -45,6 +47,65 @@ function emptyLevelOne(seed: string): GameState {
   state.attendedEncounterId = null;
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   return state;
+}
+
+function addOperationalXrayService(state: GameState): void {
+  state.rooms.push(
+    {
+      id: "room.test.examination",
+      roomDefinitionId: "room.examination",
+      x: 7,
+      y: 10,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    },
+    {
+      id: "room.test.imaging-control",
+      roomDefinitionId: "room.imaging_control",
+      x: 10,
+      y: 8,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    },
+    {
+      id: "room.test.xray",
+      roomDefinitionId: "room.xray",
+      x: 10,
+      y: 10,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    },
+  );
+  state.doors.push({
+    id: "door.test.exam-to-xray",
+    roomId: "room.test.examination",
+    side: "east",
+    offset: 1,
+    exterior: false,
+  });
+  state.employees.push({
+    id: "employee.test.imaging-tech",
+    staffRoleDefinitionId: "staff.imaging_technician",
+    displayName: "Imaging Test Technician",
+    appearance: state.founder.appearance,
+    hiredAtFacilityTick: state.facilityTick,
+    salaryPerExpenseInterval: 26,
+    morale: 75,
+    trainingLevel: 1,
+    homeRoomInstanceId: "room.test.imaging-control",
+    location: { x: 10, y: 8 },
+    path: [{ x: 10, y: 8 }],
+    pathIndex: 0,
+    lastMovedAtFacilityTick: state.facilityTick,
+    lastPraisedAtFacilityTick: null,
+    nextIdleActionAtFacilityTick: state.facilityTick + 20,
+  });
 }
 
 function admit(
@@ -141,7 +202,7 @@ describe("minute simulation and economy", () => {
 
     state = tick(state, "expense.quarter");
     expect(state.facilityTick).toBe(15);
-    expect(state.cash).toBe(startingCash - 2.5);
+    expect(state.cash).toBe(startingCash - 1.5);
     const restored = deserializeGameState(serializeGameState(state));
     expect(restored.nextFinancialPostingTick).toBe(30);
     expect(restored.operatingAccrualSixtiethCents).toBe(
@@ -165,8 +226,44 @@ describe("minute simulation and economy", () => {
 });
 
 describe("physical patient routing", () => {
-  it("walks through check-in and care before exposing the first decision", () => {
-    const admitted = admit(
+  it("uses 60-minute laboratory and staffed onsite X-ray routes, then falls back to 120-minute offsite X-ray at capacity", () => {
+    let state = emptyLevelOne("service-timing");
+    expect(
+      getEligibleServiceRoute(state, "service.basic_labs"),
+    ).toMatchObject({
+      route: { id: "route.basic_labs.outsourced" },
+      timing: { serviceDurationTicks: 60 },
+    });
+    expect(getEligibleServiceRoute(state, "service.xray")).toMatchObject({
+      route: { id: "route.xray.outsourced" },
+      timing: { serviceDurationTicks: 120 },
+    });
+
+    addOperationalXrayService(state);
+    expect(getEligibleServiceRoute(state, "service.xray")).toMatchObject({
+      route: { id: "route.xray.in_house" },
+      timing: { serviceDurationTicks: 60 },
+    });
+
+    const encounterId = "encounter.inhouse-capacity";
+    state = makeQuestionReady(
+      admit(state, encounterId),
+      encounterId,
+      "inhouse.ready",
+    );
+    state = answerCorrect(state, encounterId, "inhouse.order");
+    expect(state.encounters[encounterId]!.pendingResult).toMatchObject({
+      routeId: "route.xray.in_house",
+      serviceDurationTicks: 60,
+    });
+    expect(getEligibleServiceRoute(state, "service.xray")).toMatchObject({
+      route: { id: "route.xray.outsourced" },
+      timing: { serviceDurationTicks: 120 },
+    });
+  });
+
+  it("hides the chart until Front Desk check-in, then exposes it immediately while walking to care", () => {
+    let admitted = admit(
       emptyLevelOne("arrival-route"),
       "encounter.arrival-route",
     );
@@ -177,15 +274,40 @@ describe("physical patient routing", () => {
     expect(
       getCurrentQuestion(admitted, "encounter.arrival-route"),
     ).toBeNull();
+    expect(getPatientLists(admitted).waiting).toHaveLength(0);
+    const tooEarly = gameReducer(admitted, {
+      type: "OPEN_CHART",
+      operationId: "arrival-route.open-too-early",
+      encounterId: "encounter.arrival-route",
+    });
+    expect(
+      tooEarly.operationReceipts["arrival-route.open-too-early"]?.status,
+    ).toBe("rejected");
+
+    for (let minute = 0; minute < 100; minute += 1) {
+      if (getPatientLists(admitted).waiting.length > 0) {
+        break;
+      }
+      admitted = tick(admitted, `arrival-route.check-in.${minute}`);
+    }
+    expect(getPatientLists(admitted).waiting).toHaveLength(1);
+    const opened = gameReducer(admitted, {
+      type: "OPEN_CHART",
+      operationId: "arrival-route.open-at-check-in",
+      encounterId: "encounter.arrival-route",
+    });
+    expect(
+      opened.encounters["encounter.arrival-route"]!.lifecycle,
+    ).toBe("active_action_required");
+    expect(
+      getCurrentQuestion(opened, "encounter.arrival-route"),
+    ).not.toBeNull();
 
     const ready = makeQuestionReady(
-      admitted,
+      opened,
       "encounter.arrival-route",
       "arrival-route",
     );
-    expect(
-      ready.encounters["encounter.arrival-route"]!.patientMovement,
-    ).toBeNull();
     expect(
       getCurrentQuestion(ready, "encounter.arrival-route"),
     ).not.toBeNull();
@@ -199,6 +321,10 @@ describe("physical patient routing", () => {
       "offsite.ready",
     );
     state = answerCorrect(state, encounterId, "offsite.order");
+    expect(state.encounters[encounterId]!.pendingResult).toMatchObject({
+      routeId: "route.xray.outsourced",
+      serviceDurationTicks: 120,
+    });
     const step =
       state.encounters[encounterId]!.steps[
         state.encounters[encounterId]!.currentNodeIndex
@@ -238,6 +364,7 @@ describe("physical patient routing", () => {
     expect(state.encounters[encounterId]).toMatchObject({
       lifecycle: "active_action_required",
       patientMovement: null,
+      assignedRoomInstanceId: "room.instance.founder_desk",
     });
     expect(getCurrentQuestion(state, encounterId)).not.toBeNull();
   });
@@ -284,6 +411,13 @@ describe("physical patient routing", () => {
       patientMovement: null,
       finalPatientSatisfaction: expect.any(Number),
     });
+    expect(
+      state.events.find(
+        (event) =>
+          event.type === "left_before_seen" &&
+          event.encounterId === encounterId,
+      )?.message,
+    ).toMatch(/^Mock Google Review from .+Final satisfaction: \d+%\.$/);
   });
 });
 

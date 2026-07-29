@@ -65,10 +65,86 @@ const PATIENT_LAST_NAMES = [
   "Vale",
 ] as const;
 
+export type PixelRoleStyle = NonNullable<
+  PixelAppearanceDescriptor["roleStyle"]
+>;
+
+const ROLE_STYLES: readonly PixelRoleStyle[] = [
+  "founder",
+  "patient",
+  "receptionist",
+  "imaging_technician",
+];
+
+function boundedVariant(value: number): 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 {
+  return Math.max(0, Math.min(9, Math.floor(value))) as
+    | 0
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9;
+}
+
+/**
+ * Converts a persisted pre-golden-slice descriptor into the canonical visual
+ * identity without rerolling it. The fallback values are derived only from
+ * the saved appearance fields so reloads and migrations remain stable.
+ */
+export function normalizePixelAppearance(
+  appearance: PixelAppearanceDescriptor,
+  roleStyle: PixelRoleStyle = appearance.roleStyle ?? "patient",
+): PixelAppearanceDescriptor {
+  const bodyShapeIndex = BODY_SHAPES.indexOf(appearance.bodyShape);
+  const hairStyleIndex = HAIR_STYLES.indexOf(appearance.hairStyle);
+  const faceStyleIndex = FACE_STYLES.indexOf(appearance.faceStyle);
+  const outfitStyleIndex = OUTFIT_STYLES.indexOf(appearance.outfitStyle);
+  const accessoryIndex = ACCESSORIES.indexOf(appearance.accessory);
+  return {
+    ...appearance,
+    skinTone:
+      appearance.skinTone ??
+      (((appearance.hairShade +
+        faceStyleIndex +
+        appearance.outfitShade) %
+        4) as 0 | 1 | 2 | 3),
+    headVariant:
+      appearance.headVariant ??
+      boundedVariant(
+        hairStyleIndex * 2 +
+          faceStyleIndex * 3 +
+          accessoryIndex +
+          appearance.hairShade,
+      ),
+    bodyVariant:
+      appearance.bodyVariant ??
+      boundedVariant(
+        bodyShapeIndex * 2 +
+          outfitStyleIndex * 3 +
+          appearance.outfitShade,
+      ),
+    roleStyle: ROLE_STYLES.includes(roleStyle) ? roleStyle : "patient",
+  };
+}
+
+export function roleStyleForStaffDefinition(
+  staffRoleDefinitionId: string,
+): PixelRoleStyle {
+  return staffRoleDefinitionId === "staff.imaging_technician"
+    ? "imaging_technician"
+    : "receptionist";
+}
+
 export function createPixelAppearance(
   campaignSeed: string,
   subjectKind: "patient" | "staff",
   subjectId: string,
+  roleStyle: PixelRoleStyle =
+    subjectKind === "patient" ? "patient" : "receptionist",
 ): PixelAppearanceDescriptor {
   const streamId =
     subjectKind === "patient"
@@ -80,7 +156,7 @@ export function createPixelAppearance(
     `${subjectId}:pixel-avatar.v1`,
   );
 
-  return {
+  return normalizePixelAppearance({
     version: "pixel-avatar.v1",
     bodyShape: BODY_SHAPES[random.integer(BODY_SHAPES.length)]!,
     hairStyle: HAIR_STYLES[random.integer(HAIR_STYLES.length)]!,
@@ -89,7 +165,11 @@ export function createPixelAppearance(
     outfitStyle: OUTFIT_STYLES[random.integer(OUTFIT_STYLES.length)]!,
     outfitShade: random.integer(4) as 0 | 1 | 2 | 3,
     accessory: ACCESSORIES[random.integer(ACCESSORIES.length)]!,
-  };
+    skinTone: random.integer(4) as 0 | 1 | 2 | 3,
+    headVariant: boundedVariant(random.integer(10)),
+    bodyVariant: boundedVariant(random.integer(10)),
+    roleStyle,
+  }, roleStyle);
 }
 
 export function createStaffDisplayName(

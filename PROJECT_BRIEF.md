@@ -1,4 +1,4 @@
-# Gamify Surgery Project Brief
+# Stitchin' Time Project Brief
 
 Status: Living project record. A local playable Level 0/1 implementation
 candidate now exists under ADR 0021. External deployment, spending, outside
@@ -61,7 +61,7 @@ This operating model is recorded in
 
 ## Product
 
-Gamify Surgery is a single-player educational surgery-management game. The player begins at the front desk of a tiny fictional clinic and develops it into an optimized ambulatory surgery center while answering ABSITE-style clinical questions.
+Stitchin' Time (repository identifier: Gamify Surgery) is a single-player educational surgery-management game. The player begins at the front desk of a tiny fictional clinic and develops it into an optimized ambulatory surgery center while answering ABSITE-style clinical questions.
 
 The experience combines:
 
@@ -70,7 +70,9 @@ The experience combines:
 - Rooms, construction, salaries, morale, training, upgrades, cleanliness, maintenance, and finances
 - Clinical decisions tied to spaced repetition
 - Deterministic, seeded campaign variation
-- Large-pixel grayscale graphics and a text-forward interface
+- Crisp, detailed Game Boy-inspired pixel art in a low-chroma ivory, stone,
+  gray-olive, muted moss, and charcoal palette, with restrained
+  muted accents and readable clinical text
 - Full browser gameplay on desktop and phone
 - Private administration of clinical content and game balance
 - Persistent accounts and cloud saves

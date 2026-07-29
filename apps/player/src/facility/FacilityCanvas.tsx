@@ -17,6 +17,7 @@ import type {
   PlaceRoomRequest,
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
+  RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";
 
@@ -24,6 +25,7 @@ export interface FacilityCanvasProps {
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
   onSelectRoom?: SelectRoomRequest;
+  onRequestRoomUpgrade?: RequestRoomUpgrade;
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
   onPraiseEmployee?: PraiseEmployeeRequest;
@@ -38,8 +40,8 @@ const DEFAULT_STYLE: CSSProperties = {
   height: "clamp(280px, 62vw, 640px)",
   minWidth: 0,
   overflow: "hidden",
-  border: "2px solid #111111",
-  background: "#f7f7f3",
+  border: "3px solid #232720",
+  background: "#7e8476",
   imageRendering: "pixelated",
   touchAction: "none",
 };
@@ -53,6 +55,7 @@ export function FacilityCanvas({
   viewModel,
   onPlaceRoom,
   onSelectRoom,
+  onRequestRoomUpgrade,
   onCollectLitter,
   onRefillWaterCooler,
   onPraiseEmployee,
@@ -73,6 +76,7 @@ export function FacilityCanvas({
   bridgeRef.current.viewModel = viewModel;
   bridgeRef.current.onPlaceRoom = onPlaceRoom;
   bridgeRef.current.onSelectRoom = onSelectRoom;
+  bridgeRef.current.onRequestRoomUpgrade = onRequestRoomUpgrade;
   bridgeRef.current.onCollectLitter = onCollectLitter;
   bridgeRef.current.onRefillWaterCooler = onRefillWaterCooler;
   bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
@@ -101,7 +105,7 @@ export function FacilityCanvas({
       parent: host,
       width,
       height,
-      backgroundColor: "#f7f7f3",
+      backgroundColor: "#7e8476",
       pixelArt: true,
       antialias: false,
       audio: {

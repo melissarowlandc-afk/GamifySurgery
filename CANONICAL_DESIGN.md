@@ -3,7 +3,10 @@
 Status: Accepted product rules plus clearly marked design questions. Technical
 implementation proceeds under ADR 0021.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-28
+
+Player-facing title: **Stitchin' Time**. Historical repository, deployment,
+save, and launcher identifiers retain `GamifySurgery` for compatibility.
 
 ## Core experience
 
@@ -393,8 +396,9 @@ After the first scored response in an encounter maps to Again:
 - Vending machines and coffee kiosks are enclosed buildable rooms.
 - The Cash-Only GLP-1 Telehealth Suite is a limited comedic side business, not
   the dominant strategy. Before its future Level 2 automation, a founder may
-  use a low-cash-only, once-per-facility-hour emergency consultation that
-  awards only a small configurable cash payment and no XP or learning evidence.
+  use a low-cash-only, once-per-facility-hour emergency consultation. The
+  Level 0-1 pilot pays a fixed $25, has no daily cap or diminishing return, and
+  awards no XP or learning evidence. Repeated uses only change the sarcasm.
   See `docs/features/cash-only-glp1-telehealth.md`.
 - Alerts use Critical, Action required, Informational, and Flavor priorities.
   Useful information always appears plainly, humor never obscures a critical
@@ -489,16 +493,25 @@ This accepted design is recorded in
 - Top-down management view
 - Central visible facility
 - Compact contextual panels
-- Black-and-white or grayscale
-- Simple large-pixel graphics
-- Text as a deliberate part of the style
-- Legibility and clarity before visual detail
+- A low-chroma limited palette of neutral ivory, weathered stone, gray-olive,
+  muted moss, and charcoal that does not drift into a dominant blue cast, with
+  restrained accents
+- Crisp, detailed Game Boy-inspired pixel art with recognizable people,
+  rooms, furniture, and medical equipment
+- Shallow cutaway room depth, material-specific flooring, and no construction
+  grid during live play; the translucent logical grid appears only in
+  Build/Renovate Mode
+- Minimal one- or two-tone HUD pictograms and time controls provide visual
+  rest while environmental and character art carries the detail
+- Text as a deliberate, readable part of the illustrated style
+- Legibility, cohesion, and visual depth without smoothing pixel edges
 - Full desktop and phone functionality through responsive layouts
 - Complete usability with sound disabled
 
-No final pixel scale, font, exact layout, or control scheme is fixed. The lead
-agent may create and revise prototype layouts while preserving these
-interaction intentions and full phone usability.
+The controlling quality bar and Level 1 golden-slice gate are recorded in
+[`docs/features/visual-art-direction.md`](docs/features/visual-art-direction.md).
+The lead agent may refine implementation details while preserving that art
+direction, these interaction intentions, and full phone usability.
 
 ## Published clinical-content adoption
 
@@ -556,11 +569,33 @@ interaction intentions and full phone usability.
 
 ## First playable experience
 
-The first minute should show a tiny facility, founder, entrance, one immediate objective, basic resources, and a visible time state. The two tutorial patients should separately teach a clinical decision and the management consequences around arrivals, time, queues, and construction.
+The first minute should show a tiny facility, founder, entrance, one immediate
+objective, basic resources, and a visible time state. The first protected
+tutorial patient has exactly one immediately completing scored decision and no
+timed service; its acknowledgement-only coach then points to the settlement,
+disease-information flip, and explicit chart-resolution controls. The second
+protected patient teaches a ten-facility-minute service, physical departure and
+return, and a later sequential decision. Tutorial patients cannot walk out.
 
 The tutorial must visibly teach that new charts begin in Waiting, opened charts
 move to Active, the exclamation point and text label mean action is ready, and
 completed charts file into the reopenable Resolved folder.
+
+A chart does not enter Waiting merely because a patient sprite appeared. It
+becomes clickable only when that patient physically reaches the Front Desk and
+checks in. A returning patient reuses the same chart, and the next decision
+becomes available only after the patient has physically returned and checked in
+again. Opening the one active chart may send the patient toward an available
+Examination Room, but ordinary walking does not hide or delay the readable
+current decision. Timed care, results, and disposition still wait for the
+persisted physical route and service state.
+
+Basic laboratory send-outs take one facility hour. Outsourced X-ray takes two
+facility hours; a functioning onsite X-ray room with an available Imaging
+Technician takes one facility hour and each room-technician pair has one-patient
+capacity. Character rendering interpolates the persisted waypoint route rather
+than owning movement completion, so walls, pause, speed changes, and reloads
+cannot be bypassed by animation.
 
 Exact real clinical cases and correct answers require Melissa's review.
 Prototype costs, rewards, timing, and tutorial wording may use clearly labeled

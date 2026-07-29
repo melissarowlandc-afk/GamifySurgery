@@ -33,6 +33,8 @@ import {
   createPatientDisplayName,
   createPixelAppearance,
   createStaffDisplayName,
+  normalizePixelAppearance,
+  roleStyleForStaffDefinition,
 } from "./appearance";
 import {
   findDeterministicFacilityPath,
@@ -74,6 +76,14 @@ import type {
 
 const MAX_TRANSIENT_OPERATION_RECEIPTS = 500;
 const MAX_TRANSIENT_EVENTS = 500;
+const FIRST_TUTORIAL_CASE_ID = "case.prototype.tutorial-laceration";
+const SECOND_TUTORIAL_CASE_ID = "case.synthetic.tutorial";
+const WALKOUT_REVIEW_LINES = [
+  "I had enough time to become my own second opinion.",
+  "The waiting room was efficient at producing additional complaints.",
+  "I arrived with symptoms and left with a strong opinion about throughput.",
+  "The clinic valued my time primarily as a theoretical concept.",
+] as const;
 
 function clonePlain<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
@@ -203,6 +213,30 @@ function getEncounterSidewalkPoint(
   };
 }
 
+function getEncounterArrivalStart(
+  state: GameState,
+  context: DomainContext,
+  encounterId: string,
+): GridPoint | null {
+  const entrance = getPublicEntrance(state, context);
+  if (!entrance) {
+    return null;
+  }
+  const leftSide =
+    deterministicInteger(
+      state.campaignSeed,
+      RANDOM_STREAMS.routineArrivalTiming,
+      `${encounterId}:sidewalk-direction.v1`,
+      2,
+    ) === 0;
+  return {
+    // Start beyond the permitted map extent so a newly admitted patient enters
+    // from completely offscreen instead of materializing on the sidewalk.
+    x: leftSide ? -2 : context.balanceRelease.facility.gridWidth + 1,
+    y: entrance.outside.y,
+  };
+}
+
 function pathFromOutsideToRoom(
   state: GameState,
   context: DomainContext,
@@ -310,16 +344,33 @@ function chooseCareRoom(
   state: GameState,
   context: DomainContext,
   start: GridPoint,
+  encounterId: string,
 ): { roomId: string; path: GridPoint[] } | null {
+  const occupiedRoomIds = new Set(
+    Object.values(state.encounters)
+      .filter(
+        (encounter) =>
+          encounter.id !== encounterId &&
+          encounter.assignedRoomInstanceId !== null &&
+          encounter.lifecycle !== "resolved" &&
+          encounter.patientLocation !== null,
+      )
+      .map((encounter) => encounter.assignedRoomInstanceId!),
+  );
   const preferred = [
     ...state.rooms
-      .filter((room) => room.roomDefinitionId === "room.examination")
+      .filter(
+        (room) =>
+          room.roomDefinitionId === "room.examination" &&
+          !occupiedRoomIds.has(room.id),
+      )
       .sort((left, right) => left.id.localeCompare(right.id)),
     ...state.rooms
-      .filter((room) =>
-        context.balanceRelease.facility.protectedRoomDefinitionIds.includes(
-          room.roomDefinitionId,
-        ),
+      .filter(
+        (room) =>
+          context.balanceRelease.facility.protectedRoomDefinitionIds.includes(
+            room.roomDefinitionId,
+          ) && !occupiedRoomIds.has(room.id),
       )
       .sort((left, right) => left.id.localeCompare(right.id)),
   ];
@@ -335,6 +386,64 @@ function chooseCareRoom(
         left.roomId.localeCompare(right.roomId),
     );
   return candidates[0] ?? null;
+}
+
+function chooseWaitingDestination(
+  state: GameState,
+  context: DomainContext,
+  encounter: EncounterState,
+): { roomId: string | null; path: GridPoint[] } {
+  const start = encounter.patientLocation;
+  const entrance = getPublicEntrance(state, context);
+  if (!start || !entrance) {
+    return { roomId: null, path: [] };
+  }
+
+  const waitingRoom = state.rooms
+    .filter((room) => room.roomDefinitionId === "room.waiting")
+    .sort((left, right) => left.id.localeCompare(right.id))[0];
+  if (waitingRoom) {
+    return {
+      roomId: waitingRoom.id,
+      path: pathFromLocationToRoom(state, context, start, waitingRoom.id),
+    };
+  }
+
+  const frontDeskOccupiedByWaitingPatient = Object.values(state.encounters).some(
+    (candidate) =>
+      candidate.id !== encounter.id &&
+      candidate.lifecycle === "waiting_unopened" &&
+      candidate.patientMovement?.kind !== "arriving_for_check_in" &&
+      candidate.assignedRoomInstanceId === entrance.room.id &&
+      candidate.patientLocation !== null,
+  );
+  if (!frontDeskOccupiedByWaitingPatient) {
+    return {
+      roomId: entrance.room.id,
+      path: pathFromLocationToRoom(state, context, start, entrance.room.id),
+    };
+  }
+
+  const queuePoint =
+    getEncounterSidewalkPoint(
+      state,
+      context,
+      encounter.id,
+      1 +
+        deterministicInteger(
+          state.campaignSeed,
+          RANDOM_STREAMS.routineArrivalTiming,
+          `${encounter.id}:queue-distance.v1`,
+          3,
+        ),
+    ) ?? entrance.outside;
+  return {
+    roomId: null,
+    path: joinPaths(
+      pathFromLocationToExit(state, context, start),
+      straightSidewalkPath(entrance.outside, queuePoint),
+    ),
+  };
 }
 
 function assertPinnedContext(state: GameState, context: DomainContext): void {
@@ -385,58 +494,20 @@ function createEncounter(
     }
   }
   const entrance = getPublicEntrance(state, context);
-  const arrivalStart = getEncounterSidewalkPoint(
+  const arrivalStart = getEncounterArrivalStart(
     state,
     context,
     input.encounterId,
-    5,
   );
-  const waitingRoom = state.rooms
-    .filter((room) => room.roomDefinitionId === "room.waiting")
-    .sort((left, right) => left.id.localeCompare(right.id))[0];
   const frontCenter = entrance
     ? getRoomCenterById(state, context, entrance.room.id)
     : null;
-  const waitingDestination = waitingRoom
-    ? getRoomCenterById(state, context, waitingRoom.id)
-    : getEncounterSidewalkPoint(
-        state,
-        context,
-        input.encounterId,
-        1 +
-          deterministicInteger(
-            state.campaignSeed,
-            RANDOM_STREAMS.routineArrivalTiming,
-            `${input.encounterId}:queue-distance.v1`,
-            3,
-          ),
-      );
   const arrivalPath =
-    entrance && arrivalStart && frontCenter && waitingDestination
+    entrance && arrivalStart && frontCenter
       ? joinPaths(
           straightSidewalkPath(arrivalStart, entrance.outside),
           [entrance.inside],
           facilityPath(state, context, entrance.inside, frontCenter),
-          waitingRoom
-            ? facilityPath(
-                state,
-                context,
-                frontCenter,
-                waitingDestination,
-              )
-            : joinPaths(
-                facilityPath(
-                  state,
-                  context,
-                  frontCenter,
-                  entrance.inside,
-                ),
-                [entrance.outside],
-                straightSidewalkPath(
-                  entrance.outside,
-                  waitingDestination,
-                ),
-              ),
         )
       : [];
   const movement = createPatientMovement(
@@ -444,7 +515,7 @@ function createEncounter(
     context,
     "arriving_for_check_in",
     arrivalPath,
-    waitingRoom?.id ?? null,
+    entrance?.room.id ?? null,
   );
   return {
     id: input.encounterId,
@@ -476,11 +547,10 @@ function createEncounter(
     resolutionReason: null,
     patientLocation:
       movement?.path[0] ??
-      waitingDestination ??
       frontCenter ??
       null,
     patientMovement: movement,
-    assignedRoomInstanceId: waitingRoom?.id ?? entrance?.room.id ?? null,
+    assignedRoomInstanceId: entrance?.room.id ?? null,
     nextIdleActionAtFacilityTick: getNextIdleActionTick(
       state,
       context,
@@ -601,8 +671,24 @@ function clamp(value: number, minimum: number, maximum: number): number {
 
 function adjustCash(state: GameState, deltaDollars: number): void {
   const deltaCents = Math.round(deltaDollars * 100);
-  state.cashCents += deltaCents;
+  state.cashCents = Math.max(0, state.cashCents + deltaCents);
   state.cash = state.cashCents / 100;
+}
+
+function getDecisionXpAward(
+  encounter: EncounterState,
+  correct: boolean,
+  context: DomainContext,
+): number {
+  if (correct && encounter.id === TUTORIAL_ENCOUNTER_ID) {
+    return context.balanceRelease.clinicalSettlement
+      .firstTutorialCorrectDecisionXp;
+  }
+  return correct
+    ? context.balanceRelease.clinicalSettlement
+        .clinicalXpPerCorrectFirstAnswer
+    : context.balanceRelease.clinicalSettlement
+        .clinicalXpPerIncorrectFirstAnswer;
 }
 
 function settleEncounter(
@@ -626,9 +712,11 @@ function settleEncounter(
         balance.levelOnePerQuestionPayment * totalAnswers +
         balance.levelOnePerCorrectPayment * correctAnswers;
   const satisfactionDelta = encounter.patientSatisfaction - 100;
-  const clinicalXpAwarded =
-    correctAnswers * balance.clinicalXpPerCorrectFirstAnswer +
-    incorrectAnswers * balance.clinicalXpPerIncorrectFirstAnswer;
+  const clinicalXpAwarded = encounter.answers.reduce(
+    (total, answer) =>
+      total + getDecisionXpAward(encounter, answer.correct, context),
+    0,
+  );
   const netCashDelta = completionRevenue;
   const settlementId = `settlement.${encounter.id}.completion`;
   const settlement: EncounterSettlement = {
@@ -798,6 +886,16 @@ function reduceOpenChart(
     return rejectCommand(state, command, "This chart does not exist.");
   }
   if (
+    state.openChartEncounterId !== null &&
+    state.openChartEncounterId !== command.encounterId
+  ) {
+    return rejectCommand(
+      state,
+      command,
+      "Close the currently open chart before opening another patient.",
+    );
+  }
+  if (
     encounter.patientMovement?.kind === "arriving_for_check_in" ||
     encounter.patientMovement?.kind === "leaving_after_walkout" ||
     encounter.patientMovement?.kind === "leaving_after_resolution"
@@ -812,21 +910,25 @@ function reduceOpenChart(
   }
   const next = clonePlain(state);
   const nextEncounter = next.encounters[command.encounterId]!;
-  if (nextEncounter.patientMovement?.kind === "idle_within_room") {
+  if (
+    nextEncounter.patientMovement?.kind === "idle_within_room" ||
+    nextEncounter.patientMovement?.kind === "walking_to_waiting"
+  ) {
     nextEncounter.patientMovement = null;
   }
 
   next.openChartEncounterId = nextEncounter.id;
   if (
-    nextEncounter.lifecycle === "waiting_unopened" &&
-    nextEncounter.patientMovement === null
+    nextEncounter.lifecycle === "waiting_unopened"
   ) {
     const start =
       nextEncounter.patientLocation ??
       getPublicEntrance(next, context)?.outside ??
       null;
     const destination =
-      start === null ? null : chooseCareRoom(next, context, start);
+      start === null
+        ? null
+        : chooseCareRoom(next, context, start, nextEncounter.id);
     if (!start || !destination) {
       return rejectCommand(
         state,
@@ -834,7 +936,7 @@ function reduceOpenChart(
         "The patient cannot reach a care location through the current doors.",
       );
     }
-    const duration = startPatientMovement(
+    startPatientMovement(
       next,
       context,
       nextEncounter,
@@ -842,20 +944,15 @@ function reduceOpenChart(
       destination.path,
       destination.roomId,
     );
-    if (duration === 0) {
-      nextEncounter.lifecycle = "active_action_required";
-      nextEncounter.firstOpenedAtTick ??= next.facilityTick;
-    }
+    nextEncounter.lifecycle = "active_action_required";
+    nextEncounter.firstOpenedAtTick ??= next.facilityTick;
   }
   nextEncounter.idleWaitingSinceTick =
     nextEncounter.patientMovement?.kind === "walking_to_care"
       ? null
       : nextEncounter.idleWaitingSinceTick;
   nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
-  if (
-    nextEncounter.lifecycle === "active_action_required" ||
-    nextEncounter.lifecycle === "active_pending_result"
-  ) {
+  if (nextEncounter.lifecycle === "active_action_required") {
     next.attendedEncounterId = nextEncounter.id;
   } else {
     next.attendedEncounterId = null;
@@ -927,7 +1024,8 @@ function reduceSubmitAnswer(
   if (
     !encounter ||
     encounter.lifecycle !== "active_action_required" ||
-    encounter.patientMovement !== null
+    (encounter.patientMovement !== null &&
+      encounter.patientMovement.kind !== "walking_to_care")
   ) {
     return rejectCommand(state, command, "No answer-ready question exists.");
   }
@@ -1038,11 +1136,11 @@ function reduceSubmitAnswer(
     0,
     100,
   );
-  const learningXpAwarded = choice.isCorrect
-    ? context.balanceRelease.clinicalSettlement
-        .clinicalXpPerCorrectFirstAnswer
-    : context.balanceRelease.clinicalSettlement
-        .clinicalXpPerIncorrectFirstAnswer;
+  const learningXpAwarded = getDecisionXpAward(
+    nextEncounter,
+    choice.isCorrect,
+    context,
+  );
   next.clinicalXp += learningXpAwarded;
   const currentStep = nextEncounter.steps[nextEncounter.currentNodeIndex];
   if (!currentStep || currentStep.decisionNodeId !== node.id) {
@@ -1301,9 +1399,18 @@ function getNextRoutineArrivalTick(
       `arrival.${state.routineArrivalSequence}.v1`,
       variation * 2 + 1,
     ) - variation;
+  const advertising =
+    context.balanceRelease.advertising.levels.find(
+      (level) => level.level === state.advertisingLevel,
+    ) ?? context.balanceRelease.advertising.levels[0]!;
+  const adjustedInterval = Math.round(
+    ((arrivals.routineBaseIntervalMinutes + offset) *
+      advertising.arrivalIntervalMultiplierPercent) /
+      100,
+  );
   return (
     state.facilityTick +
-    Math.max(1, arrivals.routineBaseIntervalMinutes + offset)
+    Math.max(1, adjustedInterval)
   );
 }
 
@@ -1316,9 +1423,9 @@ function maybeAdmitAutomaticPatient(
     !state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] &&
     state.encounters[TUTORIAL_ENCOUNTER_ID]?.resolutionReason === "completed"
   ) {
-    const secondTutorial = context.clinicalRelease.cases.filter(
-      (clinicalCase) => clinicalCase.tutorialEligible,
-    )[1];
+    const secondTutorial = context.clinicalRelease.cases.find(
+      (clinicalCase) => clinicalCase.id === SECOND_TUTORIAL_CASE_ID,
+    );
     if (!secondTutorial) {
       throw new Error("The protected second tutorial case is missing.");
     }
@@ -1335,19 +1442,6 @@ function maybeAdmitAutomaticPatient(
     );
     state.criticalGuarantees["guarantee.level0.second-tutorial"] =
       "in_progress";
-    appendEvent(state, {
-      id: `event.patient-arrived.${SECOND_TUTORIAL_ENCOUNTER_ID}`,
-      type: "patient_arrived",
-      facilityTick: state.facilityTick,
-      encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-      message: `${secondTutorial.patientDisplayName} arrived for the second tutorial.`,
-      priority: "action_required",
-      definitionId: "alert.patient.arrived",
-      target: {
-        kind: "encounter",
-        id: SECOND_TUTORIAL_ENCOUNTER_ID,
-      },
-    });
     return;
   }
   if (state.facilityTick < state.nextRoutineArrivalTick) {
@@ -1411,19 +1505,6 @@ function maybeAdmitAutomaticPatient(
   });
   state.routineArrivalSequence += 1;
   state.nextRoutineArrivalTick = getNextRoutineArrivalTick(state, context);
-  appendEvent(state, {
-    id: `event.patient-arrived.${encounterId}`,
-    type: "patient_arrived",
-    facilityTick: state.facilityTick,
-    encounterId,
-    message: `${state.encounters[encounterId]!.patientDisplayName} arrived.`,
-    priority: "action_required",
-    definitionId: "alert.patient.arrived",
-    target: {
-      kind: "encounter",
-      id: encounterId,
-    },
-  });
 }
 
 function applyOperatingExpenses(
@@ -1443,7 +1524,12 @@ function applyOperatingExpenses(
     (total, employee) => total + employee.salaryPerExpenseInterval,
     0,
   );
-  const hourlyExpense = hourlyRoomExpense + hourlyStaffExpense;
+  const hourlyAdvertisingExpense =
+    context.balanceRelease.advertising.levels.find(
+      (level) => level.level === state.advertisingLevel,
+    )?.hourlyCost ?? 0;
+  const hourlyExpense =
+    hourlyRoomExpense + hourlyStaffExpense + hourlyAdvertisingExpense;
   // One simulation tick is one minute. Accruing in one-sixtieth-of-a-cent
   // units keeps the result identical across speed changes, pauses, and reloads.
   state.operatingAccrualSixtiethCents += hourlyExpense * 100;
@@ -1463,17 +1549,52 @@ function applyOperatingExpenses(
   if (postedCents <= 0) {
     return;
   }
-  state.cashCents -= postedCents;
+  const paidCents = Math.min(state.cashCents, postedCents);
+  const shortfallCents = postedCents - paidCents;
+  state.cashCents -= paidCents;
   state.cash = state.cashCents / 100;
   const expense = postedCents / 100;
   state.totalOperatingExpenses += expense;
+  if (shortfallCents > 0 && state.employees.length > 0) {
+    const moraleDecay =
+      context.balanceRelease.insolvency.moraleDecayPerPosting;
+    const quittingThreshold =
+      context.balanceRelease.insolvency.employeeQuittingThreshold;
+    const quittingEmployees = state.employees.filter((employee) => {
+      employee.morale = clamp(employee.morale - moraleDecay, 0, 100);
+      return employee.morale <= quittingThreshold;
+    });
+    if (quittingEmployees.length > 0) {
+      const quittingIds = new Set(
+        quittingEmployees.map((employee) => employee.id),
+      );
+      state.employees = state.employees.filter(
+        (employee) => !quittingIds.has(employee.id),
+      );
+      for (const employee of quittingEmployees) {
+        appendEvent(state, {
+          id: `event.staff-quit.${employee.id}.${state.facilityTick}`,
+          type: "staff_quit",
+          facilityTick: state.facilityTick,
+          encounterId: null,
+          message: `${employee.displayName} quit after another unpaid expense cycle.`,
+          priority: "action_required",
+          definitionId: "alert.staff.quit-insolvency",
+          target: { kind: "campaign", id: state.campaignId },
+        });
+      }
+    }
+  }
   appendEvent(state, {
     id: `event.operating-expense.${state.facilityTick}`,
     type: "operating_expense",
     facilityTick: state.facilityTick,
     encounterId: null,
-    message: `Operating costs -$${expense.toFixed(2)}.`,
-    priority: "informational",
+    message:
+      shortfallCents > 0
+        ? `Operating costs $${expense.toFixed(2)}; cash is $0 and staff morale fell.`
+        : `Operating costs -$${expense.toFixed(2)}.`,
+    priority: shortfallCents > 0 ? "action_required" : "informational",
     definitionId: "alert.finance.expense",
     target: {
       kind: "campaign",
@@ -1808,12 +1929,21 @@ function finalizePatientWalkout(
   if (encounter.protectedGuaranteeId) {
     state.criticalGuarantees[encounter.protectedGuaranteeId] = "pending";
   }
+  const reviewLine =
+    WALKOUT_REVIEW_LINES[
+      deterministicInteger(
+        state.campaignSeed,
+        RANDOM_STREAMS.environment,
+        `${encounter.id}:walkout-review.v1`,
+        WALKOUT_REVIEW_LINES.length,
+      )
+    ]!;
   appendEvent(state, {
     id: `event.left-before-seen.${encounter.id}`,
     type: "left_before_seen",
     facilityTick: state.facilityTick,
     encounterId: encounter.id,
-    message: `${encounter.patientDisplayName} left at ${encounter.patientSatisfaction}% satisfaction.`,
+    message: `Mock Google Review from ${encounter.patientDisplayName}: "${reviewLine}" Final satisfaction: ${encounter.patientSatisfaction}%.`,
     priority: "critical",
     definitionId: "alert.patient.left",
     target: {
@@ -1845,17 +1975,38 @@ function completePatientMovement(
       encounter.idleWaitingSinceTick = state.facilityTick;
       encounter.lastSatisfactionDecayAtTick = state.facilityTick;
       appendEvent(state, {
-        id: `event.patient-checked-in.${encounter.id}`,
+        id: `event.patient-arrived.${encounter.id}`,
         type: "patient_arrived",
         facilityTick: state.facilityTick,
         encounterId: encounter.id,
         message: `${encounter.patientDisplayName} checked in and is waiting.`,
-        priority: "informational",
-        definitionId: "event.patient.checked-in",
+        priority: "action_required",
+        definitionId: "alert.patient.arrived",
         target: { kind: "encounter", id: encounter.id },
       });
+      {
+        const destination = chooseWaitingDestination(
+          state,
+          context,
+          encounter,
+        );
+        startPatientMovement(
+          state,
+          context,
+          encounter,
+          "walking_to_waiting",
+          destination.path,
+          destination.roomId,
+        );
+      }
+      return;
+    case "walking_to_waiting":
+      encounter.idleWaitingSinceTick ??= state.facilityTick;
+      encounter.lastSatisfactionDecayAtTick = state.facilityTick;
       return;
     case "walking_to_care":
+      // Opening the chart already made the decision available. Reaching the
+      // examination destination only completes the physical movement.
       encounter.lifecycle = "active_action_required";
       encounter.firstOpenedAtTick ??= state.facilityTick;
       encounter.idleWaitingSinceTick =
@@ -2111,16 +2262,20 @@ function reduceAdvanceTick(
         encounter.pendingResult.offsiteReturnStartedAtTick === null
       ) {
         const entrance = getPublicEntrance(next, context);
-        const destinationRoomId =
-          encounter.assignedRoomInstanceId ??
-          entrance?.room.id ??
-          null;
+        // Outsourced patients must physically return to the Front Desk and
+        // check back in before the saved chart becomes result-ready.
+        const destinationRoomId = entrance?.room.id ?? null;
+        const returnStart = getEncounterArrivalStart(
+          next,
+          context,
+          encounter.id,
+        );
         const returnPath =
-          entrance && destinationRoomId
+          entrance && returnStart && destinationRoomId
             ? pathFromOutsideToRoom(
                 next,
                 context,
-                entrance.outside,
+                returnStart,
                 destinationRoomId,
               )
             : [];
@@ -2229,7 +2384,9 @@ function reduceAdvanceTick(
         encounter.lifecycle !== "active_action_required") ||
       encounter.waiting.patienceExempt ||
       encounter.idleWaitingSinceTick === null ||
-      next.openChartEncounterId === encounter.id
+      next.openChartEncounterId === encounter.id ||
+      (encounter.patientMovement !== null &&
+        encounter.patientMovement.kind !== "idle_within_room")
     ) {
       continue;
     }
@@ -2928,20 +3085,12 @@ function reduceAdmitPatient(
   if (guaranteeId) {
     next.criticalGuarantees[guaranteeId] = "in_progress";
   }
-  appendEvent(next, {
-    id: `event.patient-arrived.${command.encounterId}`,
-    type: "patient_arrived",
-    facilityTick: next.facilityTick,
-    encounterId: command.encounterId,
-    message: `${command.patientDisplayName} arrived.`,
-    priority: "action_required",
-    definitionId: "alert.patient.arrived",
-    target: {
-      kind: "encounter",
-      id: command.encounterId,
-    },
-  });
-  return recordReceipt(next, command, "applied", "Patient admitted to Waiting.");
+  return recordReceipt(
+    next,
+    command,
+    "applied",
+    "Patient is approaching the clinic.",
+  );
 }
 
 function reduceHireStaff(
@@ -3024,6 +3173,7 @@ function reduceHireStaff(
       next.campaignSeed,
       "staff",
       command.employeeId,
+      roleStyleForStaffDefinition(definition.id),
     ),
     hiredAtFacilityTick: next.facilityTick,
     salaryPerExpenseInterval: definition.salaryPerExpenseInterval,
@@ -3113,6 +3263,48 @@ function reduceSetEmployeeSalary(
     command,
     "applied",
     "Employee salary and morale updated.",
+  );
+}
+
+function reduceFireEmployee(
+  state: GameState,
+  command: Extract<GameCommand, { type: "FIRE_EMPLOYEE" }>,
+): GameState {
+  const employee = state.employees.find(
+    (candidate) => candidate.id === command.employeeId,
+  );
+  if (!employee) {
+    return rejectCommand(state, command, "That employee does not exist.");
+  }
+
+  const next = clonePlain(state);
+  next.employees = next.employees.filter(
+    (candidate) => candidate.id !== command.employeeId,
+  );
+  if (
+    next.environment.founderActivity?.kind === "praise_employee" &&
+    next.environment.founderActivity.targetId === command.employeeId
+  ) {
+    next.environment.founderActivity = null;
+  }
+  appendEvent(next, {
+    id: `event.staff-fired.${employee.id}.${command.operationId}`,
+    type: "staff_fired",
+    facilityTick: next.facilityTick,
+    encounterId: null,
+    message: `${employee.displayName} was fired. Payroll has one fewer opinion.`,
+    priority: "informational",
+    definitionId: "alert.staff.fired",
+    target: {
+      kind: "employee",
+      id: employee.id,
+    },
+  });
+  return recordReceipt(
+    next,
+    command,
+    "applied",
+    `${employee.displayName} was fired.`,
   );
 }
 
@@ -3395,8 +3587,17 @@ export function createInitialGameState(
       headId: options.founder?.headId ?? "head.default",
       bodyId: options.founder?.bodyId ?? "body.default",
       appearance:
-        options.founder?.appearance ??
-        createPixelAppearance(campaignSeed, "staff", "founder"),
+        options.founder?.appearance
+          ? normalizePixelAppearance(
+              options.founder.appearance,
+              "founder",
+            )
+          : createPixelAppearance(
+              campaignSeed,
+              "staff",
+              "founder",
+              "founder",
+            ),
     },
     clinicalReleaseId: context.clinicalRelease.id,
     balanceReleaseId: context.balanceRelease.id,
@@ -3412,6 +3613,7 @@ export function createInitialGameState(
     operatingAccrualSixtiethCents: 0,
     nextFinancialPostingTick:
       context.balanceRelease.economy.postingIntervalMinutes,
+    advertisingLevel: 0,
     clinicalXp: 0,
     openChartEncounterId: null,
     attendedEncounterId: null,
@@ -3474,13 +3676,15 @@ export function createInitialGameState(
     context,
     true,
   );
-  const tutorialCases = context.clinicalRelease.cases.filter(
-    (clinicalCase) => clinicalCase.tutorialEligible,
+  const firstTutorial = context.clinicalRelease.cases.find(
+    (clinicalCase) => clinicalCase.id === FIRST_TUTORIAL_CASE_ID,
   );
-  if (tutorialCases.length < 2) {
+  const secondTutorial = context.clinicalRelease.cases.find(
+    (clinicalCase) => clinicalCase.id === SECOND_TUTORIAL_CASE_ID,
+  );
+  if (!firstTutorial?.tutorialEligible || !secondTutorial?.tutorialEligible) {
     throw new Error("The Level 0 prototype needs two tutorial-eligible cases.");
   }
-  const firstTutorial = tutorialCases[0]!;
   state.encounters[TUTORIAL_ENCOUNTER_ID] = createEncounter(state, context, {
     encounterId: TUTORIAL_ENCOUNTER_ID,
     clinicalCase: firstTutorial,
@@ -3505,6 +3709,50 @@ export function gameReducer(
   }
 
   switch (command.type) {
+    case "SET_ADVERTISING_LEVEL": {
+      const level = context.balanceRelease.advertising.levels.find(
+        (candidate) => candidate.level === command.level,
+      );
+      if (!level) {
+        return rejectCommand(
+          state,
+          command,
+          "That advertising level does not exist.",
+        );
+      }
+      const next = clonePlain(state);
+      const previousLevel =
+        context.balanceRelease.advertising.levels.find(
+          (candidate) => candidate.level === state.advertisingLevel,
+        ) ?? context.balanceRelease.advertising.levels[0]!;
+      next.advertisingLevel = level.level;
+      // Preserve the already-generated arrival variation. Changing advertising
+      // scales the remaining wait instead of rerolling or resetting its clock,
+      // so repeatedly toggling tiers cannot manufacture or postpone patients.
+      if (
+        level.level !== previousLevel.level &&
+        next.nextRoutineArrivalTick > next.facilityTick
+      ) {
+        const remainingMinutes =
+          next.nextRoutineArrivalTick - next.facilityTick;
+        next.nextRoutineArrivalTick =
+          next.facilityTick +
+          Math.max(
+            1,
+            Math.round(
+              (remainingMinutes *
+                level.arrivalIntervalMultiplierPercent) /
+                previousLevel.arrivalIntervalMultiplierPercent,
+            ),
+          );
+      }
+      return recordReceipt(
+        next,
+        command,
+        "applied",
+        `Advertising set to ${level.displayName}.`,
+      );
+    }
     case "OPEN_CHART":
       return reduceOpenChart(state, command, context);
     case "CLOSE_CHART":
@@ -3568,6 +3816,8 @@ export function gameReducer(
       return reduceHireStaff(state, command, context);
     case "SET_EMPLOYEE_SALARY":
       return reduceSetEmployeeSalary(state, command, context);
+    case "FIRE_EMPLOYEE":
+      return reduceFireEmployee(state, command);
     case "COLLECT_LITTER":
       return reduceCollectLitter(state, command, context);
     case "REFILL_WATER_COOLER":

@@ -20,7 +20,11 @@ export interface FacilityPatientView {
   status: "waiting" | "active" | "action-ready" | "off-site";
   appearance: PixelAppearanceDescriptor;
   location?: GridPoint;
+  path?: GridPoint[];
+  pathIndex?: number;
   offsiteTravel?: OffsitePatientTravelPresentation;
+  moving?: boolean;
+  direction?: "front" | "side" | "back";
 }
 
 export interface FacilityRoomView {
@@ -36,6 +40,10 @@ export interface FacilityRoomView {
   orientation?: RoomOrientation;
   doorSide?: CardinalDirection | null;
   upgradeLevel?: RoomUpgradeLevel;
+  /** 0-100 presentation value; gameplay remains authoritative in the domain. */
+  cleanliness?: number;
+  /** Build-only affordance; the domain still decides whether an upgrade applies. */
+  upgradeAvailable?: boolean;
 }
 
 export interface FacilityDoorView {
@@ -58,13 +66,19 @@ export interface FacilityStaffView {
   location?: GridPoint;
   path?: GridPoint[];
   pathIndex?: number;
+  moving?: boolean;
+  direction?: "front" | "side" | "back";
 }
 
 export interface FacilityFounderView {
   displayName: string;
   appearance: PixelAppearanceDescriptor;
   location?: GridPoint;
+  path?: GridPoint[];
+  pathIndex?: number;
   activityLabel?: string;
+  moving?: boolean;
+  direction?: "front" | "side" | "back";
 }
 
 export interface FacilityLitterView {
@@ -77,6 +91,8 @@ export interface FacilityWaterCoolerView {
   location: GridPoint;
   fillPercent: number;
   needsRefill: boolean;
+  /** Brief alert-driven locator affordance. */
+  highlighted?: boolean;
 }
 
 export interface FacilityPlacementView {
@@ -113,6 +129,9 @@ export interface FacilityViewModel {
   facilityTitle: string;
   facilityTick: number;
   paused: boolean;
+  simulationSpeed: 1 | 2 | 4;
+  realMillisecondsPerFacilityMinuteAt1x: number;
+  patientTravelTilesPerFacilityMinute: number;
   gridColumns: number;
   gridRows: number;
   patientCounts: FacilityPatientCounts;
@@ -137,6 +156,7 @@ export type PlaceRoomRequest = (
   orientation?: RoomOrientation,
 ) => void;
 export type SelectRoomRequest = (roomInstanceId: string) => void;
+export type RequestRoomUpgrade = (roomInstanceId: string) => void;
 export type CollectLitterRequest = (litterId: string) => void;
 export type RefillWaterCoolerRequest = () => void;
 export type PraiseEmployeeRequest = (employeeId: string) => void;

@@ -26,6 +26,13 @@ export interface PrototypeAlertDefinition {
     | "room_unreachable"
     | "private_exam_needed"
     | "staff_hired"
+    | "staff_fired"
+    | "receptionist_recommended"
+    | "onsite_imaging_requested"
+    | "imaging_staff_needed"
+    | "waiting_room_needed"
+    | "bathroom_needed"
+    | "cleanliness_low"
     | "staff_unreachable"
     | "operating_expense"
     | "low_cash"
@@ -217,6 +224,103 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     tickerEligible: true,
     eligibleFacilityLevels: [1],
     consolidationKeyTemplate: "employee:{{employee_id}}:hired",
+  },
+  {
+    id: "alert.staff.fired",
+    trigger: "staff_fired",
+    priority: "informational",
+    titleTemplate: "Employee fired",
+    bodyTemplate: "{{employee_name}} was fired.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    persistent: false,
+    tickerEligible: true,
+    eligibleFacilityLevels: [1],
+    consolidationKeyTemplate: "employee:{{employee_id}}:fired",
+  },
+  {
+    id: "alert.staff.receptionist-recommended",
+    trigger: "receptionist_recommended",
+    priority: "action_required",
+    titleTemplate: "Front-desk help recommended",
+    bodyTemplate:
+      "The founder is covering check-in and patient care. A receptionist adds front-desk capacity and lets the surgeon concentrate on care.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [1],
+    consolidationKeyTemplate: "staff:receptionist-recommended",
+  },
+  {
+    id: "alert.facility.onsite-imaging-requested",
+    trigger: "onsite_imaging_requested",
+    priority: "informational",
+    titleTemplate: "Patient requests onsite imaging",
+    bodyTemplate:
+      "{{patient_name}} wishes X-ray were available onsite. An operational X-ray service shortens the trip and result wait.",
+    targetKind: "task",
+    clickAction: "open_task",
+    persistent: true,
+    tickerEligible: true,
+    eligibleFacilityLevels: [1],
+    consolidationKeyTemplate: "facility:onsite-imaging-requested",
+  },
+  {
+    id: "alert.staff.imaging-technician-needed",
+    trigger: "imaging_staff_needed",
+    priority: "action_required",
+    titleTemplate: "Imaging staff needed",
+    bodyTemplate:
+      "{{patient_name}} can see the X-ray room, but it cannot operate without an Imaging Technician.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [1],
+    consolidationKeyTemplate: "staff:imaging-technician-needed",
+  },
+  {
+    id: "alert.facility.waiting-room-needed",
+    trigger: "waiting_room_needed",
+    priority: "informational",
+    titleTemplate: "Waiting space requested",
+    bodyTemplate:
+      "{{patient_name}} would prefer to wait somewhere designed for waiting.",
+    targetKind: "task",
+    clickAction: "open_task",
+    persistent: true,
+    tickerEligible: true,
+    eligibleFacilityLevels: [1],
+    consolidationKeyTemplate: "facility:waiting-room-needed",
+  },
+  {
+    id: "alert.facility.bathroom-needed",
+    trigger: "bathroom_needed",
+    priority: "informational",
+    titleTemplate: "Patient amenity requested",
+    bodyTemplate:
+      "{{patient_name}} has begun wondering whether the clinic has a bathroom.",
+    targetKind: "task",
+    clickAction: "open_task",
+    persistent: true,
+    tickerEligible: true,
+    eligibleFacilityLevels: [1],
+    consolidationKeyTemplate: "facility:bathroom-needed",
+  },
+  {
+    id: "alert.facility.cleanliness-low",
+    trigger: "cleanliness_low",
+    priority: "informational",
+    titleTemplate: "Cleanliness needs attention",
+    bodyTemplate:
+      "{{room_name}} is looking untidy. Select visible litter to send the founder to clean it.",
+    targetKind: "task",
+    clickAction: "open_task",
+    persistent: true,
+    tickerEligible: true,
+    eligibleFacilityLevels: [0, 1],
+    consolidationKeyTemplate: "facility:cleanliness-low",
   },
   {
     id: "alert.staff.unreachable",

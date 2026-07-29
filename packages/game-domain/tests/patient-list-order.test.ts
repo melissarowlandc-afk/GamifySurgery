@@ -21,6 +21,9 @@ function createEncounter(
     id: input.id,
     patientDisplayName: input.id,
     lifecycle: input.lifecycle,
+    // These ordering fixtures represent patients who already completed
+    // Front Desk check-in. Pre-check-in arrivals are intentionally hidden.
+    patientMovement: null,
     resolutionReason: input.resolutionReason ?? null,
     settlementId: input.settlementId ?? null,
     waiting: {

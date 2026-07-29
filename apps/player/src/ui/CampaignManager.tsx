@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import type { CampaignListItemView } from "./types";
 
 interface CampaignManagerProps {
@@ -37,9 +38,10 @@ export function CampaignManager({
       >
         Campaigns ({campaigns.length})
       </button>
-      {open ? (
-        <div className="dialog-backdrop" role="presentation">
-          <section
+      {open
+        ? createPortal(
+            <div className="dialog-backdrop" role="presentation">
+              <section
             className="confirm-dialog campaign-dialog"
             role="dialog"
             aria-modal="true"
@@ -132,9 +134,11 @@ export function CampaignManager({
                 from the Campaign screen.
               </p>
             ) : null}
-          </section>
-        </div>
-      ) : null}
+              </section>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

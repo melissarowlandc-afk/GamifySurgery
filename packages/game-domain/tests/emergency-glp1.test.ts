@@ -32,10 +32,8 @@ function advanceMinutes(
 }
 
 describe("manual GLP-1 side-business action", () => {
-  it("remains available at any cash balance and awards cash only", () => {
+  it("is available below the low-cash threshold and awards $25 cash only", () => {
     const initial = createInitialGameState();
-    initial.cashCents = 50_000;
-    initial.cash = 500;
     const histories = JSON.parse(
       JSON.stringify(initial.learningHistories),
     ) as typeof initial.learningHistories;
@@ -43,9 +41,8 @@ describe("manual GLP-1 side-business action", () => {
     const next = consult(initial, 1);
 
     expect(next.cash).toBe(
-      500 +
-        PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
-          .fullPayment,
+      initial.cash +
+        PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1.payment,
     );
     expect(next.clinicalXp).toBe(0);
     expect(next.learningHistories).toEqual(histories);
@@ -57,6 +54,19 @@ describe("manual GLP-1 side-business action", () => {
         satisfactionDelta: 0,
       },
     });
+  });
+
+  it("is unavailable when the clinic is not below the low-cash threshold", () => {
+    const initial = createInitialGameState();
+    initial.cashCents = 50_000;
+    initial.cash = 500;
+    expect(getEmergencyGlp1Status(initial)).toMatchObject({
+      cashEligible: false,
+      eligible: false,
+    });
+    const blocked = consult(initial, 99);
+    expect(blocked.cash).toBe(500);
+    expect(blocked.operationReceipts["test.glp1.99"]?.status).toBe("rejected");
   });
 
   it("uses facility-minute cooldown time and survives save/reload", () => {
@@ -82,7 +92,7 @@ describe("manual GLP-1 side-business action", () => {
     expect(consult(ready, 3).emergencyGlp1.usesToday).toBe(2);
   });
 
-  it("applies configured diminishing returns, sarcasm, and the daily cap", () => {
+  it("has no daily cap or diminishing payout and adds sarcasm after use five", () => {
     let state = createInitialGameState(undefined, {
       campaignSeed: "glp1-current-rules",
     });
@@ -92,14 +102,16 @@ describe("manual GLP-1 side-business action", () => {
       PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
         .cooldownMinutes;
 
-    for (let use = 1; use <= 8; use += 1) {
+    for (let use = 1; use <= 9; use += 1) {
+      state.cash = 0;
+      state.cashCents = 0;
       const before = state.cash;
       state = consult(state, use);
       payments.push(state.cash - before);
       if (state.emergencyGlp1.lastFlavorMessage) {
         flavor.push(state.emergencyGlp1.lastFlavorMessage);
       }
-      if (use < 8) {
+      if (use < 9) {
         state = advanceMinutes(
           state,
           cooldown,
@@ -108,20 +120,19 @@ describe("manual GLP-1 side-business action", () => {
       }
     }
 
-    expect(payments).toEqual([20, 20, 20, 20, 20, 10, 10, 10]);
+    expect(payments).toEqual([25, 25, 25, 25, 25, 25, 25, 25, 25]);
     expect(flavor.slice(0, 4)).toEqual([
       "Your commitment to comprehensive metabolic care has been noted.",
       "Another individualized 90-second consultation completed.",
       "Prior authorization remains someone elses problem.",
       "At this point, this is less of a safety net and more of a business model.",
     ]);
-    const capped = consult(
-      advanceMinutes(state, cooldown, "test.glp1.cap"),
-      9,
-    );
-    expect(capped.operationReceipts["test.glp1.9"]?.status).toBe(
-      "rejected",
-    );
+    state = advanceMinutes(state, cooldown, "test.glp1.no-cap");
+    state.cash = 0;
+    state.cashCents = 0;
+    const tenth = consult(state, 10);
+    expect(tenth.operationReceipts["test.glp1.10"]?.status).toBe("applied");
+    expect(tenth.cash).toBe(25);
   });
 
   it("resets daily usage at the continuous ten-hour day rollover", () => {

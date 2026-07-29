@@ -133,8 +133,8 @@ describe("current prototype contracts", () => {
     expect(PROTOTYPE_BALANCE_RELEASE.facility).toMatchObject({
       gridWidth: 72,
       gridHeight: 32,
-      startingCash: 90,
-      patientTravelTilesPerTick: 2,
+      startingCash: 120,
+      patientTravelTilesPerTick: 4,
     });
     expect(
       PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions,
@@ -214,18 +214,18 @@ describe("current prototype contracts", () => {
       TUTORIAL_ENCOUNTER_ID,
     );
 
-    expect(encounter.answers).toHaveLength(2);
+    expect(encounter.answers).toHaveLength(1);
     expect(
       encounter.answers.every(
         (answer) => answer.primaryConceptId.length > 0,
       ),
     ).toBe(true);
     expect(settlement).toMatchObject({
-      completionRevenue: 135,
+      completionRevenue: 75,
       qualityRevenueBonus: 0,
-      netCashDelta: 135,
+      netCashDelta: 75,
       clinicalXpAwarded: 20,
-      correctAnswers: 2,
+      correctAnswers: 1,
       incorrectAnswers: 0,
     });
     expect(complete.clinicalXp).toBe(20);

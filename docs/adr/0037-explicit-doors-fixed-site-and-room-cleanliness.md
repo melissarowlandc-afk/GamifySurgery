@@ -32,9 +32,16 @@ turning the HUD into a resource spreadsheet.
 - A room is operational only when required access is valid. Imaging rooms
   require a patient-facing door and a separate internal door on a shared wall
   with an Imaging Control Room. Ultrasound has no exemption.
-- Build/Renovate Mode permits temporarily invalid work, but Done/Save and
-  Return is disabled until validation succeeds. The exact blocking reason is
-  displayed beside that button. Door rules are taught in the tutorial.
+- Build/Renovate Mode permits temporarily invalid work. Done/Save and Return
+  remains selectable; an invalid layout opens a modal listing every access
+  problem and keeps the player in Build Mode until all are corrected. Door
+  rules are taught in the tutorial.
+- The construction desk exposes named Rotate, Build Hallway, Place Door,
+  Remove Door, Undo, and Done/Save tools. Door choices use plain-language wall
+  positions rather than implementation-style fractional slot labels.
+- Every upgradeable room displays a Build Mode plus affordance. Upgrading
+  requires confirmation that states the current and next level, exact cost,
+  and every configured functional, satisfaction, upkeep, and visual effect.
 - One build session spans entry through Done/Save and Return. Stepwise Undo
   covers room and hallway placement, movement, rotation, upgrades, sales, and
   door changes. A full cancel restores the entry snapshot. There is no Redo.

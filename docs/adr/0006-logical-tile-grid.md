@@ -42,7 +42,9 @@ expansion shape, and costs remain later visual and balance decisions.
 ## Benefits
 
 - Construction validity and room access are clear on mouse and touch devices.
-- The model matches the large-pixel visual direction.
+- The model supports crisp, detailed pixel art while keeping construction,
+  routing, and interaction coordinates exact. It does not imply coarse or
+  placeholder visual assets.
 - Placement, walking distance, queues, cleaning, and maintenance share one
   spatial language.
 - Facility layouts and paths can be saved, migrated, simulated, and replayed

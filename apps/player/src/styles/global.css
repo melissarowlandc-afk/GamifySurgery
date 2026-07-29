@@ -309,6 +309,99 @@ p {
   line-height: 1.35;
 }
 
+.advertising-panel {
+  padding: 0.65rem;
+  box-shadow: 3px 3px 0 var(--ink);
+  flex: 0 0 auto;
+}
+
+.advertising-panel h2 {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 0.86rem;
+  line-height: 1.25;
+}
+
+.advertising-level-controls {
+  display: grid;
+  gap: 0.4rem;
+  align-items: stretch;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+}
+
+.advertising-step-button {
+  min-width: 36px;
+  min-height: 38px;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.advertising-current-level {
+  display: flex;
+  min-width: 0;
+  padding: 0.28rem 0.35rem;
+  border: var(--border-thin);
+  background: var(--shade-1);
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.advertising-current-level strong,
+.advertising-current-level span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.advertising-current-level strong {
+  font-size: 0.68rem;
+}
+
+.advertising-current-level span,
+.advertising-current-effects,
+.advertising-tier-details {
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+}
+
+.advertising-current-effects {
+  display: flex;
+  margin-top: 0.4rem;
+  gap: 0.35rem;
+  justify-content: space-between;
+}
+
+.advertising-tier-details {
+  margin-top: 0.4rem;
+}
+
+.advertising-tier-heading {
+  display: block;
+  font-weight: 800;
+}
+
+.advertising-tier-details ul {
+  display: grid;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  gap: 2px;
+  list-style: none;
+}
+
+.advertising-tier-details li {
+  display: grid;
+  padding: 0.25rem;
+  border-left: 2px solid transparent;
+  background: var(--shade-1);
+  gap: 1px;
+}
+
+.advertising-tier-details li.is-selected {
+  border-left-color: var(--ink);
+  background: var(--shade-2);
+}
+
 .panel-heading span {
   min-width: 0;
   font-weight: 900;
@@ -1038,7 +1131,12 @@ p {
 
 .tutorial-coach {
   position: fixed;
-  z-index: 80;
+  /*
+   * The phone chart is a full-viewport sheet at z-index 1000. Tutorial
+   * guidance must remain visibly above that sheet so its acknowledgement
+   * controls cannot be hidden behind the clinical content it explains.
+   */
+  z-index: 1100;
   top: 12px;
   right: auto;
   bottom: auto;
@@ -1079,7 +1177,7 @@ p {
 
 .tutorial-target-beacon {
   position: fixed;
-  z-index: 82;
+  z-index: 1102;
   display: grid;
   width: 36px;
   height: 36px;
@@ -1553,6 +1651,655 @@ p {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Level 1 golden-slice visual system
+   ==========================================================================
+
+   This section intentionally comes last. It replaces the earlier wireframe
+   presentation while preserving the established semantic layout and controls.
+   */
+
+html,
+body,
+#root {
+  background: var(--shade-4);
+}
+
+body {
+  color: var(--ink);
+}
+
+button,
+input,
+select,
+textarea {
+  color: var(--ink);
+}
+
+.game-shell {
+  background:
+    linear-gradient(rgb(240 237 221 / 95%), rgb(240 237 221 / 95%)),
+    repeating-linear-gradient(
+      45deg,
+      var(--shade-2) 0 2px,
+      var(--shade-1) 2px 7px
+    );
+}
+
+.game-grid-workspaces {
+  grid-template-columns:
+    minmax(190px, 230px)
+    minmax(520px, 1fr)
+    minmax(225px, 270px);
+  gap: 0.65rem;
+}
+
+.panel,
+.facility-frame,
+.desk-workspace,
+.resource-bar,
+.footer-bar {
+  border-color: var(--ink);
+  background: var(--panel);
+  box-shadow:
+    3px 3px 0 var(--ink-soft),
+    inset 0 1px 0 var(--pixel-highlight);
+}
+
+.panel::after,
+.facility-frame::after {
+  position: absolute;
+  z-index: 0;
+  right: 4px;
+  bottom: -5px;
+  left: 4px;
+  height: 4px;
+  background: var(--ink-soft);
+  content: "";
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.panel > *,
+.facility-frame > * {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-heading,
+.facility-heading {
+  border-bottom-color: var(--ink);
+  background:
+    linear-gradient(90deg, var(--deep-olive, #4c5449), var(--shade-4));
+  color: var(--paper-raised);
+  text-shadow: 1px 1px 0 var(--ink);
+}
+
+.panel-heading small,
+.facility-heading small {
+  color: var(--paper);
+}
+
+.resource-bar-main {
+  background: var(--paper);
+  box-shadow: inset 0 -3px 0 var(--shade-3);
+}
+
+.resource-chip {
+  border-color: var(--ink);
+  background:
+    linear-gradient(180deg, var(--paper-raised), var(--shade-1));
+  box-shadow:
+    inset 0 2px 0 var(--pixel-highlight),
+    inset 0 -3px 0 var(--shade-2);
+}
+
+.resource-chip:nth-child(even) {
+  background:
+    linear-gradient(180deg, var(--panel), var(--shade-2));
+}
+
+.resource-chip > .pixel-hud-icon {
+  align-self: center;
+}
+
+.pixel-icon {
+  display: inline-grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  image-rendering: pixelated;
+  place-items: center;
+}
+
+.pixel-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  image-rendering: pixelated;
+}
+
+.pixel-hud-icon {
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 2px solid var(--ink);
+  background: var(--cream, #f0eddd);
+  box-shadow:
+    2px 2px 0 var(--ink-soft),
+    inset 0 2px 0 var(--pixel-highlight);
+}
+
+.pixel-hud-icon .pixel-icon {
+  width: 2.05rem;
+  height: 2.05rem;
+}
+
+.pixel-hud-icon::before,
+.pixel-hud-icon::after {
+  display: none !important;
+}
+
+.pixel-control-button {
+  border-color: var(--ink);
+  background: linear-gradient(180deg, var(--paper-raised), var(--shade-1));
+  box-shadow:
+    3px 3px 0 var(--ink-soft),
+    inset 0 2px 0 var(--pixel-highlight);
+}
+
+.pixel-control-button:hover:not(:disabled) {
+  background: var(--paper-raised);
+  transform: translate(-1px, -1px);
+}
+
+.pixel-control-button.is-selected {
+  background: var(--shade-2);
+  box-shadow:
+    inset 3px 3px 0 rgb(52 58 50 / 22%),
+    1px 1px 0 var(--ink-soft);
+}
+
+.facility-frame {
+  overflow: hidden;
+  background: var(--shade-3);
+}
+
+.facility-host {
+  background: var(--shade-3);
+}
+
+.facility-host canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@media (min-width: 761px) {
+  .clinic-workspace,
+  .clinic-workspace.has-open-chart {
+    grid-template-rows: minmax(330px, 58%) minmax(260px, 42%);
+  }
+}
+
+/*
+ * Phaser's bitmap must have a real resolved host height at every viewport.
+ * A percentage-height child inside the phone flex layout could otherwise
+ * collapse to one backing pixel while its panel remained visually tall.
+ */
+.facility-host {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.facility-host > [data-testid="facility-canvas"] {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.staff-member-details progress::-webkit-progress-value {
+  background: var(--deep-olive);
+}
+
+.staff-member-details progress::-moz-progress-bar {
+  background: var(--deep-olive);
+}
+
+.desk-workspace {
+  background:
+    linear-gradient(rgb(202 200 187 / 94%), rgb(202 200 187 / 94%)),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 31px,
+      rgb(76 84 73 / 16%) 31px 33px
+    );
+  box-shadow:
+    inset 0 5px 0 var(--shade-3),
+    3px 3px 0 var(--ink-soft);
+}
+
+.empty-desk-message {
+  border-color: var(--shade-3);
+  background: rgb(240 237 221 / 84%);
+  box-shadow:
+    4px 5px 0 rgb(76 84 73 / 24%),
+    inset 0 2px 0 var(--pixel-highlight);
+}
+
+.patient-tab-rail {
+  background:
+    linear-gradient(90deg, var(--shade-1), var(--paper));
+}
+
+.patient-folder {
+  background: rgb(240 237 221 / 94%);
+}
+
+.patient-folder h2 {
+  border-bottom-color: var(--shade-4);
+  background:
+    linear-gradient(90deg, var(--shade-2), var(--paper));
+}
+
+.patient-tab-slide {
+  border-color: var(--ink);
+  background:
+    linear-gradient(100deg, var(--paper-raised), var(--paper));
+  box-shadow:
+    3px 3px 0 var(--ink-soft),
+    inset 0 1px 0 var(--pixel-highlight);
+}
+
+.patient-tab-slide.is-selected {
+  background:
+    linear-gradient(100deg, var(--light-sage, #b6b9aa), var(--paper-raised));
+}
+
+.staff-role-group {
+  background:
+    linear-gradient(145deg, var(--paper-raised), var(--shade-1));
+}
+
+.staff-member-card {
+  border-color: var(--ink);
+  background:
+    linear-gradient(145deg, var(--paper-raised), var(--paper));
+  box-shadow:
+    3px 3px 0 var(--shade-3),
+    inset 0 1px 0 var(--pixel-highlight);
+}
+
+.paper-chart {
+  border-color: var(--ink);
+  background: var(--paper-raised);
+  box-shadow:
+    8px 9px 0 rgb(52 58 50 / 34%),
+    -3px 4px 0 var(--paper),
+    inset 0 1px 0 var(--pixel-highlight);
+}
+
+.chart-drawer-titlebar,
+.chart-action-bar {
+  background:
+    linear-gradient(180deg, var(--paper-raised), var(--paper));
+}
+
+.chart-identity-column {
+  background:
+    linear-gradient(rgb(182 185 170 / 72%), rgb(224 222 208 / 86%)),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 8px,
+      rgb(35 39 32 / 7%) 8px 9px
+    );
+}
+
+.answer-choice {
+  background:
+    linear-gradient(180deg, var(--paper-raised), var(--shade-1));
+}
+
+.answer-choice:hover:not(:disabled) {
+  background: var(--paper-raised);
+}
+
+.pixel-avatar {
+  --avatar-width: 64px;
+  --avatar-height: 78px;
+  position: relative;
+  display: inline-grid;
+  width: var(--avatar-width);
+  height: var(--avatar-height);
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background:
+    linear-gradient(var(--paper-raised), var(--shade-2));
+  box-shadow:
+    3px 3px 0 var(--ink-soft),
+    inset 0 1px 0 var(--pixel-highlight);
+  filter: none;
+  image-rendering: pixelated;
+  place-items: center;
+}
+
+.pixel-avatar-small {
+  --avatar-width: 42px;
+  --avatar-height: 52px;
+}
+
+.pixel-avatar-medium {
+  --avatar-width: 62px;
+  --avatar-height: 74px;
+}
+
+.pixel-avatar-large {
+  --avatar-width: 104px;
+  --avatar-height: 128px;
+}
+
+.pixel-avatar.is-full {
+  aspect-ratio: 2 / 3;
+}
+
+.pixel-avatar-svg {
+  position: absolute;
+  inset: 4px;
+  display: block;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  image-rendering: pixelated;
+}
+
+.pixel-avatar-frame-b {
+  display: none;
+}
+
+.pixel-avatar.is-idle .pixel-avatar-frame-a {
+  animation: golden-avatar-idle 1.6s steps(2, end) infinite;
+}
+
+.pixel-avatar.is-star-jump {
+  overflow: visible;
+  animation: golden-star-jump-hop 0.72s steps(3, end) infinite;
+}
+
+.pixel-avatar.is-star-jump .pixel-avatar-frame-a,
+.pixel-avatar.is-star-jump .pixel-avatar-frame-b {
+  display: block;
+  animation-duration: 0.72s;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(1, end);
+}
+
+.pixel-avatar.is-star-jump .pixel-avatar-frame-a {
+  animation-name: golden-star-frame-a;
+}
+
+.pixel-avatar.is-star-jump .pixel-avatar-frame-b {
+  animation-name: golden-star-frame-b;
+}
+
+@keyframes golden-avatar-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes golden-star-jump-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes golden-star-frame-a {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes golden-star-frame-b {
+  0%,
+  49% {
+    opacity: 0;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.pixel-room-icon {
+  width: 3.1rem;
+  height: 2.7rem;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 2px 2px 0 var(--shade-3);
+}
+
+.build-card {
+  background:
+    linear-gradient(145deg, var(--paper-raised), var(--shade-1));
+}
+
+.event-message-board {
+  background:
+    linear-gradient(180deg, var(--panel), var(--paper));
+}
+
+.message-board-item {
+  border-color: var(--shade-3);
+  background: rgb(250 250 246 / 88%);
+}
+
+.footer-bar {
+  background:
+    linear-gradient(180deg, var(--paper-raised), var(--paper));
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .game-grid-workspaces {
+    grid-template-columns: minmax(190px, 230px) minmax(480px, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  html,
+  body,
+  #root {
+    background: var(--panel);
+  }
+
+  .game-grid-workspaces {
+    display: flex;
+  }
+
+  .pixel-avatar-large {
+    --avatar-width: 92px;
+    --avatar-height: 112px;
+  }
+
+  .resource-chip {
+    border-right-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-avatar.is-idle .pixel-avatar-frame-a,
+  .pixel-avatar.is-star-jump,
+  .pixel-avatar.is-star-jump .pixel-avatar-frame-a,
+  .pixel-avatar.is-star-jump .pixel-avatar-frame-b {
+    animation: none;
+  }
+
+  .pixel-avatar.is-star-jump .pixel-avatar-frame-a {
+    display: none;
+  }
+
+  .pixel-avatar.is-star-jump .pixel-avatar-frame-b {
+    display: block;
+  }
+}
+
+.character-qa-gallery {
+  position: fixed;
+  z-index: 1000;
+  inset: 1rem;
+  padding: 1rem;
+  border: 4px solid var(--ink);
+  background:
+    linear-gradient(rgb(240 237 221 / 97%), rgb(240 237 221 / 97%)),
+    repeating-linear-gradient(
+      45deg,
+      var(--shade-2) 0 2px,
+      var(--shade-1) 2px 8px
+    );
+  box-shadow: 10px 10px 0 rgb(35 39 32 / 48%);
+  overflow: auto;
+}
+
+.character-qa-heading {
+  display: flex;
+  padding-bottom: 0.7rem;
+  border-bottom: 3px solid var(--ink);
+  align-items: end;
+  justify-content: space-between;
+}
+
+.character-qa-heading span,
+.character-qa-heading strong {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.character-qa-heading h1 {
+  margin: 0.2rem 0 0;
+}
+
+.character-qa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 0.9rem;
+}
+
+.character-qa-palette {
+  display: grid;
+  margin: 0.65rem 0 0.9rem;
+  grid-template-columns: repeat(8, minmax(84px, 1fr));
+  gap: 0.35rem;
+}
+
+.character-qa-palette > span {
+  display: grid;
+  min-width: 0;
+  padding: 0.3rem;
+  border: 2px solid var(--ink);
+  background: var(--paper-raised);
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: 0.12rem 0.35rem;
+  align-items: center;
+}
+
+.character-qa-palette i {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--ink);
+  grid-row: 1 / 3;
+}
+
+.character-qa-palette b,
+.character-qa-palette code {
+  overflow: hidden;
+  font-size: 0.56rem;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.character-qa-card {
+  padding: 0.75rem;
+  border: 3px solid var(--ink);
+  background: var(--paper-raised);
+  box-shadow: 4px 4px 0 var(--shade-3);
+}
+
+.character-qa-card > header {
+  display: flex;
+  padding-bottom: 0.55rem;
+  border-bottom: 2px solid var(--shade-3);
+  gap: 0.8rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.character-qa-card > header div {
+  display: flex;
+  flex-direction: column;
+}
+
+.character-qa-card code {
+  max-width: 58%;
+  font-size: 0.62rem;
+  overflow-wrap: anywhere;
+}
+
+.character-qa-representations {
+  display: grid;
+  margin-top: 0.7rem;
+  grid-template-columns: repeat(6, minmax(54px, 1fr));
+  gap: 0.5rem;
+}
+
+.character-qa-representations figure {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  gap: 0.3rem;
+  justify-items: center;
+}
+
+.character-qa-representations figcaption {
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .character-qa-gallery {
+    inset: 0.35rem;
+  }
+
+  .character-qa-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-qa-palette {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .character-qa-representations {
+    grid-template-columns: repeat(3, minmax(62px, 1fr));
   }
 }
 
@@ -2462,7 +3209,9 @@ p {
 
 .chart-reward-banner strong,
 .chart-reward-banner span {
+  display: block;
   font-weight: 900;
+  white-space: nowrap;
 }
 
 .chart-action-buttons {
@@ -2844,42 +3593,21 @@ p {
   color: var(--ink-soft);
 }
 
-.staff-member-details label {
+.staff-morale {
   display: flex;
   margin-top: 0.35rem;
   gap: 0.2rem;
   font-size: 0.68rem;
-  flex-direction: column;
-}
-
-.staff-member-details label > span,
-.staff-salary-control {
-  display: flex;
-  gap: 0.4rem;
   justify-content: space-between;
 }
 
-.staff-member-details progress {
-  width: 100%;
-  height: 9px;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  appearance: none;
-}
-
-.staff-member-details progress::-webkit-progress-bar {
-  background: var(--panel);
-}
-
-.staff-member-details progress::-webkit-progress-value,
-.staff-member-details progress::-moz-progress-bar {
-  background: var(--ink);
-}
-
 .staff-salary-control {
+  display: grid;
   margin-top: 0.35rem;
   font-size: 0.68rem;
   align-items: center;
+  gap: 0.35rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
 }
 
 .staff-salary-buttons {
@@ -2896,6 +3624,32 @@ p {
   background: var(--panel);
   font-weight: 900;
   place-items: center;
+}
+
+.staff-fire-button {
+  min-height: 26px;
+  padding: 0.1rem 0.35rem;
+  border: 2px solid var(--ink);
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 900;
+}
+
+.staff-fire-confirmation {
+  display: grid;
+  margin-top: 0.45rem;
+  padding: 0.45rem;
+  border: 2px solid var(--ink);
+  background: var(--panel);
+  gap: 0.35rem;
+  font-size: 0.68rem;
+}
+
+.staff-fire-confirmation > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 @media (max-width: 1100px) {
@@ -3060,11 +3814,13 @@ p {
 
   .patient-rail-column {
     gap: 0.65rem;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .patient-rail-column .patient-lists {
-    min-height: 0;
-    flex: 1 1 auto;
+    min-height: 220px;
+    flex: 0 0 220px;
   }
 
   .patient-live-folders {
@@ -3566,6 +4322,23 @@ p {
     margin-top: 0.3rem;
   }
 
+  .advertising-panel {
+    padding: 0.45rem;
+  }
+
+  .advertising-panel h2 {
+    margin: 0.15rem 0 0.35rem;
+    font-size: 0.78rem;
+  }
+
+  .advertising-level-controls {
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+  }
+
+  .advertising-step-button {
+    min-height: 34px;
+  }
+
   .development-panel {
     max-height: 150px;
   }
@@ -3780,6 +4553,94 @@ body {
 
 .desk-workspace > .build-mode-trigger small {
   display: none;
+}
+
+.build-tool-toolbar {
+  position: sticky;
+  z-index: 8;
+  top: 38px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0.55rem;
+  padding: 0.5rem;
+  border: 3px double var(--ink);
+  background: var(--panel);
+  box-shadow: 4px 4px 0 rgb(24 25 20 / 22%);
+}
+
+.build-tool-toolbar .button {
+  min-width: 0;
+  min-height: 42px;
+  padding: 0.38rem 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.build-tool-toolbar .button.is-active {
+  outline: 3px double var(--ink);
+  outline-offset: -5px;
+  background: var(--shade-2);
+}
+
+.build-tool-toolbar .mode-toggle-button {
+  min-height: 42px;
+  font-size: 0.7rem;
+}
+
+.build-exit-reason,
+.build-selection-hint {
+  margin: 0.55rem;
+  padding: 0.5rem;
+  border: 2px dashed var(--ink);
+  background: var(--shade-1);
+  font-size: 0.72rem;
+}
+
+.door-remove-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.room-upgrade-dialog,
+.invalid-layout-dialog {
+  max-height: min(760px, calc(100dvh - 2rem));
+  overflow-y: auto;
+}
+
+.room-upgrade-dialog h2,
+.invalid-layout-dialog h2 {
+  margin: 0.35rem 0 0.7rem;
+}
+
+.room-upgrade-dialog h3 {
+  margin: 0.9rem 0 0.35rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.room-upgrade-dialog ul,
+.invalid-layout-dialog ul {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.4rem 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.upgrade-level-change {
+  display: inline-block;
+  padding: 0.4rem 0.55rem;
+  border: 3px double var(--ink);
+  background: var(--shade-1);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+@media (max-width: 700px) {
+  .build-tool-toolbar {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .empty-desk-message {
@@ -4176,6 +5037,20 @@ body {
   flex: 0 0 auto;
 }
 
+.patient-tab-action-marker {
+  position: absolute;
+  z-index: 3;
+  top: 0.3rem;
+  right: 0.15rem;
+}
+
+.patient-tab-satisfaction {
+  width: 1.45rem;
+  height: 1.45rem;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
 .patient-tab-name {
   font-size: 0.82rem;
   line-height: 1.2;
@@ -4199,6 +5074,26 @@ body {
 .resolved-cabinet-button {
   background: var(--shade-2);
   box-shadow: inset 0 3px 0 rgb(255 255 255 / 28%);
+}
+
+/* Keep the filing cabinet in normal document flow. The live folders share one
+   bounded scroller so a short desktop window cannot layer Resolved over an
+   otherwise visible patient tab. */
+.patient-live-folders {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.patient-live-folders .patient-folder,
+.patient-live-folders .patient-folder.is-empty {
+  min-height: auto;
+  overflow: visible;
+  flex: 0 0 auto;
+}
+
+.patient-live-folders .patient-tab-stack {
+  max-height: none;
+  overflow: visible;
 }
 
 /* Segmented resource HUD and tactile clock controls */
@@ -4240,103 +5135,24 @@ body {
 }
 
 .pixel-hud-icon {
-  position: relative;
   display: grid;
-  width: 2.35rem;
-  height: 2.35rem;
-  border: 3px solid var(--ink);
-  background: var(--panel);
-  color: var(--ink);
-  font-size: 0.68rem;
-  font-weight: 900;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 0;
+  background: transparent;
   image-rendering: pixelated;
   place-items: center;
 }
 
-.pixel-hud-icon.is-learning {
-  border-radius: 0;
-  box-shadow: inset 0 -5px 0 var(--shade-2);
+.pixel-hud-icon .pixel-icon {
+  width: 100%;
+  height: 100%;
 }
 
-.pixel-hud-icon.is-money {
-  border-radius: 45% 45% 36% 36%;
-  font-size: 1.15rem;
-}
-
-.pixel-hud-icon.is-money::before {
-  position: absolute;
-  top: -7px;
-  width: 1rem;
-  height: 0.35rem;
-  border: 2px solid var(--ink);
-  background: var(--shade-2);
-  content: "";
-}
-
-.pixel-hud-icon.is-satisfaction {
-  border-radius: 50%;
-}
-
-.pixel-hud-icon.is-satisfaction::before {
-  position: absolute;
-  top: 0.62rem;
-  left: 0.55rem;
-  width: 0.28rem;
-  height: 0.28rem;
-  background: var(--ink);
-  box-shadow: 0.78rem 0 0 var(--ink);
-  content: "";
-}
-
-.pixel-hud-icon.is-satisfaction::after {
-  position: absolute;
-  right: 0.55rem;
-  bottom: 0.48rem;
-  left: 0.55rem;
-  height: 0.35rem;
-  border-bottom: 3px solid var(--ink);
-  content: "";
-}
-
-.pixel-hud-icon.is-satisfaction.is-happy::after {
-  border-radius: 0 0 50% 50%;
-}
-
-.pixel-hud-icon.is-satisfaction.is-steady::after {
-  bottom: 0.55rem;
-  height: 0;
-}
-
-.pixel-hud-icon.is-satisfaction.is-sad::after {
-  bottom: 0.25rem;
-  border-top: 3px solid var(--ink);
-  border-bottom: 0;
-  border-radius: 50% 50% 0 0;
-}
-
-.pixel-hud-icon.is-time {
-  border-radius: 50%;
-}
-
-.pixel-hud-icon.is-time::before,
-.pixel-hud-icon.is-time::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.15rem;
-  background: var(--ink);
-  content: "";
-  transform-origin: 50% 100%;
-}
-
-.pixel-hud-icon.is-time::before {
-  height: 0.65rem;
-  transform: translate(-50%, -100%);
-}
-
-.pixel-hud-icon.is-time::after {
-  height: 0.48rem;
-  transform: translate(-50%, -100%) rotate(90deg);
+.pixel-hud-icon::before,
+.pixel-hud-icon::after {
+  display: none;
+  content: none;
 }
 
 .resource-chip span,
@@ -4369,10 +5185,10 @@ body {
   min-width: 3rem;
   min-height: 3rem;
   padding: 0;
-  border: 3px solid var(--ink);
+  border: 2px solid var(--ink);
   border-radius: 0;
   background: var(--panel);
-  box-shadow: 3px 3px 0 var(--shade-3);
+  box-shadow: 2px 2px 0 var(--shade-3);
   cursor: pointer;
   place-items: center;
 }
@@ -4841,5 +5657,152 @@ body {
   .facility-pause-indicator {
     animation: none;
     transition: none;
+  }
+}
+
+/* Current display title and restrained outline-only resource symbols. */
+
+.game-display-title {
+  z-index: 51;
+  flex: 0 0 auto;
+  padding: 0.14rem 0.7rem 0.1rem;
+  border-bottom: 1px solid var(--ink-soft);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pixel-hud-icon {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 760px) {
+  .game-display-title {
+    padding-block: 0.12rem 0.08rem;
+    font-size: 0.62rem;
+  }
+
+  .game-shell.has-open-chart .game-display-title {
+    display: none;
+  }
+}
+
+/*
+ * The facility and clinical desk are two invariant stage areas on desktop.
+ * Their allocation must not change when chart content mounts, scrolls, or
+ * collapses. Keep content intrinsic sizes inside the stage rather than
+ * allowing them to resize the map.
+ */
+@media (min-width: 761px) {
+  .clinic-workspace,
+  .clinic-workspace.has-open-chart {
+    display: grid;
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: minmax(0, 44fr) minmax(0, 56fr);
+  }
+
+  .facility-frame,
+  .clinic-workspace.has-open-chart .facility-frame,
+  .desk-workspace,
+  .desk-workspace.has-chart {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .desk-workspace,
+  .desk-workspace.has-chart {
+    overflow: hidden;
+  }
+
+  .chart-drawer,
+  .paper-chart {
+    min-height: 0;
+  }
+}
+
+/*
+ * Overlay controls must never participate in the facility column's flex
+ * layout. The generic panel child rule otherwise turned the pause banner into
+ * a hidden final row and left an apparent blank strip below the sidewalk.
+ */
+.facility-frame > .facility-pause-indicator,
+.facility-frame > .map-interaction-menu {
+  position: absolute;
+}
+
+/*
+ * Tutorial copy may overlap another control at very narrow widths, but only
+ * the tutorial's own controls should capture input. This keeps guidance from
+ * trapping confirmation dialogs or the real control it is describing.
+ */
+.tutorial-coach {
+  pointer-events: none;
+}
+
+.tutorial-coach button,
+.tutorial-coach a,
+.tutorial-coach input,
+.tutorial-coach select,
+.tutorial-coach textarea {
+  pointer-events: auto;
+}
+
+/*
+ * July 28 chart usability: the chart behaves like one vertically scrolling
+ * paper document. Completed decisions stack above the active decision, so no
+ * question, result, or explanation is hidden behind a horizontal carousel.
+ * The patient header and chart actions remain outside this scrolling sheet.
+ */
+.chart-flip-stage {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.chart-card-face.is-front {
+  height: auto;
+  min-height: 100%;
+}
+
+.chart-decision-region {
+  overflow: visible;
+}
+
+.chart-decision-timeline,
+.chart-decision-timeline.has-multiple-steps {
+  display: block;
+  overflow: visible;
+  scroll-snap-type: none;
+}
+
+.chart-step-column {
+  width: 100%;
+  min-width: 0;
+  border-right: 0;
+  border-bottom: 2px solid var(--ink);
+}
+
+.chart-completed-decision {
+  width: 100%;
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  .chart-workspace {
+    height: auto;
+    grid-template-rows: auto auto;
+  }
+
+  .chart-identity-column,
+  .chart-presentation-column {
+    overflow: visible;
   }
 }

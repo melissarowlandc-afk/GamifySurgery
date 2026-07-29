@@ -4,7 +4,11 @@ import {
   createNewFsrsCard,
   schedulerPinsMatch,
 } from "./fsrs-adapter";
-import { createPixelAppearance } from "./appearance";
+import {
+  createPixelAppearance,
+  normalizePixelAppearance,
+  roleStyleForStaffDefinition,
+} from "./appearance";
 import {
   RANDOMNESS_CONTRACT_VERSION,
   RANDOM_STREAMS,
@@ -310,7 +314,27 @@ function isPixelAppearance(
     (value.accessory === "none" ||
       value.accessory === "glasses" ||
       value.accessory === "badge" ||
-      value.accessory === "headband")
+      value.accessory === "headband") &&
+    (value.skinTone === undefined ||
+      value.skinTone === 0 ||
+      value.skinTone === 1 ||
+      value.skinTone === 2 ||
+      value.skinTone === 3) &&
+    (value.headVariant === undefined ||
+      (typeof value.headVariant === "number" &&
+        Number.isSafeInteger(value.headVariant) &&
+        value.headVariant >= 0 &&
+        value.headVariant <= 9)) &&
+    (value.bodyVariant === undefined ||
+      (typeof value.bodyVariant === "number" &&
+        Number.isSafeInteger(value.bodyVariant) &&
+        value.bodyVariant >= 0 &&
+        value.bodyVariant <= 9)) &&
+    (value.roleStyle === undefined ||
+      value.roleStyle === "founder" ||
+      value.roleStyle === "patient" ||
+      value.roleStyle === "receptionist" ||
+      value.roleStyle === "imaging_technician")
   );
 }
 
@@ -340,7 +364,10 @@ function normalizeFounder(
           candidate.bodyId.trim().length > 0
             ? candidate.bodyId
             : "body.legacy",
-        appearance: candidate.appearance,
+        appearance: normalizePixelAppearance(
+          candidate.appearance,
+          "founder",
+        ),
       };
     }
   }
@@ -348,7 +375,12 @@ function normalizeFounder(
     displayName: "Founder",
     headId: "head.generated",
     bodyId: "body.generated",
-    appearance: createPixelAppearance(campaignSeed, "staff", "founder"),
+    appearance: createPixelAppearance(
+      campaignSeed,
+      "staff",
+      "founder",
+      "founder",
+    ),
   };
 }
 
@@ -374,10 +406,7 @@ function normalizeEmergencyGlp1State(
     typeof raw.usesToday === "number" &&
     Number.isSafeInteger(raw.usesToday) &&
     raw.usesToday >= 0
-      ? Math.min(
-          raw.usesToday,
-          context.balanceRelease.emergencyGlp1.dailyUseCap,
-        )
+      ? raw.usesToday
       : 0;
   const totalUses =
     typeof raw.totalUses === "number" &&
@@ -738,6 +767,7 @@ function normalizeEncounter(
       : [];
   const movementKinds = new Set<PatientMovementState["kind"]>([
     "arriving_for_check_in",
+    "walking_to_waiting",
     "walking_to_care",
     "departing_for_offsite_testing",
     "returning_from_offsite_testing",
@@ -874,9 +904,11 @@ function normalizeEncounter(
     frozenCase:
       frozenCase as unknown as EncounterState["frozenCase"],
     patientAppearance:
-      isRecord(candidate.patientAppearance) &&
-      candidate.patientAppearance.version === "pixel-avatar.v1"
-        ? (candidate.patientAppearance as unknown as EncounterState["patientAppearance"])
+      isPixelAppearance(candidate.patientAppearance)
+        ? normalizePixelAppearance(
+            candidate.patientAppearance,
+            "patient",
+          )
         : createPixelAppearance(campaignSeed, "patient", encounterId),
     patientSatisfaction,
     idleWaitingSinceTick,
@@ -1009,8 +1041,8 @@ function migrateVersionTwo(
   const parsedCashCents =
     typeof parsed.cashCents === "number" &&
     Number.isSafeInteger(parsed.cashCents)
-      ? parsed.cashCents
-      : Math.round(parsedCash * 100);
+      ? Math.max(0, parsed.cashCents)
+      : Math.max(0, Math.round(parsedCash * 100));
   const postingInterval =
     context.balanceRelease.economy.postingIntervalMinutes;
   const next: GameState = {
@@ -1039,6 +1071,14 @@ function migrateVersionTwo(
         ? parsed.nextFinancialPostingTick
         : Math.floor(parsedFacilityTick / postingInterval + 1) *
           postingInterval,
+    advertisingLevel:
+      typeof parsed.advertisingLevel === "number" &&
+      Number.isSafeInteger(parsed.advertisingLevel) &&
+      context.balanceRelease.advertising.levels.some(
+        (level) => level.level === parsed.advertisingLevel,
+      )
+        ? parsed.advertisingLevel
+        : 0,
   };
   delete (next as unknown as Record<string, unknown>).satisfaction;
   delete (next as unknown as Record<string, unknown>)
@@ -1107,10 +1147,21 @@ function migrateVersionTwo(
           ? candidate.displayName
           : `Clinic employee ${index + 1}`,
       appearance:
-        isRecord(candidate.appearance) &&
-        candidate.appearance.version === "pixel-avatar.v1"
-          ? (candidate.appearance as unknown as EmployeeState["appearance"])
-          : createPixelAppearance(campaignSeed, "staff", candidate.id),
+        isPixelAppearance(candidate.appearance)
+          ? normalizePixelAppearance(
+              candidate.appearance,
+              roleStyleForStaffDefinition(
+                candidate.staffRoleDefinitionId,
+              ),
+            )
+          : createPixelAppearance(
+              campaignSeed,
+              "staff",
+              candidate.id,
+              roleStyleForStaffDefinition(
+                candidate.staffRoleDefinitionId,
+              ),
+            ),
       hiredAtFacilityTick:
         typeof candidate.hiredAtFacilityTick === "number"
           ? candidate.hiredAtFacilityTick

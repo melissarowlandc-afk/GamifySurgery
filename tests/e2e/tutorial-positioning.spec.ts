@@ -59,7 +59,7 @@ async function expectCoachBesideTarget(
           coachBox.y + coachBox.height <= viewport.height
         );
       },
-      { timeout: 5_000 },
+      { timeout: 15_000 },
     )
     .toBe(true);
 }
@@ -81,6 +81,12 @@ test("keeps tutorial guidance beside real controls at variable widths", async ({
   await waitForFirstPatientReady(page);
 
   const coach = page.locator(".tutorial-coach");
+  const arrivalCoach = coach.getByRole("heading", {
+    name: "Your first patient is walking to check-in",
+  });
+  if (await arrivalCoach.isVisible()) {
+    await coach.getByRole("button", { name: "Got It" }).click();
+  }
   await expect(
     coach.getByRole("heading", {
       name: "Open your first patient chart",

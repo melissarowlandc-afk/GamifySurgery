@@ -67,6 +67,16 @@ export function createFrozenServiceRouteTiming(
         room.roomDefinitionId ===
         route.patientTravel?.destinationRoomDefinitionId,
     )
+    .filter(
+      (destination) =>
+        !Object.values(state.encounters).some(
+          (encounter) =>
+            encounter.pendingResult?.routeId === route.id &&
+            encounter.pendingResult.deliveredAtTick === null &&
+            encounter.pendingResult.patientTravel
+              ?.destinationRoomInstanceId === destination.id,
+        ),
+    )
     .sort((left, right) => left.id.localeCompare(right.id));
   const candidates = origins.flatMap((origin) =>
     destinations.flatMap((destination) => {

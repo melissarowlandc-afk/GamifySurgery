@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { PixelAvatar } from "./PixelAvatar";
+import { PixelIcon } from "./PixelIcon";
 import type { PatientFolder, PatientTabView } from "./types";
 
 interface PatientListsProps {
@@ -52,6 +53,12 @@ export function PatientLists({
       patient.id === tutorialTargetEncounterId;
     const tutorialCallout = showTutorialCallout && tutorialTarget;
     const calloutId = `tutorial-patient-${patient.id}`;
+    const satisfactionIcon =
+      patient.satisfactionPercent >= 85
+        ? "satisfactionHappy"
+        : patient.satisfactionPercent >= 60
+          ? "satisfactionSteady"
+          : "satisfactionSad";
 
     return (
       <button
@@ -67,6 +74,14 @@ export function PatientLists({
         aria-describedby={tutorialCallout ? calloutId : undefined}
       >
         <span className="patient-tab-notch" aria-hidden="true" />
+        {patient.actionRequired || patient.folder === "waiting" ? (
+          <strong
+            className="action-marker patient-tab-action-marker"
+            aria-label="Action required"
+          >
+            !
+          </strong>
+        ) : null}
         {tutorialCallout ? (
           <span className="tutorial-tab-callout" id={calloutId}>
             <span aria-hidden="true">-&gt;</span> Open this chart first
@@ -79,23 +94,13 @@ export function PatientLists({
             size="small"
           />
           <span className="patient-tab-copy">
-            <span className="patient-tab-name">
-              {patient.actionRequired || patient.folder === "waiting" ? (
-                <strong
-                  className="action-marker"
-                  aria-label="Action required"
-                >
-                  !
-                </strong>
-              ) : null}
-              {patient.name}
-            </span>
-            <small>{patient.subtitle}</small>
-            <span>{patient.statusLabel}</span>
-            {patient.patienceLabel ? (
-              <small>{patient.patienceLabel}</small>
-            ) : null}
+            <span className="patient-tab-name">{patient.name}</span>
           </span>
+          <PixelIcon
+            name={satisfactionIcon}
+            className="patient-tab-satisfaction"
+            label={`Satisfaction ${patient.satisfactionPercent}%`}
+          />
         </span>
       </button>
     );

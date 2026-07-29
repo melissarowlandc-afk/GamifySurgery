@@ -68,6 +68,7 @@ export interface PrototypeSession {
   buildMode: boolean;
   buildUndoCount: number;
   buildExitBlockedReason: string | null;
+  buildExitBlockedIssues: string[];
   facilityCamera: FacilityCameraView;
   summaryVisible: boolean;
   announcement: string;
@@ -105,6 +106,7 @@ export interface PrototypeSession {
   hireStaff: (staffRoleDefinitionId: string) => void;
   decreaseEmployeeSalary: (employeeId: string) => void;
   increaseEmployeeSalary: (employeeId: string) => void;
+  fireEmployee: (employeeId: string) => void;
   collectLitter: (litterId: string) => void;
   refillWaterCooler: () => void;
   praiseEmployee: (employeeId: string) => void;
@@ -113,6 +115,7 @@ export interface PrototypeSession {
   advanceTutorialResult: () => void;
   addMoney: () => void;
   runEmergencyGlp1Consultation: () => void;
+  setAdvertisingLevel: (level: number) => void;
   switchCampaign: (campaignId: string) => void;
   openTutorialPatient: () => void;
   dismissTutorialIntro: () => void;
@@ -213,6 +216,8 @@ export function usePrototypeSession(
   const [buildUndoCount, setBuildUndoCount] = useState(0);
   const [buildExitBlockedReason, setBuildExitBlockedReason] =
     useState<string | null>(null);
+  const [buildExitBlockedIssues, setBuildExitBlockedIssues] =
+    useState<string[]>([]);
   const buildHistoryRef = useRef<GameState[]>([]);
   const [facilityCamera, setFacilityCamera] =
     useState<FacilityCameraView>({
@@ -384,6 +389,7 @@ export function usePrototypeSession(
         ];
         setBuildUndoCount(buildHistoryRef.current.length);
         setBuildExitBlockedReason(null);
+        setBuildExitBlockedIssues([]);
       }
       return status;
     },
@@ -402,6 +408,7 @@ export function usePrototypeSession(
     persistActiveState(previous);
     setBuildUndoCount(buildHistoryRef.current.length);
     setBuildExitBlockedReason(null);
+    setBuildExitBlockedIssues([]);
     setSelectedRoomDefinitionId(null);
     setMovingRoomInstanceId(null);
     setAnnouncement("The last build action was undone.");
@@ -419,6 +426,13 @@ export function usePrototypeSession(
     setBuildExitBlockedReason((current) =>
       current === nextReason ? current : nextReason,
     );
+    setBuildExitBlockedIssues((current) => {
+      const next = validation.issues;
+      return current.length === next.length &&
+        current.every((issue, index) => issue === next[index])
+        ? current
+        : next;
+    });
   }, [buildMode, state]);
 
   useEffect(() => {
@@ -499,53 +513,6 @@ export function usePrototypeSession(
     },
     [execute],
   );
-
-  const advanceToSecondTutorialPatient = useCallback(
-    (encounterId: string) => {
-      if (
-        encounterId !== TUTORIAL_ENCOUNTER_ID ||
-        stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle !==
-          "resolved" ||
-        stateRef.current.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] ||
-        stateRef.current.paused
-      ) {
-        return;
-      }
-      execute(
-        {
-          type: "DEV_FAST_FORWARD",
-          tickCount: 1,
-        },
-        {
-          announcementOverride:
-            "First chart filed. A second tutorial patient has arrived.",
-        },
-      );
-    },
-    [execute],
-  );
-
-  useEffect(() => {
-    const first = state.encounters[TUTORIAL_ENCOUNTER_ID];
-    const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
-    if (first?.lifecycle !== "resolved" || second || state.paused) {
-      return;
-    }
-
-    const timerId = window.setTimeout(() => {
-      advanceToSecondTutorialPatient(TUTORIAL_ENCOUNTER_ID);
-    }, 5_000);
-
-    return () => {
-      window.clearTimeout(timerId);
-    };
-  }, [
-    advanceToSecondTutorialPatient,
-    state.campaignId,
-    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID],
-    state.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle,
-    state.paused,
-  ]);
 
   const closeChart = useCallback(() => {
     const encounterId = stateRef.current.openChartEncounterId;
@@ -716,6 +683,8 @@ export function usePrototypeSession(
     buildHistoryRef.current = [];
     setBuildUndoCount(0);
     setBuildExitBlockedReason(null);
+    setBuildExitBlockedIssues([]);
+    setBuildExitBlockedIssues([]);
     if (current.openChartEncounterId !== null) {
       execute(
         {
@@ -752,6 +721,7 @@ export function usePrototypeSession(
         validation.reason ??
         "Every required room needs a valid reachable door.";
       setBuildExitBlockedReason(reason);
+      setBuildExitBlockedIssues(validation.issues);
       setAnnouncement(`Cannot return to play: ${reason}`);
       return;
     }
@@ -759,6 +729,7 @@ export function usePrototypeSession(
     buildHistoryRef.current = [];
     setBuildUndoCount(0);
     setBuildExitBlockedReason(null);
+    setBuildExitBlockedIssues([]);
     setSelectedRoomDefinitionId(null);
     setMovingRoomInstanceId(null);
     setSelectedRoomInstanceId(null);
@@ -920,6 +891,13 @@ export function usePrototypeSession(
     [changeEmployeeSalary],
   );
 
+  const fireEmployee = useCallback(
+    (employeeId: string) => {
+      execute({ type: "FIRE_EMPLOYEE", employeeId });
+    },
+    [execute],
+  );
+
   const collectLitter = useCallback(
     (litterId: string) => {
       execute({ type: "COLLECT_LITTER", litterId });
@@ -1009,35 +987,6 @@ export function usePrototypeSession(
     );
   }, [execute]);
 
-  useEffect(() => {
-    const tutorialEncounter =
-      state.encounters[TUTORIAL_ENCOUNTER_ID];
-    if (
-      tutorialEncounter?.lifecycle !== "active_pending_result" ||
-      !tutorialEncounter.pendingResult ||
-      state.paused
-    ) {
-      return;
-    }
-
-    const timerId = window.setTimeout(() => {
-      const currentTutorial =
-        stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID];
-      if (currentTutorial?.lifecycle === "active_pending_result") {
-        advanceTutorialResult();
-      }
-    }, 4_000);
-
-    return () => {
-      window.clearTimeout(timerId);
-    };
-  }, [
-    advanceTutorialResult,
-    state.campaignId,
-    state.encounters[TUTORIAL_ENCOUNTER_ID]?.lifecycle,
-    state.paused,
-  ]);
-
   const addMoney = useCallback(() => {
     execute(
       {
@@ -1060,6 +1009,20 @@ export function usePrototypeSession(
       type: "RUN_EMERGENCY_GLP1_CONSULTATION",
     });
   }, [buildMode, execute]);
+
+  const setAdvertisingLevel = useCallback(
+    (level: number) => {
+      if (buildMode) {
+        setAnnouncement("Exit Build Mode before changing advertising.");
+        return;
+      }
+      execute({
+        type: "SET_ADVERTISING_LEVEL",
+        level,
+      });
+    },
+    [buildMode, execute],
+  );
 
   const togglePause = useCallback(() => {
     if (buildMode) {
@@ -1165,6 +1128,7 @@ export function usePrototypeSession(
     buildMode,
     selectedRoomDefinitionId,
     selectedRoomInstanceId,
+    summaryVisible,
   });
   const tutorialTargetEncounter =
     tutorialStep?.patientEncounterId
@@ -1347,6 +1311,7 @@ export function usePrototypeSession(
     buildMode,
     buildUndoCount,
     buildExitBlockedReason,
+    buildExitBlockedIssues,
     facilityCamera,
     summaryVisible,
     announcement,
@@ -1377,6 +1342,7 @@ export function usePrototypeSession(
     hireStaff,
     decreaseEmployeeSalary,
     increaseEmployeeSalary,
+    fireEmployee,
     collectLitter,
     refillWaterCooler,
     praiseEmployee,
@@ -1385,6 +1351,7 @@ export function usePrototypeSession(
     advanceTutorialResult,
     addMoney,
     runEmergencyGlp1Consultation,
+    setAdvertisingLevel,
     switchCampaign,
     openTutorialPatient,
     dismissTutorialIntro,

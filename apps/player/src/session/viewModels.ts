@@ -1,5 +1,6 @@
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
+  TUTORIAL_ENCOUNTER_ID,
   getAnswerChoiceServicePreview,
   getClinicSatisfaction,
   getFacilityProgressionStatus,
@@ -13,6 +14,7 @@ import {
   getOperatingExpensePerFacilityHour,
   getPatientLists,
   getPendingOffsitePatientTravel,
+  getPendingPatientRoutePresentation,
   getPendingResultEta,
   getRotatedFootprint,
   getRoomDefinition,
@@ -24,12 +26,14 @@ import {
   type CardinalDirection,
   type EncounterState,
   type GameState,
+  type GridPoint,
   type PatientListItem,
   type RoomOrientation,
 } from "@gamify-surgery/game-domain";
 import type { FacilityViewModel } from "../facility";
 import { createMessageBoardView } from "./alertViewModels";
 import type {
+  AdvertisingView,
   ChartView,
   DevelopmentView,
   EmergencyGlp1View,
@@ -56,6 +60,7 @@ export interface PrototypePlayerView {
   messages: MessageBoardItemView[];
   selectedRoomBuild: SelectedRoomBuildView | null;
   emergencyGlp1: EmergencyGlp1View;
+  advertising: AdvertisingView;
   development: DevelopmentView;
   workloadStatus: string;
 }
@@ -68,6 +73,46 @@ function signedCurrency(value: number): string {
 function signedPercent(value: number): string {
   const sign = value >= 0 ? "+" : "";
   return `${sign}${value}% satisfaction`;
+}
+
+function movementPresentation(
+  path: GridPoint[] | undefined,
+  pathIndex: number | undefined,
+): {
+  moving: boolean;
+  direction: "front" | "side" | "back";
+  path?: GridPoint[];
+  pathIndex?: number;
+} {
+  if (!path || path.length < 2 || pathIndex === undefined) {
+    return {
+      moving: false,
+      direction: "front",
+      ...(path ? { path } : {}),
+      ...(pathIndex === undefined ? {} : { pathIndex }),
+    };
+  }
+  const current = path[Math.min(pathIndex, path.length - 1)];
+  const next = path[Math.min(pathIndex + 1, path.length - 1)];
+  if (!current || !next || (current.x === next.x && current.y === next.y)) {
+    return {
+      moving: false,
+      direction: "front",
+      path,
+      pathIndex,
+    };
+  }
+  return {
+    moving: true,
+    path,
+    pathIndex,
+    direction:
+      next.x !== current.x
+        ? "side"
+        : next.y < current.y
+          ? "back"
+          : "front",
+  };
 }
 
 function formatFacilityDuration(value: number): string {
@@ -137,6 +182,7 @@ function toPatientTab(
     statusLabel: pendingStatus ?? item.statusLabel,
     actionRequired: item.actionRequired,
     selected: selectedEncounterId === item.encounterId,
+    satisfactionPercent: item.patientSatisfaction,
     patienceLabel: `Satisfaction: ${item.patientSatisfaction}% · Waiting: ${item.waitingMinutes} min`,
     avatar: encounter?.patientAppearance,
     sortKey: encounter?.waiting.arrivedAtTick,
@@ -150,6 +196,8 @@ function encounterStatus(encounter: EncounterState): string {
         return "Walking to Check-In";
       case "walking_to_care":
         return "Walking to Examination";
+      case "walking_to_waiting":
+        return "Walking to Waiting Area";
       case "departing_for_offsite_testing":
         return "Leaving for Testing";
       case "returning_from_offsite_testing":
@@ -258,12 +306,15 @@ function createChartView(
       }
       const isCurrentNode =
         step.nodeIndex === encounter.currentNodeIndex;
+      const decisionAvailableDuringMovement =
+        encounter.patientMovement === null ||
+        encounter.patientMovement.kind === "walking_to_care";
       const isCurrent =
         isCurrentNode &&
         encounter.lifecycle !== "resolved" &&
         (encounter.lifecycle === "resolved_summary_available" ||
           (encounter.lifecycle === "active_action_required" &&
-            encounter.patientMovement === null));
+            decisionAvailableDuringMovement));
       const questionIsVisible =
         step.status !== "action_required" || isCurrent;
       const answer = step.answer;
@@ -286,7 +337,7 @@ function createChartView(
             : step.status === "feedback_pending"
               ? "Review feedback"
             : step.status === "action_required"
-              ? "Action required"
+              ? undefined
               : "Complete",
         questionPrompt: questionIsVisible ? node.stem : undefined,
         answerChoices: questionIsVisible ? node.answerChoices.map((choice) => {
@@ -350,9 +401,13 @@ function createChartView(
         rewardLabel: answer
           ? `Decision XP: +${
               answer.correct
-                ? PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
-                    .clinicalSettlement
-                    .clinicalXpPerCorrectFirstAnswer
+                ? encounter.id === TUTORIAL_ENCOUNTER_ID
+                  ? PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
+                      .clinicalSettlement
+                      .firstTutorialCorrectDecisionXp
+                  : PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
+                      .clinicalSettlement
+                      .clinicalXpPerCorrectFirstAnswer
                 : PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
                     .clinicalSettlement
                     .clinicalXpPerIncorrectFirstAnswer
@@ -369,6 +424,17 @@ function createChartView(
                 ? "Next: review the encounter outcome, then close the chart."
                 : "Next: continue to the following clinical decision."
             : undefined,
+        collapsedResultLabel: answer
+          ? `${
+              answer.correct ? "Correct" : "Incorrect"
+            } — ${
+              resultDelivered && visibleResult
+                ? visibleResult.resultNarrative
+                : (node.answerChoices.find(
+                    (choice) => choice.id === answer.answerChoiceId,
+                  )?.label ?? "Decision recorded")
+            }`
+          : undefined,
         current: isCurrent,
         complete: step.status === "completed",
       };
@@ -457,7 +523,7 @@ function createChartView(
     decisionSteps,
     reward: settlement
       ? {
-          heading: `Decisions correct: ${settlement.correctAnswers}/${
+          heading: `Decisions Correct: ${settlement.correctAnswers}/${
             settlement.correctAnswers + settlement.incorrectAnswers
           }`,
           moneyLabel: `Encounter Payment: ${signedCurrency(
@@ -470,10 +536,10 @@ function createChartView(
       ? intermediateFeedbackNeedsAcknowledgment
         ? encounter.pendingResult
           ? lastAnswer?.correct
-            ? "Begin plan"
-            : "Begin corrected plan"
-          : "Continue care"
-        : "Continue to summary"
+            ? "Enact Plan"
+            : "Enact Corrected Plan"
+          : "Enact Plan"
+        : "Dismiss"
       : encounter.lifecycle === "active_pending_result"
         ? "Return to clinic"
         : undefined,
@@ -507,6 +573,17 @@ export function createPrototypePlayerView(
   );
   const clock = getFacilityClock(state);
   const emergencyGlp1Status = getEmergencyGlp1Status(state);
+  const advertisingLevels =
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.advertising.levels;
+  const currentAdvertising =
+    advertisingLevels.find((level) => level.level === state.advertisingLevel) ??
+    advertisingLevels[0]!;
+  const advertisingFrequencyLabel = (intervalPercent: number): string => {
+    const increasePercent = Math.round(10_000 / intervalPercent - 100);
+    return increasePercent <= 0
+      ? "Normal arrival frequency"
+      : `About +${increasePercent}% arrival frequency`;
+  };
   const effectiveSatisfaction = getClinicSatisfaction(state);
   const hourlyOperatingDelta = getOperatingExpensePerFacilityHour(state);
   const xpRequirement = progressionStatus.requirements.find(
@@ -545,8 +622,11 @@ export function createPrototypePlayerView(
       paymentLabel: `+$${emergencyGlp1Status.payment}`,
       statusLabel:
         emergencyGlp1Status.blockedReason ??
-        "Ready now; does not advance facility time.",
-      useCountLabel: `Today: ${emergencyGlp1Status.usesToday}/${emergencyGlp1Status.dailyUseCap}`,
+        "Ready now; one consult per facility hour.",
+      cooldownLabel:
+        emergencyGlp1Status.cooldownRemainingTicks > 0
+          ? `${emergencyGlp1Status.cooldownRemainingTicks} min cooldown`
+          : "Hourly consult ready",
       cooldownProgressPercent: Math.max(
         0,
         Math.min(
@@ -563,6 +643,35 @@ export function createPrototypePlayerView(
       ),
       flavorMessage:
         state.emergencyGlp1.lastFlavorMessage ?? undefined,
+    },
+    advertising: {
+      currentLevel: currentAdvertising.level,
+      currentDisplayName: currentAdvertising.displayName,
+      hourlyCostLabel:
+        currentAdvertising.hourlyCost === 0
+          ? "$0/hr"
+          : `$${currentAdvertising.hourlyCost}/hr`,
+      arrivalFrequencyLabel: advertisingFrequencyLabel(
+        currentAdvertising.arrivalIntervalMultiplierPercent,
+      ),
+      canDecrease:
+        advertisingLevels.some(
+          (level) => level.level < currentAdvertising.level,
+        ),
+      canIncrease:
+        advertisingLevels.some(
+          (level) => level.level > currentAdvertising.level,
+        ),
+      levels: advertisingLevels.map((level) => ({
+        level: level.level,
+        displayName: level.displayName,
+        hourlyCostLabel:
+          level.hourlyCost === 0 ? "$0/hr" : `$${level.hourlyCost}/hr`,
+        arrivalFrequencyLabel: advertisingFrequencyLabel(
+          level.arrivalIntervalMultiplierPercent,
+        ),
+        selected: level.level === currentAdvertising.level,
+      })),
     },
     resourceBar: {
       moneyLabel: `$${state.cash.toLocaleString(undefined, {
@@ -611,6 +720,13 @@ export function createPrototypePlayerView(
       facilityTitle: progressionStatus.displayName,
       facilityTick: state.facilityTick,
       paused: state.paused,
+      simulationSpeed: state.simulationSpeed,
+      realMillisecondsPerFacilityMinuteAt1x:
+        PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock
+          .realMillisecondsPerFacilityMinuteAt1x,
+      patientTravelTilesPerFacilityMinute:
+        PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility
+          .patientTravelTilesPerTick,
       buildMode,
       selectedRoomInstanceId,
       camera,
@@ -626,6 +742,10 @@ export function createPrototypePlayerView(
         displayName: state.founder.displayName,
         appearance: state.founder.appearance,
         location: state.environment.founderLocation,
+        ...movementPresentation(
+          state.environment.founderActivity?.path,
+          state.environment.founderActivity?.pathIndex,
+        ),
         activityLabel:
           state.environment.founderActivity?.kind === "collect_litter"
             ? "Picking up litter"
@@ -673,6 +793,14 @@ export function createPrototypePlayerView(
             state,
             encounter.id,
           );
+          const pendingFacilityRoute =
+            getPendingPatientRoutePresentation(state, encounter.id);
+          const presentationPath =
+            encounter.patientMovement?.path ??
+            pendingFacilityRoute?.path;
+          const presentationPathIndex =
+            encounter.patientMovement?.pathIndex ??
+            pendingFacilityRoute?.pathIndex;
           return {
             instanceId: encounter.id,
             displayName: encounter.patientDisplayName,
@@ -690,6 +818,10 @@ export function createPrototypePlayerView(
                     ? ("action-ready" as const)
                     : ("active" as const),
             appearance: encounter.patientAppearance,
+            ...movementPresentation(
+              presentationPath,
+              presentationPathIndex,
+            ),
             ...(location ? { location } : {}),
             ...(offsiteTravel ? { offsiteTravel } : {}),
           };
@@ -712,6 +844,9 @@ export function createPrototypePlayerView(
                 orientation: room.orientation,
                 doorSide: room.doorSide,
                 upgradeLevel: room.upgradeLevel,
+                cleanliness: room.cleanliness ?? 100,
+                upgradeAvailable:
+                  getNextRoomUpgradeCost(state, room.id) !== null,
               },
             ]
           : [];
@@ -741,6 +876,7 @@ export function createPrototypePlayerView(
           location: employee.location,
           path: employee.path,
           pathIndex: employee.pathIndex,
+          ...movementPresentation(employee.path, employee.pathIndex),
         };
       }),
       placement: selectedRoomDefinitionId
@@ -957,6 +1093,8 @@ export function createPrototypePlayerView(
         return null;
       }
       const upgradeCost = getNextRoomUpgradeCost(state, room.id);
+      const nextUpgradeLevel =
+        upgradeCost === null ? undefined : room.upgradeLevel + 1;
       const resaleValue = getRoomResaleValue(state, room.id);
       const protectedRoom =
         facilityBalance.protectedRoomDefinitionIds.includes(
@@ -998,26 +1136,72 @@ export function createPrototypePlayerView(
               facilityBalance.protectedRoomDefinitionIds,
             ),
           );
+          const normalizedOffset =
+            sideLengths[side] <= 1
+              ? 0.5
+              : offset / (sideLengths[side] - 1);
+          const positionLabel =
+            side === "north" || side === "south"
+              ? normalizedOffset < 0.34
+                ? "left"
+                : normalizedOffset > 0.66
+                  ? "right"
+                  : "center"
+              : normalizedOffset < 0.34
+                ? "top"
+                : normalizedOffset > 0.66
+                  ? "bottom"
+                  : "middle";
           return {
             id: `${side}.${offset}`,
             side,
             offset,
-            label: `${side[0]!.toUpperCase()}${side.slice(1)} ${
-              offset + 1
-            }/${sideLengths[side]}`,
+            label: `${side[0]!.toUpperCase()}${side.slice(
+              1,
+            )} wall · ${positionLabel}`,
             enabled: validation.valid,
             blockedReason: validation.reason ?? undefined,
           };
         }),
       );
+      const upgradeImprovements =
+        nextUpgradeLevel === undefined
+          ? []
+          : [
+              `Room finish and fixed fixtures advance to Level ${nextUpgradeLevel}.`,
+              ...(definition.workloadLimitContributionPerUpgradeLevel > 0
+                ? [
+                    `Routine workload capacity +${definition.workloadLimitContributionPerUpgradeLevel}.`,
+                  ]
+                : []),
+              ...(definition.serviceDurationReductionPercentPerUpgradeLevel >
+              0
+                ? [
+                    `Room service time ${definition.serviceDurationReductionPercentPerUpgradeLevel}% faster.`,
+                  ]
+                : []),
+              ...(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
+                .patientSatisfaction.roomUpgradeBonusPerLevel > 0
+                ? [
+                    `Completed-encounter satisfaction +${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction.roomUpgradeBonusPerLevel} (clinic upgrade bonus capped at +${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction.maximumRoomUpgradeBonus}).`,
+                  ]
+                : []),
+              ...(definition.upkeepPerUpgradeLevel > 0
+                ? [
+                    `Hourly upkeep +$${definition.upkeepPerUpgradeLevel}.`,
+                  ]
+                : []),
+            ];
       return {
         id: room.id,
         displayName: definition.displayName,
         upgradeLevel: room.upgradeLevel,
+        nextUpgradeLevel,
         upgradeCostLabel:
           upgradeCost === null
             ? undefined
             : `$${upgradeCost.toLocaleString()}`,
+        upgradeImprovements,
         resaleValueLabel:
           resaleValue === null
             ? undefined
@@ -1035,7 +1219,7 @@ export function createPrototypePlayerView(
               ? "Public entrance"
               : `${door.side[0]!.toUpperCase()}${door.side.slice(
                   1,
-                )} wall · slot ${door.offset + 1}`,
+                )} wall door`,
             removable: !door.exterior,
           })),
         doorSlots,

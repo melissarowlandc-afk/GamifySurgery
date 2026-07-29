@@ -3,6 +3,7 @@ import type {
   FounderIdentity,
   PixelAppearanceDescriptor,
 } from "@gamify-surgery/game-domain";
+import { normalizePixelAppearance } from "@gamify-surgery/game-domain";
 import {
   clinicNameExists,
   normalizeClinicName,
@@ -35,40 +36,45 @@ type HeadPreset = {
   id: string;
 } & Pick<
   PixelAppearanceDescriptor,
-  "hairStyle" | "hairShade" | "faceStyle" | "accessory"
+  | "hairStyle"
+  | "hairShade"
+  | "faceStyle"
+  | "accessory"
+  | "skinTone"
+  | "headVariant"
 >;
 
 type BodyPreset = {
   id: string;
 } & Pick<
   PixelAppearanceDescriptor,
-  "bodyShape" | "outfitStyle" | "outfitShade"
+  "bodyShape" | "outfitStyle" | "outfitShade" | "bodyVariant"
 >;
 
 const HEAD_PRESETS = [
-  { id: "head.01", hairStyle: "short", hairShade: 3, faceStyle: "round", accessory: "none" },
-  { id: "head.02", hairStyle: "parted", hairShade: 2, faceStyle: "square", accessory: "glasses" },
-  { id: "head.03", hairStyle: "curly", hairShade: 1, faceStyle: "long", accessory: "none" },
-  { id: "head.04", hairStyle: "bun", hairShade: 3, faceStyle: "round", accessory: "headband" },
-  { id: "head.05", hairStyle: "none", hairShade: 0, faceStyle: "square", accessory: "glasses" },
-  { id: "head.06", hairStyle: "short", hairShade: 1, faceStyle: "long", accessory: "badge" },
-  { id: "head.07", hairStyle: "parted", hairShade: 3, faceStyle: "round", accessory: "none" },
-  { id: "head.08", hairStyle: "curly", hairShade: 2, faceStyle: "square", accessory: "headband" },
-  { id: "head.09", hairStyle: "bun", hairShade: 1, faceStyle: "long", accessory: "glasses" },
-  { id: "head.10", hairStyle: "none", hairShade: 0, faceStyle: "round", accessory: "badge" },
+  { id: "head.01", hairStyle: "short", hairShade: 3, faceStyle: "round", accessory: "none", skinTone: 0, headVariant: 0 },
+  { id: "head.02", hairStyle: "parted", hairShade: 2, faceStyle: "square", accessory: "glasses", skinTone: 1, headVariant: 1 },
+  { id: "head.03", hairStyle: "curly", hairShade: 1, faceStyle: "long", accessory: "none", skinTone: 2, headVariant: 2 },
+  { id: "head.04", hairStyle: "bun", hairShade: 3, faceStyle: "round", accessory: "headband", skinTone: 3, headVariant: 3 },
+  { id: "head.05", hairStyle: "none", hairShade: 0, faceStyle: "square", accessory: "glasses", skinTone: 1, headVariant: 4 },
+  { id: "head.06", hairStyle: "short", hairShade: 1, faceStyle: "long", accessory: "badge", skinTone: 2, headVariant: 5 },
+  { id: "head.07", hairStyle: "parted", hairShade: 3, faceStyle: "round", accessory: "none", skinTone: 3, headVariant: 6 },
+  { id: "head.08", hairStyle: "curly", hairShade: 2, faceStyle: "square", accessory: "headband", skinTone: 0, headVariant: 7 },
+  { id: "head.09", hairStyle: "bun", hairShade: 1, faceStyle: "long", accessory: "glasses", skinTone: 1, headVariant: 8 },
+  { id: "head.10", hairStyle: "none", hairShade: 0, faceStyle: "round", accessory: "badge", skinTone: 2, headVariant: 9 },
 ] as const satisfies readonly HeadPreset[];
 
 const BODY_PRESETS = [
-  { id: "body.01", bodyShape: "average", outfitStyle: "plain", outfitShade: 1 },
-  { id: "body.02", bodyShape: "compact", outfitStyle: "striped", outfitShade: 2 },
-  { id: "body.03", bodyShape: "broad", outfitStyle: "checked", outfitShade: 3 },
-  { id: "body.04", bodyShape: "tall", outfitStyle: "coat", outfitShade: 2 },
-  { id: "body.05", bodyShape: "compact", outfitStyle: "plain", outfitShade: 3 },
-  { id: "body.06", bodyShape: "average", outfitStyle: "coat", outfitShade: 1 },
-  { id: "body.07", bodyShape: "broad", outfitStyle: "striped", outfitShade: 1 },
-  { id: "body.08", bodyShape: "tall", outfitStyle: "checked", outfitShade: 2 },
-  { id: "body.09", bodyShape: "average", outfitStyle: "checked", outfitShade: 3 },
-  { id: "body.10", bodyShape: "compact", outfitStyle: "coat", outfitShade: 2 },
+  { id: "body.01", bodyShape: "average", outfitStyle: "plain", outfitShade: 1, bodyVariant: 0 },
+  { id: "body.02", bodyShape: "compact", outfitStyle: "striped", outfitShade: 2, bodyVariant: 1 },
+  { id: "body.03", bodyShape: "broad", outfitStyle: "checked", outfitShade: 3, bodyVariant: 2 },
+  { id: "body.04", bodyShape: "tall", outfitStyle: "coat", outfitShade: 2, bodyVariant: 3 },
+  { id: "body.05", bodyShape: "compact", outfitStyle: "plain", outfitShade: 3, bodyVariant: 4 },
+  { id: "body.06", bodyShape: "average", outfitStyle: "coat", outfitShade: 1, bodyVariant: 5 },
+  { id: "body.07", bodyShape: "broad", outfitStyle: "striped", outfitShade: 1, bodyVariant: 6 },
+  { id: "body.08", bodyShape: "tall", outfitStyle: "checked", outfitShade: 2, bodyVariant: 7 },
+  { id: "body.09", bodyShape: "average", outfitStyle: "checked", outfitShade: 3, bodyVariant: 8 },
+  { id: "body.10", bodyShape: "compact", outfitStyle: "coat", outfitShade: 2, bodyVariant: 9 },
 ] as const satisfies readonly BodyPreset[];
 
 function wrapIndex(index: number, length: number): number {
@@ -79,16 +85,20 @@ function createAppearance(
   headIndex: number,
   bodyIndex: number,
 ): PixelAppearanceDescriptor {
-  return {
+  return normalizePixelAppearance({
     version: "pixel-avatar.v1",
     hairStyle: HEAD_PRESETS[headIndex]!.hairStyle,
     hairShade: HEAD_PRESETS[headIndex]!.hairShade,
     faceStyle: HEAD_PRESETS[headIndex]!.faceStyle,
     accessory: HEAD_PRESETS[headIndex]!.accessory,
+    skinTone: HEAD_PRESETS[headIndex]!.skinTone,
+    headVariant: HEAD_PRESETS[headIndex]!.headVariant,
     bodyShape: BODY_PRESETS[bodyIndex]!.bodyShape,
     outfitStyle: BODY_PRESETS[bodyIndex]!.outfitStyle,
     outfitShade: BODY_PRESETS[bodyIndex]!.outfitShade,
-  };
+    bodyVariant: BODY_PRESETS[bodyIndex]!.bodyVariant,
+    roleStyle: "founder",
+  }, "founder");
 }
 
 export function OpeningSequence({
@@ -160,7 +170,7 @@ export function OpeningSequence({
   if (step === "main") {
     return (
       <main className="opening-screen prototype-main-screen">
-        <span className="opening-wordmark">Gamify Surgery</span>
+        <span className="opening-wordmark">Stitchin&apos; Time</span>
         <h1>Clinic Campaigns</h1>
         <div className="prototype-main-actions">
           {resumableCampaigns.length === 1 ? (
@@ -299,6 +309,9 @@ export function OpeningSequence({
           avatar={appearance}
           label={`${trimmedFounderName}, rich and happy`}
           size="large"
+          representation="full"
+          animation="star-jump"
+          roleStyle="founder"
           className="happy-founder-avatar"
         />
         <p className="happy-ending-copy">You are rich and happy.</p>
@@ -325,6 +338,8 @@ export function OpeningSequence({
               : "Founder preview"
           }
           size="large"
+          representation="full"
+          roleStyle="founder"
           className="founder-preview-avatar"
         />
         <label className="founder-name-field">

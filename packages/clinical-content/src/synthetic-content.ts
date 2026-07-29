@@ -116,7 +116,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
   cases: [
     {
       id: "case.synthetic.tutorial",
-      displayName: "Intro Patient 1: Interface Tutorial",
+      displayName: "Intro Patient 2: Timed-Service Tutorial",
       patientPresentationVariantId: "presentation.synthetic.tutorial-a",
       patientDisplayName: "Pixel Patient",
       prototypeDemographics: {
@@ -255,7 +255,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     },
     {
       id: "case.prototype.tutorial-laceration",
-      displayName: "Intro Patient 2: Laceration",
+      displayName: "Intro Patient 1: Laceration",
       patientPresentationVariantId: "presentation.prototype.laceration-a",
       patientDisplayName: "Morgan Thread",
       prototypeDemographics: {
@@ -1004,8 +1004,17 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
   ],
 });
 
-export const SYNTHETIC_TUTORIAL_CASE_ID = "case.synthetic.tutorial";
-export const SECOND_TUTORIAL_CASE_ID = "case.prototype.tutorial-laceration";
+/**
+ * The Level 0 tutorial order is explicit rather than relying on array order.
+ *
+ * The clinically grounded one-decision laceration case opens the tutorial.
+ * The deliberately synthetic two-decision case follows it and teaches a
+ * ten-minute facility-time service/return loop.
+ */
+export const FIRST_TUTORIAL_CASE_ID =
+  "case.prototype.tutorial-laceration";
+export const SECOND_TUTORIAL_CASE_ID = "case.synthetic.tutorial";
+export const SYNTHETIC_TUTORIAL_CASE_ID = SECOND_TUTORIAL_CASE_ID;
 export const LEVEL_ONE_ROUTINE_CASE_IDS = [
   "case.prototype.tutorial-laceration",
   "case.prototype.abscess",

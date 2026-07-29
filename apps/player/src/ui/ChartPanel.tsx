@@ -60,11 +60,11 @@ function RewardBanner({ chart }: { chart: ChartView }) {
   return (
     <div className="chart-reward-banner" role="status">
       <strong>{reward.heading ?? "Rewards earned"}</strong>
-      <span>
-        {[reward.moneyLabel, reward.xpLabel, reward.satisfactionLabel]
-          .filter(Boolean)
-          .join("  |  ")}
-      </span>
+      {[reward.moneyLabel, reward.xpLabel, reward.satisfactionLabel]
+        .filter((label): label is string => Boolean(label))
+        .map((label) => (
+          <span key={label}>{label}</span>
+        ))}
     </div>
   );
 }
@@ -212,6 +212,16 @@ export function ChartPanel({
       ? chart.patientSatisfactionLabel
       : `Satisfaction ${chart.patientSatisfactionLabel}`
     : undefined;
+  const headerDetails = [
+    chart.ageLabel,
+    chart.sexLabel,
+    ...(chart.vitals?.map((vital) => `${vital.label} ${vital.value}`) ??
+      []),
+  ].filter(Boolean);
+  const titleStatusLabel =
+    visibleStatusLabel === "Action required"
+      ? "! Action required"
+      : visibleStatusLabel;
 
   return (
     <aside
@@ -231,14 +241,10 @@ export function ChartPanel({
         <div>
           <span className="eyebrow">Patient chart</span>
           <h2>{chart.patientName}</h2>
-          <p className="chart-demographic-line">
-            {[chart.ageLabel, chart.sexLabel, chart.patientDetails]
-              .filter(Boolean)
-              .join(" · ")}
-          </p>
+          <p className="chart-demographic-line">{headerDetails.join(" · ")}</p>
         </div>
         <div className="chart-title-actions">
-          <span className="chart-title-status">{visibleStatusLabel}</span>
+          <span className="chart-title-status">{titleStatusLabel}</span>
           <button
             className="icon-button"
             type="button"
@@ -277,15 +283,6 @@ export function ChartPanel({
                   label={`${chart.patientName} portrait`}
                   size="large"
                 />
-                <h3>{chart.patientName}</h3>
-                <p>
-                  {[chart.ageLabel, chart.sexLabel, chart.patientDetails]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </p>
-                <span className="chart-state-badge">
-                  {visibleStatusLabel}
-                </span>
                 {satisfactionLabel ? (
                   <span className="chart-confidence-badge">
                     {satisfactionLabel}
@@ -294,24 +291,6 @@ export function ChartPanel({
               </section>
 
               <section className="chart-presentation-column">
-                {chart.vitals && chart.vitals.length > 0 ? (
-                  <dl className="chart-vitals" aria-label="Vital signs">
-                    {chart.vitals.map((vital) => (
-                      <div key={vital.id}>
-                        <dt>
-                          <span
-                            className={`chart-vital-icon is-${
-                              vital.icon ?? "pressure"
-                            }`}
-                            aria-hidden="true"
-                          />
-                          {vital.label}
-                        </dt>
-                        <dd>{vital.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                ) : null}
                 {chart.chiefComplaint ? (
                   <div className="chart-clinical-section">
                     <span className="eyebrow">Chief complaint</span>
@@ -351,10 +330,14 @@ export function ChartPanel({
                           key={step.id}
                         >
                           <summary>
-                            <span>{step.heading}</span>
-                            <strong>
-                              {step.feedbackTitle ?? "Completed"}
-                            </strong>
+                            <span>
+                              {step.heading.replace(/\s+of\s+\d+$/i, "")}{" "}
+                              Result
+                              {" — "}
+                              {step.collapsedResultLabel ??
+                                step.feedbackTitle ??
+                                "Completed"}
+                            </span>
                           </summary>
                           <div className="chart-completed-decision-body">
                             <DecisionStepContent
@@ -408,20 +391,20 @@ export function ChartPanel({
           <div className="chart-action-buttons">
             {chart.summaryAvailable ? (
               <button
-                className="button button-secondary"
+                className="button button-secondary chart-flip-button"
                 type="button"
                 onClick={onToggleSummary}
                 aria-pressed={showingBack}
               >
                 {showingBack
                   ? "Return to chart front"
-                  : "Flip for more disease information"}
+                  : "Flip for More Disease Information"}
               </button>
             ) : null}
 
             {chart.terminalFeedbackNeedsAcknowledgment ? (
               <button
-                className="button button-primary"
+                className="button button-primary chart-resolve-button"
                 type="button"
                 onClick={onAcknowledgeTerminalFeedback}
               >
@@ -433,7 +416,9 @@ export function ChartPanel({
                 type="button"
                 onClick={onFileChart}
               >
-                {chart.readOnly ? "Close resolved chart" : "Resolve chart"}
+                {chart.readOnly
+                  ? "Close Resolved Chart"
+                  : "Resolve Completed Chart"}
               </button>
             ) : chart.pendingLabel ? (
               <button

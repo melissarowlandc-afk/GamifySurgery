@@ -33,11 +33,27 @@ export interface PixelAppearanceDescriptor {
   version: "pixel-avatar.v1";
   bodyShape: "compact" | "average" | "broad" | "tall";
   hairStyle: "none" | "short" | "parted" | "curly" | "bun";
+  /**
+   * Palette index for the character's persisted skin tone. Optional only for
+   * pre-golden-slice saves; normalization fills it deterministically.
+   */
+  skinTone?: 0 | 1 | 2 | 3;
   hairShade: 0 | 1 | 2 | 3;
   faceStyle: "round" | "square" | "long";
   outfitStyle: "plain" | "striped" | "checked" | "coat";
   outfitShade: 0 | 1 | 2 | 3;
   accessory: "none" | "glasses" | "badge" | "headband";
+  /**
+   * Stable visual variants used by the shared portrait/map sprite generator.
+   * These do not affect clinical demographics or gameplay.
+   */
+  headVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  bodyVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  roleStyle?:
+    | "founder"
+    | "patient"
+    | "receptionist"
+    | "imaging_technician";
 }
 
 export interface FounderIdentity {
@@ -160,6 +176,7 @@ export interface FrozenPatientTravel {
 
 export type PatientMovementKind =
   | "arriving_for_check_in"
+  | "walking_to_waiting"
   | "walking_to_care"
   | "departing_for_offsite_testing"
   | "returning_from_offsite_testing"
@@ -342,7 +359,6 @@ export interface EmergencyGlp1State {
 export interface EmergencyGlp1Status {
   dayNumber: number;
   usesToday: number;
-  dailyUseCap: number;
   payment: number;
   cooldownRemainingTicks: number;
   cashEligible: boolean;
@@ -374,6 +390,8 @@ export interface DomainEvent {
     | "door_placed"
     | "door_removed"
     | "staff_hired"
+    | "staff_fired"
+    | "staff_quit"
     | "staff_salary_changed"
     | "facility_level_advanced"
     | "day_rollover"
@@ -422,6 +440,8 @@ export interface GameState {
   /** Accrued operating cost in one-sixtieth-of-a-cent units. */
   operatingAccrualSixtiethCents: number;
   nextFinancialPostingTick: number;
+  /** Persisted player-selected advertising tier (0 means disabled). */
+  advertisingLevel: number;
   clinicalXp: number;
   /** Presentation state: the chart panel currently displayed, including read-only charts. */
   openChartEncounterId: string | null;
@@ -449,6 +469,10 @@ interface CommandBase {
 }
 
 export type GameCommand =
+  | (CommandBase & {
+      type: "SET_ADVERTISING_LEVEL";
+      level: number;
+    })
   | (CommandBase & {
       type: "OPEN_CHART";
       encounterId: string;
@@ -532,6 +556,10 @@ export type GameCommand =
       type: "SET_EMPLOYEE_SALARY";
       employeeId: string;
       salaryPerExpenseInterval: number;
+    })
+  | (CommandBase & {
+      type: "FIRE_EMPLOYEE";
+      employeeId: string;
     })
   | (CommandBase & {
       type: "COLLECT_LITTER";

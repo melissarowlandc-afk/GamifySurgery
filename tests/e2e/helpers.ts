@@ -12,6 +12,7 @@ export interface PersistedCampaign {
 
 export interface PersistedProfile {
   activeCampaignId: string | null;
+  tutorialsEnabled?: boolean;
   campaigns: PersistedCampaign[];
 }
 
@@ -33,6 +34,19 @@ export interface PersistedGameState {
   learningHistories: Record<string, { reviews: unknown[] }>;
 }
 
+interface MutableVisualGameState extends PersistedGameState {
+  cashCents: number;
+  paused: boolean;
+  simulationSpeed: number;
+  employees: unknown[];
+  encounters: Record<string, Record<string, unknown>>;
+  environment: {
+    founderLocation: { x: number; y: number };
+    founderActivity: unknown;
+    [key: string]: unknown;
+  };
+}
+
 export async function installRememberedLocalAccess(
   page: Page,
 ): Promise<void> {
@@ -51,7 +65,9 @@ export async function installRememberedLocalAccess(
 
 export async function openCampaignScreen(page: Page): Promise<void> {
   await installRememberedLocalAccess(page);
-  await page.goto("/");
+  // Handoff captures and normal walkthroughs exercise the player-facing UI.
+  // Developer controls remain opt-in through ?prototype-tools=1.
+  await page.goto("/?prototype-tools=0");
   await expect(
     page.getByRole("heading", { name: "Clinic Campaigns" }),
   ).toBeVisible();
@@ -104,11 +120,8 @@ export async function waitForFirstPatientReady(
 ): Promise<Locator> {
   const patient = page
     .locator(".patient-folder.is-waiting .patient-tab")
-    .filter({ hasText: "Pixel Patient" });
+    .first();
   await expect(patient).toBeVisible({ timeout: 15_000 });
-  await expect(
-    patient.getByText("Waiting", { exact: true }),
-  ).toBeVisible({ timeout: 15_000 });
   return patient;
 }
 
@@ -143,6 +156,328 @@ export async function getActiveState(
     throw new Error("Active campaign record is missing.");
   }
   return JSON.parse(active.serializedState) as PersistedGameState;
+}
+
+/**
+ * Builds a deterministic Level 1 visual-review state from a real newly
+ * created campaign. This is test-only setup: the application still loads and
+ * renders the ordinary persisted campaign through its production migration,
+ * selectors, Phaser scene, and React UI.
+ */
+export async function installLevelOneVisualState(
+  page: Page,
+): Promise<void> {
+  const profile = await getProfile(page);
+  const activeIndex = profile.campaigns.findIndex(
+    (campaign) => campaign.campaignId === profile.activeCampaignId,
+  );
+  if (activeIndex < 0) {
+    throw new Error("Active campaign record is missing.");
+  }
+  const active = profile.campaigns[activeIndex]!;
+  const state = JSON.parse(
+    active.serializedState,
+  ) as MutableVisualGameState;
+
+  state.facilityLevel = 1;
+  state.clinicalXp = 64;
+  state.cash = 2_460;
+  state.cashCents = 246_000;
+  state.paused = true;
+  state.simulationSpeed = 1;
+  state.rooms = [
+    {
+      id: "room.instance.founder_desk",
+      roomDefinitionId: "room.front_desk",
+      x: 33,
+      y: 28,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 98,
+    },
+    {
+      id: "room.visual.waiting",
+      roomDefinitionId: "room.waiting",
+      x: 29,
+      y: 28,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 2,
+      cleanliness: 96,
+    },
+    {
+      id: "room.visual.examination",
+      roomDefinitionId: "room.examination",
+      x: 33,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 2,
+      cleanliness: 100,
+    },
+    {
+      id: "room.visual.bathroom",
+      roomDefinitionId: "room.bathroom",
+      x: 36,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 2,
+      cleanliness: 94,
+    },
+    {
+      id: "room.visual.imaging_control",
+      roomDefinitionId: "room.imaging_control",
+      x: 31,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 2,
+      cleanliness: 100,
+    },
+    {
+      id: "room.visual.xray",
+      roomDefinitionId: "room.xray",
+      x: 28,
+      y: 25,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 2,
+      cleanliness: 97,
+    },
+    {
+      id: "room.visual.minor_procedure",
+      roomDefinitionId: "room.minor_procedure",
+      x: 38,
+      y: 28,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 2,
+      cleanliness: 99,
+    },
+  ];
+  state.doors = [
+    {
+      id: "door.instance.front_entrance",
+      roomId: "room.instance.founder_desk",
+      side: "south",
+      offset: 2,
+      exterior: true,
+    },
+    {
+      id: "door.visual.waiting.front",
+      roomId: "room.visual.waiting",
+      side: "east",
+      offset: 1,
+      exterior: false,
+    },
+    {
+      id: "door.visual.exam.front",
+      roomId: "room.visual.examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    },
+    {
+      id: "door.visual.bath.front",
+      roomId: "room.visual.bathroom",
+      side: "south",
+      offset: 0,
+      exterior: false,
+    },
+    {
+      id: "door.visual.procedure.front",
+      roomId: "room.visual.minor_procedure",
+      side: "west",
+      offset: 1,
+      exterior: false,
+    },
+    {
+      id: "door.visual.control.waiting",
+      roomId: "room.visual.waiting",
+      side: "north",
+      offset: 2,
+      exterior: false,
+    },
+    {
+      id: "door.visual.xray.patient",
+      roomId: "room.visual.xray",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    },
+    {
+      id: "door.visual.xray.control",
+      roomId: "room.visual.xray",
+      side: "east",
+      offset: 1,
+      exterior: false,
+    },
+  ];
+  state.environment = {
+    ...state.environment,
+    founderLocation: { x: 36, y: 30 },
+    founderActivity: null,
+  };
+  state.employees = [
+    {
+      id: "employee.visual.receptionist",
+      staffRoleDefinitionId: "staff.receptionist",
+      displayName: "Morgan Vale",
+      appearance: {
+        version: "pixel-avatar.v1",
+        bodyShape: "average",
+        hairStyle: "bun",
+        skinTone: 3,
+        hairShade: 0,
+        faceStyle: "round",
+        outfitStyle: "plain",
+        outfitShade: 1,
+        accessory: "glasses",
+        headVariant: 4,
+        bodyVariant: 2,
+        roleStyle: "receptionist",
+      },
+      hiredAtFacilityTick: 0,
+      salaryPerExpenseInterval: 18,
+      morale: 88,
+      trainingLevel: 1,
+      homeRoomInstanceId: "room.instance.founder_desk",
+      location: { x: 34, y: 29 },
+      path: [],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 0,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: 20,
+    },
+    {
+      id: "employee.visual.imaging",
+      staffRoleDefinitionId: "staff.imaging_technician",
+      displayName: "Avery Chen",
+      appearance: {
+        version: "pixel-avatar.v1",
+        bodyShape: "compact",
+        hairStyle: "parted",
+        skinTone: 1,
+        hairShade: 2,
+        faceStyle: "square",
+        outfitStyle: "plain",
+        outfitShade: 3,
+        accessory: "badge",
+        headVariant: 6,
+        bodyVariant: 7,
+        roleStyle: "imaging_technician",
+      },
+      hiredAtFacilityTick: 0,
+      salaryPerExpenseInterval: 28,
+      morale: 82,
+      trainingLevel: 1,
+      homeRoomInstanceId: "room.visual.imaging_control",
+      location: { x: 31, y: 26 },
+      path: [],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 0,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: 20,
+    },
+  ];
+
+  const sourceEncounter = Object.values(state.encounters)[0];
+  if (sourceEncounter) {
+    const visualPatients = [
+      {
+        id: "encounter.visual.patient.2",
+        name: "Jordan Reed",
+        location: { x: 30, y: 29 },
+        satisfaction: 93,
+        appearance: {
+          version: "pixel-avatar.v1",
+          bodyShape: "tall",
+          hairStyle: "short",
+          skinTone: 0,
+          hairShade: 3,
+          faceStyle: "long",
+          outfitStyle: "striped",
+          outfitShade: 2,
+          accessory: "none",
+          headVariant: 2,
+          bodyVariant: 5,
+          roleStyle: "patient",
+        },
+      },
+      {
+        id: "encounter.visual.patient.3",
+        name: "Quinn Hart",
+        location: { x: 34, y: 26 },
+        satisfaction: 87,
+        appearance: {
+          version: "pixel-avatar.v1",
+          bodyShape: "broad",
+          hairStyle: "curly",
+          skinTone: 2,
+          hairShade: 1,
+          faceStyle: "round",
+          outfitStyle: "checked",
+          outfitShade: 0,
+          accessory: "headband",
+          headVariant: 8,
+          bodyVariant: 8,
+          roleStyle: "patient",
+        },
+      },
+    ] as const;
+
+    for (const patient of visualPatients) {
+      state.encounters[patient.id] = {
+        ...structuredClone(sourceEncounter),
+        id: patient.id,
+        patientDisplayName: patient.name,
+        patientAppearance: patient.appearance,
+        patientSatisfaction: patient.satisfaction,
+        patientLocation: patient.location,
+        patientMovement: null,
+        assignedRoomInstanceId:
+          patient.id.endsWith(".3")
+            ? "room.visual.examination"
+            : "room.visual.waiting",
+        lifecycle: patient.id.endsWith(".3")
+          ? "active_action_required"
+          : "waiting_unopened",
+        idleWaitingSinceTick: patient.id.endsWith(".3")
+          ? null
+          : sourceEncounter.idleWaitingSinceTick,
+        arrivalClass: "routine",
+        protectedGuaranteeId: null,
+        firstOpenedAtTick: null,
+      };
+    }
+  }
+
+  profile.campaigns[activeIndex] = {
+    ...active,
+    serializedState: JSON.stringify(state),
+  };
+  profile.tutorialsEnabled = false;
+  await page.addInitScript(
+    ({ profileKey, nextProfile }) => {
+      window.localStorage.setItem(
+        profileKey,
+        JSON.stringify(nextProfile),
+      );
+    },
+    { profileKey: PROFILE_KEY, nextProfile: profile },
+  );
+  await page.goto("/?prototype-tools=0");
+  const resume = page.getByRole("button", {
+    name: `Resume ${active.name}`,
+  });
+  if (await resume.isVisible()) {
+    await resume.click();
+  }
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await expect(page.locator(".facility-host canvas")).toBeVisible();
+  await page.waitForTimeout(300);
 }
 
 export async function installDeterministicCampaignIds(

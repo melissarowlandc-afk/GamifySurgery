@@ -88,7 +88,7 @@ describe("explicit-door construction and renovation", () => {
     expect(
       state.operationReceipts["place.room.exam.level-zero"]?.status,
     ).toBe("applied");
-    expect(state.cash).toBe(startingCash - 130);
+    expect(state.cash).toBe(startingCash - 160);
     expect(access(state)).toMatchObject({
       valid: false,
       unreachableRoomIds: ["room.exam.level-zero"],
@@ -135,7 +135,7 @@ describe("explicit-door construction and renovation", () => {
         ?.upgradeLevel,
     ).toBe(2);
     expect(getNextRoomUpgradeCost(state, "room.exam.renovate")).toBe(140);
-    expect(getRoomResaleValue(state, "room.exam.renovate")).toBe(55);
+    expect(getRoomResaleValue(state, "room.exam.renovate")).toBe(62);
 
     state = gameReducer(state, {
       type: "MOVE_ROOM",
@@ -262,5 +262,43 @@ describe("prototype staff", () => {
       salaryPerExpenseInterval: 30,
       morale: 100,
     });
+  });
+
+  it("fires an existing employee without refunding cash and records the action", () => {
+    let state = sandbox("fire-staff");
+    state = gameReducer(state, {
+      type: "HIRE_STAFF",
+      operationId: "hire.to-fire",
+      employeeId: "employee.to-fire",
+      staffRoleDefinitionId: "staff.receptionist",
+    });
+    const cashAfterHire = state.cash;
+
+    state = gameReducer(state, {
+      type: "FIRE_EMPLOYEE",
+      operationId: "fire.employee",
+      employeeId: "employee.to-fire",
+    });
+
+    expect(state.employees).toHaveLength(0);
+    expect(state.cash).toBe(cashAfterHire);
+    expect(state.operationReceipts["fire.employee"]).toMatchObject({
+      status: "applied",
+      commandType: "FIRE_EMPLOYEE",
+    });
+    expect(state.events.at(-1)).toMatchObject({
+      type: "staff_fired",
+      definitionId: "alert.staff.fired",
+      message: expect.stringContaining("was fired"),
+    });
+
+    const rejected = gameReducer(state, {
+      type: "FIRE_EMPLOYEE",
+      operationId: "fire.employee.again",
+      employeeId: "employee.to-fire",
+    });
+    expect(
+      rejected.operationReceipts["fire.employee.again"],
+    ).toMatchObject({ status: "rejected" });
   });
 });

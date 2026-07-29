@@ -15,13 +15,11 @@ async function startVisualClinic(page: Page): Promise<void> {
     "Visual Test Founder",
     "Visual Test Surgical Clinic",
   );
-  const tutorialToggle = page.getByRole("checkbox", {
-    name: /Tutorial guidance/,
+  const turnOffTutorials = page.getByRole("button", {
+    name: "Turn off tutorials",
   });
-  const tools = page.locator("details.development-panel");
-  await tools.locator(":scope > summary").click();
-  if (await tutorialToggle.isChecked({ timeout: 2_000 })) {
-    await tutorialToggle.uncheck();
+  if (await turnOffTutorials.isVisible({ timeout: 2_000 })) {
+    await turnOffTutorials.click();
   }
   await setFastFacilitySpeed(page);
   await waitForFirstPatientReady(page);
@@ -107,6 +105,11 @@ test("Build Mode replaces the desk while keeping clinic and staff visible", asyn
     fullPage: false,
     animations: "disabled",
   });
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/july28-build-mode-desktop.png`,
+    fullPage: false,
+    animations: "disabled",
+  });
 });
 
 test("the paper chart becomes a readable phone-width sheet", async ({
@@ -133,13 +136,57 @@ test("the paper chart becomes a readable phone-width sheet", async ({
   expect(box!.y).toBeGreaterThanOrEqual(0);
   expect(box!.width).toBeLessThanOrEqual(390);
   expect(box!.height).toBeLessThanOrEqual(844);
-  await expect(page.getByRole("button", { name: /SIGNAL ALPHA/ })).toBeVisible();
+  await expect(
+    page.locator(".chart-step-column.is-current .answer-choice").first(),
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Close patient chart" }),
   ).toBeVisible();
 
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/visual-chart-phone.png`,
+    fullPage: false,
+    animations: "disabled",
+  });
+});
+
+test("captures phone-width tutorial and Build Mode usability", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-chrome",
+    "Phone handoff captures use one explicit viewport.",
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  await startClinic(
+    page,
+    "Phone Tutorial Founder",
+    "Phone Tutorial Surgical Clinic",
+  );
+  await setFastFacilitySpeed(page);
+  const firstPatient = await waitForFirstPatientReady(page);
+  await page.getByRole("button", { name: "Got It" }).click();
+  await firstPatient.click();
+  await waitForDecisionChoices(page);
+  await expect(
+    page.getByRole("heading", {
+      name: "Read across the chart, then choose",
+    }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/july28-tutorial-phone.png`,
+    fullPage: false,
+    animations: "disabled",
+  });
+
+  await page.getByRole("button", { name: "Turn off tutorials" }).click();
+  await page.getByRole("button", { name: "Close patient chart" }).click();
+  await page.getByRole("button", { name: "Enter Build Mode" }).click();
+  await expect(
+    page.getByRole("button", { name: "Exit Build Mode" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/july28-build-mode-phone.png`,
     fullPage: false,
     animations: "disabled",
   });

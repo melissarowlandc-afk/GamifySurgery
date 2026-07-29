@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   createInitialGameState,
   deserializeGameState,
+  normalizePixelAppearance,
   serializeGameState,
   type FounderIdentity,
 } from "../src";
@@ -24,6 +25,13 @@ const FOUNDER: FounderIdentity = {
 
 describe("campaign founder persistence", () => {
   it("stores the selected founder in the self-contained campaign save", () => {
+    const expectedFounder = {
+      ...FOUNDER,
+      appearance: normalizePixelAppearance(
+        FOUNDER.appearance,
+        "founder",
+      ),
+    };
     const state = createInitialGameState(undefined, {
       campaignId: "campaign.founder.test",
       campaignSeed: "founder-test-seed",
@@ -32,10 +40,10 @@ describe("campaign founder persistence", () => {
     });
 
     expect(state.schemaVersion).toBe(5);
-    expect(state.founder).toEqual(FOUNDER);
+    expect(state.founder).toEqual(expectedFounder);
 
     const restored = deserializeGameState(serializeGameState(state));
-    expect(restored.founder).toEqual(FOUNDER);
+    expect(restored.founder).toEqual(expectedFounder);
     expect(restored.learningHistories).toEqual(state.learningHistories);
   });
 

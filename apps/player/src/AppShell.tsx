@@ -5,8 +5,10 @@ import {
   type FacilityViewModel,
 } from "./facility";
 import {
+  AdvertisingPanel,
   BuildPanel,
   CampaignManager,
+  CharacterQaGallery,
   ChartPanel,
   DevelopmentPanel,
   EmergencyGlp1Panel,
@@ -20,6 +22,7 @@ import {
   StaffPanel,
   TutorialCoach,
   type CampaignListItemView,
+  type AdvertisingView,
   type ChartView,
   type DevelopmentView,
   type EmergencyGlp1View,
@@ -57,6 +60,7 @@ interface AppShellProps {
   systemNotices: MessageBoardItemView[];
   development: DevelopmentView;
   emergencyGlp1: EmergencyGlp1View;
+  advertising: AdvertisingView;
   campaigns: CampaignListItemView[];
   tutorialsEnabled: boolean;
   tutorialCoachMode: "intro" | "callout" | null;
@@ -67,6 +71,7 @@ interface AppShellProps {
   buildMode: boolean;
   buildUndoCount: number;
   buildExitBlockedReason: string | null;
+  buildExitBlockedIssues: string[];
   placementOrientation: RoomOrientation;
   onTogglePause: () => void;
   onSimulationSpeedChange: (speed: SimulationSpeed) => void;
@@ -101,6 +106,7 @@ interface AppShellProps {
   onHireStaff: (staffRoleDefinitionId: string) => void;
   onDecreaseEmployeeSalary: (employeeId: string) => void;
   onIncreaseEmployeeSalary: (employeeId: string) => void;
+  onFireEmployee: (employeeId: string) => void;
   onCollectLitter: (litterId: string) => void;
   onRefillWaterCooler: () => void;
   onPraiseEmployee: (employeeId: string) => void;
@@ -108,6 +114,7 @@ interface AppShellProps {
   onFastForward: () => void;
   onAddMoney: () => void;
   onRunEmergencyGlp1Consultation: () => void;
+  onAdvertisingLevelChange: (level: number) => void;
   onCreateCampaign: () => void;
   onSwitchCampaign: (campaignId: string) => void;
   onTutorialAction: (actionId: TutorialActionId) => void;
@@ -139,6 +146,7 @@ export function AppShell({
   systemNotices,
   development,
   emergencyGlp1,
+  advertising,
   campaigns,
   tutorialsEnabled,
   tutorialCoachMode,
@@ -149,6 +157,7 @@ export function AppShell({
   buildMode,
   buildUndoCount,
   buildExitBlockedReason,
+  buildExitBlockedIssues,
   placementOrientation,
   onTogglePause,
   onSimulationSpeedChange,
@@ -176,6 +185,7 @@ export function AppShell({
   onHireStaff,
   onDecreaseEmployeeSalary,
   onIncreaseEmployeeSalary,
+  onFireEmployee,
   onCollectLitter,
   onRefillWaterCooler,
   onPraiseEmployee,
@@ -183,6 +193,7 @@ export function AppShell({
   onFastForward,
   onAddMoney,
   onRunEmergencyGlp1Consultation,
+  onAdvertisingLevelChange,
   onCreateCampaign,
   onSwitchCampaign,
   onTutorialAction,
@@ -197,7 +208,24 @@ export function AppShell({
   const [praiseCandidateId, setPraiseCandidateId] = useState<
     string | null
   >(null);
+  const [upgradeRequestRoomId, setUpgradeRequestRoomId] = useState<
+    string | null
+  >(null);
+  const [waterCoolerHighlightKey, setWaterCoolerHighlightKey] =
+    useState(0);
   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
+  const developmentToolPreference = new URLSearchParams(
+    window.location.search,
+  ).get("prototype-tools");
+  const showDevelopmentTools =
+    import.meta.env.DEV &&
+    (developmentToolPreference === "1" ||
+      (developmentToolPreference !== "0" &&
+        window.navigator.webdriver));
+  const showCharacterQa =
+    import.meta.env.DEV &&
+    new URLSearchParams(window.location.search).get("visual-qa") ===
+      "characters";
 
   useEffect(() => {
     if (!locatedPatientId) {
@@ -208,6 +236,16 @@ export function AppShell({
     }, 2_500);
     return () => window.clearTimeout(timer);
   }, [locatedPatientId]);
+
+  useEffect(() => {
+    if (waterCoolerHighlightKey === 0) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setWaterCoolerHighlightKey(0);
+    }, 4_000);
+    return () => window.clearTimeout(timer);
+  }, [waterCoolerHighlightKey]);
 
   const openAndLocatePatient = (patientId: string) => {
     setLocatedPatientId(patientId);
@@ -240,6 +278,19 @@ export function AppShell({
         ?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
+    if (target?.type === "water_cooler") {
+      setWaterCoolerHighlightKey((current) => current + 1);
+      document
+        .querySelector<HTMLElement>(".facility-host")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (target?.type === "build_mode") {
+      if (!buildMode) {
+        onEnterBuildMode();
+      }
+      return;
+    }
     if (target?.type === "goal") {
       document
         .querySelector<HTMLElement>(".goals-panel")
@@ -259,6 +310,7 @@ export function AppShell({
         chart ? " has-open-chart" : ""
       }`}
     >
+      <div className="game-display-title">Stitchin&apos; Time</div>
       <ResourceBar
         view={resourceBar}
         paused={paused}
@@ -278,6 +330,15 @@ export function AppShell({
               <EmergencyGlp1Panel
                 view={emergencyGlp1}
                 onConsult={onRunEmergencyGlp1Consultation}
+              />
+              <AdvertisingPanel
+                view={advertising}
+                onDecrease={() =>
+                  onAdvertisingLevelChange(advertising.currentLevel - 1)
+                }
+                onIncrease={() =>
+                  onAdvertisingLevelChange(advertising.currentLevel + 1)
+                }
               />
               <PatientLists
                 patients={patients}
@@ -299,16 +360,18 @@ export function AppShell({
               </p>
             </section>
           )}
-          <DevelopmentPanel
-            view={development}
-            paused={paused}
-            tutorialsEnabled={tutorialsEnabled}
-            onFastForward={onFastForward}
-            onAddMoney={onAddMoney}
-            onTogglePause={onTogglePause}
-            onRestart={onRestart}
-            onTutorialsEnabledChange={onTutorialsEnabledChange}
-          />
+          {showDevelopmentTools ? (
+            <DevelopmentPanel
+              view={development}
+              paused={paused}
+              tutorialsEnabled={tutorialsEnabled}
+              onFastForward={onFastForward}
+              onAddMoney={onAddMoney}
+              onTogglePause={onTogglePause}
+              onRestart={onRestart}
+              onTutorialsEnabledChange={onTutorialsEnabledChange}
+            />
+          ) : null}
         </aside>
 
         <section
@@ -358,9 +421,21 @@ export function AppShell({
                 viewModel={{
                   ...facility,
                   selectedPatientInstanceId: locatedPatientId,
+                  ...(facility.waterCooler
+                    ? {
+                        waterCooler: {
+                          ...facility.waterCooler,
+                          highlighted: waterCoolerHighlightKey > 0,
+                        },
+                      }
+                    : {}),
                 }}
                 onPlaceRoom={onPlaceRoom}
                 onSelectRoom={onSelectRoom}
+                onRequestRoomUpgrade={(roomId) => {
+                  onSelectRoom(roomId);
+                  setUpgradeRequestRoomId(roomId);
+                }}
                 onCollectLitter={onCollectLitter}
                 onRefillWaterCooler={onRefillWaterCooler}
                 onPraiseEmployee={setPraiseCandidateId}
@@ -447,6 +522,11 @@ export function AppShell({
               onUndoBuildAction={onUndoBuildAction}
               undoCount={buildUndoCount}
               exitBlockedReason={buildExitBlockedReason}
+              exitBlockedIssues={buildExitBlockedIssues}
+              upgradeRequestRoomId={upgradeRequestRoomId}
+              onUpgradeRequestHandled={() =>
+                setUpgradeRequestRoomId(null)
+              }
             />
             {!buildMode ? (
               chart ? (
@@ -482,6 +562,7 @@ export function AppShell({
             onHire={onHireStaff}
             onDecreaseSalary={onDecreaseEmployeeSalary}
             onIncreaseSalary={onIncreaseEmployeeSalary}
+            onFire={onFireEmployee}
           />
 
           {!buildMode ? (
@@ -535,6 +616,9 @@ export function AppShell({
       <p className="screen-reader-only" role="status" aria-live="polite">
         {announcement}
       </p>
+      {showCharacterQa ? (
+        <CharacterQaGallery facility={facility} />
+      ) : null}
     </div>
   );
 }
