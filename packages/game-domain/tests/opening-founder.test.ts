@@ -39,7 +39,7 @@ describe("campaign founder persistence", () => {
       founder: FOUNDER,
     });
 
-    expect(state.schemaVersion).toBe(5);
+    expect(state.schemaVersion).toBe(6);
     expect(state.founder).toEqual(expectedFounder);
 
     const restored = deserializeGameState(serializeGameState(state));
@@ -63,7 +63,7 @@ describe("campaign founder persistence", () => {
     const firstRestore = deserializeGameState(JSON.stringify(legacy));
     const replayedRestore = deserializeGameState(JSON.stringify(legacy));
 
-    expect(firstRestore.schemaVersion).toBe(5);
+    expect(firstRestore.schemaVersion).toBe(6);
     expect(firstRestore.founder.displayName).toBe("Founder");
     expect(firstRestore.founder).toEqual(replayedRestore.founder);
   });

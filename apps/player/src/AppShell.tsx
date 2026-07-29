@@ -213,6 +213,14 @@ export function AppShell({
   >(null);
   const [waterCoolerHighlightKey, setWaterCoolerHighlightKey] =
     useState(0);
+  const [highlightedStaffRoleId, setHighlightedStaffRoleId] =
+    useState<string | null>(null);
+  const [highlightedEmployeeId, setHighlightedEmployeeId] =
+    useState<string | null>(null);
+  const [advertisingHighlightKey, setAdvertisingHighlightKey] =
+    useState(0);
+  const [highlightedLitterId, setHighlightedLitterId] =
+    useState<string | null>(null);
   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
   const developmentToolPreference = new URLSearchParams(
     window.location.search,
@@ -247,6 +255,46 @@ export function AppShell({
     return () => window.clearTimeout(timer);
   }, [waterCoolerHighlightKey]);
 
+  useEffect(() => {
+    if (!highlightedStaffRoleId) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setHighlightedStaffRoleId(null);
+    }, 4_000);
+    return () => window.clearTimeout(timer);
+  }, [highlightedStaffRoleId]);
+
+  useEffect(() => {
+    if (!highlightedEmployeeId) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setHighlightedEmployeeId(null);
+    }, 4_000);
+    return () => window.clearTimeout(timer);
+  }, [highlightedEmployeeId]);
+
+  useEffect(() => {
+    if (advertisingHighlightKey === 0) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setAdvertisingHighlightKey(0);
+    }, 4_000);
+    return () => window.clearTimeout(timer);
+  }, [advertisingHighlightKey]);
+
+  useEffect(() => {
+    if (!highlightedLitterId) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setHighlightedLitterId(null);
+    }, 4_000);
+    return () => window.clearTimeout(timer);
+  }, [highlightedLitterId]);
+
   const openAndLocatePatient = (patientId: string) => {
     setLocatedPatientId(patientId);
     onOpenPatient(patientId);
@@ -272,14 +320,78 @@ export function AppShell({
       onSelectRoom(target.id);
       return;
     }
-    if (target?.type === "employee") {
-      document
-        .querySelector<HTMLElement>(".staff-panel")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (target?.type === "employee" && target.id) {
+      setHighlightedEmployeeId(target.id);
+      window.requestAnimationFrame(() => {
+        const employeeElement = [
+          ...document.querySelectorAll<HTMLElement>(
+            "[data-employee-id]",
+          ),
+        ].find(
+          (element) => element.dataset.employeeId === target.id,
+        );
+        employeeElement?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        employeeElement?.focus({ preventScroll: true });
+      });
+      return;
+    }
+    if (target?.type === "staff_role" && target.id) {
+      setHighlightedStaffRoleId(target.id);
+      window.requestAnimationFrame(() => {
+        const roleElement = [
+          ...document.querySelectorAll<HTMLElement>(
+            "[data-staff-role-id]",
+          ),
+        ].find(
+          (element) => element.dataset.staffRoleId === target.id,
+        );
+        roleElement?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        const hireButton =
+          roleElement?.querySelector<HTMLButtonElement>(
+            "[data-staff-role-hire]:not(:disabled)",
+          );
+        (hireButton ?? roleElement)?.focus({ preventScroll: true });
+      });
       return;
     }
     if (target?.type === "water_cooler") {
       setWaterCoolerHighlightKey((current) => current + 1);
+      document
+        .querySelector<HTMLElement>(".facility-host")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (target?.type === "advertising") {
+      setAdvertisingHighlightKey((current) => current + 1);
+      window.requestAnimationFrame(() => {
+        const advertisingElement =
+          document.querySelector<HTMLElement>(
+            "[data-advertising-control]",
+          );
+        advertisingElement?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        const adjustmentButton =
+          advertisingElement?.querySelector<HTMLButtonElement>(
+            "[data-advertising-adjust]:not(:disabled)",
+          );
+        (adjustmentButton ?? advertisingElement)?.focus({
+          preventScroll: true,
+        });
+      });
+      return;
+    }
+    if (target?.type === "litter") {
+      const litterId =
+        target.id ?? facility.litterItems?.[0]?.instanceId ?? null;
+      setHighlightedLitterId(litterId);
       document
         .querySelector<HTMLElement>(".facility-host")
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -333,6 +445,7 @@ export function AppShell({
               />
               <AdvertisingPanel
                 view={advertising}
+                highlighted={advertisingHighlightKey > 0}
                 onDecrease={() =>
                   onAdvertisingLevelChange(advertising.currentLevel - 1)
                 }
@@ -427,6 +540,18 @@ export function AppShell({
                           ...facility.waterCooler,
                           highlighted: waterCoolerHighlightKey > 0,
                         },
+                      }
+                    : {}),
+                  ...(facility.litterItems
+                    ? {
+                        litterItems: facility.litterItems.map(
+                          (litter) => ({
+                            ...litter,
+                            highlighted:
+                              litter.instanceId ===
+                              highlightedLitterId,
+                          }),
+                        ),
                       }
                     : {}),
                 }}
@@ -559,6 +684,8 @@ export function AppShell({
 
           <StaffPanel
             roles={staffRoles}
+            highlightedRoleId={highlightedStaffRoleId}
+            highlightedEmployeeId={highlightedEmployeeId}
             onHire={onHireStaff}
             onDecreaseSalary={onDecreaseEmployeeSalary}
             onIncreaseSalary={onIncreaseEmployeeSalary}

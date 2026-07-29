@@ -4,70 +4,103 @@ export type PrototypeAlertPriority =
   | "informational"
   | "flavor";
 
+export type PrototypeAlertCategory =
+  | "action_required"
+  | "guidance"
+  | "success"
+  | "ambient_flavor"
+  | "walkout_review";
+
 export type PrototypeAlertTargetKind =
   | "patient"
   | "room"
   | "employee"
+  | "staff_role"
+  | "advertising"
+  | "water_cooler"
+  | "litter"
+  | "build_mode"
   | "task"
-  | "system";
+  | "system"
+  | "none";
+
+export type PrototypeAlertEligibility =
+  | { kind: "always" }
+  | { kind: "facility_level"; levels: readonly (0 | 1)[] }
+  | { kind: "room_exists"; roomDefinitionId: string }
+  | { kind: "object_exists"; objectId: "water_cooler" }
+  | { kind: "checked_in_patient_exists" };
+
+export interface PrototypeAlertTextVariant {
+  /** Stable within the parent definition and safe to persist in save data. */
+  id: string;
+  titleTemplate?: string;
+  bodyTemplate: string;
+  selectionWeight: number;
+}
 
 export interface PrototypeAlertDefinition {
   id: string;
-  trigger:
-    | "patient_arrived"
-    | "patience_warning"
-    | "patient_left"
-    | "result_ready"
-    | "clinical_decision_required"
-    | "encounter_complete"
-    | "patient_payment"
-    | "learning_review_scheduled"
-    | "room_placed"
-    | "room_unreachable"
-    | "private_exam_needed"
-    | "staff_hired"
-    | "staff_fired"
-    | "receptionist_recommended"
-    | "onsite_imaging_requested"
-    | "imaging_staff_needed"
-    | "waiting_room_needed"
-    | "bathroom_needed"
-    | "cleanliness_low"
-    | "staff_unreachable"
-    | "operating_expense"
-    | "low_cash"
-    | "emergency_glp1_consultation"
-    | "objective_complete"
-    | "level_complete"
-    | "campaign_saved"
-    | "save_failed"
-    | "page_hidden_pause"
-    | "campaign_created"
-    | "campaign_restored"
-    | "campaign_restarted"
-    | "testing_mode";
-  priority: Exclude<PrototypeAlertPriority, "flavor">;
+  trigger: string;
+  category: PrototypeAlertCategory;
+  priority: PrototypeAlertPriority;
   titleTemplate: string;
   bodyTemplate: string;
+  variants: readonly PrototypeAlertTextVariant[];
+  eligibility: readonly PrototypeAlertEligibility[];
+  selectionWeight: number;
+  cooldownMinutes: number;
+  oncePerEvent: boolean;
+  placeholderFallbacks: Readonly<Record<string, string>>;
   targetKind: PrototypeAlertTargetKind;
   clickAction:
     | "open_patient"
     | "open_room"
     | "open_employee"
+    | "open_staff_role"
+    | "open_advertising"
+    | "open_water_cooler"
+    | "open_litter"
+    | "open_build_mode"
     | "open_task"
     | "open_system"
     | "none";
+  showAttentionMarker: boolean;
+  /** Walkout-review definitions may be selected only for these causes. */
+  dissatisfactionCauses?: readonly PrototypeDissatisfactionCause[];
+  /** Reviews deliberately use only one or two stars. */
+  reviewRatings?: readonly (1 | 2)[];
   persistent: boolean;
   tickerEligible: boolean;
   eligibleFacilityLevels: readonly (0 | 1)[];
   consolidationKeyTemplate: string;
 }
 
+export type PrototypeDissatisfactionCause =
+  | "excessive_waiting"
+  | "poor_cleanliness"
+  | "missing_amenities"
+  | "no_receptionist"
+  | "imaging_unavailable"
+  | "general";
+
+type BasePrototypeAlertDefinition = Omit<
+  PrototypeAlertDefinition,
+  | "category"
+  | "variants"
+  | "eligibility"
+  | "selectionWeight"
+  | "cooldownMinutes"
+  | "oncePerEvent"
+  | "placeholderFallbacks"
+  | "showAttentionMarker"
+>;
+
 /**
  * Level 0-1 definitions only. Future mechanics and their message bank remain
  * documented in docs/features/alert-notification-flavor-system.md.
  */
-export const PROTOTYPE_ALERT_DEFINITIONS = [
+const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
   {
     id: "alert.patient.arrived",
     trigger: "patient_arrived",
@@ -85,8 +118,9 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     id: "alert.patient.patience",
     trigger: "patience_warning",
     priority: "action_required",
-    titleTemplate: "Patient waiting",
-    bodyTemplate: "{{patient_name}} may leave soon.",
+    titleTemplate: "Patient approaching walkout",
+    bodyTemplate:
+      "{{patient_name}} has started reviewing the clinic instead of the magazine. Open the chart before they leave.",
     targetKind: "patient",
     clickAction: "open_patient",
     persistent: true,
@@ -241,12 +275,12 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
   {
     id: "alert.staff.receptionist-recommended",
     trigger: "receptionist_recommended",
-    priority: "action_required",
-    titleTemplate: "Front-desk help recommended",
+    priority: "informational",
+    titleTemplate: "Receptionist recommended",
     bodyTemplate:
-      "The founder is covering check-in and patient care. A receptionist adds front-desk capacity and lets the surgeon concentrate on care.",
-    targetKind: "employee",
-    clickAction: "open_employee",
+      "Patients are checking themselves in with the confidence of people who did not read the form. Hire a receptionist to speed up check-in.",
+    targetKind: "staff_role",
+    clickAction: "open_staff_role",
     persistent: true,
     tickerEligible: false,
     eligibleFacilityLevels: [1],
@@ -256,11 +290,11 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     id: "alert.facility.onsite-imaging-requested",
     trigger: "onsite_imaging_requested",
     priority: "informational",
-    titleTemplate: "Patient requests onsite imaging",
+    titleTemplate: "Onsite X-ray requested",
     bodyTemplate:
-      "{{patient_name}} wishes X-ray were available onsite. An operational X-ray service shortens the trip and result wait.",
-    targetKind: "task",
-    clickAction: "open_task",
+      "I have to leave and come back for an X-ray? The patient has a point. Build an X-ray room to offer imaging onsite.",
+    targetKind: "build_mode",
+    clickAction: "open_build_mode",
     persistent: true,
     tickerEligible: true,
     eligibleFacilityLevels: [1],
@@ -269,12 +303,12 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
   {
     id: "alert.staff.imaging-technician-needed",
     trigger: "imaging_staff_needed",
-    priority: "action_required",
-    titleTemplate: "Imaging staff needed",
+    priority: "informational",
+    titleTemplate: "Imaging technician recommended",
     bodyTemplate:
-      "{{patient_name}} can see the X-ray room, but it cannot operate without an Imaging Technician.",
-    targetKind: "employee",
-    clickAction: "open_employee",
+      "The X-ray room looks excellent. It would look even better with someone who can operate it. Hire an imaging technician.",
+    targetKind: "staff_role",
+    clickAction: "open_staff_role",
     persistent: true,
     tickerEligible: false,
     eligibleFacilityLevels: [1],
@@ -284,11 +318,11 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     id: "alert.facility.waiting-room-needed",
     trigger: "waiting_room_needed",
     priority: "informational",
-    titleTemplate: "Waiting space requested",
+    titleTemplate: "Waiting Room recommended",
     bodyTemplate:
-      "{{patient_name}} would prefer to wait somewhere designed for waiting.",
-    targetKind: "task",
-    clickAction: "open_task",
+      "A patient is waiting beside the Front Desk and now knows everyone's business. Build a Waiting Room.",
+    targetKind: "build_mode",
+    clickAction: "open_build_mode",
     persistent: true,
     tickerEligible: true,
     eligibleFacilityLevels: [1],
@@ -298,11 +332,11 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     id: "alert.facility.bathroom-needed",
     trigger: "bathroom_needed",
     priority: "informational",
-    titleTemplate: "Patient amenity requested",
+    titleTemplate: "Bathroom recommended",
     bodyTemplate:
-      "{{patient_name}} has begun wondering whether the clinic has a bathroom.",
-    targetKind: "task",
-    clickAction: "open_task",
+      "\"Is there a restroom?\" is now the clinic's most frequently asked question. Build a bathroom.",
+    targetKind: "build_mode",
+    clickAction: "open_build_mode",
     persistent: true,
     tickerEligible: true,
     eligibleFacilityLevels: [1],
@@ -314,9 +348,9 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     priority: "informational",
     titleTemplate: "Cleanliness needs attention",
     bodyTemplate:
-      "{{room_name}} is looking untidy. Select visible litter to send the founder to clean it.",
-    targetKind: "task",
-    clickAction: "open_task",
+      "Clinic cleanliness is {{cleanliness}}%. Even the dust looks concerned. Clean visible trash or improve maintenance.",
+    targetKind: "litter",
+    clickAction: "open_litter",
     persistent: true,
     tickerEligible: true,
     eligibleFacilityLevels: [0, 1],
@@ -492,161 +526,628 @@ export const PROTOTYPE_ALERT_DEFINITIONS = [
     eligibleFacilityLevels: [0, 1],
     consolidationKeyTemplate: "system:testing-mode",
   },
-] as const satisfies readonly PrototypeAlertDefinition[];
+] as const satisfies readonly BasePrototypeAlertDefinition[];
 
-export type PrototypeFlavorPoolId =
-  | "patient_arrival"
-  | "waiting"
-  | "result"
-  | "staff"
-  | "construction"
-  | "finance"
-  | "progression"
-  | "saving_testing";
+const GUIDANCE_ALERT_IDS = new Set<string>([
+  "alert.staff.receptionist-recommended",
+  "alert.facility.onsite-imaging-requested",
+  "alert.staff.imaging-technician-needed",
+  "alert.facility.waiting-room-needed",
+  "alert.facility.bathroom-needed",
+  "alert.facility.cleanliness-low",
+]);
 
-export interface PrototypeFlavorPool {
-  id: PrototypeFlavorPoolId;
-  cooldownTicks: number;
-  permittedDuringCritical: false;
-  eligibleFacilityLevels: readonly (0 | 1)[];
-  messages: readonly string[];
+const SUCCESS_ALERT_IDS = new Set<string>([
+  "alert.finance.patient-payment",
+  "alert.learning.review-scheduled",
+  "alert.facility.room-placed",
+  "alert.staff.hired",
+  "alert.staff.fired",
+  "alert.finance.expense",
+  "alert.finance.emergency-glp1-completed",
+  "alert.progress.objective",
+  "alert.system.saved",
+  "alert.system.campaign-created",
+  "alert.system.campaign-restored",
+  "alert.system.campaign-restarted",
+  "alert.system.testing-mode",
+]);
+
+const DEFAULT_PLACEHOLDER_FALLBACKS = {
+  patient_name: "The patient",
+  patient_id: "the patient",
+  employee_name: "The employee",
+  employee_id: "the employee",
+  room_name: "The room",
+  room_id: "the room",
+  result_name: "New information",
+  amount: "0",
+  threshold: "the configured threshold",
+  cleanliness: "the current value",
+  morale: "the current value",
+  objective: "Clinic objective",
+  objective_id: "clinic-objective",
+  level: "current",
+  facility_day: "today",
+  use_number: "this use",
+} as const;
+
+function categoryForBaseDefinition(
+  definition: BasePrototypeAlertDefinition,
+): PrototypeAlertCategory {
+  if (definition.id === "alert.patient.left") {
+    return "success";
+  }
+  if (GUIDANCE_ALERT_IDS.has(definition.id)) {
+    return "guidance";
+  }
+  if (SUCCESS_ALERT_IDS.has(definition.id)) {
+    return "success";
+  }
+  return definition.priority === "action_required" ||
+    definition.priority === "critical"
+    ? "action_required"
+    : "success";
 }
 
-export const PROTOTYPE_FLAVOR_POOLS = [
-  {
-    id: "patient_arrival",
-    cooldownTicks: 30,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "A patient has arrived with symptoms and expectations.",
-      "The waiting room has acquired a patient.",
-      "Good news: a patient found the clinic. They would now like care.",
-      "The front desk has produced another chart.",
-      "The clipboard hungers.",
-      "A patient is early. This feels suspicious.",
-      "A patient is late, but their symptoms arrived on time.",
+function enrichBaseDefinition(
+  definition: BasePrototypeAlertDefinition,
+): PrototypeAlertDefinition {
+  const category = categoryForBaseDefinition(definition);
+  return {
+    ...definition,
+    category,
+    variants: [
+      {
+        id: `${definition.id}.default`,
+        titleTemplate: definition.titleTemplate,
+        bodyTemplate: definition.bodyTemplate,
+        selectionWeight: 1,
+      },
     ],
-  },
-  {
-    id: "waiting",
-    cooldownTicks: 20,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "The queue is now clinically significant.",
-      "Your waiting room is beginning to develop a differential.",
-      "The chairs are now practicing population medicine.",
-      "The waiting-room clock has joined the care team.",
-      "The patient has now read the same poster three times.",
-      "The magazine formulary has been exhausted.",
-      "The clinic is popular. Unfortunately, this has created a queue.",
+    eligibility: [
+      {
+        kind: "facility_level",
+        levels: definition.eligibleFacilityLevels,
+      },
     ],
-  },
-  {
-    id: "result",
-    cooldownTicks: 20,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "Radiology has spoken. Please correlate clinically.",
-      "The lab has converted blood into decisions.",
-      "The CBC has opinions.",
-      "A result has returned from its spiritual journey through the EHR.",
-      "Good news: the result is back. Different news: it requires action.",
-      "The specimen was labeled correctly. A small victory.",
-      "The chart would like a plan.",
-      "Assessment complete. Management remains aspirational.",
-      "The workup is complete. The answer remains stubbornly answer-shaped.",
+    selectionWeight: 1,
+    cooldownMinutes: definition.persistent ? 30 : 0,
+    oncePerEvent: true,
+    placeholderFallbacks: DEFAULT_PLACEHOLDER_FALLBACKS,
+    showAttentionMarker: category === "action_required",
+  };
+}
+
+interface AdditionalAlertInput {
+  id: string;
+  trigger: string;
+  category: PrototypeAlertCategory;
+  priority?: PrototypeAlertPriority;
+  title: string;
+  body: string;
+  variants?: readonly PrototypeAlertTextVariant[];
+  eligibility?: readonly PrototypeAlertEligibility[];
+  targetKind?: PrototypeAlertTargetKind;
+  clickAction?: PrototypeAlertDefinition["clickAction"];
+  cooldownMinutes?: number;
+  oncePerEvent?: boolean;
+  persistent?: boolean;
+  tickerEligible?: boolean;
+  consolidationKey?: string;
+  dissatisfactionCauses?: readonly PrototypeDissatisfactionCause[];
+  reviewRatings?: readonly (1 | 2)[];
+}
+
+function additionalAlert(
+  input: AdditionalAlertInput,
+): PrototypeAlertDefinition {
+  const levels = [0, 1] as const;
+  return {
+    id: input.id,
+    trigger: input.trigger,
+    category: input.category,
+    priority:
+      input.priority ??
+      (input.category === "action_required"
+        ? "action_required"
+        : input.category === "ambient_flavor"
+          ? "flavor"
+          : "informational"),
+    titleTemplate: input.title,
+    bodyTemplate: input.body,
+    variants:
+      input.variants ??
+      [
+        {
+          id: `${input.id}.default`,
+          titleTemplate: input.title,
+          bodyTemplate: input.body,
+          selectionWeight: 1,
+        },
+      ],
+    eligibility:
+      input.eligibility ??
+      [{ kind: "facility_level", levels }],
+    selectionWeight: 1,
+    cooldownMinutes: input.cooldownMinutes ?? 0,
+    oncePerEvent: input.oncePerEvent ?? true,
+    placeholderFallbacks: DEFAULT_PLACEHOLDER_FALLBACKS,
+    targetKind: input.targetKind ?? "none",
+    clickAction: input.clickAction ?? "none",
+    showAttentionMarker: input.category === "action_required",
+    dissatisfactionCauses: input.dissatisfactionCauses,
+    reviewRatings: input.reviewRatings,
+    persistent: input.persistent ?? false,
+    tickerEligible: input.tickerEligible ?? true,
+    eligibleFacilityLevels: levels,
+    consolidationKeyTemplate:
+      input.consolidationKey ?? input.id,
+  };
+}
+
+const CONTEXTUAL_AND_SUCCESS_ALERTS = [
+  additionalAlert({
+    id: "alert.environment.water-empty",
+    trigger: "water_cooler_low",
+    category: "action_required",
+    title: "Water cooler empty",
+    body: "The water cooler is empty. It is now a large blue vase. Refill it.",
+    targetKind: "water_cooler",
+    clickAction: "open_water_cooler",
+    cooldownMinutes: 30,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.environment.trash-visible",
+    trigger: "litter_appeared",
+    category: "guidance",
+    title: "Visible trash",
+    body:
+      "The floor has acquired a backstory. Select the trash to send the founder to clean it.",
+    targetKind: "litter",
+    clickAction: "open_litter",
+    cooldownMinutes: 30,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.staff.morale-low",
+    trigger: "staff_morale_low",
+    category: "action_required",
+    title: "Employee morale low",
+    body:
+      "{{employee_name}} is at {{morale}}% morale and has started admiring the exit. Improve working conditions before they quit.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    cooldownMinutes: 60,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.finance.no-cash",
+    trigger: "cash_empty",
+    category: "action_required",
+    title: "No available cash",
+    body:
+      "Payroll has entered its experimental phase. Restore cash before employee morale falls further.",
+    targetKind: "system",
+    clickAction: "open_system",
+    cooldownMinutes: 30,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.advertising.recommended",
+    trigger: "advertising_recommended",
+    category: "guidance",
+    title: "Advertising available",
+    body:
+      "The clinic phone has achieved inner peace. Increase Advertising if you want more patient arrivals.",
+    targetKind: "advertising",
+    clickAction: "open_advertising",
+    cooldownMinutes: 90,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.facility.waiting-room-crowded",
+    trigger: "waiting_room_crowded",
+    category: "guidance",
+    title: "Waiting Room crowded",
+    body:
+      "The Waiting Room has become a small convention. Add capacity or move patients through the clinic faster.",
+    targetKind: "build_mode",
+    clickAction: "open_build_mode",
+    cooldownMinutes: 45,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.success.receptionist-hired",
+    trigger: "staff_hired",
+    category: "success",
+    title: "Receptionist hired",
+    body:
+      "Receptionist hired. The clipboard has recognized a new authority.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+  }),
+  additionalAlert({
+    id: "alert.success.waiting-room-constructed",
+    trigger: "room_placed",
+    category: "success",
+    title: "Waiting Room opened",
+    body: "Waiting Room opened. Patients may now wait professionally.",
+    targetKind: "room",
+    clickAction: "open_room",
+  }),
+  additionalAlert({
+    id: "alert.success.xray-constructed",
+    trigger: "room_placed",
+    category: "success",
+    title: "X-ray installed",
+    body:
+      "X-ray installed. The clinic can now see right through people, professionally.",
+    targetKind: "room",
+    clickAction: "open_room",
+  }),
+  additionalAlert({
+    id: "alert.success.imaging-technician-hired",
+    trigger: "staff_hired",
+    category: "success",
+    title: "Imaging technician hired",
+    body:
+      "Imaging technician hired. The expensive room is now more than décor.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+  }),
+  additionalAlert({
+    id: "alert.success.water-refilled",
+    trigger: "water_cooler_refilled",
+    category: "success",
+    title: "Water cooler refilled",
+    body:
+      "Water cooler refilled. Hydration has resumed normal operations.",
+    targetKind: "water_cooler",
+    clickAction: "open_water_cooler",
+  }),
+  additionalAlert({
+    id: "alert.success.trash-cleaned",
+    trigger: "litter_collected",
+    category: "success",
+    title: "Trash cleaned",
+    body: "Trash removed. The floor has been returned to the floor.",
+    targetKind: "litter",
+    clickAction: "open_litter",
+  }),
+  additionalAlert({
+    id: "alert.success.room-upgraded",
+    trigger: "room_upgraded",
+    category: "success",
+    title: "Room upgraded",
+    body:
+      "{{room_name}} upgraded. It has begun referring to itself as a suite.",
+    targetKind: "room",
+    clickAction: "open_room",
+  }),
+  additionalAlert({
+    id: "alert.success.first-ordinary-patient-resolved",
+    trigger: "encounter_complete",
+    category: "success",
+    title: "First ordinary patient resolved",
+    body:
+      "First patient resolved. The clinic remains structurally optimistic.",
+    targetKind: "patient",
+    clickAction: "open_patient",
+  }),
+  additionalAlert({
+    id: "alert.success.satisfaction-above-90",
+    trigger: "satisfaction_threshold_crossed",
+    category: "success",
+    title: "Patient satisfaction above 90%",
+    body: "Patient satisfaction is above 90%. Please act natural.",
+    targetKind: "system",
+    clickAction: "none",
+  }),
+] as const;
+
+const AMBIENT_ALERT_INPUTS = [
+  ["01", "A fax arrived. Historians have been notified.", []],
+  [
+    "02",
+    "The printer is out of cyan. It prints in black. This remains somehow relevant.",
+    [],
+  ],
+  ["03", "The good pen has been sighted near the Front Desk.", []],
+  [
+    "04",
+    "Someone adjusted the thermostat. Negotiations have collapsed.",
+    [],
+  ],
+  [
+    "05",
+    "The waiting-room plant has been promoted. Its duties remain unclear.",
+    [{ kind: "room_exists", roomDefinitionId: "room.waiting" }],
+  ],
+  ["06", "The coffee is technically warm.", []],
+  ["07", "A clipboard is missing. A committee has been formed.", []],
+  ["08", "A mysterious charger has appeared. It fits nothing.", []],
+  [
+    "09",
+    "The break-room fridge contains a yogurt with tenure.",
+    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+  ],
+  [
+    "10",
+    "The water cooler made a bubble. Three people looked.",
+    [{ kind: "object_exists", objectId: "water_cooler" }],
+  ],
+  ["11", "One ceiling tile has developed seniority.", []],
+  [
+    "12",
+    "The supply closet contains 47 extra-small gloves and one medium. Procurement calls this balanced.",
+    [{ kind: "room_exists", roomDefinitionId: "room.supply_closet" }],
+  ],
+  [
+    "13",
+    "The waiting-room magazines are now primary historical sources.",
+    [{ kind: "room_exists", roomDefinitionId: "room.waiting" }],
+  ],
+  ["14", "The hand-sanitizer dispenser sighed.", []],
+  [
+    "15",
+    "Someone labeled their leftovers DO NOT EAT. Interest has increased.",
+    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+  ],
+  [
+    "16",
+    "The stapler has relocated without leaving a forwarding address.",
+    [],
+  ],
+  [
+    "17",
+    "Someone printed an email asking everyone not to print emails.",
+    [],
+  ],
+  [
+    "18",
+    "The clinic Wi-Fi has been restarted. It is now slow with confidence.",
+    [],
+  ],
+  [
+    "19",
+    "A paper gown has escaped its drawer.",
+    [{ kind: "room_exists", roomDefinitionId: "room.examination" }],
+  ],
+  [
+    "20",
+    "The break-room microwave finished heating something no one remembers starting.",
+    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+  ],
+  [
+    "21",
+    "A patient completed every form without missing a box. Compliance is investigating.",
+    [{ kind: "checked_in_patient_exists" }],
+  ],
+  [
+    "22",
+    "Someone found a clean mug. Spirits are high.",
+    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
+  ],
+  [
+    "23",
+    "The Front Desk phone rang once and stopped. The mystery remains open.",
+    [],
+  ],
+  [
+    "24",
+    "The automatic soap dispenser activated by itself. It knows what it did.",
+    [{ kind: "room_exists", roomDefinitionId: "room.bathroom" }],
+  ],
+  [
+    "25",
+    "A box marked Miscellaneous has achieved its final form.",
+    [],
+  ],
+] as const satisfies readonly [
+  string,
+  string,
+  readonly PrototypeAlertEligibility[],
+][];
+
+export const PROTOTYPE_AMBIENT_ALERT_DEFINITIONS =
+  AMBIENT_ALERT_INPUTS.map(([suffix, body, contextualEligibility]) =>
+    additionalAlert({
+      id: `alert.ambient.${suffix}`,
+      trigger: "ambient_timer",
+      category: "ambient_flavor",
+      title: "Around the clinic",
+      body,
+      eligibility: [
+        { kind: "facility_level", levels: [0, 1] },
+        ...contextualEligibility,
+      ],
+      cooldownMinutes: 30,
+      oncePerEvent: true,
+    }),
+  );
+
+function reviewDefinition(
+  id: string,
+  causes: readonly PrototypeDissatisfactionCause[],
+  lines: readonly string[],
+): PrototypeAlertDefinition {
+  return additionalAlert({
+    id,
+    trigger: "patient_walkout",
+    category: "walkout_review",
+    title: "New patient review",
+    body: lines[0] ?? "The visit did not go as planned.",
+    variants: lines.map((body, index) => ({
+      id: `${id}.${String(index + 1).padStart(2, "0")}`,
+      bodyTemplate: body,
+      selectionWeight: 1,
+    })),
+    dissatisfactionCauses: causes,
+    reviewRatings: [1, 2],
+  });
+}
+
+export const PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS = [
+  reviewDefinition("alert.review.excessive-waiting", ["excessive_waiting"], [
+    "I was seen by three magazines and zero clinicians.",
+    "Great place to finish a novel. Less ideal for medical care.",
+    "They said someone would be right with me. Someone was not.",
+    "I left before being seen, which was the fastest part.",
+    "The chair was comfortable. I know because I lived there.",
+    "Bring snacks, a charger, and a forwarding address.",
+  ]),
+  reviewDefinition("alert.review.poor-cleanliness", ["poor_cleanliness"], [
+    "The dust bunny was seen before I was.",
+    "The floor had a texture.",
+    "Cleanliness appeared to be working remotely.",
+    "The trash had been there long enough to establish residency.",
+    "The hand sanitizer was the only reliable witness.",
+  ]),
+  reviewDefinition("alert.review.missing-amenities", ["missing_amenities"], [
+    "The water cooler and I were both empty.",
+    "The restroom was easy to find because it did not exist.",
+    "The waiting room had everything except the things a waiting room has.",
+  ]),
+  reviewDefinition("alert.review.no-receptionist", ["no_receptionist"], [
+    "The receptionist was imaginary, but very polite.",
+    "I checked myself in. I assume I also owe myself a copay.",
+    "No one knew I was there, including eventually me.",
+  ]),
+  reviewDefinition(
+    "alert.review.imaging-unavailable",
+    ["imaging_unavailable"],
+    [
+      "The X-ray room was beautiful. Shame it was decorative.",
+      "I came for an X-ray and received directions to somewhere else.",
+      "The imaging equipment and the imaging staff have apparently never met.",
     ],
-  },
-  {
-    id: "staff",
-    cooldownTicks: 45,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "The founder is covering the front desk again. Leadership.",
-      "A staff member is idle. Payroll is not.",
-      "You hired a person. They now expect a place to work.",
-      "The imaging technician cannot operate a room that exists only in your imagination.",
-      "Staff morale has entered the differential.",
-      "Your staff would like functioning equipment. Bold.",
-      "Someone has asked when lunch is. There is no correct answer.",
-      "The break room remains theoretical.",
-      "The printer has sensed urgency and gone offline.",
-      "An administrator has asked whether throughput could simply be higher.",
-    ],
-  },
-  {
-    id: "construction",
-    cooldownTicks: 20,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "Construction complete. The dust is now somebody else's problem.",
-      "You built a room. Healthcare expands.",
-      "This room contains four walls and a billing opportunity.",
-      "The exam room is ready for awkward paper-gown conversations.",
-      "The X-ray room is ready. Please add photons and staff.",
-      "The imaging control room is operational. Buttons now have consequences.",
-      "The minor-procedure room is open for business and consent forms.",
-      "The bathroom is complete. Patient satisfaction has discovered plumbing.",
-      "The waiting room now has more chairs than answers.",
-      "A room is empty. Its upkeep is not.",
-      "That placement blocks a door. Even healthcare has fire codes.",
-      "Your clinic has become a hallway with aspirations.",
-    ],
-  },
-  {
-    id: "finance",
-    cooldownTicks: 30,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "Cash is low. Your vision remains expensive.",
-      "The clinic has entered the check every invoice twice phase.",
-      "You cannot afford this. The purchase button remains optimistic.",
-      "Payroll is due. Employees continue to favor money.",
-      "Upkeep paid. The building has agreed to remain a building.",
-      "A patient payment has arrived. Revenue cycle celebrates.",
-      "Income increased. Please resist buying another hallway.",
-      "The budget is stable, a temporary and suspicious condition.",
-      "Your cash reserve has achieved the structural integrity of wet tissue paper.",
-      "The balance sheet is asking for a consult.",
-    ],
-  },
-  {
-    id: "progression",
-    cooldownTicks: 20,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "XP gained. Expertise remains nonrefundable.",
-      "You have leveled up. The patients did not become simpler.",
-      "A new room is unlocked. Your floor plan has developed needs.",
-      "Satisfaction is above 90%. Do not make sudden movements.",
-      "All objectives are complete. The bureaucracy accepts your progress.",
-      "One requirement remains. It knows what it did.",
-      "Core mastery increased. Forgetting has been rescheduled.",
-      "The scheduler has decided you should see this again. It is probably right.",
-      "Review complete. The algorithm will be in touch.",
-      "A difficult concept has returned for follow-up.",
-    ],
-  },
-  {
-    id: "saving_testing",
-    cooldownTicks: 30,
-    permittedDuringCritical: false,
-    eligibleFacilityLevels: [0, 1],
-    messages: [
-      "Campaign saved. Your questionable decisions are now durable.",
-      "Game paused. The clinic has entered an unprecedented state of calm.",
-      "Welcome back. The waiting room remembered you.",
-      "Time acceleration enabled. Mistakes will now happen more efficiently.",
-      "Developer balance mode enabled. Economic reality has been suspended.",
-      "Reset complete. The patients have agreed to forget.",
-      "Autosave complete. Accountability preserved.",
-    ],
-  },
-] as const satisfies readonly PrototypeFlavorPool[];
+  ),
+  reviewDefinition("alert.review.general", ["general"], [
+    "I expected care. I received character development.",
+    "The plant was attentive.",
+    "The parking experience was the clinical highlight.",
+    "One star submitted successfully. Unlike my appointment.",
+    "There was a clinic. I can confirm that much.",
+    "Fast Wi-Fi. Slow everything else.",
+  ]),
+] as const;
+
+export const PROTOTYPE_ALERT_SCHEDULING = {
+  firstAmbientMinimumMinutes: 10,
+  firstAmbientMaximumMinutes: 20,
+  recurringAmbientMinimumMinutes: 45,
+  recurringAmbientMaximumMinutes: 90,
+  minimumAmbientSeparationMinutes: 30,
+  recentAmbientHistoryLimit: 10,
+  recentReviewHistoryLimit: 10,
+} as const;
+
+export const PROTOTYPE_ALERT_CONTENT: readonly PrototypeAlertDefinition[] = [
+  ...BASE_PROTOTYPE_ALERT_DEFINITIONS.map(enrichBaseDefinition),
+  ...CONTEXTUAL_AND_SUCCESS_ALERTS,
+  ...PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+  ...PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
+];
+
+/** Backward-compatible name for callers that consume the whole registry. */
+export const PROTOTYPE_ALERT_DEFINITIONS = PROTOTYPE_ALERT_CONTENT;
+
+export function getPrototypeAlertDefinition(
+  definitionId: string,
+): PrototypeAlertDefinition | undefined {
+  return PROTOTYPE_ALERT_CONTENT.find(
+    (definition) => definition.id === definitionId,
+  );
+}
+
+export interface RenderedPrototypeAlert {
+  definitionId: string;
+  variantId: string;
+  title: string;
+  body: string;
+}
+
+function renderTemplate(
+  template: string,
+  values: Readonly<Record<string, string | number | null | undefined>>,
+  fallbacks: Readonly<Record<string, string>>,
+): string {
+  return template.replace(
+    /{{([a-z0-9_]+)}}/gi,
+    (_match, key: string) => {
+      const value = values[key];
+      if (value !== null && value !== undefined && String(value).trim()) {
+        return String(value);
+      }
+      return fallbacks[key] ?? "the clinic";
+    },
+  );
+}
+
+export function renderPrototypeAlert(
+  definitionOrId: PrototypeAlertDefinition | string,
+  values: Readonly<Record<string, string | number | null | undefined>> = {},
+  variantId?: string,
+): RenderedPrototypeAlert {
+  const definition =
+    typeof definitionOrId === "string"
+      ? getPrototypeAlertDefinition(definitionOrId)
+      : definitionOrId;
+  if (!definition) {
+    return {
+      definitionId:
+        typeof definitionOrId === "string"
+          ? definitionOrId
+          : "alert.unknown",
+      variantId: "alert.unknown.fallback",
+      title: "Clinic update",
+      body: "The clinic has an update.",
+    };
+  }
+  const variant =
+    definition.variants.find((candidate) => candidate.id === variantId) ??
+    definition.variants[0]!;
+  return {
+    definitionId: definition.id,
+    variantId: variant.id,
+    title: renderTemplate(
+      variant.titleTemplate ?? definition.titleTemplate,
+      values,
+      definition.placeholderFallbacks,
+    ),
+    body: renderTemplate(
+      variant.bodyTemplate,
+      values,
+      definition.placeholderFallbacks,
+    ),
+  };
+}
+
+export interface PrototypeAlertEligibilityContext {
+  facilityLevel: 0 | 1;
+  roomDefinitionIds: ReadonlySet<string>;
+  objectIds: ReadonlySet<string>;
+  hasCheckedInPatient: boolean;
+}
+
+export function isPrototypeAlertEligible(
+  definition: PrototypeAlertDefinition,
+  context: PrototypeAlertEligibilityContext,
+): boolean {
+  return definition.eligibility.every((condition) => {
+    switch (condition.kind) {
+      case "always":
+        return true;
+      case "facility_level":
+        return condition.levels.includes(context.facilityLevel);
+      case "room_exists":
+        return context.roomDefinitionIds.has(condition.roomDefinitionId);
+      case "object_exists":
+        return context.objectIds.has(condition.objectId);
+      case "checked_in_patient_exists":
+        return context.hasCheckedInPatient;
+    }
+  });
+}

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type {
+  MessageBoardCategory,
   MessageBoardItemView,
   MessageBoardPriority,
   MessageBoardTargetType,
@@ -15,18 +16,35 @@ interface EventMessageBoardProps {
   mode?: "recent_log" | "ticker";
 }
 
-const PRIORITY_LABELS: Record<MessageBoardPriority, string> = {
-  critical: "Critical alert",
-  action_required: "Action needed",
-  informational: "Clinic update",
-  flavor: "Around the clinic",
-};
+interface CategoryPresentation {
+  label: string;
+  icon: string;
+}
 
-const PRIORITY_ICONS: Record<MessageBoardPriority, string> = {
-  critical: "!!",
-  action_required: "!",
-  informational: "i",
-  flavor: "*",
+const CATEGORY_PRESENTATION: Record<
+  MessageBoardCategory,
+  CategoryPresentation
+> = {
+  action_required: {
+    label: "Action needed",
+    icon: "ACT",
+  },
+  guidance: {
+    label: "Guidance",
+    icon: "TIP",
+  },
+  success: {
+    label: "Success",
+    icon: "OK",
+  },
+  ambient_flavor: {
+    label: "Around the clinic",
+    icon: "...",
+  },
+  walkout_review: {
+    label: "Patient review",
+    icon: "REV",
+  },
 };
 
 const PRIORITY_RANK: Record<MessageBoardPriority, number> = {
@@ -49,6 +67,36 @@ function getPriority(item: MessageBoardItemView): MessageBoardPriority {
   return "informational";
 }
 
+function getCategory(item: MessageBoardItemView): MessageBoardCategory {
+  if (item.category) {
+    return item.category;
+  }
+  if (
+    item.priority === "critical" ||
+    item.priority === "action_required" ||
+    item.kind === "alert"
+  ) {
+    return "action_required";
+  }
+  if (item.kind === "positive") {
+    return "success";
+  }
+  if (item.priority === "flavor" || item.kind === "joke") {
+    return "ambient_flavor";
+  }
+  return "guidance";
+}
+
+function getPresentation(item: MessageBoardItemView): CategoryPresentation {
+  if (item.showAttentionMarker === true) {
+    return {
+      label: "Attention required",
+      icon: "!",
+    };
+  }
+  return CATEGORY_PRESENTATION[getCategory(item)];
+}
+
 /**
  * Bounded, text-first operational feed. Random selection, deduplication keys,
  * persistence, and condition resolution live in the domain. This component
@@ -69,7 +117,12 @@ export function EventMessageBoard({
       newestById.set(item.id, { item, inputIndex });
     });
 
-    let candidates = [...newestById.values()];
+    const historyCandidates = [...newestById.values()].sort(
+      (left, right) =>
+        (right.item.sortKey ?? right.inputIndex) -
+        (left.item.sortKey ?? left.inputIndex),
+    );
+    let candidates = [...historyCandidates];
     const hasCritical = candidates.some(
       ({ item }) => getPriority(item) === "critical",
     );
@@ -105,8 +158,8 @@ export function EventMessageBoard({
         : Math.max(1, maximumVisibleItems);
     return {
       liveItems: candidates.slice(0, visibleLimit).map(({ item }) => item),
-      recentItems: candidates
-        .slice(0, Math.max(visibleLimit, maximumVisibleItems))
+      recentItems: historyCandidates
+        .slice(0, Math.max(30, visibleLimit, maximumVisibleItems))
         .map(({ item }) => item),
     };
   }, [items, maximumVisibleItems, mode]);
@@ -135,6 +188,9 @@ export function EventMessageBoard({
         ) : (
           liveItems.map((item) => {
             const priority = getPriority(item);
+            const category = getCategory(item);
+            const presentation = getPresentation(item);
+            const hasAttentionMarker = item.showAttentionMarker === true;
             const target =
               item.targetType === undefined
                 ? undefined
@@ -142,17 +198,20 @@ export function EventMessageBoard({
             if (mode === "ticker") {
               return (
                 <article
-                  className={`message-board-item is-${priority}${
-                    item.persistent ? " is-persistent" : ""
-                  }`}
+                  className={`message-board-item is-${priority} is-category-${category}${
+                    hasAttentionMarker ? " has-attention-marker" : ""
+                  }${item.persistent ? " is-persistent" : ""}`}
                   key={item.id}
                   role={priority === "critical" ? "alert" : undefined}
+                  data-message-category={category}
+                  data-attention-marker={hasAttentionMarker}
                 >
                   <span
                     className="message-board-priority-icon"
-                    aria-hidden="true"
+                    aria-label={presentation.label}
+                    title={presentation.label}
                   >
-                    {PRIORITY_ICONS[priority]}
+                    {presentation.icon}
                   </span>
                   {item.actionLabel && onAction ? (
                     <button
@@ -172,22 +231,25 @@ export function EventMessageBoard({
             }
             return (
               <article
-                className={`message-board-item is-${priority}${
-                  item.persistent ? " is-persistent" : ""
-                }`}
+                className={`message-board-item is-${priority} is-category-${category}${
+                  hasAttentionMarker ? " has-attention-marker" : ""
+                }${item.persistent ? " is-persistent" : ""}`}
                 key={item.id}
                 role={priority === "critical" ? "alert" : undefined}
+                data-message-category={category}
+                data-attention-marker={hasAttentionMarker}
               >
                 <span
                   className="message-board-priority-icon"
-                  aria-hidden="true"
+                  aria-label={presentation.label}
+                  title={presentation.label}
                 >
-                  {PRIORITY_ICONS[priority]}
+                  {presentation.icon}
                 </span>
                 <div className="message-board-item-copy">
                   <div className="message-board-item-heading">
                     <strong>
-                      {item.title ?? PRIORITY_LABELS[priority]}
+                      {item.title ?? presentation.label}
                     </strong>
                     {item.timeLabel ? <time>{item.timeLabel}</time> : null}
                   </div>
@@ -212,14 +274,31 @@ export function EventMessageBoard({
           <summary>Recent events ({recentItems.length})</summary>
           <ol>
             {recentItems.map((item) => {
-              const priority = getPriority(item);
+              const category = getCategory(item);
+              const presentation = getPresentation(item);
+              const target =
+                item.targetType === undefined
+                  ? undefined
+                  : { type: item.targetType, id: item.targetId };
               return (
                 <li key={`history.${item.id}`}>
                   <span className="message-board-log-priority">
-                    {PRIORITY_ICONS[priority]}{" "}
-                    {PRIORITY_LABELS[priority]}
+                    {presentation.icon} {presentation.label}
                   </span>
-                  <span>{item.title ?? item.message}</span>
+                  {item.actionLabel && onAction ? (
+                    <button
+                      className="message-board-history-action"
+                      type="button"
+                      data-message-category={category}
+                      onClick={() => onAction(item.id, target)}
+                    >
+                      {item.message}
+                    </button>
+                  ) : (
+                    <span data-message-category={category}>
+                      {item.message}
+                    </span>
+                  )}
                 </li>
               );
             })}

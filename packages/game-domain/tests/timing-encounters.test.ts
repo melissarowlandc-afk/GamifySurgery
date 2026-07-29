@@ -417,7 +417,7 @@ describe("physical patient routing", () => {
           event.type === "left_before_seen" &&
           event.encounterId === encounterId,
       )?.message,
-    ).toMatch(/^Mock Google Review from .+Final satisfaction: \d+%\.$/);
+    ).toMatch(/^New [12]-star review from .+: .+/);
   });
 });
 

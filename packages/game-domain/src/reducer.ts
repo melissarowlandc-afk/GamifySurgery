@@ -4,6 +4,15 @@ import type {
   SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import {
+  PROTOTYPE_ALERT_SCHEDULING,
+  PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+  PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
+  isPrototypeAlertEligible,
+  renderPrototypeAlert,
+  type PrototypeAlertDefinition,
+  type PrototypeDissatisfactionCause,
+} from "@gamify-surgery/balance-config";
+import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
@@ -66,6 +75,7 @@ import type {
   GameState,
   GridPoint,
   OperationReceipt,
+  PatientDissatisfactionCause,
   PatientMovementKind,
   PatientMovementState,
   PendingResult,
@@ -78,12 +88,6 @@ const MAX_TRANSIENT_OPERATION_RECEIPTS = 500;
 const MAX_TRANSIENT_EVENTS = 500;
 const FIRST_TUTORIAL_CASE_ID = "case.prototype.tutorial-laceration";
 const SECOND_TUTORIAL_CASE_ID = "case.synthetic.tutorial";
-const WALKOUT_REVIEW_LINES = [
-  "I had enough time to become my own second opinion.",
-  "The waiting room was efficient at producing additional complaints.",
-  "I arrived with symptoms and left with a strong opinion about throughput.",
-  "The clinic valued my time primarily as a theoretical concept.",
-] as const;
 
 function clonePlain<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
@@ -539,6 +543,7 @@ function createEncounter(
         .walkoutThresholdMaximum + 1,
     ),
     satisfactionWarningsShown: [],
+    dissatisfactionByCause: {},
     finalPatientSatisfaction: null,
     resolvedAtFacilityTick: null,
     arrivalClass: input.arrivalClass,
@@ -626,6 +631,214 @@ function appendEvent(state: GameState, event: DomainEvent): void {
   }
 }
 
+function bothTutorialEncountersResolved(state: GameState): boolean {
+  return [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID].every(
+    (encounterId) => {
+      const encounter = state.encounters[encounterId];
+      return encounter !== undefined && encounter.resolutionReason !== null;
+    },
+  );
+}
+
+function getAmbientDelay(
+  state: GameState,
+  kind: "first" | "recurring",
+): number {
+  const minimum =
+    kind === "first"
+      ? PROTOTYPE_ALERT_SCHEDULING.firstAmbientMinimumMinutes
+      : Math.max(
+          PROTOTYPE_ALERT_SCHEDULING.recurringAmbientMinimumMinutes,
+          PROTOTYPE_ALERT_SCHEDULING.minimumAmbientSeparationMinutes,
+        );
+  const maximum =
+    kind === "first"
+      ? PROTOTYPE_ALERT_SCHEDULING.firstAmbientMaximumMinutes
+      : PROTOTYPE_ALERT_SCHEDULING.recurringAmbientMaximumMinutes;
+  const spread = maximum - minimum + 1;
+  return (
+    minimum +
+    deterministicInteger(
+      state.campaignSeed,
+      RANDOM_STREAMS.flavorEvents,
+      `ambient.${kind}.delay.${state.alertHumor.ambientSequence}`,
+      spread,
+    )
+  );
+}
+
+function hasCheckedInPatient(state: GameState): boolean {
+  return Object.values(state.encounters).some((encounter) => {
+    if (
+      encounter.resolutionReason !== null ||
+      encounter.patientLocation === null
+    ) {
+      return false;
+    }
+    const movementKind = encounter.patientMovement?.kind;
+    return (
+      movementKind !== "arriving_for_check_in" &&
+      movementKind !== "returning_from_offsite_testing" &&
+      movementKind !== "departing_for_offsite_testing"
+    );
+  });
+}
+
+function getEligibleAmbientDefinitions(
+  state: GameState,
+): PrototypeAlertDefinition[] {
+  const roomDefinitionIds = new Set(
+    state.rooms.map((room) => room.roomDefinitionId),
+  );
+  return PROTOTYPE_AMBIENT_ALERT_DEFINITIONS.filter((definition) =>
+    isPrototypeAlertEligible(definition, {
+      facilityLevel: state.facilityLevel,
+      roomDefinitionIds,
+      objectIds: new Set(["water_cooler"] as const),
+      hasCheckedInPatient: hasCheckedInPatient(state),
+    }),
+  );
+}
+
+function pickWeighted<T extends { selectionWeight: number }>(
+  values: readonly T[],
+  state: GameState,
+  purposeId: string,
+): T {
+  if (values.length === 0) {
+    throw new Error("A deterministic weighted selection needs a candidate.");
+  }
+  const totalWeight = values.reduce(
+    (total, value) => total + Math.max(1, value.selectionWeight),
+    0,
+  );
+  let draw = deterministicInteger(
+    state.campaignSeed,
+    RANDOM_STREAMS.flavorEvents,
+    purposeId,
+    totalWeight,
+  );
+  for (const value of values) {
+    draw -= Math.max(1, value.selectionWeight);
+    if (draw < 0) {
+      return value;
+    }
+  }
+  return values.at(-1)!;
+}
+
+function appendBoundedHistory(
+  history: string[],
+  value: string,
+  maximumLength: number,
+): string[] {
+  const withoutDuplicate = history.filter((candidate) => candidate !== value);
+  withoutDuplicate.push(value);
+  return withoutDuplicate.slice(-maximumLength);
+}
+
+function maybeEmitAmbientMessage(state: GameState): void {
+  const humor = state.alertHumor;
+  if (
+    humor.alertsTutorialAcknowledgedAtTick === null ||
+    humor.nextAmbientAlertTick === null ||
+    state.facilityTick < humor.nextAmbientAlertTick ||
+    !bothTutorialEncountersResolved(state)
+  ) {
+    return;
+  }
+
+  const eligible = getEligibleAmbientDefinitions(state);
+  if (eligible.length === 0) {
+    humor.nextAmbientAlertTick =
+      state.facilityTick +
+      PROTOTYPE_ALERT_SCHEDULING.minimumAmbientSeparationMinutes;
+    return;
+  }
+
+  let cycleCandidates = eligible.filter(
+    (definition) =>
+      !humor.ambientUsedDefinitionIds.includes(definition.id),
+  );
+  if (cycleCandidates.length === 0) {
+    humor.ambientCycle += 1;
+    humor.ambientUsedDefinitionIds = [];
+    cycleCandidates = eligible;
+  }
+  const nonRecentCandidates = cycleCandidates.filter(
+    (definition) =>
+      !humor.recentAmbientDefinitionIds.includes(definition.id),
+  );
+  const definition = pickWeighted(
+    nonRecentCandidates.length > 0
+      ? nonRecentCandidates
+      : cycleCandidates,
+    state,
+    `ambient.definition.${humor.ambientCycle}.${humor.ambientSequence}`,
+  );
+  const variant = pickWeighted(
+    definition.variants,
+    state,
+    `ambient.variant.${definition.id}.${humor.ambientSequence}`,
+  );
+  const rendered = renderPrototypeAlert(definition, {}, variant.id);
+  appendEvent(state, {
+    id: `event.ambient.${humor.ambientSequence}.${state.facilityTick}`,
+    type: "ambient_message",
+    facilityTick: state.facilityTick,
+    encounterId: null,
+    message: rendered.body,
+    priority: "flavor",
+    definitionId: rendered.definitionId,
+    alertCategory: definition.category,
+    alertVariantId: rendered.variantId,
+    target: {
+      kind: "campaign",
+      id: state.campaignId,
+    },
+  });
+  humor.ambientUsedDefinitionIds.push(definition.id);
+  humor.recentAmbientDefinitionIds = appendBoundedHistory(
+    humor.recentAmbientDefinitionIds,
+    definition.id,
+    PROTOTYPE_ALERT_SCHEDULING.recentAmbientHistoryLimit,
+  );
+  humor.ambientSequence += 1;
+  humor.nextAmbientAlertTick =
+    state.facilityTick + getAmbientDelay(state, "recurring");
+}
+
+function reduceAcknowledgeAlertsTutorial(
+  state: GameState,
+  command: Extract<
+    GameCommand,
+    { type: "ACKNOWLEDGE_ALERTS_TUTORIAL" }
+  >,
+): GameState {
+  const secondTutorial =
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+  if (secondTutorial?.resolutionReason === null || !secondTutorial) {
+    return rejectCommand(
+      state,
+      command,
+      "The Alerts tutorial unlocks after the second tutorial encounter.",
+    );
+  }
+  const next = clonePlain(state);
+  if (next.alertHumor.alertsTutorialAcknowledgedAtTick === null) {
+    next.alertHumor.alertsTutorialAcknowledgedAtTick =
+      next.facilityTick;
+    next.alertHumor.nextAmbientAlertTick =
+      next.facilityTick + getAmbientDelay(next, "first");
+  }
+  return recordReceipt(
+    next,
+    command,
+    "applied",
+    "Alerts tutorial acknowledged.",
+  );
+}
+
 function getCurrentNode(encounter: EncounterState): DecisionNode | null {
   return encounter.frozenCase.decisionNodes[encounter.currentNodeIndex] ?? null;
 }
@@ -669,6 +882,25 @@ function clamp(value: number, minimum: number, maximum: number): number {
   return Math.min(maximum, Math.max(minimum, value));
 }
 
+function applyPatientSatisfactionDelta(
+  encounter: EncounterState,
+  delta: number,
+  cause: PatientDissatisfactionCause,
+  facilityTick: number,
+): number {
+  const before = encounter.patientSatisfaction;
+  encounter.patientSatisfaction = clamp(before + delta, 0, 100);
+  const appliedDelta = encounter.patientSatisfaction - before;
+  if (appliedDelta < 0) {
+    const previous = encounter.dissatisfactionByCause[cause];
+    encounter.dissatisfactionByCause[cause] = {
+      pointsLost: (previous?.pointsLost ?? 0) - appliedDelta,
+      lastAppliedAtFacilityTick: facilityTick,
+    };
+  }
+  return appliedDelta;
+}
+
 function adjustCash(state: GameState, deltaDollars: number): void {
   const deltaCents = Math.round(deltaDollars * 100);
   state.cashCents = Math.max(0, state.cashCents + deltaCents);
@@ -689,6 +921,68 @@ function getDecisionXpAward(
         .clinicalXpPerCorrectFirstAnswer
     : context.balanceRelease.clinicalSettlement
         .clinicalXpPerIncorrectFirstAnswer;
+}
+
+function getEndedEncounterSatisfaction(
+  state: GameState,
+  context: DomainContext,
+  excludedEncounterId: string | null = null,
+): number | null {
+  const ended = Object.values(state.encounters)
+    .filter(
+      (encounter) =>
+        encounter.id !== excludedEncounterId &&
+        encounter.finalPatientSatisfaction !== null &&
+        encounter.resolvedAtFacilityTick !== null &&
+        (encounter.resolutionReason === "completed" ||
+          encounter.resolutionReason === "walkout"),
+    )
+    .sort(
+      (left, right) =>
+        (right.resolvedAtFacilityTick ?? 0) -
+          (left.resolvedAtFacilityTick ?? 0) ||
+        right.id.localeCompare(left.id),
+    )
+    .slice(
+      0,
+      context.balanceRelease.patientSatisfaction.rollingWindowSize,
+    );
+  if (ended.length === 0) {
+    return null;
+  }
+  return Math.round(
+    ended.reduce(
+      (total, candidate) =>
+        total + (candidate.finalPatientSatisfaction ?? 0),
+      0,
+    ) / ended.length,
+  );
+}
+
+function appendSuccessMessage(
+  state: GameState,
+  definitionId: string,
+  eventId: string,
+  encounter: EncounterState,
+): void {
+  const rendered = renderPrototypeAlert(definitionId, {
+    patient_name: encounter.patientDisplayName,
+  });
+  appendEvent(state, {
+    id: eventId,
+    type: "success_message",
+    facilityTick: state.facilityTick,
+    encounterId: encounter.id,
+    message: rendered.body,
+    priority: "informational",
+    definitionId: rendered.definitionId,
+    alertCategory: "success",
+    alertVariantId: rendered.variantId,
+    target: {
+      kind: "encounter",
+      id: encounter.id,
+    },
+  });
 }
 
 function settleEncounter(
@@ -755,6 +1049,49 @@ function settleEncounter(
       satisfactionDelta,
     },
   });
+  if (encounter.arrivalClass !== "tutorial") {
+    const firstOrdinaryDefinitionId =
+      "alert.success.first-ordinary-patient-resolved";
+    const priorOrdinaryCompleted = Object.values(
+      state.encounters,
+    ).some(
+      (candidate) =>
+        candidate.id !== encounter.id &&
+        candidate.arrivalClass !== "tutorial" &&
+        candidate.resolutionReason === "completed",
+    );
+    if (!priorOrdinaryCompleted) {
+      appendSuccessMessage(
+        state,
+        firstOrdinaryDefinitionId,
+        `event.success.first-ordinary.${encounter.id}`,
+        encounter,
+      );
+    }
+
+    const previousSatisfaction = getEndedEncounterSatisfaction(
+      state,
+      context,
+      encounter.id,
+    );
+    const currentSatisfaction = getEndedEncounterSatisfaction(
+      state,
+      context,
+    );
+    if (
+      currentSatisfaction !== null &&
+      currentSatisfaction > 90 &&
+      previousSatisfaction !== null &&
+      previousSatisfaction <= 90
+    ) {
+      appendSuccessMessage(
+        state,
+        "alert.success.satisfaction-above-90",
+        `event.success.satisfaction-above-90.${encounter.id}`,
+        encounter,
+      );
+    }
+  }
 }
 
 function applyCompletionExperience(
@@ -816,14 +1153,29 @@ function applyCompletionExperience(
         : averageMorale <= config.unhappyStaffMoraleThreshold
           ? -config.unhappyStaffCompletionPenalty
           : 0;
-  encounter.patientSatisfaction = clamp(
-    encounter.patientSatisfaction +
-      cleanlinessModifier +
-      upgradeModifier +
-      amenityModifier +
-      staffModifier,
-    0,
-    100,
+  applyPatientSatisfactionDelta(
+    encounter,
+    cleanlinessModifier,
+    "poor_cleanliness",
+    state.facilityTick,
+  );
+  applyPatientSatisfactionDelta(
+    encounter,
+    upgradeModifier,
+    "general",
+    state.facilityTick,
+  );
+  applyPatientSatisfactionDelta(
+    encounter,
+    amenityModifier,
+    "missing_amenities",
+    state.facilityTick,
+  );
+  applyPatientSatisfactionDelta(
+    encounter,
+    staffModifier,
+    "general",
+    state.facilityTick,
   );
   for (const room of clinicalRooms) {
     room.cleanliness = clamp(
@@ -1131,10 +1483,11 @@ function reduceSubmitAnswer(
     ? satisfactionConfig.correctCareRecovery
     : -satisfactionConfig.incorrectCarePenalty;
   const satisfactionBeforeDecision = nextEncounter.patientSatisfaction;
-  nextEncounter.patientSatisfaction = clamp(
-    nextEncounter.patientSatisfaction + careSatisfactionDelta,
-    0,
-    100,
+  applyPatientSatisfactionDelta(
+    nextEncounter,
+    careSatisfactionDelta,
+    "general",
+    next.facilityTick,
   );
   const learningXpAwarded = getDecisionXpAward(
     nextEncounter,
@@ -1831,14 +2184,19 @@ function completeFounderActivity(
         state,
         config.litterCleanupSatisfactionBonus,
       );
+      const rendered = renderPrototypeAlert(
+        "alert.success.trash-cleaned",
+      );
       appendEvent(state, {
         id: `event.${litter.id}.collected.${state.facilityTick}`,
         type: "litter_collected",
         facilityTick: state.facilityTick,
         encounterId: null,
-        message: "Litter collected. Cleanliness has acquired direct supervision.",
-        priority: "flavor",
-        definitionId: "alert.environment.litter-collected",
+        message: rendered.body,
+        priority: "informational",
+        definitionId: rendered.definitionId,
+        alertCategory: "success",
+        alertVariantId: rendered.variantId,
         target: { kind: "room", id: litter.roomId },
       });
     }
@@ -1848,14 +2206,19 @@ function completeFounderActivity(
       state,
       config.waterRefillSatisfactionBonus,
     );
+    const rendered = renderPrototypeAlert(
+      "alert.success.water-refilled",
+    );
     appendEvent(state, {
       id: `event.water-refilled.${state.facilityTick}`,
       type: "water_cooler_refilled",
       facilityTick: state.facilityTick,
       encounterId: null,
-      message: "Water cooler refilled. Hydration has re-entered the care plan.",
-      priority: "flavor",
-      definitionId: "alert.environment.water-refilled",
+      message: rendered.body,
+      priority: "informational",
+      definitionId: rendered.definitionId,
+      alertCategory: "success",
+      alertVariantId: rendered.variantId,
       target: { kind: "campaign", id: state.campaignId },
     });
   } else {
@@ -1906,6 +2269,117 @@ function advanceFounderActivity(
   }
 }
 
+const DISSATISFACTION_CAUSE_ORDER: readonly PatientDissatisfactionCause[] = [
+  "excessive_waiting",
+  "poor_cleanliness",
+  "missing_amenities",
+  "no_receptionist",
+  "imaging_unavailable",
+  "general",
+];
+
+function getPrimaryDissatisfactionCause(
+  encounter: EncounterState,
+): PrototypeDissatisfactionCause {
+  const ranked = DISSATISFACTION_CAUSE_ORDER.flatMap((cause, index) => {
+    const state = encounter.dissatisfactionByCause[cause];
+    return state
+      ? [
+          {
+            cause,
+            index,
+            pointsLost: state.pointsLost,
+            lastAppliedAtFacilityTick:
+              state.lastAppliedAtFacilityTick,
+          },
+        ]
+      : [];
+  }).sort(
+    (left, right) =>
+      right.pointsLost - left.pointsLost ||
+      right.lastAppliedAtFacilityTick -
+        left.lastAppliedAtFacilityTick ||
+      left.index - right.index,
+  );
+  return ranked[0]?.cause ?? "general";
+}
+
+function createWalkoutReview(
+  state: GameState,
+  encounter: EncounterState,
+): {
+  definitionId: string;
+  variantId: string;
+  category: "walkout_review";
+  rating: 1 | 2;
+  cause: PrototypeDissatisfactionCause;
+  message: string;
+} {
+  const cause = getPrimaryDissatisfactionCause(encounter);
+  let definitions = PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS.filter(
+    (definition) =>
+      definition.dissatisfactionCauses?.includes(cause),
+  );
+  if (definitions.length === 0) {
+    definitions = PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS.filter(
+      (definition) =>
+        definition.dissatisfactionCauses?.includes("general"),
+    );
+  }
+  const definition = pickWeighted(
+    definitions,
+    state,
+    `walkout.definition.${encounter.id}`,
+  );
+  const nonRecentVariants = definition.variants.filter(
+    (variant) =>
+      !state.alertHumor.recentWalkoutReviewVariantIds.includes(
+        variant.id,
+      ),
+  );
+  const lastReviewVariantId =
+    state.alertHumor.recentWalkoutReviewVariantIds.at(-1);
+  const nonConsecutiveVariants = definition.variants.filter(
+    (variant) => variant.id !== lastReviewVariantId,
+  );
+  const variant = pickWeighted(
+    nonRecentVariants.length > 0
+      ? nonRecentVariants
+      : nonConsecutiveVariants.length > 0
+        ? nonConsecutiveVariants
+        : definition.variants,
+    state,
+    `walkout.variant.${encounter.id}`,
+  );
+  const ratings = definition.reviewRatings ?? [1, 2];
+  const severityRating = encounter.patientSatisfaction < 30 ? 1 : 2;
+  const rating = ratings.includes(severityRating)
+    ? severityRating
+    : ratings[0]!;
+  const rendered = renderPrototypeAlert(
+    definition,
+    {
+      patient_name: encounter.patientDisplayName,
+      satisfaction: encounter.patientSatisfaction,
+    },
+    variant.id,
+  );
+  state.alertHumor.recentWalkoutReviewVariantIds =
+    appendBoundedHistory(
+      state.alertHumor.recentWalkoutReviewVariantIds,
+      rendered.variantId,
+      PROTOTYPE_ALERT_SCHEDULING.recentReviewHistoryLimit,
+    );
+  return {
+    definitionId: rendered.definitionId,
+    variantId: rendered.variantId,
+    category: "walkout_review",
+    rating,
+    cause,
+    message: rendered.body,
+  };
+}
+
 function finalizePatientWalkout(
   state: GameState,
   encounter: EncounterState,
@@ -1929,23 +2403,21 @@ function finalizePatientWalkout(
   if (encounter.protectedGuaranteeId) {
     state.criticalGuarantees[encounter.protectedGuaranteeId] = "pending";
   }
-  const reviewLine =
-    WALKOUT_REVIEW_LINES[
-      deterministicInteger(
-        state.campaignSeed,
-        RANDOM_STREAMS.environment,
-        `${encounter.id}:walkout-review.v1`,
-        WALKOUT_REVIEW_LINES.length,
-      )
-    ]!;
+  const review = createWalkoutReview(state, encounter);
   appendEvent(state, {
     id: `event.left-before-seen.${encounter.id}`,
     type: "left_before_seen",
     facilityTick: state.facilityTick,
     encounterId: encounter.id,
-    message: `Mock Google Review from ${encounter.patientDisplayName}: "${reviewLine}" Final satisfaction: ${encounter.patientSatisfaction}%.`,
-    priority: "critical",
-    definitionId: "alert.patient.left",
+    message: `New ${review.rating}-star review from ${encounter.patientDisplayName}: ${review.message}`,
+    priority: "informational",
+    definitionId: review.definitionId,
+    alertCategory: review.category,
+    alertVariantId: review.variantId,
+    walkoutReview: {
+      rating: review.rating,
+      cause: review.cause,
+    },
     target: {
       kind: "encounter",
       id: encounter.id,
@@ -2336,10 +2808,13 @@ function reduceAdvanceTick(
         completedRoute?.satisfactionOnResult ?? 0;
       const satisfactionBeforeResult = encounter.patientSatisfaction;
       if (configuredResultSatisfactionDelta !== 0) {
-        encounter.patientSatisfaction = clamp(
-          encounter.patientSatisfaction + configuredResultSatisfactionDelta,
-          0,
-          100,
+        applyPatientSatisfactionDelta(
+          encounter,
+          configuredResultSatisfactionDelta,
+          encounter.pendingResult.resultTypeId.includes("xray")
+            ? "imaging_unavailable"
+            : "general",
+          next.facilityTick,
         );
       }
       const resultSatisfactionDelta =
@@ -2415,11 +2890,21 @@ function reduceAdvanceTick(
             ),
           )
         : baseDecay;
-    encounter.patientSatisfaction = clamp(
-      encounter.patientSatisfaction - decay,
-      0,
-      100,
+    applyPatientSatisfactionDelta(
+      encounter,
+      -baseDecay,
+      "excessive_waiting",
+      next.facilityTick,
     );
+    const missingWaitingRoomDecay = Math.max(0, decay - baseDecay);
+    if (missingWaitingRoomDecay > 0) {
+      applyPatientSatisfactionDelta(
+        encounter,
+        -missingWaitingRoomDecay,
+        "missing_amenities",
+        next.facilityTick,
+      );
+    }
     encounter.lastSatisfactionDecayAtTick =
       decayBaseTick +
       intervals * satisfaction.decayIntervalMinutes;
@@ -2497,6 +2982,7 @@ function reduceAdvanceTick(
   drainWaterCooler(next, context);
   maybeSpawnLitter(next, context);
   maybeAdmitAutomaticPatient(next, context);
+  maybeEmitAmbientMessage(next);
 
   return recordReceipt(next, command, "applied", "Facility time advanced once.");
 }
@@ -2622,14 +3108,33 @@ function reducePlaceRoom(
   const next = clonePlain(state);
   next.rooms.push(placedRoom);
   adjustCash(next, -definition.constructionCost);
+  const successDefinitionId =
+    definition.id === "room.waiting"
+      ? "alert.success.waiting-room-constructed"
+      : definition.id === "room.xray"
+        ? "alert.success.xray-constructed"
+        : null;
+  const renderedSuccess = successDefinitionId
+    ? renderPrototypeAlert(successDefinitionId, {
+        room_name: definition.displayName,
+      })
+    : null;
   appendEvent(next, {
     id: `event.room-placed.${command.roomId}`,
     type: "room_placed",
     facilityTick: next.facilityTick,
     encounterId: null,
-    message: `${definition.displayName} placed.`,
+    message:
+      renderedSuccess?.body ?? `${definition.displayName} placed.`,
     priority: "informational",
-    definitionId: "alert.facility.room-placed",
+    definitionId:
+      renderedSuccess?.definitionId ?? "alert.facility.room-placed",
+    ...(renderedSuccess
+      ? {
+          alertCategory: "success" as const,
+          alertVariantId: renderedSuccess.variantId,
+        }
+      : {}),
     target: {
       kind: "room",
       id: command.roomId,
@@ -2764,14 +3269,23 @@ function reduceUpgradeRoom(
   const nextRoom = next.rooms.find((candidate) => candidate.id === room.id)!;
   nextRoom.upgradeLevel = (nextRoom.upgradeLevel + 1) as PlacedRoom["upgradeLevel"];
   adjustCash(next, -upgradeCost);
+  const renderedSuccess = renderPrototypeAlert(
+    "alert.success.room-upgraded",
+    {
+      room_name: definition.displayName,
+      room_level: nextRoom.upgradeLevel,
+    },
+  );
   appendEvent(next, {
     id: `event.room-upgraded.${room.id}.${nextRoom.upgradeLevel}`,
     type: "room_upgraded",
     facilityTick: next.facilityTick,
     encounterId: null,
-    message: `${definition.displayName} upgraded to Level ${nextRoom.upgradeLevel}.`,
+    message: renderedSuccess.body,
     priority: "informational",
-    definitionId: "event.facility.room-upgraded",
+    definitionId: renderedSuccess.definitionId,
+    alertCategory: "success",
+    alertVariantId: renderedSuccess.variantId,
     target: {
       kind: "room",
       id: room.id,
@@ -3193,14 +3707,34 @@ function reduceHireStaff(
   };
   next.employees.push(employee);
   adjustCash(next, -definition.hiringCost);
+  const successDefinitionId =
+    definition.id === "staff.receptionist"
+      ? "alert.success.receptionist-hired"
+      : definition.id === "staff.imaging_technician"
+        ? "alert.success.imaging-technician-hired"
+        : null;
+  const renderedSuccess = successDefinitionId
+    ? renderPrototypeAlert(successDefinitionId, {
+        employee_name: employee.displayName,
+      })
+    : null;
   appendEvent(next, {
     id: `event.staff-hired.${employee.id}`,
     type: "staff_hired",
     facilityTick: next.facilityTick,
     encounterId: null,
-    message: `${employee.displayName} hired as ${definition.displayName}.`,
+    message:
+      renderedSuccess?.body ??
+      `${employee.displayName} hired as ${definition.displayName}.`,
     priority: "informational",
-    definitionId: "alert.staff.hired",
+    definitionId:
+      renderedSuccess?.definitionId ?? "alert.staff.hired",
+    ...(renderedSuccess
+      ? {
+          alertCategory: "success" as const,
+          alertVariantId: renderedSuccess.variantId,
+        }
+      : {}),
     target: {
       kind: "employee",
       id: employee.id,
@@ -3577,7 +4111,7 @@ export function createInitialGameState(
     ? getRoomCenter(founderRoom, founderRoomDefinition)
     : { x: founderRoom.x, y: founderRoom.y };
   const state: GameState = {
-    schemaVersion: 5,
+    schemaVersion: 6,
     campaignId: options.campaignId ?? "campaign.local.prototype",
     campaignSeed,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
@@ -3665,6 +4199,15 @@ export function createInitialGameState(
       waterCoolerFillPercent: 100,
       nextWaterCoolerDrainTick:
         context.balanceRelease.environment.waterCoolerDrainIntervalMinutes,
+    },
+    alertHumor: {
+      alertsTutorialAcknowledgedAtTick: null,
+      nextAmbientAlertTick: null,
+      ambientSequence: 0,
+      ambientCycle: 0,
+      ambientUsedDefinitionIds: [],
+      recentAmbientDefinitionIds: [],
+      recentWalkoutReviewVariantIds: [],
     },
   };
   state.environment.nextLitterSpawnTick = getNextLitterSpawnTick(
@@ -3767,6 +4310,8 @@ export function gameReducer(
         command,
         context,
       );
+    case "ACKNOWLEDGE_ALERTS_TUTORIAL":
+      return reduceAcknowledgeAlertsTutorial(state, command);
     case "SET_PAUSED": {
       const next = clonePlain(state);
       next.paused = command.paused;

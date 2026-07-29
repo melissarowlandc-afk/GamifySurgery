@@ -2,6 +2,7 @@ import type { AdvertisingView } from "./types";
 
 interface AdvertisingPanelProps {
   view: AdvertisingView;
+  highlighted?: boolean;
   onDecrease: () => void;
   onIncrease: () => void;
 }
@@ -12,11 +13,19 @@ interface AdvertisingPanelProps {
  */
 export function AdvertisingPanel({
   view,
+  highlighted = false,
   onDecrease,
   onIncrease,
 }: AdvertisingPanelProps) {
   return (
-    <section className="panel advertising-panel" aria-labelledby="advertising-title">
+    <section
+      className={`panel advertising-panel${
+        highlighted ? " is-alert-highlighted" : ""
+      }`}
+      aria-labelledby="advertising-title"
+      data-advertising-control
+      tabIndex={-1}
+    >
       <span className="eyebrow">Patient demand</span>
       <h2 id="advertising-title">Advertising</h2>
       <div className="advertising-level-controls">
@@ -26,6 +35,7 @@ export function AdvertisingPanel({
           aria-label="Decrease advertising"
           onClick={onDecrease}
           disabled={!view.canDecrease}
+          data-advertising-adjust="decrease"
         >
           -
         </button>
@@ -39,6 +49,7 @@ export function AdvertisingPanel({
           aria-label="Increase advertising"
           onClick={onIncrease}
           disabled={!view.canIncrease}
+          data-advertising-adjust="increase"
         >
           +
         </button>

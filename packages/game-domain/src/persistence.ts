@@ -1,5 +1,10 @@
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
 import {
+  PROTOTYPE_ALERT_SCHEDULING,
+  PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+  PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
+} from "@gamify-surgery/balance-config";
+import {
   applyFsrsReview,
   createNewFsrsCard,
   schedulerPinsMatch,
@@ -20,6 +25,7 @@ import { getEmployeeHomeLocation } from "./staff";
 import { getDefaultDoorOffset } from "./doors";
 import type {
   AnswerRecord,
+  AlertHumorState,
   ConceptLearningHistory,
   DomainContext,
   DoorState,
@@ -32,6 +38,7 @@ import type {
   FrozenPatientTravel,
   PendingResult,
   PatientMovementState,
+  PatientDissatisfactionCause,
   PlacedRoom,
   ReviewRatingIntent,
   TerminalFeedback,
@@ -43,6 +50,128 @@ export function serializeGameState(state: GameState): string {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
+}
+
+const DISSATISFACTION_CAUSES = new Set<PatientDissatisfactionCause>([
+  "excessive_waiting",
+  "poor_cleanliness",
+  "missing_amenities",
+  "no_receptionist",
+  "imaging_unavailable",
+  "general",
+]);
+
+function normalizeStringHistory(
+  value: unknown,
+  allowedIds: ReadonlySet<string>,
+  maximumLength: number,
+): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  const unique: string[] = [];
+  for (const candidate of value) {
+    if (
+      typeof candidate === "string" &&
+      allowedIds.has(candidate) &&
+      !unique.includes(candidate)
+    ) {
+      unique.push(candidate);
+    }
+  }
+  return unique.slice(-maximumLength);
+}
+
+function getMigratedAmbientDelay(
+  campaignSeed: string,
+  ambientSequence: number,
+): number {
+  const minimum =
+    PROTOTYPE_ALERT_SCHEDULING.firstAmbientMinimumMinutes;
+  const spread =
+    PROTOTYPE_ALERT_SCHEDULING.firstAmbientMaximumMinutes -
+    minimum +
+    1;
+  return (
+    minimum +
+    deterministicInteger(
+      campaignSeed,
+      RANDOM_STREAMS.flavorEvents,
+      `ambient.first.delay.${ambientSequence}`,
+      spread,
+    )
+  );
+}
+
+function normalizeAlertHumorState(
+  value: unknown,
+  facilityTick: number,
+  campaignSeed: string,
+): AlertHumorState {
+  const candidate = isRecord(value) ? value : {};
+  const ambientDefinitionIds = new Set(
+    PROTOTYPE_AMBIENT_ALERT_DEFINITIONS.map(
+      (definition) => definition.id,
+    ),
+  );
+  const reviewVariantIds = new Set(
+    PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS.flatMap((definition) =>
+      definition.variants.map((variant) => variant.id),
+    ),
+  );
+  const alertsTutorialAcknowledgedAtTick =
+    typeof candidate.alertsTutorialAcknowledgedAtTick === "number" &&
+    Number.isSafeInteger(
+      candidate.alertsTutorialAcknowledgedAtTick,
+    ) &&
+    candidate.alertsTutorialAcknowledgedAtTick >= 0 &&
+    candidate.alertsTutorialAcknowledgedAtTick <= facilityTick
+      ? candidate.alertsTutorialAcknowledgedAtTick
+      : null;
+  const ambientSequence =
+    typeof candidate.ambientSequence === "number" &&
+    Number.isSafeInteger(candidate.ambientSequence) &&
+    candidate.ambientSequence >= 0
+      ? candidate.ambientSequence
+      : 0;
+  const parsedNextTick =
+    typeof candidate.nextAmbientAlertTick === "number" &&
+    Number.isSafeInteger(candidate.nextAmbientAlertTick) &&
+    candidate.nextAmbientAlertTick >= 0
+      ? candidate.nextAmbientAlertTick
+      : null;
+  const nextAmbientAlertTick =
+    alertsTutorialAcknowledgedAtTick === null
+      ? null
+      : (parsedNextTick ??
+        facilityTick +
+          getMigratedAmbientDelay(campaignSeed, ambientSequence));
+  return {
+    alertsTutorialAcknowledgedAtTick,
+    nextAmbientAlertTick,
+    ambientSequence,
+    ambientCycle:
+      typeof candidate.ambientCycle === "number" &&
+      Number.isSafeInteger(candidate.ambientCycle) &&
+      candidate.ambientCycle >= 0
+        ? candidate.ambientCycle
+        : 0,
+    ambientUsedDefinitionIds: normalizeStringHistory(
+      candidate.ambientUsedDefinitionIds,
+      ambientDefinitionIds,
+      ambientDefinitionIds.size,
+    ),
+    recentAmbientDefinitionIds: normalizeStringHistory(
+      candidate.recentAmbientDefinitionIds,
+      ambientDefinitionIds,
+      PROTOTYPE_ALERT_SCHEDULING.recentAmbientHistoryLimit,
+    ),
+    recentWalkoutReviewVariantIds: normalizeStringHistory(
+      candidate.recentWalkoutReviewVariantIds,
+      reviewVariantIds,
+      PROTOTYPE_ALERT_SCHEDULING.recentReviewHistoryLimit,
+    ),
+  };
 }
 
 function validatePins(
@@ -706,6 +835,55 @@ function normalizePendingResult(candidate: unknown): PendingResult | null {
   };
 }
 
+function normalizeDissatisfactionByCause(
+  value: unknown,
+  patientSatisfaction: number,
+  facilityTick: number,
+  context: DomainContext,
+): EncounterState["dissatisfactionByCause"] {
+  const normalized: EncounterState["dissatisfactionByCause"] = {};
+  if (isRecord(value)) {
+    for (const [rawCause, rawState] of Object.entries(value)) {
+      if (
+        !DISSATISFACTION_CAUSES.has(
+          rawCause as PatientDissatisfactionCause,
+        ) ||
+        !isRecord(rawState) ||
+        typeof rawState.pointsLost !== "number" ||
+        !Number.isFinite(rawState.pointsLost) ||
+        rawState.pointsLost <= 0
+      ) {
+        continue;
+      }
+      const cause = rawCause as PatientDissatisfactionCause;
+      normalized[cause] = {
+        pointsLost: rawState.pointsLost,
+        lastAppliedAtFacilityTick:
+          typeof rawState.lastAppliedAtFacilityTick === "number" &&
+          Number.isSafeInteger(
+            rawState.lastAppliedAtFacilityTick,
+          ) &&
+          rawState.lastAppliedAtFacilityTick >= 0
+            ? rawState.lastAppliedAtFacilityTick
+            : facilityTick,
+      };
+    }
+  }
+  if (
+    Object.keys(normalized).length === 0 &&
+    patientSatisfaction <
+      context.balanceRelease.patientSatisfaction.startingValue
+  ) {
+    normalized.general = {
+      pointsLost:
+        context.balanceRelease.patientSatisfaction.startingValue -
+        patientSatisfaction,
+      lastAppliedAtFacilityTick: facilityTick,
+    };
+  }
+  return normalized;
+}
+
 function normalizeEncounter(
   encounterId: string,
   candidate: Record<string, unknown>,
@@ -939,6 +1117,12 @@ function normalizeEncounter(
             Number.isSafeInteger(threshold),
         )
       : [],
+    dissatisfactionByCause: normalizeDissatisfactionByCause(
+      candidate.dissatisfactionByCause,
+      patientSatisfaction,
+      facilityTick,
+      context,
+    ),
     finalPatientSatisfaction:
       typeof candidate.finalPatientSatisfaction === "number" &&
       Number.isFinite(candidate.finalPatientSatisfaction)
@@ -1048,7 +1232,7 @@ function migrateVersionTwo(
   const next: GameState = {
     ...baseline,
     ...(parsed as unknown as GameState),
-    schemaVersion: 5 as const,
+    schemaVersion: 6 as const,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     founder: normalizeFounder(parsed.founder, campaignSeed),
     facilityTick: parsedFacilityTick,
@@ -1079,6 +1263,11 @@ function migrateVersionTwo(
       )
         ? parsed.advertisingLevel
         : 0,
+    alertHumor: normalizeAlertHumorState(
+      parsed.alertHumor,
+      parsedFacilityTick,
+      campaignSeed,
+    ),
   };
   delete (next as unknown as Record<string, unknown>).satisfaction;
   delete (next as unknown as Record<string, unknown>)
@@ -1367,6 +1556,17 @@ function validateVersionFive(
   return state;
 }
 
+function validateVersionSix(
+  parsed: Record<string, unknown>,
+  context: DomainContext,
+): GameState {
+  const state = migrateVersionTwo(parsed, context);
+  if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error("The saved campaign uses an incompatible randomness contract.");
+  }
+  return state;
+}
+
 export function deserializeGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -1392,6 +1592,9 @@ export function deserializeGameState(
   }
   if (parsed.schemaVersion === 5) {
     return validateVersionFive(parsed, context);
+  }
+  if (parsed.schemaVersion === 6) {
+    return validateVersionSix(parsed, context);
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }

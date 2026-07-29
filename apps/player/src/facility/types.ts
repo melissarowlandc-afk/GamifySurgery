@@ -85,6 +85,8 @@ export interface FacilityLitterView {
   instanceId: string;
   roomInstanceId: string;
   location: GridPoint;
+  /** Brief alert-driven locator affordance. */
+  highlighted?: boolean;
 }
 
 export interface FacilityWaterCoolerView {

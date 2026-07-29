@@ -273,7 +273,7 @@ describe("current prototype contracts", () => {
     const restored = deserializeGameState(serializeGameState(state));
 
     expect(restored).toMatchObject({
-      schemaVersion: 5,
+      schemaVersion: 6,
       campaignId: state.campaignId,
       campaignSeed: state.campaignSeed,
       clinicalReleaseId: state.clinicalReleaseId,

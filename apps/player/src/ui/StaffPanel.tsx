@@ -4,6 +4,8 @@ import type { StaffRoleGroupView } from "./types";
 
 interface StaffPanelProps {
   roles: StaffRoleGroupView[];
+  highlightedRoleId?: string | null;
+  highlightedEmployeeId?: string | null;
   onHire: (staffRoleDefinitionId: string) => void;
   onDecreaseSalary: (employeeId: string) => void;
   onIncreaseSalary: (employeeId: string) => void;
@@ -16,6 +18,8 @@ interface StaffPanelProps {
  */
 export function StaffPanel({
   roles,
+  highlightedRoleId,
+  highlightedEmployeeId,
   onHire,
   onDecreaseSalary,
   onIncreaseSalary,
@@ -39,7 +43,16 @@ export function StaffPanel({
           </p>
         ) : (
           roles.map((role) => (
-            <section className="staff-role-group" key={role.id}>
+            <section
+              className={`staff-role-group${
+                role.id === highlightedRoleId
+                  ? " is-alert-highlighted"
+                  : ""
+              }`}
+              key={role.id}
+              data-staff-role-id={role.id}
+              tabIndex={-1}
+            >
               <div className="staff-role-heading">
                 <div>
                   <h3>{role.displayName}</h3>
@@ -53,6 +66,7 @@ export function StaffPanel({
                   onClick={() => onHire(role.id)}
                   disabled={!role.canHire}
                   title={role.blockedReason}
+                  data-staff-role-hire
                 >
                   Hire {role.hiringCostLabel}
                 </button>
@@ -64,7 +78,16 @@ export function StaffPanel({
               ) : null}
 
               {role.employees.map((employee) => (
-                <article className="staff-member-card" key={employee.id}>
+                <article
+                  className={`staff-member-card${
+                    employee.id === highlightedEmployeeId
+                      ? " is-alert-highlighted"
+                      : ""
+                  }`}
+                  key={employee.id}
+                  data-employee-id={employee.id}
+                  tabIndex={-1}
+                >
                   <PixelAvatar
                     avatar={employee.avatar}
                     label={`${employee.displayName} portrait`}

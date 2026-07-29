@@ -195,7 +195,9 @@ function modelSignature(model: FacilityViewModel): string {
     `founder-activity:${model.founder.activityLabel ?? "-"}`,
     ...(model.litterItems ?? []).map(
       (item) =>
-        `${item.instanceId}:${item.location.x},${item.location.y}`,
+        `${item.instanceId}:${item.location.x},${item.location.y}:${
+          item.highlighted ? 1 : 0
+        }`,
     ),
     model.waterCooler
       ? `water:${model.waterCooler.fillPercent}:${
@@ -257,6 +259,7 @@ export class FacilityScene extends Phaser.Scene {
   private interactionHintText?: Phaser.GameObjects.Text;
   private founderActivityText?: Phaser.GameObjects.Text;
   private waterCoolerLabelText?: Phaser.GameObjects.Text;
+  private litterHighlightText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
   private roomUpgradeTexts: Phaser.GameObjects.Text[] = [];
 
@@ -377,6 +380,19 @@ export class FacilityScene extends Phaser.Scene {
 
     this.waterCoolerLabelText = this.add
       .text(0, 0, "", {
+        ...textStyle,
+        align: "center",
+        backgroundColor: "#20282a",
+        color: "#f0f0ea",
+        fontSize: "9px",
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 1)
+      .setDepth(FACILITY_DEPTH_UI)
+      .setVisible(false);
+
+    this.litterHighlightText = this.add
+      .text(0, 0, "CLEAN", {
         ...textStyle,
         align: "center",
         backgroundColor: "#20282a",
@@ -793,6 +809,7 @@ export class FacilityScene extends Phaser.Scene {
     graphics: Phaser.GameObjects.Graphics,
   ): void {
     const pixel = Math.max(1, Math.floor(this.layout.tileSize / 14));
+    this.litterHighlightText?.setVisible(false);
     for (const litter of this.bridge.viewModel.litterItems ?? []) {
       const x =
         this.layout.originX +
@@ -808,6 +825,45 @@ export class FacilityScene extends Phaser.Scene {
         Math.max(12, this.layout.tileSize * 0.36),
         Math.max(8, this.layout.tileSize * 0.24),
       );
+      if (litter.highlighted) {
+        const outlineWidth = Math.max(2, pixel);
+        const highlightWidth = Math.max(
+          18,
+          this.layout.tileSize * 0.54,
+        );
+        const highlightHeight = Math.max(
+          14,
+          this.layout.tileSize * 0.42,
+        );
+        graphics.lineStyle(
+          outlineWidth,
+          PIXEL_PALETTE_NUMBER.highlight,
+          1,
+        );
+        graphics.strokeRect(
+          x - highlightWidth / 2,
+          y - highlightHeight / 2,
+          highlightWidth,
+          highlightHeight,
+        );
+        graphics.lineStyle(
+          Math.max(1, outlineWidth - 1),
+          PIXEL_PALETTE_NUMBER.charcoal,
+          1,
+        );
+        graphics.strokeRect(
+          x - highlightWidth / 2 - outlineWidth * 2,
+          y - highlightHeight / 2 - outlineWidth * 2,
+          highlightWidth + outlineWidth * 4,
+          highlightHeight + outlineWidth * 4,
+        );
+        this.litterHighlightText
+          ?.setPosition(
+            x,
+            y - highlightHeight / 2 - Math.max(3, pixel),
+          )
+          .setVisible(true);
+      }
     }
     const cooler = this.bridge.viewModel.waterCooler;
     if (!cooler) {

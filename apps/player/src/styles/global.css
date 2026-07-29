@@ -3387,6 +3387,18 @@ textarea {
   box-shadow: inset 0 -4px 0 var(--shade-3);
 }
 
+.message-board-item.is-category-guidance {
+  border-left-style: dashed;
+}
+
+.message-board-item.is-category-success {
+  border-left: 3px solid var(--shade-4);
+}
+
+.message-board-item.is-category-walkout_review {
+  border-left: 4px double var(--ink-soft);
+}
+
 .message-board-priority-icon {
   display: grid;
   width: 30px;
@@ -3400,8 +3412,7 @@ textarea {
   place-items: center;
 }
 
-.message-board-item.is-critical .message-board-priority-icon,
-.message-board-item.is-action_required .message-board-priority-icon {
+.message-board-item.has-attention-marker .message-board-priority-icon {
   background: var(--ink);
   color: var(--panel);
 }
@@ -3441,8 +3452,9 @@ textarea {
 }
 
 .event-message-board.is-ticker .message-board-feed {
-  display: grid;
-  align-content: start;
+  display: flex;
+  align-content: initial;
+  flex-direction: column;
 }
 
 .event-message-board.is-ticker .message-board-item {
@@ -3451,6 +3463,7 @@ textarea {
   grid-template-columns: 24px minmax(0, 1fr);
   align-items: center;
   gap: 0.35rem;
+  flex: 0 0 auto;
 }
 
 .event-message-board.is-ticker .message-board-priority-icon {
@@ -3462,11 +3475,16 @@ textarea {
 
 .message-board-compact-action,
 .message-board-compact-copy {
+  display: block;
+  height: auto;
   min-width: 0;
+  min-height: 0;
   color: inherit;
   font: inherit;
   font-size: 0.72rem;
   line-height: 1.25;
+  overflow-wrap: anywhere;
+  white-space: normal;
   text-align: left;
 }
 
@@ -3512,6 +3530,27 @@ textarea {
   font-size: 0.66rem;
 }
 
+.message-board-history li > span:last-child {
+  min-width: 0;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.message-board-history-action {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
 .message-board-log-priority {
   font-weight: 900;
   text-transform: uppercase;
@@ -3522,6 +3561,16 @@ textarea {
   white-space: nowrap;
 }
 
+@media (max-width: 760px) {
+  .message-board-compact-action {
+    min-height: 44px;
+  }
+
+  .message-board-history li {
+    grid-template-columns: 1fr;
+  }
+}
+
 .staff-panel {
   max-height: min(46vh, 540px);
 }
@@ -3529,6 +3578,20 @@ textarea {
 .staff-role-group {
   padding: 0.6rem;
   border-bottom: 3px solid var(--ink);
+}
+
+.staff-role-group.is-alert-highlighted,
+.staff-member-card.is-alert-highlighted,
+.advertising-panel.is-alert-highlighted {
+  outline: 4px double var(--ink);
+  outline-offset: -5px;
+  animation: tutorial-target-pulse 1.15s steps(2, end) infinite;
+}
+
+.staff-role-group:focus-visible,
+.advertising-panel:focus-visible {
+  outline: 4px double var(--ink);
+  outline-offset: -5px;
 }
 
 .staff-role-heading {
@@ -5654,7 +5717,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .chart-drawer,
   .patient-tab-slide,
-  .facility-pause-indicator {
+  .facility-pause-indicator,
+  .staff-role-group.is-alert-highlighted,
+  .advertising-panel.is-alert-highlighted {
     animation: none;
     transition: none;
   }

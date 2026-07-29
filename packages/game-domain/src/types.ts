@@ -23,6 +23,25 @@ export type SimulationSpeed = 1 | 2 | 4;
 export type RoomOrientation = 0 | 90 | 180 | 270;
 export type CardinalDirection = "north" | "east" | "south" | "west";
 export type RoomUpgradeLevel = 1 | 2 | 3 | 4 | 5;
+export type PrototypeAlertCategory =
+  | "action_required"
+  | "guidance"
+  | "success"
+  | "ambient_flavor"
+  | "walkout_review";
+
+export type PatientDissatisfactionCause =
+  | "excessive_waiting"
+  | "poor_cleanliness"
+  | "missing_amenities"
+  | "no_receptionist"
+  | "imaging_unavailable"
+  | "general";
+
+export interface PatientDissatisfactionCauseState {
+  pointsLost: number;
+  lastAppliedAtFacilityTick: number;
+}
 
 export interface GridPoint {
   x: number;
@@ -258,6 +277,13 @@ export interface EncounterState {
   lastSatisfactionDecayAtTick: number;
   walkoutThreshold: number;
   satisfactionWarningsShown: number[];
+  /**
+   * Persisted attribution for losses to the one patient-satisfaction score.
+   * This drives cause-aware walkout copy without introducing another resource.
+   */
+  dissatisfactionByCause: Partial<
+    Record<PatientDissatisfactionCause, PatientDissatisfactionCauseState>
+  >;
   finalPatientSatisfaction: number | null;
   resolvedAtFacilityTick: number | null;
   arrivalClass: ArrivalClass;
@@ -366,6 +392,23 @@ export interface EmergencyGlp1Status {
   blockedReason: string | null;
 }
 
+export interface AlertHumorState {
+  /** Facility tick at which the player acknowledged the Alerts tutorial. */
+  alertsTutorialAcknowledgedAtTick: number | null;
+  /** Facility-time deadline; null keeps ambient messages locked. */
+  nextAmbientAlertTick: number | null;
+  /** Stable selection counter used by the deterministic flavor stream. */
+  ambientSequence: number;
+  /** Increments whenever the currently eligible definition pool is exhausted. */
+  ambientCycle: number;
+  /** Definition IDs already selected during the current cycle. */
+  ambientUsedDefinitionIds: string[];
+  /** Bounded persisted history used to avoid recent ambient repeats. */
+  recentAmbientDefinitionIds: string[];
+  /** Bounded persisted history used to avoid recent walkout-review repeats. */
+  recentWalkoutReviewVariantIds: string[];
+}
+
 export interface OperationReceipt {
   operationId: string;
   commandType: GameCommand["type"];
@@ -397,6 +440,8 @@ export interface DomainEvent {
     | "day_rollover"
     | "operating_expense"
     | "patient_arrived"
+    | "ambient_message"
+    | "success_message"
     | "development_money_added"
     | "emergency_glp1_consultation"
     | "litter_appeared"
@@ -409,6 +454,12 @@ export interface DomainEvent {
   message: string;
   priority?: "critical" | "action_required" | "informational" | "flavor";
   definitionId?: string;
+  alertCategory?: PrototypeAlertCategory;
+  alertVariantId?: string;
+  walkoutReview?: {
+    rating: 1 | 2;
+    cause: PatientDissatisfactionCause;
+  };
   target?: {
     kind: "campaign" | "encounter" | "room" | "employee";
     id: string;
@@ -421,7 +472,7 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 5;
+  schemaVersion: 6;
   campaignId: string;
   campaignSeed: string;
   randomGeneratorVersion: "randomness.xoshiro128ss.v1";
@@ -462,6 +513,7 @@ export interface GameState {
   totalOperatingExpenses: number;
   emergencyGlp1: EmergencyGlp1State;
   environment: FacilityEnvironmentState;
+  alertHumor: AlertHumorState;
 }
 
 interface CommandBase {
@@ -496,6 +548,9 @@ export type GameCommand =
       type: "ACKNOWLEDGE_DECISION_FEEDBACK";
       encounterId: string;
       decisionNodeId: string;
+    })
+  | (CommandBase & {
+      type: "ACKNOWLEDGE_ALERTS_TUTORIAL";
     })
   | (CommandBase & {
       type: "SET_PAUSED";

@@ -148,6 +148,8 @@ function createLevelZeroBuildTutorialStepView(
     selectedRoomInstanceId = null,
   } = input;
   const acknowledged = (id: TutorialStepView["id"]): boolean =>
+    (id === "alerts-tour" &&
+      state.alertHumor.alertsTutorialAcknowledgedAtTick !== null) ||
     acknowledgedStepIds.has(`${state.campaignId}:${id}`);
   const examRoom = state.rooms.find(
     (room) => room.roomDefinitionId === "room.examination",
@@ -302,6 +304,8 @@ function createLevelZeroTutorialStepView(
     summaryVisible = false,
   } = input;
   const acknowledged = (id: TutorialStepView["id"]): boolean =>
+    (id === "alerts-tour" &&
+      state.alertHumor.alertsTutorialAcknowledgedAtTick !== null) ||
     acknowledgedStepIds.has(`${state.campaignId}:${id}`);
   const first = state.encounters[TUTORIAL_ENCOUNTER_ID];
   if (!first) {

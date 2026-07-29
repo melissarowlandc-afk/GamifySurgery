@@ -2,6 +2,34 @@
 
 All notable implementation and project-record changes are listed here.
 
+## 2026-07-29
+
+### Data-driven Alerts and Events humor system
+
+- Consolidated Level 0-1 actionable, guidance, success, ambient, and walkout
+  review copy into one editable registry with stable definition/variant IDs,
+  weighted selection, context eligibility, placeholder fallbacks, cooldown
+  metadata, click targets, and explicit attention-marker behavior
+- Added a campaign-persisted ambient scheduler that unlocks after the Alerts
+  tutorial, guarantees its first line within 10-20 facility minutes, uses
+  45-90-minute recurring intervals, freezes with facility time, and preserves
+  shuffle/recent-history state through save and reload
+- Added the approved 25-line ambient library with room, object, and patient
+  context gates; title-screen Saves taglines remain a separate content system
+- Added condition-backed clinic guidance, action-required warnings, event-driven
+  success messages, and focus/highlight routing for patients, staff roles,
+  employees, Advertising, the water cooler, litter, rooms, goals, and Build
+  Mode without changing the underlying mechanics
+- Added cause-ledger-based one- and two-star walkout reviews with persisted
+  recent-variant protection and no additional gameplay penalty
+- Made the compact feed prioritize unresolved actions, reserve exclamation
+  marks for action-required content, suppress ambient rows during critical
+  alerts, retain a scrollable recent log, and wrap cleanly without overlapping
+  at desktop or phone widths
+- Migrated campaign saves to schema version 6 and added registry, domain,
+  selector, component, persistence, and focused browser coverage plus current
+  desktop and phone screenshots
+
 ## 2026-07-28
 
 ### July 28 tutorial, clinic loop, and balance pass

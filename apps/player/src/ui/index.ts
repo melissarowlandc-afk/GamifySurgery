@@ -27,6 +27,7 @@ export type {
   ChartView,
   DevelopmentView,
   EmergencyGlp1View,
+  MessageBoardCategory,
   MessageBoardItemKind,
   MessageBoardItemView,
   MessageBoardPriority,

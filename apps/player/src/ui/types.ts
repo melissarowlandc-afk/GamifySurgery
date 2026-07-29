@@ -316,11 +316,21 @@ export type MessageBoardPriority =
   | "informational"
   | "flavor";
 
+export type MessageBoardCategory =
+  | "action_required"
+  | "guidance"
+  | "success"
+  | "ambient_flavor"
+  | "walkout_review";
+
 export type MessageBoardTargetType =
   | "patient"
   | "employee"
+  | "staff_role"
   | "room"
   | "water_cooler"
+  | "advertising"
+  | "litter"
   | "build_mode"
   | "goal"
   | "emergency_glp1";
@@ -330,6 +340,16 @@ export interface MessageBoardItemView {
   /** Legacy display kind; priority takes precedence when both are supplied. */
   kind?: MessageBoardItemKind;
   priority?: MessageBoardPriority;
+  /**
+   * Semantic presentation category. Kept optional while older saved and
+   * development-only notices are migrated through the view-model layer.
+   */
+  category?: MessageBoardCategory;
+  /**
+   * The exclamation treatment is intentionally independent of priority: only
+   * messages that require the player's attention should receive it.
+   */
+  showAttentionMarker?: boolean;
   message: string;
   title?: string;
   timeLabel?: string;

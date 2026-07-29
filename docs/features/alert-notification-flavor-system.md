@@ -2,7 +2,7 @@
 
 Status: Accepted design direction
 
-Last updated: 2026-07-24
+Last updated: 2026-07-29
 
 This document is the durable message and interaction bank. The Level 0-1
 prototype implements only alerts backed by mechanics that currently exist.
@@ -30,8 +30,8 @@ Priorities:
 4. **Flavor:** humor only; never interrupts play or creates a penalty.
 
 Priority must never depend on color alone. Use a plain-language label plus
-icons, borders, motion, or shape appropriate to the limited cream, olive,
-muted-green, gray, and charcoal pixel-art style.
+icons, borders, motion, or shape appropriate to the approved limited
+pixel-art palette.
 Useful content always appears plainly. Humor may accompany a noncritical alert
 but never replaces a name, problem, timer, consequence, or action.
 
@@ -60,6 +60,33 @@ Each definition should eventually support:
 Store definitions as data rather than embedding prose throughout reducers and
 components. Runtime instances record their stable definition ID, target,
 trigger time, priority, and resolution state.
+
+### Current Level 0-1 registry
+
+`PROTOTYPE_ALERT_CONTENT` in
+`packages/balance-config/src/prototype-alerts.ts` is the current Level 0-1
+registry. It stores stable definition and text-variant IDs, selection weights,
+context eligibility, cooldown/once metadata, placeholder fallbacks, optional
+interaction routing, and attention-marker behavior.
+
+The current display categories are:
+
+- **Action required:** a player response is needed; this is the only category
+  that receives an exclamation attention marker.
+- **Guidance:** nonblocking advice tied to a real current mechanic.
+- **Success:** immediate confirmation of a completed action or milestone.
+- **Ambient flavor:** nonblocking humor selected only when its stated context
+  exists.
+- **Walkout review:** a cause-aware one- or two-star consequence after a
+  patient leaves.
+
+The two introductory encounters exclude ambient flavor. After the Alerts
+tutorial, the first ambient line is scheduled 10-20 simulated minutes later.
+Later ambient lines are scheduled 45-90 simulated minutes apart, with an
+absolute minimum separation of 30 simulated minutes. Pausing play, entering
+Build Mode, or leaving active play pauses this simulated-time schedule.
+Selection uses persisted shuffle and recent-history state so save/reload does
+not repeat or silently reroll recent lines.
 
 ## Functional patient and clinical messages
 

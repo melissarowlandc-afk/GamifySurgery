@@ -1,11 +1,10 @@
 import {
-  PROTOTYPE_ALERT_DEFINITIONS,
-  PROTOTYPE_FLAVOR_POOLS,
+  getPrototypeAlertDefinition,
+  renderPrototypeAlert,
 } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
-  deterministicInteger,
   getFacilityProgressionStatus,
   getRoomDefinition,
   type DomainEvent,
@@ -34,31 +33,23 @@ function facilityTimeLabel(tick: number): string {
 function configuredAlertCopy(
   definitionId: string,
   values: Readonly<Record<string, string>>,
-  fallbackTitle: string,
-  fallbackMessage: string,
 ): { title: string; message: string } {
-  const definition = PROTOTYPE_ALERT_DEFINITIONS.find(
-    (candidate) => candidate.id === definitionId,
-  );
-  const render = (template: string) =>
-    Object.entries(values).reduce(
-      (text, [key, value]) =>
-        text.split(`{{${key}}}`).join(value),
-      template,
-    );
+  const rendered = renderPrototypeAlert(definitionId, values);
   return {
-    title: definition
-      ? render(definition.titleTemplate)
-      : fallbackTitle,
-    message: definition
-      ? render(definition.bodyTemplate)
-      : fallbackMessage,
+    title: rendered.title,
+    message: rendered.body,
   };
 }
 
 function eventTarget(
   event: DomainEvent,
 ): Pick<MessageBoardItemView, "targetType" | "targetId" | "actionLabel"> {
+  if (
+    event.alertCategory === "ambient_flavor" ||
+    event.alertCategory === "walkout_review"
+  ) {
+    return {};
+  }
   if (event.type === "water_cooler_low") {
     return {
       targetType: "water_cooler",
@@ -92,10 +83,14 @@ function eventTarget(
   return {};
 }
 
-function eventTitle(event: DomainEvent): string {
+function fallbackEventTitle(event: DomainEvent): string {
   switch (event.type) {
     case "patient_arrived":
       return "New patient";
+    case "ambient_message":
+      return "Around the clinic";
+    case "success_message":
+      return "Clinic success";
     case "patience_warning":
       return "Patient waiting";
     case "left_before_seen":
@@ -153,7 +148,111 @@ function eventTitle(event: DomainEvent): string {
   }
 }
 
-function eventToMessage(event: DomainEvent): MessageBoardItemView {
+function eventContentValues(
+  state: GameState,
+  event: DomainEvent,
+): Record<string, string | number> {
+  const encounter = event.encounterId
+    ? state.encounters[event.encounterId]
+    : event.target?.kind === "encounter"
+      ? state.encounters[event.target.id]
+      : undefined;
+  const room =
+    event.target?.kind === "room"
+      ? state.rooms.find((candidate) => candidate.id === event.target?.id)
+      : undefined;
+  const employee =
+    event.target?.kind === "employee"
+      ? state.employees.find(
+          (candidate) => candidate.id === event.target?.id,
+        )
+      : undefined;
+  return {
+    patient_name: encounter?.patientDisplayName ?? "The patient",
+    patient_id: encounter?.id ?? "the-patient",
+    room_name:
+      (room
+        ? getRoomDefinition(room.roomDefinitionId)?.displayName
+        : null) ?? "The room",
+    room_id: room?.id ?? "the-room",
+    employee_name: employee?.displayName ?? "The employee",
+    employee_id: employee?.id ?? "the-employee",
+    amount: Math.abs(event.reward?.cashDelta ?? 0),
+    cleanliness: room?.cleanliness ?? 100,
+    morale: employee?.morale ?? 100,
+    level: state.facilityLevel,
+  };
+}
+
+function effectiveEventDefinitionId(
+  state: GameState,
+  event: DomainEvent,
+): string | undefined {
+  const room =
+    event.target?.kind === "room"
+      ? state.rooms.find((candidate) => candidate.id === event.target?.id)
+      : undefined;
+  const employee =
+    event.target?.kind === "employee"
+      ? state.employees.find(
+          (candidate) => candidate.id === event.target?.id,
+        )
+      : undefined;
+  if (
+    event.type === "staff_hired" &&
+    employee?.staffRoleDefinitionId === "staff.receptionist"
+  ) {
+    return "alert.success.receptionist-hired";
+  }
+  if (
+    event.type === "staff_hired" &&
+    employee?.staffRoleDefinitionId === "staff.imaging_technician"
+  ) {
+    return "alert.success.imaging-technician-hired";
+  }
+  if (
+    event.type === "room_placed" &&
+    room?.roomDefinitionId === "room.waiting"
+  ) {
+    return "alert.success.waiting-room-constructed";
+  }
+  if (
+    event.type === "room_placed" &&
+    room?.roomDefinitionId === "room.xray"
+  ) {
+    return "alert.success.xray-constructed";
+  }
+  if (event.type === "water_cooler_refilled") {
+    return "alert.success.water-refilled";
+  }
+  if (event.type === "litter_collected") {
+    return "alert.success.trash-cleaned";
+  }
+  if (event.type === "room_upgraded") {
+    return "alert.success.room-upgraded";
+  }
+  return event.definitionId;
+}
+
+function eventToMessage(
+  state: GameState,
+  event: DomainEvent,
+): MessageBoardItemView {
+  const definitionId = effectiveEventDefinitionId(state, event);
+  const definition = definitionId
+    ? getPrototypeAlertDefinition(definitionId)
+    : undefined;
+  const category =
+    event.alertCategory ??
+    definition?.category ??
+    (event.type === "left_before_seen"
+      ? "walkout_review"
+      : event.priority === "action_required" ||
+          event.priority === "critical"
+        ? "action_required"
+        : event.priority === "flavor"
+          ? "ambient_flavor"
+          : "success");
   const priority =
     event.type === "left_before_seen"
       ? "informational"
@@ -163,98 +262,27 @@ function eventToMessage(event: DomainEvent): MessageBoardItemView {
         event.type === "patience_warning"
           ? "action_required"
           : "informational"));
+  const rendered = definition
+    ? renderPrototypeAlert(
+        definition,
+        eventContentValues(state, event),
+        event.alertVariantId,
+      )
+    : null;
   return {
     id: event.id,
     priority,
+    category,
+    showAttentionMarker: category === "action_required",
+    // Reducer events freeze the selected, rendered copy so later catalog edits
+    // do not rewrite a campaign's recent history on reload.
     message: event.message,
-    title: eventTitle(event),
+    title: rendered?.title ?? fallbackEventTitle(event),
     timeLabel: facilityTimeLabel(event.facilityTick),
     sortKey: event.facilityTick,
     persistent: false,
     ...eventTarget(event),
   };
-}
-
-function poolForEvent(
-  event: DomainEvent,
-): (typeof PROTOTYPE_FLAVOR_POOLS)[number] | null {
-  const poolId =
-    event.type === "patient_arrived"
-      ? "patient_arrival"
-      : event.type === "patience_warning"
-        ? "waiting"
-        : event.type === "result_ready" ||
-            event.type === "clinical_decision_recorded" ||
-            event.type === "encounter_settled"
-          ? "result"
-          : event.type === "staff_hired" ||
-              event.type === "staff_fired" ||
-              event.type === "staff_quit" ||
-              event.type === "staff_salary_changed"
-            ? "staff"
-            : event.type === "room_placed" ||
-                event.type === "room_sold" ||
-                event.type === "room_upgraded"
-              ? "construction"
-              : event.type === "operating_expense" ||
-                  event.type === "development_money_added" ||
-                  event.type === "emergency_glp1_consultation"
-                ? "finance"
-                : event.type === "facility_level_advanced"
-                  ? "progression"
-                  : null;
-  return (
-    PROTOTYPE_FLAVOR_POOLS.find((pool) => pool.id === poolId) ?? null
-  );
-}
-
-function createFlavorMessages(
-  state: GameState,
-  events: readonly DomainEvent[],
-): MessageBoardItemView[] {
-  const latestTickByPool = new Map<string, number>();
-  const latestMessageByPool = new Map<string, string>();
-  const items: MessageBoardItemView[] = [];
-
-  for (const event of events) {
-    const pool = poolForEvent(event);
-    if (!pool || !pool.eligibleFacilityLevels.includes(state.facilityLevel)) {
-      continue;
-    }
-    const latestTick = latestTickByPool.get(pool.id);
-    if (
-      latestTick !== undefined &&
-      event.facilityTick - latestTick < pool.cooldownTicks
-    ) {
-      continue;
-    }
-    latestTickByPool.set(pool.id, event.facilityTick);
-    let messageIndex = deterministicInteger(
-      state.campaignSeed,
-      "flavor_text",
-      `${event.id}:${pool.id}`,
-      pool.messages.length,
-    );
-    const previousMessage = latestMessageByPool.get(pool.id);
-    if (
-      pool.messages.length > 1 &&
-      pool.messages[messageIndex] === previousMessage
-    ) {
-      messageIndex = (messageIndex + 1) % pool.messages.length;
-    }
-    const message = pool.messages[messageIndex]!;
-    latestMessageByPool.set(pool.id, message);
-    items.push({
-      id: `flavor.${event.id}.${pool.id}`,
-      priority: "flavor",
-      title: "Around the clinic",
-      message,
-      timeLabel: facilityTimeLabel(event.facilityTick),
-      sortKey: event.facilityTick - 0.1,
-      persistent: false,
-    });
-  }
-  return items;
 }
 
 function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
@@ -277,10 +305,6 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
         {
           patient_name: encounter.patientDisplayName,
         },
-        leaveWarningActive ? "Patient may leave soon" : "New patient",
-        leaveWarningActive
-          ? `${encounter.patientDisplayName} may leave soon.`
-          : `${encounter.patientDisplayName} has checked in.`,
       );
       return [
         {
@@ -288,10 +312,10 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
             ? `persistent.patient.${encounter.id}.leave-warning`
             : `persistent.patient.${encounter.id}.waiting`,
           priority: leaveWarningActive ? "critical" : "action_required",
+          category: "action_required",
+          showAttentionMarker: true,
           title: configuredCopy.title,
-          message: leaveWarningActive
-            ? `${encounter.patientDisplayName} may leave without being seen unless the chart is opened now.`
-            : configuredCopy.message,
+          message: configuredCopy.message,
           timeLabel: facilityTimeLabel(encounter.waiting.arrivedAtTick),
           actionLabel: "Open chart",
           targetType: "patient",
@@ -312,15 +336,13 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
           patient_name: encounter.patientDisplayName,
           result_name: "New information",
         },
-        hasResults ? "Results ready" : "Decision required",
-        hasResults
-          ? `New information is available for ${encounter.patientDisplayName}.`
-          : `A clinical decision is required for ${encounter.patientDisplayName}.`,
       );
       return [
         {
           id: `persistent.patient.${encounter.id}.decision`,
           priority: "action_required",
+          category: "action_required",
+          showAttentionMarker: true,
           title: configuredCopy.title,
           message: configuredCopy.message,
           timeLabel: facilityTimeLabel(state.facilityTick),
@@ -336,13 +358,13 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
       const configuredCopy = configuredAlertCopy(
         "alert.patient.complete",
         { patient_name: encounter.patientDisplayName },
-        "Encounter complete",
-        `${encounter.patientDisplayName}'s chart is ready to resolve.`,
       );
       return [
         {
           id: `persistent.patient.${encounter.id}.complete`,
           priority: "action_required",
+          category: "action_required",
+          showAttentionMarker: true,
           title: configuredCopy.title,
           message: configuredCopy.message,
           timeLabel: facilityTimeLabel(state.facilityTick),
@@ -363,19 +385,16 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
   const lowCashThreshold =
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
       .cashEligibilityThreshold;
-  if (state.cash < lowCashThreshold) {
-    const definition = PROTOTYPE_ALERT_DEFINITIONS.find(
-      (candidate) => candidate.id === "alert.finance.low-cash",
-    );
+  if (state.cash > 0 && state.cash < lowCashThreshold) {
     const configuredCopy = configuredAlertCopy(
       "alert.finance.low-cash",
       { threshold: String(lowCashThreshold) },
-      definition?.titleTemplate ?? "Low cash",
-      `Less than $${lowCashThreshold} remains.`,
     );
     messages.push({
       id: "persistent.finance.low-cash",
       priority: "action_required",
+      category: "action_required",
+      showAttentionMarker: true,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
@@ -398,12 +417,12 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.private-exam-needed",
       { patient_name: secondTutorial.patientDisplayName },
-      "Private exam space needed",
-      `${secondTutorial.patientDisplayName} would prefer not to discuss protected health information at the Front Desk. Build an Examination Room.`,
     );
     messages.push({
       id: "persistent.facility.private-exam-needed",
       priority: "action_required",
+      category: "action_required",
+      showAttentionMarker: true,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
@@ -432,17 +451,18 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     const configuredCopy = configuredAlertCopy(
       "alert.staff.receptionist-recommended",
       {},
-      "Front-desk help recommended",
-      "A receptionist adds front-desk capacity and lets the surgeon concentrate on care.",
     );
     messages.push({
       id: "persistent.staff.receptionist-recommended",
-      priority: "action_required",
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
-      targetType: "employee",
-      actionLabel: "View employees",
+      targetType: "staff_role",
+      targetId: "staff.receptionist",
+      actionLabel: "Show receptionist hiring",
       sortKey: state.facilityTick + 0.54,
       persistent: true,
     });
@@ -468,12 +488,12 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       const configuredCopy = configuredAlertCopy(
         "alert.facility.onsite-imaging-requested",
         { patient_name: pendingOffsiteXray.patientDisplayName },
-        "Patient requests onsite imaging",
-        `${pendingOffsiteXray.patientDisplayName} wishes X-ray were available onsite.`,
       );
       messages.push({
         id: "persistent.facility.onsite-imaging-requested",
         priority: "informational",
+        category: "guidance",
+        showAttentionMarker: false,
         title: configuredCopy.title,
         message: configuredCopy.message,
         timeLabel: facilityTimeLabel(state.facilityTick),
@@ -486,17 +506,18 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       const configuredCopy = configuredAlertCopy(
         "alert.staff.imaging-technician-needed",
         { patient_name: pendingOffsiteXray.patientDisplayName },
-        "Imaging staff needed",
-        `${pendingOffsiteXray.patientDisplayName} can see the X-ray room, but it cannot operate without an Imaging Technician.`,
       );
       messages.push({
         id: "persistent.staff.imaging-technician-needed",
-        priority: "action_required",
+        priority: "informational",
+        category: "guidance",
+        showAttentionMarker: false,
         title: configuredCopy.title,
         message: configuredCopy.message,
         timeLabel: facilityTimeLabel(state.facilityTick),
-        targetType: "employee",
-        actionLabel: "View employees",
+        targetType: "staff_role",
+        targetId: "staff.imaging_technician",
+        actionLabel: "Show imaging technician hiring",
         sortKey: state.facilityTick + 0.55,
         persistent: true,
       });
@@ -514,12 +535,12 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.waiting-room-needed",
       { patient_name: firstWaitingPatient.patientDisplayName },
-      "Waiting space requested",
-      `${firstWaitingPatient.patientDisplayName} would prefer to wait somewhere designed for waiting.`,
     );
     messages.push({
       id: "persistent.facility.waiting-room-needed",
       priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
@@ -541,12 +562,12 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.bathroom-needed",
       { patient_name: firstWaitingPatient.patientDisplayName },
-      "Patient amenity requested",
-      `${firstWaitingPatient.patientDisplayName} has begun wondering whether the clinic has a bathroom.`,
     );
     messages.push({
       id: "persistent.facility.bathroom-needed",
       priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
@@ -557,38 +578,65 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     });
   }
 
-  const litterRoomId = state.environment.litterItems[0]?.roomId;
+  const firstLitter = state.environment.litterItems[0];
   const dirtiestRoom = [...state.rooms].sort(
     (left, right) =>
       (left.cleanliness ?? 100) - (right.cleanliness ?? 100),
   )[0];
   const cleanlinessRoom =
-    (litterRoomId
-      ? state.rooms.find((room) => room.id === litterRoomId)
-      : null) ??
-    ((dirtiestRoom?.cleanliness ?? 100) <=
+    (dirtiestRoom?.cleanliness ?? 100) <=
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction
       .dirtyRoomThreshold
       ? dirtiestRoom
-      : null);
+      : null;
+  if (firstLitter) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.environment.trash-visible",
+      {},
+    );
+    messages.push({
+      id: "persistent.environment.trash-visible",
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "litter",
+      targetId: firstLitter.id,
+      actionLabel: "Show trash",
+      sortKey: state.facilityTick + 0.395,
+      persistent: true,
+    });
+  }
   if (cleanlinessRoom) {
     const roomName =
       getRoomDefinition(cleanlinessRoom.roomDefinitionId)
         ?.displayName ?? "A clinic room";
     const configuredCopy = configuredAlertCopy(
       "alert.facility.cleanliness-low",
-      { room_name: roomName },
-      "Cleanliness needs attention",
-      `${roomName} is looking untidy. Select visible litter to send the founder to clean it.`,
+      {
+        room_name: roomName,
+        cleanliness: String(cleanlinessRoom.cleanliness ?? 100),
+      },
     );
     messages.push({
       id: "persistent.facility.cleanliness-low",
       priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
       sortKey: state.facilityTick + 0.39,
       persistent: true,
+      ...(firstLitter
+        ? {
+            targetType: "litter" as const,
+            targetId: firstLitter.id,
+            actionLabel: "Show trash",
+          }
+        : {}),
     });
   }
 
@@ -597,16 +645,119 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
       .waterCoolerLowThreshold
   ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.environment.water-empty",
+      {},
+    );
     messages.push({
       id: "persistent.environment.water-cooler-low",
-      priority: "informational",
-      title: "Water cooler needs attention",
-      message:
-        "The water cooler is low. Select this update to find it, then click the cooler to refill it.",
+      priority: "action_required",
+      category: "action_required",
+      showAttentionMarker: true,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "water_cooler",
       actionLabel: "Show water cooler",
       sortKey: state.facilityTick + 0.38,
+      persistent: true,
+    });
+  }
+
+  const lowMoraleThreshold =
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction
+      .unhappyStaffMoraleThreshold;
+  for (const employee of state.employees.filter(
+    (candidate) => candidate.morale <= lowMoraleThreshold,
+  )) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.staff.morale-low",
+      {
+        employee_name: employee.displayName,
+        morale: String(employee.morale),
+      },
+    );
+    messages.push({
+      id: `persistent.staff.morale-low.${employee.id}`,
+      priority: "action_required",
+      category: "action_required",
+      showAttentionMarker: true,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "employee",
+      targetId: employee.id,
+      actionLabel: "Show employee",
+      sortKey: state.facilityTick + 0.57,
+      persistent: true,
+    });
+  }
+
+  if (state.cash <= 0) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.finance.no-cash",
+      {},
+    );
+    messages.push({
+      id: "persistent.finance.no-cash",
+      priority: "action_required",
+      category: "action_required",
+      showAttentionMarker: true,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "emergency_glp1",
+      actionLabel: "Open emergency cash option",
+      sortKey: state.facilityTick + 0.61,
+      persistent: true,
+    });
+  }
+
+  if (
+    state.facilityLevel === 1 &&
+    state.advertisingLevel === 0 &&
+    checkedInWaiting.length === 0 &&
+    state.nextRoutineArrivalTick - state.facilityTick >= 45
+  ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.advertising.recommended",
+      {},
+    );
+    messages.push({
+      id: "persistent.advertising.recommended",
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "advertising",
+      actionLabel: "Show Advertising",
+      sortKey: state.facilityTick + 0.36,
+      persistent: true,
+    });
+  }
+
+  if (
+    state.facilityLevel === 1 &&
+    checkedInWaiting.length >= 3 &&
+    state.rooms.some((room) => room.roomDefinitionId === "room.waiting")
+  ) {
+    const configuredCopy = configuredAlertCopy(
+      "alert.facility.waiting-room-crowded",
+      {},
+    );
+    messages.push({
+      id: "persistent.facility.waiting-room-crowded",
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "build_mode",
+      actionLabel: "Open Build Mode",
+      sortKey: state.facilityTick + 0.37,
       persistent: true,
     });
   }
@@ -616,12 +767,12 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     const configuredCopy = configuredAlertCopy(
       "alert.progress.level-complete",
       { level: String(state.facilityLevel) },
-      `Level ${state.facilityLevel} complete`,
-      "All progression requirements are complete.",
     );
     messages.push({
       id: `persistent.progress.level.${state.facilityLevel}`,
       priority: "action_required",
+      category: "action_required",
+      showAttentionMarker: true,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
@@ -652,21 +803,26 @@ function isRepresentedByPersistentCondition(event: DomainEvent): boolean {
 export function createMessageBoardView(
   state: GameState,
 ): MessageBoardItemView[] {
-  const recentEvents = state.events.slice(-24);
+  const recentEvents = state.events.slice(-80);
   const persistent = [
     ...persistentPatientMessages(state),
     ...persistentSystemMessages(state),
   ];
   const eventItems = recentEvents
     .filter((event) => !isRepresentedByPersistentCondition(event))
-    .map(eventToMessage);
-  const criticalActive = persistent.some(
-    (item) => item.priority === "critical",
+    .map((event) => eventToMessage(state, event));
+  const criticalActive = [...persistent, ...eventItems].some(
+    (item) =>
+      item.priority === "critical" &&
+      item.category === "action_required",
   );
-  const flavorItems = criticalActive
-    ? []
-    : createFlavorMessages(state, recentEvents);
-  return [...eventItems, ...flavorItems, ...persistent];
+  return [
+    ...eventItems.filter(
+      (item) =>
+        !criticalActive || item.category !== "ambient_flavor",
+    ),
+    ...persistent,
+  ];
 }
 
 export function targetTypeForDomainKind(

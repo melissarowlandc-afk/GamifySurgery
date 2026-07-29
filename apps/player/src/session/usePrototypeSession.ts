@@ -1,5 +1,6 @@
 import {
   PROTOTYPE_ALERT_DEFINITIONS,
+  type PrototypeAlertCategory,
   type PrototypeAlertPriority,
 } from "@gamify-surgery/balance-config";
 import {
@@ -127,7 +128,9 @@ export interface PrototypeSession {
 export interface PrototypeSystemNotice {
   id: string;
   definitionId: string;
-  priority: Exclude<PrototypeAlertPriority, "flavor">;
+  priority: PrototypeAlertPriority;
+  category: PrototypeAlertCategory;
+  showAttentionMarker: boolean;
   title: string;
   message: string;
   timeLabel: string;
@@ -246,6 +249,9 @@ export function usePrototypeSession(
         id: `system.initial.${initialState.campaignId}`,
         definitionId,
         priority: definition?.priority ?? "informational",
+        category: definition?.category ?? "success",
+        showAttentionMarker:
+          definition?.showAttentionMarker ?? false,
         title:
           definition?.titleTemplate ??
           (isNewCampaign ? "New campaign" : "Campaign restored"),
@@ -283,6 +289,9 @@ export function usePrototypeSession(
         id: `system.notice.${++systemNoticeSequenceRef.current}`,
         definitionId,
         priority: definition?.priority ?? "informational",
+        category: definition?.category ?? "success",
+        showAttentionMarker:
+          definition?.showAttentionMarker ?? false,
         title:
           titleOverride ??
           definition?.titleTemplate ??
@@ -1141,6 +1150,27 @@ export function usePrototypeSession(
         ? ("callout" as const)
         : null;
 
+  useEffect(() => {
+    if (
+      profile.tutorialsEnabled ||
+      state.alertHumor.alertsTutorialAcknowledgedAtTick !== null ||
+      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]
+        ?.resolutionReason === null ||
+      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] === undefined
+    ) {
+      return;
+    }
+    execute(
+      { type: "ACKNOWLEDGE_ALERTS_TUTORIAL" },
+      { announceReceipt: false, announceEvents: false },
+    );
+  }, [
+    execute,
+    profile.tutorialsEnabled,
+    state.alertHumor.alertsTutorialAcknowledgedAtTick,
+    state.encounters,
+  ]);
+
   const persistTutorialProfile = useCallback(
     (
       nextProfile: LocalPrototypeProfile,
@@ -1217,6 +1247,9 @@ export function usePrototypeSession(
         case "acknowledge-step":
           if (!tutorialStep) {
             return;
+          }
+          if (tutorialStep.id === "alerts-tour") {
+            execute({ type: "ACKNOWLEDGE_ALERTS_TUTORIAL" });
           }
           setAcknowledgedTutorialStepIds((current) => {
             const key = `${stateRef.current.campaignId}:${tutorialStep.id}`;

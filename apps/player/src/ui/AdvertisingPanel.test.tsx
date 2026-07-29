@@ -6,6 +6,7 @@ describe("AdvertisingPanel", () => {
   it("shows persistent tier controls, hourly cost, and arrival effect", () => {
     const markup = renderToStaticMarkup(
       <AdvertisingPanel
+        highlighted
         view={{
           currentLevel: 1,
           currentDisplayName: "Local listings",
@@ -42,5 +43,13 @@ describe("AdvertisingPanel", () => {
     expect(markup).toContain('aria-label="Decrease advertising"');
     expect(markup).toContain('aria-label="Increase advertising"');
     expect(markup).toContain("Levels");
+    expect(markup).toContain("is-alert-highlighted");
+    expect(markup).toContain("data-advertising-control");
+    expect(markup).toContain(
+      'data-advertising-adjust="decrease"',
+    );
+    expect(markup).toContain(
+      'data-advertising-adjust="increase"',
+    );
   });
 });

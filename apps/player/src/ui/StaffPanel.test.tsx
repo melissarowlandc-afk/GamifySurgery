@@ -7,6 +7,8 @@ describe("StaffPanel", () => {
   it("shows morale as a percentage and places Fire before salary without a morale bar", () => {
     const markup = renderToStaticMarkup(
       <StaffPanel
+        highlightedRoleId="staff.receptionist"
+        highlightedEmployeeId="employee.receptionist"
         roles={[
           {
             id: "staff.receptionist",
@@ -47,6 +49,14 @@ describe("StaffPanel", () => {
     expect(markup).not.toContain("<progress");
     expect(markup.indexOf(">Fire<")).toBeLessThan(
       markup.indexOf("Salary"),
+    );
+    expect(markup).toContain("is-alert-highlighted");
+    expect(markup).toContain(
+      'data-staff-role-id="staff.receptionist"',
+    );
+    expect(markup).toContain("data-staff-role-hire");
+    expect(markup).toContain(
+      'data-employee-id="employee.receptionist"',
     );
   });
 });

@@ -134,6 +134,16 @@ describe("explicit-door construction and renovation", () => {
       state.rooms.find((room) => room.id === "room.exam.renovate")
         ?.upgradeLevel,
     ).toBe(2);
+    expect(
+      state.events.find(
+        (event) =>
+          event.id === "event.room-upgraded.room.exam.renovate.2",
+      ),
+    ).toMatchObject({
+      definitionId: "alert.success.room-upgraded",
+      alertCategory: "success",
+      alertVariantId: expect.any(String),
+    });
     expect(getNextRoomUpgradeCost(state, "room.exam.renovate")).toBe(140);
     expect(getRoomResaleValue(state, "room.exam.renovate")).toBe(62);
 
@@ -198,6 +208,15 @@ describe("explicit-door construction and renovation", () => {
       1,
     );
     state = placeRoom(state, "room.xray", "room.xray", 33, 23);
+    expect(
+      state.events.find(
+        (event) => event.id === "event.room-placed.room.xray",
+      ),
+    ).toMatchObject({
+      definitionId: "alert.success.xray-constructed",
+      alertCategory: "success",
+      alertVariantId: expect.any(String),
+    });
     state = placeDoor(
       state,
       "door.xray.patient",
@@ -241,6 +260,17 @@ describe("prototype staff", () => {
     );
     expect(employee.nextIdleActionAtFacilityTick).toBeGreaterThanOrEqual(10);
     expect(getStaffRoleCount(state, "staff.receptionist")).toBe(1);
+    expect(
+      state.events.find(
+        (event) =>
+          event.id ===
+          "event.staff-hired.employee.receptionist",
+      ),
+    ).toMatchObject({
+      definitionId: "alert.success.receptionist-hired",
+      alertCategory: "success",
+      alertVariantId: expect.any(String),
+    });
 
     state = gameReducer(state, {
       type: "HIRE_STAFF",
