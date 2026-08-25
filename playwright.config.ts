@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 const usesExternallyManagedServer =
   process.env.GAMIFY_E2E_EXTERNAL_SERVER === "1";
+const baseURL = process.env.GAMIFY_E2E_BASE_URL ?? "http://127.0.0.1:4173";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -11,7 +12,7 @@ export default defineConfig({
   timeout: 60_000,
   reporter: [["list"]],
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL,
     channel: "chrome",
     trace: "retain-on-failure",
   },

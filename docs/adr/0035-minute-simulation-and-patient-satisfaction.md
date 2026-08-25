@@ -4,6 +4,8 @@ Status: Accepted
 
 Date: 2026-07-27
 
+Last amended: 2026-07-30
+
 Decision owner: Project owner
 
 Severity: RED simulation and save-model decision
@@ -29,7 +31,14 @@ confidence modifier also obscured how individual patients experienced care.
 - Routine arrivals use an exact persisted `nextArrivalAtMinute` plus a
   deterministic named-stream variation. Arrival times are never rounded to
   quarter-hour boundaries and never rerolled on refresh.
-- Every encounter owns persisted patient satisfaction beginning at `100`.
+- `100` is the clean, capable-clinic baseline, not an unconditional starting
+  value for every patient. At Front Desk check-in, a new ordinary encounter
+  receives configured, capped penalties for applicable current facility
+  dissatisfaction conditions, such as poor cleanliness, accumulated trash, an
+  empty water cooler, or a missing amenity or service that affects that
+  patient. The resulting value is persisted as that patient's starting
+  satisfaction. Resolving the facility issue later does not erase an
+  experience that patient already had.
 - Satisfaction changes only through authored or configured patient
   experiences: genuine idle waiting, correct and efficient care, incorrect
   care, upgraded rooms, staff morale, cleanliness, available or missing
@@ -44,11 +53,20 @@ confidence modifier also obscured how individual patients experienced care.
 - A leaving patient cancels pending care and physically routes to the exterior
   departure boundary. Already-recorded answers and FSRS reviews remain; direct
   expenses remain; no completion payment is awarded.
-- Clinic satisfaction is the equal-weight rolling mean of the most recent ten
-  completed encounters and walkouts. Before the first outcome it is
-  unmeasured and shown as an em dash.
-- The Level 0 and Level 1 satisfaction gate uses that same rolling value and is
-  incomplete while unmeasured.
+- Historical clinic satisfaction remains the equal-weight rolling mean of the
+  most recent ten completed encounters and walkouts. It is never recomputed
+  from current facility conditions, and past encounter results are not
+  rewritten when the player fixes a room or amenity.
+- The top HUD combines that historical rolling baseline with a separate live,
+  configured facility-condition modifier. Applicable unresolved conditions
+  lower the displayed satisfaction immediately; resolving them removes their
+  live modifier. Before the first ended encounter, the historical component is
+  still unmeasured; the HUD may use the neutral `100` baseline solely to make
+  current facility pressure visible. That provisional display does not create
+  a completed outcome.
+- The Level 0 and Level 1 satisfaction gate continues to require a measured
+  ended-encounter baseline; a provisional pre-outcome HUD value cannot satisfy
+  it.
 - Patient Confidence and the campaign-wide daily confidence modifier are
   removed.
 - The only XP counter is current-level Learning XP. It resets after advancing.
@@ -66,6 +84,11 @@ confidence modifier also obscured how individual patients experienced care.
 This ADR supersedes the hourly timing portion of ADR 0031, the abandonment
 scope in ADR 0028, and the confidence/daily-modifier portions of ADR 0033.
 The earned on-site X-ray rule in ADR 0031 remains current.
+
+The 2026-07-30 amendment supersedes the earlier statement that every patient
+always starts at `100` and the interpretation that the HUD may reflect only
+ended encounters. The ended-encounter rolling mean remains the historical
+baseline; current facility pressure is a separate live modifier.
 
 ## Cost of changing later
 

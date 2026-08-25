@@ -92,21 +92,28 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
     page.getByRole("navigation", { name: "Build Mode tools" }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Rotate" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Rotate" })).toBeDisabled();
   await expect(
     page.getByRole("button", { name: /Build Hallway.*\$35/ }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: /Place Door.*\$0/ }),
+    page.getByRole("button", { name: "Place Door" }),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Remove Door" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: /Undo \(/ }),
+    page.getByRole("button", { name: "Undo" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Done / Save" }),
+  ).toBeVisible();
+  await expect(
+    page.locator(".selected-room-inspector"),
+  ).toContainText("Examination Room");
 
   await page
-    .getByRole("button", { name: /Upgrade.*\$140/ })
+    .getByRole("button", { name: /Upgrade - \$140/ })
     .click();
   const upgradeDialog = page.getByRole("dialog", {
     name: "Examination Room",
@@ -116,12 +123,88 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(upgradeDialog).toContainText("Room service time 5% faster.");
   await upgradeDialog.getByRole("button", { name: "Cancel" }).click();
 
-  await page.getByRole("button", { name: /Place Door.*\$0/ }).click();
-  await expect(page.locator(".door-slot-grid")).not.toContainText(
-    /West \d+\/\d+/,
+  await page.screenshot({
+    path: "artifacts/screenshots/build-mode-condensed-desktop.png",
+    fullPage: false,
+    animations: "disabled",
+  });
+
+  const placeDoor = page.getByRole("button", { name: "Place Door" });
+  const removeDoor = page.getByRole("button", { name: "Remove Door" });
+  await placeDoor.click();
+  await expect(placeDoor).toHaveAttribute("aria-pressed", "true");
+  await expect(removeDoor).toHaveAttribute("aria-pressed", "false");
+  await page.screenshot({
+    path: "artifacts/screenshots/build-mode-door-highlights.png",
+    fullPage: false,
+    animations: "disabled",
+  });
+  await removeDoor.click();
+  await expect(removeDoor).toHaveAttribute("aria-pressed", "true");
+  await expect(placeDoor).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator(".build-mode-panel")).not.toContainText(
+    /North wall|South wall|East wall|West wall/,
   );
 
-  await page.getByRole("button", { name: "Exit Build Mode" }).click();
+  const hallwayTool = page.getByRole("button", {
+    name: /Build Hallway.*\$35/,
+  });
+  await hallwayTool.click();
+  await expect(hallwayTool).toHaveAttribute("aria-pressed", "true");
+  await expect(placeDoor).toHaveAttribute("aria-pressed", "false");
+  await expect(removeDoor).toHaveAttribute("aria-pressed", "false");
+
+  const hallwayCount = () =>
+    page.evaluate((profileKey) => {
+      const profile = JSON.parse(
+        window.localStorage.getItem(profileKey) ?? "{}",
+      ) as {
+        activeCampaignId: string;
+        campaigns: Array<{
+          campaignId: string;
+          serializedState: string;
+        }>;
+      };
+      const campaign = profile.campaigns.find(
+        (candidate) =>
+          candidate.campaignId === profile.activeCampaignId,
+      );
+      if (!campaign) {
+        return 0;
+      }
+      const state = JSON.parse(campaign.serializedState) as {
+        rooms: Array<{ roomDefinitionId: string }>;
+      };
+      return state.rooms.filter(
+        (room) => room.roomDefinitionId === "room.hallway",
+      ).length;
+    }, PROFILE_KEY);
+  const startingHallwayCount = await hallwayCount();
+  const canvas = page.locator(".facility-host canvas");
+  const canvasBox = await canvas.boundingBox();
+  expect(canvasBox).not.toBeNull();
+  let placedHallway = false;
+  // Scan a few ordinary map points. Existing rooms reject placement without
+  // turning off the paint tool; the first empty square should accept it.
+  for (const yRatio of [0.2, 0.35, 0.5, 0.65]) {
+    for (const xRatio of [0.15, 0.3, 0.5, 0.7, 0.85]) {
+      await page.mouse.click(
+        canvasBox!.x + canvasBox!.width * xRatio,
+        canvasBox!.y + canvasBox!.height * yRatio,
+      );
+      if ((await hallwayCount()) > startingHallwayCount) {
+        placedHallway = true;
+        break;
+      }
+    }
+    if (placedHallway) {
+      break;
+    }
+  }
+  expect(placedHallway).toBe(true);
+  await expect(hallwayTool).toHaveAttribute("aria-pressed", "true");
+
+  await page.getByRole("button", { name: "Done / Save" }).click();
   const invalidDialog = page.getByRole("dialog", {
     name: "Fix these access problems",
   });
@@ -131,6 +214,29 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(invalidDialog).toContainText(
     "X-ray Room must share a wall and internal door with an Imaging Control Room.",
   );
+  expect(
+    await invalidDialog.evaluate((dialog) => {
+      const bounds = dialog.getBoundingClientRect();
+      const topmostElement = document.elementFromPoint(
+        bounds.left + bounds.width / 2,
+        bounds.top + bounds.height / 2,
+      );
+      return {
+        portaledToBody:
+          dialog.parentElement?.parentElement === document.body,
+        dialogIsTopmost:
+          topmostElement !== null && dialog.contains(topmostElement),
+      };
+    }),
+  ).toEqual({
+    portaledToBody: true,
+    dialogIsTopmost: true,
+  });
+  await invalidDialog
+    .getByRole("button", { name: "Continue Renovating" })
+    .click();
+  await expect(invalidDialog).toBeHidden();
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect(
     page.getByText("BUILD MODE", { exact: true }),
   ).toBeVisible();

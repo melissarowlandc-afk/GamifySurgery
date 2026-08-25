@@ -83,6 +83,10 @@ The facility remains a real interactive Phaser scene. Rooms, doors, fixtures,
 characters, litter, the water cooler, and clickable objects remain separate
 functional elements. A flattened clinic screenshot is prohibited.
 
+Small direct-click floor interactions such as visible litter render above
+ordinary room fixtures and characters so they cannot be concealed, while
+remaining below patient locators, Build Mode overlays, and interface controls.
+
 Repo-native art uses reusable deterministic pixel cells:
 
 - one shared limited palette;
@@ -101,8 +105,9 @@ Every completed Level 1 room must be identifiable without its text label.
 Rooms use:
 
 - visibly thick walls and finished edges;
-- a shallow dollhouse cutaway, with roughly the lower 20-25% of a
-  full-height rear wall represented as a vertical face, short side returns,
+- a shallow dollhouse cutaway, with roughly 14-16% of room-floor depth
+  represented as the rear vertical face (capped below one-half tile at normal
+  scale), short side returns,
   low front edges, baseboards, recesses, and directional contact shadows;
 - rear-wall faces only on exposed northern building-envelope segments. When a
   room or hallway touches immediately north, the southern/front room loses the
@@ -110,7 +115,13 @@ Rooms use:
   reinterprets either room's floor. Every room's saved construction footprint
   remains its exact floor area; the visible rear wall is a bonus cutaway face
   projected outside and immediately north of that footprint. Partial-width
-  contacts preserve only the genuinely exposed wall runs;
+  contacts preserve only the genuinely exposed wall runs. Rear-wall artwork
+  remains anchored and sized against the complete wall, with covered portions
+  cropped away rather than the surviving artwork being squeezed into the
+  exposed fragment. Northmost hallway runs receive the same shallow rear-wall
+  treatment. Genuine exterior northwest and northeast corners descend through
+  short stepped pixel shoulders into the low side returns, while interruptions
+  created by a northern neighbor remain clean square cuts;
 - explicit doorframes, open wall passages, jambs, and thresholds: a rear-wall
   doorway is an upright opening cut from the wall/floor contact line upward
   into the visible exterior wall face, never a floating mark descending from
@@ -171,8 +182,20 @@ drives, at minimum:
 - role-specific clothing;
 - supported accessories.
 
-The approved ten interchangeable head choices and ten body choices use this
-same system without gender restrictions.
+The thirty interchangeable head choices and thirty body choices use this same
+system without combination restrictions in the founder creator: ten original
+human options, ten female-presenting human options, and ten non-human animal,
+alien, or robot options in each set. Cat and penguin options are included.
+Founder appearance remains cosmetic and creates no clinical or gameplay trait.
+
+Patient identity is generated only after the frozen presentation profile has
+resolved. When an authored chart explicitly records `Female` or `Male`, the
+patient's generated first-name pool and human head/body presentation family
+must agree with that chart value. `Not specified` uses a neutral name and one
+coherent human presentation family without inventing a chart value. This is a
+visual-consistency rule only: sex/gender never selects a diagnosis, concept,
+case, difficulty, reward, or simulation behavior. Patient portraits and map
+sprites continue to consume the same persisted descriptor.
 
 At the normal Level 1 camera scale, map characters are presented approximately
 50% larger than the original 24x36 render, with a crisp pixel-aligned
@@ -215,9 +238,10 @@ controls are hidden during ordinary gameplay.
 
 The top HUD is intentionally quieter than the facility. Learning XP, Money,
 Patient Satisfaction, and Facility Time use clean, immediately recognizable,
-outline-only pixel pictograms with consistent scale and stroke weight: scalpel,
-money bag, changing smiley face, and clock from left to right. The symbols have
-no individual box, fill texture, or decorative illustration.
+smooth outline pictograms with consistent scale and stroke weight: scalpel,
+money bag, changing smiley face, and clock from left to right. Unlike the
+environmental art, these small SVG symbols are not pixelated. They have no
+individual box, fill texture, or decorative illustration.
 Pause, play, and speed controls follow the same restrained treatment. They do
 not receive the texture, shading, or miniature illustrative detail used in
 rooms, equipment, characters, and portraits.
@@ -283,11 +307,14 @@ The Level 1 slice is ready for owner review only when:
 17. a front/southern room does not retain a dollhouse rear wall wherever
     another room or hallway touches immediately north, while its logical floor
     remains exactly its saved build footprint;
-18. Level 2+ room finishes and room-specific equipment visibly improve over
+18. partial wall coverage crops fixed wall artwork without rescaling or
+    recentering it, northmost hallways receive the same shallow rear wall, and
+    true exterior north corners step naturally into exposed side walls;
+19. Level 2+ room finishes and room-specific equipment visibly improve over
     their Level 1 presentation without changing footprints;
-19. the small player-facing title reads `Stitchin' Time`, while technical
+20. the small player-facing title reads `Stitchin' Time`, while technical
     identifiers remain backward-compatible.
-20. characters pass visually behind or in front of floor objects according to
+21. characters pass visually behind or in front of floor objects according to
     their baseline Y without changing routes;
 21. room furniture uses plausible wall-oriented layouts rather than defaulting
     to the room center;

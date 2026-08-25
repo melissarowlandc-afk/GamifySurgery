@@ -2,7 +2,7 @@
 
 Status: Accepted design direction
 
-Last updated: 2026-07-29
+Last updated: 2026-07-30
 
 This document is the durable message and interaction bank. The Level 0-1
 prototype implements only alerts backed by mechanics that currently exist.
@@ -16,28 +16,41 @@ systems are built.
   **Existing Patients**.
 - Response-required alerts appear on the right. Selecting one opens its
   patient chart, result, room, employee, or task in the central workspace.
-- Informational and flavor messages may enter a lower-right ticker and recent
-  event log.
+- Informational, guidance, success, review, and flavor messages share one
+  compact lower-right scrolling list. There is no separate minimized
+  `Recent events` view and no visible category-label column.
 - A delay has a consequence only when the underlying gameplay rule defines
   that consequence.
 
 Priorities:
 
-1. **Critical:** immediate, persistent, unmistakable, and never obscured by
-   humor.
-2. **Action required:** persists until handled or no longer relevant.
-3. **Informational:** brief, nonblocking, and retained in recent events.
+1. **Critical:** immediate, unmistakable, and never obscured by humor.
+2. **Action required:** clearly marked while the underlying response is still
+   needed.
+3. **Informational:** brief, nonblocking, and retained in the same scrolling
+   message list.
 4. **Flavor:** humor only; never interrupts play or creates a penalty.
 
-Priority must never depend on color alone. Use a plain-language label plus
-icons, borders, motion, or shape appropriate to the approved limited
-pixel-art palette.
+Priority must never depend on color alone. Only action-required and critical
+rows receive the visible exclamation-point marker; borders, motion, shape, and
+accessible labels may provide additional distinction. Guidance, success,
+ambient flavor, and review categories remain internal metadata rather than
+visible tokens beside every message.
+The feed is one reverse-chronological stream ordered by each row's original
+trigger time. Critical and action-required rows are not pinned, promoted, or
+continually re-sorted to the top. Newer messages push every older row down in
+the same way, and bounded feed history eventually moves old rows offscreen.
+Resolving a condition does not delete its row: it removes the exclamation
+marker and any now-inapplicable action state while preserving the message in
+its original chronological position. Ambient flavor uses the same chronology
+and does not receive a display-only recency boost.
 Useful content always appears plainly. Humor may accompany a noncritical alert
 but never replaces a name, problem, timer, consequence, or action.
 
-Suppress flavor while any critical alert is active. Consolidate escalation for
-the same target rather than stacking duplicates, and avoid repeating the same
-flavor line within a short period.
+Critical copy remains direct and visually unmistakable, but it does not pin
+itself or suppress later ordinary messages in the chronological stream.
+Consolidate escalation for the same target rather than stacking duplicates,
+and avoid repeating the same flavor line within a short period.
 
 ## Alert data contract
 
@@ -59,7 +72,24 @@ Each definition should eventually support:
 
 Store definitions as data rather than embedding prose throughout reducers and
 components. Runtime instances record their stable definition ID, target,
-trigger time, priority, and resolution state.
+trigger time, priority, and resolution state. Resolution updates the attention
+state of that runtime instance; it does not erase or retimestamp the historical
+row.
+
+The compact player feed is intentionally narrower than the domain event audit
+trail. Routine operating-cost postings, scored-decision/XP records, encounter
+settlements, manual GLP-1 completion receipts, prototype-money records, raw
+litter-spawn records, trash-cleanup and water-refill acknowledgements, and
+Build Mode placement/move/rotate/door/sale/upgrade records remain durable
+domain events but do not become feed rows. Their owning HUD, chart,
+environment, or Build Mode surface already provides clearer feedback.
+
+Routine check-in, clinical-decision-ready, and result-ready conditions also
+have a five-facility-minute quiet period. A feed row is created only when the
+same condition remains unresolved for **more than** five facility minutes. If
+the player responds within that interval, no retrospective row is created.
+Once a delayed row is created, it remains in chronological history; resolving
+the condition removes its exclamation marker rather than deleting the row.
 
 ### Current Level 0-1 registry
 
@@ -69,7 +99,7 @@ registry. It stores stable definition and text-variant IDs, selection weights,
 context eligibility, cooldown/once metadata, placeholder fallbacks, optional
 interaction routing, and attention-marker behavior.
 
-The current display categories are:
+The current internal content categories are:
 
 - **Action required:** a player response is needed; this is the only category
   that receives an exclamation attention marker.
@@ -90,7 +120,7 @@ not repeat or silently reroll recent lines.
 
 ## Functional patient and clinical messages
 
-- New patient: `{{patient_name}} has checked in.`
+- Delayed check-in: `{{patient_name}} has checked in and is waiting.`
 - `{{patient_name}} has been waiting {{minutes}} minutes.`
 - `{{patient_name}}'s satisfaction is beginning to decrease.`
 - Prolonged wait: `{{patient_name}}'s satisfaction is falling more quickly.`
@@ -108,8 +138,6 @@ not repeat or silently reroll recent lines.
 - The required room is currently occupied.
 - The required employee is currently unavailable.
 - The encounter is complete and ready to close.
-- Patient payment received: `${{amount}}`.
-- Encounter closed: `{{xp}} XP` earned.
 - Incorrect decision. Review the explanation before continuing.
 - This concept has been scheduled for future review.
 
@@ -141,10 +169,9 @@ their corresponding mechanics exist.
 
 ## Functional finance, progression, and inspection messages
 
-- Low cash: less than the configured emergency-cash threshold remains
-  (temporarily `$200` in the current Level 0-1 balance build).
-- Emergency GLP-1 consultation is available.
-- Emergency consultation unavailable for another `{{time_remaining}}`.
+- Low cash: clinic cash is below the configured finance-warning threshold.
+- Manual GLP-1 consultation is available until the dedicated room is built.
+- Manual consultation unavailable for another `{{time_remaining}}`.
 - Insufficient funds: `${{additional_amount}}` more is required.
 - Today's clinic income: `${{income}}`.
 - Today's clinic expenses: `${{expenses}}`.
@@ -362,7 +389,7 @@ Keep these inactive until the associated room exists:
 - The wound and ostomy clinic is open. Tape inventory is now a strategic asset.
 - The children's waiting room is ready. The toys will never return to their original bins.
 
-## GLP-1 emergency-clicker sarcasm
+## GLP-1 manual-clicker sarcasm
 
 Retain these four lines exactly:
 
@@ -409,12 +436,39 @@ The current prototype may activate only:
 - Patient arrival and Waiting badges
 - Waiting/patience escalation already supported by the patience rules
 - Result-ready and clinical-decision alerts
-- Encounter completion, cash, XP, and FSRS scheduling information
-- Room placement/connectivity and staff-hiring alerts
-- Existing upkeep/payroll charges
-- Low cash and the bounded emergency GLP-1 action if included
+- Persistent encounter-ready-to-close guidance and staff-hiring alerts
+- Patient guidance about waiting, unavailable onsite testing, missing
+  amenities, accumulated trash, and an occupied base-level room that could be
+  upgraded
+- Low-cash warnings; the manual GLP-1 control owns its own cooldown and
+  completion feedback instead of posting receipts into this feed
 - Save, hidden-page pause, restart, and testing-mode notices
 - Flavor categories whose underlying objects already exist
 
 Maintenance, breakdowns, repair, inspection, connection recovery, future room
 types, and automated Level 2 telehealth messages remain inactive.
+
+Visible trash receives one teaching prompt only. The prompt is permanently
+acknowledged when the player successfully starts the first founder cleanup and
+stays acknowledged across reload. Later messaging appears only after trash has
+genuinely accumulated (or visible trash accompanies low cleanliness), uses a
+single condition-backed row, and is phrased as a patient complaint rather than
+re-teaching the click interaction.
+
+The refill-water alert is emitted when the cooler first becomes empty, not
+merely when it becomes low. If it remains continuously empty, it may recur once
+after each complete facility day without a refill. Refilling resolves the
+current occurrence and clears its exclamation marker, but leaves that message
+in the chronological feed. A later transition from refilled to empty is a new
+occurrence.
+
+Any current facility condition presented as a reason patients are unhappy must
+use the same condition evaluation as its configured satisfaction effect.
+Examples include accumulated trash or poor cleanliness, an empty water cooler,
+and an applicable missing Waiting Room, Examination Room, or onsite service.
+The alert is not a cosmetic warning detached from gameplay: while the
+condition remains, it contributes to the live HUD satisfaction modifier, and a
+new ordinary patient checking in begins below the clean, capable-clinic
+baseline. Resolving the facility condition removes the live HUD modifier but
+does not rewrite satisfaction already experienced by a patient or a completed
+encounter.

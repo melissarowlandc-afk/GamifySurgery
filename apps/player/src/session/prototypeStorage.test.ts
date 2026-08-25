@@ -84,6 +84,27 @@ describe("new-campaign opening storage", () => {
     ).toBe(true);
   });
 
+  it("enables tutorial guidance for every newly created campaign", () => {
+    const profile = {
+      ...createFreshProfile(),
+      tutorialsEnabled: false,
+      tutorialIntroDismissedCampaignIds: ["campaign.previous"],
+    };
+
+    const created = appendLocalCampaign(
+      profile,
+      FOUNDER,
+      "Tutorial Returns Surgical",
+      456,
+      "tutorial-returns-seed",
+    );
+
+    expect(created.profile.tutorialsEnabled).toBe(true);
+    expect(
+      created.profile.tutorialIntroDismissedCampaignIds,
+    ).not.toContain(created.campaign.campaignId);
+  });
+
   it("round-trips an intentional no-active-campaign state with archived campaigns", () => {
     useMemoryStorage();
     const created = appendLocalCampaign(

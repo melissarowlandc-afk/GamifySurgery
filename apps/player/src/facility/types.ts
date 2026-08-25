@@ -1,7 +1,6 @@
 import type {
   CardinalDirection,
   GridPoint,
-  OffsitePatientTravelPresentation,
   PixelAppearanceDescriptor,
   RoomOrientation,
   RoomUpgradeLevel,
@@ -22,9 +21,21 @@ export interface FacilityPatientView {
   location?: GridPoint;
   path?: GridPoint[];
   pathIndex?: number;
-  offsiteTravel?: OffsitePatientTravelPresentation;
   moving?: boolean;
   direction?: "front" | "side" | "back";
+  /** Derived presentation state for a stationary patient occupying a waiting anchor. */
+  seated?: boolean;
+}
+
+/** Noninteractive exterior pedestrian; never appears in patient UI. */
+export interface FacilityAmbientPedestrianView {
+  instanceId: string;
+  appearance: PixelAppearanceDescriptor;
+  location: GridPoint;
+  path: GridPoint[];
+  pathIndex: number;
+  moving: boolean;
+  direction: "front" | "side" | "back";
 }
 
 export interface FacilityRoomView {
@@ -53,6 +64,26 @@ export interface FacilityDoorView {
   offset: number;
   exterior: boolean;
 }
+
+export type BuildDoorTool = "place" | "remove" | null;
+export type FacilityBuildDoorTool = BuildDoorTool;
+
+/**
+ * A room-relative wall segment that Build Mode may expose as a direct map
+ * interaction. The domain remains authoritative: `enabled` is only the
+ * presentation projection of the current placement validation.
+ */
+export interface FacilityBuildDoorSlotView {
+  id: string;
+  roomInstanceId: string;
+  side: CardinalDirection;
+  offset: number;
+  /** Omitted slots are valid; this permits a caller to include disabled
+   * preview positions when it needs their blocked reason. */
+  enabled?: boolean;
+  blockedReason?: string;
+}
+export type FacilityDoorSlotView = FacilityBuildDoorSlotView;
 
 export interface FacilityStaffView {
   instanceId: string;
@@ -133,11 +164,13 @@ export interface FacilityViewModel {
   paused: boolean;
   simulationSpeed: 1 | 2 | 4;
   realMillisecondsPerFacilityMinuteAt1x: number;
-  patientTravelTilesPerFacilityMinute: number;
+  /** Exact canonical movement rate shared by every map character. */
+  characterTravelTilesPerFacilityMinute: number;
   gridColumns: number;
   gridRows: number;
   patientCounts: FacilityPatientCounts;
   founder: FacilityFounderView;
+  ambientPedestrians?: FacilityAmbientPedestrianView[];
   litterItems?: FacilityLitterView[];
   waterCooler?: FacilityWaterCoolerView;
   patients?: FacilityPatientView[];
@@ -146,6 +179,10 @@ export interface FacilityViewModel {
   staff: FacilityStaffView[];
   placement: FacilityPlacementView | null;
   buildMode?: boolean;
+  buildDoorTool?: BuildDoorTool;
+  buildDoorSlots?: FacilityBuildDoorSlotView[];
+  /** @deprecated Use `buildDoorSlots`. Retained for save-free view adapters. */
+  eligibleDoorSlots?: FacilityBuildDoorSlotView[];
   selectedRoomInstanceId?: string | null;
   /** Brief visual locator requested after opening a visible patient's chart. */
   selectedPatientInstanceId?: string | null;
@@ -156,10 +193,17 @@ export type PlaceRoomRequest = (
   tileX: number,
   tileY: number,
   orientation?: RoomOrientation,
-) => void;
+) => boolean;
 export type SelectRoomRequest = (roomInstanceId: string) => void;
+export type PlaceDoorRequest = (
+  roomInstanceId: string,
+  side: CardinalDirection,
+  offset: number,
+) => void;
+export type RemoveDoorRequest = (doorInstanceId: string) => void;
 export type RequestRoomUpgrade = (roomInstanceId: string) => void;
 export type CollectLitterRequest = (litterId: string) => void;
 export type RefillWaterCoolerRequest = () => void;
 export type PraiseEmployeeRequest = (employeeId: string) => void;
+export type MoveFounderRequest = (destination: GridPoint) => boolean;
 export type FacilityCameraChangeRequest = (camera: FacilityCameraView) => void;

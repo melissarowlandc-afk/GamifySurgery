@@ -119,6 +119,7 @@ describe("state-driven tutorial coach", () => {
         candidate.encounters[TUTORIAL_ENCOUNTER_ID]!
           .patientMovement === null,
     );
+    expect(view(state)?.id).toBe("first-patient-arriving");
     expect(
       view(state, { acknowledged: ["first-patient-arriving"] })?.id,
     ).toBe("open-first-chart");
@@ -197,7 +198,7 @@ describe("state-driven tutorial coach", () => {
     });
   });
 
-  it("uses the protected second patient to explain a ten-minute facility-time service and returned decision", () => {
+  it("uses the protected second patient to explain a timed facility service and returned decision", () => {
     let state = createInitialGameState();
     state = advanceUntil(
       state,
@@ -227,6 +228,19 @@ describe("state-driven tutorial coach", () => {
     expect(
       second.frozenCase.decisionNodes[0]!.resultGateAfter,
     ).not.toBeNull();
+    expect(
+      view(state, {
+        acknowledged: [
+          "first-patient-arriving",
+          "open-first-chart",
+          "first-decision",
+          "first-feedback",
+          "first-encounter-summary",
+          "flip-first-chart",
+          "resolve-first-chart",
+        ],
+      })?.id,
+    ).toBe("between-tutorial-patients");
 
     state = advanceUntil(
       state,
@@ -234,6 +248,20 @@ describe("state-driven tutorial coach", () => {
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
           .patientMovement === null,
     );
+    expect(
+      view(state, {
+        acknowledged: [
+          "first-patient-arriving",
+          "open-first-chart",
+          "first-decision",
+          "first-feedback",
+          "first-encounter-summary",
+          "flip-first-chart",
+          "resolve-first-chart",
+          "between-tutorial-patients",
+        ],
+      })?.id,
+    ).toBe("second-patient-arriving");
     state = reduce(state, {
       type: "OPEN_CHART",
       encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
@@ -255,7 +283,7 @@ describe("state-driven tutorial coach", () => {
       id: "second-first-decision",
       target: "answer-choices",
     });
-    expect(timedDecision?.body).toContain("10 minutes");
+    expect(timedDecision?.body).toContain("1 hr");
     expect(timedDecision?.body).toContain("facility clock");
 
     state = answerCorrect(state, SECOND_TUTORIAL_ENCOUNTER_ID);
@@ -306,6 +334,36 @@ describe("state-driven tutorial coach", () => {
         acknowledged: [...throughWait, "second-result-ready"],
       })?.id,
     ).toBe("second-follow-up-decision");
+
+    state = answerCorrect(state, SECOND_TUTORIAL_ENCOUNTER_ID);
+    state = reduce(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+    });
+    const throughFinalDecision = [
+      ...throughWait,
+      "second-result-ready",
+      "second-follow-up-decision",
+    ];
+    expect(
+      state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.terminalFeedback
+        ?.acknowledged,
+    ).toBe(true);
+    expect(
+      view(state, { acknowledged: throughFinalDecision }),
+    ).toMatchObject({
+      id: "second-final-feedback",
+      targetSelector:
+        "[data-tutorial-anchor='current-decision-feedback']",
+    });
+    expect(
+      view(state, {
+        acknowledged: [
+          ...throughFinalDecision,
+          "second-final-feedback",
+        ],
+      })?.id,
+    ).toBe("resolve-second-chart");
   });
 
   it("teaches the room footprint and explicit $0 door before allowing build exit", () => {
@@ -444,20 +502,30 @@ describe("state-driven tutorial coach", () => {
         summaryVisible: true,
       })?.id,
     ).toBe("select-exam-room-for-door");
-    expect(
-      view(state, {
-        buildMode: true,
-        acknowledged: [
-          ...beforeBuild,
-          "enter-build-mode",
-          "select-exam-room",
-          "place-exam-room",
-          "select-exam-room-for-door",
-        ],
-        selectedRoomInstanceId: "room.exam.tutorial",
-        summaryVisible: true,
-      })?.id,
-    ).toBe("place-exam-room-door");
+    const doorTutorial = view(state, {
+      buildMode: true,
+      acknowledged: [
+        ...beforeBuild,
+        "enter-build-mode",
+        "select-exam-room",
+        "place-exam-room",
+        "select-exam-room-for-door",
+      ],
+      selectedRoomInstanceId: "room.exam.tutorial",
+      summaryVisible: true,
+    });
+    expect(doorTutorial).toMatchObject({
+      id: "place-exam-room-door",
+      targetSelector: "[data-tutorial-anchor='place-door']",
+    });
+    expect(doorTutorial?.body).toContain(
+      "Toggle Place Door, then click an emphasized eligible wall.",
+    );
+    expect(doorTutorial?.body).toContain(
+      "Remove Door similarly highlights the doors you can click to remove.",
+    );
+    expect(doorTutorial?.body).not.toContain("wall slot");
+    expect(doorTutorial?.avoidSelector).toBeUndefined();
 
     state.doors.push({
       id: "door.exam.tutorial",
@@ -484,43 +552,55 @@ describe("state-driven tutorial coach", () => {
     );
   });
 
-  it("introduces routine arrival and movement before a Level 1 service drill", () => {
+  it("keeps the completion prompt as the only Level 1 tutorial step", () => {
     let state = createInitialGameState();
     state.facilityLevel = 1;
     state.encounters = {};
     state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
-    expect(view(state)?.id).toBe("level-one-ready");
+    state.paused = true;
+    expect(view(state)).toMatchObject({
+      id: "level-one-resume-time",
+      title: "Resume facility time to begin Level 1",
+    });
+
+    const expectCompletionPrompt = (candidate: GameState) => {
+      const tutorial = view(candidate, {
+        acknowledged: ["level-one-await-first-arrival"],
+      });
+      expect(tutorial).toMatchObject({
+        id: "level-one-await-first-arrival",
+        title: "Your first Level 1 patient is on the way",
+        primaryAction: {
+          id: "complete-tutorial",
+          label: "Complete tutorial",
+        },
+      });
+      expect(tutorial?.secondaryAction).toBeUndefined();
+    };
+
+    state.paused = false;
+    expectCompletionPrompt(state);
 
     state = reduce(state, {
       type: "ADMIT_PATIENT",
       encounterId: "encounter.level-one.service-drill",
-      caseId: "case.synthetic.lab-routing",
+      caseId: "case.breast-cyst.under-30-asymptomatic-simple",
       patientDisplayName: "Tutorial Router",
       arrivalClass: "routine",
     });
-    expect(view(state)).toMatchObject({
-      id: "level-one-first-arrival",
-      title: "A patient is walking to check-in",
-    });
+    expectCompletionPrompt(state);
+
     state = advanceUntil(
       state,
       (candidate) =>
         candidate.encounters["encounter.level-one.service-drill"]!
           .patientMovement === null,
     );
-    expect(view(state)).toMatchObject({
-      id: "level-one-first-arrival",
-      target: "waiting-patient",
-    });
+    expectCompletionPrompt(state);
 
     state = reduce(state, {
       type: "OPEN_CHART",
       encounterId: "encounter.level-one.service-drill",
-    });
-    expect(view(state)).toMatchObject({
-      id: "level-one-service-drill",
-      title: "This artificial patient demonstrates service routing",
-      target: "answer-choices",
     });
     state = advanceUntil(
       state,
@@ -530,10 +610,30 @@ describe("state-driven tutorial coach", () => {
           "encounter.level-one.service-drill",
         ) !== null,
     );
-    expect(view(state)).toMatchObject({
-      id: "level-one-service-drill",
-      target: "answer-choices",
+    expectCompletionPrompt(state);
+
+    state = answerCorrect(
+      state,
+      "encounter.level-one.service-drill",
+    );
+    expectCompletionPrompt(state);
+
+    const firstStep =
+      state.encounters["encounter.level-one.service-drill"]!.steps[0]!;
+    state = reduce(state, {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+      encounterId: "encounter.level-one.service-drill",
+      decisionNodeId: firstStep.decisionNodeId,
     });
+    expectCompletionPrompt(state);
+
+    state = advanceUntil(
+      state,
+      (candidate) =>
+        candidate.encounters["encounter.level-one.service-drill"]!
+          .lifecycle === "active_action_required",
+    );
+    expectCompletionPrompt(state);
   });
 
   it("returns no coach when prototype tools disable tutorials", () => {

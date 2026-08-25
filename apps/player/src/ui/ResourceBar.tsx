@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { SimulationSpeed } from "@gamify-surgery/game-domain";
 import type { ResourceBarView } from "./types";
-import { PixelIcon } from "./PixelIcon";
+import { SmoothHudIcon } from "./SmoothHudIcon";
 
 interface ResourceBarProps {
   view: ResourceBarView;
@@ -39,20 +39,12 @@ function HudIcon({
   kind: "learning" | "money" | "satisfaction" | "time";
   mood?: "happy" | "steady" | "sad";
 }) {
-  const iconName =
-    kind === "satisfaction"
-      ? mood === "happy"
-        ? "satisfactionHappy"
-        : mood === "sad"
-          ? "satisfactionSad"
-          : "satisfactionSteady"
-      : kind;
   return (
     <span
-      className={`pixel-hud-icon is-${kind}${mood ? ` is-${mood}` : ""}`}
+      className={`hud-outline-icon is-${kind}${mood ? ` is-${mood}` : ""}`}
       aria-hidden="true"
     >
-      <PixelIcon name={iconName} />
+      <SmoothHudIcon kind={kind} mood={mood} />
     </span>
   );
 }
@@ -72,8 +64,6 @@ export function ResourceBar({
   const moneyDelta =
     view.moneyHourlyDeltaLabel ?? view.moneyDeltaLabel;
   const dayTime = view.dayTimeLabel ?? view.facilityTimeLabel;
-  const goals = view.goals ?? [];
-  const completeGoalCount = goals.filter((goal) => goal.complete).length;
   const satisfactionMood = satisfactionExpression(
     view.satisfactionLabel,
   );
@@ -113,9 +103,6 @@ export function ResourceBar({
                 value={xpProgressPercent}
                 aria-label="Learning XP progress toward next level"
               />
-              <span className="resource-goals-summary">
-                Goals {completeGoalCount}/{goals.length} · see Goals panel
-              </span>
             </div>
           </section>
 
@@ -126,7 +113,6 @@ export function ResourceBar({
               <strong className="resource-money-value">
                 {view.moneyLabel} <small>({moneyDelta})</small>
               </strong>
-              <small>Recurring operating change per hour</small>
             </div>
           </section>
 
@@ -135,7 +121,6 @@ export function ResourceBar({
             <div className="resource-chip-content">
               <span>Patient satisfaction</span>
               <strong>{view.satisfactionLabel}</strong>
-              <small>Last 10 completed encounters</small>
             </div>
           </section>
 
@@ -144,7 +129,6 @@ export function ResourceBar({
             <div className="resource-chip-content">
               <span>Facility time</span>
               <strong>{dayTime}</strong>
-              <small>{paused ? "Paused" : "Clinic open"}</small>
             </div>
           </section>
         </div>

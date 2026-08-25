@@ -30,7 +30,9 @@
     "clinical:workbook": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/workbook-cli.js",
     "clinical:workbook:init": "npm run clinical:workbook -- init .clinical-workbench/pilot",
     "clinical:workbook:compile": "npm run clinical:workbook -- compile .clinical-workbench/pilot .clinical-workbench/compiled-workspace.json",
-    "clinical:fingerprint-source": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/source-fingerprint-cli.js"
+    "clinical:fingerprint-source": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/source-fingerprint-cli.js",
+    "clinical:pilot:docs": "node scripts/generate-clinical-pilot-docs.mjs",
+    "clinical:pilot:links": "node scripts/check-clinical-pilot-links.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",

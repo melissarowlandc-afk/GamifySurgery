@@ -90,6 +90,39 @@ export const roomDefinitionSchema = z
       .max(20),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
     capabilityIds: z.array(stableIdSchema),
+    navigation: z
+      .object({
+        /**
+         * Coordinates are stored in the definition's unrotated local space.
+         * The domain rotates them with the room instance.
+         */
+        blockedTiles: z.array(
+          z.object({
+            x: z.number().int().nonnegative(),
+            y: z.number().int().nonnegative(),
+          }),
+        ),
+        primaryAnchor: z
+          .object({
+            x: z.number().int().nonnegative(),
+            y: z.number().int().nonnegative(),
+          })
+          .nullable(),
+        waitingAnchors: z.array(
+          z.object({
+            x: z.number().int().nonnegative(),
+            y: z.number().int().nonnegative(),
+          }),
+        ),
+        staffAnchor: z
+          .object({
+            x: z.number().int().nonnegative(),
+            y: z.number().int().nonnegative(),
+          })
+          .nullable(),
+      })
+      .strict()
+      .optional(),
   })
   .strict()
   .superRefine((room, context) => {
@@ -106,6 +139,82 @@ export const roomDefinitionSchema = z
         code: "custom",
         message: "Hallway tiles do not have a door side.",
         path: ["defaultDoorSide"],
+      });
+    }
+    const navigation = room.navigation;
+    if (navigation) {
+      const inBounds = (point: { x: number; y: number }) =>
+        point.x < room.width && point.y < room.height;
+      const key = (point: { x: number; y: number }) =>
+        `${point.x},${point.y}`;
+      const blocked = new Set(
+        navigation.blockedTiles.map((point) => key(point)),
+      );
+      const seenBlocked = new Set<string>();
+      navigation.blockedTiles.forEach((point, index) => {
+        if (!inBounds(point)) {
+          context.addIssue({
+            code: "custom",
+            message: "A blocked navigation tile is outside the room footprint.",
+            path: ["navigation", "blockedTiles", index],
+          });
+        }
+        const pointKey = key(point);
+        if (seenBlocked.has(pointKey)) {
+          context.addIssue({
+            code: "custom",
+            message: "Blocked navigation tiles must be unique.",
+            path: ["navigation", "blockedTiles", index],
+          });
+        }
+        seenBlocked.add(pointKey);
+      });
+      const validateAnchor = (
+        point: { x: number; y: number } | null,
+        path: Array<string | number>,
+      ) => {
+        if (!point) {
+          return;
+        }
+        if (!inBounds(point)) {
+          context.addIssue({
+            code: "custom",
+            message: "A navigation anchor is outside the room footprint.",
+            path,
+          });
+        }
+        if (blocked.has(key(point))) {
+          context.addIssue({
+            code: "custom",
+            message: "A navigation anchor cannot occupy a blocked tile.",
+            path,
+          });
+        }
+      };
+      validateAnchor(navigation.primaryAnchor, [
+        "navigation",
+        "primaryAnchor",
+      ]);
+      validateAnchor(navigation.staffAnchor, [
+        "navigation",
+        "staffAnchor",
+      ]);
+      const waitingKeys = new Set<string>();
+      navigation.waitingAnchors.forEach((point, index) => {
+        validateAnchor(point, [
+          "navigation",
+          "waitingAnchors",
+          index,
+        ]);
+        const pointKey = key(point);
+        if (waitingKeys.has(pointKey)) {
+          context.addIssue({
+            code: "custom",
+            message: "Waiting navigation anchors must be unique.",
+            path: ["navigation", "waitingAnchors", index],
+          });
+        }
+        waitingKeys.add(pointKey);
       });
     }
   });
@@ -189,7 +298,7 @@ export const prototypeBalanceReleaseSchema = z
         protectedRoomDefinitionIds: z.array(stableIdSchema).min(1),
         roomResalePercent: z.number().int().min(0).max(99),
         staffMovementIntervalTicks: z.number().int().positive(),
-        patientTravelTilesPerTick: z.number().int().positive(),
+        characterTravelTilesPerTick: z.number().int().positive(),
         startingCash: z.number().int().nonnegative(),
         startingSatisfaction: z.number().int().min(0).max(100),
         maximumPlayableLevel: z.literal(1),
@@ -284,6 +393,21 @@ export const prototypeBalanceReleaseSchema = z
         maximumAmenityCompletionBonus: z.number().int().nonnegative().max(20),
         roomCleanlinessLossPerEncounter: z.number().int().nonnegative().max(20),
         rollingWindowSize: z.number().int().positive().max(100),
+        facilityConditionPenalties: z
+          .object({
+            maximumTotal: z.number().int().nonnegative().max(50),
+            visibleLitterPerItem: z.number().int().nonnegative().max(20),
+            visibleLitterMaximum: z.number().int().nonnegative().max(50),
+            dirtyCleanliness: z.number().int().nonnegative().max(20),
+            emptyWaterCooler: z.number().int().nonnegative().max(20),
+            missingWaitingRoom: z.number().int().nonnegative().max(20),
+            missingExaminationRoom: z.number().int().nonnegative().max(20),
+            missingBathroom: z.number().int().nonnegative().max(20),
+            noReceptionist: z.number().int().nonnegative().max(20),
+            lowStaffMorale: z.number().int().nonnegative().max(20),
+            unavailableOnsiteXray: z.number().int().nonnegative().max(20),
+          })
+          .strict(),
       })
       .strict(),
     environment: z
@@ -296,6 +420,8 @@ export const prototypeBalanceReleaseSchema = z
         waterCoolerDrainIntervalMinutes: z.number().int().positive(),
         waterCoolerDrainPerInterval: z.number().int().positive().max(100),
         waterCoolerLowThreshold: z.number().int().min(0).max(99),
+        waterCoolerEmptyReminderMinutes: z.number().int().positive(),
+        receptionistWaterRefillDelayMinutes: z.number().int().positive(),
         waterRefillSatisfactionBonus: z.number().int().nonnegative().max(10),
         praiseMoraleBonus: z.number().int().positive().max(25),
         praiseCooldownMinutes: z.number().int().positive(),
@@ -303,6 +429,9 @@ export const prototypeBalanceReleaseSchema = z
         idleActionMinimumMinutes: z.number().int().positive(),
         idleActionMaximumMinutes: z.number().int().positive(),
         idleActionChancePercent: z.number().int().min(0).max(100),
+        sidewalkPedestrianMinimumMinutes: z.number().int().positive(),
+        sidewalkPedestrianMaximumMinutes: z.number().int().positive(),
+        maximumSidewalkPedestrians: z.number().int().positive().max(4),
       })
       .strict()
       .superRefine((environment, context) => {
@@ -324,6 +453,16 @@ export const prototypeBalanceReleaseSchema = z
             code: "custom",
             message: "The idle-action interval range is inverted.",
             path: ["idleActionMaximumMinutes"],
+          });
+        }
+        if (
+          environment.sidewalkPedestrianMaximumMinutes <
+          environment.sidewalkPedestrianMinimumMinutes
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: "The sidewalk-pedestrian interval range is inverted.",
+            path: ["sidewalkPedestrianMaximumMinutes"],
           });
         }
       }),
@@ -394,7 +533,8 @@ export const prototypeBalanceReleaseSchema = z
       .strict(),
     emergencyGlp1: z
       .object({
-        cashEligibilityThreshold: z.number().int().positive(),
+        lowCashAlertThreshold: z.number().int().positive(),
+        dedicatedRoomDefinitionId: stableIdSchema,
         cooldownTicks: z.number().int().positive(),
         cooldownMinutes: z.number().int().positive(),
         payment: z.number().int().positive(),

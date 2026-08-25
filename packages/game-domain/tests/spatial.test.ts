@@ -2,11 +2,16 @@ import { describe, expect, it } from "vitest";
 
 import type { RoomDefinition } from "@gamify-surgery/balance-config";
 import {
+  findDeterministicFacilityPath,
   findDeterministicRoomPath,
+  getRoomNavigableTiles,
+  getRoomNavigationAnchor,
   isPlacementAttachedThroughOwnEntrance,
+  rotateRoomLocalPoint,
   validateFacilityConnectivity,
 } from "../src/spatial";
-import type { PlacedRoom } from "../src/types";
+import { PROTOTYPE_DOMAIN_CONTEXT } from "../src/context";
+import type { DoorState, PlacedRoom } from "../src/types";
 
 const protectedRoomDefinitionIds = new Set(["room.front_desk"]);
 const roomDefinition = (
@@ -333,5 +338,171 @@ describe("facility connectivity", () => {
       { x: 11, y: 4 },
       { x: 11, y: 3 },
     ]);
+  });
+});
+
+describe("fixed-fixture navigation metadata", () => {
+  const prototypeDefinition = (id: string) =>
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find(
+      (definition) => definition.id === id,
+    )!;
+
+  it("rotates anchors and blocked fixture tiles with the room", () => {
+    const definition = prototypeDefinition("room.examination");
+    const room: PlacedRoom = {
+      id: "room.exam.rotated-navigation",
+      roomDefinitionId: definition.id,
+      x: 10,
+      y: 10,
+      orientation: 90,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+
+    expect(
+      rotateRoomLocalPoint(
+        definition.navigation!.primaryAnchor!,
+        definition,
+        room.orientation,
+      ),
+    ).toEqual({ x: 0, y: 1 });
+    expect(getRoomNavigationAnchor(room, definition)).toEqual({
+      x: 10,
+      y: 11,
+    });
+    expect(
+      getRoomNavigableTiles(room, definition),
+    ).not.toContainEqual({ x: 10, y: 10 });
+  });
+
+  it("reopens a blocked fixture tile when an explicit door occupies it", () => {
+    const definition = prototypeDefinition("room.examination");
+    const room: PlacedRoom = {
+      id: "room.exam.door-reopens",
+      roomDefinitionId: definition.id,
+      x: 10,
+      y: 10,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+    const door: DoorState = {
+      id: "door.exam.blocked-edge",
+      roomId: room.id,
+      side: "south",
+      offset: 0,
+      exterior: false,
+    };
+
+    expect(getRoomNavigableTiles(room, definition)).not.toContainEqual({
+      x: 10,
+      y: 11,
+    });
+    expect(
+      getRoomNavigableTiles(room, definition, [door]),
+    ).toContainEqual({ x: 10, y: 11 });
+  });
+
+  it("walks a legacy actor off a newly blocked tile without teleporting", () => {
+    const definition = prototypeDefinition("room.examination");
+    const room: PlacedRoom = {
+      id: "room.exam.legacy-origin",
+      roomDefinitionId: definition.id,
+      x: 10,
+      y: 10,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+    const blockedLegacyOrigin = { x: 10, y: 11 };
+    const path = findDeterministicFacilityPath(
+      blockedLegacyOrigin,
+      getRoomNavigationAnchor(room, definition),
+      [room],
+      [],
+      (id) => (id === definition.id ? definition : null),
+    );
+
+    expect(path[0]).toEqual(blockedLegacyOrigin);
+    expect(path.at(-1)).toEqual(
+      getRoomNavigationAnchor(room, definition),
+    );
+    expect(path.length).toBeGreaterThan(1);
+  });
+
+  it("crosses adjacent room walls only through an explicit door edge", () => {
+    const frontDefinition = prototypeDefinition("room.front_desk");
+    const examDefinition = prototypeDefinition("room.examination");
+    const front: PlacedRoom = {
+      id: "room.front.explicit-route",
+      roomDefinitionId: frontDefinition.id,
+      x: 33,
+      y: 28,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+    const exam: PlacedRoom = {
+      id: "room.exam.explicit-route",
+      roomDefinitionId: examDefinition.id,
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+    const exteriorDoor: DoorState = {
+      id: "door.front.exterior-route",
+      roomId: front.id,
+      side: "south",
+      offset: 2,
+      exterior: true,
+    };
+    const internalDoor: DoorState = {
+      id: "door.exam.explicit-route",
+      roomId: exam.id,
+      side: "south",
+      offset: 1,
+      exterior: false,
+    };
+    const definition = (id: string) =>
+      id === frontDefinition.id
+        ? frontDefinition
+        : id === examDefinition.id
+          ? examDefinition
+          : null;
+    const start = getRoomNavigationAnchor(front, frontDefinition);
+    const goal = getRoomNavigationAnchor(exam, examDefinition);
+
+    expect(
+      findDeterministicFacilityPath(
+        start,
+        goal,
+        [front, exam],
+        [exteriorDoor],
+        definition,
+      ),
+    ).toEqual([]);
+    const path = findDeterministicFacilityPath(
+      start,
+      goal,
+      [front, exam],
+      [exteriorDoor, internalDoor],
+      definition,
+    );
+    expect(path.length).toBeGreaterThan(1);
+    expect(path).toContainEqual({ x: 35, y: 28 });
+    expect(path).toContainEqual({ x: 35, y: 27 });
+    expect(
+      path.every((point, index) => {
+        const previous = path[index - 1];
+        return (
+          !previous ||
+          Math.abs(point.x - previous.x) +
+            Math.abs(point.y - previous.y) ===
+            1
+        );
+      }),
+    ).toBe(true);
   });
 });

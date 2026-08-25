@@ -43,10 +43,112 @@ export interface PatientDissatisfactionCauseState {
   lastAppliedAtFacilityTick: number;
 }
 
+export type FacilityExperienceConditionKey =
+  | "visible_litter"
+  | "dirty_cleanliness"
+  | "empty_water_cooler"
+  | "missing_waiting_room"
+  | "missing_examination_room"
+  | "missing_bathroom"
+  | "no_receptionist"
+  | "low_staff_morale"
+  | "unavailable_onsite_xray";
+
+/**
+ * Alert-only conditions that do not contribute to the facility-experience
+ * satisfaction calculation. Keeping these separate prevents financial,
+ * advertising, and progression guidance from becoming accidental patient
+ * satisfaction inputs.
+ */
+export type FacilityOperationalAlertConditionKey =
+  | "low_cash"
+  | "no_cash"
+  | "advertising_recommended"
+  | "waiting_room_crowded"
+  | "room_upgrade_requested"
+  | "progression_eligible";
+
+export type FacilityAlertConditionKey =
+  | FacilityExperienceConditionKey
+  | FacilityOperationalAlertConditionKey;
+
+export interface FacilityExperienceConditionSnapshot {
+  conditionKey: FacilityExperienceConditionKey;
+  penalty: number;
+  cause: PatientDissatisfactionCause;
+}
+
+export interface EncounterFacilityExperienceSnapshot {
+  appliedAtFacilityTick: number;
+  totalPenalty: number;
+  conditions: FacilityExperienceConditionSnapshot[];
+}
+
+export interface FacilityConditionAlertTarget {
+  kind:
+    | "litter"
+    | "water_cooler"
+    | "build_mode"
+    | "room"
+    | "staff_role"
+    | "employee"
+    | "emergency_glp1"
+    | "advertising"
+    | "goal";
+  id: string;
+}
+
+export interface FacilityConditionOccurrenceState {
+  /** Stable identity for this chronological onset or reminder row. */
+  id: string;
+  /** Stable alert-condition identity; only experience keys affect satisfaction. */
+  conditionKey: FacilityAlertConditionKey;
+  kind: "onset" | "reminder";
+  occurredAtFacilityTick: number;
+  /** Set when the condition clears; the historical row itself is retained. */
+  resolvedAtFacilityTick: number | null;
+  definitionId: string;
+  message: string;
+  priority: "action_required" | "informational";
+  target: FacilityConditionAlertTarget | null;
+}
+
 export interface GridPoint {
   x: number;
   y: number;
 }
+
+export type PixelAppearanceVariant =
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22
+  | 23
+  | 24
+  | 25
+  | 26
+  | 27
+  | 28
+  | 29;
 
 export interface PixelAppearanceDescriptor {
   version: "pixel-avatar.v1";
@@ -66,8 +168,8 @@ export interface PixelAppearanceDescriptor {
    * Stable visual variants used by the shared portrait/map sprite generator.
    * These do not affect clinical demographics or gameplay.
    */
-  headVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-  bodyVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  headVariant?: PixelAppearanceVariant;
+  bodyVariant?: PixelAppearanceVariant;
   roleStyle?:
     | "founder"
     | "patient"
@@ -162,16 +264,24 @@ export interface PendingResult {
   routeId: string;
   routeDisplayName: string;
   scheduledAtTick: number;
-  /** The frozen service time before any facility travel is added. */
+  /**
+   * Authored action interval. Patient travel and service dwell must fit
+   * inside this interval; route time is never silently added afterward.
+   */
   serviceDurationTicks: number;
   durationTicks: number;
   dueTick: number;
   deliveredAtTick: number | null;
   /**
-   * Set when an off-site patient reaches the clinic entrance and begins the
-   * persisted in-building return route. Null before that transition.
+   * Set when an off-site patient begins the persisted offscreen-to-Front-Desk
+   * return route. Null before that transition.
    */
   offsiteReturnStartedAtTick: number | null;
+  /**
+   * Frozen sidewalk itinerary for services performed away from the clinic.
+   * Null for in-facility routes and legacy results not yet normalized.
+   */
+  offsiteTravel: FrozenOffsitePatientTravel | null;
   /**
    * Exact facility route and timing selected when the service was scheduled.
    * Null means the route is off-site or otherwise has no simulated facility
@@ -190,6 +300,18 @@ export interface FrozenPatientTravel {
   outboundStartTick: number;
   outboundArrivalTick: number;
   serviceCompletionTick: number;
+  returnArrivalTick: number;
+}
+
+export interface FrozenOffsitePatientTravel {
+  version: "offsite-patient-travel.v1";
+  direction: -1 | 1;
+  outboundPath: GridPoint[];
+  returnPath: GridPoint[];
+  tilesPerTick: number;
+  outboundStartTick: number;
+  outboundArrivalTick: number;
+  returnStartTick: number;
   returnArrivalTick: number;
 }
 
@@ -269,6 +391,18 @@ export interface EncounterState {
   id: string;
   clinicalReleaseId: string;
   frozenCase: SyntheticClinicalCase;
+  /**
+   * Feed-only attention timer for an unaddressed patient condition. The
+   * reducer clears it as soon as the player addresses the condition, so waits
+   * shorter than the configured grace period never become Alerts & Events
+   * rows. Once a row is emitted, the DomainEvent remains durable history.
+   */
+  feedAttentionKind:
+    | "checked_in"
+    | "clinical_decision"
+    | "result_ready"
+    | null;
+  feedAttentionStartedAtTick: number | null;
   patientDisplayName: string;
   patientAppearance: PixelAppearanceDescriptor;
   /** Live patient experience score used for waiting pressure and walkouts. */
@@ -284,6 +418,11 @@ export interface EncounterState {
   dissatisfactionByCause: Partial<
     Record<PatientDissatisfactionCause, PatientDissatisfactionCauseState>
   >;
+  /**
+   * Persisted one-time facility-condition assessment applied at Front Desk
+   * check-in. Null means the arriving patient has not checked in yet.
+   */
+  facilityExperienceAtCheckIn: EncounterFacilityExperienceSnapshot | null;
   finalPatientSatisfaction: number | null;
   resolvedAtFacilityTick: number | null;
   arrivalClass: ArrivalClass;
@@ -296,6 +435,12 @@ export interface EncounterState {
   patientMovement: PatientMovementState | null;
   /** Last in-facility room assigned to this patient. */
   assignedRoomInstanceId: string | null;
+  /**
+   * Exam reservation made when a chart opens while the patient is finishing
+   * another legal walking leg. This prevents another chart from claiming the
+   * same room and avoids interrupting a route mid-tile.
+   */
+  queuedCareRoomInstanceId: string | null;
   nextIdleActionAtFacilityTick: number;
   currentNodeIndex: number;
   firstOpenedAtTick: number | null;
@@ -329,6 +474,12 @@ export interface DoorState {
   exterior: boolean;
 }
 
+export interface EmployeeFacilityTaskState {
+  kind: "refill_water";
+  startedAtFacilityTick: number;
+  workMinutesRemaining: number;
+}
+
 export interface EmployeeState {
   id: string;
   staffRoleDefinitionId: string;
@@ -345,6 +496,8 @@ export interface EmployeeState {
   lastMovedAtFacilityTick: number;
   lastPraisedAtFacilityTick: number | null;
   nextIdleActionAtFacilityTick: number;
+  /** Persisted operational work that temporarily supersedes room idling. */
+  facilityTask?: EmployeeFacilityTaskState | null;
 }
 
 export interface LitterState {
@@ -354,8 +507,21 @@ export interface LitterState {
   spawnedAtFacilityTick: number;
 }
 
+/** A non-patient visual passerby that remains on the exterior sidewalk. */
+export interface AmbientPedestrianState {
+  id: string;
+  appearance: PixelAppearanceDescriptor;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+}
+
 export interface FounderActivityState {
-  kind: "collect_litter" | "refill_water" | "praise_employee";
+  kind:
+    | "walk_to_point"
+    | "collect_litter"
+    | "refill_water"
+    | "praise_employee";
   targetId: string;
   path: GridPoint[];
   pathIndex: number;
@@ -366,11 +532,27 @@ export interface FounderActivityState {
 export interface FacilityEnvironmentState {
   founderLocation: GridPoint;
   founderActivity: FounderActivityState | null;
+  ambientPedestrians: AmbientPedestrianState[];
+  ambientPedestrianSequence: number;
+  nextAmbientPedestrianTick: number;
   litterItems: LitterState[];
   litterSequence: number;
+  /** Set when the player first successfully starts a litter-cleaning action. */
+  trashTeachingAcknowledgedAtTick: number | null;
+  /** Durable completion marker for the one-time visible-trash teaching prompt. */
+  founderLitterCleanups: number;
+  /** Facility tick of the latest completed cleanup, used to pace later complaints. */
+  lastLitterCleanupAtTick: number | null;
   nextLitterSpawnTick: number;
   waterCoolerFillPercent: number;
   nextWaterCoolerDrainTick: number;
+  /** Start of the current continuously-empty episode, if any. */
+  waterCoolerEmptySinceTick: number | null;
+  /** Next ten-operating-hour reminder during the current empty episode. */
+  nextWaterCoolerReminderTick: number | null;
+  facilityConditionOccurrenceSequence: number;
+  /** Durable rows; resolution clears attention without deleting history. */
+  facilityConditionOccurrences: FacilityConditionOccurrenceState[];
 }
 
 export interface EmergencyGlp1State {
@@ -387,7 +569,6 @@ export interface EmergencyGlp1Status {
   usesToday: number;
   payment: number;
   cooldownRemainingTicks: number;
-  cashEligible: boolean;
   eligible: boolean;
   blockedReason: string | null;
 }
@@ -562,6 +743,8 @@ export type GameCommand =
     })
   | (CommandBase & {
       type: "ADVANCE_TICK";
+      /** Real-world time used only to determine whether saved FSRS cards are due. */
+      advancedAtRealMs?: number;
     })
   | (CommandBase & {
       type: "PLACE_ROOM";
@@ -626,6 +809,10 @@ export type GameCommand =
   | (CommandBase & {
       type: "PRAISE_EMPLOYEE";
       employeeId: string;
+    })
+  | (CommandBase & {
+      type: "MOVE_FOUNDER";
+      destination: GridPoint;
     })
   | (CommandBase & {
       type: "LEVEL_UP";

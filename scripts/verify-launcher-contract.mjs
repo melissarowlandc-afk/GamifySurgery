@@ -28,6 +28,7 @@ const requiredLauncherMarkers = [
   "expectedHealthContract.launcherProtocol",
   "Test-PrototypePortInUse",
   "--strictPort",
+  "The existing game server remains running; this extra launcher can close now.",
 ];
 for (const marker of requiredLauncherMarkers) {
   if (!launcher.includes(marker)) {
@@ -43,6 +44,15 @@ if (
 ) {
   throw new Error(
     "The desktop launcher still fingerprints mutable public description copy.",
+  );
+}
+if (
+  launcher.includes(
+    "Press Enter to close this launcher (the existing game server will stay running)",
+  )
+) {
+  throw new Error(
+    "A redundant desktop launch must not remain blocked after handing off to an existing healthy server.",
   );
 }
 

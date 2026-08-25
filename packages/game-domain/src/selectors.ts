@@ -19,12 +19,12 @@ import {
 import {
   createFrozenServiceRouteTiming,
   getFrozenPatientTravelLocation,
-  getOffsitePatientTravelPresentation,
 } from "./patient-travel";
 import {
   validateFacilityAccess,
   type FacilityAccessValidation,
 } from "./doors";
+import { evaluateFacilityExperienceConditions } from "./facility-experience";
 
 const CAPACITY_LIFECYCLES = new Set([
   "waiting_unopened",
@@ -61,10 +61,8 @@ export function getEmergencyGlp1Status(
             config.cooldownMinutes -
             state.facilityTick,
         );
-  const cashEligible = state.cash < config.cashEligibilityThreshold;
-  const blockedReason = !cashEligible
-    ? `Available below $${config.cashEligibilityThreshold}.`
-    : cooldownRemainingTicks > 0
+  const blockedReason =
+    cooldownRemainingTicks > 0
       ? `Available in ${cooldownRemainingTicks} minute${
           cooldownRemainingTicks === 1 ? "" : "s"
         }.`
@@ -74,7 +72,6 @@ export function getEmergencyGlp1Status(
     usesToday: usage,
     payment: config.payment,
     cooldownRemainingTicks,
-    cashEligible,
     eligible: blockedReason === null,
     blockedReason,
   };
@@ -483,12 +480,35 @@ export function getClinicSatisfaction(
   );
 }
 
-/** @deprecated Use getClinicSatisfaction when the unmeasured state matters. */
+/**
+ * Live HUD satisfaction: the durable ended-encounter baseline plus current,
+ * reversible facility-condition pressure. Before the first ended encounter,
+ * 100 is used only as a provisional display baseline.
+ */
+export function getDisplayedClinicSatisfaction(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number {
+  const historical = getClinicSatisfaction(state, context);
+  const currentConditions = evaluateFacilityExperienceConditions(
+    state,
+    context,
+  );
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      (historical ?? 100) - currentConditions.totalPenalty,
+    ),
+  );
+}
+
+/** @deprecated Use getDisplayedClinicSatisfaction for player-facing UI. */
 export function getEffectiveSatisfaction(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): number {
-  return getClinicSatisfaction(state, context) ?? 0;
+  return getDisplayedClinicSatisfaction(state, context);
 }
 
 export function getFacilityAccessValidation(
@@ -525,7 +545,14 @@ export function getFacilityProgressionStatus(
     state.employees.map((employee) => employee.staffRoleDefinitionId),
   );
   const completedEncounters = getCompletedEncounterCount(state);
-  const effectiveSatisfaction = getClinicSatisfaction(state, context);
+  const historicalSatisfaction = getClinicSatisfaction(
+    state,
+    context,
+  );
+  const effectiveSatisfaction = getDisplayedClinicSatisfaction(
+    state,
+    context,
+  );
   const accessValidation = getFacilityAccessValidation(state, context);
   const requirements = [
     {
@@ -552,10 +579,13 @@ export function getFacilityProgressionStatus(
       id: "progression.satisfaction",
       label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
       met:
-        effectiveSatisfaction !== null &&
+        historicalSatisfaction !== null &&
         effectiveSatisfaction >
         definition.satisfactionMustBeGreaterThan,
-      current: effectiveSatisfaction ?? 0,
+      current:
+        historicalSatisfaction === null
+          ? 0
+          : effectiveSatisfaction,
       required: definition.satisfactionMustBeGreaterThan + 1,
     },
     ...definition.requiredRoomDefinitionIds.map((roomDefinitionId) => {
@@ -676,7 +706,9 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     actionRequired:
       encounter.lifecycle === "active_action_required" &&
       (encounter.patientMovement === null ||
-        encounter.patientMovement.kind === "walking_to_care"),
+        encounter.patientMovement.kind === "walking_to_care" ||
+        encounter.patientMovement.kind === "walking_to_waiting" ||
+        encounter.patientMovement.kind === "idle_within_room"),
     pendingLabel:
       encounter.lifecycle === "active_pending_result"
         ? (encounter.pendingResult?.pendingLabel ?? null)
@@ -777,7 +809,9 @@ export function getCurrentQuestion(
     !encounter ||
     encounter.lifecycle !== "active_action_required" ||
     (encounter.patientMovement !== null &&
-      encounter.patientMovement.kind !== "walking_to_care")
+      encounter.patientMovement.kind !== "walking_to_care" &&
+      encounter.patientMovement.kind !== "walking_to_waiting" &&
+      encounter.patientMovement.kind !== "idle_within_room")
   ) {
     return null;
   }
@@ -862,7 +896,7 @@ export function getPendingPatientRoutePresentation(
   if (!travel) {
     return null;
   }
-  const outbound = state.facilityTick <= travel.serviceCompletionTick;
+  const outbound = state.facilityTick < travel.serviceCompletionTick;
   const path = outbound ? travel.outboundPath : travel.returnPath;
   if (path.length === 0) {
     return null;
@@ -879,20 +913,6 @@ export function getPendingPatientRoutePresentation(
     path: path.map((point) => ({ ...point })),
     pathIndex,
   };
-}
-
-export function getPendingOffsitePatientTravel(
-  state: GameState,
-  encounterId: string,
-) {
-  const pendingResult = state.encounters[encounterId]?.pendingResult;
-  return pendingResult
-    ? getOffsitePatientTravelPresentation(
-        pendingResult,
-        state.facilityTick,
-        encounterId,
-      )
-    : null;
 }
 
 export function getEncounterSettlement(

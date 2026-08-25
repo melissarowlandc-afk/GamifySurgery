@@ -92,6 +92,22 @@
   font-weight: 900;
 }
 
+.founder-preset-label {
+  display: grid;
+  gap: 0.15rem;
+  line-height: 1.15;
+}
+
+.founder-preset-label b {
+  font-size: 0.88rem;
+}
+
+.founder-preset-label small {
+  color: var(--ink-soft, #4c5449);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
 .founder-arrow {
   min-width: 3rem;
   min-height: 3rem;
@@ -183,6 +199,13 @@
   gap: 2rem;
 }
 
+.opening-title-lockup {
+  display: grid;
+  justify-items: center;
+  gap: 0.55rem;
+  width: min(100%, 38rem);
+}
+
 .prototype-main-actions {
   display: grid;
   gap: 1rem;
@@ -198,6 +221,25 @@
   font-weight: 950;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.opening-tagline-slot {
+  display: grid;
+  width: 100%;
+  block-size: 2.7em;
+  place-items: start center;
+}
+
+.opening-tagline {
+  max-width: 100%;
+  margin: 0;
+  color: var(--ink-soft, #4c5449);
+  font-size: clamp(0.75rem, 1.4vw, 0.86rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .opening-choice-primary {
@@ -381,6 +423,11 @@
   .inheritance-actions .opening-choice {
     width: 100%;
     min-width: 0;
+  }
+
+  .opening-tagline {
+    font-size: clamp(0.7rem, 3vw, 0.8rem);
+    white-space: normal;
   }
 }
 

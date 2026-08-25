@@ -147,6 +147,9 @@ export function appendLocalCampaign(
       ...profile,
       activeCampaignId: campaign.campaignId,
       nextCampaignNumber: profile.nextCampaignNumber + 1,
+      // Every newly created clinic introduces the game from the beginning,
+      // even if guidance was disabled during a different campaign.
+      tutorialsEnabled: true,
       campaigns: [...profile.campaigns, campaign],
     },
   };

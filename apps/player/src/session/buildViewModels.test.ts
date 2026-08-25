@@ -6,7 +6,7 @@ import {
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("Build Mode view models", () => {
-  it("describes upgrade effects and door positions in player language", () => {
+  it("describes upgrade effects and projects valid walls for map interaction", () => {
     const initial = createInitialGameState();
     initial.cash = 1_000;
     initial.cashCents = 100_000;
@@ -46,16 +46,24 @@ describe("Build Mode view models", () => {
         "Hourly upkeep +$1.",
       ]),
     );
+    expect(view.facility.buildDoorSlots?.length).toBeGreaterThan(0);
+    expect(view.facility.buildDoorSlots).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          roomInstanceId: "room.test.exam",
+          side: expect.stringMatching(/north|east|south|west/),
+          offset: expect.any(Number),
+        }),
+      ]),
+    );
     expect(
-      view.selectedRoomBuild?.doorSlots.every(
-        (slot) => !slot.label.includes("/"),
+      view.facility.buildDoorSlots?.every((slot) =>
+        state.rooms.some((room) => room.id === slot.roomInstanceId),
       ),
     ).toBe(true);
     expect(
-      view.selectedRoomBuild?.doorSlots.some((slot) =>
-        /wall · (left|center|right|top|middle|bottom)$/.test(
-          slot.label,
-        ),
+      view.facility.buildDoorSlots?.every(
+        (slot) => !("label" in slot),
       ),
     ).toBe(true);
   });

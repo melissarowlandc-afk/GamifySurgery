@@ -1,3 +1,5 @@
+import type { PixelAppearanceVariant } from "@gamify-surgery/game-domain";
+
 export type PatientFolder = "waiting" | "active" | "resolved";
 
 export type PixelAvatarHairStyle =
@@ -44,8 +46,8 @@ export interface PixelAvatarView {
   outfitStyle: PixelAvatarOutfitStyle;
   outfitShade: 0 | 1 | 2 | 3;
   accessory: PixelAvatarAccessory;
-  headVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-  bodyVariant?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  headVariant?: PixelAppearanceVariant;
+  bodyVariant?: PixelAppearanceVariant;
   roleStyle?:
     | "founder"
     | "patient"
@@ -80,6 +82,10 @@ export interface AnswerChoiceView {
 
 export interface ChartDecisionStepView {
   id: string;
+  /** Stable authored identity used by the non-scoring developer review flag. */
+  questionVariantId?: string;
+  primaryConceptId?: string;
+  flaggedForDeveloperReview?: boolean;
   heading: string;
   statusLabel?: string;
   questionPrompt?: string;
@@ -103,8 +109,39 @@ export interface ChartRewardView {
   satisfactionLabel?: string;
 }
 
+export interface ChartClinicalReviewView {
+  diagnosisId: string;
+  diagnosisName: string;
+  sections: Array<{
+    id: string;
+    heading: string;
+    body: string;
+    evidenceClaimIds: string[];
+  }>;
+  claims: Array<{
+    id: string;
+    statement: string;
+    reviewStatus: string;
+  }>;
+  sources: Array<{
+    id: string;
+    title: string;
+    organizationOrJournal: string;
+    year: number;
+    href: string;
+    supportedClaimIds: string[];
+    reuseStatus: string;
+    lastChecked: string;
+  }>;
+  contentVersion: string;
+  reviewStatus: string;
+  lastClinicianReview?: string;
+}
+
 export interface ChartView {
   id: string;
+  /** Stable clinical case ID for provenance and development inspection. */
+  clinicalCaseId?: string;
   patientName: string;
   patientDetails: string;
   /** Optional approved demographics for the paper-chart header. */
@@ -121,6 +158,8 @@ export interface ChartView {
   }>;
   statusLabel: string;
   presentation: string;
+  /** Later-step findings shown with the presentation, never above answers. */
+  presentationUpdate?: string;
   pendingLabel?: string;
   etaLabel?: string;
   questionPrompt?: string;
@@ -134,6 +173,7 @@ export interface ChartView {
   summaryAvailable: boolean;
   summaryVisible: boolean;
   summaryBody?: string;
+  clinicalReview?: ChartClinicalReviewView;
   canFile: boolean;
   readOnly: boolean;
   avatar?: PixelAvatarView;
@@ -170,17 +210,8 @@ export interface EmergencyGlp1View {
   enabled: boolean;
   paymentLabel: string;
   statusLabel: string;
-  cooldownLabel: string;
   cooldownProgressPercent: number;
   flavorMessage?: string;
-}
-
-export interface AdvertisingLevelView {
-  level: number;
-  displayName: string;
-  hourlyCostLabel: string;
-  arrivalFrequencyLabel: string;
-  selected: boolean;
 }
 
 export interface AdvertisingView {
@@ -190,7 +221,6 @@ export interface AdvertisingView {
   arrivalFrequencyLabel: string;
   canDecrease: boolean;
   canIncrease: boolean;
-  levels: AdvertisingLevelView[];
 }
 
 export interface RoomBuildOptionView {
@@ -215,21 +245,6 @@ export interface SelectedRoomBuildView {
   resaleValueLabel?: string;
   canUpgrade: boolean;
   canSell: boolean;
-  canMove: boolean;
-  canRotate: boolean;
-  doors: Array<{
-    id: string;
-    label: string;
-    removable: boolean;
-  }>;
-  doorSlots: Array<{
-    id: string;
-    side: "north" | "east" | "south" | "west";
-    offset: number;
-    label: string;
-    enabled: boolean;
-    blockedReason?: string;
-  }>;
   blockedReason?: string;
 }
 

@@ -133,9 +133,44 @@ export const testedConceptSchema = z
       "diagnosis",
       "workup",
       "management",
+      "anatomy",
       "disposition",
       "complication",
+      "applied_science",
     ]),
+  })
+  .strict();
+
+/**
+ * One complete, clinician-reviewed presentation profile that may be selected
+ * when a runtime encounter is frozen.
+ *
+ * These are deliberately whole profiles rather than independently randomized
+ * clinical fields. The runtime may choose among them, but it cannot invent or
+ * recombine their clinical facts.
+ */
+export const approvedInstantiationProfileSchema = z
+  .object({
+    id: stableIdSchema,
+    prototypeDemographics: z
+      .object({
+        ageYears: z.number().int().min(0).max(120),
+        sexLabel: z.enum(["Female", "Male", "Not specified"]),
+      })
+      .strict()
+      .optional(),
+    prototypeVitalSigns: z
+      .object({
+        heartRateBpm: z.number().int().min(20).max(240),
+        systolicBloodPressureMmHg: z.number().int().min(40).max(280),
+        diastolicBloodPressureMmHg: z.number().int().min(20).max(180),
+        temperatureF: z.number().min(85).max(110),
+        oxygenSaturationPercent: z.number().int().min(50).max(100),
+      })
+      .strict()
+      .optional(),
+    chiefComplaint: z.string().min(1).max(160).optional(),
+    presentation: z.string().min(1).max(2_000),
   })
   .strict();
 
@@ -144,6 +179,11 @@ export const syntheticClinicalCaseSchema = z
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
     patientPresentationVariantId: stableIdSchema,
+    /**
+     * Semantic content-admission point. Older frozen prototype cases may omit
+     * this field and continue to rely on their numeric facility-stage gate.
+     */
+    releasePointId: stableIdSchema.optional(),
     patientDisplayName: z.string().min(1).max(80),
     prototypeDemographics: z
       .object({
@@ -164,10 +204,27 @@ export const syntheticClinicalCaseSchema = z
       .optional(),
     chiefComplaint: z.string().min(1).max(160).optional(),
     presentation: z.string().min(1).max(2_000),
+    /**
+     * Finite, exact alternatives approved with this case revision.
+     *
+     * A selected profile overrides only the corresponding display fields and
+     * is then frozen with the encounter. Question semantics, answer mapping,
+     * and all other clinical content remain unchanged.
+     */
+    approvedInstantiationProfiles: z
+      .array(approvedInstantiationProfileSchema)
+      .min(1)
+      .max(20)
+      .optional(),
+    /**
+     * Written only on the frozen runtime copy. Authoring records omit it.
+     */
+    selectedInstantiationProfileId: stableIdSchema.optional(),
     tutorialEligible: z.boolean(),
     routineEligible: z.boolean(),
     earliestFacilityStage: z.number().int().min(0).max(1),
     requiredClinicalSetting: z.enum(["clinic", "ambulatory_surgery"]),
+    requiredCapabilityIds: z.array(stableIdSchema).default([]),
     rewardTierId: stableIdSchema,
     sourceLabels: z.array(z.string().min(1).max(240)).min(1),
     decisionNodes: z.array(decisionNodeSchema).min(1).max(4),
@@ -188,6 +245,30 @@ export const syntheticClinicalCaseSchema = z
     }
     const nodeIds = new Set<string>();
     const conceptIds = new Set<string>();
+    const profileIds = new Set<string>();
+
+    clinicalCase.approvedInstantiationProfiles?.forEach((profile, index) => {
+      if (profileIds.has(profile.id)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate approved instantiation profile ID: ${profile.id}`,
+          path: ["approvedInstantiationProfiles", index, "id"],
+        });
+      }
+      profileIds.add(profile.id);
+    });
+
+    if (
+      clinicalCase.selectedInstantiationProfileId &&
+      !profileIds.has(clinicalCase.selectedInstantiationProfileId)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "A selected runtime instantiation profile must belong to the frozen case.",
+        path: ["selectedInstantiationProfileId"],
+      });
+    }
 
     clinicalCase.decisionNodes.forEach((node, index) => {
       if (nodeIds.has(node.id)) {
@@ -341,6 +422,9 @@ export type TerminalOutcomeDisposition = z.infer<
 export type ResultGate = z.infer<typeof resultGateSchema>;
 export type DecisionNode = z.infer<typeof decisionNodeSchema>;
 export type TestedConcept = z.infer<typeof testedConceptSchema>;
+export type ApprovedInstantiationProfile = z.infer<
+  typeof approvedInstantiationProfileSchema
+>;
 export type SyntheticClinicalCase = z.infer<typeof syntheticClinicalCaseSchema>;
 export type SyntheticClinicalRelease = z.infer<typeof syntheticClinicalReleaseSchema>;
 

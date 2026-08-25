@@ -6,8 +6,11 @@ Status: Implemented Level 0/1 prototype direction
 
 Every genuinely new campaign and recoverable restart begins with:
 
-1. A deliberately small founder creator: name, one of ten interchangeable head
-   presets, and one of ten interchangeable body presets.
+1. A deliberately small founder creator: name, one of thirty interchangeable
+   head presets, and one of thirty interchangeable body presets. Each set
+   contains ten original human options, ten female-presenting human options,
+   and ten non-human animal, alien, or robot options. Any head may be paired
+   with any body.
 2. A sparse inheritance screen containing the two equally real choices
    **Be Rich and Happy** and **Build a Surgery Clinic**.
 3. Either the short rich-and-happy non-game ending or a required clinic-name
@@ -21,12 +24,21 @@ The founder's trimmed display name and complete pixel-appearance descriptor are
 stored in the authoritative campaign save. The founder is rendered from that
 same descriptor inside the clinic.
 
+Appearance is cosmetic and clinically meaningless. Female-presenting and
+non-human art does not create statistics, traits, gender restrictions, species
+rules, bonuses, or penalties.
+
 No campaign, clinic, FSRS history, room, patient, timer, XP, or spendable money
 is created by founder editing, the inheritance screen, the naming prompt, or
 the happy ending. Choosing the clinic path first requires a normalized unique
 clinic name, then performs one synchronous campaign initialization and
 immediately persists it before mounting gameplay. Repeated activation,
 refreshes, and retries cannot initialize twice.
+
+Every newly initialized clinic re-enables tutorial guidance and immediately
+opens its first applicable tutorial step, even if guidance was disabled while
+playing a different campaign. The player may dismiss or disable the tutorial
+again after that new campaign begins.
 
 The inherited $1,000,000 is narrative framing only. The new clinic uses the
 centrally configured Level 0 starting cash.

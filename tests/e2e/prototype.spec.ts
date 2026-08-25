@@ -272,6 +272,7 @@ test("restart archives the selected campaign and returns to a fresh founder flow
 test("movement, sequential feedback, off-site return, and settlement are visible", async ({
   page,
 }, testInfo) => {
+  testInfo.setTimeout(90_000);
   test.skip(
     testInfo.project.name !== "desktop-chrome",
     "The complete clinical walkthrough runs once at the primary desktop size.",
@@ -285,7 +286,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
 
   await expect(
     page.getByRole("heading", {
-      name: "Your first patient is walking to check-in",
+      name: "Your first patient is entering the clinic",
     }),
   ).toBeVisible();
   const firstPatient = await waitForFirstPatientReady(page);
@@ -311,7 +312,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
     }),
   ).toBeVisible();
   const choices = await waitForDecisionChoices(page);
-  await expect(choices).toHaveCount(3);
+  await expect(choices).toHaveCount(4);
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/july28-tutorial-desktop.png`,
     fullPage: false,
@@ -319,9 +320,22 @@ test("movement, sequential feedback, off-site return, and settlement are visible
   });
   await page.getByRole("button", { name: "Got It" }).click();
 
+  const firstDecisionState = await getActiveState(page);
+  const firstDecisionEncounter =
+    firstDecisionState.encounters[
+      firstDecisionState.openChartEncounterId!
+    ]!;
+  const firstDecisionNode =
+    firstDecisionEncounter.frozenCase.decisionNodes[
+      firstDecisionEncounter.currentNodeIndex
+    ]!;
+  const firstCorrectChoice = firstDecisionNode.answerChoices.find(
+    (choice) => choice.isCorrect,
+  )!;
   await page
     .getByRole("button", {
-      name: /Assess wound type and vaccine history/i,
+      name: firstCorrectChoice.label,
+      exact: true,
     })
     .click();
   await expect(page.locator(".chart-step-feedback")).toContainText(
@@ -371,15 +385,19 @@ test("movement, sequential feedback, off-site return, and settlement are visible
     }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Got It" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "Pixel Patient is walking to check-in",
-    }),
-  ).toBeVisible({ timeout: 15_000 });
+  const secondArrivalCoach = page
+    .locator(".tutorial-coach")
+    .filter({ hasText: "Second patient" });
+  const secondArrivalHeading = secondArrivalCoach.getByRole("heading");
+  await expect(secondArrivalHeading).toBeVisible({ timeout: 15_000 });
+  const secondPatientName = (
+    (await secondArrivalHeading.textContent()) ?? ""
+  ).replace(/ is entering the clinic$/, "");
+  expect(secondPatientName).not.toBe("");
   await page.getByRole("button", { name: "Got It" }).click();
   const secondPatient = page
     .locator(".patient-folder.is-waiting .patient-tab")
-    .filter({ hasText: "Pixel Patient" });
+    .filter({ hasText: secondPatientName });
   await expect(secondPatient).toBeVisible({ timeout: 15_000 });
   await expect(
     page.getByRole("heading", { name: "Open the second patient chart" }),
@@ -389,7 +407,25 @@ test("movement, sequential feedback, off-site return, and settlement are visible
     page.getByRole("heading", { name: "Choose the first plan" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Got It" }).click();
-  await page.getByRole("button", { name: /^SIGNAL ALPHA/ }).click();
+  const secondDecisionState = await getActiveState(page);
+  const secondDecisionEncounter =
+    secondDecisionState.encounters[
+      secondDecisionState.openChartEncounterId!
+    ]!;
+  const secondDecisionNode =
+    secondDecisionEncounter.frozenCase.decisionNodes[
+      secondDecisionEncounter.currentNodeIndex
+    ]!;
+  const secondCorrectChoice = secondDecisionNode.answerChoices.find(
+    (choice) => choice.isCorrect,
+  )!;
+  await page
+    .getByRole("button", {
+      name: new RegExp(
+        `^${secondCorrectChoice.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+      ),
+    })
+    .click();
   await expect(page.locator(".chart-step-feedback")).toContainText(
     "Decision XP: +10",
   );
@@ -408,7 +444,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
   }
   const existingPatient = page
     .locator(".patient-folder.is-active .patient-tab")
-    .filter({ hasText: "Pixel Patient" });
+    .filter({ hasText: secondPatientName });
   const sendoutCoach = page.getByRole("heading", {
     name: "The patient is away for the timed service",
   });
@@ -442,8 +478,24 @@ test("movement, sequential feedback, off-site return, and settlement are visible
     fullPage: false,
     animations: "disabled",
   });
+  const finalDecisionState = await getActiveState(page);
+  const finalDecisionEncounter =
+    finalDecisionState.encounters[
+      finalDecisionState.openChartEncounterId!
+    ]!;
+  const finalDecisionNode =
+    finalDecisionEncounter.frozenCase.decisionNodes[
+      finalDecisionEncounter.currentNodeIndex
+    ]!;
+  const finalCorrectChoice = finalDecisionNode.answerChoices.find(
+    (choice) => choice.isCorrect,
+  )!;
   await page
-    .getByRole("button", { name: "ACTION CIRCLE" })
+    .getByRole("button", {
+      name: new RegExp(
+        `^${finalCorrectChoice.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+      ),
+    })
     .click();
   const finalFeedback = page.locator(
     ".chart-step-column.is-current .chart-step-feedback",
@@ -486,9 +538,9 @@ test("pause freezes the GLP-1 cooldown and facility time advances it", async ({
   await expect(xpValue(page)).toHaveText("0");
   await expect(
     page
-      .locator(".event-message-board")
+      .locator(".event-message-board .message-board-feed")
       .getByText(/Emergency GLP-1 consultation completed/),
-  ).toBeVisible();
+  ).toHaveCount(0);
   const consult = panel.getByRole("button", {
     name: /Complete consult/,
   });

@@ -134,7 +134,7 @@ describe("current prototype contracts", () => {
       gridWidth: 72,
       gridHeight: 32,
       startingCash: 120,
-      patientTravelTilesPerTick: 4,
+      characterTravelTilesPerTick: 2,
     });
     expect(
       PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions,

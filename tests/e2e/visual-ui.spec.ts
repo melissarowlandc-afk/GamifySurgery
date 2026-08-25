@@ -183,7 +183,7 @@ test("captures phone-width tutorial and Build Mode usability", async ({
   await page.getByRole("button", { name: "Close patient chart" }).click();
   await page.getByRole("button", { name: "Enter Build Mode" }).click();
   await expect(
-    page.getByRole("button", { name: "Exit Build Mode" }),
+    page.getByRole("button", { name: "Done / Save" }),
   ).toBeVisible();
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/july28-build-mode-phone.png`,

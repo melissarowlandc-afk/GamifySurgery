@@ -16,44 +16,6 @@ interface EventMessageBoardProps {
   mode?: "recent_log" | "ticker";
 }
 
-interface CategoryPresentation {
-  label: string;
-  icon: string;
-}
-
-const CATEGORY_PRESENTATION: Record<
-  MessageBoardCategory,
-  CategoryPresentation
-> = {
-  action_required: {
-    label: "Action needed",
-    icon: "ACT",
-  },
-  guidance: {
-    label: "Guidance",
-    icon: "TIP",
-  },
-  success: {
-    label: "Success",
-    icon: "OK",
-  },
-  ambient_flavor: {
-    label: "Around the clinic",
-    icon: "...",
-  },
-  walkout_review: {
-    label: "Patient review",
-    icon: "REV",
-  },
-};
-
-const PRIORITY_RANK: Record<MessageBoardPriority, number> = {
-  critical: 0,
-  action_required: 1,
-  informational: 2,
-  flavor: 3,
-};
-
 function getPriority(item: MessageBoardItemView): MessageBoardPriority {
   if (item.priority) {
     return item.priority;
@@ -87,20 +49,12 @@ function getCategory(item: MessageBoardItemView): MessageBoardCategory {
   return "guidance";
 }
 
-function getPresentation(item: MessageBoardItemView): CategoryPresentation {
-  if (item.showAttentionMarker === true) {
-    return {
-      label: "Attention required",
-      icon: "!",
-    };
-  }
-  return CATEGORY_PRESENTATION[getCategory(item)];
-}
-
 /**
- * Bounded, text-first operational feed. Random selection, deduplication keys,
- * persistence, and condition resolution live in the domain. This component
- * applies only display priority and prevents repeated input IDs from stacking.
+ * Compact, text-first operational feed. Random selection, deduplication keys,
+ * persistence, and condition resolution live in the domain. The UI keeps one
+ * chronological, scrollable list and prevents repeated input IDs from
+ * stacking. Attention markers deliberately do not change a row's position:
+ * newer clinic events push every older row down in the same way.
  */
 export function EventMessageBoard({
   items,
@@ -108,7 +62,7 @@ export function EventMessageBoard({
   maximumVisibleItems = 30,
   mode = "recent_log",
 }: EventMessageBoardProps) {
-  const { liveItems, recentItems } = useMemo(() => {
+  const listItems = useMemo(() => {
     const newestById = new Map<
       string,
       { item: MessageBoardItemView; inputIndex: number }
@@ -118,50 +72,26 @@ export function EventMessageBoard({
     });
 
     const historyCandidates = [...newestById.values()].sort(
-      (left, right) =>
-        (right.item.sortKey ?? right.inputIndex) -
-        (left.item.sortKey ?? left.inputIndex),
+      (left, right) => {
+        const timeDifference =
+          (right.item.sortKey ?? right.inputIndex) -
+          (left.item.sortKey ?? left.inputIndex);
+        return timeDifference !== 0
+          ? timeDifference
+          : right.inputIndex - left.inputIndex;
+      },
     );
-    let candidates = [...historyCandidates];
-    const hasCritical = candidates.some(
-      ({ item }) => getPriority(item) === "critical",
-    );
-    if (hasCritical) {
-      candidates = candidates.filter(
-        ({ item }) => getPriority(item) !== "flavor",
-      );
-    }
+    const candidates = historyCandidates;
 
-    candidates.sort((left, right) => {
-      const leftPriority = getPriority(left.item);
-      const rightPriority = getPriority(right.item);
-      const priorityDifference =
-        PRIORITY_RANK[leftPriority] - PRIORITY_RANK[rightPriority];
-      if (priorityDifference !== 0) {
-        return priorityDifference;
-      }
-      if (
-        left.item.sortKey !== undefined ||
-        right.item.sortKey !== undefined
-      ) {
-        return (
-          (right.item.sortKey ?? Number.NEGATIVE_INFINITY) -
-          (left.item.sortKey ?? Number.NEGATIVE_INFINITY)
-        );
-      }
-      return right.inputIndex - left.inputIndex;
-    });
-
-    const visibleLimit =
+    // The ticker's former seven-row limit was paired with a second collapsed
+    // history control. Keep the same compact viewport in CSS, but retain the
+    // recent items inside this one scrollable list instead of making older
+    // entries inaccessible.
+    const listLimit =
       mode === "ticker"
-        ? Math.min(7, Math.max(1, maximumVisibleItems))
+        ? Math.max(30, maximumVisibleItems)
         : Math.max(1, maximumVisibleItems);
-    return {
-      liveItems: candidates.slice(0, visibleLimit).map(({ item }) => item),
-      recentItems: historyCandidates
-        .slice(0, Math.max(30, visibleLimit, maximumVisibleItems))
-        .map(({ item }) => item),
-    };
+    return candidates.slice(0, listLimit).map(({ item }) => item);
   }, [items, maximumVisibleItems, mode]);
 
   return (
@@ -173,7 +103,7 @@ export function EventMessageBoard({
         <span id="event-board-title">
           {mode === "ticker" ? "Alerts & events" : "Clinic messages"}
         </span>
-        <small>{mode === "ticker" ? "Live" : "Priority, then newest"}</small>
+        <small>{mode === "ticker" ? "Live" : "Newest first"}</small>
       </div>
       <div
         className="message-board-feed"
@@ -181,54 +111,22 @@ export function EventMessageBoard({
         aria-live="polite"
         aria-relevant="additions"
       >
-        {liveItems.length === 0 ? (
+        {listItems.length === 0 ? (
           <p className="empty-state">
             Clinic events and helpful alerts will appear here.
           </p>
         ) : (
-          liveItems.map((item) => {
+          listItems.map((item) => {
             const priority = getPriority(item);
             const category = getCategory(item);
-            const presentation = getPresentation(item);
-            const hasAttentionMarker = item.showAttentionMarker === true;
+            const hasAttentionMarker =
+              item.showAttentionMarker === true &&
+              (priority === "critical" ||
+                priority === "action_required");
             const target =
               item.targetType === undefined
                 ? undefined
                 : { type: item.targetType, id: item.targetId };
-            if (mode === "ticker") {
-              return (
-                <article
-                  className={`message-board-item is-${priority} is-category-${category}${
-                    hasAttentionMarker ? " has-attention-marker" : ""
-                  }${item.persistent ? " is-persistent" : ""}`}
-                  key={item.id}
-                  role={priority === "critical" ? "alert" : undefined}
-                  data-message-category={category}
-                  data-attention-marker={hasAttentionMarker}
-                >
-                  <span
-                    className="message-board-priority-icon"
-                    aria-label={presentation.label}
-                    title={presentation.label}
-                  >
-                    {presentation.icon}
-                  </span>
-                  {item.actionLabel && onAction ? (
-                    <button
-                      className="message-board-compact-action"
-                      type="button"
-                      onClick={() => onAction(item.id, target)}
-                    >
-                      {item.message}
-                    </button>
-                  ) : (
-                    <span className="message-board-compact-copy">
-                      {item.message}
-                    </span>
-                  )}
-                </article>
-              );
-            }
             return (
               <article
                 className={`message-board-item is-${priority} is-category-${category}${
@@ -239,72 +137,34 @@ export function EventMessageBoard({
                 data-message-category={category}
                 data-attention-marker={hasAttentionMarker}
               >
-                <span
-                  className="message-board-priority-icon"
-                  aria-label={presentation.label}
-                  title={presentation.label}
-                >
-                  {presentation.icon}
-                </span>
-                <div className="message-board-item-copy">
-                  <div className="message-board-item-heading">
-                    <strong>
-                      {item.title ?? presentation.label}
-                    </strong>
-                    {item.timeLabel ? <time>{item.timeLabel}</time> : null}
-                  </div>
-                  <p>{item.message}</p>
-                  {item.actionLabel && onAction ? (
-                    <button
-                      className="text-button message-board-action"
-                      type="button"
-                      onClick={() => onAction(item.id, target)}
-                    >
-                      {item.actionLabel}
-                    </button>
-                  ) : null}
-                </div>
+                {hasAttentionMarker ? (
+                  <span
+                    className="message-board-priority-icon"
+                    aria-label="Attention required"
+                    title="Attention required"
+                  >
+                    !
+                  </span>
+                ) : null}
+                {item.actionLabel && onAction ? (
+                  <button
+                    className="message-board-compact-action"
+                    type="button"
+                    onClick={() => onAction(item.id, target)}
+                    title={item.actionLabel}
+                  >
+                    {item.message}
+                  </button>
+                ) : (
+                  <span className="message-board-compact-copy">
+                    {item.message}
+                  </span>
+                )}
               </article>
             );
           })
         )}
       </div>
-      {mode === "ticker" && recentItems.length > 0 ? (
-        <details className="message-board-history">
-          <summary>Recent events ({recentItems.length})</summary>
-          <ol>
-            {recentItems.map((item) => {
-              const category = getCategory(item);
-              const presentation = getPresentation(item);
-              const target =
-                item.targetType === undefined
-                  ? undefined
-                  : { type: item.targetType, id: item.targetId };
-              return (
-                <li key={`history.${item.id}`}>
-                  <span className="message-board-log-priority">
-                    {presentation.icon} {presentation.label}
-                  </span>
-                  {item.actionLabel && onAction ? (
-                    <button
-                      className="message-board-history-action"
-                      type="button"
-                      data-message-category={category}
-                      onClick={() => onAction(item.id, target)}
-                    >
-                      {item.message}
-                    </button>
-                  ) : (
-                    <span data-message-category={category}>
-                      {item.message}
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-        </details>
-      ) : null}
     </aside>
   );
 }

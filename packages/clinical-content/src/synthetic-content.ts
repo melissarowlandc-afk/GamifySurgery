@@ -1,4 +1,57 @@
 import { validateSyntheticClinicalRelease } from "./schema";
+import {
+  ROW_023_CASES,
+  ROW_023_CONCEPT,
+} from "./approved-data/ventral-hernia-pulmonary-optimization";
+import {
+  ROW_030_CASES,
+  ROW_030_CONCEPTS,
+} from "./approved-data/breast-cyst-pathway";
+import {
+  ROW_031_CASES,
+  ROW_031_CONCEPT,
+} from "./approved-data/ebv-associated-malignancies";
+import {
+  ROW_029_CASES,
+  ROW_029_CONCEPT,
+} from "./approved-data/hcc-milan-criteria";
+import {
+  ROW_036_CASES,
+  ROW_036_CONCEPTS,
+} from "./approved-data/mondor-disease";
+import {
+  ROW_047_CASES,
+  ROW_047_CONCEPT,
+} from "./approved-data/aaa-female-sex-perioperative-mortality";
+import {
+  ROW_048_CASES,
+  ROW_048_CONCEPTS,
+} from "./approved-data/desmoid-management-pathway";
+import {
+  ROW_051_CASES,
+  ROW_051_CONCEPTS,
+} from "./approved-data/pancreatic-tail-adenocarcinoma-resection";
+import {
+  ROW_052_CASES,
+  ROW_052_CONCEPTS,
+} from "./approved-data/felty-syndrome-pathway";
+import {
+  ROW_060_CASES,
+  ROW_060_CONCEPTS,
+} from "./approved-data/familial-hypocalciuric-hypercalcemia";
+import {
+  ROW_104_CASES,
+  ROW_104_CONCEPT,
+} from "./approved-data/lymphangitis-recognition";
+import {
+  ROW_119_CASES,
+  ROW_119_CONCEPT,
+} from "./approved-data/gallbladder-polyp-management";
+import { ROW_111_CASES, ROW_111_CONCEPTS } from "./approved-data/distal-cholangiocarcinoma";
+import { ROW_115_CASES, ROW_115_CONCEPT } from "./approved-data/obstructive-jaundice-vitamin-k";
+import { ROW_092_CASES, ROW_092_CONCEPT } from "./approved-data/hcc-resection-selection";
+import { ROW_058_CASES, ROW_058_CONCEPT } from "./approved-data/accessory-spleen-location";
+import { ROW_057_CASES, ROW_057_CONCEPTS } from "./approved-data/hereditary-spherocytosis-postsplenectomy";
 
 const PROTOTYPE_REVIEW_NOTICE =
   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
@@ -25,7 +78,8 @@ function authoredFinalConsequenceWithoutOutcomeVignette(
  * deliberately marked as unapproved. Nothing in this release may be presented
  * as clinically reviewed educational material.
  */
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+export const LEGACY_PROTOTYPE_CLINICAL_RELEASE =
+  validateSyntheticClinicalRelease({
   id: "clinical.synthetic.prototype.v1",
   schemaVersion: 1,
   publicationStatus: "synthetic_unapproved_prototype",
@@ -112,6 +166,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       earliestFacilityStage: 1,
       conceptType: "disposition",
     },
+    ROW_023_CONCEPT,
   ],
   cases: [
     {
@@ -1001,26 +1056,96 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       learningSummary:
         "Software-test summary: the three-step artificial workflow was BASIC LABS, X-RAY, then ROUTINE RETURN.",
     },
+    ...ROW_023_CASES,
+  ],
+});
+
+/**
+ * New campaigns admit only the exact concepts reviewed with the owner.
+ *
+ * The legacy fixture above remains source-visible solely to preserve the
+ * historical implementation and to support already-frozen encounters in old
+ * saves. It is not part of this active release and cannot create a new patient.
+ */
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+  id: LEGACY_PROTOTYPE_CLINICAL_RELEASE.id,
+  schemaVersion: LEGACY_PROTOTYPE_CLINICAL_RELEASE.schemaVersion,
+  publicationStatus: "synthetic_unapproved_prototype",
+  disclaimer:
+    "Mixed clinician-reviewed and AI-assisted synthetic development-preview content; the release as a whole is not clinically approved and is not medical guidance.",
+  concepts: [
+    ROW_023_CONCEPT,
+    ...ROW_030_CONCEPTS,
+    ROW_031_CONCEPT,
+    ROW_029_CONCEPT,
+    ...ROW_036_CONCEPTS,
+    ROW_047_CONCEPT,
+    ...ROW_048_CONCEPTS,
+    ...ROW_051_CONCEPTS,
+    ...ROW_052_CONCEPTS,
+    ...ROW_060_CONCEPTS,
+    ROW_104_CONCEPT,
+    ROW_119_CONCEPT,
+    ...ROW_111_CONCEPTS.filter((concept) => concept.earliestFacilityStage === 0),
+    ROW_115_CONCEPT,
+    ROW_092_CONCEPT,
+    ROW_058_CONCEPT,
+    ...ROW_057_CONCEPTS,
+  ],
+  cases: [
+    ...ROW_023_CASES,
+    ...ROW_030_CASES,
+    ...ROW_031_CASES,
+    ...ROW_029_CASES,
+    ...ROW_036_CASES,
+    ...ROW_047_CASES,
+    ...ROW_048_CASES,
+    ...ROW_051_CASES,
+    ...ROW_052_CASES,
+    ...ROW_060_CASES,
+    ...ROW_104_CASES,
+    ...ROW_119_CASES,
+    ...ROW_111_CASES,
+    ...ROW_115_CASES,
+    ...ROW_092_CASES,
+    ...ROW_058_CASES,
+    ...ROW_057_CASES,
   ],
 });
 
 /**
  * The Level 0 tutorial order is explicit rather than relying on array order.
  *
- * The clinically grounded one-decision laceration case opens the tutorial.
- * The deliberately synthetic two-decision case follows it and teaches a
- * ten-minute facility-time service/return loop.
+ * One approved pulmonary-optimization decision opens the chart tutorial. The
+ * approved asymptomatic simple-cyst encounter follows it and teaches the
+ * off-site ultrasound and return-result loop without restoring withdrawn
+ * prototype questions.
  */
 export const FIRST_TUTORIAL_CASE_ID =
-  "case.prototype.tutorial-laceration";
-export const SECOND_TUTORIAL_CASE_ID = "case.synthetic.tutorial";
+  "case.ventral-hernia.pulmonary-optimization.a";
+export const SECOND_TUTORIAL_CASE_ID =
+  "case.breast-cyst.under-30-asymptomatic-simple";
 export const SYNTHETIC_TUTORIAL_CASE_ID = SECOND_TUTORIAL_CASE_ID;
 export const LEVEL_ONE_ROUTINE_CASE_IDS = [
-  "case.prototype.tutorial-laceration",
-  "case.prototype.abscess",
-  "case.prototype.postoperative-symptoms",
-  "case.prototype.symptomatic-cholelithiasis",
-  "case.synthetic.xray-routing",
-  "case.synthetic.lab-routing",
-  "case.synthetic.three-step-routing",
+  "case.ventral-hernia.pulmonary-optimization.a",
+  "case.ventral-hernia.pulmonary-optimization.b",
+  "case.breast-cyst.under-30-asymptomatic-simple",
+  "case.breast-cyst.under-30-painful-simple",
+  "case.ebv-associated-malignancy.burkitt",
+  "case.ebv-associated-malignancy.gastric",
+  "case.ebv-associated-malignancy.nasopharyngeal",
+  ...ROW_029_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_036_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_047_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_048_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_051_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_052_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_060_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_104_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_119_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_111_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_115_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_092_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_058_CASES.map((clinicalCase) => clinicalCase.id),
+  ...ROW_057_CASES.map((clinicalCase) => clinicalCase.id),
 ] as const;

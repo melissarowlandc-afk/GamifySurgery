@@ -39,7 +39,6 @@ export function EmergencyGlp1Panel({
       </div>
       <div className="emergency-glp1-status">
         <span>{view.statusLabel}</span>
-        <span>{view.cooldownLabel}</span>
       </div>
       {view.flavorMessage ? (
         <p className="emergency-glp1-flavor">{view.flavorMessage}</p>

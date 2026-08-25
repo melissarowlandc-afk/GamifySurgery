@@ -85,9 +85,12 @@ recoverable archive-and-restart rules. The exact implementation boundary is reco
 - Sources, approval state, and provenance remain attached to content revisions.
 - The content system serves both as a comprehensive Clinical Topic knowledge
   base and as the source of clinically approved runtime teaching material.
-- Every concept has an earliest facility stage at which appropriate patient
-  encounters may begin; this is separate from educational difficulty, room
-  upgrade level, employee training, and FSRS state.
+- Every approved presentation/question iteration has one semantic clinical
+  release point. A Tested Concept may have iterations at several release
+  points while retaining one FSRS identity; its earliest facility availability
+  is derived from those approved iterations. Release point, required
+  capability, clinical setting, educational difficulty, room upgrade level,
+  employee training, and FSRS state remain separate.
 - Mastery patient variants are clinically meaningful presentations, not
   cosmetic changes to name, exact age, pronouns, or wording.
 - Runtime patients use only approved typed slots, values, profiles, and
@@ -141,16 +144,29 @@ question wording, perspectives, distractors, and explanations rather than
 repeating one memorized item. This accepted game-design rule is recorded in
 [ADR 0023](docs/adr/0023-multiple-choice-clinical-assessment.md).
 
+Every playable chart is anchored to exactly one fictional patient. The
+presentation gives that person a brief clinical story or question; the active
+Decision Node then asks what to do for the same person without restating the
+presentation. Comparative and reverse-direction variants use alternative
+findings or reports for that one patient, never a lineup of different patients.
+Sequential decisions and returned results remain parts of the same encounter.
+
 ### Clinical-answer consequences
 
 - Every first scored submission immediately awards current-level Learning XP:
   `10` for correct and `2` for incorrect. The HUD does not display lifetime XP.
-- Every patient begins at `100%` individual satisfaction. Correct care may
+- `100%` is the clean, capable-clinic baseline. At Front Desk check-in, a new
+  ordinary patient receives configured starting penalties for applicable
+  unresolved facility conditions, so a patient entering a dirty clinic with
+  missing amenities does not incorrectly begin at `100%`. Correct care may
   restore a configured amount; incorrect care, unnecessary delay, missing
-  facilities, poor room condition, and unhappy staff may reduce it.
+  facilities, poor room condition, and unhappy staff may reduce it further.
 - The campaign-wide Patient Confidence and same-day answer modifier no longer
-  exist. The HUD instead reports a rolling window of completed-encounter final
-  satisfaction values.
+  exist. The HUD preserves a rolling window of ended-encounter final
+  satisfaction values as its historical baseline and applies a separate live
+  modifier for current facility dissatisfaction conditions until they are
+  resolved. Fixing a condition removes only that live modifier and never
+  rewrites historical encounter outcomes.
 - Level 0 encounter cash is
   `$15 + ($10 * question count) + ($50 * correct count)`.
 - Level 1 encounter cash is
@@ -390,20 +406,25 @@ After the first scored response in an encounter maps to Again:
 - Staff have home rooms, permitted work areas, salaries, morale, training, and task queues.
 - Staff and room quality affect operations, capacity, speed, reliability, morale, waste, and finances.
 - The player is not required to dispatch every minor task.
-- The pharmacist manages medication inventory automatically.
+- The Level 3 Pharmacy hires a Pharmacist, who manages medication inventory
+  automatically.
 - Medication stockouts lose dispensing revenue and may slightly reduce satisfaction; they do not block care.
 - Outsourced diagnostic or repair fallbacks may exist.
 - Vending machines and coffee kiosks are enclosed buildable rooms.
 - The Cash-Only GLP-1 Telehealth Suite is a limited comedic side business, not
   the dominant strategy. Before its future Level 2 automation, a founder may
-  use a low-cash-only, once-per-facility-hour emergency consultation. The
-  Level 0-1 pilot pays a fixed $25, has no daily cap or diminishing return, and
-  awards no XP or learning evidence. Repeated uses only change the sarcasm.
-  See `docs/features/cash-only-glp1-telehealth.md`.
+  use a manual consultation at any clinic cash balance. The floating action
+  remains available until the dedicated room is built, may be used once per
+  facility hour, pays a fixed $25 in the Level 0-1 pilot, has no daily cap or
+  diminishing return, and awards no XP or learning evidence. Repeated uses
+  only change the sarcasm. See
+  `docs/features/cash-only-glp1-telehealth.md`.
 - Alerts use Critical, Action required, Informational, and Flavor priorities.
   Useful information always appears plainly, humor never obscures a critical
-  alert, and flavor is suppressed while a critical alert is active. The
-  complete message bank and activation boundary are in
+  alert, and every visible row shares one chronological stream. Attention rows
+  receive `!` while active but are never pinned; resolution clears the marker
+  without deleting or retimestamping the row. The complete message bank and
+  activation boundary are in
   `docs/features/alert-notification-flavor-system.md`.
 - Bankruptcy recovery does not require loans.
 
@@ -459,9 +480,20 @@ authority and integrity boundary is recorded in
   and required doors, so the control room is not a redundant separate goal.
   Bathroom, Waiting Room, and Receptionist remain useful optional purchases
   rather than formal gate items.
+- A hired Receptionist automatically walks to and refills a water cooler after
+  it has remained empty for the configured 60 facility minutes while that
+  Receptionist is employed. The task and its route persist through reload.
 - The laboratory and APP are later-level systems and are not Level 0-1 unlocks.
 - The complete current prototype checklist is maintained in
   [Level 0-1 Prototype Progression](docs/features/level-0-1-progression.md).
+- The accepted complete progression is Level 0 Starter Clinic, Level 1 Basic
+  Clinic, Level 2 Expanded Outpatient / Endoscopy, Level 3 Ambulatory Surgery
+  Center, Level 4 Specialty Expansion, and Level 5 Optimized ASC / Prestige.
+  Exact room/staff unlocks and the semantic clinical release points are
+  maintained in
+  [Facility Levels and Clinical Release Points](docs/features/facility-levels-and-clinical-release-points.md).
+  Hospital OR, Hospital Floor, ED/Trauma, and ICU content remains deferred with
+  no invented numeric level.
 - Facility stage, educational difficulty, clinical complexity, room upgrade level, and employee training level are separate concepts.
 - Room and employee upgrade/training tracks each use Levels 1-5.
 - The end-game challenge is an elective inspection week with a score and recognition tier.
@@ -590,12 +622,67 @@ Examination Room, but ordinary walking does not hide or delay the readable
 current decision. Timed care, results, and disposition still wait for the
 persisted physical route and service state.
 
+When a returned result or other current update unlocks a new decision, that
+update appears in the main decision flow immediately above the new decision.
+It is not relegated to the presentation column, where it could be overlooked.
+
+Every moving character uses the same centrally configured walking speed and the
+same persisted, cardinal-waypoint movement contract. Patients enter from a
+campaign-stable left or right off-screen sidewalk origin, pass through the
+public entrance, and reach the Front Desk before their chart appears. After
+check-in they use an available authored, visibly rendered Waiting Room chair;
+when every real chair is occupied, they use the available Front Desk waiting
+position and then a non-overlapping sidewalk queue position. The simulation
+must not invent an invisible chair or arbitrary standing location inside the
+Waiting Room. Stationary chair occupants use a seated representation derived
+from the same persisted appearance identity. Opening a chart reserves an
+available Examination Room; when none exists, the patient remains at the
+current waiting position rather than being teleported to a substitute room.
+
+Outside Build Mode, clicking a reachable room, hallway, or sidewalk location
+gives the founder a persisted walk-to-point task. A click on occupied fixture
+art resolves to the nearest reachable legal floor tile. Dragging the map remains
+a camera gesture and must not redirect the founder. Cleaning, cooler, employee,
+patient, and other explicit interactions keep priority over ordinary walking;
+an ordinary walk may be retargeted, but it does not interrupt facility work.
+
+The exterior also admits occasional non-patient pedestrians from either
+off-screen sidewalk boundary. They cross to the opposite boundary without
+entering the clinic, checking in, creating a chart, or affecting workload,
+finances, alerts, or satisfaction. Their timing, appearance, direction, and
+route are campaign-stable and persisted; they use the same walking speed,
+pause, fast-forward, interpolation, and off-screen lifecycle as other actors.
+
+An off-site service is one continuous itinerary: the patient walks through the
+public entrance to an off-screen sidewalk boundary, remains away, then walks
+back through the entrance to the Front Desk. The displayed service duration
+ends at that Front Desk return, and the next decision cannot become actionable
+earlier. After check-in, a returning patient repeats the ordinary waiting
+hierarchy and proceeds to the reserved Examination Room when the chart is
+opened before visibly leaving after resolution. Normal departures and walkouts
+likewise remain visible until the character has reached an off-screen departure
+boundary. Save/reload, pause, and facility-speed changes preserve the same
+route and destination; presentation interpolates that saved route and never
+invents a fallback location.
+
 Basic laboratory send-outs take one facility hour. Outsourced X-ray takes two
 facility hours; a functioning onsite X-ray room with an available Imaging
 Technician takes one facility hour and each room-technician pair has one-patient
 capacity. Character rendering interpolates the persisted waypoint route rather
 than owning movement completion, so walls, pause, speed changes, and reloads
-cannot be bypassed by animation.
+cannot be bypassed by animation. Render interpolation retains a short predictive
+buffer so ordinary timer and projection jitter cannot produce a repeated
+sprint-stop cadence. High-frequency clock ticks stage the current state in
+memory and serialize the complete local profile on deterministic quarter-hour
+autosave boundaries; all meaningful player actions, pausing, and Save and Close
+remain immediate write-through saves.
+
+Every test-implying answer in a multistep decision displays a facility-time
+return estimate before submission, not only the correct answer. Each choice
+references an operational service whose route and tunable duration live in the
+balance release rather than the clinical record. Wrong intermediate selections
+remain wrong and proceed through the authored corrected-forward action; their
+preview does not execute the selected wrong service.
 
 Exact real clinical cases and correct answers require Melissa's review.
 Prototype costs, rewards, timing, and tutorial wording may use clearly labeled

@@ -14,9 +14,12 @@ import type {
   FacilityCameraChangeRequest,
   CollectLitterRequest,
   FacilityViewModel,
+  MoveFounderRequest,
+  PlaceDoorRequest,
   PlaceRoomRequest,
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
+  RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";
@@ -24,11 +27,14 @@ import type {
 export interface FacilityCanvasProps {
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
+  onPlaceDoor?: PlaceDoorRequest;
+  onRemoveDoor?: RemoveDoorRequest;
   onSelectRoom?: SelectRoomRequest;
   onRequestRoomUpgrade?: RequestRoomUpgrade;
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
   onPraiseEmployee?: PraiseEmployeeRequest;
+  onMoveFounder?: MoveFounderRequest;
   onCameraChange?: FacilityCameraChangeRequest;
   className?: string;
   style?: CSSProperties;
@@ -54,11 +60,14 @@ const DEFAULT_STYLE: CSSProperties = {
 export function FacilityCanvas({
   viewModel,
   onPlaceRoom,
+  onPlaceDoor,
+  onRemoveDoor,
   onSelectRoom,
   onRequestRoomUpgrade,
   onCollectLitter,
   onRefillWaterCooler,
   onPraiseEmployee,
+  onMoveFounder,
   onCameraChange,
   className,
   style,
@@ -75,11 +84,14 @@ export function FacilityCanvas({
   // commit and the next Phaser frame without rebuilding the Phaser game.
   bridgeRef.current.viewModel = viewModel;
   bridgeRef.current.onPlaceRoom = onPlaceRoom;
+  bridgeRef.current.onPlaceDoor = onPlaceDoor;
+  bridgeRef.current.onRemoveDoor = onRemoveDoor;
   bridgeRef.current.onSelectRoom = onSelectRoom;
   bridgeRef.current.onRequestRoomUpgrade = onRequestRoomUpgrade;
   bridgeRef.current.onCollectLitter = onCollectLitter;
   bridgeRef.current.onRefillWaterCooler = onRefillWaterCooler;
   bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
+  bridgeRef.current.onMoveFounder = onMoveFounder;
   bridgeRef.current.onCameraChange = onCameraChange;
 
   useEffect(() => {

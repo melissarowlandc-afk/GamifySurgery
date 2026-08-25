@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "status": "accepted_design",
+  "updatedAt": "2026-08-05",
+  "sourceDecision": "docs/adr/0038-semantic-clinical-release-points-and-level-0-5-progression.md",
+  "definitions": [
+    {
+      "id": "release.l0.clinic_evaluation",
+      "label": "L0 - Clinic Evaluation",
+      "activation": {
+        "type": "facility_level_started",
+        "facilityLevel": 0
+      }
+    },
+    {
+      "id": "release.l1.minor_procedure",
+      "label": "L1 - Minor Procedure",
+      "activation": {
+        "type": "facility_level_started",
+        "facilityLevel": 1
+      }
+    },
+    {
+      "id": "release.l2.endoscopy",
+      "label": "L2 - Endoscopy",
+      "activation": {
+        "type": "facility_level_started",
+        "facilityLevel": 2
+      }
+    },
+    {
+      "id": "release.l3.ambulatory_or_qi",
+      "label": "L3 - Ambulatory OR / QI",
+      "activation": {
+        "type": "facility_level_started",
+        "facilityLevel": 3
+      }
+    },
+    {
+      "id": "release.l4.pediatrics",
+      "label": "L4 - Pediatrics",
+      "activation": {
+        "type": "facility_level_and_operational_room",
+        "facilityLevel": 4,
+        "requiredRoomDisplayName": "Pediatric Examination Room"
+      }
+    },
+    {
+      "id": "release.l4.wound_ostomy",
+      "label": "L4 - Wound / Ostomy",
+      "activation": {
+        "type": "facility_level_and_operational_room",
+        "facilityLevel": 4,
+        "requiredRoomDisplayName": "Wound/Ostomy Clinic"
+      }
+    },
+    {
+      "id": "release.future.hospital_or",
+      "label": "Future - Hospital OR",
+      "activation": {
+        "type": "future_scope_unassigned",
+        "futureScope": "hospital_or"
+      }
+    },
+    {
+      "id": "release.future.hospital_floor",
+      "label": "Future - Hospital Floor",
+      "activation": {
+        "type": "future_scope_unassigned",
+        "futureScope": "hospital_floor"
+      }
+    },
+    {
+      "id": "release.future.ed_trauma",
+      "label": "Future - ED / Trauma",
+      "activation": {
+        "type": "future_scope_unassigned",
+        "futureScope": "ed_trauma"
+      }
+    },
+    {
+      "id": "release.future.icu",
+      "label": "Future - ICU",
+      "activation": {
+        "type": "future_scope_unassigned",
+        "futureScope": "icu"
+      }
+    }
+  ]
+}

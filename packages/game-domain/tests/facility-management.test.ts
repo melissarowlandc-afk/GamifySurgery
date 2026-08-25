@@ -174,6 +174,56 @@ describe("explicit-door construction and renovation", () => {
     );
   });
 
+  it("does not remove a doorway while a character occupies its room", () => {
+    let state = sandbox("occupied-door", 0);
+    state = placeRoom(
+      state,
+      "room.exam.occupied",
+      "room.examination",
+      34,
+      26,
+    );
+    state = placeDoor(
+      state,
+      "door.exam.occupied",
+      "room.exam.occupied",
+      "south",
+      1,
+    );
+    state.employees.push({
+      id: "employee.route-guard",
+      staffRoleDefinitionId: "staff.receptionist",
+      displayName: "Route Guard",
+      appearance: state.founder.appearance,
+      hiredAtFacilityTick: 0,
+      salaryPerExpenseInterval: 0,
+      morale: 100,
+      trainingLevel: 1,
+      homeRoomInstanceId: null,
+      location: { x: 35, y: 27 },
+      path: [{ x: 35, y: 27 }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 0,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: 100,
+    });
+
+    state = gameReducer(state, {
+      type: "REMOVE_DOOR",
+      operationId: "remove.occupied-door",
+      doorId: "door.exam.occupied",
+    });
+
+    expect(
+      state.operationReceipts["remove.occupied-door"]?.status,
+    ).toBe("rejected");
+    expect(
+      state.doors.some(
+        (door) => door.id === "door.exam.occupied",
+      ),
+    ).toBe(true);
+  });
+
   it("requires X-ray patient access and a separate direct control-room door", () => {
     let state = sandbox("xray-access");
     state = placeRoom(state, "room.exam", "room.examination", 34, 26);
@@ -258,6 +308,23 @@ describe("prototype staff", () => {
     expect(employee.homeRoomInstanceId).toBe(
       "room.instance.founder_desk",
     );
+    expect(
+      employee.path[0]!.x < 0 ||
+        employee.path[0]!.x >=
+          PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridWidth,
+    ).toBe(true);
+    expect(
+      employee.path.every((point, index, path) => {
+        const previous = path[index - 1];
+        return (
+          !previous ||
+          Math.abs(point.x - previous.x) +
+            Math.abs(point.y - previous.y) ===
+            1
+        );
+      }),
+    ).toBe(true);
+    expect(employee.path.at(-1)).toEqual({ x: 35, y: 29 });
     expect(employee.nextIdleActionAtFacilityTick).toBeGreaterThanOrEqual(10);
     expect(getStaffRoleCount(state, "staff.receptionist")).toBe(1);
     expect(

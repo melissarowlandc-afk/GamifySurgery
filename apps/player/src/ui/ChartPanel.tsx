@@ -1,14 +1,17 @@
 import { useEffect, useRef } from "react";
 import { PixelAvatar } from "./PixelAvatar";
 import type {
+  ChartClinicalReviewView,
   ChartDecisionStepView,
   ChartView,
 } from "./types";
+import "./clinicalReview.css";
 
 interface ChartPanelProps {
   chart: ChartView | null;
   onClose: () => void;
   onSubmitAnswer: (choiceId: string) => void;
+  onFlagQuestion: (decisionNodeId: string) => void;
   onAcknowledgeTerminalFeedback: () => void;
   onToggleSummary: () => void;
   onFileChart: () => void;
@@ -58,7 +61,11 @@ function RewardBanner({ chart }: { chart: ChartView }) {
   }
 
   return (
-    <div className="chart-reward-banner" role="status">
+    <div
+      className="chart-reward-banner"
+      data-tutorial-anchor="encounter-summary"
+      role="status"
+    >
       <strong>{reward.heading ?? "Rewards earned"}</strong>
       {[reward.moneyLabel, reward.xpLabel, reward.satisfactionLabel]
         .filter((label): label is string => Boolean(label))
@@ -69,12 +76,115 @@ function RewardBanner({ chart }: { chart: ChartView }) {
   );
 }
 
+function displayReviewStatus(status: string): string {
+  return status.replaceAll("_", " ");
+}
+
+function ClinicalReviewBack({
+  review,
+  fallbackSummary,
+}: {
+  review: ChartClinicalReviewView;
+  fallbackSummary?: string;
+}) {
+  const claimsById = new Map(
+    review.claims.map((claim) => [claim.id, claim]),
+  );
+
+  return (
+    <section
+      className="chart-back-content clinical-review-back"
+      aria-label={`${review.diagnosisName} diagnosis and management summary`}
+    >
+      <div className="chart-back-stamp" aria-hidden="true">
+        Learning summary
+      </div>
+      <span className="eyebrow">Back of chart</span>
+      <h3>{review.diagnosisName}</h3>
+      <div className="clinical-summary-sections">
+        {review.sections.map((section) => (
+          <section key={section.id}>
+            <h4>{section.heading}</h4>
+            <p>{section.body}</p>
+          </section>
+        ))}
+        {review.sections.length === 0 && fallbackSummary ? (
+          <p>{fallbackSummary}</p>
+        ) : null}
+      </div>
+
+      <details className="clinical-source-review">
+        <summary>
+          Sources &amp; Clinical Review ({review.sources.length})
+        </summary>
+        <div className="clinical-review-metadata">
+          <span>Content version {review.contentVersion}</span>
+          <span>
+            Clinical review: {displayReviewStatus(review.reviewStatus)}
+          </span>
+          <span>
+            Last clinician review:{" "}
+            {review.lastClinicianReview ?? "None recorded"}
+          </span>
+        </div>
+        <ol className="clinical-source-list">
+          {review.sources.map((source) => {
+            const supportedClaims = source.supportedClaimIds
+              .map((claimId) => claimsById.get(claimId))
+              .filter(
+                (
+                  claim,
+                ): claim is ChartClinicalReviewView["claims"][number] =>
+                  claim !== undefined,
+              );
+            return (
+              <li key={source.id}>
+                <a
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {source.title}
+                </a>
+                <span>
+                  {source.organizationOrJournal} · {source.year}
+                </span>
+                <span>{source.reuseStatus}</span>
+                <span>Last source check: {source.lastChecked}</span>
+                <details>
+                  <summary>
+                    Supported claims ({supportedClaims.length})
+                  </summary>
+                  <ul>
+                    {supportedClaims.map((claim) => (
+                      <li key={claim.id}>
+                        <code>{claim.id}</code>
+                        <span>{claim.statement}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </li>
+            );
+          })}
+        </ol>
+        <p className="clinical-review-notice">
+          AI-assisted draft content. Automated checks do not constitute
+          clinical approval.
+        </p>
+      </details>
+    </section>
+  );
+}
+
 function DecisionStepContent({
   step,
   onSubmitAnswer,
+  onFlagQuestion,
 }: {
   step: ChartDecisionStepView;
   onSubmitAnswer: (choiceId: string) => void;
+  onFlagQuestion: (decisionNodeId: string) => void;
 }) {
   return (
     <>
@@ -88,8 +198,45 @@ function DecisionStepContent({
 
       {step.questionPrompt ? (
         <>
-          <p className="question-prompt">{step.questionPrompt}</p>
-          <div className="answer-list">
+          <div className="question-prompt-row">
+            <p className="question-prompt">{step.questionPrompt}</p>
+            {step.questionVariantId ? (
+              <button
+                className={`question-review-flag${
+                  step.flaggedForDeveloperReview ? " is-flagged" : ""
+                }`}
+                type="button"
+                onClick={() => onFlagQuestion(step.id)}
+                disabled={step.flaggedForDeveloperReview}
+                aria-label={
+                  step.flaggedForDeveloperReview
+                    ? "Question flagged for developer review"
+                    : "Flag this question for developer review"
+                }
+                title={
+                  step.flaggedForDeveloperReview
+                    ? "Flagged for developer review"
+                    : "Flag question for developer review"
+                }
+              >
+                <span
+                  className="question-review-flag-mark"
+                  aria-hidden="true"
+                />
+                <span>
+                  {step.flaggedForDeveloperReview
+                    ? "Flagged"
+                    : "Flag question"}
+                </span>
+              </button>
+            ) : null}
+          </div>
+          <div
+            className="answer-list"
+            data-tutorial-anchor={
+              step.current ? "current-answer-choices" : undefined
+            }
+          >
             {step.answerChoices.map((choice) => (
               <button
                 className={`answer-choice${
@@ -127,6 +274,9 @@ function DecisionStepContent({
                 ? " is-incorrect"
                 : ""
           }`}
+          data-tutorial-anchor={
+            step.current ? "current-decision-feedback" : undefined
+          }
           role="status"
         >
           <strong>
@@ -157,6 +307,7 @@ export function ChartPanel({
   chart,
   onClose,
   onSubmitAnswer,
+  onFlagQuestion,
   onAcknowledgeTerminalFeedback,
   onToggleSummary,
   onFileChart,
@@ -264,17 +415,24 @@ export function ChartPanel({
           key={showingBack ? "back" : "front"}
         >
           {showingBack ? (
-            <section
-              className="chart-back-content"
-              aria-label="Diagnosis and management summary"
-            >
-              <div className="chart-back-stamp" aria-hidden="true">
-                Learning summary
-              </div>
-              <span className="eyebrow">Back of chart</span>
-              <h3>Diagnosis &amp; management</h3>
-              <p>{chart.summaryBody}</p>
-            </section>
+            chart.clinicalReview ? (
+              <ClinicalReviewBack
+                review={chart.clinicalReview}
+                fallbackSummary={chart.summaryBody}
+              />
+            ) : (
+              <section
+                className="chart-back-content"
+                aria-label="Diagnosis and management summary"
+              >
+                <div className="chart-back-stamp" aria-hidden="true">
+                  Learning summary
+                </div>
+                <span className="eyebrow">Back of chart</span>
+                <h3>Diagnosis &amp; management</h3>
+                <p>{chart.summaryBody}</p>
+              </section>
+            )
           ) : (
             <div className="chart-workspace">
               <section className="chart-identity-column">
@@ -343,6 +501,7 @@ export function ChartPanel({
                             <DecisionStepContent
                               step={step}
                               onSubmitAnswer={onSubmitAnswer}
+                              onFlagQuestion={onFlagQuestion}
                             />
                           </div>
                         </details>
@@ -353,6 +512,15 @@ export function ChartPanel({
                           }`}
                           key={step.id}
                         >
+                          {step.current && chart.presentationUpdate ? (
+                            <div
+                              className="chart-current-update chart-decision-update"
+                              data-testid="chart-current-update"
+                            >
+                              <span className="eyebrow">Current update</span>
+                              <p>{chart.presentationUpdate}</p>
+                            </div>
+                          ) : null}
                           <div className="chart-step-heading">
                             <span>{step.heading}</span>
                             {step.statusLabel ? (
@@ -362,6 +530,7 @@ export function ChartPanel({
                           <DecisionStepContent
                             step={step}
                             onSubmitAnswer={onSubmitAnswer}
+                            onFlagQuestion={onFlagQuestion}
                           />
                         </section>
                       ),
@@ -392,6 +561,7 @@ export function ChartPanel({
             {chart.summaryAvailable ? (
               <button
                 className="button button-secondary chart-flip-button"
+                data-tutorial-anchor="flip-chart"
                 type="button"
                 onClick={onToggleSummary}
                 aria-pressed={showingBack}
@@ -405,6 +575,7 @@ export function ChartPanel({
             {chart.terminalFeedbackNeedsAcknowledgment ? (
               <button
                 className="button button-primary chart-resolve-button"
+                data-tutorial-anchor="decision-feedback-action"
                 type="button"
                 onClick={onAcknowledgeTerminalFeedback}
               >
@@ -413,6 +584,7 @@ export function ChartPanel({
             ) : chart.canFile ? (
               <button
                 className="button button-primary"
+                data-tutorial-anchor="resolve-chart"
                 type="button"
                 onClick={onFileChart}
               >

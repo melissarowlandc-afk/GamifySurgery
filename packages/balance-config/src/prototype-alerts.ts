@@ -688,6 +688,52 @@ function additionalAlert(
 
 const CONTEXTUAL_AND_SUCCESS_ALERTS = [
   additionalAlert({
+    id: "alert.patient.leaving",
+    trigger: "patient_leaving",
+    category: "action_required",
+    priority: "critical",
+    title: "Patient leaving",
+    body: "{{patient_name}} is leaving the clinic.",
+    targetKind: "none",
+    clickAction: "none",
+    cooldownMinutes: 0,
+    persistent: false,
+  }),
+  additionalAlert({
+    id: "alert.environment.water-low",
+    trigger: "water_cooler_low",
+    category: "action_required",
+    title: "Water cooler empty",
+    body:
+      "The water cooler is empty. It is now a large blue vase. Refill it.",
+    targetKind: "water_cooler",
+    clickAction: "open_water_cooler",
+    cooldownMinutes: 30,
+    persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.staff.praised",
+    trigger: "employee_praised",
+    category: "success",
+    title: "Employee praised",
+    body:
+      "{{employee_name}} was praised. Morale has acknowledged the gesture.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    cooldownMinutes: 60,
+  }),
+  additionalAlert({
+    id: "alert.staff.quit-insolvency",
+    trigger: "staff_quit",
+    category: "action_required",
+    title: "Employee quit",
+    body:
+      "{{employee_name}} quit after another unpaid expense cycle.",
+    targetKind: "employee",
+    clickAction: "open_employee",
+    cooldownMinutes: 0,
+  }),
+  additionalAlert({
     id: "alert.environment.water-empty",
     trigger: "water_cooler_low",
     category: "action_required",
@@ -709,6 +755,32 @@ const CONTEXTUAL_AND_SUCCESS_ALERTS = [
     clickAction: "open_litter",
     cooldownMinutes: 30,
     persistent: true,
+  }),
+  additionalAlert({
+    id: "alert.patient.cleanliness-complaint",
+    trigger: "dirty_clinic_patient_complaint",
+    category: "guidance",
+    title: "Patient noticed the clinic",
+    body:
+      "{{patient_name}} has started reviewing the visible trash instead of the magazine. Select it to send the founder to clean it.",
+    targetKind: "litter",
+    clickAction: "open_litter",
+    cooldownMinutes: 45,
+    persistent: true,
+    consolidationKey: "environment:trash-accumulated",
+  }),
+  additionalAlert({
+    id: "alert.patient.room-upgrade-requested",
+    trigger: "patient_room_upgrade_request",
+    category: "guidance",
+    title: "Patient noticed the room",
+    body:
+      "{{patient_name}} has begun reviewing the fixtures. Upgrade {{room_name}} to improve comfort and care efficiency.",
+    targetKind: "room",
+    clickAction: "open_room",
+    cooldownMinutes: 60,
+    persistent: true,
+    consolidationKey: "room-upgrade:{{room_id}}",
   }),
   additionalAlert({
     id: "alert.staff.morale-low",
@@ -1035,14 +1107,69 @@ export const PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS = [
 ] as const;
 
 export const PROTOTYPE_ALERT_SCHEDULING = {
+  /**
+   * Routine patient-attention rows stay quiet during brief waits. The
+   * underlying condition must remain unresolved for strictly longer than this
+   * many facility minutes before the feed records it.
+   */
+  patientAttentionDelayMinutes: 5,
   firstAmbientMinimumMinutes: 10,
   firstAmbientMaximumMinutes: 20,
   recurringAmbientMinimumMinutes: 45,
   recurringAmbientMaximumMinutes: 90,
   minimumAmbientSeparationMinutes: 30,
+  // Keeps a newly emitted flavor line near the live portion of the mixed
+  // feed long enough to be read without pinning it above later clinic events.
+  ambientFeedRecencyBoostMinutes: 30,
   recentAmbientHistoryLimit: 10,
   recentReviewHistoryLimit: 10,
+  dirtyClinicComplaintMinimumLitterItems: 2,
 } as const;
+
+/**
+ * Domain events remain part of the campaign audit trail even when their
+ * information is already clearer elsewhere in the interface. This policy
+ * controls only the compact player-facing Alerts and Events feed.
+ */
+export const PROTOTYPE_PLAYER_FEED_POLICY = {
+  suppressedEventTypes: [
+    "operating_expense",
+    "clinical_decision_recorded",
+    "encounter_settled",
+    "emergency_glp1_consultation",
+    "development_money_added",
+    "room_placed",
+    "room_sold",
+    "room_upgraded",
+    "room_moved",
+    "room_rotated",
+    "door_placed",
+    "door_removed",
+    "litter_appeared",
+    "litter_collected",
+    "water_cooler_refilled",
+  ],
+  suppressedDefinitionIds: [
+    "event.clinical.decision-correct",
+    "alert.success.trash-cleaned",
+    "alert.success.water-refilled",
+  ],
+} as const;
+
+export function isPrototypeEventSuppressedFromPlayerFeed(
+  eventType: string,
+  definitionId?: string,
+): boolean {
+  return (
+    PROTOTYPE_PLAYER_FEED_POLICY.suppressedEventTypes.some(
+      (candidate) => candidate === eventType,
+    ) ||
+    (definitionId !== undefined &&
+      PROTOTYPE_PLAYER_FEED_POLICY.suppressedDefinitionIds.some(
+        (candidate) => candidate === definitionId,
+      ))
+  );
+}
 
 export const PROTOTYPE_ALERT_CONTENT: readonly PrototypeAlertDefinition[] = [
   ...BASE_PROTOTYPE_ALERT_DEFINITIONS.map(enrichBaseDefinition),

@@ -32,17 +32,31 @@ turning the HUD into a resource spreadsheet.
 - A room is operational only when required access is valid. Imaging rooms
   require a patient-facing door and a separate internal door on a shared wall
   with an Imaging Control Room. Ultrasound has no exemption.
-- Build/Renovate Mode permits temporarily invalid work. Done/Save and Return
+- Build/Renovate Mode permits temporarily invalid work. Done/Save
   remains selectable; an invalid layout opens a modal listing every access
   problem and keeps the player in Build Mode until all are corrected. Door
   rules are taught in the tutorial.
-- The construction desk exposes named Rotate, Build Hallway, Place Door,
-  Remove Door, Undo, and Done/Save tools. Door choices use plain-language wall
-  positions rather than implementation-style fractional slot labels.
-- Every upgradeable room displays a Build Mode plus affordance. Upgrading
-  requires confirmation that states the current and next level, exact cost,
-  and every configured functional, satisfaction, upkeep, and visual effect.
-- One build session spans entry through Done/Save and Return. Stepwise Undo
+- The condensed construction desk places Build Mode, available money, Undo,
+  and Done/Save in its top bar. A second row exposes Rotate, Place Door,
+  Remove Door, and Build Hallway in that order. Rotate is available only while
+  a not-yet-placed room footprint is selected. Place Door emphasizes eligible
+  wall segments for direct selection; Remove Door highlights the doors that
+  can be clicked to remove. The interface does not expose implementation-style
+  fractional or named wall-slot controls.
+- Build Hallway is a persistent construction toggle. Clicking places one
+  hallway tile and dragging paints an orthogonally connected run without
+  requiring the tool to be selected again between tiles. It remains active
+  until explicitly toggled off; each accepted tile records its own cost and
+  build-session Undo step.
+- The complete invalid-layout explanation is a page-level modal above the
+  facility renderer and construction desk, rather than a dialog trapped
+  inside the Clinical Desk stacking context.
+- Clicking an existing room selects it and opens the compact room inspector
+  beside the room catalog. The inspector shows the room name, upgrade level,
+  upgrade cost and benefits, and sale refund. Upgrading requires confirmation
+  that states the current and next level, exact cost, and every configured
+  functional, satisfaction, upkeep, and visual effect.
+- One build session spans entry through Done/Save. Stepwise Undo
   covers room and hallway placement, movement, rotation, upgrades, sales, and
   door changes. A full cancel restores the entry snapshot. There is no Redo.
 - Furniture and equipment are not independently movable in the current

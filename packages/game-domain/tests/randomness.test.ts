@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   RANDOM_STREAMS,
   createPatientDisplayName,
+  createPatientPixelAppearance,
   createDeterministicRandom,
   deterministicShuffle,
 } from "../src";
@@ -74,5 +75,56 @@ describe("versioned deterministic randomness", () => {
     expect(first).toBe(replay);
     expect(second).not.toBe(first);
     expect(first).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/);
+  });
+
+  it("uses chart-compatible names and avatar families for specified patient sex", () => {
+    const feminineName = createPatientDisplayName(
+      "campaign-seed",
+      "encounter.sex-match",
+      "Female",
+    );
+    const masculineName = createPatientDisplayName(
+      "campaign-seed",
+      "encounter.sex-match",
+      "Male",
+    );
+    expect(feminineName).toMatch(
+      /^(Amelia|Ava|Chloe|Elena|Grace|Hannah|Isabella|Julia|Leah|Lily|Maya|Natalie|Nora|Olivia|Sophia|Zoe) /,
+    );
+    expect(masculineName).toMatch(
+      /^(Adam|Benjamin|Caleb|Daniel|Elijah|Ethan|Henry|Isaac|James|Liam|Lucas|Mateo|Noah|Oliver|Samuel|Theo) /,
+    );
+    expect(feminineName).not.toBe(masculineName);
+
+    const feminineAppearance = createPatientPixelAppearance(
+      "campaign-seed",
+      "encounter.sex-match",
+      "Female",
+    );
+    const masculineAppearance = createPatientPixelAppearance(
+      "campaign-seed",
+      "encounter.sex-match",
+      "Male",
+    );
+    expect(feminineAppearance.headVariant).toBeGreaterThanOrEqual(10);
+    expect(feminineAppearance.headVariant).toBeLessThan(20);
+    expect(feminineAppearance.bodyVariant).toBeGreaterThanOrEqual(10);
+    expect(feminineAppearance.bodyVariant).toBeLessThan(20);
+    expect(masculineAppearance.headVariant).toBeGreaterThanOrEqual(0);
+    expect(masculineAppearance.headVariant).toBeLessThan(10);
+    expect(masculineAppearance.bodyVariant).toBeGreaterThanOrEqual(0);
+    expect(masculineAppearance.bodyVariant).toBeLessThan(10);
+  });
+
+  it("keeps an unspecified patient within one coherent human avatar family", () => {
+    const appearance = createPatientPixelAppearance(
+      "campaign-seed",
+      "encounter.unspecified",
+      "Not specified",
+    );
+    const headFamily = Math.floor((appearance.headVariant ?? 0) / 10);
+    const bodyFamily = Math.floor((appearance.bodyVariant ?? 0) / 10);
+    expect(headFamily).toBe(bodyFamily);
+    expect(headFamily).toBeLessThan(2);
   });
 });

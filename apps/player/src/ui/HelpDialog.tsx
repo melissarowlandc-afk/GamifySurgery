@@ -29,7 +29,7 @@ const HELP_STEPS = [
   ],
   [
     "Build Mode",
-    "Enter Build Mode to pause the clinic. Its toolbar provides Rotate, Build Hallway, Place Door, Remove Door, Undo, and Done / Save and Return. If a layout is invalid, Done lists every access problem while renovation stays paused.",
+    "Enter Build Mode to pause the clinic. Its compact top bar provides Undo and Done / Save; Construction Tools provides Rotate, Place Door, Remove Door, and Build Hallway. Toggle Place Door, then click an emphasized eligible wall. Toggle Remove Door to highlight doors you can click to remove. If a layout is invalid, Done / Save lists every access problem while renovation stays paused.",
   ],
   [
     "Rooms, doors, and hallways",

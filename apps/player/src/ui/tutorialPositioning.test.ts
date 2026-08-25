@@ -49,14 +49,20 @@ describe("tutorial coach positioning", () => {
     expect(card.bottom).toBeLessThanOrEqual(viewport.height);
   });
 
-  it("returns no placement instead of covering a target filling the viewport", () => {
-    expect(
-      positionTutorialCoach(
-        rect(0, 0, 320, 480),
-        coach,
-        { width: 320, height: 480 },
-      ),
-    ).toBeNull();
+  it("uses an explicit non-pointing dock when a target fills the viewport", () => {
+    const result = positionTutorialCoach(
+      rect(0, 0, 320, 480),
+      coach,
+      { width: 320, height: 480 },
+    );
+
+    expect(result.docked).toBe(true);
+    expect(result).toMatchObject({
+      placement: "top",
+      top: 12,
+      left: 12,
+      width: 296,
+    });
   });
 
   it("protects a larger chart while aiming at controls inside it", () => {
@@ -79,5 +85,78 @@ describe("tutorial coach positioning", () => {
         result!.top + Math.min(coach.height, result!.maxHeight),
     };
     expect(tutorialRectsOverlap(card, chart)).toBe(false);
+  });
+
+  it("keeps the previous side while that placement remains valid", () => {
+    const viewport = { width: 1440, height: 1000 };
+    const target = rect(650, 450, 140, 100);
+    const first = positionTutorialCoach(
+      target,
+      coach,
+      viewport,
+    );
+    const retained = positionTutorialCoach(
+      target,
+      coach,
+      viewport,
+      target,
+      "right",
+    );
+
+    expect(first.docked).toBe(false);
+    expect(retained.docked).toBe(false);
+    expect(retained.placement).toBe("right");
+  });
+
+  it("abandons a preferred side only when it is no longer usable", () => {
+    const viewport = { width: 1024, height: 768 };
+    const target = rect(850, 260, 150, 100);
+    const result = positionTutorialCoach(
+      target,
+      coach,
+      viewport,
+      target,
+      "right",
+    );
+
+    expect(result.docked).toBe(false);
+    expect(result.placement).not.toBe("right");
+  });
+
+  it("honors an offset VisualViewport and keeps the card inside it", () => {
+    const viewport = {
+      left: 24,
+      top: 80,
+      width: 412,
+      height: 740,
+    };
+    const target = rect(160, 610, 160, 54);
+    const result = positionTutorialCoach(
+      target,
+      { width: 388, height: 190 },
+      viewport,
+    );
+
+    expect(result.left).toBeGreaterThanOrEqual(36);
+    expect(result.top).toBeGreaterThanOrEqual(92);
+    expect(result.left + result.width).toBeLessThanOrEqual(424);
+    expect(
+      result.top + Math.min(190, result.maxHeight),
+    ).toBeLessThanOrEqual(808);
+  });
+
+  it("docks at the edge opposite a target when no strip can fit", () => {
+    const viewport = { width: 320, height: 480 };
+    const upperTarget = rect(0, 0, 320, 430);
+    const result = positionTutorialCoach(
+      upperTarget,
+      coach,
+      viewport,
+      upperTarget,
+    );
+
+    expect(result.docked).toBe(true);
+    expect(result.placement).toBe("bottom");
+    expect(result.top + result.maxHeight).toBe(468);
   });
 });

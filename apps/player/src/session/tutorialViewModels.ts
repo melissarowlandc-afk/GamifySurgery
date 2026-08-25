@@ -1,6 +1,7 @@
 import {
   SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
+  getAnswerChoiceServicePreview,
   getFacilityAccessValidation,
   getFacilityProgressionStatus,
   type GameState,
@@ -9,6 +10,7 @@ import {
 export type TutorialActionId =
   | "open-first-chart"
   | "focus-first-chart"
+  | "complete-tutorial"
   | "acknowledge-step"
   | "advance-first-result"
   | "open-ready-chart"
@@ -25,6 +27,7 @@ export type TutorialTarget =
   | "chart"
   | "answer-choices"
   | "existing-patient"
+  | "facility-entrance"
   | "facility-clock"
   | "chart-feedback"
   | "encounter-summary"
@@ -60,19 +63,25 @@ export interface TutorialStepView {
     | "follow-up-decision"
     | "reopen-first-feedback"
     | "first-feedback"
+    | "dismiss-first-feedback"
     | "first-encounter-summary"
     | "flip-first-chart"
     | "resolve-first-chart"
+    | "reopen-first-summary"
     | "between-tutorial-patients"
     | "second-patient"
     | "second-patient-arriving"
     | "open-second-chart"
     | "second-first-decision"
     | "second-plan-feedback"
+    | "reopen-second-plan-feedback"
+    | "enact-second-plan"
     | "second-sendout-wait"
     | "second-result-ready"
     | "second-follow-up-decision"
     | "second-final-feedback"
+    | "dismiss-second-feedback"
+    | "reopen-second-summary"
     | "reopen-second-chart"
     | "second-decision"
     | "reopen-second-feedback"
@@ -89,11 +98,8 @@ export interface TutorialStepView {
     | "remaining-goals"
     | "advance-level"
     | "level-one-ready"
-    | "level-one-first-arrival"
-    | "level-one-service-drill"
-    | "level-one-sendout-wait"
-    | "level-one-result-ready"
-    | "level-one-returned-result";
+    | "level-one-resume-time"
+    | "level-one-await-first-arrival";
   eyebrow: string;
   title: string;
   body: string;
@@ -172,7 +178,8 @@ function createLevelZeroBuildTutorialStepView(
         "Build Mode pauses facility time so patients do not age into fossils while you remodel.",
       flavor: "Architecture: medicine's least reimbursable procedure.",
       target: "build-mode",
-      targetSelector: ".build-mode-trigger",
+      targetSelector:
+        "[data-tutorial-anchor='enter-build-mode']",
     });
   }
 
@@ -202,7 +209,8 @@ function createLevelZeroBuildTutorialStepView(
         note:
           "A valid outline confirms the footprint can be built. Click the facility to place it; you will add its door next.",
         target: "facility-placement",
-        targetSelector: ".facility-host",
+        targetSelector:
+          "[data-tutorial-anchor='facility-surface']",
       });
     }
     return null;
@@ -213,19 +221,21 @@ function createLevelZeroBuildTutorialStepView(
     buildMode &&
     facilityAccess.unreachableRoomIds.includes(examRoom.id)
   ) {
-    if (!acknowledged("select-exam-room-for-door")) {
-      return step({
-        id: "select-exam-room-for-door",
-        eyebrow: "Level 0 tutorial · Door access",
-        title: "Select the new Examination Room",
-        body:
-          "Click the room you just placed. Its renovation tools will open on the desk.",
-        flavor: "Four walls have been acquired. Access remains aspirational.",
-        target: "room-selection",
-        targetSelector: ".facility-host",
-      });
-    }
     if (selectedRoomInstanceId !== examRoom.id) {
+      if (!acknowledged("select-exam-room-for-door")) {
+        return step({
+          id: "select-exam-room-for-door",
+          eyebrow: "Level 0 tutorial · Door access",
+          title: "Select the new Examination Room",
+          body:
+            "Click the room you just placed. Its renovation tools will open on the desk.",
+          flavor:
+            "Four walls have been acquired. Access remains aspirational.",
+          target: "room-selection",
+          targetSelector:
+            "[data-tutorial-anchor='facility-surface']",
+        });
+      }
       return null;
     }
     if (!acknowledged("place-exam-room-door")) {
@@ -234,14 +244,13 @@ function createLevelZeroBuildTutorialStepView(
         eyebrow: "Level 0 tutorial · Door access",
         title: "Add a zero-cost door",
         body:
-          "Choose Place Door, then select a valid shared wall. Doors connect rooms to reachable rooms or hallways.",
+          "Toggle Place Door, then click an emphasized eligible wall. Doors connect rooms to reachable rooms or hallways. Remove Door similarly highlights the doors you can click to remove.",
         note:
-          "Done / Save and Return opens a modal listing every problem that must be corrected.",
+          "Done / Save opens a modal listing every problem that must be corrected.",
         flavor:
           "The clinic has discovered that walls are excellent at preventing healthcare.",
         target: "door-tool",
-        targetSelector: ".selected-room-inspector .door-tool",
-        avoidSelector: ".door-slot-grid",
+        targetSelector: "[data-tutorial-anchor='place-door']",
       });
     }
     return null;
@@ -256,9 +265,9 @@ function createLevelZeroBuildTutorialStepView(
       eyebrow: "Level 0 tutorial · Build Mode",
       title: "Construction complete — exit Build Mode",
       body:
-        "Use Done / Save and Return. Facility time returns to its previous pause state.",
+        "Use Done / Save. Facility time returns to its previous pause state.",
       target: "exit-build-mode",
-      targetSelector: ".build-mode-toggle",
+      targetSelector: "[data-tutorial-anchor='build-done']",
     });
   }
 
@@ -312,17 +321,26 @@ function createLevelZeroTutorialStepView(
     return null;
   }
 
-  if (!acknowledged("first-patient-arriving")) {
+  /*
+   * Keep the arrival explanation on screen until the player acknowledges it.
+   * Character travel is deliberately brief at the shared walking speed, so
+   * deriving this bubble solely from the live movement kind could replace it
+   * before the player had time to read or acknowledge it.
+   */
+  if (
+    first.firstOpenedAtTick === null &&
+    !acknowledged("first-patient-arriving")
+  ) {
     return step({
       id: "first-patient-arriving",
       eyebrow: "Level 0 tutorial · Arrival",
-      title: "Your first patient is walking to check-in",
+      title: "Your first patient is entering the clinic",
       body:
-        "Patients begin outside the clinic. Their chart becomes available after they reach the Front Desk and check in.",
+        "Patients arrive through the entrance. Their chart becomes available after they reach the Front Desk and check in.",
       flavor:
         "The clinic has acquired both a patient and a reason to look busy.",
-      target: "facility-clock",
-      targetSelector: ".facility-time-chip",
+      target: "facility-entrance",
+      targetSelector: "[data-tutorial-anchor='facility-entrance']",
       patientEncounterId: TUTORIAL_ENCOUNTER_ID,
     });
   }
@@ -347,74 +365,132 @@ function createLevelZeroTutorialStepView(
     });
   }
 
-  if (!acknowledged("first-decision")) {
-    return step({
-      id: "first-decision",
-      eyebrow: "Level 0 tutorial · Step 2",
-      title: "Read across the chart, then choose",
-      body: "",
-      flavor:
-        "A bold new era of clicking the thing the chart explicitly says has begun.",
-      target: "answer-choices",
-      targetSelector: ".chart-step-column.is-current .answer-list",
-      avoidSelector: ".chart-panel",
-      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-    });
-  }
-
   if (first.answers.length === 0) {
+    if (state.openChartEncounterId !== TUTORIAL_ENCOUNTER_ID) {
+      if (acknowledged("reopen-first-chart")) {
+        return null;
+      }
+      return step({
+        id: "reopen-first-chart",
+        eyebrow: "Level 0 tutorial · Patient chart",
+        title: "Reopen the first patient chart",
+        body:
+          "The patient remains in Existing Patients. Reopen the highlighted chart to make the pending decision.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!acknowledged("first-decision")) {
+      return step({
+        id: "first-decision",
+        eyebrow: "Level 0 tutorial · Step 2",
+        title: "Read across the chart, then choose",
+        body: "",
+        flavor:
+          "A bold new era of clicking the thing the chart explicitly says has begun.",
+        target: "answer-choices",
+        targetSelector:
+          "[data-tutorial-anchor='current-answer-choices']",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
     return null;
-  }
-
-  if (!acknowledged("first-feedback")) {
-    return step({
-      id: "first-feedback",
-      eyebrow: "Level 0 tutorial · Decision feedback",
-      title: "Review the decision result",
-      body:
-        "The chart locks your answer, explains the result, shows the XP earned, and states what happens next.",
-      flavor:
-        "You solved this tutorial patient. Your clinical decision making is truly godlike.",
-      target: "chart-feedback",
-      targetSelector: ".chart-step-feedback",
-      avoidSelector: ".chart-panel",
-      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-    });
-  }
-
-  if (!first.terminalFeedback?.acknowledged) {
-    return null;
-  }
-
-  if (!acknowledged("first-encounter-summary")) {
-    return step({
-      id: "first-encounter-summary",
-      eyebrow: "Level 0 tutorial · Encounter complete",
-      title: "Review the encounter summary",
-      body:
-        "Decisions Correct, Encounter Payment, and Encounter XP are recorded separately. This first tutorial encounter awards 20 XP.",
-      target: "encounter-summary",
-      targetSelector: ".chart-reward-banner",
-      avoidSelector: ".chart-panel",
-      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-    });
-  }
-
-  if (!acknowledged("flip-first-chart")) {
-    return step({
-      id: "flip-first-chart",
-      eyebrow: "Level 0 tutorial · Learning summary",
-      title: "Flip for More Disease Information",
-      body:
-        "Use the real chart button to read the brief disease and management summary on the back.",
-      target: "flip-chart",
-      targetSelector: ".chart-flip-button",
-      avoidSelector: ".chart-panel",
-      patientEncounterId: TUTORIAL_ENCOUNTER_ID,
-    });
   }
 
   if (first.lifecycle !== "resolved") {
+    const feedbackOutstanding =
+      !acknowledged("first-feedback") ||
+      !first.terminalFeedback?.acknowledged;
+    if (state.openChartEncounterId !== TUTORIAL_ENCOUNTER_ID) {
+      if (feedbackOutstanding) {
+        if (acknowledged("reopen-first-feedback")) {
+          return null;
+        }
+        return step({
+          id: "reopen-first-feedback",
+          eyebrow: "Level 0 tutorial · Decision feedback",
+          title: "Reopen the chart to review the result",
+          body:
+            "The scored decision is saved. Reopen the highlighted Existing Patient chart to read the feedback.",
+          target: "existing-patient",
+          targetSelector:
+            ".patient-folder.is-active .patient-tab.is-tutorial-target",
+          patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+        });
+      }
+      if (acknowledged("reopen-first-summary")) {
+        return null;
+      }
+      return step({
+        id: "reopen-first-summary",
+        eyebrow: "Level 0 tutorial · Encounter complete",
+        title: "Reopen the completed chart",
+        body:
+          "The completed encounter remains in Existing Patients until you review its summary and file it.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!acknowledged("first-feedback")) {
+      return step({
+        id: "first-feedback",
+        eyebrow: "Level 0 tutorial · Decision feedback",
+        title: "Review the decision result",
+        body:
+          "The chart locks your answer, explains the result, shows the XP earned, and states what happens next.",
+        flavor:
+          "You solved this tutorial patient. Your clinical decision making is truly godlike.",
+        target: "chart-feedback",
+        targetSelector:
+          "[data-tutorial-anchor='current-decision-feedback']",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!first.terminalFeedback?.acknowledged) {
+      if (!acknowledged("dismiss-first-feedback")) {
+        return step({
+          id: "dismiss-first-feedback",
+          eyebrow: "Level 0 tutorial · Continue",
+          title: "Dismiss the completed decision",
+          body:
+            "Use the real Dismiss button to continue to the encounter summary.",
+          target: "chart-feedback",
+          targetSelector:
+            "[data-tutorial-anchor='decision-feedback-action']",
+          patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+        });
+      }
+      return null;
+    }
+    if (!acknowledged("first-encounter-summary")) {
+      return step({
+        id: "first-encounter-summary",
+        eyebrow: "Level 0 tutorial · Encounter complete",
+        title: "Review the encounter summary",
+        body:
+          "Decisions Correct, Encounter Payment, and Encounter XP are recorded separately. This first tutorial encounter awards 20 XP.",
+        target: "encounter-summary",
+        targetSelector:
+          "[data-tutorial-anchor='encounter-summary']",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!summaryVisible && !acknowledged("flip-first-chart")) {
+      return step({
+        id: "flip-first-chart",
+        eyebrow: "Level 0 tutorial · Learning summary",
+        title: "Flip for More Disease Information",
+        body:
+          "Use the real chart button to read the brief disease and management summary on the back.",
+        target: "flip-chart",
+        targetSelector: "[data-tutorial-anchor='flip-chart']",
+        patientEncounterId: TUTORIAL_ENCOUNTER_ID,
+      });
+    }
     if (!summaryVisible) {
       return null;
     }
@@ -426,8 +502,7 @@ function createLevelZeroTutorialStepView(
         body:
           "Select the real Resolve Completed Chart button to move this encounter into the Resolved filing cabinet.",
         target: "resolve-chart",
-        targetSelector: ".chart-resolve-button",
-        avoidSelector: ".chart-panel",
+        targetSelector: "[data-tutorial-anchor='resolve-chart']",
         patientEncounterId: TUTORIAL_ENCOUNTER_ID,
       });
     }
@@ -441,11 +516,11 @@ function createLevelZeroTutorialStepView(
       eyebrow: "Level 0 tutorial · Between patients",
       title: "Use quiet moments around the clinic",
       body:
-        "Facility time keeps moving between patients. You can review goals, respond to alerts, clean visible litter, refill an empty water cooler, or use the GLP-1 consult when it is available.",
+        "Facility time keeps moving between patients. The GLP-1 consult is one useful waiting-time action; you can also review goals, respond to alerts, and handle visible clinic tasks.",
       flavor:
         "Silence in a clinic is either a gift or a scheduling problem.",
       target: "waiting-actions",
-      targetSelector: ".patient-rail-column",
+      targetSelector: ".emergency-glp1-panel",
     });
   }
 
@@ -453,17 +528,20 @@ function createLevelZeroTutorialStepView(
     return null;
   }
 
-  if (!acknowledged("second-patient-arriving")) {
+  if (
+    second.firstOpenedAtTick === null &&
+    !acknowledged("second-patient-arriving")
+  ) {
     return step({
       id: "second-patient-arriving",
       eyebrow: "Level 0 tutorial · Second patient",
-      title: `${second.patientDisplayName} is walking to check-in`,
+      title: `${second.patientDisplayName} is entering the clinic`,
       body:
-        "This patient will demonstrate a plan that consumes facility time and unlocks a later decision.",
+        "Watch the clinic entrance. This patient will demonstrate a plan that consumes facility time and unlocks a later decision.",
       flavor:
         "The quiet interval has concluded due to incoming healthcare.",
-      target: "facility-clock",
-      targetSelector: ".facility-time-chip",
+      target: "facility-entrance",
+      targetSelector: "[data-tutorial-anchor='facility-entrance']",
       patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
   }
@@ -488,28 +566,73 @@ function createLevelZeroTutorialStepView(
     });
   }
 
-  if (!acknowledged("second-first-decision")) {
-    return step({
-      id: "second-first-decision",
-      eyebrow: "Level 0 tutorial · Timed care",
-      title: "Choose the first plan",
-      body:
-        "A duration such as 10 minutes means ten minutes on the facility clock. Pause freezes it; 2× and 4× make those facility minutes pass faster.",
-      note:
-        "Several choices may take time. The duration describes workflow, not whether an answer is correct.",
-      target: "answer-choices",
-      targetSelector: ".chart-step-column.is-current .answer-list",
-      avoidSelector: ".chart-panel",
-      patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
-    });
-  }
-
   if (second.answers.length === 0) {
+    if (state.openChartEncounterId !== SECOND_TUTORIAL_ENCOUNTER_ID) {
+      if (acknowledged("reopen-second-chart")) {
+        return null;
+      }
+      return step({
+        id: "reopen-second-chart",
+        eyebrow: "Level 0 tutorial · Patient chart",
+        title: `Reopen ${second.patientDisplayName}'s chart`,
+        body:
+          "The patient remains in Existing Patients. Reopen the highlighted chart to make the pending decision.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!acknowledged("second-first-decision")) {
+      const correctChoice =
+        second.frozenCase.decisionNodes[0]?.answerChoices.find(
+          (choice) => choice.isCorrect,
+        );
+      const duration = correctChoice
+        ? getAnswerChoiceServicePreview(
+            state,
+            SECOND_TUTORIAL_ENCOUNTER_ID,
+            correctChoice.id,
+          )?.durationTicks
+        : null;
+      return step({
+        id: "second-first-decision",
+        eyebrow: "Level 0 tutorial · Timed care",
+        title: "Choose the first plan",
+        body: `A displayed duration${
+          duration === null || duration === undefined
+            ? ""
+            : `, such as ${formatMinutes(duration)},`
+        } uses the facility clock. Pause freezes it; 2× and 4× make those facility minutes pass faster.`,
+        note:
+          "Several choices may take time. The duration describes workflow, not whether an answer is correct.",
+        target: "answer-choices",
+        targetSelector:
+          "[data-tutorial-anchor='current-answer-choices']",
+        patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
     return null;
   }
 
   const secondFirstStep = second.steps[0];
   if (secondFirstStep?.status === "feedback_pending") {
+    if (state.openChartEncounterId !== SECOND_TUTORIAL_ENCOUNTER_ID) {
+      if (acknowledged("reopen-second-plan-feedback")) {
+        return null;
+      }
+      return step({
+        id: "reopen-second-plan-feedback",
+        eyebrow: "Level 0 tutorial · Timed care",
+        title: "Reopen the chart to review the plan",
+        body:
+          "The decision is saved. Reopen the highlighted chart to review it before the patient leaves for testing.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
     if (!acknowledged("second-plan-feedback")) {
       return step({
         id: "second-plan-feedback",
@@ -518,8 +641,21 @@ function createLevelZeroTutorialStepView(
         body:
           "After reading the feedback, use the real Enact Plan button. The patient will physically leave for the timed service.",
         target: "chart-feedback",
-        targetSelector: ".chart-step-feedback",
-        avoidSelector: ".chart-panel",
+        targetSelector:
+          "[data-tutorial-anchor='current-decision-feedback']",
+        patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!acknowledged("enact-second-plan")) {
+      return step({
+        id: "enact-second-plan",
+        eyebrow: "Level 0 tutorial · Enact the plan",
+        title: "Send the patient for the timed service",
+        body:
+          "Select the real Enact Plan button. Facility time and physical movement begin only after you enact the plan.",
+        target: "chart-feedback",
+        targetSelector:
+          "[data-tutorial-anchor='decision-feedback-action']",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
       });
     }
@@ -551,7 +687,10 @@ function createLevelZeroTutorialStepView(
   }
 
   if (second.currentNodeIndex > 0 && second.answers.length === 1) {
-    if (!acknowledged("second-result-ready")) {
+    if (
+      state.openChartEncounterId !== SECOND_TUTORIAL_ENCOUNTER_ID &&
+      !acknowledged("second-result-ready")
+    ) {
       return step({
         id: "second-result-ready",
         eyebrow: "Level 0 tutorial · Result returned",
@@ -575,26 +714,77 @@ function createLevelZeroTutorialStepView(
         body:
           "The previous decision remains reviewable in its collapsed row. Make the newly available decision.",
         target: "answer-choices",
-        targetSelector: ".chart-step-column.is-current .answer-list",
-        avoidSelector: ".chart-panel",
+        targetSelector:
+          "[data-tutorial-anchor='current-answer-choices']",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
       });
     }
     return null;
   }
 
-  if (second.answers.length > 1) {
-    if (!second.terminalFeedback?.acknowledged) {
-      if (!acknowledged("second-final-feedback")) {
+  if (
+    second.answers.length > 1 &&
+    second.lifecycle !== "resolved"
+  ) {
+    const finalFeedbackOutstanding =
+      !acknowledged("second-final-feedback") ||
+      !second.terminalFeedback?.acknowledged;
+    if (state.openChartEncounterId !== SECOND_TUTORIAL_ENCOUNTER_ID) {
+      if (finalFeedbackOutstanding) {
+        if (acknowledged("reopen-second-feedback")) {
+          return null;
+        }
         return step({
-          id: "second-final-feedback",
+          id: "reopen-second-feedback",
           eyebrow: "Level 0 tutorial · Final feedback",
-          title: "Review the final decision",
+          title: "Reopen the chart to review the final decision",
           body:
-            "The last answer completes the encounter. Read its explanation, then use the real Dismiss button.",
+            "The completed decision is saved. Reopen the highlighted chart to finish the encounter.",
+          target: "existing-patient",
+          targetSelector:
+            ".patient-folder.is-active .patient-tab.is-tutorial-target",
+          patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+        });
+      }
+      if (acknowledged("reopen-second-summary")) {
+        return null;
+      }
+      return step({
+        id: "reopen-second-summary",
+        eyebrow: "Level 0 tutorial · Complete",
+        title: "Reopen the completed chart",
+        body:
+          "The completed chart remains in Existing Patients until you file it.",
+        target: "existing-patient",
+        targetSelector:
+          ".patient-folder.is-active .patient-tab.is-tutorial-target",
+        patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!acknowledged("second-final-feedback")) {
+      return step({
+        id: "second-final-feedback",
+        eyebrow: "Level 0 tutorial · Final feedback",
+        title: "Review the final decision",
+        body:
+          "The last answer completes the encounter. Read its explanation before filing the chart.",
+        target: "chart-feedback",
+        targetSelector:
+          "[data-tutorial-anchor='current-decision-feedback']",
+        patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    if (!second.terminalFeedback?.acknowledged) {
+      if (!acknowledged("dismiss-second-feedback")) {
+        return step({
+          id: "dismiss-second-feedback",
+          eyebrow: "Level 0 tutorial · Continue",
+          title: "Dismiss the final decision",
+          body:
+            "Use the real Dismiss button to finish the encounter summary.",
           target: "chart-feedback",
-          targetSelector: ".chart-step-feedback",
-          avoidSelector: ".chart-panel",
+          targetSelector:
+            "[data-tutorial-anchor='decision-feedback-action']",
           patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
         });
       }
@@ -610,8 +800,7 @@ function createLevelZeroTutorialStepView(
         flavor:
           "The chart is signed. Medico-legally, time may resume.",
         target: "resolve-chart",
-        targetSelector: ".chart-resolve-button",
-        avoidSelector: ".chart-panel",
+        targetSelector: "[data-tutorial-anchor='resolve-chart']",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
       });
     }
@@ -658,232 +847,43 @@ export function createTutorialStepView({
   }
 
   if (state.facilityLevel >= 1) {
-    const routineEncounters = Object.values(state.encounters)
-      .filter((encounter) => encounter.arrivalClass === "routine")
-      .sort(
-        (left, right) =>
-          left.waiting.arrivedAtTick - right.waiting.arrivedAtTick ||
-          left.id.localeCompare(right.id),
-      );
-    const firstRoutineEncounter = routineEncounters[0] ?? null;
-    const serviceTutorialEncounter = routineEncounters.find(
-      (encounter) =>
-        encounter.frozenCase.decisionNodes.some(
-          (node) => node.resultGateAfter !== null,
-        ),
-    );
-    const pendingSendout =
-      serviceTutorialEncounter?.lifecycle === "active_pending_result" &&
-      serviceTutorialEncounter.currentNodeIndex === 0
-        ? serviceTutorialEncounter
-        : null;
-    const returnedResult =
-      serviceTutorialEncounter?.lifecycle ===
-        "active_action_required" &&
-      serviceTutorialEncounter.currentNodeIndex === 1 &&
-      serviceTutorialEncounter.deliveredResultNarratives.length > 0
-        ? serviceTutorialEncounter
-        : null;
-    const openServiceDrill =
-      serviceTutorialEncounter?.id === state.openChartEncounterId &&
-      serviceTutorialEncounter.lifecycle === "active_action_required" &&
-      serviceTutorialEncounter.answers.length === 0 &&
-      serviceTutorialEncounter.frozenCase.id.startsWith(
-        "case.synthetic.",
-      )
-        ? serviceTutorialEncounter
-        : null;
-    const serviceFeedbackPending =
-      serviceTutorialEncounter?.steps[
-        serviceTutorialEncounter.currentNodeIndex
-      ]?.status === "feedback_pending"
-        ? serviceTutorialEncounter
-        : null;
-
-    if (serviceFeedbackPending) {
-      if (state.openChartEncounterId !== serviceFeedbackPending.id) {
-        return step({
-          id: "level-one-service-drill",
-          eyebrow: "Level 1 guide · Decision feedback",
-          title: "Reopen the chart to continue the service plan",
-          body:
-            "The scored answer is locked. Reopen the highlighted Existing Patient chart to review the explanation.",
-          target: "existing-patient",
-          targetSelector:
-            ".patient-folder.is-active .patient-tab.is-tutorial-target",
-          patientEncounterId: serviceFeedbackPending.id,
-        });
-      }
-      return step({
-        id: "level-one-service-drill",
-        eyebrow: "Level 1 guide · Decision feedback",
-        title: "Review the result before care continues",
-        body:
-          "The chart shows whether the decision was correct, the XP earned, and the plan that will occur next. Click the real chart button when you are ready.",
-        target: "chart-feedback",
-        targetSelector:
-          ".chart-action-buttons .button.button-primary",
-        avoidSelector: ".chart-panel",
-        patientEncounterId: serviceFeedbackPending.id,
-      });
-    }
-
-    if (
-      pendingSendout
-    ) {
-      const remaining = Math.max(
-        0,
-        (pendingSendout.pendingResult?.dueTick ?? state.facilityTick) -
-          state.facilityTick,
-      );
-      return step({
-        id: "level-one-sendout-wait",
-        eyebrow: "Level 1 guide · New mechanic",
-        title: "Send-out testing takes facility time",
-        body:
-          `${pendingSendout.patientDisplayName} moved to Existing Patients while the off-site service runs. Keep the clinic clock running; you may treat someone else while you wait.`,
-      note:
-          `${formatMinutes(remaining)} remain on the facility clock.`,
-        flavor:
-          "The patient has left the building. The chart, naturally, remains.",
-        target: "existing-patient",
-        targetSelector:
-          ".patient-folder.is-active .patient-tab.is-tutorial-target",
-        patientEncounterId: pendingSendout.id,
-      });
-    }
-
-    if (returnedResult) {
-      if (state.openChartEncounterId !== returnedResult.id) {
-        return step({
-          id: "level-one-result-ready",
-          eyebrow: "Level 1 guide · Result returned",
-          title: "The send-out result is ready",
-          body:
-            `${returnedResult.patientDisplayName} now has an exclamation point in Existing Patients. Click that real patient tab to review the result and continue the encounter.`,
-          target: "existing-patient",
-          targetSelector:
-            ".patient-folder.is-active .patient-tab.is-tutorial-target",
-          patientEncounterId: returnedResult.id,
-        });
-      }
-      return step({
-        id: "level-one-returned-result",
-        eyebrow: "Level 1 guide · Result returned",
-        title: "The result added the next chart step",
-        body:
-          "The earlier decision stays visible, and the returned result appears beside the newly unlocked question. Answer using the real choices in the chart.",
-        flavor:
-          "The lab has converted waiting into another decision.",
-        target: "answer-choices",
-        targetSelector:
-          ".chart-step-column.is-current .answer-list",
-        avoidSelector: ".chart-panel",
-        patientEncounterId: returnedResult.id,
-      });
-    }
-
-    if (openServiceDrill) {
-      return step({
-        id: "level-one-service-drill",
-        eyebrow: "Level 1 guide · Practice workflow",
-        title: "This artificial patient demonstrates service routing",
-        body:
-          "The token wording is intentionally simple: this encounter exists to teach ordering a test, waiting for its return, and acting on the result. Test choices show their facility-time estimate.",
-        note:
-          "Choose through the real answer buttons. The guide will not select or fast-forward anything for you.",
-        target: "answer-choices",
-        targetSelector:
-          ".chart-step-column.is-current .answer-list",
-        avoidSelector: ".chart-panel",
-        patientEncounterId: openServiceDrill.id,
-      });
-    }
-
-    if (
-      firstRoutineEncounter?.lifecycle === "waiting_unopened" &&
-      firstRoutineEncounter.firstOpenedAtTick === null
-    ) {
-      if (
-        firstRoutineEncounter.patientMovement?.kind ===
-        "arriving_for_check_in"
-      ) {
-        return step({
-          id: "level-one-first-arrival",
-          eyebrow: "Level 1 guide · First routine patient",
-          title: "A patient is walking to check-in",
-          body:
-            "Patients now enter through the sidewalk and front door. The Waiting chart becomes actionable after check-in.",
-          target: "facility-clock",
-          targetSelector: ".facility-time-chip",
-          patientEncounterId: firstRoutineEncounter.id,
-        });
-      }
-      if (
-        firstRoutineEncounter.patientMovement?.kind ===
-        "walking_to_care"
-      ) {
-        return step({
-          id: "level-one-service-drill",
-          eyebrow: "Level 1 guide · Patient movement",
-          title: "The patient is walking to the care area",
-          body:
-            "The chart remains open, but the first decision unlocks only after the patient reaches care.",
-          target: "chart",
-          targetSelector: ".chart-panel",
-          avoidSelector: ".chart-panel",
-          patientEncounterId: firstRoutineEncounter.id,
-        });
-      }
-      return step({
-        id: "level-one-first-arrival",
-        eyebrow: "Level 1 guide · First routine patient",
-        title: "Level 1 patients arrive through the Waiting list",
-        body:
-          "This begins the repeatable clinic loop. Click the highlighted patient tab itself; after this first arrival, ordinary patient handling is up to you.",
-        target: "waiting-patient",
-        targetSelector:
-          ".patient-folder.is-waiting .patient-tab.is-tutorial-target",
-        patientEncounterId: firstRoutineEncounter.id,
-      });
-    }
-
-    if (firstRoutineEncounter) {
-      return null;
-    }
-
+    const acknowledged = (id: TutorialStepView["id"]): boolean =>
+      acknowledgedStepIds.has(`${state.campaignId}:${id}`);
     const remaining = Math.max(
       0,
       state.nextRoutineArrivalTick - state.facilityTick,
     );
-    if (
-      acknowledgedStepIds.has(
-        `${state.campaignId}:level-one-ready`,
-      )
-    ) {
-      return null;
+    if (state.paused) {
+      if (acknowledged("level-one-resume-time")) {
+        return null;
+      }
+      return step({
+        id: "level-one-resume-time",
+        eyebrow: "Level 0 tutorial · Complete",
+        title: "Resume facility time to begin Level 1",
+        body:
+          "Routine patients arrive only while facility time advances. Use the real Resume control, then watch the clinic entrance.",
+        note: `${formatMinutes(remaining)} until the next planned arrival.`,
+        flavor:
+          "You have leveled up. The patients did not become simpler.",
+        target: "facility-clock",
+        targetSelector: ".pause-button",
+      });
     }
     return step({
-      id: "level-one-ready",
-      eyebrow: "Level 0 tutorial · Complete",
-      title: state.paused
-        ? "Resume facility time to begin Level 1"
-        : "Your first Level 1 patient is on the way",
+      id: "level-one-await-first-arrival",
+      eyebrow: "Level 1 guide · First routine patient",
+      title: "Your first Level 1 patient is on the way",
       body:
-        state.paused
-          ? "Routine patients arrive only while facility time advances. Click the real Resume control above, then watch the Waiting list."
-          : "Facility time is running. A routine patient will appear in Waiting when the arrival interval elapses.",
-      note:
-        `${formatMinutes(remaining)} until the next planned arrival.`,
+        "Facility time is running. Watch the clinic entrance for the next patient.",
+      note: `${formatMinutes(remaining)} until the next planned arrival.`,
       flavor:
         "You have leveled up. The patients did not become simpler.",
       target: "facility-clock",
-      targetSelector: state.paused
-        ? ".pause-button"
-        : ".facility-time-chip",
+      targetSelector: ".facility-time-chip",
       primaryAction: {
-        id: "acknowledge-step",
-        label: "Close tutorial",
+        id: "complete-tutorial",
+        label: "Complete tutorial",
       },
     });
   }
@@ -1351,14 +1351,13 @@ export function createTutorialStepView({
       eyebrow: "Level 0 tutorial · Step 18",
       title: "Add a zero-cost door",
       body:
-        "Choose an enabled wall slot in Doors. The door must connect the Examination Room to the Front Desk, another reachable room, or a hallway.",
+        "Toggle Place Door, then click an emphasized eligible wall. The door must connect the Examination Room to the Front Desk, another reachable room, or a hallway. Remove Door highlights the doors you can click to remove.",
       note:
-        "If every slot is blocked, move the room until one wall touches a reachable space. The exact reason Build Mode cannot close appears beside Done / Save and Return.",
+        "If no wall is eligible, move the room until one wall touches a reachable space. The exact reason Build Mode cannot close appears beside Done / Save.",
       flavor:
         "The clinic has discovered that walls are excellent at preventing healthcare.",
       target: "door-tool",
-      targetSelector: ".selected-room-inspector .door-tool",
-      avoidSelector: ".door-slot-grid",
+      targetSelector: "[data-build-tool=\"place-door\"]",
     });
   }
 

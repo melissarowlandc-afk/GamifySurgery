@@ -142,7 +142,7 @@ test("captures the same clinic in normal and Build Mode", async ({
 
   await page.getByRole("button", { name: "Enter Build Mode" }).click();
   await expect(
-    page.getByRole("button", { name: "Exit Build Mode" }),
+    page.getByRole("button", { name: "Done / Save" }),
   ).toBeVisible();
   const build = await facility.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/level-1-mode-build.png`,

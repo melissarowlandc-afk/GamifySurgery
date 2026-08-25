@@ -13,7 +13,7 @@ function model(): FacilityViewModel {
     paused: false,
     simulationSpeed: 1,
     realMillisecondsPerFacilityMinuteAt1x: 1_000,
-    patientTravelTilesPerFacilityMinute: 4,
+    characterTravelTilesPerFacilityMinute: 2,
     gridColumns: 10,
     gridRows: 10,
     patientCounts: {

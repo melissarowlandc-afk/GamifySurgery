@@ -3,7 +3,7 @@ import { createInitialGameState } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("economy player view models", () => {
-  it("shows low-cash GLP-1 availability as an hourly-only cooldown", () => {
+  it("keeps the GLP-1 control available at any cash balance until its room is built", () => {
     const state = createInitialGameState();
     const view = createPrototypePlayerView(state, null, false, null);
 
@@ -11,18 +11,40 @@ describe("economy player view models", () => {
       visible: true,
       enabled: true,
       paymentLabel: "+$25",
-      cooldownLabel: "Hourly consult ready",
+      statusLabel: "Ready now; one consult per facility hour.",
     });
     expect(JSON.stringify(view.emergencyGlp1)).not.toContain("daily");
 
     state.cash = 500;
     state.cashCents = 50_000;
+    const highCashView = createPrototypePlayerView(
+      state,
+      null,
+      false,
+      null,
+    ).emergencyGlp1;
+    expect(highCashView).toMatchObject({
+      visible: true,
+      enabled: true,
+      statusLabel: "Ready now; one consult per facility hour.",
+    });
+    expect(JSON.stringify(highCashView)).not.toContain(
+      "Available below",
+    );
+
+    state.rooms.push({
+      ...state.rooms[0]!,
+      id: "room.instance.glp1.telehealth",
+      roomDefinitionId:
+        "room.glp1_telehealth_suite",
+    });
     expect(
-      createPrototypePlayerView(state, null, false, null).emergencyGlp1.visible,
+      createPrototypePlayerView(state, null, false, null).emergencyGlp1
+        .visible,
     ).toBe(false);
   });
 
-  it("presents the current advertising tier and every centralized option", () => {
+  it("presents the current centralized advertising tier", () => {
     const state = createInitialGameState();
     state.advertisingLevel = 2;
 
@@ -37,12 +59,9 @@ describe("economy player view models", () => {
       currentLevel: 2,
       currentDisplayName: "Neighborhood ads",
       hourlyCostLabel: "$8/hr",
+      arrivalFrequencyLabel: "+19% arrival frequency",
       canDecrease: true,
       canIncrease: true,
     });
-    expect(advertising.levels).toHaveLength(4);
-    expect(advertising.levels.filter((level) => level.selected)).toEqual([
-      expect.objectContaining({ level: 2 }),
-    ]);
   });
 });

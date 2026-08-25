@@ -97,6 +97,8 @@ description. The local authoring contract keeps separate definition sets for:
 - Clinical setting
 - Concept-to-topic relationship type
 - Facility stage, including an ordinal
+- Clinical release point, including its activation rule in a compatible balance
+  release
 - Deferred scope
 - Source format
 - Structured-fact type
@@ -181,7 +183,8 @@ Stable FSRS-card identity with:
 
 - One primary Clinical Topic
 - One narrow learning objective
-- Required earliest facility-stage definition
+- Derived earliest facility-stage definition based on approved linked
+  presentation release points
 - Stable lineage
 - Many immutable revisions
 - Many related-topic links
@@ -189,10 +192,11 @@ Stable FSRS-card identity with:
 - Many Patient Presentation Variants through Concept Presentation Links
 - Zero or more core-concept-set memberships
 
-`earliest_facility_stage` is an unlock reference, not educational difficulty.
-It references a stable Facility Stage Definition from a compatible balance
-release. Once the concept has an FSRS card, later-stage presentation coverage
-must keep it reviewable.
+`earliest_facility_stage` is a derived unlock index, not educational
+difficulty. It is resolved from stable Clinical Release Point Definitions on
+approved linked presentations and the compatible pinned balance release. Once
+the concept has an FSRS card, later-stage presentation coverage must keep it
+reviewable.
 
 ### Concept related-topic link
 
@@ -216,8 +220,10 @@ Nodes and Patient Presentation Variants and may link to several topics.
 
 Stable clinically meaningful mastery-presentation identity within one Case
 Family. Its revisions preserve setting, presentation role, answer-essential
-facts, required findings, stage and capability eligibility, sources, review,
-and approval.
+facts, required findings, exactly one semantic clinical release point,
+capability eligibility, sources, review, and approval. Question Variants inherit
+this release point; a clinically different later setting uses another Patient
+Presentation Variant rather than attaching several gates to one variant.
 
 Cosmetic runtime changes never create a new variant identity. A material change
 that represents a different mastery exposure creates a new stable variant
@@ -516,8 +522,9 @@ dependency role and manifest ordering where needed.
 Immutable report containing validator versions and results for structural
 integrity, constraint satisfiability, profile and boundary coverage,
 answer-invariance checks, source and approval completeness, mastery-variant
-coverage, facility-stage availability, repetition simulation, dependency
-closure, and predecessor compatibility.
+coverage, release-point and capability availability, derived facility-stage
+compatibility, repetition simulation, dependency closure, and predecessor
+compatibility.
 
 ### Clinical-release compatibility edge
 
@@ -762,6 +769,14 @@ The exact derived folder mapping is `waiting_unopened` to Waiting;
 `active_action_required` displays `!`. The summary-available state instead
 displays an accessible Complete or Summary Available label.
 
+The encounter also persists the kind and start tick of any unresolved
+check-in, clinical-decision-ready, or result-ready feed condition. These
+fields exist only to enforce the five-facility-minute Alerts and Events grace
+period across save/reload; they do not delay the chart badge or change
+workflow state. Player response clears the pending feed condition. If the
+condition remains unresolved for more than five minutes, one durable domain
+event is materialized and its attention marker later resolves in place.
+
 Each encounter stores individual patient satisfaction beginning at `100`, the
 start of its current idle wait, the last applied decay boundary, emitted warning
 thresholds, a persisted hidden walkout threshold from `0` through `59`, final
@@ -904,9 +919,11 @@ Records each economic change with integer amount, reason code, facility time, an
 
 ### Progression state
 
-Records current-level XP, the derived rolling satisfaction result, objectives,
-facility stage, accomplishments, unlocks, and level-up attempts. No lifetime-XP
-counter is required.
+Records current-level XP, the historical rolling ended-encounter satisfaction
+result, the separately derived live facility-condition modifier, objectives,
+facility stage, accomplishments, unlocks, and level-up attempts. Resolving a
+current condition removes its live modifier without rewriting the historical
+result. No lifetime-XP counter is required.
 
 ### Inspection attempt
 
@@ -921,9 +938,9 @@ current due time, current interval, and the campaign-pinned scheduler
 integration reference. Library-specific state is contained at the scheduler
 adapter boundary rather than exposed throughout the game.
 
-A concept's required earliest facility stage controls when it may first create
-an encounter and active card. Once review history exists, stage progression
-cannot delete or reset the card; at least one later-stage-compatible
+A presentation's release point and capability gates control when it may create
+an encounter and activate its concept card. Once review history exists, stage
+progression cannot delete or reset the card; at least one later-compatible
 presentation must remain available.
 
 ### Review record

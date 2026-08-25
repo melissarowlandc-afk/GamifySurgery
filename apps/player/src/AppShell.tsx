@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { GridPoint } from "@gamify-surgery/game-domain";
 import {
   FacilityCanvas,
+  type BuildDoorTool,
   type FacilityCameraView,
   type FacilityViewModel,
 } from "./facility";
@@ -16,6 +18,7 @@ import {
   GoalsPanel,
   HelpDialog,
   PatientLists,
+  QuestionReviewQueueDialog,
   ResourceBar,
   RestartDialog,
   SaveCloseDialog,
@@ -35,12 +38,18 @@ import {
   type SelectedRoomBuildView,
   type StaffRoleGroupView,
 } from "./ui";
+import {
+  cancelScheduledAnimationFrame,
+  scheduleLatestAnimationFrame,
+} from "./ui/animationFrameTask";
 import type {
   CardinalDirection,
   RoomOrientation,
   SimulationSpeed,
 } from "@gamify-surgery/game-domain";
 import type {
+  QuestionReviewFlag,
+  QuestionReviewFlagStatus,
   TutorialActionId,
   TutorialStepView,
 } from "./session";
@@ -58,12 +67,12 @@ interface AppShellProps {
   staffRoles: StaffRoleGroupView[];
   messages: MessageBoardItemView[];
   systemNotices: MessageBoardItemView[];
+  questionReviewFlags: QuestionReviewFlag[];
   development: DevelopmentView;
   emergencyGlp1: EmergencyGlp1View;
   advertising: AdvertisingView;
   campaigns: CampaignListItemView[];
   tutorialsEnabled: boolean;
-  tutorialCoachMode: "intro" | "callout" | null;
   tutorialTargetEncounterId: string | null;
   tutorialStep: TutorialStepView | null;
   workloadStatus: string;
@@ -78,6 +87,11 @@ interface AppShellProps {
   onOpenPatient: (patientId: string) => void;
   onCloseChart: () => void;
   onSubmitAnswer: (choiceId: string) => void;
+  onFlagQuestion: (decisionNodeId: string) => void;
+  onQuestionReviewStatusChange: (
+    flagId: string,
+    status: QuestionReviewFlagStatus,
+  ) => void;
   onAcknowledgeTerminalFeedback: () => void;
   onToggleSummary: () => void;
   onFileChart: () => void;
@@ -88,15 +102,14 @@ interface AppShellProps {
     tileX: number,
     tileY: number,
     orientation?: RoomOrientation,
-  ) => void;
+  ) => boolean;
   onEnterBuildMode: () => void;
   onExitBuildMode: () => void;
   onSelectRoom: (roomInstanceId: string) => void;
   onSellSelectedRoom: () => void;
   onUpgradeSelectedRoom: () => void;
-  onRotateSelectedRoom: () => void;
-  onBeginMoveSelectedRoom: () => void;
-  onPlaceDoorForSelectedRoom: (
+  onPlaceDoor: (
+    roomId: string,
     side: CardinalDirection,
     offset: number,
   ) => void;
@@ -110,6 +123,7 @@ interface AppShellProps {
   onCollectLitter: (litterId: string) => void;
   onRefillWaterCooler: () => void;
   onPraiseEmployee: (employeeId: string) => void;
+  onMoveFounder: (destination: GridPoint) => boolean;
   onLevelUp: () => void;
   onFastForward: () => void;
   onAddMoney: () => void;
@@ -144,12 +158,12 @@ export function AppShell({
   staffRoles,
   messages,
   systemNotices,
+  questionReviewFlags,
   development,
   emergencyGlp1,
   advertising,
   campaigns,
   tutorialsEnabled,
-  tutorialCoachMode,
   tutorialTargetEncounterId,
   tutorialStep,
   workloadStatus,
@@ -164,6 +178,8 @@ export function AppShell({
   onOpenPatient,
   onCloseChart,
   onSubmitAnswer,
+  onFlagQuestion,
+  onQuestionReviewStatusChange,
   onAcknowledgeTerminalFeedback,
   onToggleSummary,
   onFileChart,
@@ -176,9 +192,7 @@ export function AppShell({
   onSelectRoom,
   onSellSelectedRoom,
   onUpgradeSelectedRoom,
-  onRotateSelectedRoom,
-  onBeginMoveSelectedRoom,
-  onPlaceDoorForSelectedRoom,
+  onPlaceDoor,
   onRemoveDoor,
   onUndoBuildAction,
   onFacilityCameraChange,
@@ -189,6 +203,7 @@ export function AppShell({
   onCollectLitter,
   onRefillWaterCooler,
   onPraiseEmployee,
+  onMoveFounder,
   onLevelUp,
   onFastForward,
   onAddMoney,
@@ -202,6 +217,8 @@ export function AppShell({
   onRestart,
 }: AppShellProps) {
   const [helpOpen, setHelpOpen] = useState(false);
+  const [questionReviewQueueOpen, setQuestionReviewQueueOpen] =
+    useState(false);
   const [locatedPatientId, setLocatedPatientId] = useState<string | null>(
     null,
   );
@@ -211,6 +228,8 @@ export function AppShell({
   const [upgradeRequestRoomId, setUpgradeRequestRoomId] = useState<
     string | null
   >(null);
+  const [buildDoorTool, setBuildDoorTool] =
+    useState<BuildDoorTool>(null);
   const [waterCoolerHighlightKey, setWaterCoolerHighlightKey] =
     useState(0);
   const [highlightedStaffRoleId, setHighlightedStaffRoleId] =
@@ -221,6 +240,9 @@ export function AppShell({
     useState(0);
   const [highlightedLitterId, setHighlightedLitterId] =
     useState<string | null>(null);
+  const messageActionFrameRef = useRef<number | null>(null);
+  const activeCampaignId =
+    campaigns.find((campaign) => campaign.active)?.campaignId ?? null;
   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
   const developmentToolPreference = new URLSearchParams(
     window.location.search,
@@ -234,6 +256,10 @@ export function AppShell({
     import.meta.env.DEV &&
     new URLSearchParams(window.location.search).get("visual-qa") ===
       "characters";
+  const showQuestionReviewQueue =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("question-review") ===
+      "1";
 
   useEffect(() => {
     if (!locatedPatientId) {
@@ -244,6 +270,19 @@ export function AppShell({
     }, 2_500);
     return () => window.clearTimeout(timer);
   }, [locatedPatientId]);
+
+  useEffect(
+    () => () => {
+      cancelScheduledAnimationFrame(messageActionFrameRef);
+    },
+    [activeCampaignId],
+  );
+
+  useEffect(() => {
+    if (!buildMode) {
+      setBuildDoorTool(null);
+    }
+  }, [buildMode]);
 
   useEffect(() => {
     if (waterCoolerHighlightKey === 0) {
@@ -322,7 +361,7 @@ export function AppShell({
     }
     if (target?.type === "employee" && target.id) {
       setHighlightedEmployeeId(target.id);
-      window.requestAnimationFrame(() => {
+      scheduleLatestAnimationFrame(messageActionFrameRef, () => {
         const employeeElement = [
           ...document.querySelectorAll<HTMLElement>(
             "[data-employee-id]",
@@ -340,7 +379,7 @@ export function AppShell({
     }
     if (target?.type === "staff_role" && target.id) {
       setHighlightedStaffRoleId(target.id);
-      window.requestAnimationFrame(() => {
+      scheduleLatestAnimationFrame(messageActionFrameRef, () => {
         const roleElement = [
           ...document.querySelectorAll<HTMLElement>(
             "[data-staff-role-id]",
@@ -369,7 +408,7 @@ export function AppShell({
     }
     if (target?.type === "advertising") {
       setAdvertisingHighlightKey((current) => current + 1);
-      window.requestAnimationFrame(() => {
+      scheduleLatestAnimationFrame(messageActionFrameRef, () => {
         const advertisingElement =
           document.querySelector<HTMLElement>(
             "[data-advertising-control]",
@@ -443,6 +482,11 @@ export function AppShell({
                 view={emergencyGlp1}
                 onConsult={onRunEmergencyGlp1Consultation}
               />
+              <PatientLists
+                patients={patients}
+                onOpen={openAndLocatePatient}
+                tutorialTargetEncounterId={tutorialTargetEncounterId}
+              />
               <AdvertisingPanel
                 view={advertising}
                 highlighted={advertisingHighlightKey > 0}
@@ -453,14 +497,6 @@ export function AppShell({
                   onAdvertisingLevelChange(advertising.currentLevel + 1)
                 }
               />
-              <PatientLists
-                patients={patients}
-                onOpen={openAndLocatePatient}
-                tutorialTargetEncounterId={tutorialTargetEncounterId}
-                showTutorialCallout={
-                  tutorialCoachMode === "callout" && !helpOpen
-                }
-              />
             </>
           ) : (
             <section className="panel build-mode-instructions">
@@ -468,8 +504,8 @@ export function AppShell({
               <h2>Remodel while time is paused</h2>
               <p>
                 Use the construction tools on the desk. Place a room
-                footprint, then select it to add zero-cost doors and validate
-                access.
+                footprint, toggle Place Door, then click an emphasized
+                eligible wall to validate access.
               </p>
             </section>
           )}
@@ -530,9 +566,18 @@ export function AppShell({
               </div>
             </div>
             <div className="facility-host">
+              <span
+                className="facility-tutorial-anchor is-entrance"
+                data-tutorial-anchor="facility-entrance"
+              />
+              <span
+                className="facility-tutorial-anchor is-surface"
+                data-tutorial-anchor="facility-surface"
+              />
               <FacilityCanvas
                 viewModel={{
                   ...facility,
+                  buildDoorTool,
                   selectedPatientInstanceId: locatedPatientId,
                   ...(facility.waterCooler
                     ? {
@@ -557,6 +602,8 @@ export function AppShell({
                 }}
                 onPlaceRoom={onPlaceRoom}
                 onSelectRoom={onSelectRoom}
+                onPlaceDoor={onPlaceDoor}
+                onRemoveDoor={onRemoveDoor}
                 onRequestRoomUpgrade={(roomId) => {
                   onSelectRoom(roomId);
                   setUpgradeRequestRoomId(roomId);
@@ -564,6 +611,7 @@ export function AppShell({
                 onCollectLitter={onCollectLitter}
                 onRefillWaterCooler={onRefillWaterCooler}
                 onPraiseEmployee={setPraiseCandidateId}
+                onMoveFounder={onMoveFounder}
                 onCameraChange={onFacilityCameraChange}
               />
             </div>
@@ -638,12 +686,8 @@ export function AppShell({
               onRotatePlacement={onRotatePlacement}
               onUpgradeSelectedRoom={onUpgradeSelectedRoom}
               onSellSelectedRoom={onSellSelectedRoom}
-              onRotateSelectedRoom={onRotateSelectedRoom}
-              onBeginMoveSelectedRoom={onBeginMoveSelectedRoom}
-              onPlaceDoorForSelectedRoom={
-                onPlaceDoorForSelectedRoom
-              }
-              onRemoveDoor={onRemoveDoor}
+              buildDoorTool={buildDoorTool}
+              onBuildDoorToolChange={setBuildDoorTool}
               onUndoBuildAction={onUndoBuildAction}
               undoCount={buildUndoCount}
               exitBlockedReason={buildExitBlockedReason}
@@ -659,6 +703,7 @@ export function AppShell({
                   chart={chart}
                   onClose={onCloseChart}
                   onSubmitAnswer={onSubmitAnswer}
+                  onFlagQuestion={onFlagQuestion}
                   onAcknowledgeTerminalFeedback={
                     onAcknowledgeTerminalFeedback
                   }
@@ -704,7 +749,7 @@ export function AppShell({
       </main>
 
       <TutorialCoach
-        step={helpOpen ? null : tutorialStep}
+        step={helpOpen || questionReviewQueueOpen ? null : tutorialStep}
         onAction={onTutorialAction}
         onDisableTutorials={() => onTutorialsEnabledChange(false)}
       />
@@ -727,6 +772,15 @@ export function AppShell({
             onTogglePause={onTogglePause}
             onOpenChange={setHelpOpen}
           />
+          {showQuestionReviewQueue ? (
+            <QuestionReviewQueueDialog
+              flags={questionReviewFlags}
+              paused={paused}
+              onTogglePause={onTogglePause}
+              onStatusChange={onQuestionReviewStatusChange}
+              onOpenChange={setQuestionReviewQueueOpen}
+            />
+          ) : null}
           <CampaignManager
             campaigns={campaigns}
             onCreateCampaign={onCreateCampaign}

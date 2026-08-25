@@ -137,18 +137,24 @@ Each concept has:
 
 - A permanent stable identifier and immutable lineage
 - One narrow, plainly stated learning objective
+- One controlled concept type. The accepted vocabulary includes diagnosis,
+  workup, management, anatomy, disposition, complication, and applied science;
+  applied science is used when the scheduled skill is foundational knowledge
+  rather than a patient-care action.
 - Exactly one primary Clinical Topic for organization
 - Optional typed related-topic and differential-topic links. Each link stores
   both the related Clinical Topic ID and a controlled relationship-type ID.
 - Optional typed confusion relationships to other concepts
-- A required earliest facility stage at which it may first generate an
-  encounter
+- A derived earliest facility stage based on the release points of its approved
+  linked Patient Presentation Variants
 - Review, approval, source, and revision history
 
-The facility-stage field means **earliest unlock**, not educational difficulty,
-room-upgrade level, employee-training level, or an FSRS level. Once introduced,
-a due concept must remain reviewable in later facility stages through at least
-one eligible presentation.
+The derived facility-stage value means **earliest unlock**, not educational
+difficulty, room-upgrade level, employee-training level, or an FSRS level. It
+is an index and validation value rather than the author manually assigning one
+numeric level to every possible iteration. Once introduced, a due concept must
+remain reviewable in later facility stages through at least one eligible
+presentation.
 
 If a learning objective changes meaning, it receives a new concept identifier
 rather than redefining an existing FSRS card.
@@ -175,7 +181,8 @@ It defines:
 - Required findings
 - Approved instantiation profiles and variable slots
 - Clinical dependencies and prohibited combinations
-- Earliest facility stage and required facility capabilities
+- Exactly one semantic clinical release point and any stricter required
+  facility capabilities
 - Required post-completion Patient Learning Summary for a scored clinical
   presentation
 - Sources, review, approval, and revision history
@@ -188,6 +195,39 @@ same variant.
 Changing the clinical meaning or answer-essential profile enough to make it a
 meaningfully different mastery exposure requires a new Patient Presentation
 Variant identifier.
+
+Every playable presentation is a brief story about exactly one fictional
+patient. It states why that person is being seen and includes at least one
+symptom, finding, concern, goal, or patient question. The associated Decision
+Node asks what to do for that same patient without copying the presentation
+into the question area. Sequential nodes continue the same patient's story;
+returned information appears as the current update immediately before the next
+decision.
+
+Reverse-direction questions still use one patient. Their choices compare
+possible findings, completed reports, or future courses for that person rather
+than presenting a lineup of unrelated patients. Runtime variation may change
+approved cosmetic identity details and clinically neutral wording, but it may
+not change answer-essential facts or the keyed conclusion.
+
+### Clinical Release Point Definition
+
+A stable editorial gate describing when an approved clinical presentation may
+enter circulation. Current definitions include Clinic Evaluation, Minor
+Procedure, Endoscopy, Ambulatory OR / QI, Pediatrics, Wound / Ostomy, and
+unnumbered future Hospital OR, Hospital Floor, ED / Trauma, and ICU points.
+
+Release points are semantic identifiers rather than copied room names or
+educational difficulty labels. The campaign's pinned balance release resolves
+each implemented release point to a facility-level condition and, where
+applicable, an operational-room condition. A Question Variant inherits the
+release point of its Patient Presentation Variant; wording-only iterations do
+not create a separate gate.
+
+One Tested Concept may link to several Patient Presentation Variants at
+different release points while retaining one FSRS identity. For owner intake,
+the concept row may list several proposed release points. Normalized authoring
+stores one exact release point on each Patient Presentation Variant.
 
 ### Patient Learning Summary
 
@@ -261,6 +301,13 @@ result/service definitions in the balance release own time, cost, capacity,
 queue, and route modifiers. Operational differences cannot change the
 clinically approved result or correct answer.
 
+For a multistep decision, every answer choice that proposes a diagnostic test
+or other timed service carries a stable service request, including incorrect
+distractors. The chart previews the compatible balance-release route and
+facility-time duration for each such choice. An incorrect nonfinal choice is
+still scored as incorrect and follows the approved corrected-forward result
+gate; preview metadata does not cause the wrong service to be performed.
+
 ### Question Variant
 
 An approved alternative question under one Decision Node and therefore exactly
@@ -287,6 +334,22 @@ matching, ordering, and multi-select are not scored clinical modes in the
 current design. An unscored Decision Node may use another interaction only when
 it is clearly separated from clinical assessment and cannot update FSRS or
 mastery.
+
+Authoring review checks answer-label length and structure so the keyed choice
+does not repeatedly become identifiable as the longest or most qualified
+option. Decision-essential wording belongs in the answer label; supporting
+nuance belongs in the explanation. This is an editorial quality check rather
+than permission to make distractors vague or clinically misleading.
+
+Every displayed authored question may also be flagged by a player for
+developer review. A flag is non-scoring QA metadata tied to the exact frozen
+clinical release, case, presentation/profile, Question Variant, and rendered
+wording the player saw. A wording revision becomes a distinct review item,
+while answer-order shuffling alone does not. A flag cannot change clinical
+approval, content meaning, encounter state,
+rewards, or FSRS history. The browser prototype stores these flags locally and
+exports them for review; shared aggregation requires a separately authorized
+backend.
 
 ### Answer Choice
 
@@ -395,20 +458,23 @@ establish clinical support.
 | Terminal Clinical Outcome Revision to Source Snapshots | Many-to-many through Citation | Each clinical claim needs exact support, while one retrieved snapshot may support several outcomes |
 | Exact content revisions to Source Snapshots | Many-to-many through Citation | One retrieved snapshot supports several claims and one claim may require several exact snapshots |
 | Patient Presentation Variant to facility capabilities | Many-to-many | A presentation may require several services, and one capability supports many presentations |
+| Patient Presentation Variant to Clinical Release Point Definition | Many-to-one | Each normalized presentation has one semantic circulation gate; one release point governs many presentations |
 | Clinical Release to exact item revisions | Many-to-many through release membership | Unchanged immutable revisions may appear in several complete releases |
 
 Question Variants are never many-to-many with Tested Concepts: each has exactly
 one primary concept through its Decision Node. Topic type is one primary value
 plus tags rather than an unrestricted many-to-many classification.
 
-## Accepted facility-stage availability
+## Accepted release-point and facility availability
 
-Melissa's “Level 0” requirement is represented as a required
-`earliest_facility_stage` on every Tested Concept.
+Clinical availability is represented by one stable `release_point_id` on every
+Patient Presentation Variant. A Tested Concept's
+`earliest_facility_stage` is derived for indexing and compatibility validation
+from its approved linked variants and the pinned release-point definitions.
 
 Runtime eligibility requires all of the following:
 
-1. The campaign has reached the concept's earliest facility stage.
+1. The campaign has activated the presentation's semantic release point.
 2. The concept is part of the campaign's core set or adopted supplemental
    content.
 3. At least one linked Patient Presentation Variant is approved and compatible
@@ -417,10 +483,10 @@ Runtime eligibility requires all of the following:
 5. Educational selection and recency rules make the concept and presentation
    eligible.
 
-Patient Presentation Variants may add stricter stage or capability
-requirements. For example, one concept might unlock early through a triage or
-referral presentation while a later variant requires a service the facility
-does not yet possess.
+Patient Presentation Variants may add stricter capability requirements. For
+example, one concept might unlock early through a clinic counseling, triage, or
+offsite-testing presentation while a later variant at a procedural release
+point requires a service the facility does not yet possess.
 
 Once a concept has appeared and has an FSRS history, reaching a later facility
 stage cannot strand its reviews. Publication validation must prove that at
@@ -582,7 +648,8 @@ authorize publication.
 The authoring workspace resolves classification IDs against explicit,
 version-controlled definitions for educational difficulty, clinical setting,
 concept-to-topic relationship type, facility stage, deferred scope, source
-format, structured-fact type, distribution type, and coverage classification.
+format, clinical release point, structured-fact type, distribution type, and
+coverage classification.
 Stable IDs are stored in content records; labels and descriptions remain
 editable presentation metadata. Unknown IDs, duplicate definitions, and
 inconsistent deferred-scope classifications fail validation.
@@ -591,9 +658,9 @@ Recommended authoring sequence:
 
 1. Create or revise a Clinical Topic and its structured facts.
 2. Attach claim-specific sources and complete clinical review.
-3. Define a Tested Concept, learning objective, earliest facility stage, and
-   related topics.
-4. Create or associate Case Families and Patient Presentation Variants.
+3. Define a Tested Concept, learning objective, and related topics.
+4. Create or associate Case Families and Patient Presentation Variants, then
+   assign one reviewed release point to each variant.
 5. Define locked facts, instantiation profiles, slots, distributions, and
    constraints.
 6. Create Decision Nodes and Question Variants.
@@ -683,8 +750,9 @@ they quarantine current use without rewriting the historical audit trail.
 
 ### Clinical Library
 
-A searchable table with filters for topic type, workflow state, facility stage,
-source completeness, AI involvement, release, and validation status. Separate
+A searchable table with filters for topic type, workflow state, release point,
+derived facility stage, source completeness, AI involvement, release, and
+validation status. Separate
 views show Topics, Concepts, Case Families, Patient Variants, Questions,
 Sources, and Releases.
 
@@ -712,7 +780,8 @@ shows:
 
 - One-sentence learning objective
 - Primary and related topics
-- Earliest facility stage and required presentation coverage
+- Derived earliest facility stage, linked presentation release points, and
+  required presentation coverage
 - Core-set memberships
 - Linked Patient Presentation Variants
 - Decision Nodes and Question Variants
@@ -732,7 +801,7 @@ The middle panel provides a no-code slot table:
 
 A plain-language rules builder supports `requires`, `excludes`, `only when`,
 and boundary rules. The right panel shows compatible concepts, questions,
-facility stages, capabilities, sources, and approval status.
+release points, facility stages, capabilities, sources, and approval status.
 
 A Result Flow panel lets the editor place a Result Gate within the authored
 case, select exact approved result payloads, define readiness and player-action
@@ -807,8 +876,9 @@ A clinical release candidate should fail validation when, at minimum:
 - A scored decision lacks a primary concept.
 - A scored decision identifies more than one primary concept.
 - A Question Variant's concept differs from its Decision Node.
-- A Tested Concept lacks one clear learning objective, primary topic, or
-  earliest facility stage.
+- A Tested Concept lacks one clear learning objective or primary topic, or its
+  approved presentations do not resolve to a derived earliest facility stage.
+- A Patient Presentation Variant lacks exactly one recognized release point.
 - A referenced topic, case, variant, template, slot, profile, question, answer,
   Result Gate, result type, capability, source, or exact revision is missing.
 - Stable identifiers or revision identifiers are duplicated.
@@ -985,7 +1055,8 @@ identifier. It cannot redefine the old identifier.
 - Meaning of Patient Presentation Variant for mastery evidence
 - Many-to-many Concept Presentation and question-compatibility relationships
 - Typed slot, finite profile, value-set, and declarative constraint contract
-- Earliest facility-stage and facility-capability eligibility model
+- Semantic clinical release-point, derived facility-stage, and
+  facility-capability eligibility model
 - Separation of clinical result meaning/readiness from balance-defined service
   timing and route behavior
 - Exact frozen Runtime Encounter and Runtime Scored-Decision payload
@@ -1029,6 +1100,6 @@ review-evidence repair, and possibly reclassification of mastery history.
 - Variant difficulty labels and eligibility
 - Retired concept behavior in old campaigns
 - Source minimums and review cadence
-- Exact first facility-stage definitions, capability vocabulary, and
-  result/service types
+- Exact capability vocabulary, result/service types, and implementation-time
+  balance mappings for the accepted release-point definitions
 - AI authoring provider, data handling, cost, and source-use policy

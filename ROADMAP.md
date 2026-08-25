@@ -87,13 +87,13 @@ Implemented:
 - Paused Build/Renovate Mode with a build-only grid, bounded zoom/pan,
   repeatable rotatable rooms, explicit zero-cost doors, functional hallways and
   room-to-room access, fixed-fixture upgrades, stepwise Undo, and 25% resale
-- Four-priority actionable alerts plus a nonurgent ticker/recent-event log,
-  deterministic nonrepeating flavor, duplicate consolidation, critical alert
-  suppression of humor, and visible current-system save/campaign/testing
-  notices
-- Founder-run emergency GLP-1 consultations visible until the future room is
-  built, with a persisted facility-hour cooldown, configurable daily
-  cap/diminishing payment, and no XP or FSRS benefit
+- One chronological four-priority alert-and-event stream, deterministic
+  nonrepeating flavor, duplicate consolidation, attention markers that clear
+  without deleting or pinning resolved rows, and visible current-system
+  save/campaign/testing notices
+- Founder-run manual GLP-1 consultations available at any cash balance until
+  the future room is built, with a fixed $25 payment, persisted facility-hour
+  cooldown, no daily cap or diminishing payment, and no XP or FSRS benefit
 - Multiple named local campaigns, local save/reload, compatible save migration,
   recoverable same-seed Restart Campaign, and a separate fresh learning history
   for each campaign; creating a genuinely new campaign uses a new seed
@@ -269,13 +269,16 @@ Gate: explicit owner permission before inviting any outside learner.
 - Hosted multiuser Clinical Content administration, direct publishing, and
   comprehensive multi-textbook automation; the isolated local evidence queue
   and metadata scout are being built in Milestone 3
-- Facility Levels 2 through 5
+- Implement the accepted Facility Levels 2 through 5, room/staff unlock table,
+  and semantic clinical release points in
+  `docs/features/facility-levels-and-clinical-release-points.md`
 - Automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing;
-  the bounded pre-suite founder emergency action is already available without
+  the bounded pre-suite founder manual action is already available without
   expanding the Level 0-1 clinical scope
 - Alert and flavor definitions tied to maintenance, inspections, future rooms,
   or other systems that do not yet exist
-- Advanced rooms, staffing, diagnostics, maintenance, pharmacy, and side
+- Balance and implement the accepted advanced rooms, staffing, two-phase
+  imaging acquisition/interpretation, maintenance, pharmacy, and side
   businesses
 - Inspection week
 - Public release, native distribution, and app stores

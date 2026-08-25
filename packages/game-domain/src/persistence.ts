@@ -10,8 +10,10 @@ import {
   schedulerPinsMatch,
 } from "./fsrs-adapter";
 import {
+  createPatientPixelAppearance,
   createPixelAppearance,
   normalizePixelAppearance,
+  normalizePatientAppearanceForSex,
   roleStyleForStaffDefinition,
 } from "./appearance";
 import {
@@ -33,8 +35,12 @@ import type {
   EncounterState,
   EncounterStepState,
   EmployeeState,
+  FacilityAlertConditionKey,
+  FacilityConditionOccurrenceState,
+  FacilityExperienceConditionKey,
   FounderIdentity,
   GameState,
+  FrozenOffsitePatientTravel,
   FrozenPatientTravel,
   PendingResult,
   PatientMovementState,
@@ -60,6 +66,30 @@ const DISSATISFACTION_CAUSES = new Set<PatientDissatisfactionCause>([
   "imaging_unavailable",
   "general",
 ]);
+
+const FACILITY_EXPERIENCE_CONDITION_KEYS =
+  new Set<FacilityExperienceConditionKey>([
+    "visible_litter",
+    "dirty_cleanliness",
+    "empty_water_cooler",
+    "missing_waiting_room",
+    "missing_examination_room",
+    "missing_bathroom",
+    "no_receptionist",
+    "low_staff_morale",
+    "unavailable_onsite_xray",
+  ]);
+
+const FACILITY_ALERT_CONDITION_KEYS =
+  new Set<FacilityAlertConditionKey>([
+    ...FACILITY_EXPERIENCE_CONDITION_KEYS,
+    "low_cash",
+    "no_cash",
+    "advertising_recommended",
+    "waiting_room_crowded",
+    "room_upgrade_requested",
+    "progression_eligible",
+  ]);
 
 function normalizeStringHistory(
   value: unknown,
@@ -453,12 +483,12 @@ function isPixelAppearance(
       (typeof value.headVariant === "number" &&
         Number.isSafeInteger(value.headVariant) &&
         value.headVariant >= 0 &&
-        value.headVariant <= 9)) &&
+        value.headVariant <= 29)) &&
     (value.bodyVariant === undefined ||
       (typeof value.bodyVariant === "number" &&
         Number.isSafeInteger(value.bodyVariant) &&
         value.bodyVariant >= 0 &&
-        value.bodyVariant <= 9)) &&
+        value.bodyVariant <= 29)) &&
     (value.roleStyle === undefined ||
       value.roleStyle === "founder" ||
       value.roleStyle === "patient" ||
@@ -752,6 +782,7 @@ function normalizeAnswers(
 
 function normalizeFrozenPatientTravel(
   candidate: unknown,
+  currentTilesPerTick: number,
 ): FrozenPatientTravel | null {
   if (
     !isRecord(candidate) ||
@@ -797,7 +828,7 @@ function normalizeFrozenPatientTravel(
     destinationRoomInstanceId: candidate.destinationRoomInstanceId,
     outboundPath,
     returnPath,
-    tilesPerTick: candidate.tilesPerTick as number,
+    tilesPerTick: currentTilesPerTick,
     outboundStartTick: candidate.outboundStartTick as number,
     outboundArrivalTick: candidate.outboundArrivalTick as number,
     serviceCompletionTick: candidate.serviceCompletionTick as number,
@@ -805,7 +836,70 @@ function normalizeFrozenPatientTravel(
   };
 }
 
-function normalizePendingResult(candidate: unknown): PendingResult | null {
+function normalizeFrozenOffsitePatientTravel(
+  candidate: unknown,
+  currentTilesPerTick: number,
+): FrozenOffsitePatientTravel | null {
+  if (
+    !isRecord(candidate) ||
+    candidate.version !== "offsite-patient-travel.v1" ||
+    (candidate.direction !== -1 && candidate.direction !== 1) ||
+    !Array.isArray(candidate.outboundPath) ||
+    !Array.isArray(candidate.returnPath)
+  ) {
+    return null;
+  }
+  const outboundPath = candidate.outboundPath
+    .filter(isGridPoint)
+    .map((point) => ({ ...point }));
+  const returnPath = candidate.returnPath
+    .filter(isGridPoint)
+    .map((point) => ({ ...point }));
+  const numericKeys = [
+    "tilesPerTick",
+    "outboundStartTick",
+    "outboundArrivalTick",
+    "returnStartTick",
+    "returnArrivalTick",
+  ] as const;
+  if (
+    outboundPath.length !== candidate.outboundPath.length ||
+    returnPath.length !== candidate.returnPath.length ||
+    outboundPath.length === 0 ||
+    returnPath.length === 0 ||
+    numericKeys.some(
+      (key) =>
+        typeof candidate[key] !== "number" ||
+        !Number.isSafeInteger(candidate[key]) ||
+        candidate[key] < 0,
+    ) ||
+    candidate.tilesPerTick === 0 ||
+    Number(candidate.outboundArrivalTick) <
+      Number(candidate.outboundStartTick) ||
+    Number(candidate.returnStartTick) <
+      Number(candidate.outboundArrivalTick) ||
+    Number(candidate.returnArrivalTick) <
+      Number(candidate.returnStartTick)
+  ) {
+    return null;
+  }
+  return {
+    version: "offsite-patient-travel.v1",
+    direction: candidate.direction,
+    outboundPath,
+    returnPath,
+    tilesPerTick: currentTilesPerTick,
+    outboundStartTick: candidate.outboundStartTick as number,
+    outboundArrivalTick: candidate.outboundArrivalTick as number,
+    returnStartTick: candidate.returnStartTick as number,
+    returnArrivalTick: candidate.returnArrivalTick as number,
+  };
+}
+
+function normalizePendingResult(
+  candidate: unknown,
+  context: DomainContext,
+): PendingResult | null {
   if (!isRecord(candidate)) {
     return null;
   }
@@ -831,7 +925,14 @@ function normalizePendingResult(candidate: unknown): PendingResult | null {
       candidate.offsiteReturnStartedAtTick >= 0
         ? candidate.offsiteReturnStartedAtTick
         : null,
-    patientTravel: normalizeFrozenPatientTravel(candidate.patientTravel),
+    offsiteTravel: normalizeFrozenOffsitePatientTravel(
+      candidate.offsiteTravel,
+      context.balanceRelease.facility.characterTravelTilesPerTick,
+    ),
+    patientTravel: normalizeFrozenPatientTravel(
+      candidate.patientTravel,
+      context.balanceRelease.facility.characterTravelTilesPerTick,
+    ),
   };
 }
 
@@ -884,6 +985,67 @@ function normalizeDissatisfactionByCause(
   return normalized;
 }
 
+function normalizeFacilityExperienceAtCheckIn(
+  value: unknown,
+  fallbackAppliedAtFacilityTick: number,
+  patientHasCheckedIn: boolean,
+): EncounterState["facilityExperienceAtCheckIn"] {
+  if (isRecord(value)) {
+    const rawConditions = Array.isArray(value.conditions)
+      ? value.conditions
+      : [];
+    const conditions = rawConditions.flatMap((candidate) => {
+      if (
+        !isRecord(candidate) ||
+        typeof candidate.conditionKey !== "string" ||
+        !FACILITY_EXPERIENCE_CONDITION_KEYS.has(
+          candidate.conditionKey as FacilityExperienceConditionKey,
+        ) ||
+        typeof candidate.penalty !== "number" ||
+        !Number.isFinite(candidate.penalty) ||
+        candidate.penalty < 0 ||
+        typeof candidate.cause !== "string" ||
+        !DISSATISFACTION_CAUSES.has(
+          candidate.cause as PatientDissatisfactionCause,
+        )
+      ) {
+        return [];
+      }
+      return [
+        {
+          conditionKey:
+            candidate.conditionKey as FacilityExperienceConditionKey,
+          penalty: candidate.penalty,
+          cause: candidate.cause as PatientDissatisfactionCause,
+        },
+      ];
+    });
+    const totalPenalty = conditions.reduce(
+      (sum, condition) => sum + condition.penalty,
+      0,
+    );
+    return {
+      appliedAtFacilityTick:
+        typeof value.appliedAtFacilityTick === "number" &&
+        Number.isSafeInteger(value.appliedAtFacilityTick) &&
+        value.appliedAtFacilityTick >= 0
+          ? value.appliedAtFacilityTick
+          : fallbackAppliedAtFacilityTick,
+      totalPenalty,
+      conditions,
+    };
+  }
+  // Existing checked-in saves are grandfathered at their persisted score.
+  // This prevents a reload from applying the new one-time penalty mid-visit.
+  return patientHasCheckedIn
+    ? {
+        appliedAtFacilityTick: fallbackAppliedAtFacilityTick,
+        totalPenalty: 0,
+        conditions: [],
+      }
+    : null;
+}
+
 function normalizeEncounter(
   encounterId: string,
   candidate: Record<string, unknown>,
@@ -897,6 +1059,17 @@ function normalizeEncounter(
   const frozenCase = JSON.parse(
     JSON.stringify(candidate.frozenCase),
   ) as Record<string, unknown>;
+  const frozenDemographics = isRecord(
+    frozenCase.prototypeDemographics,
+  )
+    ? frozenCase.prototypeDemographics
+    : null;
+  const patientSexLabel =
+    frozenDemographics?.sexLabel === "Female" ||
+    frozenDemographics?.sexLabel === "Male" ||
+    frozenDemographics?.sexLabel === "Not specified"
+      ? frozenDemographics.sexLabel
+      : undefined;
   const rawNodes = Array.isArray(frozenCase.decisionNodes)
     ? frozenCase.decisionNodes.filter(isRecord)
     : [];
@@ -930,7 +1103,10 @@ function normalizeEncounter(
     Number.isSafeInteger(candidate.currentNodeIndex)
       ? candidate.currentNodeIndex
       : 0;
-  const pendingResult = normalizePendingResult(candidate.pendingResult);
+  const pendingResult = normalizePendingResult(
+    candidate.pendingResult,
+    context,
+  );
   const patientLocation = isGridPoint(candidate.patientLocation)
     ? { ...candidate.patientLocation }
     : null;
@@ -1034,7 +1210,7 @@ function normalizeEncounter(
       answers.find((item) => item.decisionNodeId === node.id) ?? null;
     const result =
       existingStep && isRecord(existingStep.result)
-        ? normalizePendingResult(existingStep.result)
+        ? normalizePendingResult(existingStep.result, context)
         : pendingResult?.originatingNodeIndex === nodeIndex
         ? JSON.parse(JSON.stringify(pendingResult))
         : null;
@@ -1076,18 +1252,60 @@ function normalizeEncounter(
       result,
     };
   });
+  const persistedFeedAttentionKind =
+    candidate.feedAttentionKind === "checked_in" ||
+    candidate.feedAttentionKind === "clinical_decision" ||
+    candidate.feedAttentionKind === "result_ready"
+      ? candidate.feedAttentionKind
+      : null;
+  const persistedFeedAttentionStartedAtTick =
+    typeof candidate.feedAttentionStartedAtTick === "number" &&
+    Number.isSafeInteger(candidate.feedAttentionStartedAtTick) &&
+    candidate.feedAttentionStartedAtTick >= 0 &&
+    candidate.feedAttentionStartedAtTick <= facilityTick
+      ? candidate.feedAttentionStartedAtTick
+      : null;
+  const legacyFeedAttentionKind: EncounterState["feedAttentionKind"] =
+    lifecycle === "waiting_unopened" &&
+    patientMovement?.kind !== "arriving_for_check_in"
+      ? "checked_in"
+      : lifecycle === "active_action_required" &&
+          idleWaitingSinceTick !== null
+        ? pendingResult?.deliveredAtTick !== null &&
+          pendingResult?.deliveredAtTick !== undefined &&
+          currentNodeIndex > pendingResult.originatingNodeIndex
+          ? "result_ready"
+          : "clinical_decision"
+        : null;
+  const feedAttentionKind =
+    persistedFeedAttentionKind ??
+    (persistedFeedAttentionStartedAtTick === null
+      ? legacyFeedAttentionKind
+      : null);
+  const feedAttentionStartedAtTick =
+    feedAttentionKind === null
+      ? null
+      : (persistedFeedAttentionStartedAtTick ??
+        idleWaitingSinceTick ??
+        arrivedAtTick);
 
   return {
     ...(candidate as unknown as EncounterState),
     frozenCase:
       frozenCase as unknown as EncounterState["frozenCase"],
+    feedAttentionKind,
+    feedAttentionStartedAtTick,
     patientAppearance:
       isPixelAppearance(candidate.patientAppearance)
-        ? normalizePixelAppearance(
+        ? normalizePatientAppearanceForSex(
             candidate.patientAppearance,
-            "patient",
+            patientSexLabel,
           )
-        : createPixelAppearance(campaignSeed, "patient", encounterId),
+        : createPatientPixelAppearance(
+            campaignSeed,
+            encounterId,
+            patientSexLabel,
+          ),
     patientSatisfaction,
     idleWaitingSinceTick,
     lastSatisfactionDecayAtTick:
@@ -1123,6 +1341,12 @@ function normalizeEncounter(
       facilityTick,
       context,
     ),
+    facilityExperienceAtCheckIn:
+      normalizeFacilityExperienceAtCheckIn(
+        candidate.facilityExperienceAtCheckIn,
+        arrivedAtTick,
+        patientMovement?.kind !== "arriving_for_check_in",
+      ),
     finalPatientSatisfaction:
       typeof candidate.finalPatientSatisfaction === "number" &&
       Number.isFinite(candidate.finalPatientSatisfaction)
@@ -1162,6 +1386,10 @@ function normalizeEncounter(
       typeof candidate.assignedRoomInstanceId === "string"
         ? candidate.assignedRoomInstanceId
         : null,
+    queuedCareRoomInstanceId:
+      typeof candidate.queuedCareRoomInstanceId === "string"
+        ? candidate.queuedCareRoomInstanceId
+        : null,
     nextIdleActionAtFacilityTick:
       typeof candidate.nextIdleActionAtFacilityTick === "number" &&
       Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
@@ -1173,6 +1401,88 @@ function normalizeEncounter(
     steps,
     pendingResult,
   };
+}
+
+function normalizeFacilityConditionOccurrences(
+  value: unknown,
+): FacilityConditionOccurrenceState[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  const allowedTargetKinds = new Set([
+    "litter",
+    "water_cooler",
+    "build_mode",
+    "room",
+    "staff_role",
+    "employee",
+    "emergency_glp1",
+    "advertising",
+    "goal",
+  ]);
+  return value
+    .flatMap((candidate) => {
+      if (
+        !isRecord(candidate) ||
+        typeof candidate.id !== "string" ||
+        typeof candidate.conditionKey !== "string" ||
+        !FACILITY_ALERT_CONDITION_KEYS.has(
+          candidate.conditionKey as FacilityAlertConditionKey,
+        ) ||
+        (candidate.kind !== "onset" &&
+          candidate.kind !== "reminder") ||
+        typeof candidate.occurredAtFacilityTick !== "number" ||
+        !Number.isSafeInteger(candidate.occurredAtFacilityTick) ||
+        candidate.occurredAtFacilityTick < 0 ||
+        typeof candidate.definitionId !== "string" ||
+        typeof candidate.message !== "string" ||
+        (candidate.priority !== "action_required" &&
+          candidate.priority !== "informational")
+      ) {
+        return [];
+      }
+      const rawTarget = isRecord(candidate.target)
+        ? candidate.target
+        : null;
+      const target =
+        rawTarget &&
+        typeof rawTarget.kind === "string" &&
+        allowedTargetKinds.has(rawTarget.kind) &&
+        typeof rawTarget.id === "string"
+          ? {
+              kind: rawTarget.kind as FacilityConditionOccurrenceState["target"] extends infer Target
+                ? Target extends { kind: infer Kind }
+                  ? Kind
+                  : never
+                : never,
+              id: rawTarget.id,
+            }
+          : null;
+      return [
+        {
+          id: candidate.id,
+          conditionKey:
+            candidate.conditionKey as FacilityAlertConditionKey,
+          kind: candidate.kind,
+          occurredAtFacilityTick:
+            candidate.occurredAtFacilityTick,
+          resolvedAtFacilityTick:
+            typeof candidate.resolvedAtFacilityTick === "number" &&
+            Number.isSafeInteger(
+              candidate.resolvedAtFacilityTick,
+            ) &&
+            candidate.resolvedAtFacilityTick >=
+              candidate.occurredAtFacilityTick
+              ? candidate.resolvedAtFacilityTick
+              : null,
+          definitionId: candidate.definitionId,
+          message: candidate.message,
+          priority: candidate.priority,
+          target,
+        } satisfies FacilityConditionOccurrenceState,
+      ];
+    })
+    .slice(-500);
 }
 
 function migrateVersionTwo(
@@ -1328,6 +1638,34 @@ function migrateVersionTwo(
     const path = Array.isArray(candidate.path)
       ? candidate.path.filter(isGridPoint).map((point) => ({ ...point }))
       : [];
+    const pathIndex =
+      path.length > 0 &&
+      typeof candidate.pathIndex === "number" &&
+      Number.isSafeInteger(candidate.pathIndex)
+        ? Math.max(0, Math.min(path.length - 1, candidate.pathIndex))
+        : 0;
+    const persistedLocation = isGridPoint(candidate.location)
+      ? { ...candidate.location }
+      : home.location;
+    const rawFacilityTask = isRecord(candidate.facilityTask)
+      ? candidate.facilityTask
+      : null;
+    const facilityTask =
+      rawFacilityTask?.kind === "refill_water" &&
+      typeof rawFacilityTask.startedAtFacilityTick === "number" &&
+      Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
+      rawFacilityTask.startedAtFacilityTick >= 0 &&
+      typeof rawFacilityTask.workMinutesRemaining === "number" &&
+      Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) &&
+      rawFacilityTask.workMinutesRemaining > 0
+        ? {
+            kind: "refill_water" as const,
+            startedAtFacilityTick:
+              rawFacilityTask.startedAtFacilityTick,
+            workMinutesRemaining:
+              rawFacilityTask.workMinutesRemaining,
+          }
+        : null;
     const employee: EmployeeState = {
       id: candidate.id,
       staffRoleDefinitionId: candidate.staffRoleDefinitionId,
@@ -1374,15 +1712,11 @@ function migrateVersionTwo(
         typeof candidate.homeRoomInstanceId === "string"
           ? candidate.homeRoomInstanceId
           : home.homeRoomInstanceId,
-      location: isGridPoint(candidate.location)
-        ? { ...candidate.location }
-        : home.location,
+      location: path[pathIndex]
+        ? { ...path[pathIndex]! }
+        : persistedLocation,
       path,
-      pathIndex:
-        typeof candidate.pathIndex === "number" &&
-        Number.isSafeInteger(candidate.pathIndex)
-          ? candidate.pathIndex
-          : 0,
+      pathIndex,
       lastMovedAtFacilityTick:
         typeof candidate.lastMovedAtFacilityTick === "number"
           ? candidate.lastMovedAtFacilityTick
@@ -1399,6 +1733,7 @@ function migrateVersionTwo(
           ? candidate.nextIdleActionAtFacilityTick
           : next.facilityTick +
             context.balanceRelease.environment.idleActionMinimumMinutes,
+      facilityTask,
     };
     return [employee];
   });
@@ -1413,33 +1748,200 @@ function migrateVersionTwo(
   const rawLitter = Array.isArray(rawEnvironment.litterItems)
     ? rawEnvironment.litterItems
     : [];
+  const rawAmbientPedestrians = Array.isArray(
+    rawEnvironment.ambientPedestrians,
+  )
+    ? rawEnvironment.ambientPedestrians
+    : [];
   const rawFounderActivity = isRecord(
     rawEnvironment.founderActivity,
   )
     ? rawEnvironment.founderActivity
     : null;
+  const founderActivityPath =
+    rawFounderActivity && Array.isArray(rawFounderActivity.path)
+      ? rawFounderActivity.path
+          .filter(isGridPoint)
+          .map((point) => ({ ...point }))
+      : [];
+  const founderActivityPathIndex =
+    founderActivityPath.length > 0 &&
+    typeof rawFounderActivity?.pathIndex === "number" &&
+    Number.isSafeInteger(rawFounderActivity.pathIndex)
+      ? Math.max(
+          0,
+          Math.min(
+            founderActivityPath.length - 1,
+            rawFounderActivity.pathIndex,
+          ),
+        )
+      : 0;
+  const persistedFounderLocation = isGridPoint(
+    rawEnvironment.founderLocation,
+  )
+    ? { ...rawEnvironment.founderLocation }
+    : { ...baseline.environment.founderLocation };
+  const waterCoolerFillPercent =
+    typeof rawEnvironment.waterCoolerFillPercent === "number" &&
+    Number.isFinite(rawEnvironment.waterCoolerFillPercent)
+      ? Math.max(
+          0,
+          Math.min(100, rawEnvironment.waterCoolerFillPercent),
+        )
+      : 100;
+  const facilityConditionOccurrences =
+    normalizeFacilityConditionOccurrences(
+      rawEnvironment.facilityConditionOccurrences,
+    );
+  const activeEmptyWaterOccurrence =
+    facilityConditionOccurrences.find(
+      (occurrence) =>
+        occurrence.conditionKey === "empty_water_cooler" &&
+        occurrence.resolvedAtFacilityTick === null,
+    );
+  const waterCoolerEmptySinceTick =
+    waterCoolerFillPercent <= 0
+      ? typeof rawEnvironment.waterCoolerEmptySinceTick ===
+          "number" &&
+        Number.isSafeInteger(
+          rawEnvironment.waterCoolerEmptySinceTick,
+        ) &&
+        rawEnvironment.waterCoolerEmptySinceTick >= 0
+        ? rawEnvironment.waterCoolerEmptySinceTick
+        : (activeEmptyWaterOccurrence?.occurredAtFacilityTick ??
+          null)
+      : null;
+  const nextWaterCoolerReminderTick =
+    waterCoolerEmptySinceTick === null
+      ? null
+      : typeof rawEnvironment.nextWaterCoolerReminderTick ===
+            "number" &&
+          Number.isSafeInteger(
+            rawEnvironment.nextWaterCoolerReminderTick,
+          ) &&
+          rawEnvironment.nextWaterCoolerReminderTick >
+            next.facilityTick
+        ? rawEnvironment.nextWaterCoolerReminderTick
+        : waterCoolerEmptySinceTick +
+          context.balanceRelease.environment
+            .waterCoolerEmptyReminderMinutes;
+  const sidewalkY = context.balanceRelease.facility.gridHeight;
+  const maximumSidewalkX =
+    context.balanceRelease.facility.gridWidth + 1;
+  const ambientPedestrians = rawAmbientPedestrians.flatMap(
+    (candidate) => {
+      if (
+        !isRecord(candidate) ||
+        typeof candidate.id !== "string" ||
+        !isPixelAppearance(candidate.appearance) ||
+        !Array.isArray(candidate.path)
+      ) {
+        return [];
+      }
+      const path = candidate.path
+        .filter(isGridPoint)
+        .map((point) => ({ ...point }));
+      if (
+        path.length < 2 ||
+        !(
+          (path[0]!.x === -2 &&
+            path.at(-1)!.x === maximumSidewalkX) ||
+          (path[0]!.x === maximumSidewalkX &&
+            path.at(-1)!.x === -2)
+        ) ||
+        path.some(
+          (point) =>
+            point.y !== sidewalkY ||
+            point.x < -2 ||
+            point.x > maximumSidewalkX,
+        ) ||
+        path.slice(1).some(
+          (point, index) =>
+            Math.abs(point.x - path[index]!.x) !== 1,
+        )
+      ) {
+        return [];
+      }
+      const pathIndex =
+        typeof candidate.pathIndex === "number" &&
+        Number.isSafeInteger(candidate.pathIndex)
+          ? Math.max(0, Math.min(path.length - 1, candidate.pathIndex))
+          : 0;
+      if (pathIndex >= path.length - 1) {
+        return [];
+      }
+      return [
+        {
+          id: candidate.id,
+          appearance: normalizePixelAppearance(
+            candidate.appearance,
+            "patient",
+          ),
+          path,
+          pathIndex,
+          lastMovedAtFacilityTick:
+            typeof candidate.lastMovedAtFacilityTick === "number" &&
+            Number.isSafeInteger(candidate.lastMovedAtFacilityTick) &&
+            candidate.lastMovedAtFacilityTick >= 0
+              ? Math.min(
+                  next.facilityTick,
+                  candidate.lastMovedAtFacilityTick,
+                )
+              : next.facilityTick,
+        },
+      ];
+    },
+  ).slice(
+    0,
+    context.balanceRelease.environment.maximumSidewalkPedestrians,
+  );
+  const highestAmbientPedestrianSequence = ambientPedestrians.reduce(
+    (highest, pedestrian) => {
+      const match = /^ambient-pedestrian\.(\d+)$/.exec(pedestrian.id);
+      return match
+        ? Math.max(highest, Number.parseInt(match[1]!, 10) + 1)
+        : highest;
+    },
+    0,
+  );
+  const ambientPedestrianSequence =
+    typeof rawEnvironment.ambientPedestrianSequence === "number" &&
+    Number.isSafeInteger(rawEnvironment.ambientPedestrianSequence) &&
+    rawEnvironment.ambientPedestrianSequence >= 0
+      ? Math.max(
+          rawEnvironment.ambientPedestrianSequence,
+          highestAmbientPedestrianSequence,
+        )
+      : highestAmbientPedestrianSequence;
+  const pedestrianInterval = context.balanceRelease.environment;
+  const fallbackAmbientPedestrianTick =
+    next.facilityTick +
+    pedestrianInterval.sidewalkPedestrianMinimumMinutes +
+    deterministicInteger(
+      next.campaignSeed,
+      RANDOM_STREAMS.sidewalkPedestrians,
+      `next.${ambientPedestrianSequence}.${next.facilityTick}`,
+      pedestrianInterval.sidewalkPedestrianMaximumMinutes -
+        pedestrianInterval.sidewalkPedestrianMinimumMinutes +
+        1,
+    );
   next.environment = {
-    founderLocation: isGridPoint(rawEnvironment.founderLocation)
-      ? { ...rawEnvironment.founderLocation }
-      : { ...baseline.environment.founderLocation },
+    founderLocation: founderActivityPath[founderActivityPathIndex]
+      ? { ...founderActivityPath[founderActivityPathIndex]! }
+      : persistedFounderLocation,
     founderActivity:
       rawFounderActivity &&
-      (rawFounderActivity.kind === "collect_litter" ||
+      (rawFounderActivity.kind === "walk_to_point" ||
+        rawFounderActivity.kind === "collect_litter" ||
         rawFounderActivity.kind === "refill_water" ||
         rawFounderActivity.kind === "praise_employee") &&
       typeof rawFounderActivity.targetId === "string" &&
-      Array.isArray(rawFounderActivity.path)
+      founderActivityPath.length > 0
         ? {
             kind: rawFounderActivity.kind,
             targetId: rawFounderActivity.targetId,
-            path: rawFounderActivity.path
-              .filter(isGridPoint)
-              .map((point) => ({ ...point })),
-            pathIndex:
-              typeof rawFounderActivity.pathIndex === "number" &&
-              Number.isSafeInteger(rawFounderActivity.pathIndex)
-                ? rawFounderActivity.pathIndex
-                : 0,
+            path: founderActivityPath,
+            pathIndex: founderActivityPathIndex,
             lastMovedAtFacilityTick:
               typeof rawFounderActivity.lastMovedAtFacilityTick ===
                 "number" &&
@@ -1459,6 +1961,14 @@ function migrateVersionTwo(
                     .founderInteractionMinutes,
           }
         : null,
+    ambientPedestrians,
+    ambientPedestrianSequence,
+    nextAmbientPedestrianTick:
+      typeof rawEnvironment.nextAmbientPedestrianTick === "number" &&
+      Number.isSafeInteger(rawEnvironment.nextAmbientPedestrianTick) &&
+      rawEnvironment.nextAmbientPedestrianTick > next.facilityTick
+        ? rawEnvironment.nextAmbientPedestrianTick
+        : fallbackAmbientPedestrianTick,
     litterItems: rawLitter.flatMap((candidate) =>
       isRecord(candidate) &&
       typeof candidate.id === "string" &&
@@ -1481,6 +1991,39 @@ function migrateVersionTwo(
       Number.isSafeInteger(rawEnvironment.litterSequence)
         ? rawEnvironment.litterSequence
         : 0,
+    trashTeachingAcknowledgedAtTick:
+      typeof rawEnvironment.trashTeachingAcknowledgedAtTick ===
+        "number" &&
+      Number.isSafeInteger(
+        rawEnvironment.trashTeachingAcknowledgedAtTick,
+      ) &&
+      rawEnvironment.trashTeachingAcknowledgedAtTick >= 0
+        ? rawEnvironment.trashTeachingAcknowledgedAtTick
+        : rawFounderActivity?.kind === "collect_litter" ||
+            next.events.some(
+              (event) => event.type === "litter_collected",
+            )
+          ? next.events
+              .find((event) => event.type === "litter_collected")
+              ?.facilityTick ?? next.facilityTick
+          : null,
+    founderLitterCleanups:
+      typeof rawEnvironment.founderLitterCleanups === "number" &&
+      Number.isSafeInteger(rawEnvironment.founderLitterCleanups) &&
+      rawEnvironment.founderLitterCleanups >= 0
+        ? rawEnvironment.founderLitterCleanups
+        : next.events.some((event) => event.type === "litter_collected")
+          ? 1
+          : 0,
+    lastLitterCleanupAtTick:
+      typeof rawEnvironment.lastLitterCleanupAtTick === "number" &&
+      Number.isSafeInteger(rawEnvironment.lastLitterCleanupAtTick) &&
+      rawEnvironment.lastLitterCleanupAtTick >= 0
+        ? rawEnvironment.lastLitterCleanupAtTick
+        : [...next.events]
+            .reverse()
+            .find((event) => event.type === "litter_collected")
+            ?.facilityTick ?? null,
     nextLitterSpawnTick:
       typeof rawEnvironment.nextLitterSpawnTick === "number" &&
       Number.isSafeInteger(rawEnvironment.nextLitterSpawnTick) &&
@@ -1489,14 +2032,7 @@ function migrateVersionTwo(
         : next.facilityTick +
           context.balanceRelease.environment
             .litterSpawnMinimumMinutes,
-    waterCoolerFillPercent:
-      typeof rawEnvironment.waterCoolerFillPercent === "number" &&
-      Number.isFinite(rawEnvironment.waterCoolerFillPercent)
-        ? Math.max(
-            0,
-            Math.min(100, rawEnvironment.waterCoolerFillPercent),
-          )
-        : 100,
+    waterCoolerFillPercent,
     nextWaterCoolerDrainTick:
       typeof rawEnvironment.nextWaterCoolerDrainTick === "number" &&
       Number.isSafeInteger(rawEnvironment.nextWaterCoolerDrainTick) &&
@@ -1505,6 +2041,21 @@ function migrateVersionTwo(
         : next.facilityTick +
           context.balanceRelease.environment
             .waterCoolerDrainIntervalMinutes,
+    waterCoolerEmptySinceTick,
+    nextWaterCoolerReminderTick,
+    facilityConditionOccurrenceSequence:
+      typeof rawEnvironment.facilityConditionOccurrenceSequence ===
+        "number" &&
+      Number.isSafeInteger(
+        rawEnvironment.facilityConditionOccurrenceSequence,
+      ) &&
+      rawEnvironment.facilityConditionOccurrenceSequence >= 0
+        ? Math.max(
+            rawEnvironment.facilityConditionOccurrenceSequence,
+            facilityConditionOccurrences.length,
+          )
+        : facilityConditionOccurrences.length,
+    facilityConditionOccurrences,
   };
   if (
     next.openChartEncounterId &&
@@ -1513,6 +2064,10 @@ function migrateVersionTwo(
     next.encounters[next.openChartEncounterId]!.idleWaitingSinceTick = null;
     next.encounters[next.openChartEncounterId]!.lastSatisfactionDecayAtTick =
       next.facilityTick;
+    next.encounters[next.openChartEncounterId]!.feedAttentionKind = null;
+    next.encounters[
+      next.openChartEncounterId
+    ]!.feedAttentionStartedAtTick = null;
   }
   return next;
 }

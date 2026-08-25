@@ -42,11 +42,13 @@ function ActivePrototypeGame({
         session.selectedRoomInstanceId,
         session.placementOrientation,
         session.facilityCamera,
+        session.questionReviewFlags,
       ),
     [
       session.buildMode,
       session.facilityCamera,
       session.placementOrientation,
+      session.questionReviewFlags,
       session.selectedRoomDefinitionId,
       session.selectedRoomInstanceId,
       session.state,
@@ -68,12 +70,12 @@ function ActivePrototypeGame({
       staffRoles={view.staffRoles}
       messages={view.messages}
       systemNotices={session.systemNotices}
+      questionReviewFlags={session.questionReviewFlags}
       development={view.development}
       emergencyGlp1={view.emergencyGlp1}
       advertising={view.advertising}
       campaigns={session.campaigns}
       tutorialsEnabled={session.tutorialsEnabled}
-      tutorialCoachMode={session.tutorialCoachMode}
       tutorialTargetEncounterId={session.tutorialTargetEncounterId}
       tutorialStep={session.tutorialStep}
       workloadStatus={view.workloadStatus}
@@ -83,6 +85,8 @@ function ActivePrototypeGame({
       onOpenPatient={session.openPatient}
       onCloseChart={session.closeChart}
       onSubmitAnswer={session.submitAnswer}
+      onFlagQuestion={session.flagQuestionForReview}
+      onQuestionReviewStatusChange={session.setQuestionReviewStatus}
       onAcknowledgeTerminalFeedback={
         session.acknowledgeTerminalFeedback
       }
@@ -102,11 +106,7 @@ function ActivePrototypeGame({
       onSelectRoom={session.selectRoom}
       onSellSelectedRoom={session.sellSelectedRoom}
       onUpgradeSelectedRoom={session.upgradeSelectedRoom}
-      onRotateSelectedRoom={session.rotateSelectedRoom}
-      onBeginMoveSelectedRoom={session.beginMoveSelectedRoom}
-      onPlaceDoorForSelectedRoom={
-        session.placeDoorForSelectedRoom
-      }
+      onPlaceDoor={session.placeDoor}
       onRemoveDoor={session.removeDoor}
       onUndoBuildAction={session.undoBuildAction}
       onFacilityCameraChange={session.setFacilityCamera}
@@ -117,6 +117,7 @@ function ActivePrototypeGame({
       onCollectLitter={session.collectLitter}
       onRefillWaterCooler={session.refillWaterCooler}
       onPraiseEmployee={session.praiseEmployee}
+      onMoveFounder={session.moveFounder}
       onLevelUp={session.levelUp}
       onFastForward={session.fastForward}
       onAddMoney={session.addMoney}

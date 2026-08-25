@@ -80,6 +80,10 @@ stop the manual server. Neither method deploys or publishes anything.
 - Single-select sequential questions, prominent Correct/Incorrect feedback,
   authored final-choice consequences, shuffled safe answer order, and one
   primary educational concept per scored decision
+- A compact non-scoring flag on every displayed authored question. Flags
+  preserve the frozen question revision in browser-local storage for later
+  developer review; the answer-key queue and JSON export are available only
+  through the explicit `?question-review=1` review view
 - Multi-step encounters with visible test turnaround estimates, off-site
   departure and return, and route-aware in-house X-ray only after the room,
   control room, and imaging technician are operational; hallway travel is
@@ -87,8 +91,9 @@ stop the manual server. Neither method deploys or publishes anything.
   tunable one-point satisfaction benefit
 - Campaign-scoped FSRS-6 scheduling through a pinned `ts-fsrs` adapter: correct
   answers map to Good and incorrect answers map to Again
-- Separate money, current-level XP, rolling clinic satisfaction, minute-level
-  facility time, quarter-hour operating-cost postings, and level requirements
+- Separate money, current-level XP, a rolling ended-encounter satisfaction
+  baseline with live facility-condition pressure, minute-level facility time,
+  quarter-hour operating-cost postings, and level requirements
 - Individual patient satisfaction driven by genuine waiting and modeled care,
   cleanliness, room, staff, amenity, and service effects, with persisted
   walkout thresholds, physical exit routes, mock walkout reviews, and
@@ -108,16 +113,17 @@ stop the manual server. Neither method deploys or publishes anything.
   appearances, role caps, room dependencies, hiring costs, adjustable salaries,
   morale, visible entry routes, and delayed capability until they reach their
   assigned room
-- A right-side message board with persistent actionable alerts, nonurgent
-  ticker messages, a recent-event log, duplicate consolidation, and critical
-  alert suppression of humor; save, campaign, hidden-tab pause, and accelerated
-  testing notices also enter the visible log. The larger future message bank is
+- A right-side message board with one chronological alert-and-event stream,
+  duplicate consolidation, and `!` markers that clear on resolution without
+  deleting, retimestamping, or pinning the historical row; save, campaign,
+  hidden-tab pause, and accelerated testing notices also enter the visible log.
+  The larger future message bank is
   preserved in
   [`docs/features/alert-notification-flavor-system.md`](docs/features/alert-notification-flavor-system.md)
-- A manual cash-only GLP-1 consultation action available below the configured
-  low-cash threshold, with a persisted facility-hour cooldown, fixed $25 pilot
-  payment, no daily cap or diminishing payout, and no XP or FSRS benefit; the
-  automated suite remains a Level 2 feature
+- A manual cash-only GLP-1 consultation action available at any cash balance
+  until the future dedicated room is built, with a persisted facility-hour
+  cooldown, fixed $25 pilot payment, no daily cap or diminishing payout, and
+  no XP or FSRS benefit; the automated suite remains a Level 2 feature
 - Persistent configurable Advertising tiers beneath the GLP-1 action, with a
   visible hourly expense and modest routine-arrival increase; changing tiers
   rescales the saved next arrival rather than rerolling it
@@ -167,12 +173,16 @@ prototype therefore does not show a substitute or temporary login screen.
 
 ## Clinical-content boundary
 
-The fixture at `packages/clinical-content/src/synthetic-content.ts` contains an
-interface tutorial plus a few original examples used only to exercise gameplay.
+The active fixture at `packages/clinical-content/src/synthetic-content.ts`
+admits only the exact owner-reviewed concept packages recorded under
+`packages/clinical-content/src/approved-data/` through 2026-08-25. Exact
+release-boundary tests currently enumerate 27 active concepts and 81 active
+cases. Earlier prototype, synthetic-routing, and AI-authored pilot patient
+questions are excluded from all new admissions.
+Already-frozen encounters remain loadable so an existing save is not corrupted.
 The player shows one global striped demonstration-content warning rather than
-repeating that wording inside each vignette. The fixture is not a curriculum,
-has not been clinically approved by Melissa, and must not be used for teaching
-or patient care.
+repeating it inside each vignette. This owner/development fixture is not yet a
+public clinical release and must not be used for patient care.
 
 The local `beta` workstream also contains a separate
 `packages/clinical-authoring` validation contract. It registers exact source
@@ -275,7 +285,7 @@ launcher to Pages or follow a tester to another computer/browser. See
 
 ## Deliberately deferred
 
-- Clinically approved content and broad ABSITE coverage
+- Comprehensive clinically approved content and broad ABSITE coverage
 - Full due-prioritized review selection, category interleaving, confused-topic
   contrasts, and repetition avoidance; FSRS cards and due-time inspection are
   implemented, but the complete review queue is not
@@ -286,8 +296,9 @@ launcher to Pages or follow a tester to another computer/browser. See
 - Supabase account creation, verified-email login, password recovery, cloud
   saves, and cross-device writer-conflict handling
 - Authenticated staging, private-pilot access, monitoring, and cloud backups
-- Levels 2 through 5, inspection week, advanced staffing, maintenance, pharmacy,
-  and other later management systems
+- Implementation and balance of the accepted Levels 2 through 5, inspection
+  week, advanced staffing, maintenance, pharmacy, and other later management
+  systems
 - The automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing
 - Alerts and flavor definitions tied to maintenance, inspections, later rooms,
   or other mechanics that do not yet exist

@@ -84,7 +84,7 @@ function resolveSingleDecisionRoutine(
     type: "ADMIT_PATIENT",
     operationId: `${encounterId}.admit`,
     encounterId,
-    caseId: "case.prototype.tutorial-laceration",
+    caseId: "case.ventral-hernia.pulmonary-optimization.b",
     patientDisplayName: `Patient ${encounterId}`,
     arrivalClass: "routine",
   });

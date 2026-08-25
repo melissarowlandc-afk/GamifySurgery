@@ -1,8 +1,701 @@
 # Changelog
 
+## Unreleased
+
+### Long-session character movement stability
+
+- Deferred quarter-hour full-profile local autosaves to browser idle work while
+  preserving immediate saves for player commands, pause/visibility changes,
+  and Save and Close
+- Reduced retained minute-tick receipts to a short idempotency window so the
+  state cloned each facility minute does not grow for bookkeeping alone
+- Cached detailed character artwork on each Phaser actor and now move the
+  existing drawing between animation frames instead of rebuilding every pixel
+  whenever only its position changes
+- Compacted consumed render-route prefixes across continuous walks and route
+  handoffs, preventing room-idle movement from retaining an actor's full
+  session-long path history
+
 All notable implementation and project-record changes are listed here.
 
+## 2026-08-16
+
+### One-patient clinical narratives across the playable release
+
+- Reworked all 48 currently admitted patient presentations and all 57 scored
+  decisions so each chart tells a brief story about one patient and the prompt
+  asks what to do for that same person
+- Removed duplicated presentation text from decision prompts and moved timed
+  follow-up facts into the existing current-update flow where applicable
+- Reframed comparative Milan, Mondor, desmoid, and pancreatic variants as
+  alternative findings, reports, or future courses for one patient rather than
+  a lineup of unrelated patients
+- Preserved stable case, presentation, question, and concept IDs together with
+  keyed answers, explanations, release points, and FSRS identity
+- Added active-release regression checks against multi-patient framing,
+  presentation duplication, and answer choices written as separate patients
+
+### Current updates lead into the next chart decision
+
+- Moved returned-result and other current-update text out of the presentation
+  column and directly above the newly available decision in the chart workflow
+- Added a rendering regression check that verifies the update precedes the
+  active decision
+
+### Multistep diagnostic timing on every test choice
+
+- Added facility-time previews to every test/procedure option in the approved
+  breast-cyst and Mondor-disease multistep diagnostic decisions instead of
+  showing timing only beside the correct answer
+- Added centrally configured editorial routes for mammography, breast MRI,
+  core-needle biopsy, and excisional biopsy; these are tunable game times and
+  not clinical turnaround claims
+- Preserved corrected-forward scoring: choosing a wrong intermediate test is
+  recorded as wrong, then the authored correct service proceeds rather than
+  performing the distractor
+- Added content and player-view regression coverage for all affected choices
+
+### Ambient sidewalk pedestrians
+
+- Added occasional campaign-stable civilian passersby who enter from either
+  off-screen sidewalk edge, cross the exterior, and leave through the opposite
+  edge without entering the clinic or creating a patient chart
+- Persisted each passerby's appearance, direction, route, progress, sequence,
+  and next spawn time so pause and reload cannot reroll or teleport them
+- Reused the canonical character art, two-tile walking speed, and render
+  interpolation while keeping their timing randomness isolated from arrivals,
+  clinical cases, and alert flavor
+- Centralized the `40-90` facility-minute interval and two-person concurrency
+  cap in balance configuration and added domain and player projection tests
+
+### Founder click-to-walk and natural shared movement
+
+- Made ordinary non-Build-Mode map clicks assign the founder a persisted legal
+  walk-to-point route, including room, hallway, and sidewalk destinations
+- Kept camera dragging and explicit litter, water-cooler, employee, and other
+  object interactions distinct from ordinary floor movement
+- Reduced the single shared patient, founder, and employee walking rate from
+  eight to two cardinal tiles per facility minute and slowed the rendered gait
+  cycle so movement reads as continuous walking rather than rapid sprinting
+- Retained simulation-time scaling at 1x, 2x, and 4x and made physically
+  impossible short send-out itineraries extend to the minimum round-trip time
+  without changing their authored service-work duration
+- Added focused domain coverage for legal destinations, retargeting, facility
+  work priority, sidewalk routing, persistence, and the revised speed contract
+
+### Receptionist water-cooler upkeep
+
+- Added a persisted receptionist facility task that begins after the water
+  cooler has remained continuously empty for 60 facility minutes while a
+  Receptionist is employed
+- Routed the Receptionist visibly to the cooler at the shared character speed,
+  suspended room-idle wandering during the task, and restored normal idling
+  after the refill
+- Made the delay balance-configurable and facility-time based, so pause, speed,
+  save, and reload preserve the same result
+- Kept the founder's manual refill available before the Receptionist starts and
+  prevented both characters from performing the refill simultaneously
+
+### Randomized new-concept circulation and cleaner chart prompts
+
+- Replaced case-array rotation with a campaign-seeded selector that prioritizes
+  due FSRS reviews, then selects uniformly across all distinct unseen concepts
+  eligible at the campaign's current facility level and capabilities
+- Selected an authored case variant only after choosing the concept so concepts
+  with more variants do not crowd out concepts with fewer variants
+- Prevented unresolved concepts and not-yet-due reviewed concepts from being
+  admitted again, including as forced prefix decisions in multistep encounters
+- Separated vignette and later-step context from the actual question at the UI
+  boundary so patient presentation appears in the chart's left column rather
+  than being repeated above the answer choices
+- Kept frozen authored stems and question-review provenance unchanged
+
+### Chart-consistent generated patient identities
+
+- Generated routine and tutorial patient names only after the frozen clinical
+  presentation profile resolves, using feminine, masculine, or neutral name
+  pools according to the chart's authored sex label
+- Assigned matching human head/body presentation families for `Female` and
+  `Male` charts while keeping `Not specified` neutral and never using this
+  presentation field for clinical selection or gameplay
+- Added reload normalization so an older saved patient's canonical portrait
+  and map sprite are corrected together when they conflict with frozen chart
+  demographics
+
+## 2026-08-13
+
+### Approved Level 0 familial hypocalciuric hypercalcemia package
+
+- Split owner row 60 into three stable FSRS identities for biochemical
+  evaluation, recognition and confirmation, and avoidance of unnecessary
+  parathyroid surgery
+- Added four encounter variants containing five scored single-select decisions,
+  including one two-decision evaluation-to-management pathway with an
+  explicitly authored later endocrine follow-up
+- Corrected the return finding to relative hypocalciuria and preserved the
+  clearance-ratio limitation: a value below 0.01 raises suspicion but does not
+  independently diagnose FHH
+- Required family and genetic context before stating confirmation and limited
+  observation/no-surgery questions to asymptomatic uncomplicated disease
+- Removed the proposed confounded-low-ratio and reverse-recognition variants
+  and admitted the approved Level 0 package to the active development release
+
+## 2026-08-10
+
+### Approved Level 0 Felty syndrome pathway
+
+- Split owner row 52 into three stable FSRS identities for syndrome
+  recognition, first-line methotrexate, and splenectomy consideration after
+  medically refractory recurrent infections
+- Added six exact single-select variants and four encounter blueprints,
+  including one three-decision clinic pathway with an explicitly authored
+  later specialist follow-up
+- Preserved the no-splenomegaly diagnostic boundary, explicit exclusion of
+  clonal LGL and other causes, and the distinction between disease-modifying,
+  bridge/supportive, and surgical treatment
+- Omitted exact historical response percentages and the unsupported defining
+  antibody claim, and explicitly excluded the proposed seventh variant
+- Admitted all four Level 0 cases to the active development release
+
+### Approved staged pancreatic-tail adenocarcinoma resection concept
+
+- Normalized owner row 51 into one management FSRS identity for oncologic
+  distal pancreatectomy with splenectomy when a fit patient with
+  pancreatic-tail adenocarcinoma has been judged resectable and is proceeding
+  to surgery
+- Added five exact single-select variants: four Level 0 counseling, candidate-
+  selection, and referral cases plus one deferred Future Hospital OR
+  procedure-by-location variant
+- Required biopsy-confirmed disease, explicit multidisciplinary resectability,
+  absence of distant metastases, and fitness for major surgery so lack of
+  metastases is never used as the sole resectability criterion
+- Kept systemic-treatment sequencing and unapproved diagnosis or staging
+  steps outside scope while preserving one concept identity across settings
+- Admitted only the four clinic variants to the active development release
+
+### Approved Level 3 dry-humor PDSA iteration concept
+
+- Normalized owner row 50 into one applied-science FSRS identity for using the
+  Act step after a completed and studied test of change
+- Added five exact single-select variants built around dry ASC improvement
+  projects involving supplies, color-coded bins, callbacks, carts, and the
+  clinic's increasingly theoretical clipboard inventory
+- Preserved the result-directed adopt, adapt, or abandon boundary and linked
+  PDSA cycles without treating root-cause analysis or another QI model as an
+  automatic replacement
+- Kept the package single-decision until a distinct measure-selection or data-
+  interpretation concept is reviewed, preventing the same FSRS card from being
+  scored twice in one encounter
+- Staged the package for Level 3 Ambulatory OR / QI and kept it outside the
+  current Level 0-1 runtime
+
+### Approved deferred peptic-ulcer bleeding hemostasis package
+
+- Split owner row 49 into two management FSRS identities: high-risk ulcer
+  stigmata requiring endoscopic hemostasis and hemostatic-modality selection
+- Added nine exact single-select variants with brief variable patient
+  presentations and seven encounter blueprints, including two coherent
+  two-decision pathways
+- Staged stable nonbleeding-visible-vessel variants for Level 2 Endoscopy and
+  active-bleeding variants for Future Hospital Floor without admitting either
+  scope to the current Level 0-1 runtime
+- Preserved the rule that epinephrine alone is inadequate while recognizing
+  valid thermal or mechanical monotherapy in appropriate contexts and selected
+  advanced-monotherapy boundaries in current guidance
+- Added provenance, answer-length safeguards, exact approval records, and
+  focused structural tests
+
+### Approved Level 0 desmoid management pathway
+
+- Split owner row 48 into two management FSRS identities: initial active
+  surveillance for selected noncritical disease and a location-specific
+  surgical option for progressing symptomatic abdominal-wall disease
+- Added eight exact single-select variants through seven encounter blueprints,
+  including one coherent two-decision encounter whose second decision is an
+  explicitly authored later specialist follow-up rather than a facility-time
+  simulation of months
+- Preserved multidisciplinary review, expected-morbidity, functional
+  preservation, nonmetastatic, and location-specific treatment boundaries
+- Lengthened three incorrect labels without changing their meaning so the
+  correct response is never the uniquely longest choice
+- Admitted the reviewed package to the active Level 0 development release
+
+## 2026-08-06
+
+### Approved Level 0 AAA sex-associated perioperative mortality concept
+
+- Normalized owner row 47 into one applied-science FSRS identity with four
+  exact single-select variants at Level 0 Clinic Evaluation
+- Scoped the teaching point to higher observed perioperative mortality among
+  women after elective intact AAA repair at the group level, including both
+  EVAR and open repair, without making the association deterministic for an
+  individual patient
+- Preserved guideline-supported repair-threshold and early-repair facts only
+  as boundaries for the approved mixed distractor variant
+- Added a standing multi-decision suitability review for every future concept;
+  this concept remains intentionally single-decision because a coherent
+  sequence would require separately approved AAA concepts
+- Admitted the four reviewed variants to the active development release
+
+### Approved Future Hospital OR Meckel resection-extent concept
+
+- Normalized owner row 46 into one management FSRS identity with four exact
+  single-select variants testing both segmental ileal resection and simple
+  diverticulectomy
+- Limited segmental-resection variants to disease involving the base and
+  adjacent ileum, while approving simple diverticulectomy for a long, narrow
+  diverticulum with tip-only inflammation and a healthy base
+- Preserved the 2 cm base-width definition only as a source-specific
+  observation from a small adult perforation series, distinct from the
+  separate greater-than-2-cm diverticulum-length observation
+- Assigned the concept to `release.future.hospital_or` without a numeric
+  facility level or capability and kept it outside the current runtime
+
+### Approved Future ED / Trauma right-thoracotomy exposure concept
+
+- Normalized owner row 45 into one operative-anatomy FSRS identity with four
+  exact single-select variants
+- Added two compatible multiple-injury incision-selection variants, the
+  approved reverse-anatomy variant, and a resuscitative-incision boundary
+- Kept `right thoracotomy` canonical while limiting `right posterolateral
+  thoracotomy` to a stable or stabilized patient undergoing planned repair of
+  localized compatible injuries
+- Assigned the concept to `release.future.ed_trauma` with Hospital OR as the
+  separate required clinical setting, no numeric facility level, and no
+  current runtime admission
+
+### Approved Future Hospital OR controlled-enterotomy mesh concept
+
+- Normalized owner row 44 into one management FSRS identity with four exact
+  single-select variants
+- Limited the concept to selected ventral or incisional hernia repair after a
+  recognized small-bowel enterotomy is securely repaired, source control is
+  adequate, contamination is minimal and controlled, and gross spillage is
+  absent
+- Approved permanent macroporous monofilament synthetic mesh without making
+  single-stage mesh repair automatic after every enterotomy
+- Assigned the package to `release.future.hospital_or` without a numeric
+  facility level or capability and kept it outside the current runtime
+
+### Approved Future ICU severe-burn enteral-nutrition concept
+
+- Normalized owner row 43 into one management FSRS identity with four exact
+  single-select variants
+- Replaced the unsupported universal eight-hour cutoff with the approved rule
+  to begin enteral nutrition as soon as feasible within 24 hours after
+  adequate resuscitation and in the absence of an enteral contraindication
+- Retained the eight-hour patient presentation as clinical context and
+  preserved safety boundaries for ongoing shock, incomplete resuscitation,
+  suspected intestinal ischemia, and mechanical obstruction
+- Assigned the package to `release.future.icu` without a numeric facility
+  level or capability and kept it outside the current runtime
+
+### Approved staged gastric-cancer splenectomy concept
+
+- Normalized owner row 42 into one management FSRS identity with four exact
+  single-select variants
+- Approved two Level 2 Endoscopy counseling variants and two Future Hospital
+  OR operative-planning variants without splitting the learning identity
+- Limited routine spleen preservation to resectable proximal gastric
+  adenocarcinoma without greater-curvature invasion, direct splenic invasion,
+  or suspected splenic-hilar disease
+- Preserved the boundary that prophylactic splenectomy adds morbidity without
+  improving survival in this population but that splenectomy is not
+  universally prohibited
+
+### Approved future Hospital Floor postoperative-ileus nutrition concept
+
+- Normalized owner row 41 into one management FSRS identity with four exact
+  single-select variants
+- Scoped parenteral nutrition to severe ileus persisting beyond seven
+  postoperative days when obstruction has been excluded and adequate oral or
+  enteral nutrition remains infeasible
+- Preserved the boundaries that postoperative day and nasogastric output are
+  not standalone indications and that parenteral nutrition supports nutrition
+  rather than directly treating the ileus
+- Assigned the package to `release.future.hospital_floor` without a numeric
+  facility level or capability and kept it outside the current runtime
+
+### Approved Level 2 gastroparesis diagnostic-testing concept
+
+- Normalized owner row 40 into one workup FSRS identity with four exact
+  single-select variants
+- Approved four-hour solid-meal gastric emptying scintigraphy after mechanical
+  obstruction has been excluded, including general, diabetic, postsurgical,
+  and objective-result formulations
+- Preserved the boundary that upper endoscopy, esophageal manometry, and
+  ambulatory pH monitoring do not substitute for objective gastric-emptying
+  measurement
+- Assigned the package to Level 2 Endoscopy as an outpatient clinic encounter
+  using an off-site service, with no Endoscopy Room capability gate, and kept
+  it outside the current Level 0-1 runtime
+
+### Player question flags and local developer-review queue
+
+- Added a compact non-scoring review flag to every displayed authored
+  question, including reviewable completed decisions
+- Persisted the exact frozen release, case, presentation, Question Variant,
+  answer order, explanation, and encounter occurrence independently from
+  campaign saves
+- Added deduplication, reopening of reviewed items, bounded occurrence
+  history, and a developer-only `?question-review=1` queue with versioned JSON
+  export
+- Kept browser-local aggregation explicit; no external service or runtime AI
+  call was introduced
+
+### Runtime answer-length cue audit
+
+- Audited every question currently reachable through the Level 0-1 runtime and
+  found 22 distinct variants whose keyed answer was uniquely longest
+- Copyedited those answer labels and selected distractors without changing
+  their answer keys, clinical meaning, stable Question Variant IDs, or FSRS
+  Concept IDs
+- Added a release-wide regression check so a uniquely longest keyed answer now
+  fails the clinical-content test suite
+
+### Approved Level 2 gastric MALT recognition and management package
+
+- Split owner row 39 into independent pathologic-recognition and
+  H. pylori-eradication-first FSRS identities
+- Added six exact single-select variants and four deferred Level 2 Endoscopy
+  blueprints, including two optional two-decision encounters
+- Preserved the boundaries that CD20 alone is nondiagnostic, eradication is
+  not shorthand for no follow-up, and progressive or transformed disease
+  requires reassessment
+- Shortened keyed answer labels, lengthened plausible distractors where
+  appropriate, and added an automated check that the correct answer is never
+  the uniquely longest choice
+
+### Approved Level 2 vitamin C and collagen-hydroxylation concept
+
+- Normalized owner row 38 into one foundational applied-science FSRS identity
+  with four exact single-select retrieval variants
+- Replaced the over-specific type III collagen wording with the approved
+  general role of vitamin C in proline and lysine hydroxylation during collagen
+  biosynthesis
+- Added the collagen-stability and impaired-healing consequence while
+  preserving the boundary against implying universal high-dose postoperative
+  supplementation
+- Assigned the package to Level 2 Endoscopy in the Peri-op/Recovery setting
+  and kept it outside the current Level 0-1 playable release
+
+### Approved future Hospital Floor postoperative chylous-ascites pathway
+
+- Split owner row 37 into independent cross-sectional-evaluation,
+  fluid-confirmation, and initial-management FSRS identities
+- Added one exact three-decision clinic-to-hospital encounter with complete
+  single-select answer sets and shuffled answer order
+- Preserved the boundary that CT establishes ascites extent but not chylous
+  composition; diagnostic fluid sampling supplies confirmation
+- Scoped initial management to the approved large, symptomatic,
+  reaccumulating postoperative leak without imposing a rigid escalation
+  timeline or universal numeric triglyceride cutoff
+- Assigned the package to `release.future.hospital_floor` without a numeric
+  level and kept it outside the current playable release
+
+### Approved Level 0 Mondor disease pathway
+
+- Split owner row 36 into separate diagnosis, workup, and management FSRS
+  identities at Level 0 Clinic Evaluation
+- Added nine exact single-select variants across one three-decision pathway,
+  one two-decision imaging-and-management pathway, and six short encounters
+- Added a centralized off-site diagnostic breast-imaging service and persisted
+  result gate without treating its editorial simulation duration as clinical
+  evidence
+- Preserved the approved selective-imaging boundary, supportive-care scope,
+  corrective-forward intermediate behavior, and renewed-evaluation red flags
+- Added complete source metadata, four atomic evidence claims, named clinician
+  approval provenance, and bounded final-answer dispositions
+
+### Approved Level 3 breast-imaging recognition package
+
+- Split owner row 35 into separate suspicious mass-morphology and suspicious
+  calcification-pattern FSRS identities with four exact variants each
+- Added a brief patient presentation before every question and six approved
+  results-already-in-hand encounter blueprints
+- Added two proposed sequential mass-evaluation blueprints that begin with
+  diagnostic imaging and return to the approved morphology decision
+- Kept the new age-30-to-39 initial-imaging card and its two exact answer sets
+  `needs_clinician_review` rather than silently merging workup mastery into a
+  recognition card
+- Added current ACR and NCI provenance, atomic claim mappings, and the boundary
+  that suspicious imaging is not itself a tissue diagnosis
+- Held all row-35 content outside the playable Level 0-1 release until Level 3
+  Ambulatory OR / QI content admission exists
+
+### Approved HCC Milan-criteria concept in both retrieval directions
+
+- Recorded owner row 29 as one Level 0 disposition FSRS identity with six
+  patient-to-criteria and four criteria-to-patient single-select variants
+- Covered solitary and multifocal tumor-burden limits, macrovascular invasion,
+  and extrahepatic disease while preserving the boundary that Milan criteria
+  guide evaluation rather than guarantee listing or permanent exclusion
+- Added finite approved presentation profiles so age and neutral narrative
+  framing vary without independently recombining answer-essential clinical
+  facts
+- Froze the selected presentation profile into each encounter through a
+  dedicated deterministic clinical-presentation randomness stream
+- Added current AASLD and AASLD/AST source metadata, atomic claims, named
+  clinician approval provenance, and exact wrong-answer dispositions
+
+### First exact owner-approved clinical concept
+
+- Recorded Melissa Rowland, MD's exact approval of owner workbook row 23 as
+  `concept.ventral-hernia.elective-pulmonary-optimization`
+- Added two original Level 0 Clinic Evaluation Question Variants that share one
+  FSRS identity; after the older prototype questions were withdrawn, the first
+  approved variant became the protected one-decision tutorial encounter
+- Preserved atomic evidence claims, complete source metadata, reuse and
+  authority distinctions, immutable review provenance, and explicit urgent
+  presentation boundaries
+- Kept the mixed development fixture labeled
+  `synthetic_unapproved_prototype`; this exact approval does not promote other
+  draft clinical content
+
+### Approved Level 3 direct-inguinal anatomy backlog
+
+- Merged owner workbook rows 8 and 25 into one stable
+  `concept.inguinal-hernia.direct-operative-anatomy` FSRS identity
+- Recorded three alternative, clinician-approved classification, mechanism,
+  and operative-search variants at `release.l3.ambulatory_or_qi`
+- Removed ambiguous standalone `deep` wording and preserved the boundary that
+  failure to identify a cord-associated sac does not exclude other occult
+  groin lesions
+- Kept the approved content out of the current runtime until the Level 3
+  Ambulatory OR encounter framework exists
+
+### Approved sequential breast-cyst encounters
+
+- Split owner row 30 into three FSRS identities for initial ultrasound under
+  age 30, observation of an asymptomatic simple cyst, and aspiration of a
+  painful or bothersome simple cyst
+- Added an approved Level 0 two-decision encounter with an off-site ultrasound
+  return and an approved Level 1 iteration gated by the Minor Procedure Room
+- Added complete ACR, ASBrS, and ACOG source metadata plus four atomic
+  source-mapped claims while keeping source reuse review distinct from clinical
+  approval
+- Deferred bloody aspirate, residual or recurrent mass, discordant/complex
+  lesions, post-aspiration decisions, and excision pathways
+
+### Approved EBV-associated malignancy recognition
+
+- Added `applied_science` to the runtime Tested Concept vocabulary after
+  explicit owner approval, matching the existing Clinical Content Workbench
+  vocabulary
+- Recorded owner row 31 as one Level 0 FSRS identity with three exact,
+  single-decision Question Variants covering Burkitt lymphoma, an
+  EBV-associated gastric-adenocarcinoma subtype, and nasopharyngeal carcinoma
+- Preserved the boundary that a recognized association is not universal
+  across every tumor and is not an individual cancer-risk prediction
+- Added complete CDC and NCI source records, atomic claims, exact clinical
+  approval provenance, and explicit wrong-answer consequences
+- Deferred a separate Hodgkin-lymphoma Question Variant until its exact wording
+  and distractors are reviewed
+
+### Earlier prototype patient questions withdrawn
+
+- Removed all earlier prototype, synthetic-routing, and AI-authored pilot
+  questions from new-campaign admission and automatic patient selection
+- Reused the approved one-decision pulmonary-optimization case and approved
+  two-decision breast-cyst case for the protected Level 0 tutorial
+- Preserved already-frozen encounters in existing saves while preventing any
+  withdrawn case from creating a new patient
+- Retained legacy synthetic cases only as non-runtime regression fixtures for
+  service-engine tests
+
+## 2026-08-05
+
+### Clinical release points and complete ambulatory progression
+
+- Accepted semantic clinical release points for Clinic Evaluation, Minor
+  Procedure, Endoscopy, Ambulatory OR / QI, Pediatrics, Wound / Ostomy, and
+  unnumbered future Hospital OR, Hospital Floor, ED / Trauma, and ICU content
+- Recorded the complete Level 0-5 room and hireable-staff unlock table while
+  leaving later-level costs, advancement gates, capacity, and implementation
+  deferred
+- Preserved one FSRS identity when a concept has several approved
+  presentation/question iterations at different release points
+- Established single-location Founder physician coverage, generalized imaging
+  operation by the Imaging Technician, separate acquisition and interpretation
+  phases with faster staff-Radiologist reads, and the Level 3 Pharmacist role
+- Replaced the discarded AI-proposed 55-row stage mapping with a neutral
+  concept-by-concept review queue containing no preassigned release points
+
+## 2026-07-30
+
+### Quieter patient-status alerts and literal waiting-room seats
+
+- Removed encounter-payment settlement receipts from the player-facing Alerts
+  and Events feed while preserving them in the domain audit trail and chart
+  summary
+- Added a save-stable five-facility-minute grace period before unresolved
+  check-in, clinical-decision-ready, or result-ready conditions enter the feed
+- Limited Waiting Room placement to visibly rendered chair anchors; overflow
+  now uses the Front Desk and sidewalk instead of an invisible or arbitrary
+  corner position
+- Raised visible litter above ordinary map fixtures and characters while
+  retaining its direct-click interaction and keeping overlays above it
+
+### Chronological alert history and live facility satisfaction
+
+- Defined Alerts and Events as one chronological stream: response-required
+  rows receive an exclamation marker while active but are not pinned, and
+  resolving a condition clears the marker without deleting or retimestamping
+  its row
+- Changed empty-water guidance to occur on the first empty state and then once
+  per complete facility day while the cooler remains continuously empty
+- Established `100%` as the clean, capable-clinic satisfaction baseline rather
+  than an unconditional starting score; applicable unresolved facility
+  conditions lower an ordinary patient's satisfaction at Front Desk check-in
+- Preserved the rolling ended-encounter satisfaction history while layering a
+  separate live HUD modifier for current facility conditions until they are
+  resolved
+
+### Continuous movement and complete return visits
+
+- Removed late-session stop-and-sprint animation caused by a one-tick render
+  target, while preserving the single configured walking speed at 1x, 2x, and
+  4x
+- Coalesced high-frequency full-profile local saves onto deterministic
+  15-facility-minute boundaries; player actions, pause/visibility changes, and
+  Save and Close still save immediately
+- Made off-site patients check back in at the Front Desk, reuse the same
+  result-ready chart, choose a Waiting Room chair or standing place, proceed to
+  a reserved Examination Room when opened, and visibly leave after resolution
+- Added a canonical seated patient presentation and kept room-idle excursions
+  returning to and reserving the same chair
+- Added focused reload, capacity, route-handoff, delayed-render, autosave, and
+  return-itinerary regressions
+
+### Development-session memory and process hygiene
+
+- Audited the long-lived player runtime, Phaser lifecycle, React effects,
+  browser reload behavior, automated browser teardown, and bounded event
+  histories for retained resources
+- Made alert-driven deferred focus work latest-request-wins and cancellable on
+  unmount or campaign changes instead of leaving stale animation-frame work
+- Changed redundant desktop launches to hand off to the already healthy
+  prototype and exit immediately, preventing extra launcher consoles from
+  accumulating
+- Removed generated Playwright trace directories left by earlier visual
+  triage runs; no campaign saves or source files were removed
+
+### Compact, complaint-led Alerts and Events feed
+
+- Unified actionable alerts, guidance, success acknowledgements, walkout
+  reviews, and ambient humor into one compact scrolling feed with no separate
+  minimized history or visible category-label column
+- Reserved the exclamation marker for critical and action-required messages
+  while retaining click targets for patients, staff, rooms, and facility
+  objects
+- Kept routine accounting, clinical-decision/XP, encounter-settlement, GLP-1
+  receipt, prototype-money, litter-spawn, trash-cleanup, water-refill, and
+  construction activity in the domain audit trail without filling the
+  player-facing feed
+- Mixed scheduled ambient humor into routine clinic messages, using normal
+  charcoal text and a bounded recency window instead of a gray flavor block at
+  the bottom
+- Made the visible-trash lesson a save-stable one-time prompt that is
+  acknowledged by the first accepted cleanup click
+- Added deduplicated patient complaints for accumulated trash and occupied
+  base-level rooms, while preserving wait-time, amenity, and off-site imaging
+  guidance
+- Preserved the irreversible patient-leaving warning as a critical feed item
+  without offering a stale chart action
+
 ## 2026-07-29
+
+### Unified character movement and physical patient lifecycle
+
+- Replaced the separate patient, founder, employee, and off-site animation
+  cadences with one centrally configured character walking speed
+- Made Phaser interpolate one persisted cardinal route contract at the exact
+  simulation rate, including predictive tick-to-tick motion, continuous route
+  handoffs, pause/Build Mode freezing, and reload-safe logical positions
+- Removed renderer-invented waiting, care, staff, founder, and off-site
+  locations plus the separate duration-dependent off-site excursion
+- Added full left/right off-screen sidewalk arrivals, Front Desk check-in
+  gating, distinct Waiting Room/Front Desk/sidewalk waiting positions,
+  Examination Room reservations, and complete visible departures
+- Changed off-site testing to a single frozen outbound/away/return itinerary
+  whose displayed duration ends when the existing chart becomes result-ready
+  at the Front Desk
+- Added rotated room navigation anchors and blocked fixture tiles so routes use
+  explicit doors without crossing counters, exam furniture, or imaging
+  equipment
+- Stopped actor-only facility ticks from rebuilding the static map, fixtures,
+  and room labels, removing a recurring source of animation hitching
+
+### Stable, control-specific tutorial guidance
+
+- Stopped facility ticks and ordinary React rerenders from tearing down and
+  reacquiring the active tutorial anchor, eliminating the recurring corner
+  flash and bubble jump
+- Replaced broad or outdated tutorial selectors with stable semantic anchors
+  on the exact patient, answer, feedback, chart, Build Mode, and facility
+  controls being explained
+- Added placement hysteresis, animation-safe repositioning, viewport and
+  element observers, one-time reveal scrolling, and a non-pointing docked
+  fallback when no honest adjacent placement is available
+- Corrected phone positioning to keep fixed tutorial geometry in the same
+  viewport-relative coordinate system after page scrolling
+- Added recovery guidance for closed charts and corrected Level 1 and
+  multi-step feedback sequencing so acknowledged prompts do not recur or skip
+  the next meaningful control
+- Added desktop and phone browser regressions that sample tutorial placement
+  continuously while facility time runs at 4x
+- Made the first Level 1 patient-on-the-way prompt the tutorial endpoint with
+  one Complete tutorial action and no subsequent tutorial popups
+
+### Condensed direct-manipulation Build Mode
+
+- Replaced the stacked construction cards with a compact top bar for Build
+  Mode, available money, Undo, and Done/Save plus a separate ordered
+  Construction Tools row
+- Condensed the available-room catalog into responsive columns, preserved
+  readable selected-room text with a strong outline, and placed upgrade
+  benefits/cost and sale refund in a compact contextual inspector
+- Limited Rotate to pending room placement, removed named wall-position
+  buttons, and moved zero-cost door placement/removal onto emphasized,
+  directly clickable map walls and doors
+- Made Build Hallway a persistent toggle: a click places one tile and a drag
+  paints a continuous edge-connected corridor until the player toggles the
+  tool off; each successful tile remains a separate $35 Undo step
+- Portaled invalid-layout explanations above the facility renderer so the
+  complete blocking-reason dialog is always visible and clickable
+- Kept access validation, invalid-layout explanations, build-session Undo,
+  upgrade confirmation, sale values, and the protected exterior entrance
+  authoritative in their existing domain systems
+
+### HUD, patient rail, and campaign guidance refinement
+
+- Replaced the four pixel-cell resource symbols with smooth outline scalpel,
+  money-bag, satisfaction-face, and clock graphics
+- Simplified the resource HUD by removing the redundant goal-panel,
+  operating-change explanation, satisfaction-window explanation, and
+  clinic-open status lines while retaining their useful values and controls
+- Reduced Advertising to its title, level controls, and current hourly
+  cost/arrival-frequency line; anchored it below the expanded Patient Charts
+  rail
+- Removed the obsolete low-cash gate from the GLP-1 consult: it remains visible
+  and usable at any cash balance until its future dedicated room is built,
+  while retaining its persisted hourly cooldown, fixed payment, and
+  no-learning-reward boundary
+- Re-enabled the opening tutorial whenever a genuinely new campaign begins
+
+### Founder customization and intro taglines
+
+- Expanded founder creation from 10 to 30 independently interchangeable heads
+  and bodies while preserving the original stable options and save identities
+- Replaced the original numbered Classic head and body placeholders with
+  distinct descriptive names while preserving their persisted IDs and artwork
+- Added 10 distinctly female-presenting human heads and outfits plus 10
+  original non-human animal, alien, and robot sets, including cat and penguin
+- Extended the canonical map, portrait, walking, and star-jump renderer and
+  persistence validation for the new cosmetic variants without changing
+  generated patients, employees, clinical demographics, or gameplay
+- Added the approved 32-line rotating campaign-screen tagline library with
+  session-scoped repeat protection and the weighted prior-authorization line
 
 ### Data-driven Alerts and Events humor system
 
@@ -76,6 +769,11 @@ All notable implementation and project-record changes are listed here.
 
 ### Level 1 visual golden slice
 
+- Lowered exposed dollhouse rear walls to a shallow, sub-half-tile cutaway;
+  added the same treatment to northmost hallways; cropped fixed wall art at
+  partial northern contacts without rescaling it; kept panel rhythm anchored
+  to the full room; and joined true exterior north corners to side lips with
+  short stepped shoulders
 - Corrected the cutaway projection so each saved room footprint remains the
   exact immutable floor area while exposed rear-wall faces project as a
   north-side visual bonus outside that footprint

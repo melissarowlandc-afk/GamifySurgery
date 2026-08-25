@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   FACILITY_DEPTH_BUILD_OVERLAY,
+  FACILITY_DEPTH_FLOOR_INTERACTION,
   FACILITY_DEPTH_LOCATOR,
   FACILITY_DEPTH_UI,
   getFacilitySceneDepth,
@@ -54,6 +55,24 @@ describe("facility render depth", () => {
     );
     expect(FACILITY_DEPTH_UI).toBeGreaterThan(
       FACILITY_DEPTH_BUILD_OVERLAY,
+    );
+  });
+
+  it("keeps small floor interactions above ordinary scene objects but below overlays", () => {
+    const frontmostOrdinaryObject = getFacilitySceneDepth(
+      2_000,
+      "character",
+      63,
+    );
+
+    expect(FACILITY_DEPTH_FLOOR_INTERACTION).toBeGreaterThan(
+      frontmostOrdinaryObject,
+    );
+    expect(FACILITY_DEPTH_LOCATOR).toBeGreaterThan(
+      FACILITY_DEPTH_FLOOR_INTERACTION,
+    );
+    expect(FACILITY_DEPTH_BUILD_OVERLAY).toBeGreaterThan(
+      FACILITY_DEPTH_FLOOR_INTERACTION,
     );
   });
 

@@ -12,6 +12,7 @@ export { OpeningSequence } from "./OpeningSequence";
 export { PatientLists } from "./PatientLists";
 export { PixelAvatar } from "./PixelAvatar";
 export { PixelIcon } from "./PixelIcon";
+export { QuestionReviewQueueDialog } from "./QuestionReviewQueueDialog";
 export { ResourceBar } from "./ResourceBar";
 export { RestartDialog } from "./RestartDialog";
 export { SaveCloseDialog } from "./SaveCloseDialog";
@@ -19,7 +20,6 @@ export { StaffPanel } from "./StaffPanel";
 export { TutorialCoach } from "./TutorialCoach";
 export type {
   AnswerChoiceView,
-  AdvertisingLevelView,
   AdvertisingView,
   CampaignListItemView,
   ChartDecisionStepView,

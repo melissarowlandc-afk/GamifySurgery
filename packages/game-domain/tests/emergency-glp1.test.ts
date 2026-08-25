@@ -32,7 +32,7 @@ function advanceMinutes(
 }
 
 describe("manual GLP-1 side-business action", () => {
-  it("is available below the low-cash threshold and awards $25 cash only", () => {
+  it("awards $25 cash only", () => {
     const initial = createInitialGameState();
     const histories = JSON.parse(
       JSON.stringify(initial.learningHistories),
@@ -56,17 +56,19 @@ describe("manual GLP-1 side-business action", () => {
     });
   });
 
-  it("is unavailable when the clinic is not below the low-cash threshold", () => {
+  it("is available at any clinic cash balance", () => {
     const initial = createInitialGameState();
     initial.cashCents = 50_000;
     initial.cash = 500;
     expect(getEmergencyGlp1Status(initial)).toMatchObject({
-      cashEligible: false,
-      eligible: false,
+      eligible: true,
+      blockedReason: null,
     });
-    const blocked = consult(initial, 99);
-    expect(blocked.cash).toBe(500);
-    expect(blocked.operationReceipts["test.glp1.99"]?.status).toBe("rejected");
+    const completed = consult(initial, 99);
+    expect(completed.cash).toBe(
+      500 + PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1.payment,
+    );
+    expect(completed.operationReceipts["test.glp1.99"]?.status).toBe("applied");
   });
 
   it("uses facility-minute cooldown time and survives save/reload", () => {

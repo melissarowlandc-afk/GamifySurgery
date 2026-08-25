@@ -10,30 +10,36 @@ import type {
   FacilityCameraView,
   CollectLitterRequest,
   FacilityDoorView,
+  FacilityDoorSlotView,
   FacilityPatientView,
   FacilityRoomView,
   FacilityViewModel,
+  MoveFounderRequest,
+  PlaceDoorRequest,
   PlaceRoomRequest,
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
+  RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";
-import {
-  getWaitingPatientQueueIndices,
-  getWaitingPatientRoomLocations,
-} from "./patientPlacement";
 import {
   getCharacterPresentationMetrics,
 } from "./characterPresentation";
 import {
   getExposedHorizontalBoundaryRuns,
-  getLargestBoundaryRun,
+  getExposedNorthCornerReturns,
+  getExposedVerticalBoundaryRuns,
+  getRearWallFaceHeight,
+  getVisibleRearWallArtworkFragments,
   isHorizontalBoundarySegmentExposed,
+  projectRearWallArtwork,
   projectRearWallRun,
   type BoundaryRun,
+  type PixelRectangle,
 } from "./roomCutaway";
 import {
+  characterAppearanceSignature,
   getCharacterPixelFrame,
   type CharacterDirection,
   type CharacterPose,
@@ -52,6 +58,7 @@ import {
 } from "../art/pixelPalette";
 import {
   FACILITY_DEPTH_BUILD_OVERLAY,
+  FACILITY_DEPTH_FLOOR_INTERACTION,
   FACILITY_DEPTH_LOCATOR,
   FACILITY_DEPTH_UI,
   FACILITY_DEPTH_WORLD,
@@ -59,6 +66,7 @@ import {
 } from "./renderDepth";
 import {
   advanceRouteMotion,
+  getRouteTilesPerSecond,
   routeMotionComplete,
   sampleRouteMotion,
   syncRouteMotion,
@@ -69,15 +77,26 @@ import {
   getCleanlinessWearSeverity,
   getEnvironmentalInteraction,
 } from "./environmentPresentation";
+import {
+  containsDoorInteractionPoint,
+  doorInteractionDistanceSquared,
+  getDoorInteractionGeometry,
+  type DoorInteractionGeometry,
+} from "./doorInteractionGeometry";
+import { rasterizeGridLine } from "./hallwayPainting";
+import { getFacilityWorldSignature } from "./facilityWorldSignature";
 
 export interface FacilitySceneBridge {
   viewModel: FacilityViewModel;
   onPlaceRoom: PlaceRoomRequest;
+  onPlaceDoor?: PlaceDoorRequest;
+  onRemoveDoor?: RemoveDoorRequest;
   onSelectRoom?: SelectRoomRequest;
   onRequestRoomUpgrade?: RequestRoomUpgrade;
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
   onPraiseEmployee?: PraiseEmployeeRequest;
+  onMoveFounder?: MoveFounderRequest;
   onCameraChange?: FacilityCameraChangeRequest;
 }
 
@@ -100,6 +119,18 @@ interface PlacementGhost {
     | "overlap"
     | null;
 }
+
+type FacilityDoorInteractionTarget =
+  | {
+      kind: "place";
+      slot: FacilityDoorSlotView;
+      geometry: DoorInteractionGeometry;
+    }
+  | {
+      kind: "remove";
+      door: FacilityDoorView;
+      geometry: DoorInteractionGeometry;
+    };
 
 interface TileRectangle {
   tileX: number;
@@ -127,10 +158,6 @@ const FALLBACK_APPEARANCE: PixelAppearanceDescriptor = {
   roleStyle: "patient",
 };
 
-function finiteCount(value: number): number {
-  return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
-}
-
 function positiveGridSize(value: number, fallback: number): number {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
 }
@@ -142,6 +169,31 @@ function rectanglesOverlap(a: TileRectangle, b: TileRectangle): boolean {
     a.tileY < b.tileY + b.height &&
     a.tileY + a.height > b.tileY
   );
+}
+
+function intersectPixelRectangles(
+  left: PixelRectangle,
+  right: PixelRectangle,
+): PixelRectangle | null {
+  const x = Math.max(left.x, right.x);
+  const y = Math.max(left.y, right.y);
+  const rightEdge = Math.min(
+    left.x + left.width,
+    right.x + right.width,
+  );
+  const bottomEdge = Math.min(
+    left.y + left.height,
+    right.y + right.height,
+  );
+  if (rightEdge <= x || bottomEdge <= y) {
+    return null;
+  }
+  return {
+    x,
+    y,
+    width: rightEdge - x,
+    height: bottomEdge - y,
+  };
 }
 
 function orientedSize(
@@ -159,77 +211,6 @@ function inferredPlacementDoorSide(
   // New rooms no longer receive an embedded door. Doors are placed as
   // separate zero-cost build objects after the room footprint is accepted.
   return placement.kind === "hallway" ? null : placement.doorSide ?? null;
-}
-
-function modelSignature(model: FacilityViewModel): string {
-  const counts = model.patientCounts;
-  const placement = model.placement;
-  const rooms = model.rooms
-    .map(
-      (room) =>
-        `${room.instanceId}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}`,
-    )
-    .join("|");
-  const doors = (model.doors ?? [])
-    .map(
-      (door) =>
-        `${door.instanceId}:${door.roomInstanceId}:${door.side}:${door.offset}:${door.exterior ? 1 : 0}`,
-    )
-    .join("|");
-  const staff = model.staff
-    .map(
-      (employee) =>
-        `${employee.instanceId}:${employee.homeRoomInstanceId}:${employee.location?.x ?? "-"},${employee.location?.y ?? "-"}:${employee.morale ?? "-"}`,
-    )
-    .join("|");
-  const patients = (model.patients ?? [])
-    .map(
-      (patient) =>
-        `${patient.instanceId}:${patient.status}:${patient.location?.x ?? "-"},${patient.location?.y ?? "-"}`,
-    )
-    .join("|");
-  const environment = [
-    model.founder.location
-      ? `${model.founder.location.x},${model.founder.location.y}`
-      : "-",
-    `founder-activity:${model.founder.activityLabel ?? "-"}`,
-    ...(model.litterItems ?? []).map(
-      (item) =>
-        `${item.instanceId}:${item.location.x},${item.location.y}:${
-          item.highlighted ? 1 : 0
-        }`,
-    ),
-    model.waterCooler
-      ? `water:${model.waterCooler.fillPercent}:${
-          model.waterCooler.needsRefill ? 1 : 0
-        }:${model.waterCooler.highlighted ? 1 : 0}`
-      : "water:-",
-  ].join("|");
-
-  return [
-    model.facilityTick,
-    model.paused ? 1 : 0,
-    model.buildMode ? 1 : 0,
-    positiveGridSize(model.gridColumns, 16),
-    positiveGridSize(model.gridRows, 10),
-    finiteCount(counts.waiting),
-    finiteCount(counts.active),
-    finiteCount(counts.actionReady),
-    finiteCount(counts.resolved),
-    placement
-      ? `${placement.definitionId}:${placement.width}x${placement.height}:${placement.orientation ?? 0}:${placement.doorSide ?? "inferred"}`
-      : "-",
-    rooms,
-    doors,
-    staff,
-    patients,
-    environment,
-    model.selectedRoomInstanceId ?? "-",
-    model.selectedPatientInstanceId ?? "-",
-    model.camera
-      ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`
-      : "camera.default",
-  ].join(":");
 }
 
 /**
@@ -261,7 +242,6 @@ export class FacilityScene extends Phaser.Scene {
   private waterCoolerLabelText?: Phaser.GameObjects.Text;
   private litterHighlightText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
-  private roomUpgradeTexts: Phaser.GameObjects.Text[] = [];
 
   private layout: GridLayout = {
     originX: 0,
@@ -277,6 +257,10 @@ export class FacilityScene extends Phaser.Scene {
   private characterPhase = 0;
   private frameDeltaMilliseconds = 0;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
+  private readonly characterRenderCache = new WeakMap<
+    Phaser.GameObjects.Graphics,
+    { signature: string; width: number; height: number }
+  >();
   private cameraView: FacilityCameraView = {
     zoom: 1,
     panX: 0,
@@ -284,8 +268,18 @@ export class FacilityScene extends Phaser.Scene {
   };
   private lastRequestedCameraSignature = "";
   private dragStart:
-    | { pointerX: number; pointerY: number; panX: number; panY: number }
+    | {
+        pointerX: number;
+        pointerY: number;
+        panX: number;
+        panY: number;
+        dragged: boolean;
+      }
     | null = null;
+  private hallwayPaintActive = false;
+  private hallwayPaintBlocked = false;
+  private hallwayPaintLastPoint: GridPoint | null = null;
+  private readonly hallwayPaintVisitedTiles = new Set<string>();
   private lastWidth = -1;
   private lastHeight = -1;
   private lastModelSignature = "";
@@ -414,9 +408,7 @@ export class FacilityScene extends Phaser.Scene {
     );
     this.input.on(
       "pointerup",
-      () => {
-        this.dragStart = null;
-      },
+      (pointer: Phaser.Input.Pointer) => this.handlePointerUp(pointer),
     );
     this.input.on(
       "wheel",
@@ -430,6 +422,7 @@ export class FacilityScene extends Phaser.Scene {
     this.input.on("gameout", () => {
       this.placementGhost = null;
       this.dragStart = null;
+      this.endHallwayPaint();
       this.setInteractionHint(null);
       this.drawPlacementGhost();
     });
@@ -438,9 +431,14 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   public update(_time: number, delta: number): void {
-    this.frameDeltaMilliseconds = this.bridge.viewModel.paused ? 0 : delta;
-    if (!this.bridge.viewModel.paused) {
-      this.characterPhase += delta * 0.006;
+    const motionFrozen =
+      this.bridge.viewModel.paused ||
+      Boolean(this.bridge.viewModel.buildMode);
+    this.frameDeltaMilliseconds = motionFrozen ? 0 : delta;
+    if (!motionFrozen) {
+      // A restrained two-frame gait reads as walking rather than rapid sprite
+      // flicker at the shared lower map speed.
+      this.characterPhase += delta * 0.0025;
     }
 
     this.refreshLayout();
@@ -450,7 +448,7 @@ export class FacilityScene extends Phaser.Scene {
   private refreshLayout(force = false): void {
     const width = Math.max(1, Math.floor(this.scale.width));
     const height = Math.max(1, Math.floor(this.scale.height));
-    const signature = modelSignature(this.bridge.viewModel);
+    const signature = getFacilityWorldSignature(this.bridge.viewModel);
 
     if (
       !force &&
@@ -645,7 +643,8 @@ export class FacilityScene extends Phaser.Scene {
     (model.doors ?? []).forEach((door) => {
       this.drawExplicitDoor(graphics, door);
     });
-    this.drawEnvironment(graphics);
+    this.drawBuildDoorHighlights(graphics);
+    this.drawEnvironment();
     this.drawExterior(graphics);
     this.removeInactiveGraphics(
       this.fixtureGraphics,
@@ -805,9 +804,7 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
-  private drawEnvironment(
-    graphics: Phaser.GameObjects.Graphics,
-  ): void {
+  private drawEnvironment(): void {
     const pixel = Math.max(1, Math.floor(this.layout.tileSize / 14));
     this.litterHighlightText?.setVisible(false);
     for (const litter of this.bridge.viewModel.litterItems ?? []) {
@@ -817,8 +814,18 @@ export class FacilityScene extends Phaser.Scene {
       const y =
         this.layout.originY +
         (litter.location.y + 0.65) * this.layout.tileSize;
+      const litterGraphics = this.getSortableGraphics(
+        this.fixtureGraphics,
+        this.activeFixtureGraphics,
+        `environment:litter:${litter.instanceId}`,
+      );
+      // Litter is a tiny direct-click interaction. Keeping it in a dedicated
+      // foreground world band prevents room furniture whose sprite projects
+      // across this tile from concealing it. The logical grid location and
+      // pointer hit test remain unchanged.
+      litterGraphics.setDepth(FACILITY_DEPTH_FLOOR_INTERACTION);
       this.drawFixture(
-        graphics,
+        litterGraphics,
         "litter",
         x,
         y,
@@ -835,23 +842,23 @@ export class FacilityScene extends Phaser.Scene {
           14,
           this.layout.tileSize * 0.42,
         );
-        graphics.lineStyle(
+        litterGraphics.lineStyle(
           outlineWidth,
           PIXEL_PALETTE_NUMBER.highlight,
           1,
         );
-        graphics.strokeRect(
+        litterGraphics.strokeRect(
           x - highlightWidth / 2,
           y - highlightHeight / 2,
           highlightWidth,
           highlightHeight,
         );
-        graphics.lineStyle(
+        litterGraphics.lineStyle(
           Math.max(1, outlineWidth - 1),
           PIXEL_PALETTE_NUMBER.charcoal,
           1,
         );
-        graphics.strokeRect(
+        litterGraphics.strokeRect(
           x - highlightWidth / 2 - outlineWidth * 2,
           y - highlightHeight / 2 - outlineWidth * 2,
           highlightWidth + outlineWidth * 4,
@@ -972,8 +979,8 @@ export class FacilityScene extends Phaser.Scene {
       ...oriented,
     });
     if (room.kind === "hallway" || room.definitionId === "room.hallway") {
-      // Corridors are an open circulation floor in the cutaway projection,
-      // not another sealed room-shaped box.
+      // Corridors remain open circulation floors. Only an actually northmost
+      // corridor edge receives the same shallow cutaway wall as a room.
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.34);
       graphics.fillRect(
         rectangle.x + 3,
@@ -1014,19 +1021,31 @@ export class FacilityScene extends Phaser.Scene {
           y - 1,
         );
       }
+      const wallWidth = Math.max(
+        4,
+        Math.floor(this.layout.tileSize * 0.16),
+      );
+      const lowWallWidth = Math.max(3, Math.floor(wallWidth * 0.62));
+      const wallFace = this.roomWallFaceColor(room);
+      this.drawExteriorSideWalls(
+        graphics,
+        room,
+        rectangle,
+        wallFace,
+        lowWallWidth,
+      );
+      this.drawExposedRearWalls(
+        graphics,
+        room,
+        rectangle,
+        wallWidth,
+        wallFace,
+        lowWallWidth,
+      );
+      this.drawCoveredNorthBoundarySeams(graphics, room, rectangle);
+
       const curb = Math.max(2, Math.floor(this.layout.tileSize * 0.07));
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.72);
-      for (const run of this.exposedBoundaryRuns(room, "north")) {
-        const x = rectangle.x + run.offset * this.layout.tileSize;
-        const width = Math.min(
-          rectangle.x + rectangle.width - x,
-          run.length * this.layout.tileSize,
-        );
-        graphics.fillRect(x, rectangle.y, width, curb);
-        graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.45);
-        graphics.fillRect(x + 1, rectangle.y + curb, Math.max(1, width - 2), 1);
-        graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.72);
-      }
       for (const run of this.exposedBoundaryRuns(room, "south")) {
         const x = rectangle.x + run.offset * this.layout.tileSize;
         graphics.fillRect(
@@ -1039,19 +1058,6 @@ export class FacilityScene extends Phaser.Scene {
           curb,
         );
       }
-      graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.ink, 0.88);
-      graphics.lineBetween(
-        rectangle.x,
-        rectangle.y,
-        rectangle.x,
-        rectangle.y + rectangle.height,
-      );
-      graphics.lineBetween(
-        rectangle.x + rectangle.width,
-        rectangle.y,
-        rectangle.x + rectangle.width,
-        rectangle.y + rectangle.height,
-      );
       return;
     }
     const shade = this.roomFloorColor(room, index);
@@ -1227,12 +1233,9 @@ export class FacilityScene extends Phaser.Scene {
   private roomWallFaceHeight(rectangle: {
     height: number;
   }): number {
-    return Math.max(
-      10,
-      Math.min(
-        Math.floor(rectangle.height * 0.24),
-        Math.floor(this.layout.tileSize * 0.72),
-      ),
+    return getRearWallFaceHeight(
+      rectangle.height,
+      this.layout.tileSize,
     );
   }
 
@@ -1412,6 +1415,159 @@ export class FacilityScene extends Phaser.Scene {
     );
   }
 
+  private getDoorGeometry(
+    room: FacilityRoomView,
+    side: CardinalDirection,
+    offset: number,
+  ): DoorInteractionGeometry {
+    const rectangle = this.toPixels({
+      tileX: room.tileX,
+      tileY: room.tileY,
+      ...orientedSize(room),
+    });
+    return getDoorInteractionGeometry({
+      room: rectangle,
+      side,
+      offset,
+      tileSize: this.layout.tileSize,
+      exposedNorthWall:
+        side === "north" &&
+        this.hasExposedNorthWallAt(room, offset),
+      northWallHeight: this.roomWallFaceHeight(rectangle),
+    });
+  }
+
+  private getBuildDoorInteractionTargets(): FacilityDoorInteractionTarget[] {
+    const model = this.bridge.viewModel;
+    if (!model.buildMode || !model.buildDoorTool) {
+      return [];
+    }
+    if (model.buildDoorTool === "place") {
+      return (
+        model.buildDoorSlots ??
+        model.eligibleDoorSlots ??
+        []
+      ).flatMap((slot) => {
+        if (slot.enabled === false) {
+          return [];
+        }
+        const room = model.rooms.find(
+          (candidate) => candidate.instanceId === slot.roomInstanceId,
+        );
+        return room
+          ? [
+              {
+                kind: "place" as const,
+                slot,
+                geometry: this.getDoorGeometry(
+                  room,
+                  slot.side,
+                  slot.offset,
+                ),
+              },
+            ]
+          : [];
+      });
+    }
+    return (model.doors ?? []).flatMap((door) => {
+      // The public entrance is immutable in the domain and never becomes a
+      // pointer target, even while the remove tool is active.
+      if (door.exterior) {
+        return [];
+      }
+      const room = model.rooms.find(
+        (candidate) => candidate.instanceId === door.roomInstanceId,
+      );
+      return room
+        ? [
+            {
+              kind: "remove" as const,
+              door,
+              geometry: this.getDoorGeometry(
+                room,
+                door.side,
+                door.offset,
+              ),
+            },
+          ]
+        : [];
+    });
+  }
+
+  private drawBuildDoorHighlights(
+    graphics: Phaser.GameObjects.Graphics,
+  ): void {
+    const targets = this.getBuildDoorInteractionTargets();
+    targets.forEach((target) => {
+      const { hitRegion, center, horizontal } = target.geometry;
+      const place = target.kind === "place";
+      const outerColor = place
+        ? PIXEL_PALETTE_NUMBER.highlight
+        : PIXEL_PALETTE_NUMBER.ink;
+      const innerColor = place
+        ? PIXEL_PALETTE_NUMBER.ink
+        : PIXEL_PALETTE_NUMBER.paper;
+      graphics.fillStyle(outerColor, place ? 0.26 : 0.4);
+      graphics.fillRect(
+        hitRegion.x,
+        hitRegion.y,
+        hitRegion.width,
+        hitRegion.height,
+      );
+      graphics.lineStyle(3, outerColor, 1);
+      graphics.strokeRect(
+        hitRegion.x,
+        hitRegion.y,
+        hitRegion.width,
+        hitRegion.height,
+      );
+      graphics.lineStyle(1, innerColor, 1);
+      graphics.strokeRect(
+        hitRegion.x + 2,
+        hitRegion.y + 2,
+        Math.max(1, hitRegion.width - 4),
+        Math.max(1, hitRegion.height - 4),
+      );
+
+      // A short crossbar makes the emphasized segment legible as a wall
+      // opening at low zoom without adding any textual wall-position picker.
+      const crossbar = Math.max(3, Math.min(9, this.layout.tileSize * 0.22));
+      graphics.lineStyle(2, innerColor, 1);
+      if (horizontal) {
+        graphics.lineBetween(
+          center.x - crossbar,
+          center.y,
+          center.x + crossbar,
+          center.y,
+        );
+      } else {
+        graphics.lineBetween(
+          center.x,
+          center.y - crossbar,
+          center.x,
+          center.y + crossbar,
+        );
+      }
+    });
+  }
+
+  private doorInteractionAtPointer(
+    pointer: Phaser.Input.Pointer,
+  ): FacilityDoorInteractionTarget | null {
+    const point = { x: pointer.x, y: pointer.y };
+    return (
+      this.getBuildDoorInteractionTargets()
+        .filter((target) =>
+          containsDoorInteractionPoint(target.geometry, point),
+        )
+        .sort(
+          (left, right) =>
+            doorInteractionDistanceSquared(left.geometry, point) -
+            doorInteractionDistanceSquared(right.geometry, point),
+        )[0] ?? null
+    );
+  }
+
   private drawRoomFloor(
     graphics: Phaser.GameObjects.Graphics,
     room: FacilityRoomView,
@@ -1515,32 +1671,94 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
-  private drawRoomShell(
+  private roomWallFaceColor(room: FacilityRoomView): number {
+    if (
+      room.definitionId === "room.xray" ||
+      room.definitionId === "room.imaging_control"
+    ) {
+      return PIXEL_PALETTE_NUMBER.sage;
+    }
+    return room.isFounderRoom
+      ? PIXEL_PALETTE_NUMBER.paper
+      : PIXEL_PALETTE_NUMBER.warmGray;
+  }
+
+  private northCornerShoulderWidth(wallWidth: number): number {
+    return Math.max(
+      wallWidth + 3,
+      Math.floor(this.layout.tileSize * 0.22),
+    );
+  }
+
+  private drawExteriorSideWalls(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    wallFace: number,
+    lowWallWidth: number,
+  ): void {
+    for (const side of ["west", "east"] as const) {
+      const runs = getExposedVerticalBoundaryRuns(
+        room,
+        this.bridge.viewModel.rooms,
+        side,
+      );
+      const x =
+        side === "east"
+          ? rectangle.x + rectangle.width - lowWallWidth
+          : rectangle.x;
+      for (const run of runs) {
+        const y =
+          rectangle.y +
+          run.offset * this.layout.tileSize +
+          (run.offset === 0 ? 1 : 0);
+        const height = Math.max(
+          1,
+          Math.min(
+            rectangle.y + rectangle.height - y,
+            run.length * this.layout.tileSize -
+              (run.offset === 0 ? 1 : 0),
+          ),
+        );
+        graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 0.96);
+        graphics.fillRect(x, y, lowWallWidth, height);
+        graphics.fillStyle(wallFace, 1);
+        graphics.fillRect(
+          x + 1,
+          y + 1,
+          Math.max(1, lowWallWidth - 2),
+          Math.max(1, height - 2),
+        );
+      }
+    }
+  }
+
+  private drawExposedRearWalls(
     graphics: Phaser.GameObjects.Graphics,
     room: FacilityRoomView,
     rectangle: { x: number; y: number; width: number; height: number },
     wallWidth: number,
+    wallFace: number,
+    lowWallWidth: number,
   ): void {
     const rearWallHeight = this.roomWallFaceHeight(rectangle);
-    const wallFace =
-      room.definitionId === "room.xray" ||
-      room.definitionId === "room.imaging_control"
-        ? PIXEL_PALETTE_NUMBER.sage
-        : room.isFounderRoom
-          ? PIXEL_PALETTE_NUMBER.paper
-          : PIXEL_PALETTE_NUMBER.warmGray;
-    // The grid rectangle is always the complete room floor. The dollhouse
-    // rear wall is an additional projection north of that footprint and its
-    // face ends exactly where the floor begins.
     const groundY = rectangle.y;
-    const bottom = rectangle.y + rectangle.height;
-    const lowWallWidth = Math.max(3, Math.floor(wallWidth * 0.62));
-    const frontWallHeight = Math.max(4, Math.floor(wallWidth * 0.72));
     const northRuns = this.exposedBoundaryRuns(room, "north");
-    const southRuns = this.exposedBoundaryRuns(room, "south");
     const panelGap = Math.max(24, Math.floor(this.layout.tileSize * 1.45));
+    const cornerReturns = getExposedNorthCornerReturns(
+      room,
+      this.bridge.viewModel.rooms,
+    );
+    const exteriorWest = cornerReturns.some(
+      (corner) => corner.side === "west",
+    );
+    const exteriorEast = cornerReturns.some(
+      (corner) => corner.side === "east",
+    );
+    const cornerShoulderWidth =
+      this.northCornerShoulderWidth(wallWidth);
 
-    const drawRearWallRun = (run: BoundaryRun) => {
+    for (const run of northRuns) {
       const projection = projectRearWallRun(
         rectangle,
         run,
@@ -1551,11 +1769,16 @@ export class FacilityScene extends Phaser.Scene {
       const runX = projection.face.x;
       const runWidth = projection.face.width;
       if (runWidth <= 0) {
-        return;
+        continue;
       }
-      const faceInsetLeft = run.offset === 0 ? wallWidth : 2;
+      const faceInsetLeft =
+        run.offset === 0 && exteriorWest
+          ? cornerShoulderWidth
+          : 2;
       const faceInsetRight =
-        run.offset + run.length >= room.width ? wallWidth : 2;
+        run.offset + run.length >= room.width && exteriorEast
+          ? cornerShoulderWidth
+          : 2;
       const faceX = runX + faceInsetLeft;
       const faceWidth = Math.max(
         1,
@@ -1608,12 +1831,17 @@ export class FacilityScene extends Phaser.Scene {
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.68);
       graphics.fillRect(faceX, groundY - 3, faceWidth, 3);
 
+      // Panel rhythm remains anchored to the complete room wall. Northern
+      // coverage crops the pattern instead of restarting it in each fragment.
       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.34);
       for (
-        let x = faceX + panelGap;
-        x < faceX + faceWidth - 2;
+        let x = rectangle.x + panelGap;
+        x < rectangle.x + rectangle.width - 2;
         x += panelGap
       ) {
+        if (x <= faceX + 1 || x >= faceX + faceWidth - 2) {
+          continue;
+        }
         graphics.lineBetween(
           x,
           projection.face.y + 3,
@@ -1622,8 +1850,8 @@ export class FacilityScene extends Phaser.Scene {
         );
       }
 
-      // A small cut end makes partial rear walls read as actual terminated
-      // walls rather than stripes abruptly clipped by another room.
+      // Coverage interruptions receive a square cut edge. They are cropped
+      // wall sections, not newly compressed or rounded miniature walls.
       for (const edgeX of [runX, runX + runWidth]) {
         const isOuterEdge =
           edgeX === rectangle.x ||
@@ -1645,65 +1873,99 @@ export class FacilityScene extends Phaser.Scene {
           );
         }
       }
-    };
-
-    northRuns.forEach(drawRearWallRun);
-
-    // East/west edges remain low cutaway lips. The full-height bonus wall is
-    // reserved exclusively for an exposed northern boundary.
-    const drawSideReturn = (right: boolean) => {
-      const x = right
-        ? rectangle.x + rectangle.width - lowWallWidth
-        : rectangle.x;
-      const width = lowWallWidth;
-      const faceStartY = rectangle.y + 1;
-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 0.96);
-      graphics.fillRect(x, faceStartY, width, bottom - faceStartY);
-      graphics.fillStyle(wallFace, 1);
-      graphics.fillRect(
-        x + 1,
-        faceStartY + 1,
-        Math.max(1, width - 2),
-        Math.max(1, bottom - faceStartY - 2),
-      );
-    };
-    drawSideReturn(false);
-    drawSideReturn(true);
-
-    // The low cutaway lip is also an exterior treatment. Where another room
-    // begins immediately south, omitting it prevents a duplicate wall from
-    // breaking the shared floor plane.
-    for (const run of southRuns) {
-      const runX = rectangle.x + run.offset * this.layout.tileSize;
-      const runWidth = Math.min(
-        rectangle.x + rectangle.width - runX,
-        run.length * this.layout.tileSize,
-      );
-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
-      graphics.fillRect(
-        runX,
-        bottom - frontWallHeight,
-        runWidth,
-        frontWallHeight,
-      );
-      graphics.fillStyle(wallFace, 1);
-      graphics.fillRect(
-        runX + 2,
-        bottom - frontWallHeight + 1,
-        Math.max(1, runWidth - 4),
-        Math.max(1, frontWallHeight - 2),
-      );
-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.58);
-      graphics.fillRect(
-        runX + 2,
-        bottom - frontWallHeight + 1,
-        Math.max(1, runWidth - 4),
-        1,
-      );
     }
 
-    // Covered rear spans retain a one-pixel plan-view partition seam. Access
-    // remains governed by explicit door objects and build validation.
+    // True exterior north corners descend into the low side wall through a
+    // short three-step pixel shoulder. The steps approximate a rounded
+    // cutaway corner without smoothing or consuming additional floor tiles.
+    const shoulderDepth = Math.min(
+      rectangle.height,
+      Math.max(8, Math.floor(this.layout.tileSize * 0.42)),
+    );
+    const faceTop = groundY - rearWallHeight;
+    const stepBottoms = [
+      groundY + Math.ceil(shoulderDepth * 0.34),
+      groundY + Math.ceil(shoulderDepth * 0.68),
+      groundY + shoulderDepth,
+    ];
+    const stepWidths = [
+      Math.max(
+        lowWallWidth + 3,
+        Math.floor(cornerShoulderWidth * 0.72),
+      ),
+      Math.max(
+        lowWallWidth + 1,
+        Math.floor(cornerShoulderWidth * 0.46),
+      ),
+      lowWallWidth,
+    ];
+    for (const corner of cornerReturns) {
+      const cornerX =
+        corner.side === "east"
+          ? rectangle.x + rectangle.width - cornerShoulderWidth
+          : rectangle.x;
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+      graphics.fillRect(
+        cornerX,
+        faceTop,
+        cornerShoulderWidth,
+        rearWallHeight,
+      );
+      graphics.fillStyle(wallFace, 1);
+      graphics.fillRect(
+        cornerX + 1,
+        faceTop + 1,
+        Math.max(1, cornerShoulderWidth - 2),
+        Math.max(1, rearWallHeight - 2),
+      );
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.44);
+      graphics.fillRect(
+        corner.side === "east"
+          ? cornerX + cornerShoulderWidth - 1
+          : cornerX,
+        faceTop + 1,
+        1,
+        Math.max(1, rearWallHeight - 2),
+      );
+
+      let startY = groundY;
+      for (let index = 0; index < stepBottoms.length; index += 1) {
+        const width = stepWidths[index] ?? lowWallWidth;
+        const endY = stepBottoms[index] ?? groundY + shoulderDepth;
+        const x =
+          corner.side === "east"
+            ? rectangle.x + rectangle.width - width
+            : rectangle.x;
+        graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+        graphics.fillRect(x, startY, width, Math.max(1, endY - startY));
+        if (width > 2) {
+          graphics.fillStyle(wallFace, 1);
+          graphics.fillRect(
+            x + 1,
+            startY + 1,
+            width - 2,
+            Math.max(1, endY - startY - 2),
+          );
+        }
+        graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.42);
+        graphics.fillRect(
+          corner.side === "east" ? x : x + width - 1,
+          startY + 1,
+          1,
+          Math.max(1, endY - startY - 2),
+        );
+        graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.78);
+        graphics.fillRect(x, startY, width, 1);
+        startY = endY;
+      }
+    }
+  }
+
+  private drawCoveredNorthBoundarySeams(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
     const coveredNorthRuns: BoundaryRun[] = [];
     let coveredStart: number | null = null;
     for (let offset = 0; offset < room.width; offset += 1) {
@@ -1737,6 +1999,71 @@ export class FacilityScene extends Phaser.Scene {
         1,
       );
     }
+  }
+
+  private drawRoomShell(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    wallWidth: number,
+  ): void {
+    const wallFace = this.roomWallFaceColor(room);
+    // The grid rectangle is always the complete room floor. The dollhouse
+    // rear wall is an additional projection north of that footprint and its
+    // face ends exactly where the floor begins.
+    const bottom = rectangle.y + rectangle.height;
+    const lowWallWidth = Math.max(3, Math.floor(wallWidth * 0.62));
+    const frontWallHeight = Math.max(4, Math.floor(wallWidth * 0.72));
+    const southRuns = this.exposedBoundaryRuns(room, "south");
+    this.drawExteriorSideWalls(
+      graphics,
+      room,
+      rectangle,
+      wallFace,
+      lowWallWidth,
+    );
+    this.drawExposedRearWalls(
+      graphics,
+      room,
+      rectangle,
+      wallWidth,
+      wallFace,
+      lowWallWidth,
+    );
+
+    // The low cutaway lip is also an exterior treatment. Where another room
+    // begins immediately south, omitting it prevents a duplicate wall from
+    // breaking the shared floor plane.
+    for (const run of southRuns) {
+      const runX = rectangle.x + run.offset * this.layout.tileSize;
+      const runWidth = Math.min(
+        rectangle.x + rectangle.width - runX,
+        run.length * this.layout.tileSize,
+      );
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+      graphics.fillRect(
+        runX,
+        bottom - frontWallHeight,
+        runWidth,
+        frontWallHeight,
+      );
+      graphics.fillStyle(wallFace, 1);
+      graphics.fillRect(
+        runX + 2,
+        bottom - frontWallHeight + 1,
+        Math.max(1, runWidth - 4),
+        Math.max(1, frontWallHeight - 2),
+      );
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.58);
+      graphics.fillRect(
+        runX + 2,
+        bottom - frontWallHeight + 1,
+        Math.max(1, runWidth - 4),
+        1,
+      );
+    }
+
+    this.drawCoveredNorthBoundarySeams(graphics, room, rectangle);
   }
 
   private drawBuildGridOverlay(
@@ -1900,9 +2227,46 @@ export class FacilityScene extends Phaser.Scene {
   ): void {
     const left = rectangle.x + inset;
     const wallHeight = this.roomWallFaceHeight(rectangle);
-    const rearWallRun = getLargestBoundaryRun(
-      this.exposedBoundaryRuns(room, "north"),
+    const rearWallRuns = this.exposedBoundaryRuns(room, "north");
+    const wallWidth = Math.max(
+      4,
+      Math.floor(this.layout.tileSize * 0.16),
     );
+    const exteriorCorners = getExposedNorthCornerReturns(
+      room,
+      this.bridge.viewModel.rooms,
+    );
+    const exteriorWest = exteriorCorners.some(
+      (corner) => corner.side === "west",
+    );
+    const exteriorEast = exteriorCorners.some(
+      (corner) => corner.side === "east",
+    );
+    const cornerShoulderWidth =
+      this.northCornerShoulderWidth(wallWidth);
+    const rearWallFaceClips = rearWallRuns.map((run) => {
+      const face = projectRearWallRun(
+        rectangle,
+        run,
+        this.layout.tileSize,
+        wallHeight,
+        wallWidth,
+      ).face;
+      const leftInset =
+        run.offset === 0 && exteriorWest
+          ? cornerShoulderWidth
+          : 2;
+      const rightInset =
+        run.offset + run.length >= room.width && exteriorEast
+          ? cornerShoulderWidth
+          : 2;
+      return {
+        x: face.x + leftInset,
+        y: face.y,
+        width: Math.max(1, face.width - leftInset - rightInset),
+        height: face.height,
+      };
+    });
     const wallTop = rectangle.y - wallHeight + 1;
     const wallUsableHeight = Math.max(8, wallHeight - 5);
     const top = rectangle.y + inset;
@@ -1991,29 +2355,75 @@ export class FacilityScene extends Phaser.Scene {
       heightRatio: number,
       alpha = 1,
     ) => {
-      if (!rearWallRun) {
+      if (rearWallRuns.length === 0) {
         return;
       }
-      const runLeft =
-        rectangle.x +
-        rearWallRun.offset * this.layout.tileSize +
-        Math.max(2, Math.floor(inset * 0.35));
-      const runWidth = Math.max(
+      const wallInset = Math.max(2, Math.floor(inset * 0.35));
+      const fullWallUsableWidth = Math.max(
         8,
-        Math.min(
-          rectangle.x + rectangle.width - runLeft,
-          rearWallRun.length * this.layout.tileSize -
-            Math.max(4, Math.floor(inset * 0.7)),
-        ),
+        rectangle.width - wallInset * 2,
       );
-      this.drawFixture(
+      const projection = projectRearWallArtwork(
+        rectangle,
+        rearWallRuns,
+        this.layout.tileSize,
+        wallHeight,
+        (wallInset + fullWallUsableWidth * centerXRatio) /
+          rectangle.width,
+        (wallTop -
+          (rectangle.y - wallHeight) +
+          wallUsableHeight * centerYRatio) /
+          wallHeight,
+        (fullWallUsableWidth * widthRatio * 1.16) /
+          rectangle.width,
+        (wallUsableHeight * heightRatio * 1.28) / wallHeight,
+      );
+      if (projection.visibleFragments.length === 0) {
+        return;
+      }
+      const fixture = FIXTURE_SPRITES[id];
+      const rendered = getFixturePresentationSize(
+        fixture.width,
+        fixture.height,
+        projection.bounds.width,
+        projection.bounds.height,
+      );
+      const x =
+        projection.bounds.x +
+        (projection.bounds.width - rendered.width) / 2;
+      const y =
+        projection.bounds.y +
+        (projection.bounds.height - rendered.height) / 2;
+      const exposedFragments = getVisibleRearWallArtworkFragments(
+        {
+          x,
+          y,
+          width: rendered.width,
+          height: rendered.height,
+        },
+        rectangle,
+        rearWallRuns,
+        this.layout.tileSize,
+        wallHeight,
+      );
+      const visibleFragments = exposedFragments.flatMap((fragment) =>
+        rearWallFaceClips.flatMap((clip) => {
+          const intersection = intersectPixelRectangles(fragment, clip);
+          return intersection ? [intersection] : [];
+        }),
+      );
+      if (visibleFragments.length === 0) {
+        return;
+      }
+      this.drawPixelFrameSized(
         graphics,
-        id,
-        runLeft + runWidth * centerXRatio,
-        wallTop + wallUsableHeight * centerYRatio,
-        runWidth * widthRatio * 1.16,
-        wallUsableHeight * heightRatio * 1.28,
+        fixture,
+        Math.round(x),
+        Math.round(y),
+        rendered.width,
+        rendered.height,
         alpha,
+        visibleFragments,
       );
     };
 
@@ -2216,50 +2626,16 @@ export class FacilityScene extends Phaser.Scene {
     moving: boolean,
     offsetIndex: number,
   ): CharacterPose {
-    if (!moving || this.bridge.viewModel.paused) {
+    if (
+      !moving ||
+      this.bridge.viewModel.paused ||
+      this.bridge.viewModel.buildMode
+    ) {
       return "idle";
     }
     return Math.floor(this.characterPhase * 2 + offsetIndex) % 2 === 0
       ? "walk-a"
       : "walk-b";
-  }
-
-  private characterFloorTopAt(location: GridPoint): number | undefined {
-    const containingRoom = [...this.bridge.viewModel.rooms]
-      .sort((left, right) => {
-        const leftIsHallway =
-          left.kind === "hallway" || left.definitionId === "room.hallway";
-        const rightIsHallway =
-          right.kind === "hallway" || right.definitionId === "room.hallway";
-        return Number(leftIsHallway) - Number(rightIsHallway);
-      })
-      .find((room) => {
-        const size = orientedSize(room);
-        return (
-          location.x >= room.tileX &&
-          location.x < room.tileX + size.width &&
-          location.y >= room.tileY &&
-          location.y < room.tileY + size.height
-        );
-      });
-    if (!containingRoom) {
-      return undefined;
-    }
-    const rectangle = this.toPixels({
-      tileX: containingRoom.tileX,
-      tileY: containingRoom.tileY,
-      ...orientedSize(containingRoom),
-    });
-    if (
-      containingRoom.kind === "hallway" ||
-      containingRoom.definitionId === "room.hallway"
-    ) {
-      return rectangle.y + Math.max(2, Math.floor(this.layout.tileSize * 0.08));
-    }
-    return (
-      rectangle.y +
-      Math.max(2, Math.floor(this.layout.tileSize * 0.05))
-    );
   }
 
   private getCharacterRoutePresentation(
@@ -2277,7 +2653,14 @@ export class FacilityScene extends Phaser.Scene {
     moving: boolean;
   } {
     const previous = this.routeMotionTracks.get(key);
-    let track = syncRouteMotion(previous, input);
+    const canonicalTilesPerFacilityMinute = Math.max(
+      0,
+      this.bridge.viewModel.characterTravelTilesPerFacilityMinute,
+    );
+    let track = syncRouteMotion(previous, {
+      ...input,
+      lookaheadPathNodes: canonicalTilesPerFacilityMinute,
+    });
     if (!track) {
       this.routeMotionTracks.delete(key);
       return {
@@ -2291,15 +2674,11 @@ export class FacilityScene extends Phaser.Scene {
       1,
       this.bridge.viewModel.realMillisecondsPerFacilityMinuteAt1x,
     );
-    const logicalTilesPerMinute = Math.max(
-      1,
-      this.bridge.viewModel.patientTravelTilesPerFacilityMinute,
+    const tilesPerSecond = getRouteTilesPerSecond(
+      canonicalTilesPerFacilityMinute,
+      millisecondsPerMinute,
+      this.bridge.viewModel.simulationSpeed,
     );
-    const tilesPerSecond =
-      Math.max(
-        logicalTilesPerMinute * 1.15,
-        (logicalTilesPerMinute * 1_000) / millisecondsPerMinute,
-      ) * this.bridge.viewModel.simulationSpeed;
     track = advanceRouteMotion(
       track,
       this.frameDeltaMilliseconds,
@@ -2320,58 +2699,46 @@ export class FacilityScene extends Phaser.Scene {
     };
   }
 
+  private getCharacterGraphics(
+    key: string,
+  ): Phaser.GameObjects.Graphics {
+    let graphics = this.characterGraphics.get(key);
+    if (!graphics) {
+      graphics = this.add.graphics();
+      this.characterGraphics.set(key, graphics);
+    }
+    graphics.setVisible(true);
+    this.activeCharacterGraphics.add(key);
+    return graphics;
+  }
+
   private drawCharacters(): void {
     this.activeCharacterGraphics = new Set<string>();
     this.locatorGraphics?.clear();
-    const founderRoom = this.getFounderRoom() ?? this.bridge.viewModel.rooms[0];
-    if (founderRoom) {
-      const graphics = this.getSortableGraphics(
-        this.characterGraphics,
-        this.activeCharacterGraphics,
-        "character:founder",
+    const representedKeys = new Set<string>();
+    const founderKey = "character:founder";
+    representedKeys.add(founderKey);
+    const founderPresentation = this.getCharacterRoutePresentation(
+      founderKey,
+      this.bridge.viewModel.founder,
+    );
+    const founderLocation = founderPresentation.location;
+    if (founderLocation) {
+      const graphics = this.getCharacterGraphics(founderKey);
+      const founderCenterX =
+        this.layout.originX +
+        (founderLocation.x + 0.5) * this.layout.tileSize;
+      const founderBaseY = this.drawPixelPerson(
+        graphics,
+        founderCenterX,
+        this.layout.originY +
+          (founderLocation.y + 0.72) * this.layout.tileSize,
+        0,
+        this.bridge.viewModel.founder.appearance,
+        0x111111,
+        founderPresentation.direction,
+        this.characterPose(founderPresentation.moving, 0),
       );
-      const founderPresentation = this.getCharacterRoutePresentation(
-        "character:founder",
-        this.bridge.viewModel.founder,
-      );
-      const founderLocation = founderPresentation.location;
-      let founderBaseY: number;
-      let founderCenterX: number;
-      if (founderLocation) {
-        founderCenterX =
-          this.layout.originX +
-          (founderLocation.x + 0.5) * this.layout.tileSize;
-        founderBaseY = this.drawPixelPerson(
-          graphics,
-          founderCenterX,
-          this.layout.originY +
-            (founderLocation.y + 0.72) * this.layout.tileSize,
-          0,
-          this.bridge.viewModel.founder.appearance,
-          0x111111,
-          founderPresentation.direction,
-          this.characterPose(
-            founderPresentation.moving,
-            0,
-          ),
-          this.characterFloorTopAt(founderLocation),
-        );
-      } else {
-        const founderRectangle = this.toPixels({
-          tileX: founderRoom.tileX,
-          tileY: founderRoom.tileY,
-          ...orientedSize(founderRoom),
-        });
-        founderCenterX =
-          founderRectangle.x + founderRectangle.width / 2;
-        founderBaseY = this.drawPerson(
-          graphics,
-          founderRoom,
-          0,
-          0x111111,
-          this.bridge.viewModel.founder.appearance,
-        );
-      }
       graphics.setDepth(
         getFacilitySceneDepth(founderBaseY, "character", 0),
       );
@@ -2388,71 +2755,77 @@ export class FacilityScene extends Phaser.Scene {
     }
 
     this.bridge.viewModel.staff.forEach((employee, index) => {
+      const key = `character:staff:${employee.instanceId}`;
+      representedKeys.add(key);
       const employeePresentation = this.getCharacterRoutePresentation(
-        `character:staff:${employee.instanceId}`,
+        key,
         employee,
       );
-      const homeRoom = employee.homeRoomInstanceId
-        ? this.bridge.viewModel.rooms.find(
-            (room) => room.instanceId === employee.homeRoomInstanceId,
-          )
-        : undefined;
-      const room =
-        homeRoom ??
-        this.bridge.viewModel.rooms[
-          Math.min(index + 1, this.bridge.viewModel.rooms.length - 1)
-        ];
-      if (room) {
-        const graphics = this.getSortableGraphics(
-          this.characterGraphics,
-          this.activeCharacterGraphics,
-          `character:staff:${employee.instanceId}`,
+      if (!employeePresentation.location) {
+        // Map actors render only from persisted locations or persisted route
+        // samples. Inferring a room-center fallback makes reloads and route
+        // transitions look like teleportation.
+        return;
+      }
+      const graphics = this.getCharacterGraphics(key);
+      const employeeBaseY = this.drawPixelPerson(
+        graphics,
+        this.layout.originX +
+          (employeePresentation.location.x + 0.5) * this.layout.tileSize,
+        this.layout.originY +
+          (employeePresentation.location.y + 0.72) * this.layout.tileSize,
+        index + 1,
+        employee.appearance,
+        0x555555,
+        employeePresentation.direction,
+        this.characterPose(employeePresentation.moving, index + 1),
+      );
+      graphics.setDepth(
+        getFacilitySceneDepth(
+          employeeBaseY,
+          "character",
+          (index + 1) % 64,
+        ),
+      );
+    });
+    this.bridge.viewModel.ambientPedestrians?.forEach(
+      (pedestrian, index) => {
+        const key = `character:ambient:${pedestrian.instanceId}`;
+        representedKeys.add(key);
+        const presentation = this.getCharacterRoutePresentation(
+          key,
+          pedestrian,
         );
-        let employeeBaseY: number;
-        if (employeePresentation.location) {
-          employeeBaseY = this.drawPixelPerson(
-            graphics,
-            this.layout.originX +
-              (employeePresentation.location.x + 0.5) * this.layout.tileSize,
-            this.layout.originY +
-              (employeePresentation.location.y + 0.72) * this.layout.tileSize,
-            index + 1,
-            employee.appearance,
-            0x555555,
-            employeePresentation.direction,
-            this.characterPose(employeePresentation.moving, index + 1),
-            this.characterFloorTopAt(employeePresentation.location),
-          );
-        } else {
-          employeeBaseY = this.drawPerson(
-            graphics,
-            room,
-            index + 1,
-            0x555555,
-            employee.appearance,
-          );
+        if (!presentation.location) {
+          return;
         }
+        const graphics = this.getCharacterGraphics(key);
+        const baseY = this.drawPixelPerson(
+          graphics,
+          this.layout.originX +
+            (presentation.location.x + 0.5) * this.layout.tileSize,
+          this.layout.originY +
+            (presentation.location.y + 0.72) * this.layout.tileSize,
+          200 + index,
+          pedestrian.appearance,
+          0x555555,
+          presentation.direction,
+          this.characterPose(presentation.moving, 200 + index),
+        );
         graphics.setDepth(
           getFacilitySceneDepth(
-            employeeBaseY,
+            baseY,
             "character",
-            (index + 1) % 64,
+            (index + 48) % 64,
           ),
         );
-      }
-    });
-    const waitingPatientIds = (this.bridge.viewModel.patients ?? [])
-      .filter((patient) => patient.status === "waiting")
-      .map((patient) => patient.instanceId);
-    const waitingLocations = getWaitingPatientRoomLocations(
-      waitingPatientIds,
-      this.bridge.viewModel.rooms,
+      },
     );
-    const waitingQueueIndices =
-      getWaitingPatientQueueIndices(waitingPatientIds);
     this.bridge.viewModel.patients?.forEach((patient, index) => {
+      const key = `character:patient:${patient.instanceId}`;
+      representedKeys.add(key);
       const presentation = this.getCharacterRoutePresentation(
-        `character:patient:${patient.instanceId}`,
+        key,
         patient,
       );
       this.drawFacilityPatient(
@@ -2465,10 +2838,13 @@ export class FacilityScene extends Phaser.Scene {
           moving: presentation.moving,
         },
         index,
-        waitingLocations.get(patient.instanceId),
-        waitingQueueIndices.get(patient.instanceId),
       );
     });
+    for (const key of this.routeMotionTracks.keys()) {
+      if (!representedKeys.has(key)) {
+        this.routeMotionTracks.delete(key);
+      }
+    }
     this.removeInactiveGraphics(
       this.characterGraphics,
       this.activeCharacterGraphics,
@@ -2478,12 +2854,13 @@ export class FacilityScene extends Phaser.Scene {
   private drawFacilityPatient(
     patient: FacilityPatientView,
     index: number,
-    waitingRoomLocation?: GridPoint,
-    waitingQueueIndex?: number,
   ): void {
-    const graphics = this.getSortableGraphics(
-      this.characterGraphics,
-      this.activeCharacterGraphics,
+    if (!patient.location) {
+      // Off-site or otherwise absent patients stay absent until the domain
+      // supplies their persisted return route/location.
+      return;
+    }
+    const graphics = this.getCharacterGraphics(
       `character:patient:${patient.instanceId}`,
     );
     const finishCharacter = (baseY: number, centerX: number) => {
@@ -2496,157 +2873,28 @@ export class FacilityScene extends Phaser.Scene {
       );
       this.drawPatientLocator(centerX, baseY, patient);
     };
-    const founderRoom = this.getFounderRoom() ?? this.bridge.viewModel.rooms[0];
-    if (!founderRoom) {
-      return;
-    }
-    const founderSize = orientedSize(founderRoom);
     const appearanceColor =
       patient.status === "action-ready" ? 0x111111 : 0x666666;
     const direction = patient.direction ?? "front";
-    const pose = this.characterPose(patient.moving ?? false, 100 + index);
+    const pose = patient.seated
+      ? "seated"
+      : this.characterPose(patient.moving ?? false, 100 + index);
 
-    if (patient.location) {
-      const baseY = this.drawPixelPerson(
-        graphics,
-        this.layout.originX +
-          (patient.location.x + 0.5) * this.layout.tileSize,
-        this.layout.originY +
-          (patient.location.y + 0.72) * this.layout.tileSize,
-        100 + index,
-        patient.appearance,
-        appearanceColor,
-        direction,
-        pose,
-        this.characterFloorTopAt(patient.location),
-      );
-      finishCharacter(
-        baseY,
-        this.layout.originX +
-          (patient.location.x + 0.5) * this.layout.tileSize,
-      );
-      return;
-    }
-
-    const entranceX =
+    const centerX =
       this.layout.originX +
-      (founderRoom.tileX + founderSize.width / 2) * this.layout.tileSize;
-    const sidewalkY =
-      this.layout.originY +
-      this.layout.height +
-      Math.max(12, Math.min(25, this.layout.tileSize * 0.45));
-
-    if (patient.status === "waiting") {
-      if (waitingRoomLocation) {
-        const baseY = this.drawPixelPerson(
-          graphics,
-          this.layout.originX +
-            (waitingRoomLocation.x + 0.5) * this.layout.tileSize,
-          this.layout.originY +
-            (waitingRoomLocation.y + 0.72) * this.layout.tileSize,
-          100 + index,
-          patient.appearance,
-          appearanceColor,
-          direction,
-          pose,
-          this.characterFloorTopAt(waitingRoomLocation),
-        );
-        finishCharacter(
-          baseY,
-          this.layout.originX +
-            (waitingRoomLocation.x + 0.5) * this.layout.tileSize,
-        );
-        return;
-      }
-      const stableQueueIndex = waitingQueueIndex ?? 0;
-      const queueIndex = Math.floor(stableQueueIndex / 2) + 1;
-      const queueDirection = stableQueueIndex % 2 === 0 ? -1 : 1;
-      const baseY = this.drawPixelPerson(
-        graphics,
-        entranceX +
-          queueDirection *
-            queueIndex *
-            Math.max(16, this.layout.tileSize * 0.72),
-        sidewalkY,
-        100 + index,
-        patient.appearance,
-        appearanceColor,
-        direction,
-        pose,
-      );
-      finishCharacter(
-        baseY,
-        entranceX +
-          queueDirection *
-            queueIndex *
-            Math.max(16, this.layout.tileSize * 0.72),
-      );
-      return;
-    }
-
-    if (patient.status === "off-site") {
-      const travel = patient.offsiteTravel;
-      if (!travel || travel.phase === "away") {
-        return;
-      }
-      const excursion =
-        travel.phase === "departing"
-          ? travel.progress
-          : 1 - travel.progress;
-      const travelDistance = Math.min(
-        this.layout.width * 0.34,
-        this.layout.tileSize * 6,
-      );
-      const baseY = this.drawPixelPerson(
-        graphics,
-        entranceX + travel.direction * excursion * travelDistance,
-        sidewalkY,
-        100 + index,
-        patient.appearance,
-        appearanceColor,
-        "side",
-        this.characterPose(true, 100 + index),
-      );
-      finishCharacter(
-        baseY,
-        entranceX + travel.direction * excursion * travelDistance,
-      );
-      return;
-    }
-
-    const careRoom =
-      this.bridge.viewModel.rooms.find(
-        (room) => room.definitionId === "room.examination",
-      ) ?? founderRoom;
-    const careSize = orientedSize(careRoom);
-    const offset =
-      ((index % Math.max(1, careSize.width)) -
-        (Math.max(1, careSize.width) - 1) / 2) *
-      Math.min(this.layout.tileSize * 0.38, 18);
-    const careLocation = {
-      x: careRoom.tileX + careSize.width / 2,
-      y: careRoom.tileY + careSize.height * 0.72,
-    };
+      (patient.location.x + 0.5) * this.layout.tileSize;
     const baseY = this.drawPixelPerson(
       graphics,
-      this.layout.originX +
-        (careRoom.tileX + careSize.width / 2) * this.layout.tileSize +
-        offset,
+      centerX,
       this.layout.originY +
-        (careRoom.tileY + careSize.height * 0.72) * this.layout.tileSize,
+        (patient.location.y + 0.72) * this.layout.tileSize,
       100 + index,
       patient.appearance,
       appearanceColor,
       direction,
       pose,
-      this.characterFloorTopAt(careLocation),
     );
-    finishCharacter(
-      baseY,
-      this.layout.originX +
-        (careRoom.tileX + careSize.width / 2) * this.layout.tileSize +
-        offset,
-    );
+    finishCharacter(baseY, centerX);
   }
 
   private drawPatientLocator(
@@ -2698,92 +2946,65 @@ export class FacilityScene extends Phaser.Scene {
     );
   }
 
-  private drawPerson(
-    graphics: Phaser.GameObjects.Graphics,
-    roomView: FacilityRoomView,
-    offsetIndex: number,
-    color: number,
-    appearance?: PixelAppearanceDescriptor,
-  ): number {
-    const size = orientedSize(roomView);
-    const room = this.toPixels({
-      tileX: roomView.tileX,
-      tileY: roomView.tileY,
-      ...size,
-    });
-    const pixel = Math.max(2, Math.floor(this.layout.tileSize / 9));
-    const bounce = this.bridge.viewModel.paused
-      ? 0
-      : Math.round(Math.sin(this.characterPhase + offsetIndex) * pixel);
-    const centerX =
-      room.x +
-      Math.floor(room.width / 2) +
-      (offsetIndex % 3 - 1) * pixel * 5;
-    const baseY = room.y + Math.floor(room.height * 0.72) + bounce;
-
-    return this.drawPixelPerson(
-      graphics,
-      centerX,
-      baseY - bounce,
-      offsetIndex,
-      appearance,
-      color,
-      "front",
-      "idle",
-      room.y + Math.max(2, Math.floor(this.layout.tileSize * 0.05)),
-    );
-  }
-
   private drawPixelPerson(
     graphics: Phaser.GameObjects.Graphics,
     centerX: number,
-    baseYWithoutBounce: number,
-    offsetIndex: number,
+    baseY: number,
+    _offsetIndex: number,
     appearance: PixelAppearanceDescriptor | undefined,
     _fallbackColor: number,
     direction: CharacterDirection = "front",
     pose: CharacterPose = "idle",
-    minimumTop?: number,
   ): number {
     // Map characters use the canonical detailed frame at a crisp 3:2
     // nearest-neighbor presentation scale. This makes people readable among
     // dense room furnishings without changing their route or foot anchor.
-    const pixel = Math.max(1, Math.round(this.layout.tileSize / 52));
-    const bounce = this.bridge.viewModel.paused
-      ? 0
-      : Math.round(Math.sin(this.characterPhase + offsetIndex) * pixel);
-    const frame = getCharacterPixelFrame(
-      appearance ?? FALLBACK_APPEARANCE,
-      { direction, pose },
-    );
-    const metrics = getCharacterPresentationMetrics(
-      frame,
+    const resolvedAppearance = appearance ?? FALLBACK_APPEARANCE;
+    const renderSignature = [
+      characterAppearanceSignature(resolvedAppearance),
+      direction,
+      pose,
       this.layout.tileSize,
-    );
-    const requestedBaseY = baseYWithoutBounce + bounce;
-    const requestedTop = requestedBaseY - metrics.height;
-    const baseY =
-      minimumTop !== undefined && requestedTop < minimumTop
-        ? requestedBaseY + (minimumTop - requestedTop)
-        : requestedBaseY;
-    const x = Math.round(centerX - metrics.width / 2);
-    const y = Math.round(baseY - metrics.height);
-    this.drawPixelFrameSizedOutline(
-      graphics,
-      frame,
-      x,
-      y,
-      metrics.width,
-      metrics.height,
-    );
-    this.drawPixelFrameSized(
-      graphics,
-      frame,
-      x,
-      y,
-      metrics.width,
-      metrics.height,
-    );
+    ].join("|");
+    const cached = this.characterRenderCache.get(graphics);
+    if (!cached || cached.signature !== renderSignature) {
+      const frame = getCharacterPixelFrame(resolvedAppearance, {
+        direction,
+        pose,
+      });
+      const metrics = getCharacterPresentationMetrics(
+        frame,
+        this.layout.tileSize,
+      );
+      const localX = Math.round(-metrics.width / 2);
+      const localY = Math.round(-metrics.height);
+      graphics.clear();
+      this.drawPixelFrameSizedOutline(
+        graphics,
+        frame,
+        localX,
+        localY,
+        metrics.width,
+        metrics.height,
+      );
+      this.drawPixelFrameSized(
+        graphics,
+        frame,
+        localX,
+        localY,
+        metrics.width,
+        metrics.height,
+      );
+      this.characterRenderCache.set(graphics, {
+        signature: renderSignature,
+        width: metrics.width,
+        height: metrics.height,
+      });
+    }
+    // The expensive detailed sprite is now local to its Graphics object. A
+    // normal animation frame only moves that object; it no longer reconstructs
+    // every hair, face, clothing, outline, and shadow pixel for every actor.
+    graphics.setPosition(Math.round(centerX), Math.round(baseY));
     return baseY;
   }
 
@@ -2864,6 +3085,7 @@ export class FacilityScene extends Phaser.Scene {
     renderedWidth: number,
     renderedHeight: number,
     alpha = 1,
+    clipRectangles?: readonly PixelRectangle[],
   ): void {
     const cellsByColor = new Map<PixelColorKey, typeof frame.cells>();
     for (const cell of frame.cells) {
@@ -2896,12 +3118,39 @@ export class FacilityScene extends Phaser.Scene {
         if (right <= left || bottom <= top) {
           continue;
         }
-        graphics.fillRect(
-          left,
-          top,
-          right - left,
-          bottom - top,
-        );
+        if (!clipRectangles) {
+          graphics.fillRect(
+            left,
+            top,
+            right - left,
+            bottom - top,
+          );
+          continue;
+        }
+        for (const clip of clipRectangles) {
+          const clippedLeft = Math.max(left, Math.ceil(clip.x));
+          const clippedTop = Math.max(top, Math.ceil(clip.y));
+          const clippedRight = Math.min(
+            right,
+            Math.floor(clip.x + clip.width),
+          );
+          const clippedBottom = Math.min(
+            bottom,
+            Math.floor(clip.y + clip.height),
+          );
+          if (
+            clippedRight <= clippedLeft ||
+            clippedBottom <= clippedTop
+          ) {
+            continue;
+          }
+          graphics.fillRect(
+            clippedLeft,
+            clippedTop,
+            clippedRight - clippedLeft,
+            clippedBottom - clippedTop,
+          );
+        }
       }
     }
   }
@@ -2942,7 +3191,6 @@ export class FacilityScene extends Phaser.Scene {
     const compact = this.scale.width < 520;
 
     this.roomTexts.forEach((text) => text.destroy());
-    this.roomUpgradeTexts.forEach((text) => text.destroy());
     this.roomTexts = model.rooms
       .filter(
         (room) =>
@@ -2989,47 +3237,6 @@ export class FacilityScene extends Phaser.Scene {
         return label;
       });
 
-    this.roomUpgradeTexts = model.buildMode
-      ? model.rooms
-          .filter(
-            (room) =>
-              room.kind !== "hallway" &&
-              room.definitionId !== "room.hallway" &&
-              room.upgradeAvailable,
-          )
-          .map((room) => {
-            const pixels = this.toPixels({
-              tileX: room.tileX,
-              tileY: room.tileY,
-              ...orientedSize(room),
-            });
-            return this.add
-              .text(
-                pixels.x + pixels.width / 2,
-                pixels.y + pixels.height / 2,
-                "+",
-                {
-                  color: "#f7f7f3",
-                  backgroundColor: "#4c5449",
-                  fontFamily: '"Courier New", Courier, monospace',
-                  fontSize: `${Math.max(
-                    10,
-                    Math.min(22, Math.floor(tileSize * 0.5)),
-                  )}px`,
-                  fontStyle: "bold",
-                  align: "center",
-                  resolution: 2,
-                  padding: {
-                    x: Math.max(3, Math.min(6, Math.floor(tileSize * 0.12))),
-                    y: 1,
-                  },
-                },
-              )
-              .setOrigin(0.5)
-              .setDepth(FACILITY_DEPTH_UI);
-          })
-      : [];
-
     this.footerText
       ?.setFontSize(compact ? 10 : 12)
       .setText(
@@ -3074,27 +3281,60 @@ export class FacilityScene extends Phaser.Scene {
     pointer: Phaser.Input.Pointer,
   ): void {
     if (this.bridge.viewModel.buildMode) {
-      this.setInteractionHint(null);
+      const activeDoorTool = this.bridge.viewModel.buildDoorTool;
+      const target = this.doorInteractionAtPointer(pointer);
+      if (target) {
+        this.setInteractionHint(
+          target.kind === "place" ? "PLACE DOOR" : "REMOVE DOOR",
+          pointer,
+        );
+      } else {
+        this.setInteractionHint(null);
+        if (activeDoorTool && this.game?.canvas) {
+          this.game.canvas.style.cursor = "crosshair";
+        }
+      }
       return;
     }
     const point = this.gridPointAtPointer(pointer);
-    if (!point) {
-      this.setInteractionHint(null);
-      return;
+    if (point) {
+      const interaction = getEnvironmentalInteraction(
+        this.bridge.viewModel,
+        point,
+      );
+      if (interaction) {
+        this.setInteractionHint(interaction.label, pointer);
+        return;
+      }
     }
-    const interaction = getEnvironmentalInteraction(
-      this.bridge.viewModel,
-      point,
+    this.setInteractionHint(
+      this.walkDestinationAtPointer(pointer)
+        ? "CLICK TO WALK HERE"
+        : null,
+      pointer,
     );
-    if (interaction) {
-      this.setInteractionHint(interaction.label, pointer);
-      return;
-    }
-    this.setInteractionHint(null);
   }
 
   private handlePointerMove(pointer: Phaser.Input.Pointer): void {
+    if (this.hallwayPaintActive) {
+      if (!this.isHallwayPlacementActive()) {
+        this.endHallwayPaint();
+      } else {
+        this.paintHallwayToPointer(pointer);
+        return;
+      }
+    }
+
     if (this.dragStart) {
+      const deltaX = pointer.x - this.dragStart.pointerX;
+      const deltaY = pointer.y - this.dragStart.pointerY;
+      if (
+        !this.dragStart.dragged &&
+        deltaX * deltaX + deltaY * deltaY < 36
+      ) {
+        return;
+      }
+      this.dragStart.dragged = true;
       this.setInteractionHint(null);
       if (this.game?.canvas) {
         this.game.canvas.style.cursor = "grabbing";
@@ -3102,9 +3342,9 @@ export class FacilityScene extends Phaser.Scene {
       this.applyCamera({
         ...this.cameraView,
         panX:
-          this.dragStart.panX + (pointer.x - this.dragStart.pointerX),
+          this.dragStart.panX + deltaX,
         panY:
-          this.dragStart.panY + (pointer.y - this.dragStart.pointerY),
+          this.dragStart.panY + deltaY,
       });
       return;
     }
@@ -3163,8 +3403,66 @@ export class FacilityScene extends Phaser.Scene {
       : null;
   }
 
+  private walkDestinationAtPointer(
+    pointer: Phaser.Input.Pointer,
+  ): GridPoint | null {
+    const roomPoint = this.gridPointAtPointer(pointer);
+    if (roomPoint && this.roomAtPointer(pointer)) {
+      return roomPoint;
+    }
+    const x = Math.floor(
+      (pointer.x - this.layout.originX) / this.layout.tileSize,
+    );
+    const columns = positiveGridSize(
+      this.bridge.viewModel.gridColumns,
+      16,
+    );
+    const rows = positiveGridSize(
+      this.bridge.viewModel.gridRows,
+      10,
+    );
+    return x >= 0 &&
+      x < columns &&
+      pointer.y >= this.layout.sidewalkTop &&
+      pointer.y < this.layout.sidewalkTop + this.layout.sidewalkHeight
+      ? { x, y: rows }
+      : null;
+  }
+
+  private handlePointerUp(pointer: Phaser.Input.Pointer): void {
+    const gesture = this.dragStart;
+    this.dragStart = null;
+    this.endHallwayPaint();
+    if (
+      !gesture ||
+      gesture.dragged ||
+      this.bridge.viewModel.buildMode ||
+      this.bridge.viewModel.placement
+    ) {
+      return;
+    }
+    const destination = this.walkDestinationAtPointer(pointer);
+    if (!destination || !this.bridge.onMoveFounder) {
+      return;
+    }
+    const accepted = this.bridge.onMoveFounder(destination);
+    this.setInteractionHint(
+      accepted ? "DESTINATION SET" : "NO WALKABLE ROUTE",
+      pointer,
+    );
+  }
+
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
     if (pointer.button !== 0) {
+      return;
+    }
+
+    if (this.isHallwayPlacementActive()) {
+      this.hallwayPaintActive = true;
+      this.hallwayPaintBlocked = false;
+      this.hallwayPaintLastPoint = null;
+      this.hallwayPaintVisitedTiles.clear();
+      this.paintHallwayToPointer(pointer);
       return;
     }
 
@@ -3183,13 +3481,40 @@ export class FacilityScene extends Phaser.Scene {
       return;
     }
 
-    const upgradeRoom = this.upgradeRoomAtPointer(pointer);
     if (
       this.bridge.viewModel.buildMode &&
-      upgradeRoom &&
-      this.bridge.onRequestRoomUpgrade
+      this.bridge.viewModel.buildDoorTool
     ) {
-      this.bridge.onRequestRoomUpgrade(upgradeRoom.instanceId);
+      const target = this.doorInteractionAtPointer(pointer);
+      if (target?.kind === "place") {
+        this.bridge.onPlaceDoor?.(
+          target.slot.roomInstanceId,
+          target.slot.side,
+          target.slot.offset,
+        );
+        this.setInteractionHint("DOOR PLACED", pointer);
+        return;
+      }
+      if (target?.kind === "remove") {
+        // Exterior doors never enter the target list, preserving the public
+        // entrance even if a stale presentation tries to expose it.
+        if (!target.door.exterior) {
+          this.bridge.onRemoveDoor?.(target.door.instanceId);
+          this.setInteractionHint("DOOR REMOVED", pointer);
+        }
+        return;
+      }
+
+      // Door tools own clicks on the map. Blank-space dragging still pans the
+      // facility, but an ineligible wall cannot accidentally select a room or
+      // open its upgrade dialog.
+      this.dragStart = {
+        pointerX: pointer.x,
+        pointerY: pointer.y,
+        panX: this.cameraView.panX,
+        panY: this.cameraView.panY,
+        dragged: false,
+      };
       return;
     }
 
@@ -3243,43 +3568,103 @@ export class FacilityScene extends Phaser.Scene {
       pointerY: pointer.y,
       panX: this.cameraView.panX,
       panY: this.cameraView.panY,
+      dragged: false,
     };
   }
 
-  private upgradeRoomAtPointer(
-    pointer: Phaser.Input.Pointer,
-  ): FacilityRoomView | null {
-    if (!this.bridge.viewModel.buildMode) {
-      return null;
+  private isHallwayPlacementActive(): boolean {
+    const placement = this.bridge.viewModel.placement;
+    return Boolean(
+      placement &&
+        (placement.kind === "hallway" ||
+          placement.definitionId === "room.hallway"),
+    );
+  }
+
+  private endHallwayPaint(): void {
+    this.hallwayPaintActive = false;
+    this.hallwayPaintBlocked = false;
+    this.hallwayPaintLastPoint = null;
+    this.hallwayPaintVisitedTiles.clear();
+  }
+
+  private paintHallwayToPointer(pointer: Phaser.Input.Pointer): void {
+    const point = this.gridPointAtPointer(pointer);
+    if (!point || !this.isHallwayPlacementActive()) {
+      return;
     }
-    const radius = Math.max(
-      8,
-      Math.min(22, Math.floor(this.layout.tileSize * 0.58)),
-    );
-    return (
-      [...this.bridge.viewModel.rooms]
-        .reverse()
-        .find((room) => {
-          if (
-            !room.upgradeAvailable ||
-            room.kind === "hallway" ||
-            room.definitionId === "room.hallway"
-          ) {
-            return false;
-          }
-          const pixels = this.toPixels({
-            tileX: room.tileX,
-            tileY: room.tileY,
-            ...orientedSize(room),
-          });
-          return (
-            Math.abs(pointer.x - (pixels.x + pixels.width / 2)) <=
-              radius &&
-            Math.abs(pointer.y - (pixels.y + pixels.height / 2)) <=
-              radius
-          );
-        }) ?? null
-    );
+    if (this.hallwayPaintBlocked) {
+      return;
+    }
+
+    const points = this.hallwayPaintLastPoint
+      ? rasterizeGridLine(this.hallwayPaintLastPoint, point)
+      : [point];
+    this.hallwayPaintLastPoint = point;
+
+    for (const candidate of points) {
+      const key = `${candidate.x}:${candidate.y}`;
+      if (this.hallwayPaintVisitedTiles.has(key)) {
+        continue;
+      }
+      // A rejected tile should not dispatch repeatedly during the same drag.
+      // Releasing and starting a new gesture permits a deliberate retry.
+      this.hallwayPaintVisitedTiles.add(key);
+      const evaluation = this.evaluatePlacement(candidate.x, candidate.y);
+      if (!evaluation.valid) {
+        if (
+          evaluation.invalidReason === "overlap" &&
+          this.isExistingHallwayTile(candidate)
+        ) {
+          // Let a stroke begin on, or pass back over, the existing hallway
+          // network without charging for or dispatching that square again.
+          continue;
+        }
+        // Do not jump across an occupied or out-of-bounds square and resume
+        // painting on the other side. The player can release and begin a new
+        // stroke from another valid square.
+        this.hallwayPaintBlocked = true;
+        break;
+      }
+      const placed = this.bridge.onPlaceRoom(
+        candidate.x,
+        candidate.y,
+        this.bridge.viewModel.placement?.orientation,
+      );
+      if (placed === false) {
+        // Affordability and other domain-only rules can reject a visually
+        // clear square. Stop this stroke so a fast drag does not produce a
+        // cascade of identical rejected operations.
+        this.hallwayPaintBlocked = true;
+        break;
+      }
+    }
+
+    this.placementGhost = {
+      tileX: point.x,
+      tileY: point.y,
+      ...this.evaluatePlacement(point.x, point.y),
+    };
+    this.drawPlacementGhost();
+    this.setInteractionHint("PAINT HALLWAY", pointer);
+  }
+
+  private isExistingHallwayTile(point: GridPoint): boolean {
+    return this.bridge.viewModel.rooms.some((room) => {
+      if (
+        room.kind !== "hallway" &&
+        room.definitionId !== "room.hallway"
+      ) {
+        return false;
+      }
+      const size = orientedSize(room);
+      return (
+        point.x >= room.tileX &&
+        point.y >= room.tileY &&
+        point.x < room.tileX + size.width &&
+        point.y < room.tileY + size.height
+      );
+    });
   }
 
   private handleWheel(deltaY: number): void {

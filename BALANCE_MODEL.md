@@ -32,7 +32,7 @@ the production release-pinning and migration behavior.
 | Area | Current value | Unit or behavior |
 |---|---:|---|
 | Starting money | `$90` | Prototype whole-dollar display units |
-| Patient starting satisfaction | `100` | Per encounter; clinic satisfaction is unmeasured until an encounter ends |
+| Patient satisfaction baseline | `100` | A clean, capable clinic starts here; applicable facility-condition penalties are applied at Front Desk check-in |
 | Level 0 XP requirement | `10` | Clinical XP |
 | Level 0 completed encounters | `0` | Intro patients teach the loop but are not a formal count gate |
 | Level 0 satisfaction gate | `> 90` | Strictly above 90 |
@@ -75,12 +75,32 @@ Level 2.
 | Imaging Control Room | `$350` | `$18` | Required for functioning in-house X-ray |
 | X-ray Room | `$600` | `$28` | In-house X-ray capability when staffed |
 | Minor-Procedure Room | `$650` | `$30` | `+1` satisfaction; `+1` workload |
-| Receptionist | `$180` | `$18` salary | `+1` workload |
+| Receptionist | `$180` | `$18` salary | `+1` workload; automatically refills a continuously empty water cooler after `60` facility minutes |
 | Imaging Technician | `$300` | `$26` salary | Required for in-house X-ray |
 
 Room footprints, build dependencies, capability identifiers, and staff
 dependencies are in the same fixture rather than hard-coded in the player
 interface.
+
+### Accepted future unlock structure
+
+Levels 2-5 and their exact rooms and staff are accepted in
+`docs/features/facility-levels-and-clinical-release-points.md`. They are not
+yet part of the playable balance fixture. Their costs, footprints, upkeep,
+salaries, capacity, upgrade curves, staffing caps, advancement gates, and
+service timings remain proposed balance areas rather than implied zero values.
+
+The structural distinctions are fixed:
+
+- Level 2 Phlebotomy performs onsite collection with send-out testing, while
+  the Level 3 Laboratory performs testing onsite with a Laboratory Technician.
+- Level 2 Peri-op/Recovery supports endoscopy before becoming part of the Level
+  3 Ambulatory OR workflow.
+- The Founder may cover one physician task in one place at a time; hired
+  Endoscopists and Surgeons add physician capacity.
+- The Imaging Technician operates X-ray, ultrasound, CT, and MRI.
+- The Level 3 Pharmacy hires a Pharmacist.
+- Level 5 adds optimization and prestige rather than another clinical setting.
 
 ### Current patient settlement and services
 
@@ -95,10 +115,30 @@ interface.
 | Maximum amenity completion benefit | `+3` satisfaction |
 | Outsourced synthetic analysis | `10` game minutes |
 | In-house synthetic analysis | `10` game minutes |
-| Outsourced X-ray | `60` game minutes |
-| Functioning in-house X-ray | `15` service minutes plus frozen travel; `+1` satisfaction on result |
-| Outsourced basic laboratory testing | `45` game minutes |
-| Manual GLP-1 action | Always visible before its future room; `60`-minute cooldown; no XP/FSRS |
+| Outsourced X-ray | `120` game minutes, including the complete off-screen round trip |
+| Functioning in-house X-ray | `60` game minutes, including frozen facility travel; `+1` satisfaction on result |
+| Outsourced basic laboratory testing | `60` game minutes, including the complete off-screen round trip |
+| Off-site mammography choice preview | `120` game minutes |
+| Off-site breast MRI choice preview | `180` game minutes |
+| Off-site core-needle biopsy choice preview | `180` game minutes |
+| Off-site excisional-biopsy choice preview | `240` game minutes |
+| Shared character walking speed | `2` cardinal grid tiles per facility minute for patients, founder, employees, and ambient sidewalk pedestrians |
+| Ambient sidewalk passersby | One scheduled every `40-90` facility minutes; at most `2` concurrently; no gameplay effects |
+| Manual GLP-1 action | Available at any cash balance until its future room is built; fixed `$25` payment; `60`-minute cooldown; no daily cap, diminishing payout, XP, or FSRS |
+
+Future imaging timing separates acquisition from interpretation. An Imaging
+Technician and operational room govern acquisition. Interpretation then uses a
+slower configurable external route or a faster configurable staff-Radiologist
+route through the Radiology Reading Room. A result becomes clinically
+actionable only after both phases complete. Existing Level 0-1 X-ray totals
+remain unchanged until this phased model is implemented and deliberately
+rebalanced.
+
+The breast-service preview values are editorial simulation timings used to keep
+diagnostic distractors from revealing the correct answer through missing UI
+metadata. They are not assertions about real clinical scheduling or pathology
+turnaround. Incorrect nonfinal choices do not perform those services; the
+approved corrected-forward service remains authoritative.
 
 The initial funding validator and tutorial fixtures preserve a worst-case route
 to the Examination Room after the protected introductory patients. The current
@@ -196,7 +236,9 @@ publication. The structural relationship is accepted in ADR 0027.
 
 ## Accepted patient-patience relationship
 
-- Every patient starts at `100%` individual satisfaction.
+- `100%` is the clean, capable-clinic baseline. At Front Desk check-in, a new
+  ordinary patient receives the centrally configured, capped penalties for
+  applicable unresolved facility dissatisfaction conditions.
 - Satisfaction decays only during genuine idle waiting after a configured grace
   period. It does not decay during normal walking, active care, an expected
   service timer, off-site travel, or while that patient's chart is open.
@@ -210,8 +252,15 @@ publication. The structural relationship is accepted in ADR 0027.
 - A patient who decides to leave cancels pending care and physically routes to
   the exterior boundary. Already submitted answers and reviews remain; no
   encounter-completion payment is awarded.
-- Clinic satisfaction is the rolling mean of the configured number of completed
-  encounters and walkouts. Active patients do not enter the HUD value.
+- Historical clinic satisfaction is the rolling mean of the configured number
+  of completed encounters and walkouts. Active encounters do not enter or
+  rewrite that historical baseline.
+- The HUD layers a separately derived live facility-condition modifier over
+  that baseline. Current issues lower the display only while unresolved; fixing
+  an issue removes its live contribution without changing completed outcomes.
+  Before the first ended encounter, a neutral `100%` presentation baseline may
+  expose current pressure, but it does not count as a measured progression
+  result.
 
 Exact durations, warning bands, grace periods, satisfaction amounts, and caps
 remain agent-managed prototype defaults until simulation and playtesting
@@ -262,9 +311,10 @@ publication. The structural relationship is accepted in ADR 0029.
 - Inspection scoring and recognition tiers
 - Bankruptcy-recovery rules
 - Vending, coffee, and pharmacy values
-- Limited GLP-1 side-business values: low-cash threshold, manual payment,
-  once-per-hour cooldown, per-day cap or diminishing returns, sarcasm
-  threshold/message pool, and future Level 2 suite staffing and throughput
+- Limited GLP-1 side-business values: future Level 2 suite staffing,
+  throughput, upgrades, and operating costs. The pre-suite manual action is
+  already fixed at `$25`, once per facility hour, at any cash balance, with no
+  daily cap or diminishing return; its daily count only controls sarcasm.
 
 ## Stable balance key
 

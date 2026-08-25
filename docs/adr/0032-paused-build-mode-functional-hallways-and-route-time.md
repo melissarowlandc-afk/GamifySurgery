@@ -35,6 +35,23 @@ pathfinding model already accepted in ADR 0006.
   rejected when it would strand a remaining room or hallway.
 - Staff and patients follow deterministic logical paths. Walking between
   interaction points is visible and contributes to operational task time.
+- One centrally configured movement speed applies to patients, the founder, and
+  employees. Saved cardinal routes and destinations are authoritative; the
+  renderer may interpolate them but may not invent locations, skip walls, or
+  complete a transition independently.
+- Patient arrivals and departures begin or end beyond a map-side sidewalk
+  boundary. Front Desk arrival is the check-in boundary for exposing a new or
+  returning chart. Off-site routes include an outbound leg, time away, and a
+  return leg that reaches the Front Desk at the displayed due time.
+- New and returning patients then use the same capacity order: authored Waiting
+  Room chairs, valid standing room, the Front Desk, and the sidewalk. Opening a
+  result-ready chart reserves an Examination Room, and that visit remains part
+  of the physical itinerary before departure.
+- The renderer keeps a bounded predictive route buffer at the same canonical
+  speed so a late browser timer or React projection cannot create artificial
+  stop-and-sprint movement. Facility-minute ticks are staged in memory and the
+  complete local profile is autosaved at quarter-hour boundaries; meaningful
+  commands, pausing, and explicit Save and Close remain write-through.
 - The player may build multiple instances of an unlocked room definition.
 - Selling is a deliberate Build Mode action with a substantially reduced,
   centrally configured refund. The Front Desk cannot be sold, and unsafe

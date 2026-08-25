@@ -1,14 +1,22 @@
 export { FacilityCanvas, type FacilityCanvasProps } from "./FacilityCanvas";
 export type {
+  BuildDoorTool,
+  FacilityAmbientPedestrianView,
   FacilityCameraChangeRequest,
   FacilityCameraView,
+  FacilityBuildDoorSlotView,
+  FacilityBuildDoorTool,
+  FacilityDoorSlotView,
   FacilityPatientCounts,
   FacilityPatientView,
   FacilityPlacementView,
   FacilityRoomView,
   FacilityStaffView,
   FacilityViewModel,
+  MoveFounderRequest,
+  PlaceDoorRequest,
   PlaceRoomRequest,
+  RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";

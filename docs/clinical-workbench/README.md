@@ -78,6 +78,46 @@ No live scout runs until a real contact address is supplied locally.
 7. Validate after each resumable batch and checkpoint only sanitized metadata
    and project-owned drafts.
 
+## Reviewed-concept release-point queue
+
+The 55 owner-authored rows covered by clinician review
+`melissa-rowland-md-2026-08-05-rows-2-56` now have a tracked, deliberately
+non-runtime review queue:
+
+- `CONCEPT_RELEASE_POINT_REVIEW_QUEUE.md` explains the concept-by-concept
+  workthrough and exact question-iteration approval process.
+- `concept-release-point-review-queue.json` records all 55 source rows, their
+  unchanged evidence dispositions, and each row's exact approval state.
+- `approvals/owner-row-023-pulmonary-optimization.md` records the first exact
+  clinician-approved revision, including its stable concept, presentation,
+  question, claim, and release-point identities.
+- `approvals/owner-rows-008-025-direct-inguinal-anatomy.md` records the
+  deliberate merger of two source rows into one Level 3 FSRS concept and keeps
+  its approved variants deferred until the Ambulatory OR framework exists.
+- `approvals/owner-row-029-hcc-milan-criteria.md` records one Level 0 HCC
+  disposition concept tested through six patient-to-criteria and four
+  criteria-to-patient variants, with bounded approved presentation profiles.
+- `approvals/owner-row-030-breast-cyst-pathway.md` and
+  `approvals/owner-row-031-ebv-associated-malignancies.md` record the other
+  exact owner-approved Level 0/1 revisions currently admitted to the
+  development-preview release.
+- `approvals/owner-row-036-mondor-disease.md` records the three-concept,
+  nine-variant Level 0 pathway for recognition, selective imaging evaluation,
+  and supportive management of Mondor disease.
+- `approvals/owner-row-037-postoperative-chylous-ascites.md` records the
+  three-concept clinic-to-hospital pathway for evaluating postoperative
+  ascites, confirming chylous fluid, and initiating inpatient management. It
+  remains deferred at Future - Hospital Floor with no numeric level.
+- `approvals/owner-row-038-vitamin-c-collagen-hydroxylation.md` records the
+  one-concept, four-variant Level 2 applied-science package for vitamin C's
+  role in collagen hydroxylation, including the type III-specificity and
+  universal-supplementation boundaries.
+
+The accepted release-point vocabulary is maintained separately in
+`docs/features/facility-levels-and-clinical-release-points.md`. No queue record
+is admitted automatically; an exact approved revision must be integrated and
+validated deliberately.
+
 ## Starting the tools
 
 - Double-click `START_CLINICAL_WORKBENCH.cmd` to install dependencies if

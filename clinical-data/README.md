@@ -13,6 +13,11 @@ Place legitimately obtained raw source files only in the fixed ignored
 extraction artifacts, metadata-provider artifacts, and private authoring output
 belong under the ignored `.clinical-workbench/` tree.
 
+`public/clinical-release-points.json` is the machine-readable accepted
+release-point vocabulary for owner intake and future authoring validation. It
+contains game-design metadata only and does not admit any clinical content to a
+runtime release.
+
 Use `npm run clinical:workbook:init` to create the ignored schema-v2
 manual-authoring CSV interchange subset with staged, no-clobber writes. These
 CSVs validate the initial import contract; they do not author extraction

@@ -61,7 +61,7 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
   }
 
   state.facilityLevel = 1;
-  state.facilityTick = 42;
+  state.facilityTick = 45;
   state.paused = true;
   state.cash = 1_000;
   state.cashCents = 100_000;
@@ -71,6 +71,24 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
     ...state.environment,
     waterCoolerFillPercent: 100,
     litterItems: [],
+    facilityConditionOccurrenceSequence: 1,
+    facilityConditionOccurrences: [
+      {
+        id: "facility-condition.no_receptionist.1",
+        conditionKey: "no_receptionist",
+        kind: "onset",
+        occurredAtFacilityTick: 41,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.staff.receptionist-recommended",
+        message:
+          "Patients are checking themselves in with the confidence of people who did not read the form. Hire a receptionist to speed up check-in.",
+        priority: "informational",
+        target: {
+          kind: "staff_role",
+          id: "staff.receptionist",
+        },
+      },
+    ],
   };
   state.alertHumor = {
     alertsTutorialAcknowledgedAtTick: 20,
@@ -88,33 +106,120 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
   patient.finalPatientSatisfaction = null;
   patient.patientMovement = null;
   patient.patientLocation = { x: 34, y: 30 };
-  patient.idleWaitingSinceTick = state.facilityTick;
+  patient.idleWaitingSinceTick = 39;
+  patient.feedAttentionKind = "checked_in";
+  patient.feedAttentionStartedAtTick = 39;
   patient.waiting = {
     ...(patient.waiting as Record<string, unknown>),
-    arrivedAtTick: state.facilityTick,
+    arrivedAtTick: 39,
     patienceExempt: false,
     warningIssued: false,
   };
 
   state.events = [
     {
-      id: "event.e2e.success",
-      type: "room_upgraded",
-      facilityTick: 39,
+      id: "event.e2e.suppressed.expense",
+      type: "operating_expense",
+      facilityTick: 35,
       encounterId: null,
-      message: "Front Desk upgraded.",
+      message: "Operating costs -$4.00.",
       priority: "informational",
-      definitionId: "alert.success.room-upgraded",
+      definitionId: "alert.finance.expense",
+      target: {
+        kind: "campaign",
+        id: state.campaignId,
+      },
+    },
+    {
+      id: "event.e2e.suppressed.decision",
+      type: "clinical_decision_recorded",
+      facilityTick: 36,
+      encounterId: "encounter.e2e",
+      message:
+        "Casey Morgan: correct decision recorded. +10 Learning XP.",
+      priority: "informational",
+      definitionId: "event.clinical.decision-correct",
+      target: {
+        kind: "encounter",
+        id: "encounter.e2e",
+      },
+    },
+    {
+      id: "event.e2e.suppressed.glp1",
+      type: "emergency_glp1_consultation",
+      facilityTick: 37,
+      encounterId: null,
+      message: "Emergency GLP-1 consultation completed: +$25.",
+      priority: "informational",
+      definitionId: "alert.finance.emergency-glp1-completed",
+      target: {
+        kind: "campaign",
+        id: state.campaignId,
+      },
+    },
+    {
+      id: "event.e2e.suppressed.build",
+      type: "room_placed",
+      facilityTick: 38,
+      encounterId: null,
+      message: "Waiting Room opened.",
+      priority: "informational",
+      definitionId: "alert.success.waiting-room-constructed",
       alertCategory: "success",
       target: {
         kind: "room",
-        id: "room.instance.founder_desk",
+        id: "room.e2e.waiting",
+      },
+    },
+    {
+      id: "event.e2e.success",
+      type: "success_message",
+      facilityTick: 39,
+      encounterId: null,
+      message:
+        "First patient resolved. The clinic remains structurally optimistic.",
+      priority: "informational",
+      definitionId:
+        "alert.success.first-ordinary-patient-resolved",
+      alertCategory: "success",
+      alertVariantId:
+        "alert.success.first-ordinary-patient-resolved.default",
+      target: null,
+    },
+    {
+      id: "event.e2e.suppressed.trash-cleaned",
+      type: "litter_collected",
+      facilityTick: 40,
+      encounterId: null,
+      message:
+        "Trash removed. The floor has been returned to the floor.",
+      priority: "informational",
+      definitionId: "alert.success.trash-cleaned",
+      alertCategory: "success",
+      target: {
+        kind: "campaign",
+        id: state.campaignId,
+      },
+    },
+    {
+      id: "event.e2e.suppressed.water-refilled",
+      type: "water_cooler_refilled",
+      facilityTick: 41,
+      encounterId: null,
+      message:
+        "Water cooler refilled. Hydration has resumed normal operations.",
+      priority: "informational",
+      definitionId: "alert.success.water-refilled",
+      alertCategory: "success",
+      target: {
+        kind: "campaign",
+        id: state.campaignId,
       },
     },
     {
       id: "event.e2e.review",
       type: "left_before_seen",
-      facilityTick: 40,
+      facilityTick: 42,
       encounterId: null,
       message:
         "New 1-star review from Casey Morgan: The plant was attentive.",
@@ -131,7 +236,7 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
     {
       id: "event.e2e.ambient",
       type: "ambient_message",
-      facilityTick: 41,
+      facilityTick: 43,
       encounterId: null,
       message: "The coffee is technically warm.",
       priority: "flavor",
@@ -261,6 +366,16 @@ test("mixed alert categories preserve attention markers and focus the receptioni
       ),
     ).not.toHaveCount(0);
   }
+  for (const suppressedCopy of [
+    "Operating costs -$4.00.",
+    "correct decision recorded",
+    "Emergency GLP-1 consultation completed",
+    "Waiting Room opened.",
+    "Trash removed. The floor has been returned to the floor.",
+    "Water cooler refilled. Hydration has resumed normal operations.",
+  ]) {
+    await expect(board).not.toContainText(suppressedCopy);
+  }
 
   const items = board.locator(".message-board-item");
   const markerAudit = await items.evaluateAll((entries) =>
@@ -284,6 +399,16 @@ test("mixed alert categories preserve attention markers and focus the receptioni
       expect(item.icon).not.toBe("!");
     }
   }
+  const rowCopy = await items.allTextContents();
+  expect(
+    rowCopy.findIndex((copy) =>
+      copy.includes("The coffee is technically warm."),
+    ),
+  ).toBeLessThan(
+    rowCopy.findIndex((copy) =>
+      copy.includes("Hire a receptionist to speed up check-in."),
+    ),
+  );
 
   const receptionistGuidance = board
     .locator(
@@ -304,9 +429,8 @@ test("mixed alert categories preserve attention markers and focus the receptioni
   ).toBeFocused();
 
   await expectFeedFitsViewport(page);
-  const history = board.locator(".message-board-history");
-  await history.locator("summary").click();
-  await expect(history).toHaveAttribute("open", "");
+  await expect(board.locator(".message-board-history")).toHaveCount(0);
+  const feed = board.locator(".message-board-feed");
   for (const category of [
     "action_required",
     "guidance",
@@ -315,10 +439,10 @@ test("mixed alert categories preserve attention markers and focus the receptioni
     "walkout_review",
   ]) {
     await expect(
-      history.locator(`[data-message-category="${category}"]`),
+      feed.locator(`[data-message-category="${category}"]`),
     ).not.toHaveCount(0);
   }
-  await history.locator("ol").evaluate((list) => {
+  await feed.evaluate((list) => {
     list.scrollTop = list.scrollHeight;
   });
   await page.screenshot({

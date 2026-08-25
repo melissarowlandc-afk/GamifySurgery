@@ -23,7 +23,7 @@ export function DevelopmentPanel({
   onRestart,
   onTutorialsEnabledChange,
 }: DevelopmentPanelProps) {
-  // Pilot utilities remain available without occupying the normal game UI.
+  // Development utilities remain available without occupying the normal game UI.
   const [open, setOpen] = useState(false);
 
   return (

@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   PROTOTYPE_ALERT_CONTENT,
+  PROTOTYPE_PLAYER_FEED_POLICY,
   isPrototypeAlertEligible,
+  isPrototypeEventSuppressedFromPlayerFeed,
   renderPrototypeAlert,
   type PrototypeAlertDefinition,
   type PrototypeAlertEligibilityContext,
@@ -227,5 +229,66 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
       ).toBe(true);
       expect(candidate.variants.length).toBeGreaterThan(0);
     }
+  });
+
+  it("keeps patient complaints data-driven while routine audit events stay out of the compact feed", () => {
+    expect(
+      definition("alert.patient.cleanliness-complaint"),
+    ).toMatchObject({
+      category: "guidance",
+      targetKind: "litter",
+      clickAction: "open_litter",
+      persistent: true,
+      cooldownMinutes: 45,
+    });
+    expect(
+      definition("alert.patient.room-upgrade-requested"),
+    ).toMatchObject({
+      category: "guidance",
+      targetKind: "room",
+      clickAction: "open_room",
+      persistent: true,
+      cooldownMinutes: 60,
+    });
+    expect(
+      PROTOTYPE_PLAYER_FEED_POLICY.suppressedEventTypes,
+    ).toEqual(
+      expect.arrayContaining([
+        "operating_expense",
+        "clinical_decision_recorded",
+        "encounter_settled",
+        "emergency_glp1_consultation",
+        "development_money_added",
+        "room_placed",
+        "room_moved",
+        "room_rotated",
+        "door_placed",
+        "door_removed",
+        "room_upgraded",
+        "litter_appeared",
+        "litter_collected",
+        "water_cooler_refilled",
+      ]),
+    );
+    expect(
+      PROTOTYPE_PLAYER_FEED_POLICY.suppressedDefinitionIds,
+    ).toEqual(
+      expect.arrayContaining([
+        "alert.success.trash-cleaned",
+        "alert.success.water-refilled",
+      ]),
+    );
+    expect(
+      isPrototypeEventSuppressedFromPlayerFeed(
+        "success_message",
+        "alert.success.trash-cleaned",
+      ),
+    ).toBe(true);
+    expect(
+      isPrototypeEventSuppressedFromPlayerFeed(
+        "success_message",
+        "alert.success.first-ordinary-patient-resolved",
+      ),
+    ).toBe(false);
   });
 });

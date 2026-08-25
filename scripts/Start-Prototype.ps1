@@ -171,7 +171,7 @@ try {
         }
         Open-PrototypeBrowser
         Write-Host ""
-        Read-Host "Press Enter to close this launcher (the existing game server will stay running)"
+        Write-Host "The existing game server remains running; this extra launcher can close now." -ForegroundColor Green
         exit 0
     }
 

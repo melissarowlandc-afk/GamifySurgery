@@ -1,8 +1,12 @@
 import {
   createDeterministicRandom,
+  deterministicInteger,
   RANDOM_STREAMS,
 } from "./randomness";
-import type { PixelAppearanceDescriptor } from "./types";
+import type {
+  PixelAppearanceDescriptor,
+  PixelAppearanceVariant,
+} from "./types";
 
 const BODY_SHAPES = ["compact", "average", "broad", "tall"] as const;
 const HAIR_STYLES = ["none", "short", "parted", "curly", "bun"] as const;
@@ -35,7 +39,7 @@ const STAFF_NAMES = [
   "Taylor",
 ] as const;
 
-const PATIENT_FIRST_NAMES = [
+const PATIENT_NEUTRAL_FIRST_NAMES = [
   "Avery",
   "Casey",
   "Devon",
@@ -48,6 +52,44 @@ const PATIENT_FIRST_NAMES = [
   "Riley",
   "Robin",
   "Taylor",
+] as const;
+
+const PATIENT_FEMININE_FIRST_NAMES = [
+  "Amelia",
+  "Ava",
+  "Chloe",
+  "Elena",
+  "Grace",
+  "Hannah",
+  "Isabella",
+  "Julia",
+  "Leah",
+  "Lily",
+  "Maya",
+  "Natalie",
+  "Nora",
+  "Olivia",
+  "Sophia",
+  "Zoe",
+] as const;
+
+const PATIENT_MASCULINE_FIRST_NAMES = [
+  "Adam",
+  "Benjamin",
+  "Caleb",
+  "Daniel",
+  "Elijah",
+  "Ethan",
+  "Henry",
+  "Isaac",
+  "James",
+  "Liam",
+  "Lucas",
+  "Mateo",
+  "Noah",
+  "Oliver",
+  "Samuel",
+  "Theo",
 ] as const;
 
 const PATIENT_LAST_NAMES = [
@@ -68,6 +110,8 @@ const PATIENT_LAST_NAMES = [
 export type PixelRoleStyle = NonNullable<
   PixelAppearanceDescriptor["roleStyle"]
 >;
+
+export type PatientSexLabel = "Female" | "Male" | "Not specified";
 
 const ROLE_STYLES: readonly PixelRoleStyle[] = [
   "founder",
@@ -172,6 +216,74 @@ export function createPixelAppearance(
   }, roleStyle);
 }
 
+function variantWithinFamily(
+  variant: PixelAppearanceVariant | undefined,
+  familyOffset: 0 | 10,
+): PixelAppearanceVariant {
+  return (familyOffset + ((variant ?? 0) % 10)) as PixelAppearanceVariant;
+}
+
+/**
+ * Aligns the human presentation of a patient avatar with the authored chart
+ * sex label. This changes presentation only; it is not a clinical selector and
+ * has no effect on case choice, simulation, scoring, or demographics.
+ */
+export function normalizePatientAppearanceForSex(
+  appearance: PixelAppearanceDescriptor,
+  sexLabel?: PatientSexLabel,
+): PixelAppearanceDescriptor {
+  const normalized = normalizePixelAppearance(appearance, "patient");
+  if (sexLabel === "Female") {
+    return {
+      ...normalized,
+      headVariant: variantWithinFamily(normalized.headVariant, 10),
+      bodyVariant: variantWithinFamily(normalized.bodyVariant, 10),
+    };
+  }
+  if (sexLabel === "Male") {
+    return {
+      ...normalized,
+      headVariant: variantWithinFamily(normalized.headVariant, 0),
+      bodyVariant: variantWithinFamily(normalized.bodyVariant, 0),
+    };
+  }
+  return normalized;
+}
+
+export function createPatientPixelAppearance(
+  campaignSeed: string,
+  encounterId: string,
+  sexLabel?: PatientSexLabel,
+): PixelAppearanceDescriptor {
+  const base = createPixelAppearance(
+    campaignSeed,
+    "patient",
+    encounterId,
+    "patient",
+  );
+  if (sexLabel === "Female" || sexLabel === "Male") {
+    return normalizePatientAppearanceForSex(base, sexLabel);
+  }
+
+  // When the chart intentionally does not specify sex, keep one coherent
+  // human presentation family without implying a chart value.
+  const familyOffset =
+    deterministicInteger(
+      campaignSeed,
+      RANDOM_STREAMS.patientAppearance,
+      `${encounterId}:unspecified-presentation-family.v1`,
+      2,
+    ) === 0
+      ? 0
+      : 10;
+  const normalized = normalizePixelAppearance(base, "patient");
+  return {
+    ...normalized,
+    headVariant: variantWithinFamily(normalized.headVariant, familyOffset),
+    bodyVariant: variantWithinFamily(normalized.bodyVariant, familyOffset),
+  };
+}
+
 export function createStaffDisplayName(
   campaignSeed: string,
   employeeId: string,
@@ -187,14 +299,20 @@ export function createStaffDisplayName(
 export function createPatientDisplayName(
   campaignSeed: string,
   encounterId: string,
+  sexLabel?: PatientSexLabel,
 ): string {
   const random = createDeterministicRandom(
     campaignSeed,
     RANDOM_STREAMS.patientIdentity,
     `${encounterId}:display-name.v1`,
   );
-  const firstName =
-    PATIENT_FIRST_NAMES[random.integer(PATIENT_FIRST_NAMES.length)]!;
+  const firstNames =
+    sexLabel === "Female"
+      ? PATIENT_FEMININE_FIRST_NAMES
+      : sexLabel === "Male"
+        ? PATIENT_MASCULINE_FIRST_NAMES
+        : PATIENT_NEUTRAL_FIRST_NAMES;
+  const firstName = firstNames[random.integer(firstNames.length)]!;
   const lastName =
     PATIENT_LAST_NAMES[random.integer(PATIENT_LAST_NAMES.length)]!;
   return `${firstName} ${lastName}`;

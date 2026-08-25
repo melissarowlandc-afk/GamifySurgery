@@ -20,9 +20,9 @@ privacy/research, external access, spending, licensing, or destructive actions.
 
 | ID | Decision | Recommended direction | Required before |
 |---|---|---|---|
-| G-002 | First real clinical validation set | After the synthetic prototype proves the flow, Melissa selects the smallest useful Level 0/1 topic and concept set; bulk authoring waits until that set validates the workflow | Real clinical-content integration |
+| G-002 | First exact runtime question-iteration set | Process the newest owner workbook incrementally, resolve concept-specific questions, preview original single-select iterations, and obtain Melissa's explicit approval of the exact concept/presentation/question versions and release points; use the first small approved L0/L1 set to validate integration before bulk runtime authoring | Real clinical-content integration |
 | G-004 | Pilot participants, optional feedback, and any disclosed playtest metrics | Melissa and trusted family first; decide outside access and data fields later | Hosted tester invitations |
-| G-005 | Remaining GLP-1 payment curve, sarcastic message pool, and automated Level 2 suite values | Preserve the once-per-hour, no-learning-reward emergency action; use the current below-$200 beta threshold as a tunable playtest value and design the staff-operated suite with Level 2 | Final GLP-1 balance and Level 2 implementation |
+| G-005 | Automated Level 2 GLP-1 suite values | Preserve the pre-suite manual action at every cash balance with its fixed $25 payment, once-per-hour cooldown, no daily cap or diminishing payout, sarcasm-only daily count, and no learning reward; design only the future staff-operated suite values | Level 2 implementation |
 
 ## Delegated delivery backlog
 
@@ -38,6 +38,7 @@ available and will not be presented as serial owner decisions:
 | Session and security logs | Revocable trusted-device sessions; minimal allowlisted logs with no clinical-answer payload |
 | Backups | Separate owner-controlled private encrypted workbook/source backups first; managed backups before valuable pilot saves; never place private clinical material in the public repository |
 | Simulation step and visible speed | Versioned tunable values selected through tests and deterministic simulation |
+| Level 2-5 advancement gates and balance | Preserve the accepted unlock table and release points; choose exact required rooms/staff, XP, satisfaction, costs, capacity, and timing when each level enters implementation |
 | Static hosting provider | Select just before the hosted pilot; preserve standards-based portability |
 
 Legacy items Y-002, Y-003, Y-004, Y-006, Y-011, Y-012, Y-015, and Y-016
@@ -86,9 +87,10 @@ starting research, or destroying owner data.
 | G-001B | Clinical-answer management consequences | Current-level XP is 10/2 for correct/incorrect first submissions; Level 0/1 encounter cash uses the configured question-and-correctness formulas; patient satisfaction reflects actual care without tutorial softlock | ADR 0025 as amended by ADRs 0034-0035; D-042; D-064; D-067 |
 | G-001C | Patient chart lifecycle | Waiting tab, player-opened chart, Active pending or action-required state with an exclamation point, required final learning-summary content that the player may optionally flip to view, then a reopenable read-only Resolved chart | ADR 0026; D-043 |
 | G-001D | Clinical result timing | Transparent, capability-based facility-time delays; meaningful waits only; outsourced routes slower than functioning in-house services; visible pending status and ETA; deterministic prototype timing | ADR 0027; D-044 |
-| G-001E | Patient satisfaction and leaving | Every patient starts at 100%; only genuine idle waiting decays satisfaction; an ordinary patient's persisted threshold controls walkout below 60%, while protected tutorial patients cannot leave; departures route physically and feed rolling clinic satisfaction | ADR 0028 as superseded in part by ADR 0035; D-045; D-064 |
+| G-001E | Patient satisfaction and leaving | 100% is the clean, capable-clinic baseline; applicable unresolved facility conditions lower an ordinary patient's starting satisfaction at Front Desk check-in and contribute a separate live HUD modifier, while the rolling ended-encounter history remains unchanged; genuine idle waiting decays satisfaction; an ordinary patient's persisted threshold controls walkout below 60%, while protected tutorial patients cannot leave | ADR 0028 as superseded in part and amended by ADR 0035; D-045; D-064; D-071 |
 | G-001F | Patient workload capacity | Waiting plus unresolved Active patients consume visible clinic workload; full routine capacity pauses intake before Waiting; protected reserve guarantees tutorial and progression-critical cases; capacity changes never evict existing patients | ADR 0029; D-046 |
 | G-001G | Incorrect-answer patient path | Wrong nonfinal answers correct forward; a wrong final answer may show one deterministic approved minor/major terminal clinical outcome before correction and summary; narrative severity cannot bypass capped management consequences | ADR 0030; D-047 |
 | G-001H | Facility-day pacing and on-site X-ray | Minute-resolution 8 AM-6 PM days with continuous rollover; 1x/2x/4x speed makes one game hour take about 60/30/15 real seconds; arrivals remain irregular; faster on-site X-ray requires the complete connected imaging capability | ADR 0031 as amended by ADR 0035; D-050; D-051; D-064 |
 | G-001I | Build Mode and navigation | Explicit paused Build/Renovate Mode, rotatable rooms, explicit zero-cost doors, functional hallways and room-to-room access, stepwise session Undo, reachability-dependent services, and visible route time | ADR 0032 as amended by ADR 0037; D-053; D-066 |
+| G-001J | Alert and event feed lifecycle | One chronological stream ordered by original trigger time; attention rows show an exclamation marker while active but are never pinned; resolution clears the marker without deleting or retimestamping the row; empty-water guidance occurs once on empty and once per full facility day continuously empty | D-055 as superseded by D-071; `docs/features/alert-notification-flavor-system.md` |
 | Y-005 | Clinical question correction | Only the first submitted answer to a scored node updates FSRS; correction, explanation, and optional practice remain unscored | ADR 0013; D-025 |

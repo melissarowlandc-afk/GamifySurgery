@@ -10,13 +10,16 @@ export const RANDOMNESS_CONTRACT_VERSION = "randomness.xoshiro128ss.v1" as const
 
 export const RANDOM_STREAMS = {
   answerOrder: "answer_order",
+  clinicalPresentation: "clinical_presentation",
   patientIdentity: "patient_identity",
   patientAppearance: "patient_appearance",
   staffAppearance: "staff_appearance",
   patientWalkout: "patient_walkout",
   routineArrivalTiming: "routine_arrival_timing",
+  clinicalCaseSelection: "clinical_case_selection",
   flavorEvents: "flavor_events",
   environment: "environment",
+  sidewalkPedestrians: "sidewalk_pedestrians",
 } as const;
 
 const SHA_256_INITIAL = [

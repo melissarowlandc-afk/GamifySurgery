@@ -1,13 +1,18 @@
 import {
+  PROTOTYPE_ALERT_SCHEDULING,
   getPrototypeAlertDefinition,
+  isPrototypeEventSuppressedFromPlayerFeed,
   renderPrototypeAlert,
 } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
   getFacilityProgressionStatus,
+  getRoomNavigableTiles,
   getRoomDefinition,
   type DomainEvent,
+  type FacilityAlertConditionKey,
+  type FacilityConditionOccurrenceState,
   type GameState,
 } from "@gamify-surgery/game-domain";
 import type {
@@ -46,11 +51,15 @@ function eventTarget(
 ): Pick<MessageBoardItemView, "targetType" | "targetId" | "actionLabel"> {
   if (
     event.alertCategory === "ambient_flavor" ||
-    event.alertCategory === "walkout_review"
+    event.alertCategory === "walkout_review" ||
+    event.definitionId === "alert.patient.leaving"
   ) {
     return {};
   }
-  if (event.type === "water_cooler_low") {
+  if (
+    event.type === "water_cooler_low" ||
+    event.type === "water_cooler_refilled"
+  ) {
     return {
       targetType: "water_cooler",
       actionLabel: "Show water cooler",
@@ -81,6 +90,102 @@ function eventTarget(
     return { targetType: "goal", actionLabel: "View goals" };
   }
   return {};
+}
+
+function conditionOccurrenceTarget(
+  occurrence: FacilityConditionOccurrenceState,
+): Pick<
+  MessageBoardItemView,
+  "targetType" | "targetId" | "actionLabel"
+> {
+  const target = occurrence.target;
+  if (!target) {
+    return {};
+  }
+  switch (target.kind) {
+    case "litter":
+      return {
+        targetType: "litter",
+        targetId: target.id,
+        actionLabel: "Show trash",
+      };
+    case "water_cooler":
+      return {
+        targetType: "water_cooler",
+        targetId: target.id,
+        actionLabel: "Show water cooler",
+      };
+    case "build_mode":
+      return {
+        targetType: "build_mode",
+        targetId: target.id,
+        actionLabel: "Open Build Mode",
+      };
+    case "room":
+      return {
+        targetType: "room",
+        targetId: target.id,
+        actionLabel: "Show room",
+      };
+    case "staff_role":
+      return {
+        targetType: "staff_role",
+        targetId: target.id,
+        actionLabel: "Show hiring",
+      };
+    case "employee":
+      return {
+        targetType: "employee",
+        targetId: target.id,
+        actionLabel: "Show employee",
+      };
+    case "emergency_glp1":
+      return {
+        targetType: "emergency_glp1",
+        targetId: target.id,
+        actionLabel: "Open emergency cash option",
+      };
+    case "advertising":
+      return {
+        targetType: "advertising",
+        targetId: target.id,
+        actionLabel: "Show Advertising",
+      };
+    case "goal":
+      return {
+        targetType: "goal",
+        targetId: target.id,
+        actionLabel: "View goals",
+      };
+  }
+}
+
+function conditionOccurrenceToMessage(
+  occurrence: FacilityConditionOccurrenceState,
+  isLatestForCondition: boolean,
+): MessageBoardItemView {
+  const unresolved = occurrence.resolvedAtFacilityTick === null;
+  const requiresAttention =
+    unresolved &&
+    isLatestForCondition &&
+    occurrence.priority === "action_required";
+  const rendered = renderPrototypeAlert(occurrence.definitionId);
+  return {
+    id: occurrence.id,
+    priority: requiresAttention
+      ? "action_required"
+      : "informational",
+    category: requiresAttention ? "action_required" : "guidance",
+    showAttentionMarker: requiresAttention,
+    title: rendered.title,
+    message: occurrence.message,
+    timeLabel: facilityTimeLabel(occurrence.occurredAtFacilityTick),
+    sortKey: occurrence.occurredAtFacilityTick,
+    persistent: false,
+    ...(unresolved && isLatestForCondition
+      ? conditionOccurrenceTarget(occurrence)
+      : {}),
+  };
 }
 
 function fallbackEventTitle(event: DomainEvent): string {
@@ -234,15 +339,14 @@ function effectiveEventDefinitionId(
   return event.definitionId;
 }
 
-function eventToMessage(
-  state: GameState,
+function eventCategory(
   event: DomainEvent,
-): MessageBoardItemView {
-  const definitionId = effectiveEventDefinitionId(state, event);
+  definitionId: string | undefined,
+): MessageBoardItemView["category"] {
   const definition = definitionId
     ? getPrototypeAlertDefinition(definitionId)
     : undefined;
-  const category =
+  return (
     event.alertCategory ??
     definition?.category ??
     (event.type === "left_before_seen"
@@ -252,16 +356,129 @@ function eventToMessage(
         ? "action_required"
         : event.priority === "flavor"
           ? "ambient_flavor"
-          : "success");
+          : "success")
+  );
+}
+
+function eventPriority(
+  event: DomainEvent,
+): MessageBoardItemView["priority"] {
+  return event.type === "left_before_seen"
+    ? "informational"
+    : (event.priority ??
+      (event.type === "patient_arrived" ||
+      event.type === "result_ready" ||
+      event.type === "patience_warning"
+        ? "action_required"
+        : "informational"));
+}
+
+function attentionGroup(event: DomainEvent): string | null {
+  if (
+    event.encounterId &&
+    (event.type === "patient_arrived" ||
+      event.type === "patience_warning" ||
+      event.type === "result_ready" ||
+      event.type === "encounter_settled")
+  ) {
+    return `patient:${event.encounterId}`;
+  }
+  if (event.type === "water_cooler_low") {
+    return "environment:water-cooler";
+  }
+  return null;
+}
+
+function attentionConditionActive(
+  state: GameState,
+  event: DomainEvent,
+): boolean {
+  const definitionId = effectiveEventDefinitionId(state, event);
+  if (eventCategory(event, definitionId) !== "action_required") {
+    return false;
+  }
+
+  if (event.type === "water_cooler_low") {
+    return (
+      state.environment.waterCoolerFillPercent <=
+      PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
+        .waterCoolerLowThreshold
+    );
+  }
+
+  const encounter = event.encounterId
+    ? state.encounters[event.encounterId]
+    : undefined;
+  if (
+    event.type === "patient_arrived" ||
+    event.type === "patience_warning" ||
+    event.type === "result_ready" ||
+    event.type === "encounter_settled"
+  ) {
+    if (!encounter || encounter.lifecycle === "resolved") {
+      return false;
+    }
+    if (event.definitionId === "alert.patient.leaving") {
+      return (
+        encounter.patientMovement?.kind ===
+        "leaving_after_walkout"
+      );
+    }
+    if (event.type === "patient_arrived") {
+      if (event.definitionId === "alert.patient.decision-required") {
+        return (
+          encounter.feedAttentionKind === "clinical_decision" &&
+          state.openChartEncounterId !== encounter.id
+        );
+      }
+      return (
+        encounter.feedAttentionKind === "checked_in" &&
+        state.openChartEncounterId !== encounter.id
+      );
+    }
+    if (event.type === "patience_warning") {
+      return (
+        (encounter.lifecycle === "waiting_unopened" ||
+          encounter.lifecycle === "active_action_required") &&
+        state.openChartEncounterId !== encounter.id &&
+        encounter.patientMovement?.kind !==
+          "leaving_after_walkout"
+      );
+    }
+    if (event.type === "encounter_settled") {
+      return encounter.lifecycle === "resolved_summary_available";
+    }
+    return (
+      encounter.feedAttentionKind === "result_ready" &&
+      state.openChartEncounterId !== encounter.id
+    );
+  }
+
+  // One-shot actionable events without a modeled resolution condition retain
+  // their authored marker. Condition-backed alerts are resolved above.
+  return true;
+}
+
+function eventToMessage(
+  state: GameState,
+  event: DomainEvent,
+  attentionActive: boolean,
+): MessageBoardItemView {
+  const definitionId = effectiveEventDefinitionId(state, event);
+  const definition = definitionId
+    ? getPrototypeAlertDefinition(definitionId)
+    : undefined;
+  const originalCategory = eventCategory(event, definitionId);
+  const originalPriority = eventPriority(event);
+  const wasActionable = originalCategory === "action_required";
+  const category =
+    wasActionable && !attentionActive
+      ? "guidance"
+      : originalCategory;
   const priority =
-    event.type === "left_before_seen"
+    wasActionable && !attentionActive
       ? "informational"
-      : (event.priority ??
-        (event.type === "patient_arrived" ||
-        event.type === "result_ready" ||
-        event.type === "patience_warning"
-          ? "action_required"
-          : "informational"));
+      : originalPriority;
   const rendered = definition
     ? renderPrototypeAlert(
         definition,
@@ -273,7 +490,7 @@ function eventToMessage(
     id: event.id,
     priority,
     category,
-    showAttentionMarker: category === "action_required",
+    showAttentionMarker: wasActionable && attentionActive,
     // Reducer events freeze the selected, rendered copy so later catalog edits
     // do not rewrite a campaign's recent history on reload.
     message: event.message,
@@ -281,17 +498,38 @@ function eventToMessage(
     timeLabel: facilityTimeLabel(event.facilityTick),
     sortKey: event.facilityTick,
     persistent: false,
-    ...eventTarget(event),
+    ...(wasActionable && !attentionActive
+      ? {}
+      : eventTarget(event)),
   };
 }
 
-function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
+function persistentPatientMessages(
+  state: GameState,
+  recentEvents: readonly DomainEvent[],
+): MessageBoardItemView[] {
   return Object.values(state.encounters).flatMap((encounter) => {
     if (encounter.lifecycle === "waiting_unopened") {
       if (
+        encounter.feedAttentionKind !== "checked_in" ||
+        encounter.feedAttentionStartedAtTick === null ||
+        state.facilityTick -
+          encounter.feedAttentionStartedAtTick <=
+          PROTOTYPE_ALERT_SCHEDULING.patientAttentionDelayMinutes ||
         state.openChartEncounterId === encounter.id ||
         encounter.patientMovement?.kind === "arriving_for_check_in" ||
         encounter.patientMovement?.kind === "leaving_after_walkout"
+      ) {
+        return [];
+      }
+      if (
+        recentEvents.some(
+          (event) =>
+            event.encounterId === encounter.id &&
+            (event.type === "patient_arrived" ||
+              (event.type === "patience_warning" &&
+                event.definitionId !== "alert.patient.leaving")),
+        )
       ) {
         return [];
       }
@@ -316,20 +554,49 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
           showAttentionMarker: true,
           title: configuredCopy.title,
           message: configuredCopy.message,
-          timeLabel: facilityTimeLabel(encounter.waiting.arrivedAtTick),
+          timeLabel: facilityTimeLabel(
+            encounter.feedAttentionStartedAtTick +
+              PROTOTYPE_ALERT_SCHEDULING
+                .patientAttentionDelayMinutes +
+              1,
+          ),
           actionLabel: "Open chart",
           targetType: "patient",
           targetId: encounter.id,
           sortKey:
-            state.facilityTick + (leaveWarningActive ? 0.9 : 0.5),
+            encounter.feedAttentionStartedAtTick +
+            PROTOTYPE_ALERT_SCHEDULING
+              .patientAttentionDelayMinutes +
+            1 +
+            (leaveWarningActive ? 0.09 : 0.05),
           persistent: true,
         } satisfies MessageBoardItemView,
       ];
     }
     if (encounter.lifecycle === "active_action_required") {
-      const hasResults = encounter.deliveredResultNarratives.length > 0;
+      const isResultReady =
+        encounter.feedAttentionKind === "result_ready";
+      if (
+        encounter.feedAttentionStartedAtTick === null ||
+        (encounter.feedAttentionKind !== "clinical_decision" &&
+          encounter.feedAttentionKind !== "result_ready") ||
+        state.facilityTick -
+          encounter.feedAttentionStartedAtTick <=
+          PROTOTYPE_ALERT_SCHEDULING.patientAttentionDelayMinutes ||
+        state.openChartEncounterId === encounter.id ||
+        recentEvents.some(
+          (event) =>
+            event.encounterId === encounter.id &&
+            (event.type === "result_ready" ||
+              (event.type === "patient_arrived" &&
+                event.definitionId ===
+                  "alert.patient.decision-required")),
+        )
+      ) {
+        return [];
+      }
       const configuredCopy = configuredAlertCopy(
-        hasResults
+        isResultReady
           ? "alert.patient.result-ready"
           : "alert.patient.decision-required",
         {
@@ -345,33 +612,20 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
           showAttentionMarker: true,
           title: configuredCopy.title,
           message: configuredCopy.message,
-          timeLabel: facilityTimeLabel(state.facilityTick),
+          timeLabel: facilityTimeLabel(
+            encounter.feedAttentionStartedAtTick +
+              PROTOTYPE_ALERT_SCHEDULING
+                .patientAttentionDelayMinutes +
+              1,
+          ),
           actionLabel: "Open chart",
           targetType: "patient",
           targetId: encounter.id,
-          sortKey: state.facilityTick + 0.8,
-          persistent: true,
-        } satisfies MessageBoardItemView,
-      ];
-    }
-    if (encounter.lifecycle === "resolved_summary_available") {
-      const configuredCopy = configuredAlertCopy(
-        "alert.patient.complete",
-        { patient_name: encounter.patientDisplayName },
-      );
-      return [
-        {
-          id: `persistent.patient.${encounter.id}.complete`,
-          priority: "action_required",
-          category: "action_required",
-          showAttentionMarker: true,
-          title: configuredCopy.title,
-          message: configuredCopy.message,
-          timeLabel: facilityTimeLabel(state.facilityTick),
-          actionLabel: "Open chart",
-          targetType: "patient",
-          targetId: encounter.id,
-          sortKey: state.facilityTick + 0.7,
+          sortKey:
+            encounter.feedAttentionStartedAtTick +
+            PROTOTYPE_ALERT_SCHEDULING
+              .patientAttentionDelayMinutes +
+            1.08,
           persistent: true,
         } satisfies MessageBoardItemView,
       ];
@@ -380,12 +634,20 @@ function persistentPatientMessages(state: GameState): MessageBoardItemView[] {
   });
 }
 
-function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
+function persistentSystemMessages(
+  state: GameState,
+  recentEvents: readonly DomainEvent[],
+  materializedConditionKeys: ReadonlySet<FacilityAlertConditionKey>,
+): MessageBoardItemView[] {
   const messages: MessageBoardItemView[] = [];
   const lowCashThreshold =
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
-      .cashEligibilityThreshold;
-  if (state.cash > 0 && state.cash < lowCashThreshold) {
+      .lowCashAlertThreshold;
+  if (
+    state.cash > 0 &&
+    state.cash < lowCashThreshold &&
+    !materializedConditionKeys.has("low_cash")
+  ) {
     const configuredCopy = configuredAlertCopy(
       "alert.finance.low-cash",
       { threshold: String(lowCashThreshold) },
@@ -400,7 +662,7 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "emergency_glp1",
       actionLabel: "Open emergency cash option",
-      sortKey: state.facilityTick + 0.6,
+      sortKey: 0.06,
       persistent: true,
     });
   }
@@ -412,7 +674,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
   if (
     state.facilityLevel === 0 &&
     secondTutorial?.lifecycle === "resolved" &&
-    !hasExaminationRoom
+    !hasExaminationRoom &&
+    !materializedConditionKeys.has("missing_examination_room")
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.private-exam-needed",
@@ -428,7 +691,9 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "goal",
       actionLabel: "View goal",
-      sortKey: state.facilityTick + 0.65,
+      sortKey:
+        (secondTutorial.resolvedAtFacilityTick ??
+          secondTutorial.waiting.arrivedAtTick) + 0.065,
       persistent: true,
     });
   }
@@ -446,7 +711,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
   if (
     state.facilityLevel === 1 &&
     checkedInWaiting.length > 0 &&
-    !hasReceptionist
+    !hasReceptionist &&
+    !materializedConditionKeys.has("no_receptionist")
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.staff.receptionist-recommended",
@@ -463,7 +729,12 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       targetType: "staff_role",
       targetId: "staff.receptionist",
       actionLabel: "Show receptionist hiring",
-      sortKey: state.facilityTick + 0.54,
+      sortKey:
+        Math.min(
+          ...checkedInWaiting.map(
+            (encounter) => encounter.waiting.arrivedAtTick,
+          ),
+        ) + 0.054,
       persistent: true,
     });
   }
@@ -475,7 +746,10 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       encounter.pendingResult.routeId === "route.xray.outsourced" &&
       encounter.pendingResult.deliveredAtTick === null,
   );
-  if (pendingOffsiteXray) {
+  if (
+    pendingOffsiteXray &&
+    !materializedConditionKeys.has("unavailable_onsite_xray")
+  ) {
     const hasXrayRoom = state.rooms.some(
       (room) => room.roomDefinitionId === "room.xray",
     );
@@ -499,7 +773,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
         timeLabel: facilityTimeLabel(state.facilityTick),
         targetType: "build_mode",
         actionLabel: "Open Build Mode",
-        sortKey: state.facilityTick + 0.43,
+        sortKey:
+          pendingOffsiteXray.pendingResult!.scheduledAtTick + 0.043,
         persistent: true,
       });
     } else if (!hasImagingTechnician) {
@@ -518,7 +793,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
         targetType: "staff_role",
         targetId: "staff.imaging_technician",
         actionLabel: "Show imaging technician hiring",
-        sortKey: state.facilityTick + 0.55,
+        sortKey:
+          pendingOffsiteXray.pendingResult!.scheduledAtTick + 0.055,
         persistent: true,
       });
     }
@@ -530,7 +806,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     firstWaitingPatient &&
     !state.rooms.some(
       (room) => room.roomDefinitionId === "room.waiting",
-    )
+    ) &&
+    !materializedConditionKeys.has("missing_waiting_room")
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.waiting-room-needed",
@@ -546,7 +823,7 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "build_mode",
       actionLabel: "Open Build Mode",
-      sortKey: state.facilityTick + 0.41,
+      sortKey: firstWaitingPatient.waiting.arrivedAtTick + 0.041,
       persistent: true,
     });
   }
@@ -557,7 +834,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       30 &&
     !state.rooms.some(
       (room) => room.roomDefinitionId === "room.bathroom",
-    )
+    ) &&
+    !materializedConditionKeys.has("missing_bathroom")
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.bathroom-needed",
@@ -573,7 +851,7 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "build_mode",
       actionLabel: "Open Build Mode",
-      sortKey: state.facilityTick + 0.4,
+      sortKey: firstWaitingPatient.waiting.arrivedAtTick + 30.04,
       persistent: true,
     });
   }
@@ -589,7 +867,13 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       .dirtyRoomThreshold
       ? dirtiestRoom
       : null;
-  if (firstLitter) {
+  const trashTeachingComplete =
+    state.environment.trashTeachingAcknowledgedAtTick !== null;
+  if (
+    firstLitter &&
+    !trashTeachingComplete &&
+    !materializedConditionKeys.has("visible_litter")
+  ) {
     const configuredCopy = configuredAlertCopy(
       "alert.environment.trash-visible",
       {},
@@ -605,45 +889,167 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       targetType: "litter",
       targetId: firstLitter.id,
       actionLabel: "Show trash",
-      sortKey: state.facilityTick + 0.395,
+      sortKey: firstLitter.spawnedAtFacilityTick + 0.0395,
       persistent: true,
     });
   }
-  if (cleanlinessRoom) {
-    const roomName =
-      getRoomDefinition(cleanlinessRoom.roomDefinitionId)
-        ?.displayName ?? "A clinic room";
+  const complaintPatient =
+    checkedInWaiting[0] ??
+    Object.values(state.encounters).find(
+      (encounter) =>
+        encounter.lifecycle === "active_action_required" &&
+        encounter.patientLocation !== null &&
+        encounter.patientMovement?.kind !==
+          "departing_for_offsite_testing" &&
+        encounter.patientMovement?.kind !==
+          "returning_from_offsite_testing",
+    );
+  const cleanlinessComplaintDefinition =
+    getPrototypeAlertDefinition(
+      "alert.patient.cleanliness-complaint",
+    );
+  const trashLessonSeparationElapsed =
+    state.facilityTick -
+      (state.environment.trashTeachingAcknowledgedAtTick ?? 0) >=
+    (cleanlinessComplaintDefinition?.cooldownMinutes ?? 45);
+  const trashHasAccumulated =
+    state.environment.litterItems.length >=
+    PROTOTYPE_ALERT_SCHEDULING.dirtyClinicComplaintMinimumLitterItems;
+  if (
+    trashTeachingComplete &&
+    trashLessonSeparationElapsed &&
+    complaintPatient &&
+    firstLitter &&
+    (trashHasAccumulated || cleanlinessRoom) &&
+    !materializedConditionKeys.has("visible_litter") &&
+    !materializedConditionKeys.has("dirty_cleanliness")
+  ) {
     const configuredCopy = configuredAlertCopy(
-      "alert.facility.cleanliness-low",
+      "alert.patient.cleanliness-complaint",
       {
-        room_name: roomName,
-        cleanliness: String(cleanlinessRoom.cleanliness ?? 100),
+        patient_name: complaintPatient.patientDisplayName,
+        patient_id: complaintPatient.id,
       },
     );
     messages.push({
-      id: "persistent.facility.cleanliness-low",
+      id: "persistent.environment.trash-accumulated",
       priority: "informational",
       category: "guidance",
       showAttentionMarker: false,
       title: configuredCopy.title,
       message: configuredCopy.message,
       timeLabel: facilityTimeLabel(state.facilityTick),
-      sortKey: state.facilityTick + 0.39,
+      sortKey:
+        Math.max(
+          firstLitter.spawnedAtFacilityTick,
+          (state.environment.trashTeachingAcknowledgedAtTick ?? 0) +
+            (cleanlinessComplaintDefinition?.cooldownMinutes ?? 45),
+        ) + 0.039,
       persistent: true,
-      ...(firstLitter
-        ? {
-            targetType: "litter" as const,
-            targetId: firstLitter.id,
-            actionLabel: "Show trash",
-          }
-        : {}),
+      targetType: "litter",
+      targetId: firstLitter.id,
+      actionLabel: "Show trash",
     });
   }
 
+  const roomUpgradeComplaintDefinition =
+    getPrototypeAlertDefinition(
+      "alert.patient.room-upgrade-requested",
+    );
+  const roomUpgradeComplaint = Object.values(state.encounters)
+    .filter(
+      (encounter) =>
+        encounter.lifecycle === "waiting_unopened" ||
+        encounter.lifecycle === "active_action_required" ||
+        encounter.lifecycle === "active_pending_result",
+    )
+    .map((encounter) => ({
+      encounter,
+      room: encounter.assignedRoomInstanceId
+        ? state.rooms.find(
+            (candidate) =>
+              candidate.id === encounter.assignedRoomInstanceId,
+          )
+        : undefined,
+    }))
+    .find(({ encounter, room }) => {
+      const definition = room
+        ? getRoomDefinition(room.roomDefinitionId)
+        : undefined;
+      if (
+        state.facilityLevel !== 1 ||
+        !room ||
+        !definition ||
+        !encounter.patientLocation
+      ) {
+        return false;
+      }
+      const patientOccupiesRoom = getRoomNavigableTiles(
+        room,
+        definition,
+        state.doors,
+      ).some(
+        (point) =>
+          point.x === encounter.patientLocation?.x &&
+          point.y === encounter.patientLocation.y,
+      );
+      return (
+        patientOccupiesRoom &&
+        encounter.patientMovement?.kind !==
+          "departing_for_offsite_testing" &&
+        encounter.patientMovement?.kind !==
+          "returning_from_offsite_testing" &&
+        room.upgradeLevel === 1 &&
+        definition.maximumUpgradeLevel > 1 &&
+        encounter.patientSatisfaction < 90 &&
+        state.facilityTick - encounter.waiting.arrivedAtTick >=
+          (roomUpgradeComplaintDefinition?.cooldownMinutes ?? 60)
+      );
+    });
   if (
-    state.environment.waterCoolerFillPercent <=
-    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
-      .waterCoolerLowThreshold
+    roomUpgradeComplaint?.room &&
+    !materializedConditionKeys.has("room_upgrade_requested")
+  ) {
+    const roomName =
+      getRoomDefinition(
+        roomUpgradeComplaint.room.roomDefinitionId,
+      )?.displayName ?? "the room";
+    const configuredCopy = configuredAlertCopy(
+      "alert.patient.room-upgrade-requested",
+      {
+        patient_name:
+          roomUpgradeComplaint.encounter.patientDisplayName,
+        patient_id: roomUpgradeComplaint.encounter.id,
+        room_name: roomName,
+        room_id: roomUpgradeComplaint.room.id,
+      },
+    );
+    messages.push({
+      id: `persistent.room-upgrade-requested.${roomUpgradeComplaint.room.id}`,
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
+      title: configuredCopy.title,
+      message: configuredCopy.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: "room",
+      targetId: roomUpgradeComplaint.room.id,
+      actionLabel: "Show room",
+      sortKey:
+        roomUpgradeComplaint.encounter.waiting.arrivedAtTick +
+        (roomUpgradeComplaintDefinition?.cooldownMinutes ?? 60) +
+        0.0385,
+      persistent: true,
+    });
+  }
+
+  const hasRetainedWaterAlert = recentEvents.some(
+    (event) => event.type === "water_cooler_low",
+  );
+  if (
+    !hasRetainedWaterAlert &&
+    !materializedConditionKeys.has("empty_water_cooler") &&
+    state.environment.waterCoolerFillPercent <= 0
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.environment.water-empty",
@@ -659,7 +1065,13 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "water_cooler",
       actionLabel: "Show water cooler",
-      sortKey: state.facilityTick + 0.38,
+      sortKey:
+        Math.max(
+          0,
+          state.environment.nextWaterCoolerDrainTick -
+            PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment
+              .waterCoolerDrainIntervalMinutes,
+        ) + 0.038,
       persistent: true,
     });
   }
@@ -668,7 +1080,9 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction
       .unhappyStaffMoraleThreshold;
   for (const employee of state.employees.filter(
-    (candidate) => candidate.morale <= lowMoraleThreshold,
+    (candidate) =>
+      candidate.morale <= lowMoraleThreshold &&
+      !materializedConditionKeys.has("low_staff_morale"),
   )) {
     const configuredCopy = configuredAlertCopy(
       "alert.staff.morale-low",
@@ -688,12 +1102,15 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       targetType: "employee",
       targetId: employee.id,
       actionLabel: "Show employee",
-      sortKey: state.facilityTick + 0.57,
+      sortKey: employee.hiredAtFacilityTick + 0.057,
       persistent: true,
     });
   }
 
-  if (state.cash <= 0) {
+  if (
+    state.cash <= 0 &&
+    !materializedConditionKeys.has("no_cash")
+  ) {
     const configuredCopy = configuredAlertCopy(
       "alert.finance.no-cash",
       {},
@@ -708,7 +1125,7 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "emergency_glp1",
       actionLabel: "Open emergency cash option",
-      sortKey: state.facilityTick + 0.61,
+      sortKey: 0.061,
       persistent: true,
     });
   }
@@ -717,7 +1134,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
     state.facilityLevel === 1 &&
     state.advertisingLevel === 0 &&
     checkedInWaiting.length === 0 &&
-    state.nextRoutineArrivalTick - state.facilityTick >= 45
+    state.nextRoutineArrivalTick - state.facilityTick >= 45 &&
+    !materializedConditionKeys.has("advertising_recommended")
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.advertising.recommended",
@@ -733,7 +1151,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "advertising",
       actionLabel: "Show Advertising",
-      sortKey: state.facilityTick + 0.36,
+      sortKey:
+        Math.max(0, state.nextRoutineArrivalTick - 45) + 0.036,
       persistent: true,
     });
   }
@@ -741,7 +1160,8 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
   if (
     state.facilityLevel === 1 &&
     checkedInWaiting.length >= 3 &&
-    state.rooms.some((room) => room.roomDefinitionId === "room.waiting")
+    state.rooms.some((room) => room.roomDefinitionId === "room.waiting") &&
+    !materializedConditionKeys.has("waiting_room_crowded")
   ) {
     const configuredCopy = configuredAlertCopy(
       "alert.facility.waiting-room-crowded",
@@ -757,13 +1177,21 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "build_mode",
       actionLabel: "Open Build Mode",
-      sortKey: state.facilityTick + 0.37,
+      sortKey:
+        Math.max(
+          ...checkedInWaiting.map(
+            (encounter) => encounter.waiting.arrivedAtTick,
+          ),
+        ) + 0.037,
       persistent: true,
     });
   }
 
   const progression = getFacilityProgressionStatus(state);
-  if (progression.eligible) {
+  if (
+    progression.eligible &&
+    !materializedConditionKeys.has("progression_eligible")
+  ) {
     const configuredCopy = configuredAlertCopy(
       "alert.progress.level-complete",
       { level: String(state.facilityLevel) },
@@ -778,25 +1206,30 @@ function persistentSystemMessages(state: GameState): MessageBoardItemView[] {
       timeLabel: facilityTimeLabel(state.facilityTick),
       targetType: "goal",
       actionLabel: "View goals",
-      sortKey: state.facilityTick + 0.6,
+      sortKey:
+        Math.max(
+          0,
+          ...state.events
+            .filter((event) =>
+              [
+                "clinical_decision_recorded",
+                "room_placed",
+                "staff_hired",
+                "encounter_settled",
+              ].includes(event.type),
+            )
+            .map((event) => event.facilityTick),
+        ) + 0.06,
       persistent: true,
     });
   }
   return messages;
 }
 
-/**
- * Actionable arrival, patience, and result events are represented by a single
- * condition-backed persistent item above. Keeping the transient event as well
- * would stack progressively stronger copies of the same patient problem and
- * would leave stale critical warnings after the condition resolved.
- */
-function isRepresentedByPersistentCondition(event: DomainEvent): boolean {
-  return (
-    event.type === "patient_arrived" ||
-    event.type === "patience_warning" ||
-    event.type === "result_ready" ||
-    event.type === "water_cooler_low"
+function isSuppressedFromPlayerFeed(event: DomainEvent): boolean {
+  return isPrototypeEventSuppressedFromPlayerFeed(
+    event.type,
+    event.definitionId,
   );
 }
 
@@ -804,25 +1237,76 @@ export function createMessageBoardView(
   state: GameState,
 ): MessageBoardItemView[] {
   const recentEvents = state.events.slice(-80);
-  const persistent = [
-    ...persistentPatientMessages(state),
-    ...persistentSystemMessages(state),
-  ];
-  const eventItems = recentEvents
-    .filter((event) => !isRepresentedByPersistentCondition(event))
-    .map((event) => eventToMessage(state, event));
-  const criticalActive = [...persistent, ...eventItems].some(
-    (item) =>
-      item.priority === "critical" &&
-      item.category === "action_required",
+  const recentConditionOccurrences = (
+    state.environment.facilityConditionOccurrences ?? []
+  ).slice(-80);
+  const visibleEvents = recentEvents.filter(
+    (event) => !isSuppressedFromPlayerFeed(event),
   );
-  return [
-    ...eventItems.filter(
-      (item) =>
-        !criticalActive || item.category !== "ambient_flavor",
+  const latestAttentionEventIdByGroup = new Map<string, string>();
+  for (const event of visibleEvents) {
+    const group = attentionGroup(event);
+    if (
+      group &&
+      eventCategory(
+        event,
+        effectiveEventDefinitionId(state, event),
+      ) === "action_required"
+    ) {
+      latestAttentionEventIdByGroup.set(group, event.id);
+    }
+  }
+  const eventItems = visibleEvents.map((event) => {
+    const group = attentionGroup(event);
+    const isLatestForCondition =
+      group === null ||
+      latestAttentionEventIdByGroup.get(group) === event.id;
+    return eventToMessage(
+      state,
+      event,
+      isLatestForCondition &&
+        attentionConditionActive(state, event),
+    );
+  });
+  const latestOccurrenceIdByCondition = new Map<
+    FacilityAlertConditionKey,
+    string
+  >();
+  for (const occurrence of recentConditionOccurrences) {
+    latestOccurrenceIdByCondition.set(
+      occurrence.conditionKey,
+      occurrence.id,
+    );
+  }
+  const conditionItems = recentConditionOccurrences.map(
+    (occurrence) =>
+      conditionOccurrenceToMessage(
+        occurrence,
+        latestOccurrenceIdByCondition.get(
+          occurrence.conditionKey,
+        ) === occurrence.id,
+      ),
+  );
+  const materializedConditionKeys = new Set(
+    (state.environment.facilityConditionOccurrences ?? []).map(
+      (occurrence) => occurrence.conditionKey,
     ),
-    ...persistent,
+  );
+  const persistent = [
+    ...persistentPatientMessages(state, recentEvents),
+    ...persistentSystemMessages(
+      state,
+      recentEvents,
+      materializedConditionKeys,
+    ),
   ];
+  const retainedHistory = [...eventItems, ...conditionItems]
+    .sort(
+      (left, right) =>
+        (left.sortKey ?? 0) - (right.sortKey ?? 0),
+    )
+    .slice(-80);
+  return [...retainedHistory, ...persistent];
 }
 
 export function targetTypeForDomainKind(

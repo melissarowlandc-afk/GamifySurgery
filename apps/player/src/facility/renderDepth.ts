@@ -5,6 +5,13 @@
  */
 export const FACILITY_DEPTH_WORLD = 0;
 export const FACILITY_DEPTH_SORTABLE_BASE = 100_000;
+/**
+ * Small floor interactions must remain discoverable even when a tall
+ * furniture sprite projects across their tile. This foreground world band is
+ * above ordinary fixtures and characters but remains below locators, build
+ * overlays, and UI.
+ */
+export const FACILITY_DEPTH_FLOOR_INTERACTION = 900_000;
 export const FACILITY_DEPTH_LOCATOR = 1_000_000;
 export const FACILITY_DEPTH_BUILD_OVERLAY = 1_000_100;
 export const FACILITY_DEPTH_UI = 1_000_200;

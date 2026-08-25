@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import type { CardinalDirection } from "@gamify-surgery/game-domain";
+import { createPortal } from "react-dom";
 import type {
   RoomBuildOptionView,
   SelectedRoomBuildView,
 } from "./types";
 import { PixelIcon } from "./PixelIcon";
 import type { PixelIconName } from "../art/iconArt";
+
+type BuildDoorTool = "place" | "remove" | null;
 
 interface BuildPanelProps {
   buildMode: boolean;
@@ -20,13 +22,8 @@ interface BuildPanelProps {
   onRotatePlacement: () => void;
   onUpgradeSelectedRoom: () => void;
   onSellSelectedRoom: () => void;
-  onRotateSelectedRoom: () => void;
-  onBeginMoveSelectedRoom: () => void;
-  onPlaceDoorForSelectedRoom: (
-    side: CardinalDirection,
-    offset: number,
-  ) => void;
-  onRemoveDoor: (doorId: string) => void;
+  buildDoorTool: BuildDoorTool;
+  onBuildDoorToolChange: (tool: BuildDoorTool) => void;
   onUndoBuildAction: () => void;
   undoCount: number;
   exitBlockedReason: string | null;
@@ -58,6 +55,32 @@ function roomIconName(roomDefinitionId: string): PixelIconName {
   }
 }
 
+function compactUpgradeImprovement(improvement: string): string {
+  const fixtures = improvement.match(
+    /fixed fixtures advance to Level (\d+)/i,
+  );
+  if (fixtures) {
+    return `Fixtures → L${fixtures[1]}`;
+  }
+  const capacity = improvement.match(/workload capacity \+(\d+)/i);
+  if (capacity) {
+    return `Capacity +${capacity[1]}`;
+  }
+  const service = improvement.match(/service time (\d+)% faster/i);
+  if (service) {
+    return `Service ${service[1]}% faster`;
+  }
+  const satisfaction = improvement.match(/satisfaction \+(\d+)/i);
+  if (satisfaction) {
+    return `Satisfaction +${satisfaction[1]}`;
+  }
+  const upkeep = improvement.match(/Hourly upkeep \+\$(\d+)/i);
+  if (upkeep) {
+    return `Upkeep +$${upkeep[1]}/hr`;
+  }
+  return improvement;
+}
+
 export function BuildPanel({
   buildMode,
   cashLabel,
@@ -71,10 +94,8 @@ export function BuildPanel({
   onRotatePlacement,
   onUpgradeSelectedRoom,
   onSellSelectedRoom,
-  onRotateSelectedRoom,
-  onBeginMoveSelectedRoom,
-  onPlaceDoorForSelectedRoom,
-  onRemoveDoor,
+  buildDoorTool,
+  onBuildDoorToolChange,
   onUndoBuildAction,
   undoCount,
   exitBlockedReason,
@@ -82,9 +103,6 @@ export function BuildPanel({
   upgradeRequestRoomId,
   onUpgradeRequestHandled,
 }: BuildPanelProps) {
-  const [doorTool, setDoorTool] = useState<
-    "place" | "remove" | null
-  >(null);
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [invalidDialogOpen, setInvalidDialogOpen] = useState(false);
 
@@ -117,6 +135,7 @@ export function BuildPanel({
     return (
       <button
         className="button button-primary build-mode-trigger build-mode-toggle mode-toggle-button"
+        data-tutorial-anchor="enter-build-mode"
         type="button"
         onClick={onEnterBuildMode}
         aria-label="Enter Build Mode"
@@ -133,9 +152,9 @@ export function BuildPanel({
   const hallwayOption = roomOptions.find(
     (room) => room.id === "room.hallway",
   );
-  const rotateEnabled =
-    Boolean(selectedPlacement && !selectedPlacementIsHallway) ||
-    Boolean(selectedRoom?.canRotate);
+  const rotateEnabled = Boolean(
+    selectedPlacement && !selectedPlacementIsHallway,
+  );
 
   const closeUpgradeDialog = () => {
     setUpgradeDialogOpen(false);
@@ -148,280 +167,233 @@ export function BuildPanel({
     }
     onExitBuildMode();
   };
+  const selectDoorTool = (tool: Exclude<BuildDoorTool, null>) => {
+    if (selectedPlacement) {
+      onCancelPlacement();
+    }
+    onBuildDoorToolChange(buildDoorTool === tool ? null : tool);
+  };
+  const selectPlacement = (roomDefinitionId: string) => {
+    if (buildDoorTool) {
+      onBuildDoorToolChange(null);
+    }
+    onSelectRoom(roomDefinitionId);
+  };
 
   return (
     <>
       <section className="panel build-panel build-mode-panel">
-        <div className="panel-heading">
-          <span>Construction tools</span>
-          <small>Time paused</small>
-        </div>
-
-        <div className="build-cash-banner">
-          <span>Available money</span>
-          <strong>{cashLabel}</strong>
-        </div>
+        <header className="build-mode-topbar">
+          <strong className="build-mode-title">Build Mode</strong>
+          <span className="build-mode-money">
+            <span>Available Money</span>
+            <strong>{cashLabel}</strong>
+          </span>
+          <div className="build-mode-topbar-actions">
+            <button
+              className="text-button build-undo-button"
+              type="button"
+              onClick={onUndoBuildAction}
+              disabled={undoCount === 0}
+            >
+              Undo
+            </button>
+            <button
+              className="button button-primary build-done-button"
+              data-tutorial-anchor="build-done"
+              type="button"
+              onClick={requestExit}
+              aria-label="Done / Save"
+            >
+              Done / Save
+            </button>
+          </div>
+        </header>
 
         <nav
           className="build-tool-toolbar"
           aria-label="Build Mode tools"
         >
+          <strong className="build-tool-toolbar-label">
+            Construction Tools
+          </strong>
           <button
             className="button button-secondary"
             type="button"
-            onClick={() => {
-              if (selectedPlacement && !selectedPlacementIsHallway) {
-                onRotatePlacement();
-              } else {
-                onRotateSelectedRoom();
-              }
-            }}
+            onClick={onRotatePlacement}
             disabled={!rotateEnabled}
           >
             Rotate
           </button>
           <button
             className={`button button-secondary${
+              buildDoorTool === "place" ? " is-active" : ""
+            }`}
+            data-build-tool="place-door"
+            data-tutorial-anchor="place-door"
+            type="button"
+            onClick={() => selectDoorTool("place")}
+            aria-pressed={buildDoorTool === "place"}
+          >
+            Place Door
+          </button>
+          <button
+            className={`button button-secondary${
+              buildDoorTool === "remove" ? " is-active" : ""
+            }`}
+            type="button"
+            onClick={() => selectDoorTool("remove")}
+            aria-pressed={buildDoorTool === "remove"}
+          >
+            Remove Door
+          </button>
+          <button
+            className={`button button-secondary${
               selectedPlacementIsHallway ? " is-active" : ""
             }`}
             type="button"
-            onClick={() =>
-              selectedPlacementIsHallway
-                ? onCancelPlacement()
-                : onSelectRoom("room.hallway")
-            }
+            onClick={() => {
+              if (buildDoorTool) {
+                onBuildDoorToolChange(null);
+              }
+              if (selectedPlacementIsHallway) {
+                onCancelPlacement();
+              } else {
+                onSelectRoom("room.hallway");
+              }
+            }}
             disabled={
               !hallwayOption ||
               (!hallwayOption.enabled && !selectedPlacementIsHallway)
             }
             title={hallwayOption?.blockedReason}
+            aria-pressed={selectedPlacementIsHallway}
           >
             Build Hallway
-            {hallwayOption ? ` · ${hallwayOption.costLabel}` : ""}
-          </button>
-          <button
-            className={`button button-secondary${
-              doorTool === "place" ? " is-active" : ""
-            }`}
-            type="button"
-            onClick={() =>
-              setDoorTool((current) =>
-                current === "place" ? null : "place",
-              )
-            }
-            disabled={!selectedRoom}
-          >
-            Place Door · $0
-          </button>
-          <button
-            className={`button button-secondary${
-              doorTool === "remove" ? " is-active" : ""
-            }`}
-            type="button"
-            onClick={() =>
-              setDoorTool((current) =>
-                current === "remove" ? null : "remove",
-              )
-            }
-            disabled={
-              !selectedRoom ||
-              !selectedRoom.doors.some((door) => door.removable)
-            }
-          >
-            Remove Door
-          </button>
-          <button
-            className="button button-secondary"
-            type="button"
-            onClick={onUndoBuildAction}
-            disabled={undoCount === 0}
-          >
-            Undo ({undoCount})
-          </button>
-          <button
-            className="button button-primary build-mode-toggle mode-toggle-button is-active"
-            type="button"
-            onClick={requestExit}
-            aria-label="Exit Build Mode"
-          >
-            Done / Save and Return
+            {hallwayOption ? ` - ${hallwayOption.costLabel}` : ""}
           </button>
         </nav>
 
         {exitIssues.length > 0 ? (
           <p className="blocked-reason build-exit-reason" role="alert">
-            Layout needs attention. Select Done / Save and Return for
-            the complete list.
+            Layout needs attention. Select Done / Save for the complete
+            list.
           </p>
         ) : null}
 
         {selectedPlacement ? (
-          <div className="build-tool-controls">
-            <strong>Placing {selectedPlacement.displayName}</strong>
+          <div className="build-placement-status" role="status">
+            <span>
+              Placing <strong>{selectedPlacement.displayName}</strong>
+            </span>
             <span className="placement-orientation">
               {selectedPlacementIsHallway
                 ? "Hallway footprint"
-                : `Orientation: ${placementOrientation}°`}
+                : `Orientation ${placementOrientation}°`}
             </span>
-            <p>
-              {selectedPlacementIsHallway
-                ? "Move over the map to preview the hallway tile."
-                : "Place the room footprint first, then use Place Door on a valid wall."}
-            </p>
             <button
-              className="button button-secondary"
+              className="text-button"
               type="button"
               onClick={onCancelPlacement}
             >
-              Cancel tool
+              Cancel
             </button>
           </div>
         ) : null}
 
-        {selectedRoom ? (
-          <div className="selected-room-inspector">
-            <span className="eyebrow">Selected room</span>
-            <h2>{selectedRoom.displayName}</h2>
-            <p>Upgrade Level {selectedRoom.upgradeLevel}</p>
-            {selectedRoom.blockedReason ? (
-              <p className="blocked-reason">{selectedRoom.blockedReason}</p>
-            ) : null}
-            <div className="selected-room-actions">
-              <button
-                className="button button-secondary"
-                type="button"
-                onClick={onBeginMoveSelectedRoom}
-                disabled={!selectedRoom.canMove}
-              >
-                Move
-              </button>
-              <button
-                className="button button-secondary"
-                type="button"
-                onClick={() => setUpgradeDialogOpen(true)}
-                disabled={selectedRoom.nextUpgradeLevel === undefined}
-              >
-                {selectedRoom.upgradeCostLabel
-                  ? `Upgrade · ${selectedRoom.upgradeCostLabel}`
-                  : "Maximum upgrade"}
-              </button>
-              <button
-                className="button button-danger"
-                type="button"
-                onClick={onSellSelectedRoom}
-                disabled={!selectedRoom.canSell}
-              >
-                Sell
-                {selectedRoom.resaleValueLabel
-                  ? ` · ${selectedRoom.resaleValueLabel}`
-                  : ""}
-              </button>
-            </div>
-
-            {doorTool ? (
-              <div className="door-tool" data-door-tool={doorTool}>
-                <h3>
-                  {doorTool === "place"
-                    ? "Place Door · $0"
-                    : "Remove Door"}
-                </h3>
-                <p>
-                  {doorTool === "place"
-                    ? "Choose a valid wall position. Imaging rooms need separate patient and control-room doors."
-                    : "Choose a removable door to convert its opening back into a wall."}
+        <div
+          className={`build-catalog-layout${
+            selectedRoom ? " has-room-inspector" : ""
+          }`}
+        >
+          {selectedRoom ? (
+            <aside className="selected-room-inspector">
+              <span className="eyebrow">Selected Room</span>
+              <h2>{selectedRoom.displayName}</h2>
+              <p className="selected-room-level">
+                Upgrade Level {selectedRoom.upgradeLevel}
+              </p>
+              {selectedRoom.blockedReason ? (
+                <p className="blocked-reason">
+                  {selectedRoom.blockedReason}
                 </p>
-                {doorTool === "place" ? (
-                  <div className="door-slot-grid">
-                    {selectedRoom.doorSlots.map((slot) => (
-                      <button
-                        className="button button-secondary"
-                        type="button"
-                        key={slot.id}
-                        disabled={!slot.enabled}
-                        title={slot.blockedReason}
-                        onClick={() =>
-                          onPlaceDoorForSelectedRoom(
-                            slot.side,
-                            slot.offset,
-                          )
-                        }
-                      >
-                        {slot.label}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="door-remove-list">
-                    {selectedRoom.doors.some(
-                      (door) => door.removable,
-                    ) ? (
-                      selectedRoom.doors
-                        .filter((door) => door.removable)
-                        .map((door) => (
-                          <button
-                            className="button button-danger"
-                            type="button"
-                            key={door.id}
-                            onClick={() => onRemoveDoor(door.id)}
-                          >
-                            Remove {door.label}
-                          </button>
-                        ))
-                    ) : (
-                      <p>No removable doors remain.</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          <p className="build-selection-hint">
-            Select a room on the map to move, upgrade, sell, or edit
-            its doors.
-          </p>
-        )}
-
-        <div className="build-section">
-          <h2>Rooms</h2>
-          <div className="build-option-list">
-            {roomOptions
-              .filter((room) => room.id !== "room.hallway")
-              .map((room) => (
+              ) : null}
+              <div className="selected-room-primary-actions">
                 <button
-                  className={`build-card${
-                    room.selected ? " is-selected" : ""
-                  }`}
+                  className="button button-secondary selected-room-upgrade"
                   type="button"
-                  key={room.id}
-                  data-room-definition-id={room.id}
-                  disabled={!room.enabled && !room.selected}
-                  onClick={() =>
-                    room.selected
-                      ? onCancelPlacement()
-                      : onSelectRoom(room.id)
-                  }
-                  title={room.blockedReason}
+                  onClick={() => setUpgradeDialogOpen(true)}
+                  disabled={selectedRoom.nextUpgradeLevel === undefined}
                 >
-                  <PixelIcon
-                    name={roomIconName(room.id)}
-                    className="pixel-room-icon"
-                  />
-                  <span>
-                    <strong>{room.displayName}</strong>
+                  <strong>
+                    {selectedRoom.upgradeCostLabel
+                      ? `Upgrade - ${selectedRoom.upgradeCostLabel}`
+                      : "Maximum Upgrade"}
+                  </strong>
+                  {selectedRoom.upgradeImprovements.length > 0 ? (
                     <small>
-                      {room.footprintLabel} · {room.costLabel}
+                      {selectedRoom.upgradeImprovements
+                        .map(compactUpgradeImprovement)
+                        .join(" · ")}
                     </small>
-                    <small>{room.upkeepLabel}</small>
-                    {room.blockedReason ? (
-                      <small className="blocked-reason">
-                        {room.blockedReason}
-                      </small>
-                    ) : null}
-                  </span>
-                  <span>{room.selected ? "Selected" : "Place"}</span>
+                  ) : null}
                 </button>
-              ))}
+                <button
+                  className="button button-danger"
+                  type="button"
+                  onClick={onSellSelectedRoom}
+                  disabled={!selectedRoom.canSell}
+                >
+                  Sell
+                  {selectedRoom.resaleValueLabel
+                    ? ` - ${selectedRoom.resaleValueLabel}`
+                    : ""}
+                </button>
+              </div>
+            </aside>
+          ) : null}
+
+          <div className="build-section build-room-catalog">
+            <h2>Rooms</h2>
+            <div className="build-option-list">
+              {roomOptions
+                .filter((room) => room.id !== "room.hallway")
+                .map((room) => (
+                  <button
+                    className={`build-card${
+                      room.selected ? " is-selected" : ""
+                    }`}
+                    type="button"
+                    key={room.id}
+                    data-room-definition-id={room.id}
+                    disabled={!room.enabled && !room.selected}
+                    onClick={() =>
+                      room.selected
+                        ? onCancelPlacement()
+                        : selectPlacement(room.id)
+                    }
+                    title={room.blockedReason}
+                    aria-pressed={room.selected}
+                  >
+                    <PixelIcon
+                      name={roomIconName(room.id)}
+                      className="pixel-room-icon"
+                    />
+                    <span>
+                      <strong>{room.displayName}</strong>
+                      <small>
+                        {room.footprintLabel} - {room.costLabel}
+                      </small>
+                      <small>{room.upkeepLabel}</small>
+                      {room.blockedReason ? (
+                        <small className="blocked-reason">
+                          {room.blockedReason}
+                        </small>
+                      ) : null}
+                    </span>
+                  </button>
+                ))}
+            </div>
           </div>
         </div>
       </section>
@@ -471,44 +443,54 @@ export function BuildPanel({
                   closeUpgradeDialog();
                 }}
               >
-                Confirm Upgrade · {selectedRoom.upgradeCostLabel}
+                Confirm Upgrade - {selectedRoom.upgradeCostLabel}
               </button>
             </div>
           </section>
         </div>
       ) : null}
 
-      {invalidDialogOpen ? (
-        <div className="dialog-backdrop" role="presentation">
-          <section
-            className="confirm-dialog invalid-layout-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="invalid-layout-title"
-          >
-            <span className="eyebrow">Layout cannot be saved yet</span>
-            <h2 id="invalid-layout-title">Fix these access problems</h2>
-            <ul>
-              {exitIssues.map((issue) => (
-                <li key={issue}>{issue}</li>
-              ))}
-            </ul>
-            <p>
-              Clinic operations remain paused until every problem is
-              corrected.
-            </p>
-            <div className="dialog-actions">
-              <button
-                className="button button-primary"
-                type="button"
-                onClick={() => setInvalidDialogOpen(false)}
+      {invalidDialogOpen && typeof document !== "undefined"
+        ? createPortal(
+            <div
+              className="dialog-backdrop invalid-layout-backdrop"
+              role="presentation"
+            >
+              <section
+                className="confirm-dialog invalid-layout-dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="invalid-layout-title"
               >
-                Continue Renovating
-              </button>
-            </div>
-          </section>
-        </div>
-      ) : null}
+                <span className="eyebrow">
+                  Layout cannot be saved yet
+                </span>
+                <h2 id="invalid-layout-title">
+                  Fix these access problems
+                </h2>
+                <ul>
+                  {exitIssues.map((issue) => (
+                    <li key={issue}>{issue}</li>
+                  ))}
+                </ul>
+                <p>
+                  Clinic operations remain paused until every problem is
+                  corrected.
+                </p>
+                <div className="dialog-actions">
+                  <button
+                    className="button button-primary"
+                    type="button"
+                    onClick={() => setInvalidDialogOpen(false)}
+                  >
+                    Continue Renovating
+                  </button>
+                </div>
+              </section>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

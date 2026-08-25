@@ -5,10 +5,10 @@ import {
 import { getDoorCells } from "./doors";
 import { getRoomDefinition, getStaffRoleDefinition } from "./selectors";
 import {
-  findDeterministicRoomPath,
-  getOccupiedTiles,
+  findDeterministicFacilityPath,
+  getRoomNavigableTiles,
   getRotatedFootprint,
-  getRoomCenter,
+  getRoomNavigationAnchor,
 } from "./spatial";
 import type { DomainContext, EmployeeState, GameState, GridPoint } from "./types";
 
@@ -28,7 +28,7 @@ export function advanceEmployeeMovement(
   context: DomainContext,
 ): void {
   const interval = context.balanceRelease.facility.staffMovementIntervalTicks;
-  if (state.facilityTick === 0 || state.facilityTick % interval !== 0) {
+  if (state.facilityTick === 0) {
     return;
   }
 
@@ -37,9 +37,25 @@ export function advanceEmployeeMovement(
       employee.path.length > 0 &&
       employee.pathIndex < employee.path.length - 1
     ) {
-      employee.pathIndex += 1;
+      const elapsedTicks = Math.max(
+        1,
+        state.facilityTick - employee.lastMovedAtFacilityTick,
+      );
+      employee.pathIndex = Math.min(
+        employee.path.length - 1,
+        employee.pathIndex +
+          elapsedTicks *
+            context.balanceRelease.facility
+              .characterTravelTilesPerTick,
+      );
       employee.location = { ...employee.path[employee.pathIndex]! };
       employee.lastMovedAtFacilityTick = state.facilityTick;
+      continue;
+    }
+    if (employee.facilityTask) {
+      continue;
+    }
+    if (state.facilityTick % interval !== 0) {
       continue;
     }
     if (state.facilityTick < employee.nextIdleActionAtFacilityTick) {
@@ -89,7 +105,11 @@ export function advanceEmployeeMovement(
           return cells ? [`${cells.inside.x},${cells.inside.y}`] : [];
         }),
     );
-    const candidates = getOccupiedTiles(homeRoom, definition)
+    const candidates = getRoomNavigableTiles(
+      homeRoom,
+      definition,
+      state.doors,
+    )
       .filter((point) => !samePoint(point, employee.location))
       .filter(
         (point) => !blockedDoorTiles.has(`${point.x},${point.y}`),
@@ -105,21 +125,15 @@ export function advanceEmployeeMovement(
       candidates.length,
     );
     const target = candidates[candidateIndex]!;
-    const path: GridPoint[] = [{ ...employee.location }];
-    let cursor = { ...employee.location };
-    while (cursor.x !== target.x) {
-      cursor = {
-        x: cursor.x + Math.sign(target.x - cursor.x),
-        y: cursor.y,
-      };
-      path.push(cursor);
-    }
-    while (cursor.y !== target.y) {
-      cursor = {
-        x: cursor.x,
-        y: cursor.y + Math.sign(target.y - cursor.y),
-      };
-      path.push(cursor);
+    const path = findDeterministicFacilityPath(
+      employee.location,
+      target,
+      state.rooms,
+      state.doors,
+      (definitionId) => getRoomDefinition(definitionId, context),
+    );
+    if (path.length <= 1) {
+      continue;
     }
     employee.path = path;
     employee.pathIndex = 0;
@@ -152,7 +166,7 @@ export function getEmployeeHomeLocation(
     homeRoomInstanceId: homeRoom?.id ?? null,
     location:
       homeRoom && definition
-        ? getRoomCenter(homeRoom, definition)
+        ? getRoomNavigationAnchor(homeRoom, definition, "staff")
         : { x: 0, y: 0 },
   };
 }
@@ -180,6 +194,7 @@ function openGridPath(start: GridPoint, goal: GridPoint): GridPoint[] {
 export function getEmployeeArrival(
   state: GameState,
   employeeRoleId: string,
+  employeeId: string,
   context: DomainContext,
 ): {
   homeRoomInstanceId: string;
@@ -219,31 +234,45 @@ export function getEmployeeArrival(
     y: entryRoom.y + entrySize.height - 1,
   };
   const entryApproach = { x: entryDoor.x, y: entryDoor.y + 1 };
-  const entryCenter = getRoomCenter(entryRoom, entryDefinition);
+  const entryCenter = getRoomNavigationAnchor(
+    entryRoom,
+    entryDefinition,
+    "staff",
+  );
+  const entersFromLeft =
+    deterministicInteger(
+      state.campaignSeed,
+      RANDOM_STREAMS.environment,
+      `${employeeId}:staff-arrival-side.v1`,
+      2,
+    ) === 0;
+  const offscreenStart = {
+    x: entersFromLeft
+      ? -2
+      : context.balanceRelease.facility.gridWidth + 1,
+    y: entryApproach.y,
+  };
   const exteriorPath = [
-    { ...entryApproach },
-    ...openGridPath(entryDoor, entryCenter),
+    ...openGridPath(offscreenStart, entryApproach),
+    entryDoor,
   ];
-
-  let path: GridPoint[];
-  if (entryRoom.id === homeRoom.id) {
-    path = exteriorPath;
-  } else {
-    const internalPath = findDeterministicRoomPath(
-      entryRoom,
-      homeRoom,
-      (definitionId) => getRoomDefinition(definitionId, context),
-      state.rooms,
-      new Set(
-        context.balanceRelease.facility.protectedRoomDefinitionIds,
-      ),
-      state.doors,
-    );
-    path =
-      internalPath.length === 0
-        ? []
-        : [...exteriorPath, ...internalPath.slice(1)];
-  }
+  const internalPath = findDeterministicFacilityPath(
+    entryDoor,
+    homeRoom.id === entryRoom.id
+      ? entryCenter
+      : getRoomNavigationAnchor(
+          homeRoom,
+          homeDefinition,
+          "staff",
+        ),
+    state.rooms,
+    state.doors,
+    (definitionId) => getRoomDefinition(definitionId, context),
+  );
+  const path =
+    internalPath.length === 0
+      ? []
+      : [...exteriorPath, ...internalPath.slice(1)];
   if (path.length === 0) {
     return null;
   }

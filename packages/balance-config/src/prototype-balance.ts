@@ -12,13 +12,14 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     hallwayRoomDefinitionId: "room.hallway",
     protectedRoomDefinitionIds: ["room.front_desk"],
     roomResalePercent: 25,
-    // Two visible grid steps per simulated minute keeps ordinary movement
-    // legible without turning short clinic routes into long real-time waits.
+    // This remains the cadence for selecting staff idle destinations. Actual
+    // travel uses the shared character speed below.
     staffMovementIntervalTicks: 1,
-    // Four tiles per facility minute keeps the wide sidewalk entrance
-    // readable without making a new player wait nearly twenty real seconds
-    // before the first chart becomes available.
-    patientTravelTilesPerTick: 4,
+    // One natural walking speed governs patients, staff, and the founder.
+    // Two tiles per facility minute gives the renderer time to interpolate
+    // every step while still fitting authored sendout travel inside its
+    // facility-time service interval.
+    characterTravelTilesPerTick: 2,
     // Keeps the required Level 0 examination-room purchase reachable even
     // after the protected tutorial's lowest authored payout.
     startingCash: 120,
@@ -58,6 +59,19 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: [],
         capabilityIds: [],
+        navigation: {
+          blockedTiles: [
+            { x: 1, y: 2 },
+            { x: 2, y: 2 },
+            { x: 3, y: 2 },
+          ],
+          primaryAnchor: { x: 2, y: 3 },
+          waitingAnchors: [
+            { x: 1, y: 3 },
+            { x: 3, y: 3 },
+          ],
+          staffAnchor: { x: 2, y: 1 },
+        },
       },
       {
         id: "room.hallway",
@@ -79,6 +93,12 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.walkable_hallway"],
+        navigation: {
+          blockedTiles: [],
+          primaryAnchor: { x: 0, y: 0 },
+          waitingAnchors: [],
+          staffAnchor: null,
+        },
       },
       {
         id: "room.examination",
@@ -103,6 +123,15 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           "capability.examination",
           "capability.synthetic.in_house_analysis",
         ],
+        navigation: {
+          blockedTiles: [
+            { x: 0, y: 1 },
+            { x: 2, y: 0 },
+          ],
+          primaryAnchor: { x: 1, y: 1 },
+          waitingAnchors: [],
+          staffAnchor: { x: 2, y: 1 },
+        },
       },
       {
         id: "room.bathroom",
@@ -124,6 +153,15 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.patient_bathroom"],
+        navigation: {
+          blockedTiles: [
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+          ],
+          primaryAnchor: { x: 0, y: 1 },
+          waitingAnchors: [],
+          staffAnchor: null,
+        },
       },
       {
         id: "room.waiting",
@@ -145,6 +183,20 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.waiting_seats"],
+        navigation: {
+          blockedTiles: [
+            { x: 1, y: 1 },
+            { x: 2, y: 1 },
+          ],
+          primaryAnchor: { x: 0, y: 1 },
+          waitingAnchors: [
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+            { x: 0, y: 1 },
+            { x: 3, y: 1 },
+          ],
+          staffAnchor: null,
+        },
       },
       {
         id: "room.xray",
@@ -166,6 +218,18 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 8,
         requiredRoomDefinitionIds: ["room.imaging_control"],
         capabilityIds: ["capability.xray_machine"],
+        navigation: {
+          blockedTiles: [
+            { x: 0, y: 0 },
+            { x: 2, y: 0 },
+            { x: 0, y: 1 },
+            { x: 2, y: 1 },
+            { x: 2, y: 2 },
+          ],
+          primaryAnchor: { x: 1, y: 1 },
+          waitingAnchors: [],
+          staffAnchor: { x: 1, y: 2 },
+        },
       },
       {
         id: "room.imaging_control",
@@ -187,6 +251,15 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: ["capability.imaging_control"],
+        navigation: {
+          blockedTiles: [
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+          ],
+          primaryAnchor: { x: 0, y: 1 },
+          waitingAnchors: [],
+          staffAnchor: { x: 0, y: 1 },
+        },
       },
       {
         id: "room.minor_procedure",
@@ -208,6 +281,17 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: ["capability.minor_procedure"],
+        navigation: {
+          blockedTiles: [
+            { x: 0, y: 1 },
+            { x: 1, y: 1 },
+            { x: 2, y: 1 },
+            { x: 2, y: 0 },
+          ],
+          primaryAnchor: { x: 1, y: 2 },
+          waitingAnchors: [],
+          staffAnchor: { x: 2, y: 2 },
+        },
       },
     ],
     staffRoleDefinitions: [
@@ -320,6 +404,22 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     maximumAmenityCompletionBonus: 3,
     roomCleanlinessLossPerEncounter: 1,
     rollingWindowSize: 10,
+    // These mild, capped pressures are shared by patient check-in, the live
+    // HUD, progression, and the durable condition-alert history. They remain
+    // deliberately easy to tune without changing simulation logic.
+    facilityConditionPenalties: {
+      maximumTotal: 15,
+      visibleLitterPerItem: 2,
+      visibleLitterMaximum: 6,
+      dirtyCleanliness: 4,
+      emptyWaterCooler: 2,
+      missingWaitingRoom: 3,
+      missingExaminationRoom: 4,
+      missingBathroom: 2,
+      noReceptionist: 2,
+      lowStaffMorale: 2,
+      unavailableOnsiteXray: 2,
+    },
   },
   environment: {
     litterSpawnMinimumMinutes: 45,
@@ -330,6 +430,9 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     waterCoolerDrainIntervalMinutes: 60,
     waterCoolerDrainPerInterval: 25,
     waterCoolerLowThreshold: 25,
+    // One operating day is ten facility hours (8 AM through 6 PM).
+    waterCoolerEmptyReminderMinutes: 600,
+    receptionistWaterRefillDelayMinutes: 60,
     waterRefillSatisfactionBonus: 1,
     praiseMoraleBonus: 5,
     praiseCooldownMinutes: 600,
@@ -337,6 +440,12 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     idleActionMinimumMinutes: 10,
     idleActionMaximumMinutes: 25,
     idleActionChancePercent: 35,
+    // A passerby occupies the full sidewalk for roughly half an operating
+    // hour at the canonical walking speed. This interval keeps the exterior
+    // alive without making it read as a constant crowd.
+    sidewalkPedestrianMinimumMinutes: 40,
+    sidewalkPedestrianMaximumMinutes: 90,
+    maximumSidewalkPedestrians: 2,
   },
   arrivals: {
     levelZeroRecoveryIntervalTicks: 2,
@@ -383,7 +492,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     employeeQuittingThreshold: 10,
   },
   emergencyGlp1: {
-    cashEligibilityThreshold: 200,
+    lowCashAlertThreshold: 200,
+    dedicatedRoomDefinitionId: "room.glp1_telehealth_suite",
     cooldownTicks: 1,
     cooldownMinutes: 60,
     payment: 25,
@@ -506,6 +616,102 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       ],
     },
     {
+      id: "service.ultrasound",
+      displayName: "Ultrasound",
+      routes: [
+        {
+          id: "route.ultrasound.outsourced",
+          displayName: "Off-site ultrasound",
+          // Editorial simulation timing for the current prototype, not a
+          // clinical turnaround-time claim. A later onsite Level 2 route can
+          // be added without changing the clinical concept IDs.
+          durationTicks: 60,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.diagnostic_breast_imaging",
+      displayName: "Diagnostic breast imaging",
+      routes: [
+        {
+          id: "route.diagnostic_breast_imaging.outsourced",
+          displayName: "Off-site diagnostic breast imaging",
+          // Editorial simulation timing for a bundled off-site diagnostic
+          // mammography/tomosynthesis and targeted-ultrasound visit. This is a
+          // tunable game value, not a clinical turnaround-time claim.
+          durationTicks: 120,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.mammography",
+      displayName: "Mammography",
+      routes: [
+        {
+          id: "route.mammography.outsourced",
+          displayName: "Off-site mammography",
+          // Editorial facility-time preview for a diagnostic distractor. It
+          // is not a clinical turnaround-time claim and an incorrect choice
+          // still follows the approved corrected-forward pathway.
+          durationTicks: 120,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.breast_mri",
+      displayName: "Breast MRI",
+      routes: [
+        {
+          id: "route.breast_mri.outsourced",
+          displayName: "Off-site breast MRI",
+          // Tunable editorial simulation time, not clinical guidance.
+          durationTicks: 180,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.breast_core_needle_biopsy",
+      displayName: "Core-needle biopsy",
+      routes: [
+        {
+          id: "route.breast_core_needle_biopsy.outsourced",
+          displayName: "Off-site core-needle biopsy",
+          // Tunable editorial simulation time, not clinical guidance.
+          durationTicks: 180,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.breast_excisional_biopsy",
+      displayName: "Excisional biopsy",
+      routes: [
+        {
+          id: "route.breast_excisional_biopsy.outsourced",
+          displayName: "Off-site excisional biopsy",
+          // Tunable editorial simulation time, not clinical guidance.
+          durationTicks: 240,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
       id: "service.basic_labs",
       displayName: "Basic laboratory testing",
       routes: [
@@ -513,6 +719,54 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           id: "route.basic_labs.outsourced",
           displayName: "Off-site basic laboratory testing",
           durationTicks: 60,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.hs.heat-damaged-rbc-scintigraphy",
+      displayName: "Tc-99m heat-damaged RBC scintigraphy",
+      routes: [
+        {
+          id: "route.hs.heat-damaged-rbc-scintigraphy.offsite",
+          displayName: "Off-site Tc-99m heat-damaged RBC scintigraphy",
+          // Editorial prototype timing for displayed alternatives, not a
+          // clinical turnaround-time claim.
+          durationTicks: 120,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.hs.sulfur-colloid-scintigraphy",
+      displayName: "Tc-99m sulfur-colloid scintigraphy",
+      routes: [
+        {
+          id: "route.hs.sulfur-colloid-scintigraphy.offsite",
+          displayName: "Off-site Tc-99m sulfur-colloid scintigraphy",
+          // Matches the other displayed study choices solely so game timing
+          // cannot reveal the keyed answer; it is not clinical guidance.
+          durationTicks: 120,
+          requiredCapabilityId: null,
+          requiredCapabilityIds: [],
+          preference: 1,
+        },
+      ],
+    },
+    {
+      id: "service.hs.noncontrast-abdominal-ct",
+      displayName: "Noncontrast abdominal CT",
+      routes: [
+        {
+          id: "route.hs.noncontrast-abdominal-ct.offsite",
+          displayName: "Off-site noncontrast abdominal CT",
+          // Matches the other displayed study choices solely so game timing
+          // cannot reveal the keyed answer; it is not clinical guidance.
+          durationTicks: 120,
           requiredCapabilityId: null,
           requiredCapabilityIds: [],
           preference: 1,

@@ -70,8 +70,12 @@ Never use a single `level` field for all classification. A Tested Concept keeps
 these independent:
 
 - `educationalDifficultyId` - expected knowledge or learner stage;
-- `earliestFacilityStageId` - earliest game-facility level at which it may
-  appear;
+- `releasePointIds` in owner intake - one or more proposed semantic points at
+  which different iterations of the concept may appear;
+- `releasePointId` on each normalized Patient Presentation Variant - exactly
+  one approved semantic release point inherited by its Question Variants;
+- `earliestFacilityStageId` - a derived authoring/runtime index resolved from
+  approved presentation release points and the pinned balance release;
 - `requiredClinicalSettingIds` - clinic, ambulatory surgery, emergency
   department, ward, ICU, or another reviewed vocabulary value;
 - `currentGameEligibility` - unclassified, eligible, deferred, or excluded;
@@ -81,6 +85,14 @@ these independent:
 The temporary `unclassified` vocabulary is not a clinical judgment. It exists
 so collection can begin without quietly converting an AI recommendation into
 an owner-approved classification.
+
+The accepted release-point IDs and their activation rules are maintained in
+`docs/features/facility-levels-and-clinical-release-points.md`. Hospital OR,
+Hospital Floor, ED / Trauma, and ICU remain unnumbered future release points.
+An intake spreadsheet may store several release-point IDs separated by
+semicolons, but normalization places one exact release point on each Patient
+Presentation Variant. Release-point approval does not confer clinical approval
+or runtime publication.
 
 Related topics are typed links, not an unlabelled list. Each one records a
 `topicId` and a controlled `relationshipTypeId` such as a related topic or

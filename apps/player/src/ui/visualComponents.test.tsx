@@ -28,6 +28,8 @@ describe("paper chart presentation", () => {
       ],
       statusLabel: "Action required",
       presentation: "Three days of worsening localized pain.",
+      presentationUpdate:
+        "Ultrasound now shows a simple fluid-filled cyst.",
       answerChoices: [],
       terminalFeedbackNeedsAcknowledgment: false,
       summaryAvailable: true,
@@ -78,6 +80,7 @@ describe("paper chart presentation", () => {
         chart={chart}
         onClose={noop}
         onSubmitAnswer={noop}
+        onFlagQuestion={noop}
         onAcknowledgeTerminalFeedback={noop}
         onToggleSummary={noop}
         onFileChart={noop}
@@ -97,9 +100,71 @@ describe("paper chart presentation", () => {
     expect(markup).toContain("Decisions Correct: 1/1");
     expect(markup).toContain("Encounter Payment: +$75");
     expect(markup).toContain("Encounter XP: +20");
+    const updatePosition = markup.indexOf("Current update");
+    const activeDecisionPosition = markup.indexOf("Decision 2 of 2");
+    expect(updatePosition).toBeGreaterThan(
+      markup.indexOf("chart-decision-region"),
+    );
+    expect(updatePosition).toBeLessThan(activeDecisionPosition);
+    expect(markup).toContain(
+      "Ultrasound now shows a simple fluid-filled cyst.",
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="current-answer-choices"',
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="current-decision-feedback"',
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="encounter-summary"',
+    );
+    expect(markup).toContain(
+      'data-tutorial-anchor="flip-chart"',
+    );
     expect(markup.match(/Action required/g)).toHaveLength(1);
     expect(markup).not.toContain("Outpatient clinic");
     expect(markup).not.toMatch(/Step [0-9]/);
+
+    const filingMarkup = renderToStaticMarkup(
+      <ChartPanel
+        chart={{
+          ...chart,
+          reward: undefined,
+          summaryAvailable: false,
+          canFile: true,
+        }}
+        onClose={noop}
+        onSubmitAnswer={noop}
+        onFlagQuestion={noop}
+        onAcknowledgeTerminalFeedback={noop}
+        onToggleSummary={noop}
+        onFileChart={noop}
+      />,
+    );
+    expect(filingMarkup).toContain(
+      'data-tutorial-anchor="resolve-chart"',
+    );
+
+    const feedbackActionMarkup = renderToStaticMarkup(
+      <ChartPanel
+        chart={{
+          ...chart,
+          reward: undefined,
+          summaryAvailable: false,
+          terminalFeedbackNeedsAcknowledgment: true,
+          primaryActionLabel: "Dismiss",
+        }}
+        onClose={noop}
+        onSubmitAnswer={noop}
+        onFlagQuestion={noop}
+        onAcknowledgeTerminalFeedback={noop}
+        onToggleSummary={noop}
+        onFileChart={noop}
+      />,
+    );
+    expect(feedbackActionMarkup).toContain(
+      'data-tutorial-anchor="decision-feedback-action"',
+    );
   });
 });
 
@@ -154,6 +219,68 @@ describe("tutorial controls", () => {
     expect(markup).toContain("Got It");
     expect(markup).toContain("Turn off tutorials");
     expect(markup).not.toContain("Enact Plan");
+    expect(markup).toContain('data-anchor-state="locating"');
+    expect(markup).toContain("visibility:hidden");
+  });
+
+  it("uses authored tutorial action labels and action identifiers", () => {
+    const markup = renderToStaticMarkup(
+      <TutorialCoach
+        step={{
+          id: "level-one-await-first-arrival",
+          eyebrow: "Level 1 guide",
+          title: "Ready",
+          body: "The clinic is ready.",
+          target: "facility-clock",
+          targetSelector: ".facility-time-chip",
+          primaryAction: {
+            id: "acknowledge-step",
+            label: "Close tutorial",
+          },
+          secondaryAction: {
+            id: "level-up",
+            label: "Advance now",
+          },
+        }}
+        onAction={noop}
+      />,
+    );
+
+    expect(markup).toContain("Close tutorial");
+    expect(markup).toContain("Advance now");
+    expect(markup).toContain(
+      'data-tutorial-action="acknowledge-step"',
+    );
+    expect(markup).toContain('data-tutorial-action="level-up"');
+  });
+
+  it("shows only the completion action on the final tutorial prompt", () => {
+    const markup = renderToStaticMarkup(
+      <TutorialCoach
+        step={{
+          id: "level-one-await-first-arrival",
+          eyebrow: "Level 1 guide",
+          title: "Your first Level 1 patient is on the way",
+          body: "Facility time is running.",
+          target: "facility-clock",
+          targetSelector: ".facility-time-chip",
+          primaryAction: {
+            id: "complete-tutorial",
+            label: "Complete tutorial",
+          },
+        }}
+        onAction={noop}
+        onDisableTutorials={noop}
+      />,
+    );
+
+    expect(markup).toContain("Complete tutorial");
+    expect(markup).toContain(
+      'data-tutorial-action="complete-tutorial"',
+    );
+    expect(markup).not.toContain("Got It");
+    expect(markup).not.toContain("Turn off tutorials");
+    expect(markup.match(/<button/g)).toHaveLength(1);
   });
 });
 
@@ -182,12 +309,18 @@ describe("segmented resource HUD", () => {
     );
 
     expect(markup).toContain("resource-bar-redesign");
-    expect(markup).toContain("pixel-hud-icon is-learning");
-    expect(markup).toContain("pixel-hud-icon is-money");
+    expect(markup).toContain("hud-outline-icon is-learning");
+    expect(markup).toContain("hud-outline-icon is-money");
     expect(markup).toContain(
-      "pixel-hud-icon is-satisfaction is-happy",
+      "hud-outline-icon is-satisfaction is-happy",
     );
-    expect(markup).toContain("pixel-hud-icon is-time");
+    expect(markup).toContain("hud-outline-icon is-time");
+    expect(markup).toContain('data-smooth-hud-icon="learning"');
+    expect(markup).toContain('data-smooth-hud-icon="money"');
+    expect(markup).toContain('data-smooth-hud-icon="satisfaction"');
+    expect(markup).toContain('data-smooth-hud-icon="time"');
+    expect(markup).not.toContain("pixel-hud-icon");
+    expect(markup).not.toContain('class="pixel-icon');
     expect(markup).toContain(
       'class="pixel-control-button pause-button" type="button" aria-label="Pause facility time" aria-pressed="false"',
     );
@@ -196,5 +329,11 @@ describe("segmented resource HUD", () => {
     );
     expect(markup).toContain("$350");
     expect(markup).toContain("20 XP");
+    expect(markup).not.toContain("see Goals panel");
+    expect(markup).not.toContain(
+      "Recurring operating change per hour",
+    );
+    expect(markup).not.toContain("Last 10 completed encounters");
+    expect(markup).not.toContain("Clinic open");
   });
 });

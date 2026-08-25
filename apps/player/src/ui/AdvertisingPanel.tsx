@@ -26,7 +26,6 @@ export function AdvertisingPanel({
       data-advertising-control
       tabIndex={-1}
     >
-      <span className="eyebrow">Patient demand</span>
       <h2 id="advertising-title">Advertising</h2>
       <div className="advertising-level-controls">
         <button
@@ -54,29 +53,9 @@ export function AdvertisingPanel({
           +
         </button>
       </div>
-      <div className="advertising-current-effects">
-        <span>{view.hourlyCostLabel}</span>
-        <span>{view.arrivalFrequencyLabel}</span>
-      </div>
-      <div className="advertising-tier-details">
-        <strong className="advertising-tier-heading">Levels</strong>
-        <ul>
-          {view.levels.map((level) => (
-            <li
-              key={level.level}
-              className={level.selected ? "is-selected" : undefined}
-              aria-current={level.selected ? "true" : undefined}
-            >
-              <strong>
-                {level.level}: {level.displayName}
-              </strong>
-              <span>
-                {level.hourlyCostLabel} · {level.arrivalFrequencyLabel}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <p className="advertising-current-effects">
+        {view.hourlyCostLabel} {view.arrivalFrequencyLabel}
+      </p>
     </section>
   );
 }
