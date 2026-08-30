@@ -7,13 +7,17 @@ import {
   gameReducer,
   getClinicSatisfaction,
   getCurrentQuestion,
+  getAnswerChoiceServicePreview,
   getFacilityClock,
   getEligibleServiceRoute,
   getPatientLists,
   serializeGameState,
+  validateFacilityAccess,
   validateDomainContext,
   type GameState,
+  type DomainContext,
 } from "../src";
+import { validateDoorPlacement } from "../src/doors";
 
 const XRAY_CASE_ID = "case.synthetic.xray-routing";
 const LEGACY_TEST_CONTEXT = validateDomainContext({
@@ -21,21 +25,58 @@ const LEGACY_TEST_CONTEXT = validateDomainContext({
   clinicalRelease: LEGACY_PROTOTYPE_CLINICAL_RELEASE,
 });
 
-function tick(state: GameState, id: string): GameState {
+function createServiceTestContext(): DomainContext {
+  const clinicalRelease = JSON.parse(
+    JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease),
+  ) as typeof PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+  const source = LEGACY_PROTOTYPE_CLINICAL_RELEASE.cases.find(
+    (candidate) => candidate.id === XRAY_CASE_ID,
+  )!;
+  for (const [serviceId, routeIds] of [
+    ["service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"]],
+    ["service.ct", ["route.ct.in_house", "route.ct.outsourced"]],
+    ["service.basic_labs", ["route.basic_labs.phlebotomy_sendout", "route.basic_labs.outsourced"]],
+  ] as const) {
+    const clinicalCase = JSON.parse(JSON.stringify(source)) as typeof source;
+    clinicalCase.id = `case.synthetic.service-route.${serviceId.split(".").at(-1)}`;
+    clinicalCase.displayName = `Practice Patient: ${serviceId} Route Drill`;
+    const node = clinicalCase.decisionNodes[0]!;
+    const choice = node.answerChoices.find((candidate) => candidate.isCorrect)!;
+    choice.serviceRequest = { serviceId };
+    node.resultGateAfter = {
+      ...node.resultGateAfter!,
+      id: `gate.synthetic.service-route.${serviceId}`,
+      resultTypeId: serviceId,
+      allowedServiceRouteIds: [...routeIds],
+    };
+    clinicalRelease.cases.push(clinicalCase);
+  }
+  return validateDomainContext({
+    ...PROTOTYPE_DOMAIN_CONTEXT,
+    clinicalRelease,
+  });
+}
+
+function tick(
+  state: GameState,
+  id: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): GameState {
   return gameReducer(state, {
     type: "ADVANCE_TICK",
     operationId: id,
-  });
+  }, context);
 }
 
 function advance(
   state: GameState,
   minutes: number,
   prefix: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {
   let next = state;
   for (let minute = 1; minute <= minutes; minute += 1) {
-    next = tick(next, `${prefix}.${minute}`);
+    next = tick(next, `${prefix}.${minute}`, context);
   }
   return next;
 }
@@ -63,7 +104,7 @@ function addWaitingAndExaminationRooms(state: GameState): void {
       y: 28,
       orientation: 0,
       doorSide: null,
-      upgradeLevel: 1,
+      upgradeLevel: 1 as const,
       cleanliness: 100,
     },
     {
@@ -100,8 +141,8 @@ function addOperationalXrayService(state: GameState): void {
     {
       id: "room.test.examination",
       roomDefinitionId: "room.examination",
-      x: 7,
-      y: 10,
+      x: 34,
+      y: 26,
       orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
@@ -110,8 +151,8 @@ function addOperationalXrayService(state: GameState): void {
     {
       id: "room.test.imaging-control",
       roomDefinitionId: "room.imaging_control",
-      x: 10,
-      y: 8,
+      x: 31,
+      y: 24,
       orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
@@ -120,21 +161,42 @@ function addOperationalXrayService(state: GameState): void {
     {
       id: "room.test.xray",
       roomDefinitionId: "room.xray",
-      x: 10,
-      y: 10,
+      x: 33,
+      y: 23,
       orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
       cleanliness: 100,
     },
+    ...([26, 27, 28] as const).map((y) => ({
+      id: `room.hall.32.${y}`,
+      roomDefinitionId: "room.hallway",
+      x: 32,
+      y,
+      orientation: 0 as const,
+      doorSide: null,
+      upgradeLevel: 1 as const,
+      cleanliness: 100,
+    })),
   );
   state.doors.push({
     id: "door.test.exam-to-xray",
-    roomId: "room.test.examination",
-    side: "east",
+    roomId: "room.test.xray",
+    side: "south",
+    offset: 2,
+    exterior: false,
+  });
+  state.doors.push({
+    id: "door.test.imaging-control-to-xray",
+    roomId: "room.test.imaging-control",
+    side: "south",
     offset: 1,
     exterior: false,
   });
+  state.doors.push(
+    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 1, exterior: false },
+    { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
+  );
   state.employees.push({
     id: "employee.test.imaging-tech",
     staffRoleDefinitionId: "staff.imaging_technician",
@@ -145,13 +207,151 @@ function addOperationalXrayService(state: GameState): void {
     morale: 75,
     trainingLevel: 1,
     homeRoomInstanceId: "room.test.imaging-control",
-    location: { x: 10, y: 8 },
-    path: [{ x: 10, y: 8 }],
+    location: { x: 31, y: 24 },
+    path: [{ x: 31, y: 24 }],
     pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick,
     lastPraisedAtFacilityTick: null,
     nextIdleActionAtFacilityTick: state.facilityTick + 20,
   });
+}
+
+function addOperationalImagingService(
+  state: GameState,
+  service: "ultrasound" | "ct",
+): void {
+  const roomDefinitionId = service === "ultrasound" ? "room.ultrasound" : "room.ct";
+  const room = service === "ultrasound"
+    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 1 }
+    : { x: 33, y: 22, patientOffset: 1, controlOffset: 2 };
+  state.rooms.push(
+    {
+      id: "room.test.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    },
+    {
+      id: "room.test.imaging-control",
+      roomDefinitionId: "room.imaging_control",
+      x: 31,
+      y: service === "ultrasound" ? 24 : 23,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    },
+    {
+      id: `room.test.${service}`,
+      roomDefinitionId,
+      x: room.x,
+      y: room.y,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    },
+    ...(service === "ct" ? [25, 26, 27, 28] : [26, 27, 28]).map((y) => ({
+      id: `room.hall.32.${y}`,
+      roomDefinitionId: "room.hallway",
+      x: 32,
+      y,
+      orientation: 0 as const,
+      doorSide: null,
+      upgradeLevel: 1 as const,
+      cleanliness: 100,
+    })),
+  );
+  state.doors.push(
+    { id: `door.test.${service}.patient`, roomId: `room.test.${service}`, side: "south", offset: room.patientOffset, exterior: false },
+    { id: `door.test.${service}.control`, roomId: `room.test.${service}`, side: "west", offset: room.controlOffset, exterior: false },
+    { id: "door.test.imaging-control-to-hall", roomId: "room.test.imaging-control", side: "south", offset: 1, exterior: false },
+    { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
+  );
+  state.employees.push({
+    id: "employee.test.imaging-tech",
+    staffRoleDefinitionId: "staff.imaging_technician",
+    displayName: "Imaging Test Technician",
+    appearance: state.founder.appearance,
+    hiredAtFacilityTick: state.facilityTick,
+    salaryPerExpenseInterval: 26,
+    morale: 75,
+    trainingLevel: 1,
+    homeRoomInstanceId: "room.test.imaging-control",
+    location: { x: 31, y: service === "ultrasound" ? 24 : 23 },
+    path: [{ x: 31, y: service === "ultrasound" ? 24 : 23 }],
+    pathIndex: 0,
+    lastMovedAtFacilityTick: state.facilityTick,
+    lastPraisedAtFacilityTick: null,
+    nextIdleActionAtFacilityTick: state.facilityTick + 20,
+  });
+}
+
+function addOperationalPhlebotomyService(state: GameState): void {
+  addOperationalXrayService(state);
+  state.rooms.push({
+    id: "room.test.phlebotomy",
+    roomDefinitionId: "room.phlebotomy",
+    x: 29,
+    y: 27,
+    orientation: 0,
+    doorSide: null,
+    upgradeLevel: 1,
+    cleanliness: 100,
+  });
+  state.doors.push({
+    id: "door.test.phlebotomy",
+    roomId: "room.test.phlebotomy",
+    side: "east",
+    offset: 1,
+    exterior: false,
+  });
+  state.employees.push({
+    id: "employee.test.phlebotomist",
+    staffRoleDefinitionId: "staff.phlebotomist",
+    displayName: "Phlebotomy Test Technician",
+    appearance: state.founder.appearance,
+    hiredAtFacilityTick: state.facilityTick,
+    salaryPerExpenseInterval: 28,
+    morale: 75,
+    trainingLevel: 1,
+    homeRoomInstanceId: "room.test.phlebotomy",
+    location: { x: 30, y: 28 },
+    path: [{ x: 30, y: 28 }],
+    pathIndex: 0,
+    lastMovedAtFacilityTick: state.facilityTick,
+    lastPraisedAtFacilityTick: null,
+    nextIdleActionAtFacilityTick: state.facilityTick + 20,
+  });
+}
+
+function expectFacilityAccessValid(state: GameState): void {
+  const facility = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
+  const validation = validateFacilityAccess(
+    state.rooms,
+    state.doors,
+    (id) => facility.roomDefinitions.find((room) => room.id === id) ?? null,
+    facility.gridWidth,
+    facility.gridHeight,
+    new Set(facility.protectedRoomDefinitionIds),
+  );
+  const invalidDoors = state.doors.flatMap((door) => {
+    const placement = validateDoorPlacement(
+      door,
+      state.rooms,
+      state.doors,
+      (id) => facility.roomDefinitions.find((room) => room.id === id) ?? null,
+      facility.gridWidth,
+      facility.gridHeight,
+      new Set(facility.protectedRoomDefinitionIds),
+    );
+    return placement.valid ? [] : [{ id: door.id, reason: placement.reason }];
+  });
+  expect(validation.valid, JSON.stringify({ validation, invalidDoors })).toBe(true);
 }
 
 function addTwoExamOperationalXrayService(state: GameState): void {
@@ -250,6 +450,10 @@ function admit(
   state: GameState,
   encounterId: string,
   caseId = XRAY_CASE_ID,
+  context: DomainContext =
+    caseId.startsWith("case.synthetic.") || caseId.startsWith("case.prototype.")
+      ? LEGACY_TEST_CONTEXT
+      : PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {
   return gameReducer(
     state,
@@ -261,10 +465,7 @@ function admit(
       patientDisplayName: "Routing Test Patient",
       arrivalClass: "routine",
     },
-    caseId.startsWith("case.synthetic.") ||
-      caseId.startsWith("case.prototype.")
-      ? LEGACY_TEST_CONTEXT
-      : PROTOTYPE_DOMAIN_CONTEXT,
+    context,
   );
 }
 
@@ -272,6 +473,7 @@ function makeQuestionReady(
   state: GameState,
   encounterId: string,
   prefix: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {
   let next = state;
   for (let attempt = 0; attempt < 150; attempt += 1) {
@@ -287,9 +489,9 @@ function makeQuestionReady(
         type: "OPEN_CHART",
         operationId: `${prefix}.open.${attempt}`,
         encounterId,
-      });
+      }, context);
     } else {
-      next = tick(next, `${prefix}.tick.${attempt}`);
+      next = tick(next, `${prefix}.tick.${attempt}`, context);
     }
   }
   throw new Error("The patient never reached an answer-ready state.");
@@ -299,8 +501,9 @@ function answerCorrect(
   state: GameState,
   encounterId: string,
   prefix: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {
-  const question = getCurrentQuestion(state, encounterId)!;
+  const question = getCurrentQuestion(state, encounterId, context)!;
   const choice = question.node.answerChoices.find(
     (candidate) => candidate.isCorrect,
   )!;
@@ -311,7 +514,7 @@ function answerCorrect(
     decisionNodeId: question.node.id,
     answerChoiceId: choice.id,
     reviewedAtMs: 1_000,
-  });
+  }, context);
 }
 
 describe("minute simulation and economy", () => {
@@ -538,6 +741,7 @@ describe("physical patient routing", () => {
     });
 
     addOperationalXrayService(state);
+    expectFacilityAccessValid(state);
     expect(getEligibleServiceRoute(state, "service.xray")).toMatchObject({
       route: { id: "route.xray.in_house" },
       timing: { serviceDurationTicks: 60 },
@@ -558,6 +762,123 @@ describe("physical patient routing", () => {
       route: { id: "route.xray.outsourced" },
       timing: { serviceDurationTicks: 120 },
     });
+  });
+
+  it("uses frozen Level 2 onsite service phases without extending the advertised ETA", () => {
+    const context = createServiceTestContext();
+    const cases = [
+      {
+        serviceId: "service.ultrasound",
+        caseId: "case.synthetic.service-route.ultrasound",
+        onsiteRouteId: "route.ultrasound.in_house",
+        offsiteRouteId: "route.ultrasound.outsourced",
+        eta: 75,
+        resourceEndsAt: 45,
+        addService: (state: GameState) => addOperationalImagingService(state, "ultrasound"),
+      },
+      {
+        serviceId: "service.ct",
+        caseId: "case.synthetic.service-route.ct",
+        onsiteRouteId: "route.ct.in_house",
+        offsiteRouteId: "route.ct.outsourced",
+        eta: 105,
+        resourceEndsAt: 60,
+        addService: (state: GameState) => addOperationalImagingService(state, "ct"),
+      },
+      {
+        serviceId: "service.basic_labs",
+        caseId: "case.synthetic.service-route.basic_labs",
+        onsiteRouteId: "route.basic_labs.phlebotomy_sendout",
+        offsiteRouteId: "route.basic_labs.outsourced",
+        eta: 75,
+        resourceEndsAt: 15,
+        addService: addOperationalPhlebotomyService,
+      },
+    ] as const;
+
+    for (const service of cases) {
+      let state = emptyLevelOne(`level-two-${service.serviceId}`);
+      expect(getEligibleServiceRoute(state, service.serviceId, null, context)).toMatchObject({
+        route: { id: service.offsiteRouteId },
+      });
+      service.addService(state);
+      expectFacilityAccessValid(state);
+      expect(getEligibleServiceRoute(state, service.serviceId, null, context)).toMatchObject({
+        route: { id: service.onsiteRouteId },
+        timing: { durationTicks: service.eta },
+      });
+
+      const encounterId = `encounter.${service.serviceId}`;
+      state = makeQuestionReady(
+        admit(state, encounterId, service.caseId, context),
+        encounterId,
+        `${service.serviceId}.ready`,
+        context,
+      );
+      const question = getCurrentQuestion(state, encounterId, context)!;
+      const choice = question.node.answerChoices.find((candidate) => candidate.isCorrect)!;
+      expect(
+        getAnswerChoiceServicePreview(state, encounterId, choice.id, context),
+      ).toMatchObject({
+        routeId: service.onsiteRouteId,
+        durationTicks: service.eta,
+      });
+      state = answerCorrect(state, encounterId, service.serviceId, context);
+      const step = state.encounters[encounterId]!.steps[
+        state.encounters[encounterId]!.currentNodeIndex
+      ]!;
+      state = gameReducer(state, {
+        type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+        operationId: `${service.serviceId}.ack`,
+        encounterId,
+        decisionNodeId: step.decisionNodeId,
+      }, context);
+
+      const pending = state.encounters[encounterId]!.pendingResult!;
+      expect(pending).toMatchObject({
+        routeId: service.onsiteRouteId,
+        dueTick: pending.scheduledAtTick + service.eta,
+        resourceReservations: [{ roomDefinitionId: expect.any(String), staffRoleDefinitionId: expect.any(String) }],
+      });
+      expect(pending.timingPhases?.[0]).toMatchObject({
+        resourceBound: true,
+        startsAtTick: pending.scheduledAtTick,
+        endsAtTick: pending.scheduledAtTick + service.resourceEndsAt,
+      });
+      expect(pending.patientTravel?.outboundArrivalTick).toBeLessThanOrEqual(
+        pending.scheduledAtTick + service.resourceEndsAt,
+      );
+      expect(pending.patientTravel?.serviceCompletionTick).toBeGreaterThanOrEqual(
+        pending.scheduledAtTick + service.resourceEndsAt,
+      );
+      expect(getEligibleServiceRoute(state, service.serviceId, null, context)).toMatchObject({
+        route: { id: service.offsiteRouteId },
+      });
+
+      const restored = deserializeGameState(serializeGameState(state), context);
+      expect(restored.encounters[encounterId]!.pendingResult).toMatchObject({
+        routeId: service.onsiteRouteId,
+        dueTick: pending.dueTick,
+        timingPhases: pending.timingPhases,
+        resourceReservations: pending.resourceReservations,
+      });
+
+      state = advance(
+        restored,
+        pending.timingPhases![0]!.endsAtTick - restored.facilityTick,
+        `${service.serviceId}.acquisition`,
+        context,
+      );
+      expect(state.encounters[encounterId]!.pendingResult?.deliveredAtTick).toBeNull();
+      const releasedRoute = getEligibleServiceRoute(state, service.serviceId, null, context);
+      expect(releasedRoute, JSON.stringify({
+        facilityTick: state.facilityTick,
+        pending: state.encounters[encounterId]!.pendingResult,
+        route: releasedRoute?.route.id,
+      })).toMatchObject({
+        route: { id: service.onsiteRouteId },
+      });
+    }
   });
 
   it("binds an onsite service route to this encounter's actual examination room", () => {

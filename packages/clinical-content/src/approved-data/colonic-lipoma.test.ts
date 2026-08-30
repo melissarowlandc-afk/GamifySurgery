@@ -134,8 +134,8 @@ describe("owner row 34 approved colonic-lipoma content", () => {
     expect(ROW_034_APPROVED_BACKLOG).toMatchObject({
       releasePointId: "release.l2.endoscopy",
       earliestFacilityStage: 2,
-      currentGameEligibility: "deferred",
-      approvedForRuntime: false,
+      currentGameEligibility: "partially_active_level_2_direct_blueprints_only",
+      approvedForRuntime: true,
       maximumScoredDecisionsPerEncounter: 2,
       directEncounterCount: 2,
       singleDecisionEncounterCount: 4,
@@ -188,20 +188,20 @@ describe("owner row 34 approved colonic-lipoma content", () => {
     );
   });
 
-  it("keeps approved Level 2 material out of the playable Level 0-1 release", () => {
+  it("activates only the approved direct Level 2 blueprints", () => {
     for (const concept of ROW_034_CONCEPTS) {
       expect(
         SYNTHETIC_CLINICAL_RELEASE.concepts.some(
           (runtimeConcept) => runtimeConcept.id === concept.id,
         ),
-      ).toBe(false);
+      ).toBe(true);
       expect(
         SYNTHETIC_CLINICAL_RELEASE.cases.some((clinicalCase) =>
           clinicalCase.decisionNodes.some(
             (node) => node.primaryConceptId === concept.id,
           ),
         ),
-      ).toBe(false);
+      ).toBe(true);
     }
   });
 });

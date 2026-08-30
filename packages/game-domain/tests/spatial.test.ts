@@ -347,6 +347,34 @@ describe("fixed-fixture navigation metadata", () => {
       (definition) => definition.id === id,
     )!;
 
+  it("keeps C2/C4 open and routes from the public anchor around C3 to B3", () => {
+    const definition = prototypeDefinition("room.front_desk");
+    const room: PlacedRoom = {
+      id: "room.front-desk.grid-proof",
+      roomDefinitionId: definition.id,
+      x: 10,
+      y: 10,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+    const navigable = getRoomNavigableTiles(room, definition);
+    expect(navigable).not.toContainEqual({ x: 10, y: 10 }); // A1
+    expect(navigable).not.toContainEqual({ x: 14, y: 10 }); // A5
+    expect(navigable).not.toContainEqual({ x: 12, y: 12 }); // C3
+    expect(navigable).toContainEqual({ x: 11, y: 12 }); // C2
+    expect(navigable).toContainEqual({ x: 13, y: 12 }); // C4
+    const path = findDeterministicFacilityPath(
+      { x: 12, y: 13 }, // D3
+      { x: 12, y: 11 }, // B3
+      [room],
+      [],
+      (id) => (id === definition.id ? definition : null),
+    );
+    expect(path.at(-1)).toEqual({ x: 12, y: 11 });
+    expect(path).not.toContainEqual({ x: 12, y: 12 });
+  });
+
   it("rotates anchors and blocked fixture tiles with the room", () => {
     const definition = prototypeDefinition("room.examination");
     const room: PlacedRoom = {

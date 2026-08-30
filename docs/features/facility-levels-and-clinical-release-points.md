@@ -1,6 +1,6 @@
 # Facility Levels and Clinical Release Points
 
-Status: Accepted design; Levels 2-5 remain future implementation
+Status: Current local implementation for Levels 0-2; Levels 3-5 remain future
 
 Owner decisions: 2026-08-05
 
@@ -27,7 +27,7 @@ room upgrade level, staff training, or FSRS state.
 | `release.future.ed_trauma` | Future - ED / Trauma | Deferred; no numeric level |
 | `release.future.icu` | Future - ICU | Deferred; no numeric level |
 
-Entering Levels 0-3 releases the corresponding content pool. A particular
+Entering Levels 0-2 releases the corresponding implemented content pool. A particular
 Patient Presentation Variant or Question Variant may still require a room,
 service, or employee before it is eligible. This allows, for example, an
 approved clinic counseling or offsite-testing iteration to circulate before a
@@ -198,11 +198,11 @@ morale, prestige, satisfaction, revenue, inspection, and end-game goals.
 
 ### Founder and physician coverage
 
-The Founder may personally provide the physician role for endoscopy or an
-ambulatory operation. The Founder can occupy only one place and perform only
-one task at a time. Travel, preparation, procedure, and recovery workflow
-therefore create a material bottleneck until an Endoscopist or Surgeon is
-hired. The Founder does not substitute for nursing, imaging, laboratory,
+The Founder may personally provide the physician role for Level 2 endoscopy or
+a future ambulatory operation. The Founder can occupy only one place and
+perform only one task at a time. Travel, preparation, procedure, and recovery
+workflow therefore create a material bottleneck until an Endoscopist or Surgeon
+is hired. The Founder does not substitute for nursing, imaging, laboratory,
 pharmacy, or environmental-services staff.
 
 An employed Endoscopist or Surgeon adds parallel physician capacity and allows
@@ -220,10 +220,12 @@ remain implementation-time operational definitions.
   remains available with a configurable delay.
 - An available staff Radiologist uses the Radiology Reading Room and shortens
   the interpretation phase.
-- Exact acquisition times, external-read times, radiologist read times,
-  concurrency, prioritization, and costs remain centralized balance values.
-- Existing Level 0-1 X-ray totals remain the prototype defaults until the
-  phased timing model is implemented and deliberately rebalanced.
+- Level 2 prototype editorial values are ultrasound 45+30 facility minutes,
+  CT 60+45, phlebotomy collection plus send-out 15+60, and endoscopy
+  preparation/procedure/recovery 30/45/45. They are simulation values, not
+  clinical claims; external fallback remains.
+- Later radiologist reads, concurrency, prioritization, and costs remain
+  centralized balance values.
 
 The accepted imaging-room access rule remains: X-ray, ultrasound, CT, and MRI
 each require a patient-facing entrance and a separate internal door on a shared
@@ -253,17 +255,17 @@ not alter the stable tested-concept identity or its FSRS history.
 - Sterile processing and inpatient beds do not require separate ASC rooms.
 - Complications outside ASC capability result in hospital transfer rather than
   silently expanding the current facility's scope.
-- The founder-run manual GLP-1 consultation remains available until the GLP-1
-  Telehealth Suite is built and staffed. The staffed suite permits the GLP-1 NP
-  to automate the bounded side business under its later balance rules.
+- The founder-run manual GLP-1 consultation remains available until a reachable
+  GLP-1 Telehealth Suite is staffed. Each staffed suite then automates one $25
+  consultation per 60 facility minutes, with a maximum capacity of five; it
+  creates no XP, FSRS review, or patient encounter.
 
 ## Deliberately deferred implementation details
 
-- Level 2-5 advancement requirements
-- Exact room footprints and adjacency beyond already accepted imaging rules
-- Construction, upkeep, salary, capacity, service-time, and upgrade values
-- Maximum staff counts and exact automation throughput
-- Exact imaging acquisition and interpretation timings
+- Level 3-5 advancement requirements
+- Exact Level 3-5 room footprints, adjacency, construction, upkeep, salary,
+  capacity, service-time, upgrade values, and automation throughput
+- Later imaging acquisition and interpretation timings
 - Inspection, prestige, and final victory thresholds
 - Detailed Hospital OR, Hospital Floor, ED/Trauma, and ICU progression
 

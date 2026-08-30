@@ -3,6 +3,7 @@ import {
   createInitialGameState,
   deserializeGameState,
   normalizePixelAppearance,
+  roleStyleForStaffDefinition,
   serializeGameState,
   type FounderIdentity,
 } from "../src";
@@ -24,6 +25,38 @@ const FOUNDER: FounderIdentity = {
 };
 
 describe("campaign founder persistence", () => {
+  it("maps and round-trips every Level 2 staff visual identity", () => {
+    const roles = [
+      ["staff.periop_nurse", "periop_nurse"],
+      ["staff.endoscopy_nurse", "endoscopy_nurse"],
+      ["staff.endoscopist", "endoscopist"],
+      ["staff.phlebotomist", "phlebotomist"],
+      ["staff.evs_worker", "evs_worker"],
+      ["staff.glp1_np", "glp1_np"],
+    ] as const;
+    for (const [definitionId, roleStyle] of roles) {
+      expect(roleStyleForStaffDefinition(definitionId)).toBe(roleStyle);
+      const state = createInitialGameState();
+      state.employees.push({
+        id: `employee.${roleStyle}`,
+        staffRoleDefinitionId: definitionId,
+        displayName: roleStyle,
+        appearance: normalizePixelAppearance(FOUNDER.appearance, roleStyle),
+        hiredAtFacilityTick: 0,
+        salaryPerExpenseInterval: 0,
+        morale: 50,
+        trainingLevel: 1,
+        homeRoomInstanceId: null,
+        location: { x: 0, y: 0 },
+        path: [], pathIndex: 0, lastMovedAtFacilityTick: 0,
+        lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 0,
+        facilityTask: null,
+      });
+      const restored = deserializeGameState(serializeGameState(state));
+      expect(restored.employees.at(-1)?.appearance.roleStyle).toBe(roleStyle);
+    }
+  });
+
   it("stores the selected founder in the self-contained campaign save", () => {
     const expectedFounder = {
       ...FOUNDER,
@@ -123,6 +156,9 @@ describe("campaign founder persistence", () => {
       restored.encounters["encounter.synthetic.tutorial"]!
         .patientAppearance;
     expect(appearance.headVariant).toBe(12);
-    expect(appearance.bodyVariant).toBe(15);
+    // The chart-facing presentation family remains female while the rendered
+    // authored identity keeps one coherent head/body skin/neck pair.
+    expect(appearance.bodyVariant).toBe(12);
+    expect(appearance.patientIdentityId).toMatch(/^patient\.adult\.\d{3}$/);
   });
 });

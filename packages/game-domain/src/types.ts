@@ -150,6 +150,12 @@ export type PixelAppearanceVariant =
   | 28
   | 29;
 
+/** Stable, presentation-only identifier for one authored adult patient.
+ * It is intentionally separate from founder-compatible numeric variants. */
+export type PatientIdentityId = `patient.adult.${string}`;
+
+export type PatientSexLabel = "Female" | "Male" | "Not specified";
+
 export interface PixelAppearanceDescriptor {
   version: "pixel-avatar.v1";
   bodyShape: "compact" | "average" | "broad" | "tall";
@@ -170,11 +176,22 @@ export interface PixelAppearanceDescriptor {
    */
   headVariant?: PixelAppearanceVariant;
   bodyVariant?: PixelAppearanceVariant;
+  /**
+   * Canonical visual identity for the authored adult patient roster. This is
+   * cosmetic matching data only; it never selects clinical content.
+   */
+  patientIdentityId?: PatientIdentityId;
   roleStyle?:
     | "founder"
     | "patient"
     | "receptionist"
-    | "imaging_technician";
+    | "imaging_technician"
+    | "periop_nurse"
+    | "endoscopy_nurse"
+    | "endoscopist"
+    | "phlebotomist"
+    | "evs_worker"
+    | "glp1_np";
 }
 
 export interface FounderIdentity {
@@ -288,6 +305,18 @@ export interface PendingResult {
    * travel.
    */
   patientTravel: FrozenPatientTravel | null;
+  /** Frozen editorial service phases; they never read later balance values. */
+  timingPhases?: Array<{ id: string; durationTicks: number; resourceBound: boolean; startsAtTick: number; endsAtTick: number }>;
+  resourceReservations?: Array<{ roomDefinitionId: string; staffRoleDefinitionId: string | null }>;
+  /** Frozen selected clinician capacity for a resource-bound service. */
+  providerReservation?:
+    | {
+        kind: "employee";
+        employeeId: string;
+        staffRoleDefinitionId: string;
+      }
+    | { kind: "founder" }
+    | null;
 }
 
 export interface FrozenPatientTravel {
@@ -475,9 +504,10 @@ export interface DoorState {
 }
 
 export interface EmployeeFacilityTaskState {
-  kind: "refill_water";
+  kind: "refill_water" | "collect_litter" | "clean_room";
   startedAtFacilityTick: number;
   workMinutesRemaining: number;
+  targetId?: string;
 }
 
 export interface EmployeeState {
@@ -544,6 +574,13 @@ export interface FacilityEnvironmentState {
   /** Facility tick of the latest completed cleanup, used to pace later complaints. */
   lastLitterCleanupAtTick: number | null;
   nextLitterSpawnTick: number;
+  glp1AutomationConsultationsCompleted: number;
+  /** One due tick per currently operational staffed GLP-1 suite. */
+  glp1AutomationNextPayoutTicks: number[];
+  /** Legacy summary of the earliest due payout, retained for v6 compatibility. */
+  glp1AutomationNextPayoutTick: number | null;
+  coffeeMoraleAppliedDayNumber: number;
+  lastEvsRoomCleanupAtTick: number | null;
   waterCoolerFillPercent: number;
   nextWaterCoolerDrainTick: number;
   /** Start of the current continuously-empty episode, if any. */
@@ -662,7 +699,7 @@ export interface GameState {
   clinicalReleaseId: string;
   balanceReleaseId: string;
   schedulerPins: SchedulerPins;
-  facilityLevel: 0 | 1;
+  facilityLevel: 0 | 1 | 2;
   facilityTick: number;
   paused: boolean;
   simulationSpeed: SimulationSpeed;
@@ -885,10 +922,10 @@ export interface ProgressionRequirementStatus {
 }
 
 export interface FacilityProgressionStatus {
-  facilityLevel: 0 | 1;
+  facilityLevel: 0 | 1 | 2;
   displayName: string;
   requirements: ProgressionRequirementStatus[];
   eligible: boolean;
-  nextFacilityLevel: 1 | null;
-  maximumPlayableLevel: 1;
+  nextFacilityLevel: 1 | 2 | null;
+  maximumPlayableLevel: 2;
 }

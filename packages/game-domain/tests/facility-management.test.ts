@@ -11,7 +11,7 @@ import {
   type GameState,
 } from "../src";
 
-function sandbox(seed: string, level: 0 | 1 = 1): GameState {
+function sandbox(seed: string, level: 0 | 1 | 2 = 1): GameState {
   const state = createInitialGameState(undefined, {
     campaignId: `campaign.${seed}`,
     campaignSeed: seed,
@@ -291,6 +291,48 @@ describe("explicit-door construction and renovation", () => {
       PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions[1]
         ?.requiredRoomDefinitionIds,
     ).toEqual(["room.xray", "room.minor_procedure"]);
+  });
+
+  it("applies the same Imaging Control and patient-access validation to Level 2 ultrasound and CT", () => {
+    for (const [roomDefinitionId, roomId, y, patientDoorOffset, controlDoorOffset] of [
+      ["room.ultrasound", "room.ultrasound", 23, 2, 1],
+      ["room.ct", "room.ct", 22, 1, 2],
+    ] as const) {
+      let state = sandbox(`imaging-${roomDefinitionId}`, 2);
+      state = placeRoom(state, "room.exam", "room.examination", 34, 26);
+      state = placeDoor(state, "door.exam", "room.exam", "south", 1);
+      state = placeRoom(state, "room.control", "room.imaging_control", 31, 24);
+      state = placeDoor(
+        state,
+        "door.control.public",
+        "room.control",
+        "south",
+        1,
+      );
+      state = placeRoom(state, roomId, roomDefinitionId, 33, y);
+      state = placeDoor(
+        state,
+        `door.${roomId}.patient`,
+        roomId,
+        "south",
+        patientDoorOffset,
+      );
+
+      expect(access(state).issues).toContain(
+        `${
+          roomDefinitionId === "room.ultrasound" ? "Ultrasound Room" : "CT Suite"
+        } must share a wall and internal door with an Imaging Control Room.`,
+      );
+
+      state = placeDoor(
+        state,
+        `door.${roomId}.control`,
+        roomId,
+        "west",
+        controlDoorOffset,
+      );
+      expect(access(state).valid).toBe(true);
+    }
   });
 });
 

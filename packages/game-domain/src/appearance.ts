@@ -6,7 +6,13 @@ import {
 import type {
   PixelAppearanceDescriptor,
   PixelAppearanceVariant,
+  PatientIdentityId,
+  PatientSexLabel,
 } from "./types";
+import {
+  patientRosterEligibleEntries,
+  patientRosterEntryById,
+} from "./patientAppearanceCatalog";
 
 const BODY_SHAPES = ["compact", "average", "broad", "tall"] as const;
 const HAIR_STYLES = ["none", "short", "parted", "curly", "bun"] as const;
@@ -111,13 +117,24 @@ export type PixelRoleStyle = NonNullable<
   PixelAppearanceDescriptor["roleStyle"]
 >;
 
-export type PatientSexLabel = "Female" | "Male" | "Not specified";
+export type { PatientSexLabel } from "./types";
+
+export interface PatientAppearanceProfile {
+  readonly sexLabel?: PatientSexLabel;
+  readonly ageYears?: number;
+}
 
 const ROLE_STYLES: readonly PixelRoleStyle[] = [
   "founder",
   "patient",
   "receptionist",
   "imaging_technician",
+  "periop_nurse",
+  "endoscopy_nurse",
+  "endoscopist",
+  "phlebotomist",
+  "evs_worker",
+  "glp1_np",
 ];
 
 function boundedVariant(value: number): 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 {
@@ -178,9 +195,27 @@ export function normalizePixelAppearance(
 export function roleStyleForStaffDefinition(
   staffRoleDefinitionId: string,
 ): PixelRoleStyle {
-  return staffRoleDefinitionId === "staff.imaging_technician"
-    ? "imaging_technician"
-    : "receptionist";
+  switch (staffRoleDefinitionId) {
+    case "staff.receptionist":
+      return "receptionist";
+    case "staff.imaging_technician":
+      return "imaging_technician";
+    case "staff.periop_nurse":
+      return "periop_nurse";
+    case "staff.endoscopy_nurse":
+      return "endoscopy_nurse";
+    case "staff.endoscopist":
+      return "endoscopist";
+    case "staff.phlebotomist":
+      return "phlebotomist";
+    case "staff.evs_worker":
+      return "evs_worker";
+    case "staff.glp1_np":
+      return "glp1_np";
+    default:
+      // Unknown legacy definitions keep the original front-desk treatment.
+      return "receptionist";
+  }
 }
 
 export function createPixelAppearance(
@@ -200,6 +235,7 @@ export function createPixelAppearance(
     `${subjectId}:pixel-avatar.v1`,
   );
 
+  const coherentVariant = boundedVariant(random.integer(10));
   return normalizePixelAppearance({
     version: "pixel-avatar.v1",
     bodyShape: BODY_SHAPES[random.integer(BODY_SHAPES.length)]!,
@@ -210,8 +246,10 @@ export function createPixelAppearance(
     outfitShade: random.integer(4) as 0 | 1 | 2 | 3,
     accessory: ACCESSORIES[random.integer(ACCESSORIES.length)]!,
     skinTone: random.integer(4) as 0 | 1 | 2 | 3,
-    headVariant: boundedVariant(random.integer(10)),
-    bodyVariant: boundedVariant(random.integer(10)),
+    // The renderer's authored human identity has a matched neck/skin/body
+    // family. This is display identity only, never a clinical selector.
+    headVariant: coherentVariant,
+    bodyVariant: coherentVariant,
     roleStyle,
   }, roleStyle);
 }
@@ -231,30 +269,52 @@ function variantWithinFamily(
 export function normalizePatientAppearanceForSex(
   appearance: PixelAppearanceDescriptor,
   sexLabel?: PatientSexLabel,
+  ageYears?: number,
+  identitySelectionKey = "legacy-patient-appearance.v1",
 ): PixelAppearanceDescriptor {
   const normalized = normalizePixelAppearance(appearance, "patient");
+  const legacyVariant = normalized.headVariant ?? 0;
+  const eligible = patientRosterEligibleEntries(sexLabel, ageYears);
+  const selectedIdentity = patientRosterEntryById(normalized.patientIdentityId)
+    ? normalized.patientIdentityId
+    : eligible.length > 0
+      ? eligible[deterministicInteger(
+          identitySelectionKey,
+          RANDOM_STREAMS.patientAppearance,
+          `legacy-roster:${legacyVariant}:${sexLabel ?? "unspecified"}:${ageYears ?? "unknown"}`,
+          eligible.length,
+        )]?.id
+      : undefined;
+  const withIdentity = {
+    ...normalized,
+    ...(selectedIdentity ? { patientIdentityId: selectedIdentity } : {}),
+  };
   if (sexLabel === "Female") {
     return {
-      ...normalized,
-      headVariant: variantWithinFamily(normalized.headVariant, 10),
-      bodyVariant: variantWithinFamily(normalized.bodyVariant, 10),
+      ...withIdentity,
+      headVariant: variantWithinFamily(withIdentity.headVariant, 10),
+      bodyVariant: variantWithinFamily(withIdentity.headVariant, 10),
     };
   }
   if (sexLabel === "Male") {
     return {
-      ...normalized,
-      headVariant: variantWithinFamily(normalized.headVariant, 0),
-      bodyVariant: variantWithinFamily(normalized.bodyVariant, 0),
+      ...withIdentity,
+      headVariant: variantWithinFamily(withIdentity.headVariant, 0),
+      bodyVariant: variantWithinFamily(withIdentity.headVariant, 0),
     };
   }
-  return normalized;
+  return withIdentity;
 }
 
 export function createPatientPixelAppearance(
   campaignSeed: string,
   encounterId: string,
-  sexLabel?: PatientSexLabel,
+  profile: PatientAppearanceProfile | PatientSexLabel = {},
+  selectionScope: "patient" | "ambient-pedestrian" = "patient",
 ): PixelAppearanceDescriptor {
+  const normalizedProfile: PatientAppearanceProfile =
+    typeof profile === "string" ? { sexLabel: profile } : profile;
+  const { sexLabel, ageYears } = normalizedProfile;
   const base = createPixelAppearance(
     campaignSeed,
     "patient",
@@ -262,7 +322,7 @@ export function createPatientPixelAppearance(
     "patient",
   );
   if (sexLabel === "Female" || sexLabel === "Male") {
-    return normalizePatientAppearanceForSex(base, sexLabel);
+    return normalizePatientAppearanceForSex(base, sexLabel, ageYears, `${campaignSeed}:${selectionScope}:${encounterId}:patient-roster.v1`);
   }
 
   // When the chart intentionally does not specify sex, keep one coherent
@@ -277,10 +337,20 @@ export function createPatientPixelAppearance(
       ? 0
       : 10;
   const normalized = normalizePixelAppearance(base, "patient");
+  const eligible = patientRosterEligibleEntries(undefined, ageYears);
+  const patientIdentityId = eligible.length > 0
+    ? eligible[deterministicInteger(
+        campaignSeed,
+        RANDOM_STREAMS.patientAppearance,
+        `${selectionScope}:${encounterId}:patient-roster.unspecified.v1`,
+        eligible.length,
+      )]?.id as PatientIdentityId | undefined
+    : undefined;
   return {
     ...normalized,
     headVariant: variantWithinFamily(normalized.headVariant, familyOffset),
-    bodyVariant: variantWithinFamily(normalized.bodyVariant, familyOffset),
+    bodyVariant: variantWithinFamily(normalized.headVariant, familyOffset),
+    ...(patientIdentityId ? { patientIdentityId } : {}),
   };
 }
 

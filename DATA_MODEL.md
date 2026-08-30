@@ -679,7 +679,7 @@ must preserve exact logical facility time and enough versioned simulation and
 randomness state to continue reproducibly. The server does not continuously
 run the facility or certify every ordinary client action.
 
-The current Level 0-1 snapshot stores authoritative facility time in simulated
+The current Level 0-2, schema-version-6-compatible snapshot stores authoritative facility time in simulated
 minutes, selected speed, fixed-point operating-cost accrual, the next financial
 posting boundary, the exact next routine-arrival timestamp, and current-level
 Learning XP. It does not store a lifetime-XP counter or a campaign-wide

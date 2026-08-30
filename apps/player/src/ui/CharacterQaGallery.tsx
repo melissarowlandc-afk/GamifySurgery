@@ -1,3 +1,7 @@
+import {
+  AUTHORED_ADULT_PATIENT_ROSTER,
+  roleStyleForStaffDefinition,
+} from "@gamify-surgery/game-domain";
 import type {
   PixelAppearanceDescriptor,
   PixelRoleStyle,
@@ -5,6 +9,7 @@ import type {
 import { characterAppearanceSignature } from "../art/characterArt";
 import { PIXEL_PALETTE } from "../art/pixelPalette";
 import type { FacilityViewModel } from "../facility";
+import { traceLateralGaitRoute } from "../facility/lateralGaitProof";
 import { PixelAvatar } from "./PixelAvatar";
 
 interface CharacterQaGalleryProps {
@@ -19,6 +24,26 @@ interface QaPerson {
   appearance: PixelAppearanceDescriptor;
 }
 
+function rosterQaAppearance(
+  id: PixelAppearanceDescriptor["patientIdentityId"],
+): PixelAppearanceDescriptor {
+  return {
+    version: "pixel-avatar.v1",
+    bodyShape: "average",
+    hairStyle: "short",
+    skinTone: 1,
+    hairShade: 3,
+    faceStyle: "round",
+    outfitStyle: "plain",
+    outfitShade: 1,
+    accessory: "none",
+    headVariant: 0,
+    bodyVariant: 0,
+    roleStyle: "patient",
+    ...(id ? { patientIdentityId: id } : {}),
+  };
+}
+
 const QA_PALETTE_SWATCHES = [
   ["Neutral ivory", PIXEL_PALETTE.cream],
   ["Weathered paper", PIXEL_PALETTE.paper],
@@ -31,10 +56,15 @@ const QA_PALETTE_SWATCHES = [
 ] as const;
 
 function QaCharacterRow({ person }: { person: QaPerson }) {
+  const routeGaitFrames = traceLateralGaitRoute({
+    ...person.appearance,
+    roleStyle: person.roleStyle,
+  });
   return (
     <article
       className="character-qa-card"
       data-character-id={person.id}
+      data-patient-identity-id={person.appearance.patientIdentityId}
       data-appearance-signature={characterAppearanceSignature(
         person.appearance,
       )}
@@ -50,13 +80,23 @@ function QaCharacterRow({ person }: { person: QaPerson }) {
         <figure>
           <PixelAvatar
             avatar={person.appearance}
+            label={`${person.name} list thumbnail`}
+            size="small"
+            representation="portrait"
+            roleStyle={person.roleStyle}
+          />
+          <figcaption>List thumbnail</figcaption>
+        </figure>
+        <figure>
+          <PixelAvatar
+            avatar={person.appearance}
             label={`${person.name} front map sprite`}
             size="medium"
             representation="full"
             direction="front"
             roleStyle={person.roleStyle}
           />
-          <figcaption>Map front</figcaption>
+          <figcaption>Map front / idle</figcaption>
         </figure>
         <figure>
           <PixelAvatar
@@ -80,23 +120,64 @@ function QaCharacterRow({ person }: { person: QaPerson }) {
           />
           <figcaption>Map back</figcaption>
         </figure>
+        {routeGaitFrames.map((frame) => (
+          <figure
+            key={`${frame.travel}:${frame.pose}`}
+            data-live-route-frame={`${person.id}:${frame.travel}:${frame.pose}`}
+            data-atlas-id={frame.atlasId}
+            data-flip-x={String(frame.flipX)}
+          >
+            <PixelAvatar
+              avatar={person.appearance}
+              label={`${person.name} ${frame.travel}bound ${frame.pose} live route walking map sprite`}
+              size="medium"
+              representation="full"
+              direction="side"
+              pose={frame.pose}
+              movingRight={frame.movingRight}
+              roleStyle={person.roleStyle}
+            />
+            <figcaption>Live route {frame.travel} {frame.pose === "walk-a" ? "A" : frame.pose === "walk-b" ? "B" : "neutral"}</figcaption>
+          </figure>
+        ))}
         <figure>
           <PixelAvatar
             avatar={person.appearance}
-            label={`${person.name} walking map sprite`}
+            label={`${person.name} seated map sprite`}
             size="medium"
             representation="full"
-            direction="side"
-            pose="walk-a"
+            pose="seated"
             roleStyle={person.roleStyle}
           />
-          <figcaption>Walk frame</figcaption>
+          <figcaption>Seated</figcaption>
+        </figure>
+        <figure>
+          <PixelAvatar
+            avatar={person.appearance}
+            label={`${person.name} working map sprite`}
+            size="medium"
+            representation="full"
+            pose="working"
+            roleStyle={person.roleStyle}
+          />
+          <figcaption>Working</figcaption>
+        </figure>
+        <figure>
+          <PixelAvatar
+            avatar={person.appearance}
+            label={`${person.name} interaction map sprite`}
+            size="medium"
+            representation="full"
+            pose="interaction"
+            roleStyle={person.roleStyle}
+          />
+          <figcaption>Interaction</figcaption>
         </figure>
         <figure>
           <PixelAvatar
             avatar={person.appearance}
             label={`${person.name} portrait`}
-            size="medium"
+            size="large"
             representation="portrait"
             roleStyle={person.roleStyle}
           />
@@ -137,9 +218,9 @@ export function CharacterQaGallery({
       role: employee.roleDisplayName,
       roleStyle:
         employee.appearance?.roleStyle ??
-        (employee.roleDisplayName.toLowerCase().includes("imaging")
-          ? ("imaging_technician" as const)
-          : ("receptionist" as const)),
+        roleStyleForStaffDefinition(
+          employee.staffRoleDefinitionId ?? "staff.receptionist",
+        ),
       appearance:
         employee.appearance ?? facility.founder.appearance,
     })),
@@ -150,6 +231,27 @@ export function CharacterQaGallery({
       roleStyle: "patient" as const,
       appearance: patient.appearance,
     })),
+    ...AUTHORED_ADULT_PATIENT_ROSTER.map((entry) => ({
+      id: `patient-roster:${entry.id}`,
+      name: `Patient ${entry.id.slice(-3)}`,
+      role: `Patient roster â€” ${entry.ageBand.replaceAll("_", " ")}`,
+      roleStyle: "patient" as const,
+      appearance: rosterQaAppearance(entry.id),
+    })),
+    {
+      id: "staff-route-proof",
+      name: "Staff route proof",
+      role: "Legacy staff lateral route",
+      roleStyle: "receptionist" as const,
+      appearance: facility.founder.appearance,
+    },
+    {
+      id: "ambient-passer-proof",
+      name: "Ambient passer proof",
+      role: "Authored patient lateral route",
+      roleStyle: "patient" as const,
+      appearance: rosterQaAppearance("patient.adult.035"),
+    },
   ];
 
   return (
@@ -166,7 +268,8 @@ export function CharacterQaGallery({
       </header>
       <p>
         Every cell below is generated from the same persisted appearance
-        descriptor used by the live facility map.
+        descriptor used by the live facility map. Lateral route frames are
+        sampled from the facility route interpolator before bitmap selection.
       </p>
       <div
         className="character-qa-palette"

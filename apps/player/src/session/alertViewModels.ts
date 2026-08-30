@@ -8,6 +8,9 @@ import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
   getFacilityProgressionStatus,
+  getOperationalGlp1AutomationCapacity,
+  isEmployeeAssignedToOperationalRoom,
+  isRoomOperationalForFacilityWork,
   getRoomNavigableTiles,
   getRoomDefinition,
   type DomainEvent,
@@ -44,6 +47,74 @@ function configuredAlertCopy(
     title: rendered.title,
     message: rendered.body,
   };
+}
+
+export interface LevelTwoOperationalGuidance {
+  definitionId: string;
+  message: string;
+  targetType: MessageBoardTargetType;
+  targetId?: string;
+  actionLabel: string;
+}
+
+/** Stable setup rows; employee movement alone must not change them. */
+export function getLevelTwoOperationalGuidance(
+  state: GameState,
+): LevelTwoOperationalGuidance[] {
+  if (state.facilityLevel !== 2) return [];
+  const roomsFor = (definitionId: string) => state.rooms.filter(
+    (room) => room.roomDefinitionId === definitionId,
+  );
+  const hasBuilt = (definitionId: string) => roomsFor(definitionId).length > 0;
+  const hasOperationalRoom = (definitionId: string) => roomsFor(definitionId).some(
+    (room) => isRoomOperationalForFacilityWork(state, room.id),
+  );
+  const hasAssignedStaff = (roleDefinitionId: string) => state.employees.some(
+    (employee) => employee.staffRoleDefinitionId === roleDefinitionId &&
+      isEmployeeAssignedToOperationalRoom(state, employee.id),
+  );
+  const roomAction = (definitionId: string) => ({
+    targetType: "build_mode" as const,
+    targetId: definitionId,
+    actionLabel: "Open Build Mode",
+  });
+  const rows: Array<Omit<LevelTwoOperationalGuidance, "message">> = [];
+  if (hasBuilt("room.endoscopy") &&
+    (!hasOperationalRoom("room.endoscopy") || !hasOperationalRoom("room.periop_recovery"))) {
+    rows.push({ definitionId: "alert.facility.endoscopy-inoperable", ...roomAction("room.endoscopy") });
+  } else if (hasBuilt("room.endoscopy") &&
+    (!hasAssignedStaff("staff.endoscopy_nurse") || !hasAssignedStaff("staff.periop_nurse"))) {
+    rows.push({ definitionId: "alert.facility.endoscopy-inoperable", targetType: "staff_role", targetId: !hasAssignedStaff("staff.endoscopy_nurse") ? "staff.endoscopy_nurse" : "staff.periop_nurse", actionLabel: "Show hiring" });
+  }
+  const builtImaging = ["room.ultrasound", "room.ct"].find(hasBuilt);
+  const inoperableImaging = ["room.ultrasound", "room.ct"].find(
+    (definitionId) => hasBuilt(definitionId) && !hasOperationalRoom(definitionId),
+  );
+  if (builtImaging &&
+    (inoperableImaging || !hasOperationalRoom("room.imaging_control"))) {
+    rows.push({ definitionId: "alert.facility.imaging-inoperable", ...roomAction(inoperableImaging ?? builtImaging) });
+  } else if (builtImaging && !hasAssignedStaff("staff.imaging_technician")) {
+    rows.push({ definitionId: "alert.facility.imaging-inoperable", targetType: "staff_role", targetId: "staff.imaging_technician", actionLabel: "Show hiring" });
+  }
+  if (hasBuilt("room.phlebotomy") && !hasOperationalRoom("room.phlebotomy")) {
+    rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", ...roomAction("room.phlebotomy") });
+  } else if (hasBuilt("room.phlebotomy") && !hasAssignedStaff("staff.phlebotomist")) {
+    rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", targetType: "staff_role", targetId: "staff.phlebotomist", actionLabel: "Show hiring" });
+  }
+  if (hasBuilt("room.evs_closet") && !hasOperationalRoom("room.evs_closet")) {
+    rows.push({ definitionId: "alert.facility.evs-inoperable", ...roomAction("room.evs_closet") });
+  } else if (hasBuilt("room.evs_closet") && !hasAssignedStaff("staff.evs_worker")) {
+    rows.push({ definitionId: "alert.facility.evs-inoperable", targetType: "staff_role", targetId: "staff.evs_worker", actionLabel: "Show hiring" });
+  }
+  if (hasBuilt("room.glp1_telehealth_suite") && !hasOperationalRoom("room.glp1_telehealth_suite")) {
+    rows.push({ definitionId: "alert.facility.glp1-inoperable", ...roomAction("room.glp1_telehealth_suite") });
+  } else if (hasBuilt("room.glp1_telehealth_suite") && getOperationalGlp1AutomationCapacity(state) === 0) {
+    rows.push({ definitionId: "alert.facility.glp1-inoperable", targetType: "staff_role", targetId: "staff.glp1_np", actionLabel: "Show hiring" });
+  }
+  return rows.map((row) => ({
+    ...row,
+    message: configuredAlertCopy(row.definitionId, {}).message,
+  }));
 }
 
 function eventTarget(
@@ -1183,6 +1254,24 @@ function persistentSystemMessages(
             (encounter) => encounter.waiting.arrivedAtTick,
           ),
         ) + 0.037,
+      persistent: true,
+    });
+  }
+
+  for (const guidance of getLevelTwoOperationalGuidance(state)) {
+    const configuredCopy = configuredAlertCopy(guidance.definitionId, {});
+    messages.push({
+      id: `persistent.${guidance.definitionId}`,
+      priority: "informational",
+      category: "guidance",
+      showAttentionMarker: false,
+      title: configuredCopy.title,
+      message: guidance.message,
+      timeLabel: facilityTimeLabel(state.facilityTick),
+      targetType: guidance.targetType,
+      targetId: guidance.targetId,
+      actionLabel: guidance.actionLabel,
+      sortKey: state.facilityTick + 0.041,
       persistent: true,
     });
   }

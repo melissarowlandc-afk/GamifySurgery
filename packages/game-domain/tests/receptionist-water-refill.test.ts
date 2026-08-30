@@ -112,6 +112,41 @@ describe("receptionist water-cooler work", () => {
     });
   });
 
+  it("routes receptionist refill work to B5 beside the occupied A5 cooler", () => {
+    let state = advance(preparedState(), 60);
+    const frontDesk = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    );
+    if (!frontDesk) throw new Error("Starter Front Desk is missing.");
+
+    expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
+    expect(state.employees[0]!.path.at(-1)).toEqual({
+      x: frontDesk.x + 4,
+      y: frontDesk.y + 1,
+    });
+  });
+
+  it("routes a manual founder refill to B5 rather than into the A5 fixture", () => {
+    const state = preparedState();
+    state.employees = [];
+    const next = gameReducer(state, {
+      type: "REFILL_WATER_COOLER",
+      operationId: "water-refill.founder-approach",
+    });
+    const frontDesk = next.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    );
+    if (!frontDesk) throw new Error("Starter Front Desk is missing.");
+    expect(next.environment.founderActivity?.path.at(-1)).toEqual({
+      x: frontDesk.x + 4,
+      y: frontDesk.y + 1,
+    });
+    expect(next.environment.founderActivity?.path).not.toContainEqual({
+      x: frontDesk.x + 4,
+      y: frontDesk.y,
+    });
+  });
+
   it("persists an in-progress refill and prevents a duplicate founder action", () => {
     let state = advance(preparedState(), 60);
     expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");

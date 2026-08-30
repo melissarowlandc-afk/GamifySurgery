@@ -908,10 +908,21 @@ export const ROW_049_APPROVED_BACKLOG = {
   ],
   earliestFacilityStage: 2,
   requiredClinicalSettings: ["endoscopy", "hospital_floor"],
-  currentGameEligibility: "deferred",
+  currentGameEligibility: "partially_active_level_2_future_hospital_floor_excluded",
+  activeBlueprintIds: [
+    "blueprint.peptic-ulcer-bleeding.visible-vessel-hemostasis.v1",
+    "blueprint.peptic-ulcer-bleeding.select-high-risk-stigmata.v1",
+    "blueprint.peptic-ulcer-bleeding.clean-base-reverse.v1",
+    "blueprint.peptic-ulcer-bleeding.visible-vessel-modality-principle.v1",
+  ],
+  deferredBlueprintIds: [
+    "blueprint.peptic-ulcer-bleeding.active-oozing-hemostasis.v1",
+    "blueprint.peptic-ulcer-bleeding.active-mechanical-combination.v1",
+    "blueprint.peptic-ulcer-bleeding.definitive-second-modality.v1",
+  ],
   deferredReason:
-    "The exact reviewed package remains outside the playable Level 0-1 release. Stable nonbleeding-visible-vessel iterations require Level 2 Endoscopy; active-bleeding iterations remain reserved for the future hospital setting.",
-  approvedForRuntime: false,
+    "Future Hospital Floor active-bleeding blueprints remain excluded; the listed stable Level 2 endoscopy blueprints are active.",
+  approvedForRuntime: true,
   tutorialEligible: false,
   maximumScoredDecisionsPerEncounter: 2,
   questionVariantIds: ROW_049_QUESTION_VARIANTS.map(

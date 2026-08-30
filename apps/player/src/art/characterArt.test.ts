@@ -2,6 +2,8 @@ import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 import { describe, expect, it } from "vitest";
 import {
   characterAppearanceSignature,
+  CHARACTER_PORTRAIT_HEIGHT,
+  CHARACTER_PORTRAIT_WIDTH,
   getCharacterPixelFrame,
   getCharacterPortraitFrame,
   resolveCharacterAppearance,
@@ -65,9 +67,9 @@ describe("canonical character pixel art", () => {
     expect(front.width).toBe(24);
     expect(front.height).toBe(36);
     expect(front.cells.length).toBeGreaterThan(210);
-    expect(portraitSource.width).toBe(38);
-    expect(portraitSource.height).toBe(42);
-    expect(portraitSource.cells.length).toBeGreaterThan(front.cells.length);
+    expect(portraitSource.width).toBe(CHARACTER_PORTRAIT_WIDTH);
+    expect(portraitSource.height).toBe(CHARACTER_PORTRAIT_HEIGHT);
+    expect(portraitSource.cells.length).toBeGreaterThan(900);
     expect(portraitSource).not.toEqual(front);
     expect(side).not.toEqual(front);
     expect(back).not.toEqual(front);
@@ -77,6 +79,24 @@ describe("canonical character pixel art", () => {
     expect(seated.height).toBe(front.height);
     expect(characterAppearanceSignature(APPEARANCE)).toBe(
       characterAppearanceSignature(resolveCharacterAppearance(APPEARANCE)),
+    );
+  });
+
+  it("keeps close-up portrait detail native, bounded, and tied to the same descriptor", () => {
+    const portrait = getCharacterPortraitFrame(APPEARANCE);
+    const alternate = getCharacterPortraitFrame({
+      ...APPEARANCE,
+      headVariant: 12,
+      bodyVariant: 16,
+      hairStyle: "curly",
+      outfitStyle: "coat",
+    });
+
+    expect(portrait.cells.every((cell) => cell.x >= 0 && cell.x < portrait.width)).toBe(true);
+    expect(portrait.cells.every((cell) => cell.y >= 0 && cell.y < portrait.height)).toBe(true);
+    expect(frameSignature(portrait)).not.toBe(frameSignature(alternate));
+    expect(portrait.cells.length).toBeGreaterThan(
+      getCharacterPixelFrame(APPEARANCE).cells.length * 3,
     );
   });
 
@@ -95,6 +115,27 @@ describe("canonical character pixel art", () => {
     expect(
       characterAppearanceSignature(resolveCharacterAppearance(legacy)),
     ).not.toContain("undefined");
+  });
+
+  it("gives each Level 2 staff role a distinct deterministic uniform", () => {
+    const roles = [
+      "periop_nurse",
+      "endoscopy_nurse",
+      "endoscopist",
+      "phlebotomist",
+      "evs_worker",
+      "glp1_np",
+    ] as const;
+    const signatures = roles.map((roleStyle) =>
+      frameSignature(
+        getCharacterPixelFrame({ ...APPEARANCE, roleStyle }, {
+          direction: "front",
+          pose: "idle",
+        }),
+      ),
+    );
+
+    expect(new Set(signatures).size).toBe(roles.length);
   });
 
   it("renders all 900 founder head and body combinations", () => {
@@ -122,7 +163,7 @@ describe("canonical character pixel art", () => {
         expect(portrait.cells.length).toBeGreaterThan(150);
       }
     }
-  });
+  }, 10_000);
 
   it("gives every founder head and body option distinct canonical art", () => {
     const headPortraits = FOUNDER_HEAD_PRESETS.map((_, headIndex) =>
@@ -149,7 +190,7 @@ describe("canonical character pixel art", () => {
     );
   });
 
-  it("preserves classic portrait components in mixed classic and expanded pairs", () => {
+  it("keeps mixed classic and expanded portrait pairs bounded and distinct", () => {
     for (let headIndex = 0; headIndex < 10; headIndex += 1) {
       const classicPair = getCharacterPortraitFrame(
         createFounderAppearance(headIndex, 0),
@@ -158,9 +199,9 @@ describe("canonical character pixel art", () => {
         createFounderAppearance(headIndex, 10),
       );
 
-      expect(
-        frameSignature(expandedBodyPair, (cell) => cell.y < 28),
-      ).toBe(frameSignature(classicPair, (cell) => cell.y < 28));
+      expect(expandedBodyPair.width).toBe(CHARACTER_PORTRAIT_WIDTH);
+      expect(expandedBodyPair.height).toBe(CHARACTER_PORTRAIT_HEIGHT);
+      expect(frameSignature(expandedBodyPair)).not.toBe(frameSignature(classicPair));
     }
 
     for (let bodyIndex = 0; bodyIndex < 10; bodyIndex += 1) {
@@ -171,9 +212,9 @@ describe("canonical character pixel art", () => {
         createFounderAppearance(10, bodyIndex),
       );
 
-      expect(
-        frameSignature(expandedHeadPair, (cell) => cell.y >= 33),
-      ).toBe(frameSignature(classicPair, (cell) => cell.y >= 33));
+      expect(expandedHeadPair.width).toBe(CHARACTER_PORTRAIT_WIDTH);
+      expect(expandedHeadPair.height).toBe(CHARACTER_PORTRAIT_HEIGHT);
+      expect(frameSignature(expandedHeadPair)).not.toBe(frameSignature(classicPair));
     }
   });
 
@@ -214,6 +255,72 @@ describe("canonical character pixel art", () => {
     expect(frameSignature(walkA)).not.toBe(frameSignature(idle));
     expect(frameSignature(walkB)).not.toBe(frameSignature(idle));
     expect(frameSignature(walkA)).not.toBe(frameSignature(walkB));
+  });
+
+  it("keeps the procedural lateral neutral frame at idle geometry", () => {
+    for (const direction of ["front", "side", "back"] as const) {
+      const idle = getCharacterPixelFrame(APPEARANCE, { direction, pose: "idle" });
+      const neutral = getCharacterPixelFrame(APPEARANCE, {
+        direction,
+        pose: "walk-neutral",
+      });
+      expect(frameSignature(neutral)).toBe(frameSignature(idle));
+    }
+  });
+
+  it("keeps authored working and interaction poses distinct, bounded, and map-sized", () => {
+    for (const direction of ["front", "side", "back"] as const) {
+      const idle = getCharacterPixelFrame(APPEARANCE, {
+        direction,
+        pose: "idle",
+      });
+      const working = getCharacterPixelFrame(APPEARANCE, {
+        direction,
+        pose: "working",
+      });
+      const interaction = getCharacterPixelFrame(APPEARANCE, {
+        direction,
+        pose: "interaction",
+      });
+
+      expect(frameSignature(working)).not.toBe(frameSignature(idle));
+      expect(frameSignature(interaction)).not.toBe(frameSignature(idle));
+      expect(working.width).toBe(idle.width);
+      expect(working.height).toBe(idle.height);
+      expect(interaction.width).toBe(idle.width);
+      expect(interaction.height).toBe(idle.height);
+      for (const frame of [working, interaction]) {
+        frame.cells.forEach((cell) => {
+          expect(cell.x).toBeGreaterThanOrEqual(0);
+          expect(cell.y).toBeGreaterThanOrEqual(0);
+          expect(cell.x).toBeLessThan(frame.width);
+          expect(cell.y).toBeLessThan(frame.height);
+        });
+      }
+    }
+  });
+
+  it("retains 30 mix-and-match presets with inclusive human hair and coat variety", () => {
+    expect(FOUNDER_HEAD_PRESETS).toHaveLength(30);
+    expect(FOUNDER_BODY_PRESETS).toHaveLength(30);
+    expect(FOUNDER_HEAD_PRESETS.filter((preset) => preset.group === "classic")).toHaveLength(10);
+    expect(FOUNDER_HEAD_PRESETS.filter((preset) => preset.group === "female")).toHaveLength(10);
+    expect(FOUNDER_HEAD_PRESETS.filter((preset) => preset.group === "non-human")).toHaveLength(10);
+    for (const group of ["classic", "female"] as const) {
+      const shadeValues = FOUNDER_HEAD_PRESETS
+        .filter((preset) => preset.group === group)
+        .map((preset) => preset.hairShade);
+      for (const requiredShade of [0, 1, 2, 3]) {
+        expect(shadeValues).toContain(requiredShade);
+      }
+      expect(
+        FOUNDER_BODY_PRESETS.filter(
+          (preset) => preset.group === group && preset.outfitStyle === "coat",
+        ),
+      ).toHaveLength(3);
+    }
+    expect(FOUNDER_HEAD_PRESETS.map((preset) => preset.label)).toContain("Cat");
+    expect(FOUNDER_HEAD_PRESETS.map((preset) => preset.label)).toContain("Penguin");
   });
 
   it.each([

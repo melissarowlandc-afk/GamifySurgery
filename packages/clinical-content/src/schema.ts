@@ -74,6 +74,12 @@ export const decisionNodeSchema = z
     id: stableIdSchema,
     questionVariantId: stableIdSchema,
     primaryConceptId: stableIdSchema,
+    /**
+     * Exact approved context revealed after an earlier decision.  It is
+     * deliberately separate from the scored stem so the chart can render a
+     * current update without rewriting an approved question.
+     */
+    currentUpdate: z.string().min(1).max(2_000).optional(),
     stem: z.string().min(1).max(2_000),
     answerChoices: z.array(answerChoiceSchema).min(2).max(8),
     shuffleAnswers: z.boolean(),
@@ -222,8 +228,14 @@ export const syntheticClinicalCaseSchema = z
     selectedInstantiationProfileId: stableIdSchema.optional(),
     tutorialEligible: z.boolean(),
     routineEligible: z.boolean(),
-    earliestFacilityStage: z.number().int().min(0).max(1),
-    requiredClinicalSetting: z.enum(["clinic", "ambulatory_surgery"]),
+    earliestFacilityStage: z.number().int().min(0).max(2),
+    requiredClinicalSetting: z.enum([
+      "clinic",
+      "ambulatory_surgery",
+      "outpatient_endoscopy",
+      "endoscopy",
+      "periop_recovery",
+    ]),
     requiredCapabilityIds: z.array(stableIdSchema).default([]),
     rewardTierId: stableIdSchema,
     sourceLabels: z.array(z.string().min(1).max(240)).min(1),

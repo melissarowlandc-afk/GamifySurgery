@@ -71,7 +71,12 @@ function createAmbientPedestrian(
     id,
     // This reuses only the canonical civilian artwork generator. The actor is
     // not an encounter and never enters any patient or clinical collection.
-    appearance: createPatientPixelAppearance(state.campaignSeed, id),
+    appearance: createPatientPixelAppearance(
+      state.campaignSeed,
+      id,
+      {},
+      "ambient-pedestrian",
+    ),
     path: sidewalkPath(start, destination),
     pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick,

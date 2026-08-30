@@ -13,6 +13,7 @@ import { ROW_119_CASES } from "./gallbladder-polyp-management";
 import { ROW_111_CASES } from "./distal-cholangiocarcinoma";
 import { ROW_115_CASES } from "./obstructive-jaundice-vitamin-k";
 import { ROW_092_CASES } from "./hcc-resection-selection";
+import { LEVEL_TWO_ROUTINE_CASE_IDS } from "./level-two-runtime";
 import { ROW_058_CASES } from "./accessory-spleen-location";
 import { ROW_057_CASES } from "./hereditary-spherocytosis-postsplenectomy";
 import {
@@ -222,6 +223,7 @@ describe("owner row 30 approved breast-cyst pathway", () => {
       ...ROW_092_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_058_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_057_CASES.map((clinicalCase) => clinicalCase.id),
+      ...LEVEL_TWO_ROUTINE_CASE_IDS,
     ]);
     expect(
       SYNTHETIC_CLINICAL_RELEASE.cases.some(

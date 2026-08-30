@@ -8,6 +8,7 @@ export * from "./facility-experience";
 export * from "./fsrs-adapter";
 export * from "./persistence";
 export * from "./patient-travel";
+export * from "./patientAppearanceCatalog";
 export * from "./randomness";
 export * from "./reducer";
 export * from "./selectors";

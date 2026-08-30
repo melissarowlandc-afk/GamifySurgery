@@ -743,10 +743,20 @@ export const ROW_034_APPROVED_BACKLOG = {
   releasePointId: "release.l2.endoscopy",
   earliestFacilityStage: 2,
   requiredClinicalSetting: "outpatient_endoscopy",
-  currentGameEligibility: "deferred",
+  currentGameEligibility: "partially_active_level_2_direct_blueprints_only",
+  activeBlueprintIds: [
+    "blueprint.colonic-lipoma.direct.typical-a",
+    "blueprint.colonic-lipoma.direct.typical-b",
+  ],
+  excludedBlueprintIds: [
+    "blueprint.colonic-lipoma.reverse.diagnosis-to-phenotype",
+    "blueprint.colonic-lipoma.boundary.negative-sign",
+    "blueprint.colonic-lipoma.reverse.plan-to-patient",
+    "blueprint.colonic-lipoma.boundary.observation",
+  ],
   deferredReason:
-    "Clinically approved content is held outside the playable Level 0-1 release until the Level 2 Endoscopy encounter framework exists.",
-  approvedForRuntime: false,
+    "Reverse and options-only blueprints remain excluded by the Level 2 one-patient rule; both approved direct blueprints are mechanically split into their exact context and question sentences.",
+  approvedForRuntime: true,
   tutorialEligible: false,
   maximumScoredDecisionsPerEncounter: 2,
   directEncounterCount: 2,

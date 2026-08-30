@@ -17,15 +17,27 @@ retain the historical `GamifySurgery` name so saves, launchers, and deployment
 paths remain compatible. Its art is crisp, detailed, and Game Boy-inspired; it
 is not a wireframe decorated with a pixel font.
 
-The controlling local comparisons are:
+The controlling local comparison set is every current image in
+`Photos for Codex` except the file explicitly named
+`Visual Example (outdated, don't use).png`. That obsolete file is excluded and
+must not influence future art work.
 
-- `Photos for Codex/Current prototype.png`, the rejected placeholder baseline;
-- `Photos for Codex/Visual Example.png`, the approved reference for
-  atmosphere, density, depth, palette, and cohesion.
+Within the controlling set:
 
-The visual example is inspiration only. It is not a runtime asset, must not be
-copied or flattened into the game, and is not required to build or deploy the
-repository. All shipped art must be original.
+- `exec-44a3ea02-2ce5-4318-822f-a5b1e05e1a86.png` is the primary integrated
+  clinic target for atmosphere, density, depth, palette, landscaping, room
+  readability, and character scale;
+- `exec-a921f897-d3b4-4632-9e4f-0ed6791bef2f.png` is the primary close facility
+  and corridor target;
+- the remaining `exec-*.png` images jointly control room layouts, door-safe
+  furniture, portraits, body/head variety, directional sprites, and dedicated
+  idle, walking, seated, working, interaction, and star-jump poses; and
+- `Play, pause, fast forward.PNG` controls the intentionally simpler HUD time
+  controls.
+
+These comparisons are inspiration and acceptance references only. They are
+not runtime assets, must not be copied or flattened into the game, and are not
+required to build or deploy the repository. All shipped art must be original.
 
 The controlling palette is a low-chroma stone-and-olive neutral range modeled
 on the local visual reference: soft ivory paper, weathered light stone,
@@ -102,13 +114,29 @@ illustrations. Emoji and unrelated generic character icons are prohibited.
 ## Rooms and environment
 
 Every completed Level 1 room must be identifiable without its text label.
+The Front Desk establishes the reusable base architectural language: one
+continuous transparent cutaway shell aligns its authored five-by-four floor to
+the logical footprint, while its deep rear wall, inset trim, side returns,
+low south wall, entrance jambs, and directional shadows remain one coherent
+perspective. Future rooms may vary flooring and furniture but must retain this
+continuous shell perspective; they must not rebuild it from independently
+stretched wall or floor fragments. Furniture, characters, doors, planters, and
+click targets remain separate live elements.
+
+Each room retains three distinct spatial notions: its saved logical footprint
+controls building, routes, and collision; a fixture's visual floor-contact
+anchor grounds its sprite; and the sprite envelope may extend upward into the
+cutaway rear-wall area. The Front Desk cabinet and interactive water cooler
+are the reference example: they remain logically A1 and A5 while their larger
+art is rear-grounded by contact anchors. This visual grounding must never move
+an obstacle tile or change a route.
 Rooms use:
 
 - visibly thick walls and finished edges;
-- a shallow dollhouse cutaway, with roughly 14-16% of room-floor depth
-  represented as the rear vertical face (capped below one-half tile at normal
-  scale), short side returns,
-  low front edges, baseboards, recesses, and directional contact shadows;
+- a coherent shallow dollhouse cutaway whose rear-wall height, outer frame,
+  inset trim, side returns, low front edges, and directional shadows follow the
+  accepted Front Desk shell proportions. Do not reduce that depth language to
+  a generic percentage or half-tile cap;
 - rear-wall faces only on exposed northern building-envelope segments. When a
   room or hallway touches immediately north, the southern/front room loses the
   covered portion of its dollhouse rear wall. This never expands, shrinks, or
@@ -144,7 +172,13 @@ Rooms use:
 - moderately light landscaped exterior grounds that preserve strong room and
   character contrast, plus irregularly spaced shrubs, flower beds, trees, and
   a sidewalk/entrance composition that visually situates the clinic without
-  forming obvious vertical planting columns.
+  forming obvious vertical planting columns. Exterior planting is a stable,
+  deterministic presentation layer across the full permitted site, not a band
+  derived from the currently constructed rooms. Its complete sprite envelope
+  (including contact shadow) is culled before rendering whenever it intersects
+  a room, hallway, protected entrance path, or sidewalk; expanding the clinic
+  therefore removes affected plants cleanly while unrelated placements stay
+  fixed;
 
 Room footprints, routing, build rules, rotations, upgrades, and explicit-door
 behavior remain domain-owned and unchanged. Visual art adapts to those rules.
@@ -160,8 +194,11 @@ disappears again. The exterior entrance remains the bottom-center anchor
 against a full-width sidewalk, and the camera must preserve the established
 10% minimum, map boundaries, panning, and entrance-oriented zoom behavior.
 The illustrated land and sidewalk fill the available map zone: aspect-ratio
-gutters read as continuous land, and the sidewalk reaches the lower viewport
-edge without an unexplained blank strip.
+gutters read as continuous land, a planted grass setback visibly separates the
+facility-grid bottom from the pavement, and the broad slab sidewalk reaches the
+lower viewport edge with a top seam and lower curb rather than an unexplained
+blank strip. The bottom-center entrance retains one clear walkway through the
+setback to the sidewalk.
 
 Characters and floor objects use baseline-Y visual occlusion. A character
 whose feet are south/in front of an object's floor contact appears in front of
@@ -316,11 +353,53 @@ The Level 1 slice is ready for owner review only when:
     identifiers remain backward-compatible.
 21. characters pass visually behind or in front of floor objects according to
     their baseline Y without changing routes;
-21. room furniture uses plausible wall-oriented layouts rather than defaulting
+22. room furniture uses plausible wall-oriented layouts rather than defaulting
     to the room center;
-22. lighter irregular landscaping and a full-height map/sidewalk composition
+23. lighter irregular landscaping and a full-height map/sidewalk composition
     leave no unexplained blank strip below the sidewalk.
+24. exterior turf, the planted entrance setback, sidewalk slabs, curb, and
+    compact entrance flower beds are world art derived from the facility
+    origin and tile scale. They pan and zoom with rooms rather than remaining
+    fixed to the browser viewport; a northern camera pan may naturally move
+    the sidewalk out of frame.
+25. landscaping candidates are deterministic full-site placements, with the
+    complete visual envelope (not only the sprite origin) culled against room,
+    hallway, entrance-path, and sidewalk space. Tree-frame background holes
+    are renderer-cleaned only when they are opaque near-neutral white, leaving
+    the accepted tree silhouettes and flower-petal pixels intact.
 
 Automated tests support this gate but cannot establish visual acceptance. The
 owner approves the rendered Level 1 screenshot before the art system expands
 to later levels.
+
+## Shared surgery-center wall construction
+
+The measured Front Desk v4 shell is the single source of truth for all current
+surgery-center room and hallway cutaway geometry: side-wall thickness,
+north-wall envelope, outer border, bevel, baseboard, foreground lip, corner
+treatment, and shadow offsets are normalized to the logical tile scale. The
+same north-wall envelope applies regardless of room depth, footprint,
+orientation, room type, or upgrade tier; room-specific floor and plaster
+materials remain independent. North doors, wall-mounted decor, Build Mode wall
+targets, and camera bounds use that same projection. Walls touching another
+room or hallway are drawn only on their exposed runs. Covered runs disappear
+at their original scale rather than being squeezed, so adjacent floors meet
+without either room's wall or foreground lip crossing the other room's
+footprint.
+
+## Canonical actor integrity and patient-roster seam
+
+Live characters use one clean, full-character v3 frame per pose and direction.
+This avoids layering separately cropped contact-sheet heads and bodies, which
+can otherwise expose a neighbouring source figure or incompatible neck/skin
+edge. The creator presents the 30 accepted paired founder identities; legacy
+mixed head/body save descriptors remain untouched and receive a deterministic
+presentation-only coherent identity projection.
+
+The current ordinary-patient visual catalog honestly contains 20 authored
+human identity entries (ten in each existing presentation family). It has a
+stable ID seam and a future target of approximately 150 genuinely distinct,
+hand-authored human patient identities across age bands, gender presentation,
+hairstyles, faces, skin tones, and ordinary clothing. Reserved future IDs must
+not be populated by duplicate combinations or non-human founder art merely to
+claim that target has been reached.

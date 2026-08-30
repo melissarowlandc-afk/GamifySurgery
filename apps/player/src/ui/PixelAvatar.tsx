@@ -1,10 +1,17 @@
 import type { PixelRoleStyle } from "@gamify-surgery/game-domain";
+import { useState } from "react";
 import {
   getCharacterPixelFrame,
   getCharacterPortraitFrame,
   type CharacterDirection,
   type CharacterPose,
 } from "../art/characterArt";
+import {
+  characterAtlasCellStyle,
+  characterBitmapLayers,
+  isPatientV1Appearance,
+} from "../art/characterBitmapArt";
+import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
 import { PIXEL_PALETTE } from "../art/pixelPalette";
 import type { PixelAvatarView } from "./types";
 
@@ -18,6 +25,7 @@ interface PixelAvatarProps {
   pose?: CharacterPose;
   animation?: "idle" | "star-jump";
   roleStyle?: PixelRoleStyle;
+  movingRight?: boolean;
 }
 
 const FALLBACK_AVATAR: PixelAvatarView = {
@@ -44,7 +52,7 @@ function PixelFrameSvg({
   roleStyle,
 }: {
   avatar: PixelAvatarView;
-  representation: "portrait" | "full";
+  representation: "portrait" | "thumbnail" | "full";
   direction: CharacterDirection;
   pose: CharacterPose;
   className: string;
@@ -81,6 +89,87 @@ function PixelFrameSvg({
   );
 }
 
+function AuthoredBitmapAvatar({
+  avatar,
+  representation,
+  direction,
+  pose,
+  roleStyle,
+  onAssetError,
+  className = "",
+  movingRight = false,
+}: {
+  avatar: PixelAvatarView;
+  representation: "portrait" | "thumbnail" | "full";
+  direction: CharacterDirection;
+  pose: CharacterPose;
+  roleStyle?: PixelRoleStyle;
+  onAssetError: () => void;
+  className?: string;
+  movingRight?: boolean;
+}) {
+  const layeredPose = representation === "portrait" || representation === "thumbnail"
+    ? "idle"
+    : pose;
+  const bitmapRepresentation = representation === "thumbnail"
+    ? "thumbnail"
+    : representation === "portrait"
+      ? "portrait"
+      : undefined;
+  const layers = characterBitmapLayers(
+    { ...avatar, roleStyle: roleStyle ?? avatar.roleStyle },
+    representation === "portrait" || representation === "thumbnail" ? "front" : direction,
+    layeredPose,
+    movingRight,
+    bitmapRepresentation,
+  );
+  return (
+    <span
+      className={`pixel-avatar-authored ${className}`.trim()}
+      data-art-source={
+        layers.actor.atlas.id.includes("patients-")
+          ? "canonical-patient-atlas-v1"
+          : layers.actor.atlas.id.includes("founders-")
+          ? "canonical-founder-atlas-v4"
+          : "canonical-character-atlas-v3"
+      }
+      style={{
+        position: "relative",
+        display: "block",
+        width: "100%",
+        height: "100%",
+        imageRendering: "pixelated",
+      }}
+    >
+      <span
+        aria-hidden="true"
+        className="pixel-avatar-authored-actor"
+        style={{
+          ...characterAtlasCellStyle(layers.actor),
+          position: "absolute",
+          left: "0%",
+          top: "0%",
+          width: "100%",
+          height: "100%",
+          backgroundRepeat: "no-repeat",
+          imageRendering: "pixelated",
+        }}
+      />
+      {/* A hidden image provides a reliable browser load-error signal while
+          spans retain exact background-position atlas cropping. */}
+      <img
+        alt=""
+        aria-hidden="true"
+        src={layers.actor.atlas.relativePath
+          ? resolvePublicArtAssetUrl(layers.actor.atlas.relativePath)
+          : undefined}
+        onError={onAssetError}
+        style={{ display: "none" }}
+      />
+    </span>
+  );
+}
+
 /**
  * Canonical character representation.
  *
@@ -99,8 +188,13 @@ export function PixelAvatar({
   pose = "idle",
   animation = "idle",
   roleStyle,
+  movingRight = false,
 }: PixelAvatarProps) {
   const starJump = animation === "star-jump";
+  const patientThumbnail = representation === "portrait" &&
+    size === "small" &&
+    isPatientV1Appearance({ ...avatar, roleStyle: roleStyle ?? avatar.roleStyle });
+  const [assetFailed, setAssetFailed] = useState(false);
   return (
     <span
       className={`pixel-avatar pixel-avatar-${size} is-${representation}${
@@ -113,15 +207,51 @@ export function PixelAvatar({
       role="img"
       aria-label={label}
     >
-      <PixelFrameSvg
-        avatar={avatar}
-        representation={representation}
-        direction={direction}
-        pose={starJump ? "idle" : pose}
-        className="pixel-avatar-svg pixel-avatar-frame-a"
-        roleStyle={roleStyle}
-      />
-      {starJump ? (
+      {!assetFailed && starJump ? (
+        <>
+          <AuthoredBitmapAvatar
+            avatar={avatar}
+            representation={representation}
+            direction={direction}
+            pose="jump-recovery"
+            roleStyle={roleStyle}
+            movingRight={movingRight}
+            className="pixel-avatar-frame-a"
+            onAssetError={() => setAssetFailed(true)}
+          />
+          <AuthoredBitmapAvatar
+            avatar={avatar}
+            representation={representation}
+            direction={direction}
+            pose="star-jump"
+            roleStyle={roleStyle}
+            movingRight={movingRight}
+            className="pixel-avatar-frame-b"
+            onAssetError={() => setAssetFailed(true)}
+          />
+        </>
+      ) : !assetFailed ? (
+        <AuthoredBitmapAvatar
+          avatar={avatar}
+          representation={patientThumbnail ? "thumbnail" : representation}
+          direction={direction}
+          pose={pose}
+          roleStyle={roleStyle}
+          movingRight={movingRight}
+          className="pixel-avatar-frame-a"
+          onAssetError={() => setAssetFailed(true)}
+        />
+      ) : (
+        <PixelFrameSvg
+          avatar={avatar}
+          representation={representation}
+          direction={direction}
+          pose={starJump ? "idle" : pose}
+          className="pixel-avatar-svg pixel-avatar-frame-a"
+          roleStyle={roleStyle}
+        />
+      )}
+      {starJump && assetFailed ? (
         <PixelFrameSvg
           avatar={avatar}
           representation={representation}

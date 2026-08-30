@@ -87,6 +87,8 @@ export type FacilityDoorSlotView = FacilityBuildDoorSlotView;
 
 export interface FacilityStaffView {
   instanceId: string;
+  /** Optional only for legacy/test facility projections. */
+  staffRoleDefinitionId?: string;
   displayName: string;
   roleDisplayName: string;
   homeRoomInstanceId: string | null;

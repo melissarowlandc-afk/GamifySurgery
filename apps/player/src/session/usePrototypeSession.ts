@@ -30,6 +30,8 @@ import {
   useState,
 } from "react";
 import type { FacilityCameraView } from "../facility";
+import { getInitialFacilityCamera } from "../facility/defaultCamera";
+import { getApprovedPlacementOrientations } from "../facility/roomVisualLayout";
 import {
   loadPrototypeProfile,
   requireActiveCampaign,
@@ -245,11 +247,9 @@ export function usePrototypeSession(
     useState<string[]>([]);
   const buildHistoryRef = useRef<GameState[]>([]);
   const [facilityCamera, setFacilityCamera] =
-    useState<FacilityCameraView>({
-      zoom: 1,
-      panX: 0,
-      panY: 0,
-    });
+    useState<FacilityCameraView>(() => getInitialFacilityCamera(
+      requireActiveCampaign(loadedRef.current!.profile).state,
+    ));
   const preBuildPausedRef = useRef(true);
   const [summaryVisible, setSummaryVisible] = useState(false);
   const [acknowledgedTutorialStepIds, setAcknowledgedTutorialStepIds] =
@@ -861,9 +861,19 @@ export function usePrototypeSession(
       setAnnouncement("Select a room before rotating it.");
       return;
     }
-    setPlacementOrientation((current) =>
-      ((current + 90) % 360) as RoomOrientation,
+    const orientations = getApprovedPlacementOrientations(
+      selectedRoomDefinitionId,
     );
+    if (orientations.length <= 1) {
+      setAnnouncement("This room has a fixed furniture orientation.");
+      return;
+    }
+    setPlacementOrientation((current) => {
+      const currentIndex = orientations.indexOf(current);
+      return orientations[
+        (currentIndex + 1 + orientations.length) % orientations.length
+      ]!;
+    });
     setAnnouncement("Placement rotated 90 degrees.");
   }, [selectedRoomDefinitionId]);
 
@@ -902,7 +912,11 @@ export function usePrototypeSession(
         roomDefinitionId,
         x: tileX,
         y: tileY,
-        orientation: requestedOrientation ?? placementOrientation,
+        orientation: getApprovedPlacementOrientations(roomDefinitionId).includes(
+          requestedOrientation ?? placementOrientation,
+        )
+          ? (requestedOrientation ?? placementOrientation)
+          : 0,
       });
       if (status === "applied") {
         if (roomDefinitionId === "room.hallway") {
@@ -1370,7 +1384,7 @@ export function usePrototypeSession(
     buildHistoryRef.current = [];
     setBuildUndoCount(0);
     setBuildExitBlockedReason(null);
-    setFacilityCamera({ zoom: 1, panX: 0, panY: 0 });
+    setFacilityCamera(getInitialFacilityCamera(selectedCampaign.state));
     setSummaryVisible(false);
     const saved = savePrototypeProfile(nextProfile);
     saveWarningShownRef.current = !saved;

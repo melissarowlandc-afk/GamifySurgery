@@ -4,6 +4,8 @@ import {
   createInitialGameState,
   deserializeGameState,
   gameReducer,
+  getOccupiedTiles,
+  getRoomNavigableTiles,
   serializeGameState,
   type GameState,
 } from "../src";
@@ -28,6 +30,30 @@ function tick(state: GameState): GameState {
   });
 }
 
+function founderRoomNavigation(state: GameState) {
+  const room = state.rooms.find((candidate) =>
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.protectedRoomDefinitionIds.includes(
+      candidate.roomDefinitionId,
+    ),
+  );
+  expect(room).toBeDefined();
+  const definition =
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find(
+      (candidate) => candidate.id === room!.roomDefinitionId,
+    );
+  expect(definition).toBeDefined();
+  return { room: room!, definition: definition! };
+}
+
+function legalFounderRoomDestinations(state: GameState) {
+  const { room, definition } = founderRoomNavigation(state);
+  return getRoomNavigableTiles(room, definition, state.doors).filter(
+    (point) =>
+      point.x !== state.environment.founderLocation.x ||
+      point.y !== state.environment.founderLocation.y,
+  );
+}
+
 describe("founder map movement", () => {
   it("persists a legal floor destination and advances at the shared speed", () => {
     let state = createInitialGameState(undefined, {
@@ -38,7 +64,7 @@ describe("founder map movement", () => {
     state.encounters = {};
     state.nextRoutineArrivalTick = 100_000;
     state.environment.nextLitterSpawnTick = 100_000;
-    const destination = { x: 33, y: 28 };
+    const destination = legalFounderRoomDestinations(state)[0]!;
 
     state = move(state, destination);
     expect(state.environment.founderActivity).toMatchObject({
@@ -77,11 +103,15 @@ describe("founder map movement", () => {
 
   it("retargets ordinary walking but does not interrupt facility work", () => {
     let state = createInitialGameState();
-    state = move(state, { x: 33, y: 28 });
-    state = move(state, { x: 37, y: 28 });
+    const destinations = legalFounderRoomDestinations(state);
+    expect(destinations.length).toBeGreaterThanOrEqual(2);
+    const firstDestination = destinations[0]!;
+    const secondDestination = destinations[1]!;
+    state = move(state, firstDestination);
+    state = move(state, secondDestination);
     expect(
       state.environment.founderActivity?.path.at(-1),
-    ).toEqual({ x: 37, y: 28 });
+    ).toEqual(secondDestination);
 
     const location = { ...state.environment.founderLocation };
     state.environment.founderActivity = {
@@ -92,7 +122,7 @@ describe("founder map movement", () => {
       lastMovedAtFacilityTick: state.facilityTick,
       workMinutesRemaining: 2,
     };
-    const blocked = move(state, { x: 33, y: 28 });
+    const blocked = move(state, firstDestination);
     expect(
       blocked.operationReceipts[Object.keys(blocked.operationReceipts).at(-1)!],
     ).toMatchObject({
@@ -123,15 +153,23 @@ describe("founder map movement", () => {
 
   it("uses the nearest legal floor tile for furniture clicks and rejects empty land", () => {
     let state = createInitialGameState();
-    const blockedFixtureTile = { x: 34, y: 30 };
-    state = move(state, blockedFixtureTile);
+    const { room, definition } = founderRoomNavigation(state);
+    const navigable = getRoomNavigableTiles(room, definition, state.doors);
+    const navigableKeys = new Set(
+      navigable.map((point) => `${point.x},${point.y}`),
+    );
+    const blockedFixtureTile = getOccupiedTiles(room, definition).find(
+      (point) => !navigableKeys.has(`${point.x},${point.y}`),
+    );
+    expect(blockedFixtureTile).toBeDefined();
+    state = move(state, blockedFixtureTile!);
     const resolvedDestination =
       state.environment.founderActivity?.path.at(-1);
     expect(resolvedDestination).toBeDefined();
     expect(resolvedDestination).not.toEqual(blockedFixtureTile);
     expect(
-      Math.abs(resolvedDestination!.x - blockedFixtureTile.x) +
-        Math.abs(resolvedDestination!.y - blockedFixtureTile.y),
+      Math.abs(resolvedDestination!.x - blockedFixtureTile!.x) +
+        Math.abs(resolvedDestination!.y - blockedFixtureTile!.y),
     ).toBe(1);
 
     const rejected = move(state, { x: 0, y: 0 });

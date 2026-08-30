@@ -1,0 +1,514 @@
+{
+  "version": 4,
+  "contentRevision": "founders-v4-r8",
+  "cells": {
+    "width": 96,
+    "height": 144,
+    "columns": 5,
+    "rows": 6
+  },
+  "floorAnchor": {
+    "x": 48,
+    "y": 136
+  },
+  "clipboardExtraction": {
+    "sourceTopInset": 4,
+    "completeHeadRequired": true
+  },
+  "variants": [
+    {
+      "id": "founder.01",
+      "source": "founder-01-the-attending.png"
+    },
+    {
+      "id": "founder.02",
+      "source": "founder-02-the-chart-keeper.png"
+    },
+    {
+      "id": "founder.03",
+      "source": "founder-03-the-quick-study.png"
+    },
+    {
+      "id": "founder.04",
+      "source": "founder-04-the-rounds-doctor.png"
+    },
+    {
+      "id": "founder.05",
+      "source": "founder-05-the-evening-consult.png"
+    },
+    {
+      "id": "founder.06",
+      "source": "founder-06-the-clinic-runner.png"
+    },
+    {
+      "id": "founder.07",
+      "source": "founder-07-the-senior-fellow.png"
+    },
+    {
+      "id": "founder.08",
+      "source": "founder-08-the-night-shift.png"
+    },
+    {
+      "id": "founder.09",
+      "source": "founder-09-the-procedure-lead.png"
+    },
+    {
+      "id": "founder.10",
+      "source": "founder-10-the-on-call-surgeon.png"
+    },
+    {
+      "id": "founder.11",
+      "source": "founder-11-the-lead-clinician.png"
+    },
+    {
+      "id": "founder.12",
+      "source": "founder-12-the-analyst.png"
+    },
+    {
+      "id": "founder.13",
+      "source": "founder-13-the-organizer.png"
+    },
+    {
+      "id": "founder.14",
+      "source": "founder-14-the-consult-specialist.png"
+    },
+    {
+      "id": "founder.15",
+      "source": "founder-15-the-quick-consult.png"
+    },
+    {
+      "id": "founder.16",
+      "source": "founder-16-the-long-call.png"
+    },
+    {
+      "id": "founder.17",
+      "source": "founder-17-the-note-taker.png"
+    },
+    {
+      "id": "founder.18",
+      "source": "founder-18-the-clinic-builder.png"
+    },
+    {
+      "id": "founder.19",
+      "source": "founder-19-the-after-hours-doctor.png"
+    },
+    {
+      "id": "founder.20",
+      "source": "founder-20-the-headwrap-scholar.png"
+    },
+    {
+      "id": "founder.21",
+      "source": "founder-21-cat-clinician.png"
+    },
+    {
+      "id": "founder.22",
+      "source": "founder-22-penguin-resident.png"
+    },
+    {
+      "id": "founder.23",
+      "source": "founder-23-fox-specialist.png"
+    },
+    {
+      "id": "founder.24",
+      "source": "founder-24-rabbit-fellow.png"
+    },
+    {
+      "id": "founder.25",
+      "source": "founder-25-owl-consultant.png"
+    },
+    {
+      "id": "founder.26",
+      "source": "founder-26-frog-practitioner.png"
+    },
+    {
+      "id": "founder.27",
+      "source": "founder-27-moon-alien.png"
+    },
+    {
+      "id": "founder.28",
+      "source": "founder-28-antenna-alien.png"
+    },
+    {
+      "id": "founder.29",
+      "source": "founder-29-robot-clinician.png"
+    },
+    {
+      "id": "founder.30",
+      "source": "founder-30-axolotl-clinician.png"
+    }
+  ],
+  "sourcePoseSlots": {
+    "front-idle": [
+      0,
+      0
+    ],
+    "left-idle": [
+      0,
+      1
+    ],
+    "right-idle": [
+      0,
+      2
+    ],
+    "back-idle": [
+      0,
+      3
+    ],
+    "front-walk-a": [
+      0,
+      4
+    ],
+    "front-walk-b": [
+      0,
+      5
+    ],
+    "left-walk-a": [
+      0,
+      6
+    ],
+    "left-walk-b": [
+      1,
+      2
+    ],
+    "right-walk-a": [
+      1,
+      1
+    ],
+    "right-walk-b": [
+      1,
+      0
+    ],
+    "back-walk-a": [
+      1,
+      3
+    ],
+    "back-walk-b": [
+      1,
+      4
+    ],
+    "front-seated": [
+      1,
+      5
+    ],
+    "left-seated": [
+      1,
+      6
+    ],
+    "right-seated": [
+      2,
+      0
+    ],
+    "front-working": [
+      2,
+      1
+    ],
+    "clipboard": [
+      2,
+      2
+    ],
+    "jump-recovery": [
+      2,
+      3
+    ],
+    "star-jump": [
+      2,
+      4
+    ],
+    "portrait": [
+      2,
+      5
+    ]
+  },
+  "horizontalWalkDerivation": {
+    "left-walk-b": {
+      "mirrorOf": "right-walk-a"
+    },
+    "right-walk-b": {
+      "mirrorOf": "left-walk-a"
+    }
+  },
+  "sourceIdentitySignatures": {
+    "front-walk-a": [
+      983861332,
+      2588711929,
+      2424857384,
+      2635079021,
+      2736887864,
+      196889352,
+      3853061130,
+      3140392616,
+      1192714956,
+      3336324365,
+      1864837442,
+      2033168815,
+      1351292142,
+      593816337,
+      3898821654,
+      2198071828,
+      3569922193,
+      2525419746,
+      1018442825,
+      1593374079,
+      2944089372,
+      765930663,
+      2258824521,
+      3054388212,
+      1501826218,
+      2956993617,
+      2111538221,
+      973214796,
+      733592113,
+      3188915064
+    ],
+    "front-walk-b": [
+      983861332,
+      2588711929,
+      2424857384,
+      2635079021,
+      2736887864,
+      196889352,
+      3853061130,
+      3140392616,
+      1192714956,
+      3336324365,
+      1864837442,
+      2033168815,
+      1351292142,
+      593816337,
+      3898821654,
+      2198071828,
+      3569922193,
+      2525419746,
+      1018442825,
+      1593374079,
+      2944089372,
+      765930663,
+      2258824521,
+      3054388212,
+      1501826218,
+      2956993617,
+      2111538221,
+      973214796,
+      733592113,
+      3188915064
+    ],
+    "left-walk-a": [
+      218542668,
+      263144350,
+      1060100857,
+      3146546600,
+      775188331,
+      4102959214,
+      3033511247,
+      730278412,
+      1871350934,
+      1908565857,
+      3135945001,
+      131982967,
+      1635809817,
+      3222182883,
+      3004540278,
+      2267514126,
+      806212201,
+      3387454165,
+      3324320798,
+      2946306433,
+      3270835410,
+      845887776,
+      3629812970,
+      2750390487,
+      1349510720,
+      3970144370,
+      495498896,
+      2027653170,
+      1694116980,
+      2729507957
+    ],
+    "left-walk-b": [
+      37334046,
+      263144350,
+      609732274,
+      2265048085,
+      3558235413,
+      2012584899,
+      3796746080,
+      1504407601,
+      119198931,
+      401968215,
+      2803193435,
+      4109266237,
+      1994346835,
+      3270376520,
+      3882180119,
+      2898754795,
+      4272840069,
+      3072946817,
+      3308747841,
+      1615888695,
+      3270835410,
+      3121156272,
+      751607098,
+      2750390487,
+      3524540753,
+      3970144370,
+      495498896,
+      2027653170,
+      1833092158,
+      2729507957
+    ],
+    "right-walk-a": [
+      3154516626,
+      2807196310,
+      2155920782,
+      4084334125,
+      2391116089,
+      1630804151,
+      3696621296,
+      1884939101,
+      3210058959,
+      4231170095,
+      4163236803,
+      1810431517,
+      32734867,
+      166053836,
+      406866935,
+      1476300143,
+      93508549,
+      3707668025,
+      1398002777,
+      2476366999,
+      3334343654,
+      3847363796,
+      1946829410,
+      2338384475,
+      4195232229,
+      2206363398,
+      1177429720,
+      833295830,
+      2733282878,
+      238026805
+    ],
+    "right-walk-b": [
+      385247820,
+      2807196310,
+      2261904557,
+      2257250844,
+      2180101667,
+      2301334262,
+      2934747227,
+      2124212636,
+      664825314,
+      2406676225,
+      3926992125,
+      1809931863,
+      1124338837,
+      2795168919,
+      1862859566,
+      949848794,
+      2686764401,
+      4020178109,
+      3898600774,
+      3988400713,
+      3334343654,
+      1652330596,
+      1411844466,
+      2338384475,
+      4191651296,
+      2206363398,
+      1177429720,
+      833295830,
+      3843903176,
+      238026805
+    ],
+    "back-walk-a": [
+      3262765221,
+      4248413970,
+      1486946223,
+      847543394,
+      2911767102,
+      3122544687,
+      3036036162,
+      2150732011,
+      401143794,
+      3202618132,
+      173484674,
+      865094884,
+      1731892889,
+      2753991303,
+      951099377,
+      1435636288,
+      235292354,
+      3199246856,
+      2787729469,
+      1537797986,
+      554066581,
+      3621482045,
+      2187831444,
+      3881991194,
+      506603075,
+      3222478302,
+      283459629,
+      743729202,
+      424439177,
+      1620039939
+    ],
+    "back-walk-b": [
+      966206506,
+      4028718639,
+      722579763,
+      1925303524,
+      3241919871,
+      2896155952,
+      1220242446,
+      1538359669,
+      4222380527,
+      472841809,
+      4098014549,
+      383425800,
+      4125437945,
+      2484682377,
+      1146475585,
+      4152978183,
+      3771692462,
+      844175131,
+      1046027112,
+      2732868838,
+      298706115,
+      1688901809,
+      3360257337,
+      293197298,
+      467758943,
+      2998214462,
+      2093342628,
+      3317994707,
+      1420884442,
+      579961671
+    ]
+  },
+  "poses": {
+    "front-idle": "founders-front-idle-v4.png",
+    "left-idle": "founders-left-idle-v4.png",
+    "right-idle": "founders-right-idle-v4.png",
+    "back-idle": "founders-back-idle-v4.png",
+    "front-walk-a": "founders-front-walk-a-v4.png",
+    "front-walk-b": "founders-front-walk-b-v4.png",
+    "left-walk-a": "founders-left-walk-a-v4.png",
+    "left-walk-b": "founders-left-walk-b-v4.png",
+    "right-walk-a": "founders-right-walk-a-v4.png",
+    "right-walk-b": "founders-right-walk-b-v4.png",
+    "back-walk-a": "founders-back-walk-a-v4.png",
+    "back-walk-b": "founders-back-walk-b-v4.png",
+    "front-seated": "founders-front-seated-v4.png",
+    "left-seated": "founders-left-seated-v4.png",
+    "right-seated": "founders-right-seated-v4.png",
+    "front-working": "founders-front-working-v4.png",
+    "clipboard": "founders-clipboard-v4.png",
+    "jump-recovery": "founders-jump-recovery-v4.png",
+    "star-jump": "founders-star-jump-v4.png",
+    "portrait": "founders-portrait-v4.png"
+  },
+  "walkPhases": {
+    "a": "left-foot-forward",
+    "b": "right-foot-forward"
+  }
+}

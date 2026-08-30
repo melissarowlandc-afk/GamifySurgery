@@ -240,9 +240,10 @@ describe("room cutaway boundaries", () => {
     expect(projection.face.y + projection.face.height).toBe(floor.y);
   });
 
-  it("keeps the rear wall shallower than the previous quarter-height treatment", () => {
-    expect(getRearWallFaceHeight(100, 40)).toBe(16);
-    expect(getRearWallFaceHeight(200, 40)).toBe(19);
-    expect(getRearWallFaceHeight(20, 10)).toBe(6);
+  it("uses the Front Desk-derived wall face regardless of footprint depth", () => {
+    const atForty = getRearWallFaceHeight(100, 40);
+    expect(getRearWallFaceHeight(200, 40)).toBe(atForty);
+    expect(getRearWallFaceHeight(20, 40)).toBe(atForty);
+    expect(getRearWallFaceHeight(100, 10)).toBeGreaterThan(0);
   });
 });

@@ -3,6 +3,7 @@ import type {
   CardinalDirection,
   GridPoint,
   PixelAppearanceDescriptor,
+  RoomOrientation,
 } from "@gamify-surgery/game-domain";
 
 import type {
@@ -45,9 +46,45 @@ import {
   type CharacterPose,
 } from "../art/characterArt";
 import {
+  allCanonicalCharacterAtlases,
+  canonicalAppearanceVariant,
+  characterBitmapLayers,
+  characterBitmapRegistration,
+  characterAtlasFrameKey,
+} from "../art/characterBitmapArt";
+import { selectCharacterWalkingPose } from "../art/lateralGaitCycle";
+import {
   FIXTURE_SPRITES,
+  getFixtureSpriteForOrientation,
   type FixtureId,
 } from "../art/fixtureArt";
+import {
+  ENVIRONMENT_ATLAS_V1,
+  ENVIRONMENT_ATLAS_V1_FRAMES,
+  FRONT_DESK_V2_ART_FRAMES,
+  FRONT_DESK_V2_FIXTURE_OVERRIDES,
+  FRONT_DESK_V4_ARCHITECTURE_FRAMES,
+  FRONT_DESK_V4_SHELL_LAYOUT,
+  SURGERY_CENTER_ARCHITECTURE_COMPONENT_FRAMES,
+  EXAMINATION_V2_ARCHITECTURE_FRAMES,
+  LANDSCAPING_ATLAS_V1,
+  LANDSCAPING_ATLAS_V1_FRAMES,
+  LEVEL_ONE_BITMAP_FIXTURE_FRAMES,
+  LEVEL_TWO_ROOM_BITMAP_FIXTURE_OVERRIDES,
+  PATIENT_CHARACTER_CORE_MAP_ATLASES_V1,
+  ROOM_FIXTURE_ATLASES,
+  getRoomBitmapFixtureFrame,
+  getEnvironmentAtlasFrameKey,
+  type EnvironmentAtlasFrameId,
+  type FrontDeskV2ArtId,
+  type FrontDeskV4ArchitectureId,
+  type LandscapingAtlasFrameId,
+} from "../art/bitmapAssetManifest";
+import {
+  getPhaserTextureKey,
+  preloadBitmapAssets,
+  registerPhaserAtlasFrames,
+} from "../art/bitmapAssetAdapters";
 import type {
   PixelFrame,
   PixelSpriteAsset,
@@ -72,11 +109,45 @@ import {
   syncRouteMotion,
   type RouteMotionTrack,
 } from "./routeMotion";
+import {
+  FRONT_DESK_PRESENTATION,
+  shouldRenderEmptyFrontDeskChair,
+  shouldRenderFounderSeatedAtFrontDesk,
+  shouldRenderReceptionistSeatedAtFrontDesk,
+} from "./frontDeskPresentation";
+import {
+  getExaminationRoomPresentation,
+  type ExaminationRoomOrientation,
+} from "./examinationRoomPresentation";
+import {
+  getSurgeryCenterArchitectureAtScale,
+  SURGERY_CENTER_WALL_GEOMETRY,
+} from "./surgeryCenterArchitecture";
 import { getFixturePresentationSize } from "./fixturePresentation";
+import {
+  getExteriorLandscapeCandidates,
+  getVisibleExteriorLandscape,
+  type ExteriorRectangle,
+} from "./exteriorLandscape";
+import { getActorPresentationBaseY } from "./exteriorActorPresentation";
+import {
+  getWorldExteriorHeight,
+  getWorldExteriorLayout,
+  WORLD_EXTERIOR_BANDS,
+} from "./worldExteriorLayout";
+import { cleanTreeFrameWhiteGaps } from "../art/treeGapCleanup";
+import {
+  getRoomVisualLayout,
+  getRoomVisualOrientation,
+  isRoomVisualDoorSlotClear,
+  shouldRenderWorldNorthWallDecor,
+  transformRoomLocalFixture,
+} from "./roomVisualLayout";
 import {
   getCleanlinessWearSeverity,
   getEnvironmentalInteraction,
 } from "./environmentPresentation";
+
 import {
   containsDoorInteractionPoint,
   doorInteractionDistanceSquared,
@@ -108,6 +179,9 @@ interface GridLayout {
   height: number;
   sidewalkTop: number;
   sidewalkHeight: number;
+  setbackTop: number;
+  setbackHeight: number;
+  worldBottom: number;
 }
 
 interface PlacementGhost {
@@ -220,19 +294,54 @@ function inferredPlacementDoorSide(
 export class FacilityScene extends Phaser.Scene {
   private readonly bridge: FacilitySceneBridge;
 
+  /** Turf stays below room floors so exterior props may be naturally occluded. */
+  private terrainGraphics?: Phaser.GameObjects.Graphics;
   private worldGraphics?: Phaser.GameObjects.Graphics;
+  /** Separate layers keep authored floor/wall bitmaps independent from domain rooms. */
+  private architectureGraphics?: Phaser.GameObjects.Graphics;
+  private landscapeGraphics?: Phaser.GameObjects.Graphics;
   private locatorGraphics?: Phaser.GameObjects.Graphics;
   private ghostGraphics?: Phaser.GameObjects.Graphics;
   private readonly fixtureGraphics = new Map<
     string,
     Phaser.GameObjects.Graphics
   >();
+  private readonly roomFixtureGraphics = new Map<
+    string,
+    Phaser.GameObjects.Graphics
+  >();
+  private readonly environmentSprites = new Map<
+    string,
+    Phaser.GameObjects.TileSprite
+  >();
+  /** Authored furniture remains independent from the logical fixture map. */
+  private readonly fixtureBitmapImages = new Map<
+    string,
+    Phaser.GameObjects.Image
+  >();
+  /** Exterior props stay separate from both terrain and semantic fixtures. */
+  private readonly landscapingBitmapImages = new Map<
+    string,
+    Phaser.GameObjects.Image
+  >();
   private readonly characterGraphics = new Map<
     string,
     Phaser.GameObjects.Graphics
   >();
+  /** Containers retain two independently authored canonical layers (head +
+   * body). They move as one object, so route interpolation never rebuilds
+   * bitmap data or replaces an actor mid-walk. */
+  private readonly characterBitmapContainers = new Map<
+    string,
+    Phaser.GameObjects.Container
+  >();
   private activeFixtureGraphics = new Set<string>();
+  private activeRoomFixtureGraphics = new Set<string>();
+  private activeEnvironmentSprites = new Set<string>();
+  private activeFixtureBitmapImages = new Set<string>();
+  private activeLandscapingBitmapImages = new Set<string>();
   private activeCharacterGraphics = new Set<string>();
+  private activeCharacterBitmapContainers = new Set<string>();
   private fixtureStableOrder = 0;
   private footerText?: Phaser.GameObjects.Text;
   private ghostStatusText?: Phaser.GameObjects.Text;
@@ -251,12 +360,18 @@ export class FacilityScene extends Phaser.Scene {
     height: 10 * 24,
     sidewalkTop: 10 * 24,
     sidewalkHeight: 24,
+    setbackTop: 10 * 24 - 24,
+    setbackHeight: 24,
+    worldBottom: 10 * 24 + 24,
   };
 
   private placementGhost: PlacementGhost | null = null;
   private characterPhase = 0;
   private frameDeltaMilliseconds = 0;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
+  /** Last horizontal render orientation survives a stationary frame without
+   * affecting the domain route or persisted character state. */
+  private readonly characterFacingRight = new Map<string, boolean>();
   private readonly characterRenderCache = new WeakMap<
     Phaser.GameObjects.Graphics,
     { signature: string; width: number; height: number }
@@ -283,19 +398,62 @@ export class FacilityScene extends Phaser.Scene {
   private lastWidth = -1;
   private lastHeight = -1;
   private lastModelSignature = "";
+  private environmentAtlasLoadRequested = false;
+  private environmentAtlasReady = false;
+  private landscapingAtlasReady = false;
+  private landscapingTreeCleanupReady = false;
+  private roomFixtureAtlasesReady = false;
+  private characterAtlasesLoadRequested = false;
+  private characterAtlasesReady = false;
+  /** Seating sheets are requested only when a real patient needs one. */
+  private patientPoseAtlasLoadRequested = false;
+  private readonly pendingPatientPoseAtlases = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
 
   public constructor(bridge: FacilitySceneBridge) {
     super({ key: "facility-scene" });
     this.bridge = bridge;
   }
 
+  /**
+   * Test-only readback from the live Phaser actor objects. This intentionally
+   * observes the scene after `drawPixelPerson` chose its texture/frame/flip;
+   * it does not call the pure bitmap resolver independently.
+   */
+  public debugCharacterGaitSnapshot(): Readonly<Record<string, Readonly<{
+    atlasId: string | undefined;
+    frame: string | undefined;
+    flipX: boolean | undefined;
+    direction: CharacterDirection | undefined;
+    pose: CharacterPose | undefined;
+  }>>> {
+    return Object.fromEntries([...this.characterBitmapContainers.entries()].map(([key, container]) => {
+      const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
+      return [key, {
+        atlasId: actor?.getData("gait-atlas-id") as string | undefined,
+        frame: actor?.getData("gait-frame") as string | undefined,
+        flipX: actor?.getData("gait-flip-x") as boolean | undefined,
+        direction: actor?.getData("gait-direction") as CharacterDirection | undefined,
+        pose: actor?.getData("gait-pose") as CharacterPose | undefined,
+      }];
+    }));
+  }
+
   public create(): void {
     this.cameras.main.setBackgroundColor("#7e8476");
     this.cameras.main.setRoundPixels(true);
 
+    this.terrainGraphics = this.add
+      .graphics()
+      .setDepth(FACILITY_DEPTH_WORLD - 10);
     this.worldGraphics = this.add
       .graphics()
       .setDepth(FACILITY_DEPTH_WORLD);
+    this.architectureGraphics = this.add
+      .graphics()
+      .setDepth(FACILITY_DEPTH_WORLD + 30);
+    this.landscapeGraphics = this.add
+      .graphics()
+      .setDepth(FACILITY_DEPTH_WORLD + 15);
     this.locatorGraphics = this.add
       .graphics()
       .setDepth(FACILITY_DEPTH_LOCATOR);
@@ -427,7 +585,223 @@ export class FacilityScene extends Phaser.Scene {
       this.drawPlacementGhost();
     });
 
+    this.ensureEnvironmentAtlas();
+    this.ensureCharacterAtlases();
     this.refreshLayout(true);
+  }
+
+  /**
+   * Dynamic scene construction means the first authored pack starts loading
+   * after `create`. Until the image is decoded, the original procedural world
+   * remains visible; a missing file therefore never blanks an active clinic.
+   */
+  private ensureEnvironmentAtlas(): void {
+    const textureKey = getPhaserTextureKey(ENVIRONMENT_ATLAS_V1);
+    if (this.textures.exists(textureKey)) {
+      this.registerEnvironmentAtlasFrames();
+      this.registerLandscapingAtlasFrames();
+      this.environmentAtlasReady = true;
+      this.landscapingAtlasReady = this.textures.exists(
+        getPhaserTextureKey(LANDSCAPING_ATLAS_V1),
+      );
+      this.registerRoomFixtureAtlasFrames();
+      this.roomFixtureAtlasesReady = ROOM_FIXTURE_ATLASES.every(
+        (asset) => this.textures.exists(getPhaserTextureKey(asset)),
+      );
+      return;
+    }
+    if (this.environmentAtlasLoadRequested) return;
+    this.environmentAtlasLoadRequested = true;
+    preloadBitmapAssets(this.load, [
+      ENVIRONMENT_ATLAS_V1,
+      LANDSCAPING_ATLAS_V1,
+      ...ROOM_FIXTURE_ATLASES,
+    ]);
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+      this.environmentAtlasLoadRequested = false;
+      if (!this.textures.exists(textureKey)) {
+        return;
+      }
+      this.registerEnvironmentAtlasFrames();
+      this.registerLandscapingAtlasFrames();
+      this.environmentAtlasReady = true;
+      this.landscapingAtlasReady = this.textures.exists(
+        getPhaserTextureKey(LANDSCAPING_ATLAS_V1),
+      );
+      this.registerRoomFixtureAtlasFrames();
+      this.roomFixtureAtlasesReady = ROOM_FIXTURE_ATLASES.every(
+        (asset) => this.textures.exists(getPhaserTextureKey(asset)),
+      );
+      // Do not modify model state: this only replaces the render payload.
+      this.drawWorld();
+    });
+    this.load.start();
+  }
+
+  /**
+   * Character textures load independently from simulation state. A failed
+   * decode leaves the existing procedural renderer intact.
+   */
+  private ensureCharacterAtlases(): void {
+    // The map needs movement art, not chart portrait/thumbnail atlases. Keep
+    // those UI images browser-loaded on demand instead of occupying Phaser's
+    // decoded texture cache.
+    const required = [
+      ...allCanonicalCharacterAtlases(),
+      ...PATIENT_CHARACTER_CORE_MAP_ATLASES_V1,
+    ];
+    if (required.every((asset) => this.textures.exists(getPhaserTextureKey(asset)))) {
+      this.registerCharacterAtlasFrames(required);
+      this.characterAtlasesReady = true;
+      return;
+    }
+    if (this.characterAtlasesLoadRequested) return;
+    this.characterAtlasesLoadRequested = true;
+    preloadBitmapAssets(this.load, required);
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+      this.characterAtlasesLoadRequested = false;
+      if (!required.every((asset) => this.textures.exists(getPhaserTextureKey(asset)))) {
+        return;
+      }
+      this.registerCharacterAtlasFrames(required);
+      this.characterAtlasesReady = true;
+      this.drawCharacters();
+    });
+    this.load.start();
+  }
+
+  private registerCharacterAtlasFrames(
+    selected: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[] = allCanonicalCharacterAtlases(),
+  ): void {
+    for (const asset of selected) {
+      const texture = this.textures.get(getPhaserTextureKey(asset));
+      const patientV1 = asset.id.includes("character:patients-");
+      const columns = 5;
+      const rows = patientV1 ? 10 : 6;
+      const variants = patientV1 ? 50 : 30;
+      const frames = Array.from({ length: variants }, (_, variant) => {
+        const column = variant % columns;
+        const row = Math.floor(variant / columns);
+        const left = Math.floor((column * asset.nativeWidth) / columns);
+        const top = Math.floor((row * asset.nativeHeight) / rows);
+        const right = Math.floor(((column + 1) * asset.nativeWidth) / columns);
+        const bottom = Math.floor(((row + 1) * asset.nativeHeight) / rows);
+        return {
+          id: `character:${asset.id}:${variant}`,
+          atlasId: asset.id,
+          sourceRect: { x: left, y: top, width: right - left, height: bottom - top },
+          nativeWidth: right - left,
+          nativeHeight: bottom - top,
+          anchor: { x: (right - left) / 2, y: bottom - top },
+          orientation: "all" as const,
+          kind: "character" as const,
+        };
+      });
+      registerPhaserAtlasFrames(texture, frames);
+    }
+  }
+
+  /**
+   * Seated map sheets are uncommon and never need to block simulation. Until
+   * their one-time decode completes, the existing v3 procedural fallback is
+   * shown for that frame only. This does not alter a route or presentation ID.
+   */
+  private ensurePatientPoseAtlas(
+    asset: import("../art/bitmapAssetManifest").BitmapAssetDescriptor,
+  ): boolean {
+    const textureKey = getPhaserTextureKey(asset);
+    if (this.textures.exists(textureKey)) {
+      this.registerCharacterAtlasFrames([asset]);
+      return true;
+    }
+    this.pendingPatientPoseAtlases.set(asset.id, asset);
+    if (this.patientPoseAtlasLoadRequested) return false;
+    this.patientPoseAtlasLoadRequested = true;
+    preloadBitmapAssets(this.load, [...this.pendingPatientPoseAtlases.values()]);
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+      this.patientPoseAtlasLoadRequested = false;
+      for (const [id, pending] of this.pendingPatientPoseAtlases) {
+        if (!this.textures.exists(getPhaserTextureKey(pending))) continue;
+        this.registerCharacterAtlasFrames([pending]);
+        this.pendingPatientPoseAtlases.delete(id);
+      }
+      this.drawCharacters();
+    });
+    this.load.start();
+    return false;
+  }
+
+  private registerEnvironmentAtlasFrames(): void {
+    const texture = this.textures.get(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1));
+    registerPhaserAtlasFrames(texture, Object.values(ENVIRONMENT_ATLAS_V1_FRAMES));
+  }
+
+  private registerLandscapingAtlasFrames(): void {
+    const textureKey = getPhaserTextureKey(LANDSCAPING_ATLAS_V1);
+    if (!this.textures.exists(textureKey)) return;
+    const cleanedKey = `${textureKey}:tree-gaps-cleaned`;
+    if (!this.textures.exists(cleanedKey)) {
+      const source = this.textures.get(textureKey).getSourceImage();
+      if (source) {
+        const cleaned = this.textures.createCanvas(
+          cleanedKey,
+          LANDSCAPING_ATLAS_V1.nativeWidth,
+          LANDSCAPING_ATLAS_V1.nativeHeight,
+        );
+        if (cleaned) {
+          // Phaser may decode this source as an Image, canvas, or ImageBitmap
+          // depending on browser/GPU. Canvas 2D accepts all CanvasImageSource
+          // variants, so avoid a browser-specific instanceof gate.
+          cleaned.context.drawImage(source as CanvasImageSource, 0, 0);
+          cleaned.update();
+          const pixels = cleaned.getData(
+            0,
+            0,
+            LANDSCAPING_ATLAS_V1.nativeWidth,
+            LANDSCAPING_ATLAS_V1.nativeHeight,
+          );
+          cleanTreeFrameWhiteGaps(
+            pixels.data,
+            LANDSCAPING_ATLAS_V1.nativeWidth,
+            Object.values(LANDSCAPING_ATLAS_V1_FRAMES).filter((frame) =>
+              frame.id.startsWith("landscape:tree"),
+            ),
+          );
+          cleaned.putData(pixels, 0, 0);
+          cleaned.refresh();
+          this.landscapingTreeCleanupReady = true;
+        }
+      }
+    } else {
+      this.landscapingTreeCleanupReady = true;
+    }
+    registerPhaserAtlasFrames(
+      this.textures.get(
+        this.landscapingTreeCleanupReady ? cleanedKey : textureKey,
+      ),
+      Object.values(LANDSCAPING_ATLAS_V1_FRAMES),
+    );
+  }
+
+  private registerRoomFixtureAtlasFrames(): void {
+    const fixtureFrames = [
+      ...Object.values(LEVEL_ONE_BITMAP_FIXTURE_FRAMES),
+      ...Object.values(FRONT_DESK_V2_FIXTURE_OVERRIDES),
+      ...Object.values(FRONT_DESK_V2_ART_FRAMES),
+      ...Object.values(FRONT_DESK_V4_ARCHITECTURE_FRAMES),
+      ...Object.values(SURGERY_CENTER_ARCHITECTURE_COMPONENT_FRAMES),
+      ...Object.values(EXAMINATION_V2_ARCHITECTURE_FRAMES).flatMap((frames) => Object.values(frames)),
+      ...Object.values(LEVEL_TWO_ROOM_BITMAP_FIXTURE_OVERRIDES).flatMap((overrides) => Object.values(overrides)),
+    ];
+    for (const frame of fixtureFrames) {
+      if (!frame) continue;
+      const texture = this.textures.get(
+        getPhaserTextureKey(
+          ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId)!,
+        ),
+      );
+      registerPhaserAtlasFrames(texture, [frame]);
+    }
   }
 
   public update(_time: number, delta: number): void {
@@ -436,8 +810,8 @@ export class FacilityScene extends Phaser.Scene {
       Boolean(this.bridge.viewModel.buildMode);
     this.frameDeltaMilliseconds = motionFrozen ? 0 : delta;
     if (!motionFrozen) {
-      // A restrained two-frame gait reads as walking rather than rapid sprite
-      // flicker at the shared lower map speed.
+      // Preserve the existing beat duration. Side travel uses those beats for
+      // a stride/neutral/stride/neutral cycle; front/back remain two-frame.
       this.characterPhase += delta * 0.0025;
     }
 
@@ -485,20 +859,20 @@ export class FacilityScene extends Phaser.Scene {
   private calculateLayout(width: number, height: number): GridLayout {
     const columns = positiveGridSize(this.bridge.viewModel.gridColumns, 16);
     const rows = positiveGridSize(this.bridge.viewModel.gridRows, 10);
-    const sidewalkHeight = Math.max(
-      20,
-      Math.min(36, Math.floor(height * 0.08)),
-    );
     const usableWidth = Math.max(1, width);
-    const sidewalkTop = Math.max(1, height - sidewalkHeight);
-    const usableHeight = sidewalkTop;
-    const wallOverhangTiles = 0.78;
+    const usableHeight = Math.max(1, height);
+    // Every constructed room and northmost hallway uses the measured Front
+    // Desk v4 envelope. Reserve that shared projection in the camera bounds.
+    const wallOverhangTiles = SURGERY_CENTER_WALL_GEOMETRY.northEnvelopeTiles;
+    const exteriorTiles =
+      WORLD_EXTERIOR_BANDS.setbackTiles +
+      WORLD_EXTERIOR_BANDS.sidewalkTiles;
     const fullSiteTileSize = Math.max(
       1,
       Math.floor(
         Math.min(
           usableWidth / columns,
-          usableHeight / (rows + wallOverhangTiles),
+          usableHeight / (rows + wallOverhangTiles + exteriorTiles),
         ),
       ),
     );
@@ -510,7 +884,7 @@ export class FacilityScene extends Phaser.Scene {
             Math.min(columns, DEFAULT_VISIBLE_GRID_COLUMNS),
           usableHeight /
             (Math.min(rows, DEFAULT_VISIBLE_GRID_ROWS) +
-              wallOverhangTiles),
+              wallOverhangTiles + exteriorTiles),
         ),
       ),
     );
@@ -565,28 +939,43 @@ export class FacilityScene extends Phaser.Scene {
     const defaultOriginX = Math.floor(
       width / 2 - focusTileX * tileSize,
     );
-    const defaultOriginY = sidewalkTop - gridHeight;
+    const worldHeight = getWorldExteriorHeight(tileSize, rows);
+    // Entrance-oriented default: the bottom curb is precisely at the lower
+    // map edge. It is a world coordinate, not an independently pinned overlay.
+    const defaultOriginY = height - worldHeight;
     const requestedOriginX = defaultOriginX + this.cameraView.panX;
     const requestedOriginY = defaultOriginY + this.cameraView.panY;
     const minimumOriginX = Math.min(0, width - gridWidth);
     const maximumOriginX = Math.max(0, width - gridWidth);
-    const minimumOriginY = Math.min(0, usableHeight - gridHeight);
-    const maximumOriginY = Math.max(0, usableHeight - gridHeight);
+    const minimumOriginY = Math.min(0, height - worldHeight);
+    const maximumOriginY = Math.max(0, height - worldHeight);
+    const originX = Math.max(
+      minimumOriginX,
+      Math.min(maximumOriginX, requestedOriginX),
+    );
+    const originY = Math.max(
+      minimumOriginY,
+      Math.min(maximumOriginY, requestedOriginY),
+    );
+    const exterior = getWorldExteriorLayout({
+      originX,
+      originY,
+      tileSize,
+      gridColumns: columns,
+      gridRows: rows,
+    });
 
     return {
-      originX: Math.max(
-        minimumOriginX,
-        Math.min(maximumOriginX, requestedOriginX),
-      ),
-      originY: Math.max(
-        minimumOriginY,
-        Math.min(maximumOriginY, requestedOriginY),
-      ),
+      originX,
+      originY,
       tileSize,
       width: gridWidth,
       height: gridHeight,
-      sidewalkTop,
-      sidewalkHeight: height - sidewalkTop,
+      sidewalkTop: exterior.sidewalkTop,
+      sidewalkHeight: exterior.sidewalkHeight,
+      setbackTop: exterior.setbackTop,
+      setbackHeight: exterior.setbackHeight,
+      worldBottom: exterior.worldBottom,
     };
   }
 
@@ -595,6 +984,9 @@ export class FacilityScene extends Phaser.Scene {
     if (!graphics) {
       return;
     }
+    this.terrainGraphics?.clear();
+    this.architectureGraphics?.clear();
+    this.landscapeGraphics?.clear();
 
     const { originX, originY, tileSize, width, height } = this.layout;
     const model = this.bridge.viewModel;
@@ -602,31 +994,22 @@ export class FacilityScene extends Phaser.Scene {
     const rows = positiveGridSize(model.gridRows, 10);
 
     this.activeFixtureGraphics = new Set<string>();
+    this.activeRoomFixtureGraphics = new Set<string>();
+    this.activeEnvironmentSprites = new Set<string>();
+    this.activeFixtureBitmapImages = new Set<string>();
+    this.activeLandscapingBitmapImages = new Set<string>();
     this.fixtureStableOrder = 0;
 
     graphics.clear();
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.moss, 1);
-    graphics.fillRect(0, 0, this.scale.width, this.scale.height);
-
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.moss, 1);
-    graphics.fillRect(originX, originY, width, height);
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.olive, 0.28);
-    const textureStep = Math.max(8, Math.floor(tileSize * 0.55));
-    for (let y = originY + 3; y < originY + height; y += textureStep) {
-      for (
-        let x = originX + ((y / textureStep) % 2) * 4;
-        x < originX + width;
-        x += textureStep
-      ) {
-        graphics.fillRect(x, y, 2, 2);
-      }
-    }
+    this.drawContinuousTurf(this.terrainGraphics ?? graphics);
+    this.drawBuildingGroundShadows(graphics);
     if (model.buildMode || model.placement) {
       graphics.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 1);
       graphics.strokeRect(originX, originY, width, height);
     }
 
-    this.drawClinicGroundDetails(graphics);
+    this.drawAuthoredEnvironmentSurface();
+    this.drawClinicGroundDetails(this.landscapeGraphics ?? graphics);
     [...model.rooms]
       .sort(
         (left, right) =>
@@ -638,18 +1021,86 @@ export class FacilityScene extends Phaser.Scene {
         this.drawRoom(graphics, room, index);
       });
     if (model.buildMode || model.placement) {
-      this.drawBuildGridOverlay(graphics, columns, rows);
+      this.drawBuildGridOverlay(
+        this.canRenderAuthoredEnvironment()
+          ? (this.architectureGraphics ?? graphics)
+          : graphics,
+        columns,
+        rows,
+      );
     }
     (model.doors ?? []).forEach((door) => {
-      this.drawExplicitDoor(graphics, door);
+      this.drawExplicitDoor(this.architectureGraphics ?? graphics, door);
     });
-    this.drawBuildDoorHighlights(graphics);
+    this.drawBuildDoorHighlights(this.architectureGraphics ?? graphics);
     this.drawEnvironment();
-    this.drawExterior(graphics);
+    this.drawExterior(this.architectureGraphics ?? graphics);
     this.removeInactiveGraphics(
       this.fixtureGraphics,
       this.activeFixtureGraphics,
     );
+    this.removeInactiveGraphics(
+      this.roomFixtureGraphics,
+      this.activeRoomFixtureGraphics,
+    );
+    this.removeInactiveEnvironmentSprites();
+    this.removeInactiveFixtureBitmapImages();
+    this.removeInactiveLandscapingBitmapImages();
+  }
+
+  /** World-anchored turf; build cells never influence these stipples. */
+  private drawContinuousTurf(graphics: Phaser.GameObjects.Graphics): void {
+    const exterior = getWorldExteriorLayout({
+      originX: this.layout.originX,
+      originY: this.layout.originY,
+      tileSize: this.layout.tileSize,
+      gridColumns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
+      gridRows: positiveGridSize(this.bridge.viewModel.gridRows, 10),
+    });
+    const left = exterior.siteLeft;
+    const top = exterior.siteTop;
+    const width = exterior.siteWidth;
+    const height = exterior.sidewalkTop - top;
+    graphics.fillStyle(0x9ba187, 1);
+    graphics.fillRect(left, top, width, height);
+    const firstRow = Math.floor(top / 7);
+    const lastRow = Math.ceil((top + height) / 7);
+    const firstColumn = Math.floor(left / 9);
+    const lastColumn = Math.ceil((left + width) / 9);
+    for (let row = firstRow; row < lastRow; row += 1) {
+      for (let column = firstColumn; column < lastColumn; column += 1) {
+        // A tiny stable integer hash provides varied grass flecks without
+        // per-frame RNG, visible checker cells, or persisted decoration.
+        const hash = ((column * 1103515245) ^ (row * 12345)) >>> 0;
+        const x = column * 9 + ((hash >>> 4) % 6);
+        const y = row * 7 + ((hash >>> 10) % 5);
+        if (x < left || x >= left + width || y < top || y >= top + height) continue;
+        graphics.fillStyle((hash & 1) === 0 ? 0xb5baa0 : 0x74805f, 0.34);
+        graphics.fillRect(x, y, 1 + ((hash >>> 16) % 2), 1);
+        if ((hash & 31) === 0) {
+          graphics.fillRect(x + 2, y - 1, 1, 2);
+        }
+      }
+    }
+  }
+
+  /** A restrained contact shadow grounds rooms without adding any collision. */
+  private drawBuildingGroundShadows(graphics: Phaser.GameObjects.Graphics): void {
+    const offset = Math.max(2, Math.floor(this.layout.tileSize * 0.09));
+    for (const room of this.bridge.viewModel.rooms) {
+      const rectangle = this.toPixels({
+        tileX: room.tileX,
+        tileY: room.tileY,
+        ...orientedSize(room),
+      });
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.2);
+      graphics.fillRect(
+        rectangle.x + offset,
+        rectangle.y + offset,
+        rectangle.width,
+        rectangle.height,
+      );
+    }
   }
 
   private getSortableGraphics(
@@ -680,127 +1131,702 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
+  private removeInactiveEnvironmentSprites(): void {
+    for (const [key, sprite] of this.environmentSprites) {
+      if (!this.activeEnvironmentSprites.has(key)) {
+        sprite.destroy();
+        this.environmentSprites.delete(key);
+      }
+    }
+  }
+
+  private removeInactiveFixtureBitmapImages(): void {
+    for (const [key, image] of this.fixtureBitmapImages) {
+      if (!this.activeFixtureBitmapImages.has(key)) {
+        image.destroy();
+        this.fixtureBitmapImages.delete(key);
+      }
+    }
+  }
+
+  private removeInactiveLandscapingBitmapImages(): void {
+    for (const [key, image] of this.landscapingBitmapImages) {
+      if (!this.activeLandscapingBitmapImages.has(key)) {
+        image.destroy();
+        this.landscapingBitmapImages.delete(key);
+      }
+    }
+  }
+
+  private canRenderAuthoredFixture(id: FixtureId, roomDefinitionId = ""): boolean {
+    const frame = getRoomBitmapFixtureFrame(roomDefinitionId, id);
+    return Boolean(
+      frame &&
+      this.roomFixtureAtlasesReady &&
+      this.textures.exists(
+        getPhaserTextureKey(
+          ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId)!,
+        ),
+      ),
+    );
+  }
+
+  private drawAuthoredFixture(
+    key: string,
+    id: FixtureId,
+    roomDefinitionId: string,
+    centerX: number,
+    centerY: number,
+    width: number,
+    height: number,
+    depth: number,
+    alpha: number,
+  ): boolean {
+    const frame = getRoomBitmapFixtureFrame(roomDefinitionId, id);
+    if (!frame || !this.canRenderAuthoredFixture(id, roomDefinitionId)) return false;
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === frame.atlasId,
+    );
+    if (!atlas) return false;
+    let image = this.fixtureBitmapImages.get(key);
+    const frameKey = getEnvironmentAtlasFrameKey(frame);
+    if (!image) {
+      image = this.add.image(centerX, centerY, getPhaserTextureKey(atlas), frameKey);
+      this.fixtureBitmapImages.set(key, image);
+    }
+    image
+      .setTexture(getPhaserTextureKey(atlas), frameKey)
+      .setPosition(Math.round(centerX), Math.round(centerY))
+      .setOrigin(
+        frame.anchor.x / Math.max(1, frame.nativeWidth),
+        frame.anchor.y / Math.max(1, frame.nativeHeight),
+      )
+      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setDepth(depth)
+      .setAlpha(alpha)
+      .setVisible(true);
+    this.activeFixtureBitmapImages.add(key);
+    return true;
+  }
+
+  /** Draws one independent Front Desk v2 architectural/decoration component. */
+  private drawFrontDeskV2Art(
+    key: string,
+    id: FrontDeskV2ArtId,
+    centerX: number,
+    centerY: number,
+    width: number,
+    height: number,
+    depth: number,
+    alpha = 1,
+  ): boolean {
+    const frame = FRONT_DESK_V2_ART_FRAMES[id];
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === frame.atlasId,
+    );
+    if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return false;
+    let image = this.fixtureBitmapImages.get(key);
+    const frameKey = getEnvironmentAtlasFrameKey(frame);
+    if (!image) {
+      image = this.add.image(centerX, centerY, getPhaserTextureKey(atlas), frameKey);
+      this.fixtureBitmapImages.set(key, image);
+    }
+    image
+      .setTexture(getPhaserTextureKey(atlas), frameKey)
+      .setPosition(Math.round(centerX), Math.round(centerY))
+      .setOrigin(0.5, 0.5)
+      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setDepth(depth)
+      .setAlpha(alpha)
+      .setVisible(true);
+    this.activeFixtureBitmapImages.add(key);
+    return true;
+  }
+
+  private canRenderFrontDeskV2Art(): boolean {
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === "room-fixtures:front-desk-v2",
+    );
+    return Boolean(atlas && this.textures.exists(getPhaserTextureKey(atlas)));
+  }
+
+  private canRenderFrontDeskV4Architecture(): boolean {
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === "room-fixtures:front-desk-v4",
+    );
+    return Boolean(atlas && this.textures.exists(getPhaserTextureKey(atlas)));
+  }
+
+  private canRenderExaminationV2Architecture(
+    orientation: ExaminationRoomOrientation,
+  ): boolean {
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === getExaminationRoomPresentation(orientation).atlasId,
+    );
+    return Boolean(atlas && this.textures.exists(getPhaserTextureKey(atlas)));
+  }
+
+  private drawFrontDeskV4ArchitectureArt(
+    key: string,
+    id: FrontDeskV4ArchitectureId,
+    centerX: number,
+    centerY: number,
+    width: number,
+    height: number,
+    depth: number,
+    alpha = 1,
+  ): boolean {
+    const frame = FRONT_DESK_V4_ARCHITECTURE_FRAMES[id];
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === frame.atlasId,
+    );
+    if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return false;
+    let image = this.fixtureBitmapImages.get(key);
+    const frameKey = getEnvironmentAtlasFrameKey(frame);
+    if (!image) {
+      image = this.add.image(centerX, centerY, getPhaserTextureKey(atlas), frameKey);
+      this.fixtureBitmapImages.set(key, image);
+    }
+    image
+      .setTexture(getPhaserTextureKey(atlas), frameKey)
+      .setPosition(Math.round(centerX), Math.round(centerY))
+      .setOrigin(0.5, 0.5)
+      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setDepth(depth)
+      .setAlpha(alpha)
+      .setVisible(true);
+    this.activeFixtureBitmapImages.add(key);
+    return true;
+  }
+
+  /**
+   * Maps the authored shell's measured five-column by four-row floor directly
+   * to the semantic Front Desk footprint.  The surrounding frame is allowed
+   * to extend beyond the logical rectangle, exactly as a cutaway room does.
+   */
+  private drawFrontDeskV4Architecture(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    if (room.definitionId !== "room.front_desk" || !this.canRenderFrontDeskV4Architecture()) {
+      return;
+    }
+    // Measured in the 1254px transparent source: floor x=212..1043,
+    // y=339..960.  This is intentionally measured art geometry, never a
+    // guessed tile sample.  The two scale axes preserve its 5-by-4 logical
+    // alignment while keeping the mockup's shallow cutaway perspective.
+    const sourceFloor = FRONT_DESK_V4_SHELL_LAYOUT.floor;
+    const sourceSize = FRONT_DESK_V4_SHELL_LAYOUT.sourceSize;
+    const scaleX = rectangle.width / sourceFloor.width;
+    const scaleY = rectangle.height / sourceFloor.height;
+    const shellWidth = sourceSize * scaleX;
+    const shellHeight = sourceSize * scaleY;
+    const shellLeft = rectangle.x - sourceFloor.x * scaleX;
+    const shellTop = rectangle.y - sourceFloor.y * scaleY;
+    this.drawFrontDeskV4ArchitectureArt(
+      `front-desk-v4:shell:${room.instanceId}`,
+      "shell",
+      shellLeft + shellWidth / 2,
+      shellTop + shellHeight / 2,
+      shellWidth,
+      shellHeight,
+      FACILITY_DEPTH_WORLD + 4,
+    );
+    if (this.canRenderFrontDeskV2Art()) {
+      // These stay independent v2 sprites, but their placement is measured in
+      // the v4 source coordinate system so they occupy the large light rear
+      // wall face rather than the shell's lower trim.
+      const noticeBoard = FRONT_DESK_V4_SHELL_LAYOUT.rearWallDecor.noticeBoard;
+      this.drawFrontDeskV2Art(
+        `front-desk-v2:notice:${room.instanceId}`,
+        "noticeBoard",
+        shellLeft + noticeBoard.centerX * scaleX,
+        shellTop + noticeBoard.centerY * scaleY,
+        noticeBoard.width * scaleX,
+        noticeBoard.height * scaleY,
+        FACILITY_DEPTH_WORLD + 21,
+      );
+      const wallClock = FRONT_DESK_V4_SHELL_LAYOUT.rearWallDecor.wallClock;
+      this.drawFrontDeskV2Art(
+        `front-desk-v2:clock:${room.instanceId}`,
+        "wallClock",
+        shellLeft + wallClock.centerX * scaleX,
+        shellTop + wallClock.centerY * scaleY,
+        wallClock.width * scaleX,
+        wallClock.height * scaleY,
+        FACILITY_DEPTH_WORLD + 21,
+      );
+    }
+    // Repeat the low south wall plus jamb crop over live actors.  The shell
+    // itself remains behind them so the rear architecture cannot conceal
+    // furniture or paths; this crop alone supplies foreground threshold
+    // occlusion.  Explicit door art renders later at depth +30.
+    const frontCrop = FRONT_DESK_V4_SHELL_LAYOUT.frontOccluder;
+    this.drawFrontDeskV4ArchitectureArt(
+      `front-desk-v4:front-occluder:${room.instanceId}`,
+      "frontOccluder",
+      shellLeft + (frontCrop.x + frontCrop.width / 2) * scaleX,
+      shellTop + (frontCrop.y + frontCrop.height / 2) * scaleY,
+      frontCrop.width * scaleX,
+      frontCrop.height * scaleY,
+      FACILITY_DEPTH_WORLD + 29,
+    );
+  }
+
+  /**
+   * The authored Examination Room floor is the exact room footprint. The
+   * shallow rear wall and low foreground lip intentionally extend outside it
+   * as visual-only cutaway architecture.
+   */
+  private drawExaminationV2Architecture(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    if (room.definitionId !== "room.examination") return;
+    const orientation: ExaminationRoomOrientation = room.orientation === 90 ? 90 : 0;
+    if (!this.canRenderExaminationV2Architecture(orientation)) return;
+    const presentation = getExaminationRoomPresentation(orientation);
+    const frames = orientation === 90
+      ? EXAMINATION_V2_ARCHITECTURE_FRAMES.vertical
+      : EXAMINATION_V2_ARCHITECTURE_FRAMES.horizontal;
+    const atlas = ROOM_FIXTURE_ATLASES.find((asset) => asset.id === presentation.atlasId);
+    if (!atlas) return;
+    const sourceFloor = presentation.floor;
+    const scaleX = rectangle.width / sourceFloor.width;
+    const scaleY = rectangle.height / sourceFloor.height;
+    const shellWidth = presentation.sourceSize * scaleX;
+    const shellHeight = presentation.sourceSize * scaleY;
+    const shellLeft = rectangle.x - sourceFloor.x * scaleX;
+    const shellTop = rectangle.y - sourceFloor.y * scaleY;
+    const draw = (
+      key: string,
+      frame: (typeof frames)[keyof typeof frames],
+      source: Readonly<{ x: number; y: number; width: number; height: number }>,
+      depth: number,
+    ) => {
+      const textureKey = getPhaserTextureKey(atlas);
+      let image = this.fixtureBitmapImages.get(key);
+      const frameKey = getEnvironmentAtlasFrameKey(frame);
+      if (!image) {
+        image = this.add.image(0, 0, textureKey, frameKey);
+        this.fixtureBitmapImages.set(key, image);
+      }
+      image
+        .setTexture(textureKey, frameKey)
+        .setPosition(
+          Math.round(shellLeft + (source.x + source.width / 2) * scaleX),
+          Math.round(shellTop + (source.y + source.height / 2) * scaleY),
+        )
+        .setOrigin(0.5, 0.5)
+        .setDisplaySize(
+          Math.max(1, Math.round(source.width * scaleX)),
+          Math.max(1, Math.round(source.height * scaleY)),
+        )
+        .setDepth(depth)
+        .setVisible(true);
+      this.activeFixtureBitmapImages.add(key);
+    };
+    draw(`examination-v2:shell:${room.instanceId}`, frames.shell, {
+      x: 0, y: 0, width: presentation.sourceSize, height: presentation.sourceSize,
+    }, FACILITY_DEPTH_WORLD + 4);
+    draw(`examination-v2:front-occluder:${room.instanceId}`, frames.frontOccluder, presentation.frontOccluder, FACILITY_DEPTH_WORLD + 29);
+  }
+
+  /** A full Front Desk bitmap is safe only while no horizontal boundary is
+   * shared. Examination always uses this composable path so its north envelope
+   * remains identical to Front Desk v4 in both authored orientations and can
+   * hide only covered runs. */
+  private requiresBoundaryAwareSurgeryCenterShell(room: FacilityRoomView): boolean {
+    if (room.definitionId === "room.examination") return true;
+    if (room.definitionId !== "room.front_desk") return false;
+    const width = orientedSize(room).width;
+    const exposed = (side: "north" | "south") => this.exposedBoundaryRuns(room, side)
+      .reduce((sum, run) => sum + run.length, 0);
+    return exposed("north") !== width || exposed("south") !== width;
+  }
+
+  /**
+   * Boundary-aware surgery-center shell. All dimensions come from the
+   * measured Front Desk v4 contract; the only varying values are floor and
+   * wall-face materials. Every wall fragment is drawn at native scale and
+   * omitted, never squeezed, where another room owns the shared boundary.
+   */
+  private drawBoundaryAwareSurgeryCenterShell(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    const geometry = getSurgeryCenterArchitectureAtScale(this.layout.tileSize);
+    const northRuns = this.exposedBoundaryRuns(room, "north");
+    const southRuns = this.exposedBoundaryRuns(room, "south");
+    const isExamination = room.definitionId === "room.examination";
+    const wallFace = this.roomWallFaceColor(room);
+    const floor = this.roomFloorColor(room, 0);
+    graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.26);
+    graphics.fillRect(
+      rectangle.x + geometry.shadowOffset.x,
+      rectangle.y + geometry.shadowOffset.y,
+      rectangle.width,
+      rectangle.height,
+    );
+    graphics.fillStyle(floor, 1);
+    graphics.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    if (isExamination) {
+      // The shared construction defines only the envelope. Examination keeps
+      // its own clinical flooring rather than inheriting Front Desk grout.
+      this.drawRoomFloor(graphics, room, rectangle, floor);
+      this.drawAuthoredRoomFloor(room, rectangle);
+    } else {
+      this.drawSurgeryCenterComponentTile(
+        `surgery-center:floor:${room.instanceId}`,
+        "floor", rectangle.x, rectangle.y, rectangle.width, rectangle.height,
+        FACILITY_DEPTH_WORLD + 5, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+      );
+    }
+    // Side thickness and trim live outside the logical floor, so an adjacent
+    // room retains its full semantic footprint and material.
+    for (const side of ["west", "east"] as const) {
+      for (const run of getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, side)) {
+        const x = side === "west"
+          ? rectangle.x - geometry.sideThickness
+          : rectangle.x + rectangle.width;
+        const y = rectangle.y + run.offset * this.layout.tileSize;
+        const height = run.length * this.layout.tileSize;
+        graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+        graphics.fillRect(x, y, geometry.sideThickness, height);
+        graphics.fillStyle(PIXEL_PALETTE_NUMBER.charcoal, 1);
+        graphics.fillRect(x + geometry.outerBorderX, y + geometry.outerBorderY,
+          Math.max(1, geometry.sideThickness - geometry.outerBorderX * 2),
+          Math.max(1, height - geometry.outerBorderY * 2));
+        if (isExamination) {
+          this.drawEnvironmentTile(
+            `environment:exam-side:${room.instanceId}:${side}:${run.offset}`,
+            "environment:side-wall",
+            x,
+            y,
+            geometry.sideThickness,
+            height,
+            FACILITY_DEPTH_WORLD + 10,
+            Math.max(0.02, geometry.sideThickness / ENVIRONMENT_ATLAS_V1_FRAMES["environment:side-wall"].nativeWidth),
+          );
+        } else {
+          this.drawSurgeryCenterComponentTile(
+            `surgery-center:side:${room.instanceId}:${side}:${run.offset}`,
+            "side", x, y, geometry.sideThickness, height,
+            FACILITY_DEPTH_WORLD + 10, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+          );
+        }
+      }
+    }
+    for (const run of northRuns) {
+      const x = rectangle.x + run.offset * this.layout.tileSize;
+      const width = run.length * this.layout.tileSize;
+      const top = rectangle.y - geometry.northEnvelope;
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+      graphics.fillRect(x, top, width, geometry.northEnvelope);
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.charcoal, 1);
+      graphics.fillRect(x + geometry.outerBorderX, top + geometry.outerBorderY,
+        Math.max(1, width - geometry.outerBorderX * 2),
+        Math.max(1, geometry.northEnvelope - geometry.outerBorderY * 2));
+      graphics.fillStyle(wallFace, 1);
+      graphics.fillRect(x + geometry.bevelX, top + geometry.bevelY * 2,
+        Math.max(1, width - geometry.bevelX * 2),
+        Math.max(1, geometry.northEnvelope - geometry.baseboard - geometry.bevelY * 3));
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.5);
+      graphics.fillRect(x + geometry.bevelX, top + geometry.bevelY * 2,
+        Math.max(1, width - geometry.bevelX * 2), Math.max(1, geometry.bevelY));
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 1);
+      graphics.fillRect(x + geometry.bevelX, rectangle.y - geometry.baseboard,
+        Math.max(1, width - geometry.bevelX * 2), geometry.baseboard);
+      if (isExamination) {
+        this.drawEnvironmentTile(
+          `environment:exam-north:${room.instanceId}:${run.offset}`,
+          "environment:north-wall",
+          x,
+          top,
+          width,
+          geometry.northEnvelope,
+          FACILITY_DEPTH_WORLD + 11,
+          Math.max(0.02, geometry.northEnvelope / ENVIRONMENT_ATLAS_V1_FRAMES["environment:north-wall"].nativeHeight),
+        );
+      } else {
+        this.drawSurgeryCenterComponentTile(
+          `surgery-center:north:${room.instanceId}:${run.offset}`,
+          "north", x, top, width, geometry.northEnvelope,
+          FACILITY_DEPTH_WORLD + 11, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+        );
+      }
+    }
+    // The foreground crop is present only on exposed south runs: its measured
+    // 20px inset is inside this floor, while its 133px extent projects below.
+    for (const run of southRuns) {
+      const x = rectangle.x + run.offset * this.layout.tileSize;
+      const width = run.length * this.layout.tileSize;
+      const y = rectangle.y + rectangle.height - geometry.foregroundInset;
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+      graphics.fillRect(x, y, width, geometry.foregroundInset + geometry.foregroundOutset);
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.charcoal, 1);
+      graphics.fillRect(x + geometry.outerBorderX, y + geometry.outerBorderY,
+        Math.max(1, width - geometry.outerBorderX * 2),
+        Math.max(1, geometry.foregroundInset + geometry.foregroundOutset - geometry.outerBorderY * 2));
+      if (isExamination) {
+        // Keep the exam-room material at the low foreground threshold too.
+        graphics.fillStyle(wallFace, 0.72);
+        graphics.fillRect(
+          x + geometry.bevelX,
+          y + geometry.outerBorderY,
+          Math.max(1, width - geometry.bevelX * 2),
+          Math.max(1, geometry.foregroundInset + geometry.foregroundOutset - geometry.outerBorderY * 2),
+        );
+      } else {
+        this.drawSurgeryCenterComponentTile(
+          `surgery-center:front:${room.instanceId}:${run.offset}`,
+          "front", x, y, width, geometry.foregroundInset + geometry.foregroundOutset,
+          FACILITY_DEPTH_WORLD + 29, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+        );
+      }
+    }
+  }
+
+  private canRenderAuthoredEnvironment(): boolean {
+    return (
+      this.environmentAtlasReady &&
+      this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1))
+    );
+  }
+
+  private canRenderAuthoredLandscaping(): boolean {
+    return (
+      this.landscapingAtlasReady &&
+      this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1))
+    );
+  }
+
+  private drawAuthoredLandscaping(
+    key: string,
+    id: LandscapingAtlasFrameId,
+    centerX: number,
+    baseY: number,
+    width: number,
+    height: number,
+    alpha = 1,
+    depth = FACILITY_DEPTH_WORLD - 5,
+  ): boolean {
+    if (!this.canRenderAuthoredLandscaping()) return false;
+    const frame = LANDSCAPING_ATLAS_V1_FRAMES[id];
+    const landscapingTextureKey = this.landscapingTreeCleanupReady
+      ? `${getPhaserTextureKey(LANDSCAPING_ATLAS_V1)}:tree-gaps-cleaned`
+      : getPhaserTextureKey(LANDSCAPING_ATLAS_V1);
+    let image = this.landscapingBitmapImages.get(key);
+    if (!image) {
+      image = this.add.image(
+        centerX,
+        baseY,
+        landscapingTextureKey,
+        getEnvironmentAtlasFrameKey(frame),
+      );
+      this.landscapingBitmapImages.set(key, image);
+    }
+    image
+      .setTexture(
+        landscapingTextureKey,
+        getEnvironmentAtlasFrameKey(frame),
+      )
+      .setPosition(Math.round(centerX), Math.round(baseY))
+      .setOrigin(
+        frame.anchor.x / Math.max(1, frame.nativeWidth),
+        frame.anchor.y / Math.max(1, frame.nativeHeight),
+      )
+      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setDepth(depth)
+      .setAlpha(alpha)
+      .setVisible(true);
+    this.activeLandscapingBitmapImages.add(key);
+    return true;
+  }
+
+  /**
+   * Creates a separate tile layer for a semantic environmental surface. The
+   * atlas source remains at its authored aspect ratio; Phaser tiles/crops it
+   * into the logical rectangle instead of stretching a partial wall or floor.
+   */
+  private drawEnvironmentTile(
+    key: string,
+    frameId: EnvironmentAtlasFrameId,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    depth: number,
+    tileScale: number,
+    alpha = 1,
+  ): void {
+    if (!this.canRenderAuthoredEnvironment()) return;
+    const frame = ENVIRONMENT_ATLAS_V1_FRAMES[frameId];
+    const textureKey = getPhaserTextureKey(ENVIRONMENT_ATLAS_V1);
+    const frameKey = getEnvironmentAtlasFrameKey(frame);
+    let sprite = this.environmentSprites.get(key);
+    if (!sprite) {
+      sprite = this.add.tileSprite(x, y, width, height, textureKey, frameKey);
+      sprite.setOrigin(0, 0);
+      this.environmentSprites.set(key, sprite);
+    }
+    sprite
+      .setTexture(textureKey, frameKey)
+      .setPosition(x, y)
+      .setSize(Math.max(1, width), Math.max(1, height))
+      .setTileScale(Math.max(0.02, tileScale))
+      .setAlpha(alpha)
+      .setDepth(depth)
+      .setVisible(true);
+    // Align repeated material with map coordinates so a room redraw or resize
+    // cannot make a floor texture shimmer beneath a stationary character.
+    sprite.tilePositionX = Math.round(-x / Math.max(0.02, tileScale));
+    sprite.tilePositionY = Math.round(-y / Math.max(0.02, tileScale));
+    this.activeEnvironmentSprites.add(key);
+  }
+
+  /** Tiles an unscaled native Front Desk-v4-derived architecture component. */
+  private drawSurgeryCenterComponentTile(
+    key: string,
+    id: keyof typeof SURGERY_CENTER_ARCHITECTURE_COMPONENT_FRAMES,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    depth: number,
+    scaleX: number,
+    scaleY: number,
+  ): void {
+    const frame = SURGERY_CENTER_ARCHITECTURE_COMPONENT_FRAMES[id];
+    const atlas = ROOM_FIXTURE_ATLASES.find((asset) => asset.id === frame.atlasId);
+    if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return;
+    const textureKey = getPhaserTextureKey(atlas);
+    let sprite = this.environmentSprites.get(key);
+    if (!sprite) {
+      sprite = this.add.tileSprite(x, y, width, height, textureKey, getEnvironmentAtlasFrameKey(frame));
+      sprite.setOrigin(0, 0);
+      this.environmentSprites.set(key, sprite);
+    }
+    sprite.setTexture(textureKey, getEnvironmentAtlasFrameKey(frame))
+      .setPosition(x, y).setSize(Math.max(1, width), Math.max(1, height))
+      .setTileScale(Math.max(0.02, scaleX), Math.max(0.02, scaleY)).setDepth(depth).setVisible(true);
+    sprite.tilePositionX = 0;
+    sprite.tilePositionY = 0;
+    this.activeEnvironmentSprites.add(key);
+  }
+
+  private drawAuthoredEnvironmentSurface(): void {
+    if (!this.canRenderAuthoredEnvironment()) return;
+    // The ground below is deliberately a single continuous procedural turf
+    // field. The source grass swatch is useful as a material reference, but
+    // tiling its dark edge pixels at live scale looked like a construction
+    // grid. Logical build cells are overlaid separately only in Build Mode.
+    this.drawEnvironmentTile(
+      "environment:sidewalk",
+      "environment:sidewalk",
+      this.layout.originX,
+      this.layout.sidewalkTop,
+      this.layout.width,
+      this.layout.sidewalkHeight,
+      FACILITY_DEPTH_WORLD + 5,
+      Math.max(0.04, this.layout.tileSize / 145),
+    );
+  }
+
+  private roomEnvironmentFloorFrame(
+    room: FacilityRoomView,
+  ): EnvironmentAtlasFrameId {
+    if (room.definitionId === "room.waiting") {
+      return "environment:waiting-floor";
+    }
+    if (
+      room.definitionId === "room.xray" ||
+      room.definitionId === "room.imaging_control" ||
+      room.definitionId === "room.ultrasound" ||
+      room.definitionId === "room.ct"
+    ) {
+      return "environment:imaging-floor";
+    }
+    return "environment:clinical-floor";
+  }
+
+  private drawAuthoredRoomFloor(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    if (!this.canRenderAuthoredEnvironment()) return;
+    const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.09));
+    this.drawEnvironmentTile(
+      `environment:floor:${room.instanceId}`,
+      this.roomEnvironmentFloorFrame(room),
+      rectangle.x + inset,
+      rectangle.y + inset,
+      Math.max(1, rectangle.width - inset * 2),
+      Math.max(1, rectangle.height - inset * 2),
+      FACILITY_DEPTH_WORLD + 5,
+      Math.max(0.04, this.layout.tileSize / 142),
+    );
+  }
+
   private drawClinicGroundDetails(
     graphics: Phaser.GameObjects.Graphics,
   ): void {
-    const rooms = this.bridge.viewModel.rooms.filter(
-      (room) =>
-        room.kind !== "hallway" && room.definitionId !== "room.hallway",
+    const model = this.bridge.viewModel;
+    const columns = positiveGridSize(model.gridColumns, 16);
+    const rows = positiveGridSize(model.gridRows, 10);
+    const alpha = model.buildMode || model.placement ? 0.38 : 1;
+    const exclusions: ExteriorRectangle[] = model.rooms.map((room) => ({
+      x: room.tileX,
+      y: room.tileY,
+      ...orientedSize(room),
+    }));
+    const founder = this.getFounderRoom();
+    if (founder) {
+      const size = orientedSize(founder);
+      // Public circulation from the protected south entrance stays clear even
+      // while the rest of the unbuilt site is naturally planted.
+      exclusions.push({
+        x: founder.tileX + size.width / 2 - 0.72,
+        y: founder.tileY + size.height - 0.35,
+        width: 1.44,
+        height: rows - (founder.tileY + size.height) + 0.98,
+      });
+    }
+    // Candidates are contact-anchored above the slab sidewalk. This catches
+    // tall crowns and their shadows rather than relying on room occlusion.
+    exclusions.push({ x: -4, y: rows + 0.84, width: columns + 8, height: 4 });
+    const visible = getVisibleExteriorLandscape(
+      getExteriorLandscapeCandidates(columns, rows),
+      exclusions,
+      0.12,
     );
-    if (rooms.length === 0) {
-      return;
-    }
-    const bounds = rooms.reduce(
-      (result, room) => {
-        const size = orientedSize(room);
-        return {
-          minimumX: Math.min(result.minimumX, room.tileX),
-          minimumY: Math.min(result.minimumY, room.tileY),
-          maximumX: Math.max(result.maximumX, room.tileX + size.width),
-          maximumY: Math.max(result.maximumY, room.tileY + size.height),
-        };
-      },
-      {
-        minimumX: Number.POSITIVE_INFINITY,
-        minimumY: Number.POSITIVE_INFINITY,
-        maximumX: Number.NEGATIVE_INFINITY,
-        maximumY: Number.NEGATIVE_INFINITY,
-      },
-    );
-    const { tileSize, originX, originY } = this.layout;
-    const alpha =
-      this.bridge.viewModel.buildMode || this.bridge.viewModel.placement
-        ? 0.38
-        : 0.94;
-    const left = originX + bounds.minimumX * tileSize;
-    const right = originX + bounds.maximumX * tileSize;
-    const top = originY + bounds.minimumY * tileSize;
-    const bottom = originY + bounds.maximumY * tileSize;
-    const clinicWidth = Math.max(tileSize, right - left);
-    const clinicHeight = Math.max(tileSize, bottom - top);
-    const landscape: Array<{
-      id: FixtureId;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    }> = [];
-
-    // Deliberately irregular, deterministic anchors keep landscaping from
-    // reading as vertical crop rows while remaining stable across reloads.
-    const northAnchors = [
-      [0.04, -0.38, "bushCluster", 1],
-      [0.19, -0.52, "flowerBed", 0.88],
-      [0.37, -0.34, "bushCluster", 1.08],
-      [0.61, -0.49, "stonePlanter", 0.84],
-      [0.78, -0.31, "bushCluster", 0.98],
-      [0.94, -0.46, "flowerBed", 0.9],
-    ] as const;
-    for (const [xRatio, yOffset, id, scale] of northAnchors) {
-      landscape.push({
-        id,
-        x: left + clinicWidth * xRatio,
-        y: top + tileSize * yOffset,
-        width: Math.max(34, tileSize * 1.08 * scale),
-        height: Math.max(14, tileSize * 0.46 * scale),
-      });
-    }
-
-    const sideAnchors = [
-      [-0.72, 0.12, "shadeTree", 1.08],
-      [-0.54, 0.39, "bushCluster", 0.96],
-      [-0.78, 0.72, "flowerBed", 0.9],
-      [-0.59, 0.91, "stonePlanter", 0.82],
-      [0.68, 0.2, "bushCluster", 0.92],
-      [0.83, 0.48, "shadeTree", 1.02],
-      [0.56, 0.77, "flowerBed", 0.86],
-      [0.76, 0.94, "bushCluster", 0.98],
-    ] as const;
-    for (const [xOffset, yRatio, id, scale] of sideAnchors) {
-      const onLeft = xOffset < 0;
-      landscape.push({
-        id,
-        x: onLeft
-          ? left + tileSize * xOffset
-          : right + tileSize * xOffset,
-        y: top + clinicHeight * yRatio,
-        width:
-          id === "shadeTree"
-            ? Math.max(44, tileSize * 1.2 * scale)
-            : Math.max(34, tileSize * 1.05 * scale),
-        height:
-          id === "shadeTree"
-            ? Math.max(34, tileSize * 1.02 * scale)
-            : Math.max(14, tileSize * 0.46 * scale),
-      });
-    }
-
-    const southAnchors = [
-      [0.08, 0.09, "flowerBed", 0.9],
-      [0.3, 0.18, "bushCluster", 0.98],
-      [0.67, 0.08, "stonePlanter", 0.84],
-      [0.88, 0.2, "flowerBed", 0.92],
-    ] as const;
-    for (const [xRatio, yOffset, id, scale] of southAnchors) {
-      landscape.push({
-        id,
-        x: left + clinicWidth * xRatio,
-        y: bottom + tileSize * yOffset,
-        width: Math.max(34, tileSize * 1.06 * scale),
-        height: Math.max(13, tileSize * 0.42 * scale),
-      });
-    }
-
-    for (const item of landscape) {
-      this.drawFixture(
-        graphics,
-        item.id,
-        item.x,
-        item.y,
-        item.width,
-        item.height,
+    for (const candidate of visible) {
+      const isTree = candidate.frameId.startsWith("landscape:tree");
+      const width = Math.max(22, candidate.width * this.layout.tileSize);
+      const height = Math.max(14, candidate.height * this.layout.tileSize);
+      const x = this.layout.originX + candidate.x * this.layout.tileSize;
+      const y = this.layout.originY + candidate.y * this.layout.tileSize;
+      if (!this.drawAuthoredLandscaping(
+        `landscape:${candidate.key}`,
+        candidate.frameId,
+        x,
+        y,
+        width,
+        height,
         alpha,
-      );
+        FACILITY_DEPTH_WORLD - 5,
+      )) {
+        this.drawFixture(
+          graphics,
+          isTree ? "shadeTree" : "bushCluster",
+          x,
+          y,
+          width,
+          Math.max(12, height * (isTree ? 0.42 : 0.56)),
+          alpha,
+        );
+      }
     }
   }
 
@@ -877,25 +1903,65 @@ export class FacilityScene extends Phaser.Scene {
       this.waterCoolerLabelText?.setVisible(false);
       return;
     }
-    const x =
+    let x =
       this.layout.originX +
       (cooler.location.x + 0.5) * this.layout.tileSize;
-    const y =
+    const fallbackY =
       this.layout.originY +
       (cooler.location.y + 0.72) * this.layout.tileSize;
-    const maximumWidth = Math.max(16, this.layout.tileSize * 0.42);
-    const maximumHeight = Math.max(24, this.layout.tileSize * 0.68);
-    const coolerCenterY = y - pixel * 3;
-    const coolerSprite = FIXTURE_SPRITES.waterCooler;
-    const coolerScale = Math.max(
-      1,
-      Math.round(
-        Math.min(
-          maximumWidth / coolerSprite.width,
-          maximumHeight / coolerSprite.height,
-        ),
+    const founderRoom = this.getFounderRoom();
+    const coolerIsAtFrontDesk = Boolean(
+      founderRoom &&
+        cooler.location.x ===
+          founderRoom.tileX + FRONT_DESK_PRESENTATION.grid.cooler.x &&
+        cooler.location.y ===
+          founderRoom.tileY + FRONT_DESK_PRESENTATION.grid.cooler.y,
+    );
+    // The authored cooler is tall and narrow. Its Front Desk envelope is
+    // intentionally larger than generic environment props so it reads as the
+    // rear-right fixture in the reference composition rather than a tiny icon.
+    const maximumWidth = Math.max(
+      16,
+      this.layout.tileSize * (
+        coolerIsAtFrontDesk
+          ? FRONT_DESK_PRESENTATION.waterCooler.widthInTiles
+          : 0.42
       ),
     );
+    const maximumHeight = Math.max(
+      24,
+      this.layout.tileSize * (
+        coolerIsAtFrontDesk
+          ? FRONT_DESK_PRESENTATION.waterCooler.heightInTiles
+          : 0.68
+      ),
+    );
+    const coolerSprite = FIXTURE_SPRITES.waterCooler;
+    const authoredFrame = getRoomBitmapFixtureFrame(
+      coolerIsAtFrontDesk ? "room.front_desk" : "",
+      "waterCooler",
+    );
+    const renderedCooler = getFixturePresentationSize(
+      authoredFrame?.nativeWidth ?? coolerSprite.width,
+      authoredFrame?.nativeHeight ?? coolerSprite.height,
+      maximumWidth,
+      maximumHeight,
+    );
+    let coolerContactY = fallbackY - pixel * 3 + renderedCooler.height / 2;
+    if (coolerIsAtFrontDesk && founderRoom) {
+      const rectangle = this.toPixels({
+        tileX: founderRoom.tileX,
+        tileY: founderRoom.tileY,
+        ...orientedSize(founderRoom),
+      });
+      const inset = Math.max(5, Math.floor(this.layout.tileSize * 0.14));
+      const usableWidth = Math.max(18, rectangle.width - inset * 2);
+      const usableHeight = Math.max(18, rectangle.height - inset * 2);
+      x = rectangle.x + inset + usableWidth * FRONT_DESK_PRESENTATION.waterCooler.contact.x;
+      coolerContactY =
+        rectangle.y + inset + usableHeight * FRONT_DESK_PRESENTATION.waterCooler.contact.y;
+    }
+    const coolerCenterY = coolerContactY - renderedCooler.height / 2;
     const coolerGraphics = this.getSortableGraphics(
       this.fixtureGraphics,
       this.activeFixtureGraphics,
@@ -903,20 +1969,37 @@ export class FacilityScene extends Phaser.Scene {
     );
     coolerGraphics.setDepth(
       getFacilitySceneDepth(
-        coolerCenterY + (coolerSprite.height * coolerScale) / 2,
+        coolerContactY,
         "fixture",
         this.fixtureStableOrder % 64,
       ),
     );
-    this.fixtureStableOrder += 1;
-    this.drawFixture(
-      coolerGraphics,
-      "waterCooler",
-      x,
-      coolerCenterY,
-      maximumWidth,
-      maximumHeight,
+    const coolerDepth = getFacilitySceneDepth(
+      coolerContactY,
+      "fixture",
+      this.fixtureStableOrder % 64,
     );
+    this.fixtureStableOrder += 1;
+    if (!this.drawAuthoredFixture(
+      "environment:water-cooler",
+      "waterCooler",
+      coolerIsAtFrontDesk ? "room.front_desk" : "",
+      x,
+      coolerContactY,
+      renderedCooler.width,
+      renderedCooler.height,
+      coolerDepth,
+      1,
+    )) {
+      this.drawFixture(
+        coolerGraphics,
+        "waterCooler",
+        x,
+        coolerCenterY,
+        maximumWidth,
+        maximumHeight,
+      );
+    }
     const fillHeight = Math.round(
       (pixel * 5 * cooler.fillPercent) / 100,
     );
@@ -928,7 +2011,7 @@ export class FacilityScene extends Phaser.Scene {
     );
     coolerGraphics.fillRect(
       x - pixel,
-      y - pixel * 7 + (pixel * 5 - fillHeight),
+      coolerCenterY + renderedCooler.height * 0.27 + (pixel * 5 - fillHeight),
       pixel * 2,
       fillHeight,
     );
@@ -939,10 +2022,10 @@ export class FacilityScene extends Phaser.Scene {
         : PIXEL_PALETTE_NUMBER.charcoal;
       coolerGraphics.lineStyle(outlineWidth, outlineColor, 1);
       coolerGraphics.strokeRect(
-        x - maximumWidth / 2 - outlineWidth * 2,
-        coolerCenterY - maximumHeight / 2 - outlineWidth * 2,
-        maximumWidth + outlineWidth * 4,
-        maximumHeight + outlineWidth * 4,
+        x - renderedCooler.width / 2 - outlineWidth * 2,
+        coolerCenterY - renderedCooler.height / 2 - outlineWidth * 2,
+        renderedCooler.width + outlineWidth * 4,
+        renderedCooler.height + outlineWidth * 4,
       );
       if (cooler.highlighted) {
         coolerGraphics.lineStyle(
@@ -951,10 +2034,10 @@ export class FacilityScene extends Phaser.Scene {
           1,
         );
         coolerGraphics.strokeRect(
-          x - maximumWidth / 2 - outlineWidth * 4,
-          coolerCenterY - maximumHeight / 2 - outlineWidth * 4,
-          maximumWidth + outlineWidth * 8,
-          maximumHeight + outlineWidth * 8,
+          x - renderedCooler.width / 2 - outlineWidth * 4,
+          coolerCenterY - renderedCooler.height / 2 - outlineWidth * 4,
+          renderedCooler.width + outlineWidth * 8,
+          renderedCooler.height + outlineWidth * 8,
         );
       }
     }
@@ -962,7 +2045,7 @@ export class FacilityScene extends Phaser.Scene {
       ?.setText(cooler.needsRefill ? "REFILL" : "WATER COOLER")
       .setPosition(
         x,
-        coolerCenterY - maximumHeight / 2 - Math.max(3, pixel),
+        coolerCenterY - renderedCooler.height / 2 - Math.max(3, pixel),
       )
       .setVisible(Boolean(cooler.highlighted || cooler.needsRefill));
   }
@@ -1065,31 +2148,61 @@ export class FacilityScene extends Phaser.Scene {
       5,
       Math.floor(this.layout.tileSize * 0.14),
     );
+    const usesFrontDeskV4Shell =
+      room.definitionId === "room.front_desk" &&
+      this.canRenderFrontDeskV4Architecture() &&
+      !this.requiresBoundaryAwareSurgeryCenterShell(room);
+    const usesExaminationV2Shell =
+      room.definitionId === "room.examination" &&
+      this.canRenderExaminationV2Architecture(room.orientation === 90 ? 90 : 0) &&
+      !this.requiresBoundaryAwareSurgeryCenterShell(room);
 
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.58);
-    graphics.fillRect(
-      rectangle.x + 5,
-      rectangle.y + 6,
-      rectangle.width,
-      rectangle.height,
-    );
-    graphics.fillStyle(shade, 1);
-    graphics.fillRect(
-      rectangle.x,
-      rectangle.y,
-      rectangle.width,
-      rectangle.height,
-    );
-    this.drawRoomFloor(graphics, room, rectangle, shade);
-    this.drawCleanlinessWear(graphics, room, rectangle);
-    this.drawRoomUpgradeFinish(graphics, room, rectangle);
-    const wallWidth = Math.max(
-      4,
-      Math.floor(this.layout.tileSize * 0.16),
-    );
-    this.drawRoomShell(graphics, room, rectangle, wallWidth);
+    if (this.requiresBoundaryAwareSurgeryCenterShell(room)) {
+      this.drawBoundaryAwareSurgeryCenterShell(graphics, room, rectangle);
+      this.drawCleanlinessWear(graphics, room, rectangle);
+    } else if (usesFrontDeskV4Shell) {
+      // The source shell owns every baseline architectural pixel for this
+      // room.  Do not put the generic shadow/floor/shell, an authored floor,
+      // or the old upgrade-finish overlay underneath it: doing so was the
+      // source of the rejected stretched and doubled architecture.
+      this.drawFrontDeskV4Architecture(room, rectangle);
+      this.drawCleanlinessWear(graphics, room, rectangle);
+    } else if (usesExaminationV2Shell) {
+      this.drawExaminationV2Architecture(room, rectangle);
+      this.drawCleanlinessWear(graphics, room, rectangle);
+    } else {
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.58);
+      graphics.fillRect(
+        rectangle.x + 5,
+        rectangle.y + 6,
+        rectangle.width,
+        rectangle.height,
+      );
+      graphics.fillStyle(shade, 1);
+      graphics.fillRect(
+        rectangle.x,
+        rectangle.y,
+        rectangle.width,
+        rectangle.height,
+      );
+      this.drawRoomFloor(graphics, room, rectangle, shade);
+      this.drawAuthoredRoomFloor(room, rectangle);
+      this.drawCleanlinessWear(graphics, room, rectangle);
+      this.drawRoomUpgradeFinish(graphics, room, rectangle);
+      const wallWidth = Math.max(
+        4,
+        Math.floor(this.layout.tileSize * 0.16),
+      );
+      this.drawRoomShell(graphics, room, rectangle, wallWidth);
+    }
 
-    this.drawRoomFixtures(graphics, room, rectangle, furnitureInset);
+    const roomFixtures = this.getSortableGraphics(
+      this.roomFixtureGraphics,
+      this.activeRoomFixtureGraphics,
+      `room-fixtures:${room.instanceId}`,
+    );
+    roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
+    this.drawRoomFixtures(roomFixtures, room, rectangle, furnitureInset);
 
     if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
       const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
@@ -1128,6 +2241,19 @@ export class FacilityScene extends Phaser.Scene {
       case "room.minor_procedure":
       case "room.examination":
         return PIXEL_PALETTE_NUMBER.cream;
+      case "room.ultrasound":
+      case "room.periop_recovery":
+      case "room.glp1_telehealth_suite":
+        return PIXEL_PALETTE_NUMBER.paper;
+      case "room.ct":
+      case "room.endoscopy":
+        return PIXEL_PALETTE_NUMBER.lightSage;
+      case "room.phlebotomy":
+      case "room.training":
+        return PIXEL_PALETTE_NUMBER.cream;
+      case "room.evs_closet":
+      case "room.coffee_kiosk":
+        return PIXEL_PALETTE_NUMBER.warmGray;
       default:
         return room.isFounderRoom || index % 2 === 0
           ? PIXEL_PALETTE_NUMBER.cream
@@ -1454,7 +2580,14 @@ export class FacilityScene extends Phaser.Scene {
         const room = model.rooms.find(
           (candidate) => candidate.instanceId === slot.roomInstanceId,
         );
-        return room
+        return room && isRoomVisualDoorSlotClear({
+          definitionId: room.definitionId,
+          orientation: room.orientation,
+          width: room.width,
+          height: room.height,
+          side: slot.side,
+          offset: slot.offset,
+        })
           ? [
               {
                 kind: "place" as const,
@@ -1594,14 +2727,25 @@ export class FacilityScene extends Phaser.Scene {
     graphics.fillRect(left, top, width, height);
 
     if (room.definitionId === "room.front_desk") {
-      // Wide commercial planks: broad horizontal joints with staggered seams.
-      const plank = Math.max(9, Math.floor(this.layout.tileSize * 0.58));
-      graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.34);
-      for (let y = top + plank; y < bottom; y += plank) {
+      if (this.canRenderFrontDeskV4Architecture()) {
+        // The v4 coherent shell supplies its own five-by-four floor and
+        // grout.  Never lay the historical procedural grid over it.
+        return;
+      }
+      // The starter room deliberately reads as a complete five-by-four tiled
+      // interior, not an extension of the build grid or an added rug.
+      const columns = FRONT_DESK_PRESENTATION.floor.tileColumns;
+      const rows = FRONT_DESK_PRESENTATION.floor.tileRows;
+      const tileWidth = width / columns;
+      const tileHeight = height / rows;
+      graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.46);
+      for (let column = 1; column < columns; column += 1) {
+        const x = left + Math.round(column * tileWidth);
+        graphics.lineBetween(x, top, x, bottom);
+      }
+      for (let row = 1; row < rows; row += 1) {
+        const y = top + Math.round(row * tileHeight);
         graphics.lineBetween(left, y, right, y);
-        const row = Math.floor((y - top) / plank);
-        const seamX = left + width * (row % 2 === 0 ? 0.32 : 0.68);
-        graphics.lineBetween(seamX, y - plank + 1, seamX, y - 1);
       }
       return;
     }
@@ -1636,6 +2780,58 @@ export class FacilityScene extends Phaser.Scene {
           graphics.lineBetween(x, y - tile, x, y);
         }
       }
+      return;
+    }
+
+    if (room.definitionId === "room.ultrasound") {
+      const band = Math.max(10, Math.floor(this.layout.tileSize * 0.62));
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.26);
+      for (let x = left + band; x < right; x += band) graphics.fillRect(x, top, 1, height);
+      return;
+    }
+    if (room.definitionId === "room.ct") {
+      const tile = Math.max(11, Math.floor(this.layout.tileSize * 0.64));
+      graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.deepOlive, 0.22);
+      for (let y = top + tile; y < bottom; y += tile) graphics.lineBetween(left, y, right, y);
+      for (let x = left + tile; x < right; x += tile) graphics.lineBetween(x, top, x, bottom);
+      return;
+    }
+    if (room.definitionId === "room.phlebotomy") {
+      const strip = Math.max(7, Math.floor(this.layout.tileSize * 0.4));
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.22);
+      for (let y = top + strip; y < bottom; y += strip) graphics.fillRect(left, y, width, 1);
+      return;
+    }
+    if (room.definitionId === "room.evs_closet" || room.definitionId === "room.coffee_kiosk") {
+      const tile = Math.max(6, Math.floor(this.layout.tileSize * (room.definitionId === "room.evs_closet" ? 0.3 : 0.42)));
+      graphics.lineStyle(1, room.definitionId === "room.evs_closet" ? PIXEL_PALETTE_NUMBER.deepOlive : PIXEL_PALETTE_NUMBER.paper, 0.3);
+      for (let y = top + tile; y < bottom; y += tile) graphics.lineBetween(left, y, right, y);
+      for (let x = left + tile; x < right; x += tile) graphics.lineBetween(x, top, x, bottom);
+      return;
+    }
+    if (room.definitionId === "room.endoscopy") {
+      const band = Math.max(12, Math.floor(this.layout.tileSize * 0.74));
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.16);
+      for (let y = top + band; y < bottom; y += band) graphics.fillRect(left, y, width, 2);
+      return;
+    }
+    if (room.definitionId === "room.periop_recovery") {
+      const plank = Math.max(10, Math.floor(this.layout.tileSize * 0.58));
+      graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.25);
+      for (let y = top + plank; y < bottom; y += plank) graphics.lineBetween(left, y, right, y);
+      return;
+    }
+    if (room.definitionId === "room.training") {
+      const tile = Math.max(9, Math.floor(this.layout.tileSize * 0.5));
+      for (let y = top; y < bottom; y += tile) for (let x = left; x < right; x += tile) {
+        if ((Math.floor((x - left) / tile) + Math.floor((y - top) / tile)) % 2 === 0) { graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.12); graphics.fillRect(x, y, tile, tile); }
+      }
+      return;
+    }
+    if (room.definitionId === "room.glp1_telehealth_suite") {
+      const tile = Math.max(13, Math.floor(this.layout.tileSize * 0.72));
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.24);
+      for (let y = top + tile; y < bottom; y += tile) for (let x = left + tile; x < right; x += tile) graphics.fillRect(x, y, 1, 1);
       return;
     }
 
@@ -1729,6 +2925,19 @@ export class FacilityScene extends Phaser.Scene {
           Math.max(1, lowWallWidth - 2),
           Math.max(1, height - 2),
         );
+        // The authored side-wall strip repeats vertically at its native aspect
+        // ratio. A partial exposed edge crops the final repeat rather than
+        // compressing its wall panels.
+        this.drawEnvironmentTile(
+          `environment:side-wall:${room.instanceId}:${side}:${run.offset}`,
+          "environment:side-wall",
+          x,
+          y,
+          lowWallWidth,
+          height,
+          FACILITY_DEPTH_WORLD + 10,
+          Math.max(0.02, lowWallWidth / ENVIRONMENT_ATLAS_V1_FRAMES["environment:side-wall"].nativeWidth),
+        );
       }
     }
   }
@@ -1742,6 +2951,9 @@ export class FacilityScene extends Phaser.Scene {
     lowWallWidth: number,
   ): void {
     const rearWallHeight = this.roomWallFaceHeight(rectangle);
+    const wallCapHeight = getSurgeryCenterArchitectureAtScale(
+      this.layout.tileSize,
+    ).outerBorderY;
     const groundY = rectangle.y;
     const northRuns = this.exposedBoundaryRuns(room, "north");
     const panelGap = Math.max(24, Math.floor(this.layout.tileSize * 1.45));
@@ -1764,7 +2976,7 @@ export class FacilityScene extends Phaser.Scene {
         run,
         this.layout.tileSize,
         rearWallHeight,
-        wallWidth,
+        wallCapHeight,
       );
       const runX = projection.face.x;
       const runWidth = projection.face.width;
@@ -1797,7 +3009,7 @@ export class FacilityScene extends Phaser.Scene {
         runX + 2,
         projection.cap.y + 2,
         Math.max(1, runWidth - 4),
-        Math.max(1, wallWidth - 3),
+        Math.max(1, wallCapHeight - 3),
       );
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.52);
       graphics.fillRect(
@@ -1826,10 +3038,24 @@ export class FacilityScene extends Phaser.Scene {
         faceX + 1,
         projection.face.y + 1,
         Math.max(1, faceWidth - 2),
-        Math.max(1, Math.floor(wallWidth * 0.28)),
+        Math.max(1, Math.floor(wallCapHeight * 0.65)),
       );
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.68);
       graphics.fillRect(faceX, groundY - 3, faceWidth, 3);
+
+      // The wall texture is repeated from the measured v1 source bounds.
+      // This leaves partial north runs as ordinary clipped continuations of
+      // their parent wall instead of changing the texture's proportions.
+      this.drawEnvironmentTile(
+        `environment:north-wall:${room.instanceId}:${run.offset}`,
+        "environment:north-wall",
+        faceX,
+        projection.face.y,
+        faceWidth,
+        rearWallHeight,
+        FACILITY_DEPTH_WORLD + 10,
+        Math.max(0.02, rearWallHeight / ENVIRONMENT_ATLAS_V1_FRAMES["environment:north-wall"].nativeHeight),
+      );
 
       // Panel rhythm remains anchored to the complete room wall. Northern
       // coverage crops the pattern instead of restarting it in each fragment.
@@ -2095,126 +3321,68 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
-    const { originY, height, tileSize } = this.layout;
-    const mapBottom = originY + height;
-    const sidewalkTop = Math.max(
-      0,
-      Math.min(this.scale.height, mapBottom),
-    );
-    const sidewalkHeight = Math.max(0, this.scale.height - sidewalkTop);
-
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
-    graphics.fillRect(0, sidewalkTop, this.scale.width, sidewalkHeight);
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.38);
-    for (
-      let y = sidewalkTop + 5;
-      y < sidewalkTop + sidewalkHeight;
-      y += 9
-    ) {
-      graphics.fillRect(0, y, this.scale.width, 1);
+    const { tileSize, originX, width, sidewalkTop, sidewalkHeight, setbackTop } = this.layout;
+    const sidewalkBottom = sidewalkTop + sidewalkHeight;
+    if (!this.canRenderAuthoredEnvironment()) {
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
+      graphics.fillRect(originX, sidewalkTop, width, sidewalkHeight);
+      graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.38);
+      for (let y = sidewalkTop + 5; y < sidewalkBottom; y += 9) {
+        graphics.fillRect(originX, y, width, 1);
+      }
     }
-    graphics.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 1);
-    graphics.lineBetween(0, sidewalkTop, this.scale.width, sidewalkTop);
-    graphics.lineBetween(
-      0,
-      sidewalkTop + sidewalkHeight,
-      this.scale.width,
-      sidewalkTop + sidewalkHeight,
-    );
-    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.88);
-    for (let x = tileSize; x < this.scale.width; x += tileSize) {
-      graphics.lineBetween(
-        x,
-        sidewalkTop + 2,
-        x,
-        sidewalkTop + sidewalkHeight - 2,
-      );
+    // Broad paving slabs, joints, and curb are all site/world-coordinate art.
+    graphics.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 0.85);
+    graphics.lineBetween(originX, sidewalkTop, originX + width, sidewalkTop);
+    graphics.lineBetween(originX, sidewalkBottom, originX + width, sidewalkBottom);
+    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.warmGray, 0.4);
+    const slabWidth = Math.max(32, Math.round(tileSize * 1.25));
+    const firstSlab = Math.floor(originX / slabWidth) * slabWidth;
+    for (let x = firstSlab; x <= originX + width; x += slabWidth) {
+      graphics.lineBetween(x, sidewalkTop + 2, x, sidewalkBottom - 2);
     }
+    graphics.lineStyle(Math.max(1, Math.floor(tileSize * 0.06)), PIXEL_PALETTE_NUMBER.charcoal, 0.55);
+    graphics.lineBetween(originX, sidewalkBottom - Math.max(2, tileSize * 0.12), originX + width, sidewalkBottom - Math.max(2, tileSize * 0.12));
 
     const founder = this.getFounderRoom();
-    if (!founder) {
-      return;
-    }
-    const founderPixels = this.toPixels({
-      tileX: founder.tileX,
-      tileY: founder.tileY,
-      ...orientedSize(founder),
-    });
-    const entranceX = Math.floor(
-      founderPixels.x + founderPixels.width / 2,
-    );
+    if (!founder) return;
+    const founderPixels = this.toPixels({ tileX: founder.tileX, tileY: founder.tileY, ...orientedSize(founder) });
+    const entranceX = Math.floor(founderPixels.x + founderPixels.width / 2);
     const entranceWidth = Math.max(12, tileSize);
     const entranceLeft = entranceX - Math.floor(entranceWidth / 2);
-
-    // The public entrance is an open wall break with a grounded threshold and
-    // jambs. No decorative ajar leaf intrudes into the walking path.
     const entranceEdgeY = founderPixels.y + founderPixels.height;
     const entranceFrame = Math.max(2, Math.floor(tileSize * 0.08));
-    graphics.fillStyle(this.roomFloorColor(founder), 1);
-    graphics.fillRect(
-      entranceLeft,
-      entranceEdgeY - Math.max(4, entranceFrame * 2),
-      entranceWidth,
-      Math.max(8, entranceFrame * 4),
-    );
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.55);
-    graphics.fillRect(
-      entranceLeft + entranceFrame,
-      entranceEdgeY - entranceFrame,
-      Math.max(1, entranceWidth - entranceFrame * 2),
-      entranceFrame * 2,
-    );
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
-    graphics.fillRect(
-      entranceLeft - entranceFrame,
-      entranceEdgeY - entranceFrame * 3,
-      entranceFrame,
-      entranceFrame * 5,
-    );
-    graphics.fillRect(
-      entranceLeft + entranceWidth,
-      entranceEdgeY - entranceFrame * 3,
-      entranceFrame,
-      entranceFrame * 5,
-    );
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.lightSage, 1);
-    graphics.fillRect(
-      entranceLeft - 3,
-      mapBottom,
-      entranceWidth + 6,
-      sidewalkHeight + 3,
-    );
-    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.olive, 1);
-    graphics.strokeRect(
-      entranceLeft - 3,
-      mapBottom,
-      entranceWidth + 6,
-      sidewalkHeight + 3,
-    );
 
-    const planterY = mapBottom - Math.max(9, Math.floor(tileSize * 0.16));
+    // The only paving through grass is the short, unobstructed public walk.
+    graphics.fillStyle(PIXEL_PALETTE_NUMBER.lightSage, 1);
+    graphics.fillRect(entranceLeft - 3, setbackTop, entranceWidth + 6, sidewalkTop - setbackTop);
+    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.olive, 0.8);
+    graphics.strokeRect(entranceLeft - 3, setbackTop, entranceWidth + 6, sidewalkTop - setbackTop);
+    graphics.fillStyle(this.roomFloorColor(founder), 1);
+    graphics.fillRect(entranceLeft, entranceEdgeY - Math.max(4, entranceFrame * 2), entranceWidth, Math.max(8, entranceFrame * 4));
+    graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.55);
+    graphics.fillRect(entranceLeft + entranceFrame, entranceEdgeY - entranceFrame, Math.max(1, entranceWidth - entranceFrame * 2), entranceFrame * 2);
+    graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+    graphics.fillRect(entranceLeft - entranceFrame, entranceEdgeY - entranceFrame * 3, entranceFrame, entranceFrame * 5);
+    graphics.fillRect(entranceLeft + entranceWidth, entranceEdgeY - entranceFrame * 3, entranceFrame, entranceFrame * 5);
+
+    // Compact flowers at the sidewalk edge give the entrance a cared-for
+    // threshold without recreating the removed full-width green stripe.
+    const planterY = sidewalkTop + Math.max(8, sidewalkHeight * 0.25);
     const entrancePlants = [
-      {
-        x: entranceX - Math.max(tileSize * 1.16, entranceWidth * 1.42),
-        y: planterY - tileSize * 0.06,
-        id: "roomPlant" as const,
-        scale: 0.92,
-      },
-      {
-        x: entranceX + Math.max(tileSize * 0.94, entranceWidth * 1.18),
-        y: planterY + tileSize * 0.08,
-        id: "stonePlanter" as const,
-        scale: 0.84,
-      },
+      { x: entranceLeft - tileSize * 0.7, id: "landscape:flowers-pink" as const },
+      { x: entranceLeft + entranceWidth + tileSize * 0.7, id: "landscape:flowers-white" as const },
     ];
-    for (const plant of entrancePlants) {
-      this.drawFixture(
-        graphics,
+    for (const [index, plant] of entrancePlants.entries()) {
+      this.drawAuthoredLandscaping(
+        `landscape:sidewalk-edge:${index}`,
         plant.id,
         plant.x,
-        plant.y,
-        Math.max(14, tileSize * 0.48 * plant.scale),
-        Math.max(18, tileSize * 0.62 * plant.scale),
+        planterY,
+        Math.max(16, tileSize * 0.7),
+        Math.max(13, tileSize * 0.54),
+        1,
+        FACILITY_DEPTH_WORLD + 20,
       );
     }
   }
@@ -2225,8 +3393,16 @@ export class FacilityScene extends Phaser.Scene {
     rectangle: { x: number; y: number; width: number; height: number },
     inset: number,
   ): void {
+    const visualLayout = getRoomVisualLayout(room.definitionId);
+    const furnitureOrientation = getRoomVisualOrientation(
+      visualLayout,
+      room.orientation,
+    );
     const left = rectangle.x + inset;
     const wallHeight = this.roomWallFaceHeight(rectangle);
+    const wallCapHeight = getSurgeryCenterArchitectureAtScale(
+      this.layout.tileSize,
+    ).outerBorderY;
     const rearWallRuns = this.exposedBoundaryRuns(room, "north");
     const wallWidth = Math.max(
       4,
@@ -2250,7 +3426,7 @@ export class FacilityScene extends Phaser.Scene {
         run,
         this.layout.tileSize,
         wallHeight,
-        wallWidth,
+        wallCapHeight,
       ).face;
       const leftInset =
         run.offset === 0 && exteriorWest
@@ -2283,25 +3459,50 @@ export class FacilityScene extends Phaser.Scene {
       widthRatio: number,
       heightRatio: number,
       alpha = 1,
+      contact?: Readonly<{ x: number; y: number }>,
+      preserveScreenOrientation = false,
     ) => {
-      const centerX = left + usableWidth * centerXRatio;
-      const centerY = top + usableHeight * centerYRatio;
-      const maximumWidth = usableWidth * widthRatio;
-      const maximumHeight = usableHeight * heightRatio;
-      const fixture = FIXTURE_SPRITES[id];
+      const transformed = preserveScreenOrientation
+        ? { centerXRatio, centerYRatio, widthRatio, heightRatio }
+        : transformRoomLocalFixture(
+        {
+          centerXRatio,
+          centerYRatio,
+          widthRatio,
+          heightRatio,
+        },
+        furnitureOrientation,
+      );
+      const centeredX = left + usableWidth * transformed.centerXRatio;
+      const centeredY = top + usableHeight * transformed.centerYRatio;
+      const maximumWidth = usableWidth * transformed.widthRatio;
+      const maximumHeight = usableHeight * transformed.heightRatio;
+      const fixture = getFixtureSpriteForOrientation(
+        id,
+        preserveScreenOrientation ? 0 : furnitureOrientation,
+      );
+      const authoredFrame = getRoomBitmapFixtureFrame(room.definitionId, id);
       const rendered = getFixturePresentationSize(
-        fixture.width,
-        fixture.height,
+        authoredFrame?.nativeWidth ?? fixture.width,
+        authoredFrame?.nativeHeight ?? fixture.height,
         maximumWidth,
         maximumHeight,
       );
+      // Front Desk's fixed orientation permits a separate visual floor
+      // contact. Its logical grid tiles remain authoritative for collision and
+      // routing while tall cabinet/cooler art can extend toward the rear wall.
+      const centerX = contact
+        ? left + usableWidth * contact.x
+        : centeredX;
+      const contactY = contact
+        ? top + usableHeight * contact.y
+        : centeredY + rendered.height / 2;
+      const centerY = contactY - rendered.height / 2;
       const shadowWidth = Math.max(
         4,
         Math.min(maximumWidth * 0.72, rendered.width * 0.82),
       );
-      const shadowY =
-        centerY + Math.min(maximumHeight, rendered.height) / 2 - 2;
-      const contactY = centerY + rendered.height / 2;
+      const shadowY = contactY - 2;
       const isFloorSurface = id === "floorRug" || id === "bathMat";
       const fixtureOrder = roomFixtureOrder;
       roomFixtureOrder += 1;
@@ -2337,6 +3538,25 @@ export class FacilityScene extends Phaser.Scene {
           ),
         ),
       );
+      if (
+        this.drawAuthoredFixture(
+          `room:${room.instanceId}:${fixtureOrder}:${id}`,
+          id,
+          room.definitionId,
+          centerX,
+          contactY,
+          rendered.width,
+          rendered.height,
+          getFacilitySceneDepth(
+            contactY,
+            "fixture",
+            (this.fixtureStableOrder - 1 + 64) % 64,
+          ),
+          alpha,
+        )
+      ) {
+        return;
+      }
       this.drawFixture(
         target,
         id,
@@ -2345,6 +3565,7 @@ export class FacilityScene extends Phaser.Scene {
         maximumWidth,
         maximumHeight,
         alpha,
+        furnitureOrientation,
       );
     };
     const placeWall = (
@@ -2355,7 +3576,16 @@ export class FacilityScene extends Phaser.Scene {
       heightRatio: number,
       alpha = 1,
     ) => {
-      if (rearWallRuns.length === 0) {
+      const largestExposedRunTiles = Math.max(
+        0,
+        ...rearWallRuns.map((run) => run.length),
+      );
+      if (
+        !shouldRenderWorldNorthWallDecor(
+          { binding: "world-north" },
+          largestExposedRunTiles,
+        )
+      ) {
         return;
       }
       const wallInset = Math.max(2, Math.floor(inset * 0.35));
@@ -2383,7 +3613,7 @@ export class FacilityScene extends Phaser.Scene {
       }
       const fixture = FIXTURE_SPRITES[id];
       const rendered = getFixturePresentationSize(
-        fixture.width,
+          fixture.width,
         fixture.height,
         projection.bounds.width,
         projection.bounds.height,
@@ -2429,53 +3659,91 @@ export class FacilityScene extends Phaser.Scene {
 
     switch (room.definitionId) {
       case "room.front_desk":
-        place("floorRug", 0.5, 0.62, 0.82, 0.5, 0.72);
-        place("frontDesk", 0.5, 0.68, 0.76, 0.28);
-        place("deskTerminal", 0.48, 0.48, 0.18, 0.25);
-        place("secretaryChair", 0.48, 0.35, 0.13, 0.2);
-        place("visitorChair", 0.84, 0.48, 0.12, 0.19);
-        place("filingCabinet", 0.12, 0.26, 0.15, 0.29);
-        place("plant", 0.9, 0.24, 0.11, 0.21);
-        place("deskPhone", 0.63, 0.57, 0.1, 0.11);
-        place("chartStack", 0.35, 0.58, 0.13, 0.09);
-        placeWall("wallWindow", 0.5, 0.48, 0.36, 0.72);
-        placeWall("medicalSign", 0.17, 0.5, 0.12, 0.7);
-        placeWall("noticeBoard", 0.82, 0.5, 0.2, 0.7);
+        // This isolated composition is deliberately declarative. It mirrors
+        // the accepted reference while all live characters, doors, and the
+        // water cooler remain independent scene elements.
+        const showEmptyFrontDeskChair = shouldRenderEmptyFrontDeskChair(
+          this.bridge.viewModel.founder,
+          this.bridge.viewModel.staff,
+          this.bridge.viewModel.rooms,
+        );
+        FRONT_DESK_PRESENTATION.fixtures.forEach((fixture) => {
+          if (fixture.id === "secretaryChair" && !showEmptyFrontDeskChair) {
+            return;
+          }
+          place(
+            fixture.id,
+            fixture.x,
+            fixture.y,
+            fixture.width,
+            fixture.height,
+            1,
+            fixture.contact,
+          );
+        });
+        // The v2 sheet provides a substantial mounted noticeboard and clock
+        // that retain legibility at ordinary facility zoom.  The small pixel
+        // fallback is kept only while that independently preloaded sheet is
+        // unavailable.
+        if (!this.canRenderFrontDeskV2Art()) {
+          FRONT_DESK_PRESENTATION.northWallFixtures.forEach((fixture) => {
+            placeWall(
+              fixture.id,
+              fixture.x,
+              fixture.y,
+              fixture.width,
+              fixture.height,
+            );
+          });
+        }
         break;
       case "room.waiting":
         place("floorRug", 0.5, 0.58, 0.78, 0.54, 0.66);
-        place("waitingBench", 0.5, 0.2, 0.7, 0.23);
-        place("visitorChair", 0.13, 0.54, 0.15, 0.23);
-        place("visitorChair", 0.87, 0.54, 0.15, 0.23);
+        place("waitingCouch", 0.5, 0.26, 0.52, 0.27);
+        place("visitorChair", 0.17, 0.61, 0.15, 0.23);
+        place("visitorChair", 0.83, 0.61, 0.15, 0.23);
         place("coffeeTable", 0.5, 0.6, 0.32, 0.22);
         place("magazineRack", 0.91, 0.25, 0.11, 0.23);
-        place("plant", 0.09, 0.23, 0.11, 0.21);
-        place("sideTable", 0.11, 0.74, 0.11, 0.15);
         place("wasteBin", 0.89, 0.79, 0.08, 0.14);
         placeWall("framedPrint", 0.19, 0.5, 0.12, 0.72);
         placeWall("noticeBoard", 0.54, 0.5, 0.22, 0.72);
         placeWall("framedPrint", 0.82, 0.5, 0.12, 0.72);
         break;
       case "room.examination":
-        place("floorRug", 0.5, 0.64, 0.72, 0.42, 0.42);
-        place("examTable", 0.34, 0.58, 0.54, 0.28);
-        place("examStep", 0.2, 0.77, 0.15, 0.15);
-        place("sinkCabinet", 0.79, 0.22, 0.34, 0.26);
-        place("rollingStool", 0.72, 0.67, 0.15, 0.22);
-        place("examScale", 0.9, 0.47, 0.12, 0.3);
-        place("wasteBin", 0.1, 0.83, 0.08, 0.15);
-        placeWall("diagnosticPanel", 0.68, 0.5, 0.22, 0.76);
-        placeWall("wallChart", 0.27, 0.5, 0.14, 0.76);
-        placeWall("privacyCurtain", 0.91, 0.58, 0.12, 0.92, 0.82);
+        {
+          const presentation = getExaminationRoomPresentation(room.orientation);
+          const widestNorthRun = Math.max(0, ...rearWallRuns.map((run) => run.length));
+          presentation.fixtures.forEach((fixture) => {
+            if (fixture.optionalNorthWallArt && widestNorthRun < 3) return;
+            if (fixture.wallMounted) {
+              placeWall(
+                fixture.id,
+                fixture.centerXRatio,
+                fixture.centerYRatio,
+                fixture.widthRatio,
+                fixture.heightRatio,
+              );
+              return;
+            }
+            place(
+              fixture.id,
+              fixture.centerXRatio,
+              fixture.centerYRatio,
+              fixture.widthRatio,
+              fixture.heightRatio,
+              1,
+              undefined,
+              true,
+            );
+          });
+        }
         break;
       case "room.bathroom":
-        place("bathMat", 0.48, 0.72, 0.56, 0.24, 0.78);
-        place("toilet", 0.31, 0.37, 0.32, 0.48);
-        place("handSink", 0.75, 0.31, 0.28, 0.34);
-        place("wasteBin", 0.86, 0.75, 0.14, 0.21);
-        placeWall("wallMirror", 0.72, 0.5, 0.28, 0.82);
-        placeWall("towelDispenser", 0.88, 0.55, 0.13, 0.65);
-        placeWall("grabBar", 0.27, 0.56, 0.28, 0.5);
+        place("bathMat", 0.5, 0.54, 0.34, 0.18, 0.72);
+        place("handSink", 0.18, 0.22, 0.25, 0.3);
+        place("toilet", 0.79, 0.78, 0.31, 0.43);
+        place("wasteBin", 0.15, 0.81, 0.1, 0.15);
+        placeWall("wallMirror", 0.18, 0.5, 0.18, 0.72);
         break;
       case "room.xray":
         place("floorRug", 0.5, 0.6, 0.72, 0.5, 0.32);
@@ -2511,6 +3779,71 @@ export class FacilityScene extends Phaser.Scene {
         place("wasteBin", 0.92, 0.8, 0.08, 0.14);
         placeWall("wallShelf", 0.72, 0.5, 0.28, 0.72);
         placeWall("medicalSign", 0.24, 0.5, 0.13, 0.74);
+        break;
+      case "room.ultrasound":
+        place("examTable", 0.35, 0.65, 0.54, 0.28);
+        place("ultrasoundConsole", 0.72, 0.47, 0.3, 0.48);
+        place("rollingCart", 0.13, 0.48, 0.18, 0.25);
+        place("supplyCabinet", 0.87, 0.2, 0.18, 0.3);
+        placeWall("diagnosticPanel", 0.28, 0.5, 0.2, 0.74);
+        break;
+      case "room.ct":
+        place("ctGantry", 0.42, 0.51, 0.58, 0.64);
+        place("supplyCabinet", 0.86, 0.31, 0.18, 0.31);
+        place("rollingCart", 0.83, 0.77, 0.16, 0.22);
+        placeWall("radiationMarker", 0.14, 0.5, 0.1, 0.74);
+        placeWall("wallWindow", 0.63, 0.5, 0.3, 0.72);
+        break;
+      case "room.phlebotomy":
+        place("phlebotomyChair", 0.34, 0.56, 0.36, 0.5);
+        place("sinkCabinet", 0.78, 0.23, 0.34, 0.27);
+        place("tubeRack", 0.73, 0.58, 0.27, 0.17);
+        place("rollingCart", 0.12, 0.76, 0.17, 0.22);
+        placeWall("wallChart", 0.3, 0.5, 0.13, 0.72);
+        break;
+      case "room.evs_closet":
+        place("mopCart", 0.31, 0.58, 0.43, 0.68);
+        place("scrubSink", 0.75, 0.65, 0.38, 0.3);
+        place("supplyCabinet", 0.78, 0.2, 0.25, 0.32);
+        placeWall("wallShelf", 0.38, 0.5, 0.3, 0.7);
+        break;
+      case "room.endoscopy":
+        place("procedureTable", 0.38, 0.64, 0.54, 0.29);
+        place("endoscopyTower", 0.78, 0.44, 0.23, 0.56);
+        place("sinkCabinet", 0.18, 0.2, 0.28, 0.24);
+        place("supplyCabinet", 0.9, 0.22, 0.16, 0.29);
+        place("instrumentTray", 0.12, 0.77, 0.18, 0.23);
+        placeWall("lightBox", 0.45, 0.5, 0.24, 0.74);
+        break;
+      case "room.periop_recovery":
+        place("procedureTable", 0.36, 0.63, 0.55, 0.3);
+        place("vitalsMonitor", 0.76, 0.45, 0.2, 0.42);
+        place("ivStand", 0.16, 0.41, 0.13, 0.4);
+        place("supplyCabinet", 0.9, 0.23, 0.16, 0.3);
+        placeWall("privacyCurtain", 0.84, 0.55, 0.13, 0.9, 0.84);
+        break;
+      case "room.training":
+        place("trainingTable", 0.48, 0.61, 0.68, 0.42);
+        place("visitorChair", 0.17, 0.44, 0.15, 0.23);
+        place("visitorChair", 0.81, 0.44, 0.15, 0.23);
+        place("rollingCart", 0.87, 0.77, 0.15, 0.2);
+        placeWall("noticeBoard", 0.32, 0.5, 0.24, 0.72);
+        placeWall("lightBox", 0.72, 0.5, 0.23, 0.72);
+        break;
+      case "room.coffee_kiosk":
+        place("frontDesk", 0.5, 0.66, 0.76, 0.28);
+        place("coffeeMachine", 0.36, 0.37, 0.25, 0.42);
+        place("chartStack", 0.65, 0.43, 0.18, 0.13);
+        place("wasteBin", 0.9, 0.78, 0.09, 0.15);
+        placeWall("medicalSign", 0.5, 0.5, 0.13, 0.72);
+        break;
+      case "room.glp1_telehealth_suite":
+        place("imagingConsole", 0.49, 0.33, 0.68, 0.4);
+        place("officeChair", 0.49, 0.65, 0.18, 0.25);
+        place("ringLight", 0.83, 0.45, 0.18, 0.5);
+        place("deskPhone", 0.67, 0.49, 0.12, 0.12);
+        place("filingCabinet", 0.12, 0.47, 0.16, 0.32);
+        placeWall("framedPrint", 0.25, 0.5, 0.13, 0.72);
         break;
       default:
         place("filingCabinet", 0.25, 0.4, 0.25, 0.38);
@@ -2551,6 +3884,33 @@ export class FacilityScene extends Phaser.Scene {
           place("vitalsMonitor", 0.89, 0.48, 0.18, 0.36, 0.96);
           place("rollingCart", 0.13, 0.82, 0.16, 0.21, 0.92);
           break;
+        case "room.ultrasound":
+          place("vitalsMonitor", 0.14, 0.78, 0.15, 0.3, 0.9);
+          break;
+        case "room.ct":
+          place("rollingCart", 0.16, 0.78, 0.16, 0.22, 0.9);
+          break;
+        case "room.phlebotomy":
+          place("wasteBin", 0.88, 0.8, 0.09, 0.14, 0.9);
+          break;
+        case "room.evs_closet":
+          place("wasteBin", 0.16, 0.82, 0.1, 0.15, 0.9);
+          break;
+        case "room.endoscopy":
+          place("vitalsMonitor", 0.15, 0.45, 0.17, 0.35, 0.94);
+          break;
+        case "room.periop_recovery":
+          place("rollingCart", 0.82, 0.78, 0.16, 0.21, 0.92);
+          break;
+        case "room.training":
+          place("roomPlant", 0.9, 0.82, 0.1, 0.18, 0.9);
+          break;
+        case "room.coffee_kiosk":
+          place("sideTable", 0.13, 0.75, 0.13, 0.16, 0.9);
+          break;
+        case "room.glp1_telehealth_suite":
+          place("officePrinter", 0.13, 0.78, 0.14, 0.19, 0.9);
+          break;
       }
     }
     if (visualTier >= 3) {
@@ -2558,6 +3918,7 @@ export class FacilityScene extends Phaser.Scene {
       placeWall("framedPrint", 0.86, 0.5, 0.12, 0.72, 0.9);
     }
     if (
+      room.definitionId !== "room.front_desk" &&
       room.definitionId !== "room.bathroom" &&
       room.definitionId !== "room.imaging_control"
     ) {
@@ -2573,8 +3934,9 @@ export class FacilityScene extends Phaser.Scene {
     maximumWidth: number,
     maximumHeight: number,
     alpha = 1,
+    orientation: RoomOrientation = 0,
   ): void {
-    const fixture = FIXTURE_SPRITES[id];
+    const fixture = getFixtureSpriteForOrientation(id, orientation);
     const rendered = getFixturePresentationSize(
       fixture.width,
       fixture.height,
@@ -2624,18 +3986,69 @@ export class FacilityScene extends Phaser.Scene {
 
   private characterPose(
     moving: boolean,
+    direction: CharacterDirection,
     offsetIndex: number,
   ): CharacterPose {
-    if (
-      !moving ||
-      this.bridge.viewModel.paused ||
-      this.bridge.viewModel.buildMode
-    ) {
-      return "idle";
+    return selectCharacterWalkingPose(
+      moving && !this.bridge.viewModel.paused && !this.bridge.viewModel.buildMode,
+      direction,
+      Math.floor(this.characterPhase * 2 + offsetIndex),
+    );
+  }
+
+  private founderPose(
+    moving: boolean,
+    direction: CharacterDirection,
+    activityLabel?: string,
+    location?: GridPoint,
+  ): CharacterPose {
+    const movingPose = this.characterPose(moving, direction, 0);
+    if (movingPose !== "idle") {
+      return movingPose;
     }
-    return Math.floor(this.characterPhase * 2 + offsetIndex) % 2 === 0
-      ? "walk-a"
-      : "walk-b";
+    // Activity labels are emitted only for persisted, live founder tasks
+    // (cleaning, refilling, praise, and similar interactions). They are a
+    // safe presentation seam: this does not alter task timing or routing.
+    if (activityLabel?.trim()) {
+      return "interaction";
+    }
+    return shouldRenderFounderSeatedAtFrontDesk(
+      location,
+      moving,
+      activityLabel,
+      this.bridge.viewModel.rooms,
+    )
+      ? "seated"
+      : "idle";
+  }
+
+  private staffPose(
+    moving: boolean,
+    direction: CharacterDirection,
+    offsetIndex: number,
+    homeRoomInstanceId: string | null,
+    location?: GridPoint,
+    staffRoleDefinitionId?: string,
+  ): CharacterPose {
+    const movingPose = this.characterPose(moving, direction, offsetIndex);
+    if (movingPose !== "idle") {
+      return movingPose;
+    }
+    if (
+      shouldRenderReceptionistSeatedAtFrontDesk(
+        location,
+        moving,
+        staffRoleDefinitionId,
+        homeRoomInstanceId,
+        this.bridge.viewModel.rooms,
+      )
+    ) {
+      return "seated";
+    }
+    // An assigned staff member who is already at a persisted home/work room
+    // can use a quiet working pose. Unassigned staff remain idle rather than
+    // inventing a workplace state from presentation alone.
+    return homeRoomInstanceId ? "working" : "idle";
   }
 
   private getCharacterRoutePresentation(
@@ -2651,6 +4064,7 @@ export class FacilityScene extends Phaser.Scene {
     location?: GridPoint;
     direction: "front" | "side" | "back";
     moving: boolean;
+    rightFacing: boolean;
   } {
     const previous = this.routeMotionTracks.get(key);
     const canonicalTilesPerFacilityMinute = Math.max(
@@ -2667,6 +4081,7 @@ export class FacilityScene extends Phaser.Scene {
         location: input.location,
         direction: input.direction ?? "front",
         moving: input.moving ?? false,
+        rightFacing: this.characterFacingRight.get(key) ?? false,
       };
     }
 
@@ -2685,6 +4100,7 @@ export class FacilityScene extends Phaser.Scene {
       tilesPerSecond,
     );
     const sample = sampleRouteMotion(track);
+    this.characterFacingRight.set(key, sample.rightFacing);
     if (routeMotionComplete(track)) {
       this.routeMotionTracks.delete(key);
     } else {
@@ -2696,7 +4112,23 @@ export class FacilityScene extends Phaser.Scene {
         ? sample.direction
         : (input.direction ?? sample.direction),
       moving: sample.moving || (input.moving ?? false),
+      rightFacing: sample.rightFacing,
     };
+  }
+
+  /**
+   * Domain routes continue to use the logical `gridRows` sidewalk row. This
+   * presentation seam maps only that final exterior segment across the visual
+   * planted setback; interior positions retain their exact old pixel mapping.
+   */
+  private actorBaseY(logicalY: number, baseOffset = 0.72): number {
+    return getActorPresentationBaseY(logicalY, baseOffset, {
+      originY: this.layout.originY,
+      tileSize: this.layout.tileSize,
+      sidewalkTop: this.layout.sidewalkTop,
+      sidewalkHeight: this.layout.sidewalkHeight,
+      gridRows: positiveGridSize(this.bridge.viewModel.gridRows, 10),
+    });
   }
 
   private getCharacterGraphics(
@@ -2705,6 +4137,7 @@ export class FacilityScene extends Phaser.Scene {
     let graphics = this.characterGraphics.get(key);
     if (!graphics) {
       graphics = this.add.graphics();
+      graphics.setData("character-key", key);
       this.characterGraphics.set(key, graphics);
     }
     graphics.setVisible(true);
@@ -2714,6 +4147,7 @@ export class FacilityScene extends Phaser.Scene {
 
   private drawCharacters(): void {
     this.activeCharacterGraphics = new Set<string>();
+    this.activeCharacterBitmapContainers = new Set<string>();
     this.locatorGraphics?.clear();
     const representedKeys = new Set<string>();
     const founderKey = "character:founder";
@@ -2728,16 +4162,28 @@ export class FacilityScene extends Phaser.Scene {
       const founderCenterX =
         this.layout.originX +
         (founderLocation.x + 0.5) * this.layout.tileSize;
+      const founderPose = this.founderPose(
+        founderPresentation.moving,
+        founderPresentation.direction,
+        this.bridge.viewModel.founder.activityLabel,
+        founderLocation,
+      );
       const founderBaseY = this.drawPixelPerson(
         graphics,
         founderCenterX,
-        this.layout.originY +
-          (founderLocation.y + 0.72) * this.layout.tileSize,
+        this.actorBaseY(
+          founderLocation.y,
+          0.72 +
+            (founderPose === "seated"
+              ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
+              : 0),
+        ),
         0,
         this.bridge.viewModel.founder.appearance,
         0x111111,
         founderPresentation.direction,
-        this.characterPose(founderPresentation.moving, 0),
+        founderPose,
+        founderPresentation.rightFacing,
       );
       graphics.setDepth(
         getFacilitySceneDepth(founderBaseY, "character", 0),
@@ -2768,17 +4214,31 @@ export class FacilityScene extends Phaser.Scene {
         return;
       }
       const graphics = this.getCharacterGraphics(key);
+      const employeePose = this.staffPose(
+        employeePresentation.moving,
+        employeePresentation.direction,
+        index + 1,
+        employee.homeRoomInstanceId,
+        employeePresentation.location,
+        employee.staffRoleDefinitionId,
+      );
       const employeeBaseY = this.drawPixelPerson(
         graphics,
         this.layout.originX +
           (employeePresentation.location.x + 0.5) * this.layout.tileSize,
-        this.layout.originY +
-          (employeePresentation.location.y + 0.72) * this.layout.tileSize,
+        this.actorBaseY(
+          employeePresentation.location.y,
+          0.72 +
+            (employeePose === "seated"
+              ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
+              : 0),
+        ),
         index + 1,
         employee.appearance,
         0x555555,
         employeePresentation.direction,
-        this.characterPose(employeePresentation.moving, index + 1),
+        employeePose,
+        employeePresentation.rightFacing,
       );
       graphics.setDepth(
         getFacilitySceneDepth(
@@ -2804,13 +4264,13 @@ export class FacilityScene extends Phaser.Scene {
           graphics,
           this.layout.originX +
             (presentation.location.x + 0.5) * this.layout.tileSize,
-          this.layout.originY +
-            (presentation.location.y + 0.72) * this.layout.tileSize,
+          this.actorBaseY(presentation.location.y),
           200 + index,
           pedestrian.appearance,
           0x555555,
           presentation.direction,
-          this.characterPose(presentation.moving, 200 + index),
+          this.characterPose(presentation.moving, presentation.direction, 200 + index),
+          presentation.rightFacing,
         );
         graphics.setDepth(
           getFacilitySceneDepth(
@@ -2836,6 +4296,7 @@ export class FacilityScene extends Phaser.Scene {
             : { location: undefined }),
           direction: presentation.direction,
           moving: presentation.moving,
+          rightFacing: presentation.rightFacing,
         },
         index,
       );
@@ -2845,14 +4306,46 @@ export class FacilityScene extends Phaser.Scene {
         this.routeMotionTracks.delete(key);
       }
     }
+    for (const key of this.characterFacingRight.keys()) {
+      if (!representedKeys.has(key)) {
+        this.characterFacingRight.delete(key);
+      }
+    }
     this.removeInactiveGraphics(
       this.characterGraphics,
       this.activeCharacterGraphics,
     );
+    this.removeInactiveCharacterBitmapContainers();
+  }
+
+  private getCharacterBitmapContainer(
+    key: string,
+  ): Phaser.GameObjects.Container {
+    let container = this.characterBitmapContainers.get(key);
+    if (!container) {
+      container = this.add.container(0, 0);
+      container.setData("character-key", key);
+      const actor = this.add.image(0, 0, "__DEFAULT");
+      actor.setName("actor");
+      container.add(actor);
+      this.characterBitmapContainers.set(key, container);
+    }
+    container.setVisible(true);
+    this.activeCharacterBitmapContainers.add(key);
+    return container;
+  }
+
+  private removeInactiveCharacterBitmapContainers(): void {
+    for (const [key, container] of this.characterBitmapContainers) {
+      if (!this.activeCharacterBitmapContainers.has(key)) {
+        container.destroy(true);
+        this.characterBitmapContainers.delete(key);
+      }
+    }
   }
 
   private drawFacilityPatient(
-    patient: FacilityPatientView,
+    patient: FacilityPatientView & { rightFacing?: boolean },
     index: number,
   ): void {
     if (!patient.location) {
@@ -2878,7 +4371,7 @@ export class FacilityScene extends Phaser.Scene {
     const direction = patient.direction ?? "front";
     const pose = patient.seated
       ? "seated"
-      : this.characterPose(patient.moving ?? false, 100 + index);
+      : this.characterPose(patient.moving ?? false, direction, 100 + index);
 
     const centerX =
       this.layout.originX +
@@ -2886,13 +4379,13 @@ export class FacilityScene extends Phaser.Scene {
     const baseY = this.drawPixelPerson(
       graphics,
       centerX,
-      this.layout.originY +
-        (patient.location.y + 0.72) * this.layout.tileSize,
+      this.actorBaseY(patient.location.y),
       100 + index,
       patient.appearance,
       appearanceColor,
       direction,
       pose,
+      patient.rightFacing ?? false,
     );
     finishCharacter(baseY, centerX);
   }
@@ -2950,16 +4443,72 @@ export class FacilityScene extends Phaser.Scene {
     graphics: Phaser.GameObjects.Graphics,
     centerX: number,
     baseY: number,
-    _offsetIndex: number,
+    offsetIndex: number,
     appearance: PixelAppearanceDescriptor | undefined,
     _fallbackColor: number,
     direction: CharacterDirection = "front",
     pose: CharacterPose = "idle",
+    movingRight = false,
   ): number {
     // Map characters use the canonical detailed frame at a crisp 3:2
     // nearest-neighbor presentation scale. This makes people readable among
     // dense room furnishings without changing their route or foot anchor.
     const resolvedAppearance = appearance ?? FALLBACK_APPEARANCE;
+    const key = graphics.getData("character-key") as string | undefined;
+    if (this.characterAtlasesReady && key) {
+      const authoredLayers = characterBitmapLayers(
+        resolvedAppearance,
+        direction,
+        pose,
+        movingRight,
+      );
+      const textureKey = getPhaserTextureKey(authoredLayers.actor.atlas);
+      const textureReady = this.textures.exists(textureKey) ||
+        // Patient chair variants are intentionally lazy. All other actor
+        // packages are part of the eager base set above.
+        (!authoredLayers.actor.atlas.id.includes("character:patients-")
+          ? false
+          : this.ensurePatientPoseAtlas(authoredLayers.actor.atlas));
+      if (!textureReady) {
+        // Continue through the established procedural fallback until the
+        // one-time authored texture registration callback redraws this actor.
+        this.characterBitmapContainers.get(key)?.setVisible(false);
+      } else {
+      const registration = characterBitmapRegistration(authoredLayers);
+      const container = this.getCharacterBitmapContainer(key);
+      const actor = container.getByName("actor") as Phaser.GameObjects.Image;
+      actor
+        .setTexture(
+          textureKey,
+          characterAtlasFrameKey(authoredLayers.actor),
+        )
+        // Every authored source frame owns one entire clean actor. There are no
+        // independently cropped planes that can expose a source neighbour.
+        .setDisplaySize(
+          this.layout.tileSize * 1.35,
+          this.layout.tileSize * (1.35 / registration.displayAspectRatio),
+        )
+        .setPosition(0, 0)
+        .setOrigin(0.5, registration.floorAnchorY)
+        .setFlipX(authoredLayers.actor.flipX);
+      // A development-only browser proof reads these properties from the
+      // actual Phaser actor after FacilityScene has selected and rendered its
+      // live route frame. They are presentation metadata only; no simulation
+      // state depends on them.
+      actor.setData({
+        "gait-atlas-id": authoredLayers.actor.atlas.id,
+        "gait-frame": characterAtlasFrameKey(authoredLayers.actor),
+        "gait-flip-x": authoredLayers.actor.flipX,
+        "gait-direction": direction,
+        "gait-pose": pose,
+      });
+      container
+        .setPosition(Math.round(centerX), Math.round(baseY))
+        .setDepth(getFacilitySceneDepth(baseY, "character", offsetIndex % 64));
+      graphics.setVisible(false);
+      return baseY;
+      }
+    }
     const renderSignature = [
       characterAppearanceSignature(resolvedAppearance),
       direction,

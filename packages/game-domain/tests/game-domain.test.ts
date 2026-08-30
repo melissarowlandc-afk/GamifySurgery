@@ -119,7 +119,7 @@ function completeTutorialCorrectly(
 }
 
 describe("current prototype contracts", () => {
-  it("validates the approved synthetic content and centralized Level 0–1 balance", () => {
+  it("validates the approved synthetic content and centralized Level 0-2 balance", () => {
     expect(() =>
       validateSyntheticClinicalRelease(SYNTHETIC_CLINICAL_RELEASE),
     ).not.toThrow();
@@ -151,6 +151,21 @@ describe("current prototype contracts", () => {
           "room.xray",
           "room.minor_procedure",
         ],
+        nextFacilityLevel: 2,
+      }),
+      expect.objectContaining({
+        level: 2,
+        minimumClinicalXp: 300,
+        requiredRoomDefinitionIds: [
+          "room.endoscopy",
+          "room.periop_recovery",
+        ],
+        requiredStaffRoleIds: [
+          "staff.periop_nurse",
+          "staff.endoscopy_nurse",
+          "staff.endoscopist",
+        ],
+        nextFacilityLevel: null,
       }),
     ]);
     expect(PROTOTYPE_BALANCE_RELEASE.clock.supportedSpeeds).toEqual([

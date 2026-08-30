@@ -39,6 +39,7 @@ interface MutableVisualGameState extends PersistedGameState {
   paused: boolean;
   simulationSpeed: number;
   employees: unknown[];
+  nextRoutineArrivalTick?: number;
   encounters: Record<string, Record<string, unknown>>;
   environment: {
     founderLocation: { x: number; y: number };
@@ -478,6 +479,97 @@ export async function installLevelOneVisualState(
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect(page.locator(".facility-host canvas")).toBeVisible();
   await page.waitForTimeout(300);
+}
+
+/**
+ * A paused Level 2 review fixture installed into a campaign that the UI has
+ * already created.  It deliberately stays in localStorage: loading it again
+ * therefore exercises the normal campaign persistence/migration path.
+ */
+export async function installLevelTwoVisualState(page: Page): Promise<void> {
+  const profile = await getProfile(page);
+  const activeIndex = profile.campaigns.findIndex(
+    (campaign) => campaign.campaignId === profile.activeCampaignId,
+  );
+  if (activeIndex < 0) throw new Error("Active campaign record is missing.");
+  const active = profile.campaigns[activeIndex]!;
+  const state = JSON.parse(active.serializedState) as MutableVisualGameState;
+  const makeRoom = (
+    id: string,
+    roomDefinitionId: string,
+    x: number,
+    y: number,
+  ) => ({ id, roomDefinitionId, x, y, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+  // A one-tile public hallway at y=27 links every patient-facing room. The
+  // three imaging-control rooms are each directly joined to their scanner;
+  // this is intentionally a valid operational graph, not a visual shortcut.
+  const roomRows: Array<[string, string, number, number]> = [
+    ["room.l2.control-ultrasound", "room.imaging_control", 8, 24],
+    ["room.l2.ultrasound", "room.ultrasound", 10, 24],
+    ["room.l2.control-ct", "room.imaging_control", 13, 24],
+    ["room.l2.ct", "room.ct", 15, 23],
+    ["room.l2.control-xray", "room.imaging_control", 19, 24],
+    ["room.l2.xray", "room.xray", 21, 24],
+    ["room.l2.examination", "room.examination", 24, 25],
+    ["room.l2.minor-procedure", "room.minor_procedure", 27, 24],
+    ["room.l2.endoscopy", "room.endoscopy", 30, 24],
+    ["room.l2.periop", "room.periop_recovery", 34, 24],
+    ["room.l2.phlebotomy", "room.phlebotomy", 38, 25],
+    ["room.l2.training", "room.training", 41, 24],
+    ["room.l2.glp", "room.glp1_telehealth_suite", 44, 25],
+    ["room.l2.waiting", "room.waiting", 47, 24],
+    ["room.l2.bathroom", "room.bathroom", 51, 25],
+    ["room.l2.evs", "room.evs_closet", 53, 25],
+    ["room.l2.coffee", "room.coffee_kiosk", 55, 25],
+  ];
+  state.facilityLevel = 2;
+  state.clinicalXp = 0;
+  state.cash = 12_345;
+  state.cashCents = 1_234_500;
+  state.paused = true;
+  state.simulationSpeed = 1;
+  state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+  state.rooms = [
+    makeRoom("room.instance.founder_desk", "room.front_desk", 33, 28),
+    ...roomRows.map(([id, definition, x, y]) => makeRoom(id, definition, x, y)),
+    ...Array.from({ length: 49 }, (_, index) => makeRoom(`room.l2.hall.${index}`, "room.hallway", 8 + index, 27)),
+  ];
+  state.doors = [
+    { id: "door.l2.front.exterior", roomId: "room.instance.founder_desk", side: "south", offset: 1, exterior: true },
+    { id: "door.l2.front.hall", roomId: "room.instance.founder_desk", side: "north", offset: 1, exterior: false },
+    ...roomRows.filter(([id]) => !id.startsWith("room.l2.control")).map(([id]) => ({ id: `door.${id}.hall`, roomId: id, side: "south" as const, offset: 1, exterior: false })),
+    { id: "door.l2.ultrasound.control", roomId: "room.l2.ultrasound", side: "west", offset: 1, exterior: false },
+    { id: "door.l2.ct.control", roomId: "room.l2.ct", side: "west", offset: 2, exterior: false },
+    { id: "door.l2.xray.control", roomId: "room.l2.xray", side: "west", offset: 1, exterior: false },
+  ];
+  const roleRows: Array<[string, string, string, string]> = [
+    ["employee.l2.receptionist", "staff.receptionist", "Morgan Vale", "room.instance.founder_desk"],
+    ["employee.l2.imaging", "staff.imaging_technician", "Avery Chen", "room.l2.control-xray"],
+    ["employee.l2.periop", "staff.periop_nurse", "Riley Park", "room.l2.periop"],
+    ["employee.l2.endoscopy", "staff.endoscopy_nurse", "Taylor Brooks", "room.l2.endoscopy"],
+    ["employee.l2.endoscopist", "staff.endoscopist", "Casey Morgan", "room.l2.endoscopy"],
+    ["employee.l2.phlebotomy", "staff.phlebotomist", "Jordan Lee", "room.l2.phlebotomy"],
+    ["employee.l2.evs", "staff.evs_worker", "Avery Stone", "room.l2.evs"],
+    ["employee.l2.glp", "staff.glp1_np", "Cameron Wells", "room.l2.glp"],
+  ];
+  state.employees = roleRows.map(([id, role, displayName, homeRoomInstanceId], index) => ({
+    id, staffRoleDefinitionId: role, displayName,
+    appearance: { version: "pixel-avatar.v1", bodyShape: "average", hairStyle: "short", skinTone: index % 4, hairShade: index % 4, faceStyle: "round", outfitStyle: "plain", outfitShade: index % 4, accessory: "badge", headVariant: index + 1, bodyVariant: index + 1, roleStyle: role.replace("staff.", "") },
+    hiredAtFacilityTick: 0, salaryPerExpenseInterval: 1, morale: 90, trainingLevel: 1,
+    homeRoomInstanceId, location: { x: 34 + (index % 3), y: 24 + Math.floor(index / 3) }, path: [], pathIndex: 0,
+    lastMovedAtFacilityTick: 0, lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 999,
+  }));
+  state.environment = { ...state.environment, founderLocation: { x: 34, y: 29 }, founderActivity: null,
+    glp1AutomationNextPayoutTicks: [60], glp1AutomationNextPayoutTick: 60 };
+  profile.campaigns[activeIndex] = { ...active, serializedState: JSON.stringify(state) };
+  profile.tutorialsEnabled = false;
+  await page.addInitScript(({ profileKey, nextProfile }) => {
+    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
+  }, { profileKey: PROFILE_KEY, nextProfile: profile });
+  await page.goto("/?prototype-tools=0");
+  const resume = page.getByRole("button", { name: `Resume ${active.name}` });
+  if (await resume.isVisible()) await resume.click();
+  await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
 export async function installDeterministicCampaignIds(

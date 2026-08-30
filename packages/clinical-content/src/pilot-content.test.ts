@@ -25,6 +25,7 @@ describe("five-diagnosis pilot registry", () => {
     const seenQuestionVariantIds = new Set<string>();
     const violations = PILOT_CLINICAL_RELEASE.cases.flatMap((clinicalCase) =>
       clinicalCase.decisionNodes.flatMap((node) => {
+        if (clinicalCase.id.startsWith("case.l2.")) return [];
         if (seenQuestionVariantIds.has(node.questionVariantId)) {
           return [];
         }

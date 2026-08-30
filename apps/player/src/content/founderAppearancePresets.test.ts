@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   createFounderAppearance,
+  createUnifiedFounderAppearance,
   FOUNDER_BODY_PRESETS,
   FOUNDER_HEAD_PRESETS,
+  FOUNDER_IDENTITY_PRESETS,
 } from "./founderAppearancePresets";
 
 describe("founder appearance presets", () => {
@@ -84,7 +86,16 @@ describe("founder appearance presets", () => {
     }
   });
 
-  it("combines every head with every body without changing their stable variants", () => {
+  it("uses neutral human-head labels while keeping the saved appearance data intact", () => {
+    const forbiddenColorWords = /\b(?:black|brown|red|blond|blonde|gray|grey)\b/i;
+    const humanHeads = FOUNDER_HEAD_PRESETS.filter(
+      (preset) => preset.group !== "non-human",
+    );
+    expect(humanHeads.every((preset) => !forbiddenColorWords.test(preset.label))).toBe(true);
+    expect(new Set(humanHeads.map((preset) => preset.label)).size).toBe(humanHeads.length);
+  });
+
+  it("retains the legacy mix-and-match compatibility helper without changing stable variants", () => {
     for (
       let headIndex = 0;
       headIndex < FOUNDER_HEAD_PRESETS.length;
@@ -107,6 +118,18 @@ describe("founder appearance presets", () => {
         );
         expect(appearance.roleStyle).toBe("founder");
       }
+    }
+  });
+
+  it("exposes exactly 30 coherent creator identities with paired stable fields", () => {
+    expect(FOUNDER_IDENTITY_PRESETS).toHaveLength(30);
+    for (let index = 0; index < FOUNDER_IDENTITY_PRESETS.length; index += 1) {
+      const identity = FOUNDER_IDENTITY_PRESETS[index]!;
+      const appearance = createUnifiedFounderAppearance(index);
+      expect(identity.head.headVariant).toBe(identity.body.bodyVariant);
+      expect(appearance.headVariant).toBe(appearance.bodyVariant);
+      expect(identity.head.id).toBe(`head.${String(index + 1).padStart(2, "0")}`);
+      expect(identity.body.id).toBe(`body.${String(index + 1).padStart(2, "0")}`);
     }
   });
 });

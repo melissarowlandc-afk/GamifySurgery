@@ -4,7 +4,7 @@ Status: Accepted design direction
 
 Last updated: 2026-07-30
 
-This document is the durable message and interaction bank. The Level 0-1
+This document is the durable message and interaction bank. The Level 0-2 local
 prototype implements only alerts backed by mechanics that currently exist.
 Future-system messages remain inactive data until their corresponding gameplay
 systems are built.
@@ -91,10 +91,10 @@ the player responds within that interval, no retrospective row is created.
 Once a delayed row is created, it remains in chronological history; resolving
 the condition removes its exclamation marker rather than deleting the row.
 
-### Current Level 0-1 registry
+### Current Level 0-2 registry
 
 `PROTOTYPE_ALERT_CONTENT` in
-`packages/balance-config/src/prototype-alerts.ts` is the current Level 0-1
+`packages/balance-config/src/prototype-alerts.ts` is the current Level 0-2
 registry. It stores stable definition and text-variant IDs, selection weights,
 context eligibility, cooldown/once metadata, placeholder fallbacks, optional
 interaction routing, and attention-marker behavior.
@@ -429,7 +429,7 @@ At the maximum of five GLP-1 NPs:
 Humor targets bureaucracy, incentives, equipment, administration, and the
 player's management choices—not patients or serious clinical harm.
 
-## Level 0-1 activation boundary
+## Level 0-2 activation boundary
 
 The current prototype may activate only:
 
@@ -442,11 +442,17 @@ The current prototype may activate only:
   upgraded
 - Low-cash warnings; the manual GLP-1 control owns its own cooldown and
   completion feedback instead of posting receipts into this feed
+- Level 2 capability-based setup guidance for ultrasound/CT, phlebotomy,
+  endoscopy, peri-op/recovery, EVS, and GLP-1 automation;
+  inaccessible rooms route to Build Mode and missing or unassigned staff route
+  to hiring rather than being described as functional
+- Training and Coffee support effects are active without adding separate setup
+  guidance rows to the feed
 - Save, hidden-page pause, restart, and testing-mode notices
 - Flavor categories whose underlying objects already exist
 
-Maintenance, breakdowns, repair, inspection, connection recovery, future room
-types, and automated Level 2 telehealth messages remain inactive.
+Maintenance, breakdowns, repair, inspection, connection recovery, Level 3+ room
+types, and later GLP-1 expansion messages remain inactive.
 
 Visible trash receives one teaching prompt only. The prompt is permanently
 acknowledged when the player successfully starts the first founder cleanup and

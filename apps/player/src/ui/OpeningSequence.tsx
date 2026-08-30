@@ -8,9 +8,8 @@ import {
   type LocalPrototypeProfile,
 } from "../session/prototypeStorage";
 import {
-  createFounderAppearance,
-  FOUNDER_BODY_PRESETS,
-  FOUNDER_HEAD_PRESETS,
+  FOUNDER_IDENTITY_PRESETS,
+  createUnifiedFounderAppearance,
 } from "../content/founderAppearancePresets";
 import {
   readLastIntroTagline,
@@ -62,11 +61,10 @@ export function OpeningSequence({
   );
   const [founderName, setFounderName] = useState("");
   const [clinicName, setClinicName] = useState("");
-  const [headIndex, setHeadIndex] = useState(0);
-  const [bodyIndex, setBodyIndex] = useState(0);
+  const [founderIdentityIndex, setFounderIdentityIndex] = useState(0);
   const initializingRef = useRef(false);
   const [initializing, setInitializing] = useState(false);
-  const appearance = createFounderAppearance(headIndex, bodyIndex);
+  const appearance = createUnifiedFounderAppearance(founderIdentityIndex);
   const trimmedFounderName = founderName.trim();
   const normalizedClinicName = normalizeClinicName(clinicName);
   const duplicateClinicName =
@@ -74,8 +72,8 @@ export function OpeningSequence({
     clinicNameExists(profile, normalizedClinicName);
   const founder: FounderIdentity = {
     displayName: trimmedFounderName,
-    headId: FOUNDER_HEAD_PRESETS[headIndex]!.id,
-    bodyId: FOUNDER_BODY_PRESETS[bodyIndex]!.id,
+    headId: FOUNDER_IDENTITY_PRESETS[founderIdentityIndex]!.head.id,
+    bodyId: FOUNDER_IDENTITY_PRESETS[founderIdentityIndex]!.body.id,
     appearance,
   };
   const resumableCampaigns = useMemo(
@@ -116,8 +114,7 @@ export function OpeningSequence({
   const beginFreshFounder = () => {
     setFounderName("");
     setClinicName("");
-    setHeadIndex(0);
-    setBodyIndex(0);
+    setFounderIdentityIndex(0);
     initializingRef.current = false;
     setInitializing(false);
     setStep("founder");
@@ -333,60 +330,28 @@ export function OpeningSequence({
           <button
             type="button"
             className="founder-arrow"
-            aria-label="Previous head"
+            aria-label="Previous founder"
             onClick={() =>
-              setHeadIndex((current) =>
-                wrapIndex(current - 1, FOUNDER_HEAD_PRESETS.length),
+              setFounderIdentityIndex((current) =>
+                wrapIndex(current - 1, FOUNDER_IDENTITY_PRESETS.length),
               )
             }
           >
             &larr;
           </button>
           <span className="founder-preset-label">
-            <b>{FOUNDER_HEAD_PRESETS[headIndex]!.label}</b>
+            <b>{FOUNDER_IDENTITY_PRESETS[founderIdentityIndex]!.label}</b>
             <small>
-              Head {headIndex + 1} of {FOUNDER_HEAD_PRESETS.length}
+              Founder {founderIdentityIndex + 1} of {FOUNDER_IDENTITY_PRESETS.length}
             </small>
           </span>
           <button
             type="button"
             className="founder-arrow"
-            aria-label="Next head"
+            aria-label="Next founder"
             onClick={() =>
-              setHeadIndex((current) =>
-                wrapIndex(current + 1, FOUNDER_HEAD_PRESETS.length),
-              )
-            }
-          >
-            &rarr;
-          </button>
-        </div>
-        <div className="founder-preset-row">
-          <button
-            type="button"
-            className="founder-arrow"
-            aria-label="Previous body"
-            onClick={() =>
-              setBodyIndex((current) =>
-                wrapIndex(current - 1, FOUNDER_BODY_PRESETS.length),
-              )
-            }
-          >
-            &larr;
-          </button>
-          <span className="founder-preset-label">
-            <b>{FOUNDER_BODY_PRESETS[bodyIndex]!.label}</b>
-            <small>
-              Body {bodyIndex + 1} of {FOUNDER_BODY_PRESETS.length}
-            </small>
-          </span>
-          <button
-            type="button"
-            className="founder-arrow"
-            aria-label="Next body"
-            onClick={() =>
-              setBodyIndex((current) =>
-                wrapIndex(current + 1, FOUNDER_BODY_PRESETS.length),
+              setFounderIdentityIndex((current) =>
+                wrapIndex(current + 1, FOUNDER_IDENTITY_PRESETS.length),
               )
             }
           >

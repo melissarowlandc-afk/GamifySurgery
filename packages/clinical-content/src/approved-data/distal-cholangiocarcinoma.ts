@@ -301,9 +301,10 @@ export const ROW_111_APPROVED_ENCOUNTER_BLUEPRINTS = [
 
 export const ROW_111_APPROVED_BACKLOG = {
   conceptIds: ROW_111_CONCEPTS.map((concept) => concept.id),
-  currentGameEligibility: "partially_active_and_partially_deferred",
+  currentGameEligibility: "level_0_and_approved_level_2_pathway_active",
   activeCaseIds: ROW_111_CASES.map((clinicalCase) => clinicalCase.id),
-  deferredBlueprintIds: ROW_111_APPROVED_ENCOUNTER_BLUEPRINTS.slice(0, 2).map((blueprint) => blueprint.id),
-  deferredReason: "Level 2 endoscopy content remains deferred until an Endoscopy Suite runtime can honor the explicit editorial result requirement without creating a live service route in the Level 0-1 release.",
+  activeLevelTwoBlueprintIds: ["blueprint.distal-cholangiocarcinoma.deferred-eus-ercp-to-resection"],
+  deferredBlueprintIds: ["blueprint.distal-cholangiocarcinoma.deferred-eus-ercp-workup-only"],
+  deferredReason: "The final-node timed workup-only variant remains excluded because no later scored node can truthfully display its result; the approved two-step pathway is active at Level 2.",
   editorialSimulationTiming: { resultDelayMinutes: 480, basis: "editorial_simulation" },
 } as const;

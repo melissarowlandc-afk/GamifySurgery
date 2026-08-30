@@ -37,6 +37,27 @@ function checkInTutorialPatient(state: GameState): void {
 }
 
 describe("createMessageBoardView data-driven alerts", () => {
+  it("adds non-attention Level 2 phlebotomy guidance only for the accepted station ID", () => {
+    const state = createInitialGameState();
+    state.facilityLevel = 2;
+    state.rooms.push({
+      ...state.rooms[0]!,
+      id: "room.test.phlebotomy",
+      roomDefinitionId: "room.phlebotomy",
+      x: 50,
+      y: 50,
+    });
+    const guidance = createMessageBoardView(state).find(
+      (item) => item.id === "persistent.alert.facility.phlebotomy-inoperable",
+    );
+    expect(guidance).toMatchObject({
+      category: "guidance",
+      showAttentionMarker: false,
+      targetType: "build_mode",
+      targetId: "room.phlebotomy",
+      actionLabel: "Open Build Mode",
+    });
+  });
   it("renders persisted ambient events from their registry definition", () => {
     const state = createInitialGameState();
     state.encounters = {};

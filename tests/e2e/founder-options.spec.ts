@@ -30,23 +30,24 @@ test("creator exposes female and non-human founder options from one canonical ap
 
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
-  await expect(page.getByText("Head 1 of 30")).toBeVisible();
-  await expect(page.getByText("Body 1 of 30")).toBeVisible();
-  await expect(page.getByText("Close Crop", { exact: true })).toBeVisible();
-  await expect(
-    page.getByText("Clinic Basics", { exact: true }),
-  ).toBeVisible();
-
-  const nextHead = page.getByRole("button", { name: "Next head" });
-  const nextBody = page.getByRole("button", { name: "Next body" });
+  await expect(page.getByText("Founder 1 of 30")).toBeVisible();
+  const nextFounder = page.getByRole("button", { name: "Next founder" });
   const preview = page.locator(".founder-preview-avatar");
+  await expect(page.getByText("The Attending", { exact: true })).toBeVisible();
+  // The complete selected actor is one clean v4 frame, never separate head
+  // and body crops that could retain a neighbouring contact-sheet fragment.
+  const defaultActor = preview.locator(".pixel-avatar-authored-actor");
+  await expect(defaultActor).toBeVisible();
+  await expect(defaultActor).toHaveCSS("left", "0px");
+  await page.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/founder-head-body-registration.png`,
+    animations: "disabled",
+    fullPage: false,
+  });
 
-  await clickTimes(nextHead, 10);
-  await clickTimes(nextBody, 10);
-  await expect(page.getByText("Shoulder Waves")).toBeVisible();
-  await expect(page.getByText("Fitted Blazer")).toBeVisible();
-  await expect(page.getByText("Head 11 of 30")).toBeVisible();
-  await expect(page.getByText("Body 11 of 30")).toBeVisible();
+  await clickTimes(nextFounder, 10);
+  await expect(page.getByText("The Lead Clinician")).toBeVisible();
+  await expect(page.getByText("Founder 11 of 30")).toBeVisible();
   await expect(preview).toHaveAttribute("data-appearance", "0-10-10");
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/founder-options-female.png`,
@@ -54,11 +55,9 @@ test("creator exposes female and non-human founder options from one canonical ap
     fullPage: false,
   });
 
-  await clickTimes(nextHead, 10);
-  await clickTimes(nextBody, 10);
-  await expect(page.getByText("Cat", { exact: true })).toHaveCount(2);
-  await expect(page.getByText("Head 21 of 30")).toBeVisible();
-  await expect(page.getByText("Body 21 of 30")).toBeVisible();
+  await clickTimes(nextFounder, 10);
+  await expect(page.getByText("Cat Clinician", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("Founder 21 of 30")).toBeVisible();
   await expect(preview).toHaveAttribute("data-appearance", "1-20-20");
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/founder-options-cat.png`,
@@ -66,11 +65,8 @@ test("creator exposes female and non-human founder options from one canonical ap
     fullPage: false,
   });
 
-  await nextHead.click();
-  await nextBody.click();
-  await expect(page.getByText("Penguin", { exact: true })).toHaveCount(
-    2,
-  );
+  await nextFounder.click();
+  await expect(page.getByText("Penguin Resident", { exact: true })).toHaveCount(1);
   await expect(preview).toHaveAttribute("data-appearance", "0-21-21");
   const creatorAppearance = await preview.getAttribute(
     "data-appearance",
@@ -98,13 +94,9 @@ test("option 30 wraps from the first choice and survives clinic save and reload"
 
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
-  await page.getByRole("button", { name: "Previous head" }).click();
-  await page.getByRole("button", { name: "Previous body" }).click();
-  await expect(page.getByText("Axolotl", { exact: true })).toHaveCount(
-    2,
-  );
-  await expect(page.getByText("Head 30 of 30")).toBeVisible();
-  await expect(page.getByText("Body 30 of 30")).toBeVisible();
+  await page.getByRole("button", { name: "Previous founder" }).click();
+  await expect(page.getByText("Axolotl Clinician", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("Founder 30 of 30")).toBeVisible();
 
   await page.getByLabel("Founder name").fill("Axolotl Founder");
   await page.getByRole("button", { name: "Continue" }).click();

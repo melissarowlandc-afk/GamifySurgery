@@ -52,7 +52,13 @@ export interface PixelAvatarView {
     | "founder"
     | "patient"
     | "receptionist"
-    | "imaging_technician";
+    | "imaging_technician"
+    | "periop_nurse"
+    | "endoscopy_nurse"
+    | "endoscopist"
+    | "phlebotomist"
+    | "evs_worker"
+    | "glp1_np";
 }
 
 export interface PatientTabView {
@@ -98,6 +104,8 @@ export interface ChartDecisionStepView {
   rewardLabel?: string;
   nextActionLabel?: string;
   collapsedResultLabel?: string;
+  /** Authored later-decision update; never derived from the presentation. */
+  currentUpdate?: string;
   current: boolean;
   complete: boolean;
 }
@@ -212,6 +220,8 @@ export interface EmergencyGlp1View {
   statusLabel: string;
   cooldownProgressPercent: number;
   flavorMessage?: string;
+  automationCapacity: number;
+  nextPayoutLabel?: string;
 }
 
 export interface AdvertisingView {

@@ -3,7 +3,6 @@ import { expect, test, type Page } from "@playwright/test";
 import {
   installLevelOneVisualState,
   startClinic,
-  waitForFirstPatientReady,
 } from "./helpers";
 
 const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
@@ -14,7 +13,6 @@ async function openGoldenSlice(page: Page): Promise<void> {
     "Dr. Rowan Vale",
     "Vale Surgical Clinic",
   );
-  await waitForFirstPatientReady(page);
   await installLevelOneVisualState(page);
   await expect(page.getByText("Level 1", { exact: true }).first()).toBeVisible();
   const resumeButton = page.getByRole("button", {
@@ -116,7 +114,7 @@ test("shows matching representations in the developer visual QA gallery", async 
   await expect(
     page.getByRole("heading", { name: "Character Visual QA" }),
   ).toBeVisible();
-  await expect(page.locator(".character-qa-card")).toHaveCount(6);
+  expect(await page.locator(".character-qa-card").count()).toBeGreaterThanOrEqual(50);
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/character-qa-gallery.png`,
     fullPage: false,

@@ -493,10 +493,10 @@ export const ROW_038_APPROVED_BACKLOG = {
   earliestFacilityStage: 2,
   requiredClinicalSetting: "periop_recovery",
   requiredCapabilityIds: ["capability.periop_recovery"],
-  currentGameEligibility: "deferred",
-  deferredReason:
-    "Clinically approved content is held outside the playable Level 0-1 release until Level 2 Endoscopy and the Peri-op/Recovery Room encounter framework exist.",
-  approvedForRuntime: false,
+  currentGameEligibility: "active_level_2",
+  activeBlueprintIds: ROW_038_APPROVED_ENCOUNTER_BLUEPRINTS.map((blueprint) => blueprint.id),
+  runtimeStatusNote: "All approved Level 2 peri-op/recovery blueprints are active in the development/unapproved prototype release.",
+  approvedForRuntime: true,
   tutorialEligible: false,
   maximumScoredDecisionsPerEncounter: 1,
   questionVariantIds: ROW_038_QUESTION_VARIANTS.map(

@@ -6,6 +6,7 @@ import type {
 } from "./types";
 import { PixelIcon } from "./PixelIcon";
 import type { PixelIconName } from "../art/iconArt";
+import { getApprovedPlacementOrientations } from "../facility/roomVisualLayout";
 
 type BuildDoorTool = "place" | "remove" | null;
 
@@ -32,7 +33,7 @@ interface BuildPanelProps {
   onUpgradeRequestHandled: () => void;
 }
 
-function roomIconName(roomDefinitionId: string): PixelIconName {
+export function roomIconName(roomDefinitionId: string): PixelIconName {
   switch (roomDefinitionId) {
     case "room.front_desk":
       return "frontDesk";
@@ -48,6 +49,24 @@ function roomIconName(roomDefinitionId: string): PixelIconName {
       return "imagingControl";
     case "room.minor_procedure":
       return "minorProcedure";
+    case "room.ultrasound":
+      return "ultrasound";
+    case "room.ct":
+      return "ct";
+    case "room.phlebotomy":
+      return "phlebotomy";
+    case "room.evs_closet":
+      return "evsCloset";
+    case "room.endoscopy":
+      return "endoscopy";
+    case "room.periop_recovery":
+      return "periopRecovery";
+    case "room.training":
+      return "training";
+    case "room.coffee_kiosk":
+      return "coffeeKiosk";
+    case "room.glp1_telehealth_suite":
+      return "glp1Suite";
     case "room.hallway":
       return "hallway";
     default:
@@ -153,7 +172,8 @@ export function BuildPanel({
     (room) => room.id === "room.hallway",
   );
   const rotateEnabled = Boolean(
-    selectedPlacement && !selectedPlacementIsHallway,
+    selectedPlacement &&
+      getApprovedPlacementOrientations(selectedPlacement.id).length > 1,
   );
 
   const closeUpgradeDialog = () => {

@@ -4,8 +4,8 @@ Stitchin' Time (repository identifier: Gamify Surgery) is an early-stage
 surgery-management learning game with a
 coordinated low-chroma ivory, stone, gray-olive, moss, and charcoal pixel-art
 direction with restrained muted accents.
-The current repository contains a playable browser candidate for facility
-Levels 0 and 1.
+The current repository contains a playable local browser candidate for facility
+Levels 0 through 2; Level 3 is a locked preview.
 
 This build is for gameplay and balance evaluation. Its clinical material is
 small, original prototype content. One striped in-game banner carries the
@@ -121,9 +121,9 @@ stop the manual server. Neither method deploys or publishes anything.
   preserved in
   [`docs/features/alert-notification-flavor-system.md`](docs/features/alert-notification-flavor-system.md)
 - A manual cash-only GLP-1 consultation action available at any cash balance
-  until the future dedicated room is built, with a persisted facility-hour
-  cooldown, fixed $25 pilot payment, no daily cap or diminishing payout, and
-  no XP or FSRS benefit; the automated suite remains a Level 2 feature
+  until a reachable GLP-1 Telehealth Suite is staffed; the operational suite
+  then automates one persisted $25 consultation per staffed suite per 60
+  facility minutes (maximum five), with no XP, FSRS, or patient encounter
 - Persistent configurable Advertising tiers beneath the GLP-1 action, with a
   visible hourly expense and modest routine-arrival increase; changing tiers
   rescales the saved next arrival rather than rerolling it
@@ -149,14 +149,16 @@ stop the manual server. Neither method deploys or publishes anything.
 - A chart/facility split that keeps the live clinic visible while a large chart
   occupies the lower workspace, plus a synchronized Phaser backing canvas so
   room placement remains accurate after resizing
-- An explicit Level 1-complete notice with Level 2 locked for this prototype
+- Playable Level 2 Expanded Outpatient / Endoscopy with its nine room unlocks,
+  six staff unlocks, setup guidance in Alerts and Events, and a completed
+  Level 3 locked-preview state
 - Newest-first Resolved charts while Waiting and Existing Patients retain
   their operational ordering
 - A development-only per-concept FSRS card inspector showing card state and due
   time
 - Centralized, validated prototype balance settings at
   `packages/balance-config/src/prototype-balance.ts`
-- The current formal Level 0-1 gates documented in
+- The current formal Level 0-2 gates documented in
   [`docs/features/level-0-1-progression.md`](docs/features/level-0-1-progression.md)
 
 ## Important local-only limitation
@@ -174,11 +176,11 @@ prototype therefore does not show a substitute or temporary login screen.
 ## Clinical-content boundary
 
 The active fixture at `packages/clinical-content/src/synthetic-content.ts`
-admits only the exact owner-reviewed concept packages recorded under
-`packages/clinical-content/src/approved-data/` through 2026-08-25. Exact
-release-boundary tests currently enumerate 27 active concepts and 81 active
-cases. Earlier prototype, synthetic-routing, and AI-authored pilot patient
-questions are excluded from all new admissions.
+admits only exact named-clinician-approved allowlisted runtime variants,
+including the approved `release.l2.endoscopy` variants needed for Level 2.
+Future Hospital and Level 3 variants, earlier prototype questions,
+synthetic-routing questions, and AI-authored pilot questions are excluded from
+new admissions.
 Already-frozen encounters remain loadable so an existing save is not corrupted.
 The player shows one global striped demonstration-content warning rather than
 repeating it inside each vignette. This owner/development fixture is not yet a
@@ -250,15 +252,10 @@ deploy the game.
 ### GitHub Pages playtest
 
 Run `npm run build:pages` to create and verify the static player with the
-`/GamifySurgery/` repository base path. The workflow at
-`.github/workflows/deploy-pages.yml` deploys every push to `main` and also
-supports manual reruns. The public playtest URL is:
-
-<https://melissarowlandc-afk.github.io/GamifySurgery/>
-
-The site and source repository are public, and this prototype has no login
-gate. Campaign data remains browser-local: it does not transfer from the local
-launcher to Pages or follow a tester to another computer/browser. See
+`/GamifySurgery/` repository base path. This local beta implementation has not
+been deployed or promoted to `main`; running the build does not publish it.
+Campaign data remains browser-local and does not transfer between browsers or
+devices. See
 [`DEPLOYMENT_PLAN.md`](DEPLOYMENT_PLAN.md) for the deployment boundary.
 
 ## Screenshots
@@ -296,10 +293,8 @@ launcher to Pages or follow a tester to another computer/browser. See
 - Supabase account creation, verified-email login, password recovery, cloud
   saves, and cross-device writer-conflict handling
 - Authenticated staging, private-pilot access, monitoring, and cloud backups
-- Implementation and balance of the accepted Levels 2 through 5, inspection
-  week, advanced staffing, maintenance, pharmacy, and other later management
-  systems
-- The automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing
+- Implementation and balance of the accepted Levels 3 through 5, inspection
+  week, pharmacy, and other later management systems
 - Alerts and flavor definitions tied to maintenance, inspections, later rooms,
   or other mechanics that do not yet exist
 - Complete phone-specific polish and a full phone gameplay walkthrough;

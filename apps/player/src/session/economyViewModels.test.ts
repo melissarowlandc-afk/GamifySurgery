@@ -3,7 +3,7 @@ import { createInitialGameState } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("economy player view models", () => {
-  it("keeps the GLP-1 control available at any cash balance until its room is built", () => {
+  it("keeps the GLP-1 control available until a suite is operationally staffed", () => {
     const state = createInitialGameState();
     const view = createPrototypePlayerView(state, null, false, null);
 
@@ -41,7 +41,7 @@ describe("economy player view models", () => {
     expect(
       createPrototypePlayerView(state, null, false, null).emergencyGlp1
         .visible,
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("presents the current centralized advertising tier", () => {

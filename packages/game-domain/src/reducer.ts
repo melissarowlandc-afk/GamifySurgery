@@ -25,6 +25,9 @@ import {
   canAdmitPatient,
   getEligibleServiceRoute,
   getEmergencyGlp1Status,
+  getOperationalGlp1AutomationCapacity,
+  isEmployeeAssignedToOperationalRoom,
+  isRoomOperationalForFacilityWork,
   getFacilityProgressionStatus,
   getCurrentCapabilities,
   getRoomDefinition,
@@ -825,8 +828,8 @@ function createEncounter(
       );
     }
   }
-  const patientSexLabel =
-    frozenCase.prototypeDemographics?.sexLabel;
+  const patientDemographics = frozenCase.prototypeDemographics;
+  const patientSexLabel = patientDemographics?.sexLabel;
   const patientDisplayName =
     input.patientDisplayName ??
     createPatientDisplayName(
@@ -868,7 +871,10 @@ function createEncounter(
     patientAppearance: createPatientPixelAppearance(
       state.campaignSeed,
       input.encounterId,
-      patientSexLabel,
+      {
+        sexLabel: patientSexLabel,
+        ageYears: patientDemographics?.ageYears,
+      },
     ),
     patientSatisfaction:
       context.balanceRelease.patientSatisfaction.startingValue,
@@ -1330,6 +1336,11 @@ function scheduleResult(
     offsiteReturnStartedAtTick: null,
     offsiteTravel: null,
     patientTravel: clonePlain(selected.timing.patientTravel),
+    timingPhases: selected.route.timingPhases.map((phase) => ({ ...phase, startsAtTick: state.facilityTick, endsAtTick: state.facilityTick + phase.durationTicks })),
+    resourceReservations: clonePlain(selected.route.resourceRequirements),
+    providerReservation: selected.providerReservation
+      ? clonePlain(selected.providerReservation)
+      : null,
   };
 }
 
@@ -2128,6 +2139,13 @@ function configurePendingResultTiming(
   pending.scheduledAtTick = originReadyTick;
   pending.durationTicks = pending.serviceDurationTicks;
   pending.dueTick = originReadyTick + pending.serviceDurationTicks;
+  let phaseStart = pending.patientTravel ? originReadyTick : originReadyTick;
+  pending.timingPhases = (pending.timingPhases ?? []).map((phase) => {
+    const startsAtTick = phaseStart;
+    const endsAtTick = startsAtTick + phase.durationTicks;
+    phaseStart = endsAtTick;
+    return { ...phase, startsAtTick, endsAtTick };
+  });
   if (pending.patientTravel) {
     const frozenOrigin = state.rooms.find(
       (room) =>
@@ -2211,14 +2229,36 @@ function configurePendingResultTiming(
     pending.patientTravel.outboundStartTick = originReadyTick;
     pending.patientTravel.outboundArrivalTick =
       originReadyTick + outboundTicks;
+    const finalResourcePhaseEnd = pending.timingPhases
+      ?.filter((phase) => phase.resourceBound)
+      .at(-1)?.endsAtTick;
+    if (finalResourcePhaseEnd !== undefined) {
+      // Travel to the room happens during acquisition/collection. The route's
+      // advertised interval remains the authored phase sum rather than being
+      // extended by travel, and the return may overlap external processing.
+      if (pending.patientTravel.outboundArrivalTick > finalResourcePhaseEnd) {
+        return false;
+      }
+      pending.patientTravel.serviceCompletionTick =
+        pending.dueTick - returnTicks;
+      if (
+        pending.patientTravel.serviceCompletionTick < finalResourcePhaseEnd
+      ) {
+        return false;
+      }
+    } else {
+      pending.patientTravel.serviceCompletionTick =
+        pending.dueTick - returnTicks;
+      if (
+        pending.patientTravel.serviceCompletionTick <
+        pending.patientTravel.outboundArrivalTick
+      ) {
+        return false;
+      }
+    }
     pending.patientTravel.returnArrivalTick = pending.dueTick;
-    pending.patientTravel.serviceCompletionTick =
-      pending.dueTick - returnTicks;
     pending.offsiteTravel = null;
-    return (
-      pending.patientTravel.serviceCompletionTick >=
-      pending.patientTravel.outboundArrivalTick
-    );
+    return true;
   }
 
   const entrance = getPublicEntrance(state, context);
@@ -2805,16 +2845,31 @@ function getWaterCoolerLocation(
     : null;
   return frontRoom && definition
     ? {
-        x: frontRoom.x,
-        y:
-          frontRoom.y +
-          Math.min(
-            1,
-            getRotatedFootprint(definition, frontRoom.orientation).height -
-              1,
+        x:
+          frontRoom.x +
+          Math.max(
+            0,
+            getRotatedFootprint(definition, frontRoom.orientation).width - 1,
           ),
+        y: frontRoom.y,
       }
     : state.environment.founderLocation;
+}
+
+/** The A5 cooler is an obstacle; workers refill from adjacent B5. */
+function getWaterCoolerApproachLocation(
+  state: GameState,
+  context: DomainContext,
+) {
+  const cooler = getWaterCoolerLocation(state, context);
+  const frontRoom = state.rooms.find((room) =>
+    context.balanceRelease.facility.protectedRoomDefinitionIds.includes(
+      room.roomDefinitionId,
+    ),
+  );
+  return frontRoom
+    ? { x: cooler.x, y: frontRoom.y + 1 }
+    : cooler;
 }
 
 function addWaitingPatientSatisfaction(
@@ -2996,7 +3051,7 @@ function maybeAssignReceptionistWaterRefill(
 
   const path = findDeterministicFacilityPath(
     receptionist.location,
-    getWaterCoolerLocation(state, context),
+    getWaterCoolerApproachLocation(state, context),
     state.rooms,
     state.doors,
     (definitionId) => getRoomDefinition(definitionId, context),
@@ -3034,16 +3089,43 @@ function advanceEmployeeFacilityTasks(
       continue;
     }
 
-    if (
-      task.kind === "refill_water" &&
-      state.environment.waterCoolerFillPercent <= 0
-    ) {
+    if (task.kind === "refill_water" && state.environment.waterCoolerFillPercent <= 0) {
       state.environment.waterCoolerFillPercent = 100;
       addWaitingPatientSatisfaction(
         state,
         context.balanceRelease.environment
           .waterRefillSatisfactionBonus,
       );
+    } else if (task.kind === "collect_litter") {
+      const litter = state.environment.litterItems.find(
+        (item) => item.id === task.targetId,
+      );
+      if (litter) {
+        state.environment.litterItems = state.environment.litterItems.filter((item) => item.id !== litter.id);
+        const room = state.rooms.find(
+          (candidate) => candidate.id === litter.roomId,
+        );
+        if (room) {
+          room.cleanliness = clamp(
+            (room.cleanliness ?? 100) +
+              context.balanceRelease.environment.litterCleanupRestore,
+            0,
+            100,
+          );
+        }
+        state.environment.lastLitterCleanupAtTick = state.facilityTick;
+      }
+    } else if (task.kind === "clean_room") {
+      const room = state.rooms.find((candidate) => candidate.id === task.targetId);
+      if (room) {
+        room.cleanliness = clamp(
+          (room.cleanliness ?? 100) +
+            context.balanceRelease.environment.evsRoomCleanlinessRestore,
+          0,
+          100,
+        );
+      }
+      state.environment.lastEvsRoomCleanupAtTick = state.facilityTick;
     }
     employee.facilityTask = null;
     employee.nextIdleActionAtFacilityTick = getNextIdleActionTick(
@@ -3052,6 +3134,157 @@ function advanceEmployeeFacilityTasks(
       employee.id,
     );
   }
+}
+
+function maybeAssignEvsTasks(state: GameState, context: DomainContext): void {
+  if (!getCurrentCapabilities(state, context).has("capability.staff.evs_worker")) {
+    return;
+  }
+  const workers = state.employees
+    .filter(
+      (employee) =>
+        employee.staffRoleDefinitionId === "staff.evs_worker" &&
+        isEmployeeAssignedToOperationalRoom(state, employee.id, context) &&
+        !employee.facilityTask &&
+        employee.pathIndex >= employee.path.length - 1,
+    )
+    .sort((left, right) => left.id.localeCompare(right.id));
+  const targeted = new Set(
+    state.employees.flatMap((employee) =>
+      (employee.facilityTask?.kind === "collect_litter" ||
+        employee.facilityTask?.kind === "clean_room") &&
+      employee.facilityTask.targetId
+        ? [employee.facilityTask.targetId]
+        : [],
+    ),
+  );
+  const litter = state.environment.litterItems
+    .filter((item) => !targeted.has(item.id))
+    .sort(
+      (left, right) =>
+        left.spawnedAtFacilityTick - right.spawnedAtFacilityTick ||
+        left.id.localeCompare(right.id),
+    );
+  const config = context.balanceRelease.environment;
+  for (const worker of workers) {
+    const roomCandidates =
+      state.environment.lastEvsRoomCleanupAtTick !== null &&
+      state.facilityTick - state.environment.lastEvsRoomCleanupAtTick <
+        config.evsRoomCleanupCooldownMinutes
+        ? []
+        : state.rooms
+            .filter(
+              (room) =>
+                !targeted.has(room.id) &&
+                isRoomOperationalForFacilityWork(state, room.id, context) &&
+                (room.cleanliness ?? 100) < config.evsRoomCleanlinessThreshold,
+            )
+            .sort(
+              (left, right) =>
+                (left.cleanliness ?? 100) - (right.cleanliness ?? 100) ||
+                left.id.localeCompare(right.id),
+            );
+    const candidates = [...litter, ...roomCandidates];
+    const selected = candidates
+      .map((target) => {
+        const location =
+          "spawnedAtFacilityTick" in target
+            ? target.location
+            : getRoomNavigationAnchor(
+                target,
+                getRoomDefinition(target.roomDefinitionId, context)!,
+              );
+        return {
+          target,
+          path: findDeterministicFacilityPath(
+            worker.location,
+            location,
+            state.rooms,
+            state.doors,
+            (definitionId) => getRoomDefinition(definitionId, context),
+          ),
+        };
+      })
+      .find(({ path }) => path.length > 0);
+    if (!selected) continue;
+    worker.path = selected.path;
+    worker.pathIndex = 0;
+    worker.lastMovedAtFacilityTick = state.facilityTick;
+    worker.facilityTask = {
+      kind:
+        "spawnedAtFacilityTick" in selected.target
+          ? "collect_litter"
+          : "clean_room",
+      targetId: selected.target.id,
+      startedAtFacilityTick: state.facilityTick,
+      workMinutesRemaining:
+        "spawnedAtFacilityTick" in selected.target
+          ? context.balanceRelease.environment.founderInteractionMinutes
+          : config.evsRoomCleanupMinutes,
+    };
+    if ("spawnedAtFacilityTick" in selected.target) {
+      targeted.add(selected.target.id);
+      const selectedIndex = litter.findIndex(
+        (item) => item.id === selected.target.id,
+      );
+      if (selectedIndex >= 0) litter.splice(selectedIndex, 1);
+    } else {
+      targeted.add(selected.target.id);
+    }
+  }
+}
+
+function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+  const environment = state.environment;
+  const capacity = getOperationalGlp1AutomationCapacity(state, context);
+  if (capacity === 0) {
+    environment.glp1AutomationNextPayoutTicks = [];
+    environment.glp1AutomationNextPayoutTick = null;
+    return;
+  }
+  const config = context.balanceRelease.environment;
+  const dueTicks = environment.glp1AutomationNextPayoutTicks
+    .filter((tick) => Number.isSafeInteger(tick) && tick > 0)
+    .sort((left, right) => left - right)
+    .slice(0, capacity);
+  while (dueTicks.length < capacity) {
+    // The current tick is the first full facility minute after the slot
+    // became operational, so its first payout lands after 60 such minutes.
+    dueTicks.push(state.facilityTick + config.glp1AutomationIntervalMinutes - 1);
+  }
+  let completed = 0;
+  for (let index = 0; index < dueTicks.length; index += 1) {
+    while (dueTicks[index]! <= state.facilityTick) {
+      completed += 1;
+      dueTicks[index]! += config.glp1AutomationIntervalMinutes;
+    }
+  }
+  if (completed > 0) {
+    environment.glp1AutomationConsultationsCompleted += completed;
+    adjustCash(state, completed * config.glp1AutomationPayment);
+  }
+  environment.glp1AutomationNextPayoutTicks = dueTicks.sort((left, right) => left - right);
+  environment.glp1AutomationNextPayoutTick = dueTicks[0] ?? null;
+}
+
+function maybeApplyCoffeeMorale(state: GameState, context: DomainContext): void {
+  const operatingTicksPerDay =
+    (context.balanceRelease.clock.dayEndHour - context.balanceRelease.clock.dayStartHour) * 60;
+  const dayNumber = Math.floor(state.facilityTick / operatingTicksPerDay) + 1;
+  if (
+    !getCurrentCapabilities(state, context).has("capability.coffee_kiosk") ||
+    state.environment.coffeeMoraleAppliedDayNumber === dayNumber
+  ) {
+    return;
+  }
+  for (const employee of state.employees) {
+    employee.morale = clamp(
+      employee.morale + context.balanceRelease.environment.coffeeMoraleBonusPerDay,
+      0,
+      100,
+    );
+  }
+  state.environment.coffeeMoraleAppliedDayNumber = dayNumber;
 }
 
 function completeFounderActivity(
@@ -4037,8 +4270,11 @@ function reduceAdvanceTick(
 
   applyOperatingExpenses(next, context);
   maybeAssignReceptionistWaterRefill(next, context);
-  advanceEmployeeMovement(next, context);
-  advanceEmployeeFacilityTasks(next, context);
+    advanceEmployeeMovement(next, context);
+    advanceEmployeeFacilityTasks(next, context);
+    maybeAssignEvsTasks(next, context);
+    advanceGlp1Automation(next, context);
+    maybeApplyCoffeeMorale(next, context);
   advanceFounderActivity(next, context);
   drainWaterCooler(next, context);
   maybeSpawnLitter(next, context);
@@ -4970,7 +5206,7 @@ function reduceLevelUp(
     return rejectCommand(
       state,
       command,
-      "Level 2 is outside this prototype and remains locked.",
+      "The Level 3 preview remains locked in this prototype.",
     );
   }
   if (!progression.eligible) {
@@ -4983,7 +5219,6 @@ function reduceLevelUp(
   const next = clonePlain(state);
   next.facilityLevel = progression.nextFacilityLevel;
   next.clinicalXp = 0;
-  next.nextRoutineArrivalTick = getNextRoutineArrivalTick(next, context);
   appendEvent(next, {
     id: `event.facility-level.${next.facilityLevel}`,
     type: "facility_level_advanced",
@@ -5075,6 +5310,13 @@ function beginFounderActivity(
   destination: { x: number; y: number },
   message: string,
 ): GameState {
+  if (isFounderReservedForService(state)) {
+    return rejectCommand(
+      state,
+      command,
+      "The founder is currently reserved for a facility service.",
+    );
+  }
   if (
     state.environment.founderActivity &&
     state.environment.founderActivity.kind !== "walk_to_point"
@@ -5109,6 +5351,22 @@ function beginFounderActivity(
       context.balanceRelease.environment.founderInteractionMinutes,
   };
   return recordReceipt(next, command, "applied", message);
+}
+
+function isFounderReservedForService(state: GameState): boolean {
+  return Object.values(state.encounters).some((encounter) => {
+    const pending = encounter.pendingResult;
+    return Boolean(
+      pending &&
+        pending.deliveredAtTick === null &&
+        pending.providerReservation?.kind === "founder" &&
+        (!(pending.timingPhases?.length) ||
+          pending.timingPhases.some(
+            (phase) =>
+              phase.resourceBound && state.facilityTick < phase.endsAtTick,
+          )),
+    );
+  });
 }
 
 function getFounderWalkPath(
@@ -5185,6 +5443,13 @@ function reduceMoveFounder(
   command: Extract<GameCommand, { type: "MOVE_FOUNDER" }>,
   context: DomainContext,
 ): GameState {
+  if (isFounderReservedForService(state)) {
+    return rejectCommand(
+      state,
+      command,
+      "The founder is currently reserved for a facility service.",
+    );
+  }
   if (
     state.environment.founderActivity &&
     state.environment.founderActivity.kind !== "walk_to_point"
@@ -5293,7 +5558,7 @@ function reduceRefillWaterCooler(
     context,
     "refill_water",
     "water-cooler.front-desk",
-    getWaterCoolerLocation(state, context),
+    getWaterCoolerApproachLocation(state, context),
     "The founder is walking over to refill the water cooler.",
   );
 }
@@ -5471,6 +5736,11 @@ export function createInitialGameState(
       lastLitterCleanupAtTick: null,
       nextLitterSpawnTick:
         context.balanceRelease.environment.litterSpawnMinimumMinutes,
+      glp1AutomationConsultationsCompleted: 0,
+      glp1AutomationNextPayoutTicks: [],
+      glp1AutomationNextPayoutTick: null,
+      coffeeMoraleAppliedDayNumber: 0,
+      lastEvsRoomCleanupAtTick: null,
       waterCoolerFillPercent: 100,
       nextWaterCoolerDrainTick:
         context.balanceRelease.environment.waterCoolerDrainIntervalMinutes,

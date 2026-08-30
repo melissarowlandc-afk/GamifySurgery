@@ -24,6 +24,11 @@ export const PIXEL_PALETTE = {
   skinMedium: "#c6a78f",
   skinDeep: "#98745f",
   skinDark: "#634b41",
+  hairBlond: "#c5a968",
+  hairBrown: "#674738",
+  hairRed: "#985747",
+  hairBlack: "#252521",
+  hairGray: "#8b8d85",
   white: "#fffdf4",
 } as const;
 

@@ -214,13 +214,13 @@ describe("owner row 49 approved peptic-ulcer hemostasis package", () => {
     }
   });
 
-  it("keeps the approved future content outside the Level 0-1 runtime", () => {
+  it("activates only approved Level 2 content and retains future exclusion", () => {
     expect(() =>
       validateSyntheticClinicalRelease(SYNTHETIC_CLINICAL_RELEASE),
     ).not.toThrow();
     expect(ROW_049_APPROVED_BACKLOG).toMatchObject({
-      approvedForRuntime: false,
-      currentGameEligibility: "deferred",
+      approvedForRuntime: true,
+      currentGameEligibility: "partially_active_level_2_future_hospital_floor_excluded",
       earliestFacilityStage: 2,
       maximumScoredDecisionsPerEncounter: 2,
     });
@@ -229,7 +229,7 @@ describe("owner row 49 approved peptic-ulcer hemostasis package", () => {
         SYNTHETIC_CLINICAL_RELEASE.concepts.some(
           (candidate) => candidate.id === concept.id,
         ),
-      ).toBe(false);
+      ).toBe(true);
     }
   });
 });

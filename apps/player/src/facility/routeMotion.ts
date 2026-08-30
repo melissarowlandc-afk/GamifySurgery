@@ -14,12 +14,15 @@ export interface RouteMotionTrack {
   sourceOffset: number;
   lastObservedPathIndex: number;
   routeActive: boolean;
+  /** Render-only facing continuity; it never changes route semantics. */
+  rightFacing: boolean;
 }
 
 export interface RouteMotionSample {
   location: GridPoint;
   direction: "front" | "side" | "back";
   moving: boolean;
+  rightFacing: boolean;
 }
 
 /**
@@ -58,6 +61,16 @@ function appendPoint(path: GridPoint[], point: GridPoint): void {
   if (!samePoint(path.at(-1), point)) {
     path.push({ ...point });
   }
+}
+
+function rightFacingAt(
+  path: readonly GridPoint[],
+  progress: number,
+  fallback = false,
+): boolean {
+  const start = path[Math.max(0, Math.min(path.length - 1, Math.floor(progress)))];
+  const end = path[Math.max(0, Math.min(path.length - 1, Math.floor(progress) + 1))];
+  return start && end && end.x !== start.x ? end.x > start.x : fallback;
 }
 
 /**
@@ -136,6 +149,7 @@ function handoffRouteMotion(
     sourceOffset,
     lastObservedPathIndex: logicalIndex,
     routeActive: true,
+    rightFacing: rightFacingAt(combined, previous.progress, previous.rightFacing),
   };
 }
 
@@ -197,6 +211,7 @@ export function syncRouteMotion(
         sourceOffset: 0,
         lastObservedPathIndex: logicalIndex,
         routeActive: true,
+        rightFacing: rightFacingAt(path, logicalIndex),
       };
     }
     return {
@@ -255,6 +270,11 @@ export function advanceRouteMotion(
     ...track,
     progress: Math.min(track.targetIndex, track.progress + step),
   };
+  advanced.rightFacing = rightFacingAt(
+    advanced.path,
+    advanced.progress,
+    track.rightFacing,
+  );
   // Back-to-back room-idle and task routes can keep one render track alive for
   // a long session. Retain one node behind the current sample for direction
   // continuity, but discard the consumed prefix so handoffs do not turn the
@@ -308,6 +328,7 @@ export function sampleRouteMotion(
           ? "back"
           : "front",
     moving,
+    rightFacing: end.x !== start.x ? end.x > start.x : track.rightFacing,
   };
 }
 

@@ -139,6 +139,19 @@ export function FacilityCanvas({
     });
     const ownedCanvas = game.canvas;
     gameRef.current = game;
+    // The map-mounted gait proof is deliberately opt-in and development-only.
+    // It lets Playwright observe the *rendered Phaser actor* metadata without
+    // adding a visible debug panel or making gameplay state inspectable.
+    const gaitProofEnabled = import.meta.env.DEV &&
+      new URLSearchParams(window.location.search).has("facility-gait-proof");
+    const proofHost = host as HTMLDivElement & {
+      __facilityGaitSnapshot?: () => unknown;
+      __facilityGame?: Phaser.Game;
+    };
+    if (gaitProofEnabled) {
+      proofHost.__facilityGame = game;
+      proofHost.__facilityGaitSnapshot = () => scene.debugCharacterGaitSnapshot();
+    }
 
     let resizeFrame: number | null = null;
     let observedWidth = width;
@@ -184,6 +197,10 @@ export function FacilityCanvas({
       }
       if (gameRef.current === game) {
         gameRef.current = null;
+      }
+      if (proofHost.__facilityGame === game) {
+        delete proofHost.__facilityGame;
+        delete proofHost.__facilityGaitSnapshot;
       }
       game.destroy(true);
       if (ownedCanvas.parentElement === host) {

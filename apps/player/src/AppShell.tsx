@@ -762,7 +762,7 @@ export function AppShell({
           <span>{workloadStatus}</span>
           {progression.prototypeComplete ? (
             <strong className="prototype-complete">
-              Level 1 complete — Level 2 is locked in this prototype.
+              {progression.facilityLevelLabel} complete — Level 3 is a locked preview in this prototype.
             </strong>
           ) : null}
         </div>

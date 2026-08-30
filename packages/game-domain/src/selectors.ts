@@ -61,8 +61,11 @@ export function getEmergencyGlp1Status(
             config.cooldownMinutes -
             state.facilityTick,
         );
+  const automationCapacity = getOperationalGlp1AutomationCapacity(state, context);
   const blockedReason =
-    cooldownRemainingTicks > 0
+    automationCapacity > 0
+      ? "Staffed GLP-1 suites handle consultations automatically."
+      : cooldownRemainingTicks > 0
       ? `Available in ${cooldownRemainingTicks} minute${
           cooldownRemainingTicks === 1 ? "" : "s"
         }.`
@@ -75,6 +78,30 @@ export function getEmergencyGlp1Status(
     eligible: blockedReason === null,
     blockedReason,
   };
+}
+
+/** Operational capacity is deliberately separate from clinical capability. */
+export function getOperationalGlp1AutomationCapacity(
+  state: GameState,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): number {
+  const access = getFacilityAccessValidation(state, context);
+  const suites = state.rooms.filter(
+    (room) =>
+      room.roomDefinitionId === "room.glp1_telehealth_suite" &&
+      isRoomOperational(state, room.id, context, access),
+  ).length;
+  const clinicians = state.employees.filter(
+    (employee) =>
+      employee.staffRoleDefinitionId === "staff.glp1_np" &&
+      employee.homeRoomInstanceId !== null &&
+      isRoomOperational(state, employee.homeRoomInstanceId, context, access),
+  ).length;
+  return Math.min(
+    suites,
+    clinicians,
+    context.balanceRelease.environment.glp1AutomationMaximumCapacity,
+  );
 }
 
 export function getRoomDefinition(
@@ -125,19 +152,85 @@ export function isEmployeeOperational(
   );
 }
 
+function isRoomOperational(
+  state: GameState,
+  roomId: string,
+  context: DomainContext,
+  access: FacilityAccessValidation,
+): boolean {
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room
+    ? getRoomDefinition(room.roomDefinitionId, context)
+    : null;
+  if (!room || !definition || access.unreachableRoomIds.includes(room.id)) {
+    return false;
+  }
+  return !access.issues.some(
+    (issue) =>
+      issue.startsWith(`${definition.displayName} requires`) ||
+      issue.startsWith(`${definition.displayName} must share a wall`),
+  );
+}
+
+function isEmployeeOperationalInAccessibleRoom(
+  state: GameState,
+  employeeId: string,
+  context: DomainContext,
+  access: FacilityAccessValidation,
+): boolean {
+  const employee = state.employees.find((candidate) => candidate.id === employeeId);
+  return Boolean(
+    employee &&
+      employee.homeRoomInstanceId !== null &&
+      isEmployeeOperational(state, employeeId, context) &&
+      isRoomOperational(state, employee.homeRoomInstanceId, context, access),
+  );
+}
+
+/** Supports non-clinical facility work without treating a walking employee as unavailable. */
+export function isEmployeeAssignedToOperationalRoom(
+  state: GameState,
+  employeeId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): boolean {
+  const employee = state.employees.find((candidate) => candidate.id === employeeId);
+  return Boolean(
+    employee?.homeRoomInstanceId &&
+      isRoomOperational(
+        state,
+        employee.homeRoomInstanceId,
+        context,
+        getFacilityAccessValidation(state, context),
+      ),
+  );
+}
+
+/** Non-clinical work targets must be reachable and satisfy their room rules. */
+export function isRoomOperationalForFacilityWork(
+  state: GameState,
+  roomId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): boolean {
+  return isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context));
+}
+
 export function getCurrentCapabilities(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): Set<string> {
   const capabilities = new Set<string>();
+  const access = getFacilityAccessValidation(state, context);
   for (const placedRoom of state.rooms) {
+    if (!isRoomOperational(state, placedRoom.id, context, access)) {
+      continue;
+    }
     const definition = getRoomDefinition(placedRoom.roomDefinitionId, context);
     for (const capabilityId of definition?.capabilityIds ?? []) {
       capabilities.add(capabilityId);
     }
   }
   for (const employee of state.employees) {
-    if (!isEmployeeOperational(state, employee.id, context)) {
+    if (!isEmployeeOperationalInAccessibleRoom(state, employee.id, context, access)) {
       continue;
     }
     const definition = getStaffRoleDefinition(
@@ -148,7 +241,104 @@ export function getCurrentCapabilities(
       capabilities.add(capabilityId);
     }
   }
+  const hasOperationalRoom = (definitionId: string) =>
+    state.rooms.some(
+      (room) =>
+        room.roomDefinitionId === definitionId &&
+        isRoomOperational(state, room.id, context, access),
+    );
+  const hasOperationalEmployee = (roleDefinitionId: string) =>
+    state.employees.some(
+      (employee) =>
+        employee.staffRoleDefinitionId === roleDefinitionId &&
+        isEmployeeOperationalInAccessibleRoom(
+          state,
+          employee.id,
+          context,
+          access,
+        ),
+    );
+  if (
+    hasOperationalRoom("room.endoscopy") &&
+    hasOperationalRoom("room.periop_recovery") &&
+    hasOperationalEmployee("staff.endoscopy_nurse") &&
+    hasOperationalEmployee("staff.periop_nurse")
+  ) {
+    // Founder coverage is an installed-capability fallback. Temporary
+    // physician busyness is resolved by the route selector, not here.
+    capabilities.add("capability.endoscopy");
+  }
   return capabilities;
+}
+
+function hasActiveResourcePhase(
+  encounter: EncounterState,
+  facilityTick: number,
+): boolean {
+  const pending = encounter.pendingResult;
+  return Boolean(
+    pending &&
+      pending.deliveredAtTick === null &&
+      (!(pending.timingPhases?.length) ||
+        pending.timingPhases.some(
+          (phase) => phase.resourceBound && facilityTick < phase.endsAtTick,
+        )),
+  );
+}
+
+function getActiveProviderReservations(state: GameState) {
+  return Object.values(state.encounters).flatMap((encounter) =>
+    hasActiveResourcePhase(encounter, state.facilityTick) &&
+    encounter.pendingResult?.providerReservation
+      ? [encounter.pendingResult.providerReservation]
+      : [],
+  );
+}
+
+function selectProviderReservation(
+  state: GameState,
+  route: DomainContext["balanceRelease"]["services"][number]["routes"][number],
+  context: DomainContext,
+  access: FacilityAccessValidation,
+) {
+  const requirement = route.providerRequirement;
+  if (!requirement) {
+    return null;
+  }
+  const activeProviders = getActiveProviderReservations(state);
+  const employee = state.employees
+    .filter(
+      (candidate) =>
+        candidate.staffRoleDefinitionId ===
+          requirement.preferredEmployeeStaffRoleDefinitionId &&
+        isEmployeeOperationalInAccessibleRoom(
+          state,
+          candidate.id,
+          context,
+          access,
+        ) &&
+        !activeProviders.some(
+          (provider) =>
+            provider.kind === "employee" &&
+            provider.employeeId === candidate.id,
+        ),
+    )
+    .sort((left, right) => left.id.localeCompare(right.id))[0];
+  if (employee) {
+    return {
+      kind: "employee" as const,
+      employeeId: employee.id,
+      staffRoleDefinitionId: employee.staffRoleDefinitionId,
+    };
+  }
+  if (
+    requirement.founderEligible &&
+    state.environment.founderActivity === null &&
+    !activeProviders.some((provider) => provider.kind === "founder")
+  ) {
+    return { kind: "founder" as const };
+  }
+  return undefined;
 }
 
 export function getEligibleServiceRoute(
@@ -166,22 +356,19 @@ export function getEligibleServiceRoute(
   const capabilities = getCurrentCapabilities(state, context);
   const allowed =
     allowedRouteIds === null ? null : new Set(allowedRouteIds);
-  const activeInHouseXrays = Object.values(state.encounters).filter(
-    (encounter) =>
-      encounter.pendingResult?.routeId === "route.xray.in_house" &&
-      encounter.pendingResult.deliveredAtTick === null,
-  ).length;
-  const xrayRoomCount = state.rooms.filter(
-    (room) => room.roomDefinitionId === "room.xray",
-  ).length;
-  const availableImagingTechnicians = state.employees.filter(
-    (employee) =>
-      employee.staffRoleDefinitionId === "staff.imaging_technician" &&
-      isEmployeeOperational(state, employee.id, context),
-  ).length;
-  const inHouseXrayCapacity = Math.min(
-    xrayRoomCount,
-    availableImagingTechnicians,
+  const access = getFacilityAccessValidation(state, context);
+  const activeResourceUses = Object.values(state.encounters).flatMap(
+    (encounter) => {
+      const pending = encounter.pendingResult;
+      return hasActiveResourcePhase(encounter, state.facilityTick) && pending
+        ? (pending.resourceReservations ??
+            context.balanceRelease.services
+              .flatMap((candidate) => candidate.routes)
+              .find((candidate) => candidate.id === pending.routeId)
+              ?.resourceRequirements ??
+          [])
+        : [];
+    },
   );
   const route =
     service.routes
@@ -193,9 +380,49 @@ export function getEligibleServiceRoute(
           !candidate.requiredCapabilityIds.every((capabilityId) =>
             capabilities.has(capabilityId),
           ) ||
-          (candidate.id === "route.xray.in_house" &&
-            activeInHouseXrays >= inHouseXrayCapacity)
+          !candidate.resourceRequirements.every((resource) => {
+            const usableRooms = state.rooms.filter(
+              (room) =>
+                room.roomDefinitionId === resource.roomDefinitionId &&
+                isRoomOperational(state, room.id, context, access),
+            ).length;
+            const usedRooms = activeResourceUses.filter(
+              (active) => active.roomDefinitionId === resource.roomDefinitionId,
+            ).length;
+            const operationalStaff =
+              resource.staffRoleDefinitionId === null
+                ? Number.POSITIVE_INFINITY
+                : state.employees.filter(
+                    (employee) =>
+                      employee.staffRoleDefinitionId ===
+                        resource.staffRoleDefinitionId &&
+                      isEmployeeOperationalInAccessibleRoom(
+                        state,
+                        employee.id,
+                        context,
+                        access,
+                      ),
+                  ).length;
+            const usedStaff =
+              resource.staffRoleDefinitionId === null
+                ? 0
+                : activeResourceUses.filter(
+                    (active) =>
+                      active.staffRoleDefinitionId ===
+                      resource.staffRoleDefinitionId,
+                  ).length;
+            return usableRooms > usedRooms && operationalStaff > usedStaff;
+          })
         ) {
+          return [];
+        }
+        const providerReservation = selectProviderReservation(
+          state,
+          candidate,
+          context,
+          access,
+        );
+        if (candidate.providerRequirement && !providerReservation) {
           return [];
         }
         const timing = createFrozenServiceRouteTiming(
@@ -203,7 +430,7 @@ export function getEligibleServiceRoute(
           context,
           candidate,
         );
-        return timing ? [{ route: candidate, timing }] : [];
+        return timing ? [{ route: candidate, timing, providerReservation }] : [];
       })
       .sort(
         (left, right) =>
@@ -211,7 +438,14 @@ export function getEligibleServiceRoute(
           left.timing.durationTicks - right.timing.durationTicks ||
           left.route.id.localeCompare(right.route.id),
       )[0] ?? null;
-  return route ? { service, route: route.route, timing: route.timing } : null;
+  return route
+    ? {
+        service,
+        route: route.route,
+        timing: route.timing,
+        providerReservation: route.providerReservation,
+      }
+    : null;
 }
 
 export function getAnswerChoiceServicePreview(
@@ -319,10 +553,15 @@ export function getWorkloadSnapshot(
     );
     return total + (definition?.workloadLimitContribution ?? 0);
   }, 0);
+  const trainingContribution = getCurrentCapabilities(state, context).has(
+    "capability.staff_training",
+  )
+    ? context.balanceRelease.environment.trainingRoutineWorkloadContribution
+    : 0;
   const routineLimit =
     context.balanceRelease.workload.baseRoutineLimit +
     roomContribution +
-    staffContribution;
+    staffContribution + trainingContribution;
   const criticalLimit =
     routineLimit + context.balanceRelease.workload.criticalReservedSlots;
 
@@ -597,15 +836,11 @@ export function getFacilityProgressionStatus(
       const functioning = instances.some(
         (instance) =>
           !accessValidation.unreachableRoomIds.includes(instance.id) &&
-          !(
-            roomDefinitionId === "room.xray" &&
-            accessValidation.issues.some(
-              (issue) =>
-                issue.startsWith("X-ray Room requires") ||
-                issue.startsWith(
-                  "X-ray Room must share a wall",
-                ),
-            )
+          !accessValidation.issues.some((issue) =>
+            issue.startsWith(`${room?.displayName ?? roomDefinitionId} requires`) ||
+            issue.startsWith(
+              `${room?.displayName ?? roomDefinitionId} must share a wall`,
+            ),
           ),
       );
       return {
@@ -635,7 +870,9 @@ export function getFacilityProgressionStatus(
       definition.nextFacilityLevel !== null &&
       requirements.every((requirement) => requirement.met),
     nextFacilityLevel:
-      definition.nextFacilityLevel === 1 ? definition.nextFacilityLevel : null,
+      definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2
+        ? definition.nextFacilityLevel
+        : null,
     maximumPlayableLevel:
       context.balanceRelease.facility.maximumPlayableLevel,
   };

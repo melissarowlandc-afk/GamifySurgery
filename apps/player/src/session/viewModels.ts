@@ -7,6 +7,7 @@ import {
   getFacilityClock,
   getCurrentQuestion,
   getEmergencyGlp1Status,
+  getOperationalGlp1AutomationCapacity,
   getEncounterSettlement,
   getEncounterPatientLocation,
   getLearningSummary,
@@ -545,6 +546,7 @@ function createChartView(
                   )?.label ?? "Decision recorded")
             }`
           : undefined,
+        currentUpdate: isCurrent ? node.currentUpdate : undefined,
         current: isCurrent,
         complete: step.status === "completed",
       };
@@ -716,12 +718,8 @@ export function createPrototypePlayerView(
   );
   const clock = getFacilityClock(state);
   const emergencyGlp1Status = getEmergencyGlp1Status(state);
-  const dedicatedGlp1RoomBuilt = state.rooms.some(
-    (room) =>
-      room.roomDefinitionId ===
-      PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.emergencyGlp1
-        .dedicatedRoomDefinitionId,
-  );
+  const glp1AutomationCapacity = getOperationalGlp1AutomationCapacity(state);
+  const nextGlp1PayoutTick = state.environment.glp1AutomationNextPayoutTick;
   const advertisingLevels =
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.advertising.levels;
   const currentAdvertising =
@@ -764,9 +762,8 @@ export function createPrototypePlayerView(
 
   return {
     emergencyGlp1: {
-      // The founder's floating action remains available at every cash balance
-      // until the later dedicated suite takes over this interaction.
-      visible: !dedicatedGlp1RoomBuilt,
+      // A built but inaccessible/unstaffed suite cannot replace the founder.
+      visible: true,
       enabled: emergencyGlp1Status.eligible,
       paymentLabel: `+$${emergencyGlp1Status.payment}`,
       statusLabel:
@@ -788,6 +785,13 @@ export function createPrototypePlayerView(
       ),
       flavorMessage:
         state.emergencyGlp1.lastFlavorMessage ?? undefined,
+      automationCapacity: glp1AutomationCapacity,
+      nextPayoutLabel:
+        glp1AutomationCapacity > 0 && nextGlp1PayoutTick !== null
+          ? `Next payout in ${formatFacilityDuration(
+              Math.max(0, nextGlp1PayoutTick - state.facilityTick),
+            )}.`
+          : undefined,
     },
     advertising: {
       currentLevel: currentAdvertising.level,
@@ -920,8 +924,16 @@ export function createPrototypePlayerView(
               room.roomDefinitionId,
             ),
           );
+          const footprint = front
+            ? getRoomInstanceFootprint(state, front.id)
+            : null;
           return front
-            ? { x: front.x, y: front.y + 1 }
+            ? {
+                x: front.x + Math.max(0, (footprint?.width ?? 1) - 1),
+                // The cooler occupies Front Desk A5. Its refill approach is
+                // distinct (B5) in the domain so actors never clip through it.
+                y: front.y,
+              }
             : state.environment.founderLocation;
         })(),
         fillPercent: state.environment.waterCoolerFillPercent,
@@ -1033,6 +1045,7 @@ export function createPrototypePlayerView(
         );
         return {
           instanceId: employee.id,
+          staffRoleDefinitionId: employee.staffRoleDefinitionId,
           displayName: employee.displayName,
           roleDisplayName:
             role?.displayName ?? employee.staffRoleDefinitionId,
@@ -1075,7 +1088,9 @@ export function createPrototypePlayerView(
       facilityLevelLabel: `Level ${state.facilityLevel}`,
       nextLevelLabel:
         progressionStatus.nextFacilityLevel === null
-          ? null
+          ? state.facilityLevel === 2
+            ? "Level 3"
+            : null
           : `Level ${progressionStatus.nextFacilityLevel}`,
       goals: progressionStatus.requirements.map((requirement) => ({
         id: requirement.id,

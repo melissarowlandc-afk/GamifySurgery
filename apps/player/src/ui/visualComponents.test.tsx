@@ -4,7 +4,9 @@ import { TutorialCoach } from "./TutorialCoach";
 import { ChartPanel } from "./ChartPanel";
 import { PatientLists } from "./PatientLists";
 import { ResourceBar } from "./ResourceBar";
+import { CharacterQaGallery } from "./CharacterQaGallery";
 import type { ChartView, ResourceBarView } from "./types";
+import type { FacilityViewModel } from "../facility";
 
 const noop = () => undefined;
 
@@ -69,6 +71,7 @@ describe("paper chart presentation", () => {
           feedbackTitle: "Correct",
           feedbackBody: "Source control is required.",
           rewardLabel: "+10 learning XP",
+          currentUpdate: "Ultrasound now shows a simple fluid-filled cyst.",
           current: true,
           complete: false,
         },
@@ -335,5 +338,52 @@ describe("segmented resource HUD", () => {
     );
     expect(markup).not.toContain("Last 10 completed encounters");
     expect(markup).not.toContain("Clinic open");
+  });
+});
+
+describe("character visual QA gallery", () => {
+  it("keeps the shared descriptor visible through idle, movement, work, interaction, seating, and portrait representations", () => {
+    const markup = renderToStaticMarkup(
+      <CharacterQaGallery
+        facility={{
+          founder: {
+            displayName: "Avery",
+            appearance: {
+              version: "pixel-avatar.v1",
+              bodyShape: "average",
+              hairStyle: "short",
+              skinTone: 1,
+              hairShade: 3,
+              faceStyle: "round",
+              outfitStyle: "coat",
+              outfitShade: 1,
+              accessory: "none",
+              headVariant: 0,
+              bodyVariant: 3,
+              roleStyle: "founder",
+            },
+          },
+          staff: [],
+          patients: [],
+        } as unknown as FacilityViewModel}
+      />,
+    );
+
+    expect(markup).toContain("Map front / idle");
+    expect(markup).toContain("Live route west A");
+    expect(markup).toContain("Live route east B");
+    expect(markup).toContain("Seated");
+    expect(markup).toContain("Working");
+    expect(markup).toContain("Interaction");
+    expect(markup).toContain("Portrait");
+    expect(markup).toContain("Star jump");
+    expect(markup).toContain("Avery working map sprite");
+    expect(markup).toContain("Avery interaction map sprite");
+    expect(
+      (markup.match(/data-character-id="patient-roster:patient\.adult\./g) ?? []),
+    ).toHaveLength(50);
+    expect(markup).toContain("canonical-patient-atlas-v1");
+    expect(markup).toContain("patients-thumbnail-v1.png");
+    expect(markup).toContain("patients-portrait-v1.png");
   });
 });

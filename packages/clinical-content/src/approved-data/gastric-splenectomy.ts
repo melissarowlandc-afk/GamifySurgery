@@ -577,10 +577,18 @@ export const ROW_042_APPROVED_BACKLOG = {
       requiredCapabilityIds: [],
     },
   },
-  currentGameEligibility: "deferred",
+  currentGameEligibility: "partially_active_level_2_future_hospital_or_excluded",
+  activeBlueprintIds: [
+    "blueprint.gastric-adenocarcinoma.post-endoscopy-splenic-referral.v1",
+    "blueprint.gastric-adenocarcinoma.spleen-preservation-counseling.v1",
+  ],
+  deferredBlueprintIds: [
+    "blueprint.gastric-adenocarcinoma.spleen-preservation-patient-selection.v1",
+    "blueprint.gastric-adenocarcinoma.spleen-preservation-boundary.v1",
+  ],
   deferredReason:
-    "The exact concept is clinically approved, but Level 2 and Future Hospital OR content have not been admitted to the current Level 0-1 runtime.",
-  approvedForRuntime: false,
+    "Future Hospital OR blueprints remain excluded; the listed Level 2 endoscopy blueprints are active.",
+  approvedForRuntime: true,
   tutorialEligible: false,
   maximumScoredDecisionsPerEncounter: 1,
   questionVariantIds: ROW_042_QUESTION_VARIANTS.map(

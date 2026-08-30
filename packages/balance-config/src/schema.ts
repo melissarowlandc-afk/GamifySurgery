@@ -28,6 +28,41 @@ export const serviceRouteDefinitionSchema = z
     satisfactionOnResult: z.number().int().min(-20).max(20).default(0),
     requiredCapabilityId: stableIdSchema.nullable(),
     requiredCapabilityIds: z.array(stableIdSchema).default([]),
+    resourceRequirements: z
+      .array(
+        z
+          .object({
+            roomDefinitionId: stableIdSchema,
+            staffRoleDefinitionId: stableIdSchema.nullable(),
+          })
+          .strict(),
+      )
+      .default([]),
+    /**
+     * An optional clinician-capacity requirement. The named employee role is
+     * preferred, while the Founder can be selected only when explicitly
+     * allowed by the route. This is operational simulation data, not a
+     * statement about clinical supervision requirements.
+     */
+    providerRequirement: z
+      .object({
+        preferredEmployeeStaffRoleDefinitionId: stableIdSchema,
+        founderEligible: z.boolean(),
+      })
+      .strict()
+      .nullable()
+      .default(null),
+    timingPhases: z
+      .array(
+        z
+          .object({
+            id: stableIdSchema,
+            durationTicks: z.number().int().positive(),
+            resourceBound: z.boolean(),
+          })
+          .strict(),
+      )
+      .default([]),
     preference: z.number().int().nonnegative(),
     patientTravel: z
       .object({
@@ -39,7 +74,24 @@ export const serviceRouteDefinitionSchema = z
       .nullable()
       .default(null),
   })
-  .strict();
+  .strict()
+  .superRefine((route, context) => {
+    if (route.timingPhases.length === 0) {
+      return;
+    }
+    const phaseDuration = route.timingPhases.reduce(
+      (total, phase) => total + phase.durationTicks,
+      0,
+    );
+    if (phaseDuration !== route.durationTicks) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Nonempty route timing phases must sum exactly to durationTicks.",
+        path: ["timingPhases"],
+      });
+    }
+  });
 
 export const serviceDefinitionSchema = z
   .object({
@@ -67,7 +119,7 @@ export const roomDefinitionSchema = z
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
     kind: z.enum(["room", "hallway"]),
-    unlockFacilityLevel: z.number().int().min(0).max(1),
+    unlockFacilityLevel: z.number().int().min(0).max(2),
     width: z.number().int().positive(),
     height: z.number().int().positive(),
     defaultDoorSide: cardinalDirectionSchema.nullable(),
@@ -223,7 +275,7 @@ export const staffRoleDefinitionSchema = z
   .object({
     id: stableIdSchema,
     displayName: z.string().min(1).max(160),
-    unlockFacilityLevel: z.number().int().min(1).max(1),
+    unlockFacilityLevel: z.number().int().min(1).max(2),
     hiringCost: z.number().int().nonnegative(),
     salaryPerExpenseInterval: z.number().int().nonnegative(),
     minimumSalaryPerExpenseInterval: z.number().int().nonnegative(),
@@ -262,14 +314,14 @@ export const patientRewardTierSchema = z
 
 export const facilityStageDefinitionSchema = z
   .object({
-    level: z.number().int().min(0).max(1),
+    level: z.number().int().min(0).max(2),
     displayName: z.string().min(1).max(160),
     minimumClinicalXp: z.number().int().nonnegative(),
     minimumCompletedEncounters: z.number().int().nonnegative(),
     satisfactionMustBeGreaterThan: z.number().int().min(0).max(99),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
     requiredStaffRoleIds: z.array(stableIdSchema),
-    nextFacilityLevel: z.number().int().min(1).max(1).nullable(),
+    nextFacilityLevel: z.number().int().min(1).max(2).nullable(),
   })
   .strict();
 
@@ -301,11 +353,11 @@ export const prototypeBalanceReleaseSchema = z
         characterTravelTilesPerTick: z.number().int().positive(),
         startingCash: z.number().int().nonnegative(),
         startingSatisfaction: z.number().int().min(0).max(100),
-        maximumPlayableLevel: z.literal(1),
+        maximumPlayableLevel: z.literal(2),
         initialRooms: z.array(initialRoomSchema).min(1),
         roomDefinitions: z.array(roomDefinitionSchema).min(1),
         staffRoleDefinitions: z.array(staffRoleDefinitionSchema).min(1),
-        stageDefinitions: z.array(facilityStageDefinitionSchema).length(2),
+        stageDefinitions: z.array(facilityStageDefinitionSchema).length(3),
         tutorialRequiredRoomDefinitionId: stableIdSchema,
         tutorialMinimumOperatingBuffer: z.number().int().nonnegative(),
       })
@@ -432,6 +484,15 @@ export const prototypeBalanceReleaseSchema = z
         sidewalkPedestrianMinimumMinutes: z.number().int().positive(),
         sidewalkPedestrianMaximumMinutes: z.number().int().positive(),
         maximumSidewalkPedestrians: z.number().int().positive().max(4),
+        glp1AutomationIntervalMinutes: z.number().int().positive(),
+        glp1AutomationPayment: z.number().int().nonnegative(),
+        glp1AutomationMaximumCapacity: z.number().int().positive().max(10),
+        evsRoomCleanlinessThreshold: z.number().int().min(0).max(100),
+        evsRoomCleanupMinutes: z.number().int().positive(),
+        evsRoomCleanlinessRestore: z.number().int().positive().max(100),
+        evsRoomCleanupCooldownMinutes: z.number().int().positive(),
+        trainingRoutineWorkloadContribution: z.number().int().nonnegative().max(10),
+        coffeeMoraleBonusPerDay: z.number().int().nonnegative().max(25),
       })
       .strict()
       .superRefine((environment, context) => {
@@ -755,10 +816,14 @@ export const prototypeBalanceReleaseSchema = z
     const stagesByLevel = new Map(
       release.facility.stageDefinitions.map((stage) => [stage.level, stage]),
     );
-    if (!stagesByLevel.has(0) || !stagesByLevel.has(1)) {
+    if (
+      !stagesByLevel.has(0) ||
+      !stagesByLevel.has(1) ||
+      !stagesByLevel.has(2)
+    ) {
       context.addIssue({
         code: "custom",
-        message: "Prototype progression must define both Level 0 and Level 1.",
+        message: "Prototype progression must define Levels 0, 1, and 2.",
         path: ["facility", "stageDefinitions"],
       });
     }

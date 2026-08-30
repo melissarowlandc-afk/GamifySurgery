@@ -46,7 +46,7 @@ describe("multistep diagnostic choice timing", () => {
       ),
     ).toEqual({
       targeted_ultrasound: {
-        etaLabel: "1 hour",
+        etaLabel: "150 min",
         detailLabel: "Off-site ultrasound",
       },
       diagnostic_mammography: {

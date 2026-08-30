@@ -13,6 +13,21 @@ export function EmergencyGlp1Panel({
     return null;
   }
 
+  if (view.automationCapacity > 0) {
+    return (
+      <section className="panel emergency-glp1-panel" aria-labelledby="glp1-title">
+        <span className="eyebrow">Operations</span>
+        <h2 id="glp1-title">GLP-1 Consult Automation</h2>
+        <div className="emergency-glp1-status">
+          <span>
+            {view.automationCapacity} staffed suite{view.automationCapacity === 1 ? "" : "s"} active.
+          </span>
+          {view.nextPayoutLabel ? <span>{view.nextPayoutLabel}</span> : null}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="panel emergency-glp1-panel" aria-labelledby="glp1-title">
       <span className="eyebrow">Emergency cash</span>

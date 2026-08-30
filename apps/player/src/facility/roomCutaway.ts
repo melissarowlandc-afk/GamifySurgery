@@ -1,4 +1,5 @@
 import type { FacilityRoomView } from "./types";
+import { getSurgeryCenterArchitectureAtScale } from "./surgeryCenterArchitecture";
 
 export type HorizontalRoomBoundary = "north" | "south";
 export type VerticalRoomBoundary = "west" | "east";
@@ -366,19 +367,16 @@ export function projectRearWallArtwork(
 }
 
 /**
- * Keeps the cutaway wall shallow at every zoom level. It is intentionally a
- * bonus projection outside the floor footprint rather than part of the room's
- * logical height.
+ * Returns the visible wall-face portion of the shared surgery-center
+ * north-wall envelope. The remaining outer-border cap is supplied by the
+ * renderer, so face plus cap is always the measured Front Desk v4 envelope.
+ * `roomPixelHeight` remains a compatibility argument but cannot affect the
+ * architectural height.
  */
 export function getRearWallFaceHeight(
-  roomPixelHeight: number,
+  _roomPixelHeight: number,
   tileSize: number,
 ): number {
-  return Math.max(
-    6,
-    Math.min(
-      Math.floor(Math.max(1, roomPixelHeight) * 0.16),
-      Math.floor(Math.max(1, tileSize) * 0.48),
-    ),
-  );
+  const geometry = getSurgeryCenterArchitectureAtScale(tileSize);
+  return Math.max(1, geometry.northEnvelope - geometry.outerBorderY);
 }

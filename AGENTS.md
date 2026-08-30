@@ -67,3 +67,38 @@ concept version when the underlying clinical meaning changes materially. Keep
 new clinical data replaceable without rewriting the patient generator, preserve
 existing frozen encounters and saves, and do not silently promote draft content
 into an approved public release.
+
+<!-- BEGIN BOUNDED_THREAD_LIFECYCLE -->
+## Bounded thread lifecycle
+
+Prefer one specific bounded task per Codex thread. When that task is completed
+and validated, update `docs/handoffs/CURRENT_THREAD_HANDOFF.md`, close the
+thread, and start a new thread for the next distinct task. A new thread must
+read the handoff and inspect the dirty working tree before editing.
+
+Do not abandon active atomic work or split one unfinished bounded task merely
+because a thread is old. The user may explicitly override this lifecycle when
+they want a continuous or differently scoped thread.
+
+### GitHub checkpoint backups
+
+Treat the completion of a substantial validated milestone, a broad integrated
+prototype checkpoint, or another materially valuable worktree state as a
+GitHub-backup checkpoint. Do not leave such a checkpoint only in the local
+working tree without explicitly calling that out to the user. At the checkpoint,
+remind the user to say **"push to GitHub"** so the backup can be created.
+
+After that explicit direction, inspect the scoped diff and repository status,
+perform the applicable source, secret, privacy, generated-asset, and clinical-
+content safety checks, create an appropriately described checkpoint commit,
+push the current branch to GitHub, and verify the remote branch contains the
+commit. Never use broad staging until the audit establishes that every included
+path belongs in the checkpoint. Never include ignored/private clinical inputs,
+credentials, proprietary sources, or unrelated user work.
+
+A GitHub backup push does not authorize a merge, release, deployment, Pages
+publication, history rewrite, or deletion. Record the pushed branch and commit
+in `docs/handoffs/CURRENT_THREAD_HANDOFF.md`. If a safe push is blocked, report
+the blocker and leave an exact recovery action rather than implying that a
+backup exists.
+<!-- END BOUNDED_THREAD_LIFECYCLE -->

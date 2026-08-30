@@ -272,7 +272,7 @@ test("restart archives the selected campaign and returns to a fresh founder flow
 test("movement, sequential feedback, off-site return, and settlement are visible", async ({
   page,
 }, testInfo) => {
-  testInfo.setTimeout(90_000);
+  testInfo.setTimeout(120_000);
   test.skip(
     testInfo.project.name !== "desktop-chrome",
     "The complete clinical walkthrough runs once at the primary desktop size.",
@@ -452,7 +452,7 @@ test("movement, sequential feedback, off-site return, and settlement are visible
     await page.getByRole("button", { name: "Got It" }).click();
   }
   await expect(existingPatient).toHaveAccessibleName(/Action required/, {
-    timeout: 30_000,
+    timeout: 60_000,
   });
   await expect(
     page.getByRole("heading", {

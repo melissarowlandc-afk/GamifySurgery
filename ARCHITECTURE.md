@@ -5,23 +5,38 @@ lead development agent may resolve or revise remaining implementation details
 under ADR 0021, with migration and validation proportional to the cost of
 change.
 
-Last updated: 2026-07-26
+Last updated: 2026-08-25
 
 ## Current local implementation candidate
 
-The repository now implements the local Level 0/1 stage of ADR 0022:
+The repository now implements the local playable Level 0-2 stage of ADR 0022;
+Level 3 is a locked preview and this beta work has not been deployed or
+promoted to `main`.
 
 - `apps/player` contains the responsive React interface and Phaser facility
   renderer.
 - `packages/game-domain` contains deterministic progression, economy, arrival,
-  patience, queue, result-routing, room/staff, save-migration, and FSRS adapter
-  rules without depending on React or Phaser.
-- `packages/clinical-content` contains only validated synthetic or clinically
-  unapproved prototype fixture content.
+  patience, queue, result-routing, Level 2 services/support automation,
+  room/staff, save-migration, and FSRS adapter rules without depending on
+  React or Phaser.
+- `packages/clinical-content` admits only exact named-clinician-approved
+  allowlisted Level 0-2 variants to the
+  `synthetic_unapproved_prototype` fixture; future Hospital and Level 3
+  variants are excluded.
 - `packages/balance-config` contains the centralized, validated, unpublished
-  Level 0/1 tuning fixture.
-- `tests/e2e` exercises the core Level 0-to-Level 1 browser path and
-  desktop/phone-width layout.
+  Level 0-2 tuning fixture.
+- `tests/e2e` exercises Level 2 progression, facility setup, persistence, and
+  desktop/phone browser evidence alongside the Level 0-1 path.
+
+Level 2 progression uses centralized prototype defaults: 300 current-level XP,
+effective satisfaction above 90%, operational Endoscopy and Peri-op/Recovery
+rooms, and Peri-op Nurse, Endoscopy Nurse, and Endoscopist. The Founder may
+cover endoscopy while limited to one place/task; dedicated staff is required at
+completion. Onsite imaging, phlebotomy, and endoscopy durations are editorial
+simulation values rather than clinical claims, and external fallbacks remain.
+The GLP-1 suite automates a bounded cash-only side stream only when reachable
+and staffed; it creates no XP, FSRS review, or patient encounter. Save schema
+v6 remains compatible.
 
 The local player keeps a versioned profile containing multiple named,
 independently resumable or archived campaigns in browser local storage. Each
@@ -127,8 +142,8 @@ Accepted repository organization:
 
 The original monorepo choice is recorded in
 [ADR 0005](docs/adr/0005-private-monorepo.md); its historical private-repository
-assumption is corrected by
-[ADR 0038](docs/adr/0038-public-repository-safety-clarification.md).
+assumption is corrected by the public-repository safety clarification in
+[Decision D-038](DECISION_LOG.md).
 
 Accepted backend and database foundation:
 

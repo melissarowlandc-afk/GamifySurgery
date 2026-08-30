@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Playable Level 2 expanded outpatient / endoscopy prototype
+
+- Added local playable Levels 0-2 with a Level 3 locked preview, the nine
+  Level 2 rooms, six Level 2 staff roles, centralized completion gate, and
+  original room/staff art.
+- Added editorial simulation workflows for onsite ultrasound, CT, phlebotomy,
+  and endoscopy while preserving external fallbacks; these timings are not
+  clinical claims.
+- Activated only exact named-clinician-approved Level 2 allowlisted variants;
+  Hospital and Level 3 variants remain excluded. The browser release remains
+  `synthetic_unapproved_prototype`, not a public learner release.
+- Added reachable, staffed GLP-1 suite automation, EVS, Training, Coffee, and
+  focused browser evidence while retaining schema-version-6 save compatibility.
+
 ### Long-session character movement stability
 
 - Deferred quarter-hour full-profile local autosaves to browser idle work while

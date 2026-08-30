@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { BuildPanel } from "./BuildPanel";
+import { BuildPanel, roomIconName } from "./BuildPanel";
+import { PIXEL_ICONS } from "../art/iconArt";
 import type {
   RoomBuildOptionView,
   SelectedRoomBuildView,
@@ -85,6 +86,31 @@ function renderBuildPanel({
 }
 
 describe("Build Mode toolbar", () => {
+  it("uses explicit, distinct catalog icons for every Level 2 room", () => {
+    const levelTwoRoomIds = [
+      "room.ultrasound",
+      "room.ct",
+      "room.phlebotomy",
+      "room.evs_closet",
+      "room.endoscopy",
+      "room.periop_recovery",
+      "room.training",
+      "room.coffee_kiosk",
+      "room.glp1_telehealth_suite",
+    ];
+    const iconNames = levelTwoRoomIds.map(roomIconName);
+
+    expect(new Set(iconNames).size).toBe(levelTwoRoomIds.length);
+    expect(new Set(iconNames.map((iconName) => PIXEL_ICONS[iconName].id)).size).toBe(
+      levelTwoRoomIds.length,
+    );
+    expect(iconNames).not.toContain("examination");
+    expect(roomIconName("room.glp1_telehealth_suite")).toBe("glp1Suite");
+    for (const iconName of iconNames) {
+      expect(PIXEL_ICONS[iconName].cells.length).toBeGreaterThan(0);
+    }
+  });
+
   it("uses the condensed header and requested construction-tool order", () => {
     const markup = renderBuildPanel();
 
@@ -138,6 +164,18 @@ describe("Build Mode toolbar", () => {
       /<button[^>]*aria-pressed="true"[^>]*>Build Hallway - \$35<\/button>/,
     );
     expect(hallwayMarkup).toMatch(
+      /<button[^>]*disabled=""[^>]*>Rotate<\/button>/,
+    );
+
+    const fixedRoomMarkup = renderBuildPanel({
+      options: roomOptions.map((room) => ({
+        ...room,
+        id: room.id === "room.examination" ? "room.xray" : room.id,
+        displayName: room.id === "room.examination" ? "X-ray Room" : room.displayName,
+        selected: room.id === "room.examination",
+      })),
+    });
+    expect(fixedRoomMarkup).toMatch(
       /<button[^>]*disabled=""[^>]*>Rotate<\/button>/,
     );
   });

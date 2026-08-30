@@ -1,0 +1,437 @@
+{
+  "contentRevision": "patients-v1-r6",
+  "sourceContract": {
+    "grid": [
+      6,
+      3
+    ],
+    "reference": "Photos for Codex/exec-e644a34b-c74e-4787-b593-d009b00768ac.png",
+    "strategy": "row actor detection + per-actor exterior-connected checker removal",
+    "poseSlots": {
+      "front-idle": [
+        0,
+        0
+      ],
+      "left-idle": [
+        1,
+        0
+      ],
+      "right-idle": [
+        2,
+        0
+      ],
+      "back-idle": [
+        3,
+        0
+      ],
+      "seated-front": [
+        4,
+        0
+      ],
+      "exam-table": [
+        5,
+        0
+      ],
+      "front-walk-a": [
+        0,
+        1
+      ],
+      "front-walk-b": [
+        1,
+        1
+      ],
+      "back-walk-a": [
+        2,
+        1
+      ],
+      "back-walk-b": [
+        3,
+        1
+      ],
+      "left-walk-a": [
+        0,
+        2
+      ],
+      "left-walk-b": [
+        1,
+        2
+      ],
+      "right-walk-a": [
+        4,
+        1
+      ],
+      "right-walk-b": [
+        5,
+        1
+      ],
+      "seated-left": [
+        2,
+        2
+      ],
+      "seated-right": [
+        3,
+        2
+      ],
+      "thumbnail": [
+        4,
+        2
+      ],
+      "portrait": [
+        5,
+        2
+      ]
+    },
+    "horizontalDirectionSlots": {
+      "right": {
+        "a": [
+          4,
+          1
+        ],
+        "b": [
+          5,
+          1
+        ]
+      },
+      "left": {
+        "a": "mirror:right-walk-a",
+        "b": "mirror:right-walk-b"
+      }
+    }
+  },
+  "horizontalWalkDerivation": {
+    "right-walk-b": {
+      "lowerLimbRowsFrom": "right-walk-b-source",
+      "upperBodyRowsFrom": "right-walk-a",
+      "upperBodyRows": [
+        0,
+        95
+      ],
+      "lowerBodyRows": [
+        96,
+        143
+      ]
+    },
+    "left-walk-a": {
+      "mirrorOf": "right-walk-a"
+    },
+    "left-walk-neutral": {
+      "mirrorOf": "right-walk-neutral"
+    },
+    "left-walk-b": {
+      "mirrorOf": "right-walk-b"
+    },
+    "right-walk-neutral": {
+      "legInsetOf": "right-walk-a",
+      "upperBodyRows": [
+        0,
+        95
+      ],
+      "lowerBodyRows": [
+        96,
+        143
+      ]
+    }
+  },
+  "columns": 5,
+  "rows": 10,
+  "mapCell": {
+    "width": 96,
+    "height": 144,
+    "floorAnchor": {
+      "x": 48,
+      "y": 136
+    },
+    "seatAnchor": {
+      "x": 48,
+      "y": 102
+    }
+  },
+  "thumbnailCell": {
+    "width": 96,
+    "height": 112
+  },
+  "portraitCell": {
+    "width": 192,
+    "height": 224
+  },
+  "variants": [
+    {
+      "id": "patient.adult.001",
+      "source": "patient-001.png",
+      "sourceSha256": "4bf7447780530f607b6d11f6405e87eaa2a98ef2cae3661c6d802eed6bc3e996"
+    },
+    {
+      "id": "patient.adult.002",
+      "source": "patient-002.png",
+      "sourceSha256": "86a110a7d99f50972c0f3bc82bca5d6afe714f41f42f2d838f9a688e9341a78f"
+    },
+    {
+      "id": "patient.adult.003",
+      "source": "patient-003.png",
+      "sourceSha256": "d55bf50156cb1ea2668f9755e0ba52a48e6ceb7c44555001b64fb4f464b7a790"
+    },
+    {
+      "id": "patient.adult.004",
+      "source": "patient-004.png",
+      "sourceSha256": "ddba801b93a82020799d0eb8fae07cb77340ea118e698d451a282bf6c9779f94"
+    },
+    {
+      "id": "patient.adult.005",
+      "source": "patient-005.png",
+      "sourceSha256": "bcd699464406759a1128f56b5435cfceb678b85ff1815b8ba7f3159ecbd07f87"
+    },
+    {
+      "id": "patient.adult.006",
+      "source": "patient-006.png",
+      "sourceSha256": "25566ad1dae8cc0a9f6468eb0037d3debec2ec7a463584ae37b5fff7ffd97f73"
+    },
+    {
+      "id": "patient.adult.007",
+      "source": "patient-007.png",
+      "sourceSha256": "ca5273781afbde5a4de5a78834b24284aa24233c28cf0488a972a15607232031"
+    },
+    {
+      "id": "patient.adult.008",
+      "source": "patient-008.png",
+      "sourceSha256": "58c92ba1d98ea261a6009873675a029d6684a53dff93ee0d6ed6e9616904b75c"
+    },
+    {
+      "id": "patient.adult.009",
+      "source": "patient-009.png",
+      "sourceSha256": "0b47d746bd8bd45172ee0f794c4d8893a1a56989291e6adba55739669086cf24"
+    },
+    {
+      "id": "patient.adult.010",
+      "source": "patient-010.png",
+      "sourceSha256": "f7847ebc00d4eb81de03ad30b174ac57943eaabf8630800d0e5bf2e9da30df16"
+    },
+    {
+      "id": "patient.adult.011",
+      "source": "patient-011.png",
+      "sourceSha256": "bc55e22e2214af55c795e0d1d44f98f4f767fde89f50bda7c6266c676c5f3d9d"
+    },
+    {
+      "id": "patient.adult.012",
+      "source": "patient-012.png",
+      "sourceSha256": "373fcfe22d6297c90e6d821094abf4c61738dbbf3e33643a23ece712eb9248d4"
+    },
+    {
+      "id": "patient.adult.013",
+      "source": "patient-013.png",
+      "sourceSha256": "c2e7986114a7968617c8bacfd5ec73bf55da9c514037f482d8e37a9531758666"
+    },
+    {
+      "id": "patient.adult.014",
+      "source": "patient-014.png",
+      "sourceSha256": "ef2c975342406c076ad0247ac09d071b865910113ce3e06861f18c4da22cd39e"
+    },
+    {
+      "id": "patient.adult.015",
+      "source": "patient-015.png",
+      "sourceSha256": "4080d642071de760763bb62073d8236ab47b84d9e886e23640f41ed837bb48f8"
+    },
+    {
+      "id": "patient.adult.016",
+      "source": "patient-016.png",
+      "sourceSha256": "969e4d631a58dfeb37be034c92559d007ff2f73d0b0c5ab6fe710b95402c1293"
+    },
+    {
+      "id": "patient.adult.017",
+      "source": "patient-017.png",
+      "sourceSha256": "7dfb92ee3661a68709ea355602d81573f7b5ca3bc4f9b69c5042a6a4718cb461"
+    },
+    {
+      "id": "patient.adult.018",
+      "source": "patient-018.png",
+      "sourceSha256": "4949ea82790bc1a6d2a96587a6978e84a8086a7db8fe07d3bcaef42c4fceb266"
+    },
+    {
+      "id": "patient.adult.019",
+      "source": "patient-019.png",
+      "sourceSha256": "2fc314f71f5ec61dd9b91d6061562dd2ed17c3c4ce9563b1413b3b0e38759d53"
+    },
+    {
+      "id": "patient.adult.020",
+      "source": "patient-020.png",
+      "sourceSha256": "30c25cb6ad44d22e449cf9abcc9f44c7024ee6b46cfa0ca8b43a6c926366533f"
+    },
+    {
+      "id": "patient.adult.021",
+      "source": "patient-021.png",
+      "sourceSha256": "f38bbc1dd9f64fda91fa4b9f64fa6e0deaab7f4c214e607ae3a1b9777f9b1aa5"
+    },
+    {
+      "id": "patient.adult.022",
+      "source": "patient-022.png",
+      "sourceSha256": "2196a5ef5920c153e84a938c8f1cc16a5c74188279f118ac33f81d780f2d1b6a"
+    },
+    {
+      "id": "patient.adult.023",
+      "source": "patient-023.png",
+      "sourceSha256": "954f9bea232fe8b53735e6c798c9a187c67f2a56c4fa52150cf5aec15e019d90"
+    },
+    {
+      "id": "patient.adult.024",
+      "source": "patient-024.png",
+      "sourceSha256": "d687093acb96b10c6183754770a1cf45f3ad11bf89d6b69dd40a98c7de75b406"
+    },
+    {
+      "id": "patient.adult.025",
+      "source": "patient-025.png",
+      "sourceSha256": "92aeb79c179a007271c9396df940045603dab4896f926416b9b198fa9e951f2f"
+    },
+    {
+      "id": "patient.adult.026",
+      "source": "patient-026.png",
+      "sourceSha256": "e40476443a17725ffef98c8648a4837d0612cbd5c61309cdeb6f41bf557fe661"
+    },
+    {
+      "id": "patient.adult.027",
+      "source": "patient-027.png",
+      "sourceSha256": "f060ca96bfc5a606110157791c827e5f4dba292882124adbeeb9c391b33663fd"
+    },
+    {
+      "id": "patient.adult.028",
+      "source": "patient-028.png",
+      "sourceSha256": "23460037fe8e162158d0e65ab81a83c9cfe3c22133b29d1edbe19b539f8b9dac"
+    },
+    {
+      "id": "patient.adult.029",
+      "source": "patient-029.png",
+      "sourceSha256": "b15795d91aa851a95f8c56b1608af220008589fc2338db7ccdd968b637d82a39"
+    },
+    {
+      "id": "patient.adult.030",
+      "source": "patient-030.png",
+      "sourceSha256": "5c390cf6e2e73c48b837b08b4ca2b1c0299a74fcf3122295686ae85e3db96fce"
+    },
+    {
+      "id": "patient.adult.031",
+      "source": "patient-031.png",
+      "sourceSha256": "bee6e4e19d77a8154d60119c9495a74fcf96d7988fe76bc6a83e6bb0ad57aa36"
+    },
+    {
+      "id": "patient.adult.032",
+      "source": "patient-032.png",
+      "sourceSha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670"
+    },
+    {
+      "id": "patient.adult.033",
+      "source": "patient-033.png",
+      "sourceSha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d"
+    },
+    {
+      "id": "patient.adult.034",
+      "source": "patient-034.png",
+      "sourceSha256": "15fac32fc24202c2aca2515674c09e6e51c21cf6101298b1a0ec33d0e049774d"
+    },
+    {
+      "id": "patient.adult.035",
+      "source": "patient-035.png",
+      "sourceSha256": "9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+    },
+    {
+      "id": "patient.adult.036",
+      "source": "patient-036.png",
+      "sourceSha256": "0c497964322f5e6159d21ceba2a3141936f70e351405dd684b6f67a2ac278c6f"
+    },
+    {
+      "id": "patient.adult.037",
+      "source": "patient-037.png",
+      "sourceSha256": "31b2e392a06211caf392d26f7146a2274121e14e01add10861b07e4cd05dbf58"
+    },
+    {
+      "id": "patient.adult.038",
+      "source": "patient-038.png",
+      "sourceSha256": "c85fc609d2acba05385bf1633dc6137e2b7528e81ed460bf59e8eceba273b0ff"
+    },
+    {
+      "id": "patient.adult.039",
+      "source": "patient-039.png",
+      "sourceSha256": "248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420"
+    },
+    {
+      "id": "patient.adult.040",
+      "source": "patient-040.png",
+      "sourceSha256": "9d1c2b20540988a1fe553fe8ceb456f3bd3c111e2979648e7cc3f56964b1d871"
+    },
+    {
+      "id": "patient.adult.041",
+      "source": "patient-041.png",
+      "sourceSha256": "8e73c5495b48843e55ea86bc80983361b019b84d588718a4a4b60c909008028a"
+    },
+    {
+      "id": "patient.adult.042",
+      "source": "patient-042.png",
+      "sourceSha256": "fecc06cf6812f49c796cb1b4d620aae6ea603ce43f5ab5586e9e0e3cdf5c8241"
+    },
+    {
+      "id": "patient.adult.043",
+      "source": "patient-043.png",
+      "sourceSha256": "1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636"
+    },
+    {
+      "id": "patient.adult.044",
+      "source": "patient-044.png",
+      "sourceSha256": "7ffacaaaa89fb66879500d383e6cc6e514c1a474bbe7fd0b38dcf5ff38e20e61"
+    },
+    {
+      "id": "patient.adult.045",
+      "source": "patient-045.png",
+      "sourceSha256": "772ca1b91300d0efd2c58f8b35effcd4d6cd127419fcdcd9d42b910709f0cdaf"
+    },
+    {
+      "id": "patient.adult.046",
+      "source": "patient-046.png",
+      "sourceSha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+    },
+    {
+      "id": "patient.adult.047",
+      "source": "patient-047.png",
+      "sourceSha256": "7b65b6fe19439998e07bc2e8c5efe478ff85c3f63659252cc9a5cc9311554d7f"
+    },
+    {
+      "id": "patient.adult.048",
+      "source": "patient-048.png",
+      "sourceSha256": "72df0908b47b8bd9b9bbd53138644e702b114a29fce13ceb1837db8a4376e385"
+    },
+    {
+      "id": "patient.adult.049",
+      "source": "patient-049.png",
+      "sourceSha256": "30f0cab073a53d0d5cbf827d17b489996f0e2cc49ef9b78b298e7664f5a68479"
+    },
+    {
+      "id": "patient.adult.050",
+      "source": "patient-050.png",
+      "sourceSha256": "daec8f3ffa89db4adcbb75ec98440c916605106c3b0879a921d81864d6c67548"
+    }
+  ],
+  "poses": {
+    "front-idle": "patients-front-idle-v1.png",
+    "left-idle": "patients-left-idle-v1.png",
+    "right-idle": "patients-right-idle-v1.png",
+    "back-idle": "patients-back-idle-v1.png",
+    "seated-front": "patients-seated-front-v1.png",
+    "exam-table": "patients-exam-table-v1.png",
+    "front-walk-a": "patients-front-walk-a-v1.png",
+    "front-walk-b": "patients-front-walk-b-v1.png",
+    "back-walk-a": "patients-back-walk-a-v1.png",
+    "back-walk-b": "patients-back-walk-b-v1.png",
+    "left-walk-a": "patients-left-walk-a-v1.png",
+    "left-walk-neutral": "patients-left-walk-neutral-v1.png",
+    "left-walk-b": "patients-left-walk-b-v1.png",
+    "right-walk-a": "patients-right-walk-a-v1.png",
+    "right-walk-neutral": "patients-right-walk-neutral-v1.png",
+    "right-walk-b": "patients-right-walk-b-v1.png",
+    "seated-left": "patients-seated-left-v1.png",
+    "seated-right": "patients-seated-right-v1.png",
+    "thumbnail": "patients-thumbnail-v1.png",
+    "portrait": "patients-portrait-v1.png"
+  },
+  "walkPhases": {
+    "a": "left-foot-forward",
+    "neutral": "feet-together",
+    "b": "right-foot-forward"
+  },
+  "decodedBytesEstimate": 60518400
+}

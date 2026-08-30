@@ -26,7 +26,7 @@ export type PrototypeAlertTargetKind =
 
 export type PrototypeAlertEligibility =
   | { kind: "always" }
-  | { kind: "facility_level"; levels: readonly (0 | 1)[] }
+  | { kind: "facility_level"; levels: readonly (0 | 1 | 2)[] }
   | { kind: "room_exists"; roomDefinitionId: string }
   | { kind: "object_exists"; objectId: "water_cooler" }
   | { kind: "checked_in_patient_exists" };
@@ -72,7 +72,7 @@ export interface PrototypeAlertDefinition {
   reviewRatings?: readonly (1 | 2)[];
   persistent: boolean;
   tickerEligible: boolean;
-  eligibleFacilityLevels: readonly (0 | 1)[];
+  eligibleFacilityLevels: readonly (0 | 1 | 2)[];
   consolidationKeyTemplate: string;
 }
 
@@ -97,10 +97,75 @@ type BasePrototypeAlertDefinition = Omit<
 >;
 
 /**
- * Level 0-1 definitions only. Future mechanics and their message bank remain
+ * Level 0-2 definitions only. Future mechanics and their message bank remain
  * documented in docs/features/alert-notification-flavor-system.md.
  */
 const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
+  {
+    id: "alert.facility.endoscopy-inoperable",
+    trigger: "endoscopy_inoperable",
+    priority: "informational",
+    titleTemplate: "Endoscopy setup incomplete",
+    bodyTemplate: "Endoscopy needs operational recovery space and assigned nurse coverage. Check access and assignments.",
+    targetKind: "build_mode",
+    clickAction: "open_build_mode",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [2],
+    consolidationKeyTemplate: "facility:endoscopy-inoperable",
+  },
+  {
+    id: "alert.facility.imaging-inoperable",
+    trigger: "imaging_inoperable",
+    priority: "informational",
+    titleTemplate: "Onsite imaging setup incomplete",
+    bodyTemplate: "Onsite ultrasound and CT need operational Imaging Control and an assigned Imaging Technician. Check access and assignments.",
+    targetKind: "staff_role",
+    clickAction: "open_staff_role",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [2],
+    consolidationKeyTemplate: "facility:imaging-inoperable",
+  },
+  {
+    id: "alert.facility.phlebotomy-inoperable",
+    trigger: "phlebotomy_inoperable",
+    priority: "informational",
+    titleTemplate: "Phlebotomy setup incomplete",
+    bodyTemplate: "Send-out collection needs an operational Phlebotomy Station and assigned Phlebotomist. Check access and assignments.",
+    targetKind: "staff_role",
+    clickAction: "open_staff_role",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [2],
+    consolidationKeyTemplate: "facility:phlebotomy-inoperable",
+  },
+  {
+    id: "alert.facility.evs-inoperable",
+    trigger: "evs_inoperable",
+    priority: "informational",
+    titleTemplate: "EVS setup incomplete",
+    bodyTemplate: "EVS automation needs an operational closet and assigned EVS Worker. Check access and assignments.",
+    targetKind: "staff_role",
+    clickAction: "open_staff_role",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [2],
+    consolidationKeyTemplate: "facility:evs-inoperable",
+  },
+  {
+    id: "alert.facility.glp1-inoperable",
+    trigger: "glp1_inoperable",
+    priority: "informational",
+    titleTemplate: "GLP-1 automation unavailable",
+    bodyTemplate: "The telehealth suite needs operational NP coverage before automation can begin. Check access and assignments.",
+    targetKind: "staff_role",
+    clickAction: "open_staff_role",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [2],
+    consolidationKeyTemplate: "facility:glp1-inoperable",
+  },
   {
     id: "alert.patient.arrived",
     trigger: "patient_arrived",
@@ -529,6 +594,11 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
 ] as const satisfies readonly BasePrototypeAlertDefinition[];
 
 const GUIDANCE_ALERT_IDS = new Set<string>([
+  "alert.facility.endoscopy-inoperable",
+  "alert.facility.imaging-inoperable",
+  "alert.facility.phlebotomy-inoperable",
+  "alert.facility.evs-inoperable",
+  "alert.facility.glp1-inoperable",
   "alert.staff.receptionist-recommended",
   "alert.facility.onsite-imaging-requested",
   "alert.staff.imaging-technician-needed",
@@ -1253,7 +1323,7 @@ export function renderPrototypeAlert(
 }
 
 export interface PrototypeAlertEligibilityContext {
-  facilityLevel: 0 | 1;
+  facilityLevel: 0 | 1 | 2;
   roomDefinitionIds: ReadonlySet<string>;
   objectIds: ReadonlySet<string>;
   hasCheckedInPatient: boolean;

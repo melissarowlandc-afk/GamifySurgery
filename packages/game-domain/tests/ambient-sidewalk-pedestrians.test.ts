@@ -38,6 +38,7 @@ describe("ambient sidewalk pedestrians", () => {
     expect(Object.keys(state.encounters)).toHaveLength(0);
     expect(state.environment.ambientPedestrians).toHaveLength(1);
     const pedestrian = state.environment.ambientPedestrians[0]!;
+    expect(pedestrian.appearance.patientIdentityId).toMatch(/^patient\.adult\.\d{3}$/);
     const grid = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
     expect(pedestrian.path.every((point) => point.y === grid.gridHeight)).toBe(
       true,
@@ -57,6 +58,9 @@ describe("ambient sidewalk pedestrians", () => {
     );
     expect(frozen.environment.nextAmbientPedestrianTick).toBe(
       state.environment.nextAmbientPedestrianTick,
+    );
+    expect(frozen.environment.ambientPedestrians[0]!.appearance.patientIdentityId).toBe(
+      pedestrian.appearance.patientIdentityId,
     );
 
     state.environment.nextAmbientPedestrianTick = Number.MAX_SAFE_INTEGER;
@@ -102,5 +106,31 @@ describe("ambient sidewalk pedestrians", () => {
     paused.paused = false;
     const resumed = tick(paused);
     expect(resumed.environment.ambientPedestrians).toHaveLength(1);
+  });
+
+  it("upgrades a legacy saved passer to one stable roster identity without perturbing encounters", () => {
+    let state = createInitialGameState(undefined, {
+      campaignId: "campaign.legacy-ambient-roster-seed",
+      campaignSeed: "legacy-ambient-roster-seed",
+      createdAtRealMs: 0,
+    });
+    state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+    state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
+    state.environment.nextAmbientPedestrianTick = 1;
+    state = tick(state);
+    const raw = JSON.parse(serializeGameState(state)) as {
+      encounters: Record<string, { patientAppearance: { patientIdentityId?: string } }>;
+      environment: { ambientPedestrians: Array<{ appearance: { patientIdentityId?: string } }> };
+    };
+    const encounterIdentityBefore = Object.values(raw.encounters)[0]?.patientAppearance.patientIdentityId;
+    delete raw.environment.ambientPedestrians[0]!.appearance.patientIdentityId;
+
+    const first = deserializeGameState(JSON.stringify(raw));
+    const second = deserializeGameState(JSON.stringify(raw));
+    const firstPasser = first.environment.ambientPedestrians[0]!;
+    const secondPasser = second.environment.ambientPedestrians[0]!;
+    expect(firstPasser.appearance.patientIdentityId).toMatch(/^patient\.adult\.\d{3}$/);
+    expect(secondPasser.appearance.patientIdentityId).toBe(firstPasser.appearance.patientIdentityId);
+    expect(Object.values(first.encounters)[0]!.patientAppearance.patientIdentityId).toBe(encounterIdentityBefore);
   });
 });

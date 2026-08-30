@@ -103,6 +103,20 @@ describe("route motion interpolation", () => {
     expect(getRouteTilesPerSecond(2, 1_000, 4)).toBe(8);
   });
 
+  it("retains a render-only right-facing signal through a horizontal route and stop", () => {
+    const path = [{ x: 1, y: 2 }, { x: 2, y: 2 }];
+    let track = syncRouteMotion(undefined, {
+      location: path[0], path, pathIndex: 0, lookaheadPathNodes: 1,
+    })!;
+    expect(sampleRouteMotion(track).rightFacing).toBe(true);
+    track = advanceRouteMotion(track, 1_000, 1);
+    expect(sampleRouteMotion(track).rightFacing).toBe(true);
+    const leftTrack = syncRouteMotion(undefined, {
+      location: path[1], path: [...path].reverse(), pathIndex: 0, lookaheadPathNodes: 1,
+    })!;
+    expect(sampleRouteMotion(leftTrack).rightFacing).toBe(false);
+  });
+
   it.each([1, 2, 4] as const)(
     "does not stop between logical ticks when the %sx timer arrives late",
     (simulationSpeed) => {

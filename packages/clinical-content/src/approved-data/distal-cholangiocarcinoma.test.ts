@@ -9,14 +9,14 @@ describe("owner row 111 distal cholangiocarcinoma package", () => {
     expect(ROW_111_QUESTION_VARIANTS).toHaveLength(5);
     expect(ROW_111_APPROVED_ENCOUNTER_BLUEPRINTS).toHaveLength(4);
   });
-  it("keeps L2 workup deferred with explicit editorial timing", () => {
+  it("activates the approved two-step L2 workup with explicit editorial timing", () => {
     const deferred = ROW_111_APPROVED_ENCOUNTER_BLUEPRINTS.slice(0, 2);
     for (const blueprint of deferred) {
       expect(blueprint.releasePointId).toBe("release.l2.endoscopy");
       expect(blueprint.requiredCapabilityIds).toEqual(["capability.endoscopy"]);
       expect("editorialSimulation" in blueprint && blueprint.editorialSimulation).toEqual({ resultDelayMinutes: 480, basis: "editorial_simulation" });
     }
-    expect(ROW_111_APPROVED_BACKLOG.currentGameEligibility).toBe("partially_active_and_partially_deferred");
+    expect(ROW_111_APPROVED_BACKLOG.currentGameEligibility).toBe("level_0_and_approved_level_2_pathway_active");
     expect(deferred[0]?.intermediateDecisionBehavior).toBe("corrective_forward");
   });
   it("uses shared hospital-referral procedure wording without referral labels", () => {

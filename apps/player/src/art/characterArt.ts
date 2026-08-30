@@ -17,7 +17,11 @@ export type CharacterPose =
   | "idle"
   | "walk-a"
   | "walk-b"
+  | "walk-neutral"
   | "seated"
+  | "working"
+  | "interaction"
+  | "jump-recovery"
   | "star-jump";
 
 export interface CharacterFrameOptions {
@@ -36,8 +40,14 @@ export interface ResolvedCharacterAppearance
 
 const MAP_WIDTH = 24;
 const MAP_HEIGHT = 36;
-const PORTRAIT_WIDTH = 38;
-const PORTRAIT_HEIGHT = 42;
+// The authoring grid stays compact so the shared head/body routines remain
+// readable. Portraits are then rendered onto a larger, independent canvas
+// with additional face and clothing pixels; they are never enlarged map
+// sprites.
+const PORTRAIT_SOURCE_WIDTH = 38;
+const PORTRAIT_SOURCE_HEIGHT = 42;
+export const CHARACTER_PORTRAIT_WIDTH = 56;
+export const CHARACTER_PORTRAIT_HEIGHT = 64;
 
 export function resolveCharacterAppearance(
   appearance: PixelAppearanceDescriptor,
@@ -81,6 +91,18 @@ function outfitColors(
         trim: "lightSage",
         highlight: "sage",
       };
+    case "periop_nurse":
+      return { primary: "lightSage", secondary: "moss", trim: "paper", highlight: "cream" };
+    case "endoscopy_nurse":
+      return { primary: "sage", secondary: "deepOlive", trim: "highlight", highlight: "paper" };
+    case "endoscopist":
+      return { primary: "cream", secondary: "deepOlive", trim: "moss", highlight: "paper" };
+    case "phlebotomist":
+      return { primary: "warmGray", secondary: "charcoal", trim: "lightSage", highlight: "paper" };
+    case "evs_worker":
+      return { primary: "moss", secondary: "charcoal", trim: "highlight", highlight: "lightSage" };
+    case "glp1_np":
+      return { primary: "paper", secondary: "sage", trim: "deepOlive", highlight: "cream" };
     default:
       return {
         primary: selected,
@@ -112,6 +134,28 @@ function skinColors(
 function hairColors(
   appearance: ResolvedCharacterAppearance,
 ): { base: PixelColorKey; highlight: PixelColorKey } {
+  const headVariant = numericHeadVariant(appearance);
+  // Human presets use an authored, natural hair palette keyed by their
+  // stable head identity. The descriptor's old shade fields remain intact
+  // for save compatibility; non-human variants retain their bespoke colors.
+  if (headVariant < 20) {
+    const humanTones: readonly {
+      base: PixelColorKey;
+      highlight: PixelColorKey;
+    }[] = [
+      { base: "hairBlack", highlight: "charcoal" },
+      { base: "hairBrown", highlight: "moss" },
+      { base: "hairRed", highlight: "paper" },
+      { base: "hairGray", highlight: "highlight" },
+      { base: "hairGray", highlight: "paper" },
+      { base: "hairBlond", highlight: "highlight" },
+      { base: "hairBlack", highlight: "moss" },
+      { base: "hairBrown", highlight: "paper" },
+      { base: "hairGray", highlight: "highlight" },
+      { base: "hairBlack", highlight: "charcoal" },
+    ];
+    return humanTones[headVariant % 10]!;
+  }
   const highlights: readonly PixelColorKey[] = [
     "highlight",
     "lightSage",
@@ -185,6 +229,45 @@ function seatedFrame(
   return canvas.frame();
 }
 
+/** Draw a compact clipboard and forward hands without changing the standing
+ * silhouette or its floor contact. These are authored overlays rather than a
+ * transformed/animated substitute for the idle frame. */
+function workingFrame(
+  source: PixelFrame,
+  direction: CharacterDirection,
+  skin: PixelColorKey,
+): PixelFrame {
+  const canvas = new PixelCanvas(source.width, source.height);
+  source.cells.forEach((cell) => canvas.set(cell.x, cell.y, cell.color));
+  const clipboardX = direction === "side" ? 15 : 13;
+  canvas.outlineRect(clipboardX, 22, 5, 7, "paper");
+  canvas.rect(clipboardX + 1, 23, 3, 1, "highlight");
+  canvas.rect(clipboardX + 1, 25, 3, 1, "deepOlive");
+  canvas.set(clipboardX + 2, 21, "ink");
+  canvas.rect(clipboardX - 2, 27, 3, 2, skin);
+  return canvas.frame();
+}
+
+/** A short, readable hand-off/praise gesture for the founder's live tasks. */
+function interactionFrame(
+  source: PixelFrame,
+  direction: CharacterDirection,
+  skin: PixelColorKey,
+): PixelFrame {
+  const canvas = new PixelCanvas(source.width, source.height);
+  source.cells.forEach((cell) => canvas.set(cell.x, cell.y, cell.color));
+  if (direction === "side") {
+    canvas.line(15, 24, 21, 27, "charcoal");
+    canvas.rect(20, 26, 3, 2, skin);
+    canvas.set(22, 25, "highlight");
+  } else {
+    canvas.line(15, 24, 20, 26, "charcoal");
+    canvas.rect(19, 25, 3, 2, skin);
+    canvas.set(21, 24, "highlight");
+  }
+  return canvas.frame();
+}
+
 function numericHeadVariant(
   appearance: ResolvedCharacterAppearance,
 ): number {
@@ -221,6 +304,12 @@ function isNonhumanBody(
   appearance: ResolvedCharacterAppearance,
 ): boolean {
   return numericBodyVariant(appearance) >= 20;
+}
+
+function isFeminineBareScalp(
+  appearance: ResolvedCharacterAppearance,
+): boolean {
+  return numericHeadVariant(appearance) === 14;
 }
 
 function drawPixelEye(
@@ -290,6 +379,12 @@ function drawFeminineFrontHair(
 ): void {
   const hair = hairColors(appearance);
   const variant = numericHeadVariant(appearance) - 10;
+  if (isFeminineBareScalp(appearance)) {
+    const skin = skinColors(appearance);
+    canvas.rect(x + 2, y + 1, width - 4, 1, skin.highlight);
+    canvas.set(x + width - 3, y + 2, skin.shadow);
+    return;
+  }
   switch (variant) {
     case 0: // Shoulder-length waves.
       canvas.rect(x + 1, y - 2, width - 2, 5, hair.base);
@@ -445,7 +540,9 @@ function drawFeminineSideHead(
   drawPixelEye(canvas, 15, 11);
   canvas.set(19, 14, skin.shadow);
   canvas.rect(16, 16, 3, 1, "deepOlive");
-  if (variant === 9) {
+  if (variant === 4) {
+    canvas.rect(8, 4, 8, 1, skin.highlight);
+  } else if (variant === 9) {
     canvas.rect(8, 3, 10, 6, "paper");
     canvas.line(9, 4, 17, 7, "moss");
   } else {
@@ -482,6 +579,11 @@ function drawFeminineBackHead(
   const hair = hairColors(appearance);
   const variant = numericHeadVariant(appearance) - 10;
   drawRoundedFace(canvas, 7, 5, 10, 13, skin.base, skin.highlight, skin.shadow);
+  if (variant === 4) {
+    canvas.rect(8, 4, 8, 1, skin.highlight);
+    canvas.rect(9, 5, 6, 1, skin.base);
+    return;
+  }
   if (variant === 9) {
     canvas.rect(7, 3, 10, 8, "paper");
     canvas.line(8, 4, 16, 8, "moss");
@@ -1237,7 +1339,9 @@ function drawFeminineSideBody(
   } else {
     canvas.line(9, top + 2, 17, top + 7, secondary);
   }
-  const armX = pose === "walk-a" ? 6 : 17;
+  // Neutral/idle must keep the static arm placement. Do not let the default
+  // branch inherit either lateral stride extreme.
+  const armX = pose === "walk-a" ? 6 : pose === "walk-b" ? 17 : 17;
   canvas.outlineRect(armX, top + 2, 4, 9, primary);
   canvas.rect(armX, top + 10, 3, 2, skin.shadow);
   const stride = pose === "walk-a" ? 2 : pose === "walk-b" ? -2 : 0;
@@ -1468,6 +1572,25 @@ function drawMapFrontBody(
     canvas.line(15, torsoTop + 1, 12, torsoTop + 4, trim);
     canvas.rect(torsoX + 2, torsoTop + 6, bodyWidth - 4, 1, secondary);
     canvas.outlineRect(torsoX + bodyWidth - 5, torsoTop + 3, 3, 3, "highlight");
+  } else if (appearance.roleStyle === "periop_nurse") {
+    canvas.rect(11, torsoTop + 2, 2, torsoHeight - 3, "paper");
+    canvas.line(torsoX + 2, torsoTop + 4, torsoX + 5, torsoTop + 6, trim);
+  } else if (appearance.roleStyle === "endoscopy_nurse") {
+    canvas.rect(torsoX + 2, torsoTop + 5, bodyWidth - 4, 1, trim);
+    canvas.outlineRect(torsoX + bodyWidth - 5, torsoTop + 3, 3, 4, "paper");
+  } else if (appearance.roleStyle === "endoscopist") {
+    canvas.rect(11, torsoTop + 3, 2, torsoHeight - 4, "paper");
+    canvas.line(9, torsoTop + 2, 11, torsoTop + 7, secondary);
+    canvas.line(15, torsoTop + 2, 13, torsoTop + 7, secondary);
+  } else if (appearance.roleStyle === "phlebotomist") {
+    canvas.outlineRect(torsoX + bodyWidth - 5, torsoTop + 3, 3, 3, "paper");
+    canvas.rect(torsoX + 2, torsoTop + 6, bodyWidth - 4, 1, trim);
+  } else if (appearance.roleStyle === "evs_worker") {
+    canvas.line(torsoX + 2, torsoTop + 2, torsoX + 5, torsoTop + 7, trim);
+    canvas.line(torsoX + bodyWidth - 2, torsoTop + 2, torsoX + bodyWidth - 5, torsoTop + 7, trim);
+  } else if (appearance.roleStyle === "glp1_np") {
+    canvas.rect(11, torsoTop + 3, 2, torsoHeight - 4, "cream");
+    canvas.rect(torsoX + bodyWidth - 5, torsoTop + 4, 3, 2, secondary);
   } else if (appearance.outfitStyle === "striped") {
     canvas.rect(torsoX + 1, torsoTop + 4, bodyWidth - 2, 1, secondary);
     canvas.rect(torsoX + 1, torsoTop + 7, bodyWidth - 2, 1, secondary);
@@ -1666,7 +1789,7 @@ function drawSideBody(
   if (appearance.bodyVariant === 8 || appearance.bodyVariant === 9) {
     canvas.rect(15, top + 5, 2, 3, highlight);
   }
-  const swing = pose === "walk-b" ? -1 : 1;
+  const swing = pose === "walk-a" ? 1 : pose === "walk-b" ? -1 : 0;
   canvas.outlineRect(
     swing < 0 ? 6 : 17,
     top + 2,
@@ -2023,7 +2146,7 @@ function drawLegacyPortraitHeadForExtendedPair(
         ? 23
         : 21;
   const faceHeight = appearance.faceStyle === "long" ? 27 : 25;
-  const faceX = Math.floor((PORTRAIT_WIDTH - faceWidth) / 2);
+  const faceX = Math.floor((PORTRAIT_SOURCE_WIDTH - faceWidth) / 2);
   const faceY = appearance.faceStyle === "long" ? 3 : 5;
   drawRoundedFace(
     canvas,
@@ -2048,7 +2171,7 @@ function drawLegacyPortraitHeadForExtendedPair(
   canvas.set(rightEye + 1, eyeY, "highlight");
   canvas.rect(leftEye - 1, eyeY - 4, 4, 1, "deepOlive");
   canvas.rect(rightEye, eyeY - 4, 4, 1, "deepOlive");
-  const center = Math.floor(PORTRAIT_WIDTH / 2);
+  const center = Math.floor(PORTRAIT_SOURCE_WIDTH / 2);
   canvas.line(center, eyeY + 2, center - 1, eyeY + 6, skin.shadow);
   canvas.rect(center - 1, eyeY + 6, 3, 1, "skinDark");
   canvas.rect(center - 4, faceY + faceHeight - 4, 8, 1, "deepOlive");
@@ -2122,6 +2245,12 @@ function drawFemininePortraitHair(
 ): void {
   const hair = hairColors(appearance);
   const variant = numericHeadVariant(appearance) - 10;
+  if (isFeminineBareScalp(appearance)) {
+    const skin = skinColors(appearance);
+    canvas.rect(x + 4, y + 1, width - 8, 2, skin.highlight);
+    canvas.set(x + width - 5, y + 3, skin.shadow);
+    return;
+  }
   if (variant === 9) {
     canvas.rect(x, y - 3, width, 10, "paper");
     canvas.rect(x + 4, y - 7, width - 8, 5, "lightSage");
@@ -2359,7 +2488,7 @@ function drawNonhumanPortraitHead(
 function getExtendedCharacterPortraitFrame(
   appearance: ResolvedCharacterAppearance,
 ): PixelFrame {
-  const canvas = new PixelCanvas(PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
+  const canvas = new PixelCanvas(PORTRAIT_SOURCE_WIDTH, PORTRAIT_SOURCE_HEIGHT);
   drawExtendedPortraitBody(canvas, appearance);
   if (isNonhumanHead(appearance)) {
     drawNonhumanPortraitHead(canvas, appearance);
@@ -2371,7 +2500,7 @@ function getExtendedCharacterPortraitFrame(
   return canvas.frame();
 }
 
-export function getCharacterPortraitFrame(
+function getCharacterPortraitSourceFrame(
   sourceAppearance: PixelAppearanceDescriptor,
   roleStyle?: PixelRoleStyle,
 ): PixelFrame {
@@ -2385,7 +2514,7 @@ export function getCharacterPortraitFrame(
   ) {
     return getExtendedCharacterPortraitFrame(appearance);
   }
-  const canvas = new PixelCanvas(PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
+  const canvas = new PixelCanvas(PORTRAIT_SOURCE_WIDTH, PORTRAIT_SOURCE_HEIGHT);
   const skin = skinColors(appearance);
   const { primary, secondary, trim, highlight } = outfitColors(appearance);
   const faceWidth =
@@ -2395,7 +2524,7 @@ export function getCharacterPortraitFrame(
         ? 23
         : 21;
   const faceHeight = appearance.faceStyle === "long" ? 27 : 25;
-  const faceX = Math.floor((PORTRAIT_WIDTH - faceWidth) / 2);
+  const faceX = Math.floor((PORTRAIT_SOURCE_WIDTH - faceWidth) / 2);
   const faceY = appearance.faceStyle === "long" ? 3 : 5;
 
   // Bust and shoulders are portrait-specific art, not a scaled map sprite.
@@ -2477,7 +2606,7 @@ export function getCharacterPortraitFrame(
   canvas.set(rightEye + 1, eyeY, "highlight");
   canvas.rect(leftEye - 1, eyeY - 4, 4, 1, "deepOlive");
   canvas.rect(rightEye, eyeY - 4, 4, 1, "deepOlive");
-  const center = Math.floor(PORTRAIT_WIDTH / 2);
+  const center = Math.floor(PORTRAIT_SOURCE_WIDTH / 2);
   canvas.line(center, eyeY + 2, center - 1, eyeY + 6, skin.shadow);
   canvas.rect(center - 1, eyeY + 6, 3, 1, "skinDark");
   canvas.rect(center - 4, faceY + faceHeight - 4, 8, 1, "deepOlive");
@@ -2538,6 +2667,131 @@ export function getCharacterPortraitFrame(
   return canvas.frame();
 }
 
+function drawDetailedPortraitRefinement(
+  canvas: PixelCanvas,
+  appearance: ResolvedCharacterAppearance,
+): void {
+  const skin = skinColors(appearance);
+  const hair = hairColors(appearance);
+  const outfit = outfitColors(appearance);
+  const head = numericHeadVariant(appearance);
+
+  // The source portrait establishes the same saved identity as the map
+  // sprite. These finer marks are deliberately portrait-only: they provide
+  // readable eyes, hair texture, collars, seams, and role detail at the
+  // larger native grid rather than scaling a walking frame.
+  if (!isNonhumanHead(appearance)) {
+    const faceLeft = 13;
+    const faceRight = 42;
+    const eyeY = 27;
+    canvas.rect(20, eyeY, 5, 3, "ink");
+    canvas.rect(32, eyeY, 5, 3, "ink");
+    canvas.set(22, eyeY, "highlight");
+    canvas.set(34, eyeY, "highlight");
+    canvas.rect(18, eyeY - 4, 7, 1, "deepOlive");
+    canvas.rect(32, eyeY - 4, 7, 1, "deepOlive");
+    canvas.line(28, eyeY + 3, 27, eyeY + 8, skin.shadow);
+    canvas.rect(26, eyeY + 8, 4, 1, "skinDark");
+    canvas.rect(24, 39, 8, 1, "deepOlive");
+    canvas.rect(25, 40, 6, 1, skin.shadow);
+    canvas.set(faceLeft + 3, 34, skin.highlight);
+    canvas.set(faceRight - 3, 34, skin.shadow);
+
+    if (appearance.hairStyle !== "none") {
+      // A compact, descriptor-driven hairline makes the portrait silhouettes
+      // distinct while retaining the source frame's larger hairstyle shape.
+      canvas.rect(18, 7, 20, 3, hair.base);
+      canvas.rect(21, 6, 13, 1, hair.highlight);
+      if (appearance.hairStyle === "parted") {
+        canvas.line(28, 7, 28, 13, "skinLight");
+      } else if (appearance.hairStyle === "curly") {
+        for (let x = 16; x <= 40; x += 5) {
+          canvas.ellipse(x, 10 + ((x / 5) % 2), 2, 2, hair.base);
+          canvas.set(x - 1, 8, hair.highlight);
+        }
+      } else if (appearance.hairStyle === "bun") {
+        canvas.ellipse(42, 10, 4, 4, hair.base);
+        canvas.set(44, 8, hair.highlight);
+      } else {
+        canvas.rect(15, 10, 3, 12, hair.base);
+        canvas.rect(38, 10, 3, 11, hair.base);
+      }
+    } else {
+      canvas.rect(21, 8, 14, 2, skin.highlight);
+    }
+
+    // Small, deterministic distinguishing details avoid a generic bust even
+    // when two presets share a hair family.
+    if (head % 5 === 1) {
+      canvas.set(18, 35, "skinDark");
+      canvas.set(20, 36, "skinDark");
+    } else if (head % 5 === 2) {
+      canvas.set(40, 35, "skinDark");
+      canvas.set(38, 36, "skinDark");
+    } else if (head % 5 === 3) {
+      canvas.set(15, 31, "highlight");
+      canvas.set(41, 31, "highlight");
+    } else if (head % 5 === 4) {
+      canvas.set(15, 34, outfit.highlight);
+    }
+  } else {
+    // Nonhuman portraits retain their bespoke source silhouettes, with a few
+    // close-up glints and garment seams instead of being humanized.
+    canvas.set(22, 25, "highlight");
+    canvas.set(34, 25, "highlight");
+    canvas.rect(25, 38, 6, 1, "deepOlive");
+  }
+
+  canvas.line(15, 48, 28, 61, outfit.trim);
+  canvas.line(41, 48, 29, 61, outfit.trim);
+  canvas.rect(27, 49, 3, 12, outfit.secondary);
+  canvas.rect(12, 56, 9, 1, outfit.highlight);
+  canvas.rect(35, 56, 9, 1, outfit.highlight);
+  canvas.outlineRect(37, 52, 5, 6, outfit.secondary, "ink");
+  canvas.set(39, 53, "paper");
+  if (appearance.roleStyle === "founder") {
+    canvas.line(18, 49, 20, 61, "deepOlive");
+    canvas.line(38, 49, 36, 61, "deepOlive");
+    canvas.ellipse(28, 60, 2, 2, "deepOlive");
+  }
+}
+
+function getDetailedPortraitFrame(
+  source: PixelFrame,
+  appearance: ResolvedCharacterAppearance,
+): PixelFrame {
+  const canvas = new PixelCanvas(
+    CHARACTER_PORTRAIT_WIDTH,
+    CHARACTER_PORTRAIT_HEIGHT,
+  );
+  for (const cell of source.cells) {
+    const left = Math.floor((cell.x * CHARACTER_PORTRAIT_WIDTH) / source.width);
+    const right = Math.max(
+      left + 1,
+      Math.floor(((cell.x + 1) * CHARACTER_PORTRAIT_WIDTH) / source.width),
+    );
+    const top = Math.floor((cell.y * CHARACTER_PORTRAIT_HEIGHT) / source.height);
+    const bottom = Math.max(
+      top + 1,
+      Math.floor(((cell.y + 1) * CHARACTER_PORTRAIT_HEIGHT) / source.height),
+    );
+    canvas.rect(left, top, right - left, bottom - top, cell.color);
+  }
+  drawDetailedPortraitRefinement(canvas, appearance);
+  return canvas.frame();
+}
+
+export function getCharacterPortraitFrame(
+  sourceAppearance: PixelAppearanceDescriptor,
+  roleStyle?: PixelRoleStyle,
+): PixelFrame {
+  const appearance = resolveCharacterAppearance(sourceAppearance, roleStyle);
+  return getDetailedPortraitFrame(
+    getCharacterPortraitSourceFrame(sourceAppearance, roleStyle),
+    appearance,
+  );
+}
+
 export function getCharacterPixelFrame(
   sourceAppearance: PixelAppearanceDescriptor,
   options: CharacterFrameOptions = {},
@@ -2562,9 +2816,16 @@ export function getCharacterPixelFrame(
     drawBackHead(canvas, appearance);
   }
   const frame = canvas.frame();
-  return pose === "seated"
-    ? seatedFrame(frame, direction)
-    : frame;
+  if (pose === "seated") {
+    return seatedFrame(frame, direction);
+  }
+  if (pose === "working") {
+    return workingFrame(frame, direction, skinColors(appearance).base);
+  }
+  if (pose === "interaction") {
+    return interactionFrame(frame, direction, skinColors(appearance).base);
+  }
+  return frame;
 }
 
 export function characterAppearanceSignature(

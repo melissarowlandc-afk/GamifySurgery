@@ -22,7 +22,11 @@ import {
   deterministicInteger,
 } from "./randomness";
 import { createInitialGameState } from "./reducer";
-import { getRoomDefinition, getStaffRoleDefinition } from "./selectors";
+import {
+  getOperationalGlp1AutomationCapacity,
+  getRoomDefinition,
+  getStaffRoleDefinition,
+} from "./selectors";
 import { getEmployeeHomeLocation } from "./staff";
 import { getDefaultDoorOffset } from "./doors";
 import type {
@@ -493,7 +497,13 @@ function isPixelAppearance(
       value.roleStyle === "founder" ||
       value.roleStyle === "patient" ||
       value.roleStyle === "receptionist" ||
-      value.roleStyle === "imaging_technician")
+      value.roleStyle === "imaging_technician" ||
+      value.roleStyle === "periop_nurse" ||
+      value.roleStyle === "endoscopy_nurse" ||
+      value.roleStyle === "endoscopist" ||
+      value.roleStyle === "phlebotomist" ||
+      value.roleStyle === "evs_worker" ||
+      value.roleStyle === "glp1_np")
   );
 }
 
@@ -933,6 +943,32 @@ function normalizePendingResult(
       candidate.patientTravel,
       context.balanceRelease.facility.characterTravelTilesPerTick,
     ),
+    timingPhases: Array.isArray(candidate.timingPhases)
+      ? candidate.timingPhases.filter(isRecord).map((phase) => ({ id: typeof phase.id === "string" ? phase.id : "phase.legacy", durationTicks: typeof phase.durationTicks === "number" ? phase.durationTicks : 1, resourceBound: phase.resourceBound === true, startsAtTick: typeof phase.startsAtTick === "number" ? phase.startsAtTick : 0, endsAtTick: typeof phase.endsAtTick === "number" ? phase.endsAtTick : 1 }))
+      : [],
+    resourceReservations: Array.isArray(candidate.resourceReservations)
+      ? candidate.resourceReservations.filter(isRecord).flatMap((resource) =>
+          typeof resource.roomDefinitionId === "string" &&
+          (typeof resource.staffRoleDefinitionId === "string" || resource.staffRoleDefinitionId === null)
+            ? [{ roomDefinitionId: resource.roomDefinitionId, staffRoleDefinitionId: resource.staffRoleDefinitionId }]
+            : [],
+        )
+      : [],
+    providerReservation: isRecord(candidate.providerReservation)
+      ? candidate.providerReservation.kind === "founder"
+        ? { kind: "founder" }
+        : candidate.providerReservation.kind === "employee" &&
+            typeof candidate.providerReservation.employeeId === "string" &&
+            typeof candidate.providerReservation.staffRoleDefinitionId ===
+              "string"
+          ? {
+              kind: "employee",
+              employeeId: candidate.providerReservation.employeeId,
+              staffRoleDefinitionId:
+                candidate.providerReservation.staffRoleDefinitionId,
+            }
+          : null
+      : null,
   };
 }
 
@@ -1069,6 +1105,11 @@ function normalizeEncounter(
     frozenDemographics?.sexLabel === "Male" ||
     frozenDemographics?.sexLabel === "Not specified"
       ? frozenDemographics.sexLabel
+      : undefined;
+  const patientAgeYears =
+    typeof frozenDemographics?.ageYears === "number" &&
+    Number.isInteger(frozenDemographics.ageYears)
+      ? frozenDemographics.ageYears
       : undefined;
   const rawNodes = Array.isArray(frozenCase.decisionNodes)
     ? frozenCase.decisionNodes.filter(isRecord)
@@ -1300,11 +1341,13 @@ function normalizeEncounter(
         ? normalizePatientAppearanceForSex(
             candidate.patientAppearance,
             patientSexLabel,
+            patientAgeYears,
+            `${campaignSeed}:${encounterId}:legacy-patient-roster.v1`,
           )
         : createPatientPixelAppearance(
             campaignSeed,
             encounterId,
-            patientSexLabel,
+            { sexLabel: patientSexLabel, ageYears: patientAgeYears },
           ),
     patientSatisfaction,
     idleWaitingSinceTick,
@@ -1493,7 +1536,9 @@ function migrateVersionTwo(
   if (
     typeof parsed.campaignId !== "string" ||
     typeof parsed.campaignSeed !== "string" ||
-    (parsed.facilityLevel !== 0 && parsed.facilityLevel !== 1) ||
+    (parsed.facilityLevel !== 0 &&
+      parsed.facilityLevel !== 1 &&
+      parsed.facilityLevel !== 2) ||
     !isRecord(parsed.encounters) ||
     !isRecord(parsed.learningHistories) ||
     !Array.isArray(parsed.employees) ||
@@ -1651,7 +1696,9 @@ function migrateVersionTwo(
       ? candidate.facilityTask
       : null;
     const facilityTask =
-      rawFacilityTask?.kind === "refill_water" &&
+      (rawFacilityTask?.kind === "refill_water" ||
+        rawFacilityTask?.kind === "collect_litter" ||
+        rawFacilityTask?.kind === "clean_room") &&
       typeof rawFacilityTask.startedAtFacilityTick === "number" &&
       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
       rawFacilityTask.startedAtFacilityTick >= 0 &&
@@ -1659,11 +1706,12 @@ function migrateVersionTwo(
       Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) &&
       rawFacilityTask.workMinutesRemaining > 0
         ? {
-            kind: "refill_water" as const,
+            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room",
             startedAtFacilityTick:
               rawFacilityTask.startedAtFacilityTick,
             workMinutesRemaining:
               rawFacilityTask.workMinutesRemaining,
+            ...(typeof rawFacilityTask.targetId === "string" ? { targetId: rawFacilityTask.targetId } : {}),
           }
         : null;
     const employee: EmployeeState = {
@@ -1873,9 +1921,11 @@ function migrateVersionTwo(
       return [
         {
           id: candidate.id,
-          appearance: normalizePixelAppearance(
+          appearance: normalizePatientAppearanceForSex(
             candidate.appearance,
-            "patient",
+            undefined,
+            undefined,
+            `${next.campaignSeed}:${candidate.id}:legacy-ambient-patient-roster.v1`,
           ),
           path,
           pathIndex,
@@ -2032,6 +2082,31 @@ function migrateVersionTwo(
         : next.facilityTick +
           context.balanceRelease.environment
             .litterSpawnMinimumMinutes,
+    glp1AutomationConsultationsCompleted:
+      typeof rawEnvironment.glp1AutomationConsultationsCompleted === "number" &&
+      Number.isSafeInteger(rawEnvironment.glp1AutomationConsultationsCompleted) &&
+      rawEnvironment.glp1AutomationConsultationsCompleted >= 0
+        ? rawEnvironment.glp1AutomationConsultationsCompleted
+        : 0,
+    glp1AutomationNextPayoutTicks: [],
+    glp1AutomationNextPayoutTick:
+      typeof rawEnvironment.glp1AutomationNextPayoutTick === "number" &&
+      Number.isSafeInteger(rawEnvironment.glp1AutomationNextPayoutTick) &&
+      rawEnvironment.glp1AutomationNextPayoutTick > next.facilityTick
+        ? rawEnvironment.glp1AutomationNextPayoutTick
+        : null,
+    coffeeMoraleAppliedDayNumber:
+      typeof rawEnvironment.coffeeMoraleAppliedDayNumber === "number" &&
+      Number.isSafeInteger(rawEnvironment.coffeeMoraleAppliedDayNumber) &&
+      rawEnvironment.coffeeMoraleAppliedDayNumber >= 0
+        ? rawEnvironment.coffeeMoraleAppliedDayNumber
+        : Math.floor(next.facilityTick / ((context.balanceRelease.clock.dayEndHour - context.balanceRelease.clock.dayStartHour) * 60)) + 1,
+    lastEvsRoomCleanupAtTick:
+      typeof rawEnvironment.lastEvsRoomCleanupAtTick === "number" &&
+      Number.isSafeInteger(rawEnvironment.lastEvsRoomCleanupAtTick) &&
+      rawEnvironment.lastEvsRoomCleanupAtTick >= 0
+        ? rawEnvironment.lastEvsRoomCleanupAtTick
+        : null,
     waterCoolerFillPercent,
     nextWaterCoolerDrainTick:
       typeof rawEnvironment.nextWaterCoolerDrainTick === "number" &&
@@ -2057,6 +2132,27 @@ function migrateVersionTwo(
         : facilityConditionOccurrences.length,
     facilityConditionOccurrences,
   };
+  const rawPayoutTicks = Array.isArray(rawEnvironment.glp1AutomationNextPayoutTicks)
+    ? rawEnvironment.glp1AutomationNextPayoutTicks.filter(
+        (tick): tick is number =>
+          typeof tick === "number" && Number.isSafeInteger(tick) && tick > 0,
+      )
+    : [];
+  const legacyPayoutTick = next.environment.glp1AutomationNextPayoutTick;
+  const normalizedPayoutTicks = rawPayoutTicks.length > 0
+    ? rawPayoutTicks
+    : legacyPayoutTick === null
+      ? []
+      : Array.from(
+          { length: getOperationalGlp1AutomationCapacity(next, context) },
+          () => legacyPayoutTick,
+        );
+  next.environment.glp1AutomationNextPayoutTicks = normalizedPayoutTicks
+    .filter((tick) => tick > next.facilityTick)
+    .sort((left, right) => left - right)
+    .slice(0, getOperationalGlp1AutomationCapacity(next, context));
+  next.environment.glp1AutomationNextPayoutTick =
+    next.environment.glp1AutomationNextPayoutTicks[0] ?? null;
   if (
     next.openChartEncounterId &&
     next.encounters[next.openChartEncounterId]

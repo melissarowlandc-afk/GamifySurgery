@@ -34,6 +34,14 @@ const DETAILED_FRONT_DESK = generatedFixture(
     canvas.rect(9, 11, 3, 1, "deepOlive");
     canvas.rect(23, 11, 2, 2, "deepOlive");
     canvas.rect(36, 11, 4, 1, "deepOlive");
+    // Files, keyboard, drawer seams, and a small service bell make this a
+    // working reception counter rather than a generic block.
+    canvas.rect(17, 14, 4, 1, "ink");
+    canvas.set(19, 13, "paper");
+    canvas.rect(29, 14, 2, 2, "charcoal");
+    canvas.set(30, 13, "highlight");
+    canvas.line(4, 17, 44, 17, "charcoal");
+    for (const x of [11, 24, 38]) canvas.rect(x, 18, 2, 1, "highlight");
     canvas.rect(5, 5, 8, 1, "white");
     canvas.rect(35, 5, 7, 1, "white");
     canvas.rect(5, 19, 5, 2, "ink");
@@ -63,6 +71,31 @@ const DETAILED_WAITING_BENCH = generatedFixture(
   },
 );
 
+/** A compact two-seat couch; deliberately leaves the surrounding walls clear. */
+const DETAILED_WAITING_COUCH = generatedFixture(
+  "waiting-couch-detailed",
+  31,
+  18,
+  (canvas) => {
+    canvas.rect(3, 15, 25, 2, "shadow");
+    canvas.outlineRect(2, 2, 27, 10, "charcoal");
+    canvas.rect(4, 3, 23, 2, "highlight");
+    canvas.rect(4, 6, 11, 4, "moss");
+    canvas.rect(16, 6, 11, 4, "moss");
+    canvas.rect(5, 6, 9, 1, "sage");
+    canvas.rect(17, 6, 9, 1, "sage");
+    canvas.outlineRect(1, 10, 29, 5, "deepOlive");
+    canvas.rect(3, 11, 25, 2, "lightSage");
+    canvas.rect(3, 14, 4, 3, "ink");
+    canvas.rect(24, 14, 4, 3, "ink");
+    canvas.set(6, 17, "ink");
+    canvas.set(24, 17, "ink");
+    canvas.rect(15, 6, 1, 8, "deepOlive");
+    canvas.set(8, 8, "highlight");
+    canvas.set(23, 8, "highlight");
+  },
+);
+
 const DETAILED_EXAM_TABLE = generatedFixture(
   "exam-table-detailed",
   45,
@@ -80,6 +113,9 @@ const DETAILED_EXAM_TABLE = generatedFixture(
     canvas.rect(24, 13, 12, 4, "warmGray");
     canvas.rect(20, 14, 2, 2, "ink");
     canvas.rect(28, 14, 3, 1, "deepOlive");
+    canvas.line(15, 8, 39, 8, "lightSage");
+    canvas.rect(11, 14, 7, 1, "highlight");
+    canvas.rect(31, 14, 3, 2, "paper");
     canvas.rect(8, 18, 5, 2, "ink");
     canvas.rect(32, 18, 5, 2, "ink");
   },
@@ -100,6 +136,9 @@ const DETAILED_TOILET = generatedFixture(
     canvas.ellipse(12, 13, 3, 2, "warmGray");
     canvas.rect(6, 18, 13, 3, "lightSage");
     canvas.rect(9, 21, 7, 2, "deepOlive");
+    canvas.set(8, 5, "paper");
+    canvas.set(16, 5, "paper");
+    canvas.rect(10, 18, 4, 1, "highlight");
   },
 );
 
@@ -125,6 +164,10 @@ const DETAILED_XRAY_SYSTEM = generatedFixture(
     canvas.rect(34, 33, 5, 3, "ink");
     canvas.outlineRect(2, 31, 12, 5, "deepOlive");
     canvas.rect(4, 32, 8, 1, "highlight");
+    canvas.rect(7, 12, 2, 12, "charcoal");
+    canvas.set(8, 14, "paper");
+    canvas.rect(19, 28, 6, 1, "paper");
+    canvas.set(36, 14, "highlight");
   },
 );
 
@@ -141,6 +184,8 @@ const DETAILED_IMAGING_CONSOLE = generatedFixture(
       canvas.rect(x + 3, 4, 8, 2, "lightSage");
       canvas.line(x + 4, 10, x + 10, 6, "sage");
       canvas.line(x + 10, 6, x + 17, 9, "paper");
+      canvas.set(x + 18, 4, "highlight");
+      canvas.set(x + 18, 10, "sage");
       canvas.rect(x + 9, 15, 5, 3, "ink");
     }
     canvas.outlineRect(1, 18, 50, 8, "warmGray");
@@ -152,6 +197,9 @@ const DETAILED_IMAGING_CONSOLE = generatedFixture(
     canvas.outlineRect(35, 21, 11, 4, "paper");
     canvas.set(38, 22, "ink");
     canvas.set(42, 22, "deepOlive");
+    for (let dial = 0; dial < 4; dial += 1) {
+      canvas.set(37 + dial * 2, 24, "sage");
+    }
     canvas.rect(5, 26, 5, 2, "ink");
     canvas.rect(42, 26, 5, 2, "ink");
   },
@@ -261,6 +309,21 @@ const DETAILED_SINK_CABINET = generatedFixture(
     canvas.rect(23, 1, 2, 3, "ink");
     canvas.rect(5, 21, 4, 2, "ink");
     canvas.rect(29, 21, 4, 2, "ink");
+  },
+);
+
+/** Small wall-mounted glove box used only as world-north wall decor. */
+const DETAILED_GLOVE_DISPENSER = generatedFixture(
+  "glove-dispenser-detailed",
+  16,
+  12,
+  (canvas) => {
+    canvas.outlineRect(1, 1, 14, 9, "paper");
+    canvas.rect(3, 3, 10, 2, "highlight");
+    canvas.rect(4, 6, 8, 2, "lightSage");
+    canvas.rect(6, 9, 4, 2, "sage");
+    canvas.rect(5, 11, 2, 1, "paper");
+    canvas.rect(9, 11, 2, 1, "paper");
   },
 );
 
@@ -431,6 +494,119 @@ const ROLLING_CART = generatedFixture(
     canvas.set(21, 22, "ink");
   },
 );
+
+// Level 2 equipment remains constructed from the shared low-chroma pixel
+// palette so it can be layered with the existing dollhouse fixtures.
+const ULTRASOUND_CONSOLE = generatedFixture("ultrasound-console", 34, 30, (canvas) => {
+  canvas.rect(4, 27, 26, 2, "shadow");
+  canvas.outlineRect(8, 1, 18, 12, "charcoal");
+  canvas.rect(10, 3, 14, 7, "deepOlive");
+  canvas.line(11, 8, 17, 5, "lightSage");
+  canvas.line(17, 5, 23, 9, "paper");
+  canvas.rect(15, 13, 4, 5, "charcoal");
+  canvas.outlineRect(5, 18, 24, 8, "warmGray");
+  canvas.rect(8, 20, 11, 2, "paper");
+  canvas.rect(21, 19, 5, 5, "lightSage");
+  canvas.rect(7, 25, 3, 4, "charcoal");
+  canvas.rect(24, 25, 3, 4, "charcoal");
+  canvas.line(27, 21, 32, 25, "ink");
+});
+
+const CT_GANTRY = generatedFixture("ct-gantry", 48, 34, (canvas) => {
+  canvas.rect(5, 31, 38, 2, "shadow");
+  canvas.ellipse(18, 15, 15, 14, "charcoal");
+  canvas.ellipse(18, 15, 12, 11, "paper");
+  canvas.ellipse(18, 15, 7, 7, "deepOlive");
+  canvas.ellipse(18, 15, 4, 4, "warmGray");
+  canvas.rect(4, 24, 7, 7, "charcoal");
+  canvas.rect(25, 24, 7, 7, "charcoal");
+  canvas.outlineRect(25, 18, 21, 7, "lightSage");
+  canvas.rect(28, 19, 16, 2, "paper");
+  canvas.rect(39, 24, 4, 7, "ink");
+});
+
+const PHLEBOTOMY_CHAIR = generatedFixture("phlebotomy-chair", 28, 28, (canvas) => {
+  canvas.rect(3, 25, 22, 2, "shadow");
+  canvas.outlineRect(7, 2, 14, 11, "charcoal");
+  canvas.rect(9, 4, 10, 7, "moss");
+  canvas.outlineRect(4, 12, 20, 6, "deepOlive");
+  canvas.rect(6, 13, 16, 3, "lightSage");
+  canvas.rect(11, 18, 4, 6, "charcoal");
+  canvas.line(13, 23, 4, 26, "ink");
+  canvas.line(13, 23, 23, 26, "ink");
+  canvas.rect(22, 8, 5, 3, "warmGray");
+});
+
+const TUBE_RACK = generatedFixture("tube-rack", 27, 16, (canvas) => {
+  canvas.rect(2, 13, 23, 2, "shadow");
+  canvas.outlineRect(3, 8, 21, 5, "warmGray");
+  for (const x of [6, 11, 16, 21]) {
+    canvas.rect(x, 1, 2, 8, "paper");
+    canvas.set(x, 1, "highlight");
+  }
+  canvas.rect(5, 10, 17, 1, "deepOlive");
+});
+
+const MOP_CART = generatedFixture("mop-cart", 31, 29, (canvas) => {
+  canvas.rect(3, 26, 25, 2, "shadow");
+  canvas.outlineRect(5, 14, 20, 10, "charcoal");
+  canvas.rect(7, 16, 16, 6, "warmGray");
+  canvas.rect(9, 18, 6, 2, "sage");
+  canvas.rect(18, 16, 3, 6, "lightSage");
+  canvas.line(9, 14, 4, 2, "ink");
+  canvas.line(14, 14, 11, 1, "ink");
+  canvas.line(20, 14, 20, 1, "ink");
+  canvas.rect(6, 24, 3, 4, "charcoal");
+  canvas.rect(21, 24, 3, 4, "charcoal");
+  canvas.rect(2, 1, 3, 17, "deepOlive");
+});
+
+const ENDOSCOPY_TOWER = generatedFixture("endoscopy-tower", 31, 39, (canvas) => {
+  canvas.rect(3, 36, 25, 2, "shadow");
+  canvas.outlineRect(4, 2, 22, 16, "charcoal");
+  canvas.rect(6, 4, 18, 10, "deepOlive");
+  canvas.line(8, 11, 13, 7, "lightSage");
+  canvas.line(13, 7, 21, 11, "paper");
+  canvas.rect(13, 18, 4, 4, "charcoal");
+  canvas.outlineRect(5, 22, 20, 12, "warmGray");
+  canvas.rect(8, 24, 14, 2, "paper");
+  canvas.rect(8, 28, 14, 2, "deepOlive");
+  canvas.rect(7, 34, 3, 4, "charcoal");
+  canvas.rect(20, 34, 3, 4, "charcoal");
+});
+
+const TRAINING_TABLE = generatedFixture("training-table", 42, 23, (canvas) => {
+  canvas.rect(3, 20, 36, 2, "shadow");
+  canvas.outlineRect(2, 5, 38, 10, "charcoal");
+  canvas.rect(4, 7, 34, 6, "warmGray");
+  canvas.rect(6, 8, 30, 1, "highlight");
+  canvas.rect(7, 15, 4, 6, "charcoal");
+  canvas.rect(31, 15, 4, 6, "charcoal");
+  canvas.rect(1, 11, 4, 7, "moss");
+  canvas.rect(37, 11, 4, 7, "moss");
+});
+
+const COFFEE_MACHINE = generatedFixture("coffee-machine", 26, 28, (canvas) => {
+  canvas.rect(3, 25, 20, 2, "shadow");
+  canvas.outlineRect(4, 2, 18, 22, "charcoal");
+  canvas.rect(6, 4, 14, 5, "deepOlive");
+  canvas.rect(8, 5, 10, 2, "lightSage");
+  canvas.outlineRect(8, 11, 10, 7, "warmGray");
+  canvas.rect(11, 18, 5, 4, "paper");
+  canvas.rect(6, 22, 3, 4, "charcoal");
+  canvas.rect(17, 22, 3, 4, "charcoal");
+});
+
+const RING_LIGHT = generatedFixture("ring-light", 24, 34, (canvas) => {
+  canvas.rect(3, 31, 18, 2, "shadow");
+  canvas.ellipse(12, 7, 8, 7, "charcoal");
+  canvas.ellipse(12, 7, 5, 4, "paper");
+  canvas.rect(11, 14, 3, 14, "charcoal");
+  canvas.outlineRect(8, 18, 8, 7, "deepOlive");
+  canvas.rect(10, 19, 4, 4, "lightSage");
+  canvas.line(12, 27, 4, 32, "ink");
+  canvas.line(12, 27, 20, 32, "ink");
+});
 
 const BASE_FIXTURES = {
   frontDesk: spriteFromMatrix("front-desk", [
@@ -1130,11 +1306,13 @@ const FIXTURES = {
   ...BASE_FIXTURES,
   frontDesk: DETAILED_FRONT_DESK,
   waitingBench: DETAILED_WAITING_BENCH,
+  waitingCouch: DETAILED_WAITING_COUCH,
   visitorChair: DETAILED_VISITOR_CHAIR,
   officeChair: DETAILED_OFFICE_CHAIR,
   secretaryChair: DETAILED_SECRETARY_CHAIR,
   examTable: DETAILED_EXAM_TABLE,
   sinkCabinet: DETAILED_SINK_CABINET,
+  gloveDispenser: DETAILED_GLOVE_DISPENSER,
   toilet: DETAILED_TOILET,
   xrayTube: DETAILED_XRAY_SYSTEM,
   xrayBucky: DETAILED_XRAY_BUCKY,
@@ -1147,9 +1325,89 @@ const FIXTURES = {
   waterCooler: DETAILED_WATER_COOLER,
   vitalsMonitor: VITALS_MONITOR,
   rollingCart: ROLLING_CART,
+  ultrasoundConsole: ULTRASOUND_CONSOLE,
+  ctGantry: CT_GANTRY,
+  phlebotomyChair: PHLEBOTOMY_CHAIR,
+  tubeRack: TUBE_RACK,
+  mopCart: MOP_CART,
+  endoscopyTower: ENDOSCOPY_TOWER,
+  trainingTable: TRAINING_TABLE,
+  coffeeMachine: COFFEE_MACHINE,
+  ringLight: RING_LIGHT,
 } as const;
 
 export type FixtureId = keyof typeof FIXTURES;
 
 export const FIXTURE_SPRITES: Readonly<Record<FixtureId, PixelSpriteAsset>> =
   FIXTURES;
+
+/**
+ * Perspective sprites stay upright in the shallow dollhouse camera. When a
+ * room package rotates, its grounded placement changes, but a finished chair,
+ * table, or machine must not be mechanically spun upside down. Future
+ * orientation-specific artwork can be registered here without changing scene
+ * code.
+ */
+const ORIENTED_FIXTURE_VARIANTS: Partial<
+  Record<FixtureId, Partial<Record<90 | 180 | 270, PixelSpriteAsset>>>
+> = {};
+
+/**
+ * Returns an explicitly authored perspective variant when one exists;
+ * otherwise retains the upright base sprite. Grounded positions still rotate
+ * through roomVisualLayout, preventing hanging/upside-down dollhouse art.
+ */
+export function getFixtureSpriteForOrientation(
+  id: FixtureId,
+  orientation: 0 | 90 | 180 | 270 = 0,
+): PixelSpriteAsset {
+  const fixture = FIXTURE_SPRITES[id];
+  return orientation === 0
+    ? fixture
+    : ORIENTED_FIXTURE_VARIANTS[id]?.[orientation] ?? fixture;
+}
+
+/** Explicit coverage keeps primary rooms from regressing to the generic fallback. */
+export const PRIMARY_ROOM_FIXTURE_IDS = {
+  "room.front_desk": [
+    "frontDesk",
+    "deskTerminal",
+    "secretaryChair",
+    "filingCabinet",
+  ],
+  "room.hallway": [],
+  "room.waiting": ["waitingCouch", "visitorChair", "coffeeTable"],
+  "room.examination": [
+    "examTable",
+    "sinkCabinet",
+    "diagnosticPanel",
+    "gloveDispenser",
+  ],
+  "room.bathroom": ["handSink", "toilet", "wallMirror"],
+  "room.xray": ["xrayTube", "xrayTable", "xrayBucky"],
+  "room.imaging_control": ["imagingConsole", "serverRack", "officeChair"],
+} as const satisfies Readonly<Record<string, readonly FixtureId[]>>;
+
+/** Explicit room-art coverage: Level 2 rooms must never use the generic fallback. */
+export const LEVEL_TWO_ROOM_FIXTURE_IDS = {
+  "room.ultrasound": ["examTable", "ultrasoundConsole", "rollingCart"],
+  "room.ct": ["ctGantry", "supplyCabinet", "rollingCart"],
+  "room.phlebotomy": ["phlebotomyChair", "tubeRack", "sinkCabinet"],
+  "room.evs_closet": ["mopCart", "scrubSink", "supplyCabinet"],
+  "room.endoscopy": ["endoscopyTower", "procedureTable", "sinkCabinet"],
+  "room.periop_recovery": ["procedureTable", "vitalsMonitor", "ivStand"],
+  "room.training": ["trainingTable", "visitorChair", "noticeBoard"],
+  "room.coffee_kiosk": ["frontDesk", "coffeeMachine", "chartStack"],
+  "room.glp1_telehealth_suite": ["imagingConsole", "ringLight", "deskPhone"],
+} as const satisfies Readonly<Record<string, readonly FixtureId[]>>;
+
+/** Minor Procedure plus Level 2 each have a non-fallback illustrated package. */
+export const ADVANCED_ROOM_FIXTURE_IDS = {
+  "room.minor_procedure": [
+    "procedureTable",
+    "procedureLight",
+    "instrumentTray",
+    "supplyCabinet",
+  ],
+  ...LEVEL_TWO_ROOM_FIXTURE_IDS,
+} as const satisfies Readonly<Record<string, readonly FixtureId[]>>;

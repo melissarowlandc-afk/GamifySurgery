@@ -164,15 +164,15 @@ describe("owner row 40 approved gastroparesis diagnostic content", () => {
     }
   });
 
-  it("keeps the approved Level 2 package outside the Level 0-1 runtime", () => {
+  it("activates the approved Level 2 package", () => {
     expect(ROW_040_APPROVED_BACKLOG).toMatchObject({
       educationalDifficulty: "intermediate",
       releasePointId: "release.l2.endoscopy",
       earliestFacilityStage: 2,
       requiredClinicalSetting: "clinic",
       requiredCapabilityIds: [],
-      currentGameEligibility: "deferred",
-      approvedForRuntime: false,
+      currentGameEligibility: "active_level_2",
+      approvedForRuntime: true,
       maximumScoredDecisionsPerEncounter: 1,
     });
 
@@ -181,14 +181,14 @@ describe("owner row 40 approved gastroparesis diagnostic content", () => {
         SYNTHETIC_CLINICAL_RELEASE.concepts.some(
           (runtimeConcept) => runtimeConcept.id === concept.id,
         ),
-      ).toBe(false);
+      ).toBe(true);
       expect(
         SYNTHETIC_CLINICAL_RELEASE.cases.some((clinicalCase) =>
           clinicalCase.decisionNodes.some(
             (node) => node.primaryConceptId === concept.id,
           ),
         ),
-      ).toBe(false);
+      ).toBe(true);
     }
   });
 });

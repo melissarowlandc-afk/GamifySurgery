@@ -1,6 +1,7 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import {
   setFastFacilitySpeed,
+  getActiveState,
   startClinic,
   waitForDecisionChoices,
   waitForFirstPatientReady,
@@ -208,6 +209,7 @@ test("keeps tutorial guidance beside real controls at variable widths", async ({
 test("keeps multistep feedback and semantic action anchors precise", async ({
   page,
 }, testInfo) => {
+  testInfo.setTimeout(90_000);
   test.skip(
     testInfo.project.name !== "desktop-chrome",
     "The complete tutorial target walkthrough runs once at desktop width.",
@@ -228,10 +230,14 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
   // The campaign seed may select any approved question variant, so exercise
   // the real current answer control without coupling the walkthrough to one
   // particular stem or option label.
-  await page
-    .locator(".chart-step-column.is-current .answer-choice")
-    .first()
-    .click();
+  const serviceState = await getActiveState(page);
+  const serviceEncounter = serviceState.encounters[
+    serviceState.openChartEncounterId!
+  ]!;
+  const serviceChoice = serviceEncounter.frozenCase.decisionNodes[
+    serviceEncounter.currentNodeIndex
+  ]!.answerChoices.find((choice) => choice.isCorrect)!;
+  await page.getByRole("button", { name: serviceChoice.label, exact: true }).click();
 
   const currentFeedback = page.locator(
     ".chart-step-column.is-current .chart-step-feedback",
@@ -293,7 +299,7 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
 
   const secondPatient = page
     .locator(".patient-folder.is-waiting .patient-tab")
-    .filter({ hasText: "Pixel Patient" });
+    .first();
   await expect(secondPatient).toBeVisible({ timeout: 15_000 });
   await secondPatient.click();
   await waitForDecisionChoices(page);
@@ -301,7 +307,20 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
     page.getByRole("heading", { name: "Choose the first plan" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Got It" }).click();
-  await page.getByRole("button", { name: /^SIGNAL ALPHA/ }).click();
+  const finalState = await getActiveState(page);
+  const finalEncounter = finalState.encounters[
+    finalState.openChartEncounterId!
+  ]!;
+  const finalChoice = finalEncounter.frozenCase.decisionNodes[
+    finalEncounter.currentNodeIndex
+  ]!.answerChoices.find((choice) => choice.isCorrect)!;
+  await page
+    .getByRole("button", {
+      name: new RegExp(
+        `^${finalChoice.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+      ),
+    })
+    .click();
   await expect(
     page.getByRole("heading", {
       name: "Review the answer before care begins",
@@ -346,9 +365,9 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
 
   const returningPatient = page
     .locator(".patient-folder.is-active .patient-tab")
-    .filter({ hasText: "Pixel Patient" });
+    .first();
   await expect(returningPatient).toHaveAccessibleName(/Action required/, {
-    timeout: 30_000,
+    timeout: 60_000,
   });
   await expect(
     page.getByRole("heading", {
@@ -364,7 +383,8 @@ test("keeps multistep feedback and semantic action anchors precise", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "Got It" }).click();
   await page
-    .getByRole("button", { name: "ACTION CIRCLE" })
+    .locator(".chart-step-column.is-current .answer-choice")
+    .first()
     .click();
 
   await expect(

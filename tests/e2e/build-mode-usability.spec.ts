@@ -48,13 +48,16 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
         door.id !== "door.visual.xray.control",
     );
     state.events.push({
-      id: "event.test.show-exam",
-      type: "room_upgraded",
-      facilityTick: state.facilityTick + 100,
+      id: "event.test.show-exam-guidance",
+      type: "success_message",
+      facilityTick: state.facilityTick,
       encounterId: null,
-      message: "Examination Room selected for renovation review.",
+      message:
+        "A patient requested a more comfortable Examination Room. Upgrade Examination Room.",
       priority: "informational",
-      definitionId: "event.facility.room-upgraded",
+      definitionId: "alert.patient.room-upgrade-requested",
+      alertCategory: "guidance",
+      alertVariantId: "fixture.room-upgrade-guidance",
       target: {
         kind: "room",
         id: "room.visual.examination",
@@ -85,9 +88,11 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
 
   await page
     .getByRole("button", {
-      name: "Examination Room selected for renovation review.",
+      name:
+        "A patient requested a more comfortable Examination Room. Upgrade Examination Room.",
     })
     .click();
+  const inspector = page.locator(".selected-room-inspector");
   await expect(
     page.getByRole("navigation", { name: "Build Mode tools" }),
   ).toBeVisible();
@@ -108,9 +113,7 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(
     page.getByRole("button", { name: "Done / Save" }),
   ).toBeVisible();
-  await expect(
-    page.locator(".selected-room-inspector"),
-  ).toContainText("Examination Room");
+  await expect(inspector).toContainText("Examination Room");
 
   await page
     .getByRole("button", { name: /Upgrade - \$140/ })
@@ -180,17 +183,17 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
       ).length;
     }, PROFILE_KEY);
   const startingHallwayCount = await hallwayCount();
-  const canvas = page.locator(".facility-host canvas");
-  const canvasBox = await canvas.boundingBox();
-  expect(canvasBox).not.toBeNull();
+  const placementCanvas = page.locator(".facility-host canvas");
+  const placementCanvasBox = await placementCanvas.boundingBox();
+  expect(placementCanvasBox).not.toBeNull();
   let placedHallway = false;
   // Scan a few ordinary map points. Existing rooms reject placement without
   // turning off the paint tool; the first empty square should accept it.
   for (const yRatio of [0.2, 0.35, 0.5, 0.65]) {
     for (const xRatio of [0.15, 0.3, 0.5, 0.7, 0.85]) {
       await page.mouse.click(
-        canvasBox!.x + canvasBox!.width * xRatio,
-        canvasBox!.y + canvasBox!.height * yRatio,
+        placementCanvasBox!.x + placementCanvasBox!.width * xRatio,
+        placementCanvasBox!.y + placementCanvasBox!.height * yRatio,
       );
       if ((await hallwayCount()) > startingHallwayCount) {
         placedHallway = true;

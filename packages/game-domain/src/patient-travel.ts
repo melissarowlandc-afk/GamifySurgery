@@ -61,6 +61,11 @@ export function createFrozenServiceRouteTiming(
           (encounter) =>
             encounter.pendingResult?.routeId === route.id &&
             encounter.pendingResult.deliveredAtTick === null &&
+            (!(encounter.pendingResult.timingPhases?.length) ||
+              encounter.pendingResult.timingPhases.some(
+                (phase) =>
+                  phase.resourceBound && state.facilityTick < phase.endsAtTick,
+              )) &&
             encounter.pendingResult.patientTravel
               ?.destinationRoomInstanceId === destination.id,
         ),

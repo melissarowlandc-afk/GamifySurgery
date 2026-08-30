@@ -1,7 +1,7 @@
-# Level 0-1 Prototype Progression
+# Level 0-2 Prototype Progression
 
-Status: Current implementation target
-Owner instruction: 2026-07-28
+Status: Current local implementation; filename retained for stable links
+Last updated: 2026-08-25
 
 ## Level 0 — Getting Started
 
@@ -55,7 +55,7 @@ Additional Examination Rooms remain repeatable. Bathroom, Waiting Room, and
 Receptionist are useful operational options but are not formal completion
 requirements.
 
-The locked Level 2 preview becomes complete when the player has:
+The Level 1 gate advances the player to Level 2 when the player has:
 
 - built a Minor-Procedure Room;
 - built a functioning X-ray Room, which implicitly requires a directly
@@ -64,11 +64,25 @@ The locked Level 2 preview becomes complete when the player has:
 - maintained effective patient satisfaction above 90%; and
 - reached the centrally configured Level 1 Learning XP target.
 
-Level 2 itself remains outside this prototype. The accepted later-level
-room/staff table and clinical release points are maintained in
-`docs/features/facility-levels-and-clinical-release-points.md`. The Level 2
-Phlebotomy Station, Level 3 in-house Laboratory, and Level 4 APP must not be
-reintroduced into the Level 1 gate.
+Level 2 Phlebotomy Station, Level 3 in-house Laboratory, and Level 4 APP must
+not be reintroduced into the Level 1 gate.
+
+## Level 2 — Expanded Outpatient / Endoscopy
+
+Level 2 unlocks Ultrasound Room, CT Suite, Phlebotomy Station,
+Environmental-Services Closet, Endoscopy Room, Peri-op/Recovery Room,
+Training Room, Coffee Kiosk, GLP-1 Telehealth Suite, Peri-op Nurse, Endoscopy
+Nurse, Endoscopist, Phlebotomist, EVS Worker, and GLP-1 NP.
+
+The completed Level 3 preview requires 300 current-level Learning XP,
+effective satisfaction above 90%, functioning Endoscopy and Peri-op/Recovery
+rooms, and the Peri-op Nurse, Endoscopy Nurse, and Endoscopist. Founder
+coverage can provide the physician role during Level 2 but is limited to one
+place/task; dedicated staff is required for completion. Ultrasound, CT,
+phlebotomy, EVS, Training, Coffee, and GLP-1 automation remain optional.
+
+Level 3 is locked: completing these requirements does not perform another
+level-up or unlock Level 3 content.
 
 ## Current clinic-loop rules
 
@@ -166,7 +180,7 @@ The current playtest defaults are deliberately provisional:
 | Imaging Control / X-ray / Minor-Procedure Room | $440 / $750 / $800 |
 | Receptionist / Imaging Technician hiring cost | $180 / $300 |
 | Receptionist empty-water response | 60 facility minutes after both the empty episode and employment have begun |
-| Manual GLP-1 action | Available at any cash balance until the future dedicated room is built; +$25 once per game hour, with no daily cap or diminishing payout and no XP/FSRS reward |
+| Manual GLP-1 action | Available at any cash balance until a reachable suite is staffed; then each staffed suite automates one $25 consultation per 60 facility minutes (maximum five), with no XP/FSRS or patient encounter |
 | Advertising | Off; $4/hr for about +9%; $8/hr for about +19%; or $14/hr for about +33% routine arrival frequency |
 | Operating day / routine arrival pace | 10 / 5 / 2.5 real minutes at 1x / 2x / 4x; about 1 arrival per 60 game minutes |
 

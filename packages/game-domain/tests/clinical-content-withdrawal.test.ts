@@ -14,6 +14,7 @@ import {
   ROW_092_CASES,
   ROW_058_CASES,
   ROW_057_CASES,
+  LEVEL_TWO_ROUTINE_CASE_IDS,
   SYNTHETIC_CLINICAL_RELEASE,
 } from "@gamify-surgery/clinical-content";
 import {
@@ -77,6 +78,7 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ...ROW_092_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_058_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_057_CASES.map((clinicalCase) => clinicalCase.id),
+      ...LEVEL_TWO_ROUTINE_CASE_IDS,
     ]);
   });
 

@@ -37,7 +37,7 @@ mechanics became more disciplined:
    care and clinic growth early, then make design decisions from play rather
    than completing the entire five-stage game on paper.
 
-The Level 0-1 desktop composition keeps the top-down facility stable in the
+The Level 0-2 desktop composition keeps the top-down facility stable in the
 upper center and reserves a tactile desk below it. Patient charts and Build
 Mode tools occupy that desk rather than resizing or moving the facility.
 Phone-width layouts may turn the chart into a readable full-screen sheet.
@@ -412,12 +412,10 @@ After the first scored response in an encounter maps to Again:
 - Outsourced diagnostic or repair fallbacks may exist.
 - Vending machines and coffee kiosks are enclosed buildable rooms.
 - The Cash-Only GLP-1 Telehealth Suite is a limited comedic side business, not
-  the dominant strategy. Before its future Level 2 automation, a founder may
-  use a manual consultation at any clinic cash balance. The floating action
-  remains available until the dedicated room is built, may be used once per
-  facility hour, pays a fixed $25 in the Level 0-1 pilot, has no daily cap or
-  diminishing return, and awards no XP or learning evidence. Repeated uses
-  only change the sarcasm. See
+  the dominant strategy. A founder may use the manual $25 consultation at any
+  clinic cash balance until a reachable suite is staffed. Operational suites
+  automate one $25 consultation each per 60 facility minutes (maximum five);
+  this produces no XP, FSRS evidence, or patient encounter. See
   `docs/features/cash-only-glp1-telehealth.md`.
 - Alerts use Critical, Action required, Informational, and Flavor priorities.
   Useful information always appears plainly, humor never obscures a critical
@@ -483,9 +481,10 @@ authority and integrity boundary is recorded in
 - A hired Receptionist automatically walks to and refills a water cooler after
   it has remained empty for the configured 60 facility minutes while that
   Receptionist is employed. The task and its route persist through reload.
-- The laboratory and APP are later-level systems and are not Level 0-1 unlocks.
+- The in-house laboratory and APP are later-level systems and are not Level 0-2
+  unlocks.
 - The complete current prototype checklist is maintained in
-  [Level 0-1 Prototype Progression](docs/features/level-0-1-progression.md).
+  [Level 0-2 Prototype Progression](docs/features/level-0-1-progression.md).
 - The accepted complete progression is Level 0 Starter Clinic, Level 1 Basic
   Clinic, Level 2 Expanded Outpatient / Endoscopy, Level 3 Ambulatory Surgery
   Center, Level 4 Specialty Expansion, and Level 5 Optimized ASC / Prestige.

@@ -1,12 +1,10 @@
 # Roadmap
 
-Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The browser-hosted Level
-0/1 playtest on `main` remains the public checkpoint. The local `beta` branch
-contains the isolated clinical-authoring/evidence pipeline plus the next
-founder-opening, Level 0/1 progression, onboarding, and visual-playtest
-candidate.
+Status: ACTIVE PROTOTYPE-FIRST PLAN under ADR 0021. The local `beta` branch
+contains the playable Level 0-2 implementation and Level 3 locked preview; it
+has not been promoted to `main` or deployed to Pages.
 
-Last updated: 2026-07-26
+Last updated: 2026-08-25
 
 ## Delivery rules
 
@@ -106,7 +104,7 @@ Implemented:
   staff/event panels, width-aware construction cards, and newest-first Resolved
   charts
 - A responsive chart/facility split with accurate post-resize Phaser pointer
-  mapping, plus an explicit Level 1-complete/Level 2-locked state
+  mapping and the original Level 1-complete state that preceded Level 2
 - One-click Windows dependency/start/browser launcher, a state-driven Level 0
   tutorial through charting, results, goals, construction, and level
   advancement, persistent tutorial controls, and in-game beginner Help; coach
@@ -157,6 +155,32 @@ Latest local verification on 2026-07-26:
   includes both opening branches, one-time initialization, pause authority,
   the Level 0/1 walkthrough, tutorial geometry, persistence safety, the stable
   facility/desk composition, and focused phone-width opening/chart behavior
+
+## Milestone 2.5: Expanded outpatient / endoscopy (Level 2)
+
+Status: IMPLEMENTED LOCALLY; FULL SUITE/PAGES BUILD/BROWSER ACCEPTANCE REMAIN
+OPEN.
+
+Implemented:
+
+- Playable Level 2 with nine room and six staff unlocks; Level 3 is a
+  non-actionable completed preview.
+- Centralized Level 2 gate: 300 current-level XP, effective satisfaction above
+  90%, functioning Endoscopy and Peri-op/Recovery rooms, and Peri-op Nurse,
+  Endoscopy Nurse, and Endoscopist. Other Level 2 investments remain optional.
+- Editorial operational routes for onsite ultrasound (45+30), CT (60+45),
+  phlebotomy collection/send-out (15+60), and endoscopy preparation/procedure/
+  recovery (30/45/45), with external fallback retained.
+- Founder endoscopy coverage with one task/place at a time; dedicated staff is
+  required to complete Level 2.
+- Reachable staffed GLP-1 suite automation, EVS, Training, Coffee, and concise
+  capability-based setup guidance in Alerts and Events.
+- Exact named-clinician-approved Level 2 allowlisted variants only; the overall
+  browser release remains `synthetic_unapproved_prototype`, not public learner
+  publication. Save schema v6 remains compatible.
+
+Next gate: Sol reviews the full suite, Pages build, and browser evidence before
+any beta checkpoint. No deployment is authorized.
 
 ## Milestone 3: Iterate and prepare approved content
 
@@ -269,12 +293,9 @@ Gate: explicit owner permission before inviting any outside learner.
 - Hosted multiuser Clinical Content administration, direct publishing, and
   comprehensive multi-textbook automation; the isolated local evidence queue
   and metadata scout are being built in Milestone 3
-- Implement the accepted Facility Levels 2 through 5, room/staff unlock table,
+- Implement the accepted Facility Levels 3 through 5, room/staff unlock table,
   and semantic clinical release points in
   `docs/features/facility-levels-and-clinical-release-points.md`
-- Automated Level 2 Cash-Only GLP-1 Telehealth Suite and GLP-1 NP staffing;
-  the bounded pre-suite founder manual action is already available without
-  expanding the Level 0-1 clinical scope
 - Alert and flavor definitions tied to maintenance, inspections, future rooms,
   or other systems that do not yet exist
 - Balance and implement the accepted advanced rooms, staffing, two-phase

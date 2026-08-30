@@ -188,7 +188,7 @@ describe("owner row 42 approved gastric splenectomy content", () => {
     }
   });
 
-  it("keeps both approved stages outside the current Level 0-1 runtime", () => {
+  it("activates Level 2 while retaining future Hospital OR exclusion", () => {
     expect(ROW_042_APPROVED_BACKLOG).toMatchObject({
       educationalDifficulty: "advanced_operational_oncology",
       releasePointIds: [
@@ -196,8 +196,8 @@ describe("owner row 42 approved gastric splenectomy content", () => {
         "release.future.hospital_or",
       ],
       earliestFacilityStage: 2,
-      currentGameEligibility: "deferred",
-      approvedForRuntime: false,
+      currentGameEligibility: "partially_active_level_2_future_hospital_or_excluded",
+      approvedForRuntime: true,
       maximumScoredDecisionsPerEncounter: 1,
     });
 
@@ -206,14 +206,14 @@ describe("owner row 42 approved gastric splenectomy content", () => {
         SYNTHETIC_CLINICAL_RELEASE.concepts.some(
           (runtimeConcept) => runtimeConcept.id === concept.id,
         ),
-      ).toBe(false);
+      ).toBe(true);
       expect(
         SYNTHETIC_CLINICAL_RELEASE.cases.some((clinicalCase) =>
           clinicalCase.decisionNodes.some(
             (node) => node.primaryConceptId === concept.id,
           ),
         ),
-      ).toBe(false);
+      ).toBe(true);
     }
   });
 });

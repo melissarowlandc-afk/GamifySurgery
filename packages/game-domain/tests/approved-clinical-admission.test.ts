@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { LEVEL_TWO_RUNTIME_CONCEPTS } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
@@ -39,8 +40,8 @@ describe("approved clinical admission boundaries", () => {
         displayName: "Off-site ultrasound",
       },
       timing: {
-        serviceDurationTicks: 60,
-        durationTicks: 60,
+        serviceDurationTicks: 150,
+        durationTicks: 150,
       },
     });
   });
@@ -92,12 +93,19 @@ describe("approved clinical admission boundaries", () => {
     state.rooms.push({
       id: "room.test.minor-procedure",
       roomDefinitionId: "room.minor_procedure",
-      x: 20,
-      y: 20,
+      x: 30,
+      y: 28,
       orientation: 0,
       doorSide: null,
       upgradeLevel: 1,
       cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.test.minor-procedure",
+      roomId: "room.test.minor-procedure",
+      side: "east",
+      offset: 1,
+      exterior: false,
     });
     state = gameReducer(state, {
       type: "ADMIT_PATIENT",
@@ -120,6 +128,25 @@ describe("approved clinical admission boundaries", () => {
       releasePointId: "release.l1.minor_procedure",
       requiredCapabilityIds: ["capability.minor_procedure"],
     });
+  });
+
+  it("withholds an approved Level 2 endoscopy case before Level 2 and before its required capability", () => {
+    const caseId = "case.l2.colonic-lipoma.direct.typical-b";
+    let state = emptyLevelOne("level-two-clinical-gate");
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT", operationId: "l2.before-stage", encounterId: "encounter.l2.before-stage",
+      caseId, patientDisplayName: "Level Two Test Patient", arrivalClass: "routine",
+    });
+    expect(state.operationReceipts["l2.before-stage"]?.message).toBe("This patient becomes eligible at Level 2.");
+
+    state.facilityLevel = 2;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT", operationId: "l2.without-capability", encounterId: "encounter.l2.without-capability",
+      caseId, patientDisplayName: "Level Two Test Patient", arrivalClass: "routine",
+    });
+    expect(state.operationReceipts["l2.without-capability"]?.message).toBe(
+      "This patient requires unavailable clinic capability capability.endoscopy.",
+    );
   });
 
   it("keeps the active runtime release limited to reviewed concepts", () => {
@@ -155,6 +182,9 @@ describe("approved clinical admission boundaries", () => {
       "concept.accessory-spleen.common-location",
       "concept.hereditary-spherocytosis.postsplenectomy-persistent-hemolysis-evaluation",
       "concept.hereditary-spherocytosis.confirmed-accessory-spleen-management",
+      ...LEVEL_TWO_RUNTIME_CONCEPTS.map((concept) => concept.id).filter(
+        (id) => id !== "concept.distal-cholangiocarcinoma.resection-selection",
+      ),
     ]);
   });
 

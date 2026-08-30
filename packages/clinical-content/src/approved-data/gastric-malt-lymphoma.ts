@@ -739,10 +739,10 @@ export const ROW_039_APPROVED_BACKLOG = {
   earliestFacilityStage: 2,
   requiredClinicalSetting: "endoscopy",
   requiredCapabilityIds: ["capability.endoscopy"],
-  currentGameEligibility: "deferred",
-  deferredReason:
-    "The exact clinically approved package is held outside the playable Level 0-1 release until Level 2 Endoscopy and the Endoscopy Room encounter framework exist.",
-  approvedForRuntime: false,
+  currentGameEligibility: "active_level_2",
+  activeBlueprintIds: ROW_039_APPROVED_ENCOUNTER_BLUEPRINTS.map((blueprint) => blueprint.id),
+  runtimeStatusNote: "All approved Level 2 endoscopy blueprints are active in the development/unapproved prototype release.",
+  approvedForRuntime: true,
   tutorialEligible: false,
   maximumScoredDecisionsPerEncounter: 2,
   questionVariantIds: ROW_039_QUESTION_VARIANTS.map(

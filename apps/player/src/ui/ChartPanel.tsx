@@ -512,13 +512,13 @@ export function ChartPanel({
                           }`}
                           key={step.id}
                         >
-                          {step.current && chart.presentationUpdate ? (
+                          {step.current && (step.currentUpdate ?? chart.presentationUpdate) ? (
                             <div
                               className="chart-current-update chart-decision-update"
                               data-testid="chart-current-update"
                             >
                               <span className="eyebrow">Current update</span>
-                              <p>{chart.presentationUpdate}</p>
+                              <p>{step.currentUpdate ?? chart.presentationUpdate}</p>
                             </div>
                           ) : null}
                           <div className="chart-step-heading">

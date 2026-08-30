@@ -139,14 +139,14 @@ describe("owner row 38 approved vitamin-C collagen-hydroxylation content", () =>
     }
   });
 
-  it("keeps the approved Level 2 package outside the playable Level 0-1 release", () => {
+  it("activates the approved Level 2 package", () => {
     expect(ROW_038_APPROVED_BACKLOG).toMatchObject({
       educationalDifficulty: "foundational",
       releasePointId: "release.l2.endoscopy",
       earliestFacilityStage: 2,
       requiredClinicalSetting: "periop_recovery",
-      currentGameEligibility: "deferred",
-      approvedForRuntime: false,
+      currentGameEligibility: "active_level_2",
+      approvedForRuntime: true,
       maximumScoredDecisionsPerEncounter: 1,
     });
 
@@ -155,14 +155,14 @@ describe("owner row 38 approved vitamin-C collagen-hydroxylation content", () =>
         SYNTHETIC_CLINICAL_RELEASE.concepts.some(
           (runtimeConcept) => runtimeConcept.id === concept.id,
         ),
-      ).toBe(false);
+      ).toBe(true);
       expect(
         SYNTHETIC_CLINICAL_RELEASE.cases.some((clinicalCase) =>
           clinicalCase.decisionNodes.some(
             (node) => node.primaryConceptId === concept.id,
           ),
         ),
-      ).toBe(false);
+      ).toBe(true);
     }
   });
 });

@@ -48,8 +48,12 @@ export function GoalsPanel({
       ) : null}
       {view.prototypeComplete ? (
         <p className="prototype-complete">
-          Level 1 complete. Later facility levels remain locked for this
-          prototype.
+          {view.facilityLevelLabel} complete. Level 3 is a locked preview and
+          is not implemented in this prototype.
+        </p>
+      ) : view.nextLevelLabel === "Level 3" ? (
+        <p className="prototype-complete">
+          Level 3 preview progress only. Level 3 is locked and not implemented.
         </p>
       ) : null}
     </aside>

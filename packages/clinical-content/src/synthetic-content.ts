@@ -52,6 +52,11 @@ import { ROW_115_CASES, ROW_115_CONCEPT } from "./approved-data/obstructive-jaun
 import { ROW_092_CASES, ROW_092_CONCEPT } from "./approved-data/hcc-resection-selection";
 import { ROW_058_CASES, ROW_058_CONCEPT } from "./approved-data/accessory-spleen-location";
 import { ROW_057_CASES, ROW_057_CONCEPTS } from "./approved-data/hereditary-spherocytosis-postsplenectomy";
+import {
+  LEVEL_TWO_ROUTINE_CASE_IDS,
+  LEVEL_TWO_RUNTIME_CASES,
+  LEVEL_TWO_RUNTIME_CONCEPTS,
+} from "./approved-data/level-two-runtime";
 
 const PROTOTYPE_REVIEW_NOTICE =
   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
@@ -1091,6 +1096,27 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     ROW_092_CONCEPT,
     ROW_058_CONCEPT,
     ...ROW_057_CONCEPTS,
+    ...LEVEL_TWO_RUNTIME_CONCEPTS.filter(
+      (concept) => ![
+        ROW_023_CONCEPT,
+        ...ROW_030_CONCEPTS,
+        ROW_031_CONCEPT,
+        ROW_029_CONCEPT,
+        ...ROW_036_CONCEPTS,
+        ROW_047_CONCEPT,
+        ...ROW_048_CONCEPTS,
+        ...ROW_051_CONCEPTS,
+        ...ROW_052_CONCEPTS,
+        ...ROW_060_CONCEPTS,
+        ROW_104_CONCEPT,
+        ROW_119_CONCEPT,
+        ...ROW_111_CONCEPTS.filter((concept) => concept.earliestFacilityStage === 0),
+        ROW_115_CONCEPT,
+        ROW_092_CONCEPT,
+        ROW_058_CONCEPT,
+        ...ROW_057_CONCEPTS,
+      ].some((existing) => existing.id === concept.id),
+    ),
   ],
   cases: [
     ...ROW_023_CASES,
@@ -1110,6 +1136,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     ...ROW_092_CASES,
     ...ROW_058_CASES,
     ...ROW_057_CASES,
+    ...LEVEL_TWO_RUNTIME_CASES,
   ],
 });
 
@@ -1149,3 +1176,5 @@ export const LEVEL_ONE_ROUTINE_CASE_IDS = [
   ...ROW_058_CASES.map((clinicalCase) => clinicalCase.id),
   ...ROW_057_CASES.map((clinicalCase) => clinicalCase.id),
 ] as const;
+
+export { LEVEL_TWO_ROUTINE_CASE_IDS };
