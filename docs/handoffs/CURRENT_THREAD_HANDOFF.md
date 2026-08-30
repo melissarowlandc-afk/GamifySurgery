@@ -1,32 +1,42 @@
 # Current Thread Handoff
 
-**Prepared:** 2026-08-30 18:28:19 -04:00
+**Prepared:** 2026-08-30 19:25:35 -04:00
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
-**HEAD:** `cf7900101563786720bb2520840f0cccecbd7297` (`cf79001`, 2026-08-25,
-`feat: checkpoint current Stitchin Time prototype`)
-**Upstream relation at audit:** 0 ahead / 0 behind `origin/beta`; no merge,
-rebase, or cherry-pick was active.
+**Verified checkpoint content commit:** `244849119596c0f31f21175db5f5e443ff98fac4`
+(`2448491`, `feat: checkpoint expanded Stitchin Time prototype`)
+**Branch relationship:** the checkpoint content commit was pushed and read-back
+verified in `origin/beta` history. This handoff is the documentation-only
+follow-up; after its push, local `beta` and `origin/beta` are verified equal.
+`main` and `origin/main` remained at `cf7900101563786720bb2520840f0cccecbd7297`
+(`cf79001`); no merge, main push, Pages workflow execution, deployment, or
+publication occurred in this checkpoint action.
 
 ## Read this first
 
-This workspace is deliberately and heavily dirty. Preserve all existing work;
-do **not** use broad staging, reset, checkout, clean, or delete commands.
+The public-safe ordinary `beta` worktree was clean immediately after the
+checkpoint commit and push. This follow-up documentation change is the only
+ordinary pending work and will leave it clean again after its own commit.
+Ignored local review/source and transient assets still exist, but are not
+ordinary Git candidates. Do **not** use broad staging, reset, checkout, clean,
+or delete commands.
 
-At final handoff validation, `git status --porcelain=v1` had **228 entries**:
-**117 tracked modifications** and **111 untracked paths** (some are directories
-containing more files). This includes the bounded lifecycle edit in `AGENTS.md`
-and this handoff document. Run a fresh `git status --short` before every edit
-and treat the tree as user/other-worker work unless a bounded assignment
-explicitly names a file.
+At final checkpoint validation, this action validated a committed checkpoint of
+**87.92 MiB** across **334 paths** (`+17,965` insertions / `-941` deletions).
+This includes the public work required for the checkpoint backup. Run a fresh
+`git status --short` before every edit and treat the tree as user/other-worker
+work unless a bounded assignment explicitly names a file.
 
 Do not indiscriminately stage ignored/private paths. `.gitignore` excludes
 `.env*`, `.local-dev/`, `.private-clinical-data/`, `.clinical-workbench/`,
 `clinical-data/private/`, `clinical-data/imports/`, `clinical-data/exports/`,
 `Photos for Codex/`, `generated_images/`, `node_modules/`, and test/build
-artifacts. `generated_images/` is an ignored local owner-review and canonical-source
-workspace; checked-in/public derived runtime assets live under
-`apps/player/public/art/`. Clinical source restrictions in `AGENTS.md` remain binding.
+artifacts. `artifacts/logs/` and `artifacts/screenshots/tmp-*.png` are also
+excluded in this backup state. `generated_images/` is an intentionally ignored
+local owner-review and canonical-source workspace; checked-in public runtime
+assets live under `apps/player/public/art/`. `artifacts/logs/` contains only
+ignored transient local logs. Clinical source restrictions in `AGENTS.md`
+remain binding.
 
 ## Current product position
 
@@ -56,6 +66,12 @@ for compatibility.
 
 ### Latest completed bounded task
 
+The latest completed bounded task is the public-safe beta backup: verified
+checkpoint content commit `2448491` was pushed and read-back verified at
+`origin/beta`. It did not promote `main` or deploy Pages.
+
+### Latest product implementation milestone
+
 `docs/execplans/unify-all-room-wall-heights.md` is complete and awaits owner
 visual review. The measured Front Desk v4 north-wall envelope now drives all
 current room/hallway cutaways at equal tile scale. Generic walls, north doors,
@@ -63,8 +79,9 @@ wall-fixture clipping, camera headroom, and Examination boundary-aware
 rendering share the contract while retaining room-specific floors/materials and
 independent fixtures.
 
-No commit, push, deployment, or Pages publication was performed by that task
-or by this handoff.
+No commit, push, deployment, or Pages publication was performed by the
+wall-height milestone. The later beta backup did push `2448491`; it did not
+promote `main` or publish Pages.
 
 ## Authoritative records
 
@@ -95,7 +112,7 @@ work.
 | `approve-hcc-resection-selection-row-092.md` | Complete | Await the next owner concept review; no implementation before approval. |
 | `approve-lymphangitis-row-104.md` | Complete | Await the owner's next concept decision. |
 | `approve-obstructive-jaundice-vitamin-k-row-115.md` | Historical | Its proposed row-92 review is already complete; do not replay it. |
-| `approve-row-057-and-pages-showcase-release.md` | Active release checkpoint | Sol staged-source/privacy audit and checkpoint, then beta/main/Pages work. **Not authorization to commit, push, or deploy without current user direction.** |
+| `approve-row-057-and-pages-showcase-release.md` | Active release checkpoint | Source/privacy audit and beta checkpoint complete; main/Pages work remains pending and outside this checkpoint action. |
 | `correct-horizontal-character-gaits.md` | Complete / owner playtest | Owner playtests direction-locked patient gait; act only on a concrete defect. |
 | `exterior-landscaping-sidewalk-pass.md` | Complete / owner review | Owner visual review; no implementation planned. |
 | `implement-level-2-expanded-outpatient-endoscopy.md` | Complete / walkthrough | Owner local walkthrough on beta; no release action authorized. |
@@ -114,32 +131,31 @@ work.
 
 ## Latest scoped validation evidence
 
-Do not claim a full-suite pass from this handoff. The latest wall-height
-milestone recorded:
+Latest checkpoint validation:
 
-- Focused Vitest: 46 tests across 7 player test files passed.
-- `npm.cmd run typecheck --workspace @gamify-surgery/player`: passed.
-- `npm.cmd run build --workspace @gamify-surgery/player`: passed (existing
-  large-chunk warning only).
-- Focused desktop Playwright passed: Exam horizontal/vertical (1 test, 45.1s),
-  Exam Build/partial adjacency (2, 59.5s), Level 2 desktop/phone (2, 48.6s),
-  and Level 1 golden slice desktop/phone/QA/Build (4, 1.0m).
-- `git diff --check`: passed at that milestone.
+- Root `npm run typecheck` passed across all seven workspaces.
+- `npm test` passed for **137** files and **856** tests, including the new
+  balance-config test hook.
+- `npm run build:pages` passed for **285** modules, **100** public build files,
+  and **2** asset references; only the existing **2,856.01 kB** chunk advisory
+  was present.
+- `git diff --check`: passed.
+- Secret scan was clean for **173** committed text files.
+- PNG text/EXIF scan clean for **160** committed images.
+- The committed checkpoint had no file over **50 MiB**.
 
-Relevant actual-app captures:
+Excluded local directories and assets that still exist but are not in the backup:
 
-- `artifacts/screenshots/examination-room-v2-horizontal.png`
-- `artifacts/screenshots/examination-room-v2-vertical.png`
-- `artifacts/screenshots/examination-room-v2-partial-adjacency.png`
-- `artifacts/screenshots/examination-room-v2-build-door-zones.png`
-- `artifacts/screenshots/level-1-golden-slice-desktop.png`
-- `artifacts/screenshots/level-two-facility-desktop.png`
+- `generated_images/` (157 files, 240.62 MiB; owner-review/canonical source)
+- `artifacts/logs/` (14 files; transient local logs)
+- `artifacts/screenshots/tmp-*.png`
 
 ## New-thread startup checklist
 
 1. Read `AGENTS.md` and this handoff completely.
-2. Run `git status --short --branch`, inspect the scoped diff, and preserve all
-   current work.
+2. Run `git status --short --branch`, confirm the clean beta tree after this
+   follow-up documentation commit, inspect ignored local source/review assets
+   only when needed, and preserve all current work.
 3. Check live agents and relevant local processes before edits; do not overlap
    a write worker or terminate a process you do not own.
 4. Choose exactly one bounded task. Read its existing ExecPlan, or create one
@@ -153,15 +169,17 @@ Relevant actual-app captures:
 Suggested first message:
 
 > Resume GamifySurgery safely from `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
-> Read `AGENTS.md`, inspect the dirty `beta` tree without reverting anything,
-> and first report bounded-task options plus any live agents/processes before
-> editing. Do not commit, push, or deploy unless I explicitly authorize it.
+> Read `AGENTS.md`, inspect the clean `beta` tree plus ignored local
+> source/review assets without reverting anything, and first report
+> bounded-task options plus any live agents/processes before editing. Do not
+> commit, push, or deploy unless I explicitly authorize it.
 
 ## Running-work note
 
 At audit there were no additional child write agents and no active Playwright
-session owned by the completed wall-height milestone. Two local `node`
-processes were present at 2026-08-30 18:27 -04:00; their ownership was not
-inferred. Recheck rather than terminating them.
+session owned by this checkpoint action. No process ownership was inferred from
+the prior local activity; recheck rather than terminating anything.
 
-This handoff performed **no commit, push, deployment, or publication**.
+This handoff is the documentation-only follow-up to the completed public
+checkpoint backup; it performs no main promotion, Pages publication, or
+deployment.
