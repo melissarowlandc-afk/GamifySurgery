@@ -133,8 +133,10 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 - [x] Sol staged-source/privacy review and beta checkpoint commit.
 - [x] Push `beta` backup.
 - [x] Owner explicitly instructed: "push the current version for GitHub pages deployment."
-- [ ] Fast-forward/push `main`.
-- [ ] Verify Pages workflow and live application.
+- [x] Fast-forward/push `main` to the reviewed showcase commit.
+- [x] Verify the Pages workflow and live application.
+- [ ] Commit and push the separate docs-only post-deployment record (this plan and
+  the current handoff); its commit hash cannot be recorded in advance.
 
 ## Discoveries
 
@@ -151,21 +153,30 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 - The title-tagline and HUD/tutorial browser specs were intentionally not run in
   that validation milestone because their tracked screenshot artifacts were
   already dirty at the time; no user artifacts were overwritten.
-- Current release audit state before the new checkpoint commit: local `beta`
-  and `origin/beta` resolve to `6109028`; local `main` and `origin/main`
-  resolve to `cf79001`, and `main` is a strict ancestor of `beta`.
+- The current public-safe showcase commit is
+  `23f9be41d924578a19f2fa7b580e69c1744e63c4` (`feat: publish current
+  Stitchin Time showcase`). `beta`, `origin/beta`, `main`, and `origin/main`
+  were read-back verified at that commit after the fast-forward release.
 - The current release audit passed root typecheck across seven workspaces, root
   tests (**144 files / 900 tests**), and `build:pages` (**292 modules / 2 asset
   references / 100 public build files**), plus `git diff --check` and candidate
   secret, private-path, clinical-content, PNG, and symlink scans. The explicit
-  68-path candidate manifest is retained in the audit handoff context. The
-  ignored local owner-review asset workspace and two concurrent diagnostic
-  screenshots are excluded from the candidate release.
+  70-path candidate manifest was committed as 6,080 insertions and 385
+  deletions. The ignored local owner-review asset workspace and two concurrent
+  diagnostic screenshots were excluded from the release.
+- GitHub Actions Pages run `33460580885` (job `99709662988`) completed
+  successfully in 1m02s. The live site returned HTTP 200 and its HTML matched
+  the local Pages build's `/GamifySurgery/assets/index-CybogVE6.js` and
+  `/GamifySurgery/assets/index-FbGXVgJP.css` references; both assets returned
+  HTTP 200 (2,931,561 and 102,222 bytes respectively).
+- The release audit incident was contained: an excluded local owner-review
+  workspace was reached before a filter took effect, but nothing was modified,
+  staged, committed, or uploaded, and no repository/log output file was
+  created. All subsequent checks were explicit-path scoped.
 
 ## Exact next action
 
-Sol re-audits the sanitized manifest, scoped-stages the explicit paths, reviews
-the cached diff, commits `beta`, pushes and verifies `beta`, fast-forwards and
-pushes `main`, monitors Pages, and verifies the live URL. The owner explicitly
-authorized this beta-to-main promotion, Pages workflow, and live verification;
-do not mark any of those steps complete until their evidence is recorded.
+Sol may commit and push this docs-only post-deployment record after its scoped
+review. Its future hash must not be claimed in this record. The owner then
+remotely playtests the deployed showcase before beginning a new bounded
+concept-review thread.

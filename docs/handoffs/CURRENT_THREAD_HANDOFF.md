@@ -3,35 +3,45 @@
 **Prepared:** 2026-08-31
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
-**Verified checkpoint content commit:** `244849119596c0f31f21175db5f5e443ff98fac4`
-(`2448491`, `feat: checkpoint expanded Stitchin Time prototype`)
-**Branch relationship:** the prior checkpoint content commit was pushed and
-read-back verified in `origin/beta` history. The newer clinical batch described
-below is an uncommitted, unpushed local checkpoint.
-`main` and `origin/main` remained at `cf7900101563786720bb2520840f0cccecbd7297`
-(`cf79001`); no merge, main push, Pages workflow execution, deployment, or
-publication occurred in this checkpoint action.
+**Deployed showcase commit:** `23f9be41d924578a19f2fa7b580e69c1744e63c4`
+(`feat: publish current Stitchin Time showcase`)
+**Branch relationship:** `beta`, `origin/beta`, `main`, and `origin/main` were
+read-back verified at the deployed showcase commit. This handoff update is a
+separate docs-only post-deployment follow-up; it is not yet committed or pushed,
+and its future commit hash cannot be self-recorded here.
+**Pages:** workflow run `33460580885`, job `99709662988`, completed successfully
+in 1m02s. The deployed URL is
+`https://melissarowlandc-afk.github.io/GamifySurgery/`.
 
 ## Read this first
 
-The public-safe ordinary `beta` worktree was clean immediately after the
-checkpoint commit and push. It is **not clean now**: the ongoing graphics
-thread has an uncommitted Front Desk v5 rebuild awaiting owner visual review,
-refreshed visual proofs, two Front Desk ExecPlans, and the user-supplied
-untracked ignored local owner-review asset workspace. Other clinical-review
-work is also present. Preserve all of it. Do **not** use broad staging, reset,
-checkout, clean, or delete commands.
+At the deployed showcase checkpoint, the tracked worktree was clean; only the
+two excluded untracked diagnostics remained:
+`artifacts/screenshots/examination-room-v3-horizontal-north-door-diagnostic.png`
+and
+`artifacts/screenshots/examination-room-v3-vertical-north-door-diagnostic.png`.
+After that deployment, concurrent unstaged tracked edits appeared in
+`apps/player/src/facility/FacilityScene.ts`,
+`apps/player/src/facility/canonicalRoomShell.test.ts`, and
+`apps/player/src/facility/canonicalRoomShell.ts`, in addition to this docs-only
+follow-up and the two excluded diagnostics. Later canonical-room work also
+appeared in `docs/execplans/unify-canonical-room-shell-and-examination-grid.md`,
+`artifacts/screenshots/canonical-enclosed-room-matrix-desktop.png`, and
+`tests/e2e/canonical-enclosed-room-matrix.spec.ts`. None of these concurrent
+paths are part of the deployed commit or this docs-only closure; preserve and
+independently audit them before any later checkpoint. Do **not** use broad
+staging, reset, checkout, clean, or delete commands.
 
-At final checkpoint validation, this action validated a committed checkpoint of
-**87.92 MiB** across **334 paths** (`+17,965` insertions / `-941` deletions).
-This includes the public work required for the checkpoint backup. Run a fresh
-`git status --short` before every edit and treat the tree as user/other-worker
-work unless a bounded assignment explicitly names a file.
+The deployed checkpoint contains 70 public-safe paths (`+6,080` insertions /
+`-385` deletions). Run a fresh `git status --short` before every edit and treat
+the tree as user/other-worker work unless a bounded assignment explicitly names
+a file.
 
 Do not indiscriminately stage ignored/private paths. `.gitignore` excludes
 `.env*`, `.local-dev/`, `.private-clinical-data/`, `.clinical-workbench/`,
 `clinical-data/private/`, `clinical-data/imports/`, `clinical-data/exports/`,
-`Photos for Codex/`, `generated_images/`, `node_modules/`, and test/build
+the ignored local owner-review asset workspace, `generated_images/`,
+`node_modules/`, and test/build
 artifacts. `artifacts/logs/` and `artifacts/screenshots/tmp-*.png` are also
 excluded in this backup state. `generated_images/` is an intentionally ignored
 local owner-review and canonical-source workspace; checked-in public runtime
@@ -62,13 +72,13 @@ for compatibility.
   fixture. Hospital/future material is deferred; new clinical content requires
   named clinician approval and the provenance rules in `AGENTS.md`.
 - Art is repository-native pixel work with canonical character identity data,
-  detailed Level 1/2 rooms, world-anchored exterior, and the uncommitted Front
+  detailed Level 1/2 rooms, world-anchored exterior, and the committed Front
   Desk v5 component-based room presentation.
 
 ### Latest completed bounded task: approved clinical content batch
 
-The 2026-08-31 clinical batch is implemented and validated as a mixed
-active/deferred development-preview checkpoint. Level 0 now actively admits six
+The 2026-08-31 clinical batch is implemented, validated, and included in the
+deployed showcase. Level 0 now actively admits six
 stable concepts and 24 exact clinically approved patient-linked variants: rows
 66, 87, and 109 (one concept/four variants each) plus row 62 MEN2A (three
 concepts/12 variants). MEN2A 2B omits the cueing sentence, "The record contains
@@ -90,13 +100,9 @@ remain outstanding. The next bounded thread should prepare the owner-review
 set: 24 variants across six early-game concepts. Do not implement Graves/RAI
 until exact approval is recorded.
 
-The queue pending-not-authored count remains 81. No staging, commit, push,
-merge, deployment, or Pages publication occurred for this clinical batch. The
-branch remains `beta` tracking `origin/beta`; the prior remote backup is
-`2448491`, not a backup of this new batch. This is a substantial validated
-GitHub-backup checkpoint: ask the owner to say **"push to GitHub"** to authorize
-a scoped safety audit, commit, and push. Do not imply that this batch is backed
-up until that succeeds.
+The queue pending-not-authored count remains 81. This batch was included in the
+reviewed, pushed, and deployed showcase commit. It does not require a separate
+backup authorization.
 
 ### Superseded pre-implementation clinical review notes
 
@@ -115,12 +121,11 @@ left-offset counter, rear-left cabinet, board/clock, rear-right cooler/bin, and
 inward-facing southeast chair. Live staff/patient art remains independent and
 uses Front Desk-only display positions/scaling. The room remains logically
 five by four, centered above the sidewalk, with a clear central walk and one
-tested door candidate per wall. This uncommitted checkpoint awaits owner
-visual review.
+tested door candidate per wall. It awaits owner visual review.
 
-The preceding repository checkpoint remains public-safe beta backup commit
-`2448491`, pushed and read-back verified at `origin/beta`. The Front Desk task
-did not commit, push, promote `main`, deploy Pages, or publish anything.
+The Front Desk and Examination updates are included in the deployed showcase
+commit. Owner visual review may still identify a concrete follow-up, but it is
+not a release blocker for the verified current prototype.
 
 ### Latest product implementation milestone
 
@@ -135,9 +140,8 @@ target-family v3 architecture and matching v2 furniture, so the runtime v5
 presentation was rebuilt deterministically from those assets. The accepted
 declarative entrance beds, center walk, and four-wall door coverage remain.
 
-No commit, push, deployment, or Pages publication was performed by this Front
-Desk v5 task. The earlier beta backup did push `2448491`; it did not promote
-`main` or publish Pages.
+The committed graphics checkpoint was incorporated in the showcase release and
+deployed through Pages with the rest of the reviewed prototype.
 
 ## Authoritative records
 
@@ -164,7 +168,7 @@ work.
 | --- | --- | --- |
 | `approve-accessory-spleen-location-row-058.md` | Complete | Await the owner's next concept-review request. |
 | `approve-distal-cholangiocarcinoma-row-111.md` | Active review queue | Select/present the next strongest unreviewed workbook concept when review continues. |
-| `implement-approved-clinical-content-batch-2026-08-31.md` | Complete / unpushed checkpoint | Start the Graves/RAI owner-review batch; say **"push to GitHub"** first if this validated batch should be backed up. |
+| `implement-approved-clinical-content-batch-2026-08-31.md` | Complete / deployed showcase | Start the Graves/RAI owner-review batch; no additional backup step is needed for the included batch. |
 | `approve-graves-rai-row-061.md` | Approved seed scopes / unimplemented | Prepare 18 exact expansion variants for owner review; do not implement before exact approval. |
 | `approve-phyllodes-row-053.md` | Implemented deferred package | Keep outside active runtime pending Level 3 capability and release work. |
 | `approve-trauma-vka-row-054.md` | Implemented deferred package | Keep outside active runtime pending future Hospital/ED capability and release work. |
@@ -172,7 +176,7 @@ work.
 | `approve-hcc-resection-selection-row-092.md` | Complete | Await the next owner concept review; no implementation before approval. |
 | `approve-lymphangitis-row-104.md` | Complete | Await the owner's next concept decision. |
 | `approve-obstructive-jaundice-vitamin-k-row-115.md` | Historical | Its proposed row-92 review is already complete; do not replay it. |
-| `approve-row-057-and-pages-showcase-release.md` | Active release checkpoint | Source/privacy audit and beta checkpoint complete; main/Pages work remains pending and outside this checkpoint action. |
+| `approve-row-057-and-pages-showcase-release.md` | Complete / docs follow-up pending | Showcase commit deployed; commit the separate post-deployment record, then owner remote playtest. |
 | `correct-horizontal-character-gaits.md` | Complete / owner playtest | Owner playtests direction-locked patient gait; act only on a concrete defect. |
 | `exterior-landscaping-sidewalk-pass.md` | Complete / owner review | Owner visual review; no implementation planned. |
 | `implement-level-2-expanded-outpatient-endoscopy.md` | Complete / walkthrough | Owner local walkthrough on beta; no release action authorized. |
@@ -193,7 +197,7 @@ work.
 
 ## Latest scoped validation evidence
 
-Clinical batch validation reviewed by Sol:
+Clinical batch and Pages release validation reviewed by Sol:
 
 - Focused clinical content: **4 files / 23 tests passed** (early-game, MEN2A,
   phyllodes, and trauma/VKA). Focused game-domain admission/selection: **2
@@ -201,14 +205,26 @@ Clinical batch validation reviewed by Sol:
   checks passed **3 files / 14 tests**.
 - Clinical-content and game-domain typechecks passed. Queue assertions passed:
   pending count 81, row 54 packaged/deferred, and row 61 unchanged/deferred.
-- Sequential root `npm.cmd test` passed **144 files / 895 tests**: clinical
-  context workbench 8/43, player 56/291, balance 1/6, clinical authoring 7/81,
+- Sequential root `npm.cmd test` passed **144 files / 900 tests**: clinical
+  context workbench 8/43, player 56/296, balance 1/6, clinical authoring 7/81,
   clinical content 39/259, clinical research 8/83, and game domain 25/132.
 - Root `npm.cmd run typecheck` passed all seven workspaces. Player build passed
   292 modules with only its existing large-chunk advisory. `git diff --check`
   passed. An earlier parallel DOCX-boundary timeout was isolated to resource
   contention; its standalone rerun passed 1 file / 4 tests, and the final
   sequential suite passed all clinical-research tests.
+- Final local Pages build passed its boundary checks, seven-workspace typecheck,
+  292 modules, two asset references, and 100 public files. The live HTML
+  matched local `index-CybogVE6.js` and `index-FbGXVgJP.css` asset references;
+  both deployed assets returned HTTP 200 (JS 2,931,561 bytes; CSS 102,222 bytes).
+- GitHub Actions Pages run `33460580885` / job `99709662988` succeeded in 1m02s;
+  the live URL returned HTTP 200.
+- The 70-path release audit found no secrets, private paths, prohibited clinical
+  source material, unsafe PNG metadata, symlinks, or files over 50 MiB. An
+  excluded local owner-review workspace was accidentally reached by an audit
+  command before its filter took effect; nothing was modified, staged,
+  committed, or uploaded, and no repository/log output file was created.
+  Subsequent checks used only explicit release paths.
 
 Clinical worker accountability: Terra completed the packageability inventory;
 Level 0 authoring/recovery; approval/provenance and exhaustive-fixture repairs;
@@ -263,10 +279,11 @@ Excluded local directories and assets that still exist but are not in the backup
 ## New-thread startup checklist
 
 1. Read `AGENTS.md` and this handoff completely.
-2. Run `git status --short --branch`, inspect and preserve the uncommitted Front
-   Desk graphics checkpoint plus the ignored local owner-review asset workspace,
-   and never assume the
-   beta tree is clean.
+2. Run `git status --short --branch`, preserve the docs-only follow-up, the
+   concurrent unstaged Facility Scene/canonical-room-shell edits, later
+   canonical-room plan/test/screenshot work, and the two excluded diagnostic
+   screenshots. Independently audit those concurrent edits before any later
+   checkpoint; never assume the tree is clean.
 3. Check live agents and relevant local processes before edits; do not overlap
    a write worker or terminate a process you do not own.
 4. Choose exactly one bounded task. Read its existing ExecPlan, or create one
@@ -280,10 +297,10 @@ Excluded local directories and assets that still exist but are not in the backup
 Suggested first message:
 
 > Resume GamifySurgery safely from `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
-> Read `AGENTS.md`, inspect the uncommitted Front Desk graphics checkpoint plus
-> local source/review assets without reverting anything, and first report
-> bounded-task options plus any live agents/processes before editing. Do not
-> commit, push, or deploy unless I explicitly authorize it.
+> Read `AGENTS.md`, inspect the docs-only release record and excluded diagnostics
+> without reverting anything, and first report bounded-task options plus any live
+> agents/processes before editing. Do not commit, push, or deploy unless I
+> explicitly authorize it.
 
 ## Running-work note
 
@@ -297,15 +314,14 @@ required visual/product judgment rather than deterministic bulk edits. There
 was no active child write agent or Playwright session at final handoff; recheck
 rather than terminating any later process.
 
-This handoff records an uncommitted graphics-only Front Desk checkpoint. It
-performs no commit, push, main promotion, Pages publication, or deployment.
+This handoff records a docs-only post-deployment follow-up. It must be committed
+separately after review; its future hash cannot be recorded in advance.
 
 ## Graphics checkpoint: Front Desk corrections and Examination v3
 
 The graphics-only task in
-`docs/execplans/front-desk-corrections-and-examination-redesign.md` is complete
-and independently validated. It remains an uncommitted local owner-review
-checkpoint.
+`docs/execplans/front-desk-corrections-and-examination-redesign.md` is complete,
+independently validated, and included in the deployed showcase.
 
 - Front Desk v5 walls are continuous except at live doors, including the
   protected founder entrance. The low south wall sorts above in-room contacts;
@@ -343,7 +359,6 @@ Desk wall/depth/chair/sidewalk milestone), `examination_cortan_accessories`
 and tests). No Spark worker ran because the work required visual and renderer
 judgment rather than a deterministic mechanical transformation.
 
-Do not commit, push, deploy, publish, or broadly stage this mixed dirty tree
-without explicit owner direction and a fresh scoped safety audit. If the owner
-wants this validated graphics checkpoint backed up, ask them to say
-**"push to GitHub"**.
+The owner’s exact next action is a remote playtest of the deployed showcase.
+After that, begin a new bounded concept-review thread; do not expand or alter
+clinical content without the required named approval.
