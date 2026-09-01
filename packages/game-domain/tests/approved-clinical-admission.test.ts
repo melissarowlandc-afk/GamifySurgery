@@ -182,6 +182,12 @@ describe("approved clinical admission boundaries", () => {
       "concept.accessory-spleen.common-location",
       "concept.hereditary-spherocytosis.postsplenectomy-persistent-hemolysis-evaluation",
       "concept.hereditary-spherocytosis.confirmed-accessory-spleen-management",
+      "concept.ipaa.pouchitis-common-post-ipaa-complication",
+      "concept.choledochal-cyst.type-iva-combined-duct-dilation",
+      "concept.anal-hsil.high-risk-hpv-association",
+      "concept.men2a.core-manifestation-pattern",
+      "concept.men2a.pheochromocytoma-precedes-thyroid-intervention",
+      "concept.pheochromocytoma.alpha-before-beta-blockade",
       ...LEVEL_TWO_RUNTIME_CONCEPTS.map((concept) => concept.id).filter(
         (id) => id !== "concept.distal-cholangiocarcinoma.resection-selection",
       ),

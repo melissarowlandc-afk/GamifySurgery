@@ -1,6 +1,7 @@
 export const WORLD_EXTERIOR_BANDS = {
-  setbackTiles: 0.94,
-  sidewalkTiles: 1.22,
+  /** Kept at zero only for backwards-compatible layout field consumers. */
+  setbackTiles: 0,
+  sidewalkTiles: 1,
   curbTiles: 0.12,
 } as const;
 

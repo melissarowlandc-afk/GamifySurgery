@@ -68,6 +68,14 @@ new clinical data replaceable without rewriting the patient generator, preserve
 existing frozen encounters and saves, and do not silently promote draft content
 into an approved public release.
 
+### Question-authoring presentation
+
+Runtime answer choices must be randomized. A review artifact may show the key
+first only when it explicitly says so. Straightforward single-best-answer
+options must use parallel grammar, comparable specificity and length, and the
+same semantic category; do not use odd-one-out qualifiers or explanatory
+distractor wording that reveals the key.
+
 <!-- BEGIN BOUNDED_THREAD_LIFECYCLE -->
 ## Bounded thread lifecycle
 

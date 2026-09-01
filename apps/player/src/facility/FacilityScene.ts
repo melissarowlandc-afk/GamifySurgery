@@ -63,6 +63,7 @@ import {
   ENVIRONMENT_ATLAS_V1_FRAMES,
   FRONT_DESK_V2_ART_FRAMES,
   FRONT_DESK_V2_FIXTURE_OVERRIDES,
+  FRONT_DESK_V3_ARCHITECTURE_FRAMES,
   FRONT_DESK_V4_ARCHITECTURE_FRAMES,
   FRONT_DESK_V4_SHELL_LAYOUT,
   SURGERY_CENTER_ARCHITECTURE_COMPONENT_FRAMES,
@@ -77,6 +78,7 @@ import {
   getEnvironmentAtlasFrameKey,
   type EnvironmentAtlasFrameId,
   type FrontDeskV2ArtId,
+  type FrontDeskV3ArchitectureId,
   type FrontDeskV4ArchitectureId,
   type LandscapingAtlasFrameId,
 } from "../art/bitmapAssetManifest";
@@ -85,6 +87,12 @@ import {
   preloadBitmapAssets,
   registerPhaserAtlasFrames,
 } from "../art/bitmapAssetAdapters";
+import {
+  getFrontDeskV5ArchitectureComponents,
+  getFrontDeskV5Projection,
+  shouldRenderFrontDeskV5Architecture,
+  type FrontDeskV5WallOpening,
+} from "./frontDeskV5Architecture";
 import type {
   PixelFrame,
   PixelSpriteAsset,
@@ -111,14 +119,20 @@ import {
 } from "./routeMotion";
 import {
   FRONT_DESK_PRESENTATION,
+  getFrontDeskV5StationaryActorDisplay,
   shouldRenderEmptyFrontDeskChair,
   shouldRenderFounderSeatedAtFrontDesk,
   shouldRenderReceptionistSeatedAtFrontDesk,
 } from "./frontDeskPresentation";
 import {
   getExaminationRoomPresentation,
+  isExaminationNorthWallFixtureVisible,
   type ExaminationRoomOrientation,
 } from "./examinationRoomPresentation";
+import {
+  getExaminationV3ArchitectureComponents,
+  type ExaminationDoorOpening,
+} from "./examinationV3Architecture";
 import {
   getSurgeryCenterArchitectureAtScale,
   SURGERY_CENTER_WALL_GEOMETRY,
@@ -788,6 +802,7 @@ export class FacilityScene extends Phaser.Scene {
       ...Object.values(LEVEL_ONE_BITMAP_FIXTURE_FRAMES),
       ...Object.values(FRONT_DESK_V2_FIXTURE_OVERRIDES),
       ...Object.values(FRONT_DESK_V2_ART_FRAMES),
+      ...Object.values(FRONT_DESK_V3_ARCHITECTURE_FRAMES),
       ...Object.values(FRONT_DESK_V4_ARCHITECTURE_FRAMES),
       ...Object.values(SURGERY_CENTER_ARCHITECTURE_COMPONENT_FRAMES),
       ...Object.values(EXAMINATION_V2_ARCHITECTURE_FRAMES).flatMap((frames) => Object.values(frames)),
@@ -1181,6 +1196,7 @@ export class FacilityScene extends Phaser.Scene {
     height: number,
     depth: number,
     alpha: number,
+    rotationDegrees = 0,
   ): boolean {
     const frame = getRoomBitmapFixtureFrame(roomDefinitionId, id);
     if (!frame || !this.canRenderAuthoredFixture(id, roomDefinitionId)) return false;
@@ -1198,10 +1214,21 @@ export class FacilityScene extends Phaser.Scene {
       .setTexture(getPhaserTextureKey(atlas), frameKey)
       .setPosition(Math.round(centerX), Math.round(centerY))
       .setOrigin(
-        frame.anchor.x / Math.max(1, frame.nativeWidth),
-        frame.anchor.y / Math.max(1, frame.nativeHeight),
+        rotationDegrees === 0
+          ? frame.anchor.x / Math.max(1, frame.nativeWidth)
+          : 0.5,
+        rotationDegrees === 0
+          ? frame.anchor.y / Math.max(1, frame.nativeHeight)
+          : 0.5,
       )
-      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      // `width`/`height` describe the on-screen footprint. A quarter-turn
+      // swaps the image's pre-rotation display axes while retaining that
+      // authored footprint for depth, shadows, and clipping.
+      .setDisplaySize(
+        Math.max(1, Math.round(rotationDegrees % 180 === 0 ? width : height)),
+        Math.max(1, Math.round(rotationDegrees % 180 === 0 ? height : width)),
+      )
+      .setAngle(rotationDegrees)
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
@@ -1257,11 +1284,9 @@ export class FacilityScene extends Phaser.Scene {
     return Boolean(atlas && this.textures.exists(getPhaserTextureKey(atlas)));
   }
 
-  private canRenderExaminationV2Architecture(
-    orientation: ExaminationRoomOrientation,
-  ): boolean {
+  private canRenderFrontDeskV5Architecture(): boolean {
     const atlas = ROOM_FIXTURE_ATLASES.find(
-      (asset) => asset.id === getExaminationRoomPresentation(orientation).atlasId,
+      (asset) => asset.id === "room-fixtures:front-desk-v3",
     );
     return Boolean(atlas && this.textures.exists(getPhaserTextureKey(atlas)));
   }
@@ -1297,6 +1322,74 @@ export class FacilityScene extends Phaser.Scene {
       .setVisible(true);
     this.activeFixtureBitmapImages.add(key);
     return true;
+  }
+
+  private drawFrontDeskV3ArchitectureArt(
+    key: string,
+    id: FrontDeskV3ArchitectureId,
+    centerX: number,
+    centerY: number,
+    width: number,
+    height: number,
+    depth: number,
+  ): boolean {
+    const frame = FRONT_DESK_V3_ARCHITECTURE_FRAMES[id];
+    const atlas = ROOM_FIXTURE_ATLASES.find(
+      (asset) => asset.id === frame.atlasId,
+    );
+    if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return false;
+    let image = this.fixtureBitmapImages.get(key);
+    const frameKey = getEnvironmentAtlasFrameKey(frame);
+    if (!image) {
+      image = this.add.image(centerX, centerY, getPhaserTextureKey(atlas), frameKey);
+      this.fixtureBitmapImages.set(key, image);
+    }
+    image
+      .setTexture(getPhaserTextureKey(atlas), frameKey)
+      .setPosition(Math.round(centerX), Math.round(centerY))
+      .setOrigin(0.5, 0.5)
+      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
+      .setDepth(depth)
+      .setAlpha(1)
+      .setVisible(true);
+    this.activeFixtureBitmapImages.add(key);
+    return true;
+  }
+
+  /**
+   * Front Desk v5 is deliberately assembled from target-family v3 components,
+   * rather than reusing the rejected v4 full-shell silhouette. Its projection
+   * is display-only: logical tiles, paths, doors, and saves stay unchanged.
+   */
+  private drawFrontDeskV5Architecture(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    if (room.definitionId !== "room.front_desk" || !this.canRenderFrontDeskV5Architecture()) {
+      return;
+    }
+    const projection = getFrontDeskV5Projection(rectangle);
+    const openings: readonly FrontDeskV5WallOpening[] = (this.bridge.viewModel.doors ?? [])
+      .filter((door) => door.roomInstanceId === room.instanceId)
+      .map((door) => ({ side: door.side, offset: door.offset }));
+    const components = getFrontDeskV5ArchitectureComponents(projection, openings);
+    for (const component of components) {
+      const { bounds } = component;
+      this.drawFrontDeskV3ArchitectureArt(
+        `front-desk-v5:${component.key}:${room.instanceId}`,
+        component.frameId,
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+        bounds.width,
+        bounds.height,
+        component.layer === "front-occluder"
+          // The low south wall shares the same baseline depth contract as
+          // actors and fixtures. Interior contacts sort behind it; sidewalk
+          // contacts below the building naturally remain in front.
+          ? getFacilitySceneDepth(projection.southEntranceY, "fixture", 63)
+          : FACILITY_DEPTH_WORLD + 4,
+      );
+    }
   }
 
   /**
@@ -1371,65 +1464,6 @@ export class FacilityScene extends Phaser.Scene {
       frontCrop.height * scaleY,
       FACILITY_DEPTH_WORLD + 29,
     );
-  }
-
-  /**
-   * The authored Examination Room floor is the exact room footprint. The
-   * shallow rear wall and low foreground lip intentionally extend outside it
-   * as visual-only cutaway architecture.
-   */
-  private drawExaminationV2Architecture(
-    room: FacilityRoomView,
-    rectangle: { x: number; y: number; width: number; height: number },
-  ): void {
-    if (room.definitionId !== "room.examination") return;
-    const orientation: ExaminationRoomOrientation = room.orientation === 90 ? 90 : 0;
-    if (!this.canRenderExaminationV2Architecture(orientation)) return;
-    const presentation = getExaminationRoomPresentation(orientation);
-    const frames = orientation === 90
-      ? EXAMINATION_V2_ARCHITECTURE_FRAMES.vertical
-      : EXAMINATION_V2_ARCHITECTURE_FRAMES.horizontal;
-    const atlas = ROOM_FIXTURE_ATLASES.find((asset) => asset.id === presentation.atlasId);
-    if (!atlas) return;
-    const sourceFloor = presentation.floor;
-    const scaleX = rectangle.width / sourceFloor.width;
-    const scaleY = rectangle.height / sourceFloor.height;
-    const shellWidth = presentation.sourceSize * scaleX;
-    const shellHeight = presentation.sourceSize * scaleY;
-    const shellLeft = rectangle.x - sourceFloor.x * scaleX;
-    const shellTop = rectangle.y - sourceFloor.y * scaleY;
-    const draw = (
-      key: string,
-      frame: (typeof frames)[keyof typeof frames],
-      source: Readonly<{ x: number; y: number; width: number; height: number }>,
-      depth: number,
-    ) => {
-      const textureKey = getPhaserTextureKey(atlas);
-      let image = this.fixtureBitmapImages.get(key);
-      const frameKey = getEnvironmentAtlasFrameKey(frame);
-      if (!image) {
-        image = this.add.image(0, 0, textureKey, frameKey);
-        this.fixtureBitmapImages.set(key, image);
-      }
-      image
-        .setTexture(textureKey, frameKey)
-        .setPosition(
-          Math.round(shellLeft + (source.x + source.width / 2) * scaleX),
-          Math.round(shellTop + (source.y + source.height / 2) * scaleY),
-        )
-        .setOrigin(0.5, 0.5)
-        .setDisplaySize(
-          Math.max(1, Math.round(source.width * scaleX)),
-          Math.max(1, Math.round(source.height * scaleY)),
-        )
-        .setDepth(depth)
-        .setVisible(true);
-      this.activeFixtureBitmapImages.add(key);
-    };
-    draw(`examination-v2:shell:${room.instanceId}`, frames.shell, {
-      x: 0, y: 0, width: presentation.sourceSize, height: presentation.sourceSize,
-    }, FACILITY_DEPTH_WORLD + 4);
-    draw(`examination-v2:front-occluder:${room.instanceId}`, frames.frontOccluder, presentation.frontOccluder, FACILITY_DEPTH_WORLD + 29);
   }
 
   /** A full Front Desk bitmap is safe only while no horizontal boundary is
@@ -1586,6 +1620,49 @@ export class FacilityScene extends Phaser.Scene {
         );
       }
     }
+  }
+
+  /** Examination v3 owns a complete cutaway envelope: adjacency never makes
+   * an opening. Only a live explicit door subtracts its own logical slot. */
+  private drawExaminationV3Architecture(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    const size = orientedSize(room);
+    const openings: ExaminationDoorOpening[] = (this.bridge.viewModel.doors ?? [])
+      .filter((door) => door.roomInstanceId === room.instanceId)
+      .map((door) => ({ side: door.side, offset: door.offset }));
+    const floor = this.roomFloorColor(room, 0);
+    graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.25);
+    graphics.fillRect(rectangle.x + 3, rectangle.y + 4, rectangle.width, rectangle.height);
+    graphics.fillStyle(floor, 1);
+    graphics.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    this.drawRoomFloor(graphics, room, rectangle, floor);
+    this.drawAuthoredRoomFloor(room, rectangle);
+    if (!this.canRenderFrontDeskV5Architecture()) return;
+    const components = getExaminationV3ArchitectureComponents(rectangle, size, openings);
+    for (const component of components) {
+      const { bounds } = component;
+      this.drawFrontDeskV3ArchitectureArt(
+        `examination-v3:${component.key}:${room.instanceId}`,
+        component.frameId,
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+        bounds.width,
+        bounds.height,
+        component.layer === "front-occluder"
+          ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
+          : FACILITY_DEPTH_WORLD + 4,
+      );
+    }
+  }
+
+  private drawExaminationV3Foreground(room: FacilityRoomView, rectangle: { x: number; y: number; width: number; height: number }): void {
+    if (room.definitionId !== "room.examination") return;
+    // Front Desk-derived foreground component art is already rendered at the
+    // sortable threshold above; this retained seam keeps later fixture work
+    // from accidentally reintroducing a procedural Examination-only lip.
   }
 
   private canRenderAuthoredEnvironment(): boolean {
@@ -1954,12 +2031,12 @@ export class FacilityScene extends Phaser.Scene {
         tileY: founderRoom.tileY,
         ...orientedSize(founderRoom),
       });
-      const inset = Math.max(5, Math.floor(this.layout.tileSize * 0.14));
-      const usableWidth = Math.max(18, rectangle.width - inset * 2);
-      const usableHeight = Math.max(18, rectangle.height - inset * 2);
-      x = rectangle.x + inset + usableWidth * FRONT_DESK_PRESENTATION.waterCooler.contact.x;
+      const projection = getFrontDeskV5Projection(rectangle);
+      x = projection.floorBounds.x +
+        projection.floorBounds.width * FRONT_DESK_PRESENTATION.waterCooler.contact.x;
       coolerContactY =
-        rectangle.y + inset + usableHeight * FRONT_DESK_PRESENTATION.waterCooler.contact.y;
+        projection.floorBounds.y +
+        projection.floorBounds.height * FRONT_DESK_PRESENTATION.waterCooler.contact.y;
     }
     const coolerCenterY = coolerContactY - renderedCooler.height / 2;
     const coolerGraphics = this.getSortableGraphics(
@@ -1980,6 +2057,19 @@ export class FacilityScene extends Phaser.Scene {
       this.fixtureStableOrder % 64,
     );
     this.fixtureStableOrder += 1;
+    if (coolerIsAtFrontDesk) {
+      const source = FRONT_DESK_V3_ARCHITECTURE_FRAMES.coolerShadow;
+      const shadowWidth = renderedCooler.width * 1.5;
+      this.drawFrontDeskV3ArchitectureArt(
+        "front-desk-v5:shadow:water-cooler",
+        "coolerShadow",
+        x,
+        coolerContactY,
+        shadowWidth,
+        shadowWidth * (source.nativeHeight / source.nativeWidth),
+        coolerDepth - 1,
+      );
+    }
     if (!this.drawAuthoredFixture(
       "environment:water-cooler",
       "waterCooler",
@@ -2148,27 +2238,24 @@ export class FacilityScene extends Phaser.Scene {
       5,
       Math.floor(this.layout.tileSize * 0.14),
     );
-    const usesFrontDeskV4Shell =
-      room.definitionId === "room.front_desk" &&
-      this.canRenderFrontDeskV4Architecture() &&
-      !this.requiresBoundaryAwareSurgeryCenterShell(room);
-    const usesExaminationV2Shell =
-      room.definitionId === "room.examination" &&
-      this.canRenderExaminationV2Architecture(room.orientation === 90 ? 90 : 0) &&
-      !this.requiresBoundaryAwareSurgeryCenterShell(room);
+    const usesFrontDeskV5Architecture = shouldRenderFrontDeskV5Architecture(
+      room.definitionId,
+      this.canRenderFrontDeskV5Architecture(),
+      this.requiresBoundaryAwareSurgeryCenterShell(room),
+    );
 
-    if (this.requiresBoundaryAwareSurgeryCenterShell(room)) {
+    if (usesFrontDeskV5Architecture) {
+      // The component renderer owns both isolated Front Desk rooms and rooms
+      // connected through its deliberate north/south openings. Its fixtures
+      // use the same v5 floor projection, avoiding a legacy-shell/v5-fixture
+      // mixture at shared boundaries.
+      this.drawFrontDeskV5Architecture(room, rectangle);
+      this.drawCleanlinessWear(graphics, room, rectangle);
+    } else if (room.definitionId === "room.examination") {
+      this.drawExaminationV3Architecture(graphics, room, rectangle);
+      this.drawCleanlinessWear(graphics, room, rectangle);
+    } else if (this.requiresBoundaryAwareSurgeryCenterShell(room)) {
       this.drawBoundaryAwareSurgeryCenterShell(graphics, room, rectangle);
-      this.drawCleanlinessWear(graphics, room, rectangle);
-    } else if (usesFrontDeskV4Shell) {
-      // The source shell owns every baseline architectural pixel for this
-      // room.  Do not put the generic shadow/floor/shell, an authored floor,
-      // or the old upgrade-finish overlay underneath it: doing so was the
-      // source of the rejected stretched and doubled architecture.
-      this.drawFrontDeskV4Architecture(room, rectangle);
-      this.drawCleanlinessWear(graphics, room, rectangle);
-    } else if (usesExaminationV2Shell) {
-      this.drawExaminationV2Architecture(room, rectangle);
       this.drawCleanlinessWear(graphics, room, rectangle);
     } else {
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.58);
@@ -2203,6 +2290,7 @@ export class FacilityScene extends Phaser.Scene {
     );
     roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
     this.drawRoomFixtures(roomFixtures, room, rectangle, furnitureInset);
+    this.drawExaminationV3Foreground(room, rectangle);
 
     if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
       const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
@@ -3321,7 +3409,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
-    const { tileSize, originX, width, sidewalkTop, sidewalkHeight, setbackTop } = this.layout;
+    const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.layout;
     const sidewalkBottom = sidewalkTop + sidewalkHeight;
     if (!this.canRenderAuthoredEnvironment()) {
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
@@ -3353,11 +3441,8 @@ export class FacilityScene extends Phaser.Scene {
     const entranceEdgeY = founderPixels.y + founderPixels.height;
     const entranceFrame = Math.max(2, Math.floor(tileSize * 0.08));
 
-    // The only paving through grass is the short, unobstructed public walk.
-    graphics.fillStyle(PIXEL_PALETTE_NUMBER.lightSage, 1);
-    graphics.fillRect(entranceLeft - 3, setbackTop, entranceWidth + 6, sidewalkTop - setbackTop);
-    graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.olive, 0.8);
-    graphics.strokeRect(entranceLeft - 3, setbackTop, entranceWidth + 6, sidewalkTop - setbackTop);
+    // The buildable edge meets the sidewalk directly. The small threshold is
+    // visual entrance trim, not a separate grass setback or a route change.
     graphics.fillStyle(this.roomFloorColor(founder), 1);
     graphics.fillRect(entranceLeft, entranceEdgeY - Math.max(4, entranceFrame * 2), entranceWidth, Math.max(8, entranceFrame * 4));
     graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.55);
@@ -3366,24 +3451,40 @@ export class FacilityScene extends Phaser.Scene {
     graphics.fillRect(entranceLeft - entranceFrame, entranceEdgeY - entranceFrame * 3, entranceFrame, entranceFrame * 5);
     graphics.fillRect(entranceLeft + entranceWidth, entranceEdgeY - entranceFrame * 3, entranceFrame, entranceFrame * 5);
 
-    // Compact flowers at the sidewalk edge give the entrance a cared-for
-    // threshold without recreating the removed full-width green stripe.
-    const planterY = sidewalkTop + Math.max(8, sidewalkHeight * 0.25);
-    const entrancePlants = [
-      { x: entranceLeft - tileSize * 0.7, id: "landscape:flowers-pink" as const },
-      { x: entranceLeft + entranceWidth + tileSize * 0.7, id: "landscape:flowers-white" as const },
-    ];
-    for (const [index, plant] of entrancePlants.entries()) {
+    // The Front Desk owns its paired entrance-bed composition declaratively.
+    // Their top edges touch the building within the rear sidewalk band. The
+    // lower sidewalk remains a continuous public pedestrian lane.
+    for (const [planterIndex, planter] of FRONT_DESK_PRESENTATION.entrancePlanters.entries()) {
+      const planterBaseY =
+        sidewalkTop + planter.baseYInSidewalk * tileSize;
       this.drawAuthoredLandscaping(
-        `landscape:sidewalk-edge:${index}`,
-        plant.id,
-        plant.x,
-        planterY,
-        Math.max(16, tileSize * 0.7),
-        Math.max(13, tileSize * 0.54),
+        `landscape:front-desk-entrance-bed:${planter.side}`,
+        "landscape:entrance-planter",
+        founderPixels.x + planter.centerXInTiles * tileSize,
+        planterBaseY,
+        planter.widthInTiles * tileSize,
+        planter.heightInTiles * tileSize,
         1,
-        FACILITY_DEPTH_WORLD + 20,
+        // Their rear-side contact is outside the south wall, while actors in
+        // the lower sidewalk lane have later baselines and pass in front.
+        getFacilitySceneDepth(planterBaseY, "fixture", planterIndex),
       );
+      planter.bloomAccents.forEach((accent, accentIndex) => {
+        this.drawAuthoredLandscaping(
+          `landscape:front-desk-entrance-bloom:${planterIndex}:${accentIndex}`,
+          accent.id,
+          founderPixels.x + accent.centerXInTiles * tileSize,
+          sidewalkTop + accent.baseYInSidewalk * tileSize,
+          accent.widthInTiles * tileSize,
+          accent.heightInTiles * tileSize,
+          accent.alpha,
+          getFacilitySceneDepth(
+            sidewalkTop + accent.baseYInSidewalk * tileSize,
+            "fixture",
+            planterIndex * 4 + accentIndex + 2,
+          ),
+        );
+      });
     }
   }
 
@@ -3451,6 +3552,19 @@ export class FacilityScene extends Phaser.Scene {
       18,
       rectangle.y + rectangle.height - inset - top,
     );
+    // Front Desk v5 deliberately uses its wide/shallow display floor for all
+    // room-specific contacts. The semantic five-by-four rectangle remains
+    // untouched for navigation, doors, saves, and route samples.
+    const frontDeskV5Projection =
+      room.definitionId === "room.front_desk" && this.canRenderFrontDeskV5Architecture()
+        ? getFrontDeskV5Projection(rectangle)
+        : undefined;
+    const fixtureDisplayBounds = frontDeskV5Projection?.floorBounds ?? {
+      x: left,
+      y: top,
+      width: usableWidth,
+      height: usableHeight,
+    };
     let roomFixtureOrder = 0;
     const place = (
       id: FixtureId,
@@ -3461,6 +3575,7 @@ export class FacilityScene extends Phaser.Scene {
       alpha = 1,
       contact?: Readonly<{ x: number; y: number }>,
       preserveScreenOrientation = false,
+      presentationRotation = 0,
     ) => {
       const transformed = preserveScreenOrientation
         ? { centerXRatio, centerYRatio, widthRatio, heightRatio }
@@ -3473,18 +3588,25 @@ export class FacilityScene extends Phaser.Scene {
         },
         furnitureOrientation,
       );
-      const centeredX = left + usableWidth * transformed.centerXRatio;
-      const centeredY = top + usableHeight * transformed.centerYRatio;
-      const maximumWidth = usableWidth * transformed.widthRatio;
-      const maximumHeight = usableHeight * transformed.heightRatio;
+      const centeredX =
+        fixtureDisplayBounds.x + fixtureDisplayBounds.width * transformed.centerXRatio;
+      const centeredY =
+        fixtureDisplayBounds.y + fixtureDisplayBounds.height * transformed.centerYRatio;
+      const maximumWidth = fixtureDisplayBounds.width * transformed.widthRatio;
+      const maximumHeight = fixtureDisplayBounds.height * transformed.heightRatio;
       const fixture = getFixtureSpriteForOrientation(
         id,
         preserveScreenOrientation ? 0 : furnitureOrientation,
       );
       const authoredFrame = getRoomBitmapFixtureFrame(room.definitionId, id);
+      const rotated = presentationRotation % 180 !== 0;
       const rendered = getFixturePresentationSize(
-        authoredFrame?.nativeWidth ?? fixture.width,
-        authoredFrame?.nativeHeight ?? fixture.height,
+        rotated
+          ? authoredFrame?.nativeHeight ?? fixture.height
+          : authoredFrame?.nativeWidth ?? fixture.width,
+        rotated
+          ? authoredFrame?.nativeWidth ?? fixture.width
+          : authoredFrame?.nativeHeight ?? fixture.height,
         maximumWidth,
         maximumHeight,
       );
@@ -3492,10 +3614,10 @@ export class FacilityScene extends Phaser.Scene {
       // contact. Its logical grid tiles remain authoritative for collision and
       // routing while tall cabinet/cooler art can extend toward the rear wall.
       const centerX = contact
-        ? left + usableWidth * contact.x
+        ? fixtureDisplayBounds.x + fixtureDisplayBounds.width * contact.x
         : centeredX;
       const contactY = contact
-        ? top + usableHeight * contact.y
+        ? fixtureDisplayBounds.y + fixtureDisplayBounds.height * contact.y
         : centeredY + rendered.height / 2;
       const centerY = contactY - rendered.height / 2;
       const shadowWidth = Math.max(
@@ -3513,14 +3635,13 @@ export class FacilityScene extends Phaser.Scene {
             this.activeFixtureGraphics,
             `room:${room.instanceId}:${fixtureOrder}:${id}`,
           );
+      const fixtureDepth = getFacilitySceneDepth(
+        contactY,
+        "fixture",
+        this.fixtureStableOrder % 64,
+      );
       if (!isFloorSurface) {
-        target.setDepth(
-          getFacilitySceneDepth(
-            contactY,
-            "fixture",
-            this.fixtureStableOrder % 64,
-          ),
-        );
+        target.setDepth(fixtureDepth);
         this.fixtureStableOrder += 1;
       }
       target.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.23 * alpha);
@@ -3538,21 +3659,47 @@ export class FacilityScene extends Phaser.Scene {
           ),
         ),
       );
+      const v5ContactShadow =
+        room.definitionId === "room.front_desk" && frontDeskV5Projection
+          ? id === "frontDesk"
+            ? "counterShadow"
+            : id === "filingCabinet"
+              ? "cabinetShadow"
+              : undefined
+          : undefined;
+      if (v5ContactShadow) {
+        const shadowWidth =
+          id === "frontDesk" ? rendered.width * 1.15 : rendered.width * 1.3;
+        const source = FRONT_DESK_V3_ARCHITECTURE_FRAMES[v5ContactShadow];
+        this.drawFrontDeskV3ArchitectureArt(
+          `front-desk-v5:shadow:${room.instanceId}:${id}`,
+          v5ContactShadow,
+          centerX,
+          contactY,
+          shadowWidth,
+          shadowWidth * (source.nativeHeight / source.nativeWidth),
+          fixtureDepth - 1,
+        );
+      }
       if (
         this.drawAuthoredFixture(
           `room:${room.instanceId}:${fixtureOrder}:${id}`,
           id,
           room.definitionId,
           centerX,
-          contactY,
+          // Unrotated atlas furniture retains its bottom-center source anchor
+          // and contact baseline. A deliberately rotated presentation asset
+          // instead uses a centered visual origin so its authored grid cell
+          // remains the actual rendered footprint; contactY still supplies
+          // depth ordering and its floor shadow.
+          presentationRotation === 0 ? contactY : centeredY,
           rendered.width,
           rendered.height,
           getFacilitySceneDepth(
-            contactY,
-            "fixture",
-            (this.fixtureStableOrder - 1 + 64) % 64,
+            contactY, "fixture", (this.fixtureStableOrder - 1 + 64) % 64,
           ),
           alpha,
+          presentationRotation,
         )
       ) {
         return;
@@ -3681,11 +3828,24 @@ export class FacilityScene extends Phaser.Scene {
             fixture.contact,
           );
         });
-        // The v2 sheet provides a substantial mounted noticeboard and clock
-        // that retain legibility at ordinary facility zoom.  The small pixel
-        // fallback is kept only while that independently preloaded sheet is
-        // unavailable.
-        if (!this.canRenderFrontDeskV2Art()) {
+        if (frontDeskV5Projection && this.canRenderFrontDeskV2Art()) {
+          // v5's rear wall is component art, so the old v4-only decor branch
+          // is intentionally bypassed. These independent sprites are placed
+          // from the reference-measured v5 floor, left of its north opening.
+          const northWallHeight = frontDeskV5Projection.floorBounds.height * 0.34;
+          FRONT_DESK_PRESENTATION.northWallFixtures.forEach((fixture) => {
+            this.drawFrontDeskV2Art(
+              `front-desk-v5:decor:${room.instanceId}:${fixture.id}`,
+              fixture.id as FrontDeskV2ArtId,
+              frontDeskV5Projection.floorBounds.x +
+                frontDeskV5Projection.floorBounds.width * fixture.x,
+              frontDeskV5Projection.floorBounds.y - northWallHeight * 0.49,
+              frontDeskV5Projection.floorBounds.width * fixture.width,
+              northWallHeight * fixture.height,
+              FACILITY_DEPTH_WORLD + 21,
+            );
+          });
+        } else {
           FRONT_DESK_PRESENTATION.northWallFixtures.forEach((fixture) => {
             placeWall(
               fixture.id,
@@ -3712,17 +3872,56 @@ export class FacilityScene extends Phaser.Scene {
       case "room.examination":
         {
           const presentation = getExaminationRoomPresentation(room.orientation);
-          const widestNorthRun = Math.max(0, ...rearWallRuns.map((run) => run.length));
+          const examinationOpenings: ExaminationDoorOpening[] = (this.bridge.viewModel.doors ?? [])
+            .filter((door) => door.roomInstanceId === room.instanceId)
+            .map((door) => ({ side: door.side, offset: door.offset }));
+          const northDoorOffsets = examinationOpenings
+            .filter((opening) => opening.side === "north")
+            .map((opening) => opening.offset);
+          const canonicalNorthHeight = getExaminationV3ArchitectureComponents(
+            rectangle,
+            orientedSize(room),
+            examinationOpenings,
+          ).find((component) => component.side === "north")?.bounds.height ?? wallHeight;
+          const placeExaminationWall = (fixture: (typeof presentation.fixtures)[number]) => {
+            // A decoration belongs to a real remaining north-wall interval.
+            // Its authored logical slot is deliberately exact: another north
+            // door does not suppress it, but a door in this slot does.
+            if (!isExaminationNorthWallFixtureVisible(fixture, northDoorOffsets)) return;
+            const source = FIXTURE_SPRITES[fixture.id];
+            const authored = getRoomBitmapFixtureFrame(room.definitionId, fixture.id);
+            const rendered = getFixturePresentationSize(
+              authored?.nativeWidth ?? source.width,
+              authored?.nativeHeight ?? source.height,
+              rectangle.width * fixture.widthRatio,
+              canonicalNorthHeight * fixture.heightRatio,
+            );
+            const centerX = rectangle.x + rectangle.width * fixture.centerXRatio;
+            const centerY = rectangle.y - canonicalNorthHeight + canonicalNorthHeight * fixture.centerYRatio;
+            const depth = FACILITY_DEPTH_WORLD + 22;
+            if (this.drawAuthoredFixture(
+              `examination-v3:wall:${room.instanceId}:${fixture.id}`,
+              fixture.id,
+              room.definitionId,
+              centerX,
+              centerY,
+              rendered.width,
+              rendered.height,
+              depth,
+              1,
+            )) return;
+            this.drawPixelFrameSized(
+              graphics,
+              source,
+              Math.round(centerX - rendered.width / 2),
+              Math.round(centerY - rendered.height / 2),
+              rendered.width,
+              rendered.height,
+            );
+          };
           presentation.fixtures.forEach((fixture) => {
-            if (fixture.optionalNorthWallArt && widestNorthRun < 3) return;
             if (fixture.wallMounted) {
-              placeWall(
-                fixture.id,
-                fixture.centerXRatio,
-                fixture.centerYRatio,
-                fixture.widthRatio,
-                fixture.heightRatio,
-              );
+              placeExaminationWall(fixture);
               return;
             }
             place(
@@ -3733,7 +3932,10 @@ export class FacilityScene extends Phaser.Scene {
               fixture.heightRatio,
               1,
               undefined,
+              // v3 supplies separate north-up arrangements for 3x2 and 2x3;
+              // do not rotate their composed furniture a second time.
               true,
+              fixture.rotationDegrees ?? 0,
             );
           });
         }
@@ -3857,16 +4059,16 @@ export class FacilityScene extends Phaser.Scene {
     if (visualTier >= 2) {
       switch (room.definitionId) {
         case "room.front_desk":
-          place("rollingCart", 0.85, 0.76, 0.16, 0.2, 0.92);
-          placeWall("framedPrint", 0.7, 0.5, 0.12, 0.72);
+          // The reference establishes the complete level 0–2 room. Upgrade
+          // clutter belongs to other rooms, not this fixed Front Desk.
           break;
         case "room.waiting":
           place("roomPlant", 0.91, 0.78, 0.1, 0.18, 0.94);
           place("sideTable", 0.88, 0.48, 0.11, 0.15, 0.9);
           break;
         case "room.examination":
-          place("vitalsMonitor", 0.87, 0.64, 0.2, 0.38, 0.96);
-          place("rollingCart", 0.12, 0.44, 0.17, 0.25, 0.92);
+          // Examination v3 is a complete reference-led composition. Upgrade
+          // state remains intact, but its legacy visual clutter is suppressed.
           break;
         case "room.bathroom":
           place("roomPlant", 0.17, 0.78, 0.13, 0.21, 0.82);
@@ -3920,7 +4122,8 @@ export class FacilityScene extends Phaser.Scene {
     if (
       room.definitionId !== "room.front_desk" &&
       room.definitionId !== "room.bathroom" &&
-      room.definitionId !== "room.imaging_control"
+      room.definitionId !== "room.imaging_control" &&
+      room.definitionId !== "room.examination"
     ) {
       placeWall("wallClock", 0.5, 0.46, 0.08, 0.7, 0.88);
     }
@@ -4131,6 +4334,35 @@ export class FacilityScene extends Phaser.Scene {
     });
   }
 
+  /** Maps only stationary Front Desk anchor poses into the v5 display floor. */
+  private getFrontDeskV5ActorDisplayPosition(
+    location: GridPoint | undefined,
+    moving: boolean,
+    anchor: "staff" | "public",
+  ): Readonly<{ centerX: number; baseY: number; scale: number }> | undefined {
+    if (!this.canRenderFrontDeskV5Architecture()) return undefined;
+    const display = getFrontDeskV5StationaryActorDisplay(
+      location,
+      moving,
+      anchor,
+      this.bridge.viewModel.rooms,
+    );
+    const room = this.bridge.viewModel.rooms.find(
+      (candidate) => candidate.definitionId === "room.front_desk",
+    );
+    if (!display || !room) return undefined;
+    const projection = getFrontDeskV5Projection(this.toPixels({
+      tileX: room.tileX,
+      tileY: room.tileY,
+      ...orientedSize(room),
+    }));
+    return {
+      centerX: projection.floorBounds.x + projection.floorBounds.width * display.x,
+      baseY: projection.floorBounds.y + projection.floorBounds.height * display.y,
+      scale: display.scale,
+    };
+  }
+
   private getCharacterGraphics(
     key: string,
   ): Phaser.GameObjects.Graphics {
@@ -4159,31 +4391,38 @@ export class FacilityScene extends Phaser.Scene {
     const founderLocation = founderPresentation.location;
     if (founderLocation) {
       const graphics = this.getCharacterGraphics(founderKey);
-      const founderCenterX =
-        this.layout.originX +
-        (founderLocation.x + 0.5) * this.layout.tileSize;
       const founderPose = this.founderPose(
         founderPresentation.moving,
         founderPresentation.direction,
         this.bridge.viewModel.founder.activityLabel,
         founderLocation,
       );
+      const founderDisplay = founderPose === "seated"
+        ? this.getFrontDeskV5ActorDisplayPosition(
+            founderLocation,
+            founderPresentation.moving,
+            "staff",
+          )
+        : undefined;
+      const founderCenterX = founderDisplay?.centerX ??
+        this.layout.originX + (founderLocation.x + 0.5) * this.layout.tileSize;
       const founderBaseY = this.drawPixelPerson(
         graphics,
         founderCenterX,
-        this.actorBaseY(
-          founderLocation.y,
-          0.72 +
-            (founderPose === "seated"
-              ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
-              : 0),
-        ),
+        founderDisplay?.baseY ?? this.actorBaseY(
+            founderLocation.y,
+            0.72 +
+              (founderPose === "seated"
+                ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
+                : 0),
+          ),
         0,
         this.bridge.viewModel.founder.appearance,
         0x111111,
         founderPresentation.direction,
         founderPose,
         founderPresentation.rightFacing,
+        founderDisplay?.scale ?? 1,
       );
       graphics.setDepth(
         getFacilitySceneDepth(founderBaseY, "character", 0),
@@ -4222,23 +4461,32 @@ export class FacilityScene extends Phaser.Scene {
         employeePresentation.location,
         employee.staffRoleDefinitionId,
       );
+      const employeeDisplay = employeePose === "seated"
+        ? this.getFrontDeskV5ActorDisplayPosition(
+            employeePresentation.location,
+            employeePresentation.moving,
+            "staff",
+          )
+        : undefined;
       const employeeBaseY = this.drawPixelPerson(
         graphics,
-        this.layout.originX +
-          (employeePresentation.location.x + 0.5) * this.layout.tileSize,
-        this.actorBaseY(
-          employeePresentation.location.y,
-          0.72 +
-            (employeePose === "seated"
-              ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
-              : 0),
-        ),
+        employeeDisplay?.centerX ??
+          this.layout.originX +
+            (employeePresentation.location.x + 0.5) * this.layout.tileSize,
+        employeeDisplay?.baseY ?? this.actorBaseY(
+            employeePresentation.location.y,
+            0.72 +
+              (employeePose === "seated"
+                ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
+                : 0),
+          ),
         index + 1,
         employee.appearance,
         0x555555,
         employeePresentation.direction,
         employeePose,
         employeePresentation.rightFacing,
+        employeeDisplay?.scale ?? 1,
       );
       graphics.setDepth(
         getFacilitySceneDepth(
@@ -4373,19 +4621,24 @@ export class FacilityScene extends Phaser.Scene {
       ? "seated"
       : this.characterPose(patient.moving ?? false, direction, 100 + index);
 
-    const centerX =
-      this.layout.originX +
-      (patient.location.x + 0.5) * this.layout.tileSize;
+    const frontDeskDisplay = this.getFrontDeskV5ActorDisplayPosition(
+      patient.location,
+      Boolean(patient.moving),
+      "public",
+    );
+    const centerX = frontDeskDisplay?.centerX ??
+      this.layout.originX + (patient.location.x + 0.5) * this.layout.tileSize;
     const baseY = this.drawPixelPerson(
       graphics,
       centerX,
-      this.actorBaseY(patient.location.y),
+      frontDeskDisplay?.baseY ?? this.actorBaseY(patient.location.y),
       100 + index,
       patient.appearance,
       appearanceColor,
       direction,
       pose,
       patient.rightFacing ?? false,
+      frontDeskDisplay?.scale ?? 1,
     );
     finishCharacter(baseY, centerX);
   }
@@ -4449,6 +4702,7 @@ export class FacilityScene extends Phaser.Scene {
     direction: CharacterDirection = "front",
     pose: CharacterPose = "idle",
     movingRight = false,
+    displayScale = 1,
   ): number {
     // Map characters use the canonical detailed frame at a crisp 3:2
     // nearest-neighbor presentation scale. This makes people readable among
@@ -4485,8 +4739,8 @@ export class FacilityScene extends Phaser.Scene {
         // Every authored source frame owns one entire clean actor. There are no
         // independently cropped planes that can expose a source neighbour.
         .setDisplaySize(
-          this.layout.tileSize * 1.35,
-          this.layout.tileSize * (1.35 / registration.displayAspectRatio),
+          this.layout.tileSize * 1.35 * displayScale,
+          this.layout.tileSize * (1.35 / registration.displayAspectRatio) * displayScale,
         )
         .setPosition(0, 0)
         .setOrigin(0.5, registration.floorAnchorY)
@@ -4514,6 +4768,7 @@ export class FacilityScene extends Phaser.Scene {
       direction,
       pose,
       this.layout.tileSize,
+      displayScale,
     ].join("|");
     const cached = this.characterRenderCache.get(graphics);
     if (!cached || cached.signature !== renderSignature) {
@@ -4523,7 +4778,7 @@ export class FacilityScene extends Phaser.Scene {
       });
       const metrics = getCharacterPresentationMetrics(
         frame,
-        this.layout.tileSize,
+        this.layout.tileSize * displayScale,
       );
       const localX = Math.round(-metrics.width / 2);
       const localY = Math.round(-metrics.height);

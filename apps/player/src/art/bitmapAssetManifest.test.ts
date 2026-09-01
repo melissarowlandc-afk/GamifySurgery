@@ -110,6 +110,15 @@ describe("bitmap art asset seam", () => {
       .toBe("room-fixtures:front-desk-v2");
     expect(getRoomBitmapFixtureFrame("room.front_desk", "frontDesk")?.atlasId)
       .toBe("room-fixtures:front-desk-v2");
+    expect(getRoomBitmapFixtureFrame("room.front_desk", "visitorChair")).toMatchObject({
+      atlasId: "room-fixtures:waiting-v1",
+      sourceRect: { x: 157, y: 681, width: 232, height: 254 },
+      nativeWidth: 232,
+      nativeHeight: 254,
+    });
+    expect(getRoomBitmapFixtureFrame("room.waiting", "visitorChair")?.sourceRect).toEqual({
+      x: 157, y: 681, width: 232, height: 254,
+    });
     expect(getRoomBitmapFixtureFrame("room.coffee_kiosk", "filingCabinet")?.atlasId)
       .toBe("room-fixtures:front-desk-v1");
     expect(getLevelOneBitmapFixtureFrame("procedureLight")?.nativeHeight).toBeGreaterThan(400);

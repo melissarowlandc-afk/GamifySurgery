@@ -210,6 +210,22 @@ test("renders the isolated rebuilt Front Desk with founder seated behind a check
     path: `${SCREENSHOT_DIRECTORY}/front-desk-grounded-occupied.png`,
     animations: "disabled",
   });
+  // Use the player-visible HUD control for a single owner-review frame at a
+  // closer scale. This is intentionally not a CSS crop: the production
+  // camera chooses the actual map scale while retaining the full entrance
+  // composition (shell, paired beds, walk, and controlled actors).
+  const zoomIn = capturePage.getByRole("button", {
+    name: "Zoom facility in",
+  });
+  await expect(zoomIn).toBeVisible();
+  for (let index = 0; index < 2; index += 1) {
+    await zoomIn.click();
+  }
+  await capturePage.waitForTimeout(120);
+  await facility.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/front-desk-redesign-entrance-close.png`,
+    animations: "disabled",
+  });
   await capturePage.close();
 
   // The vacant proof changes actual persisted actor state: it does not hide a

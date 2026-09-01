@@ -96,6 +96,44 @@ const DETAILED_WAITING_COUCH = generatedFixture(
   },
 );
 
+/** Examination-only accessories.  They are decorative presentation layers,
+ * deliberately separate from the room's interactive fixture model. */
+const EXAMINATION_PRIVACY_CURTAIN_V3 = generatedFixture(
+  "examination-privacy-curtain-v3", 18, 38,
+  (canvas) => {
+    canvas.rect(1, 1, 16, 2, "ink");
+    canvas.rect(2, 2, 14, 1, "highlight");
+    for (const x of [3, 7, 11, 15]) { canvas.rect(x, 3, 1, 3, "charcoal"); canvas.set(x, 5, "paper"); }
+    canvas.outlineRect(2, 6, 14, 28, "charcoal");
+    canvas.rect(3, 7, 12, 26, "sage");
+    for (const x of [5, 9, 13]) { canvas.rect(x, 8, 1, 24, "lightSage"); canvas.rect(x + 1, 8, 1, 24, "moss"); }
+    canvas.rect(3, 32, 12, 2, "deepOlive");
+    canvas.rect(3, 34, 2, 3, "ink"); canvas.rect(13, 34, 2, 3, "ink");
+  },
+);
+
+const EXAMINATION_PHYSICIAN_SCALE_V3 = generatedFixture(
+  "examination-physician-scale-v3", 15, 31,
+  (canvas) => {
+    canvas.rect(3, 27, 9, 3, "shadow");
+    canvas.outlineRect(2, 25, 11, 4, "ink"); canvas.rect(3, 26, 9, 2, "warmGray");
+    canvas.rect(6, 8, 3, 18, "charcoal"); canvas.rect(7, 9, 1, 15, "highlight");
+    canvas.outlineRect(3, 3, 9, 7, "ink"); canvas.rect(4, 4, 7, 5, "warmGray");
+    canvas.rect(5, 5, 5, 2, "paper"); canvas.set(7, 7, "deepOlive");
+    canvas.rect(4, 1, 7, 2, "charcoal"); canvas.set(3, 2, "highlight"); canvas.set(12, 2, "highlight");
+  },
+);
+
+const EXAMINATION_PAPER_TOWEL_V3 = generatedFixture(
+  "examination-paper-towel-v3", 14, 18,
+  (canvas) => {
+    canvas.rect(2, 1, 10, 2, "shadow"); canvas.outlineRect(1, 2, 12, 9, "ink");
+    canvas.rect(2, 3, 10, 6, "warmGray"); canvas.rect(3, 4, 8, 1, "highlight");
+    canvas.rect(5, 9, 4, 3, "paper"); canvas.rect(4, 12, 6, 4, "cream");
+    canvas.line(4, 14, 9, 14, "highlight"); canvas.rect(5, 16, 4, 1, "shadow");
+  },
+);
+
 const DETAILED_EXAM_TABLE = generatedFixture(
   "exam-table-detailed",
   45,
@@ -1311,6 +1349,9 @@ const FIXTURES = {
   officeChair: DETAILED_OFFICE_CHAIR,
   secretaryChair: DETAILED_SECRETARY_CHAIR,
   examTable: DETAILED_EXAM_TABLE,
+  examinationPrivacyCurtain: EXAMINATION_PRIVACY_CURTAIN_V3,
+  examinationPhysicianScale: EXAMINATION_PHYSICIAN_SCALE_V3,
+  examinationPaperTowel: EXAMINATION_PAPER_TOWEL_V3,
   sinkCabinet: DETAILED_SINK_CABINET,
   gloveDispenser: DETAILED_GLOVE_DISPENSER,
   toilet: DETAILED_TOILET,

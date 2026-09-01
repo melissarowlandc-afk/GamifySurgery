@@ -33,3 +33,7 @@ export * from "./approved-data/hcc-resection-selection";
 export * from "./approved-data/accessory-spleen-location";
 export * from "./approved-data/hereditary-spherocytosis-postsplenectomy";
 export * from "./approved-data/level-two-runtime";
+export * from "./approved-data/early-game-clinic-batch";
+export * from "./approved-data/men2a-clinic-batch";
+export * from "./approved-data/phyllodes-pathology-follow-up";
+export * from "./approved-data/trauma-vka-emergency-reversal";

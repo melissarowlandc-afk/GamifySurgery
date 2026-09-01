@@ -16,6 +16,8 @@ import { ROW_092_CASES } from "./hcc-resection-selection";
 import { LEVEL_TWO_ROUTINE_CASE_IDS } from "./level-two-runtime";
 import { ROW_058_CASES } from "./accessory-spleen-location";
 import { ROW_057_CASES } from "./hereditary-spherocytosis-postsplenectomy";
+import { EARLY_GAME_CLINIC_BATCH_CASES } from "./early-game-clinic-batch";
+import { ROW_062_CASES } from "./men2a-clinic-batch";
 import {
   ROW_030_CASES,
   ROW_030_CLINICAL_APPROVAL,
@@ -223,6 +225,8 @@ describe("owner row 30 approved breast-cyst pathway", () => {
       ...ROW_092_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_058_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_057_CASES.map((clinicalCase) => clinicalCase.id),
+      ...EARLY_GAME_CLINIC_BATCH_CASES.map((clinicalCase) => clinicalCase.id),
+      ...ROW_062_CASES.map((clinicalCase) => clinicalCase.id),
       ...LEVEL_TWO_ROUTINE_CASE_IDS,
     ]);
     expect(

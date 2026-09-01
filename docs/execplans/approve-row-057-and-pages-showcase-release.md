@@ -132,6 +132,7 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 - [x] Terra release-readiness validation and bounded fixes.
 - [x] Sol staged-source/privacy review and beta checkpoint commit.
 - [x] Push `beta` backup.
+- [x] Owner explicitly instructed: "push the current version for GitHub pages deployment."
 - [ ] Fast-forward/push `main`.
 - [ ] Verify Pages workflow and live application.
 
@@ -150,10 +151,21 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 - The title-tagline and HUD/tutorial browser specs were intentionally not run in
   that validation milestone because their tracked screenshot artifacts were
   already dirty at the time; no user artifacts were overwritten.
+- Current release audit state before the new checkpoint commit: local `beta`
+  and `origin/beta` resolve to `6109028`; local `main` and `origin/main`
+  resolve to `cf79001`, and `main` is a strict ancestor of `beta`.
+- The current release audit passed root typecheck across seven workspaces, root
+  tests (**144 files / 900 tests**), and `build:pages` (**292 modules / 2 asset
+  references / 100 public build files**), plus `git diff --check` and candidate
+  secret, private-path, clinical-content, PNG, and symlink scans. The explicit
+  68-path candidate manifest is retained in the audit handoff context. The
+  ignored local owner-review asset workspace and two concurrent diagnostic
+  screenshots are excluded from the candidate release.
 
 ## Exact next action
 
-Await a separate explicit instruction to promote `beta` to `main` and to
-deploy/verify Pages. The phrase "push to GitHub" authorizes the backup workflow
-under `AGENTS.md`; it does not by itself authorize a merge, main promotion,
-deployment, or Pages verification.
+Sol re-audits the sanitized manifest, scoped-stages the explicit paths, reviews
+the cached diff, commits `beta`, pushes and verifies `beta`, fast-forwards and
+pushes `main`, monitors Pages, and verifies the live URL. The owner explicitly
+authorized this beta-to-main promotion, Pages workflow, and live verification;
+do not mark any of those steps complete until their evidence is recorded.

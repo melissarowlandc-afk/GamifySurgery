@@ -1,6 +1,7 @@
 import type { GridPoint } from "@gamify-surgery/game-domain";
 
 import type { FixtureId } from "../art/fixtureArt";
+import type { LandscapingAtlasFrameId } from "../art/bitmapAssetManifest";
 import type {
   FacilityFounderView,
   FacilityRoomView,
@@ -48,37 +49,47 @@ export const FRONT_DESK_PRESENTATION = {
     // nominal width alone would make the counter/cabinet visibly too small.
     {
       id: "filingCabinet",
-      x: 0.1,
-      y: 0.16,
-      width: 0.27,
+      x: 0.08,
+      y: 0.3,
+      width: 0.22,
       height: 0.5,
-      contact: { x: 0.12, y: 0.26 },
+      contact: { x: 0.08, y: 0.31 },
     },
     // The counter is centered directly in front of staff anchor (2, 1).
     {
       id: "secretaryChair",
-      x: 0.5,
-      y: 0.38,
-      width: 0.17,
-      height: 0.25,
-      contact: { x: 0.5, y: 0.5 },
+      x: 0.29,
+      y: 0.49,
+      width: 0.16,
+      height: 0.24,
+      contact: { x: 0.29, y: 0.53 },
     },
     {
       id: "frontDesk",
-      x: 0.5,
-      y: 0.62,
-      width: 0.52,
-      height: 0.35,
-      contact: { x: 0.5, y: 0.79 },
+      x: 0.34,
+      y: 0.61,
+      width: 0.45,
+      height: 0.38,
+      contact: { x: 0.34, y: 0.7 },
     },
     // Water cooler is live at rear-right A5; workers approach from B5.
     {
       id: "wasteBin",
-      x: 0.96,
-      y: 0.16,
-      width: 0.065,
-      height: 0.14,
-      contact: { x: 0.96, y: 0.27 },
+      x: 0.94,
+      y: 0.25,
+      width: 0.085,
+      height: 0.18,
+      contact: { x: 0.94, y: 0.31 },
+    },
+    // This is deliberately a separately sorted object, never part of the
+    // south wall or a patient sheet. Its inset keeps east-wall slot 1 clear.
+    {
+      id: "visitorChair",
+      x: 0.9,
+      y: 0.78,
+      width: 0.16,
+      height: 0.29,
+      contact: { x: 0.9, y: 0.92 },
     },
   ] as const satisfies readonly FrontDeskFixturePlacement[],
   /**
@@ -88,21 +99,88 @@ export const FRONT_DESK_PRESENTATION = {
    */
   waterCooler: {
     footprint: { x: 4, y: 0 },
-    contact: { x: 0.84, y: 0.26 },
-    widthInTiles: 0.72,
-    heightInTiles: 1.25,
+    contact: { x: 0.83, y: 0.31 },
+    widthInTiles: 0.66,
+    heightInTiles: 1.14,
   },
   /** Authored seated sheets include their own chair; this shifts only art. */
   seatedPresentation: { towardCounterTiles: 0.28 },
   northWallFixtures: [
-    { id: "noticeBoard", x: 0.4, y: 0.5, width: 0.25, height: 0.72 },
-    { id: "wallClock", x: 0.66, y: 0.5, width: 0.12, height: 0.66 },
+    { id: "noticeBoard", x: 0.19, y: 0.46, width: 0.18, height: 0.55 },
+    { id: "wallClock", x: 0.32, y: 0.44, width: 0.1, height: 0.43 },
   ] as const satisfies readonly FrontDeskWallFixturePlacement[],
-  /** Exterior-only recess planter centers. They never alter the 5x4 floor. */
+  /** Target-measured visual poses for non-moving actors at logical anchors. */
+  v5ActorDisplay: {
+    // The room frame is intentionally larger than ordinary tiles; stationary
+    // reception poses scale down only in this display seam to match its
+    // reference figures. Moving actors retain canonical map scale.
+    staff: { x: 0.29, y: 0.53, scale: 0.82 },
+    public: { x: 0.62, y: 0.82, scale: 0.82 },
+  },
+  /** One unoccupied integer-compatible door option per wall, by visual design. */
+  clearDoorCandidates: {
+    north: 2,
+    east: 1,
+    south: 2,
+    west: 3,
+  },
+  /**
+   * Exterior-only entrance beds. Their room-local X positions are measured in
+   * tiles across the fixed five-tile frontage; their Y positions occupy the
+   * rear portion of the one-tile sidewalk. They never alter the 5x4 floor.
+   */
   entrancePlanters: [
-    { side: "west", x: -0.1, y: 1.01, scale: 0.9 },
-    { side: "east", x: 1.1, y: 1.01, scale: 0.86 },
-  ] as const,
+    {
+      side: "west",
+      centerXInTiles: 0.95,
+      baseYInSidewalk: 0.5,
+      widthInTiles: 1.55,
+      heightInTiles: 0.5,
+      bloomAccents: [
+        {
+          id: "landscape:flowers-white",
+          centerXInTiles: 0.64,
+          baseYInSidewalk: 0.43,
+          widthInTiles: 0.52,
+          heightInTiles: 0.43,
+          alpha: 0.96,
+        },
+        {
+          id: "landscape:flowers-pink",
+          centerXInTiles: 1.22,
+          baseYInSidewalk: 0.57,
+          widthInTiles: 0.46,
+          heightInTiles: 0.38,
+          alpha: 0.9,
+        },
+      ],
+    },
+    {
+      side: "east",
+      centerXInTiles: 4.05,
+      baseYInSidewalk: 0.5,
+      widthInTiles: 1.55,
+      heightInTiles: 0.5,
+      bloomAccents: [
+        {
+          id: "landscape:flowers-pink",
+          centerXInTiles: 3.78,
+          baseYInSidewalk: 0.43,
+          widthInTiles: 0.5,
+          heightInTiles: 0.42,
+          alpha: 0.92,
+        },
+        {
+          id: "landscape:flowers-white",
+          centerXInTiles: 4.35,
+          baseYInSidewalk: 0.57,
+          widthInTiles: 0.48,
+          heightInTiles: 0.38,
+          alpha: 0.9,
+        },
+      ],
+    },
+  ] as const satisfies readonly FrontDeskEntrancePlanterPlacement[],
 } as const;
 
 export interface FrontDeskFixturePlacement {
@@ -117,8 +195,101 @@ export interface FrontDeskFixturePlacement {
 
 export interface FrontDeskWallFixturePlacement extends FrontDeskFixturePlacement {}
 
+export interface FrontDeskEntranceBloomAccent {
+  id: Extract<
+    LandscapingAtlasFrameId,
+    "landscape:flowers-white" | "landscape:flowers-pink"
+  >;
+  centerXInTiles: number;
+  baseYInSidewalk: number;
+  widthInTiles: number;
+  heightInTiles: number;
+  alpha: number;
+}
+
+export interface FrontDeskEntrancePlanterPlacement {
+  side: "west" | "east";
+  centerXInTiles: number;
+  baseYInSidewalk: number;
+  widthInTiles: number;
+  heightInTiles: number;
+  bloomAccents: readonly FrontDeskEntranceBloomAccent[];
+}
+
+export interface FrontDeskEntranceDisplayBounds {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+}
+
+function boundsForEntranceDisplay(
+  centerXInTiles: number,
+  baseYInSidewalk: number,
+  widthInTiles: number,
+  heightInTiles: number,
+): FrontDeskEntranceDisplayBounds {
+  return {
+    left: centerXInTiles - widthInTiles / 2,
+    top: baseYInSidewalk - heightInTiles,
+    right: centerXInTiles + widthInTiles / 2,
+    bottom: baseYInSidewalk,
+  };
+}
+
+/**
+ * Bounds are intentionally tile-local and rendering-independent so the
+ * Front Desk's only public walk can remain clear as exterior art evolves.
+ */
+export function getFrontDeskEntrancePlanterDisplayBounds(
+  planter: FrontDeskEntrancePlanterPlacement,
+): readonly FrontDeskEntranceDisplayBounds[] {
+  return [
+    boundsForEntranceDisplay(
+      planter.centerXInTiles,
+      planter.baseYInSidewalk,
+      planter.widthInTiles,
+      planter.heightInTiles,
+    ),
+    ...planter.bloomAccents.map((accent) =>
+      boundsForEntranceDisplay(
+        accent.centerXInTiles,
+        accent.baseYInSidewalk,
+        accent.widthInTiles,
+        accent.heightInTiles,
+      ),
+    ),
+  ];
+}
+
 export function isFrontDeskRoom(room: FacilityRoomView): boolean {
   return room.definitionId === "room.front_desk";
+}
+
+export type FrontDeskStationaryActorAnchor = "staff" | "public";
+
+/**
+ * Returns a display-only target position for a stationary actor on one of the
+ * protected Front Desk anchors. Route samples and every other actor continue
+ * to use their exact logical position.
+ */
+export function getFrontDeskV5StationaryActorDisplay(
+  location: GridPoint | undefined,
+  moving: boolean,
+  anchor: FrontDeskStationaryActorAnchor,
+  rooms: readonly FacilityRoomView[],
+): Readonly<{ x: number; y: number; scale: number }> | undefined {
+  if (!location || moving) return undefined;
+  const frontDesk = rooms.find(isFrontDeskRoom);
+  const logicalAnchor = FRONT_DESK_PRESENTATION.anchors[anchor];
+  if (
+    !frontDesk ||
+    location.x !== frontDesk.tileX + logicalAnchor.x ||
+    location.y !== frontDesk.tileY + logicalAnchor.y
+  ) {
+    return undefined;
+  }
+  return FRONT_DESK_PRESENTATION.v5ActorDisplay[anchor];
 }
 
 /**

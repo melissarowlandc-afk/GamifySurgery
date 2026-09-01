@@ -6,9 +6,10 @@ import {
 } from "./worldExteriorLayout";
 
 describe("world exterior layout", () => {
-  it("anchors the default sidewalk below the grid rather than to a viewport", () => {
+  it("anchors the one-tile sidewalk directly at the grid edge rather than to a viewport", () => {
     const layout = getWorldExteriorLayout({ originX: 20, originY: -180, tileSize: 20, gridColumns: 60, gridRows: 32 });
-    expect(layout.sidewalkTop).toBeGreaterThan(layout.gridBottom);
+    expect(layout.sidewalkTop).toBe(layout.gridBottom);
+    expect(layout.sidewalkHeight).toBe(20);
     expect(layout.worldBottom - layout.siteTop).toBe(getWorldExteriorHeight(20, 32));
   });
 

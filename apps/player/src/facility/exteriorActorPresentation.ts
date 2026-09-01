@@ -1,7 +1,7 @@
 /**
- * Maps the domain's unchanged logical sidewalk row onto the rendered sidewalk
- * after the presentation-only planted setback. The final route tile eases
- * across that extra visual distance, so no actor jumps when crossing outside.
+ * Maps the domain's unchanged logical sidewalk row onto the rendered sidewalk.
+ * The final route tile still eases to the pavement baseline without changing
+ * the logical route or introducing a visual grass setback.
  */
 export interface ExteriorActorPresentationLayout {
   readonly originY: number;

@@ -8,9 +8,10 @@ const MULTI_PATIENT_FRAMING = [
   /\bwhich (?:presentation|referral profile)\b/i,
 ];
 
-const PATIENT_REFERENCE = /\b(?:patient|adult|woman|man|they|she|he)\b/i;
+const PATIENT_REFERENCE =
+  /\b(?:patient|adult|woman|man|recipient|they|she|he)\b/i;
 const STORY_CUE =
-  /\b(?:asks?|wants?|reports?|returns?|noticed|comes?|brings?|discuss|reviews?|hoping)\b/i;
+  /\b(?:asks?|wants?|reports?|returns?|noticed|comes?|brings?|discuss|reviews?|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|found|undergoing|preparing|prepared|confirms|completed|scheduled|plans|starts|persists|decides|receives)\b/i;
 const ALTERNATE_PATIENT_CHOICE =
   /^(?:a|an|fit) (?:patient|adult|woman|man)\b/i;
 

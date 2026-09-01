@@ -59,6 +59,23 @@ describe("room visual layout", () => {
     );
   });
 
+  it("keeps an eligible integer door candidate on every wall of the exact 5x4 Front Desk", () => {
+    for (const side of ["north", "east", "south", "west"] as const) {
+      const wallLength = side === "north" || side === "south" ? 5 : 4;
+      const eligibleOffsets = Array.from({ length: wallLength }, (_, offset) =>
+        isRoomVisualDoorSlotClear({
+          definitionId: "room.front_desk",
+          orientation: 0,
+          width: 5,
+          height: 4,
+          side,
+          offset,
+        }),
+      );
+      expect(eligibleOffsets).toContain(true);
+    }
+  });
+
   it("declares all four fixture-clear wall zones for the primary room slice", () => {
     for (const definitionId of PRIMARY_ROOM_VISUAL_IDS) {
       const layout = getRoomVisualLayout(definitionId);

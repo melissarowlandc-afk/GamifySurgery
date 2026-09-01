@@ -4,12 +4,11 @@ Status: Active owner-review queue; not a playable clinical release
 
 Date established: 2026-08-05
 
-This queue covers 90 owner-authored rows through
-`Gamify Surgery Concepts (3).xlsx`. The first 55 rows were reviewed under
-`melissa-rowland-md-2026-08-05-rows-2-56`; the 35 newly read rows 57–91 remain
-owner proposals awaiting the normal evidence, clarification, exact-content,
-and release-point walkthrough. Their intake is recorded in
-`NEW_CONCEPT_INTAKE_2026-08-10.md`.
+This queue covers 121 owner-authored rows, 2-122, through
+`Gamify Surgery Concepts (4).xlsx`. Workbook-(4) rows 1-91 are unchanged from
+workbook (3); its 31 newly read rows, 92-122, are recorded in
+`NEW_CONCEPT_INTAKE_2026-08-31.md`. The earlier rows-57-91 intake remains in
+`NEW_CONCEPT_INTAKE_2026-08-10.md` as historical provenance.
 
 The review receipt approves the owner-authored concept, intended answer or
 action, and reviewed stem/scope constraints. It leaves evidence traceability
@@ -314,6 +313,24 @@ excluded, exact historical response percentages are not taught, and the
 proposed seventh surgical-candidate variant is explicitly excluded. Its exact
 receipt is `approvals/owner-row-052-felty-syndrome-pathway.md`.
 
+Row 53 is packaged and tested as deferred data: nine separate future Level 3 pathology-follow-up/planning
+concepts for benign, borderline, and malignant phyllodes management plus
+spread-pattern and axillary boundaries. Exactly 33 patient-based question
+versions are approved: four variants for each concept except three each for
+borderline close-margin management, malignant close-margin management, and no
+routine axillary staging. The approved content distinguishes benign complete
+excision from a fixed-width margin requirement, retains the specified
+borderline and malignant consensus margin-management boundaries, and does not
+authorize onsite surgery or runtime admission. Every wording revision or new
+variant requires exact named-clinician re-review. The exported package is
+`packages/clinical-content/src/approved-data/phyllodes-pathology-follow-up.ts`
+(content version `clinical.owner-row-053.2026-08-31.1`) with its focused test
+at `packages/clinical-content/src/approved-data/phyllodes-pathology-follow-up.test.ts`;
+it contains two source records and nine evidence claims, all source/claim prose
+remaining `needs_clinician_review`. It remains deferred (`deferredRuntimeAdmission:
+true`) with no active-game selection or onsite operation. Its immutable receipt is
+`approvals/owner-row-053-phyllodes.md`.
+
 Row 60 is exactly approved as three Level 0 concepts for biochemical evaluation
 of suspected FHH, recognition and confirmation of FHH, and avoidance of
 unnecessary parathyroid surgery. Four encounter variants contain five scored
@@ -324,12 +341,42 @@ is not used as a definitive discriminator, and two proposed variants were
 removed. Its exact receipt is
 `approvals/owner-row-060-familial-hypocalciuric-hypercalcemia.md`.
 
-The other 30 rows from the prior 55-row intake and 34 new rows remain
-`pending_concept_workthrough` (64 total); their approved
-release-point IDs remain empty until the owner and developer complete each
-concept's review. The queue as a whole remains blocked from automatic runtime
-admission: exact approvals, approved scope splits, and partial pathway
-decisions do not authorize the remaining records.
+Row 61 is approved as six distinct future FSRS identities covering Graves
+pattern recognition, TRAb diagnostic support, appropriate RAI evaluation, and
+the separately scored pregnancy, current-lactation, and active moderate-to-
+severe thyroid-eye-disease avoidance boundaries. Exactly six reviewed seed
+question versions/scopes are clinically approved. The eventual release point is Level 0 Clinic
+Evaluation for counseling/referral only; radioactive iodine is never given
+onsite. No runtime package, encounter, source record, or implementation is
+approved by this receipt. Each identity ultimately needs at least four authored
+variants with distinct presentations and retrieval directions; the remaining
+eighteen variants and every later wording revision stay
+`needs_clinician_review` until exact named-clinician approval. The immutable
+receipt is `approvals/owner-row-061-graves-rai.md`.
+
+Rows 62, 66, 87, and 109 are actively implemented in the development-preview
+Level 0 release at `release.l0.clinic_evaluation`. Row 66 is limited to
+UC/IPAA inflammatory-pouch frequency; row 87 is limited to Type IVA
+congenital-bile-duct-cyst anatomy in reviewed MRCP; row 109 is limited to the
+anal-HSIL/high-risk-HPV association after pathology is available. Their
+receipts are `approvals/owner-row-062-men2a.md`,
+`approvals/owner-row-066-pouchitis-after-ipaa.md`,
+`approvals/owner-row-087-type-iva-bile-duct-cyst.md`, and
+`approvals/owner-row-109-anal-hsil-hpv.md`. Wording revisions and new variants
+require exact named-clinician re-review.
+
+Rows 57 and 58 were unchanged between workbooks but had stale queue state;
+their existing approved/implemented records are now reconciled. Workbook-(4)
+rows 92, 104, 111, 115, and 119 retain existing approvals rather than being
+added as unreviewed proposals.
+
+There are 81 `pending_concept_workthrough` records: 56 from rows 2-91 and 25
+from new rows 92-122. Their approved release-point IDs remain empty until the
+owner and developer complete each concept's review. The next source row is
+intentionally unset pending Sol's rerank after this early-game batch. The queue
+as a whole remains blocked from automatic runtime admission: exact approvals,
+approved scope splits, and partial pathway decisions do not authorize the
+remaining records.
 
 The current evidence dispositions are:
 

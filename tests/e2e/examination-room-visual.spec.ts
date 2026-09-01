@@ -17,13 +17,15 @@ async function openVisualRoom(page: Page): Promise<void> {
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
-async function installOrientationForFreshCapture(page: Page, orientation: 0 | 90, partial = false) {
+type ExaminationDoorProof = { side: "north" | "south"; offset: number };
+
+async function installOrientationForFreshCapture(page: Page, orientation: 0 | 90, partial = false, placedDoor?: ExaminationDoorProof) {
   const profile = await getProfile(page);
   const active = profile.campaigns.find((campaign) => campaign.campaignId === profile.activeCampaignId);
   if (!active) throw new Error("Active campaign is missing.");
   const state = JSON.parse(active.serializedState) as {
     rooms: Array<{ id: string; orientation: number; x: number; y: number }>;
-    doors?: Array<{ roomId: string }>;
+    doors?: Array<{ id: string; roomId: string; side: "north" | "east" | "south" | "west"; offset: number; exterior: boolean }>;
     employees?: unknown[];
     encounters?: Record<string, { lifecycle?: string; patientMovement?: unknown; pendingResult?: unknown }>;
     paused?: boolean;
@@ -48,9 +50,22 @@ async function installOrientationForFreshCapture(page: Page, orientation: 0 | 90
   state.rooms = state.rooms.filter((room) =>
     room.id === "room.instance.founder_desk" || room.id === "room.visual.examination",
   );
+  // Default proofs must be genuinely doorless for Examination. Preserve only
+  // the founder room's real exterior entrance; an explicit proof appends one
+  // exact persisted Examination door below.
   state.doors = state.doors?.filter((door) =>
-    door.roomId === "room.instance.founder_desk" || door.roomId === "room.visual.examination",
+    door.roomId === "room.instance.founder_desk",
   );
+  if (placedDoor) {
+    state.doors = (state.doors ?? []).filter((door) => door.roomId !== "room.visual.examination");
+    state.doors.push({
+      id: "door.visual.examination.south",
+      roomId: "room.visual.examination",
+      side: placedDoor.side,
+      offset: placedDoor.offset,
+      exterior: false,
+    });
+  }
   state.employees = [];
   for (const encounter of Object.values(state.encounters ?? {})) {
     encounter.lifecycle = "resolved";
@@ -71,11 +86,12 @@ async function openFreshCapture(
   source: Page,
   orientation: 0 | 90,
   partial = false,
+  placedDoor?: ExaminationDoorProof,
 ): Promise<Page> {
   const expectedFootprint = orientation === 0
     ? { width: 3, height: 2 }
     : { width: 2, height: 3 };
-  await installOrientationForFreshCapture(source, orientation, partial);
+  await installOrientationForFreshCapture(source, orientation, partial, placedDoor);
   const capture = await source.context().newPage();
   await capture.setViewportSize({ width: 1374, height: 1273 });
   await capture.goto("/?prototype-tools=0");
@@ -88,6 +104,7 @@ async function openFreshCapture(
   const hydratedState = JSON.parse(hydrated.serializedState) as {
     paused?: boolean;
     rooms: Array<{ id: string; orientation?: number; x: number; y: number }>;
+    doors?: Array<{ id: string; roomId: string; side: string; offset: number; exterior: boolean }>;
   };
   const hydratedExam = hydratedState.rooms.find((room) => room.id === "room.visual.examination");
   expect(hydratedState.paused).toBe(true);
@@ -102,6 +119,20 @@ async function openFreshCapture(
     ? hydratedDesk!.x + 4
     : hydratedDesk!.x + Math.floor((5 - expectedFootprint.width) / 2));
   expect(hydratedExam?.y).toBe(hydratedDesk!.y - expectedFootprint.height);
+  const examinationDoors = (hydratedState.doors ?? []).filter(
+    (door) => door.roomId === "room.visual.examination",
+  );
+  if (placedDoor) {
+    expect(examinationDoors).toEqual([{
+      id: "door.visual.examination.south",
+      roomId: "room.visual.examination",
+      side: placedDoor.side,
+      offset: placedDoor.offset,
+      exterior: false,
+    }]);
+  } else {
+    expect(examinationDoors).toHaveLength(0);
+  }
   await capture.addStyleTag({
     content: ".facility-pause-indicator { visibility: hidden !important; }",
   });
@@ -134,21 +165,21 @@ test("renders both authored Examination Room compositions from fresh persisted s
   const horizontal = await openFreshCapture(page, 0);
   await expect(horizontal.locator(".facility-frame")).toBeVisible();
   await horizontal.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/examination-room-v2-horizontal.png`,
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-horizontal.png`,
     animations: "disabled",
   });
   const horizontalDigest = createHash("sha256")
-    .update(readFileSync(`${SCREENSHOT_DIRECTORY}/examination-room-v2-horizontal.png`))
+    .update(readFileSync(`${SCREENSHOT_DIRECTORY}/examination-room-v3-horizontal.png`))
     .digest("hex");
 
   const vertical = await openFreshCapture(page, 90);
   await expect(vertical.locator(".facility-frame")).toBeVisible();
   await vertical.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/examination-room-v2-vertical.png`,
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-vertical.png`,
     animations: "disabled",
   });
   const verticalDigest = createHash("sha256")
-    .update(readFileSync(`${SCREENSHOT_DIRECTORY}/examination-room-v2-vertical.png`))
+    .update(readFileSync(`${SCREENSHOT_DIRECTORY}/examination-room-v3-vertical.png`))
     .digest("hex");
   expect(verticalDigest).not.toBe(horizontalDigest);
 
@@ -171,7 +202,7 @@ test("renders Build Mode candidate door spans for the complete vertical Examinat
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.waitForTimeout(180);
   await capture.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/examination-room-v2-build-door-zones.png`,
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-build-door-zones.png`,
     animations: "disabled",
   });
   await capture.close();
@@ -184,8 +215,50 @@ test("renders a real partial north-south shared boundary without moving rooms ap
   const capture = await openFreshCapture(page, 0, true);
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.screenshot({
-    path: `${SCREENSHOT_DIRECTORY}/examination-room-v2-partial-adjacency.png`,
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-closed-wall-adjacency.png`,
     animations: "disabled",
   });
   await capture.close();
+});
+
+test("renders a persisted explicit Examination door as the only south-wall aperture", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chrome", "Capture one controlled actual-app desktop proof.");
+  await page.setViewportSize({ width: 1374, height: 1273 });
+  await openVisualRoom(page);
+  const noDoor = await openFreshCapture(page, 0);
+  const noDoorCanvasDigest = createHash("sha256")
+    .update(await noDoor.getByTestId("facility-canvas").screenshot({ animations: "disabled" }))
+    .digest("hex");
+  const capture = await openFreshCapture(page, 0, false, { side: "south", offset: 1 });
+  await expect(capture.getByTestId("facility-canvas")).toBeVisible();
+  await capture.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-explicit-south-door.png`,
+    animations: "disabled",
+  });
+  const explicitDoorCanvasDigest = createHash("sha256")
+    .update(await capture.getByTestId("facility-canvas").screenshot({ animations: "disabled" }))
+    .digest("hex");
+  // Canvas-only output excludes changing HUD text; this makes the aperture
+  // itself, rather than unrelated whole-page state, the proof subject.
+  expect(explicitDoorCanvasDigest).not.toBe(noDoorCanvasDigest);
+  await noDoor.close();
+  await capture.close();
+});
+
+test("suppresses only the diagnostic unit whose exact north-wall slot receives a live door", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chrome", "Capture one controlled actual-app desktop proof.");
+  await page.setViewportSize({ width: 1374, height: 1273 });
+  await openVisualRoom(page);
+  const horizontal = await openFreshCapture(page, 0, false, { side: "north", offset: 2 });
+  await horizontal.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-horizontal-north-door-diagnostic.png`,
+    animations: "disabled",
+  });
+  const vertical = await openFreshCapture(page, 90, false, { side: "north", offset: 0 });
+  await vertical.screenshot({
+    path: `${SCREENSHOT_DIRECTORY}/examination-room-v3-vertical-north-door-diagnostic.png`,
+    animations: "disabled",
+  });
+  await horizontal.close();
+  await vertical.close();
 });

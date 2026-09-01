@@ -414,7 +414,7 @@ export const PATIENT_CHARACTER_CORE_MAP_ATLASES_V1 = PATIENT_CHARACTER_MAP_ATLAS
 export type LevelOneBitmapFixtureId =
   | "frontDesk" | "filingCabinet" | "secretaryChair" | "visitorChair" | "waterCooler" | "wasteBin"
   | "waitingCouch" | "coffeeTable" | "magazineRack" | "plant" | "sideTable"
-  | "examTable" | "sinkCabinet" | "rollingStool" | "diagnosticPanel"
+  | "examTable" | "sinkCabinet" | "rollingStool" | "diagnosticPanel" | "gloveDispenser" | "wallChart"
   | "handSink" | "toilet" | "wallMirror"
   | "xrayTube" | "xrayTable" | "xrayBucky" | "leadApron" | "supplyCabinet" | "imagingConsole" | "officeChair" | "serverRack"
   | "procedureTable" | "procedureLight" | "instrumentTray" | "biohazardBin";
@@ -451,6 +451,9 @@ export const LEVEL_ONE_BITMAP_FIXTURE_FRAMES: Readonly<Partial<Record<LevelOneBi
   sinkCabinet: fixtureAtlasFrame("sinkCabinet", "room-fixtures:examination-v1", { x: 120, y: 296, width: 316, height: 393 }),
   rollingStool: fixtureAtlasFrame("rollingStool", "room-fixtures:examination-v1", { x: 200, y: 785, width: 220, height: 264 }),
   diagnosticPanel: fixtureAtlasFrame("diagnosticPanel", "room-fixtures:examination-v1", { x: 529, y: 111, width: 191, height: 226 }),
+  // Measured to alpha/content edges in the approved Examination v1 atlas.
+  gloveDispenser: fixtureAtlasFrame("gloveDispenser", "room-fixtures:examination-v1", { x: 755, y: 143, width: 113, height: 184 }),
+  wallChart: fixtureAtlasFrame("wallChart", "room-fixtures:examination-v1", { x: 930, y: 116, width: 191, height: 221 }),
   handSink: fixtureAtlasFrame("handSink", "room-fixtures:bathroom-v1", { x: 111, y: 456, width: 192, height: 252 }),
   toilet: fixtureAtlasFrame("toilet", "room-fixtures:bathroom-v1", { x: 817, y: 411, width: 217, height: 434 }),
   wallMirror: fixtureAtlasFrame("wallMirror", "room-fixtures:bathroom-v1", { x: 128, y: 273, width: 147, height: 176 }),
@@ -664,8 +667,22 @@ export const FRONT_DESK_V2_FIXTURE_OVERRIDES: Readonly<
   frontDesk: fixtureAtlasFrame("frontDesk", "room-fixtures:front-desk-v2", { x: 476, y: 108, width: 492, height: 281 }),
   filingCabinet: fixtureAtlasFrame("filingCabinet", "room-fixtures:front-desk-v2", { x: 48, y: 19, width: 209, height: 374 }),
   secretaryChair: fixtureAtlasFrame("secretaryChair", "room-fixtures:front-desk-v2", { x: 293, y: 56, width: 152, height: 272 }),
+  // The Front Desk's southeast visitor chair faces left into the room.
+  visitorChair: fixtureAtlasFrame("visitorChair", "room-fixtures:waiting-v1", { x: 157, y: 681, width: 232, height: 254 }),
   waterCooler: fixtureAtlasFrame("waterCooler", "room-fixtures:front-desk-v2", { x: 1064, y: 184, width: 151, height: 324 }),
   wasteBin: fixtureAtlasFrame("wasteBin", "room-fixtures:front-desk-v2", { x: 72, y: 420, width: 112, height: 144 }),
+};
+
+/** Keep high-detail Examination source crops local to this presentation. */
+export const EXAMINATION_V3_FIXTURE_OVERRIDES: Readonly<
+  Partial<Record<LevelOneBitmapFixtureId, BitmapAtlasFrameDescriptor>>
+> = {
+  sinkCabinet: LEVEL_ONE_BITMAP_FIXTURE_FRAMES.sinkCabinet!,
+  examTable: LEVEL_ONE_BITMAP_FIXTURE_FRAMES.examTable!,
+  rollingStool: LEVEL_ONE_BITMAP_FIXTURE_FRAMES.rollingStool!,
+  diagnosticPanel: LEVEL_ONE_BITMAP_FIXTURE_FRAMES.diagnosticPanel!,
+  gloveDispenser: LEVEL_ONE_BITMAP_FIXTURE_FRAMES.gloveDispenser!,
+  wallChart: LEVEL_ONE_BITMAP_FIXTURE_FRAMES.wallChart!,
 };
 
 export function getLevelOneBitmapFixtureFrame(id: FixtureId): BitmapAtlasFrameDescriptor | undefined {
@@ -789,6 +806,8 @@ export function getRoomBitmapFixtureFrame(
 ): BitmapAtlasFrameDescriptor | undefined {
   return (roomDefinitionId === "room.front_desk"
     ? FRONT_DESK_V2_FIXTURE_OVERRIDES[id as LevelOneBitmapFixtureId]
+    : roomDefinitionId === "room.examination"
+      ? EXAMINATION_V3_FIXTURE_OVERRIDES[id as LevelOneBitmapFixtureId]
     : undefined) ?? LEVEL_TWO_ROOM_BITMAP_FIXTURE_OVERRIDES[roomDefinitionId]?.[
     id as LevelTwoBitmapFixtureId
   ] ?? getLevelOneBitmapFixtureFrame(id);
