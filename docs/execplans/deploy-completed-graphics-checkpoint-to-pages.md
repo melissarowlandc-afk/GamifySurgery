@@ -36,15 +36,17 @@ game at `https://melissarowlandc-afk.github.io/GamifySurgery/`.
 
 ## Relevant repository state
 
-- Current branch and `origin/beta` start at
-  `692baf7769ad31c0d11c575b7a60f12d29c97643`.
-- Local and remote `main` start at
-  `202e2332989680c66d71dc7e693ae49ff88e1192`, a strict ancestor in the current
-  `beta` history.
-- The prior live app content is `23f9be41d924578a19f2fa7b580e69c1744e63c4`.
-- The completed graphics work has an empty index and 32 visible dirty paths:
-  the 29 public release candidates listed below plus three untracked
-  diagnostics that must remain excluded.
+- The application/content checkpoint is
+  `7d8dab437838250b7315a71870ec6ea2d720f3ca`
+  (`feat: publish canonical rooms and Level 1 interiors`). It contains the 29
+  audited public paths.
+- `origin/beta`, local `beta`, `origin/main`, and local `main` contain that
+  application checkpoint after the beta push/readback and non-force main
+  fast-forward/readback.
+- The application checkpoint committed all 29 public release candidates. This
+  beta-only closure follow-up changes only this plan and the shared handoff;
+  after it is committed, the three excluded diagnostics remain the sole visible
+  untracked paths in the local worktree.
 - `deploy-pages.yml` triggers from `main`, runs locked installation and the
   deterministic test/Pages build gates, and deploys `apps/player/dist`.
 
@@ -61,9 +63,8 @@ game at `https://melissarowlandc-afk.github.io/GamifySurgery/`.
 - The accepted five-room proof set excludes
   `five-room-waiting-bathroom-100-vertical-north-door.png`; it is an older
   unreferenced diagnostic.
-- The initial readiness audit found literal local owner-reference paths and a
-  private Cortan host in the two public graphics plans. The scoped sanitation
-  is complete; release audit must continue to enforce those exclusions.
+- Scoped privacy sanitation in the two public graphics plans is complete;
+  release audit continues to enforce those exclusions.
 - The user's request explicitly authorizes the beta checkpoint, main
   fast-forward, GitHub Pages deployment, monitoring, and live verification
   after the graphics completion gate.
@@ -156,10 +157,10 @@ Excluded local diagnostics: `artifacts/screenshots/examination-room-v3-horizonta
 - [x] Terra identified the active five-room graphics task and completion gate.
 - [x] Terra observed the complete plan/handoff/validation and two stable polls.
 - [x] Complete fresh release-readiness audit.
-- [ ] Review and commit the scoped `beta` checkpoint.
-- [ ] Push/read back `beta` and fast-forward/read back `main`.
-- [ ] Verify the Pages workflow and live application.
-- [ ] Finalize and push the release record.
+- [x] Review and commit the scoped `beta` checkpoint.
+- [x] Push/read back `beta` and fast-forward/read back `main`.
+- [x] Verify the Pages workflow and live application.
+- [x] Finalize the beta-only release record follow-up.
 
 ## Discoveries
 
@@ -171,8 +172,8 @@ Excluded local diagnostics: `artifacts/screenshots/examination-room-v3-horizonta
   Fresh release-wide gates remain required here.
 - The independent thread used existing registered art only; it reports no
   raster generation, private upload, or clinical/gameplay changes.
-- The first scoped audit exposed the plan-only privacy leak described above;
-  the two source plans were sanitized before this final audit. The exact 29
+- Scoped privacy sanitation was completed in the two source plans before this
+  final audit. The exact 29
   public candidates now reconcile with the 32 visible paths and three explicit
   diagnostics.
 - Final release-readiness validation passed: the seven workspace suites total
@@ -180,9 +181,17 @@ Excluded local diagnostics: `artifacts/screenshots/examination-room-v3-horizonta
   modules and verified two asset references and 100 public build files. The
   candidate-only scan found no credential, private-path, prohibited-source,
   encoding, symlink, ignored-policy, oversized-file, or PNG metadata blocker.
+- Sol reviewed the actual source/docs diffs, cached state, and all accepted
+  proof images at native resolution before release. GitHub Pages run
+  `33495561102` (job `99816808633`) succeeded in 1m17s. A cache-busted live
+  request returned HTTP 200 with the same JavaScript and CSS references as the
+  audited build: `/GamifySurgery/assets/index-8DTr9UQX.js` and
+  `/GamifySurgery/assets/index-FbGXVgJP.css`.
 
 ## Exact next action
 
-Sol reviews the exact 29-path public manifest, source/docs diffs, and accepted
-proof images before scoped staging. All three diagnostics and every
-ignored/private path remain excluded.
+The owner remotely playtests the deployed game. At a future substantial
+checkpoint, remind the owner to explicitly say `push to GitHub` before backup
+or deployment. This closure documentation is a beta-only follow-up; `main`
+remains exactly the verified application checkpoint and no redundant Pages run
+is triggered.

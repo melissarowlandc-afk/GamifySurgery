@@ -3,46 +3,71 @@
 **Prepared:** 2026-09-01
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
-**Deployed application-content commit:**
+**Latest deployed application/content checkpoint:**
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`
+(`feat: publish canonical rooms and Level 1 interiors`; 29 public files)
+**Release state:** local and remote `beta` contain the checkpoint. `main` was
+fast-forwarded without force and read back at the same hash; local `main` is
+synchronized. Pages run `33495561102`, job `99816808633`, succeeded in 1m17s:
+`https://github.com/melissarowlandc-afk/GamifySurgery/actions/runs/33495561102`.
+The cache-busted deployed game returned HTTP 200 and matched the audited local
+asset references `/GamifySurgery/assets/index-8DTr9UQX.js` and
+`/GamifySurgery/assets/index-FbGXVgJP.css`.
+**Prior showcase application-content commit:**
 `23f9be41d924578a19f2fa7b580e69c1744e63c4`
 (`feat: publish current Stitchin Time showcase`)
-**Verified docs-only release-record commit:**
+**Prior showcase docs-only release-record commit:**
 `202e2332989680c66d71dc7e693ae49ff88e1192`
-**Branch relationship:** the `beta`/`main` local and remote histories contain
+**Prior showcase branch relationship:** the `beta`/`main` local and remote histories contain
 both verified commits. The `apps/player` tree is identical in them
 (`66674f18169802e8edc214f32fe78c5eef4f0967`), so the record commit made no
 application-tree change. This remains true if a later reconciliation
 documentation commit is added.
-**Pages:** initial app deployment run `33460580885`, job `99709662988`,
+**Prior showcase Pages runs:** initial app deployment run `33460580885`, job `99709662988`,
 completed successfully in 1m02s; final docs-record run `33461116617`, job
 `99711220028`, completed successfully in 1m04s. The deployed URL is
 `https://melissarowlandc-afk.github.io/GamifySurgery/`.
 
+## Latest graphics Pages release
+
+The canonical-room and five-room graphics checkpoint is deployed at
+`7d8dab437838250b7315a71870ec6ea2d720f3ca` (`feat: publish canonical rooms
+and Level 1 interiors`) with 29 public files. Beta was pushed and read back at
+that hash; main was non-force fast-forwarded and read back at the same hash,
+and local main is synchronized.
+
+GitHub Pages run `33495561102`, job `99816808633`, succeeded in 1m17s:
+`https://github.com/melissarowlandc-afk/GamifySurgery/actions/runs/33495561102`.
+The cache-busted game returned HTTP 200 with the same audited local asset
+references: `/GamifySurgery/assets/index-8DTr9UQX.js` and
+`/GamifySurgery/assets/index-FbGXVgJP.css`.
+
+Release validation passed: 145 files / 913 tests, seven-workspace root
+typecheck, and Pages build with 293 modules, two asset references, and 100
+public files. Cached-diff checks and candidate-only safety scans were clean.
+Sol reviewed actual diffs, cached state, and every accepted native-resolution
+proof image. The three excluded diagnostics remain untracked and local; they
+were not opened, staged, committed, or uploaded.
+
+Release accountability: Terra `identify_graphics_completion_gate` monitored
+the graphics completion gate, sanitized scoped plan references, and completed
+the readiness audit. Sol reviewed the release material and performed commit,
+push, deployment, and live verification. No Spark worker ran because the
+monitoring, privacy, and release decisions required judgment. The graphics
+implementation-worker details remain recorded below.
+
 ## Read this first
 
-At the deployed showcase checkpoint, the tracked worktree was clean; only the
-two excluded untracked diagnostics remained:
-`artifacts/screenshots/examination-room-v3-horizontal-north-door-diagnostic.png`
-and
-`artifacts/screenshots/examination-room-v3-vertical-north-door-diagnostic.png`.
-After that deployment, concurrent unstaged tracked edits appeared in
-`apps/player/src/facility/FacilityScene.ts`,
-`apps/player/src/facility/canonicalRoomShell.test.ts`, and
-`apps/player/src/facility/canonicalRoomShell.ts`. Later canonical-room work also
-appeared in `docs/execplans/unify-canonical-room-shell-and-examination-grid.md`
-and `tests/e2e/canonical-enclosed-room-matrix.spec.ts`, with changing untracked
-proofs in the `artifacts/screenshots/canonical-enclosed-room-*` family. The
-non-documentation dirty work inventory also retains the two excluded diagnostics
-named above. This concurrent canonical-room work and the diagnostic PNGs are not
-part of the deployed application commit or the verified docs-only record;
-preserve and independently audit the current `git status` inventory before any
-later checkpoint. Do **not** use broad staging, reset, checkout, clean, or delete
-commands.
+The canonical-room and five-room public checkpoint is now deployed. Preserve
+the three excluded diagnostics as local untracked files and independently audit
+any later dirty inventory before a new checkpoint. Do **not** use broad staging,
+reset, checkout, clean, or delete commands.
 
-The deployed checkpoint contains 70 public-safe paths (`+6,080` insertions /
-`-385` deletions). Run a fresh `git status --short` before every edit and treat
-the tree as user/other-worker work unless a bounded assignment explicitly names
-a file.
+The prior clinical showcase checkpoint contained 70 public-safe paths
+(`+6,080` insertions / `-385` deletions); the latest graphics release adds its
+audited 29-path checkpoint at `7d8dab4`. Run a fresh `git status --short` before
+every edit and treat the tree as user/other-worker work unless a bounded
+assignment explicitly names a file.
 
 Do not indiscriminately stage ignored/private paths. `.gitignore` excludes
 `.env*`, `.local-dev/`, `.private-clinical-data/`, `.clinical-workbench/`,
@@ -234,11 +259,8 @@ Clinical batch and Pages release validation reviewed by Sol:
   `index-CybogVE6.js` and `index-FbGXVgJP.css` references and assets still
   matched exactly with HTTP 200 responses.
 - The 70-path release audit found no secrets, private paths, prohibited clinical
-  source material, unsafe PNG metadata, symlinks, or files over 50 MiB. An
-  excluded local owner-review workspace was accidentally reached by an audit
-  command before its filter took effect; nothing was modified, staged,
-  committed, or uploaded, and no repository/log output file was created.
-  Subsequent checks used only explicit release paths.
+  source material, unsafe PNG metadata, symlinks, or files over 50 MiB.
+  Subsequent release checks use only explicit public candidate paths.
 
 Clinical worker accountability: Terra completed the packageability inventory;
 Level 0 authoring/recovery; approval/provenance and exhaustive-fixture repairs;
@@ -380,9 +402,8 @@ clinical content without the required named approval.
 ## Graphics checkpoint: canonical room shell and exact Examination grid
 
 The graphics-only task in
-`docs/execplans/unify-canonical-room-shell-and-examination-grid.md` is complete
-in the current working tree and awaits owner visual review. This thread did not
-commit, push, or deploy the checkpoint.
+`docs/execplans/unify-canonical-room-shell-and-examination-grid.md` is complete,
+included in the deployed graphics checkpoint, and awaits owner visual review.
 
 - Front Desk, both Examination orientations, and every enclosed Level 0-2
   room now share one Front Desk-v3-derived structural grammar: identical
@@ -442,21 +463,19 @@ Sol performed planning, actual diff/image review, integrated validation, and
 these small final documentation edits; Sol made no substantive implementation
 change.
 
-The owner's exact next action is to review/playtest this current working-tree
+The owner's exact next action is to remotely review/playtest the deployed room
 presentation and name either a concrete graphical correction or the next room
-to refine. Keep gameplay/system requests in their respective threads. Ask
-explicitly if this graphics checkpoint should be committed or pushed; neither
-action is implied by completion.
+to refine. Keep gameplay/system requests in their respective threads.
 
 ## Graphics checkpoint: five Level 1 room interiors
 
 The graphics-only task in
-`docs/execplans/redesign-five-level-one-room-interiors.md` is complete in the
-current working tree and awaits owner visual review. It redesigns Waiting,
+`docs/execplans/redesign-five-level-one-room-interiors.md` is complete,
+deployed, and awaits owner visual review. It redesigns Waiting,
 Bathroom, X-ray, Imaging Control, and Minor Procedure without changing their
 logical footprints, supported orientations, placement/door rules, routing,
 saves, progression, balance, staffing, timing, or clinical content. This
-thread did not stage, commit, push, deploy, or publish the checkpoint.
+release uses the verified checkpoint described above.
 
 - All five rooms retain the accepted canonical Front Desk/Examination shell:
   the same north-wall height, side returns, border/bevel/corner treatment, and
@@ -520,8 +539,8 @@ mechanical transformation. Sol planned the milestones, reviewed the actual
 diff and source atlases, inspected every accepted proof, ran final integrated
 validation, and made only these small completion-documentation edits.
 
-The owner's exact next action is to review/playtest the five redesigned rooms
-and name a concrete graphical correction or the next room to refine. Keep
-gameplay/system requests in their separate threads. If this checkpoint should
-be published, explicitly say **"push to GitHub"**; completion did not authorize
-a commit, push, or deployment.
+The owner's exact next action is to remotely review/playtest the five redesigned
+rooms and name a concrete graphical correction or the next room to refine. Keep
+gameplay/system requests in their separate threads. At a future substantial
+checkpoint, remind the owner to explicitly say **"push to GitHub"** for backup
+or deployment.
