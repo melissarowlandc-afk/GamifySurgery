@@ -1,6 +1,6 @@
 # Current Thread Handoff
 
-**Prepared:** 2026-08-31
+**Prepared:** 2026-09-01
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
 **Deployed application-content commit:**
@@ -200,6 +200,8 @@ work.
 | `replicate-photos-for-codex-art-direction.md` | Complete / owner review | Owner reviews Milestone 9; broader patient roster is later work. |
 | `unify-examination-room-architecture.md` | Complete / owner review | Review horizontal, vertical, partial-adjacency, and Build captures. |
 | `unify-all-room-wall-heights.md` | Complete / owner review | Owner reviews all-room wall-height pass; no further implementation planned. |
+| `unify-canonical-room-shell-and-examination-grid.md` | Complete / owner review | Playtest the shared room-wall grammar and exact Examination layouts; continue only with a concrete graphics adjustment or the next room refinement. |
+| `redesign-five-level-one-room-interiors.md` | Complete / owner review | Review/playtest Waiting, Bathroom, X-ray, Imaging Control, and Minor Procedure; continue only with a concrete graphics correction or the next room redesign. |
 | `world-anchored-exterior-correction.md` | Complete / owner review | Owner playthrough review; no further implementation planned. |
 
 ## Latest scoped validation evidence
@@ -374,3 +376,152 @@ judgment rather than a deterministic mechanical transformation.
 The owner’s exact next action is a remote playtest of the deployed showcase.
 After that, begin a new bounded concept-review thread; do not expand or alter
 clinical content without the required named approval.
+
+## Graphics checkpoint: canonical room shell and exact Examination grid
+
+The graphics-only task in
+`docs/execplans/unify-canonical-room-shell-and-examination-grid.md` is complete
+in the current working tree and awaits owner visual review. This thread did not
+commit, push, or deploy the checkpoint.
+
+- Front Desk, both Examination orientations, and every enclosed Level 0-2
+  room now share one Front Desk-v3-derived structural grammar: identical
+  per-tile north-wall height, return thickness, border/bevel language, corner
+  treatment, and shallow south/front lip. Wall tint and room floor remain
+  independent presentation skins.
+- The canonical front lip is exactly half the preceding Front Desk v5 height.
+  Its baseline depth keeps in-room people/furniture behind it while outside
+  contacts remain in front.
+- Enclosed walls are complete by default. Only a persisted live door removes
+  its exact slot; mere room adjacency never creates a hole. Generic north-wall
+  decoration clips to the remaining wall face after door subtraction.
+- Examination uses the owner's presentation-only 4-by-2 and 2-by-4 grids over
+  unchanged logical footprints. The sink, stool, bed, and wall diagnostic are
+  in the specified cells and orientations. The human poster, glove dispenser,
+  physician scale, and privacy curtain are absent. The diagnostic disappears
+  only for its conflicting north slot, and each orientation retains a
+  furniture-clear legal door candidate on every wall.
+- Hallways remain open circulation floors. Only genuinely exposed perimeter
+  runs receive canonical north/side/front components; contiguous runs are
+  grouped to avoid per-tile seams and connected hallway edges remain absent.
+- Existing component and fixture art was sufficient, so no raster generation
+  or local image-generation fallback was used. Cortan was checked read-only at
+  the task outset and remained available on HTTPS 443 with the recorded Qwen
+  Image Edit/IP-Adapter/ControlNet resources. Its empty upscale-model folder
+  and unavailable SAM/Grounding-DINO/InsightFace/ONNX endpoints remain recorded
+  limitations to report before any later raster-refinement attempt.
+
+Sol reviewed the actual production diff and all cited native-resolution
+captures. Final validation:
+
+- Player Vitest: **56 files / 302 tests passed**. The focused canonical shell,
+  Front Desk, Examination, layout, and cutaway suite independently passed
+  **6 files / 50 tests**.
+- Player typecheck passed. Player production build passed for 292 modules with
+  only the existing large-chunk advisory. `git diff --check` passed.
+- The integrated desktop visual run passed Front Desk, the two 100% enclosed
+  room sweeps, the 100% hallway proof, and four of five Examination scenarios:
+  **7 passed**. The remaining two-orientation Examination scenario timed out
+  during a camera drag under four-worker contention, then passed formally by
+  itself: **1/1 in 44.9 seconds**. This supplies passing evidence for all eight
+  intended scenarios without masking the initial timeout.
+- Sol inspected `front-desk-redesign-entrance-close.png`, both normal
+  Examination orientation captures, both conflicting-north-door captures,
+  `canonical-enclosed-room-100-left-desktop.png`,
+  `canonical-enclosed-room-100-right-desktop.png`, and
+  `canonical-hallway-100-edges-desktop.png` at native resolution.
+
+Terra workers that actually ran: `canonical_room_shell_audit` (read-only
+renderer/layout audit), `canonical_shell_front_exam` (shared shell and
+half-height Front Desk/Examination structure), `examination_exact_grid` (exact
+contents, bed direction, and diagnostic-door behavior), and
+`canonical_enclosed_rooms` (remaining enclosed rooms, native evidence, and
+hallway exposed-edge milestone). No Spark worker ran because each milestone
+required visual/product judgment rather than a deterministic bulk rewrite.
+Sol performed planning, actual diff/image review, integrated validation, and
+these small final documentation edits; Sol made no substantive implementation
+change.
+
+The owner's exact next action is to review/playtest this current working-tree
+presentation and name either a concrete graphical correction or the next room
+to refine. Keep gameplay/system requests in their respective threads. Ask
+explicitly if this graphics checkpoint should be committed or pushed; neither
+action is implied by completion.
+
+## Graphics checkpoint: five Level 1 room interiors
+
+The graphics-only task in
+`docs/execplans/redesign-five-level-one-room-interiors.md` is complete in the
+current working tree and awaits owner visual review. It redesigns Waiting,
+Bathroom, X-ray, Imaging Control, and Minor Procedure without changing their
+logical footprints, supported orientations, placement/door rules, routing,
+saves, progression, balance, staffing, timing, or clinical content. This
+thread did not stage, commit, push, deploy, or publish the checkpoint.
+
+- All five rooms retain the accepted canonical Front Desk/Examination shell:
+  the same north-wall height, side returns, border/bevel/corner treatment, and
+  shallow front lip. Their existing floor and wall colors remain independent.
+- Waiting has separate north-up 4-by-3 and 3-by-4 compositions with one couch,
+  two chairs, a coffee table, one magazine rack, and restrained wall art. The
+  authored furniture is repositioned rather than mechanically rotated.
+- Bathroom is reduced to a north-west sink, wall-mounted mirror, and
+  east/south toilet. The old mat, plant, bin, and upgrade clutter are absent.
+- X-ray uses a central north-south patient table, distinct tube and bucky,
+  supply cabinet, wall-mounted lead apron, and one radiation marker. The rug,
+  three-art row, upgrade cart, waste clutter, and clock are absent.
+- Imaging Control uses exactly one console, one chair, one server rack, and one
+  north-wall display. Its old second chair, printer, bin, plant, upgrade art,
+  and clock are absent.
+- Minor Procedure uses the authored table, standing articulated lamp,
+  instrument tray, sink cabinet, supply cabinet, and biohazard bin, plus one
+  small north-wall medical sign. The first proof incorrectly treated the lamp
+  as wall art; Sol rejected it, and Terra grounded the accepted lamp behind the
+  table while leaving door suppression only on the sign.
+- Declarative edge-clear metadata reserves one furniture-clear candidate on
+  every wall of every room. Whole wall pieces disappear only for their exact
+  conflicting persisted north-door slot; floor equipment remains independent.
+  Legacy upgrade props and generic clocks are suppressed only for these five
+  complete reference-led packages.
+
+Existing registered room atlases were sufficient, so no raster generation was
+needed. Cortan was refreshed read-only over the authorized tailnet at HTTPS
+443: ComfyUI 0.34.0 reported 994 nodes and the RTX 4070 Ti SUPER, SDXL/pixel-art
+checkpoints and LoRAs, SDXL ControlNet/IP-Adapter, and Qwen Image Edit stack.
+Known limitations remain an empty upscale-model folder and missing
+SAM/Grounding-DINO/InsightFace/ONNX endpoints. Nothing was uploaded, queued,
+installed, or changed on Cortan, and local image generation was not used.
+
+Sol reviewed the actual source diff and the native-resolution normal, Build
+Mode, and exact-conflict proofs. Final integrated validation:
+
+- Focused player Vitest passed **4 files / 32 tests**.
+- Player typecheck passed.
+- Player production build passed; only the existing large-chunk advisory was
+  reported.
+- Desktop Playwright passed **2/2** focused scenarios in 54.1 seconds.
+- `git diff --check` passed.
+- Accepted proof files are
+  `five-room-waiting-bathroom-100-horizontal-normal.png`,
+  `five-room-waiting-bathroom-100-vertical-normal.png`,
+  `five-room-waiting-bathroom-100-horizontal-north-door.png`,
+  `five-room-clinical-100-normal.png`,
+  `five-room-clinical-100-door-zones.png`, and
+  `five-room-clinical-100-north-door-conflicts.png` under
+  `artifacts/screenshots/`. The older unreferenced vertical conflict capture
+  remains an untracked diagnostic and is not required evidence.
+
+Workers that actually ran: explorer `five_room_asset_audit` performed the
+read-only footprint/atlas/door-zone audit; Terra worker
+`waiting_bathroom_redesign` implemented Milestone 1, both Sol-requested
+acceptance corrections, Milestone 2, the shared renderer/tests, and all focused
+production captures. No Spark worker ran because the implementation required
+visual composition and renderer judgment rather than a deterministic
+mechanical transformation. Sol planned the milestones, reviewed the actual
+diff and source atlases, inspected every accepted proof, ran final integrated
+validation, and made only these small completion-documentation edits.
+
+The owner's exact next action is to review/playtest the five redesigned rooms
+and name a concrete graphical correction or the next room to refine. Keep
+gameplay/system requests in their separate threads. If this checkpoint should
+be published, explicitly say **"push to GitHub"**; completion did not authorize
+a commit, push, or deployment.

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { getCanonicalRoomShellLayout } from "./canonicalRoomShell";
+import {
+  CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS,
+  getCanonicalHallwayEdgeComponents,
+  getCanonicalNorthWallDecorFragments,
+  getCanonicalRoomShellLayout,
+  isCanonicalEnclosedRoomDefinition,
+} from "./canonicalRoomShell";
 import { getFrontDeskV5Projection } from "./frontDeskV5Architecture";
 
 describe("canonical room shell", () => {
@@ -54,5 +60,80 @@ describe("canonical room shell", () => {
   it("carries a skin identity without allowing it to alter shell structure", () => {
     const olive = getCanonicalRoomShellLayout(floor, { width: 3, height: 2 }, [], false, { id: "exam-olive" });
     expect(olive.components.every((component) => component.skinId === "exam-olive")).toBe(true);
+    const cream = getCanonicalRoomShellLayout(floor, { width: 3, height: 2 }, [], false, { id: "waiting-cream" });
+    expect(olive.components.map((component) => component.bounds)).toEqual(cream.components.map((component) => component.bounds));
+  });
+
+  it("enumerates every enclosed Level 0-2 room without classifying the hallway", () => {
+    expect(CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS).toEqual([
+      "room.waiting", "room.bathroom", "room.xray", "room.imaging_control",
+      "room.minor_procedure", "room.ultrasound", "room.ct", "room.phlebotomy",
+      "room.evs_closet", "room.endoscopy", "room.periop_recovery", "room.training",
+      "room.coffee_kiosk", "room.glp1_telehealth_suite",
+    ]);
+    expect(isCanonicalEnclosedRoomDefinition("room.hallway")).toBe(false);
+  });
+
+  it("keeps common 64px-tile geometry across ordinary and rotated footprints", () => {
+    const layouts = [
+      getCanonicalRoomShellLayout({ x: 0, y: 0, width: 128, height: 128 }, { width: 2, height: 2 }),
+      getCanonicalRoomShellLayout({ x: 0, y: 0, width: 192, height: 192 }, { width: 3, height: 3 }),
+      getCanonicalRoomShellLayout({ x: 0, y: 0, width: 256, height: 256 }, { width: 4, height: 4 }),
+      getCanonicalRoomShellLayout({ x: 0, y: 0, width: 192, height: 128 }, { width: 3, height: 2 }),
+      getCanonicalRoomShellLayout({ x: 0, y: 0, width: 128, height: 192 }, { width: 2, height: 3 }),
+    ];
+    const first = layouts[0]!;
+    for (const layout of layouts.slice(1)) {
+      expect(layout.geometry.northHeight).toBe(first.geometry.northHeight);
+      expect(layout.geometry.sideWidth).toBe(first.geometry.sideWidth);
+      expect(layout.geometry.frontHeight).toBe(first.geometry.frontHeight);
+    }
+  });
+
+  it("does not use adjacency as an opening and cuts exact first and last live slots", () => {
+    const closed = getCanonicalRoomShellLayout({ x: 0, y: 0, width: 192, height: 128 }, { width: 3, height: 2 });
+    const opened = getCanonicalRoomShellLayout(
+      { x: 0, y: 0, width: 192, height: 128 },
+      { width: 3, height: 2 },
+      [{ side: "north", offset: 0 }, { side: "north", offset: 2 }],
+    );
+    expect(closed.northWallFaceRuns).toEqual([{ start: 0, length: 192 }]);
+    expect(opened.northWallFaceRuns).toHaveLength(3);
+    expect(opened.northWallFaceRuns[0]!.length).toBeCloseTo(10.24, 8);
+    expect(opened.northWallFaceRuns[1]!.start).toBeCloseTo(53.76, 8);
+    expect(opened.northWallFaceRuns[1]!.length).toBeCloseTo(84.48, 8);
+    expect(opened.northWallFaceRuns[2]!.start).toBeCloseTo(181.76, 8);
+  });
+
+  it("clips generic north-wall decor to remaining live-door-subtracted wall intervals", () => {
+    const layout = getCanonicalRoomShellLayout(
+      { x: 0, y: 100, width: 192, height: 128 },
+      { width: 3, height: 2 },
+      [{ side: "north", offset: 1 }],
+    );
+    const fragments = getCanonicalNorthWallDecorFragments(
+      layout,
+      { x: 0, y: 100, width: 192, height: 128 },
+      { x: 45, y: 20, width: 102, height: 100 },
+    );
+    expect(fragments).toHaveLength(2);
+    expect(fragments[0]!.x + fragments[0]!.width).toBeLessThanOrEqual(72.24);
+    expect(fragments[1]!.x).toBeGreaterThanOrEqual(119.76);
+  });
+
+  it("uses exact canonical dimensions for exposed hallway strips and omits internal edges", () => {
+    const floor = { x: 0, y: 100, width: 64, height: 64 };
+    const enclosed = getCanonicalRoomShellLayout(floor, { width: 1, height: 1 }, [], false);
+    const hallway = getCanonicalHallwayEdgeComponents(floor, { width: 1, height: 1 }, {
+      north: [{ start: 0, length: 64 }], east: [{ start: 0, length: 64 }],
+      south: [{ start: 0, length: 64 }], west: [],
+    });
+    expect(hallway.find((component) => component.side === "north")!.bounds.height)
+      .toBe(enclosed.geometry.northHeight);
+    expect(hallway.find((component) => component.side === "east")!.bounds.width)
+      .toBe(enclosed.geometry.sideWidth);
+    expect(hallway.find((component) => component.layer === "front-occluder")!.bounds.height)
+      .toBe(enclosed.geometry.frontHeight);
+    expect(hallway.some((component) => component.side === "west")).toBe(false);
   });
 });

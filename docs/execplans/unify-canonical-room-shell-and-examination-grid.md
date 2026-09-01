@@ -121,8 +121,8 @@ faces rather than floating over the floor.
 
 ## Cortan capability state checked for this task
 
-On 2026-08-31, Cortan was reachable at
-`https://cortan.taile197db.ts.net` over HTTPS 443. ComfyUI 0.34.0 reported 994
+On 2026-08-31, the authorized private Cortan host was reachable over HTTPS
+443. ComfyUI 0.34.0 reported 994
 nodes and an RTX 4070 Ti SUPER with 16 GiB VRAM. Relevant available resources
 include:
 
@@ -265,10 +265,10 @@ preserve unrelated work.
   pass; isolated desktop Front Desk and both Examination-orientation captures
   were refreshed and inspected.
 - [x] Implement the Examination visual-grid contents and focused renderer validation.
-- [ ] Complete the isolated desktop Chrome proof run and native-resolution review for the Examination visual-grid contents.
-- [ ] Migrate and validate remaining enclosed rooms.
-- [ ] Adapt and validate hallway edges plus all-room proportions/decor.
-- [ ] Complete integrated review and handoff.
+- [x] Complete the isolated desktop Chrome proof run and native-resolution review for the Examination visual-grid contents.
+- [x] Migrate and validate remaining enclosed rooms.
+- [x] Adapt and validate hallway edges plus all-room proportions/decor.
+- [x] Complete integrated review and handoff.
 
 ## Discoveries
 
@@ -298,9 +298,43 @@ preserve unrelated work.
   diagnostic and paper-towel sprites are rendered through an Examination-only
   north-wall path and keyed to exact logical north door offsets, rather than
   the generic floor-fixture or adjacency-aware rear-wall paths.
+- Every listed Level 0-2 enclosed room now calls the shared canonical shell
+  with only its persisted live doors as openings. Its existing authored floor,
+  fixture package, upgrade finish, and room-wall tint remain independent.
+  `room.hallway` deliberately remains on its open-circulation branch.
+- Generic room wall decor is now clipped to canonical north-wall pixel runs,
+  so an intersecting north door suppresses only the overlapping artwork. The
+  peri-op privacy curtain was corrected to a floor/partition contact.
+- Native review uses the fresh player-visible 100% captures
+  `canonical-enclosed-room-100-left-desktop.png` and
+  `canonical-enclosed-room-100-right-desktop.png`, rather than the superseded
+  60% overview. Together they show every listed enclosed room plus contextual
+  Front Desk/Examination, closed shared boundaries, live apertures, wall art,
+  furniture, and people at inspectable scale. No concrete M3 presentation
+  defect or true raster edit was found; Cortan was therefore not used for this
+  deterministic component/layout milestone.
+- Hallway perimeter strips now use a renderer-only exposed-edge helper derived
+  from the exact canonical shell dimensions. Contiguous hallway runs are
+  grouped before component rendering, preventing per-tile front-lip seams;
+  connected hallway cells still render no internal edge. The focused persisted
+  Level 2 review slice at 100% is captured in
+  `canonical-hallway-100-edges-desktop.png`; it includes a live staff member,
+  connected hallway cells, outer end returns, north/south lips, and the nearby
+  Front Desk entrance. Native inspection found no concrete fixture/person
+  proportion or wall-decoration outlier requiring an M4 correction.
+- Final Sol validation passed the complete player unit suite (**56 files / 302
+  tests**), player typecheck, and production build. The four focused visual
+  specs supplied eight desktop scenarios: seven passed in the combined
+  four-worker run, while the two-composition Examination scenario exceeded its
+  60-second camera-drag timeout under contention and then passed formally in
+  isolation (**1/1 in 44.9 seconds**). Sol inspected the refreshed Front Desk,
+  both Examination orientations, both diagnostic-conflicting north doors, the
+  two 100% enclosed-room sweeps, and the final 100% hallway perimeter capture.
+  `git diff --check` also passed.
 
 ## Exact next action
 
-Complete the in-flight isolated desktop Chrome Examination capture run,
-inspect the refreshed native-resolution files, then have Sol review the
-Milestone 2 diff before delegating Milestone 3.
+Have the owner review/playtest the current room presentation and identify any
+specific remaining graphics adjustment or the next room to refine. Keep that
+follow-up in this graphics-only thread; no commit, push, or deployment is
+authorized by this checkpoint.

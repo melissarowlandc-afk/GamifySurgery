@@ -130,9 +130,22 @@ import {
   type ExaminationRoomOrientation,
 } from "./examinationRoomPresentation";
 import {
+  getFiveRoomPresentation,
+  isFiveReferenceRoomDefinition,
+  isFiveRoomNorthWallFixtureVisible,
+} from "./fiveRoomPresentation";
+import {
   getExaminationV3ArchitectureComponents,
   type ExaminationDoorOpening,
 } from "./examinationV3Architecture";
+import {
+  getCanonicalHallwayEdgeComponents,
+  getCanonicalNorthWallDecorFragments,
+  getCanonicalRoomShellLayout,
+  isCanonicalEnclosedRoomDefinition,
+  type CanonicalRoomWallOpening,
+  type CanonicalRoomWallRun,
+} from "./canonicalRoomShell";
 import {
   getSurgeryCenterArchitectureAtScale,
   SURGERY_CENTER_WALL_GEOMETRY,
@@ -1332,6 +1345,7 @@ export class FacilityScene extends Phaser.Scene {
     width: number,
     height: number,
     depth: number,
+    tint?: number,
   ): boolean {
     const frame = FRONT_DESK_V3_ARCHITECTURE_FRAMES[id];
     const atlas = ROOM_FIXTURE_ATLASES.find(
@@ -1352,6 +1366,8 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(depth)
       .setAlpha(1)
       .setVisible(true);
+    if (tint === undefined) image.clearTint();
+    else image.setTint(tint);
     this.activeFixtureBitmapImages.add(key);
     return true;
   }
@@ -1390,6 +1406,136 @@ export class FacilityScene extends Phaser.Scene {
           : FACILITY_DEPTH_WORLD + 4,
       );
     }
+  }
+
+  /**
+   * The non-founder rooms keep their authored floors and fixture packages, but
+   * share the Front Desk component envelope.  In particular, this deliberately
+   * reads persisted doors only: touching rooms never remove a wall segment.
+   */
+  private drawCanonicalEnclosedRoomShell(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    if (!this.canRenderFrontDeskV5Architecture()) return;
+    const openings: readonly CanonicalRoomWallOpening[] = (this.bridge.viewModel.doors ?? [])
+      .filter((door) => door.roomInstanceId === room.instanceId)
+      .map((door) => ({ side: door.side, offset: door.offset }));
+    const shell = getCanonicalRoomShellLayout(
+      rectangle,
+      orientedSize(room),
+      openings,
+      false,
+      { id: `room-skin:${room.definitionId}` },
+    );
+    const tint = this.roomWallFaceColor(room);
+    for (const component of shell.components) {
+      const { bounds } = component;
+      this.drawFrontDeskV3ArchitectureArt(
+        `canonical-room:${room.instanceId}:${component.key}`,
+        component.frameId,
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+        bounds.width,
+        bounds.height,
+        component.layer === "front-occluder"
+          ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
+          : FACILITY_DEPTH_WORLD + 4,
+        tint,
+      );
+    }
+  }
+
+  /** Draws only actual hallway perimeter strips; it never closes circulation. */
+  private drawCanonicalHallwayExposedEdges(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): void {
+    if (!this.canRenderFrontDeskV5Architecture()) return;
+    const horizontal = (side: "north" | "south") => this.getGroupedHallwayHorizontalRuns(room, side);
+    const vertical = (side: "east" | "west") => this.getGroupedHallwayVerticalRuns(room, side);
+    const components = getCanonicalHallwayEdgeComponents(
+      rectangle,
+      orientedSize(room),
+      {
+        north: horizontal("north"),
+        east: vertical("east"),
+        south: horizontal("south"),
+        west: vertical("west"),
+      },
+      { id: "hallway-paper" },
+    );
+    for (const component of components) {
+      const { bounds } = component;
+      this.drawFrontDeskV3ArchitectureArt(
+        `canonical-hallway:${room.instanceId}:${component.key}`,
+        component.frameId,
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+        bounds.width,
+        bounds.height,
+        component.layer === "front-occluder"
+          ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
+          : FACILITY_DEPTH_WORLD + 4,
+        PIXEL_PALETTE_NUMBER.paper,
+      );
+    }
+  }
+
+  private getGroupedHallwayHorizontalRuns(
+    room: FacilityRoomView,
+    side: "north" | "south",
+  ): readonly CanonicalRoomWallRun[] {
+    const tile = this.layout.tileSize;
+    const hallwayAt = (x: number, y: number) => this.bridge.viewModel.rooms.find((candidate) => {
+      const size = orientedSize(candidate);
+      return (candidate.kind === "hallway" || candidate.definitionId === "room.hallway")
+        && x >= candidate.tileX && x < candidate.tileX + size.width
+        && y >= candidate.tileY && y < candidate.tileY + size.height;
+    });
+    const exposedAt = (candidate: FacilityRoomView, x: number) => this.exposedBoundaryRuns(candidate, side)
+      .some((run) => x >= candidate.tileX + run.offset && x < candidate.tileX + run.offset + run.length);
+    const edgeY = side === "north" ? room.tileY : room.tileY + orientedSize(room).height - 1;
+    return this.exposedBoundaryRuns(room, side).flatMap((run) => {
+      const start = room.tileX + run.offset;
+      const left = hallwayAt(start - 1, edgeY);
+      if (left && exposedAt(left, start - 1)) return [];
+      let end = start + run.length;
+      for (;;) {
+        const next = hallwayAt(end, edgeY);
+        if (!next || !exposedAt(next, end)) break;
+        end += 1;
+      }
+      return [{ start: run.offset * tile, length: (end - start) * tile }];
+    });
+  }
+
+  private getGroupedHallwayVerticalRuns(
+    room: FacilityRoomView,
+    side: "east" | "west",
+  ): readonly CanonicalRoomWallRun[] {
+    const tile = this.layout.tileSize;
+    const hallwayAt = (x: number, y: number) => this.bridge.viewModel.rooms.find((candidate) => {
+      const size = orientedSize(candidate);
+      return (candidate.kind === "hallway" || candidate.definitionId === "room.hallway")
+        && x >= candidate.tileX && x < candidate.tileX + size.width
+        && y >= candidate.tileY && y < candidate.tileY + size.height;
+    });
+    const exposedAt = (candidate: FacilityRoomView, y: number) => getExposedVerticalBoundaryRuns(candidate, this.bridge.viewModel.rooms, side)
+      .some((run) => y >= candidate.tileY + run.offset && y < candidate.tileY + run.offset + run.length);
+    const edgeX = side === "west" ? room.tileX : room.tileX + orientedSize(room).width - 1;
+    return getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, side).flatMap((run) => {
+      const start = room.tileY + run.offset;
+      const above = hallwayAt(edgeX, start - 1);
+      if (above && exposedAt(above, start - 1)) return [];
+      let end = start + run.length;
+      for (;;) {
+        const next = hallwayAt(edgeX, end);
+        if (!next || !exposedAt(next, end)) break;
+        end += 1;
+      }
+      return [{ start: run.offset * tile, length: (end - start) * tile }];
+    });
   }
 
   /**
@@ -2152,8 +2298,8 @@ export class FacilityScene extends Phaser.Scene {
       ...oriented,
     });
     if (room.kind === "hallway" || room.definitionId === "room.hallway") {
-      // Corridors remain open circulation floors. Only an actually northmost
-      // corridor edge receives the same shallow cutaway wall as a room.
+      // Corridors remain open circulation floors. Only real exterior edges
+      // receive the same component grammar as the enclosed room shells.
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.34);
       graphics.fillRect(
         rectangle.x + 3,
@@ -2194,43 +2340,7 @@ export class FacilityScene extends Phaser.Scene {
           y - 1,
         );
       }
-      const wallWidth = Math.max(
-        4,
-        Math.floor(this.layout.tileSize * 0.16),
-      );
-      const lowWallWidth = Math.max(3, Math.floor(wallWidth * 0.62));
-      const wallFace = this.roomWallFaceColor(room);
-      this.drawExteriorSideWalls(
-        graphics,
-        room,
-        rectangle,
-        wallFace,
-        lowWallWidth,
-      );
-      this.drawExposedRearWalls(
-        graphics,
-        room,
-        rectangle,
-        wallWidth,
-        wallFace,
-        lowWallWidth,
-      );
-      this.drawCoveredNorthBoundarySeams(graphics, room, rectangle);
-
-      const curb = Math.max(2, Math.floor(this.layout.tileSize * 0.07));
-      graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.72);
-      for (const run of this.exposedBoundaryRuns(room, "south")) {
-        const x = rectangle.x + run.offset * this.layout.tileSize;
-        graphics.fillRect(
-          x,
-          rectangle.y + rectangle.height - curb,
-          Math.min(
-            rectangle.x + rectangle.width - x,
-            run.length * this.layout.tileSize,
-          ),
-          curb,
-        );
-      }
+      this.drawCanonicalHallwayExposedEdges(room, rectangle);
       return;
     }
     const shade = this.roomFloorColor(room, index);
@@ -2276,11 +2386,15 @@ export class FacilityScene extends Phaser.Scene {
       this.drawAuthoredRoomFloor(room, rectangle);
       this.drawCleanlinessWear(graphics, room, rectangle);
       this.drawRoomUpgradeFinish(graphics, room, rectangle);
-      const wallWidth = Math.max(
-        4,
-        Math.floor(this.layout.tileSize * 0.16),
-      );
-      this.drawRoomShell(graphics, room, rectangle, wallWidth);
+      if (isCanonicalEnclosedRoomDefinition(room.definitionId)) {
+        this.drawCanonicalEnclosedRoomShell(room, rectangle);
+      } else {
+        const wallWidth = Math.max(
+          4,
+          Math.floor(this.layout.tileSize * 0.16),
+        );
+        this.drawRoomShell(graphics, room, rectangle, wallWidth);
+      }
     }
 
     const roomFixtures = this.getSortableGraphics(
@@ -3500,7 +3614,17 @@ export class FacilityScene extends Phaser.Scene {
       room.orientation,
     );
     const left = rectangle.x + inset;
-    const wallHeight = this.roomWallFaceHeight(rectangle);
+    const canonicalOpenings: readonly CanonicalRoomWallOpening[] = isCanonicalEnclosedRoomDefinition(room.definitionId)
+      ? (this.bridge.viewModel.doors ?? [])
+        .filter((door) => door.roomInstanceId === room.instanceId)
+        .map((door) => ({ side: door.side, offset: door.offset }))
+      : [];
+    const canonicalShell = isCanonicalEnclosedRoomDefinition(room.definitionId)
+      ? getCanonicalRoomShellLayout(rectangle, orientedSize(room), canonicalOpenings, false, {
+        id: `room-skin:${room.definitionId}`,
+      })
+      : undefined;
+    const wallHeight = canonicalShell?.geometry.northHeight ?? this.roomWallFaceHeight(rectangle);
     const wallCapHeight = getSurgeryCenterArchitectureAtScale(
       this.layout.tileSize,
     ).outerBorderY;
@@ -3723,6 +3847,39 @@ export class FacilityScene extends Phaser.Scene {
       heightRatio: number,
       alpha = 1,
     ) => {
+      if (canonicalShell) {
+        const largestRun = Math.max(0, ...canonicalShell.northWallFaceRuns.map((run) => run.length / this.layout.tileSize));
+        if (!shouldRenderWorldNorthWallDecor({ binding: "world-north" }, largestRun)) return;
+        const wallInset = Math.max(2, Math.floor(inset * 0.35));
+        const usableWidth = Math.max(8, rectangle.width - wallInset * 2);
+        const usableHeight = Math.max(8, wallHeight - 5);
+        const fixture = FIXTURE_SPRITES[id];
+        const rendered = getFixturePresentationSize(
+          fixture.width,
+          fixture.height,
+          usableWidth * widthRatio * 1.16,
+          usableHeight * heightRatio * 1.28,
+        );
+        const x = rectangle.x + wallInset + usableWidth * centerXRatio - rendered.width / 2;
+        const y = rectangle.y - wallHeight + usableHeight * centerYRatio - rendered.height / 2;
+        const visibleFragments = getCanonicalNorthWallDecorFragments(
+          canonicalShell,
+          rectangle,
+          { x, y, width: rendered.width, height: rendered.height },
+        );
+        if (visibleFragments.length === 0) return;
+        this.drawPixelFrameSized(
+          graphics,
+          fixture,
+          Math.round(x),
+          Math.round(y),
+          rendered.width,
+          rendered.height,
+          alpha,
+          visibleFragments,
+        );
+        return;
+      }
       const largestExposedRunTiles = Math.max(
         0,
         ...rearWallRuns.map((run) => run.length),
@@ -3804,6 +3961,35 @@ export class FacilityScene extends Phaser.Scene {
       );
     };
 
+    // The five reference-led rooms share one metadata renderer. Their room
+    // shells, doors, live actors, and logical geometry remain independent.
+    const renderFiveRoomPresentation = (): boolean => {
+      const presentation = getFiveRoomPresentation(room.definitionId, room.orientation);
+      if (!presentation) return false;
+      const northDoorOffsets = (this.bridge.viewModel.doors ?? [])
+        .filter((door) => door.roomInstanceId === room.instanceId && door.side === "north")
+        .map((door) => door.offset);
+      presentation.fixtures.forEach((fixture) => {
+        if (fixture.wallMounted) {
+          if (isFiveRoomNorthWallFixtureVisible(fixture, northDoorOffsets)) {
+            placeWall(fixture.id, fixture.centerXRatio, fixture.centerYRatio, fixture.widthRatio, fixture.heightRatio);
+          }
+          return;
+        }
+        place(
+          fixture.id,
+          fixture.centerXRatio,
+          fixture.centerYRatio,
+          fixture.widthRatio,
+          fixture.heightRatio,
+          1,
+          undefined,
+          fixture.preserveScreenOrientation,
+        );
+      });
+      return true;
+    };
+
     switch (room.definitionId) {
       case "room.front_desk":
         // This isolated composition is deliberately declarative. It mirrors
@@ -3858,16 +4044,7 @@ export class FacilityScene extends Phaser.Scene {
         }
         break;
       case "room.waiting":
-        place("floorRug", 0.5, 0.58, 0.78, 0.54, 0.66);
-        place("waitingCouch", 0.5, 0.26, 0.52, 0.27);
-        place("visitorChair", 0.17, 0.61, 0.15, 0.23);
-        place("visitorChair", 0.83, 0.61, 0.15, 0.23);
-        place("coffeeTable", 0.5, 0.6, 0.32, 0.22);
-        place("magazineRack", 0.91, 0.25, 0.11, 0.23);
-        place("wasteBin", 0.89, 0.79, 0.08, 0.14);
-        placeWall("framedPrint", 0.19, 0.5, 0.12, 0.72);
-        placeWall("noticeBoard", 0.54, 0.5, 0.22, 0.72);
-        placeWall("framedPrint", 0.82, 0.5, 0.12, 0.72);
+        renderFiveRoomPresentation();
         break;
       case "room.examination":
         {
@@ -3941,46 +4118,16 @@ export class FacilityScene extends Phaser.Scene {
         }
         break;
       case "room.bathroom":
-        place("bathMat", 0.5, 0.54, 0.34, 0.18, 0.72);
-        place("handSink", 0.18, 0.22, 0.25, 0.3);
-        place("toilet", 0.79, 0.78, 0.31, 0.43);
-        place("wasteBin", 0.15, 0.81, 0.1, 0.15);
-        placeWall("wallMirror", 0.18, 0.5, 0.18, 0.72);
+        renderFiveRoomPresentation();
         break;
       case "room.xray":
-        place("floorRug", 0.5, 0.6, 0.72, 0.5, 0.32);
-        place("xrayTube", 0.38, 0.41, 0.39, 0.51);
-        place("xrayTable", 0.53, 0.7, 0.56, 0.23);
-        place("xrayBucky", 0.12, 0.48, 0.21, 0.46);
-        place("leadApron", 0.88, 0.25, 0.15, 0.33);
-        place("supplyCabinet", 0.87, 0.68, 0.19, 0.29);
-        place("wasteBin", 0.12, 0.82, 0.1, 0.16);
-        placeWall("radiationMarker", 0.18, 0.5, 0.12, 0.75);
-        placeWall("wallWindow", 0.56, 0.5, 0.3, 0.72);
-        placeWall("wallShelf", 0.83, 0.5, 0.2, 0.72);
+        renderFiveRoomPresentation();
         break;
       case "room.imaging_control":
-        place("imagingConsole", 0.5, 0.3, 0.76, 0.46);
-        place("officeChair", 0.35, 0.61, 0.17, 0.22);
-        place("officeChair", 0.65, 0.61, 0.17, 0.22);
-        place("serverRack", 0.1, 0.4, 0.15, 0.46);
-        place("officePrinter", 0.9, 0.52, 0.14, 0.22);
-        place("wasteBin", 0.88, 0.86, 0.09, 0.14);
-        placeWall("lightBox", 0.68, 0.5, 0.27, 0.76);
-        placeWall("wallWindow", 0.27, 0.5, 0.3, 0.72);
+        renderFiveRoomPresentation();
         break;
       case "room.minor_procedure":
-        place("floorRug", 0.5, 0.63, 0.72, 0.46, 0.38);
-        place("procedureTable", 0.46, 0.58, 0.56, 0.28);
-        place("procedureLight", 0.46, 0.32, 0.25, 0.33);
-        place("instrumentTray", 0.75, 0.59, 0.2, 0.25);
-        place("supplyCabinet", 0.86, 0.22, 0.23, 0.32);
-        place("biohazardBin", 0.12, 0.78, 0.13, 0.19);
-        place("ivStand", 0.14, 0.4, 0.13, 0.37);
-        place("scrubSink", 0.78, 0.86, 0.29, 0.23);
-        place("wasteBin", 0.92, 0.8, 0.08, 0.14);
-        placeWall("wallShelf", 0.72, 0.5, 0.28, 0.72);
-        placeWall("medicalSign", 0.24, 0.5, 0.13, 0.74);
+        renderFiveRoomPresentation();
         break;
       case "room.ultrasound":
         place("examTable", 0.35, 0.65, 0.54, 0.28);
@@ -4022,7 +4169,8 @@ export class FacilityScene extends Phaser.Scene {
         place("vitalsMonitor", 0.76, 0.45, 0.2, 0.42);
         place("ivStand", 0.16, 0.41, 0.13, 0.4);
         place("supplyCabinet", 0.9, 0.23, 0.16, 0.3);
-        placeWall("privacyCurtain", 0.84, 0.55, 0.13, 0.9, 0.84);
+        // A curtain is a movable partition/floor contact, not wall art.
+        place("privacyCurtain", 0.84, 0.55, 0.13, 0.9, 0.84);
         break;
       case "room.training":
         place("trainingTable", 0.48, 0.61, 0.68, 0.42);
@@ -4056,7 +4204,7 @@ export class FacilityScene extends Phaser.Scene {
       1,
       Math.min(5, room.upgradeLevel ?? 1),
     );
-    if (visualTier >= 2) {
+    if (visualTier >= 2 && !isFiveReferenceRoomDefinition(room.definitionId)) {
       switch (room.definitionId) {
         case "room.front_desk":
           // The reference establishes the complete level 0–2 room. Upgrade
@@ -4115,12 +4263,13 @@ export class FacilityScene extends Phaser.Scene {
           break;
       }
     }
-    if (visualTier >= 3) {
+    if (visualTier >= 3 && !isFiveReferenceRoomDefinition(room.definitionId)) {
       place("roomPlant", 0.92, 0.86, 0.1, 0.18, 0.94);
       placeWall("framedPrint", 0.86, 0.5, 0.12, 0.72, 0.9);
     }
     if (
       room.definitionId !== "room.front_desk" &&
+      !isFiveReferenceRoomDefinition(room.definitionId) &&
       room.definitionId !== "room.bathroom" &&
       room.definitionId !== "room.imaging_control" &&
       room.definitionId !== "room.examination"

@@ -54,6 +54,57 @@ export interface CanonicalRoomShellLayout {
   northWallFaceRuns: readonly CanonicalRoomWallRun[];
 }
 
+/** Actual exposed hall perimeter segments in floor-local display pixels. */
+export interface CanonicalRoomExposedEdges {
+  north: readonly CanonicalRoomWallRun[];
+  east: readonly CanonicalRoomWallRun[];
+  south: readonly CanonicalRoomWallRun[];
+  west: readonly CanonicalRoomWallRun[];
+}
+
+export interface CanonicalRoomWallDecorBounds extends CanonicalRoomShellRect {}
+
+/** Clips wall art to real remaining north-wall face runs, including doors. */
+export function getCanonicalNorthWallDecorFragments(
+  layout: CanonicalRoomShellLayout,
+  floor: CanonicalRoomShellRect,
+  decor: CanonicalRoomWallDecorBounds,
+): readonly CanonicalRoomWallDecorBounds[] {
+  const wallTop = floor.y - layout.geometry.northHeight + 2;
+  const wallBottom = floor.y - 2;
+  return layout.northWallFaceRuns.flatMap((run) => {
+    const left = Math.max(decor.x, floor.x + run.start + 2);
+    const right = Math.min(decor.x + decor.width, floor.x + run.start + run.length - 2);
+    const top = Math.max(decor.y, wallTop);
+    const bottom = Math.min(decor.y + decor.height, wallBottom);
+    return right > left && bottom > top
+      ? [{ x: left, y: top, width: right - left, height: bottom - top }]
+      : [];
+  });
+}
+
+/** Enclosed room definitions that use the common cutaway construction. */
+export const CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS = [
+  "room.waiting",
+  "room.bathroom",
+  "room.xray",
+  "room.imaging_control",
+  "room.minor_procedure",
+  "room.ultrasound",
+  "room.ct",
+  "room.phlebotomy",
+  "room.evs_closet",
+  "room.endoscopy",
+  "room.periop_recovery",
+  "room.training",
+  "room.coffee_kiosk",
+  "room.glp1_telehealth_suite",
+] as const;
+
+export function isCanonicalEnclosedRoomDefinition(definitionId: string): boolean {
+  return (CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS as readonly string[]).includes(definitionId);
+}
+
 const FRONT_DESK_COLUMNS = 5;
 const FRONT_DESK_VISIBLE_FLOOR_ASPECT_RATIO = 1.53;
 const NORTH_HEIGHT_PER_TILE =
@@ -86,6 +137,46 @@ export function getCanonicalRoomWallRuns(
   }
   if (cursor < length) runs.push({ start: cursor, length: length - cursor });
   return runs.filter((run) => run.length > 0.5);
+}
+
+/**
+ * Produces only the component strips needed around an open circulation floor.
+ * It shares the enclosed-shell geometry exactly, but intentionally has no
+ * implicit walls or side-return shoulder extensions on suppressed edges.
+ */
+export function getCanonicalHallwayEdgeComponents(
+  floor: CanonicalRoomShellRect,
+  footprint: Readonly<{ width: number; height: number }>,
+  exposed: CanonicalRoomExposedEdges,
+  skin: CanonicalRoomShellSkin = DEFAULT_SKIN,
+): readonly CanonicalRoomShellComponent[] {
+  const shell = getCanonicalRoomShellLayout(floor, footprint, [], false, skin);
+  const { geometry } = shell;
+  const components: CanonicalRoomShellComponent[] = [];
+  exposed.north.forEach((run, index) => components.push({
+    key: `hallway-north-${index}`, frameId: "northWall",
+    bounds: { x: floor.x + run.start, y: floor.y - geometry.northHeight, width: run.length, height: geometry.northHeight },
+    layer: "base", side: "north", skinId: skin.id,
+  }));
+  const addSide = (side: "west" | "east", runs: readonly CanonicalRoomWallRun[], frameId: FrontDeskV3ArchitectureId) => {
+    const x = side === "west" ? floor.x : floor.x + floor.width - geometry.sideWidth;
+    runs.forEach((run, index) => components.push({
+      key: `hallway-${side}-${index}`, frameId,
+      bounds: { x, y: floor.y + run.start, width: geometry.sideWidth, height: run.length },
+      layer: "base", side, skinId: skin.id,
+    }));
+  };
+  addSide("west", exposed.west, "westReturn");
+  addSide("east", exposed.east, "eastReturn");
+  exposed.south.forEach((run, index) => {
+    const component: CanonicalRoomShellComponent = {
+      key: `hallway-front-${index}-base`, frameId: run.start === 0 ? "frontWest" : "frontEast",
+      bounds: { x: floor.x + run.start, y: geometry.frontTop, width: run.length, height: geometry.frontHeight },
+      layer: "base", side: "south", skinId: skin.id,
+    };
+    components.push(component, { ...component, key: component.key.replace("-base", "-occluder"), layer: "front-occluder" });
+  });
+  return components;
 }
 
 /**
