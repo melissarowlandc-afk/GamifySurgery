@@ -4,6 +4,10 @@
 
 Implement the owner-approved two-concept hereditary-spherocytosis/accessory-spleen package from `Gamify Surgery Concepts (4).xlsx`, Sheet1 row 57, validate the complete accumulated prototype, create a public-safe source checkpoint, update `main`, and verify the owner playtest at `https://melissarowlandc-afk.github.io/GamifySurgery/` for the owner's work-laptop demonstration.
 
+**Status:** Complete. The verified application showcase and its docs-only release
+record are pushed and deployed; the next work is owner remote playtest followed
+by a new bounded concept-review thread.
+
 ## Requirements
 
 - Add the approved workup concept for persistent hemolysis after documented total splenectomy.
@@ -135,8 +139,8 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 - [x] Owner explicitly instructed: "push the current version for GitHub pages deployment."
 - [x] Fast-forward/push `main` to the reviewed showcase commit.
 - [x] Verify the Pages workflow and live application.
-- [ ] Commit and push the separate docs-only post-deployment record (this plan and
-  the current handoff); its commit hash cannot be recorded in advance.
+- [x] Commit and push the separate docs-only post-deployment record as
+  `202e2332989680c66d71dc7e693ae49ff88e1192`.
 
 ## Discoveries
 
@@ -156,7 +160,11 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 - The current public-safe showcase commit is
   `23f9be41d924578a19f2fa7b580e69c1744e63c4` (`feat: publish current
   Stitchin Time showcase`). `beta`, `origin/beta`, `main`, and `origin/main`
-  were read-back verified at that commit after the fast-forward release.
+  contain it and the verified docs-only release-record commit
+  `202e2332989680c66d71dc7e693ae49ff88e1192`. The application tree is
+  identical in those commits (`apps/player` tree
+  `66674f18169802e8edc214f32fe78c5eef4f0967`), so the record commit introduced
+  no application change.
 - The current release audit passed root typecheck across seven workspaces, root
   tests (**144 files / 900 tests**), and `build:pages` (**292 modules / 2 asset
   references / 100 public build files**), plus `git diff --check` and candidate
@@ -169,6 +177,10 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
   the local Pages build's `/GamifySurgery/assets/index-CybogVE6.js` and
   `/GamifySurgery/assets/index-FbGXVgJP.css` references; both assets returned
   HTTP 200 (2,931,561 and 102,222 bytes respectively).
+- The final Pages verification for the docs-only record, run `33461116617`
+  (job `99711220028`), succeeded in 1m04s. A cache-busted live request returned
+  HTTP 200 with `Last-Modified: Tue, 01 Sep 2026 02:04:45 GMT` and the same
+  immutable JavaScript and CSS references; both assets returned HTTP 200.
 - The release audit incident was contained: an excluded local owner-review
   workspace was reached before a filter took effect, but nothing was modified,
   staged, committed, or uploaded, and no repository/log output file was
@@ -176,7 +188,5 @@ Implement the owner-approved two-concept hereditary-spherocytosis/accessory-sple
 
 ## Exact next action
 
-Sol may commit and push this docs-only post-deployment record after its scoped
-review. Its future hash must not be claimed in this record. The owner then
-remotely playtests the deployed showcase before beginning a new bounded
-concept-review thread.
+The release is complete. The owner remotely playtests the deployed showcase,
+then begins a new bounded concept-review thread.

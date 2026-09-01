@@ -3,14 +3,19 @@
 **Prepared:** 2026-08-31
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
-**Deployed showcase commit:** `23f9be41d924578a19f2fa7b580e69c1744e63c4`
+**Deployed application-content commit:**
+`23f9be41d924578a19f2fa7b580e69c1744e63c4`
 (`feat: publish current Stitchin Time showcase`)
-**Branch relationship:** `beta`, `origin/beta`, `main`, and `origin/main` were
-read-back verified at the deployed showcase commit. This handoff update is a
-separate docs-only post-deployment follow-up; it is not yet committed or pushed,
-and its future commit hash cannot be self-recorded here.
-**Pages:** workflow run `33460580885`, job `99709662988`, completed successfully
-in 1m02s. The deployed URL is
+**Verified docs-only release-record commit:**
+`202e2332989680c66d71dc7e693ae49ff88e1192`
+**Branch relationship:** the `beta`/`main` local and remote histories contain
+both verified commits. The `apps/player` tree is identical in them
+(`66674f18169802e8edc214f32fe78c5eef4f0967`), so the record commit made no
+application-tree change. This remains true if a later reconciliation
+documentation commit is added.
+**Pages:** initial app deployment run `33460580885`, job `99709662988`,
+completed successfully in 1m02s; final docs-record run `33461116617`, job
+`99711220028`, completed successfully in 1m04s. The deployed URL is
 `https://melissarowlandc-afk.github.io/GamifySurgery/`.
 
 ## Read this first
@@ -23,14 +28,16 @@ and
 After that deployment, concurrent unstaged tracked edits appeared in
 `apps/player/src/facility/FacilityScene.ts`,
 `apps/player/src/facility/canonicalRoomShell.test.ts`, and
-`apps/player/src/facility/canonicalRoomShell.ts`, in addition to this docs-only
-follow-up and the two excluded diagnostics. Later canonical-room work also
-appeared in `docs/execplans/unify-canonical-room-shell-and-examination-grid.md`,
-`artifacts/screenshots/canonical-enclosed-room-matrix-desktop.png`, and
-`tests/e2e/canonical-enclosed-room-matrix.spec.ts`. None of these concurrent
-paths are part of the deployed commit or this docs-only closure; preserve and
-independently audit them before any later checkpoint. Do **not** use broad
-staging, reset, checkout, clean, or delete commands.
+`apps/player/src/facility/canonicalRoomShell.ts`. Later canonical-room work also
+appeared in `docs/execplans/unify-canonical-room-shell-and-examination-grid.md`
+and `tests/e2e/canonical-enclosed-room-matrix.spec.ts`, with changing untracked
+proofs in the `artifacts/screenshots/canonical-enclosed-room-*` family. The
+non-documentation dirty work inventory also retains the two excluded diagnostics
+named above. This concurrent canonical-room work and the diagnostic PNGs are not
+part of the deployed application commit or the verified docs-only record;
+preserve and independently audit the current `git status` inventory before any
+later checkpoint. Do **not** use broad staging, reset, checkout, clean, or delete
+commands.
 
 The deployed checkpoint contains 70 public-safe paths (`+6,080` insertions /
 `-385` deletions). Run a fresh `git status --short` before every edit and treat
@@ -176,7 +183,7 @@ work.
 | `approve-hcc-resection-selection-row-092.md` | Complete | Await the next owner concept review; no implementation before approval. |
 | `approve-lymphangitis-row-104.md` | Complete | Await the owner's next concept decision. |
 | `approve-obstructive-jaundice-vitamin-k-row-115.md` | Historical | Its proposed row-92 review is already complete; do not replay it. |
-| `approve-row-057-and-pages-showcase-release.md` | Complete / docs follow-up pending | Showcase commit deployed; commit the separate post-deployment record, then owner remote playtest. |
+| `approve-row-057-and-pages-showcase-release.md` | Complete / deployed and recorded | Owner remote playtest, then a new bounded concept-review thread. |
 | `correct-horizontal-character-gaits.md` | Complete / owner playtest | Owner playtests direction-locked patient gait; act only on a concrete defect. |
 | `exterior-landscaping-sidewalk-pass.md` | Complete / owner review | Owner visual review; no implementation planned. |
 | `implement-level-2-expanded-outpatient-endoscopy.md` | Complete / walkthrough | Owner local walkthrough on beta; no release action authorized. |
@@ -219,6 +226,11 @@ Clinical batch and Pages release validation reviewed by Sol:
   both deployed assets returned HTTP 200 (JS 2,931,561 bytes; CSS 102,222 bytes).
 - GitHub Actions Pages run `33460580885` / job `99709662988` succeeded in 1m02s;
   the live URL returned HTTP 200.
+- Final Pages run `33461116617` / job `99711220028` succeeded in 1m04s. A
+  cache-busted live request returned HTTP 200 with
+  `Last-Modified: Tue, 01 Sep 2026 02:04:45 GMT`, and the immutable
+  `index-CybogVE6.js` and `index-FbGXVgJP.css` references and assets still
+  matched exactly with HTTP 200 responses.
 - The 70-path release audit found no secrets, private paths, prohibited clinical
   source material, unsafe PNG metadata, symlinks, or files over 50 MiB. An
   excluded local owner-review workspace was accidentally reached by an audit
@@ -279,10 +291,10 @@ Excluded local directories and assets that still exist but are not in the backup
 ## New-thread startup checklist
 
 1. Read `AGENTS.md` and this handoff completely.
-2. Run `git status --short --branch`, preserve the docs-only follow-up, the
-   concurrent unstaged Facility Scene/canonical-room-shell edits, later
-   canonical-room plan/test/screenshot work, and the two excluded diagnostic
-   screenshots. Independently audit those concurrent edits before any later
+2. Run `git status --short --branch`, preserve the concurrent Facility
+   Scene/canonical-room-shell edits, related ExecPlan and E2E spec, current
+   `canonical-enclosed-room-*` proof files, and the two excluded diagnostic
+   screenshots. Independently audit that current inventory before any later
    checkpoint; never assume the tree is clean.
 3. Check live agents and relevant local processes before edits; do not overlap
    a write worker or terminate a process you do not own.
@@ -297,10 +309,10 @@ Excluded local directories and assets that still exist but are not in the backup
 Suggested first message:
 
 > Resume GamifySurgery safely from `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
-> Read `AGENTS.md`, inspect the docs-only release record and excluded diagnostics
-> without reverting anything, and first report bounded-task options plus any live
-> agents/processes before editing. Do not commit, push, or deploy unless I
-> explicitly authorize it.
+> Read `AGENTS.md`, inspect the concurrent canonical-room work and excluded
+> diagnostics without reverting anything, and first report bounded-task options
+> plus any live agents/processes before editing. Do not commit, push, or deploy
+> unless I explicitly authorize it.
 
 ## Running-work note
 
@@ -314,8 +326,8 @@ required visual/product judgment rather than deterministic bulk edits. There
 was no active child write agent or Playwright session at final handoff; recheck
 rather than terminating any later process.
 
-This handoff records a docs-only post-deployment follow-up. It must be committed
-separately after review; its future hash cannot be recorded in advance.
+The Pages release and its docs-only record are complete. Preserve the separately
+dirty canonical-room work for its own bounded audit and checkpoint.
 
 ## Graphics checkpoint: Front Desk corrections and Examination v3
 
