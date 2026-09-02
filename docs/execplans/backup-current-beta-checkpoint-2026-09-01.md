@@ -157,9 +157,9 @@ deploy, or publish GitHub Pages.
   assessment of the later completed clinical overlay.
 - [x] Finalize and review the explicit staged candidate.
 - [x] Run staged validation and source/privacy/clinical checks.
-- [ ] Commit the public-safe checkpoint on `beta`.
-- [ ] Push and verify the remote branch.
-- [ ] Record the verified backup in the handoff.
+- [x] Commit the public-safe checkpoint on `beta`.
+- [x] Push and verify the remote branch.
+- [x] Record the verified backup in the handoff.
 
 ## Discoveries
 
@@ -189,9 +189,17 @@ deploy, or publish GitHub Pages.
 - Four Front Desk/art paths gained later working-tree edits after the candidate
   was staged. Their audited pre-polish versions remain frozen in the index; the
   later edits and unfinished plan remain unstaged for the other thread.
+- The owner explicitly approved public backup of the unapproved development-
+  preview presentation text after the first push approval gate surfaced that
+  exposure. Commit `3bb92ffaee22e4c1636b6db7ef1ee720670ba00d` then pushed
+  normally to `beta`; direct `ls-remote` readback returned that exact hash.
+- Since the checkpoint was frozen, the separate Front Desk polish thread has
+  completed additional local source, test, screenshot, plan, and handoff work.
+  None of those later paths or hunks entered commit `3bb92ff`.
 
 ## Exact next action
 
-Recheck the staged snapshot and remote divergence, create the checkpoint commit
-on `beta`, push it without force, and verify the remote branch resolves to the
-created commit.
+Create and push a documentation-only follow-up containing this completed plan
+and only the isolated beta-backup record in `CURRENT_THREAD_HANDOFF.md`, then
+verify the remote `beta` ref again. Leave all later Front Desk polish work local
+and unstaged for its own checkpoint.

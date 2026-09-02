@@ -28,6 +28,42 @@ completed successfully in 1m02s; final docs-record run `33461116617`, job
 `99711220028`, completed successfully in 1m04s. The deployed URL is
 `https://melissarowlandc-afk.github.io/GamifySurgery/`.
 
+## Current beta GitHub backup
+
+The integrated source checkpoint was backed up to the public GitHub `beta`
+branch at `3bb92ffaee22e4c1636b6db7ef1ee720670ba00d` (`chore: back up
+integrated beta checkpoint`) on 2026-09-02. The ordinary push advanced
+`origin/beta` from `eb57bb0018e449b5ab699cb74abd09180714ba67`, and a direct
+GitHub ref readback resolved `refs/heads/beta` to the same `3bb92ff` commit.
+This was a source backup only: `main` was not merged or advanced, GitHub Pages
+was not deployed, and the canonical remote playtest remains on its prior
+deployed checkpoint.
+
+The checkpoint contains 197 audited paths with 11,138 insertions and 1,094
+deletions across the completed workspace splitter, compact HUD/footer,
+Management Mode, compact chart, edge-anchored layout, room-wall/door rendering,
+high-resolution character, Cortan workflow, documentation, and presentation-
+overlay milestones. The owner explicitly approved public backup of the
+AI-assisted presentation overlay after being told it is unapproved. Its exact
+boundary remains `aiAssistedDrafting: true`, `needs_clinician_review`, null last
+review, and `synthetic_unapproved_prototype`; the backup does not constitute
+clinical approval or authorize learner deployment.
+
+Checkpoint validation passed staged whitespace, secret/privacy and clinical-
+boundary scans, the 40-file/269-test clinical suite, focused chart tests,
+workspace typecheck, player production build, ComfyUI workflow validation, and
+character-asset validators. Terra `current_beta_backup_audit` performed the
+read-only public-safety and scope audit. Sol reviewed the actual frozen diff,
+reconciled the clinical status, staged explicit audited paths, committed,
+pushed, and verified the remote ref. No Spark worker ran because the milestone
+was an audit/release-boundary task requiring privacy and clinical judgment.
+
+The later Front Desk actor/occlusion polish source, tests, screenshots, and
+ExecPlan remain local working-tree changes for a separate checkpoint. The three
+long-standing diagnostic screenshots also remain untracked and excluded. No
+ignored owner reference, generated-source, clinical-workbench, environment,
+browser-data, build, dependency, log, or test-result path was uploaded.
+
 ## Latest graphics Pages release
 
 The canonical-room and five-room graphics checkpoint is deployed at
