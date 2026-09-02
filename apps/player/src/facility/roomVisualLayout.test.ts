@@ -59,21 +59,15 @@ describe("room visual layout", () => {
     );
   });
 
-  it("keeps an eligible integer door candidate on every wall of the exact 5x4 Front Desk", () => {
-    for (const side of ["north", "east", "south", "west"] as const) {
-      const wallLength = side === "north" || side === "south" ? 5 : 4;
-      const eligibleOffsets = Array.from({ length: wallLength }, (_, offset) =>
-        isRoomVisualDoorSlotClear({
-          definitionId: "room.front_desk",
-          orientation: 0,
-          width: 5,
-          height: 4,
-          side,
-          offset,
-        }),
-      );
-      expect(eligibleOffsets).toContain(true);
-    }
+  it("keeps the exact Front Desk visual door-clear tiles requested for its 5x4 floor", () => {
+    const eligible = (side: "north" | "east" | "south" | "west", length: number) =>
+      Array.from({ length }, (_, offset) => isRoomVisualDoorSlotClear({
+        definitionId: "room.front_desk", orientation: 0, width: 5, height: 4, side, offset,
+      }));
+    expect(eligible("north", 5)).toEqual([false, true, true, true, false]);
+    expect(eligible("east", 4)).toEqual([false, true, true, false]);
+    expect(eligible("south", 5)).toEqual([false, false, true, false, false]);
+    expect(eligible("west", 4)).toEqual([false, true, true, true]);
   });
 
   it("declares all four fixture-clear wall zones for the primary room slice", () => {

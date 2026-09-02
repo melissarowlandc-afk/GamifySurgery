@@ -1,6 +1,8 @@
 import type { FrontDeskV3ArchitectureId } from "../art/bitmapAssetManifest";
 import {
   getCanonicalRoomShellLayout,
+  type CanonicalRoomBackedNorthRun,
+  type CanonicalRoomWallRun,
   type CanonicalRoomWallOpening,
 } from "./canonicalRoomShell";
 
@@ -13,13 +15,6 @@ export interface FrontDeskV5DisplayRect {
 }
 
 export const FRONT_DESK_V5_LOGICAL_FOOTPRINT = { width: 5, height: 4 } as const;
-
-/**
- * The v3 plate carries a little transparent frame around its visible tiles.
- * This compensates in the display projection so the assembled room retains
- * the reference's wide-but-not-squat interior.
- */
-export const FRONT_DESK_V5_VISIBLE_FLOOR_ASPECT_RATIO = 1.53;
 
 export interface FrontDeskV5Projection {
   logicalBounds: FrontDeskV5DisplayRect;
@@ -45,24 +40,22 @@ export function shouldRenderFrontDeskV5Architecture(
 }
 
 /**
- * Projects the protected five-by-four Front Desk grid into the reference's
- * deliberately wide, shallow display floor. This changes pixels only: room
- * placement, collision, paths, doors, and saves continue to use logicalBounds.
+ * The Front Desk's visual floor is its full five-by-four logical rectangle.
+ * The north wall begins at its north edge and projects outward, so it never
+ * consumes row A. This remains display-only: room placement, collision,
+ * paths, doors, and saves continue to use logicalBounds.
  */
 export function getFrontDeskV5Projection(
   logicalBounds: FrontDeskV5DisplayRect,
 ): FrontDeskV5Projection {
   const floorWidth = Math.max(1, logicalBounds.width);
-  const floorHeight = Math.max(
-    1,
-    floorWidth / FRONT_DESK_V5_VISIBLE_FLOOR_ASPECT_RATIO,
-  );
+  const floorHeight = Math.max(1, logicalBounds.height);
   const southEntranceY = logicalBounds.y + logicalBounds.height;
   return {
     logicalBounds,
     floorBounds: {
       x: logicalBounds.x,
-      y: southEntranceY - floorHeight,
+      y: logicalBounds.y,
       width: floorWidth,
       height: floorHeight,
     },
@@ -102,10 +95,18 @@ export type FrontDeskV5WallOpening = CanonicalRoomWallOpening;
 export function getFrontDeskV5ArchitectureComponents(
   projection: FrontDeskV5Projection,
   openings: readonly FrontDeskV5WallOpening[] = [],
+  backedNorthRuns: readonly CanonicalRoomBackedNorthRun[] = [],
+  backedSouthRuns: readonly CanonicalRoomBackedNorthRun[] = [],
+  sideRuns?: Readonly<Partial<Record<"west" | "east", readonly CanonicalRoomWallRun[]>>>,
 ): readonly FrontDeskV5ArchitectureComponent[] {
   return getCanonicalRoomShellLayout(
     projection.floorBounds,
     FRONT_DESK_V5_LOGICAL_FOOTPRINT,
     openings,
+    false,
+    undefined,
+    backedNorthRuns,
+    backedSouthRuns,
+    sideRuns,
   ).components as readonly FrontDeskV5ArchitectureComponent[];
 }

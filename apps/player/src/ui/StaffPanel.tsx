@@ -13,8 +13,8 @@ interface StaffPanelProps {
 }
 
 /**
- * Normal-play employee roster. Hiring and salary changes remain domain
- * commands; this panel does not calculate caps, salary, or morale.
+ * Employee roster. Hiring and salary changes remain domain commands; this
+ * panel does not calculate caps, salary, or morale.
  */
 export function StaffPanel({
   roles,

@@ -6,6 +6,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { verifyPatientActors } from "./verify-character-resolution-alpha.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 const sourceDir = resolve(root, "generated_images/patient-character-sources-v1");
@@ -19,22 +20,22 @@ function sha(bytes) { return createHash("sha256").update(bytes).digest("hex"); }
 function pixels(image) { const canvas = createCanvas(image.width, image.height); const ctx = canvas.getContext("2d"); ctx.drawImage(image, 0, 0); return ctx.getImageData(0, 0, image.width, image.height).data; }
 function hash(data, width, left, top, cellW, cellH) { let value = 2166136261; for (let y = top; y < top + cellH; y++) for (let x = left; x < left + cellW; x++) { const offset = (y * width + x) * 4; for (let channel = 0; channel < 4; channel++) value = Math.imul(value ^ data[offset + channel], 16777619); } return value >>> 0; }
 function assertExactHorizontalMirror(source, target, index, sourceLabel, targetLabel) {
-  const left = index % 5 * 96, top = Math.floor(index / 5) * 144;
-  for (let y = 0; y < 144; y++) for (let x = 0; x < 96; x++) for (let channel = 0; channel < 4; channel++) {
+  const left = index % 5 * 128, top = Math.floor(index / 5) * 192;
+  for (let y = 0; y < 192; y++) for (let x = 0; x < 128; x++) for (let channel = 0; channel < 4; channel++) {
     const from = ((top + y) * source.image.width + left + x) * 4 + channel;
-    const mirrored = ((top + y) * target.image.width + left + (95 - x)) * 4 + channel;
+    const mirrored = ((top + y) * target.image.width + left + (127 - x)) * 4 + channel;
     assert(source.data[from] === target.data[mirrored], `${ids[index]} ${targetLabel} must be an exact horizontal mirror of ${sourceLabel}`);
   }
 }
 function assertExactRows(source, target, index, endRow, sourceLabel, targetLabel) {
-  const left = index % 5 * 96, top = Math.floor(index / 5) * 144;
-  for (let y = 0; y <= endRow; y++) for (let x = 0; x < 96; x++) for (let channel = 0; channel < 4; channel++) {
+  const left = index % 5 * 128, top = Math.floor(index / 5) * 192;
+  for (let y = 0; y <= endRow; y++) for (let x = 0; x < 128; x++) for (let channel = 0; channel < 4; channel++) {
     const from = ((top + y) * source.image.width + left + x) * 4 + channel;
     const to = ((top + y) * target.image.width + left + x) * 4 + channel;
     assert(source.data[from] === target.data[to], `${ids[index]} ${targetLabel} must preserve ${sourceLabel} head/torso pixels through row ${endRow}`);
   }
 }
-function floorRow(data, atlasWidth, left, top) { let floor = -1; for (let y = 0; y < 144; y += 1) for (let x = 0; x < 96; x += 1) if (data[((top + y) * atlasWidth + left + x) * 4 + 3] > 12) floor = Math.max(floor, y); return floor; }
+function floorRow(data, atlasWidth, left, top) { let floor = -1; for (let y = 0; y < 192; y += 1) for (let x = 0; x < 128; x += 1) if (data[((top + y) * atlasWidth + left + x) * 4 + 3] > 12) floor = Math.max(floor, y); return floor; }
 function alphaComponents(data, atlasWidth, left, top, cellW, cellH) {
   const visited = new Uint8Array(cellW * cellH), components = [], opaqueAt = (x, y) => data[((top + y) * atlasWidth + left + x) * 4 + 3] > 12;
   for (let start = 0; start < visited.length; start++) {
@@ -59,20 +60,20 @@ function cellChecks(data, atlasWidth, index, cellW, cellH, pose) {
     if (alpha <= 12) continue;
     opaque++;
     if (x === 0 || y === 0 || x === cellW - 1 || y === cellH - 1) perimeter++;
-    if (y < Math.ceil(cellH * .48)) topOpaque++;
-    if (cellH === 144 && y >= 104) lowerOpaque++;
+    if (y < Math.ceil(cellH * .64)) topOpaque++;
+    if (cellH === 192 && y >= 104) lowerOpaque++;
     if (x > 5 && x < cellW - 6 && y > 5 && y < cellH - 6) innerOpaque++;
   }
   assert(perimeter === 0, `${pose} ${ids[index]} leaks into a cell perimeter`);
   assert(opaque > 180 && innerOpaque > 150, `${pose} ${ids[index]} is implausibly empty`);
   assert(topOpaque > 28, `${pose} ${ids[index]} has clipped or missing head content`);
-  if (cellH === 144) assert(lowerOpaque > 4, `${pose} ${ids[index]} has no lower-body/floor content`);
+  if (cellH === 192) assert(lowerOpaque > 4, `${pose} ${ids[index]} has no lower-body/floor content`);
   const components = alphaComponents(data, atlasWidth, left, top, cellW, cellH).sort((a, b) => b.count - a.count), primary = components[0], allowedGap = cellH === 224 ? 14 : 9;
   assert(primary, `${pose} ${ids[index]} has no retained actor component`);
   for (const component of components.slice(1)) { const gap = bboxGap(component, primary); assert(component.meaningful && (gap <= 4 || (component.count <= 28 && gap <= allowedGap)), `${pose} ${ids[index]} retains disconnected exterior/checker noise (${component.count}px, gap ${gap}px, meaningful=${component.meaningful})`); }
 }
 
-assert(manifest.contentRevision === "patients-v1-r6", "patient pack must be revision r6");
+assert(manifest.contentRevision === "patients-v1-r7-hires", "patient pack must be revision r6");
 assert(manifest.sourceContract?.grid?.join("x") === "6x3", "missing canonical 6x3 source contract");
 assert(manifest.sourceContract?.strategy === "row actor detection + per-actor exterior-connected checker removal", "wrong source-cleaning strategy");
 assert(Object.keys(manifest.sourceContract?.poseSlots ?? {}).length === 18, "manifest must retain all 18 source pose slots");
@@ -87,8 +88,8 @@ assert(manifest.horizontalWalkDerivation?.["right-walk-neutral"]?.legInsetOf ===
 assert(manifest.variants?.length === 50, "manifest must list exactly 50 variants");
 assert(manifest.variants.map((variant) => variant.id).join("|") === ids.join("|"), "manifest roster/domain ID parity failed");
 assert(Object.keys(manifest.poses ?? {}).length === 20, "manifest must expose exactly 20 pose families including directional lateral neutral frames");
-assert(manifest.mapCell?.floorAnchor?.x === 48 && manifest.mapCell?.floorAnchor?.y === 136, "map floor anchor mismatch");
-assert(manifest.mapCell?.seatAnchor?.x === 48 && manifest.mapCell?.seatAnchor?.y === 102, "map seat anchor mismatch");
+assert(manifest.mapCell?.floorAnchor?.x === 64 && manifest.mapCell?.floorAnchor?.y === 181, "map floor anchor mismatch");
+assert(manifest.mapCell?.seatAnchor?.x === 64 && manifest.mapCell?.seatAnchor?.y === 136, "map seat anchor mismatch");
 assert(manifest.walkPhases?.a === "left-foot-forward" && manifest.walkPhases?.b === "right-foot-forward", "stride phase declaration missing");
 const sources = readdirSync(sourceDir).filter((name) => /^patient-\d{3}\.png$/.test(name)).sort();
 assert(sources.length === 50, `expected 50 source sheets, found ${sources.length}`);
@@ -108,14 +109,14 @@ for (let index = 0; index < 50; index++) {
 const loaded = {};
 for (const pose of allPoses) {
   const file = manifest.poses[pose]; assert(typeof file === "string" && existsSync(resolve(dir, file)), `missing ${pose} atlas`);
-  const image = await loadImage(resolve(dir, file)); const expected = pose === "portrait" ? [960, 2240] : pose === "thumbnail" ? [480, 1120] : [480, 1440];
+  const image = await loadImage(resolve(dir, file)); const expected = pose === "portrait" ? [960, 2240] : pose === "thumbnail" ? [480, 1120] : [640, 1920];
   assert(image.width === expected[0] && image.height === expected[1], `${pose} atlas geometry ${image.width}x${image.height} != ${expected.join("x")}`);
   const data = pixels(image); for (let index = 0; index < 50; index++) cellChecks(data, image.width, index, expected[0] / 5, expected[1] / 10, pose);
   loaded[pose] = { image, data };
 }
 for (const direction of ["front", "back", "left", "right"]) for (let index = 0; index < 50; index++) {
-  const a = loaded[`${direction}-walk-a`], b = loaded[`${direction}-walk-b`], left = index % 5 * 96, top = Math.floor(index / 5) * 144;
-  assert(hash(a.data, a.image.width, left, top + 78, 96, 58) !== hash(b.data, b.image.width, left, top + 78, 96, 58), `${ids[index]} ${direction} A/B stride is identical`);
+  const a = loaded[`${direction}-walk-a`], b = loaded[`${direction}-walk-b`], left = index % 5 * 128, top = Math.floor(index / 5) * 192;
+  assert(hash(a.data, a.image.width, left, top + 139, 128, 58) !== hash(b.data, b.image.width, left, top + 139, 128, 58), `${ids[index]} ${direction} A/B stride is identical`);
   const aFloor = floorRow(a.data, a.image.width, left, top), bFloor = floorRow(b.data, b.image.width, left, top);
   assert(aFloor === bFloor && aFloor <= manifest.mapCell.floorAnchor.y, `${ids[index]} ${direction} gait phases must share the canonical floor anchor`);
 }
@@ -132,26 +133,29 @@ for (let index = 0; index < 50; index++) {
   assertExactRows(loaded["left-walk-a"], loaded["left-walk-neutral"], index, 95, "left-walk-a", "left-walk-neutral");
   assertExactRows(loaded["right-walk-a"], loaded["right-walk-b"], index, 95, "right-walk-a", "right-walk-b");
   assertExactRows(loaded["left-walk-a"], loaded["left-walk-b"], index, 95, "left-walk-a", "left-walk-b");
-  const row = Math.floor(index / 5), column = index % 5, left = column * 96, top = row * 144;
+  const row = Math.floor(index / 5), column = index % 5, left = column * 128, top = row * 192;
   for (const direction of ["left", "right"]) {
     const a = loaded[`${direction}-walk-a`], neutral = loaded[`${direction}-walk-neutral`], b = loaded[`${direction}-walk-b`];
-    assert(hash(a.data, a.image.width, left, top + 96, 96, 48) !== hash(neutral.data, neutral.image.width, left, top + 96, 96, 48), `${ids[index]} ${direction} neutral must visibly change the lower limb band`);
-    assert(hash(b.data, b.image.width, left, top + 96, 96, 48) !== hash(neutral.data, neutral.image.width, left, top + 96, 96, 48), `${ids[index]} ${direction} neutral must stay distinct from the opposite stride`);
+    assert(hash(a.data, a.image.width, left, top + 128, 128, 64) !== hash(neutral.data, neutral.image.width, left, top + 128, 128, 64), `${ids[index]} ${direction} neutral must visibly change the lower limb band`);
+    assert(hash(b.data, b.image.width, left, top + 128, 128, 64) !== hash(neutral.data, neutral.image.width, left, top + 128, 128, 64), `${ids[index]} ${direction} neutral must stay distinct from the opposite stride`);
   }
 }
 for (const suffix of ["idle", "walk-a", "walk-neutral", "walk-b"]) assert(readFileSync(resolve(dir, manifest.poses[`left-${suffix}`])).compare(readFileSync(resolve(dir, manifest.poses[`right-${suffix}`]))) !== 0, `left/right ${suffix} requires explicit directional art`);
 for (let index = 0; index < 50; index++) {
   const row = Math.floor(index / 5), column = index % 5;
-  const front = hash(loaded["front-idle"].data, loaded["front-idle"].image.width, column * 96, row * 144, 96, 112);
-  const thumb = hash(loaded.thumbnail.data, loaded.thumbnail.image.width, column * 96, row * 112, 96, 112);
+  const front = hash(loaded["front-idle"].data, loaded["front-idle"].image.width, column * 128, row * 192, 128, 112);
+  const thumb = hash(loaded.thumbnail.data, loaded.thumbnail.image.width, column * 128, row * 112, 128, 112);
   const portrait = hash(loaded.portrait.data, loaded.portrait.image.width, column * 192, row * 224, 192, 224);
   assert(front !== thumb && thumb !== portrait, `${ids[index]} UI art lacks a distinct matched rendering`);
 }
 for (const id of ["patient.adult.003", "patient.adult.017", "patient.adult.018"]) {
   const index = ids.indexOf(id); assert(index >= 0, `missing regression identity ${id}`);
   for (const pose of allPoses) {
-    const item = loaded[pose], width = pose === "portrait" ? 192 : 96, height = pose === "portrait" ? 224 : pose === "thumbnail" ? 112 : 144;
+    const item = loaded[pose], width = pose === "portrait" ? 192 : pose === "thumbnail" ? 96 : 128, height = pose === "portrait" ? 224 : pose === "thumbnail" ? 112 : 192;
     cellChecks(item.data, item.image.width, index, width, height, `${pose} regression`);
   }
 }
-console.log("Verified patients-v1-r6: 50 canonical source identities, 20 clean extracted atlas families, direction-locked A/neutral/B upper-body and exact-mirror orientation contracts.");
+console.log("Verified patients-v1-r7-hires: 50 canonical source identities, 20 clean extracted atlas families, direction-locked A/neutral/B upper-body and exact-mirror orientation contracts.");
+
+await verifyPatientActors();
+console.log("Patient v1 shared high-resolution alpha audit passed.");

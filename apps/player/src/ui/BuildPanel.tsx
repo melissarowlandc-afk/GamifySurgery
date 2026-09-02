@@ -12,6 +12,7 @@ type BuildDoorTool = "place" | "remove" | null;
 
 interface BuildPanelProps {
   buildMode: boolean;
+  showInactiveTrigger?: boolean;
   cashLabel: string;
   roomOptions: RoomBuildOptionView[];
   selectedRoom: SelectedRoomBuildView | null;
@@ -102,6 +103,7 @@ function compactUpgradeImprovement(improvement: string): string {
 
 export function BuildPanel({
   buildMode,
+  showInactiveTrigger = true,
   cashLabel,
   roomOptions,
   selectedRoom,
@@ -151,6 +153,9 @@ export function BuildPanel({
   );
 
   if (!buildMode) {
+    if (!showInactiveTrigger) {
+      return null;
+    }
     return (
       <button
         className="button button-primary build-mode-trigger build-mode-toggle mode-toggle-button"

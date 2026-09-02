@@ -65,11 +65,12 @@ describe("Front Desk founder presentation", () => {
       counter: { x: 2, y: 2 },
       public: { x: 2, y: 3 },
     });
+    expect(FRONT_DESK_PRESENTATION.anchors.staff).toEqual({ x: 2, y: 1 });
     expect(
       FRONT_DESK_PRESENTATION.fixtures.find(
         (fixture) => fixture.id === "frontDesk",
       ),
-    ).toMatchObject({ x: 0.34, width: 0.45, height: 0.38, contact: { x: 0.34, y: 0.7 } });
+    ).toMatchObject({ x: 0.4, width: 0.4, height: 0.31, contact: { x: 0.4, y: 0.7 } });
   });
 
   it("keeps both declarative entrance beds in the rear sidewalk band and out of the front walk lane", () => {
@@ -100,14 +101,14 @@ describe("Front Desk founder presentation", () => {
       (fixture) => fixture.id === "filingCabinet",
     );
     expect(cabinet).toMatchObject({
-      contact: { x: 0.08, y: 0.31 },
+      contact: { x: 0.1, y: 0.2 },
       width: 0.22,
       height: 0.5,
     });
     expect(FRONT_DESK_PRESENTATION.grid.cabinet).toEqual({ x: 0, y: 0 });
     expect(FRONT_DESK_PRESENTATION.waterCooler).toEqual({
       footprint: { x: 4, y: 0 },
-      contact: { x: 0.83, y: 0.31 },
+      contact: { x: 0.84, y: 0.2 },
       widthInTiles: 0.66,
       heightInTiles: 1.14,
     });
@@ -117,11 +118,11 @@ describe("Front Desk founder presentation", () => {
       FRONT_DESK_PRESENTATION.fixtures.find(
         (fixture) => fixture.id === "secretaryChair",
       ),
-    ).toMatchObject({ contact: { x: 0.29, y: 0.53 } });
+    ).toMatchObject({ x: 0.4, y: 0.5, contact: { x: 0.4, y: 0.5 } });
     const bin = FRONT_DESK_PRESENTATION.fixtures.find(
       (fixture) => fixture.id === "wasteBin",
     );
-    expect(bin).toMatchObject({ contact: { x: 0.94, y: 0.31 } });
+    expect(bin).toMatchObject({ contact: { x: 0.95, y: 0.2 } });
     expect(
       (bin?.contact?.x ?? 0) - FRONT_DESK_PRESENTATION.waterCooler.contact.x,
     ).toBeGreaterThan(0.1);
@@ -129,15 +130,27 @@ describe("Front Desk founder presentation", () => {
 
   it("keeps target wall decor, actor contacts, and one visual door candidate on every wall", () => {
     expect(FRONT_DESK_PRESENTATION.northWallFixtures).toEqual([
-      expect.objectContaining({ id: "noticeBoard", x: 0.19 }),
-      expect.objectContaining({ id: "wallClock", x: 0.32 }),
+      expect.objectContaining({ id: "noticeBoard", x: 0.28 }),
+      expect.objectContaining({ id: "wallClock", x: 0.36 }),
     ]);
     expect(FRONT_DESK_PRESENTATION.v5ActorDisplay).toEqual({
-      staff: { x: 0.29, y: 0.53, scale: 0.82 },
+      staff: { x: 0.4, y: 0.5, scale: 0.82 },
       public: { x: 0.62, y: 0.82, scale: 0.82 },
     });
     expect(FRONT_DESK_PRESENTATION.clearDoorCandidates).toEqual({
-      north: 2, east: 1, south: 2, west: 3,
+      north: [1, 2, 3], east: [1, 2], south: 2, west: [1, 2, 3],
+    });
+    for (const fixture of FRONT_DESK_PRESENTATION.northWallFixtures) {
+      expect(fixture.x - fixture.width / 2).toBeGreaterThanOrEqual(0.2);
+      expect(fixture.x + fixture.width / 2).toBeLessThanOrEqual(0.4);
+    }
+    const secretaryChair = FRONT_DESK_PRESENTATION.fixtures.find(
+      (fixture) => fixture.id === "secretaryChair",
+    )!;
+    expect(secretaryChair.contact).toEqual({ x: 0.4, y: 0.5 });
+    expect(secretaryChair.contact).toEqual({
+      x: FRONT_DESK_PRESENTATION.v5ActorDisplay.staff.x,
+      y: FRONT_DESK_PRESENTATION.v5ActorDisplay.staff.y,
     });
   });
 
@@ -151,7 +164,7 @@ describe("Front Desk founder presentation", () => {
   it("moves only stationary actors at Front Desk anchors into target display positions", () => {
     expect(getFrontDeskV5StationaryActorDisplay(
       { x: 10, y: 5 }, false, "staff", [frontDesk],
-    )).toEqual({ x: 0.29, y: 0.53, scale: 0.82 });
+    )).toEqual({ x: 0.4, y: 0.5, scale: 0.82 });
     expect(getFrontDeskV5StationaryActorDisplay(
       { x: 10, y: 7 }, false, "public", [frontDesk],
     )).toEqual({ x: 0.62, y: 0.82, scale: 0.82 });

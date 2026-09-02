@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { GridPoint } from "@gamify-surgery/game-domain";
 import {
   FacilityCanvas,
@@ -17,13 +17,14 @@ import {
   EventMessageBoard,
   GoalsPanel,
   HelpDialog,
+  ManagementPanel,
   PatientLists,
   QuestionReviewQueueDialog,
   ResourceBar,
   RestartDialog,
   SaveCloseDialog,
-  StaffPanel,
   TutorialCoach,
+  WorkspaceSplitter,
   type CampaignListItemView,
   type AdvertisingView,
   type ChartView,
@@ -42,6 +43,11 @@ import {
   cancelScheduledAnimationFrame,
   scheduleLatestAnimationFrame,
 } from "./ui/animationFrameTask";
+import {
+  getWorkspaceStorage,
+  readWorkspaceMapShare,
+  writeWorkspaceMapShare,
+} from "./ui/workspaceSplitPreference";
 import type {
   CardinalDirection,
   RoomOrientation,
@@ -78,6 +84,7 @@ interface AppShellProps {
   workloadStatus: string;
   announcement: string;
   buildMode: boolean;
+  managementMode: boolean;
   buildUndoCount: number;
   buildExitBlockedReason: string | null;
   buildExitBlockedIssues: string[];
@@ -105,6 +112,8 @@ interface AppShellProps {
   ) => boolean;
   onEnterBuildMode: () => void;
   onExitBuildMode: () => void;
+  onEnterManagementMode: () => void;
+  onExitManagementMode: () => void;
   onSelectRoom: (roomInstanceId: string) => void;
   onSellSelectedRoom: () => void;
   onUpgradeSelectedRoom: () => void;
@@ -169,6 +178,7 @@ export function AppShell({
   workloadStatus,
   announcement,
   buildMode,
+  managementMode,
   buildUndoCount,
   buildExitBlockedReason,
   buildExitBlockedIssues,
@@ -189,6 +199,8 @@ export function AppShell({
   onPlaceRoom,
   onEnterBuildMode,
   onExitBuildMode,
+  onEnterManagementMode,
+  onExitManagementMode,
   onSelectRoom,
   onSellSelectedRoom,
   onUpgradeSelectedRoom,
@@ -216,6 +228,10 @@ export function AppShell({
   onSaveAndPause,
   onRestart,
 }: AppShellProps) {
+  const clinicWorkspaceRef = useRef<HTMLElement>(null);
+  const [workspaceMapShare, setWorkspaceMapShare] = useState(() =>
+    readWorkspaceMapShare(getWorkspaceStorage()),
+  );
   const [helpOpen, setHelpOpen] = useState(false);
   const [questionReviewQueueOpen, setQuestionReviewQueueOpen] =
     useState(false);
@@ -260,6 +276,10 @@ export function AppShell({
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("question-review") ===
       "1";
+
+  useEffect(() => {
+    writeWorkspaceMapShare(getWorkspaceStorage(), workspaceMapShare);
+  }, [workspaceMapShare]);
 
   useEffect(() => {
     if (!locatedPatientId) {
@@ -360,6 +380,9 @@ export function AppShell({
       return;
     }
     if (target?.type === "employee" && target.id) {
+      if (!managementMode) {
+        onEnterManagementMode();
+      }
       setHighlightedEmployeeId(target.id);
       scheduleLatestAnimationFrame(messageActionFrameRef, () => {
         const employeeElement = [
@@ -378,6 +401,9 @@ export function AppShell({
       return;
     }
     if (target?.type === "staff_role" && target.id) {
+      if (!managementMode) {
+        onEnterManagementMode();
+      }
       setHighlightedStaffRoleId(target.id);
       scheduleLatestAnimationFrame(messageActionFrameRef, () => {
         const roleElement = [
@@ -458,6 +484,8 @@ export function AppShell({
   return (
     <div
       className={`game-shell${buildMode ? " is-build-mode" : ""}${
+        managementMode ? " is-management-mode" : ""
+      }${
         chart ? " has-open-chart" : ""
       }`}
     >
@@ -465,7 +493,9 @@ export function AppShell({
       <ResourceBar
         view={resourceBar}
         paused={paused}
-        pauseLocked={buildMode}
+        buildMode={buildMode}
+        managementMode={managementMode}
+        pauseLocked={buildMode || managementMode}
         simulationSpeed={simulationSpeed}
         onTogglePause={onTogglePause}
         onSimulationSpeedChange={onSimulationSpeedChange}
@@ -524,16 +554,26 @@ export function AppShell({
         </aside>
 
         <section
+          ref={clinicWorkspaceRef}
           className={`center-column clinic-workspace${
             chart ? " has-open-chart" : ""
           }`}
+          style={
+            {
+              "--workspace-map-track": `${workspaceMapShare}fr`,
+              "--workspace-desk-track": `${1 - workspaceMapShare}fr`,
+            } as CSSProperties
+          }
         >
-          <section className="facility-frame" aria-labelledby="facility-title">
-            <div className="panel-heading facility-heading">
-              <span id="facility-title">{facility.facilityTitle}</span>
-              <div className="facility-heading-actions">
+          <section className="facility-frame" aria-label="Facility map">
+            <div className="facility-host">
+              <div
+                className="facility-zoom-overlay"
+                role="group"
+                aria-label="Facility map zoom"
+              >
                 <button
-                  className="text-button"
+                  className="facility-zoom-button"
                   type="button"
                   onClick={() =>
                     onFacilityCameraChange({
@@ -547,9 +587,11 @@ export function AppShell({
                 >
                   −
                 </button>
-                <strong>{Math.round(camera.zoom * 100)}%</strong>
+                <output aria-live="polite">
+                  {Math.round(camera.zoom * 100)}%
+                </output>
                 <button
-                  className="text-button"
+                  className="facility-zoom-button"
                   type="button"
                   onClick={() =>
                     onFacilityCameraChange({
@@ -564,8 +606,6 @@ export function AppShell({
                   +
                 </button>
               </div>
-            </div>
-            <div className="facility-host">
               <span
                 className="facility-tutorial-anchor is-entrance"
                 data-tutorial-anchor="facility-entrance"
@@ -644,30 +684,34 @@ export function AppShell({
                 </div>
               </div>
             ) : null}
-            {paused ? (
+            {paused && !buildMode && !managementMode ? (
               <div
-                className={`facility-pause-indicator${
-                  buildMode ? " is-build-mode" : ""
-                }`}
+                className="facility-pause-indicator"
                 role="status"
               >
-                <strong>
-                  {buildMode ? "BUILD MODE" : "GAME PAUSED"}
-                </strong>
-                <span>
-                  {buildMode
-                    ? "Facility time is stopped while you remodel."
-                    : "Patients and facility time are waiting for you."}
-                </span>
+                <strong>GAME PAUSED</strong>
+                <span>Patients and facility time are waiting for you.</span>
               </div>
             ) : null}
           </section>
 
+          <WorkspaceSplitter
+            workspaceRef={clinicWorkspaceRef}
+            mapShare={workspaceMapShare}
+            onMapShareChange={setWorkspaceMapShare}
+          />
+
           <section
             className={`desk-workspace${chart ? " has-chart" : ""}${
               buildMode ? " is-build-desk" : ""
-            }`}
-            aria-label={buildMode ? "Construction desk" : "Clinical desk"}
+            }${managementMode ? " is-management-desk" : ""}`}
+            aria-label={
+              buildMode
+                ? "Construction desk"
+                : managementMode
+                  ? "Management desk"
+                  : "Clinical desk"
+            }
           >
             <div className="desk-surface-details" aria-hidden="true">
               <span className="desk-pencil" />
@@ -675,6 +719,7 @@ export function AppShell({
             </div>
             <BuildPanel
               buildMode={buildMode}
+              showInactiveTrigger={!chart && !managementMode}
               cashLabel={resourceBar.moneyLabel}
               roomOptions={roomOptions}
               selectedRoom={selectedRoomBuild}
@@ -697,26 +742,36 @@ export function AppShell({
                 setUpgradeRequestRoomId(null)
               }
             />
-            {!buildMode ? (
-              chart ? (
-                <ChartPanel
-                  chart={chart}
-                  onClose={onCloseChart}
-                  onSubmitAnswer={onSubmitAnswer}
-                  onFlagQuestion={onFlagQuestion}
-                  onAcknowledgeTerminalFeedback={
-                    onAcknowledgeTerminalFeedback
-                  }
-                  onToggleSummary={onToggleSummary}
-                  onFileChart={onFileChart}
-                />
-              ) : (
-                <div className="empty-desk-message">
-                  <span className="empty-desk-paper" aria-hidden="true" />
-                  <strong>Clinical desk</strong>
-                  <span>Open a patient chart to place it here.</span>
-                </div>
-              )
+            <ManagementPanel
+              managementMode={managementMode}
+              showInactiveTrigger={!chart && !buildMode}
+              roles={staffRoles}
+              highlightedRoleId={highlightedStaffRoleId}
+              highlightedEmployeeId={highlightedEmployeeId}
+              onEnterManagementMode={onEnterManagementMode}
+              onExitManagementMode={onExitManagementMode}
+              onHire={onHireStaff}
+              onDecreaseSalary={onDecreaseEmployeeSalary}
+              onIncreaseSalary={onIncreaseEmployeeSalary}
+              onFire={onFireEmployee}
+            />
+            {chart ? (
+              <ChartPanel
+                chart={chart}
+                onClose={onCloseChart}
+                onSubmitAnswer={onSubmitAnswer}
+                onFlagQuestion={onFlagQuestion}
+                onAcknowledgeTerminalFeedback={
+                  onAcknowledgeTerminalFeedback
+                }
+                onToggleSummary={onToggleSummary}
+                onFileChart={onFileChart}
+              />
+            ) : !buildMode && !managementMode ? (
+              <div className="empty-desk-message">
+                <strong>Clinical desk</strong>
+                <span>Open a patient chart to place it here.</span>
+              </div>
             ) : null}
           </section>
         </section>
@@ -725,16 +780,6 @@ export function AppShell({
           <GoalsPanel
             view={progression}
             onLevelUp={onLevelUp}
-          />
-
-          <StaffPanel
-            roles={staffRoles}
-            highlightedRoleId={highlightedStaffRoleId}
-            highlightedEmployeeId={highlightedEmployeeId}
-            onHire={onHireStaff}
-            onDecreaseSalary={onDecreaseEmployeeSalary}
-            onIncreaseSalary={onIncreaseEmployeeSalary}
-            onFire={onFireEmployee}
           />
 
           {!buildMode ? (
@@ -766,6 +811,11 @@ export function AppShell({
             </strong>
           ) : null}
         </div>
+        {resourceBar.contentNoticeLabel ? (
+          <p className="footer-content-notice" role="note">
+            {resourceBar.contentNoticeLabel}
+          </p>
+        ) : null}
         <div className="footer-actions">
           <HelpDialog
             paused={paused}

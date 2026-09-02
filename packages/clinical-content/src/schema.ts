@@ -180,6 +180,43 @@ export const approvedInstantiationProfileSchema = z
   })
   .strict();
 
+/**
+ * A presentation-only revision is deliberately independent from the approved
+ * question content. It records wording that must not inherit approval merely
+ * because the frozen case and presentation IDs remain stable.
+ */
+export const patientPresentationRevisionSchema = z
+  .object({
+    id: stableIdSchema,
+    patientPresentationVariantId: stableIdSchema,
+    contentVersion: z.string().regex(/^presentation-revision\.[a-z0-9._-]+$/),
+    revisedChiefComplaint: z.string().min(1).max(160).optional(),
+    revisedPresentation: z.string().min(1).max(2_000).optional(),
+    revisedFields: z
+      .array(z.enum(["chiefComplaint", "presentation"]))
+      .max(2),
+    revisedProfilePresentations: z
+      .array(
+        z
+          .object({
+            id: stableIdSchema,
+            approvedInstantiationProfileId: stableIdSchema,
+            contentVersion: z.string().regex(/^presentation-revision\.[a-z0-9._-]+$/),
+            revisedPresentation: z.string().min(1).max(2_000),
+            revisedFields: z.tuple([z.literal("presentation")]),
+            aiAssistedDrafting: z.literal(true),
+            reviewStatus: z.literal("needs_clinician_review"),
+            lastClinicianReview: z.null(),
+          })
+          .strict(),
+      )
+      .optional(),
+    aiAssistedDrafting: z.literal(true),
+    reviewStatus: z.literal("needs_clinician_review"),
+    lastClinicianReview: z.null(),
+  })
+  .strict();
+
 export const syntheticClinicalCaseSchema = z
   .object({
     id: stableIdSchema,
@@ -209,6 +246,7 @@ export const syntheticClinicalCaseSchema = z
       .strict()
       .optional(),
     chiefComplaint: z.string().min(1).max(160).optional(),
+    patientPresentationRevision: patientPresentationRevisionSchema.optional(),
     presentation: z.string().min(1).max(2_000),
     /**
      * Finite, exact alternatives approved with this case revision.
@@ -254,6 +292,115 @@ export const syntheticClinicalCaseSchema = z
           "Four-decision encounters are reserved for rare Level 3-or-later content.",
         path: ["decisionNodes"],
       });
+    }
+
+    if (clinicalCase.patientPresentationRevision) {
+      const revision = clinicalCase.patientPresentationRevision;
+      if (revision.patientPresentationVariantId !== clinicalCase.patientPresentationVariantId) {
+        context.addIssue({
+          code: "custom",
+          message: "A presentation revision must bind to the case presentation variant.",
+          path: ["patientPresentationRevision", "patientPresentationVariantId"],
+        });
+      }
+      const expectedRevisedFields = [
+        ...(revision.revisedChiefComplaint ? ["chiefComplaint" as const] : []),
+        ...(revision.revisedPresentation ? ["presentation" as const] : []),
+      ];
+      if (
+        expectedRevisedFields.length === 0 &&
+        !revision.revisedProfilePresentations?.length
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "A presentation revision must revise a case field or an instantiation profile.",
+          path: ["patientPresentationRevision"],
+        });
+      }
+      if (
+        revision.revisedFields.length !== expectedRevisedFields.length ||
+        revision.revisedFields.some(
+          (field, index) => field !== expectedRevisedFields[index],
+        )
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "Presentation revision fields must exactly name its revised case fields.",
+          path: ["patientPresentationRevision", "revisedFields"],
+        });
+      }
+      if (revision.revisedChiefComplaint && !clinicalCase.chiefComplaint) {
+        context.addIssue({
+          code: "custom",
+          message: "A chief-complaint revision requires a chief complaint.",
+          path: ["patientPresentationRevision"],
+        });
+      }
+      if (
+        revision.revisedChiefComplaint &&
+        revision.revisedChiefComplaint !== clinicalCase.chiefComplaint
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "A presentation revision must bind to the exact revised chief complaint.",
+          path: ["patientPresentationRevision", "revisedChiefComplaint"],
+        });
+      }
+      if (
+        revision.revisedPresentation &&
+        revision.revisedPresentation !== clinicalCase.presentation
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "A presentation revision must bind to the exact revised presentation.",
+          path: ["patientPresentationRevision", "revisedPresentation"],
+        });
+      }
+      const profileRevisionRecordIds = new Set<string>();
+      const profileRevisionProfileIds = new Set<string>();
+      for (const [index, profileRevision] of (
+        revision.revisedProfilePresentations ?? []
+      ).entries()) {
+        if (profileRevisionRecordIds.has(profileRevision.id)) {
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate instantiation-profile presentation revision record ID.",
+            path: ["patientPresentationRevision", "revisedProfilePresentations", index, "id"],
+          });
+        }
+        profileRevisionRecordIds.add(profileRevision.id);
+        if (profileRevisionProfileIds.has(profileRevision.approvedInstantiationProfileId)) {
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate instantiation-profile presentation revision.",
+            path: ["patientPresentationRevision", "revisedProfilePresentations", index],
+          });
+        }
+        profileRevisionProfileIds.add(profileRevision.approvedInstantiationProfileId);
+        if (profileRevision.contentVersion !== revision.contentVersion) {
+          context.addIssue({
+            code: "custom",
+            message: "A profile presentation revision must use its parent content version.",
+            path: ["patientPresentationRevision", "revisedProfilePresentations", index, "contentVersion"],
+          });
+        }
+        const profile = clinicalCase.approvedInstantiationProfiles?.find(
+          (candidate) => candidate.id === profileRevision.approvedInstantiationProfileId,
+        );
+        if (!profile) {
+          context.addIssue({
+            code: "custom",
+            message: "A profile presentation revision must bind to an approved instantiation profile.",
+            path: ["patientPresentationRevision", "revisedProfilePresentations", index, "approvedInstantiationProfileId"],
+          });
+        } else if (profile.presentation !== profileRevision.revisedPresentation) {
+          context.addIssue({
+            code: "custom",
+            message: "A profile presentation revision must bind to the exact revised profile presentation.",
+            path: ["patientPresentationRevision", "revisedProfilePresentations", index, "revisedPresentation"],
+          });
+        }
+      }
     }
     const nodeIds = new Set<string>();
     const conceptIds = new Set<string>();
@@ -436,6 +583,9 @@ export type DecisionNode = z.infer<typeof decisionNodeSchema>;
 export type TestedConcept = z.infer<typeof testedConceptSchema>;
 export type ApprovedInstantiationProfile = z.infer<
   typeof approvedInstantiationProfileSchema
+>;
+export type PatientPresentationRevision = z.infer<
+  typeof patientPresentationRevisionSchema
 >;
 export type SyntheticClinicalCase = z.infer<typeof syntheticClinicalCaseSchema>;
 export type SyntheticClinicalRelease = z.infer<typeof syntheticClinicalReleaseSchema>;

@@ -1,4 +1,5 @@
 import { validateSyntheticClinicalRelease } from "./schema";
+import { applyPendingPatientPresentationRevisions } from "./patient-presentation-revisions";
 import {
   ROW_023_CASES,
   ROW_023_CONCEPT,
@@ -1074,6 +1075,29 @@ export const LEGACY_PROTOTYPE_CLINICAL_RELEASE =
  * historical implementation and to support already-frozen encounters in old
  * saves. It is not part of this active release and cannot create a new patient.
  */
+export const ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES = [
+  ...ROW_023_CASES,
+  ...ROW_030_CASES,
+  ...ROW_031_CASES,
+  ...ROW_029_CASES,
+  ...ROW_036_CASES,
+  ...ROW_047_CASES,
+  ...ROW_048_CASES,
+  ...ROW_051_CASES,
+  ...ROW_052_CASES,
+  ...ROW_060_CASES,
+  ...ROW_104_CASES,
+  ...ROW_119_CASES,
+  ...ROW_111_CASES,
+  ...ROW_115_CASES,
+  ...ROW_092_CASES,
+  ...ROW_058_CASES,
+  ...ROW_057_CASES,
+  ...EARLY_GAME_CLINIC_BATCH_CASES,
+  ...ROW_062_CASES,
+  ...LEVEL_TWO_RUNTIME_CASES,
+];
+
 export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
   id: LEGACY_PROTOTYPE_CLINICAL_RELEASE.id,
   schemaVersion: LEGACY_PROTOTYPE_CLINICAL_RELEASE.schemaVersion,
@@ -1124,28 +1148,7 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
       ].some((existing) => existing.id === concept.id),
     ),
   ],
-  cases: [
-    ...ROW_023_CASES,
-    ...ROW_030_CASES,
-    ...ROW_031_CASES,
-    ...ROW_029_CASES,
-    ...ROW_036_CASES,
-    ...ROW_047_CASES,
-    ...ROW_048_CASES,
-    ...ROW_051_CASES,
-    ...ROW_052_CASES,
-    ...ROW_060_CASES,
-    ...ROW_104_CASES,
-    ...ROW_119_CASES,
-    ...ROW_111_CASES,
-    ...ROW_115_CASES,
-    ...ROW_092_CASES,
-    ...ROW_058_CASES,
-    ...ROW_057_CASES,
-    ...EARLY_GAME_CLINIC_BATCH_CASES,
-    ...ROW_062_CASES,
-    ...LEVEL_TWO_RUNTIME_CASES,
-  ],
+  cases: applyPendingPatientPresentationRevisions(ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES),
 });
 
 /**

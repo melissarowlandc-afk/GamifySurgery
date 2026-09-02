@@ -38,16 +38,15 @@ test("renders the actual Level 1 golden slice on desktop", async ({
   await openGoldenSlice(page);
   const facilityFill = await page.evaluate(() => {
     const frame = document.querySelector<HTMLElement>(".facility-frame");
-    const heading = document.querySelector<HTMLElement>(".facility-heading");
     const host = document.querySelector<HTMLElement>(".facility-host");
-    if (!frame || !heading || !host) {
+    if (!frame || !host) {
       return null;
     }
     return {
-      unusedHeight:
-        frame.clientHeight - heading.offsetHeight - host.offsetHeight,
+      unusedHeight: frame.clientHeight - host.offsetHeight,
     };
   });
+  await expect(page.locator(".facility-heading")).toHaveCount(0);
   expect(facilityFill?.unusedHeight).toBeLessThanOrEqual(8);
   await page
     .getByRole("button", { name: /Quinn Hart portrait/ })

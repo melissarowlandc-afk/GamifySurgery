@@ -1,5 +1,5 @@
 {
-  "contentRevision": "patients-v1-r6",
+  "contentRevision": "patients-v1-r7-hires",
   "sourceContract": {
     "grid": [
       6,
@@ -104,11 +104,11 @@
       "upperBodyRowsFrom": "right-walk-a",
       "upperBodyRows": [
         0,
-        95
+        127
       ],
       "lowerBodyRows": [
-        96,
-        143
+        128,
+        191
       ]
     },
     "left-walk-a": {
@@ -124,26 +124,26 @@
       "legInsetOf": "right-walk-a",
       "upperBodyRows": [
         0,
-        95
+        127
       ],
       "lowerBodyRows": [
-        96,
-        143
+        128,
+        191
       ]
     }
   },
   "columns": 5,
   "rows": 10,
   "mapCell": {
-    "width": 96,
-    "height": 144,
+    "width": 128,
+    "height": 192,
     "floorAnchor": {
-      "x": 48,
-      "y": 136
+      "x": 64,
+      "y": 181
     },
     "seatAnchor": {
-      "x": 48,
-      "y": 102
+      "x": 64,
+      "y": 136
     }
   },
   "thumbnailCell": {
@@ -433,5 +433,5 @@
     "neutral": "feet-together",
     "b": "right-foot-forward"
   },
-  "decodedBytesEstimate": 60518400
+  "decodedBytesEstimate": 99225600
 }

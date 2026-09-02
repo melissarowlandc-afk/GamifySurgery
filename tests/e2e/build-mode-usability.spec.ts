@@ -243,4 +243,10 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(
     page.getByText("BUILD MODE", { exact: true }),
   ).toBeVisible();
+  await expect(
+    page.getByText("Facility time is stopped while you remodel.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".facility-pause-indicator")).toHaveCount(0);
 });

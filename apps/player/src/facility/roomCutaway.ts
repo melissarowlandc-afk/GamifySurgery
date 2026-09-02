@@ -43,6 +43,52 @@ export interface NorthCornerReturn {
   northOffset: number;
 }
 
+export interface BoundaryDoorOpening {
+  side: "north" | "east" | "south" | "west";
+  offset: number;
+}
+
+function isHallway(room: FacilityRoomView): boolean {
+  return room.kind === "hallway" || room.definitionId === "room.hallway";
+}
+
+/**
+ * Produces the single owner for vertical caps. West edges render only when
+ * exposed; east edges render exposed caps and own closed room/hall partitions.
+ * Hall-to-hall boundaries deliberately remain circulation, not partitions.
+ */
+export function getOwnedVerticalBoundaryRuns(
+  room: FacilityRoomView,
+  rooms: readonly FacilityRoomView[],
+  side: VerticalRoomBoundary,
+  openings: readonly BoundaryDoorOpening[] = [],
+): BoundaryRun[] {
+  const height = roomHeight(room);
+  const runs: BoundaryRun[] = [];
+  let start: number | null = null;
+  const hasDoor = (offset: number) => openings.some((opening) => opening.side === side && opening.offset === offset);
+  for (let offset = 0; offset < height; offset += 1) {
+    const segmentStart = room.tileY + offset;
+    const segmentEnd = segmentStart + 1;
+    const adjacent = rooms.find((candidate) => {
+      if (!touchesVerticalBoundary(room, candidate, side)) return false;
+      const candidateStart = candidate.tileY;
+      const candidateEnd = candidate.tileY + roomHeight(candidate);
+      return candidateStart < segmentEnd && candidateEnd > segmentStart;
+    });
+    const draw = !hasDoor(offset) && (
+      !adjacent || (side === "east" && !(isHallway(room) && isHallway(adjacent)))
+    );
+    if (draw && start === null) start = offset;
+    if (!draw && start !== null) {
+      runs.push({ offset: start, length: offset - start });
+      start = null;
+    }
+  }
+  if (start !== null) runs.push({ offset: start, length: height - start });
+  return runs;
+}
+
 function roomWidth(room: FacilityRoomView): number {
   return Math.max(1, Math.floor(room.width));
 }
@@ -132,6 +178,82 @@ export function getExposedHorizontalBoundaryRuns(
   if (runStart !== null) {
     runs.push({ offset: runStart, length: width - runStart });
   }
+  return runs;
+}
+
+/**
+ * Returns the logical north/south edge segments which directly abut another
+ * constructed room or hallway.  Unlike exposed runs, these are still real
+ * room boundaries: renderers use them for a short, in-footprint wall rather
+ * than treating them as an opening.
+ */
+export function getBackedHorizontalBoundaryRuns(
+  room: FacilityRoomView,
+  rooms: readonly FacilityRoomView[],
+  side: HorizontalRoomBoundary,
+): BoundaryRun[] {
+  const width = roomWidth(room);
+  const runs: BoundaryRun[] = [];
+  let runStart: number | null = null;
+
+  for (let offset = 0; offset < width; offset += 1) {
+    const backed = !isHorizontalBoundarySegmentExposed(room, rooms, side, offset);
+    if (backed && runStart === null) runStart = offset;
+    if (!backed && runStart !== null) {
+      runs.push({ offset: runStart, length: offset - runStart });
+      runStart = null;
+    }
+  }
+  if (runStart !== null) runs.push({ offset: runStart, length: width - runStart });
+  return runs;
+}
+
+/**
+ * Logical horizontal wall ownership. North edges retain either a tall exposed
+ * wall or a short shared wall; south edges retain only exposed foreground.
+ */
+export function getOwnedHorizontalBoundaryRuns(
+  room: FacilityRoomView,
+  rooms: readonly FacilityRoomView[],
+  side: HorizontalRoomBoundary,
+  openings: readonly BoundaryDoorOpening[] = [],
+): BoundaryRun[] {
+  const width = roomWidth(room);
+  const runs: BoundaryRun[] = [];
+  let start: number | null = null;
+  const hasDoor = (offset: number) => openings.some((opening) => opening.side === side && opening.offset === offset);
+  for (let offset = 0; offset < width; offset += 1) {
+    const exposed = isHorizontalBoundarySegmentExposed(room, rooms, side, offset);
+    const segmentStart = room.tileX + offset;
+    const segmentEnd = segmentStart + 1;
+    const adjacent = rooms.find((candidate) => touchesBoundary(room, candidate, side) && candidate.tileX < segmentEnd && candidate.tileX + roomWidth(candidate) > segmentStart);
+    const draw = !hasDoor(offset) && (side === "north"
+      ? (exposed || !(isHallway(room) && adjacent && isHallway(adjacent)))
+      : exposed);
+    if (draw && start === null) start = offset;
+    if (!draw && start !== null) { runs.push({ offset: start, length: offset - start }); start = null; }
+  }
+  if (start !== null) runs.push({ offset: start, length: width - start });
+  return runs;
+}
+
+/** Backed north segments actually owned by this space (hall/hall stays open). */
+export function getOwnedBackedNorthBoundaryRuns(
+  room: FacilityRoomView,
+  rooms: readonly FacilityRoomView[],
+  openings: readonly BoundaryDoorOpening[] = [],
+): BoundaryRun[] {
+  const owned = getOwnedHorizontalBoundaryRuns(room, rooms, "north", openings);
+  const width = roomWidth(room);
+  const runs: BoundaryRun[] = [];
+  let start: number | null = null;
+  for (let offset = 0; offset < width; offset += 1) {
+    const inOwned = owned.some((run) => offset >= run.offset && offset < run.offset + run.length);
+    const backed = !isHorizontalBoundarySegmentExposed(room, rooms, "north", offset);
+    if (inOwned && backed && start === null) start = offset;
+    if ((!inOwned || !backed) && start !== null) { runs.push({ offset: start, length: offset - start }); start = null; }
+  }
+  if (start !== null) runs.push({ offset: start, length: width - start });
   return runs;
 }
 

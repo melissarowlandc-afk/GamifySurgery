@@ -55,10 +55,12 @@ const EVERY_WALL_DOOR_ZONES: readonly FixtureClearDoorZone[] = [
 ];
 
 const FRONT_DESK_DOOR_ZONES: readonly FixtureClearDoorZone[] = [
-  { side: "north", offsetRatio: 0.42, lengthRatio: 0.16 },
-  { side: "east", offsetRatio: 0.72, lengthRatio: 0.18 },
-  { side: "south", offsetRatio: 0.42, lengthRatio: 0.16 },
-  { side: "west", offsetRatio: 0.7, lengthRatio: 0.18 },
+  // North A2-A4; the complete consecutive span is deliberately selectable.
+  { side: "north", offsetRatio: 0.2, lengthRatio: 0.6 },
+  // East B/C and west B/C/D. East/west offsets are rows in the engine.
+  { side: "east", offsetRatio: 0.25, lengthRatio: 0.5 },
+  { side: "south", offsetRatio: 0.4, lengthRatio: 0.2 },
+  { side: "west", offsetRatio: 0.25, lengthRatio: 0.75 },
 ];
 
 const WAITING_DOOR_ZONES: readonly FixtureClearDoorZone[] = [

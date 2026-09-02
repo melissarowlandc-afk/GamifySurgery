@@ -448,17 +448,21 @@ export function ChartPanel({
                 ) : null}
               </section>
 
-              <section className="chart-presentation-column">
+              <section
+                className="chart-presentation-column"
+                aria-label="Patient presentation"
+              >
                 {chart.chiefComplaint ? (
-                  <div className="chart-clinical-section">
-                    <span className="eyebrow">Chief complaint</span>
+                  <section
+                    className="chart-clinical-section"
+                    aria-label="Patient concern"
+                  >
                     <p>{chart.chiefComplaint}</p>
-                  </div>
+                  </section>
                 ) : null}
-                <span className="eyebrow">
-                  {chart.presentationHeading ?? "HPI & presentation"}
-                </span>
-                <p>{chart.presentation}</p>
+                <section aria-label="History of present illness">
+                  <p>{chart.presentation}</p>
+                </section>
                 {chart.pendingLabel ? (
                   <div className="chart-pending-card">
                     <strong>Patient is away</strong>

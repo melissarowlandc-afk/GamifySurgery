@@ -3,6 +3,8 @@ import {
   getCanonicalRoomWallRuns,
   type CanonicalRoomShellComponent,
   type CanonicalRoomWallOpening,
+  type CanonicalRoomBackedNorthRun,
+  type CanonicalRoomWallRun,
 } from "./canonicalRoomShell";
 
 export type ExaminationWallSide = "north" | "east" | "south" | "west";
@@ -46,6 +48,9 @@ export function getExaminationV3ArchitectureComponents(
   floor: Readonly<{ x: number; y: number; width: number; height: number }>,
   footprint: Readonly<{ width: number; height: number }>,
   openings: readonly ExaminationDoorOpening[],
+  backedNorthRuns: readonly CanonicalRoomBackedNorthRun[] = [],
+  backedSouthRuns: readonly CanonicalRoomBackedNorthRun[] = [],
+  sideRuns?: Readonly<Partial<Record<"west" | "east", readonly CanonicalRoomWallRun[]>>>,
 ): readonly CanonicalRoomShellComponent[] {
-  return getCanonicalRoomShellLayout(floor, footprint, openings, false).components;
+  return getCanonicalRoomShellLayout(floor, footprint, openings, false, undefined, backedNorthRuns, backedSouthRuns, sideRuns).components;
 }

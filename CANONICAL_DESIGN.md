@@ -38,10 +38,56 @@ mechanics became more disciplined:
    than completing the entire five-stage game on paper.
 
 The Level 0-2 desktop composition keeps the top-down facility stable in the
-upper center and reserves a tactile desk below it. Patient charts and Build
-Mode tools occupy that desk rather than resizing or moving the facility.
-Phone-width layouts may turn the chart into a readable full-screen sheet.
-Patient navigation and urgent alerts remain easy to find.
+upper center and reserves a tactile desk below it. A compact, explicit desktop
+splitter lets the player allocate more vertical room to either surface; its
+device-local presentation preference is independent of campaign saves.
+On every multi-column layout, the patient and operations rails are anchored to
+the viewport edges while the map-and-desk center fills the entire bounded gap
+between them. The map has no title row: its compact black minus/percentage/plus
+zoom group overlays the top-right corner without consuming map height. Phone
+keeps its intentional stacked layout while retaining the contained zoom group.
+The empty Clinical Desk owns matched `Enter Management Mode` (left) and `Enter
+Build Mode` (right) triggers. Employees live only in desk-owned Management
+Mode, while Goals and Alerts use the right rail. Management remembers the prior
+pause state, replaces the Facility Time HUD status while active, and restores
+running time only when it caused the pause. Build Mode, Management Mode, and a
+patient chart are mutually exclusive. Charts have desk priority: they omit both
+triggers, remove the desk chrome, and fill the desk without changing the
+player-chosen split or facility camera. Phone-width charts may remain readable
+fixed full-screen sheets, while Management stays desk-bound with internal
+scrolling. Staff and employee alerts open Management before focusing their
+target; the splitter remains compatible with every desk owner.
+
+Within an open chart, the patient concern and longer presentation remain
+separate, rule-divided accessible regions without visible `Chief Complaint` or
+HPI headings. The current decision prompt appears once, directly above its
+randomized answer choices, never in the presentation. Charts use a compact
+title, portrait, and paper spacing while preserving 44px minimum enabled answer
+targets. On desktop and laptop the shaded/rule-bearing chart surfaces extend to
+the desk-owned paper body bottom; compact desktop uses an intentional two-row
+chart grid, and phone keeps natural document scrolling. The subtle paper stack
+and clipboard clip are absolute, pointer-transparent decoration that consumes
+no layout space and is suppressed on phone.
+
+The unapproved synthetic preview applies exact source-to-final v2 presentation
+bindings: 105 patient-voice concern revisions, 51 exact base-presentation
+de-dup revisions, and 30 explicit HCC profile-presentation revisions; 54 base
+presentations remain unchanged. They remove only audited teaching-question
+restatements while retaining clinical context. These AI-assisted revisions
+remain `needs_clinician_review` in `synthetic_unapproved_prototype`; frozen
+source arrays, stable clinical IDs, and independent prior question approvals
+remain intact.
+
+The compact title strip and resource HUD reserve their vertical space for the
+play surfaces. The demonstration-content notice appears once in the centered
+lower status bar rather than in a separate row. During Build Mode, the Facility
+Time HUD cell reads `BUILD MODE` and `Facility time is stopped while you
+remodel.`; the ordinary map pause overlay remains reserved for manual pause.
+Non-clinical navigation and management panels use compact headings, rows, and
+controls on desktop while keeping their semantic labels, scrolling, and focus
+behavior. Chart reading, answer choices, explanations, dialogs, and critical
+clinical actions retain their readable presentation; phone layouts wrap dense
+status text rather than clipping it.
 
 ### Historical ideas that remain candidates
 

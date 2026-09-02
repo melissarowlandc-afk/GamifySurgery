@@ -70,6 +70,16 @@ export function isExaminationNorthWallFixtureVisible(
   );
 }
 
+/** A backed wall suppresses only fixtures anchored in the backed slot(s). */
+export function isExaminationNorthWallFixtureBacked(
+  fixture: ExaminationFixturePlacement,
+  backedNorthOffsets: readonly number[],
+): boolean {
+  return fixture.wallMounted === true && (fixture.northWallOffsets ?? []).some(
+    (offset) => backedNorthOffsets.includes(offset),
+  );
+}
+
 export function getExaminationRoomPresentation(orientation: number | undefined): ExaminationRoomPresentation {
   return orientation === 90 ? EXAMINATION_ROOM_PRESENTATIONS[90] : EXAMINATION_ROOM_PRESENTATIONS[0];
 }

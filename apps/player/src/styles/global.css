@@ -3254,22 +3254,6 @@ textarea {
   padding: 0;
 }
 
-.global-content-notice {
-  padding: 0.25rem 0.65rem;
-  border-bottom: 2px solid var(--ink);
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--shade-1),
-    var(--shade-1) 8px,
-    var(--panel) 8px,
-    var(--panel) 16px
-  );
-  font-size: 0.68rem;
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
-}
-
 .resource-bar-main {
   display: flex;
   min-width: 0;
@@ -4069,19 +4053,13 @@ textarea {
     font-size: 0.78rem;
   }
 
-  .operations-column > .staff-panel,
   .operations-column > .event-message-board {
     max-height: none;
   }
 
-  .operations-column > .staff-panel {
-    min-height: 170px;
-    flex: 1.1 1 56%;
-  }
-
   .operations-column > .event-message-board {
     min-height: 150px;
-    flex: 0.9 1 44%;
+    flex: 1 1 auto;
   }
 
   .operations-column .panel-heading {
@@ -4090,7 +4068,6 @@ textarea {
     flex: 0 0 auto;
   }
 
-  .operations-column .staff-role-group,
   .operations-column .message-board-item {
     padding: 0.45rem;
   }
@@ -4573,7 +4550,8 @@ body {
   transform: rotate(4deg);
 }
 
-.desk-workspace > .build-mode-trigger {
+.desk-workspace > .build-mode-trigger,
+.desk-workspace > .management-mode-trigger {
   position: absolute;
   z-index: 28;
   top: 0.4rem;
@@ -4586,8 +4564,14 @@ body {
   box-shadow: 3px 3px 0 rgb(24 25 20 / 32%);
 }
 
-.desk-workspace > .build-mode-trigger small {
+.desk-workspace > .build-mode-trigger small,
+.desk-workspace > .management-mode-trigger small {
   display: none;
+}
+
+.desk-workspace > .management-mode-trigger {
+  right: auto;
+  left: 0.5rem;
 }
 
 .build-tool-toolbar {
@@ -4709,16 +4693,6 @@ body {
   text-transform: uppercase;
 }
 
-.empty-desk-paper {
-  position: absolute;
-  top: 0.65rem;
-  left: 0.65rem;
-  width: 1.5rem;
-  height: 1.85rem;
-  border: 2px solid rgb(24 25 20 / 28%);
-  background: var(--paper-raised);
-}
-
 .build-mode-panel {
   position: relative;
   z-index: 2;
@@ -4752,9 +4726,27 @@ body {
   padding: 0;
 }
 
+.desk-workspace.is-management-desk {
+  padding: 0;
+}
+
+.desk-workspace.has-chart {
+  padding: 0;
+}
+
 .desk-workspace.is-build-desk::before,
-.desk-workspace.is-build-desk > .desk-surface-details {
+.desk-workspace.is-build-desk > .desk-surface-details,
+.desk-workspace.is-management-desk::before,
+.desk-workspace.is-management-desk > .desk-surface-details,
+.desk-workspace.has-chart::before,
+.desk-workspace.has-chart > .desk-surface-details {
   display: none;
+}
+
+.desk-workspace.has-chart > .chart-drawer {
+  top: 0;
+  height: 100%;
+  max-height: none;
 }
 
 .desk-workspace.is-build-desk > .build-mode-panel {
@@ -4764,6 +4756,68 @@ body {
 
 .desk-workspace.is-build-desk > .build-mode-panel::after {
   display: none;
+}
+
+.management-panel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+  border: 0;
+  background: var(--paper-raised);
+  box-shadow: none;
+  flex-direction: column;
+}
+
+.management-mode-topbar {
+  display: flex;
+  min-height: 40px;
+  padding: 0.3rem 0.55rem;
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-raised);
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+}
+
+.management-mode-topbar > div {
+  display: grid;
+  min-width: 0;
+  gap: 0.05rem;
+}
+
+.management-mode-title {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.management-mode-topbar span {
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.management-done-button {
+  min-height: 28px;
+  padding: 0.25rem 0.48rem;
+  box-shadow: 1px 1px 0 var(--ink);
+  font-size: 0.68rem;
+}
+
+.management-panel > .staff-panel {
+  width: 100%;
+  max-height: none;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  flex: 1 1 auto;
 }
 
 .build-mode-topbar {
@@ -5694,14 +5748,9 @@ body {
     flex: 0 1 auto;
   }
 
-  .operations-column > .staff-panel {
-    min-height: 140px;
-    flex: 1 1 48%;
-  }
-
   .operations-column > .event-message-board {
     min-height: 140px;
-    flex: 1 1 52%;
+    flex: 1 1 auto;
   }
 }
 
@@ -5866,8 +5915,12 @@ body {
     isolation: auto;
   }
 
-  .desk-workspace > .build-mode-trigger {
-    min-width: 10rem;
+  .desk-workspace > .build-mode-trigger,
+  .desk-workspace > .management-mode-trigger {
+    width: calc(50% - 0.65rem);
+    min-width: 0;
+    min-height: 3.4rem;
+    padding-inline: 0.35rem;
   }
 
   .paper-chart {
@@ -6192,6 +6245,245 @@ body {
   }
 }
 
+/* Compact full-desk paper chart: desktop surfaces fill the scrolling body. */
+@media (min-width: 761px) {
+  .paper-chart.chart-drawer {
+    display: flex;
+    min-height: 0;
+  }
+
+  .chart-flip-stage {
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+
+  .chart-card-face.is-front {
+    display: flex;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .chart-workspace {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    align-items: stretch;
+  }
+
+  .chart-identity-column,
+  .chart-presentation-column,
+  .chart-decision-region,
+  .chart-decision-timeline,
+  .chart-step-column.is-current {
+    min-height: 0;
+  }
+
+  .chart-identity-column,
+  .chart-presentation-column,
+  .chart-decision-region {
+    height: 100%;
+  }
+
+  .chart-decision-timeline,
+  .chart-decision-timeline.has-multiple-steps {
+    height: 100%;
+  }
+
+  .chart-decision-timeline.chart-decision-stack,
+  .chart-step-column.is-current {
+    min-height: 0;
+  }
+
+  /* The live decision owns the remaining paper body. Its copy scrolls inside
+   * that surface rather than forcing the ruled paper past the chart stage. */
+  .chart-decision-timeline.chart-decision-stack {
+    box-sizing: border-box;
+    padding-bottom: 0;
+  }
+
+  .chart-step-column.is-current {
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  /* Restore the bounded two-row chart grid after the legacy stacked-paper
+   * rule. The first row holds identity/presentation; the decision fills row 2. */
+  .chart-workspace {
+    height: 100%;
+    grid-template-rows: minmax(115px, 34%) minmax(0, 66%);
+  }
+}
+
+/* The phone chart remains a naturally sized, vertically scrolling document. */
+@media (max-width: 760px) {
+  .chart-card-face.is-front,
+  .chart-workspace,
+  .chart-decision-timeline.chart-decision-stack,
+  .chart-step-column.is-current {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+/* Late physical-paper density rules so they win over the earlier chart skin. */
+.chart-drawer-titlebar {
+  min-height: 3.05rem;
+  padding: 0.32rem 0.5rem;
+}
+
+.chart-drawer-titlebar h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  line-height: 1.05;
+}
+
+.chart-drawer-titlebar .eyebrow,
+.chart-demographic-line {
+  font-size: 0.68rem;
+  line-height: 1.1;
+}
+
+.chart-title-actions {
+  gap: 0.35rem;
+}
+
+.chart-title-status,
+.chart-confidence-badge {
+  padding: 0.18rem 0.3rem;
+  font-size: 0.64rem;
+}
+
+.chart-identity-column,
+.chart-presentation-column,
+.chart-step-column {
+  padding: 0.42rem;
+}
+
+.chart-identity-column .pixel-avatar-large {
+  --avatar-width: 74px;
+  --avatar-height: 88px;
+  --avatar-pixel: 4px;
+  border-width: 2px;
+  box-shadow: 2px 2px 0 var(--shade-3);
+}
+
+.chart-confidence-badge {
+  margin-top: 0.24rem;
+}
+
+.chart-presentation-column p,
+.chart-clinical-section p {
+  margin: 0.24rem 0;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.chart-clinical-section {
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+
+.chart-decision-update {
+  margin: 0 0 0.38rem;
+  padding: 0.36rem 0.42rem;
+  border-left-width: 4px;
+}
+
+.chart-decision-update p {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.chart-step-heading {
+  min-height: 19px;
+  font-size: 0.66rem;
+}
+
+.chart-step-column .question-prompt,
+.question-prompt-row > .question-prompt {
+  margin: 0.3rem 0;
+  font-size: 0.82rem;
+  line-height: 1.22;
+}
+
+.question-prompt-row {
+  gap: 0.3rem;
+}
+
+.chart-step-column .answer-list {
+  gap: 0.25rem;
+}
+
+.chart-step-column .answer-choice {
+  min-height: 44px;
+  gap: 0.35rem;
+  padding: 0.28rem 0.38rem;
+}
+
+.answer-choice-copy strong {
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+.answer-choice-copy small,
+.answer-choice-eta {
+  font-size: 0.68rem;
+  line-height: 1.15;
+}
+
+.chart-step-feedback,
+.chart-result-card,
+.chart-pending-card {
+  gap: 0.18rem;
+  margin-top: 0.32rem;
+  padding: 0.35rem;
+}
+
+.chart-step-feedback p {
+  font-size: 0.74rem;
+  line-height: 1.25;
+}
+
+.chart-action-bar {
+  min-height: 46px;
+  gap: 0.35rem;
+  padding: 0.28rem 0.45rem;
+}
+
+.chart-action-buttons {
+  gap: 0.35rem;
+}
+
+.paper-chart-stack {
+  background:
+    linear-gradient(rgb(231 229 215 / 88%), rgb(231 229 215 / 88%)),
+    repeating-linear-gradient(0deg, transparent, transparent 7px, rgb(24 25 20 / 7%) 7px, rgb(24 25 20 / 8%) 8px);
+  box-shadow: 2px 3px 0 rgb(24 25 20 / 18%);
+}
+
+.paper-chart-clip {
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgb(24 25 20 / 10%), rgb(24 25 20 / 10%) 2px, transparent 2px, transparent 5px),
+    var(--shade-3);
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  .chart-drawer-titlebar {
+    min-height: 2.8rem;
+  }
+
+  .chart-identity-column .pixel-avatar-large {
+    --avatar-width: 62px;
+    --avatar-height: 74px;
+    --avatar-pixel: 3px;
+  }
+}
+
 /*
  * Resource symbols use smooth vector outlines rather than the environmental
  * pixel-art system. Their restraint makes the compact HUD easier to scan.
@@ -6488,6 +6780,94 @@ body {
   justify-content: end;
 }
 
+/* Desktop-only player-controlled split. The visual rule is deliberately thin;
+ * the centered control supplies the forgiving pointer target. */
+.workspace-splitter-row {
+  display: none;
+}
+
+@media (min-width: 761px) {
+  .clinic-workspace,
+  .clinic-workspace.has-open-chart {
+    gap: 0;
+    grid-template-rows:
+      minmax(220px, var(--workspace-map-track))
+      18px
+      minmax(190px, var(--workspace-desk-track));
+  }
+
+  .workspace-splitter-row {
+    position: relative;
+    z-index: 32;
+    display: grid;
+    min-height: 0;
+    border-top: 1px solid rgb(24 25 20 / 34%);
+    border-bottom: 1px solid rgb(255 254 242 / 62%);
+    background: var(--shade-2);
+    place-items: center;
+  }
+
+  .workspace-splitter {
+    display: inline-grid;
+    width: 2.35rem;
+    height: 1rem;
+    padding: 0 0.2rem;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: var(--paper-raised);
+    box-shadow: 1px 1px 0 rgb(24 25 20 / 38%);
+    cursor: row-resize;
+    touch-action: none;
+    grid-template-columns: 0.6rem 1fr;
+    place-items: center;
+  }
+
+  .workspace-splitter:hover,
+  .workspace-splitter:focus-visible {
+    background: var(--shade-1);
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .workspace-splitter:active {
+    box-shadow: none;
+  }
+
+  .workspace-splitter-cue {
+    position: relative;
+    width: 0.45rem;
+    height: 0.7rem;
+  }
+
+  .workspace-splitter-cue::before,
+  .workspace-splitter-cue::after {
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-right: 0.22rem solid transparent;
+    border-left: 0.22rem solid transparent;
+    content: "";
+  }
+
+  .workspace-splitter-cue::before {
+    top: 0;
+    border-bottom: 0.25rem solid var(--ink);
+  }
+
+  .workspace-splitter-cue::after {
+    bottom: 0;
+    border-top: 0.25rem solid var(--ink);
+  }
+
+  .workspace-splitter-grip {
+    width: 0.85rem;
+    height: 1px;
+    background: var(--ink);
+    box-shadow: 0 3px 0 var(--ink), 0 6px 0 var(--ink);
+  }
+}
+
 @media (max-width: 760px) {
   .question-review-dialog {
     width: calc(100vw - 0.5rem);
@@ -6502,5 +6882,670 @@ body {
   .question-review-item dl > div {
     grid-template-columns: 1fr;
     gap: 0.1rem;
+  }
+}
+
+/* Dense primary chrome: keep clinical reading surfaces at their existing scale. */
+@media (min-width: 761px) {
+  .game-display-title {
+    padding: 0.08rem 0.55rem 0.06rem;
+    font-size: 0.62rem;
+  }
+
+  .resource-bar-main {
+    padding: 0.2rem 0.4rem;
+  }
+
+  .resource-chip {
+    box-sizing: border-box;
+    height: 54px;
+    min-height: 54px;
+    padding: 0.28rem 0.42rem;
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .resource-level-chip {
+    padding-block: 0.22rem;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+  }
+
+  .pixel-hud-icon {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+
+  .resource-chip strong {
+    font-size: 0.9rem;
+  }
+
+  .resource-chip span,
+  .resource-chip small {
+    font-size: 0.68rem;
+    line-height: 1.05;
+  }
+
+  .resource-xp-row > strong {
+    font-size: 0.78rem;
+    line-height: 1.05;
+  }
+
+  .xp-progress {
+    height: 7px;
+  }
+
+  .facility-time-chip.is-build-mode .resource-chip-content > span,
+  .facility-time-chip.is-management-mode .resource-chip-content > span {
+    color: var(--accent-strong, var(--ink));
+    font-weight: 900;
+  }
+
+  .facility-time-chip.is-build-mode .resource-chip-content > strong,
+  .facility-time-chip.is-management-mode .resource-chip-content > strong {
+    font-size: 0.7rem;
+    line-height: 1.12;
+    white-space: normal;
+  }
+
+  .pixel-control-button {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .resource-controls > .button,
+  .resource-controls > .save-close-dialog,
+  .resource-controls .save-close-button {
+    min-height: 2.75rem;
+  }
+
+  .facility-heading {
+    box-sizing: border-box;
+    height: 36px;
+    min-height: 36px;
+    gap: 0.35rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .facility-heading-actions .text-button {
+    min-height: 30px;
+    padding: 0.18rem 0.35rem;
+  }
+
+  .desk-workspace {
+    padding: 2.6rem 0.5rem 0.4rem;
+  }
+
+  .desk-workspace::before {
+    top: 2.15rem;
+    right: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .desk-workspace > .build-mode-trigger,
+  .desk-workspace > .management-mode-trigger {
+    top: 0.25rem;
+    min-height: 2rem;
+    padding: 0.25rem 0.55rem;
+  }
+
+  .desk-workspace > .build-mode-trigger {
+    right: 0.4rem;
+  }
+
+  .desk-workspace > .management-mode-trigger {
+    left: 0.4rem;
+  }
+
+  .footer-bar {
+    position: relative;
+    min-height: 42px;
+    padding: 0.1rem 0.55rem;
+    gap: 0.45rem;
+  }
+
+  .footer-content-notice {
+    position: absolute;
+    left: 50%;
+    max-width: min(42vw, 580px);
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 760px) {
+  .footer-bar {
+    display: grid;
+    min-height: 0;
+    padding: 0.3rem 0.45rem;
+    gap: 0.3rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .footer-content-notice {
+    margin: 0;
+    grid-column: 1 / -1;
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .facility-time-chip.is-build-mode,
+  .facility-time-chip.is-management-mode {
+    grid-column: 1 / -1;
+  }
+
+  .facility-time-chip.is-build-mode .resource-chip-content > strong,
+  .facility-time-chip.is-management-mode .resource-chip-content > strong {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .resource-xp-row {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .resource-xp-row .xp-progress {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .resource-xp-row small {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  .footer-bar {
+    display: grid;
+    min-height: 0;
+    padding: 0.2rem 0.45rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .footer-content-notice {
+    position: static;
+    max-width: none;
+    margin: 0;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 0.56rem;
+    transform: none;
+  }
+
+  .facility-time-chip.is-build-mode .resource-chip-content > span,
+  .facility-time-chip.is-management-mode .resource-chip-content > span {
+    font-size: 0.58rem;
+    line-height: 1;
+  }
+
+  .facility-time-chip.is-build-mode .resource-chip-content > strong,
+  .facility-time-chip.is-management-mode .resource-chip-content > strong {
+    font-size: 0.56rem;
+    line-height: 1.02;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .build-tool-toolbar {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .build-tool-toolbar-label {
+    grid-column: 1 / -1;
+  }
+
+  .build-tool-toolbar .button,
+  .build-tool-toolbar .mode-toggle-button {
+    min-width: 0;
+    padding-inline: 0.2rem;
+    font-size: 0.58rem;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+
+/* Second HUD/footer density pass: desktop-only chrome, no clinical text. */
+@media (min-width: 761px) {
+  .resource-bar-main {
+    padding-block: 0.12rem;
+  }
+
+  .resource-chip {
+    height: 48px;
+    min-height: 48px;
+    padding-block: 0.18rem;
+  }
+
+  .resource-level-chip {
+    padding-block: 0.16rem;
+  }
+
+  .resource-xp-row {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.28rem;
+    align-items: center;
+  }
+
+  .resource-xp-row .xp-progress {
+    width: 100%;
+    height: 6px;
+    min-width: 0;
+  }
+
+  .resource-xp-row small {
+    overflow: visible;
+    font-size: 0.62rem;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
+  .pixel-control-button {
+    width: 2.4rem;
+    min-width: 2.4rem;
+    min-height: 2.4rem;
+  }
+
+  .resource-controls > .button,
+  .resource-controls > .save-close-dialog,
+  .resource-controls .save-close-button {
+    min-height: 2.4rem;
+  }
+
+  .footer-bar {
+    box-sizing: border-box;
+    height: 24px;
+    min-height: 24px;
+    padding-block: 1px;
+  }
+
+  .footer-bar,
+  .footer-status,
+  .footer-actions,
+  .footer-content-notice {
+    line-height: 1;
+  }
+
+  .footer-status,
+  .footer-actions {
+    gap: 0.28rem;
+  }
+
+  .footer-bar .footer-actions button,
+  .footer-bar .footer-actions .button,
+  .footer-bar .footer-actions .text-button {
+    min-height: 0;
+    padding: 0.05rem 0.14rem;
+    font-size: 0.62rem;
+    line-height: 1;
+  }
+
+  .footer-status,
+  .footer-content-notice {
+    font-size: 0.62rem;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  .footer-bar {
+    height: 34px;
+    min-height: 34px;
+    padding-block: 1px;
+    row-gap: 0;
+  }
+
+  .footer-content-notice {
+    font-size: 0.5rem;
+    line-height: 1;
+  }
+}
+
+/* Desktop operations chrome: compact navigation and management surfaces only. */
+@media (min-width: 761px) {
+  .panel-heading {
+    min-height: 32px;
+    padding: 0.28rem 0.45rem;
+    gap: 0.35rem;
+  }
+
+  .panel-heading span {
+    font-size: 0.78rem;
+  }
+
+  .panel-heading small {
+    font-size: 0.66rem;
+  }
+
+  .emergency-glp1-panel,
+  .advertising-panel {
+    padding: 0.45rem;
+  }
+
+  .emergency-glp1-panel h2,
+  .advertising-panel h2 {
+    margin: 0.12rem 0 0.35rem;
+    font-size: 0.78rem;
+  }
+
+  .emergency-glp1-button {
+    min-height: 34px;
+    padding: 0.32rem;
+  }
+
+  .glp1-cooldown-meter {
+    height: 8px;
+    margin-top: 0.22rem;
+  }
+
+  .emergency-glp1-status,
+  .advertising-current-effects,
+  .advertising-tier-details {
+    margin-top: 0.25rem;
+  }
+
+  .emergency-glp1-flavor {
+    margin-top: 0.3rem;
+    padding-top: 0.25rem;
+    font-size: 0.62rem;
+  }
+
+  .advertising-level-controls {
+    gap: 0.3rem;
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+  }
+
+  .advertising-step-button {
+    min-width: 32px;
+    min-height: 34px;
+  }
+
+  .advertising-current-level {
+    padding: 0.2rem 0.3rem;
+  }
+
+  .advertising-tier-details ul {
+    margin-top: 0.22rem;
+  }
+
+  .advertising-tier-details li {
+    padding: 0.18rem;
+  }
+
+  .patient-folder {
+    min-height: 58px;
+  }
+
+  .patient-folder h2 {
+    padding: 0.34rem 0.45rem;
+    font-size: 0.72rem;
+  }
+
+  .patient-folder h2 span,
+  .action-marker {
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+  }
+
+  .patient-tab,
+  .patient-tab.is-compact {
+    min-height: 56px;
+    padding: 0.34rem 0.4rem;
+  }
+
+  .patient-tab-name {
+    gap: 0.28rem;
+    font-size: 0.78rem;
+  }
+
+  .patient-tab small {
+    font-size: 0.66rem;
+  }
+
+  .resolved-cabinet-button {
+    min-height: 48px;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .goals-panel {
+    min-height: 180px;
+  }
+
+  .goal-list {
+    padding: 0.35rem 0.45rem;
+    gap: 0.22rem;
+  }
+
+  .goal-list li {
+    gap: 0.38rem;
+    font-size: 0.78rem;
+  }
+
+  .goal-list li small {
+    font-size: 0.62rem;
+  }
+
+  .staff-role-group {
+    padding: 0.42rem;
+    border-bottom-width: 2px;
+  }
+
+  .staff-role-heading,
+  .staff-role-heading > div {
+    gap: 0.3rem;
+  }
+
+  .staff-role-heading h3 {
+    font-size: 0.78rem;
+  }
+
+  .staff-role-heading .button {
+    min-height: 30px;
+    padding: 0.22rem 0.35rem;
+    font-size: 0.64rem;
+  }
+
+  .staff-blocked-reason {
+    margin-top: 0.22rem;
+    font-size: 0.64rem;
+  }
+
+  .staff-member-card {
+    margin-top: 0.35rem;
+    padding: 0.35rem;
+    gap: 0.35rem;
+  }
+
+  .staff-member-details h4 {
+    font-size: 0.74rem;
+  }
+
+  .staff-morale,
+  .staff-salary-control {
+    margin-top: 0.22rem;
+    font-size: 0.62rem;
+  }
+
+  .message-board-item {
+    padding: 0.34rem 0.42rem;
+    gap: 0.3rem;
+  }
+
+  .message-board-item-heading,
+  .message-board-compact-action,
+  .message-board-compact-copy {
+    font-size: 0.66rem;
+  }
+
+  .message-board-item p {
+    margin-top: 0.2rem;
+    font-size: 0.7rem;
+    line-height: 1.25;
+  }
+
+  .event-message-board.is-ticker .message-board-item {
+    min-height: 28px;
+    padding: 0.18rem 0.32rem;
+  }
+
+  .build-mode-instructions {
+    padding: 0.5rem;
+  }
+
+  .build-mode-instructions h2 {
+    margin-block: 0.18rem;
+    font-size: 0.82rem;
+  }
+
+  .build-mode-instructions p {
+    margin: 0.3rem 0 0;
+    font-size: 0.68rem;
+    line-height: 1.28;
+  }
+
+  .build-tool-toolbar {
+    top: 32px;
+    gap: 0.3rem;
+    margin: 0.35rem;
+    padding: 0.32rem;
+  }
+
+  .build-tool-toolbar .button,
+  .build-tool-toolbar .mode-toggle-button {
+    min-height: 36px;
+    padding: 0.26rem 0.35rem;
+    font-size: 0.66rem;
+  }
+
+  .build-catalog-layout {
+    padding: 0.32rem;
+    gap: 0.32rem;
+  }
+
+  .build-catalog-layout .selected-room-inspector {
+    top: 68px;
+    padding: 0.38rem;
+  }
+
+  .build-mode-panel .build-room-catalog .build-card {
+    min-height: 52px;
+    padding: 0.3rem;
+    gap: 0.3rem;
+  }
+
+  .build-mode-panel .build-room-catalog .build-card strong {
+    font-size: 0.64rem;
+  }
+}
+
+/* Keep chart prompt density effective after the QA-flag controls cascade. */
+.chart-step-column .question-prompt-row {
+  gap: 0.3rem;
+}
+
+.chart-step-column .question-prompt-row > .question-prompt {
+  margin: 0.3rem 0;
+}
+
+/*
+ * The multi-column workspace is intentionally edge-to-edge: additional
+ * viewport width belongs to the map and desk, not to decorative gutters or
+ * unbounded information rails. The map zoom controls are an overlay so the
+ * canvas receives the full facility-frame height.
+ */
+@media (min-width: 761px) {
+  .game-grid.game-grid-workspaces {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+}
+
+.facility-host > .facility-zoom-overlay {
+  position: absolute;
+  z-index: 20;
+  top: 0.4rem;
+  right: 0.4rem;
+  display: inline-grid;
+  width: auto !important;
+  height: auto !important;
+  min-height: 34px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  box-shadow: 2px 2px 0 rgb(24 25 20 / 34%);
+  color: var(--paper-raised);
+  flex: none;
+  grid-template-columns: auto minmax(3.2rem, auto) auto;
+  align-items: stretch;
+}
+
+.facility-zoom-overlay output {
+  display: grid;
+  min-width: 3.2rem;
+  padding: 0.25rem 0.35rem;
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 900;
+  place-items: center;
+  white-space: nowrap;
+}
+
+.facility-zoom-button {
+  min-width: 34px;
+  min-height: 32px;
+  border: 0;
+  border-right: 1px solid rgb(255 254 242 / 42%);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.facility-zoom-button:last-child {
+  border-right: 0;
+  border-left: 1px solid rgb(255 254 242 / 42%);
+}
+
+.facility-zoom-button:hover:not(:disabled),
+.facility-zoom-button:focus-visible {
+  background: rgb(255 255 255 / 16%);
+  outline: 2px solid var(--paper-raised);
+  outline-offset: -2px;
+}
+
+.facility-zoom-button:disabled {
+  color: rgb(255 254 242 / 46%);
+  cursor: default;
+}
+
+@media (max-width: 760px) {
+  .facility-zoom-overlay {
+    top: 0.35rem;
+    right: 0.35rem;
   }
 }

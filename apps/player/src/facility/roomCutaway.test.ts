@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import type { FacilityRoomView } from "./types";
 import {
+  getBackedHorizontalBoundaryRuns,
   getExposedHorizontalBoundaryRuns,
   getExposedNorthCornerReturns,
   getExposedVerticalBoundaryRuns,
   getLargestBoundaryRun,
+  getOwnedVerticalBoundaryRuns,
+  getOwnedHorizontalBoundaryRuns,
+  getOwnedBackedNorthBoundaryRuns,
   getRearWallFaceHeight,
   isHorizontalBoundarySegmentExposed,
   isVerticalBoundarySegmentExposed,
@@ -41,7 +45,7 @@ describe("room cutaway boundaries", () => {
     ).toEqual([{ offset: 0, length: 4 }]);
   });
 
-  it("removes the rear wall where another floor touches from the north", () => {
+  it("identifies backed north segments where another floor touches from the north", () => {
     const subject = room("south", 3, 5, 4, 2);
     const northern = room("north", 3, 3, 4, 2);
     expect(
@@ -51,6 +55,9 @@ describe("room cutaway boundaries", () => {
         "north",
       ),
     ).toEqual([]);
+    expect(
+      getBackedHorizontalBoundaryRuns(subject, [subject, northern], "north"),
+    ).toEqual([{ offset: 0, length: 4 }]);
     expect(
       getExposedHorizontalBoundaryRuns(
         northern,
@@ -76,6 +83,9 @@ describe("room cutaway boundaries", () => {
       offset: 0,
       length: 2,
     });
+    expect(
+      getBackedHorizontalBoundaryRuns(subject, [subject, northern], "north"),
+    ).toEqual([{ offset: 2, length: 2 }]);
   });
 
   it("crops full-width wall artwork instead of rescaling it into an exposed run", () => {
@@ -146,6 +156,9 @@ describe("room cutaway boundaries", () => {
       getExposedHorizontalBoundaryRuns(southernRoom, rooms, "north"),
     ).toEqual([]);
     expect(
+      getBackedHorizontalBoundaryRuns(southernRoom, rooms, "north"),
+    ).toEqual([{ offset: 0, length: 3 }]);
+    expect(
       getExposedHorizontalBoundaryRuns(northernHallway, rooms, "south"),
     ).toEqual([]);
   });
@@ -171,6 +184,44 @@ describe("room cutaway boundaries", () => {
         "east",
       ),
     ).toEqual([{ offset: 0, length: 3 }]);
+  });
+
+  it("gives closed vertical partitions one east-side owner and cuts exact door slots", () => {
+    const left = room("left", 3, 5, 2, 3);
+    const right = room("right", 5, 5, 2, 3);
+    const rooms = [left, right];
+    expect(getOwnedVerticalBoundaryRuns(left, rooms, "east", [{ side: "east", offset: 1 }]))
+      .toEqual([{ offset: 0, length: 1 }, { offset: 2, length: 1 }]);
+    expect(getOwnedVerticalBoundaryRuns(right, rooms, "west", []))
+      .toEqual([]);
+  });
+
+  it("leaves hallway-to-hallway vertical circulation open while retaining room-hall partitions", () => {
+    const hallLeft = room("hall-left", 0, 0, 1, 2, "hallway");
+    const hallRight = room("hall-right", 1, 0, 1, 2, "hallway");
+    expect(getOwnedVerticalBoundaryRuns(hallLeft, [hallLeft, hallRight], "east")).toEqual([]);
+    const clinical = room("clinical", 0, 0, 1, 2);
+    expect(getOwnedVerticalBoundaryRuns(clinical, [clinical, hallRight], "east"))
+      .toEqual([{ offset: 0, length: 2 }]);
+  });
+
+  it("makes the south space the only owner of a shared horizontal wall", () => {
+    const north = room("north", 0, 0, 3, 2);
+    const south = room("south", 0, 2, 3, 2);
+    const rooms = [north, south];
+    expect(getOwnedHorizontalBoundaryRuns(north, rooms, "south")).toEqual([]);
+    expect(getOwnedBackedNorthBoundaryRuns(south, rooms)).toEqual([{ offset: 0, length: 3 }]);
+    expect(getOwnedBackedNorthBoundaryRuns(south, rooms, [{ side: "north", offset: 1 }]))
+      .toEqual([{ offset: 0, length: 1 }, { offset: 2, length: 1 }]);
+  });
+
+  it("keeps a hallway south of a room as the short-wall owner but opens hall-to-hall", () => {
+    const north = room("north", 0, 0, 2, 1);
+    const southHall = room("south-hall", 0, 1, 2, 1, "hallway");
+    expect(getOwnedBackedNorthBoundaryRuns(southHall, [north, southHall]))
+      .toEqual([{ offset: 0, length: 2 }]);
+    const northHall = room("north-hall", 0, 0, 2, 1, "hallway");
+    expect(getOwnedBackedNorthBoundaryRuns(southHall, [northHall, southHall])).toEqual([]);
   });
 
   it("adds short side returns only at genuinely exposed north corners", () => {

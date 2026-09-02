@@ -47,18 +47,18 @@ export const CHARACTER_BITMAP_REGISTRATION_V3: CharacterBitmapRegistration = {
   displayAspectRatio: 160 / 240,
 };
 export const FOUNDER_BITMAP_REGISTRATION_V4: CharacterBitmapRegistration = {
-  // All approved pose-sheet extractions retain visible feet through y=135 and
-  // a transparent eight-pixel bottom margin.  Anchor at y=136: the true
+  // All approved high-resolution pose-sheet extractions retain visible feet
+  // through y=180 and a transparent bottom safety margin. Anchor at y=181: the true
   // floor-contact baseline, not the PNG's lower canvas edge.  This preserves
   // full feet and keeps idle/walk poses on one stable world floor.
-  cell: { width: 96, height: 144 }, neckY: 0, floorY: 136, floorAnchorY: 136 / 144, displayAspectRatio: 96 / 144,
+  cell: { width: 128, height: 192 }, neckY: 0, floorY: 181, floorAnchorY: 181 / 192, displayAspectRatio: 128 / 192,
 };
 export const PATIENT_BITMAP_REGISTRATION_V1: CharacterBitmapRegistration = {
-  cell: { width: 96, height: 144 },
+  cell: { width: 128, height: 192 },
   neckY: 0,
-  floorY: 136,
-  floorAnchorY: 136 / 144,
-  displayAspectRatio: 96 / 144,
+  floorY: 181,
+  floorAnchorY: 181 / 192,
+  displayAspectRatio: 128 / 192,
 };
 /** @deprecated retained for consumers while v3 is adopted. */
 export const CHARACTER_BITMAP_REGISTRATION_V2 = CHARACTER_BITMAP_REGISTRATION_V3;
@@ -119,15 +119,15 @@ function resolveFounderV4Atlas(direction: CharacterDirection, pose: CharacterPos
   if (pose === "walk-a" || pose === "walk-b") {
     const phase = pose === "walk-a" ? "a" : "b";
     const view = direction === "front" ? "front" : direction === "back" ? "back" : movingRight ? "right" : "left";
-    return { id: `character:founders-${view}-walk-${phase}-v4-r8`, view };
+    return { id: `character:founders-${view}-walk-${phase}-v4-r9-hires`, view };
   }
-  if (pose === "seated") return { id: "character:founders-front-seated-v4-r8", view: "front" };
-  if (pose === "working") return { id: "character:founders-front-working-v4-r8", view: "front" };
-  if (pose === "interaction") return { id: "character:founders-clipboard-v4-r8", view: "front" };
-  if (pose === "jump-recovery") return { id: "character:founders-jump-recovery-v4-r8", view: "front" };
-  if (pose === "star-jump") return { id: "character:founders-star-jump-v4-r8", view: "front" };
+  if (pose === "seated") return { id: "character:founders-front-seated-v4-r9-hires", view: "front" };
+  if (pose === "working") return { id: "character:founders-front-working-v4-r9-hires", view: "front" };
+  if (pose === "interaction") return { id: "character:founders-clipboard-v4-r9-hires", view: "front" };
+  if (pose === "jump-recovery") return { id: "character:founders-jump-recovery-v4-r9-hires", view: "front" };
+  if (pose === "star-jump") return { id: "character:founders-star-jump-v4-r9-hires", view: "front" };
   const view = direction === "front" ? "front" : direction === "back" ? "back" : movingRight ? "right" : "left";
-  return { id: `character:founders-${view}-idle-v4-r8`, view };
+  return { id: `character:founders-${view}-idle-v4-r9-hires`, view };
 }
 
 function resolvePatientV1Atlas(
@@ -137,10 +137,10 @@ function resolvePatientV1Atlas(
   representation: "thumbnail" | "portrait" | undefined,
 ): { id: string; view: CharacterAtlasView } {
   if (representation === "portrait") {
-    return { id: "character:patients-portrait-v1-r6", view: "front" };
+    return { id: "character:patients-portrait-v1-r7-hires", view: "front" };
   }
   if (representation === "thumbnail") {
-    return { id: "character:patients-thumbnail-v1-r6", view: "front" };
+    return { id: "character:patients-thumbnail-v1-r7-hires", view: "front" };
   }
   const view = direction === "front"
     ? "front"
@@ -150,15 +150,15 @@ function resolvePatientV1Atlas(
   if (pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b") {
     const phase = pose === "walk-a" ? "a" : pose === "walk-b" ? "b" : "neutral";
     return {
-      id: `character:patients-${view}-walk-${phase}-v1-r6`,
+      id: `character:patients-${view}-walk-${phase}-v1-r7-hires`,
       view,
     };
   }
   if (pose === "seated") {
     const seatedView = direction === "side" ? view : "front";
-    return { id: `character:patients-seated-${seatedView}-v1-r6`, view: seatedView };
+    return { id: `character:patients-seated-${seatedView}-v1-r7-hires`, view: seatedView };
   }
-  return { id: `character:patients-${view}-idle-v1-r6`, view };
+  return { id: `character:patients-${view}-idle-v1-r7-hires`, view };
 }
 
 export function patientV1AtlasCell(
@@ -190,12 +190,12 @@ export function characterBitmapLayers(
   const selected = patientV1
     ? resolvePatientV1Atlas(direction, pose, movingRight, representation)
     : founder && representation === "portrait"
-    ? { id: "character:founders-portrait-v4-r8", view: "front" as const }
+    ? { id: "character:founders-portrait-v4-r9-hires", view: "front" as const }
     : founder ? resolveFounderV4Atlas(direction, pose, movingRight) : resolveActorAtlas(direction, pose);
   const actor: CharacterBitmapLayer = {
     atlas: atlas(selected.id),
     variant: patientV1 ? patientV1AtlasCell(appearance)! : coherentCharacterVariant(appearance),
-    // Patient-v1 r6 and founder r8 both contain explicit east-facing frames.
+    // Patient-v1 r7-hires and founder r9-hires both contain explicit east-facing frames.
     // v3 is the only fallback package that still mirrors left-facing art.
     flipX: !patientV1 && !founder && selected.view === "left" && movingRight,
   };

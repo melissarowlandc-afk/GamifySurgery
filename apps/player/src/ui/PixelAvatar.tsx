@@ -138,7 +138,7 @@ function AuthoredBitmapAvatar({
         display: "block",
         width: "100%",
         height: "100%",
-        imageRendering: "pixelated",
+        imageRendering: "auto",
       }}
     >
       <span
@@ -152,7 +152,7 @@ function AuthoredBitmapAvatar({
           width: "100%",
           height: "100%",
           backgroundRepeat: "no-repeat",
-          imageRendering: "pixelated",
+          imageRendering: "auto",
         }}
       />
       {/* A hidden image provides a reliable browser load-error signal while

@@ -5,6 +5,7 @@ import { getFixturePresentationSize } from "./fixturePresentation";
 import {
   EXAMINATION_ROOM_PRESENTATIONS,
   getExaminationRoomPresentation,
+  isExaminationNorthWallFixtureBacked,
   isExaminationNorthWallFixtureVisible,
 } from "./examinationRoomPresentation";
 
@@ -74,6 +75,15 @@ describe("Examination Room presentation", () => {
     expect(isExaminationNorthWallFixtureVisible(horizontalDiagnostic, [1])).toBe(true);
     expect(isExaminationNorthWallFixtureVisible(verticalDiagnostic, [0])).toBe(false);
     expect(isExaminationNorthWallFixtureVisible(verticalDiagnostic, [1])).toBe(true);
+  });
+
+  it("suppresses Examination wall art only when one of its own slots is backed", () => {
+    const horizontalDiagnostic = EXAMINATION_ROOM_PRESENTATIONS[0].fixtures.find((fixture) => fixture.id === "diagnosticPanel")!;
+    const verticalDiagnostic = EXAMINATION_ROOM_PRESENTATIONS[90].fixtures.find((fixture) => fixture.id === "diagnosticPanel")!;
+    expect(isExaminationNorthWallFixtureBacked(horizontalDiagnostic, [2])).toBe(true);
+    expect(isExaminationNorthWallFixtureBacked(horizontalDiagnostic, [1])).toBe(false);
+    expect(isExaminationNorthWallFixtureBacked(verticalDiagnostic, [0])).toBe(true);
+    expect(isExaminationNorthWallFixtureBacked(verticalDiagnostic, [1])).toBe(false);
   });
 
   it("keeps every floor-contact fixture inside its Examination Room floor envelope", () => {

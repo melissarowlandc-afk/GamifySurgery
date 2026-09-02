@@ -97,12 +97,15 @@ function ActivePrototypeGame({
       onRotatePlacement={session.rotatePlacement}
       onPlaceRoom={session.placeRoom}
       buildMode={session.buildMode}
+      managementMode={session.managementMode}
       buildUndoCount={session.buildUndoCount}
       buildExitBlockedReason={session.buildExitBlockedReason}
       buildExitBlockedIssues={session.buildExitBlockedIssues}
       placementOrientation={session.placementOrientation}
       onEnterBuildMode={session.enterBuildMode}
       onExitBuildMode={session.exitBuildMode}
+      onEnterManagementMode={session.enterManagementMode}
+      onExitManagementMode={session.exitManagementMode}
       onSelectRoom={session.selectRoom}
       onSellSelectedRoom={session.sellSelectedRoom}
       onUpgradeSelectedRoom={session.upgradeSelectedRoom}

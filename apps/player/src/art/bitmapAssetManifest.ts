@@ -350,10 +350,10 @@ export const FOUNDER_CHARACTER_ATLASES_V4 = [
   // generated walk sheets changed could combine a newly selected frame name
   // with a stale decoded sheet.  A content revision makes every live founder
   // frame resolve as one matching asset family after a reload/HMR update.
-  `character:founders-${pose}-v4-r8`,
-  `art/characters/founders-v4/founders-${pose}-v4.png?rev=founders-v4-r8`,
-  480,
-  864,
+  `character:founders-${pose}-v4-r9-hires`,
+  `art/characters/founders-v4/founders-${pose}-v4.png?rev=founders-v4-r9-hires`,
+  640,
+  1152,
 )) as readonly BitmapAssetDescriptor[];
 
 /**
@@ -362,7 +362,7 @@ export const FOUNDER_CHARACTER_ATLASES_V4 = [
  * a persisted patientIdentityId selects one immutable atlas cell, while v3
  * remains the explicit fallback for malformed or historic descriptors.
  */
-export const PATIENT_CHARACTER_ATLAS_REVISION_V1 = "patients-v1-r6";
+export const PATIENT_CHARACTER_ATLAS_REVISION_V1 = "patients-v1-r7-hires";
 export const PATIENT_CHARACTER_ATLAS_POSES_V1 = [
   "front-idle", "left-idle", "right-idle", "back-idle",
   "front-walk-a", "front-walk-b", "back-walk-a", "back-walk-b",
@@ -380,10 +380,10 @@ const patientCharacterAtlas = (
 ): BitmapAssetDescriptor => {
   const portrait = pose === "portrait";
   const thumbnail = pose === "thumbnail";
-  const nativeWidth = portrait ? 960 : 480;
-  const nativeHeight = portrait ? 2240 : thumbnail ? 1120 : 1440;
+  const nativeWidth = portrait ? 960 : thumbnail ? 480 : 640;
+  const nativeHeight = portrait ? 2240 : thumbnail ? 1120 : 1920;
   return characterAtlas(
-    `character:patients-${pose}-v1-r6`,
+    `character:patients-${pose}-v1-r7-hires`,
     `art/characters/patients-v1/patients-${pose}-v1.png?rev=${PATIENT_CHARACTER_ATLAS_REVISION_V1}`,
     nativeWidth,
     nativeHeight,
@@ -517,6 +517,8 @@ export type FrontDeskV3ArchitectureId =
   | "northWall"
   | "westReturn"
   | "eastReturn"
+  | "westCap"
+  | "eastCap"
   | "frontWest"
   | "frontEast"
   | "threshold"
@@ -546,6 +548,10 @@ export const FRONT_DESK_V3_ARCHITECTURE_FRAMES: Readonly<
   northWall: frontDeskV3ArchitectureFrame("northWall", { x: 1080, y: 15, width: 386, height: 181 }),
   westReturn: frontDeskV3ArchitectureFrame("westReturn", { x: 1092, y: 225, width: 99, height: 383 }),
   eastReturn: frontDeskV3ArchitectureFrame("eastReturn", { x: 1341, y: 225, width: 99, height: 383 }),
+  // Straight, top-down border material sampled from the floor plate itself.
+  // These deliberately exclude the separate upright/angled return sprites.
+  westCap: frontDeskV3ArchitectureFrame("westCap", { x: 80, y: 48, width: 31, height: 478 }),
+  eastCap: frontDeskV3ArchitectureFrame("eastCap", { x: 997, y: 48, width: 28, height: 478 }),
   frontWest: frontDeskV3ArchitectureFrame("frontWest", { x: 47, y: 644, width: 535, height: 145 }),
   frontEast: frontDeskV3ArchitectureFrame("frontEast", { x: 929, y: 644, width: 552, height: 145 }),
   threshold: frontDeskV3ArchitectureFrame("threshold", { x: 601, y: 752, width: 282, height: 44 }),
@@ -667,8 +673,9 @@ export const FRONT_DESK_V2_FIXTURE_OVERRIDES: Readonly<
   frontDesk: fixtureAtlasFrame("frontDesk", "room-fixtures:front-desk-v2", { x: 476, y: 108, width: 492, height: 281 }),
   filingCabinet: fixtureAtlasFrame("filingCabinet", "room-fixtures:front-desk-v2", { x: 48, y: 19, width: 209, height: 374 }),
   secretaryChair: fixtureAtlasFrame("secretaryChair", "room-fixtures:front-desk-v2", { x: 293, y: 56, width: 152, height: 272 }),
-  // The Front Desk's southeast visitor chair faces left into the room.
-  visitorChair: fixtureAtlasFrame("visitorChair", "room-fixtures:waiting-v1", { x: 157, y: 681, width: 232, height: 254 }),
+  // The Front Desk's southeast visitor chair uses the mirrored, left-facing
+  // waiting-room crop so it faces into the room from D5.
+  visitorChair: fixtureAtlasFrame("visitorChair", "room-fixtures:waiting-v1", { x: 865, y: 681, width: 232, height: 254 }),
   waterCooler: fixtureAtlasFrame("waterCooler", "room-fixtures:front-desk-v2", { x: 1064, y: 184, width: 151, height: 324 }),
   wasteBin: fixtureAtlasFrame("wasteBin", "room-fixtures:front-desk-v2", { x: 72, y: 420, width: 112, height: 144 }),
 };

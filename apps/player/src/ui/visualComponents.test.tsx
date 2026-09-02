@@ -1,10 +1,12 @@
 import { renderToStaticMarkup } from "react-dom/server";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { TutorialCoach } from "./TutorialCoach";
 import { ChartPanel } from "./ChartPanel";
 import { PatientLists } from "./PatientLists";
 import { ResourceBar } from "./ResourceBar";
 import { CharacterQaGallery } from "./CharacterQaGallery";
+import { PixelAvatar } from "./PixelAvatar";
 import type { ChartView, ResourceBarView } from "./types";
 import type { FacilityViewModel } from "../facility";
 
@@ -92,7 +94,11 @@ describe("paper chart presentation", () => {
 
     expect(markup).toContain("paper-chart");
     expect(markup).toContain("Morgan Reyes");
-    expect(markup).toContain("Chief complaint");
+    expect(markup).toContain("Painful swelling");
+    expect(markup).toContain("Three days of worsening localized pain.");
+    expect(markup).not.toContain(">Chief complaint<");
+    expect(markup).not.toContain(">HPI &amp; presentation<");
+    expect(markup).not.toContain(">History of present illness<");
     expect(markup).toContain("38.1 C");
     expect(markup).toContain("Satisfaction 94%");
     expect(markup).toContain("+10 learning XP");
@@ -299,6 +305,7 @@ describe("segmented resource HUD", () => {
       workloadStatusLabel: "Stable",
       facilityLevelLabel: "Level 0",
       xpProgressPercent: 50,
+      xpProgressLabel: "20/40 XP",
       goals: [],
     };
 
@@ -331,17 +338,119 @@ describe("segmented resource HUD", () => {
       'class="pixel-control-button is-selected" type="button" aria-label="Resume facility time" aria-pressed="true"',
     );
     expect(markup).toContain("$350");
-    expect(markup).toContain("20 XP");
+    expect(markup).toContain("20/40 XP");
+    expect(markup).not.toContain("<strong>20 XP</strong>");
+    expect(markup).toContain('aria-label="Level 0, 20 XP learning XP"');
     expect(markup).not.toContain("see Goals panel");
     expect(markup).not.toContain(
       "Recurring operating change per hour",
     );
     expect(markup).not.toContain("Last 10 completed encounters");
     expect(markup).not.toContain("Clinic open");
+    expect(markup).not.toContain("Demonstration content only");
+  });
+
+  it("uses the facility time cell for compact Build Mode status", () => {
+    const markup = renderToStaticMarkup(
+      <ResourceBar
+        view={{
+          moneyLabel: "$350",
+          moneyDeltaLabel: "-$12/hour",
+          xpLabel: "20 XP",
+          satisfactionLabel: "94%",
+          facilityTimeLabel: "Day 1, 9 AM",
+          workloadLabel: "1 waiting",
+          workloadStatusLabel: "Stable",
+          facilityLevelLabel: "Level 0",
+          xpProgressPercent: 50,
+          goals: [],
+          contentNoticeLabel: "Demonstration content only.",
+        }}
+        paused
+        buildMode
+        onTogglePause={noop}
+      />,
+    );
+
+    expect(markup).toContain("facility-time-chip is-build-mode");
+    expect(markup).toContain("BUILD MODE");
+    expect(markup).toContain(
+      "Facility time is stopped while you remodel.",
+    );
+    expect(markup).not.toContain("global-content-notice");
+    expect(markup).not.toContain("Demonstration content only.");
+  });
+
+  it("uses the facility time cell for locked Management Mode status", () => {
+    const markup = renderToStaticMarkup(
+      <ResourceBar
+        view={{
+          moneyLabel: "$350",
+          moneyDeltaLabel: "-$12/hour",
+          xpLabel: "20 XP",
+          satisfactionLabel: "94%",
+          facilityTimeLabel: "Day 1, 9 AM",
+          workloadLabel: "1 waiting",
+          workloadStatusLabel: "Stable",
+          facilityLevelLabel: "Level 0",
+          xpProgressPercent: 50,
+          goals: [],
+          contentNoticeLabel: "Demonstration content only.",
+        }}
+        paused
+        managementMode
+        pauseLocked
+        onTogglePause={noop}
+      />,
+    );
+
+    expect(markup).toContain("facility-time-chip is-management-mode");
+    expect(markup).toContain("MANAGEMENT MODE");
+    expect(markup).toContain(
+      "Facility time is stopped while you manage staff.",
+    );
+    expect(markup).toMatch(
+      /aria-label="Pause facility time"[^>]*disabled=""/,
+    );
+    expect(markup).toMatch(
+      /aria-label="Resume facility time"[^>]*disabled=""/,
+    );
+    expect(markup).toContain(
+      "Management Mode controls the pause. Exit Management Mode to resume.",
+    );
   });
 });
 
 describe("character visual QA gallery", () => {
+  it("uses smooth sampling for authored atlas crops while retaining the crisp SVG fallback", () => {
+    const markup = renderToStaticMarkup(
+      <PixelAvatar
+        label="Avery"
+        representation="full"
+        avatar={{
+          version: "pixel-avatar.v1",
+          bodyShape: "average",
+          hairStyle: "short",
+          skinTone: 1,
+          hairShade: 3,
+          faceStyle: "round",
+          outfitStyle: "coat",
+          outfitShade: 1,
+          accessory: "none",
+          headVariant: 0,
+          bodyVariant: 0,
+          roleStyle: "founder",
+        }}
+      />,
+    );
+    expect(markup).toContain("pixel-avatar-authored");
+    expect(markup).toContain("pixel-avatar-authored-actor");
+    expect((markup.match(/image-rendering:auto/g) ?? [])).toHaveLength(2);
+
+    const source = readFileSync(new URL("./PixelAvatar.tsx", import.meta.url), "utf8");
+    expect(source).toContain('shapeRendering="crispEdges"');
+  });
+
   it("keeps the shared descriptor visible through idle, movement, work, interaction, seating, and portrait representations", () => {
     const markup = renderToStaticMarkup(
       <CharacterQaGallery

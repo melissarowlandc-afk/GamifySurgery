@@ -29,8 +29,8 @@ describe("live lateral gait route proof", () => {
     expect(frames.map((frame) => frame.atlasId)).toEqual(
       family === "patients"
         ? [
-          "character:patients-left-walk-a-v1-r6", "character:patients-left-walk-neutral-v1-r6", "character:patients-left-walk-b-v1-r6",
-          "character:patients-right-walk-a-v1-r6", "character:patients-right-walk-neutral-v1-r6", "character:patients-right-walk-b-v1-r6",
+          "character:patients-left-walk-a-v1-r7-hires", "character:patients-left-walk-neutral-v1-r7-hires", "character:patients-left-walk-b-v1-r7-hires",
+          "character:patients-right-walk-a-v1-r7-hires", "character:patients-right-walk-neutral-v1-r7-hires", "character:patients-right-walk-b-v1-r7-hires",
         ]
         : [
           "character:actors-left-walk-a-v3", "character:actors-left-idle-v3", "character:actors-left-walk-b-v3",

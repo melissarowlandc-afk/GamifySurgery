@@ -227,6 +227,10 @@ work.
 | `unify-all-room-wall-heights.md` | Complete / owner review | Owner reviews all-room wall-height pass; no further implementation planned. |
 | `unify-canonical-room-shell-and-examination-grid.md` | Complete / owner review | Playtest the shared room-wall grammar and exact Examination layouts; continue only with a concrete graphics adjustment or the next room refinement. |
 | `redesign-five-level-one-room-interiors.md` | Complete / owner review | Review/playtest Waiting, Bathroom, X-ray, Imaging Control, and Minor Procedure; continue only with a concrete graphics correction or the next room redesign. |
+| `flatten-vertical-room-walls-top-down.md` | Complete / owner review, local only | Review/playtest the thin east/west wall caps; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
+| `shorten-backed-north-room-walls.md` | Complete / owner review, local only | Review/playtest adjacency-aware shallow north walls; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
+| `correct-front-desk-four-row-floor-and-door-layout.md` | Complete / owner review, local only | Review/playtest the true 5-by-4 Front Desk and destination-aware door runs; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
+| `render-doorways-as-full-floor-continuous-cutouts.md` | Complete / owner review, local only | Review/playtest full-tile persisted doorway cutouts and direct floor seams; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
 | `world-anchored-exterior-correction.md` | Complete / owner review | Owner playthrough review; no further implementation planned. |
 
 ## Latest scoped validation evidence
@@ -544,3 +548,922 @@ rooms and name a concrete graphical correction or the next room to refine. Keep
 gameplay/system requests in their separate threads. At a future substantial
 checkpoint, remind the owner to explicitly say **"push to GitHub"** for backup
 or deployment.
+
+## Graphics checkpoint: top-down east/west room-wall caps
+
+The graphics-only task in
+`docs/execplans/flatten-vertical-room-walls-top-down.md` is complete locally
+and awaits owner visual review. It is not committed, pushed, or deployed; the
+deployed graphics baseline remains `7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+
+- Every canonical east/west room wall now uses a thin, straight top-down cap
+  instead of the former upright return with angled ends. At the shared 64px
+  map scale the displayed cap is 0.15 tile / 9.6px wide and runs exactly from
+  the floor's north edge to its south edge.
+- The cap material reuses measured straight border crops from the existing
+  Front Desk v3 atlas: west `{ x: 80, y: 48, width: 31, height: 478 }` and
+  east `{ x: 997, y: 48, width: 28, height: 478 }`. The source PNG was not
+  edited; the east crop excludes three transparent/outside artifact columns.
+- Front Desk, both Examination orientations, all enclosed Level 0-2 rooms,
+  and genuinely exposed hallway sides inherit the same cap grammar through
+  the shared canonical component path.
+- North and south wall frames, heights, bounds, occlusion, door behavior, and
+  decoration clipping are unchanged. East/west persisted doors subtract only
+  their exact floor-slot interval, with no hidden upright return remaining.
+- Room interiors, furniture, characters, planters, logical footprints, door
+  legality, routing, saves, progression, balance, staffing, timing, systems,
+  and clinical content are unchanged.
+- Existing code-native atlas material was sufficient. Cortan and local image
+  generation were not used, and no raster asset was added or regenerated.
+
+Sol reviewed the actual diff and native-resolution normal, explicit side-door,
+complete room-matrix, and hallway captures. Final integrated validation:
+
+- Focused player Vitest passed **6 files / 55 tests**.
+- Player typecheck passed.
+- Player production build passed for **295 modules** with only the existing
+  large-chunk advisory.
+- Desktop Playwright passed the top-down-cap proof **1/1**, full Level 0-2
+  enclosed-room matrix **1/1**, and exposed hallway-edge proof **1/1**.
+- `git diff --check` passed.
+- Accepted proof files are `top-down-side-caps-100-normal-desktop.png`,
+  `top-down-side-caps-100-east-west-door-gaps-desktop.png`,
+  `canonical-enclosed-room-100-left-desktop.png`,
+  `canonical-enclosed-room-100-right-desktop.png`, and
+  `canonical-hallway-100-edges-desktop.png` under `artifacts/screenshots/`.
+
+Terra worker `top_down_side_walls` implemented the bounded manifest,
+canonical-shell, tests, and capture milestone, then tightened the east crop and
+refreshed the full matrix after Sol review. No Spark worker ran because source
+crop selection, corner joins, and visual acceptance required renderer judgment.
+Sol created the plan, reviewed the actual source diff and images, ran final
+integrated validation, and made only completion-documentation edits. Concurrent
+workspace-divider UI changes and the three pre-existing screenshot diagnostics
+were preserved without modification.
+
+The owner's exact next action is to review/playtest this local wall treatment
+and name a concrete graphical correction if needed. Keep gameplay/system work
+in its separate threads. Say **"push to GitHub"** when this checkpoint should
+be backed up or released.
+
+## Gameplay checkpoint: desktop map/desk splitter
+
+The local-only workspace-divider feature in
+`docs/execplans/add-draggable-map-desk-divider.md` is complete and awaits an
+owner local playtest/review. It is not staged, committed, pushed, deployed, or
+included in the current Pages build.
+
+- Desktop widths receive a compact 18px divider between the facility and desk.
+  Its contained 38px by 16px original CSS cue uses paired up/down triangles and
+  three grip lines; no supplied stock raster was copied or shipped.
+- The focusable horizontal separator supports mouse, pen, and touch drag with
+  pointer capture plus Arrow Up/Down and current-value ARIA text. The default
+  remains 44/56 map/desk. When the available height permits, clamps reserve
+  220px for the map and 190px for the desk.
+- The guarded device-local preference key
+  `gamify-surgery.ui.workspace-split.v1` is independent of campaign saves.
+  Invalid, unavailable, or out-of-range storage falls back safely. Phone
+  layouts at 760px and below remain unchanged.
+- Direct `fr` grid tracks preserve the selected ratio, and center-aware
+  pointer math avoids a jump when a player grabs the current divider. The
+  FacilityCanvas remains unchanged: its existing Scale.NONE and ResizeObserver
+  behavior makes the backing bitmap follow the host within one pixel of normal
+  browser rounding, revealing more or less world without distortion or a
+  camera re-zoom.
+- The Build Mode control remains desk-owned, follows the same split delta, and
+  remains clickable. Opening/closing a chart or entering/exiting Build Mode
+  preserves the selected allocation. Accepted proof
+  `artifacts/screenshots/workspace-splitter-desktop-map-reduced.png` visibly
+  shows Enter Build Mode aligned with the desk after a meaningful split.
+
+Sol rejected the first oversized overlapping control/proof. Terra then
+corrected the control size and semantic element, grid compatibility,
+center-aware pointer math, storage bounds, bidirectional browser coverage, and
+the proof. Terra initial validation and Sol independent acceptance covered
+focused Vitest (1 file / 4 tests; Sol run 325ms), player typecheck, player
+production build (295 modules; existing chunk advisory only), focused desktop
+Playwright (1/1; Sol run 14.5 seconds / 15.9 seconds total), `git diff
+--check`, and native-proof inspection.
+
+Task-owned manifest: `apps/player/src/AppShell.tsx`, `global.css`, the UI
+index export, `WorkspaceSplitter.tsx`, `workspaceSplitPreference.ts`,
+`workspaceSplitter.test.ts`, `tests/e2e/workspace-splitter.spec.ts`, the proof
+PNG, `CANONICAL_DESIGN.md`, `docs/features/visual-art-direction.md`, this
+splitter ExecPlan, and this handoff closure. The concurrent top-down wall task,
+its files/proofs/plan, and the three local diagnostic screenshots remain
+separate and untouched.
+
+Accountability: explorer `desk_map_splitter_audit` completed the read-only
+ownership, resize, and test audit. Terra `implement_map_desk_splitter`
+implemented the feature, acceptance corrections, focused validation, and this
+closure. Sol made the product, persistence, and reference decisions; authored
+the plan; reviewed actual diffs and proof; and reran acceptance validation. No
+Spark worker ran because React, CSS, accessibility, and browser behavior
+required coupled judgment.
+
+The owner's exact next action is a local playtest/review. Say **"push to
+GitHub"** when this completed checkpoint should be backed up or deployed; no
+staging, commit, push, or deployment has been authorized or performed.
+
+## Graphics checkpoint: adjacency-aware shallow north walls
+
+The graphics-only task in
+`docs/execplans/shorten-backed-north-room-walls.md` is complete locally and
+awaits owner visual review. It is not staged, committed, pushed, or deployed;
+the deployed graphics baseline remains
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+
+- All canonical east/west room and exposed-hallway edges retain the exact thin,
+  straight Front Desk cap grammar: 0.15 tile wide at the shared 64px scale,
+  using the measured existing-atlas crops.
+- Each room's north-edge tile is tall only while it is exterior. When a room or
+  hallway directly occupies the tile to its north, that exact segment becomes
+  the same shallow wall art and height used by a room's front wall. The shallow
+  segment begins at the room's north floor edge, remains inside its logical
+  footprint, and never covers the northern room or hallway.
+- Full and partial backing use exact tile boundaries. Adjacency alone keeps a
+  short wall present; a persisted north door subtracts only its exact aperture.
+  The wall treatment does not enlarge or reserve space beyond the room's
+  existing logical footprint.
+- Front Desk, both Examination orientations, and all enclosed Level 0-2 room
+  packages use the shared rule. Hallway shared/internal circulation remains
+  open, while genuinely exposed hallway sides retain their canonical caps.
+- Generic north-wall decoration is limited to surviving tall exterior faces.
+  Front Desk notice/clock art requires full support by one tall door-subtracted
+  run, and Examination wall art checks only its own authored wall slot.
+- Room placement, routing, door legality, saves, furniture, characters,
+  progression, balance, systems, and clinical content are unchanged. Existing
+  code-native atlas material was sufficient, so no raster source was modified
+  and neither Cortan nor local image generation was used.
+
+Sol reviewed the actual diff and the dedicated plus regression captures at
+native resolution. Final integrated validation:
+
+- Focused player Vitest passed **7 files / 69 tests**.
+- Player workspace typecheck passed.
+- Player production build passed for **295 modules** with only the existing
+  large-chunk advisory.
+- The dedicated backed-wall desktop Playwright proof passed **1/1**.
+- The top-down side-cap, complete Level 0-2 enclosed-room matrix, and hallway
+  edge desktop regressions passed **3/3**.
+- `git diff --check` passed.
+- Accepted proof files are
+  `backed-north-room-walls-100-desktop.png`,
+  `top-down-side-caps-100-normal-desktop.png`,
+  `top-down-side-caps-100-east-west-door-gaps-desktop.png`,
+  `canonical-enclosed-room-100-left-desktop.png`,
+  `canonical-enclosed-room-100-right-desktop.png`, and
+  `canonical-hallway-100-edges-desktop.png` under `artifacts/screenshots/`.
+
+Terra worker `short_north_walls` implemented the bounded shared renderer,
+tests, and proof milestone, then completed Sol's correction for exact decor
+support and a genuine partially hallway-backed proof. No Spark worker ran
+because adjacency/run intersection, depth ordering, and native visual
+acceptance required renderer judgment. Sol authored the plan, reviewed the
+actual source diff and all proof images, returned the bounded correction,
+reran the full acceptance suite, and made only completion-documentation edits.
+Concurrent workspace-divider and interface-density work, along with the three
+pre-existing screenshot diagnostics, was preserved without modification.
+
+The owner's exact next action is to review/playtest the local wall treatment
+and name a concrete graphical correction if needed. Keep gameplay/system work
+in its separate threads. Say **"push to GitHub"** when this checkpoint should
+be backed up or released; no commit, push, or deployment has been authorized
+or performed.
+
+## Gameplay/UI checkpoint: condensed interface vertical density
+
+The interface-density task in
+`docs/execplans/condense-interface-vertical-density.md` is complete locally.
+It is not staged, committed, pushed, deployed, or included in the current
+Pages build. Local `beta` and `origin/beta` remain at
+`eb57bb0018e449b5ab699cb74abd09180714ba67`; deployed `main` remains at
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+
+- The title strip, desktop HUD, facility heading, normal desk chrome, and
+  footer are compacted. The demonstration-content disclaimer renders exactly
+  once in the lower bar.
+- Build Mode replaces the Facility Time HUD label/value with `BUILD MODE` and
+  `Facility time is stopped while you remodel.` and no longer renders a map
+  status overlay. Ordinary manual pause retains the `GAME PAUSED` map overlay.
+- Desktop non-clinical panel, tab, goal, staff, event, advertising, emergency,
+  and Build Mode chrome is denser while preserving labels, controls, scrolling,
+  focus, and keyboard behavior. Chart prose, question/answer surfaces,
+  explanations, dialogs, and clinical actions were intentionally protected.
+- The 1024px footer uses a compact two-row layout so the notice cannot collide
+  with status/actions. Phone Build Mode gives the stopped-time HUD message a
+  full-width wrapping cell. The existing splitter remains an 18px desktop row;
+  prior completed splitter lines coexist in AppShell, CSS, and documentation.
+
+Measurements and accepted native proofs:
+
+- At 1440px, resource chips measure 54px, the facility heading 36px, and the
+  footer about 42.19px. At 1024px, the two-row footer measures 62.41px, still
+  below the old approximately 50px footer plus its separate notice row.
+- The compact HUD remains 54px; its full Build Mode message box measures
+  27.38px. Its contained toolbar measures 517.28px by 66.83px and retains all
+  labels, including wrapped `Build Hallway - $35`.
+- Accepted proofs under `artifacts/screenshots/` are
+  `ui-density-normal-desktop.png`, `ui-density-build-desktop.png`,
+  `ui-density-compact-desktop.png`, and `ui-density-phone-build.png`.
+
+Sol independently validated focused Vitest **2 files / 12 tests**, player
+typecheck, and a production build of **295 modules** with only the existing
+chunk-size advisory. Focused Playwright passed **4** with **8 expected project
+skips in 30.0s**; `git diff --check` passed. Sol also natively inspected all
+four accepted proof PNGs.
+
+Task-owned files are AppShell, ResourceBar, global CSS, the visualComponents
+test, the Build Mode usability test, new `ui-density` E2E, canonical design,
+visual art direction, the density ExecPlan, four `ui-density` PNGs, and this
+handoff section. `build-mode-condensed-desktop.png` and
+`build-mode-door-highlights.png` were incidentally regenerated by an early
+existing-suite run; preserve them as shared/concurrent-state outputs, not
+density acceptance proofs.
+
+Accountability: read-only explorers `vertical_density_layout_audit` and
+`build_status_disclaimer_audit` completed discovery. Terra
+`condense_primary_ui_bars` implemented M1, M2, the compact-width acceptance
+correction, validation, and closure. No Spark worker ran because responsive
+visual, accessibility, and test work required judgment. Sol planned, reviewed
+actual diffs and native proofs, returned the clipping correction, and
+independently validated without implementation edits.
+
+The owner's exact next action is a local/remote-after-push playtest and naming
+any concrete density correction. Otherwise, say **"push to GitHub"** at this
+substantial checkpoint for backup/deployment. No push has occurred.
+
+## Gameplay/UI checkpoint: further HUD and footer compaction
+
+The follow-up density task in
+`docs/execplans/further-condense-hud-footer.md` is complete locally. It is not
+staged, committed, pushed, deployed, or included in the current Pages build.
+Local `beta` and `origin/beta` remain at
+`eb57bb0018e449b5ab699cb74abd09180714ba67`; deployed `main` remains at
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+
+- Learning XP now visibly uses heading/level followed by progress bar/fraction.
+  The redundant visible `xpLabel` is removed while the Learning XP accessible
+  cell name retains the current XP value.
+- Desktop wrapper block padding changed from 0.2rem to 0.12rem and chip block
+  padding from 0.28rem to 0.18rem. Combined vertical padding fell from 15.36px
+  to 9.60px: 5.76px, or 37.5%, less top/bottom dead space.
+- Desktop chips fell from 54px to 48px, reclaiming 6px. The wide footer fell
+  from 42.19px to 24px, reclaiming 18.19px; the compact footer fell from
+  62.41px to 34px, reclaiming 28.41px. These are approximately half of the
+  prior total heights while fixed borders/text line boxes remain, and remove
+  substantially more than half of removable dead space.
+- The exact Build Mode sentence remains contained. Phone retains the full XP
+  fraction, full-width Build message, and its existing 36px footer-action
+  minimums. The splitter remains an 18px desktop row and clinical typography is
+  unchanged.
+
+Accepted native proofs under `artifacts/screenshots/` are
+`ui-density-extra-compact-wide-desktop.png`,
+`ui-density-extra-compact-wide-build.png`,
+`ui-density-extra-compact-compact-desktop.png`, and
+`ui-density-extra-compact-phone-build.png`.
+
+Sol independently validated focused Vitest **2 files / 12 tests**, player
+typecheck, and a production build of **295 modules** with only the existing
+chunk-size advisory. A clean serial focused Playwright run passed **4** with
+**8 expected project skips in 51.1 seconds**; `git diff --check` passed. Sol
+inspected all four proof PNGs natively.
+
+Task-owned paths are ResourceBar, global CSS, the visualComponents test, the
+existing untracked `ui-density` E2E, four new task-specific proof PNGs, this
+follow-up plan, and this appended handoff section. Earlier density/splitter
+changes coexist in the shared files. Concurrent graphics paths, including
+`frontDeskPresentation.ts/test`, `roomVisualLayout.ts/test`, new
+`doorPresentation.ts/test`, and
+`docs/execplans/correct-front-desk-four-row-floor-and-door-layout.md`, remain
+unrelated and untouched.
+
+Accountability: Terra `condense_primary_ui_bars` implemented the bounded
+follow-up, responsive assertions/proofs, validation, and closure. No Spark
+worker ran because responsive visual, accessibility, and testing judgment was
+required. Sol audited, planned, reviewed actual diffs/proofs, and independently
+validated without implementation edits.
+
+The owner's exact next action is to playtest wide, compact, and phone layouts
+and name a concrete correction. Otherwise say **"push to GitHub"** for
+backup/deployment. No push has occurred.
+
+## Graphics checkpoint: true 5-by-4 Front Desk tile floor
+
+The graphics-only task in
+`docs/execplans/correct-front-desk-four-row-floor-and-door-layout.md` is
+complete locally and awaits owner visual review. It is not staged, committed,
+pushed, or deployed; the deployed graphics baseline remains
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+
+- The Front Desk display floor now equals its complete logical five-column by
+  four-row footprint. All twenty floor tiles are square at the shared map
+  scale, and both tall exposed and shallow backed north-wall treatments begin
+  at the north edge of row A without reserving, replacing, or compressing any
+  floor space.
+- Room-local graphics coordinates are now recorded as lettered rows from
+  north to south and numbered columns from west to east. The Front Desk uses
+  rows A-D and columns 1-5.
+- The filing cabinet is grounded in A1; the notice board and clock are wholly
+  mounted above A2; the cooler and waste bin fit in A5; the reception desk
+  spans C2-C3; the seated founder and vacant secretary chair remain logically
+  anchored at B3 but share the exact display ground-contact at the B2/B3/C2/C3
+  junction (`{ x: 0.4, y: 0.5 }`) immediately behind the desk; and the visitor
+  chair occupies D5 using the existing authored crop that visibly faces left
+  into the room.
+- Front Desk presentation exposes north door offsets 1/2/3 (A2/A3/A4), east
+  row offsets 1/2 (B/C), west row offsets 1/2/3 (B/C/D), and the protected
+  south entrance at offset 2 (D3). The domain represents an east/west door by
+  its boundary side and row offset, so conversational east `B4`/`C4` retains
+  the requested B/C row meaning at the actual east boundary.
+- A presentation-only door helper resolves the outside cell for each room
+  door. The later full-cutout checkpoint now mirrors that physical opening onto
+  the destination shell as well: same-destination slots merge, while distinct
+  destinations remain separated by their genuine shared wall rather than a
+  synthetic jamb or threshold. Persisted door data, legality, navigation,
+  collision, and room footprints remain unchanged.
+- The D5 chair is only placed and faced by this graphics pass. Patient waiting
+  behavior or routing to that chair remains intentionally unchanged and belongs
+  in the gameplay/systems thread.
+- Existing checked-in atlas artwork was sufficient. No raster source was
+  modified, and neither Cortan nor local image generation was used.
+
+Sol reviewed the complete task-owned diff and inspected the accepted captures
+at native resolution. Final integrated validation:
+
+- Focused player Vitest passed **9 files / 83 tests**.
+- Player workspace typecheck passed.
+- Player production build passed for **297 modules** with only the existing
+  large-chunk advisory.
+- The dedicated Front Desk Build Mode proof plus the isolated Front Desk,
+  backed-north-wall, complete canonical-room matrix, canonical-hallway, and
+  top-down side-cap desktop regressions passed **6/6** in about 2.3 minutes.
+- For the owner's seated-position follow-up, focused Vitest passed **1 file /
+  11 tests**, player typecheck passed, Terra's production build passed for
+  **297 modules** with only the existing advisory, and Sol independently reran
+  the occupied/vacant desktop browser proof **1/1** in 47.3 seconds. Native
+  review confirms the seated lower body is naturally occluded by the desk and
+  the empty chair occupies the identical seat.
+- `git diff --check` passed, and the rejected stale Front Desk proof was
+  removed.
+- Primary accepted proofs under `artifacts/screenshots/` are
+  `front-desk-four-row-floor-build-candidates-100-desktop.png`,
+  `front-desk-four-row-floor-door-runs-100-desktop.png`,
+  `front-desk-v4-shell-normal.png`,
+  `front-desk-grounded-occupied.png`,
+  `front-desk-grounded-vacant.png`, and
+  `backed-north-room-walls-100-desktop.png`. The canonical matrix, hallway,
+  and side-cap captures were also reviewed as regressions.
+
+Terra worker `front_desk_tile_floor` implemented the bounded projection,
+fixture, existing-atlas crop, visual door-zone, destination-aware door-run,
+tests, and browser-proof milestone. Terra also completed Sol's corrections for
+destination-instance identity, protected-door proof coverage, exact A2/A5
+fixture contacts, the later B2/B3/C2/C3 seated-position correction, all-room
+door presentation, and rejected-proof cleanup. No Spark
+worker ran because the coupled renderer geometry, visual authorship, and native
+proof decisions required judgment. Sol authored the plan, reviewed the actual
+source/test diff and every accepted proof, independently reran the full
+acceptance suite, and made only the art-direction convention and completion
+documentation edits. No qualifying implementation work was left undelegated.
+Concurrent management-mode, workspace-divider, and interface-density work,
+the prior canonical wall work, and the three protected diagnostic screenshots
+were preserved.
+
+The owner's exact next action is to review/playtest the local Front Desk and
+name a concrete graphical correction if needed. Keep patient behavior and all
+other gameplay/system changes in their separate threads. Say **"push to
+GitHub"** when this checkpoint should be backed up or released; no commit,
+push, or deployment has been authorized or performed.
+
+## Gameplay/UI checkpoint: desk-owned Management Mode
+
+Employees now live only in desk-owned Management Mode. The empty Clinical Desk
+has matched Management-left and Build-right triggers; Goals and Alerts remain
+in the right rail. Management pauses/restores according to the prior pause
+state, replaces Facility Time, and locks time controls. Build, Management, and
+charts are mutually exclusive. Charts omit both triggers, remove desk chrome,
+and fill the desk; phone charts may remain fixed while Management is bounded
+to the desk with internal scrolling. Staff alerts open Management before
+focusing their target, and the splitter remains compatible.
+
+Task-owned paths are `apps/player/src/session/usePrototypeSession.ts`,
+`apps/player/src/App.tsx`, task-relevant lines in `AppShell.tsx` and
+`global.css`, `BuildPanel.tsx` and its test, new `ManagementPanel.tsx` and its
+test, `ResourceBar.tsx` and its visual-component tests, the genericized
+`StaffPanel.tsx` comment, the UI export, `tests/e2e/management-mode.spec.ts`,
+narrow edits in `visual-ui.spec.ts`, `ui-density.spec.ts`, and
+`alert-humor.spec.ts`, `CANONICAL_DESIGN.md`,
+`docs/execplans/move-employees-to-management-mode.md`, and this append. Unique
+proofs are `management-mode-laptop.png` (1280x720),
+`management-mode-laptop-chart-priority.png` (1280x720),
+`management-mode-compact-desktop.png` (1024x768), and
+`management-mode-phone.png` (412x839 logical Pixel 7 viewport; 1082x2202 output
+pixels). The phone trigger gap is 4.81 CSS px; chart edge deltas are 0/4/0/1px.
+
+Validation passed: focused player Vitest passed 4 files / 19 tests; player
+typecheck passed; and the production build passed for 297 modules with only the
+existing large-chunk advisory. The first final build attempt hit a transient
+Windows `ENOTEMPTY` race while Vite cleared generated `dist`; an unchanged
+retry passed. The focused Management E2E selected 8 cases across desktop,
+laptop, compact desktop, and phone (6 passed, 2 expected project skips in 1.7
+minutes). Focused desktop Build composition, compact desktop density, and
+desktop staff-role alert reveal/focus each passed once; the alert opens
+Management and focuses the receptionist hire control. `git diff --check`
+passed. Legacy checks regenerated shared `visual-build-mode-desktop.png`,
+`july28-build-mode-desktop.png`, `alert-humor-feed-desktop.png`, and the prior
+`ui-density-extra-compact-compact-desktop.png`; they are shared outputs, not
+unique Management proofs. The Build test's pre-existing Zoom Out count was
+corrected 9→10 because the isolated Front Desk begins at 1.1 and the existing
+minimum is 0.1.
+
+Local `beta` and `origin/beta` remain at
+`eb57bb0018e449b5ab699cb74abd09180714ba67`; deployed `main` remains at
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`. This checkpoint is local only:
+nothing is staged, committed, pushed, deployed, or released. Concurrent
+graphics, splitter, and density work remains excluded and preserved. Existing
+shared screenshot outputs may have been refreshed by legacy E2E; they are not
+Management proofs.
+
+Accountability: read-only explorers `management_mode_staff_audit` and
+`management_mode_desk_audit` completed discovery. Terra
+`implement_management_mode_core` implemented core behavior, acceptance
+corrections, browser coverage, and closure. Sol planned, reviewed actual diffs
+and native proofs, independently reran component/typecheck/build/laptop E2E,
+and made only the tiny two-branch proof-capture correction during integration.
+No Spark ran because session lifecycle, responsive layout, and browser visual
+acceptance required judgment; Sol's correction was genuinely tiny, not
+undelegated qualifying implementation.
+
+The owner's next action is a local laptop playtest/review. Name any concrete
+correction, or say **"push to GitHub"** when this valuable checkpoint should be
+backed up. No push has occurred.
+
+## Graphics checkpoint: full floor-continuous doorway cutouts
+
+The graphics-only task in
+`docs/execplans/render-doorways-as-full-floor-continuous-cutouts.md` is
+complete locally and awaits owner visual review. It is not staged, committed,
+pushed, or deployed; the deployed graphics baseline remains
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+
+- Every persisted door now removes its complete one-tile segment from north,
+  south, east, or west canonical wall geometry. Adjacent door offsets naturally
+  become one uninterrupted multi-tile aperture.
+- The late scene layer that repainted floor-color bridges, paper thresholds,
+  sills, headers, frames, and jambs over persisted openings was removed. Room
+  and hallway floor patterns now touch directly at the shared edge; their
+  material may change there, but no generic strip covers either surface.
+- A renderer-only reciprocal-opening helper gives each destination room the
+  exact opposite-side aperture for an incoming non-exterior door. This removes
+  both sides of a physical room-to-room wall while leaving the single saved
+  gameplay door, legality, collision, navigation, and saves unchanged.
+- Consecutive doors into one destination form a continuous wide opening.
+  Consecutive doors into different destinations contain no synthetic wall
+  material inside either slot and remain separate through the genuine wall
+  between the destination rooms.
+- Room-to-hallway connections use the same direct floor seam; hallway internal
+  boundaries remain open. The protected Front Desk entrance is also a complete
+  south-wall cutout whose floor meets the sidewalk directly, while its planters
+  and clear sidewalk lane remain intact.
+- Build Mode candidates/highlights remain interaction affordances only. Closed
+  wall segments, tall/shallow north-wall behavior, thin side caps, room
+  footprints, furniture, characters, and floor patterns remain intact.
+- Existing renderer and floor art were sufficient. No raster source was
+  modified, and neither Cortan nor local image generation was used.
+
+Sol rejected the first native proof because the source shell opened but the
+destination room's reciprocal wall still crossed room-to-room paths. Terra
+then implemented the reciprocal-shell correction. The accepted proof now shows
+both shells removed, direct floor seams on all orientations, a two-tile wide
+opening, genuine separation between distinct destinations, a room-to-hallway
+join, and the protected exterior entrance.
+
+Final validation reviewed and independently rerun by Sol:
+
+- Focused player Vitest passed **4 files / 33 tests**.
+- Player workspace typecheck passed.
+- Player production build passed for **298 modules** with only the existing
+  large-chunk advisory.
+- The dedicated cutout proof plus Front Desk door-run, top-down side-cap,
+  backed-north-wall, complete canonical-room matrix, and canonical-hallway
+  desktop regressions passed **6/6** in 2.0 minutes.
+- `git diff --check` passed.
+- The primary accepted proof is
+  `artifacts/screenshots/door-cutout-floor-continuity-100-desktop.png`.
+  Sol also inspected the refreshed Front Desk door-run, side-cap door-gap,
+  backed-wall, hallway, and two canonical matrix captures at native resolution.
+
+Accountability: explorer `door_cutout_audit` completed the read-only shell,
+floor-ordering, hallway, exterior, and Build Mode audit. Terra worker
+`full_door_cutouts` implemented full-tile shell subtraction, removed permanent
+door overlays, added exact geometry and browser coverage, and completed Sol's
+reciprocal-destination correction. No Spark worker ran because shared renderer
+geometry, reciprocal boundary mapping, and native visual acceptance required
+judgment. Sol authored the plan, reviewed the actual diff and every proof,
+rejected the incomplete first pass, independently reran acceptance, and made
+only controlling art-direction and completion-documentation edits. No
+qualifying implementation work was left undelegated. Concurrent management,
+workspace-divider, density, prior graphics work, and the three protected
+diagnostic screenshots were preserved.
+
+The owner's exact next action is to review/playtest persisted doorways in local
+Build Mode and ordinary play and name a concrete graphical correction if
+needed. Keep door legality, routing, and other gameplay/system changes in their
+separate threads. Say **"push to GitHub"** when this checkpoint should be
+backed up or released; no commit, push, or deployment has been authorized or
+performed.
+
+## Gameplay/UI checkpoint: compact patient chart presentation
+
+The desk-owned patient chart now removes visible Chief Complaint and HPI labels
+while retaining separate accessible, rule-divided concern and presentation
+regions. Its current prompt appears only once, immediately above the randomized
+answer choices, never in presentation copy. The compact chart preserves a
+full-desk desktop/laptop surface, uses the intended two-row compact-desktop
+layout, and keeps natural document scrolling on phone. Paper stack and clip
+decoration are absolute, pointer-transparent, consume no layout space, and are
+suppressed on phone; enabled choices retain 44px minimum targets.
+
+The active `synthetic_unapproved_prototype` overlay now uses exact v2
+source-to-final bindings: 105 AI-assisted patient-voice chief-concern
+revisions, 51 exact base-presentation de-dup revisions, and 30 explicit HCC
+profile-presentation revisions; 54 base presentations remain unchanged. All
+AI-assisted copy remains `needs_clinician_review`; frozen source arrays, stable
+clinical IDs, and independent prior question approvals remain unchanged. This
+UI/content checkpoint is not clinical approval and is not approved public
+content.
+
+Sol reviewed the chart CSS, markup, focused E2E, and native proofs. Verified
+geometry is flush at desktop `959.609375` CSS px and laptop `679.609375` CSS
+px; the compact lower decision surface is flush at `720.8125` CSS px while its
+intentional first identity/presentation row ends at `550.71875` CSS px. All
+viewports had zero horizontal overflow, 44px enabled answer targets, and phone
+kept natural scrolling with decoration suppressed. Unique inspected proofs are
+`patient-chart-compact-desktop.png` (1440x1000),
+`patient-chart-compact-laptop.png` (1280x720),
+`patient-chart-compact-compact-desktop.png` (1024x768), and
+`patient-chart-compact-phone.png` (Pixel 7 logical 412x839).
+
+After semantic presentation de-duplication, Terra refreshed the focused browser
+proof sequentially: desktop passed 1/1 in 14.1s, laptop 1/1 in 11.4s, compact
+desktop 1/1 in 12.5s, and phone 1/1 in 10.4s. The runtime assertion confirms
+the first displayed presentation retains COPD context but has neither the exact
+teaching-tail duplicate nor a question-mark teaching tail; the patient concern
+and decision prompt each remain singular, with the prompt directly above its
+choices. Sol independently reran the final proof: desktop 1/1 in 19.1s, laptop
+1/1 in 15.0s, compact desktop 1/1 in 14.6s, and phone 1/1 in 13.8s. Final
+integrated validation also passed clinical-content Vitest (40 files / 269
+tests), focused player Vitest (3 files / 17 tests), both workspace typechecks,
+the 298-module player production build (existing chunk advisory only), and
+repository boundary/launcher checks.
+
+Accountability: Terra `compact_chart_ui` implemented the compact chart
+structure, semantics, density, and initial full-height treatment. Terra
+`patient_concern_revisions` implemented the exact pending concern overlay and
+its first provenance/schema tests. Terra `validate_compact_chart` authored the
+four-viewport acceptance proof, refreshed it for semantic de-duplication, and
+completed the owned documentation. Terra `fix_chart_body_geometry` corrected
+the legacy responsive height conflicts. Terra
+`deduplicate_patient_presentations` established the v2 presentation/profile
+schema draft and stopped at the discovered fragment/fact-loss boundary; Terra
+`finish_explicit_presentation_overlay` replaced that draft with 51 base and 30
+profile literal source-to-final records and complete drift guards. Terra
+`fix_presentation_narrative_grammar` repaired eight grammar-only fragments and
+the narrative regression contract. Terra `harden_presentation_revision_schema`
+closed duplicate-field/profile-record invariants and reformatted the overlay
+without changing its audited literals. Read-only explorers audited layout and
+clinical-text boundaries before and after implementation. Sol planned, reviewed
+the actual diffs and native proofs, rejected incomplete intermediate mappings,
+required and reviewed each correction, and independently reran final
+acceptance. No Spark worker ran because responsive layout and provenance-safe
+clinical-copy/schema work required judgment. No qualifying implementation work
+was left undelegated; Sol made only final plan/handoff bookkeeping edits.
+
+This is a validated major local checkpoint. Nothing is staged, committed,
+pushed, deployed, or released. Say **"push to GitHub"** when a GitHub backup is
+desired; that instruction is required before any checkpoint commit or push.
+
+## Graphics checkpoint: floor-only door seams and single-owner shared walls
+
+The graphics-only task in
+`docs/execplans/refine-shared-walls-and-door-seams.md` is complete locally and
+awaits owner visual review. Local `beta` and `origin/beta` remain at
+`eb57bb0018e449b5ab699cb74abd09180714ba67`; the deployed graphics baseline
+remains `7d8dab437838250b7315a71870ec6ea2d720f3ca`. Nothing from this checkpoint
+is staged, committed, pushed, deployed, or released.
+
+- Procedural, authored, and Front Desk room floor material now fills the entire
+  logical footprint. The Front Desk retains its visible five-by-four tile
+  pattern but no longer paints the framed atlas floor plate. Baseboards, rims,
+  and foreground lips are wall-owned decoration rather than floor-owned bands.
+- A north boundary with a constructed room or hallway immediately behind it is
+  now one very short, room-tinted baseboard-plus-wallpaper strip, approximately
+  0.10 tile high. The southern space owns that strip; the northern neighbor
+  suppresses its south/front lip. Exposed north runs keep the complete tall
+  wall, and exact persisted door runs remove the applicable wall completely.
+- A closed east/west room/room or room/hallway boundary now has exactly one
+  accepted-width top-down cap centered on the global tile border. The western
+  space deterministically owns it, including when that space is a hallway. A
+  persisted door removes the complete interval. Hallway/hallway circulation
+  remains open and exposed exterior side caps remain intact.
+- Build Mode derives exact cuts from direct and reciprocal presentation
+  openings before drawing its global grid. Consequently neither ordinary play
+  nor Build Mode can reintroduce a dark boundary line inside a persisted door:
+  one room's actual floor texture touches the adjacent room or hallway floor
+  texture directly.
+- Door records, destination resolution, legality, routing, collision, saves,
+  fixtures, actors, furniture, landscaping, and room footprints were not
+  changed. No raster source was modified, and neither Cortan nor local image
+  generation was used.
+
+Sol rejected Terra's first visual pass because the Front Desk had lost its
+visible five-by-four grid, the northern space still painted a duplicate south
+lip, and a hallway west of a room did not own a centered vertical partition.
+Terra corrected all three. Sol then rejected the first corrected proof because
+it did not visibly exercise the hallway-west-of-room and hallway/hallway cases;
+Terra added an asserted far-right cluster showing an open hall-to-room door, a
+closed centered hall-to-room cap, and open hall/hall circulation in both normal
+and Build Mode.
+
+Final validation reviewed and independently rerun by Sol:
+
+- Focused player Vitest passed **5 files / 50 tests**.
+- Player workspace typecheck passed.
+- Player production build passed for **298 modules**, with only the existing
+  large-chunk advisory.
+- The dedicated normal/Build proof plus Front Desk, backed-north, side-cap,
+  canonical-room-matrix, and canonical-hallway desktop regressions passed
+  **6/6** in 2.0 minutes.
+- `git diff --check` passed before documentation closure and was rerun after it.
+- Sol inspected both dedicated captures and every refreshed affected regression
+  capture at native resolution. The primary proofs are
+  `artifacts/screenshots/door-cutout-floor-continuity-100-desktop.png` and
+  `artifacts/screenshots/door-cutout-floor-continuity-build-100-desktop.png`.
+
+Accountability: explorer `shared_wall_seam_audit` completed the read-only floor,
+shell, hallway, shared-edge, Build Mode, and draw-order audit. Terra worker
+`shared_wall_seams` implemented the renderer geometry, exact ownership helpers,
+focused tests, both requested correction passes, and the final browser proof.
+No Spark worker ran because atlas-aware geometry, shared-boundary ownership,
+depth presentation, and native visual acceptance required product judgment.
+Sol authored the plan, reviewed the actual source/test diff, rejected two
+incomplete passes, inspected native proof, independently reran acceptance, and
+made only the art-direction and completion-documentation integration edits. No
+qualifying implementation work was left undelegated. Concurrent Management,
+workspace-divider, density, clinical-content, and other graphics work, plus the
+three protected diagnostic screenshots, were preserved.
+
+The owner's exact next action is to review or playtest the local room/room and
+room/hall doorway seams in ordinary play and Build Mode and name any concrete
+graphics correction. Keep door legality, routing, and other gameplay/system
+changes in their separate threads. Say **"push to GitHub"** when this checkpoint
+should be backed up or released; no commit, push, or deployment has been
+authorized or performed.
+
+## Edge-anchored rails and titleless map zoom checkpoint
+
+The responsive shell checkpoint in
+`docs/execplans/edge-anchor-rails-and-overlay-map-zoom.md` is complete locally.
+Desktop and compact multi-column layouts pin the patient rail to the viewport's
+left edge and the operations rail to its right edge, leaving all additional
+width to the center map-and-desk workspace. The visible facility title row is
+gone; an accessible compact black minus/percentage/plus group now overlays the
+map host's top-right corner. Phone intentionally remains stacked while keeping
+the zoom group contained and usable. No clinical content changed.
+
+Terra added `tests/e2e/edge-anchored-layout.spec.ts` and inspected native
+actual-app proofs: `artifacts/screenshots/edge-anchored-layout-ultrawide.png`,
+`edge-anchored-layout-desktop.png`, `edge-anchored-layout-laptop.png`,
+`edge-anchored-layout-compact.png`, and `edge-anchored-layout-phone.png`.
+The proof numerically covers 1920x1080, 1440x1000, 1280x720, 1024x768, and
+Pixel 7: viewport-edge rails, center fill, zero horizontal overflow, title-row
+absence, host/frame fill, contained compact overlay, accessible zoom controls,
+canvas CSS/backing-bitmap resizing, and a representative splitter drag.
+
+Validation completed by Terra: new desktop/phone proof passed 2/2 (with the
+other two project combinations intentionally skipped); UI-density passed
+desktop 1/1, compact 1/1, and phone 2/2; the updated Build Mode visual test
+passed 1/1; workspace splitter passed 1/1. The updated golden-slice desktop
+and explicit-phone assertions passed before the broad command runner detached
+its unrelated remaining gallery/mode captures, so only that exact validation
+process group was stopped and the focused changed assertions are recorded as
+passing. Sol independently reran the new responsive proof (2 active passed, 2
+intentional project-mismatch skips), the complete player Vitest suite (60 files
+/ 341 tests), player typecheck, the 298-module production build, and
+`git diff --check`; all passed, with only the existing large-chunk build
+advisory. Sol also inspected all five native proof images at original
+resolution and accepted the integrated layout.
+
+The only browser-discovered product correction was narrow and task-scoped:
+the old generic facility-host canvas sizing selector also matched the new zoom
+overlay, initially causing it to fill the map. The overlay now resets that
+inherited sizing with a more-specific selector. Existing unrelated dirty work,
+including graphics, Management, splitter, chart, clinical-content, handoff,
+and screenshot changes, was preserved. Nothing is staged, committed, pushed,
+deployed, or released. Say **"push to GitHub"** when this validated checkpoint
+should be backed up; that explicit instruction is required before any commit or
+push.
+
+Accountability: read-only explorers `edge_layout_audit` and
+`map_zoom_overlay_audit` mapped the effective responsive cascade, header
+dependencies, accessibility, canvas resize path, and stale tests. Terra worker
+`edge_anchor_layout_implementation` implemented the responsive shell/overlay
+milestone and, in a sequential follow-up, the browser proof and documentation
+milestone. No Spark worker ran because responsive layout, accessibility,
+shared-cascade recovery, and browser visual acceptance required product
+judgment. Sol authored the plan, reviewed the actual code/test/document diff,
+independently reran acceptance, and made only this completion-record update. No
+qualifying implementation work was left undelegated.
+
+## Cortan versioned graphics-workflow checkpoint
+
+The graphics-only pipeline milestone in
+`docs/execplans/build-cortan-graphics-workflows.md` is complete. Canonical
+repository copies now live under `tools/comfyui/workflows/`, and matching new
+workflow files are installed on Cortan without replacing the user's original
+`Pixel Art Sprite Starter.json`.
+
+- `GamifySurgery - Pixel Art Sprite Starter v2.json` preserves the existing
+  SDXL/pixel-art baseline and 1024-to-128 nearest-exact finish, uses a fixed
+  seed, removes the erroneous foreground-mask inversion, and saves both the
+  transparent result and an explicit mask-QA image.
+- `GamifySurgery - Incremental Asset Edit Qwen v1.json` uses Cortan's local
+  Qwen Image Edit 2511 INT8 stack and four-step Lightning LoRA. Its canonical
+  baseline is source-only; two optional reference loaders remain deliberately
+  disconnected until Sol wires each enabled reference into both conditioning
+  encoders. A red-channel edit mask composites generated pixels only inside the
+  approved region while taking all outside pixels from the exact source image.
+- Room shells, tiles, walls, door seams, depth ordering, collision, and other
+  map/game systems remain renderer-owned. These workflows are only for modular
+  raster assets such as furniture, props, characters, and transparent cutouts.
+
+Sol verified all 26 used node classes and every referenced model against
+Cortan's live registry. Local structural validation passed. Both uploaded files
+read back byte-for-byte: starter v2 is 6,327 bytes with SHA-256
+`1D0A1A257014F6221EE3B539B69C916E53FD01A80CB854C4414AB5C9D1493062`;
+Qwen v1 is 11,190 bytes with SHA-256
+`06C31240C30A4347942C53571E9057A6B55F265016AF52EA6E56C7354DE34A47`.
+The original remains 8,915 bytes with SHA-256
+`7558BA7927E7F9AEBFB3D73BF4223220B37E7C431FDEA54A7EA3FD99F3736146`.
+Cortan's generation queue was empty before and after; no raster was generated.
+
+Accountability: Terra worker `cortan_graphics_inventory` authored both
+canonical workflows, the offline validator, operator documentation, and the
+requested correction pass. Sol rejected the initial Qwen graph after inspecting
+the actual opaque-alpha edit mask and link topology, required red-channel mask
+loading, exact-source compositing, disconnected optional references, and empty
+baseline negative conditioning, then reviewed the corrected files and performed
+all live compatibility, no-overwrite upload, read-back, original-integrity, and
+queue checks. No Spark worker ran because adapting the official nested Qwen
+topology and validating mask/composite semantics required graphics and workflow
+judgment. No qualifying implementation work was left undelegated.
+
+The owner's next graphics action is to request a controlled candidate run for
+one specific modular asset. Sol should manage the prompt, fixed seed, mask,
+optional reference wiring, output/mask QA, and acceptance record. Third-party
+model licensing/provenance still needs resolution before generated work ships.
+No gameplay/system file was changed for this milestone, and nothing was staged,
+committed, pushed, deployed, or released. Say **"push to GitHub"** if this
+checkpoint should be backed up.
+
+## High-resolution characters and stable zoom checkpoint
+
+The graphics-only character-resolution milestone in
+`docs/execplans/increase-character-resolution-and-clean-alpha.md` is complete.
+Founders and authored patients were deterministically re-extracted from the
+larger project source sheets into 128-by-192 map cells. Founder atlases are now
+640 by 1,152 under revision `founders-v4-r9-hires`; patient map atlases are 640
+by 1,920 under `patients-v1-r7-hires`. Patient thumbnail and portrait cells
+remain 96 by 112 and 192 by 224. Staff and ambient v3 actors were already
+160-by-240 native cells and were not artificially enlarged.
+
+Cleanup remains topology-aware: it removes exterior-connected checker/chroma
+matte residue without globally keying white, so coats, paper, badges, and other
+authored light details remain intact. The complete legacy founder and patient
+validator bodies run before the new shared alpha/rim audit. Task-scoped alpha
+proofs use the `character-resolution-alpha-*` names.
+
+Runtime character atlases alone now use Phaser's linear texture filter. Their
+authored presentation sizes are positive integer multiples of each reduced
+source ratio, giving an exact 2:3 shape (70 by 105 at the reference tile size)
+instead of fractional stretching as map zoom changes. Floor anchors and depth
+ordering are unchanged. Authored React avatar crops use automatic image
+sampling, while the procedural SVG fallback retains crisp edges. Global room,
+wall, furniture, and environment sampling was not changed.
+
+The live proof `tests/e2e/character-resolution-zoom.spec.ts` verified a founder,
+an authored patient, and a v3 staff actor at 70%, 100%, and 160% zoom. Each used
+the expected atlas family, linear source mode, a positive integer exact-2:3
+display size, and its original floor origin (181/192 for founder/patient and
+220/240 for v3). Sol inspected
+`character-resolution-zoom-70.png`,
+`character-resolution-zoom-100.png`, and
+`character-resolution-zoom-160.png`: identities, proportions, and floor contact
+remain coherent, with no visible white/checker/chroma rim or character clipping.
+
+Final Sol validation passed: 47 focused Vitest tests, workspace typecheck,
+production build, the founder/patient/shared-alpha/v3 atlas validators, scoped
+diff checks, and a direct desktop-Chrome Playwright rerun (1 passed). Vite's
+existing large-chunk advisory remains. The generic E2E wrapper had stayed
+attached to a pre-existing inaccessible Node process, so the same spec was run
+directly against the healthy local server.
+
+Cortan was checked first as required. Its ComfyUI registry has no installed
+upscale model, so no model-based super-resolution could be run responsibly.
+No Cortan raster generation, remote write, or Codex native image generation was
+used; the retained resolution came from the existing larger project sources.
+
+Accountability: read-only explorer `character_asset_audit` mapped the atlas and
+renderer contracts. Terra `character_hires_assets` rebuilt and proved the
+founder/patient assets and implemented the initial character runtime hunks; Sol
+rejected its first bypassed validator entry points and a second shortened
+validator rewrite, then accepted the restored full checks. That Terra stopped
+twice before the test milestone, so the work was reassigned once to Terra
+`character_runtime_tests`, which completed unit contracts, live zoom E2E, and
+proof capture. Sol reviewed the actual diffs and images and independently reran
+acceptance. No Spark worker ran because source identity preservation, alpha
+topology, renderer behavior, and visual acceptance required judgment. The only
+undelegated change was this small final acceptance/handoff record, which is
+Sol's integration responsibility; no qualifying implementation was left
+undelegated.
+
+No gameplay or system behavior was changed for this milestone, and nothing was
+staged, committed, pushed, deployed, or released. Say **"push to GitHub"** if
+this accepted graphics checkpoint should be backed up.
+
+## Local save failure diagnosis and durable persistence design checkpoint
+
+The read-only diagnosis and design in
+`docs/execplans/durable-browser-persistence.md` is complete. The current warning
+is emitted after access to `localStorage` fails or the one aggregate profile
+write throws. The application discards that exception, so the repository alone
+cannot distinguish the exact affected-laptop cause after the fact. Corrupt save
+JSON uses a separate load-time path and is not this warning. A clean Chrome
+profile successfully wrote, read, and deleted a temporary value on the deployed
+GitHub Pages origin, ruling out an inherent Pages/origin storage prohibition.
+
+Quota exhaustion is the leading cause. The current adapter rewrites all active
+and archived campaigns into `gamify-surgery.prototype.profile.v1`. Measurements
+put one fresh profile near 25.9 KB, 100 fresh campaigns near 2.58 MB, and 200
+near 5.15 MB. Repeated current frozen-encounter shapes put one campaign near
+4.48 MB at 500 encounters and 5.37 MB at 600. Encounters, settlements, review
+intents, and per-concept reviews are not currently retention-bounded. The
+affected browser must intercept the real `setItem` exception once before reset:
+`QuotaExceededError` confirms capacity; `SecurityError` or `NotAllowedError`
+identifies a browser/site-data policy that clearing alone may not fix.
+
+The owner explicitly does not need the existing campaigns. A safe reset must
+remove only `gamify-surgery.prototype.profile.v1` and
+`gamify-surgery.prototype.save.v1`, preserving access/auth, workspace split,
+question-review flags, and other preferences. Do not use `localStorage.clear()`.
+Do not naively delete and reload an active clinic: its `pagehide` handler can
+write `profileRef.current` back. From the affected active game tab, use:
+
+```js
+(() => {
+  const campaignKeys = new Set([
+    "gamify-surgery.prototype.profile.v1",
+    "gamify-surgery.prototype.save.v1",
+  ]);
+  const originalSetItem = Storage.prototype.setItem;
+  Storage.prototype.setItem = function (key, value) {
+    if (campaignKeys.has(String(key))) return;
+    return originalSetItem.call(this, key, value);
+  };
+  for (const key of campaignKeys) localStorage.removeItem(key);
+  location.reload();
+})();
+```
+
+The durable design moves campaigns to IndexedDB database
+`gamify-surgery.local.v1`, stores small profile metadata separately from one
+snapshot per campaign, preserves two verified revisions, uses atomic
+per-campaign writes with schema/revision/size/timestamp/checksum metadata, and
+adds exact local diagnostics, campaign-only reset, storage health, and validated
+JSON export/import. Legacy migration is one campaign at a time and retains its
+source until read-back verification. A later domain task must decide explicit
+history retention; a later cloud task uses this repository as the cache/recovery
+layer for the already accepted Supabase revision and writer-lease design.
+
+Accountability: Terra worker `durable_local_persistence_design` performed the
+substantial read-only storage/domain/ADR/test investigation. No Spark worker ran
+because root-cause classification and persistence/recovery architecture require
+engineering judgment. Sol reviewed the cited implementation paths, independently
+measured serialized growth, verified the deployed origin with a clean browser,
+and authored the resumable plan. No runtime implementation, deletion, staging,
+commit, push, deployment, or release occurred. The exact next action is for the
+owner to capture the affected-browser exception and run the guarded reset; any
+subsequent implementation starts with Terra Milestone 1.
+
+Follow-up while the owner was actively using `http://127.0.0.1:4173` confirmed
+that this is the correct local pathway and a live Vite development server, not a
+stale preview build: the response loads `/@vite/client` and `/src/main.tsx` and
+uses `Cache-Control: no-cache`. The rollback to an earlier game state matches a
+failed later write leaving the last successful whole-profile snapshot intact
+while play continues only in memory. An origin switch remains a separate way to
+see different data: `127.0.0.1`, `localhost`, other ports/profiles, and GitHub
+Pages have independent browser storage. Repository instructions now require
+future work to name the exact local or remote opening pathway and explicitly
+warn the owner whenever it changes or isolates saves.

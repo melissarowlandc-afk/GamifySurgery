@@ -49,47 +49,49 @@ export const FRONT_DESK_PRESENTATION = {
     // nominal width alone would make the counter/cabinet visibly too small.
     {
       id: "filingCabinet",
-      x: 0.08,
-      y: 0.3,
+      x: 0.1,
+      y: 0.2,
       width: 0.22,
       height: 0.5,
-      contact: { x: 0.08, y: 0.31 },
+      contact: { x: 0.1, y: 0.2 },
     },
     // The counter is centered directly in front of staff anchor (2, 1).
     {
       id: "secretaryChair",
-      x: 0.29,
-      y: 0.49,
+      // Display-only desk seat at the B2/B3/C2/C3 junction. The logical
+      // founder/receptionist anchor remains B3 above in `anchors.staff`.
+      x: 0.4,
+      y: 0.5,
       width: 0.16,
       height: 0.24,
-      contact: { x: 0.29, y: 0.53 },
+      contact: { x: 0.4, y: 0.5 },
     },
     {
       id: "frontDesk",
-      x: 0.34,
-      y: 0.61,
-      width: 0.45,
-      height: 0.38,
-      contact: { x: 0.34, y: 0.7 },
+      x: 0.4,
+      y: 0.63,
+      width: 0.4,
+      height: 0.31,
+      contact: { x: 0.4, y: 0.7 },
     },
     // Water cooler is live at rear-right A5; workers approach from B5.
     {
       id: "wasteBin",
-      x: 0.94,
-      y: 0.25,
+      x: 0.95,
+      y: 0.2,
       width: 0.085,
       height: 0.18,
-      contact: { x: 0.94, y: 0.31 },
+      contact: { x: 0.95, y: 0.2 },
     },
     // This is deliberately a separately sorted object, never part of the
     // south wall or a patient sheet. Its inset keeps east-wall slot 1 clear.
     {
       id: "visitorChair",
       x: 0.9,
-      y: 0.78,
+      y: 0.82,
       width: 0.16,
       height: 0.29,
-      contact: { x: 0.9, y: 0.92 },
+      contact: { x: 0.9, y: 0.94 },
     },
   ] as const satisfies readonly FrontDeskFixturePlacement[],
   /**
@@ -99,30 +101,30 @@ export const FRONT_DESK_PRESENTATION = {
    */
   waterCooler: {
     footprint: { x: 4, y: 0 },
-    contact: { x: 0.83, y: 0.31 },
+    contact: { x: 0.84, y: 0.2 },
     widthInTiles: 0.66,
     heightInTiles: 1.14,
   },
   /** Authored seated sheets include their own chair; this shifts only art. */
   seatedPresentation: { towardCounterTiles: 0.28 },
   northWallFixtures: [
-    { id: "noticeBoard", x: 0.19, y: 0.46, width: 0.18, height: 0.55 },
-    { id: "wallClock", x: 0.32, y: 0.44, width: 0.1, height: 0.43 },
+    { id: "noticeBoard", x: 0.28, y: 0.46, width: 0.12, height: 0.55 },
+    { id: "wallClock", x: 0.36, y: 0.44, width: 0.06, height: 0.43 },
   ] as const satisfies readonly FrontDeskWallFixturePlacement[],
   /** Target-measured visual poses for non-moving actors at logical anchors. */
   v5ActorDisplay: {
     // The room frame is intentionally larger than ordinary tiles; stationary
     // reception poses scale down only in this display seam to match its
     // reference figures. Moving actors retain canonical map scale.
-    staff: { x: 0.29, y: 0.53, scale: 0.82 },
+    staff: { x: 0.4, y: 0.5, scale: 0.82 },
     public: { x: 0.62, y: 0.82, scale: 0.82 },
   },
-  /** One unoccupied integer-compatible door option per wall, by visual design. */
+  /** Exact renderer-only door-clear tile offsets, by visual design. */
   clearDoorCandidates: {
-    north: 2,
-    east: 1,
+    north: [1, 2, 3],
+    east: [1, 2],
     south: 2,
-    west: 3,
+    west: [1, 2, 3],
   },
   /**
    * Exterior-only entrance beds. Their room-local X positions are measured in

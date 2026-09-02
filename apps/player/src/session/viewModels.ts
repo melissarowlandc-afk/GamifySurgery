@@ -663,7 +663,6 @@ function createChartView(
     canFile,
     readOnly,
     avatar: encounter.patientAppearance,
-    presentationHeading: "History of present illness",
     decisionSteps,
     reward: settlement
       ? {

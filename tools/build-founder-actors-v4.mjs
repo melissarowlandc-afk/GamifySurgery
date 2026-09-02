@@ -13,8 +13,9 @@ const source = resolve(root, "generated_images/founder-character-mockups-v3/pose
 const target = resolve(root, "apps/player/public/art/characters/founders-v4");
 const columns = 5;
 const rows = 6;
-const cellWidth = 96;
-const cellHeight = 144;
+const cellWidth = 128;
+const cellHeight = 192;
+const mapFloorAnchor = 181;
 
 const poses = {
   "front-idle": [0, 0], "left-idle": [0, 1], "right-idle": [0, 2], "back-idle": [0, 3],
@@ -175,24 +176,29 @@ function extractActor(image, sourceRect, portrait = false, sourceInsets = {}) {
   const safe = { x: sourceRect.x + insetX, y: sourceRect.y + insetTop, width: sourceRect.width - insetX * 2, height: sourceRect.height - insetTop - insetBottom };
   const cell = createCanvas(safe.width, safe.height);
   const ctx = cell.getContext("2d");
-  ctx.imageSmoothingEnabled = false;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.drawImage(image, safe.x, safe.y, safe.width, safe.height, 0, 0, safe.width, safe.height);
   removePanelBackground(cell);
   const actor = actorComponents(cell);
   const output = createCanvas(cellWidth, cellHeight);
   const outputCtx = output.getContext("2d");
-  outputCtx.imageSmoothingEnabled = false;
+  // The original project-owned sheet is reduced directly into this larger
+  // runtime cell. Canvas resampling operates on premultiplied alpha, avoiding
+  // the transparent-RGB matte bleed caused by nearest-neighbour extraction.
+  outputCtx.imageSmoothingEnabled = true;
+  outputCtx.imageSmoothingQuality = "high";
   // Preserve a common ground anchor. Portraits remain a separate detailed
   // source while using the same compact atlas geometry for CSS/Phaser crops.
   // Keep a six-pixel horizontal safety gutter for authored ears, tails and
   // elbows.  A cell must never borrow visual pixels from its neighbouring
   // founder in an atlas.
   const scale = portrait
-    ? Math.min(0.90, 120 / actor.bounds.height)
-    : Math.min(0.92, 128 / actor.bounds.height, 84 / actor.bounds.width);
+    ? Math.min(1.20, 160 / actor.bounds.height, 112 / actor.bounds.width)
+    : Math.min(1.23, 171 / actor.bounds.height, 112 / actor.bounds.width);
   const width = Math.round(actor.bounds.width * scale);
   const height = Math.round(actor.bounds.height * scale);
-  outputCtx.drawImage(actor.canvas, actor.bounds.x, actor.bounds.y, actor.bounds.width, actor.bounds.height, Math.round((cellWidth - width) / 2), portrait ? 10 : cellHeight - height - 8, width, height);
+  outputCtx.drawImage(actor.canvas, actor.bounds.x, actor.bounds.y, actor.bounds.width, actor.bounds.height, Math.round((cellWidth - width) / 2), portrait ? 13 : mapFloorAnchor - height, width, height);
   return output;
 }
 
@@ -206,16 +212,16 @@ function deriveFrontGait(frontIdle, phase, nonHuman) {
   // band, gently diverge each half from the centreline as it approaches the
   // floor. This produces alternate leading feet without importing an
   // independently generated profile, detached panel fragment, or rectangle.
-  const splitY = nonHuman ? 116 : 88;
+  const splitY = nonHuman ? 155 : 117;
   const direction = phase === "a" ? -1 : 1;
   for (let y = 0; y < cellHeight; y += 1) for (let x = 0; x < cellWidth; x += 1) {
     const from = (y * cellWidth + x) * 4;
     if (source.data[from + 3] === 0) continue;
     let offset = 0;
     if (y >= splitY) {
-      const progress = Math.min(1, (y - splitY) / Math.max(1, 136 - splitY));
+      const progress = Math.min(1, (y - splitY) / Math.max(1, mapFloorAnchor - splitY));
       const side = x < cellWidth / 2 ? -1 : 1;
-      offset = Math.round(progress * 3 * side * direction);
+      offset = Math.round(progress * 4 * side * direction);
     }
     const destinationX = Math.max(1, Math.min(cellWidth - 2, x + offset));
     const to = (y * cellWidth + destinationX) * 4;
@@ -234,7 +240,7 @@ function deriveFrontGait(frontIdle, phase, nonHuman) {
 function mirrorActorCell(source) {
   const out = createCanvas(cellWidth, cellHeight);
   const context = out.getContext("2d");
-  context.imageSmoothingEnabled = false;
+  context.imageSmoothingEnabled = true;
   context.translate(cellWidth, 0);
   context.scale(-1, 1);
   context.drawImage(source, 0, 0);
@@ -250,7 +256,7 @@ function synthesizeJump(idle) {
 /** A deterministic fingerprint of the unmodified head/face/torso zone.  It
  * deliberately excludes the leg band that changes between gait phases. */
 function upperIdentitySignature(canvas) {
-  const data = canvas.getContext("2d").getImageData(0, 0, cellWidth, 88).data;
+  const data = canvas.getContext("2d").getImageData(0, 0, cellWidth, 117).data;
   let hash = 2166136261;
   for (let index = 0; index < data.length; index += 1) {
     hash = Math.imul(hash ^ data[index], 16777619);
@@ -271,7 +277,7 @@ function dedicatedGaitCell(image, row, column) {
   sourceRect.height = Math.round(((row + 1) * image.height) / 2) - sourceRect.y;
   const inset = Math.max(4, Math.round(Math.min(sourceRect.width, sourceRect.height) * 0.025));
   const cell = createCanvas(sourceRect.width - inset * 2, sourceRect.height - inset * 2);
-  const ctx = cell.getContext("2d"); ctx.imageSmoothingEnabled = false;
+  const ctx = cell.getContext("2d"); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
   ctx.drawImage(image, sourceRect.x + inset, sourceRect.y + inset, cell.width, cell.height, 0, 0, cell.width, cell.height);
   // The approved gait sheets use an opaque neutral checkerboard.  Clearing
   // checker-like pixels independently left anti-aliased source fragments in
@@ -320,10 +326,10 @@ function dedicatedGaitCell(image, row, column) {
   }
   ctx.putImageData(data, 0, 0);
   const actor = actorComponents(cell);
-  const output = createCanvas(cellWidth, cellHeight); const outputCtx = output.getContext("2d"); outputCtx.imageSmoothingEnabled = false;
-  const scale = Math.min(0.86, 132 / actor.bounds.height, 90 / actor.bounds.width);
+  const output = createCanvas(cellWidth, cellHeight); const outputCtx = output.getContext("2d"); outputCtx.imageSmoothingEnabled = true; outputCtx.imageSmoothingQuality = "high";
+  const scale = Math.min(1.15, 176 / actor.bounds.height, 120 / actor.bounds.width);
   const width = Math.round(actor.bounds.width * scale); const height = Math.round(actor.bounds.height * scale);
-  outputCtx.drawImage(actor.canvas, actor.bounds.x, actor.bounds.y, actor.bounds.width, actor.bounds.height, Math.round((cellWidth - width) / 2), cellHeight - height - 8, width, height);
+  outputCtx.drawImage(actor.canvas, actor.bounds.x, actor.bounds.y, actor.bounds.width, actor.bounds.height, Math.round((cellWidth - width) / 2), mapFloorAnchor - height, width, height);
   return output;
 }
 
@@ -334,7 +340,7 @@ const poseKeys = Object.keys(poses);
 const gaitPoseKeys = poseKeys.filter((pose) => pose.includes("-walk-"));
 const atlases = Object.fromEntries(poseKeys.map((pose) => [pose, createCanvas(columns * cellWidth, rows * cellHeight)]));
 const sourceIdentitySignatures = Object.fromEntries(gaitPoseKeys.map((pose) => [pose, []]));
-for (const canvas of Object.values(atlases)) canvas.getContext("2d").imageSmoothingEnabled = false;
+for (const canvas of Object.values(atlases)) canvas.getContext("2d").imageSmoothingEnabled = true;
 for (let variant = 0; variant < sources.length; variant += 1) {
   // Every live gait begins with the exact approved 21-panel founder sheet.
   // Do not use independently generated gait people: their identities drifted
@@ -374,7 +380,7 @@ for (let variant = 0; variant < sources.length; variant += 1) {
 for (const [pose, canvas] of Object.entries(atlases)) writeFileSync(resolve(target, `founders-${pose}-v4.png`), canvas.toBuffer("image/png"));
 // Human-readable proof from the exact runtime cells, not a separate mockup.
 const reviewFounders = [0, 3, 10, 13, 20, 21, 23, 29];
-const proof = createCanvas(8 * 150, reviewFounders.length * 180); const proofCtx = proof.getContext("2d");
+const proof = createCanvas(8 * 180, reviewFounders.length * 230); const proofCtx = proof.getContext("2d");
 proofCtx.fillStyle = "#d9dddc"; proofCtx.fillRect(0, 0, proof.width, proof.height); proofCtx.imageSmoothingEnabled = false;
 for (let row = 0; row < reviewFounders.length; row += 1) {
   const variant = reviewFounders[row];
@@ -382,14 +388,14 @@ for (let row = 0; row < reviewFounders.length; row += 1) {
     const direction = ["front", "front", "back", "back", "left", "left", "right", "right"][column];
     const phase = column % 2 === 0 ? "a" : "b";
     const atlas = atlases[`${direction}-walk-${phase}`]; const x = (variant % columns) * cellWidth; const y = Math.floor(variant / columns) * cellHeight;
-    drawChecker(proofCtx, column * 150 + 2, row * 180 + 2, 146, 176);
-    proofCtx.drawImage(atlas, x, y, cellWidth, cellHeight, column * 150 + 27, row * 180 + 18, 96, 144);
-    proofCtx.fillStyle = "#20282a"; proofCtx.font = "bold 12px sans-serif"; proofCtx.fillText(`${direction} ${phase.toUpperCase()}`, column * 150 + 34, row * 180 + 166);
+    drawChecker(proofCtx, column * 180 + 2, row * 230 + 2, 176, 226);
+    proofCtx.drawImage(atlas, x, y, cellWidth, cellHeight, column * 180 + 26, row * 230 + 18, cellWidth, cellHeight);
+    proofCtx.fillStyle = "#20282a"; proofCtx.font = "bold 12px sans-serif"; proofCtx.fillText(`${direction} ${phase.toUpperCase()}`, column * 180 + 42, row * 230 + 218);
   }
-  proofCtx.fillStyle = "#20282a"; proofCtx.font = "bold 12px sans-serif"; proofCtx.fillText(`founder.${String(variant + 1).padStart(2, "0")}`, 4, row * 180 + 14);
+  proofCtx.fillStyle = "#20282a"; proofCtx.font = "bold 12px sans-serif"; proofCtx.fillText(`founder.${String(variant + 1).padStart(2, "0")}`, 4, row * 230 + 14);
 }
 mkdirSync(resolve(root, "artifacts/screenshots"), { recursive: true });
-writeFileSync(resolve(root, "artifacts/screenshots/founder-v4-gait-proof.png"), proof.toBuffer("image/png"));
+writeFileSync(resolve(root, "artifacts/screenshots/character-resolution-alpha-founder-v4-gait-proof.png"), proof.toBuffer("image/png"));
 // A dense all-founder continuity sheet makes identity drift auditable at a
 // glance: canonical front idle, then the two live front gait phases.
 const frontIdleAtlas = await loadImage(resolve(target, "founders-front-idle-v4.png"));
@@ -407,7 +413,7 @@ for (let variant = 0; variant < 30; variant += 1) {
     continuityCtx.fillStyle = "#20282a"; continuityCtx.font = "10px sans-serif"; continuityCtx.fillText(label, destinationX + 23, groupY + 147);
   }
 }
-writeFileSync(resolve(root, "artifacts/screenshots/founder-v4-identity-continuity-all-30.png"), continuity.toBuffer("image/png"));
+writeFileSync(resolve(root, "artifacts/screenshots/character-resolution-alpha-founder-v4-identity-continuity-all-30.png"), continuity.toBuffer("image/png"));
 // Clipboard work pose proof, from exact runtime cells on a checkerboard, makes
 // head/ear/antenna clipping visible before a Phaser scene is opened.
 const clipboardProof = createCanvas(5 * 144, 6 * 166); const clipboardCtx = clipboardProof.getContext("2d");
@@ -419,9 +425,9 @@ for (let variant = 0; variant < 30; variant += 1) {
   clipboardCtx.drawImage(atlases.clipboard, sourceX, sourceY, cellWidth, cellHeight, groupX + 24, groupY + 14, 96, 144);
   clipboardCtx.fillStyle = "#20282a"; clipboardCtx.font = "bold 11px sans-serif"; clipboardCtx.fillText(`founder.${String(variant + 1).padStart(2, "0")}`, groupX + 7, groupY + 12);
 }
-writeFileSync(resolve(root, "artifacts/screenshots/founder-v4-clipboard-proof.png"), clipboardProof.toBuffer("image/png"));
+writeFileSync(resolve(root, "artifacts/screenshots/character-resolution-alpha-founder-v4-clipboard-proof.png"), clipboardProof.toBuffer("image/png"));
 writeFileSync(resolve(target, "manifest.json"), JSON.stringify({
-  version: 4, contentRevision: "founders-v4-r8", cells: { width: cellWidth, height: cellHeight, columns, rows }, floorAnchor: { x: 48, y: 136 },
+  version: 4, contentRevision: "founders-v4-r9-hires", cells: { width: cellWidth, height: cellHeight, columns, rows }, floorAnchor: { x: 64, y: mapFloorAnchor },
   clipboardExtraction: { sourceTopInset: 4, completeHeadRequired: true },
   variants: sources.map((name, index) => ({ id: `founder.${String(index + 1).padStart(2, "0")}`, source: name })),
   // These source slots are part of the gait contract: authored sheet row 2

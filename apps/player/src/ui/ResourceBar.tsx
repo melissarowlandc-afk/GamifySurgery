@@ -6,6 +6,8 @@ import { SmoothHudIcon } from "./SmoothHudIcon";
 interface ResourceBarProps {
   view: ResourceBarView;
   paused: boolean;
+  buildMode?: boolean;
+  managementMode?: boolean;
   pauseLocked?: boolean;
   simulationSpeed?: SimulationSpeed;
   onTogglePause: () => void;
@@ -52,6 +54,8 @@ function HudIcon({
 export function ResourceBar({
   view,
   paused,
+  buildMode = false,
+  managementMode = false,
   pauseLocked = false,
   simulationSpeed = 1,
   onTogglePause,
@@ -60,6 +64,15 @@ export function ResourceBar({
   endControls,
 }: ResourceBarProps) {
   const levelLabel = view.levelLabel ?? view.facilityLevelLabel;
+  const controlledMode = buildMode
+    ? "build"
+    : managementMode
+      ? "management"
+      : null;
+  const timeControlLockMessage =
+    controlledMode === "build"
+      ? "Build Mode controls the pause. Exit Build Mode to resume."
+      : "Management Mode controls the pause. Exit Management Mode to resume.";
   const xpProgressPercent = clampPercent(view.xpProgressPercent);
   const moneyDelta =
     view.moneyHourlyDeltaLabel ?? view.moneyDeltaLabel;
@@ -73,12 +86,6 @@ export function ResourceBar({
       className="resource-bar resource-bar-redesign"
       aria-label="Clinic resources"
     >
-      {view.contentNoticeLabel ? (
-        <div className="global-content-notice" role="note">
-          {view.contentNoticeLabel}
-        </div>
-      ) : null}
-
       <div className="resource-bar-main">
         <div className="resource-grid resource-grid-primary">
           <section
@@ -92,17 +99,16 @@ export function ResourceBar({
                 <strong>{levelLabel}</strong>
               </div>
               <div className="resource-xp-row">
-                <strong>{view.xpLabel}</strong>
+                <progress
+                  className="xp-progress"
+                  max={100}
+                  value={xpProgressPercent}
+                  aria-label="Learning XP progress toward next level"
+                />
                 <small>
                   {view.xpProgressLabel ?? "Progress toward next level"}
                 </small>
               </div>
-              <progress
-                className="xp-progress"
-                max={100}
-                value={xpProgressPercent}
-                aria-label="Learning XP progress toward next level"
-              />
             </div>
           </section>
 
@@ -124,11 +130,27 @@ export function ResourceBar({
             </div>
           </section>
 
-          <section className="resource-chip facility-time-chip">
+          <section
+            className={`resource-chip facility-time-chip${
+              buildMode ? " is-build-mode" : ""
+            }${managementMode ? " is-management-mode" : ""}`}
+          >
             <HudIcon kind="time" />
             <div className="resource-chip-content">
-              <span>Facility time</span>
-              <strong>{dayTime}</strong>
+              <span>
+                {buildMode
+                  ? "BUILD MODE"
+                  : managementMode
+                    ? "MANAGEMENT MODE"
+                    : "Facility time"}
+              </span>
+              <strong>
+                {buildMode
+                  ? "Facility time is stopped while you remodel."
+                  : managementMode
+                    ? "Facility time is stopped while you manage staff."
+                  : dayTime}
+              </strong>
             </div>
           </section>
         </div>
@@ -153,7 +175,7 @@ export function ResourceBar({
               disabled={pauseLocked}
               title={
                 pauseLocked
-                  ? "Build Mode controls the pause. Exit Build Mode to resume."
+                  ? timeControlLockMessage
                   : "Pause facility time"
               }
             >
@@ -177,7 +199,7 @@ export function ResourceBar({
               disabled={pauseLocked}
               title={
                 pauseLocked
-                  ? "Build Mode controls the pause. Exit Build Mode to resume."
+                  ? timeControlLockMessage
                   : "Resume facility time"
               }
             >

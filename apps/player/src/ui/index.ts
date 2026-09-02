@@ -8,6 +8,7 @@ export { EmergencyGlp1Panel } from "./EmergencyGlp1Panel";
 export { EventMessageBoard } from "./EventMessageBoard";
 export { GoalsPanel } from "./GoalsPanel";
 export { HelpDialog } from "./HelpDialog";
+export { ManagementPanel } from "./ManagementPanel";
 export { OpeningSequence } from "./OpeningSequence";
 export { PatientLists } from "./PatientLists";
 export { PixelAvatar } from "./PixelAvatar";
@@ -18,6 +19,7 @@ export { RestartDialog } from "./RestartDialog";
 export { SaveCloseDialog } from "./SaveCloseDialog";
 export { StaffPanel } from "./StaffPanel";
 export { TutorialCoach } from "./TutorialCoach";
+export { WorkspaceSplitter } from "./WorkspaceSplitter";
 export type {
   AnswerChoiceView,
   AdvertisingView,

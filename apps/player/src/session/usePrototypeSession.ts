@@ -84,6 +84,7 @@ export interface PrototypeSession {
   selectedRoomInstanceId: string | null;
   placementOrientation: RoomOrientation;
   buildMode: boolean;
+  managementMode: boolean;
   buildUndoCount: number;
   buildExitBlockedReason: string | null;
   buildExitBlockedIssues: string[];
@@ -115,6 +116,8 @@ export interface PrototypeSession {
   ) => boolean;
   enterBuildMode: () => void;
   exitBuildMode: () => void;
+  enterManagementMode: () => void;
+  exitManagementMode: () => void;
   selectRoom: (roomInstanceId: string) => void;
   sellSelectedRoom: () => void;
   upgradeSelectedRoom: () => void;
@@ -238,6 +241,7 @@ export function usePrototypeSession(
   const [placementOrientation, setPlacementOrientation] =
     useState<RoomOrientation>(0);
   const [buildMode, setBuildMode] = useState(false);
+  const [managementMode, setManagementMode] = useState(false);
   const [movingRoomInstanceId, setMovingRoomInstanceId] =
     useState<string | null>(null);
   const [buildUndoCount, setBuildUndoCount] = useState(0);
@@ -251,6 +255,7 @@ export function usePrototypeSession(
       requireActiveCampaign(loadedRef.current!.profile).state,
     ));
   const preBuildPausedRef = useRef(true);
+  const preManagementPausedRef = useRef(true);
   const [summaryVisible, setSummaryVisible] = useState(false);
   const [acknowledgedTutorialStepIds, setAcknowledgedTutorialStepIds] =
     useState<ReadonlySet<string>>(() => new Set());
@@ -650,8 +655,57 @@ export function usePrototypeSession(
     };
   }, [documentVisible, execute, state.paused, state.simulationSpeed]);
 
+  const exitManagementMode = useCallback(() => {
+    if (!managementMode) {
+      return;
+    }
+    setManagementMode(false);
+    if (!preManagementPausedRef.current && stateRef.current.paused) {
+      execute(
+        { type: "SET_PAUSED", paused: false },
+        { announceReceipt: false },
+      );
+    }
+    setAnnouncement(
+      preManagementPausedRef.current
+        ? "Management Mode closed. The clinic remains paused."
+        : "Management Mode closed. Facility operations resumed.",
+    );
+  }, [execute, managementMode]);
+
+  const enterManagementMode = useCallback(() => {
+    if (managementMode || buildMode) {
+      return;
+    }
+    const current = stateRef.current;
+    preManagementPausedRef.current = current.paused;
+    if (current.openChartEncounterId !== null) {
+      execute(
+        {
+          type: "CLOSE_CHART",
+          encounterId: current.openChartEncounterId,
+        },
+        { announceReceipt: false },
+      );
+      setSummaryVisible(false);
+    }
+    if (!stateRef.current.paused) {
+      execute(
+        { type: "SET_PAUSED", paused: true },
+        { announceReceipt: false },
+      );
+    }
+    setManagementMode(true);
+    setAnnouncement(
+      "Management Mode opened. Facility time is paused while you manage staff.",
+    );
+  }, [buildMode, execute, managementMode]);
+
   const openPatient = useCallback(
     (encounterId: string) => {
+      if (managementMode) {
+        exitManagementMode();
+      }
       const status = execute({
         type: "OPEN_CHART",
         encounterId,
@@ -660,7 +714,7 @@ export function usePrototypeSession(
         setSummaryVisible(false);
       }
     },
-    [execute],
+    [execute, exitManagementMode, managementMode],
   );
 
   const closeChart = useCallback(() => {
@@ -949,6 +1003,9 @@ export function usePrototypeSession(
     if (buildMode) {
       return;
     }
+    if (managementMode) {
+      exitManagementMode();
+    }
     const current = stateRef.current;
     preBuildPausedRef.current = current.paused;
     buildHistoryRef.current = [];
@@ -980,7 +1037,7 @@ export function usePrototypeSession(
     setAnnouncement(
       "Build Mode opened. Facility time is paused while you remodel.",
     );
-  }, [buildMode, execute]);
+  }, [buildMode, execute, exitManagementMode, managementMode]);
 
   const exitBuildMode = useCallback(() => {
     if (!buildMode) {
@@ -1303,8 +1360,12 @@ export function usePrototypeSession(
   );
 
   const togglePause = useCallback(() => {
-    if (buildMode) {
-      setAnnouncement("Exit Build Mode before resuming facility time.");
+    if (buildMode || managementMode) {
+      setAnnouncement(
+        buildMode
+          ? "Exit Build Mode before resuming facility time."
+          : "Exit Management Mode before resuming facility time.",
+      );
       return;
     }
     const current = stateRef.current;
@@ -1312,16 +1373,24 @@ export function usePrototypeSession(
       type: "SET_PAUSED",
       paused: !current.paused,
     });
-  }, [buildMode, execute]);
+  }, [buildMode, execute, managementMode]);
 
   const setSimulationSpeed = useCallback(
     (speed: SimulationSpeed) => {
+      if (buildMode || managementMode) {
+        setAnnouncement(
+          buildMode
+            ? "Exit Build Mode before changing facility speed."
+            : "Exit Management Mode before changing facility speed.",
+        );
+        return;
+      }
       execute({
         type: "SET_SIMULATION_SPEED",
         speed,
       });
     },
-    [execute],
+    [buildMode, execute, managementMode],
   );
 
   const saveAndPause = useCallback((): boolean => {
@@ -1381,6 +1450,7 @@ export function usePrototypeSession(
     setMovingRoomInstanceId(null);
     setPlacementOrientation(0);
     setBuildMode(false);
+    setManagementMode(false);
     buildHistoryRef.current = [];
     setBuildUndoCount(0);
     setBuildExitBlockedReason(null);
@@ -1612,6 +1682,7 @@ export function usePrototypeSession(
     selectedRoomInstanceId,
     placementOrientation,
     buildMode,
+    managementMode,
     buildUndoCount,
     buildExitBlockedReason,
     buildExitBlockedIssues,
@@ -1636,6 +1707,8 @@ export function usePrototypeSession(
     placeRoom,
     enterBuildMode,
     exitBuildMode,
+    enterManagementMode,
+    exitManagementMode,
     selectRoom,
     sellSelectedRoom,
     upgradeSelectedRoom,

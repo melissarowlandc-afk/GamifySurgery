@@ -185,7 +185,6 @@ export interface ChartView {
   canFile: boolean;
   readOnly: boolean;
   avatar?: PixelAvatarView;
-  presentationHeading?: string;
   /**
    * Ordered frozen encounter history. When omitted, ChartPanel builds one
    * compatible decision column from the legacy question fields above.

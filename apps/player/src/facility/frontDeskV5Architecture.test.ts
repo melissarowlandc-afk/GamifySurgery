@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  FRONT_DESK_V5_VISIBLE_FLOOR_ASPECT_RATIO,
   getFrontDeskV5ArchitectureComponents,
   getFrontDeskV5Projection,
   projectFrontDeskV5LogicalPoint,
@@ -11,17 +10,15 @@ import {
 describe("Front Desk v5 architecture projection", () => {
   const logical = { x: 100, y: 200, width: 250, height: 200 };
 
-  it("keeps the logical five-by-four rectangle while displaying a shallow target floor", () => {
+  it("keeps the full logical five-by-four rectangle as its square-tile floor", () => {
     const projection = getFrontDeskV5Projection(logical);
     expect(projection.logicalBounds).toBe(logical);
-    expect(projection.floorBounds.width / projection.floorBounds.height).toBeCloseTo(
-      FRONT_DESK_V5_VISIBLE_FLOOR_ASPECT_RATIO,
-      5,
-    );
-    expect(projection.floorBounds.height).toBeLessThan(logical.height);
+    expect(projection.floorBounds).toEqual(logical);
+    expect(projection.scaleX).toBe(50);
+    expect(projection.scaleY).toBe(50);
   });
 
-  it("anchors logical and visual south centers at the public entrance", () => {
+  it("anchors the full visual floor and its south entrance to the logical rectangle", () => {
     const projection = getFrontDeskV5Projection(logical);
     expect(projection.southEntranceY).toBe(400);
     expect(projection.floorBounds.y + projection.floorBounds.height).toBe(400);
@@ -36,14 +33,14 @@ describe("Front Desk v5 architecture projection", () => {
     const components = getFrontDeskV5ArchitectureComponents(projection);
     const base = components.filter((component) => component.layer === "base");
     const byKey = (key: string) => base.find((component) => component.key === key)!;
-    const floor = byKey("floor").bounds;
+    const floor = projection.floorBounds;
     const north = byKey("north-wall-0").bounds;
     const west = byKey("west-return-0").bounds;
     const east = byKey("east-return-0").bounds;
     const front = byKey("front-0-base").bounds;
 
-    expect(west.x).toBe(floor.x);
-    expect(east.x + east.width).toBe(floor.x + floor.width);
+    expect(west.x + west.width / 2).toBe(floor.x);
+    expect(east.x + east.width / 2).toBe(floor.x + floor.width);
     expect(north).toMatchObject({ x: floor.x, width: floor.width });
     expect(front).toMatchObject({ x: floor.x, width: floor.width });
   });
@@ -68,13 +65,32 @@ describe("Front Desk v5 architecture projection", () => {
     expect(south[0]!.bounds.x + south[0]!.bounds.width).toBeLessThan(south[1]!.bounds.x);
   });
 
+  it("uses low in-footprint front art for backed north segments", () => {
+    const projection = getFrontDeskV5Projection(logical);
+    const components = getFrontDeskV5ArchitectureComponents(
+      projection,
+      [],
+      [{ offset: 1, length: 3 }],
+    ).filter((component) => component.layer === "base");
+    const floor = projection.floorBounds;
+    const short = components.filter((component) => component.key.startsWith("north-short-"));
+    expect(short).toHaveLength(1);
+    expect(short[0]!.frameId).toBe("frontEast");
+    expect(short[0]!.bounds.y).toBe(floor.y);
+    expect(short[0]!.bounds.height).toBeLessThan(
+      components.find((component) => component.key === "north-wall-0")!.bounds.height,
+    );
+  });
+
   it("repeats only low south architecture as foreground occlusion", () => {
     const projection = getFrontDeskV5Projection(logical);
     const occluders = getFrontDeskV5ArchitectureComponents(projection)
       .filter((component) => component.layer === "front-occluder");
     expect(occluders.map((component) => component.frameId)).toEqual(["frontWest"]);
     expect(occluders.every((component) => component.bounds.y >= projection.floorBounds.y)).toBe(true);
-    expect(occluders[0]!.bounds.height).toBeCloseTo(projection.floorBounds.height * 0.27 / 2, 8);
+    // The shared shell uses a constant tile-relative front lip, so a Front
+    // Desk's restored fourth row does not make the foreground wall taller.
+    expect(occluders[0]!.bounds.height).toBeCloseTo(projection.scaleX * 0.4411764705882353, 8);
   });
 
   it("keeps v5 architecture active when Front Desk shares a designed horizontal opening", () => {

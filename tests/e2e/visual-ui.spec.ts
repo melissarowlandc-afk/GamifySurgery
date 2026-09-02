@@ -66,7 +66,7 @@ test("the facility stays fixed above the clinical desk", async ({
   });
 });
 
-test("Build Mode replaces the desk while keeping clinic and staff visible", async ({
+test("Build Mode replaces the desk while keeping clinic and operations visible", async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -84,15 +84,17 @@ test("Build Mode replaces the desk while keeping clinic and staff visible", asyn
     name: "Construction desk",
   });
   await expect(constructionDesk.locator(".build-mode-panel")).toBeVisible();
-  await expect(page.locator(".operations-column .staff-panel")).toBeVisible();
+  await expect(page.locator(".operations-column .staff-panel")).toHaveCount(0);
+  await expect(page.locator(".operations-column .goals-panel")).toBeVisible();
+  await expect(page.locator(".operations-column .event-message-board")).toHaveCount(0);
   await expect(page.locator(".operations-column .build-mode-panel")).toHaveCount(
     0,
   );
 
-  for (let step = 0; step < 9; step += 1) {
+  for (let step = 0; step < 10; step += 1) {
     await page.getByRole("button", { name: "Zoom facility out" }).click();
   }
-  await expect(page.locator(".facility-heading-actions")).toContainText("10%");
+  await expect(page.locator(".facility-zoom-overlay")).toContainText("10%");
   await expect(
     page.getByRole("button", { name: "Zoom facility out" }),
   ).toBeDisabled();

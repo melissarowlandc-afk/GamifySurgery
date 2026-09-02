@@ -51,14 +51,19 @@ function renderBuildPanel({
   options = roomOptions,
   room = selectedRoom,
   buildDoorTool = null,
+  buildMode = true,
+  showInactiveTrigger = true,
 }: {
   options?: RoomBuildOptionView[];
   room?: SelectedRoomBuildView | null;
   buildDoorTool?: "place" | "remove" | null;
+  buildMode?: boolean;
+  showInactiveTrigger?: boolean;
 } = {}) {
   return renderToStaticMarkup(
     <BuildPanel
-      buildMode
+      buildMode={buildMode}
+      showInactiveTrigger={showInactiveTrigger}
       cashLabel="$500"
       roomOptions={options}
       selectedRoom={room}
@@ -86,6 +91,17 @@ function renderBuildPanel({
 }
 
 describe("Build Mode toolbar", () => {
+  it("can omit its inactive trigger when another desk owner is active", () => {
+    const visibleMarkup = renderBuildPanel({ buildMode: false });
+    const hiddenMarkup = renderBuildPanel({
+      buildMode: false,
+      showInactiveTrigger: false,
+    });
+
+    expect(visibleMarkup).toContain("Enter Build Mode");
+    expect(hiddenMarkup).toBe("");
+  });
+
   it("uses explicit, distinct catalog icons for every Level 2 room", () => {
     const levelTwoRoomIds = [
       "room.ultrasound",

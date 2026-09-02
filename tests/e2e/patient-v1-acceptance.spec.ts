@@ -228,8 +228,8 @@ test("FacilityScene holds each live non-founder on one lateral profile through A
     expect(passerFrames.every((frame) => frame.flipX === false)).toBe(true);
     expect(staffFrames.every((frame) => frame.flipX === east)).toBe(true);
     const patientFamily = east ? "right" : "left";
-    expect(patientFrames.every((frame) => new RegExp(`^character:patients-${patientFamily}-walk-(a|neutral|b)-v1-r6$`).test(String(frame.atlasId)))).toBe(true);
-    expect(passerFrames.every((frame) => new RegExp(`^character:patients-${patientFamily}-walk-(a|neutral|b)-v1-r6$`).test(String(frame.atlasId)))).toBe(true);
+    expect(patientFrames.every((frame) => new RegExp(`^character:patients-${patientFamily}-walk-(a|neutral|b)-v1-r7-hires$`).test(String(frame.atlasId)))).toBe(true);
+    expect(passerFrames.every((frame) => new RegExp(`^character:patients-${patientFamily}-walk-(a|neutral|b)-v1-r7-hires$`).test(String(frame.atlasId)))).toBe(true);
     expect(staffFrames.every((frame) => [
       "character:actors-left-walk-a-v3", "character:actors-left-idle-v3", "character:actors-left-walk-b-v3",
     ].includes(String(frame.atlasId)))).toBe(true);

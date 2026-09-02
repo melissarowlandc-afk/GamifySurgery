@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { verifyFounderActors } from "./verify-character-resolution-alpha.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 const directory = resolve(root, "apps/player/public/art/characters/founders-v4");
@@ -15,7 +16,7 @@ function lowerBodyHashes(image) {
   for (let index = 0; index < 30; index += 1) {
     const col = index % 5; const row = Math.floor(index / 5);
     let hash = 2166136261;
-    for (let y = row * 144 + 82; y < row * 144 + 144; y += 1) for (let x = col * 96; x < col * 96 + 96; x += 1) {
+    for (let y = row * 192 + 109; y < row * 192 + 192; y += 1) for (let x = col * 128; x < col * 128 + 128; x += 1) {
       const offset = (y * image.width + x) * 4;
       hash = Math.imul(hash ^ data[offset], 16777619);
       hash = Math.imul(hash ^ data[offset + 1], 16777619);
@@ -35,7 +36,7 @@ function upperIdentityHashes(image) {
   for (let index = 0; index < 30; index += 1) {
     const col = index % 5; const row = Math.floor(index / 5);
     let hash = 2166136261;
-    for (let y = row * 144; y < row * 144 + 88; y += 1) for (let x = col * 96; x < col * 96 + 96; x += 1) {
+    for (let y = row * 192; y < row * 192 + 117; y += 1) for (let x = col * 128; x < col * 128 + 128; x += 1) {
       const offset = (y * image.width + x) * 4;
       for (const value of [data[offset], data[offset + 1], data[offset + 2], data[offset + 3]]) hash = Math.imul(hash ^ value, 16777619);
     }
@@ -49,10 +50,10 @@ function alphaFloorRows(image) {
   context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
   return Array.from({ length: 30 }, (_, index) => {
-    const left = (index % 5) * 96;
-    const top = Math.floor(index / 5) * 144;
+    const left = (index % 5) * 128;
+    const top = Math.floor(index / 5) * 192;
     let floor = -1;
-    for (let y = 0; y < 144; y += 1) for (let x = 0; x < 96; x += 1) {
+    for (let y = 0; y < 192; y += 1) for (let x = 0; x < 128; x += 1) {
       if (data[((top + y) * image.width + left + x) * 4 + 3] > 12) floor = Math.max(floor, y);
     }
     return floor;
@@ -70,11 +71,11 @@ function assertExactHorizontalMirror(
   const actual = derivedCanvas.getContext("2d").getImageData(0, 0, derived.width, derived.height).data;
   const expected = oppositeCanvas.getContext("2d").getImageData(0, 0, canonicalOpposite.width, canonicalOpposite.height).data;
   for (let founder = 0; founder < 30; founder += 1) {
-    const left = (founder % 5) * 96;
-    const top = Math.floor(founder / 5) * 144;
-    for (let y = 0; y < 144; y += 1) for (let x = 0; x < 96; x += 1) {
+    const left = (founder % 5) * 128;
+    const top = Math.floor(founder / 5) * 192;
+    for (let y = 0; y < 192; y += 1) for (let x = 0; x < 128; x += 1) {
       const actualOffset = ((top + y) * derived.width + left + x) * 4;
-      const expectedOffset = ((top + y) * canonicalOpposite.width + left + 95 - x) * 4;
+      const expectedOffset = ((top + y) * canonicalOpposite.width + left + 127 - x) * 4;
       for (let channel = 0; channel < 4; channel += 1) if (actual[actualOffset + channel] !== expected[expectedOffset + channel]) {
         throw new Error(`${label} founder ${founder + 1} is not an exact horizontal mirror of its canonical opposite-facing A stride.`);
       }
@@ -85,10 +86,10 @@ function assertTransparentPerimeters(image, pose) {
   const canvas = createCanvas(image.width, image.height); const context = canvas.getContext("2d"); context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
   for (let index = 0; index < 30; index += 1) {
-    const left = (index % 5) * 96; const top = Math.floor(index / 5) * 144;
+    const left = (index % 5) * 128; const top = Math.floor(index / 5) * 192;
     let opaqueEdge = 0;
-    for (let x = left; x < left + 96; x += 1) for (const y of [top, top + 143]) if (data[(y * image.width + x) * 4 + 3] > 12) opaqueEdge += 1;
-    for (let y = top + 1; y < top + 143; y += 1) for (const x of [left, left + 95]) if (data[(y * image.width + x) * 4 + 3] > 12) opaqueEdge += 1;
+    for (let x = left; x < left + 128; x += 1) for (const y of [top, top + 191]) if (data[(y * image.width + x) * 4 + 3] > 12) opaqueEdge += 1;
+    for (let y = top + 1; y < top + 191; y += 1) for (const x of [left, left + 127]) if (data[(y * image.width + x) * 4 + 3] > 12) opaqueEdge += 1;
     if (opaqueEdge > 0) throw new Error(`${pose} founder ${index + 1} has opaque cell-edge panel residue.`);
   }
 }
@@ -108,9 +109,9 @@ function assertFrontIdleFeet(image) {
   const canvas = createCanvas(image.width, image.height); const context = canvas.getContext("2d"); context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
   for (let founder = 0; founder < 30; founder += 1) {
-    const left = (founder % 5) * 96; const top = Math.floor(founder / 5) * 144;
+    const left = (founder % 5) * 128; const top = Math.floor(founder / 5) * 192;
     let lowerBodyPixels = 0;
-    for (let y = top + 130; y < top + 143; y += 1) for (let x = left + 8; x < left + 88; x += 1) {
+    for (let y = top + 173; y < top + 191; y += 1) for (let x = left + 11; x < left + 117; x += 1) {
       if (data[(y * image.width + x) * 4 + 3] > 12) lowerBodyPixels += 1;
     }
     if (lowerBodyPixels === 0) throw new Error(`front-idle founder ${founder + 1} has no visible feet in the floor band.`);
@@ -120,7 +121,7 @@ function assertFrontWalkCoverage(image, phase) {
   const canvas = createCanvas(image.width, image.height); const context = canvas.getContext("2d"); context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
   for (let founder = 0; founder < 30; founder += 1) {
-    const left = (founder % 5) * 96; const top = Math.floor(founder / 5) * 144;
+    const left = (founder % 5) * 128; const top = Math.floor(founder / 5) * 192;
     let torsoCoverage = 0;
     for (let y = top + 36; y < top + 108; y += 1) for (let x = left + 24; x < left + 72; x += 1) {
       if (data[(y * image.width + x) * 4 + 3] > 12) torsoCoverage += 1;
@@ -138,8 +139,8 @@ function assertNoLargeInteriorAlphaHoles(image, pose) {
   const canvas = createCanvas(image.width, image.height); const context = canvas.getContext("2d"); context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
   for (let founder = 0; founder < 30; founder += 1) {
-    const left = (founder % 5) * 96; const top = Math.floor(founder / 5) * 144;
-    const width = 96; const height = 112; const count = width * height;
+    const left = (founder % 5) * 128; const top = Math.floor(founder / 5) * 192;
+    const width = 128; const height = 112; const count = width * height;
     const opaque = new Uint8Array(count);
     for (let y = 0; y < height; y += 1) for (let x = 0; x < width; x += 1) opaque[y * width + x] = data[((top + y) * image.width + left + x) * 4 + 3] > 12 ? 1 : 0;
     const dilated = new Uint8Array(count);
@@ -184,8 +185,8 @@ async function assertCompleteClipboardHeads() {
   const canvas = createCanvas(image.width, image.height); const context = canvas.getContext("2d"); context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
   for (let founder = 0; founder < 30; founder += 1) {
-    const left = (founder % 5) * 96; const top = Math.floor(founder / 5) * 144;
-    let headPixels = 0; let firstOpaque = 144;
+    const left = (founder % 5) * 128; const top = Math.floor(founder / 5) * 192;
+    let headPixels = 0; let firstOpaque = 192;
     // The rendered head/ears/antennae must occupy the complete top identity
     // zone, rather than a re-scaled neck/torso after the source crop removes
     // its actual top. This catches the former clipboard-only panel-inset bug.
@@ -196,9 +197,9 @@ async function assertCompleteClipboardHeads() {
   }
 }
 if (manifest.variants.length !== 30) throw new Error("Founder manifest must contain exactly 30 identities.");
-if (manifest.contentRevision !== "founders-v4-r8") throw new Error("Founder manifest must declare the active r8 content revision.");
+if (manifest.contentRevision !== "founders-v4-r9-hires") throw new Error("Founder manifest must declare the active r8 content revision.");
 if (manifest.clipboardExtraction?.sourceTopInset > 6 || manifest.clipboardExtraction?.completeHeadRequired !== true) throw new Error("Clipboard atlas must retain the complete source head above the panel-label inset.");
-if (manifest.floorAnchor?.y !== 136) throw new Error("Founder feet must use the approved-pose floor baseline.");
+if (manifest.floorAnchor?.y !== 181) throw new Error("Founder feet must use the approved-pose floor baseline.");
 if (!manifest.sourceIdentitySignatures) throw new Error("Founder manifest must include source-driven identity signatures.");
 const expectedHorizontalSourceSlots = {
   "left-walk-a": [0, 6],
@@ -227,7 +228,7 @@ for (const direction of directions) {
     if (!filename || !existsSync(resolve(directory, filename))) throw new Error(`Missing ${direction} walk ${phase}.`);
   }
   const [a, b] = await Promise.all(["a", "b"].map((phase) => loadImage(resolve(directory, manifest.poses[`${direction}-walk-${phase}`]))));
-  if (a.width !== 480 || a.height !== 864 || b.width !== 480 || b.height !== 864) throw new Error(`Unexpected ${direction} atlas geometry.`);
+  if (a.width !== 640 || a.height !== 1152 || b.width !== 640 || b.height !== 1152) throw new Error(`Unexpected ${direction} atlas geometry.`);
   assertTransparentPerimeters(a, `${direction}-a`); assertTransparentPerimeters(b, `${direction}-b`);
   assertNoChromaMatte(a, `${direction}-a`); assertNoChromaMatte(b, `${direction}-b`);
   // Distinct source atlases provide an auditable lower-body phase difference.
@@ -275,3 +276,6 @@ for (const [pose, filename] of Object.entries(manifest.poses)) {
   assertNoLargeInteriorAlphaHoles(await loadImage(resolve(directory, filename)), pose);
 }
 console.log("Founder v4 verifier passed: 30 identities, 20 pose atlases, four explicit A/B walk pairs.");
+
+await verifyFounderActors();
+console.log("Founder v4 shared high-resolution alpha audit passed.");

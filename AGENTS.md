@@ -88,6 +88,22 @@ Do not abandon active atomic work or split one unfinished bounded task merely
 because a thread is old. The user may explicitly override this lifecycle when
 they want a continuous or differently scoped thread.
 
+### Canonical playtest origins
+
+- For local owner playtesting, start the game with `START_GAME.cmd` and use the
+  exact URL `http://127.0.0.1:4173` in the intended persistent browser profile.
+- `http://localhost:4173`, any other host or port, the GitHub Pages site, an
+  incognito/guest window, and another browser profile have separate browser
+  storage. Never imply that a campaign automatically follows between them.
+- The canonical remote playtest is
+  `https://melissarowlandc-afk.github.io/GamifySurgery/`. It has separate saves
+  from the local origin until authenticated cloud synchronization exists.
+- Whenever a task changes or temporarily substitutes the scheme, host, port,
+  path, browser profile, launcher, or remote playtest URL, explicitly tell the
+  owner which opening pathway to use and what it means for existing saves.
+  Record a durable pathway change in the current handoff before closing the
+  task. Include `location.origin` when diagnosing persistence.
+
 ### GitHub checkpoint backups
 
 Treat the completion of a substantial validated milestone, a broad integrated

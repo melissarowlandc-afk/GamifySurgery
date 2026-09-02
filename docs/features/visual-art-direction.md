@@ -130,6 +130,13 @@ cutaway rear-wall area. The Front Desk cabinet and interactive water cooler
 are the reference example: they remain logically A1 and A5 while their larger
 art is rear-grounded by contact anchors. This visual grounding must never move
 an obstacle tile or change a route.
+
+Room-local tile coordinates are named consistently in graphics discussion and
+proofs: lettered rows run north-to-south from A, and numbered columns run
+west-to-east from 1. The Front Desk's exact five-by-four footprint therefore
+has rows A-D and columns 1-5; other rooms use the corresponding range for their
+current orientation. Walls project outward from the floor boundary and never
+consume a named floor tile.
 Rooms use:
 
 - visibly thick walls and finished edges;
@@ -137,25 +144,40 @@ Rooms use:
   inset trim, side returns, low front edges, and directional shadows follow the
   accepted Front Desk shell proportions. Do not reduce that depth language to
   a generic percentage or half-tile cap;
-- rear-wall faces only on exposed northern building-envelope segments. When a
-  room or hallway touches immediately north, the southern/front room loses the
-  covered portion of its dollhouse rear wall. This never expands, shrinks, or
-  reinterprets either room's floor. Every room's saved construction footprint
-  remains its exact floor area; the visible rear wall is a bonus cutaway face
-  projected outside and immediately north of that footprint. Partial-width
-  contacts preserve only the genuinely exposed wall runs. Rear-wall artwork
-  remains anchored and sized against the complete wall, with covered portions
-  cropped away rather than the surviving artwork being squeezed into the
-  exposed fragment. Northmost hallway runs receive the same shallow rear-wall
-  treatment. Genuine exterior northwest and northeast corners descend through
-  short stepped pixel shoulders into the low side returns, while interruptions
-  created by a northern neighbor remain clean square cuts;
-- explicit doorframes, open wall passages, jambs, and thresholds: a rear-wall
-  doorway is an upright opening cut from the wall/floor contact line upward
-  into the visible exterior wall face, never a floating mark descending from
-  the room's top edge. A north doorway on a shared interior floor boundary
-  becomes a grounded opening and threshold instead. Ordinary passages do not
-  display decorative door leaves standing ajar;
+- full rear-wall faces only on exposed northern building-envelope segments.
+  When a room or hallway touches immediately north, the southern space owns one
+  very short shared wall on that run: its baseboard plus only a tiny strip of
+  that room's matching wallpaper, currently about one-tenth of a tile high.
+  A door removes this short wall for the complete door span. The northern
+  neighbor does not add a second foreground lip on the same boundary. This
+  never expands, shrinks, or reinterprets either room's floor. Every room's
+  saved construction footprint remains its exact floor area; the visible rear
+  wall is bonus cutaway architecture projected from that boundary. Partial-
+  width contacts preserve the correct tall, short, and open runs. Rear-wall
+  artwork remains anchored and sized against the complete wall, with covered
+  portions cropped away rather than the surviving artwork being squeezed into
+  the exposed fragment. Northmost hallway runs use the same rule. Genuine
+  exterior northwest and northeast corners descend through short stepped pixel
+  shoulders into the low side returns, while neighbor transitions remain clean
+  square cuts;
+- persisted doorways are complete one-tile wall cutouts. Both the source shell
+  and the adjacent room's reciprocal wall/cap omit the same physical segment;
+  no threshold, sill, header, leaf, frame strip, or wall material may be
+  painted across the walking path. The two existing floor patterns meet
+  directly at their shared edge and may change material there without a
+  generic bridge. Consecutive doors into one destination form a continuous
+  multi-tile opening, while different destinations remain separated by their
+  genuine shared destination wall rather than synthetic door trim. Build Mode
+  selection/highlight overlays may identify a door, but neither the construction
+  grid nor any dark boundary line may cross its persisted opening;
+- room floor material fills the complete logical footprint. Baseboards, rims,
+  perimeter strips, and foreground lips are wall decoration, never floor
+  decoration, so none can survive inside a doorway or inset the usable floor;
+- each closed east/west room-to-room or room-to-hallway connection uses exactly
+  one accepted-width top-down partition cap centered on the global tile border.
+  A persisted door removes that thick line for the entire tile interval.
+  Hallway-to-hallway circulation stays open, while exposed east/west exterior
+  edges retain the accepted Front Desk cap treatment;
 - subtle room-specific flooring or tiles that do not resemble the logical
   placement grid;
 - small cast shadows and consistent depth;
@@ -263,10 +285,15 @@ across these representations. It is never part of ordinary gameplay.
 
 ## Interface composition
 
-The facility stays stable in the upper-middle workspace. Opening a chart must
-not resize, move, or re-zoom it. The Clinical Desk occupies the lower-middle
-workspace and holds either the current paper chart or paused construction
-tools.
+The facility stays stable in the upper-middle workspace. On desktop, a narrow
+paper-and-ink divider with an original up/down grip gives the player an
+explicit, accessible allocation between the facility and Clinical Desk. It
+changes the host height so the map reveals more or less of the same world;
+it never stretches, squashes, or re-zooms the art. Opening a chart must not
+silently change that chosen allocation. The Clinical Desk occupies the
+lower-middle workspace and holds either the current paper chart or paused
+construction tools, so its Build Mode control naturally follows the divider.
+Phone layouts retain their fixed stacked composition without a divider.
 
 Panels use layered paper-like surfaces, limited-palette shadows, strong
 hierarchy, tactile pixel controls, and readable clinical typography. Heavy
@@ -279,6 +306,20 @@ smooth outline pictograms with consistent scale and stroke weight: scalpel,
 money bag, changing smiley face, and clock from left to right. Unlike the
 environmental art, these small SVG symbols are not pixelated. They have no
 individual box, fill texture, or decorative illustration.
+
+The title strip, HUD cells, facility heading, desk edge, and lower status bar
+use compact chrome so the facility and Clinical Desk retain the available
+vertical space. The demonstration-content notice is centered in the lower bar,
+not assigned a dedicated row. In Build Mode, the Facility Time cell carries the
+short status label and stopped-time message; the map overlay remains for an
+ordinary manual pause only.
+
+Patient folders, goals, staffing, alerts, promotions, and construction menus
+use tighter desktop chrome to reserve the map and desk as the dominant surfaces.
+This density is limited to navigation and operations UI: charts, clinical
+choices, explanations, dialogs, and primary care actions retain their existing
+reading scale. At compact and phone widths, status and footer text takes a new
+line when needed instead of colliding with controls or being truncated.
 Pause, play, and speed controls follow the same restrained treatment. They do
 not receive the texture, shading, or miniature illustrative detail used in
 rooms, equipment, characters, and portraits.
@@ -367,6 +408,17 @@ The Level 1 slice is ready for owner review only when:
     hallway, entrance-path, and sidewalk space. Tree-frame background holes
     are renderer-cleaned only when they are opaque near-neutral white, leaving
     the accepted tree silhouettes and flower-petal pixels intact.
+26. floor material reaches every logical room edge, while baseboards and other
+    perimeter strips remain wall-owned decoration rather than floor-owned rims.
+27. every backed north segment has one very short baseboard-and-wallpaper strip
+    owned by the southern space, every exposed north segment keeps the complete
+    tall wall, and a door removes either presentation for its full span.
+28. every closed room/room or room/hallway side connection has one thick
+    top-down cap centered exactly on the tile border; a persisted door removes
+    it completely, and hallway/hallway circulation remains open.
+29. ordinary play and Build Mode show only floor texture touching floor texture
+    through persisted doorways, with no dark grid line, rim, threshold, or wall
+    pixel crossing the opening.
 
 Automated tests support this gate but cannot establish visual acceptance. The
 owner approves the rendered Level 1 screenshot before the art system expands
@@ -378,14 +430,20 @@ The measured Front Desk v4 shell is the single source of truth for all current
 surgery-center room and hallway cutaway geometry: side-wall thickness,
 north-wall envelope, outer border, bevel, baseboard, foreground lip, corner
 treatment, and shadow offsets are normalized to the logical tile scale. The
-same north-wall envelope applies regardless of room depth, footprint,
+same exposed north-wall envelope applies regardless of room depth, footprint,
 orientation, room type, or upgrade tier; room-specific floor and plaster
 materials remain independent. North doors, wall-mounted decor, Build Mode wall
-targets, and camera bounds use that same projection. Walls touching another
-room or hallway are drawn only on their exposed runs. Covered runs disappear
-at their original scale rather than being squeezed, so adjacent floors meet
-without either room's wall or foreground lip crossing the other room's
-footprint.
+targets, and camera bounds use that same projection.
+
+Each constructed shared boundary has one presentation owner. A southern room
+or hallway owns the backed north run as a very short baseboard-plus-wallpaper
+strip, and the northern neighbor suppresses its south/front lip on that run. A
+west room or hallway owns one vertical partition cap centered on an east/west
+tile border; the east neighbor does not paint a duplicate. Persisted door runs
+are subtracted from the complete owned component and from Build Mode grid lines.
+Hallway-to-hallway internal boundaries remain open. Floor materials fill their
+complete logical rectangles beneath this wall system, so adjacent floor
+textures meet directly in every opening without a floor-owned rim or baseboard.
 
 ## Canonical actor integrity and patient-roster seam
 

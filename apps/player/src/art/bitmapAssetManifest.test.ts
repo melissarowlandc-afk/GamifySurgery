@@ -5,6 +5,7 @@ import {
   ENVIRONMENT_ATLAS_V1,
   ENVIRONMENT_ATLAS_V1_FRAMES,
   FRONT_DESK_V2_FIXTURE_OVERRIDES,
+  FRONT_DESK_V3_ARCHITECTURE_FRAMES,
   FRONT_DESK_V4_ARCHITECTURE_FRAMES,
   FRONT_DESK_V4_SHELL_LAYOUT,
   EXAMINATION_V2_ARCHITECTURE_FRAMES,
@@ -17,6 +18,7 @@ import {
   PATIENT_CHARACTER_ATLASES_V1,
   PATIENT_CHARACTER_CORE_MAP_ATLASES_V1,
   PATIENT_CHARACTER_MAP_ATLASES_V1,
+  FOUNDER_CHARACTER_ATLASES_V4,
   ROOM_FIXTURE_ATLASES,
   createCharacterBitmapDescriptor,
   createFixtureBitmapDescriptor,
@@ -49,7 +51,22 @@ describe("bitmap art asset seam", () => {
     expect(thumbnail?.nativeWidth).toBe(480);
     expect(thumbnail?.nativeHeight).toBe(1120);
     for (const asset of PATIENT_CHARACTER_ATLASES_V1) {
-      expect(asset.relativePath).toContain("?rev=patients-v1-r6");
+      expect(asset.relativePath).toContain("?rev=patients-v1-r7-hires");
+    }
+    for (const asset of PATIENT_CHARACTER_MAP_ATLASES_V1) {
+      expect(asset.nativeWidth).toBe(640);
+      expect(asset.nativeHeight).toBe(1920);
+      expect(asset.id).toContain("-v1-r7-hires");
+    }
+  });
+
+  it("keeps founder map atlases on their revisioned 128-by-192 grid", () => {
+    expect(FOUNDER_CHARACTER_ATLASES_V4).toHaveLength(20);
+    for (const asset of FOUNDER_CHARACTER_ATLASES_V4) {
+      expect(asset.nativeWidth).toBe(640);
+      expect(asset.nativeHeight).toBe(1152);
+      expect(asset.id).toContain("-v4-r9-hires");
+      expect(asset.relativePath).toContain("?rev=founders-v4-r9-hires");
     }
   });
 
@@ -75,6 +92,12 @@ describe("bitmap art asset seam", () => {
     });
     expect(FRONT_DESK_V4_ARCHITECTURE_FRAMES.frontOccluder.sourceRect).toEqual({
       x: 157, y: 941, width: 940, height: 153,
+    });
+    expect(FRONT_DESK_V3_ARCHITECTURE_FRAMES.westCap.sourceRect).toEqual({
+      x: 80, y: 48, width: 31, height: 478,
+    });
+    expect(FRONT_DESK_V3_ARCHITECTURE_FRAMES.eastCap.sourceRect).toEqual({
+      x: 997, y: 48, width: 28, height: 478,
     });
     expect(FRONT_DESK_V4_SHELL_LAYOUT.floor).toEqual({
       x: 212, y: 339, width: 832, height: 622,
@@ -112,7 +135,7 @@ describe("bitmap art asset seam", () => {
       .toBe("room-fixtures:front-desk-v2");
     expect(getRoomBitmapFixtureFrame("room.front_desk", "visitorChair")).toMatchObject({
       atlasId: "room-fixtures:waiting-v1",
-      sourceRect: { x: 157, y: 681, width: 232, height: 254 },
+      sourceRect: { x: 865, y: 681, width: 232, height: 254 },
       nativeWidth: 232,
       nativeHeight: 254,
     });

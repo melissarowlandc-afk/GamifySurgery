@@ -417,6 +417,8 @@ test("mixed alert categories preserve attention markers and focus the receptioni
     .filter({ hasText: "Hire a receptionist to speed up check-in." });
   await expect(receptionistGuidance).toHaveCount(1);
   await receptionistGuidance.locator("button").click();
+  await expect(page.locator(".management-panel")).toBeVisible();
+  await expect(page.locator(".operations-column .staff-panel")).toHaveCount(0);
   await expect(
     page.locator(
       '[data-staff-role-id="staff.receptionist"].is-alert-highlighted',
