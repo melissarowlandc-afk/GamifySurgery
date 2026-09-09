@@ -3,6 +3,56 @@
 **Prepared:** 2026-09-01
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
+
+## GS-001 accepted: scoped backup in progress (2026-09-09)
+
+Read `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md`, the full technical review
+`docs/handoffs/GS-001_SAVE_REPOSITORY_REVIEW.md`, and the active plan
+`docs/execplans/durable-browser-persistence.md` before continuing. The original
+twelve defects and rejected-pass history remain in
+`docs/handoffs/DURABLE_BROWSER_PERSISTENCE_RESUME.md`; their historical
+rejection is not the status of the corrected repository.
+
+The isolated M2 repository and migration now have a fresh independent Sol
+technical PASS. Final validation: 24 repository / 42 affected tests, player
+typecheck, and build pass; only the existing Vite large-chunk advisory remains.
+Terra `Archimedes` implemented a rejected first correction, Sol `Rawls` made
+the deeper and final test corrections, and fresh Sol `Locke` reviewed the actual
+diff and independently verified the final tests. Astra inspected the source,
+returned corrections, reran the required checks, and maintains the evidence.
+No qualifying implementation was kept local instead of delegated.
+
+M1 diagnostics/guarded legacy reset and all unrelated graphics, gameplay,
+assets, domain, clinical content, and tests are preserved. The live game still
+saves the aggregate `localStorage` profile: **GS-001 is not live integration
+and does not mean the owner's save problem is fixed in the game.** M3/GS-002
+and later browser/launcher validation must be separate owner-directed tasks.
+No PM subagent was resumed, no PM message was sent, and the PM board/inventory
+were not changed. The owner reports completion to the PM.
+
+The accepted source/test hashes are unchanged. Before closeout, local/remote
+`beta` HEAD was reconfirmed at
+`fd5ccdcefdfeb4e2a8c3c5a16511ce90b81f8853`. The large inherited dirty tree
+and original ignored baseline are intact; the starting-state hash manifest is
+in `.local-dev/gs001-standalone-start/`. The repository source/test, plan,
+resume, GS-001 result/review, and this narrow persistence section are the task
+scope. Existing package/lock `fake-indexeddb` 6.2.5 entries are unchanged by
+this thread and are included as the repository's required test dependency.
+Inspect hunks before staging, particularly in shared plan/handoff files.
+
+**Owner acceptance:** "Complete and agree" on 2026-09-09 authorizes this
+thread's scoped commit/backup, remote verification, evidence, and archival.
+Terra `Epicurus` passed publication safety and HEAD import-independence review;
+Astra reran 42 affected tests, typecheck, and build, all exit 0. Shared plan and
+handoff contents are selected in the index without changing unrelated working
+hunks. Backup verification is pending. No merge, deployment, release, M3, or
+automatic new task is authorized.
+
+The opening pathway is unchanged: `START_GAME.cmd`, then exactly
+`http://127.0.0.1:4173` in the same intended persistent browser profile. No
+browser or owner data was touched during GS-001. Other origins/profiles and
+the canonical Pages playtest retain separate saves.
+
 **Latest deployed application/content checkpoint:**
 `7d8dab437838250b7315a71870ec6ea2d720f3ca`
 (`feat: publish canonical rooms and Level 1 interiors`; 29 public files)

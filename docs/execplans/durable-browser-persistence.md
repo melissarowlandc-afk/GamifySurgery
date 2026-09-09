@@ -1,5 +1,17 @@
 # Durable Browser Persistence
 
+> **GS-001 accepted; scoped backup in progress (2026-09-09):** The owner said
+> "Complete and agree" after technical PASS. This thread
+> completed only Milestone 2 repository corrections and technical validation. Read
+> `docs/handoffs/DURABLE_BROWSER_PERSISTENCE_RESUME.md` for the original twelve
+> defects and `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md` for current status.
+> Milestone 1 and the extensive unrelated dirty tree remain protected. The live
+> game still uses aggregate `localStorage`; Milestone 3 is a separate task.
+> Final findings, exact commands, limitations, and all twelve requirements are
+> mapped in `docs/handoffs/GS-001_SAVE_REPOSITORY_REVIEW.md`.
+> The scoped backup excludes inherited M1 runtime changes and unrelated work.
+> Earlier diagnosis/M1 notes below are historical context, not GS-001 status.
+
 ## Goal
 
 Replace the prototype's single, synchronous, ever-growing `localStorage` save
@@ -34,9 +46,11 @@ site preferences or allowing the active page's exit autosave to recreate it.
 
 ## Constraints and non-goals
 
-- The current work is diagnosis and design only. Do not change runtime code,
-  delete browser data, stage, commit, push, merge, deploy, or release as part of
-  this planning checkpoint.
+- GS-001 is limited to the isolated repository, its tests, required pinned test
+  dependency, and task-relevant plan/handoff hunks. The owner's 2026-09-09
+  completion agreement authorizes only its audited commit, current-branch
+  backup, verification, evidence, and archival, superseding earlier planning-
+  only restrictions for this task. No M3, merge, Pages publication, or release.
 - This repository cannot inspect or erase the storage partition in the owner's
   remote laptop browser. The affected browser must expose its caught exception
   once before reset to conclusively distinguish quota exhaustion from a privacy
@@ -194,10 +208,12 @@ then select Save & Close:
    and this plan's results. Cover large campaigns, multiple campaigns, failed
    transactions, corrupt current revision recovery, migration interruption,
    export/import, reset isolation, and reload.
-5. **Final acceptance - Sol.** Review actual diffs and worker validation,
+5. **Final technical review - Sol; acceptance/closeout - Astra and owner.** Review actual diffs and worker validation,
    independently rerun proportional unit/type/build/E2E checks, inspect browser
-   evidence, update the handoff, and stop without committing or pushing unless
-   the owner explicitly says "push to GitHub."
+   evidence and update the handoff. For standalone GS-001, completion agreement
+   from the owner authorizes its scoped audit, commit, GitHub backup, remote
+   verification, and archival; no additional phrase is required. Do not push
+   before that agreement or continue automatically into Milestone 3.
 
 ## Acceptance criteria
 
@@ -257,6 +273,45 @@ then select Save & Close:
 - [ ] Implement Milestone 1 only after explicit implementation direction.
 - [ ] Review Milestone 1 before delegating Milestone 2.
 
+- [x] Preserve the rejected first Milestone 2 pass and its rejection history.
+  `localCampaignRepository.ts` and its test were added with `fake-indexeddb`
+  6.2.5 pinned for tests. Sol rejected that pass pending atomic rollback proof, safe transaction
+  completion/close paths, fully structured checksum/open/upgrade failures,
+  current-missing recovery, coherent profile assembly, and resumable one-at-a-
+  time migration that never references an unstored campaign. The complete gap
+  list and worker history are in the 2026-09-07 resume record.
+- [x] Preserve the subsequent unaccepted correction as the GS-001 starting
+  state. Its claimed 8 repository / 26 affected tests and typecheck/build are
+  historical worker reports, not independent acceptance; a direct upgrade
+  failure test was acknowledged missing.
+- [x] Complete the standalone GS-001 correction and independent technical
+  review. Terra `Archimedes` (`01a07e3c-db19-7710-9ee8-b9c8f6b2c09a`) returned
+  a correction with reported 10 repository / 28 affected tests, but Astra and
+  fresh Sol `Rawls` (`01a07e47-d0d3-77b0-9d22-9f769f2c4be0`) rejected it for
+  remaining terminal-promise, verified-history, metadata, coherent-read, and
+  exact-readback defects. Terra is closed; its reviewed state is preserved in
+  `.local-dev/gs001-terra-reviewed/`. Rawls completed the escalated two-file
+  correction and a final test-only correction after fresh Sol `Locke`
+  (`01a07e75-8f29-72a1-9898-1d44a9b24230`) identified two remaining coverage
+  gaps. Locke reviewed the actual diffs and final unchanged source, independently
+  passed 24 repository / 42 affected tests, and returned PASS. Astra inspected
+  source/tests, returned additional corrections, independently passed the
+  required three-file / 42-test command, player typecheck and build, and accepted
+  isolated M2 technically. Full evidence and limitations are in the GS-001
+  review. No PM agent was resumed or messaged; no M3 code was changed.
+- [x] Obtain GS-001 owner acceptance on 2026-09-09: "Complete and agree."
+  Terra `Epicurus` audited publication safety and HEAD import independence;
+  Astra reconfirmed the accepted source/test hashes and reran the required
+  three-file / 42-test command, player typecheck, and build, all exit 0.
+- [ ] Finish the scoped commit/backup, verify the remote commit, record the
+  evidence, and archive this task. Shared plan/handoff files require selective
+  index contents; inherited M1 and unrelated hunks must remain unstaged.
+- [ ] Integrate IndexedDB into application bootstrap/session/UI only after Sol
+  accepts the corrected isolated repository. The current live hook still saves
+  the aggregate legacy profile.
+- [ ] Run stress/recovery/browser acceptance and the real `START_GAME.cmd` /
+  exact `http://127.0.0.1:4173` owner pathway after integration.
+
 ## Discoveries
 
 - The warning proves a write/access failure but cannot reveal the exact cause
@@ -280,10 +335,31 @@ then select Save & Close:
   but only export or the future cloud backend protects against device loss,
   browser-profile loss, and site-data clearing.
 
+- The original rejected IndexedDB pass installed
+  transaction completion handlers late, returned directly after `abort()` on
+  conflict, computed checksums outside structured failure handling, could not
+  reconstruct a full profile, and wrote full legacy metadata during each
+  partial migration. Its five tests did not prove rollback or coherent
+  interrupted migration.
+- Three historical Terra continuation attempts ended with a service-side HTTP
+  404. That first pass was preserved as an ignored baseline; this was not a repository or
+  local machine failure and requires no user repair.
+- GS-001's ignored before-state baseline is .local-dev/gs001-repository-baseline/.
+- The standalone task refreshed `beta` at
+  `fd5ccdcefdfeb4e2a8c3c5a16511ce90b81f8853`, found an empty index, inspected
+  actual original-to-start no-index diffs, and captured its inherited source,
+  tests, handoffs, status, and changed-file SHA-256 manifest under
+  `.local-dev/gs001-standalone-start/`. The original baseline remains intact.
+- Starting-state inspection found that the claimed large-campaign test merely
+  changed `facilityTick`; the rollback test did not change profile metadata;
+  mixed recovery errors still depended on the last candidate; and the code and
+  tests remained compressed. These gaps were corrected and independently
+  reviewed rather than accepted based on passing totals.
+
 ## Exact next action
 
-On the affected laptop, run the diagnostic interception above, click Save &
-Close once, and retain the `STITCHIN_TIME_SAVE_ERROR` object. Then clear only
-the two campaign keys using the guarded reset recorded in the current handoff.
-If the owner next authorizes implementation, Sol must delegate Milestone 1 to a
-Terra worker before making any runtime edit.
+Owner acceptance was received on 2026-09-09. Finish this thread's scoped commit
+and `beta` backup, verify the remote commit, record the evidence, and archive.
+Do not request another acceptance phrase, message the PM, launch a browser, or
+begin Milestone 3. The owner reports completion to the PM and starts the next
+distinct task. The technical result and opening pathway remain unchanged.
