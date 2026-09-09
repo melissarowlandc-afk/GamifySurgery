@@ -1,6 +1,6 @@
 # Durable Browser Persistence
 
-> **GS-001 accepted; scoped backup in progress (2026-09-09):** The owner said
+> **GS-001 complete; scoped backup verified (2026-09-09):** The owner said
 > "Complete and agree" after technical PASS. This thread
 > completed only Milestone 2 repository corrections and technical validation. Read
 > `docs/handoffs/DURABLE_BROWSER_PERSISTENCE_RESUME.md` for the original twelve
@@ -11,6 +11,8 @@
 > mapped in `docs/handoffs/GS-001_SAVE_REPOSITORY_REVIEW.md`.
 > The scoped backup excludes inherited M1 runtime changes and unrelated work.
 > Earlier diagnosis/M1 notes below are historical context, not GS-001 status.
+> Repository checkpoint `20701bcf426f56236a99869a1759cf2313f30422` was pushed
+> to `origin/beta` and read back at 2026-09-09 13:51:37 UTC. `main` is unchanged.
 
 ## Goal
 
@@ -303,9 +305,12 @@ then select Save & Close:
   Terra `Epicurus` audited publication safety and HEAD import independence;
   Astra reconfirmed the accepted source/test hashes and reran the required
   three-file / 42-test command, player typecheck, and build, all exit 0.
-- [ ] Finish the scoped commit/backup, verify the remote commit, record the
-  evidence, and archive this task. Shared plan/handoff files require selective
-  index contents; inherited M1 and unrelated hunks must remain unstaged.
+- [x] Commit only the nine-path GS-001 allowlist and push the `beta` backup.
+  `20701bcf426f56236a99869a1759cf2313f30422` was verified by remote readback
+  and ancestry check at 2026-09-09 13:51:37 UTC, all exit 0. Evidence is recorded
+  in the review/current handoff and a docs-only follow-up. Shared doc selections
+  preserve inherited M1 and unrelated unstaged hunks. Archive after that
+  evidence-only follow-up is pushed and verified; no implementation remains.
 - [ ] Integrate IndexedDB into application bootstrap/session/UI only after Sol
   accepts the corrected isolated repository. The current live hook still saves
   the aggregate legacy profile.
@@ -358,8 +363,8 @@ then select Save & Close:
 
 ## Exact next action
 
-Owner acceptance was received on 2026-09-09. Finish this thread's scoped commit
-and `beta` backup, verify the remote commit, record the evidence, and archive.
-Do not request another acceptance phrase, message the PM, launch a browser, or
-begin Milestone 3. The owner reports completion to the PM and starts the next
-distinct task. The technical result and opening pathway remain unchanged.
+GS-001 is owner-accepted and its repository backup is verified. Push and verify
+the evidence-only record, then archive this task. Do not request another
+acceptance phrase, message the PM, launch a browser, or begin Milestone 3. The
+owner reports completion to the PM and starts the next distinct task. The
+technical result and opening pathway remain unchanged.

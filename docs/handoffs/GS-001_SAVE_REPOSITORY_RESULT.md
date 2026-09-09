@@ -1,6 +1,6 @@
 # GS-001 durable save repository result
 
-Updated 2026-09-09. Status: **owner accepted; scoped backup in progress.**
+Updated 2026-09-09. Status: **complete, owner accepted, backup verified.**
 
 The isolated IndexedDB repository now passes review for structured failures,
 terminal transaction handling/connection cleanup, revision conflicts, atomic
@@ -44,8 +44,17 @@ already supplies the repository's imports; inherited M1/domain changes are not
 required. Astra reran the required 42 affected tests, typecheck, and build, all
 exit 0, with the accepted source/test hashes unchanged. The exact dependency
 entries are included as required test support; shared docs are staged only by
-GS-001-owned hunks. Backup verification is still pending. The owner reports
-completion to the PM; this thread does not message it or continue into M3.
+GS-001-owned hunks.
+
+**Verified GitHub backup:** `20701bcf426f56236a99869a1759cf2313f30422`
+(`feat: complete GS-001 isolated durable-save repository`) is on `origin/beta`.
+Commit, non-force push, remote readback, and ancestry check all exited 0;
+readback matched at 2026-09-09 13:51:37 UTC. Remote `main` remains
+`7d8dab437838250b7315a71870ec6ea2d720f3ca`; no merge or Pages publication
+occurred. The nine-path checkpoint excludes M1 runtime and all unrelated work.
+This docs-only verification record is the final follow-up before archival.
+The owner reports completion to the PM; this thread does not message it or
+continue into M3.
 
 The older summary below is retained only as historical unaccepted evidence.
 

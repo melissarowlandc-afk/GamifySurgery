@@ -1,6 +1,6 @@
 # GS-001 isolated save repository technical review
 
-Updated 2026-09-09. Status: **owner accepted; scoped backup in progress**.
+Updated 2026-09-09. Status: **complete, owner accepted, backup verified**.
 Scope is Milestone 2 only. The live application still saves
 the aggregate legacy `localStorage` profile; this task does not fix that path.
 
@@ -320,6 +320,34 @@ paths. Shared docs used `git hash-object -w --path=<shared-document-path>
 only GS-001 sections; inherited M1 progress/runtime and unrelated handoff
 sections remain unstaged in the unchanged working files.
 
-The scoped commit, push, and remote verification are the remaining closeout
-steps. No backup is claimed until the remote branch is read back. The final
-verification evidence will be recorded here and in the current handoff.
+## Verified GitHub backup (2026-09-09)
+
+Repository checkpoint: **`20701bcf426f56236a99869a1759cf2313f30422`**,
+`feat: complete GS-001 isolated durable-save repository`, parent
+`fd5ccdcefdfeb4e2a8c3c5a16511ce90b81f8853`. It contains exactly nine scoped
+paths, 3,343 insertions / 11 deletions; shared plan/handoff contents are selective.
+
+| Exact command | Exit | Verified result |
+| --- | --- | --- |
+| `git commit -m "feat: complete GS-001 isolated durable-save repository"` | 0 | Created the checkpoint at 2026-09-09 09:51:03 -0400. |
+| `git ls-remote --heads origin beta main` (pre-push) | 0 | Remote `beta` still matched the accepted starting HEAD; no concurrent advance. |
+| `git push origin beta` | 0 | Normal fast-forward backup, `fd5ccdc..20701bc`; no force. |
+| `git ls-remote --heads origin beta main` (post-push) | 0 | Remote `beta` exactly `20701bcf426f56236a99869a1759cf2313f30422` at 2026-09-09 13:51:37 UTC. |
+| `git merge-base --is-ancestor 20701bcf426f56236a99869a1759cf2313f30422 refs/remotes/origin/beta` | 0 | Origin tracking branch contains the checkpoint; exact remote readback independently confirms it. |
+
+Remote `main` remains `7d8dab437838250b7315a71870ec6ea2d720f3ca`. No merge,
+Pages dispatch, release, history rewrite, deletion, browser access, or PM
+communication occurred. Private inputs and ignored baselines remain local.
+The live game still uses aggregate `localStorage`.
+
+The fresh 42-test/typecheck/build runs used the protected shared working tree;
+M1's affected tests/runtime are intentionally not part of this isolated backup.
+Epicurus separately verified all repository imports exist at the parent HEAD.
+No browser or standalone clean-checkout validation is claimed.
+
+This five-document evidence-only follow-up records the already verified
+repository commit without changing runtime/tests. It must itself be pushed and
+its final `beta` tip read back before this task is archived. The self-referential
+record names the verified implementation commit rather than inventing its own
+future commit hash. All implementation and audit workers are closed; no further
+implementation is authorized in this task.

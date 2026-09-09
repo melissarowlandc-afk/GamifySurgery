@@ -1,10 +1,10 @@
 # Current Thread Handoff
 
-**Prepared:** 2026-09-01
+**Prepared:** 2026-09-01; active persistence handoff updated 2026-09-09
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
 
-## GS-001 accepted: scoped backup in progress (2026-09-09)
+## GS-001 complete: scoped backup verified (2026-09-09)
 
 Read `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md`, the full technical review
 `docs/handoffs/GS-001_SAVE_REPOSITORY_REVIEW.md`, and the active plan
@@ -45,8 +45,16 @@ thread's scoped commit/backup, remote verification, evidence, and archival.
 Terra `Epicurus` passed publication safety and HEAD import-independence review;
 Astra reran 42 affected tests, typecheck, and build, all exit 0. Shared plan and
 handoff contents are selected in the index without changing unrelated working
-hunks. Backup verification is pending. No merge, deployment, release, M3, or
-automatic new task is authorized.
+hunks. No merge, deployment, release, M3, or automatic new task is authorized.
+
+**Verified GitHub backup:** `origin/beta` contains
+`20701bcf426f56236a99869a1759cf2313f30422`
+(`feat: complete GS-001 isolated durable-save repository`; nine scoped paths).
+`git push origin beta`, `git ls-remote --heads origin beta main`, and the
+ancestor check all exited 0. Readback matched at 2026-09-09 13:51:37 UTC;
+remote `main` remains `7d8dab437838250b7315a71870ec6ea2d720f3ca`.
+The Pages workflow was not dispatched. This evidence-only follow-up must also
+be pushed and verified, then this task is archived. No implementation remains.
 
 The opening pathway is unchanged: `START_GAME.cmd`, then exactly
 `http://127.0.0.1:4173` in the same intended persistent browser profile. No
@@ -1553,3 +1561,10 @@ see different data: `127.0.0.1`, `localhost`, other ports/profiles, and GitHub
 Pages have independent browser storage. Repository instructions now require
 future work to name the exact local or remote opening pathway and explicitly
 warn the owner whenever it changes or isolates saves.
+
+## Historical GS-001 pre-review report (2026-09-07; superseded)
+
+This earlier report preceded standalone technical review and owner acceptance.
+Current GS-001 status and backup evidence are in the GS-001 section at the top
+of this handoff and `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md`. The task
+remains repository-only, not live-game integration.
