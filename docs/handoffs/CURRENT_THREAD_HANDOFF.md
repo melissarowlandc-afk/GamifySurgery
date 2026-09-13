@@ -1,5 +1,15 @@
 # Current Thread Handoff
 
+> GS-006 clinical backup verified (September 13): checkpoint
+> `b4ba1bfa9d9c84c51bea1db2c43594bc636d3487` is on `origin/beta`; remote
+> SHA independently verified. Includes clinical batches through September 13,
+> patient presentation/demographic repairs and diagnostic timing support.
+> Sol audited and staged the scope; root reviewed the diff and isolated checks:
+> 1,048 covered tests, seven workspace typechecks and production build pass.
+> [Backup plan](../execplans/clinical-checkpoint-backup-2026-09-13.md).
+> Unrelated graphics, movement and browser-storage edits remain local. No merge,
+> deployment, Pages publication or save change. GS-006 remains open.
+
 **Prepared:** 2026-09-01; active persistence handoff updated 2026-09-09
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`

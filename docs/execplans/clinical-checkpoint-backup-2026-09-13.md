@@ -20,7 +20,7 @@ No dependency installation or history rewrite. Preserve all worktree contents.
 - [x] Sol: scoped diff, source/privacy/secret/dependency audit and explicit
   staging, using partial index versions for mixed files where required.
 - [x] Root: inspect staged diff and audit; validate exact staged tree.
-- [ ] Root: commit, push beta normally, verify remote commit; record handoff.
+- [x] Root: commit, push beta normally, verify remote commit; record handoff.
 
 Root retains scope and acceptance decisions, durable planning and final response.
 Sol may stage but does not commit/push or spawn other agents. Audit manifest
@@ -52,3 +52,13 @@ pass. All 1,048 distinct tests covered in the staged clinical/domain/player/bala
 suites pass after those corrections. Final staged code acceptance is complete;
 commit and verified remote push are next. Sol performed audit and partial staging;
 root reviewed diffs, prepared the isolated snapshot and ran acceptance checks.
+
+## Verified backup
+
+Checkpoint b4ba1bfa9d9c84c51bea1db2c43594bc636d3487 was pushed normally to
+origin/beta and independently verified with git ls-remote. It contains 176
+reviewed clinical files/hunks. Final scan found no high-confidence secrets or
+excluded paths; all 129 staged code files matched the validated snapshot bytes.
+Unrelated graphics, movement and browser-storage work remains local and intact.
+No merge, Pages publication, deployment, owner-save change or task archival.
+The follow-up documentation commit records this verified checkpoint in handoffs.

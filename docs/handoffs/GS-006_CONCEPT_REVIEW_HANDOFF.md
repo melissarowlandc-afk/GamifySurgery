@@ -1,6 +1,6 @@
 # GS-006: owner clinical concept review
 
-Updated: 2026-09-13. Status: early-level batch and prior clinical dependencies implemented and validated; owner-authorized scoped GitHub backup in progress. See the September 13 completion entry below for current counts; earlier entries are historical.
+Updated: 2026-09-13. Status: early-level batch and prior clinical dependencies backed up to GitHub beta as b4ba1bfa9d9c84c51bea1db2c43594bc636d3487; remote SHA verified. See the September 13 completion entry below for current counts; earlier entries are historical. No merge/deployment; unrelated graphics and persistence changes remain local. Keep GS-006 open.
 Task: `01a08678-2899-7410-8bf1-613839be60f7`.
 
 ## September 11: twenty additional board concept groups
