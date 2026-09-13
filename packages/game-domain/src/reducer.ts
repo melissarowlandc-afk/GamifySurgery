@@ -21,6 +21,8 @@ import {
   validateDomainContext,
 } from "./context";
 import { selectRoutineClinicalCase } from "./clinical-selection";
+import { materializePatientName } from "./patientText";
+import { completePatientDemographics } from "./patientDemographics";
 import {
   canAdmitPatient,
   getEligibleServiceRoute,
@@ -790,7 +792,7 @@ function createEncounter(
 ): EncounterState {
   const patienceExempt =
     input.arrivalClass === "tutorial" || input.patienceExempt === true;
-  const frozenCase = clonePlain(input.clinicalCase);
+  let frozenCase = clonePlain(input.clinicalCase);
   const approvedProfiles = frozenCase.approvedInstantiationProfiles;
   if (approvedProfiles && approvedProfiles.length > 0) {
     const selectedProfile =
@@ -828,6 +830,12 @@ function createEncounter(
       );
     }
   }
+  frozenCase.prototypeDemographics = completePatientDemographics({
+    caseId: frozenCase.id,
+    campaignSeed: state.campaignSeed,
+    encounterId: input.encounterId,
+    demographics: frozenCase.prototypeDemographics,
+  });
   const patientDemographics = frozenCase.prototypeDemographics;
   const patientSexLabel = patientDemographics?.sexLabel;
   const patientDisplayName =
@@ -837,6 +845,7 @@ function createEncounter(
       input.encounterId,
       patientSexLabel,
     );
+  frozenCase = materializePatientName(frozenCase, patientDisplayName);
   const entrance = getPublicEntrance(state, context);
   const arrivalStart = getEncounterArrivalStart(
     state,

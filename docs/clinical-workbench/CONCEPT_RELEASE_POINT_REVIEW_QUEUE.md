@@ -39,6 +39,11 @@ points, and given original question-iteration examples for exact review.
    encounters remain rare and unavailable before Level 3.
 6. Show every original single-select question iteration with its complete
    answer set: the keyed correct answer and every proposed incorrect choice.
+   Follow the [Patient Presentation Variant rule](../../CONTENT_MODEL.md#patient-presentation-variant): show the current patient's presentation followed
+   by a question about that same patient; keep history and examination in the
+   presentation rather than repeating them in the question. Reverse-direction
+   choices concern possible findings, reports, or courses for that same patient,
+   not different patients.
 7. Mark the exact concept, Patient Presentation Variant, Question Variant,
    explanation, learning summary, and release point approved only after
    explicit named-clinician approval of those versions.
@@ -341,18 +346,50 @@ is not used as a definitive discriminator, and two proposed variants were
 removed. Its exact receipt is
 `approvals/owner-row-060-familial-hypocalciuric-hypercalcemia.md`.
 
-Row 61 is approved as six distinct future FSRS identities covering Graves
-pattern recognition, TRAb diagnostic support, appropriate RAI evaluation, and
-the separately scored pregnancy, current-lactation, and active moderate-to-
-severe thyroid-eye-disease avoidance boundaries. Exactly six reviewed seed
-question versions/scopes are clinically approved. The eventual release point is Level 0 Clinic
-Evaluation for counseling/referral only; radioactive iodine is never given
-onsite. No runtime package, encounter, source record, or implementation is
-approved by this receipt. Each identity ultimately needs at least four authored
-variants with distinct presentations and retrieval directions; the remaining
-eighteen variants and every later wording revision stay
-`needs_clinician_review` until exact named-clinician approval. The immutable
-receipt is `approvals/owner-row-061-graves-rai.md`.
+Row 61 retains six historically approved seed scopes and six reviewed seed
+versions/scopes across separate future FSRS identities: Graves pattern
+recognition, TRAb diagnostic support, appropriate RAI evaluation, and the
+separately scored pregnancy, current-lactation, and active moderate-to-severe
+thyroid-eye-disease avoidance boundaries. The 2026-08-31 immutable receipt is
+`approvals/owner-row-061-graves-rai.md`.
+
+The recognition concept, `concept.graves.clinical-pattern-recognition`, the TRAb
+concept, `concept.graves.trab-diagnostic-support`, the RAI-candidate concept,
+`concept.graves.rai-appropriate-candidate`, the pregnancy-contraindication
+concept, `concept.graves.rai-pregnancy-contraindication`, and the lactation-
+contraindication concept, `concept.graves.rai-lactation-contraindication`, and the
+active-TED-avoidance concept, `concept.graves.rai-active-ted-avoidance`, each
+now have one exact approved authored review set containing four patient-presented
+variants at their frozen snapshots. Their 2026-09-09 receipts are
+`approvals/owner-row-061-graves-pattern-recognition-2026-09-09.md`,
+`approvals/owner-row-061-graves-trab-diagnostic-support-2026-09-09.md`,
+`approvals/owner-row-061-graves-rai-appropriate-candidate-2026-09-09.md`,
+`approvals/owner-row-061-graves-rai-pregnancy-contraindication-2026-09-09.md`,
+`approvals/owner-row-061-graves-rai-lactation-contraindication-2026-09-09.md`, and
+`approvals/owner-row-061-graves-rai-active-ted-avoidance-2026-09-09.md`.
+These exact approvals did not by themselves approve standalone source/atomic-
+claim metadata, capability readiness, runtime release, or publication. The
+current `release.l0.clinic_evaluation` scope remains limited to clinic
+recognition, counseling, testing selection, and referral; radioactive iodine is
+never given onsite. Current local runtime admission is separately authorized by
+the owner-delegated twenty-concept batch receipt below.
+
+### Row 61 current batch note
+
+The recognition, TRAb, RAI-candidate, pregnancy-contraindication, lactation-
+contraindication, and active-TED-avoidance approvals are six exact clinician-
+approved review sets, with four variants each. The owner later authorized
+fourteen additional concepts to be independently authored and agent-reviewed
+under delegated GS-006 review and directed that all twenty concepts be admitted
+together. The complete 20-concept, 80-variant, 52-case batch is now actively
+implemented in the local unapproved development preview. Its exact authority,
+hash-bound content manifest, agent review, and lack of clinician sign-off for
+the fourteen new concepts are recorded in
+`approvals/owner-delegated-twenty-concept-batch-2026-09-09.md`. The historical
+`runtimeAdmissionAuthorized: false` values inside the six original exact-review
+sets describe their original implementation hold; the newer delegated receipt
+is the separate authority for current admission. Public release and publication
+remain unauthorized.
 
 Rows 62, 66, 87, and 109 are actively implemented in the development-preview
 Level 0 release at `release.l0.clinic_evaluation`. Row 66 is limited to

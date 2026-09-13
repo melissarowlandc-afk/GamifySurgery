@@ -160,7 +160,8 @@ function sourceLabel(source: ClinicalSource): string {
     source.doi !== null
       ? `doi:${source.doi}`
       : source.officialUrl ?? source.id;
-  const label = `${source.title} (${source.organizationOrJournal}, ${source.publicationYear}; ${locator})`;
+  const yearLabel = source.publicationYear === null ? "undated" : String(source.publicationYear);
+  const label = `${source.title} (${source.organizationOrJournal}, ${yearLabel}; ${locator})`;
   return label.length <= 240 ? label : `${label.slice(0, 237)}...`;
 }
 

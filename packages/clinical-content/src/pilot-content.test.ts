@@ -27,6 +27,9 @@ const IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS = new Set([
   "question.men2a.2d.v1",
   "question.men2a.3c.v1",
   "question.men2a.3d.v1",
+  "question.graves-rai-appropriate-candidate.v2",
+  "question.graves-rai-lactation-contraindication.v1",
+  "question.graves-rai-pregnancy-contraindication.v1",
 ]);
 
 function generatedForEveryTemplate(seed = "pilot-test-seed") {

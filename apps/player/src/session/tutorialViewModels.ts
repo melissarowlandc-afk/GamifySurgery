@@ -1,7 +1,6 @@
 import {
   SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
-  getAnswerChoiceServicePreview,
   getFacilityAccessValidation,
   getFacilityProgressionStatus,
   type GameState,
@@ -584,26 +583,12 @@ function createLevelZeroTutorialStepView(
       });
     }
     if (!acknowledged("second-first-decision")) {
-      const correctChoice =
-        second.frozenCase.decisionNodes[0]?.answerChoices.find(
-          (choice) => choice.isCorrect,
-        );
-      const duration = correctChoice
-        ? getAnswerChoiceServicePreview(
-            state,
-            SECOND_TUTORIAL_ENCOUNTER_ID,
-            correctChoice.id,
-          )?.durationTicks
-        : null;
       return step({
         id: "second-first-decision",
         eyebrow: "Level 0 tutorial · Timed care",
         title: "Choose the first plan",
-        body: `A displayed duration${
-          duration === null || duration === undefined
-            ? ""
-            : `, such as ${formatMinutes(duration)},`
-        } uses the facility clock. Pause freezes it; 2× and 4× make those facility minutes pass faster.`,
+        body:
+          "Each testing choice shows its expected game time. Pause freezes the facility clock; 2× and 4× make those facility minutes pass faster.",
         note:
           "Several choices may take time. The duration describes workflow, not whether an answer is correct.",
         target: "answer-choices",

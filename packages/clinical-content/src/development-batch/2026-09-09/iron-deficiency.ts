@@ -1,0 +1,48 @@
+import { claim, concept, createDevelopmentFamily, linkSourcesToClaims, source, type CaseSpec } from "./batch-helpers";
+
+const BSG = "source.bsg.iron-deficiency-anaemia.2021";
+const NHLBI = "source.nhlbi.iron-deficiency-anemia.2022";
+export const IRON_DEFICIENCY_CLAIMS = [
+  claim({ id: "claim.iron-deficiency.iron-studies", statement: "Iron studies are used to confirm iron deficiency in an already anemic patient, and low ferritin supports depleted iron stores.", sourceIds: [BSG, NHLBI], evidenceCategory: "evaluation", certainty: "high", limitation: "A normal ferritin can be misleading with inflammation; this content uses no numeric threshold and does not claim isolated low ferritin proves anemia.", applicablePopulation: "Adults with established anemia undergoing evaluation for iron deficiency.", lastCheckedOn: "2026-09-09" }),
+  claim({ id: "claim.iron-deficiency.bidirectional-endoscopy", statement: "New unexplained confirmed iron-deficiency anemia in adult men or postmenopausal patients generally warrants gastrointestinal evaluation with upper endoscopy and colonoscopy when suitable.", sourceIds: [BSG], evidenceCategory: "evaluation", certainty: "high", limitation: "Suitability, individual context, and alternative established causes must be considered; no referral deadline is taught.", applicablePopulation: "Adult men and explicitly postmenopausal patients with newly confirmed otherwise unexplained iron-deficiency anemia.", lastCheckedOn: "2026-09-09" }),
+];
+export const IRON_DEFICIENCY_SOURCES = linkSourcesToClaims([
+  source({ id: BSG, title: "British Society of Gastroenterology guidelines for the management of iron deficiency anaemia in adults", completeCitation: "Snook J, Bhala N, Beales ILP, Cannings D, Kightley C, Logan RPH, Pritchard DM, Sidhu R, Surgenor S, Thomas W, Verma AM, Goddard AF. British Society of Gastroenterology guidelines for the management of iron deficiency anaemia in adults. Gut. 2021;70(11):2030-2051. doi:10.1136/gutjnl-2021-325210.", organizationOrJournal: "Gut", authors: ["Snook J", "Bhala N", "Beales ILP", "Cannings D", "Kightley C", "Logan RPH", "Pritchard DM", "Sidhu R", "Surgenor S", "Thomas W", "Verma AM", "Goddard AF"], publicationYear: 2021, doi: "10.1136/gutjnl-2021-325210", pmid: null, officialUrl: "https://www.bsg.org.uk/clinical-resource/guidelines-iron-deficiency-anaemia-in-adults", accessedOn: "2026-09-09", sourceClass: "professional_society_guideline", licenseLabel: "Creative Commons Attribution-NonCommercial 4.0 International", reuseStatus: "cc_by_nc_4_0_restricted", reuseNotes: "Original factual synthesis under https://creativecommons.org/licenses/by-nc/4.0/ . Development use only; commercial reuse requires renewed rights review or permission. No source prose, tables, or algorithms copied.", authorityAssessment: "Externally peer-reviewed society guideline directly checked in the official PDF; BSG review in 2026 does not change the 2021 publication year.", usageRole: "evidence" }),
+  source({ id: NHLBI, title: "Anemia: Iron-Deficiency Anemia", completeCitation: "National Heart, Lung, and Blood Institute. Anemia: Iron-Deficiency Anemia. Updated March 24, 2022.", organizationOrJournal: "NHLBI", authors: ["National Heart, Lung, and Blood Institute"], publicationYear: 2022, doi: null, pmid: null, officialUrl: "https://www.nhlbi.nih.gov/health/anemia/iron-deficiency-anemia", accessedOn: "2026-09-09", sourceClass: "government_guidance", licenseLabel: "United States government patient guidance", reuseStatus: "copyrighted_targeted_verification_only", reuseNotes: "Bounded factual cross-check only; no numeric-cutoff image, source prose, or art reproduced.", authorityAssessment: "Federal patient guidance used to cross-check that CBC/hemoglobin, iron, and ferritin contribute to diagnostic assessment.", usageRole: "cross_check" }),
+], IRON_DEFICIENCY_CLAIMS);
+
+const scenarios = [
+  ["adult-man-fatigue", 48, "Male", "I have fatigue and newly documented anemia.", "is an adult man with newly documented anemia and fatigue. The initial history has not identified an explanation, and iron deficiency has not yet been confirmed."],
+  ["postmenopausal-dyspnea", 63, "Female", "I have exertional fatigue and newly documented anemia.", "is postmenopausal and has newly documented anemia with exertional fatigue. There is no established source of blood loss or other explanation in the current history."],
+  ["adult-man-donation", 57, "Male", "My newly recognized anemia remains unexplained.", "is an adult man referred for newly recognized anemia. They have not recently donated blood, and the preliminary evaluation has not established a cause."],
+  ["postmenopausal-checkup", 70, "Female", "My checkup found anemia.", "is postmenopausal and has anemia newly found at a routine visit. The available history does not reveal a clear explanation."],
+] as const;
+const cases: CaseSpec[] = scenarios.map(([slug, age, sex, complaint, story], index) => {
+  const n = index + 1;
+  const labs = "The complete blood count confirms anemia. Iron studies show clearly depleted iron stores, including low ferritin, supporting iron deficiency; no alternate explanation has emerged.";
+  return { id: `case.iron-deficiency.${slug}`, displayName: "Unexplained anemia evaluation", chiefComplaint: complaint, presentation: `{patientName} ${story}`, ageYears: [age, age + 3], sexLabels: [sex], stage: 1, nodes: [
+    { conceptId: "concept.iron-deficiency.iron-studies", stem: "Which laboratory investigation best evaluates whether iron deficiency explains the established anemia?", choices: [
+      { id: `iron_studies_${n}`, label: "Ferritin and complementary iron studies", isCorrect: true, serviceId: "service.basic_labs", rationale: "These studies evaluate iron stores and availability in the already anemic patient." },
+      { id: `b12_folate_${n}`, label: "Vitamin B12 and folate measurements", serviceId: "service.basic_labs", rationale: "These evaluate other deficiency patterns but do not directly establish depleted iron stores." },
+      { id: `hemolysis_panel_${n}`, label: "Reticulocyte count, bilirubin, haptoglobin, and LDH", serviceId: "service.basic_labs", rationale: "This evaluates hemolysis rather than directly confirming iron deficiency." },
+      { id: `coagulation_panel_${n}`, label: "Prothrombin time and activated partial thromboplastin time", serviceId: "service.basic_labs", rationale: "Coagulation testing does not establish iron stores as the cause of anemia." },
+    ], explanation: "Iron studies confirm iron deficiency in an already anemic patient; low ferritin supports depleted stores. Inflammation can make a normal ferritin less reassuring, so the full clinical and laboratory context matters.", claimIds: ["claim.iron-deficiency.iron-studies"], gate: { id: `gate.iron-deficiency.labs.${n}`, serviceId: "service.basic_labs", pendingLabel: "Iron studies pending", resultNarrative: labs, routeIds: ["route.basic_labs.outsourced", "route.basic_labs.phlebotomy_sendout"] } },
+    { conceptId: "concept.iron-deficiency.gi-evaluation", currentUpdate: labs, stem: "Which diagnostic strategy is generally appropriate for this otherwise unexplained confirmed iron-deficiency anemia?", choices: [
+      { id: `bidirectional_${n}`, label: "Bidirectional endoscopy", isCorrect: true, rationale: "Bidirectional endoscopy is generally appropriate in the scoped adult population when confirmed IDA remains unexplained." },
+      { id: `upper_only_${n}`, label: "Upper GI endoscopy alone", rationale: "This omits the generally recommended lower-gastrointestinal assessment without a case-specific reason." },
+      { id: `colon_only_${n}`, label: "Colonoscopy alone", rationale: "This omits the generally recommended upper-gastrointestinal assessment without a case-specific reason." },
+      { id: `capsule_first_${n}`, label: "Small-bowel capsule endoscopy", rationale: "Small-bowel testing is not the usual first GI strategy before indicated upper and lower endoscopic evaluation." },
+    ], explanation: "New unexplained confirmed iron-deficiency anemia in adult men and postmenopausal patients generally warrants bidirectional endoscopy—upper endoscopy plus colonoscopy—when suitable. Individual context and procedural suitability still matter.", claimIds: ["claim.iron-deficiency.bidirectional-endoscopy"] },
+  ] };
+});
+export const IRON_DEFICIENCY_CONCEPTS = [
+  concept({ id: "concept.iron-deficiency.iron-studies", educationalTier: 0, displayName: "Iron studies in established anemia", learningObjective: "Choose ferritin and complementary iron studies to determine whether iron deficiency explains established anemia without relying on a numeric threshold.", earliestFacilityStage: 1, conceptType: "workup", evidenceClaimIds: ["claim.iron-deficiency.iron-studies"] }),
+  concept({ id: "concept.iron-deficiency.gi-evaluation", educationalTier: 1, displayName: "Gastrointestinal evaluation of unexplained IDA", learningObjective: "Recommend suitability assessment for upper endoscopy and colonoscopy in adult men or postmenopausal patients with otherwise unexplained confirmed iron-deficiency anemia.", earliestFacilityStage: 1, conceptType: "workup", evidenceClaimIds: ["claim.iron-deficiency.bidirectional-endoscopy"] }),
+];
+const family = createDevelopmentFamily({ concepts: IRON_DEFICIENCY_CONCEPTS, cases, sourceLabels: ["Snook et al., BSG iron-deficiency anaemia guideline (2021), CC BY-NC 4.0", "NHLBI iron-deficiency anemia guidance (updated 2022; cross-check)"] });
+export const IRON_DEFICIENCY_TESTED_CONCEPTS = family.testedConcepts;
+export const IRON_DEFICIENCY_QUESTIONS = family.questions;
+export const IRON_DEFICIENCY_CASES = family.cases;
+export const IRON_DEFICIENCY_CASE_REVIEWS = family.caseReviews;
+
+

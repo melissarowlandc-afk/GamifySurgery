@@ -49,6 +49,31 @@ describe("coherent rendered appearance families", () => {
     expect(patientRosterEntryById(first.patientIdentityId)?.ageBand).toBe("adult");
   });
 
+  it("repairs an incompatible saved roster identity while retaining a compatible one", () => {
+    const femaleOlder = createPatientPixelAppearance(
+      "appearance-seed",
+      "female-older",
+      { sexLabel: "Female", ageYears: 70 },
+    );
+    const retained = normalizePatientAppearanceForSex(
+      femaleOlder,
+      "Female",
+      70,
+      "repair-key",
+    );
+    expect(retained.patientIdentityId).toBe(femaleOlder.patientIdentityId);
+    const repaired = normalizePatientAppearanceForSex(
+      femaleOlder,
+      "Male",
+      38,
+      "repair-key",
+    );
+    expect(patientRosterEntryById(repaired.patientIdentityId)).toMatchObject({
+      compatibleSexLabel: "Male",
+      ageBand: "adult",
+    });
+  });
+
   it("contains fifty distinct, all-human adult visual records", () => {
     expect(AUTHORED_ADULT_PATIENT_ROSTER).toHaveLength(50);
     expect(new Set(AUTHORED_ADULT_PATIENT_ROSTER.map((entry) => entry.id)).size).toBe(50);

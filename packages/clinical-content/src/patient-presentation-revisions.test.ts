@@ -10,11 +10,11 @@ import {
   PENDING_PROFILE_PRESENTATION_REVISIONS,
 } from "./patient-presentation-revisions";
 import {
-  ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES,
+  PATIENT_PRESENTATION_REVISION_SOURCE_CASES,
   SYNTHETIC_CLINICAL_RELEASE,
 } from "./synthetic-content";
 
-const sourceCases = ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES as readonly SyntheticClinicalCase[];
+const sourceCases = PATIENT_PRESENTATION_REVISION_SOURCE_CASES as readonly SyntheticClinicalCase[];
 const NARRATIVE_STATE_VERB = /\b(?:are|brings?|comes?|confirms?|continues|develops?|discuss(?:es)?|does|finds?|has|have|had|is|noticed|presents?|reports?|returns?|reviews?|shows?|was|were)\b/i;
 const AUDITED_TEACHING_QUESTION_ENDING = /\b(?:asks?|wants?|would like|brings? a short list of questions)\b[^.!?]*[.!?]$/i;
 
@@ -99,7 +99,7 @@ describe("pending patient-presentation revisions", () => {
   });
 
   it("keeps revised complaints in patient voice", () => {
-    for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
+    for (const clinicalCase of applyPendingPatientPresentationRevisions(sourceCases)) {
       if (!clinicalCase.chiefComplaint) continue;
       expect(clinicalCase.chiefComplaint.length).toBeLessThanOrEqual(160);
       expect(clinicalCase.chiefComplaint).toMatch(/^(I|My)\b/);

@@ -283,7 +283,8 @@ describe("state-driven tutorial coach", () => {
       id: "second-first-decision",
       target: "answer-choices",
     });
-    expect(timedDecision?.body).toContain("2 hr 30 min");
+    expect(timedDecision?.body).toContain("Each testing choice");
+    expect(timedDecision?.body).not.toContain("2 hr 30 min");
     expect(timedDecision?.body).toContain("facility clock");
 
     state = answerCorrect(state, SECOND_TUTORIAL_ENCOUNTER_ID);

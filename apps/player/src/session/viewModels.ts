@@ -36,7 +36,10 @@ import type {
   FacilityViewModel,
 } from "../facility";
 import { createMessageBoardView } from "./alertViewModels";
-import { splitClinicalDecisionStem } from "./clinicalText";
+import {
+  normalizeFrozenClinicalText,
+  splitClinicalDecisionStem,
+} from "./clinicalText";
 import {
   isQuestionFlagOpen,
   type QuestionReviewFlag,
@@ -414,7 +417,40 @@ function createChartView(
       const resultDelivered =
         visibleResult !== null &&
         visibleResult.deliveredAtTick !== null;
-      const decisionText = splitClinicalDecisionStem(node.stem);
+      const selectedAnswerLabel = answer
+        ? (node.answerChoices.find(
+            (choice) => choice.id === answer.answerChoiceId,
+          )?.label ?? "Decision recorded")
+        : undefined;
+      const correctAnswerLabel = node.answerChoices.find(
+        (choice) => choice.isCorrect,
+      )?.label;
+      const feedbackBody =
+        answer === null
+          ? undefined
+          : answer.correct
+            ? answer.explanation
+            : correctAnswerLabel
+              ? `Correct answer: ${correctAnswerLabel}. ${answer.explanation}`
+              : answer.explanation;
+      const precedingDeliveredResult =
+        step.nodeIndex > 0
+          ? encounter.steps[step.nodeIndex - 1]?.result
+          : null;
+      const fallbackCurrentUpdate =
+        precedingDeliveredResult?.deliveredAtTick != null
+          ? precedingDeliveredResult.resultNarrative
+          : undefined;
+      const decisionText = splitClinicalDecisionStem(
+        normalizeFrozenClinicalText({
+          clinicalCaseId: encounter.frozenCase.id,
+          patientDisplayName: encounter.patientDisplayName,
+          text: node.stem,
+          field: "stem",
+          decisionNodeId: node.id,
+          questionVariantId: node.questionVariantId,
+        }) ?? node.stem,
+      );
       return {
         id: step.decisionNodeId,
         questionVariantId: step.questionVariantId,
@@ -442,7 +478,11 @@ function createChartView(
           step.status === "action_required" && !isCurrent
             ? "Patient en route"
             : step.status === "result_pending"
-            ? "Patient off-site"
+            ? result?.patientTravel
+              ? "Onsite care in progress"
+              : result?.offsiteTravel
+                ? "External service in progress"
+                : "Awaiting result"
             : step.status === "feedback_pending"
               ? "Review feedback"
             : step.status === "action_required"
@@ -469,26 +509,24 @@ function createChartView(
               !isCurrent ||
               terminalFeedbackNeedsAcknowledgment ||
               readOnly,
-            etaLabel:
-              preview?.durationTicks === null ||
-              preview?.durationTicks === undefined
+            etaLabel: preview?.kind === "no_test"
+              ? "No test wait"
+              : preview?.durationTicks === null || preview?.durationTicks === undefined
                 ? undefined
                 : formatFacilityDuration(preview.durationTicks),
-            detailLabel:
-              preview?.routeDisplayName ??
-              (choice.serviceRequest
-                ? "Service route unavailable"
-                : undefined),
+            detailLabel: preview?.kind === "test"
+              ? "Estimated test wait (game time)"
+              : undefined,
           };
         }) : [],
         resultHeading:
-          visibleResult === null
+          !isCurrent || visibleResult === null
             ? undefined
             : resultDelivered
               ? "Result returned"
               : visibleResult.pendingLabel,
         resultBody:
-          visibleResult === null
+          !isCurrent || visibleResult === null
             ? undefined
             : resultDelivered
               ? visibleResult.resultNarrative
@@ -508,7 +546,7 @@ function createChartView(
             : answer.correct
               ? "Correct"
               : "Incorrect",
-        feedbackBody: answer?.explanation,
+        feedbackBody,
         rewardLabel: answer
           ? `Decision XP: +${
               answer.correct
@@ -538,15 +576,18 @@ function createChartView(
         collapsedResultLabel: answer
           ? `${
               answer.correct ? "Correct" : "Incorrect"
-            } — ${
-              resultDelivered && visibleResult
-                ? visibleResult.resultNarrative
-                : (node.answerChoices.find(
-                    (choice) => choice.id === answer.answerChoiceId,
-                  )?.label ?? "Decision recorded")
-            }`
+            } — ${selectedAnswerLabel}`
           : undefined,
-        currentUpdate: isCurrent ? node.currentUpdate : undefined,
+        currentUpdate: isCurrent
+          ? normalizeFrozenClinicalText({
+              clinicalCaseId: encounter.frozenCase.id,
+              patientDisplayName: encounter.patientDisplayName,
+              text: node.currentUpdate ?? fallbackCurrentUpdate,
+              field: "currentUpdate",
+              decisionNodeId: node.id,
+              questionVariantId: node.questionVariantId,
+            })
+          : undefined,
         current: isCurrent,
         complete: step.status === "completed",
       };
@@ -556,7 +597,16 @@ function createChartView(
   const currentNode =
     encounter.frozenCase.decisionNodes[encounter.currentNodeIndex];
   const currentDecisionText = currentNode
-    ? splitClinicalDecisionStem(currentNode.stem)
+    ? splitClinicalDecisionStem(
+        normalizeFrozenClinicalText({
+          clinicalCaseId: encounter.frozenCase.id,
+          patientDisplayName: encounter.patientDisplayName,
+          text: currentNode.stem,
+          field: "stem",
+          decisionNodeId: currentNode.id,
+          questionVariantId: currentNode.questionVariantId,
+        }) ?? currentNode.stem,
+      )
     : null;
 
   return {
@@ -572,7 +622,12 @@ function createChartView(
       : undefined,
     sexLabel:
       encounter.frozenCase.prototypeDemographics?.sexLabel,
-    chiefComplaint: encounter.frozenCase.chiefComplaint,
+    chiefComplaint: normalizeFrozenClinicalText({
+      clinicalCaseId: encounter.frozenCase.id,
+      patientDisplayName: encounter.patientDisplayName,
+      text: encounter.frozenCase.chiefComplaint,
+      field: "chiefComplaint",
+    }),
     patientSatisfactionLabel: `${encounter.patientSatisfaction}%`,
     vitals: encounter.frozenCase.prototypeVitalSigns
       ? [
@@ -603,7 +658,14 @@ function createChartView(
         ]
       : undefined,
     statusLabel: encounterStatus(encounter),
-    presentation: encounter.frozenCase.presentation,
+    presentation: normalizeFrozenClinicalText({
+      clinicalCaseId: encounter.frozenCase.id,
+      patientDisplayName: encounter.patientDisplayName,
+      text: encounter.frozenCase.presentation,
+      field: "presentation",
+      selectedInstantiationProfileId:
+        encounter.frozenCase.selectedInstantiationProfileId,
+    }) ?? encounter.frozenCase.presentation,
     presentationUpdate:
       encounter.currentNodeIndex > 0
         ? currentDecisionText?.context
@@ -619,7 +681,16 @@ function createChartView(
         ? undefined
         : `${formatFacilityDuration(pendingEta)} remaining`,
     questionPrompt: question
-      ? splitClinicalDecisionStem(question.node.stem).question
+      ? splitClinicalDecisionStem(
+          normalizeFrozenClinicalText({
+            clinicalCaseId: encounter.frozenCase.id,
+            patientDisplayName: encounter.patientDisplayName,
+            text: question.node.stem,
+            field: "stem",
+            decisionNodeId: question.node.id,
+            questionVariantId: question.node.questionVariantId,
+          }) ?? question.node.stem,
+        ).question
       : undefined,
     answerChoices:
       question?.node.answerChoices.map((choice) => {
@@ -639,16 +710,14 @@ function createChartView(
             answerForQuestion !== undefined ||
             terminalFeedbackNeedsAcknowledgment ||
             readOnly,
-          etaLabel:
-            preview?.durationTicks === null ||
-            preview?.durationTicks === undefined
+          etaLabel: preview?.kind === "no_test"
+            ? "No test wait"
+            : preview?.durationTicks === null || preview?.durationTicks === undefined
               ? undefined
               : formatFacilityDuration(preview.durationTicks),
-          detailLabel:
-            preview?.routeDisplayName ??
-            (choice.serviceRequest
-              ? "Service route unavailable"
-              : undefined),
+          detailLabel: preview?.kind === "test"
+            ? "Estimated test wait (game time)"
+            : undefined,
         };
       }) ?? [],
     feedbackTitle,

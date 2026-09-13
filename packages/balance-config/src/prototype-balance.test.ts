@@ -177,6 +177,119 @@ describe("service-route timing invariants", () => {
   });
 });
 
+describe("owner-delegated batch external services", () => {
+  it("provides only honest external routes with centralized editorial timing", () => {
+    const expected = {
+      "service.colonoscopy": ["route.colonoscopy.outsourced", 300],
+      "service.upper_endoscopy_duodenal_biopsy": ["route.upper_endoscopy_duodenal_biopsy.outsourced", 300],
+      "service.extremity_mri": ["route.extremity_mri.outsourced", 180],
+    } as const;
+    for (const [serviceId, [routeId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      expect(service?.routes).toHaveLength(1);
+      expect(service?.routes[0]).toMatchObject({ id: routeId, durationTicks, requiredCapabilityId: null, requiredCapabilityIds: [] });
+      expect(service?.routes[0]?.displayName).toContain("Off-site");
+    }
+  });
+});
+
+describe("surgery-center external service contracts", () => {
+  it("keeps the four new services external without facility or provider requirements", () => {
+    const expected = {
+      "service.thyroid_fna": ["route.thyroid_fna.outsourced", 180],
+      "service.anoscopy": ["route.anoscopy.outsourced", 90],
+      "service.esophageal_manometry": ["route.esophageal_manometry.outsourced", 180],
+      "service.skin_excisional_biopsy": ["route.skin_excisional_biopsy.outsourced", 180],
+    } as const;
+    for (const [serviceId, [routeId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      expect(service?.routes).toHaveLength(1);
+      expect(service?.routes[0]).toMatchObject({
+        id: routeId,
+        durationTicks,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        resourceRequirements: [],
+        providerRequirement: null,
+      });
+    }
+  });
+});
+
+describe("board-expansion external service contracts", () => {
+  it("keeps seven new services external with matching editorial timing profiles", () => {
+    const expected = {
+      "service.dxa": ["route.dxa.outsourced", "timing.test.dxa", 180],
+      "service.mrcp": ["route.mrcp.outsourced", "timing.test.mrcp", 180],
+      "service.laryngeal_examination": ["route.laryngeal_examination.outsourced", "timing.test.laryngeal_examination", 180],
+      "service.contrast_swallow": ["route.contrast_swallow.outsourced", "timing.test.contrast_swallow", 180],
+      "service.resting_abi": ["route.resting_abi.outsourced", "timing.test.vascular_physiology", 90],
+      "service.rectal_response_assessment": ["route.rectal_response_assessment.outsourced", "timing.test.rectal_response_assessment", 240],
+      "service.carotid_cta": ["route.carotid_cta.outsourced", "timing.test.ct_angiography", 180],
+    } as const;
+    for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      expect(service?.routes).toHaveLength(1);
+      expect(service?.routes[0]).toMatchObject({ id: routeId, durationTicks, requiredCapabilityId: null, requiredCapabilityIds: [], resourceRequirements: [], providerRequirement: null });
+      expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === timingProfileId)).toMatchObject({ durationTicks });
+    }
+    expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === "timing.test.ct_angiography")?.serviceId).toBeNull();
+  });
+});
+
+describe("September 12 board-expansion external service contracts", () => {
+  it("keeps nine new services external with matching dedicated timing profiles", () => {
+    const expected = {
+      "service.genetic_testing": ["route.genetic_testing.outsourced", null, 180],
+      "service.pelvic_mri": ["route.pelvic_mri.outsourced", null, 180],
+      "service.anal_lesion_biopsy_staging": ["route.anal_lesion_biopsy_staging.outsourced", "timing.test.biopsy_staging", 360],
+      "service.venous_duplex": ["route.venous_duplex.outsourced", "timing.test.venous_duplex", 150],
+      "service.hiv_hcv_serology": ["route.hiv_hcv_serology.outsourced", "timing.test.viral_serology", 60],
+      "service.gist_eus_core_molecular": ["route.gist_eus_core_molecular.outsourced", "timing.test.gist_eus_core_molecular", 480],
+      "service.liver_mri": ["route.liver_mri.outsourced", null, 180],
+      "service.mesenteric_cta": ["route.mesenteric_cta.outsourced", "timing.test.mesenteric_cta", 180],
+      "service.primary_aldosteronism_screen": ["route.primary_aldosteronism_screen.outsourced", "timing.test.primary_aldosteronism_screen", 60],
+    } as const;
+    for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+      const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+      expect(service?.routes).toHaveLength(1);
+      expect(service?.routes[0]).toMatchObject({
+        id: routeId,
+        durationTicks,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        resourceRequirements: [],
+        providerRequirement: null,
+      });
+      if (timingProfileId !== null) {
+        expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === timingProfileId)).toMatchObject({ serviceId, durationTicks });
+      }
+    }
+    expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === "timing.test.bone_marrow")).toMatchObject({ durationTicks: 180, serviceId: null });
+    expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile) => profile.id === "timing.test.adrenal_ct_avs")).toMatchObject({ durationTicks: 300, serviceId: null });
+  });
+});
+
+describe("September 13 early-level external service contracts", () => {
+  it("keeps four new services external with matching centralized timing", () => {
+    const expected = {
+      "service.hepatobiliary_contrast_mrcp": ["route.hepatobiliary_contrast_mrcp.outsourced", "timing.test.hepatobiliary_contrast_mrcp", 180],
+      "service.ambulatory_reflux_monitoring": ["route.ambulatory_reflux_monitoring.outsourced", "timing.test.ambulatory_reflux_monitoring", 180],
+      "service.tumor_mmr_ihc": ["route.tumor_mmr_ihc.outsourced", "timing.test.tumor_mmr_ihc", 120],
+      "service.cutaneous_lesion_biopsy": ["route.cutaneous_lesion_biopsy.outsourced", "timing.test.cutaneous_lesion_biopsy", 180],
+    } as const;
+    for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+      const service=PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id===serviceId);
+      expect(service?.routes).toHaveLength(1);
+      expect(service?.routes[0]).toMatchObject({id:routeId,durationTicks,requiredCapabilityId:null,requiredCapabilityIds:[],resourceRequirements:[],providerRequirement:null});
+      expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId,durationTicks});
+    }
+    for(const timingProfileId of ["timing.test.ercp","timing.test.therapeutic_ercp","timing.test.bile_leak_ercp","timing.test.pseudocyst_drainage","timing.test.microbiology","timing.test.skin_surgery_histology"]){
+      expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId:null});
+    }
+  });
+});
+
 describe("Level 2 diagnostic route defaults", () => {
   it("keeps acquisition and external interpretation as explicit editorial phases", () => {
     const route = (serviceId: string, routeId: string) =>
@@ -199,5 +312,20 @@ describe("Level 2 diagnostic route defaults", () => {
     });
     expect(route("service.ultrasound", "route.ultrasound.outsourced")?.durationTicks).toBe(150);
     expect(route("service.ct", "route.ct.outsourced")?.durationTicks).toBe(180);
+  });
+});
+
+describe("endoscopy return timing", () => {
+  it("reserves clinical resources for the original phases and leaves editorial return/report time non-resource-bound", () => {
+    const route = PROTOTYPE_BALANCE_RELEASE.services
+      .find((service) => service.id === "service.endoscopy")
+      ?.routes.find((candidate) => candidate.id === "route.endoscopy.in_house");
+    expect(route).toMatchObject({ durationTicks: 180, requiredCapabilityId: "capability.endoscopy" });
+    expect(route?.timingPhases).toEqual([
+      { id: "phase.endoscopy.preparation", durationTicks: 30, resourceBound: true },
+      { id: "phase.endoscopy.procedure", durationTicks: 45, resourceBound: true },
+      { id: "phase.endoscopy.recovery", durationTicks: 45, resourceBound: true },
+      { id: "phase.endoscopy.return_and_report", durationTicks: 60, resourceBound: false },
+    ]);
   });
 });

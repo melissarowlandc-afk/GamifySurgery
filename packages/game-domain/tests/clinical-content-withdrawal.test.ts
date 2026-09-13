@@ -18,6 +18,11 @@ import {
   ROW_062_CASES,
   LEVEL_TWO_ROUTINE_CASE_IDS,
   SYNTHETIC_CLINICAL_RELEASE,
+  SURGERY_CENTER_CASES,
+  BOARD_EXPANSION_CASES,
+  BOARD_EXPANSION_20260912_CASES,
+  EARLY_LEVELS_20260913_CASES,
+  TWENTY_CONCEPT_BATCH_CASES,
 } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
@@ -83,6 +88,11 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ...EARLY_GAME_CLINIC_BATCH_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_062_CASES.map((clinicalCase) => clinicalCase.id),
       ...LEVEL_TWO_ROUTINE_CASE_IDS,
+      ...TWENTY_CONCEPT_BATCH_CASES.map((clinicalCase) => clinicalCase.id),
+      ...SURGERY_CENTER_CASES.map((clinicalCase) => clinicalCase.id),
+      ...BOARD_EXPANSION_CASES.map((clinicalCase) => clinicalCase.id),
+      ...BOARD_EXPANSION_20260912_CASES.map((clinicalCase) => clinicalCase.id),
+      ...EARLY_LEVELS_20260913_CASES.map((clinicalCase) => clinicalCase.id),
     ]);
   });
 
@@ -119,12 +129,14 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ...encounter.frozenCase,
       id: "case.pilot.archived-save-only",
       displayName: "Withdrawn archived draft",
+      presentation: "Archived literal {patientName} remains frozen.",
       decisionNodes: encounter.frozenCase.decisionNodes.map((node) => ({
         ...node,
         primaryConceptId: "concept.pilot.archived-save-only",
         questionVariantId: "question.pilot.archived-save-only.v1",
       })),
     };
+    const frozenBeforeReload = JSON.parse(JSON.stringify(encounter.frozenCase));
 
     const reloaded = deserializeGameState(serializeGameState(state));
     expect(
@@ -139,5 +151,6 @@ describe("withdrawn AI-authored clinical pilot", () => {
       primaryConceptId: "concept.pilot.archived-save-only",
       questionVariantId: "question.pilot.archived-save-only.v1",
     });
+    expect(reloaded.encounters[TUTORIAL_ENCOUNTER_ID]?.frozenCase).toEqual(frozenBeforeReload);
   });
 });

@@ -114,6 +114,17 @@ export const serviceDefinitionSchema = z
     });
   });
 
+export const answerChoiceTimingProfileSchema = z
+  .object({
+    id: stableIdSchema,
+    durationTicks: z.number().int().positive(),
+    /** Optional existing service used only to compute a live preview. */
+    serviceId: stableIdSchema.nullable().default(null),
+    /** Editorial simulation timing only; never a clinical turnaround claim. */
+    displayName: z.string().min(1).max(160),
+  })
+  .strict();
+
 export const roomDefinitionSchema = z
   .object({
     id: stableIdSchema,
@@ -639,6 +650,7 @@ export const prototypeBalanceReleaseSchema = z
       })
       .strict(),
     services: z.array(serviceDefinitionSchema).min(1),
+    answerChoiceTimingProfiles: z.array(answerChoiceTimingProfileSchema).min(1),
   })
   .strict()
   .superRefine((release, context) => {
@@ -968,6 +980,25 @@ export const prototypeBalanceReleaseSchema = z
           });
         }
       });
+    });
+
+    const timingProfileIds = new Set<string>();
+    release.answerChoiceTimingProfiles.forEach((profile, index) => {
+      if (timingProfileIds.has(profile.id)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate answer-choice timing profile ID: ${profile.id}`,
+          path: ["answerChoiceTimingProfiles", index, "id"],
+        });
+      }
+      timingProfileIds.add(profile.id);
+      if (profile.serviceId !== null && !serviceIds.has(profile.serviceId)) {
+        context.addIssue({
+          code: "custom",
+          message: `Answer-choice timing profile ${profile.id} references a missing service.`,
+          path: ["answerChoiceTimingProfiles", index, "serviceId"],
+        });
+      }
     });
 
     const rewardTierIds = new Set<string>();

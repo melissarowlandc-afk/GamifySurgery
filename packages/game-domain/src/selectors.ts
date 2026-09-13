@@ -25,6 +25,7 @@ import {
   type FacilityAccessValidation,
 } from "./doors";
 import { evaluateFacilityExperienceConditions } from "./facility-experience";
+import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content";
 
 const CAPACITY_LIFECYCLES = new Set([
   "waiting_unopened",
@@ -455,40 +456,119 @@ export function getAnswerChoiceServicePreview(
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ) {
   const question = getCurrentQuestion(state, encounterId, context);
+  const encounter = state.encounters[encounterId];
   const choice = question?.node.answerChoices.find(
     (candidate) => candidate.id === answerChoiceId,
   );
-  const serviceId = choice?.serviceRequest?.serviceId;
-  if (!choice || !serviceId) {
+  if (!question || !encounter || !choice) {
     return null;
   }
-  const allowedRouteIds =
-    question?.node.resultGateAfter?.resultTypeId === serviceId
-      ? question.node.resultGateAfter.allowedServiceRouteIds
-      : null;
-  const selected = getEligibleServiceRoute(
-    state,
-    serviceId,
-    allowedRouteIds,
-    context,
+  const registryEntry = ANSWER_CHOICE_TIMING_REGISTRY.find(
+    (entry) =>
+      entry.caseId === encounter.frozenCase.id &&
+      entry.nodeId === question.node.id &&
+      entry.questionVariantId === question.node.questionVariantId,
   );
-  if (!selected) {
+  const exactRegisteredChoices =
+    registryEntry?.classification.kind === "test_choices" &&
+    registryEntry.classification.choices.length === question.node.answerChoices.length &&
+    question.node.answerChoices.every((candidate) =>
+      registryEntry.classification.kind === "test_choices" &&
+      registryEntry.classification.choices.some(
+        (registered) =>
+          registered.choiceId === candidate.id &&
+          registered.choiceLabel === candidate.label,
+      ),
+    );
+  if (!exactRegisteredChoices) {
+    if (registryEntry?.classification.kind === "no_test") {
+      return null;
+    }
+    const fullyRoutedLegacy = question.node.answerChoices.map((candidate) => {
+      const candidateServiceId = candidate.serviceRequest?.serviceId;
+      if (!candidateServiceId) return null;
+      const candidateAllowedRouteIds =
+        question.node.resultGateAfter?.resultTypeId === candidateServiceId
+          ? question.node.resultGateAfter.allowedServiceRouteIds
+          : null;
+      return getEligibleServiceRoute(
+        state,
+        candidateServiceId,
+        candidateAllowedRouteIds,
+        context,
+      );
+    });
+    if (fullyRoutedLegacy.some((candidate) => candidate === null)) {
+      return null;
+    }
+    const selectedLegacy = fullyRoutedLegacy[
+      question.node.answerChoices.findIndex((candidate) => candidate.id === answerChoiceId)
+    ]!;
     return {
+      kind: "test" as const,
       answerChoiceId,
-      serviceId,
-      serviceDisplayName: serviceId,
+      serviceId: selectedLegacy.service.id,
+      serviceDisplayName: selectedLegacy.service.displayName,
+      routeId: selectedLegacy.route.id,
+      routeDisplayName: selectedLegacy.route.displayName,
+      durationTicks: selectedLegacy.timing.durationTicks,
+      timingProfileId: null,
+    };
+  }
+  if (registryEntry.classification.kind !== "test_choices") {
+    return null;
+  }
+  const registeredChoice = registryEntry.classification.choices.find(
+    (candidate) => candidate.choiceId === choice.id,
+  );
+  if (!registeredChoice || registeredChoice.timing.kind === "no_test") {
+    return {
+      kind: "no_test" as const,
+      answerChoiceId,
+      serviceId: null,
+      serviceDisplayName: null,
       routeId: null,
       routeDisplayName: null,
       durationTicks: null,
+      timingProfileId: null,
+    };
+  }
+  const timingProfileId = registeredChoice.timing.timingProfileId;
+  const timingProfile = context.balanceRelease.answerChoiceTimingProfiles.find(
+    (profile) => profile.id === timingProfileId,
+  );
+  if (!timingProfile) {
+    return null;
+  }
+  const serviceId = choice.serviceRequest?.serviceId ?? timingProfile.serviceId;
+  const allowedRouteIds =
+    serviceId !== null && question.node.resultGateAfter?.resultTypeId === serviceId
+      ? question.node.resultGateAfter.allowedServiceRouteIds
+      : null;
+  const selected = serviceId === null
+    ? null
+    : getEligibleServiceRoute(state, serviceId, allowedRouteIds, context);
+  if (!selected) {
+    return {
+      kind: "test" as const,
+      answerChoiceId,
+      serviceId,
+      serviceDisplayName: timingProfile.displayName,
+      routeId: null,
+      routeDisplayName: null,
+      durationTicks: timingProfile.durationTicks,
+      timingProfileId: timingProfile.id,
     };
   }
   return {
+    kind: "test" as const,
     answerChoiceId,
     serviceId,
     serviceDisplayName: selected.service.displayName,
     routeId: selected.route.id,
     routeDisplayName: selected.route.displayName,
     durationTicks: selected.timing.durationTicks,
+    timingProfileId: timingProfile.id,
   };
 }
 

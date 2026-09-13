@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { validateSyntheticClinicalRelease } from "../schema";
 import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
+import { TWENTY_CONCEPT_BATCH_CASES } from "../development-batch/2026-09-09/twenty-concept-batch";
+import { SURGERY_CENTER_CASES } from "../development-batch/2026-09-10/surgery-center-batch";
+import { BOARD_EXPANSION_CASES } from "../development-batch/2026-09-11/board-expansion-batch";
+import { BOARD_EXPANSION_20260912_CASES } from "../development-batch/2026-09-12/board-expansion-batch";
+import { EARLY_LEVELS_20260913_CASES } from "../development-batch/2026-09-13/early-levels-batch";
 import { ROW_047_CASES } from "./aaa-female-sex-perioperative-mortality";
 import { ROW_048_CASES } from "./desmoid-management-pathway";
 import { ROW_029_CASES } from "./hcc-milan-criteria";
@@ -228,6 +233,11 @@ describe("owner row 30 approved breast-cyst pathway", () => {
       ...EARLY_GAME_CLINIC_BATCH_CASES.map((clinicalCase) => clinicalCase.id),
       ...ROW_062_CASES.map((clinicalCase) => clinicalCase.id),
       ...LEVEL_TWO_ROUTINE_CASE_IDS,
+      ...TWENTY_CONCEPT_BATCH_CASES.map((clinicalCase) => clinicalCase.id),
+      ...SURGERY_CENTER_CASES.map((clinicalCase) => clinicalCase.id),
+      ...BOARD_EXPANSION_CASES.map((clinicalCase) => clinicalCase.id),
+      ...BOARD_EXPANSION_20260912_CASES.map((clinicalCase) => clinicalCase.id),
+      ...EARLY_LEVELS_20260913_CASES.map((clinicalCase) => clinicalCase.id),
     ]);
     expect(
       SYNTHETIC_CLINICAL_RELEASE.cases.some(

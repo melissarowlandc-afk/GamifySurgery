@@ -22,6 +22,7 @@ import {
   deterministicInteger,
 } from "./randomness";
 import { createInitialGameState } from "./reducer";
+import { completePatientDemographics } from "./patientDemographics";
 import {
   getOperationalGlp1AutomationCapacity,
   getRoomDefinition,
@@ -1095,6 +1096,17 @@ function normalizeEncounter(
   const frozenCase = JSON.parse(
     JSON.stringify(candidate.frozenCase),
   ) as Record<string, unknown>;
+  frozenCase.prototypeDemographics = completePatientDemographics({
+    caseId: typeof frozenCase.id === "string" ? frozenCase.id : encounterId,
+    campaignSeed,
+    encounterId,
+    demographics: isRecord(frozenCase.prototypeDemographics)
+      ? frozenCase.prototypeDemographics
+      : undefined,
+    savedPatientIdentityId: isPixelAppearance(candidate.patientAppearance)
+      ? candidate.patientAppearance.patientIdentityId
+      : undefined,
+  });
   const frozenDemographics = isRecord(
     frozenCase.prototypeDemographics,
   )

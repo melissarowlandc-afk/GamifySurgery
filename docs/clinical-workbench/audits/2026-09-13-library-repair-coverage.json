@@ -1,0 +1,46 @@
+{
+  "auditDate": "2026-09-13",
+  "sourceSnapshot": ".local-dev/patient-library-before-root-2026-09-13.json",
+  "contentVersion": "presentation-revision.patient-library.2026-09-13.v3",
+  "scope": {
+    "concepts": 123,
+    "cases": 298,
+    "decisionNodes": 463,
+    "approvedInstantiationProfiles": 664,
+    "totalPresentations": 962
+  },
+  "literalBindings": {
+    "caseWording": 298,
+    "profileWording": 664,
+    "decisionStems": 1
+  },
+  "before": {
+    "casesWithChiefComplaint": 253,
+    "casesMissingChiefComplaint": 45,
+    "chiefComplaintsOverFiveWords": 244,
+    "presentationsUsingPatientNameToken": 806,
+    "genericAnalHsilStemCount": 1
+  },
+  "after": {
+    "casesWithChiefComplaint": 298,
+    "casesMissingChiefComplaint": 0,
+    "chiefComplaintsOverFiveWords": 0,
+    "maximumChiefComplaintWords": 5,
+    "presentationsUsingPatientNameToken": 962,
+    "abstractPatientOpenings": 0,
+    "decisionStemsEndingInQuestionMark": 463,
+    "genericAnalHsilStemCount": 0
+  },
+  "changed": {
+    "chiefComplaints": 298,
+    "basePresentations": 126,
+    "profilePresentations": 30,
+    "decisionStems": 1
+  },
+  "clinicalReview": {
+    "status": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "publicationStatus": "synthetic_unapproved_prototype"
+  }
+}

@@ -929,6 +929,66 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     patientSatisfactionDeltaMinimum: 0,
     patientSatisfactionDeltaMaximum: 0,
   },
+  // Presentation-only estimates for alternatives that do not have an
+  // executable service route. These are tunable game values, not real-world
+  // clinical turnaround-time claims.
+  answerChoiceTimingProfiles: [
+    { id: "timing.test.basic_labs", displayName: "Laboratory testing", durationTicks: 60, serviceId: "service.basic_labs" },
+    { id: "timing.test.ultrasound", displayName: "Ultrasound", durationTicks: 150, serviceId: "service.ultrasound" },
+    { id: "timing.test.ct", displayName: "CT", durationTicks: 180, serviceId: "service.ct" },
+    { id: "timing.test.mri", displayName: "MRI", durationTicks: 180 },
+    { id: "timing.test.radiography", displayName: "Radiography", durationTicks: 120, serviceId: "service.xray" },
+    { id: "timing.test.mammography", displayName: "Mammography", durationTicks: 120, serviceId: "service.mammography" },
+    { id: "timing.test.biopsy", displayName: "Biopsy or tissue sampling", durationTicks: 180 },
+    { id: "timing.test.upper_endoscopy", displayName: "Upper endoscopy", durationTicks: 180, serviceId: "service.endoscopy" },
+    { id: "timing.test.lower_endoscopy", displayName: "Lower endoscopy", durationTicks: 300, serviceId: "service.colonoscopy" },
+    { id: "timing.test.endoscopy_with_sampling", displayName: "Endoscopy with sampling", durationTicks: 300 },
+    { id: "timing.test.advanced_diagnostic", displayName: "Advanced diagnostic testing", durationTicks: 480 },
+    { id: "timing.test.physiology", displayName: "Physiology testing", durationTicks: 180 },
+    { id: "timing.test.nuclear_imaging", displayName: "Specialty imaging", durationTicks: 180 },
+    { id: "timing.test.genetic", displayName: "Genetic testing", durationTicks: 180 },
+    { id: "timing.test.metabolic_workup", displayName: "Metabolic testing", durationTicks: 180 },
+    { id: "timing.test.pathology_review", displayName: "Pathology review", durationTicks: 120 },
+    { id: "timing.test.clinical_procedure", displayName: "Office diagnostic procedure", durationTicks: 90, serviceId: "service.anoscopy" },
+    { id: "timing.test.general_diagnostic", displayName: "Diagnostic testing", durationTicks: 180 },
+    { id: "timing.test.combined_diagnostic", displayName: "Combined diagnostic testing", durationTicks: 240 },
+    { id: "timing.test.excisional_biopsy", displayName: "Excisional biopsy", durationTicks: 240, serviceId: "service.breast_excisional_biopsy" },
+    { id: "timing.test.breast_mri", displayName: "Breast MRI", durationTicks: 180, serviceId: "service.breast_mri" },
+    { id: "timing.test.breast_core_biopsy", displayName: "Breast core-needle biopsy", durationTicks: 180, serviceId: "service.breast_core_needle_biopsy" },
+    { id: "timing.test.four_hour_protocol", displayName: "Four-hour testing protocol", durationTicks: 240 },
+    { id: "timing.test.twenty_four_hour_protocol", displayName: "Twenty-four-hour testing protocol", durationTicks: 1440 },
+    { id: "timing.test.dxa", displayName: "DXA", durationTicks: 180, serviceId: "service.dxa" },
+    { id: "timing.test.mrcp", displayName: "MRI/MRCP", durationTicks: 180, serviceId: "service.mrcp" },
+    { id: "timing.test.laryngeal_examination", displayName: "Laryngeal examination", durationTicks: 180, serviceId: "service.laryngeal_examination" },
+    { id: "timing.test.contrast_swallow", displayName: "Contrast swallow", durationTicks: 180, serviceId: "service.contrast_swallow" },
+    { id: "timing.test.vascular_physiology", displayName: "Vascular physiology testing", durationTicks: 90, serviceId: "service.resting_abi" },
+    { id: "timing.test.rectal_response_assessment", displayName: "Rectal response assessment", durationTicks: 240, serviceId: "service.rectal_response_assessment" },
+    { id: "timing.test.ct_angiography", displayName: "CT angiography", durationTicks: 180 },
+    { id: "timing.test.overnight_protocol", displayName: "Overnight testing protocol", durationTicks: 720 },
+    { id: "timing.test.pet_ct", displayName: "PET-CT", durationTicks: 480, serviceId: "service.imaging.pet-ct" },
+    { id: "timing.test.esophageal_manometry", displayName: "Esophageal manometry", durationTicks: 180, serviceId: "service.esophageal_manometry" },
+    { id: "timing.test.image_guided_aspiration_culture", displayName: "Image-guided aspiration with culture", durationTicks: 180 },
+    { id: "timing.test.gist_eus_core_molecular", displayName: "EUS-guided core sampling and molecular testing", durationTicks: 480, serviceId: "service.gist_eus_core_molecular" },
+    { id: "timing.test.biopsy_staging", displayName: "Biopsy with cross-sectional staging", durationTicks: 360, serviceId: "service.anal_lesion_biopsy_staging" },
+    { id: "timing.test.venous_duplex", displayName: "Venous duplex ultrasound", durationTicks: 150, serviceId: "service.venous_duplex" },
+    { id: "timing.test.viral_serology", displayName: "Viral serology", durationTicks: 60, serviceId: "service.hiv_hcv_serology" },
+    { id: "timing.test.bone_marrow", displayName: "Bone marrow examination", durationTicks: 180 },
+    { id: "timing.test.mesenteric_cta", displayName: "Mesenteric CT angiography", durationTicks: 180, serviceId: "service.mesenteric_cta" },
+    { id: "timing.test.primary_aldosteronism_screen", displayName: "Aldosterone-renin testing", durationTicks: 60, serviceId: "service.primary_aldosteronism_screen" },
+    { id: "timing.test.adrenal_ct_avs", displayName: "Adrenal CT with venous sampling", durationTicks: 300 },
+    // September 13 early-level batch estimates are centralized gameplay values,
+    // not medical turnaround-time or procedure-duration claims.
+    { id: "timing.test.hepatobiliary_contrast_mrcp", displayName: "Hepatobiliary-contrast MRCP", durationTicks: 180, serviceId: "service.hepatobiliary_contrast_mrcp" },
+    { id: "timing.test.ambulatory_reflux_monitoring", displayName: "Ambulatory reflux monitoring", durationTicks: 180, serviceId: "service.ambulatory_reflux_monitoring" },
+    { id: "timing.test.tumor_mmr_ihc", displayName: "Tumor MMR immunohistochemistry", durationTicks: 120, serviceId: "service.tumor_mmr_ihc" },
+    { id: "timing.test.cutaneous_lesion_biopsy", displayName: "Cutaneous lesion biopsy", durationTicks: 180, serviceId: "service.cutaneous_lesion_biopsy" },
+    { id: "timing.test.microbiology", displayName: "Microbiology testing", durationTicks: 60 },
+    { id: "timing.test.skin_surgery_histology", displayName: "Skin surgery with histology", durationTicks: 180 },
+    { id: "timing.test.ercp", displayName: "Diagnostic ERCP", durationTicks: 180 },
+    { id: "timing.test.therapeutic_ercp", displayName: "Therapeutic ERCP referral", durationTicks: 180 },
+    { id: "timing.test.bile_leak_ercp", displayName: "Bile-leak ERCP referral", durationTicks: 180 },
+    { id: "timing.test.pseudocyst_drainage", displayName: "Pseudocyst drainage referral", durationTicks: 180 },
+  ],
   services: [
     {
       id: "service.synthetic.analysis",
@@ -1120,6 +1180,197 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       ],
     },
     {
+      id: "service.thyroid_fna",
+      displayName: "Thyroid fine-needle aspiration",
+      routes: [{
+        id: "route.thyroid_fna.outsourced",
+        displayName: "Off-site thyroid fine-needle aspiration",
+        // Editorial prototype timing only; not a clinical turnaround claim.
+        durationTicks: 180,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 0,
+      }],
+    },
+    {
+      id: "service.anoscopy",
+      displayName: "Anoscopy",
+      routes: [{
+        id: "route.anoscopy.outsourced",
+        displayName: "Off-site anoscopy",
+        // Editorial prototype timing only; not a clinical turnaround claim.
+        durationTicks: 90,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 0,
+      }],
+    },
+    {
+      id: "service.esophageal_manometry",
+      displayName: "Esophageal manometry",
+      routes: [{
+        id: "route.esophageal_manometry.outsourced",
+        displayName: "Off-site esophageal manometry",
+        // Editorial prototype timing only; not a clinical turnaround claim.
+        durationTicks: 180,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 0,
+      }],
+    },
+    {
+      id: "service.skin_excisional_biopsy",
+      displayName: "Excisional skin biopsy",
+      routes: [{
+        id: "route.skin_excisional_biopsy.outsourced",
+        displayName: "Off-site excisional skin biopsy",
+        // Editorial prototype timing only; not a clinical turnaround claim.
+        durationTicks: 180,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 0,
+      }],
+    },
+    {
+      id: "service.dxa",
+      displayName: "DXA",
+      routes: [{ id: "route.dxa.outsourced", displayName: "Off-site DXA", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.mrcp",
+      displayName: "MRI/MRCP",
+      routes: [{ id: "route.mrcp.outsourced", displayName: "Off-site MRI/MRCP", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.hepatobiliary_contrast_mrcp",
+      displayName: "Hepatobiliary-contrast MRCP",
+      routes: [{ id: "route.hepatobiliary_contrast_mrcp.outsourced", displayName: "Off-site hepatobiliary-contrast MRCP", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.ambulatory_reflux_monitoring",
+      displayName: "Ambulatory reflux monitoring",
+      routes: [{ id: "route.ambulatory_reflux_monitoring.outsourced", displayName: "Off-site ambulatory reflux monitoring", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.tumor_mmr_ihc",
+      displayName: "Tumor MMR immunohistochemistry",
+      routes: [{ id: "route.tumor_mmr_ihc.outsourced", displayName: "Off-site tumor MMR immunohistochemistry", durationTicks: 120, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.cutaneous_lesion_biopsy",
+      displayName: "Cutaneous lesion biopsy",
+      routes: [{ id: "route.cutaneous_lesion_biopsy.outsourced", displayName: "Off-site cutaneous lesion biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.laryngeal_examination",
+      displayName: "Laryngeal examination",
+      routes: [{ id: "route.laryngeal_examination.outsourced", displayName: "Off-site laryngeal examination", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.contrast_swallow",
+      displayName: "Contrast swallow",
+      routes: [{ id: "route.contrast_swallow.outsourced", displayName: "Off-site contrast swallow", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.resting_abi",
+      displayName: "Resting ankle-brachial index",
+      routes: [{ id: "route.resting_abi.outsourced", displayName: "Off-site resting ankle-brachial index", durationTicks: 90, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.rectal_response_assessment",
+      displayName: "Rectal response assessment",
+      routes: [{ id: "route.rectal_response_assessment.outsourced", displayName: "Off-site rectal response assessment", durationTicks: 240, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.carotid_cta",
+      displayName: "Carotid CT angiography",
+      routes: [{ id: "route.carotid_cta.outsourced", displayName: "Off-site carotid CT angiography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.genetic_testing",
+      displayName: "Hereditary-polyposis genetic testing",
+      routes: [{ id: "route.genetic_testing.outsourced", displayName: "Off-site hereditary-polyposis genetic testing", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.pelvic_mri",
+      displayName: "Pelvic MRI",
+      routes: [{ id: "route.pelvic_mri.outsourced", displayName: "Off-site pelvic MRI", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.anal_lesion_biopsy_staging",
+      displayName: "Anal lesion biopsy and staging",
+      routes: [{ id: "route.anal_lesion_biopsy_staging.outsourced", displayName: "Off-site anal lesion biopsy and staging", durationTicks: 360, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.venous_duplex",
+      displayName: "Venous duplex ultrasound",
+      routes: [{ id: "route.venous_duplex.outsourced", displayName: "Off-site venous duplex ultrasound", durationTicks: 150, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.hiv_hcv_serology",
+      displayName: "HIV and hepatitis-C serology",
+      routes: [{ id: "route.hiv_hcv_serology.outsourced", displayName: "Off-site HIV and hepatitis-C serology", durationTicks: 60, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.gist_eus_core_molecular",
+      displayName: "EUS-guided core and molecular evaluation",
+      routes: [{ id: "route.gist_eus_core_molecular.outsourced", displayName: "Off-site EUS-guided core and molecular evaluation", durationTicks: 480, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.liver_mri",
+      displayName: "Multiphasic liver MRI",
+      routes: [{ id: "route.liver_mri.outsourced", displayName: "Off-site multiphasic liver MRI", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.mesenteric_cta",
+      displayName: "Mesenteric CT angiography",
+      routes: [{ id: "route.mesenteric_cta.outsourced", displayName: "Off-site mesenteric CT angiography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.primary_aldosteronism_screen",
+      displayName: "Aldosterone-renin testing",
+      routes: [{ id: "route.primary_aldosteronism_screen.outsourced", displayName: "Off-site aldosterone-renin testing", durationTicks: 60, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+    },
+    {
+      id: "service.colonoscopy",
+      displayName: "Diagnostic colonoscopy with lesion sampling",
+      routes: [{
+        id: "route.colonoscopy.outsourced",
+        displayName: "Off-site diagnostic colonoscopy with lesion sampling",
+        // Centralized editorial simulation timing, not a medical turnaround claim.
+        durationTicks: 300,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 1,
+      }],
+    },
+    {
+      id: "service.upper_endoscopy_duodenal_biopsy",
+      displayName: "Upper endoscopy with duodenal biopsy",
+      routes: [{
+        id: "route.upper_endoscopy_duodenal_biopsy.outsourced",
+        displayName: "Off-site upper endoscopy with duodenal biopsy",
+        // Centralized editorial simulation timing, not a medical turnaround claim.
+        durationTicks: 300,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 1,
+      }],
+    },
+    {
+      id: "service.extremity_mri",
+      displayName: "Extremity MRI",
+      routes: [{
+        id: "route.extremity_mri.outsourced",
+        displayName: "Off-site extremity MRI",
+        // Centralized editorial simulation timing, not a medical turnaround claim.
+        durationTicks: 180,
+        requiredCapabilityId: null,
+        requiredCapabilityIds: [],
+        preference: 1,
+      }],
+    },
+    {
       id: "service.endoscopy.eus-ercp-sampling",
       displayName: "EUS/ERCP sampling",
       routes: [
@@ -1176,7 +1427,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           displayName: "Onsite endoscopy workflow",
           // Editorial facility simulation only; it does not assert a
           // clinical protocol or real-world timing.
-          durationTicks: 120,
+          durationTicks: 180,
           requiredCapabilityId: "capability.endoscopy",
           requiredCapabilityIds: [],
           resourceRequirements: [
@@ -1197,6 +1448,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
             { id: "phase.endoscopy.preparation", durationTicks: 30, resourceBound: true },
             { id: "phase.endoscopy.procedure", durationTicks: 45, resourceBound: true },
             { id: "phase.endoscopy.recovery", durationTicks: 45, resourceBound: true },
+            // Editorial patient return/report time, not a clinical or pathology turnaround claim.
+            { id: "phase.endoscopy.return_and_report", durationTicks: 60, resourceBound: false },
           ],
           preference: 0,
           patientTravel: {

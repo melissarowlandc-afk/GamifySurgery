@@ -167,7 +167,7 @@ export interface PilotChartClinicalReview {
     id: string;
     title: string;
     organizationOrJournal: string;
-    year: number;
+    year: number | null;
     href: string;
     supportedClaimIds: string[];
     reuseStatus: string;

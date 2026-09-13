@@ -28,6 +28,38 @@ export const answerChoiceSchema = z
   })
   .strict();
 
+export const answerChoiceTimingClassificationSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("no_test") }).strict(),
+  z.object({ kind: z.literal("test"), timingProfileId: stableIdSchema }).strict(),
+]);
+
+export const answerChoiceTimingRegistryEntrySchema = z
+  .object({
+    caseId: stableIdSchema,
+    nodeId: stableIdSchema,
+    questionVariantId: stableIdSchema,
+    classification: z.discriminatedUnion("kind", [
+      z.object({ kind: z.literal("no_test") }).strict(),
+      z
+        .object({
+          kind: z.literal("test_choices"),
+          choices: z
+            .array(
+              z
+                .object({
+                  choiceId: stableIdSchema,
+                  choiceLabel: z.string().min(1).max(240),
+                  timing: answerChoiceTimingClassificationSchema,
+                })
+                .strict(),
+            )
+            .min(2),
+        })
+        .strict(),
+    ]),
+  })
+  .strict();
+
 export const terminalClinicalOutcomeSchema = z
   .object({
     id: stableIdSchema,
@@ -81,6 +113,11 @@ export const decisionNodeSchema = z
      */
     currentUpdate: z.string().min(1).max(2_000).optional(),
     stem: z.string().min(1).max(2_000),
+    /**
+     * When false, conceal route and ETA cues until the answer is submitted.
+     * Omission preserves the legacy preview behavior for frozen encounters.
+     */
+    showServicePreviews: z.boolean().optional(),
     answerChoices: z.array(answerChoiceSchema).min(2).max(8),
     shuffleAnswers: z.boolean(),
     explanation: z.string().min(1).max(2_000),
@@ -211,6 +248,22 @@ export const patientPresentationRevisionSchema = z
           .strict(),
       )
       .optional(),
+    revisedDecisionStems: z
+      .array(
+        z
+          .object({
+            id: stableIdSchema,
+            decisionNodeId: stableIdSchema,
+            questionVariantId: stableIdSchema,
+            contentVersion: z.string().regex(/^presentation-revision\.[a-z0-9._-]+$/),
+            revisedStem: z.string().min(1).max(2_000),
+            aiAssistedDrafting: z.literal(true),
+            reviewStatus: z.literal("needs_clinician_review"),
+            lastClinicianReview: z.null(),
+          })
+          .strict(),
+      )
+      .optional(),
     aiAssistedDrafting: z.literal(true),
     reviewStatus: z.literal("needs_clinician_review"),
     lastClinicianReview: z.null(),
@@ -309,7 +362,8 @@ export const syntheticClinicalCaseSchema = z
       ];
       if (
         expectedRevisedFields.length === 0 &&
-        !revision.revisedProfilePresentations?.length
+        !revision.revisedProfilePresentations?.length &&
+        !revision.revisedDecisionStems?.length
       ) {
         context.addIssue({
           code: "custom",
@@ -398,6 +452,51 @@ export const syntheticClinicalCaseSchema = z
             code: "custom",
             message: "A profile presentation revision must bind to the exact revised profile presentation.",
             path: ["patientPresentationRevision", "revisedProfilePresentations", index, "revisedPresentation"],
+          });
+        }
+      }
+      const decisionRevisionRecordIds = new Set<string>();
+      const decisionRevisionNodeIds = new Set<string>();
+      for (const [index, decisionRevision] of (
+        revision.revisedDecisionStems ?? []
+      ).entries()) {
+        if (decisionRevisionRecordIds.has(decisionRevision.id)) {
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate decision-stem revision record ID.",
+            path: ["patientPresentationRevision", "revisedDecisionStems", index, "id"],
+          });
+        }
+        decisionRevisionRecordIds.add(decisionRevision.id);
+        if (decisionRevisionNodeIds.has(decisionRevision.decisionNodeId)) {
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate decision-stem revision.",
+            path: ["patientPresentationRevision", "revisedDecisionStems", index],
+          });
+        }
+        decisionRevisionNodeIds.add(decisionRevision.decisionNodeId);
+        if (decisionRevision.contentVersion !== revision.contentVersion) {
+          context.addIssue({
+            code: "custom",
+            message: "A decision-stem revision must use its parent content version.",
+            path: ["patientPresentationRevision", "revisedDecisionStems", index, "contentVersion"],
+          });
+        }
+        const node = clinicalCase.decisionNodes.find(
+          (candidate) => candidate.id === decisionRevision.decisionNodeId,
+        );
+        if (!node || node.questionVariantId !== decisionRevision.questionVariantId) {
+          context.addIssue({
+            code: "custom",
+            message: "A decision-stem revision must bind to the exact decision identity.",
+            path: ["patientPresentationRevision", "revisedDecisionStems", index],
+          });
+        } else if (node.stem !== decisionRevision.revisedStem) {
+          context.addIssue({
+            code: "custom",
+            message: "A decision-stem revision must bind to the exact revised stem.",
+            path: ["patientPresentationRevision", "revisedDecisionStems", index, "revisedStem"],
           });
         }
       }
@@ -574,6 +673,12 @@ export const syntheticClinicalReleaseSchema = z
   });
 
 export type AnswerChoice = z.infer<typeof answerChoiceSchema>;
+export type AnswerChoiceTimingClassification = z.infer<
+  typeof answerChoiceTimingClassificationSchema
+>;
+export type AnswerChoiceTimingRegistryEntry = z.infer<
+  typeof answerChoiceTimingRegistryEntrySchema
+>;
 export type TerminalClinicalOutcome = z.infer<typeof terminalClinicalOutcomeSchema>;
 export type TerminalOutcomeDisposition = z.infer<
   typeof terminalOutcomeDispositionSchema

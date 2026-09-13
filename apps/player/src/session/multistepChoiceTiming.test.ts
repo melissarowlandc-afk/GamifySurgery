@@ -47,19 +47,19 @@ describe("multistep diagnostic choice timing", () => {
     ).toEqual({
       targeted_ultrasound: {
         etaLabel: "150 min",
-        detailLabel: "Off-site ultrasound",
+        detailLabel: "Estimated test wait (game time)",
       },
       diagnostic_mammography: {
         etaLabel: "2 hours",
-        detailLabel: "Off-site mammography",
+        detailLabel: "Estimated test wait (game time)",
       },
       breast_mri: {
         etaLabel: "3 hours",
-        detailLabel: "Off-site breast MRI",
+        detailLabel: "Estimated test wait (game time)",
       },
       core_biopsy: {
         etaLabel: "3 hours",
-        detailLabel: "Off-site core-needle biopsy",
+        detailLabel: "Estimated test wait (game time)",
       },
     });
   });

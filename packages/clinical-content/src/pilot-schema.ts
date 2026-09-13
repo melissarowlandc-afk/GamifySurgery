@@ -23,7 +23,9 @@ export interface ClinicalSource extends AuthoredClinicalRecord {
   completeCitation: string;
   organizationOrJournal: string;
   authors: string[];
-  publicationYear: number;
+  publicationYear: number | null;
+  /** Optional date context retained for legacy provenance records. */
+  publicationDateNote?: string;
   doi: string | null;
   pmid: string | null;
   officialUrl: string | null;

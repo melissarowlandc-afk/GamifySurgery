@@ -275,8 +275,18 @@ export function normalizePatientAppearanceForSex(
   const normalized = normalizePixelAppearance(appearance, "patient");
   const legacyVariant = normalized.headVariant ?? 0;
   const eligible = patientRosterEligibleEntries(sexLabel, ageYears);
-  const selectedIdentity = patientRosterEntryById(normalized.patientIdentityId)
-    ? normalized.patientIdentityId
+  const existingIdentity = patientRosterEntryById(normalized.patientIdentityId);
+  const existingIdentityIsCompatible = existingIdentity
+    && (
+      (sexLabel !== "Female" && sexLabel !== "Male") ||
+      existingIdentity.compatibleSexLabel === sexLabel
+    )
+    && (
+      ageYears === undefined ||
+      eligible.some((entry) => entry.id === existingIdentity.id)
+    );
+  const selectedIdentity = existingIdentityIsCompatible
+    ? existingIdentity.id
     : eligible.length > 0
       ? eligible[deterministicInteger(
           identitySelectionKey,
@@ -285,8 +295,12 @@ export function normalizePatientAppearanceForSex(
           eligible.length,
         )]?.id
       : undefined;
+  const {
+    patientIdentityId: _discardedPatientIdentityId,
+    ...appearanceWithoutIdentity
+  } = normalized;
   const withIdentity = {
-    ...normalized,
+    ...appearanceWithoutIdentity,
     ...(selectedIdentity ? { patientIdentityId: selectedIdentity } : {}),
   };
   if (sexLabel === "Female") {

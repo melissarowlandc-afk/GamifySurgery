@@ -1,5 +1,6 @@
 import { validateSyntheticClinicalRelease } from "./schema";
 import { applyPendingPatientPresentationRevisions } from "./patient-presentation-revisions";
+import { applyPatientLibraryWordingRepair } from "./patient-library-wording-repair";
 import {
   ROW_023_CASES,
   ROW_023_CONCEPT,
@@ -60,6 +61,20 @@ import {
   LEVEL_TWO_RUNTIME_CASES,
   LEVEL_TWO_RUNTIME_CONCEPTS,
 } from "./approved-data/level-two-runtime";
+import {
+  TWENTY_CONCEPT_BATCH_CASES,
+  TWENTY_CONCEPT_BATCH_CONCEPTS,
+} from "./development-batch/2026-09-09/twenty-concept-batch";
+import {
+  SURGERY_CENTER_CASES,
+  SURGERY_CENTER_TESTED_CONCEPTS,
+} from "./development-batch/2026-09-10/surgery-center-batch";
+import {
+  BOARD_EXPANSION_CASES,
+  BOARD_EXPANSION_TESTED_CONCEPTS,
+} from "./development-batch/2026-09-11/board-expansion-batch";
+import { BOARD_EXPANSION_20260912_CASES, BOARD_EXPANSION_20260912_TESTED_CONCEPTS } from "./development-batch/2026-09-12/board-expansion-batch";
+import { EARLY_LEVELS_20260913_CASES, EARLY_LEVELS_20260913_TESTED_CONCEPTS } from "./development-batch/2026-09-13/early-levels-batch";
 
 const PROTOTYPE_REVIEW_NOTICE =
   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
@@ -1069,13 +1084,15 @@ export const LEGACY_PROTOTYPE_CLINICAL_RELEASE =
 });
 
 /**
- * New campaigns admit only the exact concepts reviewed with the owner.
+ * New encounters admit clinician-reviewed content together with the explicitly
+ * owner-delegated development batch. The global release remains an unapproved
+ * local prototype; per-record provenance preserves the review distinction.
  *
  * The legacy fixture above remains source-visible solely to preserve the
  * historical implementation and to support already-frozen encounters in old
  * saves. It is not part of this active release and cannot create a new patient.
  */
-export const ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES = [
+export const PATIENT_PRESENTATION_REVISION_SOURCE_CASES = [
   ...ROW_023_CASES,
   ...ROW_030_CASES,
   ...ROW_031_CASES,
@@ -1096,6 +1113,24 @@ export const ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES = [
   ...EARLY_GAME_CLINIC_BATCH_CASES,
   ...ROW_062_CASES,
   ...LEVEL_TWO_RUNTIME_CASES,
+];
+
+export const ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES = [
+  ...PATIENT_PRESENTATION_REVISION_SOURCE_CASES,
+  ...TWENTY_CONCEPT_BATCH_CASES,
+  ...SURGERY_CENTER_CASES,
+  ...BOARD_EXPANSION_CASES,
+  ...BOARD_EXPANSION_20260912_CASES,
+  ...EARLY_LEVELS_20260913_CASES,
+];
+
+/** Exact pre-repair assembly used by the literal September 13 wording bindings. */
+export const PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES = [
+  ...applyPendingPatientPresentationRevisions(PATIENT_PRESENTATION_REVISION_SOURCE_CASES),
+  ...TWENTY_CONCEPT_BATCH_CASES,
+  ...SURGERY_CENTER_CASES,
+  ...BOARD_EXPANSION_CASES,
+  ...BOARD_EXPANSION_20260912_CASES,
 ];
 
 export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
@@ -1147,8 +1182,16 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
         ...ROW_062_CONCEPTS,
       ].some((existing) => existing.id === concept.id),
     ),
+    ...TWENTY_CONCEPT_BATCH_CONCEPTS,
+    ...SURGERY_CENTER_TESTED_CONCEPTS,
+    ...BOARD_EXPANSION_TESTED_CONCEPTS,
+    ...BOARD_EXPANSION_20260912_TESTED_CONCEPTS,
+    ...EARLY_LEVELS_20260913_TESTED_CONCEPTS,
   ],
-  cases: applyPendingPatientPresentationRevisions(ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES),
+  cases: [
+    ...applyPatientLibraryWordingRepair(PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES),
+    ...EARLY_LEVELS_20260913_CASES,
+  ],
 });
 
 /**

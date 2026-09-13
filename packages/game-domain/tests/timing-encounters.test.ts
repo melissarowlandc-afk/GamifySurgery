@@ -41,8 +41,9 @@ function createServiceTestContext(): DomainContext {
     clinicalCase.id = `case.synthetic.service-route.${serviceId.split(".").at(-1)}`;
     clinicalCase.displayName = `Practice Patient: ${serviceId} Route Drill`;
     const node = clinicalCase.decisionNodes[0]!;
-    const choice = node.answerChoices.find((candidate) => candidate.isCorrect)!;
-    choice.serviceRequest = { serviceId };
+    for (const choice of node.answerChoices) {
+      choice.serviceRequest = { serviceId };
+    }
     node.resultGateAfter = {
       ...node.resultGateAfter!,
       id: `gate.synthetic.service-route.${serviceId}`,

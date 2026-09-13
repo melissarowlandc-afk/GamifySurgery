@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { LEVEL_TWO_RUNTIME_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
   deserializeGameState,
   gameReducer,
   getEligibleServiceRoute,
+  patientRosterEntryById,
+  patientVisualAgeBand,
   serializeGameState,
 } from "../src";
 
@@ -191,6 +193,11 @@ describe("approved clinical admission boundaries", () => {
       ...LEVEL_TWO_RUNTIME_CONCEPTS.map((concept) => concept.id).filter(
         (id) => id !== "concept.distal-cholangiocarcinoma.resection-selection",
       ),
+      ...TWENTY_CONCEPT_BATCH_CONCEPTS.map((concept) => concept.id),
+      ...SURGERY_CENTER_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...BOARD_EXPANSION_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...BOARD_EXPANSION_20260912_TESTED_CONCEPTS.map((concept) => concept.id),
+      ...EARLY_LEVELS_20260913_TESTED_CONCEPTS.map((concept) => concept.id),
     ]);
   });
 
@@ -219,9 +226,16 @@ describe("approved clinical admission boundaries", () => {
       (profile) => profile.id === frozen.selectedInstantiationProfileId,
     );
     expect(selected).toBeDefined();
-    expect(frozen?.prototypeDemographics).toEqual(
-      selected?.prototypeDemographics,
+    expect(frozen?.prototypeDemographics?.ageYears).toBe(
+      selected?.prototypeDemographics?.ageYears,
     );
+    if (selected?.prototypeDemographics?.sexLabel === "Not specified") {
+      expect(frozen?.prototypeDemographics?.sexLabel).toMatch(/^(Female|Male)$/);
+    } else {
+      expect(frozen?.prototypeDemographics?.sexLabel).toBe(
+        selected?.prototypeDemographics?.sexLabel,
+      );
+    }
     expect(frozen?.presentation).toBe(selected?.presentation);
 
     const authored = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(
@@ -233,5 +247,83 @@ describe("approved clinical admission boundaries", () => {
     expect(
       restored.encounters["encounter.hcc-profile-admission"]?.frozenCase,
     ).toEqual(frozen);
+  });
+
+  it("freezes coherent display demographics, names, and roster identity for representative admissions", () => {
+    const cases = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases;
+    const representativeIds = [
+      "case.fhh.evaluation-to-confirmed-management",
+      "case.fhh.suggestive-results-confirmation",
+      "case.pancreatic-tail-adenocarcinoma.clinic-counseling",
+      "case.choledochal-cyst.type-iva.2a",
+      "case.anal-hsil.hpv.3d",
+      cases.find((clinicalCase) =>
+        clinicalCase.prototypeDemographics?.sexLabel === "Not specified",
+      )?.id,
+      cases.find((clinicalCase) =>
+        clinicalCase.prototypeDemographics?.sexLabel === "Female",
+      )?.id,
+      cases.find((clinicalCase) =>
+        clinicalCase.prototypeDemographics?.sexLabel === "Male",
+      )?.id,
+    ];
+    expect(representativeIds.every((caseId) => typeof caseId === "string")).toBe(true);
+    const permissiveContext = {
+      ...PROTOTYPE_DOMAIN_CONTEXT,
+      clinicalRelease: {
+        ...PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease,
+        cases: cases.map((clinicalCase) => ({
+          ...clinicalCase,
+          earliestFacilityStage: 0,
+          requiredCapabilityIds: [],
+        })),
+      },
+    };
+    let state = createInitialGameState(permissiveContext, {
+      campaignId: "campaign.identity-admission",
+      campaignSeed: "identity-admission",
+      createdAtRealMs: 0,
+    });
+    state.encounters = {};
+    state.openChartEncounterId = null;
+    state.attendedEncounterId = null;
+    state.facilityLevel = 2;
+    state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+    const admittedDemographics = new Map<string, { ageYears: number; sexLabel: string }>();
+    for (const [index, caseId] of representativeIds.entries()) {
+      const encounterId = `encounter.identity-admission.${index}`;
+      state.encounters = {};
+      state = gameReducer(state, {
+        type: "ADMIT_PATIENT",
+        operationId: `identity-admission.${index}`,
+        encounterId,
+        caseId: caseId!,
+        patientDisplayName: `Explicit Identity ${index}`,
+        arrivalClass: "routine",
+      }, permissiveContext);
+      expect(state.operationReceipts[`identity-admission.${index}`]?.status).toBe("applied");
+      const encounter = state.encounters[encounterId]!;
+      expect(encounter.patientDisplayName).toBe(`Explicit Identity ${index}`);
+      expect(encounter.frozenCase.prototypeDemographics?.sexLabel).toMatch(/^(Female|Male)$/);
+      const rosterIdentity = patientRosterEntryById(encounter.patientAppearance.patientIdentityId);
+      expect(rosterIdentity?.compatibleSexLabel).toBe(
+        encounter.frozenCase.prototypeDemographics?.sexLabel,
+      );
+      expect(rosterIdentity?.ageBand).toBe(
+        patientVisualAgeBand(encounter.frozenCase.prototypeDemographics?.ageYears),
+      );
+      admittedDemographics.set(caseId!, encounter.frozenCase.prototypeDemographics!);
+    }
+    expect(admittedDemographics.get("case.fhh.evaluation-to-confirmed-management")?.ageYears).toBe(27);
+    const youngAdultAge = admittedDemographics.get("case.fhh.suggestive-results-confirmation")?.ageYears;
+    expect(youngAdultAge).toBeGreaterThanOrEqual(18);
+    expect(youngAdultAge).toBeLessThanOrEqual(29);
+    expect(admittedDemographics.get("case.pancreatic-tail-adenocarcinoma.clinic-counseling")?.ageYears).toBeGreaterThanOrEqual(65);
+    const choledochalAge = admittedDemographics.get("case.choledochal-cyst.type-iva.2a")?.ageYears;
+    expect(choledochalAge).toBeGreaterThanOrEqual(45);
+    expect(choledochalAge).toBeLessThanOrEqual(64);
+    expect(admittedDemographics.get("case.anal-hsil.hpv.3d")?.sexLabel).toBe("Female");
+    const restored = deserializeGameState(serializeGameState(state), permissiveContext);
+    expect(restored.encounters).toEqual(state.encounters);
   });
 });

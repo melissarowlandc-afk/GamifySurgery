@@ -76,6 +76,19 @@ options must use parallel grammar, comparable specificity and length, and the
 same semantic category; do not use odd-one-out qualifiers or explanatory
 distractor wording that reveals the key.
 
+Owner presentation guidance (September 13, 2026): chief complaints should
+usually contain 1–5 words, expressing a symptom, question or visit reason
+rather than a full sentence. Present the specific named patient in the clinic;
+avoid abstract openings such as "A patient with" and avoid repeating the same
+sentence in the complaint and presentation. Each question must state the task
+completely, even after presentation and question text are separated for display.
+Show an age and sex for every patient, consistent with the clinical story,
+generated name and chosen character; preserve clinically constrained profiles.
+Show runtime wait estimates for all testing choices, including distractors.
+Current durations are placeholders pending the future facility-dependent timing
+design in `docs/features/diagnostic-timing-future-design.md`; do not bake fixed
+durations into authored question prose.
+
 <!-- BEGIN BOUNDED_THREAD_LIFECYCLE -->
 ## Bounded thread lifecycle
 

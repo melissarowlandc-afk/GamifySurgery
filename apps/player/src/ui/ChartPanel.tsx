@@ -147,7 +147,7 @@ function ClinicalReviewBack({
                   {source.title}
                 </a>
                 <span>
-                  {source.organizationOrJournal} · {source.year}
+                  {source.organizationOrJournal} · {source.year ?? "undated"}
                 </span>
                 <span>{source.reuseStatus}</span>
                 <span>Last source check: {source.lastChecked}</span>

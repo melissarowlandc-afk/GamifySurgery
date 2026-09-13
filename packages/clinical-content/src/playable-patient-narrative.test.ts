@@ -9,9 +9,9 @@ const MULTI_PATIENT_FRAMING = [
 ];
 
 const PATIENT_REFERENCE =
-  /\b(?:patient|adult|woman|man|recipient|they|she|he|\d{1,3}-year-old)\b/i;
+  /(?:\{patientName\}|\b(?:patient|adult|woman|man|recipient|they|she|he|\d{1,3}-year-old)\b)/i;
 const STORY_CUE =
-  /\b(?:asks?|wants?|reports?|returns?|noticed|comes?|brings?|discuss|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives)\b/i;
+  /\b(?:asks?|wants?|reports?|returns?|noticed|notes?|describes?|is seen|comes?|brings?|discuss|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives)\b/i;
 const ALTERNATE_PATIENT_CHOICE =
   /^(?:a|an|fit) (?:patient|adult|woman|man)\b/i;
 
@@ -67,11 +67,15 @@ describe("playable one-patient narratives", () => {
 
   it("keeps explicitly female stories attached to female chart identities", () => {
     for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
-      if (/\b(?:woman|she|her)\b/i.test(clinicalCase.presentation)) {
-        expect(
-          clinicalCase.prototypeDemographics?.sexLabel,
-          clinicalCase.id,
-        ).toBe("Female");
+      const profiles = clinicalCase.approvedInstantiationProfiles ?? [];
+      if (profiles.length > 0) {
+        for (const profile of profiles) {
+          if (/\b(?:woman|she|her)\b/i.test(profile.presentation)) {
+            expect(profile.prototypeDemographics?.sexLabel, `${clinicalCase.id}/${profile.id}`).toBe("Female");
+          }
+        }
+      } else if (/\b(?:woman|she|her)\b/i.test(clinicalCase.presentation)) {
+        expect(clinicalCase.prototypeDemographics?.sexLabel, clinicalCase.id).toBe("Female");
       }
     }
   });
