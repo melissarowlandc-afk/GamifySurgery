@@ -1,6 +1,14 @@
 # GS-014 website release evidence
 
-## Verified release — ready for owner review
+## Verified release — owner accepted 2026-09-15
+
+Owner acceptance: “We can complete and close 014.” GS-014 is complete.
+On September 15, a focused GitHub check confirmed deployed source
+`680f9cdb5c42ddb414f41d4cb571252482ebccdf` on main and accepted evidence
+`b0f9626414f3c54e3a1a538e8357ed174252bd37` on
+`release/gs-014-2026-09-14`; the evidence includes the source in its ancestry.
+This documentation-only closeout is backed up on the release branch before
+native task archival. No redeployment, main update, or other-task messages.
 
 - Live game: https://melissarowlandc-afk.github.io/GamifySurgery/
 - Exact deployed source commit: `680f9cdb5c42ddb414f41d4cb571252482ebccdf`.
@@ -62,9 +70,8 @@ scoped commits/push/main integration, native live-asset/deployment verification,
 and final evidence recording. Astra made only tiny evidence formatting and test
 comment corrections. No qualifying implementation work was left undelegated.
 
-Release is complete and awaiting owner acceptance. Keep this dedicated task open
-for review; the owner reports completion to GS Manager. Do not archive this task
-until owner acceptance, and do not archive or message the unrelated active tasks.
+Owner acceptance is recorded above. Archive only this dedicated GS-014 task
+after verifying the closeout backup. Preserve all unrelated tasks and shared work.
 
 ## Source capture (2026-09-14)
 

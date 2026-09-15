@@ -1,5 +1,12 @@
 # Current Thread Handoff
 
+> GS-014 closeout, 2026-09-15: owner accepted “We can complete and close 014.”
+> Verified source `680f9cdb5c42ddb414f41d4cb571252482ebccdf` on main and
+> evidence `b0f9626414f3c54e3a1a538e8357ed174252bd37` on
+> `release/gs-014-2026-09-14`. The documentation-only acceptance record is
+> backed up on that release branch before archiving GS-014. No redeployment,
+> main change, or other-task messages. See `GS-014_WEBSITE_RELEASE.md`.
+
 > GS-006 clinical backup verified (September 13): checkpoint
 > `b4ba1bfa9d9c84c51bea1db2c43594bc636d3487` is on `origin/beta`; remote
 > SHA independently verified. Includes clinical batches through September 13,

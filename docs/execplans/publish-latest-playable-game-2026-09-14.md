@@ -1,5 +1,14 @@
 # GS-014 — Publish latest playable game
 
+## Closeout — 2026-09-15
+
+Owner explicitly accepted completion: “We can complete and close 014.”
+Accepted source `680f9cdb5c42ddb414f41d4cb571252482ebccdf` and evidence
+`b0f9626414f3c54e3a1a538e8357ed174252bd37` were confirmed on GitHub.
+All milestones are complete. Only this documentation closeout is pushed to
+`release/gs-014-2026-09-14` before native archival; main is unchanged.
+No new worker was needed for this small documentation-only closeout.
+
 ## Goal and authorization
 Publish the latest integrated playable game to the existing GitHub Pages URL for September 15 laptop play. The owner explicitly authorized a scoped source checkpoint, push, non-destructive publishing-branch integration, deployment and live verification. Leave this task open for owner acceptance.
 
