@@ -7,8 +7,8 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 
-const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
-const PROTOTYPE_PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
+export const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
+export const PROTOTYPE_PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
 const PROFILE_SCHEMA_VERSION = 2;
 
 export type LocalCampaignStatus = "resumable" | "archived";
@@ -37,6 +37,37 @@ export interface LoadedPrototypeProfile {
   notice: string;
 }
 
+export type PrototypeStorageFailureCategory =
+  | "quota"
+  | "security"
+  | "not_allowed"
+  | "unavailable"
+  | "serialization"
+  | "validation"
+  | "unknown";
+
+export interface PrototypeStorageFailure {
+  category: PrototypeStorageFailureCategory;
+  operation: "access" | "serialize" | "write" | "remove";
+  name: string;
+  message: string;
+  profileCharacters?: number;
+}
+
+export type PrototypeSaveResult =
+  | { ok: true; profileCharacters: number }
+  | { ok: false; failure: PrototypeStorageFailure };
+
+export type PrototypeResetResult =
+  | { ok: true }
+  | { ok: false; failure: PrototypeStorageFailure };
+
+export interface PrototypeCampaignWriteGate {
+  save: (profile: LocalPrototypeProfile) => PrototypeSaveResult;
+  suppress: () => void;
+  isSuppressed: () => boolean;
+}
+
 interface PersistedCampaignRecord {
   campaignId: string;
   name: string;
@@ -55,14 +86,86 @@ interface PersistedPrototypeProfile {
   campaigns: PersistedCampaignRecord[];
 }
 
-function storageAvailable(): boolean {
+function storageFailure(
+  error: unknown,
+  operation: PrototypeStorageFailure["operation"],
+  profileCharacters?: number,
+): PrototypeStorageFailure {
+  const candidate = error as { name?: unknown; message?: unknown } | null;
+  const name = typeof candidate?.name === "string" ? candidate.name : "UnknownError";
+  const rawMessage =
+    typeof candidate?.message === "string" ? candidate.message : String(error ?? "");
+  const message = rawMessage.replace(/\s+/g, " ").trim().slice(0, 240);
+  const category: PrototypeStorageFailureCategory =
+    name === "QuotaExceededError"
+      ? "quota"
+      : name === "SecurityError"
+        ? "security"
+        : name === "NotAllowedError"
+          ? "not_allowed"
+          : name === "ValidationError"
+            ? "validation"
+            : "unknown";
+  return {
+    category,
+    operation,
+    name,
+    message: message.length > 0 ? message : "No browser error message was provided.",
+    ...(profileCharacters === undefined ? {} : { profileCharacters }),
+  };
+}
+
+export function describePrototypeStorageFailure(
+  failure: PrototypeStorageFailure,
+): string {
+  switch (failure.category) {
+    case "quota":
+      return "Browser storage is full. Clear local campaigns or free browser site data, then try saving again.";
+    case "security":
+      return "This browser blocked access to local storage. Use a normal, non-private browser window and allow site data.";
+    case "not_allowed":
+      return "This browser does not allow this site to save data. Check site-data permissions, then try again.";
+    case "unavailable":
+      return "Local storage is unavailable in this browser session. Check browser privacy or site-data settings.";
+    case "serialization":
+      return "The campaign could not be prepared for saving. Keep this tab open and try again.";
+    case "validation":
+      return "The campaign data could not be validated for saving. Keep this tab open and try again.";
+    default:
+      return "The browser rejected this save. Keep this tab open and try again, or clear local campaigns if you no longer need them.";
+  }
+}
+
+function getBrowserStorage():
+  | { ok: true; storage: Storage }
+  | { ok: false; failure: PrototypeStorageFailure } {
   if (typeof window === "undefined") {
-    return false;
+    return {
+      ok: false,
+      failure: {
+        category: "unavailable",
+        operation: "access",
+        name: "StorageUnavailable",
+        message: "Browser storage is not available outside a browser window.",
+      },
+    };
   }
   try {
-    return window.localStorage !== undefined;
-  } catch {
-    return false;
+    const storage = window.localStorage;
+    if (storage === undefined || storage === null) {
+      return {
+        ok: false,
+        failure: {
+          category: "unavailable",
+          operation: "access",
+          name: "StorageUnavailable",
+          message: "This browser session does not provide local storage.",
+        },
+      };
+    }
+    return { ok: true, storage };
+  } catch (error) {
+    return { ok: false, failure: storageFailure(error, "access") };
   }
 }
 
@@ -391,15 +494,16 @@ export function requireActiveCampaign(
 }
 
 export function loadPrototypeProfile(): LoadedPrototypeProfile {
-  if (!storageAvailable()) {
+  const storageResult = getBrowserStorage();
+  if (!storageResult.ok) {
     return {
       profile: createFreshProfile(),
-      notice: "Local saving is unavailable in this browser session.",
+      notice: describePrototypeStorageFailure(storageResult.failure),
     };
   }
 
   try {
-    const serializedProfile = window.localStorage.getItem(
+    const serializedProfile = storageResult.storage.getItem(
       PROTOTYPE_PROFILE_KEY,
     );
     if (serializedProfile !== null) {
@@ -416,27 +520,27 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
       };
     }
 
-    const legacySave = window.localStorage.getItem(
+    const legacySave = storageResult.storage.getItem(
       LEGACY_PROTOTYPE_SAVE_KEY,
     );
     if (legacySave !== null) {
       const profile = migrateLegacySave(legacySave);
-      const persisted = savePrototypeProfile(profile);
+      const persisted = savePrototypeProfileResult(profile);
       return {
         profile,
-        notice: persisted
+        notice: persisted.ok
           ? "Existing local save migrated into the campaign list."
-          : "Existing local save opened, but the campaign list could not be saved.",
+          : `Existing local save opened, but ${describePrototypeStorageFailure(persisted.failure)}`,
       };
     }
 
     const profile = createFreshProfile();
-    const persisted = savePrototypeProfile(profile);
+    const persisted = savePrototypeProfileResult(profile);
     return {
       profile,
-      notice: persisted
+      notice: persisted.ok
         ? "New clinic started."
-        : "New clinic started, but local saving is unavailable.",
+        : `New clinic started, but ${describePrototypeStorageFailure(persisted.failure)}`,
     };
   } catch {
     const profile = createFreshProfile();
@@ -451,34 +555,98 @@ export function loadPrototypeProfile(): LoadedPrototypeProfile {
 export function savePrototypeProfile(
   profile: LocalPrototypeProfile,
 ): boolean {
-  if (!storageAvailable()) {
-    return false;
+  return savePrototypeProfileResult(profile).ok;
+}
+
+export function savePrototypeProfileResult(
+  profile: LocalPrototypeProfile,
+): PrototypeSaveResult {
+  const storageResult = getBrowserStorage();
+  if (!storageResult.ok) {
+    return storageResult;
   }
 
-  const persistedProfile: PersistedPrototypeProfile = {
-    schemaVersion: PROFILE_SCHEMA_VERSION,
-    activeCampaignId: profile.activeCampaignId,
-    nextCampaignNumber: profile.nextCampaignNumber,
-    tutorialsEnabled: profile.tutorialsEnabled,
-    tutorialIntroDismissedCampaignIds:
-      profile.tutorialIntroDismissedCampaignIds,
-    campaigns: profile.campaigns.map((campaign) => ({
-      campaignId: campaign.campaignId,
-      name: campaign.name,
-      createdAtRealMs: campaign.createdAtRealMs,
-      updatedAtRealMs: campaign.updatedAtRealMs,
-      status: campaign.status,
-      serializedState: serializeGameState(campaign.state),
-    })),
-  };
+  let serialized: string;
+  try {
+    const persistedProfile: PersistedPrototypeProfile = {
+      schemaVersion: PROFILE_SCHEMA_VERSION,
+      activeCampaignId: profile.activeCampaignId,
+      nextCampaignNumber: profile.nextCampaignNumber,
+      tutorialsEnabled: profile.tutorialsEnabled,
+      tutorialIntroDismissedCampaignIds:
+        profile.tutorialIntroDismissedCampaignIds,
+      campaigns: profile.campaigns.map((campaign) => ({
+        campaignId: campaign.campaignId,
+        name: campaign.name,
+        createdAtRealMs: campaign.createdAtRealMs,
+        updatedAtRealMs: campaign.updatedAtRealMs,
+        status: campaign.status,
+        serializedState: serializeGameState(campaign.state),
+      })),
+    };
+    serialized = JSON.stringify(persistedProfile);
+  } catch (error) {
+    return {
+      ok: false,
+      failure: {
+        ...storageFailure(error, "serialize"),
+        category: "serialization",
+      },
+    };
+  }
 
   try {
-    window.localStorage.setItem(
-      PROTOTYPE_PROFILE_KEY,
-      JSON.stringify(persistedProfile),
-    );
-    return true;
-  } catch {
-    return false;
+    storageResult.storage.setItem(PROTOTYPE_PROFILE_KEY, serialized);
+    return { ok: true, profileCharacters: serialized.length };
+  } catch (error) {
+    return {
+      ok: false,
+      failure: storageFailure(error, "write", serialized.length),
+    };
   }
+}
+
+/** Deletes only the legacy prototype campaign keys; unrelated preferences stay intact. */
+export function clearPrototypeCampaignStorage(): PrototypeResetResult {
+  const storageResult = getBrowserStorage();
+  if (!storageResult.ok) {
+    return storageResult;
+  }
+  let firstFailure: PrototypeStorageFailure | null = null;
+  try {
+    storageResult.storage.removeItem(PROTOTYPE_PROFILE_KEY);
+  } catch (error) {
+    firstFailure = storageFailure(error, "remove");
+  }
+  try {
+    storageResult.storage.removeItem(LEGACY_PROTOTYPE_SAVE_KEY);
+  } catch (error) {
+    firstFailure ??= storageFailure(error, "remove");
+  }
+  return firstFailure ? { ok: false, failure: firstFailure } : { ok: true };
+}
+
+/** Keeps page-exit/autosave writers from recreating campaigns after reset. */
+export function createPrototypeCampaignWriteGate(): PrototypeCampaignWriteGate {
+  let suppressed = false;
+  return {
+    save: (profile) => {
+      if (suppressed) {
+        return {
+          ok: false,
+          failure: {
+            category: "unavailable",
+            operation: "write",
+            name: "CampaignWritesSuppressed",
+            message: "Campaign writes were disabled after local campaigns were cleared.",
+          },
+        };
+      }
+      return savePrototypeProfileResult(profile);
+    },
+    suppress: () => {
+      suppressed = true;
+    },
+    isSuppressed: () => suppressed,
+  };
 }

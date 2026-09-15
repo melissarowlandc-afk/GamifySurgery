@@ -122,7 +122,7 @@ test("live character atlases stay smooth, exact-aspect, and floor-anchored acros
 
   const facility = page.getByTestId("facility-canvas");
   const expectedActors = [
-    ["character:founder", /^character:founders-.*-v4-r9-hires$/, 181 / 192],
+    ["character:founder", /^character:founders-.*-v4-r10-feet$/, 181 / 192],
     ["character:patient:encounter.visual.patient.2", /^character:patients-.*-v1-r7-hires$/, 181 / 192],
     ["character:staff:employee.visual.receptionist", /^character:actors-.*-v3$/, 220 / 240],
   ] as const;

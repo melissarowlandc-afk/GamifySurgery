@@ -124,7 +124,7 @@ describe("Level 2 facility progression", () => {
     expect(deserializeGameState(serializeGameState(levelZero)).facilityLevel).toBe(0);
     expect(deserializeGameState(serializeGameState(levelOne)).facilityLevel).toBe(1);
     const restored = deserializeGameState(serializeGameState(levelTwo));
-    expect(restored.schemaVersion).toBe(6);
+    expect(restored.schemaVersion).toBe(7);
     expect(restored.facilityLevel).toBe(2);
     expect(restored.clinicalXp).toBe(123);
   });

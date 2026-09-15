@@ -108,6 +108,20 @@ export function getRoomNavigationAnchor(
     : getRoomCenter(room, definition);
 }
 
+export function getRoomCareAnchor(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  kind: "patient" | "clinician",
+): GridPoint {
+  const configured =
+    kind === "patient"
+      ? definition.navigation?.patientCareAnchor
+      : definition.navigation?.clinicianCareAnchor;
+  return configured
+    ? roomLocalToGlobal(room, definition, configured)
+    : getRoomNavigationAnchor(room, definition, kind === "clinician" ? "staff" : "primary");
+}
+
 export function getRoomWaitingAnchors(
   room: PlacedRoom,
   definition: RoomDefinition,

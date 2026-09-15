@@ -20,6 +20,7 @@ import {
   getRoomDefinition,
   getRoomInstanceFootprint,
   getRoomWaitingAnchors,
+  getRoomCareAnchor,
   getRoomResaleValue,
   getStaffRoleDefinition,
   getWorkloadSnapshot,
@@ -282,6 +283,9 @@ function toPatientTab(
 }
 
 function encounterStatus(encounter: EncounterState): string {
+  if (encounter.checkInStatus === "awaiting_staff") {
+    return "Waiting to Check In";
+  }
   if (encounter.patientMovement) {
     switch (encounter.patientMovement.kind) {
       case "arriving_for_check_in":
@@ -965,7 +969,21 @@ export function createPrototypePlayerView(
               : state.environment.founderActivity?.kind ===
                   "praise_employee"
                 ? "Praising employee"
-                : undefined,
+                : state.environment.founderActivity?.kind === "attend_encounter"
+                  ? "In examination"
+                  : state.environment.founderActivity?.kind === "return_to_front_desk"
+                    ? "Returning to Front Desk"
+                    : state.environment.founderActivity?.kind === "wander_facility"
+                      ? "Walking through clinic"
+                      : state.environment.founderActivity?.kind === "sit_in_chair"
+                        ? "Taking a seat"
+                        : state.environment.founderActivity?.kind === "visit_bathroom"
+                          ? "Visiting bathroom"
+                  : undefined,
+        seated:
+          (state.environment.founderActivity?.kind === "attend_encounter" || state.environment.founderActivity?.kind === "sit_in_chair") &&
+          state.environment.founderActivity.pathIndex >=
+            state.environment.founderActivity.path.length - 1,
       },
       ambientPedestrians: state.environment.ambientPedestrians.map(
         (pedestrian) => ({
@@ -1030,18 +1048,30 @@ export function createPrototypePlayerView(
           const assignedRoomDefinition = assignedRoom
             ? getRoomDefinition(assignedRoom.roomDefinitionId)
             : null;
+          const waitingAnchorSeated =
+            encounter.patientMovement === null &&
+            location !== null &&
+            assignedRoomDefinition !== null &&
+            assignedRoom !== undefined &&
+            getRoomWaitingAnchors(assignedRoom, assignedRoomDefinition).some(
+              (anchor) => anchor.x === location.x && anchor.y === location.y,
+            );
           const seated =
             encounter.patientMovement === null &&
             location !== null &&
-            assignedRoom?.roomDefinitionId === "room.waiting" &&
+            ((encounter.waitingDestination?.kind === "chair" &&
+              encounter.waitingDestination.location.x === location.x &&
+              encounter.waitingDestination.location.y === location.y) ||
+              waitingAnchorSeated);
+          const onExamTable =
+            encounter.patientMovement === null &&
+            location !== null &&
+            assignedRoom?.roomDefinitionId === "room.examination" &&
             assignedRoomDefinition !== null &&
-            getRoomWaitingAnchors(
-              assignedRoom,
-              assignedRoomDefinition,
-            ).some(
-              (anchor) =>
-                anchor.x === location.x && anchor.y === location.y,
-            );
+            (() => {
+              const anchor = getRoomCareAnchor(assignedRoom, assignedRoomDefinition, "patient");
+              return anchor.x === location.x && anchor.y === location.y;
+            })();
           const pendingFacilityRoute =
             getPendingPatientRoutePresentation(state, encounter.id);
           const presentationPath =
@@ -1068,6 +1098,7 @@ export function createPrototypePlayerView(
                     : ("active" as const),
             appearance: encounter.patientAppearance,
             seated,
+            pose: onExamTable ? "exam-table" : seated ? "seated" : undefined,
             ...movementPresentation(
               presentationPath,
               presentationPathIndex,

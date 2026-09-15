@@ -55,6 +55,42 @@ export function advanceEmployeeMovement(
     if (employee.facilityTask) {
       continue;
     }
+    // Reception is a post, not an idle-wander role. The water-cooler task is
+    // the intentional exception above; once it is complete, route back to the
+    // staff-side Front Desk anchor and remain there for arriving patients.
+    if (employee.staffRoleDefinitionId === "staff.receptionist") {
+      const homeRoom = employee.homeRoomInstanceId
+        ? state.rooms.find((room) => room.id === employee.homeRoomInstanceId)
+        : null;
+      const definition = homeRoom
+        ? getRoomDefinition(homeRoom.roomDefinitionId, context)
+        : null;
+      if (homeRoom && definition) {
+        const staffAnchor = getRoomNavigationAnchor(
+          homeRoom,
+          definition,
+          "staff",
+        );
+        if (samePoint(employee.location, staffAnchor)) {
+          employee.path = [];
+          employee.pathIndex = 0;
+          continue;
+        }
+        const path = findDeterministicFacilityPath(
+          employee.location,
+          staffAnchor,
+          state.rooms,
+          state.doors,
+          (definitionId) => getRoomDefinition(definitionId, context),
+        );
+        if (path.length > 1) {
+          employee.path = path;
+          employee.pathIndex = 0;
+          employee.lastMovedAtFacilityTick = state.facilityTick;
+          continue;
+        }
+      }
+    }
     if (state.facilityTick % interval !== 0) {
       continue;
     }

@@ -1,0 +1,88 @@
+# GS-014 source capture
+
+Captured: 2026-09-14T20:05:26.4013211-04:00
+
+Base commit: `c26c96a111103d8665e33c9258ef54071d729f14` (detached beta worktree)
+
+This is the audited dirty-source manifest for the release candidate. Each line is a SHA-256 of the exact candidate working-tree byte stream followed by two spaces and its repository-relative path. Git blob hashes may differ for text files because Git's configured line-ending normalization applies when objects are staged; binaries retain their byte identity. The isolated candidate was copied from the shared checkout and every selected source hash matched both immediately before and after copy; all paths below were rehashed at capture.
+
+Included: 76 modified/untracked runtime, required production-atlas, and regression-test paths. The committed beta baseline also carries seven commits ahead of main, including clinical content whose existing review status/provenance remains unchanged; this capture does not promote draft content.
+
+Excluded from the dirty workspace: screenshots/review artifacts, GS-013 character-fitting experiments and mappings, private/ignored clinical and photo inputs, generated source art, ComfyUI inputs, disposable tooling artifacts, unrelated documents and plans. The changed founder atlas generator/verifiers are excluded because production Pages builds use the committed atlas PNGs and manifest directly; source regeneration depends on excluded development-only inputs. The changed browser regression `tests/e2e/character-resolution-zoom.spec.ts` is included.
+
+b8715e29524c7178e14fe647fb1345668cfee9225b7555c5216f72ccdeee395e  apps/player/public/art/characters/founders-v4/founders-front-idle-v4.png
+21eec36ea5201b14926e056a16e9919fa8a659f2baf5a4cad4668ce4b7c6ff12  apps/player/public/art/characters/founders-v4/founders-left-idle-v4.png
+161f20d85521436f841b1dd94d9213d6b712e5356d6a4c6548683e6c98488ef4  apps/player/public/art/characters/founders-v4/founders-right-idle-v4.png
+726adcc5949304ef3e9dd42cdd1e4a21b7db95db859998fed790dbcfc336557e  apps/player/public/art/characters/founders-v4/manifest.json
+73d1aec94de5fd6ccd463db5137a134ba34bf94fd1d9fb922e01eeead8186739  apps/player/src/App.tsx
+6578de4562967aa11d4e4ce60570cadde7366230a1f6cf37038891e39ebc8ab9  apps/player/src/AppShell.tsx
+e3f4cd06d57e07e59305e505b213e412713be35c9e87aedab26f47a0e12cf714  apps/player/src/art/bitmapAssetManifest.test.ts
+494a2880678aa04d757b0ba29973899834135c14d6817e831d150b55c7dd79ba  apps/player/src/art/bitmapAssetManifest.ts
+9a721c34ed64bea7e12acf359258003dece7cf4698a861dbe6b33a74cc04c7fb  apps/player/src/art/characterArt.ts
+6e72635280a0b6ee73b89cb35912fae87f0a56c3c029bf6b3afce066a39c8eac  apps/player/src/art/characterBitmapArt.test.ts
+a0bff0290991bceb5ee8a4f95a9b9b457fc6b3359c16fb7dd4882d392fe0e8df  apps/player/src/art/characterBitmapArt.ts
+2c649e92727c965e3b7a0f7da4dfbec9efcfa017b95e10a3711e209d7ab17c22  apps/player/src/facility/canonicalRoomShell.test.ts
+99266c88f56e5a3397e4855ede0fe7f9d9b478e07cfab2ee8a2aa9a4f8d00eb0  apps/player/src/facility/canonicalRoomShell.ts
+b3dd4c98591563abbdb9abcb2ac7c44aa979d9046a6ac6c04c92b37ba4c0376f  apps/player/src/facility/characterMotionPresentation.test.ts
+19749b952daa5ec01be223f2d7cfa5feeaec0e0359ab5ad4ea69ba41589937b0  apps/player/src/facility/characterMotionPresentation.ts
+2720760ce42bde70bc2e5d8ad17612dd7ae596df6b34cad66469aaa1c10bc492  apps/player/src/facility/characterPauseArrival.test.ts
+f85392b6334999f43f34f2843faafaa92fe9ae5f30e074cc742035a758e18afe  apps/player/src/facility/environmentTilePhase.test.ts
+f0bf45661a1d0246fcd1f55f67bff7a0aa871a39a711b8693796c911d425a8fe  apps/player/src/facility/environmentTilePhase.ts
+565c9f89269b77ee58da77262bc76d52e02edd59b9218c5026741e51adadbd3a  apps/player/src/facility/examinationV3Architecture.test.ts
+fd77c7a140aad311dd6e20494c91960cd1d403f2144e1dc3e3e190152c1a1c78  apps/player/src/facility/FacilityScene.ts
+018cbec4c97c72a424715ea292ea22284639f65848403af69ce9593129ba1be5  apps/player/src/facility/frontDeskPresentation.test.ts
+e5d975aff2773db6e2c82c51b883e1ec0b7585a0c289eb5d730aa9b9649eff72  apps/player/src/facility/frontDeskPresentation.ts
+db0066703f823ca63f172a3fb007d14dd92d7c737a5c886bf5f16cefb2c315c2  apps/player/src/facility/frontDeskV5Architecture.test.ts
+35e1079f597c725f579fe8c0c6bddc070c52a74aa13c0f074061b3a45d2fc123  apps/player/src/facility/frontDeskV5Architecture.ts
+8db7c9b9292b781a18a60f5b40a5c7c76f6a2a4749c43df3a2060f17c5887751  apps/player/src/facility/presentationOrigin.test.ts
+80fe5ee163e13219c5b3b512e643a695b65ecbc897523a9d6c4e665bd77f9083  apps/player/src/facility/presentationOrigin.ts
+76158789d709d06deac9a4853abde68a81f7da2d41fec6ffbe2b33355aa476a0  apps/player/src/facility/proceduralSurfacePhase.test.ts
+e1c3ac78c269bd8d9239fed70cbc1f85381a3742c25b3cb2d576953014cc4cdc  apps/player/src/facility/proceduralSurfacePhase.ts
+48e34698b5c6c909d787752c51da88e8882f358c0700ba1e2a8c508ead45edee  apps/player/src/facility/types.ts
+f4a1cfafb8447ac233f01e4c64ec27dea3e0da31d63986f0c803f2a678a29eda  apps/player/src/session/alertViewModels.test.ts
+0bd7f7729f643b18c8dfe60bde6369a32fc44d99b1b08cf09df6386515e3e47f  apps/player/src/session/alertViewModels.ts
+7e52ad7ee05744dd9e410a58230caf77ba7d71d965b58d034ca42362c80f8b6b  apps/player/src/session/buildViewModels.test.ts
+8ed2a4cf797c67560df85c8e4d29f3499c2145f31ddd2af6b9bdfcd48fc0a70f  apps/player/src/session/index.ts
+16d1c15bab4ea2da114774d7e78c2b420eeece00a645980765b44bef369cccea  apps/player/src/session/patientMovementViewModels.test.ts
+6998e4bc3dfd0f90b2887ff7f62bda98c59bf5ed0cecffa661ed2d5d9e0f58c0  apps/player/src/session/prototypeStorage.test.ts
+04a69fd11b1fcb599b2155c5a205ceabf4ddcd748f87f7ddbbda3feea5a405f6  apps/player/src/session/prototypeStorage.ts
+c6eb66a8a4a756d70c400a7c042c4effcba4d68a4fb2a066438e0a87f8a3b15d  apps/player/src/session/tutorialViewModels.test.ts
+6a6a114ad059ad7e486aaddf2c46c9ade342e3b421cc23613ea8fe0c211757d2  apps/player/src/session/tutorialViewModels.ts
+9e1da44cfe4f3eb82956d8011ffeaad86fb67421289b5751a1478181ad3216ba  apps/player/src/session/usePrototypeSession.ts
+cbf7284ff3fac747393df5294ed3caef416882249aa7f839265df925430d673c  apps/player/src/session/viewModels.ts
+14c5bb172b5930e26a6975d1b9535380e2555c5752688fd73c942cd42394ed57  apps/player/src/styles/global.css
+49928cd0d10dacdf597fa07dc4d72d90d8c1483dc4b57db513ce30a7d0896b4c  apps/player/src/ui/OpeningSequence.css
+46afe364da7524bfcdfe25528175ebf231d61a2b4e331ed45eedb7a87b98ee40  apps/player/src/ui/SaveCloseDialog.test.tsx
+9e189cd28c8a172254bbe4f28bb72a213e21d2b634499ec1e3cf2a2b0931b338  apps/player/src/ui/SaveCloseDialog.tsx
+49091a13159762616b1aaf5b72e6f1c84079599d6bb45a5cb8a0d0a4426ab0e3  packages/balance-config/src/prototype-alerts.ts
+cfce43759dd7ce546242c9f305fae2250f4e5ba21d423e0d3937aad9e8489f97  packages/balance-config/src/prototype-balance.test.ts
+c3b55a6149908d1c61e20fdfede6197f4c3f7a4c02effbc89cf18d9e63b88cdd  packages/balance-config/src/prototype-balance.ts
+a55654490955ce11f784826f1e6f08a9e7e3e15e75587efcd623070fceb974af  packages/balance-config/src/schema.ts
+0d9b42d6523b63d57c22bfbc21b0c97a528c23db3d745c9160fdefad9e74fc8e  packages/game-domain/src/persistence.ts
+c8aaef02524cbd1175b29f70bc5c499831bb03bfe066bfde1f99c02a5f635ac6  packages/game-domain/src/reducer.ts
+364883fb929730ba9daafbbcb4484dc495524b04bae2b27d075b0845a48324ba  packages/game-domain/src/selectors.ts
+ce0b42260d3b71738d78bf474139d9055d03d4463561d36503886419b3ef62c9  packages/game-domain/src/spatial.ts
+985b53ed77f59db59d89beb2e0c5d58a84b0467668361c1cff3d36d48d2bb353  packages/game-domain/src/staff.ts
+031ca3fdb04d0c5cb182d3bd223b1c2d93eb36f645dd5648b7ca629888f5d4db  packages/game-domain/src/types.ts
+22c2b5e936f33efce535076127c2421a470e7c509b2cddfeb0fa666858980d4d  packages/game-domain/tests/alert-humor.test.ts
+8797dded579e080b6b81b37e1ea67573d861fa034c6a04f4df61adcc285bd771  packages/game-domain/tests/facility-experience.test.ts
+750f9ddb8219ef875fa58f826f0034dcada0acc601feb9c4cdc38c80679aa3ff  packages/game-domain/tests/facility-management.test.ts
+012c2852794bc3b105dcc71e7a85b1afa7afbfccd3778ce1b6310dd60d427416  packages/game-domain/tests/founder-map-movement.test.ts
+02a846bfe2934eeb67dadd4355c77f6f041d0f2760055abe6378e04bd896e711  packages/game-domain/tests/game-domain.test.ts
+31b361d569a8958a793ce06caa30377f929b6905e4a053379cfcd200c6062108  packages/game-domain/tests/level-two-endoscopy.test.ts
+c754a6e0d8895f1c4af45a9db0b5536cd9addc9a57aedfd9c154076e03e08869  packages/game-domain/tests/level-two-persistence.test.ts
+5022ec2c443a80e7aaa77ec375e67c3e18b8c8afe28556be7a71a7ce6a6848a6  packages/game-domain/tests/level-two-progression.test.ts
+3e38f80d4400ba167052a3fbec38242f7880d149fb185577811b1a1e2bf44579  packages/game-domain/tests/opening-founder.test.ts
+2ecaa867592d1dfcbfe604bcf92a548bfdc345558be1a885bdd2180c8fe1c93b  packages/game-domain/tests/patient-alert-delay.test.ts
+fd72517cc3898d1371a9003b4ce16e843a26438d9f5e15e66690917388a08612  packages/game-domain/tests/patient-list-order.test.ts
+9af0c383ec32c81af99656218ed176ce07f0d286d193d404d1081fe942761fe8  packages/game-domain/tests/receptionist-water-refill.test.ts
+6c438882ad9370a8c9a7d1cb0ac58a9aeface584127ad36193d61bf993d7b234  packages/game-domain/tests/spatial.test.ts
+65f9793946014eb878f3af310703f9c872e497747b90c78f3027e8af868ebec1  packages/game-domain/tests/timing-encounters.test.ts
+4a308ae8943ef55f90d2e729fa2b514c62526e3b2dc0761e0a04c3981a4147bc  packages/game-domain/tests/waiting-destination-routing.test.ts
+aaf0d299288dd8061d894455318c90539ad9222562755fac96cf40cd6bfc8e5b  tests/e2e/character-resolution-zoom.spec.ts
+ee3b95d273ffaede8ad5a4423a07c706788b579ddcfbb9800fa42ca66041ed75  tests/e2e/floor-pattern-pan-stability.spec.ts
+9b71ab20304182b3af205a39c6b340f5c9c3e1bb6337f654477632cd5406d3c9  tests/e2e/front-desk-founder-anatomy.spec.ts
+deafaac01b70933de4ccddeaf4f3526806dedf3b25216e3dc10db63e7ef24492  tests/e2e/front-desk-occlusion-polish.spec.ts
+a8ed4d0154dd72624b0d50fed45cf2e11795abe7c6e673afc1c1703613f9f32a  tests/e2e/non-editable-cursor.spec.ts
+d47aaa7ed75fff2e9a681069fd394e7b3d16cff242cbfd4411e5f00276315334  tests/e2e/staffed-checkin-pathing.spec.ts
+d01a9e51738c1839fe17184a689d0603a3c557fa4f9b47d95d3ddd9cae5fbced  tests/e2e/wall-corner-continuity.spec.ts

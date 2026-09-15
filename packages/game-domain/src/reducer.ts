@@ -9,6 +9,8 @@ import {
   PROTOTYPE_ALERT_SCHEDULING,
   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
   PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
+  STARTER_EXAMINATION_DOOR_INSTANCE_ID,
+  STARTER_EXAMINATION_ROOM_INSTANCE_ID,
   isPrototypeAlertEligible,
   renderPrototypeAlert,
   type PrototypeAlertDefinition,
@@ -63,6 +65,7 @@ import {
   findDeterministicFacilityPath,
   getRoomNavigableTiles,
   getRoomNavigationAnchor,
+  getRoomCareAnchor,
   getRoomWaitingAnchors,
   getRotatedFootprint,
   isInsideFacility,
@@ -162,6 +165,235 @@ function getRoomDestinationById(
   return room && definition
     ? getRoomNavigationAnchor(room, definition)
     : null;
+}
+
+function samePoint(left: GridPoint, right: GridPoint): boolean {
+  return left.x === right.x && left.y === right.y;
+}
+
+function isFrontDeskStaffed(state: GameState, context: DomainContext): boolean {
+  const entrance = getPublicEntrance(state, context);
+  if (!entrance) {
+    return false;
+  }
+  const definition = getRoomDefinition(entrance.room.roomDefinitionId, context);
+  if (!definition) {
+    return false;
+  }
+  const staffAnchor = getRoomNavigationAnchor(
+    entrance.room,
+    definition,
+    "staff",
+  );
+  const founderIsAvailable =
+    state.environment.founderActivity === null &&
+    samePoint(state.environment.founderLocation, staffAnchor);
+  const receptionistIsAvailable = state.employees.some(
+    (employee) =>
+      employee.staffRoleDefinitionId === "staff.receptionist" &&
+      isEmployeeAssignedToOperationalRoom(state, employee.id, context) &&
+      employee.facilityTask === null &&
+      employee.pathIndex >= employee.path.length - 1 &&
+      samePoint(employee.location, staffAnchor),
+  );
+  return founderIsAvailable || receptionistIsAvailable;
+}
+
+function hasOperationalReceptionist(
+  state: GameState,
+  context: DomainContext,
+): boolean {
+  return state.employees.some(
+    (employee) =>
+      employee.staffRoleDefinitionId === "staff.receptionist" &&
+      isEmployeeAssignedToOperationalRoom(state, employee.id, context),
+  );
+}
+
+function pointKey(point: GridPoint): string {
+  return `${point.x},${point.y}`;
+}
+
+/**
+ * Automatic founder idling never claims a clinical room or a staff post.  The
+ * same persisted endpoint convention used by patient waiting reservations is
+ * used here so a save cannot restore the founder onto an occupied tile.
+ */
+function chooseAutomaticFounderActivity(
+  state: GameState,
+  context: DomainContext,
+): NonNullable<GameState["environment"]["founderActivity"]> | null {
+  const occupied = new Set<string>();
+  for (const encounter of Object.values(state.encounters)) {
+    if (encounter.lifecycle === "resolved") continue;
+    for (const point of [
+      encounter.patientLocation,
+      encounter.patientMovement?.path.at(-1),
+      encounter.waitingDestination?.location,
+    ]) {
+      if (point) occupied.add(pointKey(point));
+    }
+  }
+  for (const employee of state.employees) {
+    occupied.add(pointKey(employee.location));
+    const endpoint = employee.path.at(-1);
+    if (endpoint) occupied.add(pointKey(endpoint));
+  }
+
+  const examinationReservations = new Set(
+    Object.values(state.encounters).flatMap((encounter) => [
+      encounter.assignedRoomInstanceId,
+      encounter.queuedCareRoomInstanceId,
+      encounter.patientMovement?.destinationRoomInstanceId ?? null,
+    ]).flatMap((roomId) => {
+      const room = roomId
+        ? state.rooms.find((candidate) => candidate.id === roomId)
+        : null;
+      return room?.roomDefinitionId === "room.examination" && roomId
+        ? [roomId]
+        : [];
+    }),
+  );
+  const candidates: Array<{
+    kind: "wander_facility" | "sit_in_chair" | "visit_bathroom";
+    targetId: string;
+    path: GridPoint[];
+  }> = [];
+  for (const room of [...state.rooms].sort((left, right) => left.id.localeCompare(right.id))) {
+    if (examinationReservations.has(room.id)) continue;
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition) continue;
+    const doorTiles = new Set(
+      state.doors
+        .filter((door) => door.roomId === room.id)
+        .flatMap((door) => {
+          const cells = getDoorCells(door, room, definition);
+          return cells ? [pointKey(cells.inside)] : [];
+        }),
+    );
+    const excludedEndpoints = new Set(doorTiles);
+    if (definition.navigation?.staffAnchor) {
+      excludedEndpoints.add(
+        pointKey(getRoomNavigationAnchor(room, definition, "staff")),
+      );
+    }
+    const addCandidate = (
+      kind: "wander_facility" | "sit_in_chair" | "visit_bathroom",
+      point: GridPoint,
+    ) => {
+      if (
+        occupied.has(pointKey(point)) ||
+        excludedEndpoints.has(pointKey(point))
+      ) return;
+      const routedPath = pathFromLocationToFacilityPoint(
+        state,
+        context,
+        state.environment.founderLocation,
+        point,
+      );
+      const path =
+        routedPath.length > 0
+          ? routedPath
+          : samePoint(state.environment.founderLocation, point)
+            ? [{ ...point }]
+            : [];
+      if (path.length === 0) return;
+      candidates.push({
+        kind,
+        targetId: `${room.id}.${point.x}.${point.y}`,
+        path,
+      });
+    };
+
+    // The authored waiting anchors are chair inventory, not merely visual
+    // decoration.  A founder may choose any unoccupied chair once a
+    // receptionist is covering the desk.
+    for (const chair of getRoomWaitingAnchors(room, definition)) {
+      addCandidate("sit_in_chair", chair);
+    }
+    if (room.roomDefinitionId === "room.bathroom") {
+      addCandidate(
+        "visit_bathroom",
+        getRoomNavigationAnchor(room, definition),
+      );
+    }
+    if (definition.navigation?.publicWaitingArea === true) {
+      const excluded = new Set([
+        ...excludedEndpoints,
+        ...getRoomWaitingAnchors(room, definition).map(pointKey),
+      ]);
+      for (const point of getRoomNavigableTiles(room, definition, state.doors)
+        .sort((left, right) => left.y - right.y || left.x - right.x)) {
+        if (!excluded.has(pointKey(point))) addCandidate("wander_facility", point);
+      }
+    }
+  }
+  if (candidates.length === 0) return null;
+  const chosen = candidates[
+    deterministicInteger(
+      state.campaignSeed,
+      RANDOM_STREAMS.environment,
+      `founder:auto-idle:${state.facilityTick}`,
+      candidates.length,
+    )
+  ]!;
+  const config = context.balanceRelease.environment;
+  return {
+    ...chosen,
+    pathIndex: 0,
+    lastMovedAtFacilityTick: state.facilityTick,
+    workMinutesRemaining:
+      config.idleActionMinimumMinutes +
+      deterministicInteger(
+        state.campaignSeed,
+        RANDOM_STREAMS.environment,
+        `founder:auto-idle-dwell:${state.facilityTick}`,
+        config.idleActionMaximumMinutes - config.idleActionMinimumMinutes + 1,
+      ),
+  };
+}
+
+function planFounderAfterEncounter(
+  state: GameState,
+  context: DomainContext,
+): void {
+  const entrance = getPublicEntrance(state, context);
+  if (!entrance) {
+    state.environment.founderActivity = null;
+    return;
+  }
+  const definition = getRoomDefinition(entrance.room.roomDefinitionId, context);
+  if (!definition) {
+    state.environment.founderActivity = null;
+    return;
+  }
+  if (!hasOperationalReceptionist(state, context)) {
+    const desk = getRoomNavigationAnchor(entrance.room, definition, "staff");
+    const path = pathFromLocationToFacilityPoint(
+      state,
+      context,
+      state.environment.founderLocation,
+      desk,
+    );
+    if (path.length <= 1) {
+      state.environment.founderLocation = { ...desk };
+      state.environment.founderActivity = null;
+      return;
+    }
+    state.environment.founderActivity = {
+      kind: "return_to_front_desk",
+      targetId: entrance.room.id,
+      path,
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      // This is only a travel plan.  Settling at the desk must make the
+      // founder immediately eligible to check patients in.
+      workMinutesRemaining: 0,
+    };
+    return;
+  }
+  state.environment.founderActivity =
+    chooseAutomaticFounderActivity(state, context);
 }
 
 function facilityPath(
@@ -444,8 +676,9 @@ function chooseCareRoom(
   state: GameState,
   context: DomainContext,
   start: GridPoint,
+  founderStart: GridPoint,
   encounterId: string,
-): { roomId: string; path: GridPoint[] } | null {
+): { roomId: string; patientPath: GridPoint[]; founderPath: GridPoint[] } | null {
   const occupiedRoomIds = new Set(
     Object.values(state.encounters)
       .filter(
@@ -473,14 +706,22 @@ function chooseCareRoom(
         !occupiedRoomIds.has(room.id),
     )
     .sort((left, right) => left.id.localeCompare(right.id))
-    .map((room) => ({
-      roomId: room.id,
-      path: pathFromLocationToRoom(state, context, start, room.id),
-    }))
-    .filter((candidate) => candidate.path.length > 0)
+    .flatMap((room) => {
+      const definition = getRoomDefinition(room.roomDefinitionId, context);
+      if (!definition) return [];
+      const patientPath = pathFromLocationToFacilityPoint(
+        state, context, start, getRoomCareAnchor(room, definition, "patient"),
+      );
+      const founderPath = pathFromLocationToFacilityPoint(
+        state, context, founderStart, getRoomCareAnchor(room, definition, "clinician"),
+      );
+      return patientPath.length > 0 && founderPath.length > 0
+        ? [{ roomId: room.id, patientPath, founderPath }]
+        : [];
+    })
     .sort(
       (left, right) =>
-        left.path.length - right.path.length ||
+        left.patientPath.length - right.patientPath.length ||
         left.roomId.localeCompare(right.roomId),
     );
   return candidates[0] ?? null;
@@ -503,15 +744,35 @@ function encounterHasExaminationRoomReservation(
   );
 }
 
+function getEncounterExaminationRoomId(
+  state: GameState,
+  encounter: EncounterState,
+): string | null {
+  return [
+    encounter.assignedRoomInstanceId,
+    encounter.queuedCareRoomInstanceId,
+    encounter.patientMovement?.destinationRoomInstanceId ?? null,
+  ].find(
+    (roomId): roomId is string =>
+      roomId !== null &&
+      state.rooms.find((room) => room.id === roomId)?.roomDefinitionId ===
+        "room.examination",
+  ) ?? null;
+}
+
 function chooseWaitingDestination(
   state: GameState,
   context: DomainContext,
   encounter: EncounterState,
-): { roomId: string | null; path: GridPoint[] } {
+): {
+  roomId: string | null;
+  path: GridPoint[];
+  reservation: EncounterState["waitingDestination"];
+} {
   const start = encounter.patientLocation;
   const entrance = getPublicEntrance(state, context);
   if (!start || !entrance) {
-    return { roomId: null, path: [] };
+    return { roomId: null, path: [], reservation: null };
   }
 
   const occupiedPoints = new Set(
@@ -528,16 +789,23 @@ function chooseWaitingDestination(
         ...(candidate.patientMovement?.path.at(-1)
           ? [candidate.patientMovement.path.at(-1)!]
           : []),
+        ...(candidate.waitingDestination
+          ? [candidate.waitingDestination.location]
+          : []),
       ])
       .map((point) => `${point.x},${point.y}`),
   );
-  const startsLeft =
-    deterministicInteger(
-      state.campaignSeed,
-      RANDOM_STREAMS.routineArrivalTiming,
-      `${encounter.id}:sidewalk-direction.v1`,
-      2,
-    ) === 0;
+  const reservedActors = [
+    state.environment.founderLocation,
+    ...(state.environment.founderActivity?.path.at(-1)
+      ? [state.environment.founderActivity.path.at(-1)!]
+      : []),
+    ...state.employees.flatMap((employee) => [
+      employee.location,
+      ...(employee.path.at(-1) ? [employee.path.at(-1)!] : []),
+    ]),
+  ];
+  for (const point of reservedActors) occupiedPoints.add(`${point.x},${point.y}`);
 
   const waitingRooms = state.rooms
     .filter((room) => room.roomDefinitionId === "room.waiting")
@@ -560,7 +828,7 @@ function chooseWaitingDestination(
               : [];
           }),
       );
-      return [{ room, definition, doorTileKeys }];
+        return [{ room, definition, doorTileKeys }];
     });
 
   // Every authored Waiting Room anchor corresponds to a chair that is visible
@@ -589,35 +857,18 @@ function chooseWaitingDestination(
         anchor,
       );
       if (path.length > 0) {
-        return { roomId: waitingRoom.id, path };
+        return {
+          roomId: waitingRoom.id,
+          path,
+          reservation: { roomInstanceId: waitingRoom.id, location: anchor, kind: "chair" },
+        };
       }
     }
   }
 
-  const frontDeskOccupiedByWaitingPatient = Object.values(state.encounters).some(
-    (candidate) =>
-      candidate.id !== encounter.id &&
-      candidate.lifecycle === "waiting_unopened" &&
-      candidate.patientMovement?.kind !== "arriving_for_check_in" &&
-      (candidate.assignedRoomInstanceId === entrance.room.id ||
-        candidate.patientMovement?.destinationRoomInstanceId ===
-          entrance.room.id) &&
-      candidate.patientLocation !== null,
-  );
-  if (!frontDeskOccupiedByWaitingPatient) {
-    const frontDefinition = getRoomDefinition(
-      entrance.room.roomDefinitionId,
-      context,
-    );
-    const frontAnchors = frontDefinition
-      ? getRoomWaitingAnchors(entrance.room, frontDefinition)
-      : [];
-    const orderedFrontAnchors = [...frontAnchors].sort(
-      (left, right) =>
-        (startsLeft ? left.x - right.x : right.x - left.x) ||
-        left.y - right.y,
-    );
-    for (const anchor of orderedFrontAnchors) {
+  const frontDefinition = getRoomDefinition(entrance.room.roomDefinitionId, context);
+  if (frontDefinition) {
+    for (const anchor of getRoomWaitingAnchors(entrance.room, frontDefinition)) {
       if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) {
         continue;
       }
@@ -628,37 +879,151 @@ function chooseWaitingDestination(
         anchor,
       );
       if (path.length > 0) {
-        return { roomId: entrance.room.id, path };
+        return {
+          roomId: entrance.room.id,
+          path,
+          reservation: { roomInstanceId: entrance.room.id, location: anchor, kind: "chair" },
+        };
       }
     }
   }
 
-  const queueCandidates: GridPoint[] = [];
-  for (
-    let distance = 1;
-    distance < context.balanceRelease.facility.gridWidth;
-    distance += 1
-  ) {
-    for (const direction of startsLeft ? [-1, 1] : [1, -1]) {
-      const x = entrance.outside.x + direction * distance;
-      if (
-        x >= 0 &&
-        x < context.balanceRelease.facility.gridWidth
-      ) {
-        queueCandidates.push({ x, y: entrance.outside.y });
+  const doorKeysFor = (room: PlacedRoom, definition: NonNullable<ReturnType<typeof getRoomDefinition>>) =>
+    new Set(state.doors.filter((door) => door.roomId === room.id).flatMap((door) => {
+      const cells = getDoorCells(door, room, definition);
+      return cells ? [`${cells.inside.x},${cells.inside.y}`] : [];
+    }));
+  const findStanding = (
+    rooms: readonly PlacedRoom[],
+    kind: "standing" | "public_wander",
+  ) => {
+    for (const room of rooms) {
+      const definition = getRoomDefinition(room.roomDefinitionId, context);
+      if (!definition) continue;
+      const doorKeys = doorKeysFor(room, definition);
+      const excluded = new Set([
+        ...doorKeys,
+        ...getRoomWaitingAnchors(room, definition).map((point) => `${point.x},${point.y}`),
+      ]);
+      // A configured staff post is not a patient waiting point.  Do not use
+      // the generic navigation-anchor fallback here: a 1x1 hallway's primary
+      // tile is its only legitimate public standing point.
+      if (definition.navigation?.staffAnchor) {
+        const staffAnchor = getRoomNavigationAnchor(room, definition, "staff");
+        excluded.add(`${staffAnchor.x},${staffAnchor.y}`);
+      }
+      for (const point of getRoomNavigableTiles(room, definition, state.doors).sort((a, b) => a.y - b.y || a.x - b.x)) {
+        const key = `${point.x},${point.y}`;
+        if (occupiedPoints.has(key) || excluded.has(key)) continue;
+        const path = pathFromLocationToFacilityPoint(state, context, start, point);
+        if (path.length > 0) return { roomId: room.id, path, reservation: { roomInstanceId: room.id, location: point, kind } };
       }
     }
+    return null;
+  };
+  const otherChairRooms = state.rooms
+    .filter((room) => room.roomDefinitionId !== "room.waiting" && room.id !== entrance.room.id)
+    .sort((a, b) => a.id.localeCompare(b.id));
+  for (const room of otherChairRooms) {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition) continue;
+    for (const anchor of getRoomWaitingAnchors(room, definition)) {
+      if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) continue;
+      const path = pathFromLocationToFacilityPoint(state, context, start, anchor);
+      if (path.length > 0) return { roomId: room.id, path, reservation: { roomInstanceId: room.id, location: anchor, kind: "chair" } };
+    }
   }
-  const queuePoint =
-    queueCandidates.find(
-      (point) => !occupiedPoints.has(`${point.x},${point.y}`),
-    ) ?? entrance.outside;
+  const waitingStanding = findStanding(waitingRooms.map(({ room }) => room), "standing");
+  if (waitingStanding) return waitingStanding;
+  const publicStanding = findStanding(
+    state.rooms.filter((room) => room.roomDefinitionId !== "room.waiting" && getRoomDefinition(room.roomDefinitionId, context)?.navigation?.publicWaitingArea === true).sort((a, b) => a.id.localeCompare(b.id)),
+    "public_wander",
+  );
+  if (publicStanding) return publicStanding;
+  const fallbackPath = pathFromLocationToFacilityPoint(state, context, start, entrance.inside);
   return {
-    roomId: null,
-    path: joinPaths(
-      pathFromLocationToExit(state, context, start),
-      straightSidewalkPath(entrance.outside, queuePoint),
-    ),
+    roomId: entrance.room.id,
+    path: fallbackPath,
+    reservation: { roomInstanceId: entrance.room.id, location: entrance.inside, kind: "public_wander" },
+  };
+}
+
+/** Narrow deterministic seam for routing acceptance coverage. */
+export function selectWaitingDestinationForTesting(
+  state: GameState,
+  context: DomainContext,
+  encounterId: string,
+) {
+  const encounter = state.encounters[encounterId];
+  return encounter ? chooseWaitingDestination(state, context, encounter) : null;
+}
+
+function choosePublicWanderDestination(
+  state: GameState,
+  context: DomainContext,
+  encounter: EncounterState,
+): {
+  roomId: string;
+  path: GridPoint[];
+  reservation: NonNullable<EncounterState["waitingDestination"]>;
+} | null {
+  const start = encounter.patientLocation;
+  if (!start) return null;
+  const occupied = new Set(
+    Object.values(state.encounters)
+      .filter((candidate) => candidate.id !== encounter.id && candidate.lifecycle !== "resolved")
+      .flatMap((candidate) => [
+        ...(candidate.patientLocation ? [candidate.patientLocation] : []),
+        ...(candidate.patientMovement?.path.at(-1) ? [candidate.patientMovement.path.at(-1)!] : []),
+        ...(candidate.waitingDestination ? [candidate.waitingDestination.location] : []),
+      ])
+      .map((point) => `${point.x},${point.y}`),
+  );
+  for (const point of [
+    state.environment.founderLocation,
+    ...(state.environment.founderActivity?.path.at(-1) ? [state.environment.founderActivity.path.at(-1)!] : []),
+    ...state.employees.flatMap((employee) => [employee.location, ...(employee.path.at(-1) ? [employee.path.at(-1)!] : [])]),
+  ]) occupied.add(`${point.x},${point.y}`);
+
+  const candidates: { roomId: string; point: GridPoint; path: GridPoint[] }[] = [];
+  for (const room of state.rooms
+    .filter((candidate) =>
+      candidate.roomDefinitionId !== "room.waiting" &&
+      getRoomDefinition(candidate.roomDefinitionId, context)?.navigation?.publicWaitingArea === true,
+    )
+    .sort((left, right) => left.id.localeCompare(right.id))) {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition) continue;
+    const excluded = new Set([
+      ...state.doors.filter((door) => door.roomId === room.id).flatMap((door) => {
+        const cells = getDoorCells(door, room, definition);
+        return cells ? [`${cells.inside.x},${cells.inside.y}`] : [];
+      }),
+      ...getRoomWaitingAnchors(room, definition).map((point) => `${point.x},${point.y}`),
+    ]);
+    if (definition.navigation?.staffAnchor) {
+      const anchor = getRoomNavigationAnchor(room, definition, "staff");
+      excluded.add(`${anchor.x},${anchor.y}`);
+    }
+    for (const point of getRoomNavigableTiles(room, definition, state.doors)
+      .sort((left, right) => left.y - right.y || left.x - right.x)) {
+      const key = `${point.x},${point.y}`;
+      if (occupied.has(key) || excluded.has(key) || (point.x === start.x && point.y === start.y)) continue;
+      const path = pathFromLocationToFacilityPoint(state, context, start, point);
+      if (path.length > 1) candidates.push({ roomId: room.id, point, path });
+    }
+  }
+  if (candidates.length === 0) return null;
+  const choice = candidates[deterministicInteger(
+    state.campaignSeed,
+    RANDOM_STREAMS.environment,
+    `${encounter.id}:public-wander:${state.facilityTick}`,
+    candidates.length,
+  )]!;
+  return {
+    roomId: choice.roomId,
+    path: choice.path,
+    reservation: { roomInstanceId: choice.roomId, location: { ...choice.point }, kind: "public_wander" },
   };
 }
 
@@ -899,6 +1264,9 @@ function createEncounter(
     satisfactionWarningsShown: [],
     dissatisfactionByCause: {},
     facilityExperienceAtCheckIn: null,
+    checkInStatus: "approaching",
+    checkInWaitingSinceTick: null,
+    unstaffedCheckInOverdueApplied: false,
     finalPatientSatisfaction: null,
     resolvedAtFacilityTick: null,
     arrivalClass: input.arrivalClass,
@@ -912,6 +1280,7 @@ function createEncounter(
     patientMovement: movement,
     assignedRoomInstanceId: entrance?.room.id ?? null,
     queuedCareRoomInstanceId: null,
+    waitingDestination: null,
     nextIdleActionAtFacilityTick: getNextIdleActionTick(
       state,
       context,
@@ -1020,6 +1389,87 @@ function clearPatientFeedAttention(
   encounter.feedAttentionStartedAtTick = null;
 }
 
+function completeStaffedCheckIn(
+  state: GameState,
+  encounter: EncounterState,
+  context: DomainContext,
+): void {
+  if (encounter.checkInStatus !== "awaiting_staff") {
+    return;
+  }
+  encounter.checkInStatus = "checked_in";
+  encounter.checkInWaitingSinceTick = null;
+  // Check-in makes the chart available immediately, but ordinary walking to a
+  // waiting place is not idle waiting and must not consume patience.
+  applyFacilityExperienceAtCheckIn(state, encounter, context);
+  encounter.idleWaitingSinceTick = null;
+  encounter.lastSatisfactionDecayAtTick = state.facilityTick;
+  beginPatientFeedAttention(encounter, "checked_in", state.facilityTick);
+  const destination = chooseWaitingDestination(state, context, encounter);
+  encounter.waitingDestination = destination.reservation;
+  startPatientMovement(
+    state,
+    context,
+    encounter,
+    "walking_to_waiting",
+    destination.path,
+    destination.roomId,
+  );
+}
+
+function maybeCompleteAwaitingCheckIns(
+  state: GameState,
+  context: DomainContext,
+): void {
+  if (!isFrontDeskStaffed(state, context)) {
+    return;
+  }
+  for (const encounter of Object.values(state.encounters)) {
+    if (
+      encounter.checkInStatus === "awaiting_staff" &&
+      encounter.patientMovement === null
+    ) {
+      completeStaffedCheckIn(state, encounter, context);
+    }
+  }
+}
+
+function maybeApplyUnstaffedCheckInOverdue(
+  state: GameState,
+  context: DomainContext,
+): void {
+  const config = context.balanceRelease.patientSatisfaction;
+  for (const encounter of Object.values(state.encounters)) {
+    const waitingSince = encounter.checkInWaitingSinceTick;
+    if (
+      encounter.checkInStatus !== "awaiting_staff" ||
+      waitingSince === null ||
+      encounter.unstaffedCheckInOverdueApplied ||
+      state.facilityTick - waitingSince <= config.unstaffedCheckInDelayMinutes
+    ) {
+      continue;
+    }
+    encounter.unstaffedCheckInOverdueApplied = true;
+    applyPatientSatisfactionDelta(
+      encounter,
+      -config.unstaffedCheckInSatisfactionPenalty,
+      "no_receptionist",
+      state.facilityTick,
+    );
+    const entrance = getPublicEntrance(state, context);
+    appendEvent(state, {
+      id: `event.patient-check-in-overdue.${encounter.id}.${waitingSince}`,
+      type: "patience_warning",
+      facilityTick: state.facilityTick,
+      encounterId: encounter.id,
+      message: `${encounter.patientDisplayName} has been waiting at the Front Desk for staff.`,
+      priority: "action_required",
+      definitionId: "alert.patient.check-in-unattended",
+      target: entrance ? { kind: "room", id: entrance.room.id } : null,
+    });
+  }
+}
+
 function maybeEmitDelayedPatientAttention(
   state: GameState,
 ): void {
@@ -1041,6 +1491,7 @@ function maybeEmitDelayedPatientAttention(
       state.openChartEncounterId !== encounter.id &&
       (kind === "checked_in"
         ? encounter.lifecycle === "waiting_unopened" &&
+          encounter.checkInStatus === "checked_in" &&
           encounter.firstOpenedAtTick === null
         : encounter.lifecycle === "active_action_required" &&
           currentStep?.status === "action_required");
@@ -1763,6 +2214,13 @@ function reduceOpenChart(
   if (!encounter) {
     return rejectCommand(state, command, "This chart does not exist.");
   }
+  if (encounter.checkInStatus !== "checked_in") {
+    return rejectCommand(
+      state,
+      command,
+      "The patient has not checked in at the Front Desk yet.",
+    );
+  }
   if (
     state.openChartEncounterId !== null &&
     state.openChartEncounterId !== command.encounterId
@@ -1791,47 +2249,113 @@ function reduceOpenChart(
 
   next.openChartEncounterId = nextEncounter.id;
   clearPatientFeedAttention(nextEncounter);
-  const isFirstOpening =
-    nextEncounter.lifecycle === "waiting_unopened";
-  const isReturnedResultOpening =
-    nextEncounter.lifecycle === "active_action_required" &&
-    nextEncounter.pendingResult?.offsiteTravel !== null &&
-    nextEncounter.pendingResult?.offsiteTravel !== undefined &&
-    nextEncounter.pendingResult.deliveredAtTick !== null &&
-    nextEncounter.currentNodeIndex >
-      nextEncounter.pendingResult.originatingNodeIndex;
-  if (
-    isFirstOpening ||
-    (isReturnedResultOpening &&
-      !encounterHasExaminationRoomReservation(next, nextEncounter))
-  ) {
-    const currentMovement = nextEncounter.patientMovement;
-    const start =
-      currentMovement?.path.at(-1) ??
-      nextEncounter.patientLocation ??
-      getPublicEntrance(next, context)?.outside ??
-      null;
-    const destination =
-      start === null
-        ? null
-        : chooseCareRoom(next, context, start, nextEncounter.id);
-    if (destination) {
-      if (
-        currentMovement?.kind === "walking_to_waiting" ||
-        currentMovement?.kind === "idle_within_room"
-      ) {
-        nextEncounter.queuedCareRoomInstanceId =
-          destination.roomId;
-      } else {
-        startPatientMovement(
-          next,
-          context,
-          nextEncounter,
-          "walking_to_care",
-          destination.path,
-          destination.roomId,
-        );
-      }
+  const isFirstOpening = nextEncounter.lifecycle === "waiting_unopened";
+  const isReopenableActive =
+    nextEncounter.lifecycle === "active_action_required";
+  const isUnacknowledgedTerminal =
+    nextEncounter.lifecycle === "resolved_summary_available" &&
+    nextEncounter.terminalFeedback?.acknowledged !== true;
+  const hasExamReservation = encounterHasExaminationRoomReservation(
+    next,
+    nextEncounter,
+  );
+  const needsCareRoom =
+    (isFirstOpening || isReopenableActive || isUnacknowledgedTerminal) &&
+    !hasExamReservation;
+  const existingExamRoomId = getEncounterExaminationRoomId(
+    next,
+    nextEncounter,
+  );
+  const founderAlreadyAttending =
+    next.environment.founderActivity?.kind === "attend_encounter" &&
+    next.environment.founderActivity.targetId === nextEncounter.id;
+  const needsFounderEscort =
+    !needsCareRoom &&
+    existingExamRoomId !== null &&
+    !founderAlreadyAttending &&
+    nextEncounter.lifecycle !== "active_pending_result";
+  if (needsCareRoom || needsFounderEscort) {
+    if (
+      isFounderReservedForService(next) ||
+      (next.environment.founderActivity !== null &&
+        next.environment.founderActivity.kind !== "walk_to_point" &&
+        !isAutomaticFounderActivity(next.environment.founderActivity))
+    ) {
+      return rejectCommand(
+        state,
+        command,
+        "The founder is busy and cannot attend this examination.",
+      );
+    }
+    const destination = needsCareRoom
+      ? (() => {
+          const start =
+            nextEncounter.patientLocation ??
+            getPublicEntrance(next, context)?.outside ??
+            null;
+          return start === null
+            ? null
+            : chooseCareRoom(
+                next,
+                context,
+                start,
+                next.environment.founderLocation,
+                nextEncounter.id,
+              );
+        })()
+      : (() => {
+          const room = next.rooms.find(
+            (candidate) => candidate.id === existingExamRoomId,
+          );
+          const definition = room
+            ? getRoomDefinition(room.roomDefinitionId, context)
+            : null;
+          if (!room || !definition) return null;
+          const founderPath = pathFromLocationToFacilityPoint(
+            next,
+            context,
+            next.environment.founderLocation,
+            getRoomCareAnchor(room, definition, "clinician"),
+          );
+          return founderPath.length > 0
+            ? {
+                roomId: room.id,
+                patientPath: [],
+                founderPath,
+              }
+            : null;
+        })();
+    if (!destination) {
+      return rejectCommand(
+        state,
+        command,
+        "No reachable Examination Room is available for this visit.",
+      );
+    }
+    next.environment.founderActivity = {
+      kind: "attend_encounter",
+      targetId: nextEncounter.id,
+      path: destination.founderPath,
+      pathIndex: 0,
+      lastMovedAtFacilityTick: next.facilityTick,
+      // Arrival keeps the seated visual stable until a later chart-close
+      // milestone explicitly assigns the founder's next activity.
+      workMinutesRemaining: Number.MAX_SAFE_INTEGER,
+    };
+    if (needsCareRoom) {
+      nextEncounter.waitingDestination = null;
+      // Chart availability is immediate and so is the care redirect: a patient
+      // already walking or idling toward a waiting endpoint leaves that leg at
+      // their persisted current tile, not after reaching its stale reservation.
+      nextEncounter.queuedCareRoomInstanceId = null;
+      startPatientMovement(
+        next,
+        context,
+        nextEncounter,
+        "walking_to_care",
+        destination.patientPath,
+        destination.roomId,
+      );
     }
     if (isFirstOpening) {
       nextEncounter.lifecycle = "active_action_required";
@@ -1851,6 +2375,36 @@ function reduceOpenChart(
   return recordReceipt(next, command, "applied", "Chart opened.");
 }
 
+function releaseEncounterCareReservation(encounter: EncounterState): void {
+  encounter.assignedRoomInstanceId = null;
+  encounter.queuedCareRoomInstanceId = null;
+}
+
+function releasePendingTestingCareReservation(encounter: EncounterState): void {
+  releaseEncounterCareReservation(encounter);
+  // The patient can finish the already-frozen service approach, but its
+  // movement destination must no longer reserve the Examination Room for the
+  // duration of that journey.
+  if (encounter.patientMovement?.kind === "walking_to_care") {
+    encounter.patientMovement.destinationRoomInstanceId = null;
+  }
+}
+
+function releaseFounderAttendanceForEncounter(
+  state: GameState,
+  context: DomainContext,
+  encounter: EncounterState,
+): void {
+  const activity = state.environment.founderActivity;
+  // A player may have superseded the escort. Do not replace that newer command
+  // merely because the original encounter subsequently closes or starts a
+  // service route.
+  if (activity?.kind !== "attend_encounter" || activity.targetId !== encounter.id) {
+    return;
+  }
+  planFounderAfterEncounter(state, context);
+}
+
 function reduceCloseChart(
   state: GameState,
   command: Extract<GameCommand, { type: "CLOSE_CHART" }>,
@@ -1866,6 +2420,19 @@ function reduceCloseChart(
   }
   const next = clonePlain(state);
   const nextEncounter = next.encounters[command.encounterId]!;
+  const releaseFounderAttendance = () =>
+    releaseFounderAttendanceForEncounter(next, context, nextEncounter);
+  const returnPatientToWaiting = () => {
+    releaseEncounterCareReservation(nextEncounter);
+    nextEncounter.waitingDestination = null;
+    // Preserve the tile reached so far, but discard an obsolete leg to the
+    // Examination Room before selecting a fresh waiting route.
+    nextEncounter.patientMovement = null;
+    if (!nextEncounter.patientLocation) return;
+    const destination = chooseWaitingDestination(next, context, nextEncounter);
+    nextEncounter.waitingDestination = destination.reservation;
+    if (destination.path.length > 0) startPatientMovement(next, context, nextEncounter, "walking_to_waiting", destination.path, destination.roomId);
+  };
   if (next.openChartEncounterId === command.encounterId) {
     next.openChartEncounterId = null;
   }
@@ -1878,8 +2445,7 @@ function reduceCloseChart(
   ) {
     nextEncounter.lifecycle = "resolved";
     nextEncounter.idleWaitingSinceTick = null;
-    if (nextEncounter.patientMovement === null) {
-      const exitPath = nextEncounter.patientLocation
+    const exitPath = nextEncounter.patientLocation
         ? pathFromLocationToOffscreen(
             next,
             context,
@@ -1887,7 +2453,10 @@ function reduceCloseChart(
             nextEncounter.id,
           )
         : [];
-      startPatientMovement(
+    releaseEncounterCareReservation(nextEncounter);
+    nextEncounter.waitingDestination = null;
+    nextEncounter.patientMovement = null;
+    startPatientMovement(
         next,
         context,
         nextEncounter,
@@ -1895,8 +2464,10 @@ function reduceCloseChart(
         exitPath,
         null,
       );
-    }
+    releaseFounderAttendance();
   } else if (nextEncounter.lifecycle === "active_action_required") {
+    returnPatientToWaiting();
+    releaseFounderAttendance();
     nextEncounter.idleWaitingSinceTick = next.facilityTick;
     nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
     beginPatientFeedAttention(
@@ -1909,6 +2480,14 @@ function reduceCloseChart(
         : "clinical_decision",
       next.facilityTick,
     );
+  } else if (nextEncounter.lifecycle === "resolved_summary_available") {
+    // Terminal feedback remains available until it is acknowledged, but the
+    // physical examination is over as soon as the player closes the chart.
+    // Route from the current tile so a stale leg to the bed cannot complete.
+    returnPatientToWaiting();
+    releaseFounderAttendance();
+    nextEncounter.idleWaitingSinceTick = next.facilityTick;
+    nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
   }
   return recordReceipt(
     next,
@@ -2512,6 +3091,12 @@ function reduceAcknowledgeDecisionFeedback(
       nextEncounter,
       context,
     );
+    // Timing and the exact on-site/off-site route are now frozen.  The
+    // examination is no longer occupied while that service journey runs, but
+    // retain the movement object and pending-route snapshot rather than
+    // replacing either with a generic waiting or departure route.
+    releasePendingTestingCareReservation(nextEncounter);
+    releaseFounderAttendanceForEncounter(next, context, nextEncounter);
     nextStep.result = clonePlain(nextEncounter.pendingResult);
     nextStep.status = "result_pending";
     nextEncounter.lifecycle = "active_pending_result";
@@ -3416,6 +4001,15 @@ function advanceFounderActivity(
     state.environment.founderLocation = {
       ...activity.path[activity.pathIndex]!,
     };
+    if (
+      activity.kind === "return_to_front_desk" &&
+      activity.pathIndex >= activity.path.length - 1
+    ) {
+      // A Front Desk return is a travel-only automatic plan.  Clearing it on
+      // arrival is what makes the seated staff anchor immediately count for
+      // check-in on this same simulation tick.
+      state.environment.founderActivity = null;
+    }
     return;
   }
   activity.workMinutesRemaining -= 1;
@@ -3606,31 +4200,9 @@ function completePatientMovement(
 
   switch (movement.kind) {
     case "arriving_for_check_in":
-      // Check-in makes the chart available immediately, but ordinary walking
-      // to a waiting place is not idle waiting and must not consume patience.
-      applyFacilityExperienceAtCheckIn(state, encounter, context);
+      encounter.checkInStatus = "awaiting_staff";
+      encounter.checkInWaitingSinceTick = state.facilityTick;
       encounter.idleWaitingSinceTick = null;
-      encounter.lastSatisfactionDecayAtTick = state.facilityTick;
-      beginPatientFeedAttention(
-        encounter,
-        "checked_in",
-        state.facilityTick,
-      );
-      {
-        const destination = chooseWaitingDestination(
-          state,
-          context,
-          encounter,
-        );
-        startPatientMovement(
-          state,
-          context,
-          encounter,
-          "walking_to_waiting",
-          destination.path,
-          destination.roomId,
-        );
-      }
       return;
     case "walking_to_waiting":
       encounter.idleWaitingSinceTick = state.facilityTick;
@@ -3638,12 +4210,13 @@ function completePatientMovement(
       if (encounter.queuedCareRoomInstanceId) {
         const roomId = encounter.queuedCareRoomInstanceId;
         const path = encounter.patientLocation
-          ? pathFromLocationToRoom(
-              state,
-              context,
-              encounter.patientLocation,
-              roomId,
-            )
+          ? (() => {
+              const room = state.rooms.find((candidate) => candidate.id === roomId);
+              const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+              return room && definition
+                ? pathFromLocationToFacilityPoint(state, context, encounter.patientLocation!, getRoomCareAnchor(room, definition, "patient"))
+                : [];
+            })()
           : [];
         encounter.queuedCareRoomInstanceId = null;
         startPatientMovement(
@@ -3700,6 +4273,10 @@ function completePatientMovement(
         return;
       }
       if (encounter.lifecycle === "active_pending_result") {
+        // ACKNOWLEDGE_DECISION_FEEDBACK released the examination when the
+        // service route was frozen. Completing the already-started approach
+        // must not silently reserve it again.
+        encounter.assignedRoomInstanceId = null;
         encounter.idleWaitingSinceTick = null;
         beginPendingResultTravel(state, encounter, context);
         return;
@@ -3739,6 +4316,7 @@ function completePatientMovement(
         context,
         encounter,
       );
+      encounter.waitingDestination = destination.reservation;
       startPatientMovement(
         state,
         context,
@@ -3772,12 +4350,13 @@ function completePatientMovement(
       if (encounter.queuedCareRoomInstanceId) {
         const roomId = encounter.queuedCareRoomInstanceId;
         const path = encounter.patientLocation
-          ? pathFromLocationToRoom(
-              state,
-              context,
-              encounter.patientLocation,
-              roomId,
-            )
+          ? (() => {
+              const room = state.rooms.find((candidate) => candidate.id === roomId);
+              const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+              return room && definition
+                ? pathFromLocationToFacilityPoint(state, context, encounter.patientLocation!, getRoomCareAnchor(room, definition, "patient"))
+                : [];
+            })()
           : [];
         encounter.queuedCareRoomInstanceId = null;
         startPatientMovement(
@@ -3819,6 +4398,9 @@ function startPatientMovement(
 ): number {
   if (path.length === 0) {
     return -1;
+  }
+  if (kind !== "walking_to_waiting" && kind !== "idle_within_room") {
+    encounter.waitingDestination = null;
   }
   if (path.length > 0) {
     encounter.patientLocation = { ...path[0]! };
@@ -3912,6 +4494,27 @@ function maybeStartPatientIdleMovements(
     if (roll >= config.idleActionChancePercent) {
       continue;
     }
+    const reservation = encounter.waitingDestination;
+    // Preferred waiting places remain occupied; only public-wander patients
+    // move between public standing points on the deterministic idle cadence.
+    if (reservation?.kind === "chair" || reservation?.kind === "standing") {
+      continue;
+    }
+    if (reservation?.kind === "public_wander") {
+      const destination = choosePublicWanderDestination(state, context, encounter);
+      if (destination) {
+        encounter.waitingDestination = destination.reservation;
+        startPatientMovement(
+          state,
+          context,
+          encounter,
+          "idle_within_room",
+          destination.path,
+          destination.roomId,
+        );
+      }
+      continue;
+    }
     const room = state.rooms.find(
       (candidate) => candidate.id === encounter.assignedRoomInstanceId,
     );
@@ -3963,34 +4566,20 @@ function maybeStartPatientIdleMovements(
       target,
     );
     if (outboundPath.length > 1) {
-      const currentWaitingSeat =
-        room.roomDefinitionId === "room.waiting" &&
-        getRoomWaitingAnchors(room, definition).some(
-          (anchor) =>
-            anchor.x === encounter.patientLocation!.x &&
-            anchor.y === encounter.patientLocation!.y,
-        )
-          ? { ...encounter.patientLocation }
-          : null;
-      const returnPath = currentWaitingSeat
-        ? facilityPath(
-            state,
-            context,
-            target,
-            currentWaitingSeat,
-          )
-        : [];
-      const idlePath =
-        currentWaitingSeat && returnPath.length > 1
-          ? joinPaths(outboundPath, returnPath)
-          : outboundPath;
+      if (reservation?.kind === "public_wander") {
+        encounter.waitingDestination = {
+          roomInstanceId: room.id,
+          location: { ...target },
+          kind: "public_wander",
+        };
+      }
       startPatientMovement(
         state,
         context,
         encounter,
         "idle_within_room",
-        idlePath,
-        encounter.assignedRoomInstanceId,
+        outboundPath,
+        room.id,
       );
     }
   }
@@ -4285,6 +4874,8 @@ function reduceAdvanceTick(
     advanceGlp1Automation(next, context);
     maybeApplyCoffeeMorale(next, context);
   advanceFounderActivity(next, context);
+  maybeApplyUnstaffedCheckInOverdue(next, context);
+  maybeCompleteAwaitingCheckIns(next, context);
   drainWaterCooler(next, context);
   maybeSpawnLitter(next, context);
   maybeAdmitAutomaticPatient(
@@ -5328,7 +5919,8 @@ function beginFounderActivity(
   }
   if (
     state.environment.founderActivity &&
-    state.environment.founderActivity.kind !== "walk_to_point"
+    state.environment.founderActivity.kind !== "walk_to_point" &&
+    !isAutomaticFounderActivity(state.environment.founderActivity)
   ) {
     return rejectCommand(
       state,
@@ -5360,6 +5952,12 @@ function beginFounderActivity(
       context.balanceRelease.environment.founderInteractionMinutes,
   };
   return recordReceipt(next, command, "applied", message);
+}
+
+export function isAutomaticFounderActivity(
+  activity: GameState["environment"]["founderActivity"],
+): boolean {
+  return activity !== null && ["attend_encounter", "return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(activity.kind);
 }
 
 function isFounderReservedForService(state: GameState): boolean {
@@ -5461,7 +6059,8 @@ function reduceMoveFounder(
   }
   if (
     state.environment.founderActivity &&
-    state.environment.founderActivity.kind !== "walk_to_point"
+    state.environment.founderActivity.kind !== "walk_to_point" &&
+    !isAutomaticFounderActivity(state.environment.founderActivity)
   ) {
     return rejectCommand(
       state,
@@ -5651,8 +6250,11 @@ export function createInitialGameState(
         "staff",
       )
     : { x: founderRoom.x, y: founderRoom.y };
+  const hasStarterExaminationRoom = initialRooms.some(
+    (room) => room.id === STARTER_EXAMINATION_ROOM_INSTANCE_ID,
+  );
   const state: GameState = {
-    schemaVersion: 6,
+    schemaVersion: 7,
     campaignId: options.campaignId ?? "campaign.local.prototype",
     campaignSeed,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
@@ -5701,6 +6303,17 @@ export function createInitialGameState(
         offset: 2,
         exterior: true,
       },
+      ...(hasStarterExaminationRoom
+        ? [
+            {
+              id: STARTER_EXAMINATION_DOOR_INSTANCE_ID,
+              roomId: STARTER_EXAMINATION_ROOM_INSTANCE_ID,
+              side: "south" as const,
+              offset: 1,
+              exterior: false,
+            },
+          ]
+        : []),
     ],
     employees: [],
     encounters: {},

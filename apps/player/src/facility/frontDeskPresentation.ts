@@ -19,10 +19,7 @@ export const FRONT_DESK_PRESENTATION = {
   anchors: {
     staff: { x: 2, y: 1 },
     public: { x: 2, y: 3 },
-    waiting: [
-      { x: 1, y: 3 },
-      { x: 3, y: 3 },
-    ],
+    waiting: [{ x: 4, y: 3 }],
   },
   grid: {
     cabinet: { x: 0, y: 0 }, // A1
@@ -113,10 +110,9 @@ export const FRONT_DESK_PRESENTATION = {
   ] as const satisfies readonly FrontDeskWallFixturePlacement[],
   /** Target-measured visual poses for non-moving actors at logical anchors. */
   v5ActorDisplay: {
-    // The room frame is intentionally larger than ordinary tiles; stationary
-    // reception poses scale down only in this display seam to match its
-    // reference figures. Moving actors retain canonical map scale.
-    staff: { x: 0.4, y: 0.5, scale: 0.82 },
+    // The room frame is intentionally larger than ordinary tiles. Staff retain
+    // canonical map scale; only the public-side display pose scales down.
+    staff: { x: 0.4, y: 0.5, scale: 1 },
     public: { x: 0.62, y: 0.82, scale: 0.82 },
   },
   /** Exact renderer-only door-clear tile offsets, by visual design. */
@@ -269,6 +265,44 @@ export function isFrontDeskRoom(room: FacilityRoomView): boolean {
 }
 
 export type FrontDeskStationaryActorAnchor = "staff" | "public";
+
+/**
+ * Separates the idle receptionist at B2 from a founder seated at B3. This is
+ * deliberately a renderer-only offset: both people retain their persisted
+ * tile, route, role, and depth contract.
+ */
+export function getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
+  employee: Pick<
+    FacilityStaffView,
+    "location" | "moving" | "staffRoleDefinitionId"
+  >,
+  founder: Pick<FacilityFounderView, "location" | "moving" | "activityLabel">,
+  rooms: readonly FacilityRoomView[],
+): Readonly<{ centerOffsetTiles: number; baseOffsetTiles: number }> | undefined {
+  if (
+    employee.moving ||
+    employee.staffRoleDefinitionId !== "staff.receptionist" ||
+    !shouldRenderFounderSeatedAtFrontDesk(
+      founder.location,
+      Boolean(founder.moving),
+      founder.activityLabel,
+      rooms,
+    )
+  ) {
+    return undefined;
+  }
+  const frontDesk = rooms.find(isFrontDeskRoom);
+  if (
+    !frontDesk ||
+    employee.location?.x !== frontDesk.tileX + 1 ||
+    employee.location.y !== frontDesk.tileY + 1
+  ) {
+    return undefined;
+  }
+  // A 0.72-tile westward nudge keeps the receptionist visibly behind the
+  // counter while leaving a small clear gap before the founder's hair.
+  return { centerOffsetTiles: -0.72, baseOffsetTiles: 0 };
+}
 
 /**
  * Returns a display-only target position for a stationary actor on one of the

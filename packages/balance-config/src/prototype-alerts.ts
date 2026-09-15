@@ -352,6 +352,20 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     consolidationKeyTemplate: "staff:receptionist-recommended",
   },
   {
+    id: "alert.patient.check-in-unattended",
+    trigger: "patient_check_in_unattended",
+    priority: "action_required",
+    titleTemplate: "Patient waiting at Front Desk",
+    bodyTemplate:
+      "{{patient_name}} has been waiting to check in. Return to the Front Desk or arrange reception coverage.",
+    targetKind: "room",
+    clickAction: "open_room",
+    persistent: true,
+    tickerEligible: true,
+    eligibleFacilityLevels: [0, 1, 2],
+    consolidationKeyTemplate: "patient:{{patient_id}}:check-in-unattended",
+  },
+  {
     id: "alert.facility.onsite-imaging-requested",
     trigger: "onsite_imaging_requested",
     priority: "informational",

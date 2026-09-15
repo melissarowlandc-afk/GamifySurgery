@@ -67,6 +67,29 @@ function advance(state: GameState, minutes: number): GameState {
 }
 
 describe("receptionist water-cooler work", () => {
+  it("returns an idle receptionist to the Front Desk staff post instead of wandering", () => {
+    let state = preparedState();
+    state.environment.waterCoolerFillPercent = 100;
+    state.environment.waterCoolerEmptySinceTick = null;
+    const receptionist = state.employees[0]!;
+    const frontDesk = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    )!;
+    receptionist.location = { x: frontDesk.x + 4, y: frontDesk.y + 1 };
+    receptionist.path = [{ ...receptionist.location }];
+    receptionist.pathIndex = 0;
+
+    state = advance(state, 1);
+    expect(state.employees[0]!.path.at(-1)).toEqual(
+      state.environment.founderLocation,
+    );
+    state = advance(state, 20);
+    expect(state.employees[0]!.location).toEqual(
+      state.environment.founderLocation,
+    );
+    expect(state.employees[0]!.facilityTask).toBeNull();
+  });
+
   it("waits one full facility hour, pauses with the simulation, then refills", () => {
     let state = preparedState();
 

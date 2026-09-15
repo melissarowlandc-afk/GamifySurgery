@@ -13,6 +13,26 @@ import { normalizePatientAppearanceForSex } from "@gamify-surgery/game-domain";
 import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 
 describe("clean unified character actor atlases", () => {
+  it("uses the authored patient exam-table atlas when the semantic pose requests it", () => {
+    const patient = {
+      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
+      patientIdentityId: "patient.adult.001" as const,
+    };
+    expect(
+      characterBitmapLayers(patient, "front", "exam-table").actor.atlas.id,
+    ).toBe("character:patients-exam-table-v1-r7-hires");
+  });
+
+  it("uses the generic seated atlas for a legacy patient on an exam table", () => {
+    const legacyPatient = {
+      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
+      roleStyle: "patient" as const,
+      patientIdentityId: "patient.adult.999" as never,
+    };
+    expect(characterBitmapLayers(legacyPatient, "front", "exam-table").actor.atlas.id)
+      .toBe("character:actors-front-seated-v3");
+  });
+
   it("retains v3 for ordinary actors and supplies the founder-only v4 package", () => {
     expect(allCanonicalCharacterAtlases()).toHaveLength(29);
     expect(allCanonicalCharacterAtlases().filter((atlas) => atlas.relativePath?.includes("/v3/actors-"))).toHaveLength(9);
@@ -53,14 +73,14 @@ describe("clean unified character actor atlases", () => {
 
   it("keeps every founder identity fixed through every directional gait frame", () => {
     const expectedAtlasSuffixes = [
-      ["front", false, "character:founders-front-walk-a-v4-r9-hires"],
-      ["front", false, "character:founders-front-walk-b-v4-r9-hires"],
-      ["back", false, "character:founders-back-walk-a-v4-r9-hires"],
-      ["back", false, "character:founders-back-walk-b-v4-r9-hires"],
-      ["side", false, "character:founders-left-walk-a-v4-r9-hires"],
-      ["side", false, "character:founders-left-walk-b-v4-r9-hires"],
-      ["side", true, "character:founders-right-walk-a-v4-r9-hires"],
-      ["side", true, "character:founders-right-walk-b-v4-r9-hires"],
+      ["front", false, "character:founders-front-walk-a-v4-r10-feet"],
+      ["front", false, "character:founders-front-walk-b-v4-r10-feet"],
+      ["back", false, "character:founders-back-walk-a-v4-r10-feet"],
+      ["back", false, "character:founders-back-walk-b-v4-r10-feet"],
+      ["side", false, "character:founders-left-walk-a-v4-r10-feet"],
+      ["side", false, "character:founders-left-walk-b-v4-r10-feet"],
+      ["side", true, "character:founders-right-walk-a-v4-r10-feet"],
+      ["side", true, "character:founders-right-walk-b-v4-r10-feet"],
     ] as const;
     for (let founder = 0; founder < 30; founder += 1) {
       const appearance = createUnifiedFounderAppearance(founder);
@@ -83,7 +103,7 @@ describe("clean unified character actor atlases", () => {
       );
       const actor = layers.actor;
       expect(actor.variant).toBe(founder);
-      expect(actor.atlas.id).toBe("character:founders-clipboard-v4-r9-hires");
+      expect(actor.atlas.id).toBe("character:founders-clipboard-v4-r10-feet");
       expect(characterBitmapRegistration(layers).floorY).toBe(181);
     }
   });
@@ -175,9 +195,9 @@ describe("clean unified character actor atlases", () => {
     };
     const staff = { ...founder, roleStyle: "receptionist" as const };
     expect(characterBitmapLayers(founder, "side", "walk-neutral", false).actor.atlas.id)
-      .toBe("character:founders-left-idle-v4-r9-hires");
+      .toBe("character:founders-left-idle-v4-r10-feet");
     expect(characterBitmapLayers(founder, "side", "walk-neutral", true).actor.atlas.id)
-      .toBe("character:founders-right-idle-v4-r9-hires");
+      .toBe("character:founders-right-idle-v4-r10-feet");
     expect(characterBitmapLayers(patient, "side", "walk-neutral", false).actor.atlas.id)
       .toBe("character:patients-left-walk-neutral-v1-r7-hires");
     expect(characterBitmapLayers(patient, "side", "walk-neutral", true).actor.atlas.id)
@@ -241,7 +261,7 @@ describe("clean unified character actor atlases", () => {
       patientIdentityId: "patient.adult.999" as never,
     };
     expect(characterBitmapLayers(founder, "front", "idle").actor.atlas.id)
-      .toBe("character:founders-front-idle-v4-r9-hires");
+      .toBe("character:founders-front-idle-v4-r10-feet");
     expect(isPatientV1Appearance(legacyPatient)).toBe(false);
     expect(characterBitmapLayers(legacyPatient, "front", "idle").actor.atlas.id)
       .toBe("character:actors-front-idle-v3");

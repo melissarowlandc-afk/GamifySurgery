@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   TUTORIAL_ENCOUNTER_ID,
+  PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
   deserializeGameState,
   gameReducer,
@@ -37,13 +38,156 @@ function quietTutorialState(): GameState {
   state.alertHumor.nextAmbientAlertTick = null;
   const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
   encounter.patientMovement = null;
-  encounter.patientLocation = { x: 34, y: 29 };
-  encounter.assignedRoomInstanceId = "room.instance.founder_desk";
+  encounter.patientLocation = { x: 36, y: 27 };
+  encounter.assignedRoomInstanceId = "room.instance.starter_examination";
+  encounter.checkInStatus = "checked_in";
+  encounter.checkInWaitingSinceTick = null;
   encounter.idleWaitingSinceTick = state.facilityTick;
   return state;
 }
 
 describe("delayed patient attention events", () => {
+  it("keeps an unstaffed Front Desk arrival unavailable, then applies one overdue consequence strictly after an hour", () => {
+    let state = quietTutorialState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.lifecycle = "waiting_unopened";
+    encounter.checkInStatus = "awaiting_staff";
+    encounter.checkInWaitingSinceTick = state.facilityTick;
+    encounter.unstaffedCheckInOverdueApplied = false;
+    encounter.feedAttentionKind = null;
+    encounter.feedAttentionStartedAtTick = null;
+    const deskLocation = { ...state.environment.founderLocation };
+    state.environment.founderLocation = { x: 0, y: 0 };
+    const before = encounter.patientSatisfaction;
+
+    const rejected = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "awaiting-staff.open-chart",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(
+      rejected.operationReceipts["awaiting-staff.open-chart"],
+    ).toMatchObject({ status: "rejected" });
+
+    state = advance(state, 60, "check-in-overdue.before-threshold");
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus).toBe(
+      "awaiting_staff",
+    );
+    expect(
+      state.events.some(
+        (event) => event.definitionId === "alert.patient.check-in-unattended",
+      ),
+    ).toBe(false);
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientSatisfaction).toBe(
+      before,
+    );
+
+    const restored = deserializeGameState(serializeGameState(state));
+    restored.environment.founderLocation = deskLocation;
+    state = tick(restored, "check-in-overdue.after-threshold");
+    const overdueEvents = state.events.filter(
+      (event) => event.definitionId === "alert.patient.check-in-unattended",
+    );
+    expect(overdueEvents).toHaveLength(1);
+    expect(overdueEvents[0]).toMatchObject({
+      facilityTick: 61,
+      priority: "action_required",
+      target: { kind: "room", id: "room.instance.founder_desk" },
+    });
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientSatisfaction,
+    ).toBe(
+      before -
+        PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction
+          .unstaffedCheckInSatisfactionPenalty,
+    );
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.unstaffedCheckInOverdueApplied,
+    ).toBe(true);
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus).toBe(
+      "checked_in",
+    );
+
+    state = advance(state, 10, "check-in-overdue.no-repeat");
+    expect(
+      state.events.filter(
+        (event) => event.definitionId === "alert.patient.check-in-unattended",
+      ),
+    ).toHaveLength(1);
+  });
+
+  it("keeps a saved awaiting check-in operationally unstarted until staffed", () => {
+    let state = quietTutorialState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    const deskLocation = { ...state.environment.founderLocation };
+    encounter.lifecycle = "waiting_unopened";
+    encounter.checkInStatus = "awaiting_staff";
+    encounter.checkInWaitingSinceTick = state.facilityTick;
+    encounter.feedAttentionKind = null;
+    encounter.feedAttentionStartedAtTick = null;
+    encounter.facilityExperienceAtCheckIn = null;
+    state.environment.founderLocation = { x: 0, y: 0 };
+
+    state = deserializeGameState(serializeGameState(state));
+    const restoredEncounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    expect(restoredEncounter.checkInStatus).toBe("awaiting_staff");
+    expect(restoredEncounter.facilityExperienceAtCheckIn).toBeNull();
+    expect(restoredEncounter.feedAttentionKind).toBeNull();
+    expect(restoredEncounter.feedAttentionStartedAtTick).toBeNull();
+
+    state.environment.founderLocation = deskLocation;
+    state = tick(state, "awaiting-staff.staffed");
+    const checkedIn = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    expect(checkedIn.checkInStatus).toBe("checked_in");
+    expect(checkedIn.facilityExperienceAtCheckIn).not.toBeNull();
+    expect(checkedIn.feedAttentionKind).toBe("checked_in");
+    const experience = checkedIn.facilityExperienceAtCheckIn;
+
+    state = tick(state, "awaiting-staff.no-double-assessment");
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.facilityExperienceAtCheckIn,
+    ).toEqual(experience);
+  });
+
+  it("migrates version-six arrivals safely while preserving already checked-in charts", () => {
+    const arrivalState = createInitialGameState(undefined, {
+      campaignId: "campaign.v6-arrival",
+      campaignSeed: "v6-arrival",
+      createdAtRealMs: 0,
+    });
+    const arriving = JSON.parse(serializeGameState(arrivalState)) as {
+      schemaVersion: number;
+      encounters: Record<string, Record<string, unknown>>;
+    };
+    arriving.schemaVersion = 6;
+    delete arriving.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus;
+    delete arriving.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInWaitingSinceTick;
+    delete arriving.encounters[TUTORIAL_ENCOUNTER_ID]!
+      .unstaffedCheckInOverdueApplied;
+    const restoredArrival = deserializeGameState(JSON.stringify(arriving));
+    expect(restoredArrival.schemaVersion).toBe(7);
+    expect(
+      restoredArrival.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus,
+    ).toBe("approaching");
+
+    const state = quietTutorialState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.patientMovement = null;
+    const checkedIn = JSON.parse(serializeGameState(state)) as {
+      schemaVersion: number;
+      encounters: Record<string, Record<string, unknown>>;
+    };
+    checkedIn.schemaVersion = 6;
+    delete checkedIn.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus;
+    delete checkedIn.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInWaitingSinceTick;
+    delete checkedIn.encounters[TUTORIAL_ENCOUNTER_ID]!
+      .unstaffedCheckInOverdueApplied;
+    const restoredCheckedIn = deserializeGameState(JSON.stringify(checkedIn));
+    expect(
+      restoredCheckedIn.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus,
+    ).toBe("checked_in");
+  });
+
   it("records checked-in waiting only after more than five unresolved facility minutes", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
@@ -89,6 +233,23 @@ describe("delayed patient attention events", () => {
 
   it("never records a brief checked-in wait that the player addresses", () => {
     let state = quietTutorialState();
+    state.rooms.push({
+      id: "room.test.patient-alert-exam",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.test.patient-alert-exam",
+      roomId: "room.test.patient-alert-exam",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "waiting_unopened";
     encounter.firstOpenedAtTick = null;
@@ -147,7 +308,7 @@ describe("delayed patient attention events", () => {
     });
   });
 
-  it("delays result-ready rows and retains the emitted event after the chart is opened", () => {
+  it("delays result-ready rows and restarts actionable attention after the chart closes", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "active_action_required";
@@ -203,6 +364,22 @@ describe("delayed patient attention events", () => {
       feedAttentionKind: null,
       feedAttentionStartedAtTick: null,
     });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "result.close",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      feedAttentionKind: "result_ready",
+      feedAttentionStartedAtTick: 6,
+      patientMovement: expect.objectContaining({
+        kind: "walking_to_waiting",
+      }),
+    });
+    state = advance(state, 1, "result.after-close.no-duplicate");
+    expect(
+      state.events.filter((event) => event.type === "result_ready"),
+    ).toHaveLength(1);
   });
 
   it("normalizes legacy unresolved attention timing without rerolling it", () => {

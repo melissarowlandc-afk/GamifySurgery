@@ -452,6 +452,12 @@ export interface EncounterState {
    * check-in. Null means the arriving patient has not checked in yet.
    */
   facilityExperienceAtCheckIn: EncounterFacilityExperienceSnapshot | null;
+  /** Operational arrival state; intentionally separate from clinical lifecycle. */
+  checkInStatus: "approaching" | "awaiting_staff" | "checked_in";
+  /** Tick at which the patient began waiting at the Front Desk for staff. */
+  checkInWaitingSinceTick: number | null;
+  /** Prevents the staffed-check-in overdue consequence from repeating. */
+  unstaffedCheckInOverdueApplied: boolean;
   finalPatientSatisfaction: number | null;
   resolvedAtFacilityTick: number | null;
   arrivalClass: ArrivalClass;
@@ -470,6 +476,12 @@ export interface EncounterState {
    * same room and avoids interrupting a route mid-tile.
    */
   queuedCareRoomInstanceId: string | null;
+  /** Reserved indoor waiting endpoint, retained while the patient travels or waits. */
+  waitingDestination: {
+    roomInstanceId: string | null;
+    location: GridPoint;
+    kind: "chair" | "standing" | "public_wander";
+  } | null;
   nextIdleActionAtFacilityTick: number;
   currentNodeIndex: number;
   firstOpenedAtTick: number | null;
@@ -551,7 +563,12 @@ export interface FounderActivityState {
     | "walk_to_point"
     | "collect_litter"
     | "refill_water"
-    | "praise_employee";
+    | "praise_employee"
+    | "attend_encounter"
+    | "return_to_front_desk"
+    | "wander_facility"
+    | "sit_in_chair"
+    | "visit_bathroom";
   targetId: string;
   path: GridPoint[];
   pathIndex: number;
@@ -690,7 +707,7 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 6;
+  schemaVersion: 7;
   campaignId: string;
   campaignSeed: string;
   randomGeneratorVersion: "randomness.xoshiro128ss.v1";

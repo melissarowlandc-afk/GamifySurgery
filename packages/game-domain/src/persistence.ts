@@ -1215,6 +1215,42 @@ function normalizeEncounter(
         }
       : null;
   const lifecycle = candidate.lifecycle as EncounterState["lifecycle"];
+  const checkInStatus: EncounterState["checkInStatus"] =
+    candidate.checkInStatus === "approaching" ||
+    candidate.checkInStatus === "awaiting_staff" ||
+    candidate.checkInStatus === "checked_in"
+      ? candidate.checkInStatus
+      : patientMovement?.kind === "arriving_for_check_in"
+        ? "approaching"
+        : "checked_in";
+  const checkInWaitingSinceTick =
+    checkInStatus === "awaiting_staff" &&
+    typeof candidate.checkInWaitingSinceTick === "number" &&
+    Number.isSafeInteger(candidate.checkInWaitingSinceTick) &&
+    candidate.checkInWaitingSinceTick >= 0 &&
+    candidate.checkInWaitingSinceTick <= facilityTick
+      ? candidate.checkInWaitingSinceTick
+      : checkInStatus === "awaiting_staff"
+        ? facilityTick
+        : null;
+  const waitingDestination =
+    isRecord(candidate.waitingDestination) &&
+    isGridPoint(candidate.waitingDestination.location) &&
+    (candidate.waitingDestination.kind === "chair" ||
+      candidate.waitingDestination.kind === "standing" ||
+      candidate.waitingDestination.kind === "public_wander")
+      ? {
+          roomInstanceId:
+            typeof candidate.waitingDestination.roomInstanceId === "string"
+              ? candidate.waitingDestination.roomInstanceId
+              : null,
+          location: { ...candidate.waitingDestination.location },
+          kind: candidate.waitingDestination.kind as
+            | "chair"
+            | "standing"
+            | "public_wander",
+        }
+      : null;
   const legacyResolutionReason = candidate.resolutionReason;
   const resolutionReason =
     legacyResolutionReason === "completed"
@@ -1320,7 +1356,7 @@ function normalizeEncounter(
       : null;
   const legacyFeedAttentionKind: EncounterState["feedAttentionKind"] =
     lifecycle === "waiting_unopened" &&
-    patientMovement?.kind !== "arriving_for_check_in"
+    checkInStatus === "checked_in"
       ? "checked_in"
       : lifecycle === "active_action_required" &&
           idleWaitingSinceTick !== null
@@ -1331,10 +1367,13 @@ function normalizeEncounter(
           : "clinical_decision"
         : null;
   const feedAttentionKind =
-    persistedFeedAttentionKind ??
-    (persistedFeedAttentionStartedAtTick === null
-      ? legacyFeedAttentionKind
-      : null);
+    checkInStatus !== "checked_in" &&
+    persistedFeedAttentionKind === "checked_in"
+      ? null
+      : (persistedFeedAttentionKind ??
+        (persistedFeedAttentionStartedAtTick === null
+          ? legacyFeedAttentionKind
+          : null));
   const feedAttentionStartedAtTick =
     feedAttentionKind === null
       ? null
@@ -1400,8 +1439,13 @@ function normalizeEncounter(
       normalizeFacilityExperienceAtCheckIn(
         candidate.facilityExperienceAtCheckIn,
         arrivedAtTick,
-        patientMovement?.kind !== "arriving_for_check_in",
+        checkInStatus === "checked_in",
       ),
+    checkInStatus,
+    checkInWaitingSinceTick,
+    unstaffedCheckInOverdueApplied:
+      candidate.unstaffedCheckInOverdueApplied === true,
+    waitingDestination,
     finalPatientSatisfaction:
       typeof candidate.finalPatientSatisfaction === "number" &&
       Number.isFinite(candidate.finalPatientSatisfaction)
@@ -1599,7 +1643,7 @@ function migrateVersionTwo(
   const next: GameState = {
     ...baseline,
     ...(parsed as unknown as GameState),
-    schemaVersion: 6 as const,
+    schemaVersion: 7 as const,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     founder: normalizeFounder(parsed.founder, campaignSeed),
     facilityTick: parsedFacilityTick,
@@ -1996,7 +2040,12 @@ function migrateVersionTwo(
       (rawFounderActivity.kind === "walk_to_point" ||
         rawFounderActivity.kind === "collect_litter" ||
         rawFounderActivity.kind === "refill_water" ||
-        rawFounderActivity.kind === "praise_employee") &&
+        rawFounderActivity.kind === "praise_employee" ||
+        rawFounderActivity.kind === "attend_encounter" ||
+        rawFounderActivity.kind === "return_to_front_desk" ||
+        rawFounderActivity.kind === "wander_facility" ||
+        rawFounderActivity.kind === "sit_in_chair" ||
+        rawFounderActivity.kind === "visit_bathroom") &&
       typeof rawFounderActivity.targetId === "string" &&
       founderActivityPath.length > 0
         ? {
@@ -2230,6 +2279,17 @@ function validateVersionSix(
   return state;
 }
 
+function validateVersionSeven(
+  parsed: Record<string, unknown>,
+  context: DomainContext,
+): GameState {
+  const state = migrateVersionTwo(parsed, context);
+  if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error("The saved campaign uses an incompatible randomness contract.");
+  }
+  return state;
+}
+
 export function deserializeGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -2258,6 +2318,9 @@ export function deserializeGameState(
   }
   if (parsed.schemaVersion === 6) {
     return validateVersionSix(parsed, context);
+  }
+  if (parsed.schemaVersion === 7) {
+    return validateVersionSeven(parsed, context);
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }

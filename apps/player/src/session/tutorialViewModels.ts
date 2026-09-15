@@ -5,6 +5,7 @@ import {
   getFacilityProgressionStatus,
   type GameState,
 } from "@gamify-surgery/game-domain";
+import { STARTER_EXAMINATION_ROOM_INSTANCE_ID } from "@gamify-surgery/balance-config";
 
 export type TutorialActionId =
   | "open-first-chart"
@@ -156,10 +157,21 @@ function createLevelZeroBuildTutorialStepView(
     (id === "alerts-tour" &&
       state.alertHumor.alertsTutorialAcknowledgedAtTick !== null) ||
     acknowledgedStepIds.has(`${state.campaignId}:${id}`);
-  const examRoom = state.rooms.find(
-    (room) => room.roomDefinitionId === "room.examination",
+  const starterExaminationRoom = state.rooms.find(
+    (room) => room.id === STARTER_EXAMINATION_ROOM_INSTANCE_ID,
   );
+  // New campaigns begin with a stable, connected care room. Their construction
+  // lesson teaches an additional room for capacity. Older saves retain the
+  // original one-room lesson because they do not contain that stable ID.
+  const examRoom = starterExaminationRoom
+    ? state.rooms.find(
+        (room) =>
+          room.roomDefinitionId === "room.examination" &&
+          room.id !== STARTER_EXAMINATION_ROOM_INSTANCE_ID,
+      )
+    : state.rooms.find((room) => room.roomDefinitionId === "room.examination");
   const examRoomBuilt = examRoom !== undefined;
+  const expansionLesson = starterExaminationRoom !== undefined;
   const progression = getFacilityProgressionStatus(state);
   const facilityAccess = getFacilityAccessValidation(state);
 
@@ -172,7 +184,7 @@ function createLevelZeroBuildTutorialStepView(
       eyebrow: "Level 0 tutorial · Build Mode",
       title: "Enter Build Mode",
       body:
-        "A patient would prefer not to discuss private health information at the Front Desk. Enter Build Mode and add an Examination Room.",
+        `A patient would prefer not to discuss private health information at the Front Desk. Enter Build Mode and add ${expansionLesson ? "another " : "an "}Examination Room.`,
       note:
         "Build Mode pauses facility time so patients do not age into fossils while you remodel.",
       flavor: "Architecture: medicine's least reimbursable procedure.",
@@ -187,7 +199,9 @@ function createLevelZeroBuildTutorialStepView(
       return step({
         id: "select-exam-room",
         eyebrow: "Level 0 tutorial · Build Mode",
-        title: "Select the Examination Room",
+        title: expansionLesson
+          ? "Select another Examination Room"
+          : "Select the Examination Room",
         body:
           "The room card shows its price and footprint. Select it to attach a placement outline to your pointer.",
         target: "exam-room-option",
@@ -202,9 +216,11 @@ function createLevelZeroBuildTutorialStepView(
       return step({
         id: "place-exam-room",
         eyebrow: "Level 0 tutorial · Build Mode",
-        title: "Place the room beside the clinic",
+        title: expansionLesson
+          ? "Place the additional room beside the clinic"
+          : "Place the room beside the clinic",
         body:
-          "Move the outlined room beside the Front Desk. Rooms may connect directly to other rooms or to hallways.",
+          `Move the outlined ${expansionLesson ? "additional " : ""}room beside the Front Desk. Rooms may connect directly to other rooms or to hallways.`,
         note:
           "A valid outline confirms the footprint can be built. Click the facility to place it; you will add its door next.",
         target: "facility-placement",

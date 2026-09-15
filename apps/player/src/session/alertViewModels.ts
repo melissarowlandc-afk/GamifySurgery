@@ -136,6 +136,16 @@ function eventTarget(
       actionLabel: "Show water cooler",
     };
   }
+  if (
+    event.definitionId === "alert.patient.check-in-unattended" &&
+    event.target?.kind === "room"
+  ) {
+    return {
+      targetType: "room",
+      targetId: event.target.id,
+      actionLabel: "Show Front Desk",
+    };
+  }
   if (event.target?.kind === "encounter" || event.encounterId) {
     return {
       targetType: "patient",
@@ -480,6 +490,9 @@ function attentionConditionActive(
   const encounter = event.encounterId
     ? state.encounters[event.encounterId]
     : undefined;
+  if (definitionId === "alert.patient.check-in-unattended") {
+    return encounter?.checkInStatus === "awaiting_staff";
+  }
   if (
     event.type === "patient_arrived" ||
     event.type === "patience_warning" ||
@@ -582,6 +595,7 @@ function persistentPatientMessages(
   return Object.values(state.encounters).flatMap((encounter) => {
     if (encounter.lifecycle === "waiting_unopened") {
       if (
+        encounter.checkInStatus !== "checked_in" ||
         encounter.feedAttentionKind !== "checked_in" ||
         encounter.feedAttentionStartedAtTick === null ||
         state.facilityTick -

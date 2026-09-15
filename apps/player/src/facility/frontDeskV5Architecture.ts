@@ -1,6 +1,7 @@
 import type { FrontDeskV3ArchitectureId } from "../art/bitmapAssetManifest";
 import {
   getCanonicalRoomShellLayout,
+  type CanonicalRoomShellLayer,
   type CanonicalRoomBackedNorthRun,
   type CanonicalRoomWallRun,
   type CanonicalRoomWallOpening,
@@ -76,7 +77,7 @@ export function projectFrontDeskV5LogicalPoint(
   };
 }
 
-export type FrontDeskV5ArchitectureLayer = "base" | "front-occluder";
+export type FrontDeskV5ArchitectureLayer = CanonicalRoomShellLayer;
 
 export interface FrontDeskV5ArchitectureComponent {
   key: string;

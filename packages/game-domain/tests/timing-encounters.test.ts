@@ -11,6 +11,7 @@ import {
   getFacilityClock,
   getEligibleServiceRoute,
   getPatientLists,
+  getRoomCareAnchor,
   serializeGameState,
   validateFacilityAccess,
   validateDomainContext,
@@ -89,6 +90,14 @@ function emptyLevelOne(seed: string): GameState {
     createdAtRealMs: 0,
   });
   state.facilityLevel = 1;
+  // These custom-routing fixtures predate the stable fresh-campaign starter
+  // room and intentionally author their own Examination Room topology.
+  state.rooms = state.rooms.filter(
+    (room) => room.id !== "room.instance.starter_examination",
+  );
+  state.doors = state.doors.filter(
+    (door) => door.roomId !== "room.instance.starter_examination",
+  );
   state.encounters = {};
   state.openChartEncounterId = null;
   state.attendedEncounterId = null;
@@ -551,7 +560,7 @@ describe("minute simulation and economy", () => {
 
     state = tick(state, "expense.quarter");
     expect(state.facilityTick).toBe(15);
-    expect(state.cash).toBe(startingCash - 1.5);
+    expect(state.cash).toBe(startingCash - 3);
     const restored = deserializeGameState(serializeGameState(state));
     expect(restored.nextFinancialPostingTick).toBe(30);
     expect(restored.operatingAccrualSixtiethCents).toBe(
@@ -763,6 +772,27 @@ describe("physical patient routing", () => {
       route: { id: "route.xray.outsourced" },
       timing: { serviceDurationTicks: 120 },
     });
+    const decision = state.encounters[encounterId]!.steps[
+      state.encounters[encounterId]!.currentNodeIndex
+    ]!;
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+      operationId: "inhouse.ack-preserve-route",
+      encounterId,
+      decisionNodeId: decision.decisionNodeId,
+    });
+    const acknowledged = state.encounters[encounterId]!;
+    const frozenOnsiteTravel = JSON.parse(
+      JSON.stringify(acknowledged.pendingResult!.patientTravel),
+    );
+    expect(acknowledged).toMatchObject({
+      lifecycle: "active_pending_result",
+      assignedRoomInstanceId: null,
+      queuedCareRoomInstanceId: null,
+    });
+    expect(acknowledged.pendingResult!.patientTravel).toEqual(
+      frozenOnsiteTravel,
+    );
   });
 
   it("uses frozen Level 2 onsite service phases without extending the advertised ETA", () => {
@@ -951,8 +981,10 @@ describe("physical patient routing", () => {
   });
 
   it("hides the chart until Front Desk check-in, then exposes it immediately while walking to care", () => {
+    const arrivalRouteState = emptyLevelOne("arrival-route");
+    addWaitingAndExaminationRooms(arrivalRouteState);
     let admitted = admit(
-      emptyLevelOne("arrival-route"),
+      arrivalRouteState,
       "encounter.arrival-route",
     );
     expect(
@@ -1001,6 +1033,55 @@ describe("physical patient routing", () => {
     ).not.toBeNull();
   });
 
+  it("redirects a checked-in patient from a waiting route directly to the shared examination anchors", () => {
+    const initial = emptyLevelOne("open-chart-immediate-redirect");
+    addWaitingAndExaminationRooms(initial);
+    let state = admit(initial, "encounter.open-chart-immediate-redirect");
+    for (let minute = 0; minute < 100; minute += 1) {
+      if (state.encounters["encounter.open-chart-immediate-redirect"]!.checkInStatus === "checked_in") break;
+      state = tick(state, `open-chart-immediate-redirect.check-in.${minute}`);
+    }
+    const before = state.encounters["encounter.open-chart-immediate-redirect"]!;
+    expect(before.patientMovement?.kind).toBe("walking_to_waiting");
+    const opened = gameReducer(state, {
+      type: "OPEN_CHART", operationId: "open-chart-immediate-redirect.open",
+      encounterId: before.id,
+    });
+    const after = opened.encounters[before.id]!;
+    const exam = opened.rooms.find((room) => room.id === "room.test.return-examination")!;
+    const definition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions
+      .find((room) => room.id === "room.examination")!;
+    expect(getCurrentQuestion(opened, after.id)).not.toBeNull();
+    expect(after.waitingDestination).toBeNull();
+    expect(after.queuedCareRoomInstanceId).toBeNull();
+    expect(after.patientMovement?.kind).toBe("walking_to_care");
+    expect(after.patientMovement?.path[0]).toEqual(before.patientLocation);
+    expect(after.patientMovement?.path.at(-1)).toEqual(getRoomCareAnchor(exam, definition, "patient"));
+    expect(opened.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: after.id });
+    expect(opened.environment.founderActivity?.path.at(-1)).toEqual(getRoomCareAnchor(exam, definition, "clinician"));
+  });
+
+  it("rejects chart opening atomically when no exam is available or the founder is explicitly busy", () => {
+    const state = emptyLevelOne("open-chart-atomic-rejection");
+    const admitted = admit(state, "encounter.open-chart-atomic-rejection");
+    const encounter = admitted.encounters["encounter.open-chart-atomic-rejection"]!;
+    encounter.checkInStatus = "checked_in";
+    encounter.lifecycle = "waiting_unopened";
+    encounter.patientMovement = null;
+    encounter.patientLocation = { ...admitted.environment.founderLocation };
+    encounter.waitingDestination = { roomInstanceId: "room.instance.founder_desk", location: { ...encounter.patientLocation }, kind: "standing" };
+    const snapshot = JSON.stringify({ open: admitted.openChartEncounterId, encounter, founder: admitted.environment.founderActivity });
+    const noExam = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.no-exam", encounterId: encounter.id });
+    expect(noExam.operationReceipts["atomic.no-exam"]?.status).toBe("rejected");
+    expect(JSON.stringify({ open: noExam.openChartEncounterId, encounter: noExam.encounters[encounter.id], founder: noExam.environment.founderActivity })).toBe(snapshot);
+    addWaitingAndExaminationRooms(admitted);
+    admitted.environment.founderActivity = { kind: "collect_litter", targetId: "litter.busy", path: [{ ...admitted.environment.founderLocation }], pathIndex: 0, lastMovedAtFacilityTick: admitted.facilityTick, workMinutesRemaining: 5 };
+    const busySnapshot = JSON.stringify({ open: admitted.openChartEncounterId, encounter: admitted.encounters[encounter.id], founder: admitted.environment.founderActivity });
+    const busy = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.busy-founder", encounterId: encounter.id });
+    expect(busy.operationReceipts["atomic.busy-founder"]?.status).toBe("rejected");
+    expect(JSON.stringify({ open: busy.openChartEncounterId, encounter: busy.encounters[encounter.id], founder: busy.environment.founderActivity })).toBe(busySnapshot);
+  });
+
   it("uses only one Front Desk waiting place before queuing later patients on the sidewalk", () => {
     let state = emptyLevelOne("front-desk-overflow");
     state = admit(state, "encounter.front-desk.first");
@@ -1038,8 +1119,8 @@ describe("physical patient routing", () => {
           PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridHeight,
     );
 
-    expect(frontDeskWaiters).toHaveLength(1);
-    expect(sidewalkWaiters).toHaveLength(1);
+    expect(frontDeskWaiters).toHaveLength(2);
+    expect(sidewalkWaiters).toHaveLength(0);
   });
 
   it("uses only visible Waiting Room chairs and sends chair overflow outside that room", () => {
@@ -1106,6 +1187,256 @@ describe("physical patient routing", () => {
     expect(overflowKey).not.toBe("32,28");
   });
 
+  it("releases an examination on close from the bed or an approach, while terminal feedback remains reviewable", () => {
+    const encounterId = "encounter.close-disposition";
+    let state = emptyLevelOne("close-disposition");
+    addWaitingAndExaminationRooms(state);
+    state = makeQuestionReady(
+      admit(state, encounterId),
+      encounterId,
+      "close-disposition.ready",
+    );
+
+    // A stationary patient leaving an unfinished chart relinquishes the room
+    // and immediately receives a normal ordered waiting reservation.
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "close-disposition.from-bed",
+      encounterId,
+    });
+    expect(state.encounters[encounterId]).toMatchObject({
+      lifecycle: "active_action_required",
+      queuedCareRoomInstanceId: null,
+      feedAttentionKind: "clinical_decision",
+    });
+    expect(state.encounters[encounterId]!.assignedRoomInstanceId).not.toBe(
+      "room.test.return-examination",
+    );
+    expect(
+      state.encounters[encounterId]!.patientMovement?.kind ?? "arrived_waiting",
+    ).toMatch(/walking_to_waiting|arrived_waiting/);
+
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "close-disposition.reopen-unfinished",
+      encounterId,
+    });
+    expect(state.encounters[encounterId]!.patientMovement).toMatchObject({
+      kind: "walking_to_care",
+      destinationRoomInstanceId: "room.test.return-examination",
+    });
+    expect(state.environment.founderActivity).toMatchObject({
+      kind: "attend_encounter",
+      targetId: encounterId,
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "close-disposition.close-reopened-unfinished",
+      encounterId,
+    });
+
+    // A second checked-in chart can claim that freed room immediately.
+    const secondId = "encounter.close-disposition.reuse";
+    const second = JSON.parse(
+      JSON.stringify(state.encounters[encounterId]),
+    ) as GameState["encounters"][string];
+    second.id = secondId;
+    second.lifecycle = "waiting_unopened";
+    second.patientLocation = { x: 35, y: 31 };
+    second.patientMovement = null;
+    second.waitingDestination = null;
+    second.assignedRoomInstanceId = "room.instance.founder_desk";
+    second.queuedCareRoomInstanceId = null;
+    state.encounters[secondId] = second;
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "close-disposition.reuse-open",
+      encounterId: secondId,
+    });
+    expect(state.encounters[secondId]!.patientMovement).toMatchObject({
+      kind: "walking_to_care",
+      destinationRoomInstanceId: "room.test.return-examination",
+    });
+
+    // Closing during that approach routes from the current persisted tile,
+    // rather than allowing the stale care leg to finish.
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "close-disposition.mid-approach",
+      encounterId: secondId,
+    });
+    expect(state.encounters[secondId]).toMatchObject({
+      assignedRoomInstanceId: null,
+      queuedCareRoomInstanceId: null,
+      patientMovement: { kind: "walking_to_waiting" },
+    });
+
+    let terminal = makeQuestionReady(
+      admit(state, "encounter.close-disposition.terminal"),
+      "encounter.close-disposition.terminal",
+      "close-disposition.terminal-ready",
+    );
+    const terminalEncounter =
+      terminal.encounters["encounter.close-disposition.terminal"]!;
+    terminalEncounter.lifecycle = "resolved_summary_available";
+    terminalEncounter.terminalFeedback = {
+      kind: "completion",
+      outcome: null,
+      consequence: null,
+      correction: null,
+      acknowledged: false,
+    };
+    terminal = gameReducer(terminal, {
+      type: "CLOSE_CHART",
+      operationId: "close-disposition.terminal-unacknowledged",
+      encounterId: "encounter.close-disposition.terminal",
+    });
+    expect(terminal.encounters["encounter.close-disposition.terminal"]).toMatchObject({
+      lifecycle: "resolved_summary_available",
+      terminalFeedback: { acknowledged: false },
+    });
+    expect(
+      terminal.encounters["encounter.close-disposition.terminal"]!
+        .assignedRoomInstanceId,
+    ).not.toBe("room.test.return-examination");
+    expect(
+      terminal.encounters["encounter.close-disposition.terminal"]!
+        .patientMovement?.kind ?? "arrived_waiting",
+    ).toMatch(/walking_to_waiting|arrived_waiting/);
+    terminal = gameReducer(terminal, {
+      type: "OPEN_CHART",
+      operationId: "close-disposition.reopen-terminal-unacknowledged",
+      encounterId: "encounter.close-disposition.terminal",
+    });
+    expect(
+      terminal.encounters["encounter.close-disposition.terminal"]!
+        .patientMovement,
+    ).toMatchObject({ kind: "walking_to_care" });
+    expect(terminal.environment.founderActivity).toMatchObject({
+      kind: "attend_encounter",
+      targetId: "encounter.close-disposition.terminal",
+    });
+  });
+
+  it("releases pending-testing exam signals without mutating the frozen route or manual founder commands", () => {
+    const encounterId = "encounter.pending-mid-approach";
+    const initial = emptyLevelOne("pending-mid-approach");
+    addWaitingAndExaminationRooms(initial);
+    let state = admit(initial, encounterId);
+    for (let minute = 0; minute < 100; minute += 1) {
+      if (state.encounters[encounterId]!.checkInStatus === "checked_in") {
+        break;
+      }
+      state = tick(state, `pending-mid-approach.check-in.${minute}`);
+    }
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "pending-mid-approach.open",
+      encounterId,
+    });
+    expect(state.encounters[encounterId]!.patientMovement?.kind).toBe(
+      "walking_to_care",
+    );
+    state = answerCorrect(state, encounterId, "pending-mid-approach.answer");
+    const step = state.encounters[encounterId]!.steps[
+      state.encounters[encounterId]!.currentNodeIndex
+    ]!;
+    const beforeAcknowledgement = JSON.parse(JSON.stringify(state));
+    const movementBefore = state.encounters[encounterId]!.patientMovement!;
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+      operationId: "pending-mid-approach.ack",
+      encounterId,
+      decisionNodeId: step.decisionNodeId,
+    });
+    const pendingEncounter = state.encounters[encounterId]!;
+    expect(pendingEncounter.patientMovement).toMatchObject({
+      kind: movementBefore.kind,
+      path: movementBefore.path,
+      pathIndex: movementBefore.pathIndex,
+      destinationRoomInstanceId: null,
+    });
+    const frozenOffsite = JSON.parse(
+      JSON.stringify(pendingEncounter.pendingResult!.offsiteTravel),
+    );
+    expect(pendingEncounter).toMatchObject({
+      lifecycle: "active_pending_result",
+      assignedRoomInstanceId: null,
+      queuedCareRoomInstanceId: null,
+    });
+    expect(state.environment.founderActivity?.kind).not.toBe(
+      "attend_encounter",
+    );
+
+    const secondId = "encounter.pending-mid-approach.reuse";
+    const second = JSON.parse(
+      JSON.stringify(pendingEncounter),
+    ) as GameState["encounters"][string];
+    second.id = secondId;
+    second.lifecycle = "waiting_unopened";
+    second.pendingResult = null;
+    second.patientLocation = { x: 35, y: 31 };
+    second.patientMovement = null;
+    second.waitingDestination = null;
+    second.assignedRoomInstanceId = "room.instance.founder_desk";
+    state.encounters[secondId] = second;
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "pending-mid-approach.reuse-open",
+      encounterId: secondId,
+    });
+    expect(state.encounters[secondId]!.patientMovement).toMatchObject({
+      kind: "walking_to_care",
+      destinationRoomInstanceId: "room.test.return-examination",
+    });
+    expect(state.encounters[encounterId]!.pendingResult!.offsiteTravel).toEqual(
+      frozenOffsite,
+    );
+
+    // This fixture removes the authored service gate after the answer has
+    // been recorded to exercise the reducer's ordinary intermediate branch.
+    // It must keep the chart, room reservation, and escort intact.
+    let intermediate = JSON.parse(
+      JSON.stringify(beforeAcknowledgement),
+    ) as GameState;
+    intermediate.encounters[encounterId]!.pendingResult = null;
+    intermediate = gameReducer(intermediate, {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+      operationId: "pending-mid-approach.intermediate-no-service",
+      encounterId,
+      decisionNodeId: step.decisionNodeId,
+    });
+    expect(intermediate.openChartEncounterId).toBe(encounterId);
+    expect(intermediate.encounters[encounterId]!.patientMovement).toMatchObject({
+      kind: "walking_to_care",
+      destinationRoomInstanceId: "room.test.return-examination",
+    });
+    expect(intermediate.environment.founderActivity).toMatchObject({
+      kind: "attend_encounter",
+      targetId: encounterId,
+    });
+
+    let manual = beforeAcknowledgement as GameState;
+    manual.environment.founderActivity = {
+      kind: "walk_to_point",
+      targetId: "manual.destination",
+      path: [{ ...manual.environment.founderLocation }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: manual.facilityTick,
+      workMinutesRemaining: 0,
+    };
+    manual = gameReducer(manual, {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+      operationId: "pending-mid-approach.manual-founder",
+      encounterId,
+      decisionNodeId: step.decisionNodeId,
+    });
+    expect(manual.environment.founderActivity).toMatchObject({
+      kind: "walk_to_point",
+      targetId: "manual.destination",
+    });
+  });
+
   it("walks out for send-out testing, remains away, and returns before results become actionable", () => {
     const encounterId = "encounter.offsite-route";
     const initial = emptyLevelOne("offsite-route");
@@ -1130,6 +1461,18 @@ describe("physical patient routing", () => {
       encounterId,
       decisionNodeId: step.decisionNodeId,
     });
+    const acknowledged = state.encounters[encounterId]!;
+    const frozenOffsiteTravel = JSON.parse(
+      JSON.stringify(acknowledged.pendingResult!.offsiteTravel),
+    );
+    expect(acknowledged).toMatchObject({
+      lifecycle: "active_pending_result",
+      assignedRoomInstanceId: null,
+      queuedCareRoomInstanceId: null,
+    });
+    expect(acknowledged.pendingResult!.offsiteTravel).toEqual(
+      frozenOffsiteTravel,
+    );
 
     for (let minute = 0; minute < 100; minute += 1) {
       if (
@@ -1142,6 +1485,9 @@ describe("physical patient routing", () => {
     }
     expect(state.encounters[encounterId]!.patientMovement?.kind).toBe(
       "departing_for_offsite_testing",
+    );
+    expect(state.encounters[encounterId]!.pendingResult!.offsiteTravel).toEqual(
+      frozenOffsiteTravel,
     );
     const frozenTravel =
       state.encounters[encounterId]!.pendingResult!.offsiteTravel!;
@@ -1232,10 +1578,14 @@ describe("physical patient routing", () => {
       operationId: "offsite.open-while-walking-to-wait",
       encounterId,
     });
-    expect(
-      immediateResolution.encounters[encounterId]!
-        .queuedCareRoomInstanceId,
-    ).toBe("room.test.return-examination");
+    expect(immediateResolution.encounters[encounterId]).toMatchObject({
+      queuedCareRoomInstanceId: null,
+      waitingDestination: null,
+      patientMovement: {
+        kind: "walking_to_care",
+        destinationRoomInstanceId: "room.test.return-examination",
+      },
+    });
     immediateResolution = answerCorrect(
       immediateResolution,
       encounterId,
@@ -1253,26 +1603,11 @@ describe("physical patient routing", () => {
     });
     expect(immediateResolution.encounters[encounterId]).toMatchObject({
       lifecycle: "resolved",
-      patientMovement: { kind: "walking_to_waiting" },
-      queuedCareRoomInstanceId: "room.test.return-examination",
-    });
-    for (let minute = 0; minute < 100; minute += 1) {
-      if (
-        immediateResolution.encounters[encounterId]!.patientMovement
-          ?.kind === "walking_to_care"
-      ) {
-        break;
-      }
-      immediateResolution = tick(
-        immediateResolution,
-        `offsite.immediate-to-exam.${minute}`,
-      );
-    }
-    expect(
-      immediateResolution.encounters[encounterId]!.patientMovement,
-    ).toMatchObject({
-      kind: "walking_to_care",
-      destinationRoomInstanceId: "room.test.return-examination",
+      // Once the acknowledged terminal chart closes, departure starts from
+      // the patient's persisted current tile rather than completing the
+      // obsolete approach to the Examination Room.
+      patientMovement: { kind: "leaving_after_resolution" },
+      queuedCareRoomInstanceId: null,
     });
     for (let minute = 0; minute < 100; minute += 1) {
       if (
@@ -1383,9 +1718,11 @@ describe("physical patient routing", () => {
 
   it("extends a legacy ten-minute send-out enough for the complete natural-speed round trip", () => {
     const encounterId = "encounter.ten-minute-sendout";
+    const tenMinuteState = emptyLevelOne("ten-minute-sendout");
+    addWaitingAndExaminationRooms(tenMinuteState);
     let state = makeQuestionReady(
       admit(
-        emptyLevelOne("ten-minute-sendout"),
+        tenMinuteState,
         encounterId,
         "case.synthetic.tutorial",
       ),
@@ -1433,8 +1770,10 @@ describe("physical patient routing", () => {
     const sides = new Set<"left" | "right">();
     for (let index = 0; index < 16; index += 1) {
       const encounterId = `encounter.ten-minute-side.${index}`;
+      const sideState = emptyLevelOne("ten-minute-both-sides");
+      addWaitingAndExaminationRooms(sideState);
       let state = admit(
-        emptyLevelOne("ten-minute-both-sides"),
+        sideState,
         encounterId,
         "case.synthetic.tutorial",
       );

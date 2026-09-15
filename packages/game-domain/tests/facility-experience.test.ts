@@ -67,7 +67,7 @@ describe("facility experience conditions", () => {
       evaluateFacilityExperienceConditions(state).conditions.map(
         (condition) => condition.conditionKey,
       ),
-    ).toEqual(["missing_examination_room"]);
+    ).toEqual([]);
 
     state.facilityLevel = 1;
     expect(
@@ -76,15 +76,16 @@ describe("facility experience conditions", () => {
       ),
     ).toEqual([
       "missing_waiting_room",
-      "missing_examination_room",
-      "missing_bathroom",
+        "missing_bathroom",
       "unavailable_onsite_xray",
     ]);
   });
 
   it("centralizes litter, dirty-room, and actually-empty water pressure under the cap", () => {
     const state = createInitialGameState();
-    state.rooms[0]!.cleanliness = 40;
+    state.rooms.forEach((room) => {
+      room.cleanliness = 40;
+    });
     state.environment.waterCoolerFillPercent = 0;
     state.environment.litterItems = [
       {
@@ -107,9 +108,8 @@ describe("facility experience conditions", () => {
       "visible_litter",
       "dirty_cleanliness",
       "empty_water_cooler",
-      "missing_examination_room",
     ]);
-    expect(result.totalPenalty).toBe(14);
+    expect(result.totalPenalty).toBe(10);
 
     state.environment.waterCoolerFillPercent = 1;
     expect(
@@ -154,13 +154,13 @@ describe("facility experience conditions", () => {
     const checkedIn =
       state.encounters["encounter.facility-experience"]!;
     expect(checkedIn.facilityExperienceAtCheckIn).toMatchObject({
-      totalPenalty: 13,
+      totalPenalty: 9,
     });
-    expect(checkedIn.patientSatisfaction).toBe(87);
+    expect(checkedIn.patientSatisfaction).toBe(91);
     expect(
       checkedIn.dissatisfactionByCause.missing_amenities
         ?.pointsLost,
-    ).toBe(9);
+    ).toBe(5);
     expect(
       checkedIn.dissatisfactionByCause.no_receptionist
         ?.pointsLost,
@@ -178,7 +178,7 @@ describe("facility experience conditions", () => {
     expect(
       restored.encounters["encounter.facility-experience"]!
         .patientSatisfaction,
-    ).toBe(87);
+    ).toBe(91);
   });
 
   it("protects tutorial patients from the check-in environment penalty", () => {
@@ -203,7 +203,7 @@ describe("facility experience conditions", () => {
   it("keeps raw history separate while progression uses measured live-adjusted satisfaction", () => {
     const state = createInitialGameState();
     expect(getClinicSatisfaction(state)).toBeNull();
-    expect(getDisplayedClinicSatisfaction(state)).toBe(96);
+    expect(getDisplayedClinicSatisfaction(state)).toBe(100);
     expect(
       getFacilityProgressionStatus(state).requirements.find(
         (requirement) =>
@@ -214,13 +214,13 @@ describe("facility experience conditions", () => {
     const completed = endedEncounter(state, 95);
     state.encounters = { [completed.id]: completed };
     expect(getClinicSatisfaction(state)).toBe(95);
-    expect(getDisplayedClinicSatisfaction(state)).toBe(91);
+    expect(getDisplayedClinicSatisfaction(state)).toBe(95);
     expect(
       getFacilityProgressionStatus(state).requirements.find(
         (requirement) =>
           requirement.id === "progression.satisfaction",
       ),
-    ).toMatchObject({ met: true, current: 91 });
+    ).toMatchObject({ met: true, current: 95 });
 
     state.environment.litterItems.push({
       id: "litter.progression",
@@ -229,13 +229,13 @@ describe("facility experience conditions", () => {
       spawnedAtFacilityTick: 2,
     });
     expect(getClinicSatisfaction(state)).toBe(95);
-    expect(getDisplayedClinicSatisfaction(state)).toBe(89);
+    expect(getDisplayedClinicSatisfaction(state)).toBe(93);
     expect(
       getFacilityProgressionStatus(state).requirements.find(
         (requirement) =>
           requirement.id === "progression.satisfaction",
       )?.met,
-    ).toBe(false);
+    ).toBe(true);
   });
 });
 

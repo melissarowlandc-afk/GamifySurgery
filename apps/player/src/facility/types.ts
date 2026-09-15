@@ -25,6 +25,7 @@ export interface FacilityPatientView {
   direction?: "front" | "side" | "back";
   /** Derived presentation state for a stationary patient occupying a waiting anchor. */
   seated?: boolean;
+  pose?: "seated" | "exam-table";
 }
 
 /** Noninteractive exterior pedestrian; never appears in patient UI. */
@@ -112,6 +113,7 @@ export interface FacilityFounderView {
   activityLabel?: string;
   moving?: boolean;
   direction?: "front" | "side" | "back";
+  seated?: boolean;
 }
 
 export interface FacilityLitterView {

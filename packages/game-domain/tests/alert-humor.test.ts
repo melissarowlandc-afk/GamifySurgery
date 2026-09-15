@@ -71,6 +71,25 @@ function resolveSingleDecisionRoutine(
   state: GameState,
   encounterId: string,
 ): GameState {
+  if (!state.rooms.some((room) => room.roomDefinitionId === "room.examination")) {
+    state.rooms.push({
+      id: "room.test.alert-humor-examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.test.alert-humor-examination",
+      roomId: "room.test.alert-humor-examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
+  }
   state.openChartEncounterId = null;
   state.attendedEncounterId = null;
   for (const previous of Object.values(state.encounters)) {
@@ -95,6 +114,8 @@ function resolveSingleDecisionRoutine(
   };
   encounter.assignedRoomInstanceId =
     "room.instance.founder_desk";
+  encounter.checkInStatus = "checked_in";
+  encounter.checkInWaitingSinceTick = null;
   encounter.idleWaitingSinceTick = next.facilityTick;
   next = gameReducer(next, {
     type: "OPEN_CHART",
@@ -278,7 +299,7 @@ describe("persisted alert humor scheduler", () => {
       .dissatisfactionByCause;
 
     const restored = deserializeGameState(JSON.stringify(legacy));
-    expect(restored.schemaVersion).toBe(6);
+    expect(restored.schemaVersion).toBe(7);
     expect(restored.alertHumor).toEqual({
       alertsTutorialAcknowledgedAtTick: null,
       nextAmbientAlertTick: null,

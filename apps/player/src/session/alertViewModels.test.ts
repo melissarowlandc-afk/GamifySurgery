@@ -32,6 +32,8 @@ function checkInTutorialPatient(state: GameState): void {
   encounter.patientMovement = null;
   encounter.patientLocation = { x: 34, y: 29 };
   encounter.assignedRoomInstanceId = "room.instance.founder_desk";
+  encounter.checkInStatus = "checked_in";
+  encounter.checkInWaitingSinceTick = null;
   encounter.feedAttentionKind = "checked_in";
   encounter.feedAttentionStartedAtTick = state.facilityTick;
 }
@@ -240,6 +242,7 @@ describe("createMessageBoardView data-driven alerts", () => {
   it("distinguishes missing onsite X-ray from an X-ray room without a technician", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.checkInStatus = "awaiting_staff";
     state.facilityLevel = 1;
     state.cash = 1_000;
     state.cashCents = 100_000;
@@ -1094,6 +1097,39 @@ describe("createMessageBoardView data-driven alerts", () => {
     expect(
       items.some((item) => item.message.includes("has checked in")),
     ).toBe(false);
+  });
+
+  it("routes an overdue unstaffed check-in alert to the Front Desk, not an unavailable chart", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.checkInStatus = "awaiting_staff";
+    state.events = [
+      event({
+        id: "event.patient-check-in-overdue.tutorial.0",
+        type: "patience_warning",
+        facilityTick: 61,
+        encounterId: encounter.id,
+        definitionId: "alert.patient.check-in-unattended",
+        priority: "action_required",
+        target: { kind: "room", id: "room.instance.founder_desk" },
+      }),
+    ];
+
+    const active = createMessageBoardView(state).find(
+      (item) => item.id === "event.patient-check-in-overdue.tutorial.0",
+    );
+    expect(active).toMatchObject({
+      targetType: "room",
+      targetId: "room.instance.founder_desk",
+      actionLabel: "Show Front Desk",
+    });
+
+    encounter.checkInStatus = "checked_in";
+    const resolved = createMessageBoardView(state).find(
+      (item) => item.id === "event.patient-check-in-overdue.tutorial.0",
+    );
+    expect(resolved?.actionLabel).toBeUndefined();
+    expect(resolved?.targetType).toBeUndefined();
   });
 
   it("keeps encounter settlement audit events out of Alerts and Events", () => {

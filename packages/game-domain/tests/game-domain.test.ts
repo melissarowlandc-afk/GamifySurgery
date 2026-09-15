@@ -13,6 +13,7 @@ import {
   createInitialGameState,
   deserializeGameState,
   gameReducer,
+  getFacilityAccessValidation,
   getCurrentQuestion,
   getEncounterSettlement,
   serializeGameState,
@@ -25,6 +26,12 @@ function tick(state: GameState, id: string): GameState {
     type: "ADVANCE_TICK",
     operationId: id,
   });
+}
+
+function createTutorialState(
+  options?: Parameters<typeof createInitialGameState>[1],
+): GameState {
+  return createInitialGameState(undefined, options);
 }
 
 function makeQuestionReady(
@@ -43,7 +50,7 @@ function makeQuestionReady(
     }
     if (
       encounter.lifecycle === "waiting_unopened" &&
-      encounter.patientMovement === null
+      encounter.checkInStatus === "checked_in"
     ) {
       next = gameReducer(next, {
         type: "OPEN_CHART",
@@ -119,6 +126,58 @@ function completeTutorialCorrectly(
 }
 
 describe("current prototype contracts", () => {
+  it("bootstraps a connected starter Examination Room for the first checked-in chart", () => {
+    let state = createInitialGameState();
+    expect(state.rooms).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "room.instance.starter_examination",
+          roomDefinitionId: "room.examination",
+          x: 34,
+          y: 26,
+          orientation: 0,
+        }),
+      ]),
+    );
+    expect(state.doors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "door.instance.starter_examination",
+          roomId: "room.instance.starter_examination",
+          side: "south",
+          offset: 1,
+          exterior: false,
+        }),
+      ]),
+    );
+    expect(getFacilityAccessValidation(state)).toMatchObject({
+      valid: true,
+      unreachableRoomIds: [],
+    });
+
+    for (let tickIndex = 0; tickIndex < 120; tickIndex += 1) {
+      state = tick(state, `starter-exam.arrive.${tickIndex}`);
+      if (state.encounters[TUTORIAL_ENCOUNTER_ID]?.checkInStatus === "checked_in") break;
+    }
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]?.checkInStatus).toBe("checked_in");
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "starter-exam.open",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(state.operationReceipts["starter-exam.open"]?.status).toBe("applied");
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      patientMovement: {
+        kind: "walking_to_care",
+        destinationRoomInstanceId: "room.instance.starter_examination",
+      },
+    });
+    expect(state.environment.founderActivity).toMatchObject({
+      kind: "attend_encounter",
+      targetId: TUTORIAL_ENCOUNTER_ID,
+    });
+  });
+
   it("validates the approved synthetic content and centralized Level 0-2 balance", () => {
     expect(() =>
       validateSyntheticClinicalRelease(SYNTHETIC_CLINICAL_RELEASE),
@@ -214,7 +273,7 @@ describe("current prototype contracts", () => {
   });
 
   it("routes the tutorial patient, scores one concept per decision, and settles with current formulas", () => {
-    const initial = createInitialGameState(undefined, {
+    const initial = createTutorialState({
       campaignSeed: "current-tutorial",
       createdAtRealMs: 0,
     });
@@ -253,7 +312,7 @@ describe("current prototype contracts", () => {
 
   it("keeps FSRS histories isolated between campaigns", () => {
     const learned = completeTutorialCorrectly(
-      createInitialGameState(undefined, {
+      createTutorialState({
         campaignId: "campaign.learned",
         campaignSeed: "campaign-learned",
         createdAtRealMs: 0,
@@ -288,7 +347,7 @@ describe("current prototype contracts", () => {
     const restored = deserializeGameState(serializeGameState(state));
 
     expect(restored).toMatchObject({
-      schemaVersion: 6,
+      schemaVersion: 7,
       campaignId: state.campaignId,
       campaignSeed: state.campaignSeed,
       clinicalReleaseId: state.clinicalReleaseId,

@@ -3,6 +3,7 @@ import {
   LEVEL_TWO_ROOM_DEFINITION_IDS,
   LEVEL_TWO_STAFF_ROLE_IDS,
   PROTOTYPE_BALANCE_RELEASE,
+  STARTER_EXAMINATION_ROOM_INSTANCE_ID,
 } from "./prototype-balance";
 import { serviceRouteDefinitionSchema } from "./schema";
 
@@ -40,11 +41,27 @@ describe("Front Desk A1-D5 navigation", () => {
       { x: 2, y: 2 },
     ]);
     expect(frontDesk?.navigation?.primaryAnchor).toEqual({ x: 2, y: 3 });
-    expect(frontDesk?.navigation?.waitingAnchors).toEqual([
-      { x: 1, y: 3 },
-      { x: 3, y: 3 },
-    ]);
+    expect(frontDesk?.navigation?.waitingAnchors).toEqual([{ x: 4, y: 3 }]);
     expect(frontDesk?.navigation?.staffAnchor).toEqual({ x: 2, y: 1 });
+  });
+});
+
+describe("fresh campaign starter care capacity", () => {
+  it("declares the stable Examination Room without changing starting cash", () => {
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.initialRooms).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: STARTER_EXAMINATION_ROOM_INSTANCE_ID,
+          roomDefinitionId: "room.examination",
+          x: 34,
+          y: 26,
+          orientation: 0,
+          doorSide: "south",
+          upgradeLevel: 1,
+        }),
+      ]),
+    );
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.startingCash).toBe(120);
   });
 });
 

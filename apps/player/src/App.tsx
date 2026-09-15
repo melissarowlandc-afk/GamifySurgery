@@ -4,10 +4,11 @@ import {
   appendLocalCampaign,
   archiveLocalCampaign,
   createPrototypePlayerView,
+  describePrototypeStorageFailure,
   getActiveCampaign,
   loadPrototypeProfile,
   restoreLocalCampaign,
-  savePrototypeProfile,
+  savePrototypeProfileResult,
   selectLocalCampaign,
   type LoadedPrototypeProfile,
   type LocalPrototypeProfile,
@@ -133,6 +134,7 @@ function ActivePrototypeGame({
       onTutorialAction={session.performTutorialAction}
       onTutorialsEnabledChange={session.setTutorialsEnabled}
       onSaveAndPause={session.saveAndPause}
+      onClearLocalCampaigns={session.clearLocalCampaigns}
       onRestart={() =>
         onRequestRestart(session.profile, session.state.campaignSeed)
       }
@@ -188,12 +190,12 @@ function AuthenticatedPrototype() {
     notice = "Local campaign restored.",
   ) => {
     const selected = selectLocalCampaign(profile, campaignId);
-    savePrototypeProfile(selected);
+    const saved = savePrototypeProfileResult(selected);
     setLaunch({
       mode: "game",
       loadedProfile: {
         profile: selected,
-        notice,
+        notice: saved.ok ? notice : `${notice} ${describePrototypeStorageFailure(saved.failure)}`,
       },
     });
   };
@@ -213,14 +215,14 @@ function AuthenticatedPrototype() {
             Date.now(),
             campaignSeed,
           );
-          const saved = savePrototypeProfile(next.profile);
+          const saved = savePrototypeProfileResult(next.profile);
           setLaunch({
             mode: "game",
             loadedProfile: {
               profile: next.profile,
-              notice: saved
+              notice: saved.ok
                 ? "New clinic campaign created with fresh learning histories."
-                : "New clinic campaign created, but local saving is unavailable.",
+                : `New clinic campaign created, but ${describePrototypeStorageFailure(saved.failure)}`,
             },
           });
         }}
@@ -232,11 +234,13 @@ function AuthenticatedPrototype() {
             launch.profile,
             campaignId,
           );
-          savePrototypeProfile(restored);
+          const saved = savePrototypeProfileResult(restored);
           openCampaign(
             restored,
             campaignId,
-            "Archived clinic restored with its original learning history.",
+            saved.ok
+              ? "Archived clinic restored with its original learning history."
+              : `Archived clinic restored, but ${describePrototypeStorageFailure(saved.failure)}`,
           );
         }}
       />
@@ -255,13 +259,14 @@ function AuthenticatedPrototype() {
             founder,
             clinicName,
           );
-          savePrototypeProfile(next.profile);
+          const saved = savePrototypeProfileResult(next.profile);
           setLaunch({
             mode: "game",
             loadedProfile: {
               profile: next.profile,
-              notice:
-                "New clinic campaign created with fresh learning histories.",
+              notice: saved.ok
+                ? "New clinic campaign created with fresh learning histories."
+                : `New clinic campaign created, but ${describePrototypeStorageFailure(saved.failure)}`,
             },
           });
         }}
@@ -273,8 +278,14 @@ function AuthenticatedPrototype() {
             launch.loadedProfile.profile,
             campaignId,
           );
-          savePrototypeProfile(restored);
-          openCampaign(restored, campaignId);
+          const saved = savePrototypeProfileResult(restored);
+          openCampaign(
+            restored,
+            campaignId,
+            saved.ok
+              ? "Local campaign restored."
+              : `Archived clinic restored, but ${describePrototypeStorageFailure(saved.failure)}`,
+          );
         }}
       />
     );
@@ -292,7 +303,7 @@ function AuthenticatedPrototype() {
           profile,
           activeCampaign.campaignId,
         );
-        savePrototypeProfile(archived);
+        savePrototypeProfileResult(archived);
         requestOpening(archived, campaignSeed, "founder");
       }}
     />

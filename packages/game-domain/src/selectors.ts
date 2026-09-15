@@ -980,7 +980,9 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     encounter.waiting.warningThresholdsShown.length > 0;
 
   let statusLabel: string;
-  if (encounter.patientMovement) {
+  if (encounter.checkInStatus === "awaiting_staff") {
+    statusLabel = "Waiting to check in";
+  } else if (encounter.patientMovement) {
     statusLabel =
       encounter.patientMovement.kind === "arriving_for_check_in"
         ? "Walking to Check-In"
@@ -1098,7 +1100,7 @@ export function getPatientLists(state: GameState): PatientLists {
       .filter(
         (encounter) =>
           encounter.lifecycle === "waiting_unopened" &&
-          encounter.patientMovement?.kind !== "arriving_for_check_in",
+          encounter.checkInStatus === "checked_in",
       )
       .map((encounter) => toPatientListItem(state, encounter)),
     active: encounters

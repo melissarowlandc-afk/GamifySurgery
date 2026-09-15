@@ -1,5 +1,10 @@
 import { validatePrototypeBalanceRelease } from "./schema";
 
+export const STARTER_EXAMINATION_ROOM_INSTANCE_ID =
+  "room.instance.starter_examination";
+export const STARTER_EXAMINATION_DOOR_INSTANCE_ID =
+  "door.instance.starter_examination";
+
 export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   id: "balance.synthetic.prototype.v1",
   schemaVersion: 1,
@@ -37,6 +42,18 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         doorSide: null,
         upgradeLevel: 1,
       },
+      {
+        // A campaign starts with one usable care room so the first checked-in
+        // chart can be opened immediately. The later tutorial still teaches a
+        // second room for capacity.
+        id: STARTER_EXAMINATION_ROOM_INSTANCE_ID,
+        roomDefinitionId: "room.examination",
+        x: 34,
+        y: 26,
+        orientation: 0,
+        doorSide: "south",
+        upgradeLevel: 1,
+      },
     ],
     roomDefinitions: [
       {
@@ -68,11 +85,10 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
             { x: 2, y: 2 },
           ],
           primaryAnchor: { x: 2, y: 3 },
-          waitingAnchors: [
-            { x: 1, y: 3 },
-            { x: 3, y: 3 },
-          ],
+          // The visible visitor chair is the southeast seat only.
+          waitingAnchors: [{ x: 4, y: 3 }],
           staffAnchor: { x: 2, y: 1 },
+          publicWaitingArea: true,
         },
       },
       {
@@ -100,6 +116,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           primaryAnchor: { x: 0, y: 0 },
           waitingAnchors: [],
           staffAnchor: null,
+          publicWaitingArea: true,
         },
       },
       {
@@ -133,6 +150,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           primaryAnchor: { x: 1, y: 1 },
           waitingAnchors: [],
           staffAnchor: { x: 2, y: 1 },
+          patientCareAnchor: { x: 2, y: 1 },
+          clinicianCareAnchor: { x: 1, y: 1 },
         },
       },
       {
@@ -198,6 +217,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
             { x: 3, y: 1 },
           ],
           staffAnchor: null,
+          publicWaitingArea: true,
         },
       },
       {
@@ -765,6 +785,10 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     maximumAmenityCompletionBonus: 3,
     roomCleanlinessLossPerEncounter: 1,
     rollingWindowSize: 10,
+    // A patient at the desk is tolerated for one facility hour; the next tick
+    // creates one actionable staffing consequence.
+    unstaffedCheckInDelayMinutes: 60,
+    unstaffedCheckInSatisfactionPenalty: 2,
     // These mild, capped pressures are shared by patient check-in, the live
     // HUD, progression, and the durable condition-alert history. They remain
     // deliberately easy to tune without changing simulation logic.

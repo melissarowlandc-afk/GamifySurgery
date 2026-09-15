@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   FRONT_DESK_PRESENTATION,
   getFrontDeskEntrancePlanterDisplayBounds,
+  getFrontDeskFounderSeatedAdjacentReceptionistSeparation,
   getFrontDeskV5StationaryActorDisplay,
   shouldRenderEmptyFrontDeskChair,
   shouldRenderFounderSeatedAtFrontDesk,
@@ -22,6 +23,10 @@ const frontDesk = {
 } as const;
 
 describe("Front Desk founder presentation", () => {
+  it("aligns the sole waiting anchor to the southeast visitor chair", () => {
+    expect(FRONT_DESK_PRESENTATION.anchors.waiting).toEqual([{ x: 4, y: 3 }]);
+  });
+
   it("keeps the starter room's sole baseline door as the protected south entrance", () => {
     const state = createInitialGameState();
     const frontDesk = state.rooms.find(
@@ -134,7 +139,7 @@ describe("Front Desk founder presentation", () => {
       expect.objectContaining({ id: "wallClock", x: 0.36 }),
     ]);
     expect(FRONT_DESK_PRESENTATION.v5ActorDisplay).toEqual({
-      staff: { x: 0.4, y: 0.5, scale: 0.82 },
+      staff: { x: 0.4, y: 0.5, scale: 1 },
       public: { x: 0.62, y: 0.82, scale: 0.82 },
     });
     expect(FRONT_DESK_PRESENTATION.clearDoorCandidates).toEqual({
@@ -164,7 +169,7 @@ describe("Front Desk founder presentation", () => {
   it("moves only stationary actors at Front Desk anchors into target display positions", () => {
     expect(getFrontDeskV5StationaryActorDisplay(
       { x: 10, y: 5 }, false, "staff", [frontDesk],
-    )).toEqual({ x: 0.4, y: 0.5, scale: 0.82 });
+    )).toEqual({ x: 0.4, y: 0.5, scale: 1 });
     expect(getFrontDeskV5StationaryActorDisplay(
       { x: 10, y: 7 }, false, "public", [frontDesk],
     )).toEqual({ x: 0.62, y: 0.82, scale: 0.82 });
@@ -172,6 +177,43 @@ describe("Front Desk founder presentation", () => {
       { x: 10, y: 5 }, true, "staff", [frontDesk],
     )).toBeUndefined();
   });
+
+  it("separates only the stationary adjacent receptionist while the founder is seated at B3", () => {
+    const seatedFounder = { location: { x: 10, y: 5 }, moving: false };
+    const adjacentReceptionist = {
+      location: { x: 9, y: 5 },
+      moving: false,
+      staffRoleDefinitionId: "staff.receptionist",
+    };
+    expect(getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
+      adjacentReceptionist,
+      seatedFounder,
+      [frontDesk],
+    )).toEqual({ centerOffsetTiles: -0.72, baseOffsetTiles: 0 });
+
+    for (const employee of [
+      { ...adjacentReceptionist, moving: true },
+      { ...adjacentReceptionist, staffRoleDefinitionId: "staff.imaging_technician" },
+      { ...adjacentReceptionist, location: { x: 10, y: 5 } },
+    ]) {
+      expect(getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
+        employee,
+        seatedFounder,
+        [frontDesk],
+      )).toBeUndefined();
+    }
+    expect(getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
+      adjacentReceptionist,
+      { ...seatedFounder, moving: true },
+      [frontDesk],
+    )).toBeUndefined();
+    expect(getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
+      adjacentReceptionist,
+      seatedFounder,
+      [{ ...frontDesk, definitionId: "room.waiting" }],
+    )).toBeUndefined();
+  });
+
   it("uses the seated pose only at the stationary staff anchor", () => {
     expect(
       shouldRenderFounderSeatedAtFrontDesk(

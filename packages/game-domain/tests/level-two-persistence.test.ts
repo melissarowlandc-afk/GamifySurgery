@@ -60,6 +60,52 @@ function levelTwoPersistenceFixture(): GameState {
 }
 
 describe("Level 2 persistence", () => {
+  it("does not inject the creation-only starter Examination Room into existing saves", () => {
+    const state = createInitialGameState(undefined, {
+      campaignId: "campaign.no-starter-save",
+      campaignSeed: "no-starter-save",
+      createdAtRealMs: 0,
+    });
+    state.rooms = state.rooms.filter(
+      (room) => room.id !== "room.instance.starter_examination",
+    );
+    state.doors = state.doors.filter(
+      (door) => door.roomId !== "room.instance.starter_examination",
+    );
+    const expectedRoomIds = state.rooms.map((room) => room.id);
+    const expectedDoorIds = state.doors.map((door) => door.id);
+
+    for (const schemaVersion of [7, 6]) {
+      const serialized = JSON.parse(serializeGameState(state)) as Record<string, unknown>;
+      serialized.schemaVersion = schemaVersion;
+      const restored = deserializeGameState(JSON.stringify(serialized));
+      expect(restored.rooms.map((room) => room.id)).toEqual(expectedRoomIds);
+      expect(restored.doors.map((door) => door.id)).toEqual(expectedDoorIds);
+      expect(restored.rooms.some((room) => room.id === "room.instance.starter_examination")).toBe(false);
+      expect(restored.doors.some((door) => door.id === "door.instance.starter_examination")).toBe(false);
+      expect(restored.rooms.some((room) => room.id === "room.instance.founder_desk")).toBe(true);
+      expect(restored.doors.some((door) => door.id === "door.instance.front_entrance")).toBe(true);
+    }
+  });
+
+  it("round-trips waiting reservations and automatic exam attendance, while legacy absence normalizes safely", () => {
+    const state = createInitialGameState(undefined, { campaignId: "campaign.waiting-reservations", campaignSeed: "waiting-reservations", createdAtRealMs: 0 });
+    const encounter = Object.values(state.encounters)[0]!;
+    encounter.checkInStatus = "checked_in";
+    encounter.waitingDestination = { roomInstanceId: "room.instance.founder_desk", location: { x: 37, y: 31 }, kind: "chair" };
+    state.environment.founderActivity = { kind: "attend_encounter", targetId: encounter.id, path: [{ ...state.environment.founderLocation }, { x: 37, y: 31 }], pathIndex: 0, lastMovedAtFacilityTick: 0, workMinutesRemaining: 4 };
+    for (const kind of ["chair", "standing", "public_wander"] as const) {
+      encounter.waitingDestination = { roomInstanceId: "room.instance.founder_desk", location: { x: 37, y: 31 }, kind };
+      const restored = deserializeGameState(serializeGameState(state));
+      expect(restored.encounters[encounter.id]!.waitingDestination).toEqual(encounter.waitingDestination);
+      expect(restored.environment.founderActivity).toEqual(state.environment.founderActivity);
+    }
+    const legacy = JSON.parse(serializeGameState(state)) as Record<string, unknown>;
+    legacy.schemaVersion = 6;
+    delete (legacy.encounters as Record<string, Record<string, unknown>>)[encounter.id]!.waitingDestination;
+    expect(deserializeGameState(JSON.stringify(legacy)).encounters[encounter.id]!.waitingDestination).toBeNull();
+  });
+
   it("retains an active endoscopy reservation and GLP-1 schedule across save/load and ticks", () => {
     let restored = deserializeGameState(serializeGameState(levelTwoPersistenceFixture()));
     expect(restored.facilityLevel).toBe(2);

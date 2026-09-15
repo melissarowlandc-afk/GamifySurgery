@@ -5,6 +5,7 @@ import {
   findDeterministicFacilityPath,
   findDeterministicRoomPath,
   getRoomNavigableTiles,
+  getRoomCareAnchor,
   getRoomNavigationAnchor,
   isPlacementAttachedThroughOwnEntrance,
   rotateRoomLocalPoint,
@@ -401,6 +402,19 @@ describe("fixed-fixture navigation metadata", () => {
     expect(
       getRoomNavigableTiles(room, definition),
     ).not.toContainEqual({ x: 10, y: 10 });
+  });
+
+  it("rotates Examination patient-bed and clinician-stool anchors with room orientation", () => {
+    const definition = prototypeDefinition("room.examination");
+    const horizontal: PlacedRoom = {
+      id: "room.exam.horizontal-care", roomDefinitionId: definition.id,
+      x: 10, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1,
+    };
+    const vertical: PlacedRoom = { ...horizontal, id: "room.exam.vertical-care", orientation: 90 };
+    expect(getRoomCareAnchor(horizontal, definition, "patient")).toEqual({ x: 12, y: 11 });
+    expect(getRoomCareAnchor(horizontal, definition, "clinician")).toEqual({ x: 11, y: 11 });
+    expect(getRoomCareAnchor(vertical, definition, "patient")).toEqual({ x: 10, y: 12 });
+    expect(getRoomCareAnchor(vertical, definition, "clinician")).toEqual({ x: 10, y: 11 });
   });
 
   it("reopens a blocked fixture tile when an explicit door occupies it", () => {

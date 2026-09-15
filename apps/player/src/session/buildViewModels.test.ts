@@ -8,6 +8,13 @@ import { createPrototypePlayerView } from "./viewModels";
 describe("Build Mode view models", () => {
   it("describes upgrade effects and projects valid walls for map interaction", () => {
     const initial = createInitialGameState();
+    // This view-model fixture owns the only Examination Room it selects.
+    initial.rooms = initial.rooms.filter(
+      (room) => room.id !== "room.instance.starter_examination",
+    );
+    initial.doors = initial.doors.filter(
+      (door) => door.roomId !== "room.instance.starter_examination",
+    );
     initial.cash = 1_000;
     initial.cashCents = 100_000;
     const state = gameReducer(initial, {

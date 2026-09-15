@@ -20,6 +20,14 @@ function sandbox(seed: string, level: 0 | 1 | 2 = 1): GameState {
   state.facilityLevel = level;
   state.cashCents = 500_000;
   state.cash = 5_000;
+  // Construction scenarios deliberately start from the legacy blank clinic so
+  // each test owns the Examination Room footprint and door it exercises.
+  state.rooms = state.rooms.filter(
+    (room) => room.id !== "room.instance.starter_examination",
+  );
+  state.doors = state.doors.filter(
+    (door) => door.roomId !== "room.instance.starter_examination",
+  );
   state.encounters = {};
   return state;
 }

@@ -7549,3 +7549,43 @@ body {
     right: 0.35rem;
   }
 }
+
+/*
+ * The clinic is a direct-manipulation interface, not a document editor.
+ * Keep passive copy from advertising text selection or a text caret while
+ * leaving real form fields and purpose-built controls with their native cues.
+ */
+body {
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  caret-color: transparent;
+}
+
+button:not(:disabled),
+a[href],
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+select {
+  cursor: pointer;
+  caret-color: currentcolor;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+  cursor: pointer;
+}
+
+/* This semantic separator is a drag handle, not a generic control. */
+.workspace-splitter {
+  cursor: row-resize;
+}

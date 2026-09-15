@@ -38,6 +38,10 @@ function tick(state: GameState): GameState {
   return reduce(state, { type: "ADVANCE_TICK" });
 }
 
+function createTutorialState(): GameState {
+  return createInitialGameState();
+}
+
 function advanceUntil(
   state: GameState,
   predicate: (candidate: GameState) => boolean,
@@ -103,7 +107,7 @@ function view(
 
 describe("state-driven tutorial coach", () => {
   it("keeps the first tutorial to one immediate decision and gates every explanation on acknowledgment", () => {
-    let state = createInitialGameState();
+    let state = createTutorialState();
     const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     expect(first.frozenCase.id).toBe(FIRST_TUTORIAL_CASE_ID);
     expect(first.frozenCase.decisionNodes).toHaveLength(1);
@@ -117,7 +121,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters[TUTORIAL_ENCOUNTER_ID]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     expect(view(state)?.id).toBe("first-patient-arriving");
     expect(
@@ -199,12 +203,12 @@ describe("state-driven tutorial coach", () => {
   });
 
   it("uses the protected second patient to explain a timed facility service and returned decision", () => {
-    let state = createInitialGameState();
+    let state = createTutorialState();
     state = advanceUntil(
       state,
       (candidate) =>
-        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.patientMovement ===
-        null,
+        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus ===
+        "checked_in",
     );
     state = reduce(state, {
       type: "OPEN_CHART",
@@ -246,7 +250,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     expect(
       view(state, {
@@ -367,13 +371,13 @@ describe("state-driven tutorial coach", () => {
     ).toBe("resolve-second-chart");
   });
 
-  it("teaches the room footprint and explicit $0 door before allowing build exit", () => {
-    let state = createInitialGameState();
+  it("teaches adding a second Examination Room and its explicit $0 door before allowing build exit", () => {
+    let state = createTutorialState();
     state = advanceUntil(
       state,
       (candidate) =>
-        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.patientMovement ===
-        null,
+        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus ===
+        "checked_in",
     );
     state = reduce(state, {
       type: "OPEN_CHART",
@@ -393,7 +397,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     state = reduce(state, {
       type: "OPEN_CHART",
@@ -426,6 +430,12 @@ describe("state-driven tutorial coach", () => {
       type: "CLOSE_CHART",
       encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
+    state.rooms = state.rooms.filter(
+      (room) => room.id !== "room.test.tutorial-examination",
+    );
+    state.doors = state.doors.filter(
+      (door) => door.roomId !== "room.test.tutorial-examination",
+    );
 
     const beforeBuild = [
       "first-patient-arriving",
@@ -484,7 +494,7 @@ describe("state-driven tutorial coach", () => {
     state.rooms.push({
       id: "room.exam.tutorial",
       roomDefinitionId: "room.examination",
-      x: 34,
+      x: 37,
       y: 26,
       orientation: 0,
       doorSide: null,
@@ -531,7 +541,7 @@ describe("state-driven tutorial coach", () => {
     state.doors.push({
       id: "door.exam.tutorial",
       roomId: "room.exam.tutorial",
-      side: "south",
+      side: "west",
       offset: 1,
       exterior: false,
     });
@@ -553,8 +563,65 @@ describe("state-driven tutorial coach", () => {
     );
   });
 
+  it("keeps the original one-room construction lesson for campaigns without the stable starter", () => {
+    const state = createInitialGameState();
+    state.rooms = state.rooms.filter(
+      (room) => room.id !== "room.instance.starter_examination",
+    );
+    state.doors = state.doors.filter(
+      (door) => door.roomId !== "room.instance.starter_examination",
+    );
+    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    first.lifecycle = "resolved";
+    first.firstOpenedAtTick = 0;
+    first.answers = [{}] as typeof first.answers;
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...first,
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      answers: [{}, {}] as typeof first.answers,
+    };
+
+    expect(
+      view(state, {
+        acknowledged: [
+          "between-tutorial-patients",
+          "resolve-second-chart",
+          "alerts-tour",
+        ],
+      })?.id,
+    ).toBe("enter-build-mode");
+
+    state.rooms.push({
+      id: "room.legacy.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.legacy.examination",
+      roomId: "room.legacy.examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
+    expect(
+      view(state, {
+        buildMode: true,
+        acknowledged: [
+          "between-tutorial-patients",
+          "resolve-second-chart",
+          "alerts-tour",
+        ],
+      })?.id,
+    ).toBe("exit-build-mode");
+  });
+
   it("keeps the completion prompt as the only Level 1 tutorial step", () => {
-    let state = createInitialGameState();
+    let state = createTutorialState();
     state.facilityLevel = 1;
     state.encounters = {};
     state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
@@ -595,7 +662,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters["encounter.level-one.service-drill"]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     expectCompletionPrompt(state);
 

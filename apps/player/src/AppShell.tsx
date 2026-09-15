@@ -56,6 +56,7 @@ import type {
 import type {
   QuestionReviewFlag,
   QuestionReviewFlagStatus,
+  PrototypeSaveResult,
   TutorialActionId,
   TutorialStepView,
 } from "./session";
@@ -142,7 +143,8 @@ interface AppShellProps {
   onSwitchCampaign: (campaignId: string) => void;
   onTutorialAction: (actionId: TutorialActionId) => void;
   onTutorialsEnabledChange: (enabled: boolean) => void;
-  onSaveAndPause: () => boolean;
+  onSaveAndPause: () => PrototypeSaveResult;
+  onClearLocalCampaigns: () => boolean;
   onRestart: () => void;
 }
 
@@ -226,6 +228,7 @@ export function AppShell({
   onTutorialAction,
   onTutorialsEnabledChange,
   onSaveAndPause,
+  onClearLocalCampaigns,
   onRestart,
 }: AppShellProps) {
   const clinicWorkspaceRef = useRef<HTMLElement>(null);
@@ -500,7 +503,10 @@ export function AppShell({
         onTogglePause={onTogglePause}
         onSimulationSpeedChange={onSimulationSpeedChange}
         endControls={
-          <SaveCloseDialog onSaveAndPause={onSaveAndPause} />
+          <SaveCloseDialog
+            onSaveAndPause={onSaveAndPause}
+            onClearLocalCampaigns={onClearLocalCampaigns}
+          />
         }
       />
 

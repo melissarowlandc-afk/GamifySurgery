@@ -35,10 +35,13 @@ import { getApprovedPlacementOrientations } from "../facility/roomVisualLayout";
 import {
   loadPrototypeProfile,
   requireActiveCampaign,
-  savePrototypeProfile,
+  clearPrototypeCampaignStorage,
+  createPrototypeCampaignWriteGate,
+  describePrototypeStorageFailure,
   selectLocalCampaign,
   type LoadedPrototypeProfile,
   type LocalPrototypeProfile,
+  type PrototypeSaveResult,
 } from "./prototypeStorage";
 import {
   createTutorialStepView,
@@ -149,7 +152,8 @@ export interface PrototypeSession {
   dismissTutorialIntro: () => void;
   performTutorialAction: (actionId: TutorialActionId) => void;
   setTutorialsEnabled: (enabled: boolean) => void;
-  saveAndPause: () => boolean;
+  saveAndPause: () => PrototypeSaveResult;
+  clearLocalCampaigns: () => boolean;
 }
 
 export interface PrototypeSystemNotice {
@@ -303,6 +307,11 @@ export function usePrototypeSession(
   const systemNoticeSequenceRef = useRef(0);
   const saveWarningShownRef = useRef(false);
   const lastSaveSucceededRef = useRef(true);
+  const lastSaveResultRef = useRef<PrototypeSaveResult>({
+    ok: true,
+    profileCharacters: 0,
+  });
+  const campaignWriteGateRef = useRef(createPrototypeCampaignWriteGate());
   const pendingAutosaveProfileRef =
     useRef<LocalPrototypeProfile | null>(null);
   const autosaveTaskRef = useRef<PrototypeAutosaveTask | null>(null);
@@ -363,6 +372,21 @@ export function usePrototypeSession(
     }
   }, []);
 
+  const attemptSaveProfile = useCallback(
+    (nextProfile: LocalPrototypeProfile): PrototypeSaveResult => {
+      const result = campaignWriteGateRef.current.save(nextProfile);
+      lastSaveResultRef.current = result;
+      lastSaveSucceededRef.current = result.ok;
+      if (result.ok) {
+        // A later verified write makes the previous warning stale and allows
+        // a distinct future failure to be reported again.
+        saveWarningShownRef.current = false;
+      }
+      return result;
+    },
+    [],
+  );
+
   const stageActiveState = useCallback((nextState: GameState) => {
     const now = Date.now();
     const nextProfile: LocalPrototypeProfile = {
@@ -392,10 +416,8 @@ export function usePrototypeSession(
     pendingAutosaveProfileRef.current = null;
     const nextProfile = stageActiveState(nextState);
     setProfile(nextProfile);
-    const saved = savePrototypeProfile(nextProfile);
-    lastSaveSucceededRef.current = saved;
-    return saved;
-  }, [cancelScheduledAutosave, stageActiveState]);
+    return attemptSaveProfile(nextProfile).ok;
+  }, [attemptSaveProfile, cancelScheduledAutosave, stageActiveState]);
 
   const flushScheduledAutosave = useCallback(() => {
     autosaveTaskRef.current = null;
@@ -405,16 +427,16 @@ export function usePrototypeSession(
       return;
     }
     setProfile(pendingProfile);
-    const saved = savePrototypeProfile(pendingProfile);
-    lastSaveSucceededRef.current = saved;
+    const result = attemptSaveProfile(pendingProfile);
+    const saved = result.ok;
     if (!saved && !saveWarningShownRef.current) {
       saveWarningShownRef.current = true;
       publishSystemNotice(
         "alert.system.save-failed",
-        "Local saving is unavailable. Progress will last only for this browser session.",
+        describePrototypeStorageFailure(result.failure),
       );
     }
-  }, [publishSystemNotice]);
+  }, [attemptSaveProfile, publishSystemNotice]);
 
   const scheduleActiveStateAutosave = useCallback(
     (nextState: GameState) => {
@@ -492,7 +514,9 @@ export function usePrototypeSession(
         saveWarningShownRef.current = true;
         publishSystemNotice(
           "alert.system.save-failed",
-          "Local saving is unavailable. Progress will last only for this browser session.",
+          lastSaveResultRef.current.ok
+            ? "The browser rejected this save. Keep this tab open and try again."
+            : describePrototypeStorageFailure(lastSaveResultRef.current.failure),
         );
       }
 
@@ -512,10 +536,10 @@ export function usePrototypeSession(
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
       if (pendingProfile) {
-        savePrototypeProfile(pendingProfile);
+        attemptSaveProfile(pendingProfile);
       }
     },
-    [cancelScheduledAutosave],
+    [attemptSaveProfile, cancelScheduledAutosave],
   );
 
   const executeBuildCommand = useCallback(
@@ -578,14 +602,15 @@ export function usePrototypeSession(
   }, [buildMode, state]);
 
   useEffect(() => {
-    if (!savePrototypeProfile(profileRef.current)) {
+    const result = attemptSaveProfile(profileRef.current);
+    if (!result.ok) {
       saveWarningShownRef.current = true;
       publishSystemNotice(
         "alert.system.save-failed",
-        "Local saving is unavailable. Progress will last only for this browser session.",
+        describePrototypeStorageFailure(result.failure),
       );
     }
-  }, [publishSystemNotice]);
+  }, [attemptSaveProfile, publishSystemNotice]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -615,7 +640,7 @@ export function usePrototypeSession(
       // document is discarded.
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
-      savePrototypeProfile(profileRef.current);
+      attemptSaveProfile(profileRef.current);
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -628,7 +653,7 @@ export function usePrototypeSession(
       );
       window.removeEventListener("pagehide", handlePageHide);
     };
-  }, [cancelScheduledAutosave, execute, publishSystemNotice]);
+  }, [attemptSaveProfile, cancelScheduledAutosave, execute, publishSystemNotice]);
 
   useEffect(() => {
     if (!documentVisible || state.paused) {
@@ -1393,7 +1418,7 @@ export function usePrototypeSession(
     [buildMode, execute, managementMode],
   );
 
-  const saveAndPause = useCallback((): boolean => {
+  const saveAndPause = useCallback((): PrototypeSaveResult => {
     if (!stateRef.current.paused) {
       execute(
         { type: "SET_PAUSED", paused: true },
@@ -1402,24 +1427,48 @@ export function usePrototypeSession(
             "Campaign saved and paused. It is safe to close this tab.",
         },
       );
+      const result = lastSaveResultRef.current;
       const saved = lastSaveSucceededRef.current;
       publishSystemNotice(
         saved ? "alert.system.saved" : "alert.system.save-failed",
         saved
           ? "Campaign saved and paused. It is safe to close this tab."
-          : "Save failed. Keep the game open and try again.",
+        : result.ok
+          ? "Save failed. Keep the game open and try again."
+          : describePrototypeStorageFailure(result.failure),
       );
-      return saved;
+      return result;
     }
     const saved = persistActiveState(stateRef.current);
+    const result = lastSaveResultRef.current;
     publishSystemNotice(
       saved ? "alert.system.saved" : "alert.system.save-failed",
       saved
         ? "Campaign saved and paused. It is safe to close this tab."
-        : "Save failed. Keep the game open and try again.",
+      : result.ok
+        ? "Save failed. Keep the game open and try again."
+        : describePrototypeStorageFailure(result.failure),
     );
-    return saved;
+    return result;
   }, [execute, persistActiveState, publishSystemNotice]);
+
+  const clearLocalCampaigns = useCallback((): boolean => {
+    // This must happen before deleting keys: pagehide/unmount can otherwise
+    // synchronously put the in-memory whole-profile snapshot back.
+    campaignWriteGateRef.current.suppress();
+    cancelScheduledAutosave();
+    pendingAutosaveProfileRef.current = null;
+    const result = clearPrototypeCampaignStorage();
+    if (!result.ok) {
+      publishSystemNotice(
+        "alert.system.save-failed",
+        `Local campaigns were not cleared. ${describePrototypeStorageFailure(result.failure)}`,
+      );
+      return false;
+    }
+    window.location.reload();
+    return true;
+  }, [cancelScheduledAutosave, publishSystemNotice]);
 
   const switchCampaign = useCallback((campaignId: string) => {
     const currentProfile = profileRef.current;
@@ -1456,7 +1505,8 @@ export function usePrototypeSession(
     setBuildExitBlockedReason(null);
     setFacilityCamera(getInitialFacilityCamera(selectedCampaign.state));
     setSummaryVisible(false);
-    const saved = savePrototypeProfile(nextProfile);
+    const saveResult = attemptSaveProfile(nextProfile);
+    const saved = saveResult.ok;
     saveWarningShownRef.current = !saved;
     publishSystemNotice(
       saved
@@ -1464,9 +1514,9 @@ export function usePrototypeSession(
         : "alert.system.save-failed",
       saved
         ? `${selectedCampaign.name} opened. Its learning history is unchanged.`
-        : `${selectedCampaign.name} opened, but local saving is unavailable.`,
+        : `${selectedCampaign.name} opened, but ${describePrototypeStorageFailure(saveResult.failure)}`,
     );
-  }, [cancelScheduledAutosave, publishSystemNotice]);
+  }, [attemptSaveProfile, cancelScheduledAutosave, publishSystemNotice]);
 
   const tutorialIntroDismissed =
     profile.tutorialIntroDismissedCampaignIds.includes(state.campaignId);
@@ -1515,15 +1565,16 @@ export function usePrototypeSession(
       pendingAutosaveProfileRef.current = null;
       profileRef.current = nextProfile;
       setProfile(nextProfile);
-      const saved = savePrototypeProfile(nextProfile);
+      const saveResult = attemptSaveProfile(nextProfile);
+      const saved = saveResult.ok;
       saveWarningShownRef.current = !saved;
       setAnnouncement(
         saved
           ? successAnnouncement
-          : `${successAnnouncement} Local saving is unavailable.`,
+          : `${successAnnouncement} ${describePrototypeStorageFailure(saveResult.failure)}`,
       );
     },
-    [cancelScheduledAutosave],
+    [attemptSaveProfile, cancelScheduledAutosave],
   );
 
   const dismissTutorialIntro = useCallback(() => {
@@ -1737,5 +1788,6 @@ export function usePrototypeSession(
     performTutorialAction,
     setTutorialsEnabled,
     saveAndPause,
+    clearLocalCampaigns,
   };
 }

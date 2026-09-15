@@ -183,6 +183,15 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           })
           .nullable(),
+        patientCareAnchor: z
+          .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
+          .nullable()
+          .optional(),
+        clinicianCareAnchor: z
+          .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
+          .nullable()
+          .optional(),
+        publicWaitingArea: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -261,6 +270,14 @@ export const roomDefinitionSchema = z
       validateAnchor(navigation.staffAnchor, [
         "navigation",
         "staffAnchor",
+      ]);
+      validateAnchor(navigation.patientCareAnchor ?? null, [
+        "navigation",
+        "patientCareAnchor",
+      ]);
+      validateAnchor(navigation.clinicianCareAnchor ?? null, [
+        "navigation",
+        "clinicianCareAnchor",
       ]);
       const waitingKeys = new Set<string>();
       navigation.waitingAnchors.forEach((point, index) => {
@@ -456,6 +473,12 @@ export const prototypeBalanceReleaseSchema = z
         maximumAmenityCompletionBonus: z.number().int().nonnegative().max(20),
         roomCleanlinessLossPerEncounter: z.number().int().nonnegative().max(20),
         rollingWindowSize: z.number().int().positive().max(100),
+        unstaffedCheckInDelayMinutes: z.number().int().positive().max(240),
+        unstaffedCheckInSatisfactionPenalty: z
+          .number()
+          .int()
+          .nonnegative()
+          .max(20),
         facilityConditionPenalties: z
           .object({
             maximumTotal: z.number().int().nonnegative().max(50),
