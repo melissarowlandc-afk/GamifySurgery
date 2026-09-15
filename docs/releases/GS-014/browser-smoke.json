@@ -1,0 +1,30 @@
+{
+  "recordedAtUtc": "2026-09-15T00:32:29.7746521Z",
+  "deployedCommit": "680f9cdb5c42ddb414f41d4cb571252482ebccdf",
+  "url": "https://melissarowlandc-afk.github.io/GamifySurgery/",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  },
+  "project": "laptop-chrome",
+  "scenarioDurationSeconds": 10.5,
+  "totalDurationSeconds": 11.9,
+  "result": {
+    "status": "passed",
+    "failedTests": []
+  },
+  "checks": [
+    "Real prototype entry and new campaign",
+    "Rendered facility and image loads",
+    "Build Mode enter and exit",
+    "Save & Close",
+    "Reload and resume same campaign ID, founder and paused state",
+    "No page errors",
+    "No non-favicon request or console errors",
+    "Parent visually inspected live screenshot"
+  ],
+  "screenshotLocalPath": "artifacts/logs/GS014/live-production-laptop.png",
+  "screenshotSHA256": "98aa326aad35acda771925ffb9d6692ad38ce681317aca309ac4dd8eac10c87c",
+  "harness": "tests/e2e/pages-release-smoke.spec.ts",
+  "harnessSHA256": "36b5f4d84952be69b7ad033401687aea382851348f5d767c8d134a09bb2a8d93"
+}
