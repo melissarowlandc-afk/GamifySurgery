@@ -1,6 +1,6 @@
 # GS-016 — Remove the prebuilt examination room
 
-Updated 2026-09-17. Status: owner accepted; scoped backup closeout in progress.
+Updated 2026-09-17. Status: owner accepted; local backup verified; GitHub push awaiting approval review.
 Owner confirmation: "The examination room is gone at the start like it's
 supposed to be. Let's resolve GS-016" (2026-09-17). No deployment authorized.
 
@@ -131,3 +131,18 @@ runnable game or runtime integration: the accepted working state depends on
 earlier uncommitted routing and persistence foundations. The package stores
 the recorded baseline, exact task patch, SHA-256 manifest and restore script.
 No unrelated runtime changes are included as an integrated source commit.
+
+## Backup closeout receipt — 2026-09-17
+
+Local package commit: 5c5cfbf80f85d27969e6a76bf28773241766f393.
+Branch: backup/gs-016-accepted-2026-09-17.
+Astra independently restored the committed Git archive and verified all 22
+accepted SHA-256 hashes. Non-empty destination refusal also passed.
+Terra implemented the fix; Sol validated acceptance and audited/prepared the
+reconstruction package; Astra reviewed diffs, tests, screenshots and restore.
+
+GitHub push was rejected by automatic approval review, which did not recognize
+trusted authorization for this specific source/evidence payload and destination.
+No remote backup is claimed. Exact payload/destination approval was requested.
+After approval, push this backup branch to origin, verify its remote hash,
+record verification and archive the task. No merge or deployment is authorized.

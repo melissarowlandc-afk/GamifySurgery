@@ -96,3 +96,12 @@ Sol exam_room_acceptance now audits the baseline-relative scope and prepares
 isolated backup artifacts; Astra records acceptance, reviews the exact staged
 scope, commits/pushes, verifies the remote and archives. Preserve all unrelated
 dirty hunks; no merge, deployment or next feedback batch is authorized.
+
+## Closeout checkpoint
+
+Sol completed the reconstruction audit. Astra restored the committed archive:
+22/22 hashes passed and non-empty target refusal passed. Local backup commit
+5c5cfbf80f85d27969e6a76bf28773241766f393 is on
+backup/gs-016-accepted-2026-09-17. Automatic approval review rejected the push
+for lack of recognized payload/destination authorization. Await the requested
+exact approval, then push, verify remote and archive; do not bypass rejection.
