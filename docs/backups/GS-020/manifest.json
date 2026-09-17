@@ -1,0 +1,194 @@
+{
+  "schema": "gs-020-scoped-reconstruction.v1",
+  "generatedAt": "2026-09-17",
+  "sourceHead": "c26c96a111103d8665e33c9258ef54071d729f14",
+  "patch": "gs-020-baseline-to-accepted.patch",
+  "patchSha256": "09858610ee8631672f3b9b95b902e23e40466dc886ac9d9d1b612c592d8cc023",
+  "entryCount": 23,
+  "entries": [
+    {
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "baselineSha256": "db636f845709fa9098b3475b0fe54d7293abfa446e54a741b803d362cdbde5e8",
+      "acceptedSha256": "6f766f64b788fc07b62921ec70f7e1d108f0990bdee39955cc264ddf1fcef48a",
+      "currentSha256": "6f766f64b788fc07b62921ec70f7e1d108f0990bdee39955cc264ddf1fcef48a",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "ca0ef58bba44bf50ce49979d6f043b24b56d30f5"
+    },
+    {
+      "path": "packages/balance-config/src/schema.ts",
+      "baselineSha256": "a55654490955ce11f784826f1e6f08a9e7e3e15e75587efcd623070fceb974af",
+      "acceptedSha256": "a81fcc5ee35b52341b05751723587541b2b3907629318f02adeb6103538cb5cd",
+      "currentSha256": "a81fcc5ee35b52341b05751723587541b2b3907629318f02adeb6103538cb5cd",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "7113554559a701c210d12d845969856a5f4b3baa"
+    },
+    {
+      "path": "packages/balance-config/src/prototype-alerts.ts",
+      "baselineSha256": "d2f06349c5ce885f2ae0df513fab1fbf614b597c544f7b0df58d392d0285c471",
+      "acceptedSha256": "271624e91021ebedaf278c22de5c097e1d64f601beb15a34f69fd75b45b82404",
+      "currentSha256": "6376c762ed9f0bec7f8a58af5e9ebd63bf8bd0fd4c2a12678d35d6c5d9f46462",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "8ba5727674476e123e40eceff4c520fdf6782342"
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.test.ts",
+      "baselineSha256": "87917697d5980c9851f9c0841a68373055e0885003c0f3cc0986fe2d7a79d759",
+      "acceptedSha256": "df34414367c088142ad364cc89d3d29767166501a3fd3eafc42a397470fb350f",
+      "currentSha256": "df34414367c088142ad364cc89d3d29767166501a3fd3eafc42a397470fb350f",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "bf8a438b37c1ac45f3356dd0a6e7374aa33fdc5b"
+    },
+    {
+      "path": "packages/game-domain/src/doors.ts",
+      "baselineSha256": "eb9c001c9bd2c076eac66dbfbf49c04cd1ff8f482cae057ab62010bb2b455370",
+      "acceptedSha256": "fed95d43cdc92bb138b4c885ccea21c8529b2541c1ddb75332a7cdfb79e80764",
+      "currentSha256": "fed95d43cdc92bb138b4c885ccea21c8529b2541c1ddb75332a7cdfb79e80764",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "70672fbd41f0bdeb6504650707fed649219379c7"
+    },
+    {
+      "path": "packages/game-domain/src/selectors.ts",
+      "baselineSha256": "364883fb929730ba9daafbbcb4484dc495524b04bae2b27d075b0845a48324ba",
+      "acceptedSha256": "c1fe1a082fafc85b5ee584d4ffd296b975910e803c22467995caf1bebc55c7b6",
+      "currentSha256": "c1fe1a082fafc85b5ee584d4ffd296b975910e803c22467995caf1bebc55c7b6",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "c343c244db876d6288f042acde37dea83ffbdf61"
+    },
+    {
+      "path": "packages/game-domain/src/patient-travel.ts",
+      "baselineSha256": "058bc3c808e237e6d6aab59368c5263b25c35bcd849be0d75ecb71fc66297680",
+      "acceptedSha256": "9759248a8730bdcdca3a3dd77ab20738e39198ad35c348076c00512eb89bcb3a",
+      "currentSha256": "9759248a8730bdcdca3a3dd77ab20738e39198ad35c348076c00512eb89bcb3a",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "f1313cc79d1573e594c85e81ab5f48d3d1ebb1ac"
+    },
+    {
+      "path": "packages/game-domain/src/staff.ts",
+      "baselineSha256": "985b53ed77f59db59d89beb2e0c5d58a84b0467668361c1cff3d36d48d2bb353",
+      "acceptedSha256": "ccdf7101bd886f4fd1de56929839773579df685ea49399df845914cf290919b9",
+      "currentSha256": "ccdf7101bd886f4fd1de56929839773579df685ea49399df845914cf290919b9",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "f52ac74e7f05e70d235025fb608db401f9e1cc0f"
+    },
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "baselineSha256": "b60b4fa2a1ab2d926b73f24ffdb20a46a52d3449f53acddf95e8c49e5cf0c23d",
+      "acceptedSha256": "6d08a9d4d688adbe92c0b6948ceb151985f9f533374bc2aea18d341f021f73ec",
+      "currentSha256": "38e133be27539f6115a07b71eef2fa99eec19302cab6fcc9974dadebc6cdcc13",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "daec4270efbcdeba0f63e74ef8991dd09a392648"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "baselineSha256": "8ae1c032b90d6365016f8cf0d17cbee7432efb6d1983c0ade8e12af234b79d19",
+      "acceptedSha256": "69d663fe201e061892c376dcc823b5c8cb5141a13575d25e284352477b55a8f5",
+      "currentSha256": "01d23c3d94022d1b6b789e9938b64e9aab5c1ca6f0a461ad05e72d99dec5a804",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "1df25c41a57f81da4cc74ceaa70a8db2a6243be8"
+    },
+    {
+      "path": "packages/game-domain/src/persistence.ts",
+      "baselineSha256": "349d8e268f09dd1b4c835a78f303a2e13fbb3a5d5e5d0b9a632aadcff55dda9d",
+      "acceptedSha256": "5242ca3eb90ffdd962aa0b78fae0991f24b87eb30248bc490603f17d5e37d751",
+      "currentSha256": "a8c8c41408f2fc5b96f64e0722e48d64238303c879ea42324d4b18f5e54da980",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "ba331d38c922bb1cb4596bf6e0124205e93098f9"
+    },
+    {
+      "path": "packages/game-domain/src/facility-experience.ts",
+      "baselineSha256": "dc76fcb21fbc9621d57cf353b5b31e3eda7237202b072f33946483d6a2462f98",
+      "acceptedSha256": "ec25ca1d696d71716f9a3848b1b9172ccca893c70b2cb76569c8aead5fde1261",
+      "currentSha256": "6e10df3b1c5b9cdc1b1875c652955ec9c08a80f171ee2c63c38e89a5d70a366c",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "e9f1f7ab69c96ecaf66ea014a87717588d1f422f"
+    },
+    {
+      "path": "packages/game-domain/tests/facility-management.test.ts",
+      "baselineSha256": "750f9ddb8219ef875fa58f826f0034dcada0acc601feb9c4cdc38c80679aa3ff",
+      "acceptedSha256": "d3a320807366264eb49dc4ba8ad5bf88efc3705d9f74bd7fec53381d0db93160",
+      "currentSha256": "d3a320807366264eb49dc4ba8ad5bf88efc3705d9f74bd7fec53381d0db93160",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "3949f307a878807b6315a96926cd31dd4050fd57"
+    },
+    {
+      "path": "packages/game-domain/tests/facility-experience.test.ts",
+      "baselineSha256": "5b8c0c9c2da8e32cb520312963de345a1ec95e427ef88855824bc88124d9500e",
+      "acceptedSha256": "2bddcaf2c488bd2815d186ef10cd6c144006270191aefea8bbb3e7ad87f4f105",
+      "currentSha256": "ece74020b751a0e4df4eb6bbd78b041335843bed43d5ca7bb9f34781f372c6fa",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "4888dacae9e8a7d70a69e91f2046705c513d44d6"
+    },
+    {
+      "path": "packages/game-domain/tests/game-domain.test.ts",
+      "baselineSha256": "49598dda0ff8745a901a1032e140373381fea4c56c38fafc2362ddbedd5aadce",
+      "acceptedSha256": "1a8bda87afa1485082b0324e5321204cbe941b3a0bf9bfab1059f8d3b7192d9d",
+      "currentSha256": "1a8bda87afa1485082b0324e5321204cbe941b3a0bf9bfab1059f8d3b7192d9d",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "e95b10858c42b3e7b273b14fa6049577964b4327"
+    },
+    {
+      "path": "packages/game-domain/tests/spatial.test.ts",
+      "baselineSha256": "6c438882ad9370a8c9a7d1cb0ac58a9aeface584127ad36193d61bf993d7b234",
+      "acceptedSha256": "2f77d90548e1a40d8dcb0898454a14231174e78bea6743b34a90721e08596170",
+      "currentSha256": "2f77d90548e1a40d8dcb0898454a14231174e78bea6743b34a90721e08596170",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "80ce0289e9cd85105c2b79f87e73f79b23c9a648"
+    },
+    {
+      "path": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "baselineSha256": null,
+      "acceptedSha256": "2e51669f1eebe28b086ff787927041de8fef88daf3ea785dc0bfb4f90358b712",
+      "currentSha256": "2e51669f1eebe28b086ff787927041de8fef88daf3ea785dc0bfb4f90358b712",
+      "acceptedMatchesCurrent": true,
+      "headBlob": null
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "baselineSha256": "94a24dca69d5e9e1804da44d2b0b61db23e36bd712349fb8db8820309cf7790d",
+      "acceptedSha256": "a3b9f5ce6ed3e6cbd18cf4377f6d0c39e4e3cab7eaf2079ea24cc01bd1e82421",
+      "currentSha256": "a3b9f5ce6ed3e6cbd18cf4377f6d0c39e4e3cab7eaf2079ea24cc01bd1e82421",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "bd4e6f05eeca4394116ba214d79a5d764819bee5"
+    },
+    {
+      "path": "apps/player/src/session/alertViewModels.ts",
+      "baselineSha256": "edd5d71fc04a849c775db10aff55bcabc9e3bae39bfa8d1ec2cbe121920e73b0",
+      "acceptedSha256": "8b119f7d5c5d6849c1e635a014c58d113943cc207fc438c60d0c21eb664ebbed",
+      "currentSha256": "48bd4b7b6862d50145d99ce79b68b5849f22477ca517c1f43e0365787682cbdd",
+      "acceptedMatchesCurrent": false,
+      "headBlob": "9b9ba0677da1b1610d4fa1837b305a34e01aa8e4"
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "baselineSha256": "c8e35d3a7e6493da5337f32b435d1058dcb5a78a16de052b650609c2554affc4",
+      "acceptedSha256": "898a4a511fcfaf568fb0a0a103e16b2cb1acc32fc9c19b8675783bbd7532adf2",
+      "currentSha256": "898a4a511fcfaf568fb0a0a103e16b2cb1acc32fc9c19b8675783bbd7532adf2",
+      "acceptedMatchesCurrent": true,
+      "headBlob": "66f5f3f7dd9be1eb0b9821d3126da6c72c0cb0b8"
+    },
+    {
+      "path": "tests/e2e/ultrasound-first-imaging.spec.ts",
+      "baselineSha256": null,
+      "acceptedSha256": "19a5300f21edcefb963ad921b07d35ecd6f34376d0008da0427aee938e4b03f8",
+      "currentSha256": "19a5300f21edcefb963ad921b07d35ecd6f34376d0008da0427aee938e4b03f8",
+      "acceptedMatchesCurrent": true,
+      "headBlob": null
+    },
+    {
+      "path": "artifacts/screenshots/gs-020-ultrasound-build-goals.png",
+      "baselineSha256": null,
+      "acceptedSha256": "cb7f21e2883dd8b83601ad9a8111891bb14bf490e77e084bcce709461b7b6aff",
+      "currentSha256": "cb7f21e2883dd8b83601ad9a8111891bb14bf490e77e084bcce709461b7b6aff",
+      "acceptedMatchesCurrent": true,
+      "headBlob": null
+    },
+    {
+      "path": "artifacts/screenshots/gs-020-onsite-ultrasound-pending.png",
+      "baselineSha256": null,
+      "acceptedSha256": "c797108c23cfbe8fd605391a07969b3a6a3727465a6e1dfdc1b1535fd487cc4f",
+      "currentSha256": "c797108c23cfbe8fd605391a07969b3a6a3727465a6e1dfdc1b1535fd487cc4f",
+      "acceptedMatchesCurrent": true,
+      "headBlob": null
+    }
+  ]
+}
