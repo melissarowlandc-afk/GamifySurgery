@@ -1,5 +1,18 @@
 # Current Thread Handoff
 
+> GS-017 OWNER ACCEPTANCE AND SPECIFIC BACKUP CONSENT (2026-09-17).
+> Owner reported “I finished and completed GS-017” to GS Manager, accepting
+> the final alert and chart-close changes. The historical day-six shortage
+> remains a diagnosed limitation/content follow-up, not a proven fix.
+> Owner then answered “I approv” to the explicit question approving this
+> prepared package, including prerequisite source snapshots and six synthetic
+> screenshots, to the public GamifySurgery GitHub repository.
+> Approved destination: https://github.com/melissarowlandc-afk/GamifySurgery.git
+> Branch: backup/gs-017-alerts-2026-09-17. Package scope is unchanged.
+> Complete archival after verifying this checkpoint on the remote. No merge
+> or deployment is authorized.
+
+
 > GS-017 OWNER-AUTHORIZED GITHUB CHECKPOINT (2026-09-17).
 > Scoped payload commit 8629113791a362253120b6058a5a5a0bf0dd2839 is stored on
 > backup/gs-017-alerts-2026-09-17. See docs/backups/GS-017/README.md.
