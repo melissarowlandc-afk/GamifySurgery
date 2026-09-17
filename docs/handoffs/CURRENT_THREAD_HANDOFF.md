@@ -4,9 +4,9 @@
 > absent at a fresh start and requested resolution. Technical validation passed:
 > 768 unit tests, 3 browser checks, typechecks and build. Existing saves retain
 > rooms/progress; normal $160 construction and $120 starting cash are unchanged.
-> Local backup 5c5cfbf80f85d27969e6a76bf28773241766f393 is verified on
-> backup/gs-016-accepted-2026-09-17. GitHub push awaits exact-payload approval
-> after automatic review rejection; no remote backup or archival yet.
+> GitHub backup verified: 28e3bed42748bb60be63420f890388f6d0b7a845 on
+> backup/gs-016-accepted-2026-09-17 (owner explicitly approved package push).
+> Exact reconstruction evidence, not a standalone release. Ready for archival.
 > Preserve shared beta. See GS-016_PREBUILT_EXAMINATION_ROOM.md for evidence.
 > Canonical opening remains START_GAME.cmd -> http://127.0.0.1:4173.
 > No deployment or next feedback batch is authorized in this task.
