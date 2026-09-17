@@ -1,0 +1,74 @@
+packages/game-domain/src/reducer.ts(66,3): error TS2305: Module '"./spatial"' has no exported member 'getRoomCareAnchor'.
+packages/game-domain/src/reducer.ts(230,17): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(318,32): error TS2339: Property 'publicWaitingArea' does not exist on type '{ blockedTiles: { x: number; y: number; }[]; primaryAnchor: { x: number; y: number; } | null; waitingAnchors: { x: number; y: number; }[]; staffAnchor: { x: number; y: number; } | null; }'.
+packages/game-domain/src/reducer.ts(339,3): error TS2322: Type '{ kind: "wander_facility" | "sit_in_chair" | "visit_bathroom"; targetId: string; path: GridPoint[]; pathIndex: number; lastMovedAtFacilityTick: number; workMinutesRemaining: number; }' is not assignable to type 'FounderActivityState'.
+  Types of property 'kind' are incompatible.
+    Type '"sit_in_chair" | "visit_bathroom" | "wander_facility"' is not assignable to type '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point"'.
+      Type '"sit_in_chair"' is not assignable to type '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point"'.
+packages/game-domain/src/reducer.ts(382,7): error TS2322: Type '"return_to_front_desk"' is not assignable to type '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point"'.
+packages/game-domain/src/reducer.ts(768,31): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(790,23): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(791,24): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(937,141): error TS2339: Property 'publicWaitingArea' does not exist on type '{ blockedTiles: { x: number; y: number; }[]; primaryAnchor: { x: number; y: number; } | null; waitingAnchors: { x: number; y: number; }[]; staffAnchor: { x: number; y: number; } | null; }'.
+packages/game-domain/src/reducer.ts(966,43): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(976,23): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(976,55): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(990,75): error TS2339: Property 'publicWaitingArea' does not exist on type '{ blockedTiles: { x: number; y: number; }[]; primaryAnchor: { x: number; y: number; } | null; waitingAnchors: { x: number; y: number; }[]; staffAnchor: { x: number; y: number; } | null; }'.
+packages/game-domain/src/reducer.ts(1265,5): error TS2353: Object literal may only specify known properties, and 'checkInStatus' does not exist in type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1395,17): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1398,13): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1399,13): error TS2551: Property 'checkInWaitingSinceTick' does not exist on type 'EncounterState'. Did you mean 'idleWaitingSinceTick'?
+packages/game-domain/src/reducer.ts(1407,13): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1427,17): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1441,36): error TS2551: Property 'checkInWaitingSinceTick' does not exist on type 'EncounterState'. Did you mean 'idleWaitingSinceTick'?
+packages/game-domain/src/reducer.ts(1443,17): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1445,17): error TS2339: Property 'unstaffedCheckInOverdueApplied' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1446,51): error TS2339: Property 'unstaffedCheckInDelayMinutes' does not exist on type '{ startingValue: 100; idleGraceMinutes: number; decayIntervalMinutes: number; decayPerInterval: number; sidewalkDecayMultiplierPercent: number; warningThresholds: number[]; walkoutThresholdMinimum: 0; ... 16 more ...; facilityConditionPenalties: { ...; }; }'.
+packages/game-domain/src/reducer.ts(1450,15): error TS2339: Property 'unstaffedCheckInOverdueApplied' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(1453,15): error TS2339: Property 'unstaffedCheckInSatisfactionPenalty' does not exist on type '{ startingValue: 100; idleGraceMinutes: number; decayIntervalMinutes: number; decayPerInterval: number; sidewalkDecayMultiplierPercent: number; warningThresholds: number[]; walkoutThresholdMinimum: 0; ... 16 more ...; facilityConditionPenalties: { ...; }; }'.
+packages/game-domain/src/reducer.ts(1492,21): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(2215,17): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(2282,5): error TS2367: This comparison appears to be unintentional because the types '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point" | undefined' and '"attend_encounter"' have no overlap.
+packages/game-domain/src/reducer.ts(2348,7): error TS2322: Type '"attend_encounter"' is not assignable to type '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point"'.
+packages/game-domain/src/reducer.ts(2358,21): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(2414,7): error TS2367: This comparison appears to be unintentional because the types '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point" | undefined' and '"attend_encounter"' have no overlap.
+packages/game-domain/src/reducer.ts(2439,19): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(2445,19): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(2469,19): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(4017,7): error TS2367: This comparison appears to be unintentional because the types '"collect_litter" | "praise_employee" | "refill_water" | "walk_to_point"' and '"return_to_front_desk"' have no overlap.
+packages/game-domain/src/reducer.ts(4215,17): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(4216,17): error TS2551: Property 'checkInWaitingSinceTick' does not exist on type 'EncounterState'. Did you mean 'idleWaitingSinceTick'?
+packages/game-domain/src/reducer.ts(4331,17): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(4415,15): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(4509,35): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(4518,19): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(4582,19): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/src/reducer.ts(6266,5): error TS2322: Type '7' is not assignable to type '6'.
+packages/game-domain/tests/game-domain.test.ts(55,17): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/game-domain.test.ts(197,52): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/game-domain.test.ts(199,53): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/game-domain.test.ts(355,24): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/game-domain.test.ts(383,9): error TS2353: Object literal may only specify known properties, and 'checkInStatus' does not exist in type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(45,13): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(46,13): error TS2551: Property 'checkInWaitingSinceTick' does not exist on type 'EncounterState'. Did you mean 'idleWaitingSinceTick'?
+packages/game-domain/tests/patient-alert-delay.test.ts(56,15): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(57,15): error TS2551: Property 'checkInWaitingSinceTick' does not exist on type 'EncounterState'. Did you mean 'idleWaitingSinceTick'?
+packages/game-domain/tests/patient-alert-delay.test.ts(58,15): error TS2339: Property 'unstaffedCheckInOverdueApplied' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(75,53): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(104,12): error TS2339: Property 'unstaffedCheckInSatisfactionPenalty' does not exist on type '{ startingValue: 100; idleGraceMinutes: number; decayIntervalMinutes: number; decayPerInterval: number; sidewalkDecayMultiplierPercent: number; warningThresholds: number[]; walkoutThresholdMinimum: 0; ... 16 more ...; facilityConditionPenalties: { ...; }; }'.
+packages/game-domain/tests/patient-alert-delay.test.ts(107,48): error TS2339: Property 'unstaffedCheckInOverdueApplied' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(109,53): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(126,15): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(127,15): error TS2551: Property 'checkInWaitingSinceTick' does not exist on type 'EncounterState'. Did you mean 'idleWaitingSinceTick'?
+packages/game-domain/tests/patient-alert-delay.test.ts(135,30): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(143,22): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(172,58): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/patient-alert-delay.test.ts(189,60): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(14,3): error TS2305: Module '"../src"' has no exported member 'getRoomCareAnchor'.
+packages/game-domain/tests/timing-encounters.test.ts(1043,72): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(1057,18): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(1070,15): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(1074,15): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(1249,12): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(1329,42): error TS2339: Property 'checkInStatus' does not exist on type 'EncounterState'.
+packages/game-domain/tests/timing-encounters.test.ts(1382,12): error TS2339: Property 'waitingDestination' does not exist on type 'EncounterState'.

@@ -1,5 +1,14 @@
 # Current Thread Handoff
 
+> GS-016 OWNER ACCEPTED, 2026-09-17. Owner confirmed the examination room is
+> absent at a fresh start and requested resolution. Technical validation passed:
+> 768 unit tests, 3 browser checks, typechecks and build. Existing saves retain
+> rooms/progress; normal $160 construction and $120 starting cash are unchanged.
+> Scoped GitHub backup is being audited on an isolated checkout; preserve the
+> shared beta worktree. See GS-016_PREBUILT_EXAMINATION_ROOM.md for evidence.
+> Canonical opening remains START_GAME.cmd -> http://127.0.0.1:4173.
+> No deployment or next feedback batch is authorized in this task.
+
 > GS-006 clinical backup verified (September 13): checkpoint
 > `b4ba1bfa9d9c84c51bea1db2c43594bc636d3487` is on `origin/beta`; remote
 > SHA independently verified. Includes clinical batches through September 13,
