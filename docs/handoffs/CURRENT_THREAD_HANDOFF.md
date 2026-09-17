@@ -1,5 +1,19 @@
 # Current Thread Handoff
 
+> GS-017 OWNER-AUTHORIZED GITHUB CHECKPOINT (2026-09-17).
+> Scoped payload commit 8629113791a362253120b6058a5a5a0bf0dd2839 is stored on
+> backup/gs-017-alerts-2026-09-17. See docs/backups/GS-017/README.md.
+> Preserves final alert pacing, staff-noise suppression, daily cash warning,
+> clinic-wide complaints, chart-close behavior, patient-supply diagnostic and
+> six synthetic browser screenshots. Sol prepared the package; Astra reviewed
+> actual mixed-file exclusions and independently restored all 34 manifest hashes.
+> Current integrated validation: player46/46, domain alerts33/33, player
+> typecheck and boundary checks pass. Prior browser evidence is documented.
+> Reconstruction backup only: not standalone runnable, merge-ready or deployed.
+> Shared beta source/index and owner 4173 server/save remain untouched.
+> Task stays open for owner closeout after remote verification.
+
+
 > GS-006 clinical backup verified (September 13): checkpoint
 > `b4ba1bfa9d9c84c51bea1db2c43594bc636d3487` is on `origin/beta`; remote
 > SHA independently verified. Includes clinical batches through September 13,
