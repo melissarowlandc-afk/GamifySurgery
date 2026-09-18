@@ -1,0 +1,991 @@
+diff --git "a/.local-dev\\gs-021-m2-baseline\\docs\\clinical-workbench\\approvals\\owner-delegated-bread-and-butter-2026-09-17.md" b/docs/clinical-workbench/approvals/owner-delegated-bread-and-butter-2026-09-17.md
+index fbc1d31..8b4e2ad 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\docs\\clinical-workbench\\approvals\\owner-delegated-bread-and-butter-2026-09-17.md"
++++ b/docs/clinical-workbench/approvals/owner-delegated-bread-and-butter-2026-09-17.md
+@@ -105,7 +105,7 @@ tests excluded.
+ | `batch-helpers.ts` | `5bf5bdd4545d82212820fbbf200d12eb3635e29c35d1eead8e903e6233ca7806` |
+ | `bread-butter-batch.ts` | `51d84ccb5832403042a3f58f9670097ad941bc87c3b815bb34bbfe08a092e985` |
+ | `breast-mass.ts` | `d698be95d3275af70a8f100e9676613ccd054b6c5991fa02ec86a308ce677d04` |
+-| `cutaneous-abscess.ts` | `ea08d9ba4597c5732d6a0c7a549ac24b1907c88b94d27786db217580048378e2` |
++| `cutaneous-abscess.ts` | `19e6e82f3a2f648e6b9fc7e3ef7e7217f9dd0f71d4b3d59da7272a8519c675c2` |
+ | `groin-hernia-management.ts` | `23eb3dbe74a16ad1d55531a1a70ceaf5165403ee89c7a6708dc47d758a23f3a0` |
+ | `hernia-anatomy.ts` | `2e3309ac23f2b234776b6fd5ab720bb99c95faf621ec10860da5f23204696792` |
+ | `high-output-ileostomy.ts` | `c32a04d5851e64224488c87dace9c5ea9157a7af71fb7e67470d0de42863d6a1` |
+@@ -113,4 +113,10 @@ tests excluded.
+ | `perioperative-medications.ts` | `37fd883b6a22777d86b9ddc22d783271288c29be4ea15d331854bb6625b4619a` |
+ | `postoperative-prophylaxis.ts` | `4258655e53eecf17c8760887140df0a19fcf342ab4b893e50482c79987788ffc` |
+ | `postoperative-urinary-retention.ts` | `3ffcadb9cf128f8f8479d46eb5a4679aac05c29ff6a43976f071dc5d316e3e2b` |
+-| `postoperative-wounds.ts` | `5bfafd1f2fe050e73cdc291931ca4eabe75dfe7f4585ded746bdf60f5f254cbd` |
++| `postoperative-wounds.ts` | `b03d9c094d68fbdad793b46ca91ebd0408b9654d3a4fe2a42eb4adce990c9c99` |
++
++## GS-021 operational amendment — September 17, 2026
++
++The owner-approved GS-021 service catalog requires newly admitted cases whose correct final action is a local minor procedure to have the installed minor-procedure capability. This operational amendment adds that admission capability gate to the already-authored cutaneous-abscess drainage and superficial-incisional-infection drainage cases. It does not change teaching text, answer keys, evidence claims, review status, or represent new clinician approval.
++
++The previously recorded LF-normalized SHA-256 values were ea08d9ba4597c5732d6a0c7a549ac24b1907c88b94d27786db217580048378e2 for cutaneous-abscess.ts and 5bfafd1f2fe050e73cdc291931ca4eabe75dfe7f4585ded746bdf60f5f254cbd for postoperative-wounds.ts. The canonical table now records the replacement operationally amended source hashes.
+diff --git "a/.local-dev\\gs-021-m2-baseline\\docs\\clinical-workbench\\approvals\\owner-delegated-early-levels-2026-09-13.md" b/docs/clinical-workbench/approvals/owner-delegated-early-levels-2026-09-13.md
+index a28c4b4..a5354b6 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\docs\\clinical-workbench\\approvals\\owner-delegated-early-levels-2026-09-13.md"
++++ b/docs/clinical-workbench/approvals/owner-delegated-early-levels-2026-09-13.md
+@@ -122,7 +122,13 @@ pending; editorial acceptance does not replace it.
+ | `b3115c605fdb472e454dcbc76f65e2728d3bb123f791a7f2265939e27f64bee8` | `packages/clinical-content/src/development-batch/2026-09-13/post-bariatric-hypoglycemia.ts` |
+ | `10a4184a5097da5aa4a7cabb350b724f451a5352c4ab82fec01bf76ba3849747` | `packages/clinical-content/src/development-batch/2026-09-13/lynch-tumor.ts` |
+ | `b6b306715df0b3808d77ee6bc300aeda8e878417d831e654f5f5d66f554e986e` | `packages/clinical-content/src/development-batch/2026-09-13/chronic-anal-fissure.ts` |
+-| `e1f31f6e13d6ea3f45045ff7c350975bcbd8b84f84712709c3b7b8acbc3b3493` | `packages/clinical-content/src/development-batch/2026-09-13/cutaneous-scc.ts` |
++| `9593272361d9f50cffbb2fda9c45349326fac7428f12053de24ab41b4c9bd5c1` | `packages/clinical-content/src/development-batch/2026-09-13/cutaneous-scc.ts` |
+ | `93d73f559e02bc0781ded8790e78a29bc436f8a9669b7274d343130f3e864fd6` | `packages/clinical-content/src/development-batch/2026-09-13/venous-leg-ulcer.ts` |
+ | `96368b847bba7753a538fbb9f9f3e4db7f3708620b6f67c01e2fde5381a672a4` | `packages/clinical-content/src/development-batch/2026-09-13/splenectomy-infection-prevention.ts` |
+ | `99dbc44d73b6b030a4f6d50bcddf2236cdf797bac3fc1bde754a3bae2925e4d5` | `packages/clinical-content/src/development-batch/2026-09-13/early-levels-batch.ts` |
++
++### GS-021 operational amendment — September 17, 2026
++
++The owner-approved GS-021 service catalog authorized onsite minor-procedure-room acquisition for the already-authored cutaneous-lesion biopsy, while retaining external pathology. The operational amendment adds the facility capability gate and route contract only. It does not change the teaching text, answer key, evidence claims, review status, or represent new clinician approval.
++
++The previously recorded LF-normalized SHA-256 for cutaneous-scc.ts was e1f31f6e13d6ea3f45045ff7c350975bcbd8b84f84712709c3b7b8acbc3b3493. The canonical table now records the replacement operationally amended source hash.
+diff --git "a/.local-dev\\gs-021-m2-baseline\\docs\\clinical-workbench\\approvals\\owner-delegated-surgery-center-batch-2026-09-10.md" b/docs/clinical-workbench/approvals/owner-delegated-surgery-center-batch-2026-09-10.md
+index 89385de..ff438b9 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\docs\\clinical-workbench\\approvals\\owner-delegated-surgery-center-batch-2026-09-10.md"
++++ b/docs/clinical-workbench/approvals/owner-delegated-surgery-center-batch-2026-09-10.md
+@@ -58,7 +58,13 @@ Hashes use UTF-8 without BOM after normalizing CRLF to LF. The expected set is e
+ | `667a1bb2fae09ae5751e3aefe2c5e4ec30d2c9dc5b28387f2dad28764948e4a2` | `packages/clinical-content/src/development-batch/2026-09-10/internal-hemorrhoids.ts` |
+ | `714e68d26fa76447c2c3593ce9a1a6dba63a6b6ec3345565278732b51a053fab` | `packages/clinical-content/src/development-batch/2026-09-10/esophageal-dysphagia.ts` |
+ | `69ede140743fcaa8768ce80d17ff89bac8fe4c5a545d2ef808575dc9adb868b8` | `packages/clinical-content/src/development-batch/2026-09-10/achalasia.ts` |
+-| `856efd75322d671c2fce01c8c5cef0e86f3ced45adf0b44e48f991b8ca5115a5` | `packages/clinical-content/src/development-batch/2026-09-10/pigmented-skin-lesion.ts` |
++| `60f451d69414de09209b3c395c371af671e2877dd4ae49606c9b88028661f483` | `packages/clinical-content/src/development-batch/2026-09-10/pigmented-skin-lesion.ts` |
+ | `be194edda71c7f999e0e1f09cc0c1848c5c9fab2630eb77eebdda987e5702e90` | `packages/clinical-content/src/development-batch/2026-09-10/postoperative-seroma.ts` |
+ | `2997ffa9adf31d7ac56abfb9eabe127532613c2090218388c56364cb8e885118` | `packages/clinical-content/src/development-batch/2026-09-10/pilonidal-disease.ts` |
+ | `5de413be03fb4c14e03877e4d42a4e0df5369d5f3bc3cbe547822638e1cfe49f` | `packages/clinical-content/src/development-batch/2026-09-10/surgery-center-batch.ts` |
++
++## GS-021 operational amendment — September 17, 2026
++
++The owner-approved GS-021 service catalog authorized an onsite minor-procedure-room acquisition route for the already-authored pigmented-lesion biopsy, while retaining external pathology. The operational amendment adds the facility capability gate and route contract only. It does not change the teaching text, answer key, evidence claims, review status, or represent new clinician approval.
++
++The previously recorded LF-normalized SHA-256 for pigmented-skin-lesion.ts was 856efd75322d671c2fce01c8c5cef0e86f3ced45adf0b44e48f991b8ca5115a5. The canonical table now records the replacement operationally amended source hash.
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\balance-config\\src\\prototype-balance.test.ts" b/packages/balance-config/src/prototype-balance.test.ts
+index 206a698..f77ca82 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\balance-config\\src\\prototype-balance.test.ts"
++++ b/packages/balance-config/src/prototype-balance.test.ts
+@@ -286,8 +286,8 @@ describe("owner-delegated batch external services", () => {
+   });
+ });
+ 
+-describe("surgery-center external service contracts", () => {
+-  it("keeps the four new services external without facility or provider requirements", () => {
++describe("surgery-center service contracts", () => {
++  it("keeps external fallbacks and adds only the approved onsite skin sampling route", () => {
+     const expected = {
+       "service.thyroid_fna": ["route.thyroid_fna.outsourced", 180],
+       "service.anoscopy": ["route.anoscopy.outsourced", 90],
+@@ -296,8 +296,8 @@ describe("surgery-center external service contracts", () => {
+     } as const;
+     for (const [serviceId, [routeId, durationTicks]] of Object.entries(expected)) {
+       const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
+-      expect(service?.routes).toHaveLength(1);
+-      expect(service?.routes[0]).toMatchObject({
++      const route = service?.routes.find((candidate) => candidate.id === routeId);
++      expect(route).toMatchObject({
+         id: routeId,
+         durationTicks,
+         requiredCapabilityId: null,
+@@ -305,7 +305,15 @@ describe("surgery-center external service contracts", () => {
+         resourceRequirements: [],
+         providerRequirement: null,
+       });
++      if (serviceId !== "service.skin_excisional_biopsy") expect(service?.routes).toHaveLength(1);
+     }
++    expect(PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === "service.skin_excisional_biopsy")?.routes[0]).toMatchObject({
++      id: "route.skin_excisional_biopsy.in_house",
++      requiredCapabilityId: "capability.minor_procedure",
++      preference: 0,
++      resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
++      providerRequirement: { founderEligible: true },
++    });
+   });
+ });
+ 
+@@ -363,8 +371,8 @@ describe("September 12 board-expansion external service contracts", () => {
+   });
+ });
+ 
+-describe("September 13 early-level external service contracts", () => {
+-  it("keeps four new services external with matching centralized timing", () => {
++describe("September 13 early-level service contracts", () => {
++  it("keeps external fallbacks and the approved onsite cutaneous sampling route", () => {
+     const expected = {
+       "service.hepatobiliary_contrast_mrcp": ["route.hepatobiliary_contrast_mrcp.outsourced", "timing.test.hepatobiliary_contrast_mrcp", 180],
+       "service.ambulatory_reflux_monitoring": ["route.ambulatory_reflux_monitoring.outsourced", "timing.test.ambulatory_reflux_monitoring", 180],
+@@ -373,10 +381,12 @@ describe("September 13 early-level external service contracts", () => {
+     } as const;
+     for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
+       const service=PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id===serviceId);
+-      expect(service?.routes).toHaveLength(1);
+-      expect(service?.routes[0]).toMatchObject({id:routeId,durationTicks,requiredCapabilityId:null,requiredCapabilityIds:[],resourceRequirements:[],providerRequirement:null});
++      const route=service?.routes.find((candidate)=>candidate.id===routeId);
++      expect(route).toMatchObject({id:routeId,durationTicks,requiredCapabilityId:null,requiredCapabilityIds:[],resourceRequirements:[],providerRequirement:null});
++      if(serviceId!=="service.cutaneous_lesion_biopsy") expect(service?.routes).toHaveLength(1);
+       expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId,durationTicks});
+     }
++    expect(PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id==="service.cutaneous_lesion_biopsy")?.routes[0]).toMatchObject({id:"route.cutaneous_lesion_biopsy.in_house",requiredCapabilityId:"capability.minor_procedure",preference:0,resourceRequirements:[{roomDefinitionId:"room.minor_procedure",staffRoleDefinitionId:null}],providerRequirement:{founderEligible:true}});
+     for(const timingProfileId of ["timing.test.ercp","timing.test.therapeutic_ercp","timing.test.bile_leak_ercp","timing.test.pseudocyst_drainage","timing.test.microbiology","timing.test.skin_surgery_histology"]){
+       expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId:null});
+     }
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\balance-config\\src\\prototype-balance.ts" b/packages/balance-config/src/prototype-balance.ts
+index 12c092e..4db3585 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\balance-config\\src\\prototype-balance.ts"
++++ b/packages/balance-config/src/prototype-balance.ts
+@@ -1249,13 +1249,27 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+       id: "service.skin_excisional_biopsy",
+       displayName: "Excisional skin biopsy",
+       routes: [{
++        id: "route.skin_excisional_biopsy.in_house",
++        displayName: "Onsite excisional skin biopsy with external pathology",
++        durationTicks: 180,
++        requiredCapabilityId: "capability.minor_procedure",
++        requiredCapabilityIds: [],
++        resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
++        providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.app", founderEligible: true },
++        timingPhases: [
++          { id: "phase.skin_excisional_biopsy.sampling", durationTicks: 60, resourceBound: true },
++          { id: "phase.skin_excisional_biopsy.external_pathology", durationTicks: 120, resourceBound: false },
++        ],
++        preference: 0,
++        patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.minor_procedure", roundTrip: true },
++      }, {
+         id: "route.skin_excisional_biopsy.outsourced",
+         displayName: "Off-site excisional skin biopsy",
+         // Editorial prototype timing only; not a clinical turnaround claim.
+         durationTicks: 180,
+         requiredCapabilityId: null,
+         requiredCapabilityIds: [],
+-        preference: 0,
++        preference: 1,
+       }],
+     },
+     {
+@@ -1286,7 +1300,24 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+     {
+       id: "service.cutaneous_lesion_biopsy",
+       displayName: "Cutaneous lesion biopsy",
+-      routes: [{ id: "route.cutaneous_lesion_biopsy.outsourced", displayName: "Off-site cutaneous lesion biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
++      routes: [
++        {
++          id: "route.cutaneous_lesion_biopsy.in_house",
++          displayName: "Onsite cutaneous lesion biopsy with external pathology",
++          durationTicks: 180,
++          requiredCapabilityId: "capability.minor_procedure",
++          requiredCapabilityIds: [],
++          resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
++          providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.app", founderEligible: true },
++          timingPhases: [
++            { id: "phase.cutaneous_lesion_biopsy.sampling", durationTicks: 60, resourceBound: true },
++            { id: "phase.cutaneous_lesion_biopsy.external_pathology", durationTicks: 120, resourceBound: false },
++          ],
++          preference: 0,
++          patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.minor_procedure", roundTrip: true },
++        },
++        { id: "route.cutaneous_lesion_biopsy.outsourced", displayName: "Off-site cutaneous lesion biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
++      ],
+     },
+     {
+       id: "service.laryngeal_examination",
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\balance-config\\src\\service-income-catalog.ts" b/packages/balance-config/src/service-income-catalog.ts
+index 031fcb5..04031c7 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\balance-config\\src\\service-income-catalog.ts"
++++ b/packages/balance-config/src/service-income-catalog.ts
+@@ -1,39 +1,44 @@
+-export type ServiceIncomeLine = { id: string; kind: "clinical" | "retail" | "remote"; minimumFacilityLevel: 1 | 2 | 3 | 4 | 5; fee: number; requiredCapabilityIds: readonly string[]; eligibleRouteIds: readonly string[]; paymentStage: "resource_completion" | "episode_completion" | "dispense" };
++export interface ServiceOperationPhase { id: string; roomDefinitionId: string | null; durationMinutes: number; staffRoleDefinitionIds: readonly string[]; providerRoleDefinitionIds?: readonly string[]; founderEligible?: boolean }
++export interface ServiceOperationContract { visitorMode: "scheduled" | "work_queue" | "explicit_only"; arrivalCadenceMinutes: number | null; phases: readonly ServiceOperationPhase[] }
++export interface ServiceIncomeLine { id: string; displayName: string; kind: "clinical" | "retail" | "remote"; minimumFacilityLevel: 1 | 2 | 3 | 4 | 5; fee: number; requiredCapabilityIds: readonly string[]; eligibleRouteIds: readonly string[]; paymentStage: "resource_completion" | "episode_completion" | "dispense"; operation?: ServiceOperationContract }
++
++const phase = (id: string, roomDefinitionId: string | null, durationMinutes: number, staffRoleDefinitionIds: readonly string[] = [], providerRoleDefinitionIds?: readonly string[], founderEligible?: boolean): ServiceOperationPhase => ({ id, roomDefinitionId, durationMinutes, staffRoleDefinitionIds, ...(providerRoleDefinitionIds ? { providerRoleDefinitionIds } : {}), ...(founderEligible ? { founderEligible: true } : {}) });
+ 
+ /** Product balance rows; clinical route/provider approval remains authoritative. */
+ export const SERVICE_INCOME_CATALOG: readonly ServiceIncomeLine[] = [
+-  { id: "income.ultrasound", kind: "clinical", minimumFacilityLevel: 1, fee: 120, requiredCapabilityIds: ["capability.ultrasound_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ultrasound.in_house"], paymentStage: "resource_completion" },
+-  { id: "income.xray", kind: "clinical", minimumFacilityLevel: 2, fee: 90, requiredCapabilityIds: ["capability.xray_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.xray.in_house"], paymentStage: "resource_completion" },
+-  { id: "income.ct", kind: "clinical", minimumFacilityLevel: 2, fee: 180, requiredCapabilityIds: ["capability.ct_scanner", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ct.in_house"], paymentStage: "resource_completion" },
+-  { id: "income.collection", kind: "clinical", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.phlebotomy_collection", "capability.staff.phlebotomist"], eligibleRouteIds: ["route.basic_labs.phlebotomy_sendout"], paymentStage: "resource_completion" },
+-  { id: "income.bladder_scan", kind: "clinical", minimumFacilityLevel: 1, fee: 20, requiredCapabilityIds: ["capability.ultrasound_machine"], eligibleRouteIds: ["route.bladder_scan.ultrasound_room"], paymentStage: "resource_completion" },
+-  { id: "income.endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 400, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.in_house"], paymentStage: "resource_completion" },
+-  { id: "income.advanced_endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 550, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.eus-ercp-sampling.in_house"], paymentStage: "resource_completion" },
+-  { id: "income.glp1_telehealth", kind: "remote", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.glp1_telehealth", "capability.staff.glp1_np"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.laboratory_processing", kind: "clinical", minimumFacilityLevel: 3, fee: 80, requiredCapabilityIds: ["capability.in_house_laboratory", "capability.staff.laboratory_technician"], eligibleRouteIds: [], paymentStage: "resource_completion" },
+-  { id: "income.ambulatory_operation", kind: "clinical", minimumFacilityLevel: 3, fee: 900, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.ambulatory_operation_extended", kind: "clinical", minimumFacilityLevel: 3, fee: 1300, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.pharmacy_pickup", kind: "retail", minimumFacilityLevel: 3, fee: 25, requiredCapabilityIds: ["capability.pharmacy", "capability.staff.pharmacist"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.mri", kind: "clinical", minimumFacilityLevel: 4, fee: 240, requiredCapabilityIds: ["capability.mri_machine", "capability.staff.imaging_technician"], eligibleRouteIds: [], paymentStage: "resource_completion" },
+-  { id: "income.image_read", kind: "remote", minimumFacilityLevel: 4, fee: 40, requiredCapabilityIds: ["capability.radiology_reading", "capability.staff.radiologist"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.app_consult", kind: "clinical", minimumFacilityLevel: 4, fee: 80, requiredCapabilityIds: ["capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.pediatric_consult", kind: "clinical", minimumFacilityLevel: 4, fee: 80, requiredCapabilityIds: ["capability.pediatric_examination", "capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.wound_care", kind: "clinical", minimumFacilityLevel: 4, fee: 60, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.wound_procedure", kind: "clinical", minimumFacilityLevel: 4, fee: 120, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.ostomy_support", kind: "clinical", minimumFacilityLevel: 4, fee: 75, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.followup_independent", kind: "clinical", minimumFacilityLevel: 1, fee: 40, requiredCapabilityIds: ["capability.examination"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.minor_procedure_simple", kind: "clinical", minimumFacilityLevel: 1, fee: 100, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.minor_procedure_sampling", kind: "clinical", minimumFacilityLevel: 1, fee: 150, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.minor_procedure_complex", kind: "clinical", minimumFacilityLevel: 1, fee: 200, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+-  { id: "income.coffee", kind: "retail", minimumFacilityLevel: 2, fee: 5, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.kiosk_drink", kind: "retail", minimumFacilityLevel: 2, fee: 3, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.kiosk_snack", kind: "retail", minimumFacilityLevel: 2, fee: 4, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.vending_drink", kind: "retail", minimumFacilityLevel: 3, fee: 3, requiredCapabilityIds: ["capability.vending"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.vending_snack", kind: "retail", minimumFacilityLevel: 3, fee: 4, requiredCapabilityIds: ["capability.vending"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.gift_shop", kind: "retail", minimumFacilityLevel: 5, fee: 15, requiredCapabilityIds: ["capability.gift_shop"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.gift_shop_premium", kind: "retail", minimumFacilityLevel: 5, fee: 25, requiredCapabilityIds: ["capability.gift_shop"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.otc_supply", kind: "retail", minimumFacilityLevel: 3, fee: 12, requiredCapabilityIds: ["capability.pharmacy"], eligibleRouteIds: [], paymentStage: "dispense" },
+-  { id: "income.wound_supply", kind: "retail", minimumFacilityLevel: 4, fee: 20, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.ultrasound", displayName: "Ultrasound", kind: "clinical", minimumFacilityLevel: 1, fee: 120, requiredCapabilityIds: ["capability.ultrasound_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ultrasound.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 120, phases: [phase("acquisition", "room.ultrasound", 45, ["staff.imaging_technician"])] } },
++  { id: "income.xray", displayName: "X-ray", kind: "clinical", minimumFacilityLevel: 2, fee: 90, requiredCapabilityIds: ["capability.xray_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.xray.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 180, phases: [phase("acquisition", "room.xray", 60, ["staff.imaging_technician"])] } },
++  { id: "income.ct", displayName: "CT", kind: "clinical", minimumFacilityLevel: 2, fee: 180, requiredCapabilityIds: ["capability.ct_scanner", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ct.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 240, phases: [phase("acquisition", "room.ct", 60, ["staff.imaging_technician"])] } },
++  { id: "income.collection", displayName: "Blood/specimen collection", kind: "clinical", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.phlebotomy_collection", "capability.staff.phlebotomist"], eligibleRouteIds: ["route.basic_labs.phlebotomy_sendout"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 60, phases: [phase("collection", "room.phlebotomy", 15, ["staff.phlebotomist"])] } },
++  { id: "income.bladder_scan", displayName: "Bladder scan", kind: "clinical", minimumFacilityLevel: 1, fee: 20, requiredCapabilityIds: ["capability.ultrasound_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.bladder_scan.ultrasound_room"], paymentStage: "resource_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("scan", "room.ultrasound", 5, ["staff.imaging_technician"])] } },
++  { id: "income.endoscopy", displayName: "Routine endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 400, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 300, phases: [phase("preparation_and_procedure", "room.endoscopy", 75, ["staff.endoscopy_nurse"], ["staff.endoscopist"], true), phase("recovery", "room.periop_recovery", 45, ["staff.periop_nurse"])] } },
++  { id: "income.advanced_endoscopy", displayName: "Advanced endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 550, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.eus-ercp-sampling.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 600, phases: [phase("preparation_and_procedure", "room.endoscopy", 75, ["staff.endoscopy_nurse"], ["staff.endoscopist"], true), phase("recovery", "room.periop_recovery", 45, ["staff.periop_nurse"])] } },
++  { id: "income.glp1_telehealth", displayName: "GLP-1 telehealth consultation", kind: "remote", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.glp1_telehealth", "capability.staff.glp1_np"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.laboratory_processing", displayName: "Onsite laboratory processing", kind: "clinical", minimumFacilityLevel: 3, fee: 80, requiredCapabilityIds: ["capability.in_house_laboratory", "capability.staff.laboratory_technician"], eligibleRouteIds: [], paymentStage: "resource_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("processing", "room.laboratory", 60, ["staff.laboratory_technician"])] } },
++  { id: "income.ambulatory_operation", displayName: "Ambulatory operation", kind: "clinical", minimumFacilityLevel: 3, fee: 900, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 600, phases: [phase("operation", "room.ambulatory_or", 120, ["staff.or_nurse"], ["staff.surgeon"], true), phase("recovery", "room.periop_recovery", 60, ["staff.periop_nurse"])] } },
++  { id: "income.ambulatory_operation_extended", displayName: "Extended ambulatory operation", kind: "clinical", minimumFacilityLevel: 3, fee: 1300, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("operation", "room.ambulatory_or", 180, ["staff.or_nurse"], ["staff.surgeon"], true), phase("recovery", "room.periop_recovery", 60, ["staff.periop_nurse"])] } },
++  { id: "income.pharmacy_pickup", displayName: "Prescription pickup", kind: "retail", minimumFacilityLevel: 3, fee: 25, requiredCapabilityIds: ["capability.pharmacy", "capability.staff.pharmacist"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.mri", displayName: "MRI", kind: "clinical", minimumFacilityLevel: 4, fee: 240, requiredCapabilityIds: ["capability.mri_machine", "capability.staff.imaging_technician"], eligibleRouteIds: [], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 240, phases: [phase("acquisition", "room.mri", 60, ["staff.imaging_technician"])] } },
++  { id: "income.image_read", displayName: "Onsite image interpretation", kind: "remote", minimumFacilityLevel: 4, fee: 40, requiredCapabilityIds: ["capability.radiology_reading", "capability.staff.radiologist"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "work_queue", arrivalCadenceMinutes: null, phases: [phase("interpretation", "room.reading", 30, ["staff.radiologist"])] } },
++  { id: "income.app_consult", displayName: "APP appointment", kind: "clinical", minimumFacilityLevel: 4, fee: 80, requiredCapabilityIds: ["capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 120, phases: [phase("consultation", "room.examination", 30, ["staff.app"])] } },
++  { id: "income.pediatric_consult", displayName: "Pediatric appointment", kind: "clinical", minimumFacilityLevel: 4, fee: 80, requiredCapabilityIds: ["capability.pediatric_examination", "capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("consultation", "room.pediatric_examination", 30, ["staff.app"])] } },
++  { id: "income.wound_care", displayName: "Routine wound care", kind: "clinical", minimumFacilityLevel: 4, fee: 60, requiredCapabilityIds: ["capability.wound_ostomy_clinic", "capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 180, phases: [phase("wound_care", "room.wound_ostomy", 30, ["staff.app"])] } },
++  { id: "income.wound_procedure", displayName: "Wound procedure", kind: "clinical", minimumFacilityLevel: 4, fee: 120, requiredCapabilityIds: ["capability.wound_ostomy_clinic", "capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("wound_procedure", "room.wound_ostomy", 45, ["staff.app"])] } },
++  { id: "income.ostomy_support", displayName: "Ostomy support", kind: "clinical", minimumFacilityLevel: 4, fee: 75, requiredCapabilityIds: ["capability.wound_ostomy_clinic", "capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 180, phases: [phase("support", "room.wound_ostomy", 30, ["staff.app"])] } },
++  { id: "income.followup_independent", displayName: "Independent follow-up", kind: "clinical", minimumFacilityLevel: 1, fee: 40, requiredCapabilityIds: ["capability.examination"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("followup", "room.examination", 20, [], [], true)] } },
++  { id: "income.minor_procedure_simple", displayName: "Simple minor procedure", kind: "clinical", minimumFacilityLevel: 1, fee: 100, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 240, phases: [phase("procedure", "room.minor_procedure", 45, [], [], true)] } },
++  { id: "income.minor_procedure_sampling", displayName: "Minor diagnostic sampling", kind: "clinical", minimumFacilityLevel: 1, fee: 150, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: ["route.skin_excisional_biopsy.in_house", "route.cutaneous_lesion_biopsy.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("sampling", "room.minor_procedure", 60, [], [], true)] } },
++  { id: "income.minor_procedure_complex", displayName: "Complex office procedure", kind: "clinical", minimumFacilityLevel: 1, fee: 200, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("procedure", "room.minor_procedure", 60, [], [], true)] } },
++  { id: "income.coffee", displayName: "Coffee", kind: "retail", minimumFacilityLevel: 2, fee: 5, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.kiosk_drink", displayName: "Bottled drink", kind: "retail", minimumFacilityLevel: 2, fee: 3, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.kiosk_snack", displayName: "Packaged snack", kind: "retail", minimumFacilityLevel: 2, fee: 4, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.vending_drink", displayName: "Vending drink", kind: "retail", minimumFacilityLevel: 3, fee: 3, requiredCapabilityIds: ["capability.vending"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.vending_snack", displayName: "Vending snack", kind: "retail", minimumFacilityLevel: 3, fee: 4, requiredCapabilityIds: ["capability.vending"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.gift_shop", displayName: "Gift", kind: "retail", minimumFacilityLevel: 5, fee: 15, requiredCapabilityIds: ["capability.gift_shop"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.gift_shop_premium", displayName: "Premium gift", kind: "retail", minimumFacilityLevel: 5, fee: 25, requiredCapabilityIds: ["capability.gift_shop"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.otc_supply", displayName: "OTC supply basket", kind: "retail", minimumFacilityLevel: 3, fee: 12, requiredCapabilityIds: ["capability.pharmacy"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.wound_supply", displayName: "Wound/ostomy supply basket", kind: "retail", minimumFacilityLevel: 4, fee: 20, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "dispense" },
+ ];
+ 
+ export function getServiceIncomeForRoute(routeId: string): ServiceIncomeLine | null { return SERVICE_INCOME_CATALOG.find((line) => line.eligibleRouteIds.includes(routeId)) ?? null; }
++export function getServiceIncomeLine(lineId: string): ServiceIncomeLine | null { return SERVICE_INCOME_CATALOG.find((line) => line.id === lineId) ?? null; }
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-10\\pigmented-skin-lesion.ts" b/packages/clinical-content/src/development-batch/2026-09-10/pigmented-skin-lesion.ts
+index ccc08b4..850d7d6 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-10\\pigmented-skin-lesion.ts"
++++ b/packages/clinical-content/src/development-batch/2026-09-10/pigmented-skin-lesion.ts
+@@ -37,9 +37,9 @@ const depths = ["1.4 mm", "1.6 mm", "1.8 mm", "1.5 mm"] as const;
+ 
+ const cases: CaseSpec[] = stories.map(([slug, age, complaint, story], index) => {
+   const result = `Complete biopsy shows invasive melanoma with a measured thickness of ${depths[index]} with adequate histologic microstaging.`;
+-  return { id: `case.pigmented-skin-lesion.${slug}`, displayName: "Changing skin lesion evaluation", chiefComplaint: complaint, presentation: `{patientName} ${story}`, ageYears: [age, age + 5], sexLabels: ["Female", "Male"], stage: 1,
++  return { id: `case.pigmented-skin-lesion.${slug}`, displayName: "Changing skin lesion evaluation", chiefComplaint: complaint, presentation: `{patientName} ${story}`, ageYears: [age, age + 5], sexLabels: ["Female", "Male"], stage: 1, requiredCapabilityIds: ["capability.minor_procedure"],
+     nodes: [
+-      { conceptId: "concept.pigmented-skin-lesion.complete-diagnostic-biopsy", stem: `Which initial tissue-diagnosis approach best fits {patientName}'s lesion?`, choices: [...biopsyChoices(index + 1)], explanation: "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.", claimIds: ["claim.pigmented-skin-lesion.complete-diagnostic-biopsy"], gate: { id: `gate.pigmented-skin-lesion.biopsy.${index + 1}`, serviceId: "service.skin_excisional_biopsy", pendingLabel: "Skin-lesion pathology pending", resultNarrative: result, routeIds: ["route.skin_excisional_biopsy.outsourced"] } },
++      { conceptId: "concept.pigmented-skin-lesion.complete-diagnostic-biopsy", stem: `Which initial tissue-diagnosis approach best fits {patientName}'s lesion?`, choices: [...biopsyChoices(index + 1)], explanation: "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.", claimIds: ["claim.pigmented-skin-lesion.complete-diagnostic-biopsy"], gate: { id: `gate.pigmented-skin-lesion.biopsy.${index + 1}`, serviceId: "service.skin_excisional_biopsy", pendingLabel: "Skin-lesion pathology pending", resultNarrative: result, routeIds: ["route.skin_excisional_biopsy.in_house", "route.skin_excisional_biopsy.outsourced"] } },
+       { conceptId: "concept.melanoma.sentinel-node-staging", currentUpdate: result, stem: `With clinically negative regional nodes, which staging discussion should accompany {patientName}'s definitive wide-excision planning?`, choices: [...stagingChoices(index + 1)], explanation: "Intermediate-thickness invasive melanoma with no clinically palpable nodes supports discussion of sentinel lymph-node biopsy for pathological regional staging. This is distinct from automatic complete nodal dissection and does not guarantee a survival benefit.", claimIds: ["claim.melanoma.sentinel-node-staging", "claim.pigmented-skin-lesion.complete-diagnostic-biopsy"] },
+     ],
+   };
+@@ -55,4 +55,4 @@ export const PIGMENTED_SKIN_LESION_QUESTIONS = family.questions;
+ export const PIGMENTED_SKIN_LESION_CASES = family.cases;
+ export const PIGMENTED_SKIN_LESION_CASE_REVIEWS = family.caseReviews;
+ export const PIGMENTED_SKIN_LESION_AUTHORING_REVIEW = NEEDS_REVIEW;
+-export const PIGMENTED_SKIN_LESION_SERVICE_CONTRACTS = [{ serviceId: "service.skin_excisional_biopsy", allowedRouteIds: ["route.skin_excisional_biopsy.outsourced"], delivery: "new_external_contract_required" as const }];
++export const PIGMENTED_SKIN_LESION_SERVICE_CONTRACTS = [{ serviceId: "service.skin_excisional_biopsy", allowedRouteIds: ["route.skin_excisional_biopsy.in_house", "route.skin_excisional_biopsy.outsourced"], delivery: "existing_balance_contract" as const }];
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-10\\surgery-center-admission.test.ts" b/packages/clinical-content/src/development-batch/2026-09-10/surgery-center-admission.test.ts
+index d16f0db..cf3490f 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-10\\surgery-center-admission.test.ts"
++++ b/packages/clinical-content/src/development-batch/2026-09-10/surgery-center-admission.test.ts
+@@ -61,9 +61,12 @@ describe("September 10 surgery-center batch admission", () => {
+     expect(SURGERY_CENTER_SERVICE_CONTRACTS.filter((item) => item.delivery === "new_external_contract_required").map((item) => item.serviceId).sort()).toEqual([
+       "service.anoscopy",
+       "service.esophageal_manometry",
+-      "service.skin_excisional_biopsy",
+       "service.thyroid_fna",
+     ]);
++    expect(SURGERY_CENTER_SERVICE_CONTRACTS.find((item) => item.serviceId === "service.skin_excisional_biopsy")).toMatchObject({
++      delivery: "existing_balance_contract",
++      allowedRouteIds: ["route.skin_excisional_biopsy.in_house", "route.skin_excisional_biopsy.outsourced"],
++    });
+   });
+ 
+   it("binds exactly the finalized twelve production content files to the owner-delegated receipt", () => {
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-13\\cutaneous-scc.ts" b/packages/clinical-content/src/development-batch/2026-09-13/cutaneous-scc.ts
+index 09255a9..d490990 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-13\\cutaneous-scc.ts"
++++ b/packages/clinical-content/src/development-batch/2026-09-13/cutaneous-scc.ts
+@@ -4,6 +4,6 @@ export const CUTANEOUS_SCC_CLAIMS=[claim({id:"claim.cutaneous-scc.biopsy-for-dia
+ export const CUTANEOUS_SCC_SOURCES=linkSourcesToClaims([source({id:AAD,title:"Guidelines of care for the management of cutaneous squamous cell carcinoma",completeCitation:"Alam M, Armstrong A, Baum C, et al. Guidelines of care for the management of cutaneous squamous cell carcinoma. Journal of the American Academy of Dermatology. 2018;78(3):560-578. doi:10.1016/j.jaad.2017.10.007.",organizationOrJournal:"American Academy of Dermatology / Journal of the American Academy of Dermatology",authors:["Alam M","Armstrong A","Baum C","et al."],publicationYear:2018,doi:"10.1016/j.jaad.2017.10.007",pmid:"29331386",officialUrl:"https://www.aad.org/member/clinical-quality/guidelines/scc",accessedOn:"2026-09-13",sourceClass:"professional_society_guideline",licenseLabel:"Copyrighted society guideline; targeted factual verification only",reuseStatus:"copyrighted_targeted_verification_only",reuseNotes:"Original factual synthesis only; no source prose, tables, figures, or marks reproduced.",authorityAssessment:"Primary guidance for biopsy adequacy, risk stratification, excision, and Mohs selection.",usageRole:"evidence"}),source({id:WISELY,title:"Choosing Wisely recommendations",completeCitation:"American Academy of Dermatology. Choosing Wisely: recommendations about treatments, tests, and procedures. Live professional page accessed 2026-09-13.",organizationOrJournal:"American Academy of Dermatology",authors:["American Academy of Dermatology"],publicationYear:null,doi:null,pmid:null,officialUrl:"https://www.aad.org/member/clinical-quality/clinical-care/wisely",accessedOn:"2026-09-13",sourceClass:"open_educational_resource",licenseLabel:"Copyrighted society resource; targeted factual verification only",reuseStatus:"copyrighted_targeted_verification_only",reuseNotes:"Independent factual cross-check only.",authorityAssessment:"Supports restraint around Mohs for low-risk superficial trunk/extremity lesions.",usageRole:"cross_check"})],CUTANEOUS_SCC_CLAIMS);
+ const t=(id:string,label:string,rationale:string,correct=false,serviceId?:string)=>({id,label,rationale,timing:label==="Diagnostic skin biopsy"?{kind:"test" as const,timingProfileId:"timing.test.cutaneous_lesion_biopsy"}:label.includes("Mohs")?{kind:"test" as const,timingProfileId:"timing.test.skin_surgery_histology"}:{kind:"no_test" as const},...(correct?{isCorrect:true,...(serviceId?{serviceId}:{})}:{})});const a=(id:string,label:string,rationale:string,correct=false)=>({id,label:label==="Standard excision"&&!correct?"Standard excision with margins":label,rationale,timing:label.includes("Mohs")||label.startsWith("Standard excision")?{kind:"test" as const,timingProfileId:"timing.test.skin_surgery_histology"}:{kind:"no_test" as const},...(correct?{isCorrect:true}:{})});
+ const stories=[["forearm-low",[54,56],"Scaly forearm lesion","is immunocompetent and comes to clinic about a small, well-defined primary keratotic forearm lesion without prior biopsy or palpable nodes","low"],["trunk-low",[62,60],"Trunk skin lesion","is immunocompetent and comes to clinic about a small, well-defined primary keratotic upper-trunk lesion without prior biopsy or palpable nodes","low"],["ear-high",[71,69],"Ear skin lesion","comes to clinic for a biopsy-naive keratotic ear lesion without palpable nodes","high"],["recurrent-high",[66,64],"Recurrent skin lesion","comes to clinic about a recurrent keratotic lesion without palpable nodes","high"]] as const;
+-const cases:CaseSpec[]=stories.map(([slug,ages,complaint,detail,risk],i)=>{const result=risk==="low"?"External pathology confirms a shallow well-differentiated invasive cutaneous squamous cell carcinoma without perineural invasion.":"External pathology confirms poorly differentiated invasive cutaneous squamous cell carcinoma with perineural invasion.";return{id:`case.cutaneous-scc.${slug}`,displayName:"Keratinocyte lesion review",chiefComplaint:complaint,presentation:`{patientName} is a {patientAge}-year-old {patientSex} who ${detail}.`,ageYears:ages,sexLabels:["Female","Male"],stage:1,nodes:[{conceptId:"concept.cutaneous-scc.diagnostic-biopsy",stem:"Which diagnostic approach best obtains tissue for {patientName}'s suspicious skin lesion?",choices:[t(`biopsy_${i}`,"Diagnostic skin biopsy","Adequate diagnostic tissue is needed before risk-directed treatment.",true,"service.cutaneous_lesion_biopsy"),t(`freeze_${i}`,"Cryotherapy treatment","Destructive treatment would forgo the needed pathology."),t(`observe_${i}`,"Clinical observation","The suspicious lesion needs tissue diagnosis."),t(`mohs_${i}`,"Refer for Mohs surgery","Definitive technique selection follows diagnosis and risk assessment.")],explanation:"Obtain an adequate diagnostic biopsy before choosing risk-directed cSCC treatment.",claimIds:["claim.cutaneous-scc.biopsy-for-diagnosis-and-risk"],gate:{id:`gate.cutaneous-scc.biopsy.${i}`,serviceId:"service.cutaneous_lesion_biopsy",pendingLabel:"External skin pathology pending",resultNarrative:result,routeIds:["route.cutaneous_lesion_biopsy.outsourced"]}},{conceptId:"concept.cutaneous-scc.risk-directed-surgery",currentUpdate:result,stem:"Which treatment pathway best fits {patientName}'s returned cSCC pathology?",choices:risk==="low"?[a(`excision_${i}`,"Standard excision","Low-risk primary cSCC can use standard excision with histologic margin assessment.",true),a(`mohs_${i}`,"Refer for Mohs surgery","Routine Mohs is not the selected pathway for this low-risk presentation."),a(`radiation_${i}`,"Refer for radiation therapy","This surgical candidate has a low-risk lesion suitable for excision."),a(`observe_${i}`,"Observe after biopsy","Confirmed invasive cSCC should receive definitive treatment.")]:[a(`mohs_${i}`,"Refer for Mohs surgery","High-risk cSCC merits Mohs-capable specialist evaluation.",true),a(`excision_${i}`,"Standard excision","The returned pathology establishes high-risk features rather than a low-risk excision pathway."),a(`freeze_${i}`,"Cryotherapy treatment","Destructive therapy does not provide the selected high-risk cancer treatment."),a(`observe_${i}`,"Clinical observation","Confirmed high-risk cSCC needs definitive specialist planning.")],explanation:"Match definitive treatment to the established cSCC risk classification; standard excision includes histologic margin assessment.",claimIds:["claim.cutaneous-scc.risk-directed-surgery","claim.cutaneous-scc.pathology-risk-features"]}]};});
++const cases:CaseSpec[]=stories.map(([slug,ages,complaint,detail,risk],i)=>{const result=risk==="low"?"External pathology confirms a shallow well-differentiated invasive cutaneous squamous cell carcinoma without perineural invasion.":"External pathology confirms poorly differentiated invasive cutaneous squamous cell carcinoma with perineural invasion.";return{id:`case.cutaneous-scc.${slug}`,displayName:"Keratinocyte lesion review",chiefComplaint:complaint,presentation:`{patientName} is a {patientAge}-year-old {patientSex} who ${detail}.`,ageYears:ages,sexLabels:["Female","Male"],stage:1,requiredCapabilityIds:["capability.minor_procedure"],nodes:[{conceptId:"concept.cutaneous-scc.diagnostic-biopsy",stem:"Which diagnostic approach best obtains tissue for {patientName}'s suspicious skin lesion?",choices:[t(`biopsy_${i}`,"Diagnostic skin biopsy","Adequate diagnostic tissue is needed before risk-directed treatment.",true,"service.cutaneous_lesion_biopsy"),t(`freeze_${i}`,"Cryotherapy treatment","Destructive treatment would forgo the needed pathology."),t(`observe_${i}`,"Clinical observation","The suspicious lesion needs tissue diagnosis."),t(`mohs_${i}`,"Refer for Mohs surgery","Definitive technique selection follows diagnosis and risk assessment.")],explanation:"Obtain an adequate diagnostic biopsy before choosing risk-directed cSCC treatment.",claimIds:["claim.cutaneous-scc.biopsy-for-diagnosis-and-risk"],gate:{id:`gate.cutaneous-scc.biopsy.${i}`,serviceId:"service.cutaneous_lesion_biopsy",pendingLabel:"External skin pathology pending",resultNarrative:result,routeIds:["route.cutaneous_lesion_biopsy.in_house","route.cutaneous_lesion_biopsy.outsourced"]}},{conceptId:"concept.cutaneous-scc.risk-directed-surgery",currentUpdate:result,stem:"Which treatment pathway best fits {patientName}'s returned cSCC pathology?",choices:risk==="low"?[a(`excision_${i}`,"Standard excision","Low-risk primary cSCC can use standard excision with histologic margin assessment.",true),a(`mohs_${i}`,"Refer for Mohs surgery","Routine Mohs is not the selected pathway for this low-risk presentation."),a(`radiation_${i}`,"Refer for radiation therapy","This surgical candidate has a low-risk lesion suitable for excision."),a(`observe_${i}`,"Observe after biopsy","Confirmed invasive cSCC should receive definitive treatment.")]:[a(`mohs_${i}`,"Refer for Mohs surgery","High-risk cSCC merits Mohs-capable specialist evaluation.",true),a(`excision_${i}`,"Standard excision","The returned pathology establishes high-risk features rather than a low-risk excision pathway."),a(`freeze_${i}`,"Cryotherapy treatment","Destructive therapy does not provide the selected high-risk cancer treatment."),a(`observe_${i}`,"Clinical observation","Confirmed high-risk cSCC needs definitive specialist planning.")],explanation:"Match definitive treatment to the established cSCC risk classification; standard excision includes histologic margin assessment.",claimIds:["claim.cutaneous-scc.risk-directed-surgery","claim.cutaneous-scc.pathology-risk-features"]}]};});
+ export const CUTANEOUS_SCC_CONCEPTS=[concept({id:"concept.cutaneous-scc.diagnostic-biopsy",educationalTier:0,displayName:"Diagnostic biopsy of a suspicious keratinocyte lesion",learningObjective:"Select adequate diagnostic biopsy for a suspicious lesion before cSCC risk-directed treatment.",earliestFacilityStage:1,conceptType:"workup",evidenceClaimIds:["claim.cutaneous-scc.biopsy-for-diagnosis-and-risk"]}),concept({id:"concept.cutaneous-scc.risk-directed-surgery",educationalTier:1,displayName:"Risk-directed surgery for cutaneous SCC",learningObjective:"Choose standard excision for low-risk cSCC and Mohs-capable referral for high-risk cSCC.",earliestFacilityStage:1,conceptType:"management",evidenceClaimIds:["claim.cutaneous-scc.risk-directed-surgery"]})];
+-const family=createDevelopmentFamily({concepts:CUTANEOUS_SCC_CONCEPTS,cases,sourceLabels:["AAD cutaneous SCC guideline","AAD Choosing Wisely"]});export const CUTANEOUS_SCC_TESTED_CONCEPTS=family.testedConcepts,CUTANEOUS_SCC_QUESTIONS=family.questions,CUTANEOUS_SCC_CASES=family.cases,CUTANEOUS_SCC_CASE_REVIEWS=family.caseReviews,CUTANEOUS_SCC_TIMING_ENTRIES=family.timingEntries,CUTANEOUS_SCC_AUTHORING_REVIEW=NEEDS_REVIEW;export const CUTANEOUS_SCC_SERVICE_CONTRACTS=[{serviceId:"service.cutaneous_lesion_biopsy",allowedRouteIds:["route.cutaneous_lesion_biopsy.outsourced"],delivery:"new_external_contract_required" as const}];
++const family=createDevelopmentFamily({concepts:CUTANEOUS_SCC_CONCEPTS,cases,sourceLabels:["AAD cutaneous SCC guideline","AAD Choosing Wisely"]});export const CUTANEOUS_SCC_TESTED_CONCEPTS=family.testedConcepts,CUTANEOUS_SCC_QUESTIONS=family.questions,CUTANEOUS_SCC_CASES=family.cases,CUTANEOUS_SCC_CASE_REVIEWS=family.caseReviews,CUTANEOUS_SCC_TIMING_ENTRIES=family.timingEntries,CUTANEOUS_SCC_AUTHORING_REVIEW=NEEDS_REVIEW;export const CUTANEOUS_SCC_SERVICE_CONTRACTS=[{serviceId:"service.cutaneous_lesion_biopsy",allowedRouteIds:["route.cutaneous_lesion_biopsy.in_house","route.cutaneous_lesion_biopsy.outsourced"],delivery:"existing_balance_contract" as const}];
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-13\\early-levels-admission.test.ts" b/packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts
+index 300ccc7..ab47b32 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-13\\early-levels-admission.test.ts"
++++ b/packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts
+@@ -66,7 +66,8 @@ describe("September 13 early-level batch admission", () => {
+     for(const source of EARLY_LEVELS_20260913_SOURCES)for(const id of source.evidenceClaimIds)expect(claimIds.has(id)).toBe(true);
+     for(const concept of EARLY_LEVELS_20260913_AUTHORING_CONCEPTS)for(const id of concept.evidenceClaimIds)expect(claimIds.has(id)).toBe(true);
+     for(const question of EARLY_LEVELS_20260913_QUESTIONS)for(const id of question.supportingEvidenceClaimIds)expect(claimIds.has(id)).toBe(true);
+-    expect(EARLY_LEVELS_20260913_SERVICE_CONTRACTS.filter((item)=>item.delivery==="new_external_contract_required").map((item)=>item.serviceId).sort()).toEqual(["service.ambulatory_reflux_monitoring","service.cutaneous_lesion_biopsy","service.hepatobiliary_contrast_mrcp","service.tumor_mmr_ihc"]);
++    expect(EARLY_LEVELS_20260913_SERVICE_CONTRACTS.filter((item)=>item.delivery==="new_external_contract_required").map((item)=>item.serviceId).sort()).toEqual(["service.ambulatory_reflux_monitoring","service.hepatobiliary_contrast_mrcp","service.tumor_mmr_ihc"]);
++    expect(EARLY_LEVELS_20260913_SERVICE_CONTRACTS.find((item)=>item.serviceId==="service.cutaneous_lesion_biopsy")).toMatchObject({delivery:"existing_balance_contract",allowedRouteIds:["route.cutaneous_lesion_biopsy.in_house","route.cutaneous_lesion_biopsy.outsourced"]});
+   });
+ 
+   it("binds ordered concepts and LF-normalized source hashes in the owner receipt", () => {
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-17-bread-and-butter\\cutaneous-abscess.ts" b/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/cutaneous-abscess.ts
+index 9e40cda..bb01554 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-17-bread-and-butter\\cutaneous-abscess.ts"
++++ b/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/cutaneous-abscess.ts
+@@ -216,6 +216,7 @@ const cases: CaseSpec[] = stories.map(([slug, complaint, detail], index) => {
+     ageYears: [29, 51],
+     sexLabels: ["Female", "Male"],
+     stage: 1,
++    requiredCapabilityIds: ["capability.minor_procedure"],
+     nodes: [
+       {
+         conceptId: CONCEPT_IDS.ultrasound,
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-17-bread-and-butter\\postoperative-wounds.ts" b/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/postoperative-wounds.ts
+index 54decc4..d7c7b81 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\clinical-content\\src\\development-batch\\2026-09-17-bread-and-butter\\postoperative-wounds.ts"
++++ b/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/postoperative-wounds.ts
+@@ -197,6 +197,7 @@ const cases: CaseSpec[] = [
+     ageYears: [36, 62],
+     sexLabels: ["Female", "Male"] as const,
+     stage: 0 as const,
++    requiredCapabilityIds: ["capability.minor_procedure"],
+     nodes: [
+       {
+         conceptId: CONCEPT_IDS.superficial,
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\index.ts" b/packages/game-domain/src/index.ts
+index 44caee9..caee835 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\index.ts"
++++ b/packages/game-domain/src/index.ts
+@@ -14,6 +14,7 @@ export * from "./patientDemographics";
+ export * from "./randomness";
+ export * from "./reducer";
+ export * from "./selectors";
++export * from "./service-operations";
+ export * from "./spatial";
+ export * from "./staff";
+ export * from "./types";
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\persistence.ts" b/packages/game-domain/src/persistence.ts
+index a3d3ee5..5e12a59 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\persistence.ts"
++++ b/packages/game-domain/src/persistence.ts
+@@ -1,6 +1,7 @@
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { alertCadencePolicy } from "./alert-cadence";
+ import {
++  getServiceIncomeLine,
+   PROTOTYPE_ALERT_SCHEDULING,
+   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+   PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
+@@ -54,6 +55,7 @@ import type {
+   PatientDissatisfactionCause,
+   PlacedRoom,
+   ReviewRatingIntent,
++  ServiceOperationState,
+   TerminalFeedback,
+ } from "./types";
+ 
+@@ -622,6 +624,84 @@ function isPixelAppearance(
+   );
+ }
+ 
++const SERVICE_OPERATION_STATUSES = new Set<ServiceOperationState["status"]>([
++  "waiting_for_resources",
++  "walking_to_service",
++  "in_service",
++  "walking_between_phases",
++  "leaving",
++  "completed",
++  "cancelled",
++]);
++
++function normalizeServiceOperations(
++  candidate: unknown,
++): ServiceOperationState[] {
++  if (!Array.isArray(candidate)) return [];
++  return candidate.flatMap((raw) => {
++    if (
++      !isRecord(raw) ||
++      typeof raw.id !== "string" ||
++      typeof raw.incomeLineId !== "string" ||
++      !getServiceIncomeLine(raw.incomeLineId)?.operation ||
++      (raw.actorKind !== "visitor" && raw.actorKind !== "encounter" && raw.actorKind !== "remote") ||
++      typeof raw.actorId !== "string" ||
++      typeof raw.displayName !== "string" ||
++      typeof raw.status !== "string" ||
++      !SERVICE_OPERATION_STATUSES.has(raw.status as ServiceOperationState["status"]) ||
++      typeof raw.createdAtFacilityTick !== "number" || !Number.isSafeInteger(raw.createdAtFacilityTick) ||
++      typeof raw.waitDeadlineFacilityTick !== "number" || !Number.isSafeInteger(raw.waitDeadlineFacilityTick) ||
++      typeof raw.quoteFee !== "number" || !Number.isFinite(raw.quoteFee) || raw.quoteFee < 0 ||
++      typeof raw.phaseIndex !== "number" || !Number.isSafeInteger(raw.phaseIndex) || raw.phaseIndex < 0 ||
++      !Array.isArray(raw.reservedRoomInstanceIds) ||
++      !Array.isArray(raw.reservedEmployeeIds) ||
++      !Array.isArray(raw.path) ||
++      typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) ||
++      typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)
++    ) return [];
++    const line = getServiceIncomeLine(raw.incomeLineId)!;
++    if (
++      raw.phaseIndex > line.operation!.phases.length ||
++      (raw.phaseIndex === line.operation!.phases.length && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
++    ) return [];
++    const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
++    const providerReservation = isRecord(raw.providerReservation) && raw.providerReservation.kind === "founder"
++      ? { kind: "founder" as const }
++      : isRecord(raw.providerReservation) && raw.providerReservation.kind === "employee" && typeof raw.providerReservation.employeeId === "string"
++        ? { kind: "employee" as const, employeeId: raw.providerReservation.employeeId }
++        : null;
++    const nullableTick = (value: unknown) =>
++      typeof value === "number" && Number.isSafeInteger(value) ? value : null;
++    return [{
++      id: raw.id,
++      incomeLineId: raw.incomeLineId,
++      catalogVersion: 1 as const,
++      actorKind: raw.actorKind,
++      actorId: raw.actorId,
++      displayName: raw.displayName,
++      appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
++      status: raw.status as ServiceOperationState["status"],
++      createdAtFacilityTick: raw.createdAtFacilityTick,
++      waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
++      startedAtFacilityTick: nullableTick(raw.startedAtFacilityTick),
++      completedAtFacilityTick: nullableTick(raw.completedAtFacilityTick),
++      cancelledAtFacilityTick: nullableTick(raw.cancelledAtFacilityTick),
++      quoteFee: raw.quoteFee,
++      phaseIndex: raw.phaseIndex,
++      phaseStartedAtFacilityTick: nullableTick(raw.phaseStartedAtFacilityTick),
++      phaseEndsAtFacilityTick: nullableTick(raw.phaseEndsAtFacilityTick),
++      reservedRoomInstanceIds: raw.reservedRoomInstanceIds.filter((id): id is string => typeof id === "string"),
++      reservedEmployeeIds: raw.reservedEmployeeIds.filter((id): id is string => typeof id === "string"),
++      providerReservation,
++      location: isGridPoint(raw.location) ? { ...raw.location } : null,
++      path,
++      pathIndex: path.length > 0 ? Math.max(0, Math.min(path.length - 1, raw.pathIndex)) : 0,
++      lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
++      cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
++    } satisfies ServiceOperationState];
++  });
++}
++
+ function normalizeFounder(
+   candidate: unknown,
+   campaignSeed: string,
+@@ -1782,16 +1862,17 @@ function migrateVersionTwo(
+         typeof candidate.transactionKey === "string" &&
+         typeof candidate.incomeLineId === "string" &&
+         (candidate.routeId === null || typeof candidate.routeId === "string") &&
+-        (candidate.actorKind === "patient" || candidate.actorKind === "employee" || candidate.actorKind === "founder" || candidate.actorKind === "remote") &&
++        (candidate.actorKind === "patient" || candidate.actorKind === "visitor" || candidate.actorKind === "employee" || candidate.actorKind === "founder" || candidate.actorKind === "remote") &&
+         typeof candidate.actorId === "string" &&
+         typeof candidate.grossAmount === "number" && Number.isFinite(candidate.grossAmount) &&
+         typeof candidate.stockCost === "number" && Number.isFinite(candidate.stockCost) &&
+         typeof candidate.netCashDelta === "number" && Number.isFinite(candidate.netCashDelta) &&
+         typeof candidate.completedAtFacilityTick === "number" && Number.isSafeInteger(candidate.completedAtFacilityTick)
+-          ? [{ id: candidate.id, transactionKey: candidate.transactionKey, incomeLineId: candidate.incomeLineId, catalogVersion: 1 as const, routeId: candidate.routeId, actorKind: candidate.actorKind as "patient" | "employee" | "founder" | "remote", actorId: candidate.actorId, grossAmount: candidate.grossAmount, stockCost: candidate.stockCost, netCashDelta: candidate.netCashDelta, completedAtFacilityTick: candidate.completedAtFacilityTick }]
++          ? [{ id: candidate.id, transactionKey: candidate.transactionKey, incomeLineId: candidate.incomeLineId, catalogVersion: 1 as const, routeId: candidate.routeId, actorKind: candidate.actorKind as "patient" | "visitor" | "employee" | "founder" | "remote", actorId: candidate.actorId, ...(isRecord(candidate.displayAnchor) && ((candidate.displayAnchor.actorKind === "employee" && typeof candidate.displayAnchor.actorId === "string") || (candidate.displayAnchor.actorKind === "founder" && candidate.displayAnchor.actorId === "founder")) ? { displayAnchor: candidate.displayAnchor as { actorKind: "employee"; actorId: string } | { actorKind: "founder"; actorId: "founder" } } : {}), grossAmount: candidate.grossAmount, stockCost: candidate.stockCost, netCashDelta: candidate.netCashDelta, completedAtFacilityTick: candidate.completedAtFacilityTick }]
+           : [],
+       )
+     : [];
++  const serviceOperations = normalizeServiceOperations(parsed.serviceOperations);
+   const next: GameState = {
+     ...baseline,
+     ...(parsed as unknown as GameState),
+@@ -1806,6 +1887,30 @@ function migrateVersionTwo(
+     cashCents: parsedCashCents,
+     cash: parsedCashCents / 100,
+     serviceIncomeReceipts,
++    serviceAppointmentsEnabled:
++      typeof parsed.serviceAppointmentsEnabled === "boolean"
++        ? parsed.serviceAppointmentsEnabled
++        : baseline.serviceAppointmentsEnabled,
++    nextServiceAppointmentTicks: isRecord(parsed.nextServiceAppointmentTicks)
++      ? Object.fromEntries(Object.entries(parsed.nextServiceAppointmentTicks).filter(([, tick]) =>
++          typeof tick === "number" && Number.isSafeInteger(tick) && tick > parsedFacilityTick,
++        )) as Record<string, number>
++      : {},
++    lastServiceAppointmentArrivalTick:
++      typeof parsed.lastServiceAppointmentArrivalTick === "number" &&
++      Number.isSafeInteger(parsed.lastServiceAppointmentArrivalTick) &&
++      parsed.lastServiceAppointmentArrivalTick <= parsedFacilityTick
++        ? parsed.lastServiceAppointmentArrivalTick
++        : null,
++    serviceOperationSequence: Math.max(
++      serviceOperations.length,
++      typeof parsed.serviceOperationSequence === "number" &&
++        Number.isSafeInteger(parsed.serviceOperationSequence) &&
++        parsed.serviceOperationSequence >= 0
++        ? parsed.serviceOperationSequence
++        : 0,
++    ),
++    serviceOperations,
+     nextServiceIncomeReceiptSequence: Math.max(
+       serviceIncomeReceipts.length,
+       typeof parsed.nextServiceIncomeReceiptSequence === "number" && Number.isSafeInteger(parsed.nextServiceIncomeReceiptSequence) && parsed.nextServiceIncomeReceiptSequence >= 0
+@@ -1916,7 +2021,8 @@ function migrateVersionTwo(
+       (rawFacilityTask?.kind === "refill_water" ||
+         rawFacilityTask?.kind === "collect_litter" ||
+         rawFacilityTask?.kind === "clean_room" ||
+-        rawFacilityTask?.kind === "perform_imaging") &&
++        rawFacilityTask?.kind === "perform_imaging" ||
++        rawFacilityTask?.kind === "perform_service") &&
+       typeof rawFacilityTask.startedAtFacilityTick === "number" &&
+       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
+       rawFacilityTask.startedAtFacilityTick >= 0 &&
+@@ -1924,7 +2030,7 @@ function migrateVersionTwo(
+       Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) &&
+       rawFacilityTask.workMinutesRemaining > 0
+         ? {
+-            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room" | "perform_imaging",
++            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service",
+             startedAtFacilityTick:
+               rawFacilityTask.startedAtFacilityTick,
+             workMinutesRemaining:
+@@ -2273,7 +2379,8 @@ function migrateVersionTwo(
+         rawFounderActivity.kind === "return_to_front_desk" ||
+         rawFounderActivity.kind === "wander_facility" ||
+         rawFounderActivity.kind === "sit_in_chair" ||
+-        rawFounderActivity.kind === "visit_bathroom") &&
++        rawFounderActivity.kind === "visit_bathroom" ||
++        rawFounderActivity.kind === "perform_service") &&
+       typeof rawFounderActivity.targetId === "string" &&
+       founderActivityPath.length > 0
+         ? {
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\reducer.ts" b/packages/game-domain/src/reducer.ts
+index 4ae59e8..6ffa98f 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\reducer.ts"
++++ b/packages/game-domain/src/reducer.ts
+@@ -85,6 +85,12 @@ import {
+   getEmployeeArrival,
+   getEffectiveEmployeeMorale,
+ } from "./staff";
++import {
++  advanceServiceOperations,
++  encounterHasActiveServiceOperation,
++  startEncounterProcedureOperation,
++  startServiceOperation,
++} from "./service-operations";
+ import type {
+   AnswerRecord,
+   DoorState,
+@@ -233,6 +239,7 @@ function chooseAutomaticFounderActivity(
+       if (point) occupied.add(pointKey(point));
+     }
+   }
++
+   for (const employee of state.employees) {
+     occupied.add(pointKey(employee.location));
+     const endpoint = employee.path.at(-1);
+@@ -1096,6 +1103,15 @@ function roomHasActiveCharacterOrRoute(
+     }
+   }
+ 
++  if (state.serviceOperations.some(
++    (operation) =>
++      operation.status !== "completed" &&
++      operation.status !== "cancelled" &&
++      (operation.reservedRoomInstanceIds.includes(room.id) ||
++        (operation.location && pointInsideRoom(operation.location, room, context)) ||
++        routeTouchesRoom(operation.path.slice(operation.pathIndex))),
++  )) return true;
++
+   if (
+     state.employees.some(
+       (employee) =>
+@@ -2605,6 +2621,29 @@ function reduceCloseChart(
+   );
+ }
+ 
++function finalProcedureIncomeLineId(
++  encounter: EncounterState,
++  node: DecisionNode,
++  answerChoiceId: string,
++): string | null {
++  const exactAction = `${encounter.frozenCase.id}|${node.id}|${answerChoiceId}`;
++  const simpleActions = new Set([
++    "case.breast-cyst.under-30-painful-simple|node.breast-cyst.symptomatic-simple-aspiration.v1|needle_aspiration",
++    "case.bread-butter.cutaneous-abscess.forearm-redness|node.bread-butter.cutaneous-abscess.forearm-redness.2|drain_1",
++    "case.bread-butter.cutaneous-abscess.back-nodule|node.bread-butter.cutaneous-abscess.back-nodule.2|drain_2",
++    "case.bread-butter.cutaneous-abscess.thigh-swelling|node.bread-butter.cutaneous-abscess.thigh-swelling.2|drain_3",
++    "case.bread-butter.cutaneous-abscess.abdominal-wall-redness|node.bread-butter.cutaneous-abscess.abdominal-wall-redness.2|drain_4",
++  ]);
++  if (simpleActions.has(exactAction)) return "income.minor_procedure_simple";
++  const complexActions = new Set([
++    "case.bread-butter.superficial-incisional-ssi.purulent-staple-line|node.bread-butter.superficial-incisional-ssi.purulent-staple-line.1|open_1",
++    "case.bread-butter.superficial-incisional-ssi.red-incision|node.bread-butter.superficial-incisional-ssi.red-incision.1|open_2",
++    "case.bread-butter.superficial-incisional-ssi.incisional-collection|node.bread-butter.superficial-incisional-ssi.incisional-collection.1|open_3",
++    "case.bread-butter.superficial-incisional-ssi.tender-staples|node.bread-butter.superficial-incisional-ssi.tender-staples.1|open_4",
++  ]);
++  return complexActions.has(exactAction) ? "income.minor_procedure_complex" : null;
++}
++
+ function reduceSubmitAnswer(
+   state: GameState,
+   command: Extract<GameCommand, { type: "SUBMIT_ANSWER" }>,
+@@ -2798,6 +2837,21 @@ function reduceSubmitAnswer(
+       next.criticalGuarantees[nextEncounter.protectedGuaranteeId] = "satisfied";
+     }
+     settleEncounter(next, context, nextEncounter);
++    if (choice.isCorrect) {
++      const procedureLineId = finalProcedureIncomeLineId(
++        nextEncounter,
++        node,
++        choice.id,
++      );
++      if (procedureLineId) {
++        startEncounterProcedureOperation(
++          next,
++          nextEncounter,
++          procedureLineId,
++          context,
++        );
++      }
++    }
+   } else if (scheduledResult) {
+     if (!routeImagingTechnicianToScheduledService(next, context, scheduledResult)) {
+       return rejectCommand(
+@@ -3277,6 +3331,13 @@ function reduceAcknowledgeFeedback(
+   ) {
+     return rejectCommand(state, command, "No terminal feedback is ready.");
+   }
++  if (encounterHasActiveServiceOperation(state, encounter.id)) {
++    return rejectCommand(
++      state,
++      command,
++      "Complete the in-clinic procedure before closing its feedback.",
++    );
++  }
+   const next = clonePlain(state);
+   next.encounters[command.encounterId]!.terminalFeedback!.acknowledged = true;
+   return recordReceipt(next, command, "applied", "Terminal feedback acknowledged.");
+@@ -3827,6 +3888,17 @@ function advanceEmployeeFacilityTasks(
+       );
+       continue;
+     }
++    if (task.kind === "perform_service") {
++      const stillReserved = state.serviceOperations.some(
++        (operation) =>
++          operation.id === task.targetId &&
++          operation.status !== "completed" &&
++          operation.status !== "cancelled",
++      );
++      if (stillReserved) continue;
++      employee.facilityTask = null;
++      continue;
++    }
+ 
+     task.workMinutesRemaining -= 1;
+     if (task.workMinutesRemaining > 0) {
+@@ -4188,6 +4260,9 @@ function advanceFounderActivity(
+     }
+     return;
+   }
++  if (activity.kind === "perform_service") {
++    return;
++  }
+   activity.workMinutesRemaining -= 1;
+   if (activity.workMinutesRemaining <= 0) {
+     completeFounderActivity(state, context);
+@@ -5048,11 +5123,12 @@ function reduceAdvanceTick(
+   applyOperatingExpenses(next, context);
+   maybeAssignReceptionistWaterRefill(next, context);
+     advanceEmployeeMovement(next, context);
++  advanceFounderActivity(next, context);
++  advanceServiceOperations(next, context);
+     advanceEmployeeFacilityTasks(next, context);
+     maybeAssignEvsTasks(next, context);
+     advanceGlp1Automation(next, context);
+     maybeApplyCoffeeMorale(next, context);
+-  advanceFounderActivity(next, context);
+   maybeApplyUnstaffedCheckInOverdue(next, context);
+   maybeCompleteAwaitingCheckIns(next, context);
+   drainWaterCooler(next, context);
+@@ -5966,6 +6042,20 @@ function reduceFireEmployee(
+   if (!employee) {
+     return rejectCommand(state, command, "That employee does not exist.");
+   }
++  if (state.serviceOperations.some(
++    (operation) =>
++      operation.status !== "completed" &&
++      operation.status !== "cancelled" &&
++      (operation.reservedEmployeeIds.includes(employee.id) ||
++        (operation.providerReservation?.kind === "employee" &&
++          operation.providerReservation.employeeId === employee.id)),
++  )) {
++    return rejectCommand(
++      state,
++      command,
++      `${employee.displayName} is performing a service and cannot be fired yet.`,
++    );
++  }
+   const reservedForImaging = Object.values(state.encounters).some(
+     (encounter) => {
+       const pending = encounter.pendingResult;
+@@ -6556,6 +6646,11 @@ export function createInitialGameState(
+     settlements: [],
+     serviceIncomeReceipts: [],
+     nextServiceIncomeReceiptSequence: 0,
++    serviceAppointmentsEnabled: true,
++    nextServiceAppointmentTicks: {},
++    lastServiceAppointmentArrivalTick: null,
++    serviceOperationSequence: 0,
++    serviceOperations: [],
+     operationReceipts: {},
+     events: [],
+     criticalGuarantees: {},
+@@ -6827,6 +6922,31 @@ function reduceGameCommand(
+     }
+     case "RUN_EMERGENCY_GLP1_CONSULTATION":
+       return reduceEmergencyGlp1Consultation(state, command, context);
++    case "SET_SERVICE_APPOINTMENTS_ENABLED": {
++      const next = clonePlain(state);
++      next.serviceAppointmentsEnabled = command.enabled;
++      if (!command.enabled) next.nextServiceAppointmentTicks = {};
++      return recordReceipt(
++        next,
++        command,
++        "applied",
++        command.enabled
++          ? "Service appointments enabled."
++          : "Service appointments disabled.",
++      );
++    }
++    case "START_SERVICE_OPERATION": {
++      const next = clonePlain(state);
++      const operationId = startServiceOperation(
++        next,
++        command.incomeLineId,
++        command.actorKind ?? "visitor",
++        context,
++      );
++      return operationId
++        ? recordReceipt(next, command, "applied", `Service operation ${operationId} scheduled.`)
++        : rejectCommand(state, command, "That service operation is not currently eligible.");
++    }
+     case "ADMIT_PATIENT":
+       return reduceAdmitPatient(state, command, context);
+   }
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\selectors.ts" b/packages/game-domain/src/selectors.ts
+index a95edcf..c178327 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\selectors.ts"
++++ b/packages/game-domain/src/selectors.ts
+@@ -312,13 +312,30 @@ function hasActiveResourcePhase(
+   );
+ }
+ 
+-function getActiveProviderReservations(state: GameState) {
+-  return Object.values(state.encounters).flatMap((encounter) =>
++type ActiveProviderReservation =
++  | { kind: "founder" }
++  | { kind: "employee"; employeeId: string; staffRoleDefinitionId: string };
++
++function getActiveProviderReservations(state: GameState): ActiveProviderReservation[] {
++  const clinicalProviders = Object.values(state.encounters).flatMap((encounter) =>
+     hasActiveResourcePhase(encounter, state.facilityTick) &&
+     encounter.pendingResult?.providerReservation
+       ? [encounter.pendingResult.providerReservation]
+       : [],
+-  );
++  ) as ActiveProviderReservation[];
++  const operationProviders: ActiveProviderReservation[] = [];
++  for (const operation of state.serviceOperations) {
++    if (operation.status === "completed" || operation.status === "cancelled") continue;
++    const reservation = operation.providerReservation;
++    if (!reservation) continue;
++    if (reservation.kind === "founder") {
++      operationProviders.push({ kind: "founder" });
++      continue;
++    }
++    const employee = state.employees.find((candidate) => candidate.id === reservation.employeeId);
++    if (employee) operationProviders.push({ kind: "employee", employeeId: employee.id, staffRoleDefinitionId: employee.staffRoleDefinitionId });
++  }
++  return [...clinicalProviders, ...operationProviders];
+ }
+ 
+ function selectProviderReservation(
+@@ -381,12 +398,24 @@ function selectReachableIdleImagingTechnician(
+   if (!destination || !definition) return null;
+   const target = getRoomNavigationAnchor(destination, definition, "staff");
+   const reservedEmployeeIds = new Set(
+-    Object.values(state.encounters).flatMap((encounter) =>
+-      hasActiveResourcePhase(encounter, state.facilityTick) &&
+-      encounter.pendingResult?.imagingTechnicianId
+-        ? [encounter.pendingResult.imagingTechnicianId]
+-        : [],
+-    ),
++    [
++      ...Object.values(state.encounters).flatMap((encounter) =>
++        hasActiveResourcePhase(encounter, state.facilityTick) &&
++        encounter.pendingResult?.imagingTechnicianId
++          ? [encounter.pendingResult.imagingTechnicianId]
++          : [],
++      ),
++      ...state.serviceOperations.flatMap((operation) =>
++        operation.status !== "completed" && operation.status !== "cancelled"
++          ? [
++              ...operation.reservedEmployeeIds,
++              ...(operation.providerReservation?.kind === "employee"
++                ? [operation.providerReservation.employeeId]
++                : []),
++            ]
++          : [],
++      ),
++    ],
+   );
+   return (
+     state.employees
+@@ -458,13 +487,31 @@ export function getEligibleServiceRoute(
+         : [];
+     },
+   );
++  for (const operation of state.serviceOperations) {
++    if (operation.status === "completed" || operation.status === "cancelled") continue;
++    for (const roomId of operation.reservedRoomInstanceIds) {
++      const room = state.rooms.find((candidate) => candidate.id === roomId);
++      if (room) activeResourceUses.push({ roomDefinitionId: room.roomDefinitionId, staffRoleDefinitionId: null });
++    }
++    for (const employeeId of operation.reservedEmployeeIds) {
++      const employee = state.employees.find((candidate) => candidate.id === employeeId);
++      if (employee) activeResourceUses.push({ roomDefinitionId: "", staffRoleDefinitionId: employee.staffRoleDefinitionId });
++    }
++  }
+   const activeDestinationRoomIds = new Set(
+-    Object.values(state.encounters).flatMap((encounter) =>
+-      hasActiveResourcePhase(encounter, state.facilityTick) &&
+-      encounter.pendingResult?.patientTravel?.destinationRoomInstanceId
+-        ? [encounter.pendingResult.patientTravel.destinationRoomInstanceId]
+-        : [],
+-    ),
++    [
++      ...Object.values(state.encounters).flatMap((encounter) =>
++        hasActiveResourcePhase(encounter, state.facilityTick) &&
++        encounter.pendingResult?.patientTravel?.destinationRoomInstanceId
++          ? [encounter.pendingResult.patientTravel.destinationRoomInstanceId]
++          : [],
++      ),
++      ...state.serviceOperations.flatMap((operation) =>
++        operation.status !== "completed" && operation.status !== "cancelled"
++          ? operation.reservedRoomInstanceIds
++          : [],
++      ),
++    ],
+   );
+   const route =
+     service.routes
+diff --git "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\types.ts" b/packages/game-domain/src/types.ts
+index b536c2d..d75de50 100644
+--- "a/.local-dev\\gs-021-m2-baseline\\packages\\game-domain\\src\\types.ts"
++++ b/packages/game-domain/src/types.ts
+@@ -431,14 +431,57 @@ export interface ServiceIncomeReceipt {
+   incomeLineId: string;
+   catalogVersion: 1;
+   routeId: string | null;
+-  actorKind: "patient" | "employee" | "founder" | "remote";
++  actorKind: "patient" | "visitor" | "employee" | "founder" | "remote";
+   actorId: string;
++  displayAnchor?:
++    | { actorKind: "employee"; actorId: string }
++    | { actorKind: "founder"; actorId: "founder" };
+   grossAmount: number;
+   stockCost: number;
+   netCashDelta: number;
+   completedAtFacilityTick: number;
+ }
+ 
++export type ServiceOperationStatus =
++  | "waiting_for_resources"
++  | "walking_to_service"
++  | "in_service"
++  | "walking_between_phases"
++  | "leaving"
++  | "completed"
++  | "cancelled";
++
++export interface ServiceOperationState {
++  id: string;
++  incomeLineId: string;
++  catalogVersion: 1;
++  actorKind: "visitor" | "encounter" | "remote";
++  actorId: string;
++  displayName: string;
++  appearance: PixelAppearanceDescriptor | null;
++  status: ServiceOperationStatus;
++  createdAtFacilityTick: number;
++  waitDeadlineFacilityTick: number;
++  startedAtFacilityTick: number | null;
++  completedAtFacilityTick: number | null;
++  cancelledAtFacilityTick: number | null;
++  quoteFee: number;
++  phaseIndex: number;
++  phaseStartedAtFacilityTick: number | null;
++  phaseEndsAtFacilityTick: number | null;
++  reservedRoomInstanceIds: string[];
++  reservedEmployeeIds: string[];
++  providerReservation:
++    | { kind: "employee"; employeeId: string }
++    | { kind: "founder" }
++    | null;
++  location: GridPoint | null;
++  path: GridPoint[];
++  pathIndex: number;
++  lastMovedAtFacilityTick: number;
++  cancellationReason: string | null;
++}
++
+ export interface EncounterState {
+   id: string;
+   clinicalReleaseId: string;
+@@ -539,7 +582,7 @@ export interface DoorState {
+ }
+ 
+ export interface EmployeeFacilityTaskState {
+-  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging";
++  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service";
+   startedAtFacilityTick: number;
+   workMinutesRemaining: number;
+   targetId?: string;
+@@ -591,7 +634,8 @@ export interface FounderActivityState {
+     | "return_to_front_desk"
+     | "wander_facility"
+     | "sit_in_chair"
+-    | "visit_bathroom";
++    | "visit_bathroom"
++    | "perform_service";
+   targetId: string;
+   path: GridPoint[];
+   pathIndex: number;
+@@ -781,6 +825,11 @@ export interface GameState {
+   settlements: EncounterSettlement[];
+   serviceIncomeReceipts: ServiceIncomeReceipt[];
+   nextServiceIncomeReceiptSequence: number;
++  serviceAppointmentsEnabled: boolean;
++  nextServiceAppointmentTicks: Record<string, number>;
++  lastServiceAppointmentArrivalTick: number | null;
++  serviceOperationSequence: number;
++  serviceOperations: ServiceOperationState[];
+   operationReceipts: Record<string, OperationReceipt>;
+   events: DomainEvent[];
+   criticalGuarantees: Record<string, "pending" | "in_progress" | "satisfied">;
+@@ -922,6 +971,15 @@ export type GameCommand =
+   | (CommandBase & {
+       type: "RUN_EMERGENCY_GLP1_CONSULTATION";
+     })
++  | (CommandBase & {
++      type: "SET_SERVICE_APPOINTMENTS_ENABLED";
++      enabled: boolean;
++    })
++  | (CommandBase & {
++      type: "START_SERVICE_OPERATION";
++      incomeLineId: string;
++      actorKind?: "visitor" | "remote";
++    })
+   | (CommandBase & {
+       type: "ADMIT_PATIENT";
+       encounterId: string;

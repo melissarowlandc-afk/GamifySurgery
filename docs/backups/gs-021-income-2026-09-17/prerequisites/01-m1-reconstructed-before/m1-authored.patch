@@ -1,0 +1,991 @@
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/balance-config/src/index.ts b/.local-dev/gs-021-m1-current/packages/balance-config/src/index.ts
+index 2e6824a..0b24db1 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/balance-config/src/index.ts
++++ b/.local-dev/gs-021-m1-current/packages/balance-config/src/index.ts
+@@ -1,3 +1,4 @@
+ export * from "./schema";
+ export * from "./prototype-balance";
+ export * from "./prototype-alerts";
++export * from "./service-income-catalog";
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/balance-config/src/prototype-balance.test.ts b/.local-dev/gs-021-m1-current/packages/balance-config/src/prototype-balance.test.ts
+index 6298ad9..206a698 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/balance-config/src/prototype-balance.test.ts
++++ b/.local-dev/gs-021-m1-current/packages/balance-config/src/prototype-balance.test.ts
+@@ -5,6 +5,29 @@ import {
+   PROTOTYPE_BALANCE_RELEASE,
+ } from "./prototype-balance";
+ import { serviceRouteDefinitionSchema } from "./schema";
++import { SERVICE_INCOME_CATALOG, getServiceIncomeForRoute } from "./service-income-catalog";
++
++describe("service income catalog", () => {
++  it("has unique durable keys and the approved current-route prices", () => {
++    expect(new Set(SERVICE_INCOME_CATALOG.map((line) => line.id)).size).toBe(
++      SERVICE_INCOME_CATALOG.length,
++    );
++    const routeIds = SERVICE_INCOME_CATALOG.flatMap((line) => line.eligibleRouteIds);
++    expect(new Set(routeIds).size).toBe(routeIds.length);
++    expect(getServiceIncomeForRoute("route.bladder_scan.ultrasound_room")).toMatchObject({
++      id: "income.bladder_scan",
++      fee: 20,
++    });
++    expect(getServiceIncomeForRoute("route.bladder_scan.in_house")).toBeNull();
++    expect(getServiceIncomeForRoute("route.endoscopy.in_house")).toMatchObject({
++      id: "income.endoscopy",
++      fee: 400,
++      paymentStage: "resource_completion",
++    });
++    expect(SERVICE_INCOME_CATALOG.find((line) => line.id === "income.glp1_telehealth")?.fee).toBe(50);
++    expect(SERVICE_INCOME_CATALOG.some((line) => line.id.includes("cafeteria"))).toBe(false);
++  });
++});
+ 
+ describe("row 57 off-site functional-study services", () => {
+   it("keeps every displayed study off-site with equal editorial prototype timing", () => {
+@@ -231,18 +254,17 @@ describe("service-route timing invariants", () => {
+     }
+   });
+ 
+-  it("marks only the bedside bladder scan as stationary onsite care", () => {
++  it("routes the approved bladder scan through the staffed Ultrasound Room", () => {
+     const routes = PROTOTYPE_BALANCE_RELEASE.services.flatMap(
+       (service) => service.routes,
+     );
+     expect(
+-      routes.filter((route) => route.patientRemainsOnsite),
++      routes.filter((route) => route.id === "route.bladder_scan.ultrasound_room"),
+     ).toEqual([
+       expect.objectContaining({
+-        id: "route.bladder_scan.in_house",
++        id: "route.bladder_scan.ultrasound_room",
+         durationTicks: 5,
+-        patientRemainsOnsite: true,
+-        patientTravel: null,
++        patientTravel: expect.objectContaining({ destinationRoomDefinitionId: "room.ultrasound" }),
+       }),
+     ]);
+   });
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/balance-config/src/prototype-balance.ts b/.local-dev/gs-021-m1-current/packages/balance-config/src/prototype-balance.ts
+index 84515ba..12c092e 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/balance-config/src/prototype-balance.ts
++++ b/.local-dev/gs-021-m1-current/packages/balance-config/src/prototype-balance.ts
+@@ -821,7 +821,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+     sidewalkPedestrianMaximumMinutes: 90,
+     maximumSidewalkPedestrians: 2,
+     glp1AutomationIntervalMinutes: 60,
+-    glp1AutomationPayment: 25,
++    glp1AutomationPayment: 50,
+     glp1AutomationMaximumCapacity: 5,
+     evsRoomCleanlinessThreshold: 85,
+     evsRoomCleanupMinutes: 5,
+@@ -879,7 +879,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+     dedicatedRoomDefinitionId: "room.glp1_telehealth_suite",
+     cooldownTicks: 1,
+     cooldownMinutes: 60,
+-    payment: 25,
++    payment: 50,
+     sarcasmStartsAtUse: 5,
+     sarcasmLines: [
+       "Your commitment to comprehensive metabolic care has been noted.",
+@@ -1540,7 +1540,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+     { id: "service.h_pylori_urea_breath", displayName: "Urea breath testing", routes: [{ id: "route.h_pylori_urea_breath.outsourced", displayName: "Off-site urea breath testing", durationTicks: 120, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }] },
+     { id: "service.ibc_biopsy_and_staging", displayName: "Breast biopsy with staging", routes: [{ id: "route.ibc_biopsy_and_staging.outsourced", displayName: "Off-site breast biopsy with staging", durationTicks: 360, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }] },
+     { id: "service.nipple_areolar_biopsy", displayName: "Nipple-areolar biopsy", routes: [{ id: "route.nipple_areolar_biopsy.outsourced", displayName: "Off-site nipple-areolar biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }] },
+-    { id: "service.bladder_scan", displayName: "Bedside bladder scan", routes: [{ id: "route.bladder_scan.in_house", displayName: "Bedside bladder scan", durationTicks: 5, requiredCapabilityId: "capability.examination", requiredCapabilityIds: [], preference: 0, patientRemainsOnsite: true }] },
++    { id: "service.bladder_scan", displayName: "Bladder scan", routes: [{ id: "route.bladder_scan.ultrasound_room", displayName: "Ultrasound-room bladder scan", durationTicks: 5, requiredCapabilityId: "capability.ultrasound_machine", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true } }, { id: "route.bladder_scan.in_house", displayName: "Bedside bladder scan", durationTicks: 5, requiredCapabilityId: "capability.examination", requiredCapabilityIds: [], preference: 1, patientRemainsOnsite: true }] },
+   ],
+ });
+ 
+diff --git a/.local-dev/gs-021-m1-current/packages/balance-config/src/service-income-catalog.ts b/.local-dev/gs-021-m1-current/packages/balance-config/src/service-income-catalog.ts
+new file mode 100644
+index 0000000..031fcb5
+--- /dev/null
++++ b/.local-dev/gs-021-m1-current/packages/balance-config/src/service-income-catalog.ts
+@@ -0,0 +1,39 @@
++export type ServiceIncomeLine = { id: string; kind: "clinical" | "retail" | "remote"; minimumFacilityLevel: 1 | 2 | 3 | 4 | 5; fee: number; requiredCapabilityIds: readonly string[]; eligibleRouteIds: readonly string[]; paymentStage: "resource_completion" | "episode_completion" | "dispense" };
++
++/** Product balance rows; clinical route/provider approval remains authoritative. */
++export const SERVICE_INCOME_CATALOG: readonly ServiceIncomeLine[] = [
++  { id: "income.ultrasound", kind: "clinical", minimumFacilityLevel: 1, fee: 120, requiredCapabilityIds: ["capability.ultrasound_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ultrasound.in_house"], paymentStage: "resource_completion" },
++  { id: "income.xray", kind: "clinical", minimumFacilityLevel: 2, fee: 90, requiredCapabilityIds: ["capability.xray_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.xray.in_house"], paymentStage: "resource_completion" },
++  { id: "income.ct", kind: "clinical", minimumFacilityLevel: 2, fee: 180, requiredCapabilityIds: ["capability.ct_scanner", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ct.in_house"], paymentStage: "resource_completion" },
++  { id: "income.collection", kind: "clinical", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.phlebotomy_collection", "capability.staff.phlebotomist"], eligibleRouteIds: ["route.basic_labs.phlebotomy_sendout"], paymentStage: "resource_completion" },
++  { id: "income.bladder_scan", kind: "clinical", minimumFacilityLevel: 1, fee: 20, requiredCapabilityIds: ["capability.ultrasound_machine"], eligibleRouteIds: ["route.bladder_scan.ultrasound_room"], paymentStage: "resource_completion" },
++  { id: "income.endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 400, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.in_house"], paymentStage: "resource_completion" },
++  { id: "income.advanced_endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 550, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.eus-ercp-sampling.in_house"], paymentStage: "resource_completion" },
++  { id: "income.glp1_telehealth", kind: "remote", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.glp1_telehealth", "capability.staff.glp1_np"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.laboratory_processing", kind: "clinical", minimumFacilityLevel: 3, fee: 80, requiredCapabilityIds: ["capability.in_house_laboratory", "capability.staff.laboratory_technician"], eligibleRouteIds: [], paymentStage: "resource_completion" },
++  { id: "income.ambulatory_operation", kind: "clinical", minimumFacilityLevel: 3, fee: 900, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.ambulatory_operation_extended", kind: "clinical", minimumFacilityLevel: 3, fee: 1300, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.pharmacy_pickup", kind: "retail", minimumFacilityLevel: 3, fee: 25, requiredCapabilityIds: ["capability.pharmacy", "capability.staff.pharmacist"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.mri", kind: "clinical", minimumFacilityLevel: 4, fee: 240, requiredCapabilityIds: ["capability.mri_machine", "capability.staff.imaging_technician"], eligibleRouteIds: [], paymentStage: "resource_completion" },
++  { id: "income.image_read", kind: "remote", minimumFacilityLevel: 4, fee: 40, requiredCapabilityIds: ["capability.radiology_reading", "capability.staff.radiologist"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.app_consult", kind: "clinical", minimumFacilityLevel: 4, fee: 80, requiredCapabilityIds: ["capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.pediatric_consult", kind: "clinical", minimumFacilityLevel: 4, fee: 80, requiredCapabilityIds: ["capability.pediatric_examination", "capability.staff.app"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.wound_care", kind: "clinical", minimumFacilityLevel: 4, fee: 60, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.wound_procedure", kind: "clinical", minimumFacilityLevel: 4, fee: 120, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.ostomy_support", kind: "clinical", minimumFacilityLevel: 4, fee: 75, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.followup_independent", kind: "clinical", minimumFacilityLevel: 1, fee: 40, requiredCapabilityIds: ["capability.examination"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.minor_procedure_simple", kind: "clinical", minimumFacilityLevel: 1, fee: 100, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.minor_procedure_sampling", kind: "clinical", minimumFacilityLevel: 1, fee: 150, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.minor_procedure_complex", kind: "clinical", minimumFacilityLevel: 1, fee: 200, requiredCapabilityIds: ["capability.minor_procedure"], eligibleRouteIds: [], paymentStage: "episode_completion" },
++  { id: "income.coffee", kind: "retail", minimumFacilityLevel: 2, fee: 5, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.kiosk_drink", kind: "retail", minimumFacilityLevel: 2, fee: 3, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.kiosk_snack", kind: "retail", minimumFacilityLevel: 2, fee: 4, requiredCapabilityIds: ["capability.coffee_kiosk"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.vending_drink", kind: "retail", minimumFacilityLevel: 3, fee: 3, requiredCapabilityIds: ["capability.vending"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.vending_snack", kind: "retail", minimumFacilityLevel: 3, fee: 4, requiredCapabilityIds: ["capability.vending"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.gift_shop", kind: "retail", minimumFacilityLevel: 5, fee: 15, requiredCapabilityIds: ["capability.gift_shop"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.gift_shop_premium", kind: "retail", minimumFacilityLevel: 5, fee: 25, requiredCapabilityIds: ["capability.gift_shop"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.otc_supply", kind: "retail", minimumFacilityLevel: 3, fee: 12, requiredCapabilityIds: ["capability.pharmacy"], eligibleRouteIds: [], paymentStage: "dispense" },
++  { id: "income.wound_supply", kind: "retail", minimumFacilityLevel: 4, fee: 20, requiredCapabilityIds: ["capability.wound_ostomy_clinic"], eligibleRouteIds: [], paymentStage: "dispense" },
++];
++
++export function getServiceIncomeForRoute(routeId: string): ServiceIncomeLine | null { return SERVICE_INCOME_CATALOG.find((line) => line.eligibleRouteIds.includes(routeId)) ?? null; }
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/persistence.ts b/.local-dev/gs-021-m1-current/packages/game-domain/src/persistence.ts
+index 51f5fda..a3d3ee5 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/persistence.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/src/persistence.ts
+@@ -26,6 +26,7 @@ import { createInitialGameState } from "./reducer";
+ import { completePatientDemographics } from "./patientDemographics";
+ import {
+   getOperationalGlp1AutomationCapacity,
++  getOperationalGlp1AutomationAssignments,
+   getRoomDefinition,
+   getStaffRoleDefinition,
+ } from "./selectors";
+@@ -1059,6 +1060,21 @@ function normalizePendingResult(
+     ),
+     patientRemainsOnsite:
+       candidate.patientRemainsOnsite === true ? true : undefined,
++    serviceIncomeEligible:
++      candidate.serviceIncomeEligible === true &&
++      typeof candidate.serviceIncomeLineId === "string" &&
++      typeof candidate.serviceIncomeFee === "number" &&
++      Number.isFinite(candidate.serviceIncomeFee) && candidate.serviceIncomeFee >= 0
++        ? true
++        : undefined,
++    serviceIncomeLineId:
++      candidate.serviceIncomeEligible === true && typeof candidate.serviceIncomeLineId === "string"
++        ? candidate.serviceIncomeLineId
++        : undefined,
++    serviceIncomeFee:
++      candidate.serviceIncomeEligible === true && typeof candidate.serviceIncomeFee === "number" && Number.isFinite(candidate.serviceIncomeFee) && candidate.serviceIncomeFee >= 0
++        ? candidate.serviceIncomeFee
++        : undefined,
+     timingPhases: Array.isArray(candidate.timingPhases)
+       ? candidate.timingPhases.filter(isRecord).map((phase) => ({ id: typeof phase.id === "string" ? phase.id : "phase.legacy", durationTicks: typeof phase.durationTicks === "number" ? phase.durationTicks : 1, resourceBound: phase.resourceBound === true, startsAtTick: typeof phase.startsAtTick === "number" ? phase.startsAtTick : 0, endsAtTick: typeof phase.endsAtTick === "number" ? phase.endsAtTick : 1 }))
+       : [],
+@@ -1759,6 +1775,23 @@ function migrateVersionTwo(
+       : Math.max(0, Math.round(parsedCash * 100));
+   const postingInterval =
+     context.balanceRelease.economy.postingIntervalMinutes;
++  const serviceIncomeReceipts = Array.isArray(parsed.serviceIncomeReceipts)
++    ? parsed.serviceIncomeReceipts.flatMap((candidate) =>
++        isRecord(candidate) &&
++        typeof candidate.id === "string" &&
++        typeof candidate.transactionKey === "string" &&
++        typeof candidate.incomeLineId === "string" &&
++        (candidate.routeId === null || typeof candidate.routeId === "string") &&
++        (candidate.actorKind === "patient" || candidate.actorKind === "employee" || candidate.actorKind === "founder" || candidate.actorKind === "remote") &&
++        typeof candidate.actorId === "string" &&
++        typeof candidate.grossAmount === "number" && Number.isFinite(candidate.grossAmount) &&
++        typeof candidate.stockCost === "number" && Number.isFinite(candidate.stockCost) &&
++        typeof candidate.netCashDelta === "number" && Number.isFinite(candidate.netCashDelta) &&
++        typeof candidate.completedAtFacilityTick === "number" && Number.isSafeInteger(candidate.completedAtFacilityTick)
++          ? [{ id: candidate.id, transactionKey: candidate.transactionKey, incomeLineId: candidate.incomeLineId, catalogVersion: 1 as const, routeId: candidate.routeId, actorKind: candidate.actorKind as "patient" | "employee" | "founder" | "remote", actorId: candidate.actorId, grossAmount: candidate.grossAmount, stockCost: candidate.stockCost, netCashDelta: candidate.netCashDelta, completedAtFacilityTick: candidate.completedAtFacilityTick }]
++          : [],
++      )
++    : [];
+   const next: GameState = {
+     ...baseline,
+     ...(parsed as unknown as GameState),
+@@ -1772,6 +1805,13 @@ function migrateVersionTwo(
+         : 1,
+     cashCents: parsedCashCents,
+     cash: parsedCashCents / 100,
++    serviceIncomeReceipts,
++    nextServiceIncomeReceiptSequence: Math.max(
++      serviceIncomeReceipts.length,
++      typeof parsed.nextServiceIncomeReceiptSequence === "number" && Number.isSafeInteger(parsed.nextServiceIncomeReceiptSequence) && parsed.nextServiceIncomeReceiptSequence >= 0
++        ? parsed.nextServiceIncomeReceiptSequence
++        : 0,
++    ),
+     operatingAccrualSixtiethCents:
+       typeof parsed.operatingAccrualSixtiethCents === "number" &&
+       Number.isSafeInteger(parsed.operatingAccrualSixtiethCents) &&
+@@ -2337,6 +2377,7 @@ function migrateVersionTwo(
+       rawEnvironment.glp1AutomationConsultationsCompleted >= 0
+         ? rawEnvironment.glp1AutomationConsultationsCompleted
+         : 0,
++    glp1AutomationSlots: [],
+     glp1AutomationNextPayoutTicks: [],
+     glp1AutomationNextPayoutTick:
+       typeof rawEnvironment.glp1AutomationNextPayoutTick === "number" &&
+@@ -2381,6 +2422,32 @@ function migrateVersionTwo(
+         : facilityConditionOccurrences.length,
+     facilityConditionOccurrences,
+   };
++  const operationalGlp1Assignments =
++    getOperationalGlp1AutomationAssignments(next, context);
++  const rawSlots = Array.isArray(rawEnvironment.glp1AutomationSlots)
++    ? rawEnvironment.glp1AutomationSlots.filter(isRecord)
++    : [];
++  next.environment.glp1AutomationSlots = rawSlots.flatMap((slot) => {
++    if (
++      typeof slot.suiteRoomInstanceId !== "string" ||
++      typeof slot.employeeId !== "string" ||
++      typeof slot.nextPayoutTick !== "number" ||
++      !Number.isSafeInteger(slot.nextPayoutTick) ||
++      slot.nextPayoutTick <= next.facilityTick ||
++      !operationalGlp1Assignments.some(
++        (assignment) =>
++          assignment.suiteRoomInstanceId === slot.suiteRoomInstanceId &&
++          assignment.employeeId === slot.employeeId,
++      )
++    ) {
++      return [];
++    }
++    return [{
++      suiteRoomInstanceId: slot.suiteRoomInstanceId,
++      employeeId: slot.employeeId,
++      nextPayoutTick: slot.nextPayoutTick,
++    }];
++  });
+   const rawPayoutTicks = Array.isArray(rawEnvironment.glp1AutomationNextPayoutTicks)
+     ? rawEnvironment.glp1AutomationNextPayoutTicks.filter(
+         (tick): tick is number =>
+@@ -2396,10 +2463,26 @@ function migrateVersionTwo(
+           { length: getOperationalGlp1AutomationCapacity(next, context) },
+           () => legacyPayoutTick,
+         );
++  if (next.environment.glp1AutomationSlots.length === 0) {
++    next.environment.glp1AutomationSlots = operationalGlp1Assignments.flatMap(
++      (assignment, index) => {
++        const nextPayoutTick = normalizedPayoutTicks[index];
++        return nextPayoutTick && nextPayoutTick > next.facilityTick
++          ? [{ ...assignment, nextPayoutTick }]
++          : [];
++      },
++    );
++  }
+   next.environment.glp1AutomationNextPayoutTicks = normalizedPayoutTicks
+     .filter((tick) => tick > next.facilityTick)
+     .sort((left, right) => left - right)
+     .slice(0, getOperationalGlp1AutomationCapacity(next, context));
++  if (next.environment.glp1AutomationSlots.length > 0) {
++    next.environment.glp1AutomationNextPayoutTicks =
++      next.environment.glp1AutomationSlots
++        .map((slot) => slot.nextPayoutTick)
++        .sort((left, right) => left - right);
++  }
+   next.environment.glp1AutomationNextPayoutTick =
+     next.environment.glp1AutomationNextPayoutTicks[0] ?? null;
+   if (
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/reducer.ts b/.local-dev/gs-021-m1-current/packages/game-domain/src/reducer.ts
+index a2bf552..4ae59e8 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/reducer.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/src/reducer.ts
+@@ -6,6 +6,7 @@ import {
+   type SyntheticClinicalCase,
+ } from "@gamify-surgery/clinical-content";
+ import {
++  getServiceIncomeForRoute,
+   PROTOTYPE_ALERT_SCHEDULING,
+   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+   PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
+@@ -27,7 +28,7 @@ import {
+   canAdmitPatient,
+   getEligibleServiceRoute,
+   getEmergencyGlp1Status,
+-  getOperationalGlp1AutomationCapacity,
++  getOperationalGlp1AutomationAssignments,
+   isEmployeeAssignedToOperationalRoom,
+   isRoomOperationalForFacilityWork,
+   getFacilityProgressionStatus,
+@@ -1773,6 +1774,9 @@ function scheduleResult(
+     durationTicks: selected.timing.durationTicks,
+     dueTick: state.facilityTick + selected.timing.durationTicks,
+     deliveredAtTick: null,
++    serviceIncomeEligible: getServiceIncomeForRoute(selected.route.id) ? true : undefined,
++    serviceIncomeLineId: getServiceIncomeForRoute(selected.route.id)?.id,
++    serviceIncomeFee: getServiceIncomeForRoute(selected.route.id)?.fee,
+     offsiteReturnStartedAtTick: null,
+     offsiteTravel: null,
+     patientTravel: clonePlain(selected.timing.patientTravel),
+@@ -1933,6 +1937,44 @@ function adjustCash(state: GameState, deltaDollars: number): void {
+   state.cash = state.cashCents / 100;
+ }
+ 
++function creditEligibleServiceIncome(
++  state: GameState,
++  encounter: EncounterState,
++): void {
++  const pending = encounter.pendingResult;
++  if (
++    encounter.lifecycle !== "active_pending_result" ||
++    pending?.deliveredAtTick !== null ||
++    !pending?.serviceIncomeEligible ||
++    typeof pending.serviceIncomeFee !== "number"
++  ) return;
++  const line = getServiceIncomeForRoute(pending.routeId);
++  if (!line || pending.serviceIncomeLineId !== line.id) return;
++  const finalResourceTick = (pending.timingPhases ?? [])
++    .filter((phase) => phase.resourceBound)
++    .at(-1)?.endsAtTick;
++  // A fee is earned only after frozen local work completes; routes without
++  // explicit phases use their frozen local route completion tick.
++  const completionTick = finalResourceTick ?? pending.dueTick;
++  if (state.facilityTick < completionTick) return;
++  const id = `income.${pending.operationId}.${pending.serviceIncomeLineId}`;
++  if (state.serviceIncomeReceipts.some((receipt) => receipt.transactionKey === id)) return;
++  state.serviceIncomeReceipts.push({
++    id: `${id}.${state.nextServiceIncomeReceiptSequence}`,
++    transactionKey: id,
++    incomeLineId: pending.serviceIncomeLineId,
++    catalogVersion: 1,
++    routeId: pending.routeId,
++    actorKind: "patient",
++    actorId: encounter.id,
++    grossAmount: pending.serviceIncomeFee,
++    stockCost: 0,
++    netCashDelta: pending.serviceIncomeFee,
++    completedAtFacilityTick: state.facilityTick,
++  });
++  state.nextServiceIncomeReceiptSequence += 1;
++  adjustCash(state, pending.serviceIncomeFee);
++}
+ 
+ function getDecisionXpAward(
+   encounter: EncounterState,
+@@ -3938,35 +3980,61 @@ function maybeAssignEvsTasks(state: GameState, context: DomainContext): void {
+ 
+ function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+   const environment = state.environment;
+-  const capacity = getOperationalGlp1AutomationCapacity(state, context);
+-  if (capacity === 0) {
++  const assignments = getOperationalGlp1AutomationAssignments(state, context);
++  if (assignments.length === 0) {
++    environment.glp1AutomationSlots = [];
+     environment.glp1AutomationNextPayoutTicks = [];
+     environment.glp1AutomationNextPayoutTick = null;
+     return;
+   }
+   const config = context.balanceRelease.environment;
+-  const dueTicks = environment.glp1AutomationNextPayoutTicks
+-    .filter((tick) => Number.isSafeInteger(tick) && tick > 0)
+-    .sort((left, right) => left - right)
+-    .slice(0, capacity);
+-  while (dueTicks.length < capacity) {
+-    // The current tick is the first full facility minute after the slot
+-    // became operational, so its first payout lands after 60 such minutes.
+-    dueTicks.push(state.facilityTick + config.glp1AutomationIntervalMinutes - 1);
+-  }
+-  let completed = 0;
+-  for (let index = 0; index < dueTicks.length; index += 1) {
+-    while (dueTicks[index]! <= state.facilityTick) {
+-      completed += 1;
+-      dueTicks[index]! += config.glp1AutomationIntervalMinutes;
++  const priorSlots = environment.glp1AutomationSlots ?? [];
++  const slots = assignments.map((assignment) => {
++    const prior = priorSlots.find(
++      (slot) =>
++        slot.suiteRoomInstanceId === assignment.suiteRoomInstanceId &&
++        slot.employeeId === assignment.employeeId,
++    );
++    return {
++      ...assignment,
++      // The current tick is the first full facility minute after a new slot
++      // became operational, so its first payout lands after 60 such minutes.
++      nextPayoutTick:
++        prior?.nextPayoutTick ??
++        state.facilityTick + config.glp1AutomationIntervalMinutes - 1,
++    };
++  });
++  for (const slot of slots) {
++    if (slot.nextPayoutTick <= state.facilityTick) {
++      const transactionKey =
++        `income.glp1.automation.${slot.suiteRoomInstanceId}.` +
++        `${slot.employeeId}.${slot.nextPayoutTick}`;
++      if (!state.serviceIncomeReceipts.some((receipt) => receipt.transactionKey === transactionKey)) {
++      state.serviceIncomeReceipts.push({
++        id: `${transactionKey}.${state.nextServiceIncomeReceiptSequence++}`,
++        transactionKey,
++        incomeLineId: "income.glp1_telehealth",
++        catalogVersion: 1,
++        routeId: null,
++        actorKind: "employee",
++        actorId: slot.employeeId,
++        grossAmount: config.glp1AutomationPayment,
++        stockCost: 0,
++        netCashDelta: config.glp1AutomationPayment,
++        completedAtFacilityTick: state.facilityTick,
++      });
++        environment.glp1AutomationConsultationsCompleted += 1;
++        adjustCash(state, config.glp1AutomationPayment);
++      }
++      slot.nextPayoutTick += config.glp1AutomationIntervalMinutes;
+     }
+   }
+-  if (completed > 0) {
+-    environment.glp1AutomationConsultationsCompleted += completed;
+-    adjustCash(state, completed * config.glp1AutomationPayment);
+-  }
+-  environment.glp1AutomationNextPayoutTicks = dueTicks.sort((left, right) => left - right);
+-  environment.glp1AutomationNextPayoutTick = dueTicks[0] ?? null;
++  environment.glp1AutomationSlots = slots;
++  environment.glp1AutomationNextPayoutTicks = slots
++    .map((slot) => slot.nextPayoutTick)
++    .sort((left, right) => left - right);
++  environment.glp1AutomationNextPayoutTick =
++    environment.glp1AutomationNextPayoutTicks[0] ?? null;
+ }
+ 
+ function maybeApplyCoffeeMorale(state: GameState, context: DomainContext): void {
+@@ -4739,6 +4807,7 @@ function reduceAdvanceTick(
+   advanceAmbientPedestrians(next, context);
+ 
+   for (const encounter of Object.values(next.encounters)) {
++    creditEligibleServiceIncome(next, encounter);
+     if (
+       encounter.lifecycle !== "active_pending_result" ||
+       !encounter.pendingResult ||
+@@ -6022,6 +6091,19 @@ function reduceEmergencyGlp1Consultation(
+   next.emergencyGlp1.totalUses += 1;
+   next.emergencyGlp1.lastUsedAtFacilityTick = next.facilityTick;
+   adjustCash(next, status.payment);
++  next.serviceIncomeReceipts.push({
++    id: `income.glp1.manual.${command.operationId}.${next.nextServiceIncomeReceiptSequence++}`,
++    transactionKey: `income.glp1.manual.${command.operationId}`,
++    incomeLineId: "income.glp1_telehealth",
++    catalogVersion: 1,
++    routeId: null,
++    actorKind: "founder",
++    actorId: "founder",
++    grossAmount: status.payment,
++    stockCost: 0,
++    netCashDelta: status.payment,
++    completedAtFacilityTick: next.facilityTick,
++  });
+ 
+   let flavorMessage: string | null = null;
+   if (useNumber >= config.sarcasmStartsAtUse) {
+@@ -6472,6 +6554,8 @@ export function createInitialGameState(
+     ),
+     reviewIntents: [],
+     settlements: [],
++    serviceIncomeReceipts: [],
++    nextServiceIncomeReceiptSequence: 0,
+     operationReceipts: {},
+     events: [],
+     criticalGuarantees: {},
+@@ -6502,6 +6586,7 @@ export function createInitialGameState(
+       nextLitterSpawnTick:
+         context.balanceRelease.environment.litterSpawnMinimumMinutes,
+       glp1AutomationConsultationsCompleted: 0,
++      glp1AutomationSlots: [],
+       glp1AutomationNextPayoutTicks: [],
+       glp1AutomationNextPayoutTick: null,
+       coffeeMoraleAppliedDayNumber: 0,
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/selectors.ts b/.local-dev/gs-021-m1-current/packages/game-domain/src/selectors.ts
+index 07d039e..a95edcf 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/selectors.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/src/selectors.ts
+@@ -88,23 +88,37 @@ export function getOperationalGlp1AutomationCapacity(
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): number {
++  return getOperationalGlp1AutomationAssignments(state, context).length;
++}
++
++/** Concrete staffed suites that can complete telehealth work this minute. */
++export function getOperationalGlp1AutomationAssignments(
++  state: GameState,
++  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++): Array<{ suiteRoomInstanceId: string; employeeId: string }> {
+   const access = getFacilityAccessValidation(state, context);
+-  const suites = state.rooms.filter(
+-    (room) =>
+-      room.roomDefinitionId === "room.glp1_telehealth_suite" &&
+-      isRoomOperational(state, room.id, context, access),
+-  ).length;
+-  const clinicians = state.employees.filter(
+-    (employee) =>
+-      employee.staffRoleDefinitionId === "staff.glp1_np" &&
+-      employee.homeRoomInstanceId !== null &&
+-      isRoomOperational(state, employee.homeRoomInstanceId, context, access),
+-  ).length;
+-  return Math.min(
+-    suites,
+-    clinicians,
+-    context.balanceRelease.environment.glp1AutomationMaximumCapacity,
+-  );
++  return state.rooms
++    .filter(
++      (room) =>
++        room.roomDefinitionId === "room.glp1_telehealth_suite" &&
++        isRoomOperational(state, room.id, context, access),
++    )
++    .sort((left, right) => left.id.localeCompare(right.id))
++    .flatMap((suite) => {
++      const employee = state.employees
++        .filter(
++          (candidate) =>
++            candidate.staffRoleDefinitionId === "staff.glp1_np" &&
++            candidate.homeRoomInstanceId === suite.id &&
++            !candidate.facilityTask &&
++            isEmployeeOperational(state, candidate.id, context),
++        )
++        .sort((left, right) => left.id.localeCompare(right.id))[0];
++      return employee
++        ? [{ suiteRoomInstanceId: suite.id, employeeId: employee.id }]
++        : [];
++    })
++    .slice(0, context.balanceRelease.environment.glp1AutomationMaximumCapacity);
+ }
+ 
+ export function getRoomDefinition(
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/types.ts b/.local-dev/gs-021-m1-current/packages/game-domain/src/types.ts
+index 3184c44..b536c2d 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/src/types.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/src/types.ts
+@@ -309,6 +309,11 @@ export interface PendingResult {
+   patientRemainsOnsite?: true;
+   /** Frozen editorial service phases; they never read later balance values. */
+   timingPhases?: Array<{ id: string; durationTicks: number; resourceBound: boolean; startsAtTick: number; endsAtTick: number }>;
++  /** Undefined in legacy saves: no new fee is backpaid. */
++  serviceIncomeEligible?: true;
++  /** Frozen only for work scheduled after the income feature was introduced. */
++  serviceIncomeLineId?: string;
++  serviceIncomeFee?: number;
+   resourceReservations?: Array<{ roomDefinitionId: string; staffRoleDefinitionId: string | null }>;
+   /** Concrete mobile imaging worker selected for this frozen onsite service. */
+   imagingTechnicianId?: string | null;
+@@ -420,6 +425,20 @@ export interface EncounterSettlement {
+   settledAtFacilityTick: number;
+ }
+ 
++export interface ServiceIncomeReceipt {
++  id: string;
++  transactionKey: string;
++  incomeLineId: string;
++  catalogVersion: 1;
++  routeId: string | null;
++  actorKind: "patient" | "employee" | "founder" | "remote";
++  actorId: string;
++  grossAmount: number;
++  stockCost: number;
++  netCashDelta: number;
++  completedAtFacilityTick: number;
++}
++
+ export interface EncounterState {
+   id: string;
+   clinicalReleaseId: string;
+@@ -596,6 +615,12 @@ export interface FacilityEnvironmentState {
+   lastLitterCleanupAtTick: number | null;
+   nextLitterSpawnTick: number;
+   glp1AutomationConsultationsCompleted: number;
++  /** Durable timer and concrete worker identity for each staffed GLP-1 suite. */
++  glp1AutomationSlots: Array<{
++    suiteRoomInstanceId: string;
++    employeeId: string;
++    nextPayoutTick: number;
++  }>;
+   /** One due tick per currently operational staffed GLP-1 suite. */
+   glp1AutomationNextPayoutTicks: number[];
+   /** Legacy summary of the earliest due payout, retained for v6 compatibility. */
+@@ -754,6 +779,8 @@ export interface GameState {
+   learningHistories: Record<string, ConceptLearningHistory>;
+   reviewIntents: SchedulerReviewIntent[];
+   settlements: EncounterSettlement[];
++  serviceIncomeReceipts: ServiceIncomeReceipt[];
++  nextServiceIncomeReceiptSequence: number;
+   operationReceipts: Record<string, OperationReceipt>;
+   events: DomainEvent[];
+   criticalGuarantees: Record<string, "pending" | "in_progress" | "satisfied">;
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/emergency-glp1.test.ts b/.local-dev/gs-021-m1-current/packages/game-domain/tests/emergency-glp1.test.ts
+index ad58231..fabd54b 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/emergency-glp1.test.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/tests/emergency-glp1.test.ts
+@@ -32,7 +32,7 @@ function advanceMinutes(
+ }
+ 
+ describe("manual GLP-1 side-business action", () => {
+-  it("awards $25 cash only", () => {
++  it("awards the configured cash once and records a founder receipt", () => {
+     const initial = createInitialGameState();
+     const histories = JSON.parse(
+       JSON.stringify(initial.learningHistories),
+@@ -47,6 +47,14 @@ describe("manual GLP-1 side-business action", () => {
+     expect(next.clinicalXp).toBe(0);
+     expect(next.learningHistories).toEqual(histories);
+     expect(next.emergencyGlp1.usesToday).toBe(1);
++    expect(next.serviceIncomeReceipts).toEqual([
++      expect.objectContaining({
++        incomeLineId: "income.glp1_telehealth",
++        actorKind: "founder",
++        grossAmount: 50,
++        netCashDelta: 50,
++      }),
++    ]);
+     expect(next.events.at(-1)).toMatchObject({
+       type: "emergency_glp1_consultation",
+       reward: {
+@@ -122,7 +130,7 @@ describe("manual GLP-1 side-business action", () => {
+       }
+     }
+ 
+-    expect(payments).toEqual([25, 25, 25, 25, 25, 25, 25, 25, 25]);
++    expect(payments).toEqual([50, 50, 50, 50, 50, 50, 50, 50, 50]);
+     expect(flavor.slice(0, 4)).toEqual([
+       "Your commitment to comprehensive metabolic care has been noted.",
+       "Another individualized 90-second consultation completed.",
+@@ -134,7 +142,7 @@ describe("manual GLP-1 side-business action", () => {
+     state.cashCents = 0;
+     const tenth = consult(state, 10);
+     expect(tenth.operationReceipts["test.glp1.10"]?.status).toBe("applied");
+-    expect(tenth.cash).toBe(25);
++    expect(tenth.cash).toBe(50);
+   });
+ 
+   it("resets daily usage at the continuous ten-hour day rollover", () => {
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/level-two-persistence.test.ts b/.local-dev/gs-021-m1-current/packages/game-domain/tests/level-two-persistence.test.ts
+index 7697bd7..a524c15 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/level-two-persistence.test.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/tests/level-two-persistence.test.ts
+@@ -46,6 +46,7 @@ function levelTwoPersistenceFixture(): GameState {
+     employee("employee.test.endoscopist", "staff.endoscopist", "room.test.endoscopy"),
+     employee("employee.test.glp", "staff.glp1_np", "room.test.glp"),
+   );
++  state.employees.at(-1)!.location = { x: 37, y: 26 };
+   state.environment.glp1AutomationNextPayoutTicks = [60];
+   state.environment.glp1AutomationNextPayoutTick = 60;
+   state.encounters["encounter.test.endoscopy"] = {
+@@ -122,7 +123,8 @@ describe("Level 2 persistence", () => {
+     expect(restored.facilityLevel).toBe(2);
+     expect(restored.encounters["encounter.test.endoscopy"]?.pendingResult?.providerReservation).toEqual({ kind: "employee", employeeId: "employee.test.endoscopist", staffRoleDefinitionId: "staff.endoscopist" });
+     expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(1);
+-    expect(restored.cash).toBe(cashBeforePayout + 25);
++    expect(restored.cash).toBe(cashBeforePayout + 50);
++    expect(restored.serviceIncomeReceipts).toHaveLength(1);
+     expect(restored.environment.glp1AutomationNextPayoutTicks).toEqual([120]);
+   });
+ });
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/level-two-support-operations.test.ts b/.local-dev/gs-021-m1-current/packages/game-domain/tests/level-two-support-operations.test.ts
+index 551b2ea..e1a8305 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/level-two-support-operations.test.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/tests/level-two-support-operations.test.ts
+@@ -6,6 +6,7 @@ import {
+   getEmergencyGlp1Status,
+   getFacilityAccessValidation,
+   getCurrentCapabilities,
++  getOperationalGlp1AutomationCapacity,
+   isEmployeeAssignedToOperationalRoom,
+   getWorkloadSnapshot,
+   serializeGameState,
+@@ -66,31 +67,62 @@ function supportState(): GameState {
+ }
+ 
+ describe("Level 2 nonclinical support operations", () => {
+-  it("automates only staffed GLP-1 suites on independent full-hour schedules", () => {
++  it("binds staggered GLP-1 timers and receipts to the concrete operational NP", () => {
+     let state = supportState();
+     expect(getFacilityAccessValidation(state).unreachableRoomIds).toEqual([]);
+     state.employees = [];
+     expect(getEmergencyGlp1Status(state).eligible).toBe(true);
+-    state = advance(state, 60);
+-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
++    state = advance(state, 10);
+     state.employees.push({ ...supportState().employees[1]!, id: "employee.glp.one" });
+-    state = advance(state, 60);
+-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
+-    const cashAfterOne = state.cash;
++    expect(getOperationalGlp1AutomationCapacity(state)).toBe(1);
++    state.employees.at(-1)!.facilityTask = {
++      kind: "perform_imaging",
++      targetId: "room.missing",
++      startedAtFacilityTick: state.facilityTick,
++      workMinutesRemaining: 5,
++    };
++    expect(getOperationalGlp1AutomationCapacity(state)).toBe(0);
++    state.employees.at(-1)!.facilityTask = null;
++    state = advance(state, 30);
+     state.employees.push({ ...supportState().employees[2]!, id: "employee.glp.two" });
+-    state = advance(state, 59);
+-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
++    state.employees.push({
++      ...supportState().employees[2]!,
++      id: "employee.aaa.nonoperational",
++      homeRoomInstanceId: "room.missing",
++    });
++    state = advance(state, 29);
++    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
+     state = advance(state, 1);
+-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(3);
+-    expect(state.cash).toBe(cashAfterOne + 50);
++    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
++    expect(state.serviceIncomeReceipts.at(-1)).toMatchObject({
++      incomeLineId: "income.glp1_telehealth",
++      actorId: "employee.glp.one",
++      grossAmount: 50,
++      netCashDelta: 50,
++    });
++    const afterFirstPayout = deserializeGameState(serializeGameState(state));
++    state = advance(afterFirstPayout, 30);
++    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
++    expect(state.serviceIncomeReceipts.at(-1)).toMatchObject({
++      actorId: "employee.glp.two",
++      grossAmount: 50,
++    });
++    expect(state.serviceIncomeReceipts.some(
++      (receipt) => receipt.actorId === "employee.aaa.nonoperational",
++    )).toBe(false);
++    const receiptKeys = state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey);
++    const cashAfterTwo = state.cash;
++    state = advance(deserializeGameState(serializeGameState(state)), 1);
++    expect(state.cash).toBe(cashAfterTwo);
++    expect(state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey)).toEqual(receiptKeys);
+     expect(getEmergencyGlp1Status(state).eligible).toBe(false);
+     const learning = JSON.stringify(state.learningHistories);
+     state.paused = true;
+     state = advance(state, 120);
+-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(3);
++    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
+     state.paused = false;
+     const restored = deserializeGameState(serializeGameState(state));
+-    expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(3);
++    expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(2);
+     expect(JSON.stringify(restored.learningHistories)).toBe(learning);
+   });
+ 
+diff --git a/.local-dev/gs-021-m1-current/packages/game-domain/tests/service-income.test.ts b/.local-dev/gs-021-m1-current/packages/game-domain/tests/service-income.test.ts
+new file mode 100644
+index 0000000..9547c20
+--- /dev/null
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/tests/service-income.test.ts
+@@ -0,0 +1,179 @@
++import { describe, expect, it } from "vitest";
++import { SECOND_TUTORIAL_CASE_ID } from "@gamify-surgery/clinical-content";
++import {
++  createInitialGameState,
++  deserializeGameState,
++  gameReducer,
++  serializeGameState,
++  type GameState,
++  type PendingResult,
++} from "../src";
++
++let operationSequence = 0;
++
++function advance(state: GameState, minutes: number): GameState {
++  let next = state;
++  for (let index = 0; index < minutes; index += 1) {
++    next = gameReducer(next, {
++      type: "ADVANCE_TICK",
++      operationId: `service-income.tick.${operationSequence++}`,
++    });
++  }
++  return next;
++}
++
++function pendingIncomeState(
++  overrides: Partial<PendingResult> & Pick<PendingResult, "routeId">,
++): GameState {
++  let state = createInitialGameState(undefined, {
++    campaignId: `campaign.service-income.${operationSequence++}`,
++    campaignSeed: "service-income",
++    createdAtRealMs: 0,
++  });
++  state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
++  state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER;
++  state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
++  state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
++  state = gameReducer(state, {
++    type: "ADMIT_PATIENT",
++    operationId: `service-income.admit.${operationSequence++}`,
++    encounterId: "encounter.service-income",
++    caseId: SECOND_TUTORIAL_CASE_ID,
++    patientDisplayName: "Income Patient",
++    arrivalClass: "tutorial",
++  });
++  const encounter = state.encounters["encounter.service-income"]!;
++  expect(encounter.steps.length).toBeGreaterThan(1);
++  const { routeId, ...remainingOverrides } = overrides;
++  const pending: PendingResult = {
++    operationId: `service-income.pending.${operationSequence++}`,
++    gateId: "gate.service-income",
++    originatingNodeIndex: 0,
++    resultTypeId: "service.ultrasound",
++    pendingLabel: "Result pending",
++    resultNarrative: "Result returned.",
++    routeId,
++    routeDisplayName: "Frozen local route",
++    scheduledAtTick: 0,
++    serviceDurationTicks: overrides.dueTick ?? 5,
++    durationTicks: overrides.dueTick ?? 5,
++    dueTick: overrides.dueTick ?? 5,
++    deliveredAtTick: null,
++    offsiteReturnStartedAtTick: null,
++    offsiteTravel: null,
++    patientTravel: null,
++    patientRemainsOnsite: true,
++    ...remainingOverrides,
++  };
++  encounter.lifecycle = "active_pending_result";
++  encounter.currentNodeIndex = 0;
++  encounter.pendingResult = pending;
++  encounter.steps[0]!.status = "result_pending";
++  encounter.steps[0]!.result = pending;
++  encounter.steps[1]!.status = "locked";
++  encounter.patientMovement = null;
++  encounter.idleWaitingSinceTick = null;
++  return state;
++}
++
++describe("service income accounting", () => {
++  it("credits a frozen quote once after local work, before delayed report feedback", () => {
++    let state = pendingIncomeState({
++      routeId: "route.ultrasound.in_house",
++      dueTick: 5,
++      serviceIncomeEligible: true,
++      serviceIncomeLineId: "income.ultrasound",
++      serviceIncomeFee: 123,
++      timingPhases: [
++        { id: "phase.ultrasound.scan", durationTicks: 2, resourceBound: true, startsAtTick: 0, endsAtTick: 2 },
++        { id: "phase.ultrasound.report", durationTicks: 3, resourceBound: false, startsAtTick: 2, endsAtTick: 5 },
++      ],
++    });
++    const cashBefore = state.cash;
++    state = advance(state, 1);
++    expect(state.cash).toBe(cashBefore);
++    state = deserializeGameState(serializeGameState(state));
++    state = advance(state, 1);
++    expect(state.cash).toBe(cashBefore + 123);
++    expect(state.encounters["encounter.service-income"]!.lifecycle).toBe("active_pending_result");
++    expect(state.serviceIncomeReceipts).toHaveLength(1);
++    expect(state.serviceIncomeReceipts[0]).toMatchObject({
++      incomeLineId: "income.ultrasound",
++      routeId: "route.ultrasound.in_house",
++      grossAmount: 123,
++      netCashDelta: 123,
++      completedAtFacilityTick: 2,
++    });
++    const transactionKey = state.serviceIncomeReceipts[0]!.transactionKey;
++    state = advance(deserializeGameState(serializeGameState(state)), 3);
++    expect(state.cash).toBe(cashBefore + 123);
++    expect(state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey)).toEqual([transactionKey]);
++    expect(state.encounters["encounter.service-income"]!.lifecycle).toBe("active_action_required");
++  });
++
++  it("waits through endoscopy recovery but not the external report phase", () => {
++    let state = pendingIncomeState({
++      routeId: "route.endoscopy.in_house",
++      dueTick: 5,
++      serviceIncomeEligible: true,
++      serviceIncomeLineId: "income.endoscopy",
++      serviceIncomeFee: 400,
++      timingPhases: [
++        { id: "phase.endoscopy.preparation", durationTicks: 1, resourceBound: true, startsAtTick: 0, endsAtTick: 1 },
++        { id: "phase.endoscopy.procedure", durationTicks: 1, resourceBound: true, startsAtTick: 1, endsAtTick: 2 },
++        { id: "phase.endoscopy.recovery", durationTicks: 1, resourceBound: true, startsAtTick: 2, endsAtTick: 3 },
++        { id: "phase.endoscopy.return_and_report", durationTicks: 2, resourceBound: false, startsAtTick: 3, endsAtTick: 5 },
++      ],
++    });
++    const cashBefore = state.cash;
++    state = advance(state, 2);
++    expect(state.cash).toBe(cashBefore);
++    state = advance(state, 1);
++    expect(state.cash).toBe(cashBefore + 400);
++    expect(state.serviceIncomeReceipts[0]?.completedAtFacilityTick).toBe(3);
++  });
++
++  it("credits an unphased local route at result completion", () => {
++    let state = pendingIncomeState({
++      routeId: "route.xray.in_house",
++      dueTick: 2,
++      serviceIncomeEligible: true,
++      serviceIncomeLineId: "income.xray",
++      serviceIncomeFee: 90,
++    });
++    const cashBefore = state.cash;
++    state = advance(state, 1);
++    expect(state.cash).toBe(cashBefore);
++    state = advance(state, 1);
++    expect(state.cash).toBe(cashBefore + 90);
++    expect(state.serviceIncomeReceipts).toHaveLength(1);
++    expect(state.encounters["encounter.service-income"]!.lifecycle).toBe("active_action_required");
++  });
++
++  it("does not backpay offsite or legacy pending work", () => {
++    let offsite = pendingIncomeState({
++      routeId: "route.ultrasound.outsourced",
++      dueTick: 2,
++    });
++    const offsiteCash = offsite.cash;
++    offsite = advance(offsite, 2);
++    expect(offsite.cash).toBe(offsiteCash);
++    expect(offsite.serviceIncomeReceipts).toEqual([]);
++
++    let legacy = pendingIncomeState({
++      routeId: "route.ultrasound.in_house",
++      dueTick: 2,
++    });
++    const serialized = JSON.parse(serializeGameState(legacy)) as Record<string, unknown>;
++    const rawEncounter = (serialized.encounters as Record<string, Record<string, unknown>>)["encounter.service-income"]!;
++    const rawPending = rawEncounter.pendingResult as Record<string, unknown>;
++    delete rawPending.serviceIncomeEligible;
++    delete rawPending.serviceIncomeLineId;
++    delete rawPending.serviceIncomeFee;
++    legacy = deserializeGameState(JSON.stringify(serialized));
++    const legacyCash = legacy.cash;
++    legacy = advance(legacy, 2);
++    expect(legacy.cash).toBe(legacyCash);
++    expect(legacy.serviceIncomeReceipts).toEqual([]);
++  });
++});
+diff --git a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/ultrasound-first-imaging.test.ts b/.local-dev/gs-021-m1-current/packages/game-domain/tests/ultrasound-first-imaging.test.ts
+index ef60d1e..588868e 100644
+--- a/.local-dev/gs-021-m1-reconstructed-baseline/packages/game-domain/tests/ultrasound-first-imaging.test.ts
++++ b/.local-dev/gs-021-m1-current/packages/game-domain/tests/ultrasound-first-imaging.test.ts
+@@ -381,10 +381,14 @@ describe("ultrasound-first imaging progression", () => {
+     expect(beforeAck.pendingResult).toMatchObject({
+       routeId: "route.ultrasound.in_house",
+       imagingTechnicianId: "employee.test.imaging",
++      serviceIncomeEligible: true,
++      serviceIncomeLineId: "income.ultrasound",
++      serviceIncomeFee: 120,
+       deliveredAtTick: null,
+     });
+     const dueBeforeAck = beforeAck.pendingResult!.dueTick;
+     const step = beforeAck.steps[beforeAck.currentNodeIndex]!;
++    expect(state.serviceIncomeReceipts).toEqual([]);
+     state = gameReducer(state, {
+       type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+       operationId: "actual-ultrasound.ack", encounterId: beforeAck.id,
+@@ -423,12 +427,26 @@ describe("ultrasound-first imaging progression", () => {
+     expect(state.encounters[beforeAck.id]!.pendingResult?.deliveredAtTick)
+       .not.toBeNull();
+     expect(state.encounters[beforeAck.id]!.deliveredResultNarratives).toHaveLength(1);
+-    expect(state.cashCents).toBeLessThanOrEqual(cashBeforeReload);
++    expect(state.cashCents).toBeLessThanOrEqual(cashBeforeReload + 12_000);
++    expect(
++      state.serviceIncomeReceipts.filter(
++        (receipt) =>
++          receipt.incomeLineId === "income.ultrasound" &&
++          receipt.actorId === beforeAck.id,
++      ),
++    ).toEqual([
++      expect.objectContaining({
++        routeId: "route.ultrasound.in_house",
++        grossAmount: 120,
++        netCashDelta: 120,
++      }),
++    ]);
+     const cashAfterCompletion = state.cashCents;
+     const completedReload = deserializeGameState(serializeGameState(state));
+     expect(completedReload.encounters[beforeAck.id]!.deliveredResultNarratives)
+       .toHaveLength(1);
+     expect(completedReload.cashCents).toBe(cashAfterCompletion);
++    expect(completedReload.serviceIncomeReceipts).toEqual(state.serviceIncomeReceipts);
+   });
+ 
+   it("round-trips an existing control room and frozen imaging reservation unchanged", () => {
