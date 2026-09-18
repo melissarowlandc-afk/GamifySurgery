@@ -55,3 +55,5 @@ Owner accepted task completion on 2026-09-17. These notes preserve only GS-021 c
 
 - **GS-021 closeout status (2026-09-17):** Completed collection visits and low-rate retail visitors, plus purchases by existing employees, eligible waiting patients and companions. Approved 32-entry catalog includes gated future outlets; no cafeteria. Verified domain/player/clinical/balance suites and isolated browser scenarios; completion authorization is not a claim of separately reported hands-on playtesting. [GS-021 handoff](../backups/gs-021-income-2026-09-17/accepted-after/docs/handoffs/GS-021_CLINIC_INCOME.md). This supersedes the historical intake status below.
 
+
+Payload commit: febece1e24f717c5b94a15b990cc148e27a43fff. The package-specific .gitattributes rule disables newline conversion for recovery evidence. Parent verified all283 payload hashes from git archive; without that rule Windows system core.autocrlf altered archive line endings, so archive verification was repeated with exact-byte settings. The rule preserves package bytes in subsequent checkouts/archives without changing runtime source.
