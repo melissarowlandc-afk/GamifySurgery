@@ -1,0 +1,1461 @@
+{
+  "schemaVersion": 8,
+  "status": "arm-leg-fit-correction-awaiting-review",
+  "rig": {
+    "id": "patient.adult.046",
+    "view": "south",
+    "canvas": {
+      "width": 160,
+      "height": 320
+    },
+    "floorY": 287,
+    "head": {
+      "x": 36,
+      "y": 28,
+      "scale": 1,
+      "rigid": true
+    },
+    "torso": {
+      "topY": 110,
+      "height": 97
+    },
+    "hips": {
+      "left": {
+        "x": 60,
+        "y": 197
+      },
+      "right": {
+        "x": 100,
+        "y": 197
+      }
+    },
+    "shoulders": {
+      "left": {
+        "x": 46,
+        "y": 128
+      },
+      "right": {
+        "x": 108,
+        "y": 128
+      }
+    },
+    "arms": {
+      "sleeveScale": 0.42,
+      "sleevePivot": {
+        "x": 47,
+        "y": 35
+      },
+      "handScale": 0.25,
+      "handPivot": {
+        "x": 45,
+        "y": 4
+      },
+      "restHands": {
+        "left": {
+          "x": 42,
+          "y": 187
+        },
+        "right": {
+          "x": 112,
+          "y": 187
+        }
+      }
+    },
+    "seated": {
+      "lowerTopY": 205,
+      "lowerHeight": 82,
+      "seatY": 217,
+      "replacementFrame": 10,
+      "armScale": 0.14,
+      "armRects": {
+        "left": [
+          224,
+          212,
+          381,
+          595
+        ],
+        "right": [
+          931,
+          212,
+          375,
+          595
+        ]
+      },
+      "armPivots": {
+        "left": {
+          "x": 171.075,
+          "y": 36.906
+        },
+        "right": {
+          "x": 209.109,
+          "y": 36.737
+        }
+      }
+    }
+  },
+  "calibration": {
+    "canonicalFrame": {
+      "width": 240,
+      "height": 310,
+      "axisX": 112,
+      "floorY": 296
+    },
+    "correctedRest": {
+      "hips": {
+        "left": {
+          "x": 65,
+          "y": 197
+        },
+        "right": {
+          "x": 95,
+          "y": 197
+        }
+      },
+      "shoulders": {
+        "left": {
+          "x": 50,
+          "y": 130
+        },
+        "right": {
+          "x": 110,
+          "y": 130
+        }
+      },
+      "floorY": 287
+    },
+    "projectionScale": {
+      "x": -1.1538461538461537,
+      "y": 0.9375
+    },
+    "sourceBands": {
+      "thigh": {
+        "y": 67,
+        "height": 452
+      },
+      "shin": {
+        "y": 519,
+        "height": 421
+      },
+      "shoe": {
+        "y": 940,
+        "height": 201
+      }
+    },
+    "destinationSeamOverlap": 0.8,
+    "sleeves": {
+      "acrossScale": 0.29,
+      "shoulderAnchors": {
+        "left": {
+          "x": 65.0056,
+          "y": 15.0024
+        },
+        "right": {
+          "x": 40.3096,
+          "y": 14.9216
+        }
+      },
+      "cuffAnchors": {
+        "left": {
+          "x": 45.6548,
+          "y": 176.1736
+        },
+        "right": {
+          "x": 58.0176,
+          "y": 176.3477
+        }
+      },
+      "restCuffs": {
+        "left": {
+          "x": 48,
+          "y": 193
+        },
+        "right": {
+          "x": 112,
+          "y": 193
+        }
+      }
+    },
+    "hands": {
+      "sourceSkinY": 35,
+      "scale": 0.25,
+      "skinAnchors": {
+        "left": {
+          "x": 47,
+          "y": 35
+        },
+        "right": {
+          "x": 49,
+          "y": 35
+        }
+      }
+    },
+    "fixedRasterScale": 0.08387698042870456
+  },
+  "canonical": {
+    "module": {
+      "path": "tools/character-mapping/canonical-master/canonical-geometry.mjs",
+      "sha256": "cdee59857e73d89055f990f8e9ff7974b8d70a2ee519401e1038582655beb8e8"
+    },
+    "manifest": {
+      "path": "artifacts/character-movement/canonical-master/preview/manifest.json",
+      "sha256": "c9ccf24da87a4f89e1f464a65819d205bf0b2930950f9c60105a64c6d618c309"
+    }
+  },
+  "assetPins": {
+    "head": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-source-head-v5.png",
+      "sha256": "2453f22e72bffc066e4aed5e5348b0d4ba623e4a053bb71bd267de7596bbdc2b"
+    },
+    "torso": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-torso-arm-free-v4.png",
+      "sha256": "609454d343fa5406df44b911655f98127ff5fd540802093d7ce9e846019ee86f"
+    },
+    "legs": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-continuous-legs-v5.png",
+      "sha256": "67708ba76d4538602314d25a484d87a5ffc8383f747acc6865fde3143545dc71"
+    },
+    "seated": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-lowerbody-v6.png",
+      "sha256": "cdce1e801d28d293b132962b49911414414740869666154489af3eb4350760b3"
+    },
+    "seatedArms": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-arms-v6.png",
+      "sha256": "6e7c2e7a5d0544db840a9fde9094b1839e57fc51473ff1066d3fda310410d882"
+    },
+    "sleeveLeft": {
+      "path": "artifacts/character-movement/layered-pilot/green-south-parts-v3/sleeveLeft.png",
+      "sha256": "05fbf20e969eca908d7ba603a9b9d95bad14a2d3cc65df0c47c39210baa35e8f"
+    },
+    "sleeveRight": {
+      "path": "artifacts/character-movement/layered-pilot/green-south-parts-v3/sleeveRight.png",
+      "sha256": "421a4bf833e90de8ccbfc3b0dc54c2e69f4b2d98bbe4dfe636dce41b7fc0091e"
+    },
+    "handLeft": {
+      "path": "artifacts/character-movement/layered-pilot/green-south-parts-v3/handLeft.png",
+      "sha256": "6f26623179ae5b54935e21c98d15cc15624cec99459f8d8a55c2d29353495197"
+    },
+    "handRight": {
+      "path": "artifacts/character-movement/layered-pilot/green-south-parts-v3/handRight.png",
+      "sha256": "3bd5ab251a8905b58fbba69bd7adf9a3f23c32d653c3b1df1cef504dd27fa6f1"
+    }
+  },
+  "sequences": [
+    {
+      "id": "walk",
+      "label": "Canonical South gait on frozen layered art",
+      "fps": 5.555555555555555,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/walk/00.png",
+          "sha256": "71ec7016a8104f16b7211c1c26705cb9e0550f474f69269c8f946893fdfaa9f6",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 0,
+            "phaseId": "01",
+            "bodyBob": 3
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 199.74884375
+              },
+              "knee": {
+                "x": 65,
+                "y": 235.89340625
+              },
+              "ankle": {
+                "x": 65,
+                "y": 272.0375
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 287
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 199.74884375
+              },
+              "knee": {
+                "x": 95,
+                "y": 239.60590625
+              },
+              "ankle": {
+                "x": 95,
+                "y": 279.4625
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 287
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 20,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 133
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 192.73759375000003
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 192.73759375000003
+              },
+              "radians": 0.09500169080740561,
+              "sleeveTransform": {
+                "a": 0.2908139480325125,
+                "b": -0.01655591389812701,
+                "c": -0.00040221296807464724,
+                "d": 0.36865906297986345,
+                "e": 31.10149897960995,
+                "f": 128.54545639004698,
+                "alongScale": 0.3696708226892158,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 133
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 187.04087500000003
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 187.04087500000003
+              },
+              "radians": -0.10494638473816176,
+              "sleeveTransform": {
+                "a": 0.29050694031976665,
+                "b": 0.006089399684336767,
+                "c": 0.0033948090991807803,
+                "d": 0.3341036171374382,
+                "e": 98.239125455032,
+                "f": 127.76917820100627,
+                "alongScale": 0.3346163697065757,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 31,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 111.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 1,
+          "file": "frames/walk/01.png",
+          "sha256": "400e47c6251b02b7364f1bd646e23acf019d9fefd61f46053c09d25ff59fa8e9",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 1,
+            "phaseId": "02",
+            "bodyBob": 1
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 63.97123076923077,
+                "y": 237.62834375
+              },
+              "ankle": {
+                "x": 65,
+                "y": 271.08124999999995
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 284.1875
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 95.00415384615386,
+                "y": 237.64503125000002
+              },
+              "ankle": {
+                "x": 95,
+                "y": 277.60625000000005
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 287
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 20,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 131
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 192.22756249999998
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 192.22756249999998
+              },
+              "radians": 0.09270321668942949,
+              "sleeveTransform": {
+                "a": 0.29087596885327055,
+                "b": -0.018308977291006705,
+                "c": -0.0003947665229385028,
+                "d": 0.3776932177847976,
+                "e": 31.09735556439557,
+                "f": 126.52388132369363,
+                "alongScale": 0.37880914786606407,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 131
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 189.32759375
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 189.32759375
+              },
+              "radians": -0.09728394979117505,
+              "sleeveTransform": {
+                "a": 0.29072990819157557,
+                "b": 0.011165374107075382,
+                "c": 0.0033703501357666074,
+                "d": 0.3601020981446738,
+                "e": 98.230502676175,
+                "f": 125.17662876821788,
+                "alongScale": 0.3608786852174382,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 29,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 109.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 2,
+          "file": "frames/walk/02.png",
+          "sha256": "45b14210b28f5293bfdb6c6e55c5ca617d16d98d7177597c20a352b48823b613",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 2,
+            "phaseId": "03",
+            "bodyBob": 0
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197
+              },
+              "knee": {
+                "x": 63.56646153846154,
+                "y": 236.18459374999998
+              },
+              "ankle": {
+                "x": 65,
+                "y": 270.125
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 281.375
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197
+              },
+              "knee": {
+                "x": 95,
+                "y": 236.375
+              },
+              "ankle": {
+                "x": 95,
+                "y": 275.75
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 287
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 19,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 130
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 190.71278125000003
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 190.71278125000003
+              },
+              "radians": 0.09348469100867995,
+              "sleeveTransform": {
+                "a": 0.29085505188195454,
+                "b": -0.017706905961393897,
+                "c": -0.0003972778905311086,
+                "d": 0.37457150194403405,
+                "e": 31.098752961207317,
+                "f": 125.53157654539882,
+                "alongScale": 0.3756516519627085,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 130
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 190.71278125000003
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 190.71278125000003
+              },
+              "radians": -0.09348469100867973,
+              "sleeveTransform": {
+                "a": 0.2908342161424129,
+                "b": 0.01385719384589076,
+                "c": 0.0033589078399208494,
+                "d": 0.37458253690931653,
+                "e": 98.22646880176163,
+                "f": 123.85205127620362,
+                "alongScale": 0.3754995636745146,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 108.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 3,
+          "file": "frames/walk/03.png",
+          "sha256": "b621f3f187e663451eee22662ca41802acaccdc27133238455892ece2cd68199",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 3,
+            "phaseId": "04",
+            "bodyBob": 1
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 64.15746153846155,
+                "y": 237.0809375
+              },
+              "ankle": {
+                "x": 65,
+                "y": 275.73125000000005
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 285.125
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 95.00415384615386,
+                "y": 235.79890625000002
+              },
+              "ankle": {
+                "x": 95,
+                "y": 273.89374999999995
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 287
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 20,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 131
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 189.32759375
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 189.32759375
+              },
+              "radians": 0.09728394979117527,
+              "sleeveTransform": {
+                "a": 0.2907508664576078,
+                "b": -0.014866367327074977,
+                "c": -0.0004097867712086062,
+                "d": 0.3601134548177792,
+                "e": 31.105713260459712,
+                "f": 126.56383103335865,
+                "alongScale": 0.361024851622915,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 131
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 192.22756249999998
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 192.22756249999998
+              },
+              "radians": -0.09270321668942927,
+              "sleeveTransform": {
+                "a": 0.2908551577129769,
+                "b": 0.014427155115061246,
+                "c": 0.0033566106071217655,
+                "d": 0.3777089729431764,
+                "e": 98.22565893381777,
+                "f": 124.78242493750503,
+                "alongScale": 0.37865578121760096,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 29,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 109.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 4,
+          "file": "frames/walk/04.png",
+          "sha256": "f588b17cdbe9a636bfad78f4c186d00805b2ac3e6c33d3474dc7b857072f43da",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 4,
+            "phaseId": "05",
+            "bodyBob": 3
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 199.74884375
+              },
+              "knee": {
+                "x": 65,
+                "y": 239.60590625
+              },
+              "ankle": {
+                "x": 65,
+                "y": 279.4625
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 287
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 199.74884375
+              },
+              "knee": {
+                "x": 95,
+                "y": 235.89340625
+              },
+              "ankle": {
+                "x": 95,
+                "y": 272.0375
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 287
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 20,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 133
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 187.04087500000003
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 187.04087500000003
+              },
+              "radians": 0.10494638473816198,
+              "sleeveTransform": {
+                "a": 0.2905281604974809,
+                "b": -0.009523391345606709,
+                "c": -0.0004365256581389254,
+                "d": 0.3341576519796928,
+                "e": 31.12059154249862,
+                "f": 128.6059070103958,
+                "alongScale": 0.33475189910738873,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 133
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 192.73759375000003
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 192.73759375000003
+              },
+              "radians": -0.09500169080740539,
+              "sleeveTransform": {
+                "a": 0.29079306395309557,
+                "b": 0.012767017918296375,
+                "c": 0.003363422122112096,
+                "d": 0.36866104921510745,
+                "e": 98.22806026973899,
+                "f": 126.9843539025525,
+                "alongScale": 0.36952115583077316,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 31,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 111.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 5,
+          "file": "frames/walk/05.png",
+          "sha256": "bf67f45801cba3441304af2add845d774b19479805dfdc045eae01702b903557",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 5,
+            "phaseId": "06",
+            "bodyBob": 1
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 64.99584615384614,
+                "y": 237.64503125000002
+              },
+              "ankle": {
+                "x": 65,
+                "y": 277.60625000000005
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 287
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 96.02876923076923,
+                "y": 237.62834375
+              },
+              "ankle": {
+                "x": 95,
+                "y": 271.08124999999995
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 284.1875
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 20,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 131
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 189.32759375
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 189.32759375
+              },
+              "radians": 0.09728394979117527,
+              "sleeveTransform": {
+                "a": 0.2907508664576078,
+                "b": -0.014866367327074977,
+                "c": -0.0004097867712086062,
+                "d": 0.3601134548177792,
+                "e": 31.105713260459712,
+                "f": 126.56383103335865,
+                "alongScale": 0.361024851622915,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 131
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 192.22756249999998
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 192.22756249999998
+              },
+              "radians": -0.09270321668942927,
+              "sleeveTransform": {
+                "a": 0.2908551577129769,
+                "b": 0.014427155115061246,
+                "c": 0.0033566106071217655,
+                "d": 0.3777089729431764,
+                "e": 98.22565893381777,
+                "f": 124.78242493750503,
+                "alongScale": 0.37865578121760096,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 29,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 109.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 6,
+          "file": "frames/walk/06.png",
+          "sha256": "16fdf4f7395d17d345ad6bed574af6d840f10a020f902744d2c8ee4753b3ac7b",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 6,
+            "phaseId": "07",
+            "bodyBob": 0
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197
+              },
+              "knee": {
+                "x": 65,
+                "y": 236.375
+              },
+              "ankle": {
+                "x": 65,
+                "y": 275.75
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 287
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197
+              },
+              "knee": {
+                "x": 96.43353846153846,
+                "y": 236.18459374999998
+              },
+              "ankle": {
+                "x": 95,
+                "y": 270.125
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 281.375
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 19,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 130
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 190.71278125000003
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 190.71278125000003
+              },
+              "radians": 0.09348469100867995,
+              "sleeveTransform": {
+                "a": 0.29085505188195454,
+                "b": -0.017706905961393897,
+                "c": -0.0003972778905311086,
+                "d": 0.37457150194403405,
+                "e": 31.098752961207317,
+                "f": 125.53157654539882,
+                "alongScale": 0.3756516519627085,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 130
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 190.71278125000003
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 190.71278125000003
+              },
+              "radians": -0.09348469100867973,
+              "sleeveTransform": {
+                "a": 0.2908342161424129,
+                "b": 0.01385719384589076,
+                "c": 0.0033589078399208494,
+                "d": 0.37458253690931653,
+                "e": 98.22646880176163,
+                "f": 123.85205127620362,
+                "alongScale": 0.3754995636745146,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 108.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        },
+        {
+          "index": 7,
+          "file": "frames/walk/07.png",
+          "sha256": "4a29501f637b7a1db2599b02238f463298a76740bdf28770b2afc938f8d413bc",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 7,
+            "phaseId": "08",
+            "bodyBob": 1
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 64.99584615384614,
+                "y": 235.79890625000002
+              },
+              "ankle": {
+                "x": 65,
+                "y": 273.89374999999995
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 287
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197.67818749999998
+              },
+              "knee": {
+                "x": 95.84253846153845,
+                "y": 237.0809375
+              },
+              "ankle": {
+                "x": 95,
+                "y": 275.73125000000005
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 285.125
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 20,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 131
+              },
+              "cuff": {
+                "x": 44.30769230769231,
+                "y": 192.22756249999998
+              },
+              "handAnchor": {
+                "x": 44.30769230769231,
+                "y": 192.22756249999998
+              },
+              "radians": 0.09270321668942949,
+              "sleeveTransform": {
+                "a": 0.29087596885327055,
+                "b": -0.018308977291006705,
+                "c": -0.0003947665229385028,
+                "d": 0.3776932177847976,
+                "e": 31.09735556439557,
+                "f": 126.52388132369363,
+                "alongScale": 0.37880914786606407,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 131
+              },
+              "cuff": {
+                "x": 115.6923076923077,
+                "y": 189.32759375
+              },
+              "handAnchor": {
+                "x": 115.6923076923077,
+                "y": 189.32759375
+              },
+              "radians": -0.09728394979117505,
+              "sleeveTransform": {
+                "a": 0.29072990819157557,
+                "b": 0.011165374107075382,
+                "c": 0.0033703501357666074,
+                "d": 0.3601020981446738,
+                "e": 98.230502676175,
+                "f": 125.17662876821788,
+                "alongScale": 0.3608786852174382,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 29,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 109.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        }
+      ]
+    },
+    {
+      "id": "stand",
+      "label": "corrected proportional stand",
+      "fps": 5.555555555555555,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/stand/00.png",
+          "sha256": "a101eed6a0dbee814fc8c21fd09dc01273d177ec2549159d7f980383b702f330",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "index": 0,
+            "phaseId": "stand",
+            "bodyBob": 0
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 65,
+                "y": 197
+              },
+              "knee": {
+                "x": 65,
+                "y": 236.375
+              },
+              "ankle": {
+                "x": 65,
+                "y": 275.75
+              },
+              "soleContact": {
+                "x": 65,
+                "y": 287
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 95,
+                "y": 197
+              },
+              "knee": {
+                "x": 95,
+                "y": 236.375
+              },
+              "ankle": {
+                "x": 95,
+                "y": 275.75
+              },
+              "soleContact": {
+                "x": 95,
+                "y": 287
+              }
+            }
+          },
+          "continuity": {
+            "left": {
+              "hipAlpha": 19,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            },
+            "right": {
+              "hipAlpha": 21,
+              "kneeAlpha": 49,
+              "ankleAlpha": 49,
+              "thighPathMisses": 0,
+              "shinPathMisses": 0
+            }
+          },
+          "arms": {
+            "left": {
+              "shoulder": {
+                "x": 50,
+                "y": 130
+              },
+              "cuff": {
+                "x": 48,
+                "y": 193
+              },
+              "handAnchor": {
+                "x": 48,
+                "y": 193
+              },
+              "radians": 0.03173537352845801,
+              "sleeveTransform": {
+                "a": 0.28925585166224,
+                "b": -0.03712850076705946,
+                "c": 0.022319943850673526,
+                "d": 0.38643091201999363,
+                "e": 30.861897083559747,
+                "f": 126.61616935497442,
+                "alongScale": 0.38829692626668905,
+                "acrossScale": 0.29
+              }
+            },
+            "right": {
+              "shoulder": {
+                "x": 110,
+                "y": 130
+              },
+              "cuff": {
+                "x": 112,
+                "y": 193
+              },
+              "handAnchor": {
+                "x": 112,
+                "y": 193
+              },
+              "radians": -0.03173537352845779,
+              "sleeveTransform": {
+                "a": 0.28946852567237474,
+                "b": 0.033155815446741635,
+                "c": -0.019364332363889184,
+                "d": 0.3866343597477057,
+                "e": 98.62058633935784,
+                "f": 122.89429907925665,
+                "alongScale": 0.38813971834674965,
+                "acrossScale": 0.29
+              }
+            }
+          },
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "torso": {
+            "x": 31.01661129568106,
+            "y": 108.63039867109634,
+            "scale": 0.08056478405315615
+          }
+        }
+      ]
+    },
+    {
+      "id": "sit",
+      "label": "sit endpoint",
+      "fps": 5.555555555555555,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/sit/00.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320
+        }
+      ]
+    }
+  ],
+  "atlas": {
+    "file": "green-south-v8-atlas.png",
+    "sha256": "cbece8436063c384d536ef3572f629f963ab7d1e336729564da2137a5e885f8a",
+    "columns": 4,
+    "rows": 2,
+    "tile": {
+      "width": 160,
+      "height": 320
+    }
+  },
+  "contactSheet": {
+    "file": "green-south-v8-contact.png",
+    "sha256": "e74ecc13f702917e77974dd247af7ae32f999c98ca8ec2d7fa1d1b17b7fdbfae",
+    "columns": 4,
+    "rows": 2,
+    "cell": {
+      "width": 200,
+      "height": 344
+    }
+  },
+  "previousReference": {
+    "file": "green-south-v8-hands-behind-reference.png",
+    "sha256": "b025e1bda594aefed78210a804ceeb39b85ad72b6a734a02f47fa84566a51b7b",
+    "note": "Pre-correction v8 contact retained for draw-order comparison only."
+  },
+  "endpointContract": {
+    "sourceRoot": "../v6-motion",
+    "stand": "corrected v8 render",
+    "sit": "frames/seated-hold/00.png",
+    "transition": "instant"
+  },
+  "limitations": [
+    "South-only gait transfer proof; no traveling displacement or game integration.",
+    "Sleeves use a narrowed cross-axis fit and longitudinal shoulder-to-cuff binding; hands attach to the same cuff transform.",
+    "Standing uses the corrected v8 proportions; sitting retains the prior fixed endpoint and switches instantly.",
+    "Automated continuity and overlap checks do not establish owner appearance approval."
+  ]
+}

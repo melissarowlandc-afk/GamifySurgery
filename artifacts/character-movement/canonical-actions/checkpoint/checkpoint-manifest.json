@@ -1,0 +1,3605 @@
+{
+  "schemaVersion": 1,
+  "status": "canonical-actions-checkpoint-awaiting-owner-review",
+  "frame": {
+    "width": 280,
+    "height": 350,
+    "axisX": 140,
+    "floorY": 330
+  },
+  "phaseIds": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08"
+  ],
+  "jumpStages": [
+    "gather",
+    "takeoff",
+    "opening",
+    "open-star",
+    "closing",
+    "soft-landing",
+    "recover",
+    "ready"
+  ],
+  "records": {
+    "static": {
+      "sitEast": {
+        "clean": "sit-east.png",
+        "guide": "sit-east-guide.png",
+        "sha256": {
+          "clean": "3db3062030d5abf4efb339356772a8ace03074701f71cd4471c9104f3dbb8264",
+          "guide": "41873acbf016f06d8e13ff95e1249d2a453e3646a5f45763fc4e7392ffda4b95"
+        },
+        "geometry": {
+          "view": "east",
+          "phaseId": "sit",
+          "action": "sit",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 276
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 138.7,
+                "y": 276
+              },
+              "knee": {
+                "x": 177.7492,
+                "y": 276
+              },
+              "ankle": {
+                "x": 177.7492,
+                "y": 318
+              },
+              "heel": {
+                "x": 167.7492,
+                "y": 330
+              },
+              "toe": {
+                "x": 195.7492,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 136.6,
+                "y": 198
+              },
+              "elbow": {
+                "x": 145.773,
+                "y": 234.5196
+              },
+              "wrist": {
+                "x": 168.2,
+                "y": 263
+              },
+              "palm": {
+                "x": 174.2619,
+                "y": 270.698
+              },
+              "thumbTip": {
+                "x": 180.8619,
+                "y": 271.698
+              },
+              "thumbLatent": {
+                "lateral": -9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": -27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": -18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": -15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 141.3,
+                "y": 276
+              },
+              "knee": {
+                "x": 182.7492,
+                "y": 276
+              },
+              "ankle": {
+                "x": 182.7492,
+                "y": 318
+              },
+              "heel": {
+                "x": 172.7492,
+                "y": 330
+              },
+              "toe": {
+                "x": 200.7492,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 143.4,
+                "y": 198
+              },
+              "elbow": {
+                "x": 151.3556,
+                "y": 234.5196
+              },
+              "wrist": {
+                "x": 171.8,
+                "y": 263
+              },
+              "palm": {
+                "x": 177.3261,
+                "y": 270.698
+              },
+              "thumbTip": {
+                "x": 182.7261,
+                "y": 271.698
+              },
+              "thumbLatent": {
+                "lateral": 9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": 27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": 18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": 15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "chair",
+            "farArm",
+            "farLeg",
+            "nearLeg",
+            "torso",
+            "head",
+            "nearArm"
+          ],
+          "chair": {
+            "seatHeight": 54,
+            "seatForward": 0
+          }
+        }
+      },
+      "sitWest": {
+        "clean": "sit-west.png",
+        "guide": "sit-west-guide.png",
+        "sha256": {
+          "clean": "a492a3d9bbc8f62396b4035f8c29b0e695dc5e5c24f422566734aa3628688696",
+          "guide": "70afd70f85d1d6fa6a8ced11d4882c89fd03844d507c742a4582e6d9ff13586f"
+        },
+        "geometry": {
+          "view": "west",
+          "phaseId": "sit",
+          "action": "sit",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 276
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 138.7,
+                "y": 276
+              },
+              "knee": {
+                "x": 97.2508,
+                "y": 276
+              },
+              "ankle": {
+                "x": 97.2508,
+                "y": 318
+              },
+              "heel": {
+                "x": 107.2508,
+                "y": 330
+              },
+              "toe": {
+                "x": 79.2508,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 136.6,
+                "y": 198
+              },
+              "elbow": {
+                "x": 128.6444,
+                "y": 234.5196
+              },
+              "wrist": {
+                "x": 108.2,
+                "y": 263
+              },
+              "palm": {
+                "x": 102.6739,
+                "y": 270.698
+              },
+              "thumbTip": {
+                "x": 97.2739,
+                "y": 271.698
+              },
+              "thumbLatent": {
+                "lateral": -9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": -27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": -18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": -15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 141.3,
+                "y": 276
+              },
+              "knee": {
+                "x": 102.2508,
+                "y": 276
+              },
+              "ankle": {
+                "x": 102.2508,
+                "y": 318
+              },
+              "heel": {
+                "x": 112.2508,
+                "y": 330
+              },
+              "toe": {
+                "x": 84.2508,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 143.4,
+                "y": 198
+              },
+              "elbow": {
+                "x": 134.227,
+                "y": 234.5196
+              },
+              "wrist": {
+                "x": 111.8,
+                "y": 263
+              },
+              "palm": {
+                "x": 105.7381,
+                "y": 270.698
+              },
+              "thumbTip": {
+                "x": 99.1381,
+                "y": 271.698
+              },
+              "thumbLatent": {
+                "lateral": 9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": 27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": 18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": 15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "chair",
+            "farArm",
+            "farLeg",
+            "nearLeg",
+            "torso",
+            "head",
+            "nearArm"
+          ],
+          "chair": {
+            "seatHeight": 54,
+            "seatForward": 0
+          }
+        }
+      },
+      "sitSouth": {
+        "clean": "sit-south.png",
+        "guide": "sit-south-guide.png",
+        "sha256": {
+          "clean": "0703bb53f13b0edb972997d9b220adb0a99aa43f6c16a5ead3a95b14dc5bfd2b",
+          "guide": "ca0bd738c86045a8d1cc618a53b60f2be2b486678da79469f228ecdf9e9ed181"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "sit",
+          "action": "sit",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 276
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 276
+              },
+              "knee": {
+                "x": 165,
+                "y": 283.2449
+              },
+              "ankle": {
+                "x": 165,
+                "y": 325.2449
+              },
+              "heel": {
+                "x": 160,
+                "y": 337.2449
+              },
+              "toe": {
+                "x": 177,
+                "y": 337.2449
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 198
+              },
+              "elbow": {
+                "x": 167.9133,
+                "y": 236.0612
+              },
+              "wrist": {
+                "x": 158,
+                "y": 268.4
+              },
+              "palm": {
+                "x": 155.321,
+                "y": 277.1409
+              },
+              "thumbTip": {
+                "x": 149.321,
+                "y": 279.2209
+              },
+              "thumbLatent": {
+                "lateral": -9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": -27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": -18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": -15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 276
+              },
+              "knee": {
+                "x": 115,
+                "y": 283.2449
+              },
+              "ankle": {
+                "x": 115,
+                "y": 325.2449
+              },
+              "heel": {
+                "x": 120,
+                "y": 337.2449
+              },
+              "toe": {
+                "x": 103,
+                "y": 337.2449
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 198
+              },
+              "elbow": {
+                "x": 112.0867,
+                "y": 236.0612
+              },
+              "wrist": {
+                "x": 122,
+                "y": 268.4
+              },
+              "palm": {
+                "x": 124.679,
+                "y": 277.1409
+              },
+              "thumbTip": {
+                "x": 130.679,
+                "y": 279.2209
+              },
+              "thumbLatent": {
+                "lateral": 9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": 27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": 18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": 15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "chair",
+            "legs",
+            "torso",
+            "head",
+            "arms"
+          ],
+          "chair": {
+            "seatHeight": 54,
+            "seatForward": 0
+          }
+        }
+      },
+      "sitNorth": {
+        "clean": "sit-north.png",
+        "guide": "sit-north-guide.png",
+        "sha256": {
+          "clean": "089c483147007a97e292a4d439542f04816371841ee9ee9aa81a7c3b5eb4c0b7",
+          "guide": "c2b355ffda2d28272d9c4a15f80f22371bb033a183e4f99af302ea7f9d047798"
+        },
+        "geometry": {
+          "view": "north",
+          "phaseId": "sit",
+          "action": "sit",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 276
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 127,
+                "y": 276
+              },
+              "knee": {
+                "x": 115,
+                "y": 268.7551
+              },
+              "ankle": {
+                "x": 115,
+                "y": 310.7551
+              },
+              "heel": {
+                "x": 120,
+                "y": 322.7551
+              },
+              "toe": {
+                "x": 103,
+                "y": 322.7551
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 198
+              },
+              "elbow": {
+                "x": 112.0867,
+                "y": 232.978
+              },
+              "wrist": {
+                "x": 122,
+                "y": 257.6
+              },
+              "palm": {
+                "x": 124.679,
+                "y": 264.2551
+              },
+              "thumbTip": {
+                "x": 130.679,
+                "y": 264.1751
+              },
+              "thumbLatent": {
+                "lateral": -9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "guide-only-occluded",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": -27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": -18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": -15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 153,
+                "y": 276
+              },
+              "knee": {
+                "x": 165,
+                "y": 268.7551
+              },
+              "ankle": {
+                "x": 165,
+                "y": 310.7551
+              },
+              "heel": {
+                "x": 160,
+                "y": 322.7551
+              },
+              "toe": {
+                "x": 177,
+                "y": 322.7551
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 198
+              },
+              "elbow": {
+                "x": 167.9133,
+                "y": 232.978
+              },
+              "wrist": {
+                "x": 158,
+                "y": 257.6
+              },
+              "palm": {
+                "x": 155.321,
+                "y": 264.2551
+              },
+              "thumbTip": {
+                "x": 149.321,
+                "y": 264.1751
+              },
+              "thumbLatent": {
+                "lateral": 9.321,
+                "forward": 41.794,
+                "height": 58.302
+              },
+              "thumbVisibility": "guide-only-occluded",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "knee": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 25,
+                  "forward": 40.2492,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 132
+                },
+                "elbow": {
+                  "lateral": 27.9133,
+                  "forward": 8.5643,
+                  "height": 95.4804
+                },
+                "wrist": {
+                  "lateral": 18,
+                  "forward": 30,
+                  "height": 67
+                },
+                "hand": {
+                  "lateral": 15.321,
+                  "forward": 35.794,
+                  "height": 59.302
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "chair",
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "chair": {
+            "seatHeight": 54,
+            "seatForward": 0
+          }
+        }
+      },
+      "clipboardEast": {
+        "clean": "clipboard-east.png",
+        "guide": "clipboard-east-guide.png",
+        "sha256": {
+          "clean": "23cfef09424b9fd106a9e8d900dbdee849243ac6a21142da7b505dbd40a39650",
+          "guide": "17ca0d29bd235a21f553e7a6cb39623b39921ef3ea2175df88cd0a08554c8113"
+        },
+        "geometry": {
+          "view": "east",
+          "phaseId": "hold",
+          "action": "clipboard",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 234
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 138.7,
+                "y": 234
+              },
+              "knee": {
+                "x": 138.7,
+                "y": 276
+              },
+              "ankle": {
+                "x": 138.7,
+                "y": 318
+              },
+              "heel": {
+                "x": 128.7,
+                "y": 330
+              },
+              "toe": {
+                "x": 156.7,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 136.6,
+                "y": 156
+              },
+              "elbow": {
+                "x": 126.8806,
+                "y": 192.1615
+              },
+              "wrist": {
+                "x": 154.1322,
+                "y": 211.716
+              },
+              "palm": {
+                "x": 161.5,
+                "y": 217
+              },
+              "thumbTip": {
+                "x": 168.1,
+                "y": 218
+              },
+              "thumbLatent": {
+                "lateral": 1,
+                "forward": 28,
+                "height": 112
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": -28.467,
+                  "forward": -10.2727,
+                  "height": 137.8385
+                },
+                "wrist": {
+                  "lateral": -9.9929,
+                  "forward": 15.1315,
+                  "height": 118.284
+                },
+                "hand": {
+                  "lateral": -5,
+                  "forward": 22,
+                  "height": 113
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 141.3,
+                "y": 234
+              },
+              "knee": {
+                "x": 141.3,
+                "y": 276
+              },
+              "ankle": {
+                "x": 141.3,
+                "y": 318
+              },
+              "heel": {
+                "x": 131.3,
+                "y": 330
+              },
+              "toe": {
+                "x": 159.3,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 143.4,
+                "y": 156
+              },
+              "elbow": {
+                "x": 136.9743,
+                "y": 193.3063
+              },
+              "wrist": {
+                "x": 168.1675,
+                "y": 188.3409
+              },
+              "palm": {
+                "x": 176.6,
+                "y": 187
+              },
+              "thumbTip": {
+                "x": 182,
+                "y": 188
+              },
+              "thumbLatent": {
+                "lateral": 10,
+                "forward": 41,
+                "height": 142
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": 36.7436,
+                  "forward": -6.7001,
+                  "height": 136.6937
+                },
+                "wrist": {
+                  "lateral": 20.4118,
+                  "forward": 26.1263,
+                  "height": 141.6591
+                },
+                "hand": {
+                  "lateral": 16,
+                  "forward": 35,
+                  "height": 143
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "legs",
+            "torso",
+            "head",
+            "rightArm",
+            "clipboard",
+            "leftArm"
+          ],
+          "clipboard": {
+            "latentCenter": {
+              "lateral": 0,
+              "forward": 30,
+              "height": 132
+            },
+            "center": {
+              "x": 170,
+              "y": 198
+            },
+            "latentCorners": {
+              "topLeft": {
+                "lateral": -30,
+                "forward": 36,
+                "height": 153
+              },
+              "topRight": {
+                "lateral": 30,
+                "forward": 36,
+                "height": 153
+              },
+              "bottomRight": {
+                "lateral": 30,
+                "forward": 24,
+                "height": 111
+              },
+              "bottomLeft": {
+                "lateral": -30,
+                "forward": 24,
+                "height": 111
+              }
+            },
+            "corners": {
+              "topLeft": {
+                "x": 173,
+                "y": 177
+              },
+              "topRight": {
+                "x": 179,
+                "y": 177
+              },
+              "bottomRight": {
+                "x": 167,
+                "y": 219
+              },
+              "bottomLeft": {
+                "x": 161,
+                "y": 219
+              }
+            },
+            "anchors": {
+              "leftSupport": {
+                "lateral": -5,
+                "forward": 22,
+                "height": 113
+              },
+              "rightRest": {
+                "lateral": 16,
+                "forward": 35,
+                "height": 143
+              }
+            },
+            "roles": {
+              "left": "underside-support",
+              "right": "writing-face-rest"
+            },
+            "frontOfBody": true
+          }
+        }
+      },
+      "clipboardWest": {
+        "clean": "clipboard-west.png",
+        "guide": "clipboard-west-guide.png",
+        "sha256": {
+          "clean": "2e55633cfbbe809a7a9b366531328d52b271a0f75ef24cfe39f4c7f55b5474d7",
+          "guide": "34848192f1e8919cacda5c149c7529212795dc0b97a8780e3967b8beeb7f79c7"
+        },
+        "geometry": {
+          "view": "west",
+          "phaseId": "hold",
+          "action": "clipboard",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 234
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 138.7,
+                "y": 234
+              },
+              "knee": {
+                "x": 138.7,
+                "y": 276
+              },
+              "ankle": {
+                "x": 138.7,
+                "y": 318
+              },
+              "heel": {
+                "x": 148.7,
+                "y": 330
+              },
+              "toe": {
+                "x": 120.7,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 136.6,
+                "y": 156
+              },
+              "elbow": {
+                "x": 147.426,
+                "y": 192.1615
+              },
+              "wrist": {
+                "x": 123.8692,
+                "y": 211.716
+              },
+              "palm": {
+                "x": 117.5,
+                "y": 217
+              },
+              "thumbTip": {
+                "x": 112.1,
+                "y": 218
+              },
+              "thumbLatent": {
+                "lateral": 1,
+                "forward": 28,
+                "height": 112
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": -28.467,
+                  "forward": -10.2727,
+                  "height": 137.8385
+                },
+                "wrist": {
+                  "lateral": -9.9929,
+                  "forward": 15.1315,
+                  "height": 118.284
+                },
+                "hand": {
+                  "lateral": -5,
+                  "forward": 22,
+                  "height": 113
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 141.3,
+                "y": 234
+              },
+              "knee": {
+                "x": 141.3,
+                "y": 276
+              },
+              "ankle": {
+                "x": 141.3,
+                "y": 318
+              },
+              "heel": {
+                "x": 151.3,
+                "y": 330
+              },
+              "toe": {
+                "x": 123.3,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 143.4,
+                "y": 156
+              },
+              "elbow": {
+                "x": 150.3745,
+                "y": 193.3063
+              },
+              "wrist": {
+                "x": 115.9149,
+                "y": 188.3409
+              },
+              "palm": {
+                "x": 106.6,
+                "y": 187
+              },
+              "thumbTip": {
+                "x": 100,
+                "y": 188
+              },
+              "thumbLatent": {
+                "lateral": 10,
+                "forward": 41,
+                "height": 142
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": 36.7436,
+                  "forward": -6.7001,
+                  "height": 136.6937
+                },
+                "wrist": {
+                  "lateral": 20.4118,
+                  "forward": 26.1263,
+                  "height": 141.6591
+                },
+                "hand": {
+                  "lateral": 16,
+                  "forward": 35,
+                  "height": 143
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "legs",
+            "torso",
+            "head",
+            "rightArm",
+            "clipboard",
+            "leftArm"
+          ],
+          "clipboard": {
+            "latentCenter": {
+              "lateral": 0,
+              "forward": 30,
+              "height": 132
+            },
+            "center": {
+              "x": 110,
+              "y": 198
+            },
+            "latentCorners": {
+              "topLeft": {
+                "lateral": -30,
+                "forward": 36,
+                "height": 153
+              },
+              "topRight": {
+                "lateral": 30,
+                "forward": 36,
+                "height": 153
+              },
+              "bottomRight": {
+                "lateral": 30,
+                "forward": 24,
+                "height": 111
+              },
+              "bottomLeft": {
+                "lateral": -30,
+                "forward": 24,
+                "height": 111
+              }
+            },
+            "corners": {
+              "topLeft": {
+                "x": 101,
+                "y": 177
+              },
+              "topRight": {
+                "x": 107,
+                "y": 177
+              },
+              "bottomRight": {
+                "x": 119,
+                "y": 219
+              },
+              "bottomLeft": {
+                "x": 113,
+                "y": 219
+              }
+            },
+            "anchors": {
+              "leftSupport": {
+                "lateral": -5,
+                "forward": 22,
+                "height": 113
+              },
+              "rightRest": {
+                "lateral": 16,
+                "forward": 35,
+                "height": 143
+              }
+            },
+            "roles": {
+              "left": "underside-support",
+              "right": "writing-face-rest"
+            },
+            "frontOfBody": true
+          }
+        }
+      },
+      "clipboardSouth": {
+        "clean": "clipboard-south.png",
+        "guide": "clipboard-south-guide.png",
+        "sha256": {
+          "clean": "673e56b1ee06e992fe7cf3107d1ac269aa3cf31fc1f94ee833cc8213215a844d",
+          "guide": "34cc448519df506fc7b2e0bd176207852dc56fbfc4134f0831e2d228cd7a060a"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "hold",
+          "action": "clipboard",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 234
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 234
+              },
+              "knee": {
+                "x": 153,
+                "y": 276
+              },
+              "ankle": {
+                "x": 153,
+                "y": 318
+              },
+              "heel": {
+                "x": 148,
+                "y": 330
+              },
+              "toe": {
+                "x": 165,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 156
+              },
+              "elbow": {
+                "x": 169.1611,
+                "y": 187.5331
+              },
+              "wrist": {
+                "x": 150.1394,
+                "y": 204.4022
+              },
+              "palm": {
+                "x": 145,
+                "y": 208.96
+              },
+              "thumbTip": {
+                "x": 139,
+                "y": 211.04
+              },
+              "thumbLatent": {
+                "lateral": 1,
+                "forward": 28,
+                "height": 124
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": -29.1611,
+                  "forward": -15.5504,
+                  "height": 139.6678
+                },
+                "wrist": {
+                  "lateral": -10.1394,
+                  "forward": 14.0126,
+                  "height": 128.1201
+                },
+                "hand": {
+                  "lateral": -5,
+                  "forward": 22,
+                  "height": 125
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 234
+              },
+              "knee": {
+                "x": 127,
+                "y": 276
+              },
+              "ankle": {
+                "x": 127,
+                "y": 318
+              },
+              "heel": {
+                "x": 132,
+                "y": 330
+              },
+              "toe": {
+                "x": 115,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 156
+              },
+              "elbow": {
+                "x": 105.1355,
+                "y": 193.1404
+              },
+              "wrist": {
+                "x": 119.9873,
+                "y": 183.8195
+              },
+              "palm": {
+                "x": 124,
+                "y": 181.3
+              },
+              "thumbTip": {
+                "x": 130,
+                "y": 183.38
+              },
+              "thumbLatent": {
+                "lateral": 10,
+                "forward": 41,
+                "height": 154
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": 34.8645,
+                  "forward": -3.7126,
+                  "height": 136.1913
+                },
+                "wrist": {
+                  "lateral": 20.0127,
+                  "forward": 26.768,
+                  "height": 150.9987
+                },
+                "hand": {
+                  "lateral": 16,
+                  "forward": 35,
+                  "height": 155
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "legs",
+            "torso",
+            "head",
+            "rightArm",
+            "clipboard",
+            "leftArm"
+          ],
+          "clipboard": {
+            "latentCenter": {
+              "lateral": 0,
+              "forward": 30,
+              "height": 144
+            },
+            "center": {
+              "x": 140,
+              "y": 191.4
+            },
+            "latentCorners": {
+              "topLeft": {
+                "lateral": -30,
+                "forward": 36,
+                "height": 165
+              },
+              "topRight": {
+                "lateral": 30,
+                "forward": 36,
+                "height": 165
+              },
+              "bottomRight": {
+                "lateral": 30,
+                "forward": 24,
+                "height": 123
+              },
+              "bottomLeft": {
+                "lateral": -30,
+                "forward": 24,
+                "height": 123
+              }
+            },
+            "corners": {
+              "topLeft": {
+                "x": 170,
+                "y": 171.48
+              },
+              "topRight": {
+                "x": 110,
+                "y": 171.48
+              },
+              "bottomRight": {
+                "x": 110,
+                "y": 211.32
+              },
+              "bottomLeft": {
+                "x": 170,
+                "y": 211.32
+              }
+            },
+            "anchors": {
+              "leftSupport": {
+                "lateral": -5,
+                "forward": 22,
+                "height": 125
+              },
+              "rightRest": {
+                "lateral": 16,
+                "forward": 35,
+                "height": 155
+              }
+            },
+            "roles": {
+              "left": "underside-support",
+              "right": "writing-face-rest"
+            },
+            "frontOfBody": true
+          }
+        }
+      },
+      "clipboardNorth": {
+        "clean": "clipboard-north.png",
+        "guide": "clipboard-north-guide.png",
+        "sha256": {
+          "clean": "702da00f1c7b32c69c39b7b915d35451f7d38a375b25993379cdd2630fd7881e",
+          "guide": "55c5b75e2abce394151a4ef44de9ac401e4d14c6707f6479c859adf003c5b9e9"
+        },
+        "geometry": {
+          "view": "north",
+          "phaseId": "hold",
+          "action": "clipboard",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 234
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 127,
+                "y": 234
+              },
+              "knee": {
+                "x": 127,
+                "y": 276
+              },
+              "ankle": {
+                "x": 127,
+                "y": 318
+              },
+              "heel": {
+                "x": 132,
+                "y": 330
+              },
+              "toe": {
+                "x": 115,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 156
+              },
+              "elbow": {
+                "x": 111.533,
+                "y": 194.0106
+              },
+              "wrist": {
+                "x": 130.0071,
+                "y": 208.9923
+              },
+              "palm": {
+                "x": 135,
+                "y": 213.04
+              },
+              "thumbTip": {
+                "x": 141,
+                "y": 212.96
+              },
+              "thumbLatent": {
+                "lateral": 1,
+                "forward": 28,
+                "height": 112
+              },
+              "thumbVisibility": "guide-only-occluded",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": -28.467,
+                  "forward": -10.2727,
+                  "height": 137.8385
+                },
+                "wrist": {
+                  "lateral": -9.9929,
+                  "forward": 15.1315,
+                  "height": 118.284
+                },
+                "hand": {
+                  "lateral": -5,
+                  "forward": 22,
+                  "height": 113
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 153,
+                "y": 234
+              },
+              "knee": {
+                "x": 153,
+                "y": 276
+              },
+              "ankle": {
+                "x": 153,
+                "y": 318
+              },
+              "heel": {
+                "x": 148,
+                "y": 330
+              },
+              "toe": {
+                "x": 165,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 156
+              },
+              "elbow": {
+                "x": 176.7436,
+                "y": 194.5123
+              },
+              "wrist": {
+                "x": 160.4118,
+                "y": 183.6382
+              },
+              "palm": {
+                "x": 156,
+                "y": 180.7
+              },
+              "thumbTip": {
+                "x": 150,
+                "y": 180.62
+              },
+              "thumbLatent": {
+                "lateral": 10,
+                "forward": 41,
+                "height": 142
+              },
+              "thumbVisibility": "guide-only-occluded",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": 36.7436,
+                  "forward": -6.7001,
+                  "height": 136.6937
+                },
+                "wrist": {
+                  "lateral": 20.4118,
+                  "forward": 26.1263,
+                  "height": 141.6591
+                },
+                "hand": {
+                  "lateral": 16,
+                  "forward": 35,
+                  "height": 143
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "rightArm",
+            "clipboard",
+            "leftArm",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "clipboard": {
+            "latentCenter": {
+              "lateral": 0,
+              "forward": 30,
+              "height": 132
+            },
+            "center": {
+              "x": 140,
+              "y": 192.6
+            },
+            "latentCorners": {
+              "topLeft": {
+                "lateral": -30,
+                "forward": 36,
+                "height": 153
+              },
+              "topRight": {
+                "lateral": 30,
+                "forward": 36,
+                "height": 153
+              },
+              "bottomRight": {
+                "lateral": 30,
+                "forward": 24,
+                "height": 111
+              },
+              "bottomLeft": {
+                "lateral": -30,
+                "forward": 24,
+                "height": 111
+              }
+            },
+            "corners": {
+              "topLeft": {
+                "x": 110,
+                "y": 170.52
+              },
+              "topRight": {
+                "x": 170,
+                "y": 170.52
+              },
+              "bottomRight": {
+                "x": 170,
+                "y": 214.68
+              },
+              "bottomLeft": {
+                "x": 110,
+                "y": 214.68
+              }
+            },
+            "anchors": {
+              "leftSupport": {
+                "lateral": -5,
+                "forward": 22,
+                "height": 113
+              },
+              "rightRest": {
+                "lateral": 16,
+                "forward": 35,
+                "height": 143
+              }
+            },
+            "roles": {
+              "left": "underside-support",
+              "right": "writing-face-rest"
+            },
+            "frontOfBody": false
+          }
+        }
+      }
+    },
+    "southJump": {
+      "01": {
+        "clean": "jump-south-01.png",
+        "guide": "jump-south-01-guide.png",
+        "sha256": {
+          "clean": "1d44a5fa2dc537d9dc80f5710566a90b0fa79462cf4fad2c556e50061ea67e73",
+          "guide": "35143fa3774c540348add724920cd2838fc59ec5a999addac18dbc6e9543b138"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "01",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 248
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 248
+              },
+              "knee": {
+                "x": 156.7616,
+                "y": 287.0668
+              },
+              "ankle": {
+                "x": 155,
+                "y": 318
+              },
+              "heel": {
+                "x": 150,
+                "y": 330
+              },
+              "toe": {
+                "x": 167,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 170
+              },
+              "elbow": {
+                "x": 185.8572,
+                "y": 200.533
+              },
+              "wrist": {
+                "x": 182,
+                "y": 237
+              },
+              "palm": {
+                "x": 180.958,
+                "y": 246.8548
+              },
+              "thumbTip": {
+                "x": 174.958,
+                "y": 248.9348
+              },
+              "thumbLatent": {
+                "lateral": -34.958,
+                "forward": 9.882,
+                "height": 82.844
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 82
+                },
+                "knee": {
+                  "lateral": -16.7616,
+                  "forward": 23.0301,
+                  "height": 47.0786
+                },
+                "ankle": {
+                  "lateral": -15,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 160
+                },
+                "elbow": {
+                  "lateral": -45.8572,
+                  "forward": -14.3654,
+                  "height": 126.8812
+                },
+                "wrist": {
+                  "lateral": -42,
+                  "forward": 0,
+                  "height": 93
+                },
+                "hand": {
+                  "lateral": -40.958,
+                  "forward": 3.882,
+                  "height": 83.844
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 248
+              },
+              "knee": {
+                "x": 123.2384,
+                "y": 287.0668
+              },
+              "ankle": {
+                "x": 125,
+                "y": 318
+              },
+              "heel": {
+                "x": 130,
+                "y": 330
+              },
+              "toe": {
+                "x": 113,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 170
+              },
+              "elbow": {
+                "x": 94.1428,
+                "y": 200.533
+              },
+              "wrist": {
+                "x": 98,
+                "y": 237
+              },
+              "palm": {
+                "x": 99.042,
+                "y": 246.8548
+              },
+              "thumbTip": {
+                "x": 105.042,
+                "y": 248.9348
+              },
+              "thumbLatent": {
+                "lateral": 34.958,
+                "forward": 9.882,
+                "height": 82.844
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 82
+                },
+                "knee": {
+                  "lateral": 16.7616,
+                  "forward": 23.0301,
+                  "height": 47.0786
+                },
+                "ankle": {
+                  "lateral": 15,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 160
+                },
+                "elbow": {
+                  "lateral": 45.8572,
+                  "forward": -14.3654,
+                  "height": 126.8812
+                },
+                "wrist": {
+                  "lateral": 42,
+                  "forward": 0,
+                  "height": 93
+                },
+                "hand": {
+                  "lateral": 40.958,
+                  "forward": 3.882,
+                  "height": 83.844
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "gather"
+        }
+      },
+      "02": {
+        "clean": "jump-south-02.png",
+        "guide": "jump-south-02-guide.png",
+        "sha256": {
+          "clean": "c34d613c1262431c36e6cf0b9ea75adf78bf8b07336656e2350ec8ba8ca397ed",
+          "guide": "121d790c8f4617f1bc966076419a8629e5098d8bbbc0a9fe9de1f51c65920b29"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "02",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 234
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 234
+              },
+              "knee": {
+                "x": 160.4848,
+                "y": 274.7553
+              },
+              "ankle": {
+                "x": 164,
+                "y": 310
+              },
+              "heel": {
+                "x": 159,
+                "y": 322
+              },
+              "toe": {
+                "x": 176,
+                "y": 322
+              },
+              "soleHeight": 8,
+              "shoulder": {
+                "x": 174,
+                "y": 156
+              },
+              "elbow": {
+                "x": 194.9446,
+                "y": 176.5178
+              },
+              "wrist": {
+                "x": 196,
+                "y": 211
+              },
+              "palm": {
+                "x": 196.285,
+                "y": 220.3193
+              },
+              "thumbTip": {
+                "x": 190.285,
+                "y": 222.3993
+              },
+              "thumbLatent": {
+                "lateral": -50.285,
+                "forward": 11.535,
+                "height": 109.677
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": -20.4848,
+                  "forward": 16.9029,
+                  "height": 58.2872
+                },
+                "ankle": {
+                  "lateral": -24,
+                  "forward": 0,
+                  "height": 20
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": -54.9446,
+                  "forward": -20.4809,
+                  "height": 149.7956
+                },
+                "wrist": {
+                  "lateral": -56,
+                  "forward": 0,
+                  "height": 119
+                },
+                "hand": {
+                  "lateral": -56.285,
+                  "forward": 5.535,
+                  "height": 110.677
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 234
+              },
+              "knee": {
+                "x": 119.5152,
+                "y": 274.7553
+              },
+              "ankle": {
+                "x": 116,
+                "y": 310
+              },
+              "heel": {
+                "x": 121,
+                "y": 322
+              },
+              "toe": {
+                "x": 104,
+                "y": 322
+              },
+              "soleHeight": 8,
+              "shoulder": {
+                "x": 106,
+                "y": 156
+              },
+              "elbow": {
+                "x": 85.0554,
+                "y": 176.5178
+              },
+              "wrist": {
+                "x": 84,
+                "y": 211
+              },
+              "palm": {
+                "x": 83.715,
+                "y": 220.3193
+              },
+              "thumbTip": {
+                "x": 89.715,
+                "y": 222.3993
+              },
+              "thumbLatent": {
+                "lateral": 50.285,
+                "forward": 11.535,
+                "height": 109.677
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": 20.4848,
+                  "forward": 16.9029,
+                  "height": 58.2872
+                },
+                "ankle": {
+                  "lateral": 24,
+                  "forward": 0,
+                  "height": 20
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": 54.9446,
+                  "forward": -20.4809,
+                  "height": 149.7956
+                },
+                "wrist": {
+                  "lateral": 56,
+                  "forward": 0,
+                  "height": 119
+                },
+                "hand": {
+                  "lateral": 56.285,
+                  "forward": 5.535,
+                  "height": 110.677
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "takeoff"
+        }
+      },
+      "03": {
+        "clean": "jump-south-03.png",
+        "guide": "jump-south-03-guide.png",
+        "sha256": {
+          "clean": "188151a62e2eb7e89e7f53d0ca82177e0ad5aa36c481cc9bb8f93f3069f24306",
+          "guide": "4f56c89b32d975958e69976fb78e3d497dccf78a4ac6ec97fa43bb9070c9c470"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "03",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 220
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 220
+              },
+              "knee": {
+                "x": 169.3443,
+                "y": 257.4822
+              },
+              "ankle": {
+                "x": 182,
+                "y": 290
+              },
+              "heel": {
+                "x": 177,
+                "y": 302
+              },
+              "toe": {
+                "x": 194,
+                "y": 302
+              },
+              "soleHeight": 28,
+              "shoulder": {
+                "x": 174,
+                "y": 142
+              },
+              "elbow": {
+                "x": 200.5544,
+                "y": 143.9596
+              },
+              "wrist": {
+                "x": 219,
+                "y": 167
+              },
+              "palm": {
+                "x": 223.985,
+                "y": 173.2276
+              },
+              "thumbTip": {
+                "x": 217.985,
+                "y": 175.3076
+              },
+              "thumbLatent": {
+                "lateral": -77.985,
+                "forward": 13.12,
+                "height": 157.054
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 110
+                },
+                "knee": {
+                  "lateral": -29.3443,
+                  "forward": 18.0209,
+                  "height": 75.7616
+                },
+                "ankle": {
+                  "lateral": -42,
+                  "forward": 0,
+                  "height": 40
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 188
+                },
+                "elbow": {
+                  "lateral": -60.5544,
+                  "forward": -26.3423,
+                  "height": 181.2988
+                },
+                "wrist": {
+                  "lateral": -79,
+                  "forward": 0,
+                  "height": 163
+                },
+                "hand": {
+                  "lateral": -83.985,
+                  "forward": 7.12,
+                  "height": 158.054
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 220
+              },
+              "knee": {
+                "x": 110.6557,
+                "y": 257.4822
+              },
+              "ankle": {
+                "x": 98,
+                "y": 290
+              },
+              "heel": {
+                "x": 103,
+                "y": 302
+              },
+              "toe": {
+                "x": 86,
+                "y": 302
+              },
+              "soleHeight": 28,
+              "shoulder": {
+                "x": 106,
+                "y": 142
+              },
+              "elbow": {
+                "x": 79.4456,
+                "y": 143.9596
+              },
+              "wrist": {
+                "x": 61,
+                "y": 167
+              },
+              "palm": {
+                "x": 56.015,
+                "y": 173.2276
+              },
+              "thumbTip": {
+                "x": 62.015,
+                "y": 175.3076
+              },
+              "thumbLatent": {
+                "lateral": 77.985,
+                "forward": 13.12,
+                "height": 157.054
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 110
+                },
+                "knee": {
+                  "lateral": 29.3443,
+                  "forward": 18.0209,
+                  "height": 75.7616
+                },
+                "ankle": {
+                  "lateral": 42,
+                  "forward": 0,
+                  "height": 40
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 188
+                },
+                "elbow": {
+                  "lateral": 60.5544,
+                  "forward": -26.3423,
+                  "height": 181.2988
+                },
+                "wrist": {
+                  "lateral": 79,
+                  "forward": 0,
+                  "height": 163
+                },
+                "hand": {
+                  "lateral": 83.985,
+                  "forward": 7.12,
+                  "height": 158.054
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "opening"
+        }
+      },
+      "04": {
+        "clean": "jump-south-04.png",
+        "guide": "jump-south-04-guide.png",
+        "sha256": {
+          "clean": "c62dcedc341346591f19274270a2bf651de49ba6fc8342463fdf9184f14a9beb",
+          "guide": "8aeff86aabb7c501fbe171aa64bcbc00d4f09b8e973444498854a09a76afea16"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "04",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 212
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 212
+              },
+              "knee": {
+                "x": 175.3012,
+                "y": 246.9133
+              },
+              "ankle": {
+                "x": 195,
+                "y": 278
+              },
+              "heel": {
+                "x": 190,
+                "y": 290
+              },
+              "toe": {
+                "x": 207,
+                "y": 290
+              },
+              "soleHeight": 40,
+              "shoulder": {
+                "x": 174,
+                "y": 134
+              },
+              "elbow": {
+                "x": 203.8712,
+                "y": 117.6381
+              },
+              "wrist": {
+                "x": 226,
+                "y": 99
+              },
+              "palm": {
+                "x": 231.981,
+                "y": 93.9624
+              },
+              "thumbTip": {
+                "x": 225.981,
+                "y": 96.0424
+              },
+              "thumbLatent": {
+                "lateral": -85.981,
+                "forward": 11.319,
+                "height": 235.995
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 118
+                },
+                "knee": {
+                  "lateral": -35.3012,
+                  "forward": 15.219,
+                  "height": 85.8261
+                },
+                "ankle": {
+                  "lateral": -55,
+                  "forward": 0,
+                  "height": 52
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 196
+                },
+                "elbow": {
+                  "lateral": -63.8712,
+                  "forward": -19.6807,
+                  "height": 208.8194
+                },
+                "wrist": {
+                  "lateral": -86,
+                  "forward": 0,
+                  "height": 231
+                },
+                "hand": {
+                  "lateral": -91.981,
+                  "forward": 5.319,
+                  "height": 236.995
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 212
+              },
+              "knee": {
+                "x": 104.6988,
+                "y": 246.9133
+              },
+              "ankle": {
+                "x": 85,
+                "y": 278
+              },
+              "heel": {
+                "x": 90,
+                "y": 290
+              },
+              "toe": {
+                "x": 73,
+                "y": 290
+              },
+              "soleHeight": 40,
+              "shoulder": {
+                "x": 106,
+                "y": 134
+              },
+              "elbow": {
+                "x": 76.1288,
+                "y": 117.6381
+              },
+              "wrist": {
+                "x": 54,
+                "y": 99
+              },
+              "palm": {
+                "x": 48.019,
+                "y": 93.9624
+              },
+              "thumbTip": {
+                "x": 54.019,
+                "y": 96.0424
+              },
+              "thumbLatent": {
+                "lateral": 85.981,
+                "forward": 11.319,
+                "height": 235.995
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 118
+                },
+                "knee": {
+                  "lateral": 35.3012,
+                  "forward": 15.219,
+                  "height": 85.8261
+                },
+                "ankle": {
+                  "lateral": 55,
+                  "forward": 0,
+                  "height": 52
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 196
+                },
+                "elbow": {
+                  "lateral": 63.8712,
+                  "forward": -19.6807,
+                  "height": 208.8194
+                },
+                "wrist": {
+                  "lateral": 86,
+                  "forward": 0,
+                  "height": 231
+                },
+                "hand": {
+                  "lateral": 91.981,
+                  "forward": 5.319,
+                  "height": 236.995
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "open-star"
+        }
+      },
+      "05": {
+        "clean": "jump-south-05.png",
+        "guide": "jump-south-05-guide.png",
+        "sha256": {
+          "clean": "f45218d142f1185223ad2d5b3f057c06326ce671245fc5fdb016363f28c3151a",
+          "guide": "679df2a52ef51d6d4f1a364f93f7ea228eb4fdccc48cf43ae27611fccf9b314e"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "05",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 222
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 222
+              },
+              "knee": {
+                "x": 168.3648,
+                "y": 259.9958
+              },
+              "ankle": {
+                "x": 180,
+                "y": 293
+              },
+              "heel": {
+                "x": 175,
+                "y": 305
+              },
+              "toe": {
+                "x": 192,
+                "y": 305
+              },
+              "soleHeight": 25,
+              "shoulder": {
+                "x": 174,
+                "y": 144
+              },
+              "elbow": {
+                "x": 198.6373,
+                "y": 143.0831
+              },
+              "wrist": {
+                "x": 216,
+                "y": 164
+              },
+              "palm": {
+                "x": 220.692,
+                "y": 169.6533
+              },
+              "thumbTip": {
+                "x": 214.692,
+                "y": 171.7333
+              },
+              "thumbLatent": {
+                "lateral": -74.692,
+                "forward": 13.735,
+                "height": 160.739
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 108
+                },
+                "knee": {
+                  "lateral": -28.3648,
+                  "forward": 17.8193,
+                  "height": 73.2117
+                },
+                "ankle": {
+                  "lateral": -40,
+                  "forward": 0,
+                  "height": 37
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 186
+                },
+                "elbow": {
+                  "lateral": -58.6373,
+                  "forward": -28.6202,
+                  "height": 181.7653
+                },
+                "wrist": {
+                  "lateral": -76,
+                  "forward": 0,
+                  "height": 166
+                },
+                "hand": {
+                  "lateral": -80.692,
+                  "forward": 7.735,
+                  "height": 161.739
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 222
+              },
+              "knee": {
+                "x": 111.6352,
+                "y": 259.9958
+              },
+              "ankle": {
+                "x": 100,
+                "y": 293
+              },
+              "heel": {
+                "x": 105,
+                "y": 305
+              },
+              "toe": {
+                "x": 88,
+                "y": 305
+              },
+              "soleHeight": 25,
+              "shoulder": {
+                "x": 106,
+                "y": 144
+              },
+              "elbow": {
+                "x": 81.3627,
+                "y": 143.0831
+              },
+              "wrist": {
+                "x": 64,
+                "y": 164
+              },
+              "palm": {
+                "x": 59.308,
+                "y": 169.6533
+              },
+              "thumbTip": {
+                "x": 65.308,
+                "y": 171.7333
+              },
+              "thumbLatent": {
+                "lateral": 74.692,
+                "forward": 13.735,
+                "height": 160.739
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 108
+                },
+                "knee": {
+                  "lateral": 28.3648,
+                  "forward": 17.8193,
+                  "height": 73.2117
+                },
+                "ankle": {
+                  "lateral": 40,
+                  "forward": 0,
+                  "height": 37
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 186
+                },
+                "elbow": {
+                  "lateral": 58.6373,
+                  "forward": -28.6202,
+                  "height": 181.7653
+                },
+                "wrist": {
+                  "lateral": 76,
+                  "forward": 0,
+                  "height": 166
+                },
+                "hand": {
+                  "lateral": 80.692,
+                  "forward": 7.735,
+                  "height": 161.739
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "closing"
+        }
+      },
+      "06": {
+        "clean": "jump-south-06.png",
+        "guide": "jump-south-06-guide.png",
+        "sha256": {
+          "clean": "fdb260a8a517d90dfea46283277b05da899f25feba9ac42a19b62544e06f49e6",
+          "guide": "706b0fe86ec0ad37c023f7db7ea52b8051845efdfa963ad0b5df7b7c7ad714d9"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "06",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 248
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 248
+              },
+              "knee": {
+                "x": 161.1219,
+                "y": 286.6196
+              },
+              "ankle": {
+                "x": 164,
+                "y": 318
+              },
+              "heel": {
+                "x": 159,
+                "y": 330
+              },
+              "toe": {
+                "x": 176,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 170
+              },
+              "elbow": {
+                "x": 194.9446,
+                "y": 190.5178
+              },
+              "wrist": {
+                "x": 196,
+                "y": 225
+              },
+              "palm": {
+                "x": 196.285,
+                "y": 234.3193
+              },
+              "thumbTip": {
+                "x": 190.285,
+                "y": 236.3993
+              },
+              "thumbLatent": {
+                "lateral": -50.285,
+                "forward": 11.535,
+                "height": 95.677
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 82
+                },
+                "knee": {
+                  "lateral": -21.1219,
+                  "forward": 22.3976,
+                  "height": 47.412
+                },
+                "ankle": {
+                  "lateral": -24,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 160
+                },
+                "elbow": {
+                  "lateral": -54.9446,
+                  "forward": -20.4809,
+                  "height": 135.7956
+                },
+                "wrist": {
+                  "lateral": -56,
+                  "forward": 0,
+                  "height": 105
+                },
+                "hand": {
+                  "lateral": -56.285,
+                  "forward": 5.535,
+                  "height": 96.677
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 248
+              },
+              "knee": {
+                "x": 118.8781,
+                "y": 286.6196
+              },
+              "ankle": {
+                "x": 116,
+                "y": 318
+              },
+              "heel": {
+                "x": 121,
+                "y": 330
+              },
+              "toe": {
+                "x": 104,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 170
+              },
+              "elbow": {
+                "x": 85.0554,
+                "y": 190.5178
+              },
+              "wrist": {
+                "x": 84,
+                "y": 225
+              },
+              "palm": {
+                "x": 83.715,
+                "y": 234.3193
+              },
+              "thumbTip": {
+                "x": 89.715,
+                "y": 236.3993
+              },
+              "thumbLatent": {
+                "lateral": 50.285,
+                "forward": 11.535,
+                "height": 95.677
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 82
+                },
+                "knee": {
+                  "lateral": 21.1219,
+                  "forward": 22.3976,
+                  "height": 47.412
+                },
+                "ankle": {
+                  "lateral": 24,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 160
+                },
+                "elbow": {
+                  "lateral": 54.9446,
+                  "forward": -20.4809,
+                  "height": 135.7956
+                },
+                "wrist": {
+                  "lateral": 56,
+                  "forward": 0,
+                  "height": 105
+                },
+                "hand": {
+                  "lateral": 56.285,
+                  "forward": 5.535,
+                  "height": 96.677
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "soft-landing"
+        }
+      },
+      "07": {
+        "clean": "jump-south-07.png",
+        "guide": "jump-south-07-guide.png",
+        "sha256": {
+          "clean": "a96365af2e98e51d7743aaec4a8c522062de7aece69afc1a54df6b77a625f014",
+          "guide": "027db2dd140d41efd3755c88311ba9b6a9ca7f186318f2d2b23f2bf505727516"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "07",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 240
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 240
+              },
+              "knee": {
+                "x": 156.3436,
+                "y": 281.7032
+              },
+              "ankle": {
+                "x": 156,
+                "y": 318
+              },
+              "heel": {
+                "x": 151,
+                "y": 330
+              },
+              "toe": {
+                "x": 168,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 162
+              },
+              "elbow": {
+                "x": 187.1589,
+                "y": 191.628
+              },
+              "wrist": {
+                "x": 184,
+                "y": 228
+              },
+              "palm": {
+                "x": 183.146,
+                "y": 237.8294
+              },
+              "thumbTip": {
+                "x": 177.146,
+                "y": 239.9094
+              },
+              "thumbLatent": {
+                "lateral": -37.146,
+                "forward": 10.058,
+                "height": 91.901
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 90
+                },
+                "knee": {
+                  "lateral": -16.3436,
+                  "forward": 15.406,
+                  "height": 51.0699
+                },
+                "ankle": {
+                  "lateral": -16,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 168
+                },
+                "elbow": {
+                  "lateral": -47.1589,
+                  "forward": -15.0166,
+                  "height": 135.669
+                },
+                "wrist": {
+                  "lateral": -44,
+                  "forward": 0,
+                  "height": 102
+                },
+                "hand": {
+                  "lateral": -43.146,
+                  "forward": 4.058,
+                  "height": 92.901
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 240
+              },
+              "knee": {
+                "x": 123.6564,
+                "y": 281.7032
+              },
+              "ankle": {
+                "x": 124,
+                "y": 318
+              },
+              "heel": {
+                "x": 129,
+                "y": 330
+              },
+              "toe": {
+                "x": 112,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 162
+              },
+              "elbow": {
+                "x": 92.8411,
+                "y": 191.628
+              },
+              "wrist": {
+                "x": 96,
+                "y": 228
+              },
+              "palm": {
+                "x": 96.854,
+                "y": 237.8294
+              },
+              "thumbTip": {
+                "x": 102.854,
+                "y": 239.9094
+              },
+              "thumbLatent": {
+                "lateral": 37.146,
+                "forward": 10.058,
+                "height": 91.901
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 90
+                },
+                "knee": {
+                  "lateral": 16.3436,
+                  "forward": 15.406,
+                  "height": 51.0699
+                },
+                "ankle": {
+                  "lateral": 16,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 168
+                },
+                "elbow": {
+                  "lateral": 47.1589,
+                  "forward": -15.0166,
+                  "height": 135.669
+                },
+                "wrist": {
+                  "lateral": 44,
+                  "forward": 0,
+                  "height": 102
+                },
+                "hand": {
+                  "lateral": 43.146,
+                  "forward": 4.058,
+                  "height": 92.901
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "recover"
+        }
+      },
+      "08": {
+        "clean": "jump-south-08.png",
+        "guide": "jump-south-08-guide.png",
+        "sha256": {
+          "clean": "287398b6ba00f057d9b3494a32573a10e83be9e7fc3b90f01a93bc2476e0b527",
+          "guide": "64ad4cabe2661dc76a9afac6d7a6d10cb63fe86096876056e222f43cb60c4b25"
+        },
+        "geometry": {
+          "view": "south",
+          "phaseId": "08",
+          "action": "starJump",
+          "dimensions": {
+            "width": 280,
+            "height": 350,
+            "axisX": 140,
+            "floorY": 330
+          },
+          "hipCenter": {
+            "x": 140,
+            "y": 234
+          },
+          "joints": {
+            "left": {
+              "hip": {
+                "x": 153,
+                "y": 234
+              },
+              "knee": {
+                "x": 153,
+                "y": 276
+              },
+              "ankle": {
+                "x": 153,
+                "y": 318
+              },
+              "heel": {
+                "x": 148,
+                "y": 330
+              },
+              "toe": {
+                "x": 165,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 174,
+                "y": 156
+              },
+              "elbow": {
+                "x": 183.0278,
+                "y": 188.3377
+              },
+              "wrist": {
+                "x": 178,
+                "y": 225
+              },
+              "palm": {
+                "x": 176.641,
+                "y": 234.9088
+              },
+              "thumbTip": {
+                "x": 170.641,
+                "y": 236.9888
+              },
+              "thumbLatent": {
+                "lateral": -30.641,
+                "forward": 9.449,
+                "height": 94.712
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": -13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": -34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": -43.0278,
+                  "forward": -12.7607,
+                  "height": 139.3654
+                },
+                "wrist": {
+                  "lateral": -38,
+                  "forward": 0,
+                  "height": 105
+                },
+                "hand": {
+                  "lateral": -36.641,
+                  "forward": 3.449,
+                  "height": 95.712
+                }
+              }
+            },
+            "right": {
+              "hip": {
+                "x": 127,
+                "y": 234
+              },
+              "knee": {
+                "x": 127,
+                "y": 276
+              },
+              "ankle": {
+                "x": 127,
+                "y": 318
+              },
+              "heel": {
+                "x": 132,
+                "y": 330
+              },
+              "toe": {
+                "x": 115,
+                "y": 330
+              },
+              "soleHeight": 0,
+              "shoulder": {
+                "x": 106,
+                "y": 156
+              },
+              "elbow": {
+                "x": 96.9722,
+                "y": 188.3377
+              },
+              "wrist": {
+                "x": 102,
+                "y": 225
+              },
+              "palm": {
+                "x": 103.359,
+                "y": 234.9088
+              },
+              "thumbTip": {
+                "x": 109.359,
+                "y": 236.9888
+              },
+              "thumbLatent": {
+                "lateral": 30.641,
+                "forward": 9.449,
+                "height": 94.712
+              },
+              "thumbVisibility": "visible",
+              "latent": {
+                "hip": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 96
+                },
+                "knee": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 54
+                },
+                "ankle": {
+                  "lateral": 13,
+                  "forward": 0,
+                  "height": 12
+                },
+                "shoulder": {
+                  "lateral": 34,
+                  "forward": 0,
+                  "height": 174
+                },
+                "elbow": {
+                  "lateral": 43.0278,
+                  "forward": -12.7607,
+                  "height": 139.3654
+                },
+                "wrist": {
+                  "lateral": 38,
+                  "forward": 0,
+                  "height": 105
+                },
+                "hand": {
+                  "lateral": 36.641,
+                  "forward": 3.449,
+                  "height": 95.712
+                }
+              }
+            }
+          },
+          "layerPolicy": [
+            "arms",
+            "legs",
+            "torso",
+            "head"
+          ],
+          "stage": "ready"
+        }
+      }
+    }
+  },
+  "oldMasterManifestSha256": "c9ccf24da87a4f89e1f464a65819d205bf0b2930950f9c60105a64c6d618c309",
+  "reviewSheet": {
+    "clean": "canonical-actions-static-south-jump.png",
+    "sha256": "ca0ca54425a3571451afd86ed20cee57821cab852e6ef37b105a9f8c6da9ac3b"
+  },
+  "clipboardReview": {
+    "clean": "canonical-clipboard-four-view.png",
+    "sha256": "33b52529d479e724288677399f9a48fd2ebde5bd3dfa507b7fea3e9cb87b1e96"
+  }
+}

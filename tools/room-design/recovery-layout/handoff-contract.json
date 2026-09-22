@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "roomType": "periop_recovery",
+  "scope": "isolated presentation proof only; no runtime room capacity, reservations, saves, staffing, timing, pathfinding or clinical behavior changes",
+  "geometry": {
+    "roomTiles": [6, 6],
+    "centralStationFootprint": [2, 3, 2, 0.65],
+    "centralStationOpen": true,
+    "nurseStoolGrounds": [[2.5, 2.2], [3.5, 2.2]],
+    "nurseFacing": "S",
+    "bayCentersPerWall": [2.25, 3.75],
+    "bedFootprintTiles": [1.55, 0.7]
+  },
+  "visualBayCapacity": {
+    "maximum": 8,
+    "formula": "8 minus the count of unique open bay-owned door segments",
+    "bayOwnedDoorSegments": ["N3", "N4", "S3", "S4", "WC", "WD", "EC", "ED"],
+    "otherLegalDoorSegments": ["N1", "N2", "N5", "N6", "S1", "S2", "S5", "S6", "WA", "WB", "WE", "WF", "EA", "EB", "EE", "EF"],
+    "runtimeCapacityChanged": false
+  },
+  "bayBehavior": {
+    "headTowardWall": true,
+    "footTowardCenter": true,
+    "patientDirections": {"northBays": "S", "southBays": "N", "westBays": "E", "eastBays": "W"},
+    "monitorDirections": {"northBays": "S", "southBays": "N", "westBays": "E", "eastBays": "W"},
+    "patientPose": "seated at bed foot like Examination",
+    "doorHides": ["owned bed", "owned monitor", "shared solid partition when either adjacent bay is absent"],
+    "backedNorthEffect": "hide own north wall art only; north beds remain functional"
+  },
+  "scaleReference": {
+    "tilePixels": 120,
+    "bedPhysicalPixels": {"length": 186, "width": 84},
+    "examinationCushionRisePixels": [42.48, 42.95],
+    "recoveryCushionRisePixels": {"N": 41.47, "S": 41.47, "W": 41.85, "E": 41.50},
+    "stoolWidthPixels": 60,
+    "stoolSeatRisePixels": 50.68,
+    "stationBaseWidthPixels": 240,
+    "stationFacadeHeightPixels": 93.24
+  },
+  "artVisibility": "Eight unique bay artworks remain assigned. N3/N4 render at their own tall north-wall segments. The former WD/ED partition pieces render at outer tall north-wall segments N1/N6 and hide only for the corresponding N1/N6 door or backed state. No partition-mounted art remains; other assignments remain view-occluded rather than creating false east/west/south billboard walls.",
+  "runtimeBoundary": "Current runtime reserves an entire Peri-op/Recovery room instance for one active recovery operation. The eight-bay count is presentation-proof metadata and must not be used as runtime throughput without a separately authorized domain design."
+}

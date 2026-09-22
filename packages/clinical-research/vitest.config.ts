@@ -9,5 +9,8 @@ export default defineConfig({
     // Vitest process pool, which can otherwise exit nondeterministically on
     // resource-constrained Windows hosts.
     fileParallelism: false,
+    // Threads remain stable when those tests start a nested Node Worker; the
+    // default forks pool can unexpectedly exit on Windows.
+    pool: "threads",
   },
 });

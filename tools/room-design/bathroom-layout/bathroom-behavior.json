@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "status": "approved-design-contract-pending-runtime-integration",
+  "scope": "Any character already assigned a Bathroom visit. This contract does not add or change visit eligibility.",
+  "timebase": {
+    "unit": "facility game minute",
+    "notWallClock": true,
+    "useDurationMinutes": 2,
+    "countdownStartsOnlyAfterArrival": true,
+    "walkingDoesNotConsumeUseDuration": true
+  },
+  "fixtures": {
+    "sink": { "permanent": true, "useFacing": "north", "staticPose": "idle" },
+    "toilet": { "permanent": true, "useFacing": "south", "staticPose": "seated" }
+  },
+  "sequence": [
+    {
+      "phase": "walk_to_toilet",
+      "movement": "normal routed movement to the existing toilet approach/seat attachment",
+      "pose": "normal cardinal walking frames",
+      "layering": "While traversing Bathroom A1 or A2, draw the actor behind both the toilet and sink."
+    },
+    {
+      "phase": "use_toilet",
+      "entryCondition": "route arrival at the toilet attachment",
+      "durationGameMinutes": 2,
+      "pose": "existing static seated pose facing south",
+      "layering": "draw actor in front of the toilet",
+      "animation": "none"
+    },
+    {
+      "phase": "walk_to_sink",
+      "movement": "normal routed movement from the toilet attachment to the existing sink approach/use attachment",
+      "pose": "normal cardinal walking frames",
+      "layering": "While traversing Bathroom A1 or A2, draw the actor behind both the toilet and sink."
+    },
+    {
+      "phase": "use_sink",
+      "entryCondition": "route arrival at the sink attachment",
+      "durationGameMinutes": 2,
+      "pose": "existing static standing/idle pose facing north",
+      "layering": "draw actor in front of the sink",
+      "animation": "none"
+    },
+    {
+      "phase": "complete",
+      "result": "return control to the caller's normal post-visit behavior"
+    }
+  ],
+  "runtimeIntegrationNotes": {
+    "domain": "FounderActivityState currently has only kind visit_bathroom plus one route and workMinutesRemaining; it needs ordered visit phase/attachment data without changing eligibility.",
+    "timing": "advanceFounderActivity already avoids decrementing workMinutesRemaining until pathIndex reaches the final node; two separate arrived-use timers are required.",
+    "viewModel": "Current founder seated derivation excludes visit_bathroom, so it needs an explicit phase-to-pose and cardinal-facing mapping.",
+    "renderer": "FacilityScene currently derives founder furniture pose only for Front Desk and depths characters from baseY. Bathroom use requires a narrow relevant-fixture front-layer override while preserving normal A1/A2 walking occlusion.",
+    "art": "Reuse existing seated/front (south) and idle/back (north) character statics. No new animation or raster asset is authorized."
+  },
+  "evidence": {
+    "domainTypes": "packages/game-domain/src/types.ts",
+    "domainAdvance": "packages/game-domain/src/reducer.ts",
+    "viewModel": "apps/player/src/session/viewModels.ts",
+    "renderer": "apps/player/src/facility/FacilityScene.ts",
+    "bathroomFixturePresentation": "apps/player/src/facility/fiveRoomPresentation.ts",
+    "characterAtlasResolver": "apps/player/src/art/characterBitmapArt.ts"
+  }
+}

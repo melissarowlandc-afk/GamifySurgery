@@ -1,5 +1,7 @@
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+import { alertCadencePolicy } from "./alert-cadence";
 import {
+  getServiceIncomeLine,
   PROTOTYPE_ALERT_SCHEDULING,
   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
   PROTOTYPE_WALKOUT_REVIEW_DEFINITIONS,
@@ -25,6 +27,7 @@ import { createInitialGameState } from "./reducer";
 import { completePatientDemographics } from "./patientDemographics";
 import {
   getOperationalGlp1AutomationCapacity,
+  getOperationalGlp1AutomationAssignments,
   getRoomDefinition,
   getStaffRoleDefinition,
 } from "./selectors";
@@ -52,6 +55,12 @@ import type {
   PatientDissatisfactionCause,
   PlacedRoom,
   ReviewRatingIntent,
+  RetailActorKind,
+  RetailActorLedgerState,
+  RetailExternalActorState,
+  RetailOperationState,
+  RetailOrderState,
+  ServiceOperationState,
   TerminalFeedback,
 } from "./types";
 
@@ -142,6 +151,8 @@ function normalizeAlertHumorState(
   value: unknown,
   facilityTick: number,
   campaignSeed: string,
+  root: Record<string, unknown>,
+  context: DomainContext,
 ): AlertHumorState {
   const candidate = isRecord(value) ? value : {};
   const ambientDefinitionIds = new Set(
@@ -175,15 +186,125 @@ function normalizeAlertHumorState(
     candidate.nextAmbientAlertTick >= 0
       ? candidate.nextAmbientAlertTick
       : null;
+  const ambientCadenceIsCurrent =
+    candidate.ambientCadenceVersion === 1;
+  const rawEvents = Array.isArray(root.events)
+    ? root.events.filter(isRecord)
+    : [];
+  const lastAmbientEventTick = rawEvents.reduce<number | null>(
+    (latest, event) =>
+      event.type === "ambient_message" &&
+      typeof event.facilityTick === "number" &&
+      Number.isSafeInteger(event.facilityTick) &&
+      event.facilityTick >= 0 &&
+      event.facilityTick <= facilityTick
+        ? Math.max(latest ?? 0, event.facilityTick)
+        : latest,
+    null,
+  );
+  const migratedAmbientMinimumTick =
+    lastAmbientEventTick !== null
+      ? lastAmbientEventTick +
+        PROTOTYPE_ALERT_SCHEDULING.recurringAmbientMinimumMinutes
+      : ambientSequence > 0
+        ? facilityTick +
+          PROTOTYPE_ALERT_SCHEDULING.recurringAmbientMinimumMinutes
+        : alertsTutorialAcknowledgedAtTick !== null
+          ? alertsTutorialAcknowledgedAtTick +
+            PROTOTYPE_ALERT_SCHEDULING.firstAmbientMinimumMinutes
+          : facilityTick;
   const nextAmbientAlertTick =
     alertsTutorialAcknowledgedAtTick === null
       ? null
-      : (parsedNextTick ??
-        facilityTick +
-          getMigratedAmbientDelay(campaignSeed, ambientSequence));
+      : ambientCadenceIsCurrent
+        ? (parsedNextTick ??
+          facilityTick +
+            getMigratedAmbientDelay(campaignSeed, ambientSequence))
+        : Math.max(
+            parsedNextTick ?? 0,
+            migratedAmbientMinimumTick,
+          );
+  const normalizeTickRecord = (input: unknown): Record<string, number> =>
+    isRecord(input)
+      ? Object.fromEntries(
+          Object.entries(input).filter(
+            (entry): entry is [string, number] =>
+              typeof entry[1] === "number" &&
+              Number.isSafeInteger(entry[1]) &&
+              entry[1] >= 0 &&
+              entry[1] <= facilityTick,
+          ),
+        )
+      : {};
+  const persistedActiveTicks = normalizeTickRecord(
+    candidate.conditionActiveSinceTicks,
+  );
+  const persistedEmissionTicks = normalizeTickRecord(
+    candidate.conditionLastEmittedTicks,
+  );
+  const rawEnvironment = isRecord(root.environment) ? root.environment : {};
+  const rawOccurrences = Array.isArray(rawEnvironment.facilityConditionOccurrences)
+    ? rawEnvironment.facilityConditionOccurrences.filter(isRecord)
+    : [];
+  const migratedActiveTicks = { ...persistedActiveTicks };
+  const migratedEmissionTicks = { ...persistedEmissionTicks };
+  let migratedComplaintTick: number | null = null;
+  for (const occurrence of rawOccurrences) {
+    if (
+      typeof occurrence.conditionKey !== "string" ||
+      typeof occurrence.occurredAtFacilityTick !== "number" ||
+      !Number.isSafeInteger(occurrence.occurredAtFacilityTick) ||
+      occurrence.occurredAtFacilityTick < 0 ||
+      occurrence.occurredAtFacilityTick > facilityTick
+    ) continue;
+    const policy =
+      occurrence.conditionKey === "missing_examination_room" &&
+      root.facilityLevel === 0
+        ? null
+        : alertCadencePolicy(
+            occurrence.conditionKey as FacilityAlertConditionKey,
+            context,
+          );
+    if (!policy) continue;
+    if (
+      occurrence.resolvedAtFacilityTick === null &&
+      migratedActiveTicks[occurrence.conditionKey] === undefined
+    ) {
+      migratedActiveTicks[occurrence.conditionKey] =
+        occurrence.occurredAtFacilityTick;
+    }
+    if (persistedEmissionTicks[policy.group] === undefined) {
+      migratedEmissionTicks[policy.group] = facilityTick;
+    }
+    if (policy.complaint) migratedComplaintTick = facilityTick;
+  }
   return {
     alertsTutorialAcknowledgedAtTick,
     nextAmbientAlertTick,
+    ambientCadenceVersion: 1,
+    lastPatientArrivalTick:
+      typeof candidate.lastPatientArrivalTick === "number" &&
+      Number.isSafeInteger(candidate.lastPatientArrivalTick) &&
+      candidate.lastPatientArrivalTick >= 0 &&
+      candidate.lastPatientArrivalTick <= facilityTick
+        ? candidate.lastPatientArrivalTick
+        : Object.prototype.hasOwnProperty.call(
+              candidate,
+              "lastPatientArrivalTick",
+            ) && candidate.lastPatientArrivalTick === null
+          ? null
+        : Object.keys(isRecord(root.encounters) ? root.encounters : {}).length > 0
+          ? facilityTick
+          : null,
+    conditionActiveSinceTicks: migratedActiveTicks,
+    conditionLastEmittedTicks: migratedEmissionTicks,
+    lastComplaintAlertTick:
+      typeof candidate.lastComplaintAlertTick === "number" &&
+      Number.isSafeInteger(candidate.lastComplaintAlertTick) &&
+      candidate.lastComplaintAlertTick >= 0 &&
+      candidate.lastComplaintAlertTick <= facilityTick
+        ? candidate.lastComplaintAlertTick
+        : migratedComplaintTick,
     ambientSequence,
     ambientCycle:
       typeof candidate.ambientCycle === "number" &&
@@ -506,6 +627,140 @@ function isPixelAppearance(
       value.roleStyle === "evs_worker" ||
       value.roleStyle === "glp1_np")
   );
+}
+
+const SERVICE_OPERATION_STATUSES = new Set<ServiceOperationState["status"]>([
+  "waiting_for_resources",
+  "walking_to_service",
+  "in_service",
+  "walking_between_phases",
+  "leaving",
+  "completed",
+  "cancelled",
+]);
+
+function normalizeServiceOperations(
+  candidate: unknown,
+): ServiceOperationState[] {
+  if (!Array.isArray(candidate)) return [];
+  return candidate.flatMap((raw) => {
+    if (
+      !isRecord(raw) ||
+      typeof raw.id !== "string" ||
+      typeof raw.incomeLineId !== "string" ||
+      !getServiceIncomeLine(raw.incomeLineId)?.operation ||
+      (raw.actorKind !== "visitor" && raw.actorKind !== "encounter" && raw.actorKind !== "remote") ||
+      typeof raw.actorId !== "string" ||
+      typeof raw.displayName !== "string" ||
+      typeof raw.status !== "string" ||
+      !SERVICE_OPERATION_STATUSES.has(raw.status as ServiceOperationState["status"]) ||
+      typeof raw.createdAtFacilityTick !== "number" || !Number.isSafeInteger(raw.createdAtFacilityTick) ||
+      typeof raw.waitDeadlineFacilityTick !== "number" || !Number.isSafeInteger(raw.waitDeadlineFacilityTick) ||
+      typeof raw.quoteFee !== "number" || !Number.isFinite(raw.quoteFee) || raw.quoteFee < 0 ||
+      typeof raw.phaseIndex !== "number" || !Number.isSafeInteger(raw.phaseIndex) || raw.phaseIndex < 0 ||
+      !Array.isArray(raw.reservedRoomInstanceIds) ||
+      !Array.isArray(raw.reservedEmployeeIds) ||
+      !Array.isArray(raw.path) ||
+      typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) ||
+      typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)
+    ) return [];
+    const line = getServiceIncomeLine(raw.incomeLineId)!;
+    if (
+      raw.phaseIndex > line.operation!.phases.length ||
+      (raw.phaseIndex === line.operation!.phases.length && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
+    ) return [];
+    const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
+    const providerReservation = isRecord(raw.providerReservation) && raw.providerReservation.kind === "founder"
+      ? { kind: "founder" as const }
+      : isRecord(raw.providerReservation) && raw.providerReservation.kind === "employee" && typeof raw.providerReservation.employeeId === "string"
+        ? { kind: "employee" as const, employeeId: raw.providerReservation.employeeId }
+        : null;
+    const nullableTick = (value: unknown) =>
+      typeof value === "number" && Number.isSafeInteger(value) ? value : null;
+    return [{
+      id: raw.id,
+      incomeLineId: raw.incomeLineId,
+      catalogVersion: 1 as const,
+      actorKind: raw.actorKind,
+      actorId: raw.actorId,
+      displayName: raw.displayName,
+      appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
+      status: raw.status as ServiceOperationState["status"],
+      createdAtFacilityTick: raw.createdAtFacilityTick,
+      waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
+      startedAtFacilityTick: nullableTick(raw.startedAtFacilityTick),
+      completedAtFacilityTick: nullableTick(raw.completedAtFacilityTick),
+      cancelledAtFacilityTick: nullableTick(raw.cancelledAtFacilityTick),
+      quoteFee: raw.quoteFee,
+      phaseIndex: raw.phaseIndex,
+      phaseStartedAtFacilityTick: nullableTick(raw.phaseStartedAtFacilityTick),
+      phaseEndsAtFacilityTick: nullableTick(raw.phaseEndsAtFacilityTick),
+      reservedRoomInstanceIds: raw.reservedRoomInstanceIds.filter((id): id is string => typeof id === "string"),
+      reservedEmployeeIds: raw.reservedEmployeeIds.filter((id): id is string => typeof id === "string"),
+      providerReservation,
+      location: isGridPoint(raw.location) ? { ...raw.location } : null,
+      path,
+      pathIndex: path.length > 0 ? Math.max(0, Math.min(path.length - 1, raw.pathIndex)) : 0,
+      lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+      cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
+    } satisfies ServiceOperationState];
+  });
+}
+
+const RETAIL_ACTOR_KINDS = new Set<RetailActorKind>(["employee", "founder", "encounter", "service_visitor", "retail_visitor", "companion"]);
+const RETAIL_OPERATION_STATUSES = new Set<RetailOperationState["status"]>(["walking_to_outlet", "queued", "purchasing", "returning", "leaving", "completed", "abandoned", "cancelled"]);
+
+function normalizeRetailOperations(candidate: unknown): RetailOperationState[] {
+  if (!Array.isArray(candidate)) return [];
+  return candidate.flatMap((raw) => {
+    if (!isRecord(raw) || typeof raw.id !== "string" || typeof raw.incomeLineId !== "string" || !getServiceIncomeLine(raw.incomeLineId)?.retail ||
+      typeof raw.actorKind !== "string" || !RETAIL_ACTOR_KINDS.has(raw.actorKind as RetailActorKind) || typeof raw.actorId !== "string" ||
+      typeof raw.displayName !== "string" || !isPixelAppearance(raw.appearance) || typeof raw.status !== "string" || !RETAIL_OPERATION_STATUSES.has(raw.status as RetailOperationState["status"]) ||
+      typeof raw.createdAtFacilityTick !== "number" || !Number.isSafeInteger(raw.createdAtFacilityTick) || typeof raw.waitDeadlineFacilityTick !== "number" || !Number.isSafeInteger(raw.waitDeadlineFacilityTick) ||
+      typeof raw.quoteGross !== "number" || !Number.isFinite(raw.quoteGross) || raw.quoteGross < 0 || typeof raw.quoteStockCost !== "number" || !Number.isFinite(raw.quoteStockCost) || raw.quoteStockCost < 0 ||
+      typeof raw.outletRoomInstanceId !== "string" || (raw.outletDurationMinutes !== 1 && raw.outletDurationMinutes !== 2) || !isGridPoint(raw.location) || !Array.isArray(raw.path) ||
+      typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) || typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)) return [];
+    const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
+    const tick = (value: unknown) => typeof value === "number" && Number.isSafeInteger(value) ? value : null;
+    return [{ id: raw.id, incomeLineId: raw.incomeLineId, catalogVersion: 1 as const, actorKind: raw.actorKind as RetailActorKind, actorId: raw.actorId, displayName: raw.displayName, appearance: raw.appearance,
+      linkedServiceOperationId: typeof raw.linkedServiceOperationId === "string" ? raw.linkedServiceOperationId : null, authorizedOrderId: typeof raw.authorizedOrderId === "string" ? raw.authorizedOrderId : null,
+      status: raw.status as RetailOperationState["status"], createdAtFacilityTick: raw.createdAtFacilityTick, waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
+      startedAtFacilityTick: tick(raw.startedAtFacilityTick), completedAtFacilityTick: tick(raw.completedAtFacilityTick), quoteGross: raw.quoteGross, quoteStockCost: raw.quoteStockCost,
+      outletRoomInstanceId: raw.outletRoomInstanceId, outletDurationMinutes: raw.outletDurationMinutes, staffRoleDefinitionId: typeof raw.staffRoleDefinitionId === "string" ? raw.staffRoleDefinitionId : null, servingEmployeeId: typeof raw.servingEmployeeId === "string" ? raw.servingEmployeeId : null,
+      location: { ...raw.location }, returnLocation: isGridPoint(raw.returnLocation) ? { ...raw.returnLocation } : null, path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0,
+      lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick, purchaseEndsAtFacilityTick: tick(raw.purchaseEndsAtFacilityTick), cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null } satisfies RetailOperationState];
+  });
+}
+
+function normalizeRetailExternalActors(candidate: unknown): RetailExternalActorState[] {
+  if (!Array.isArray(candidate)) return [];
+  return candidate.flatMap((raw) => {
+    if (!isRecord(raw) || typeof raw.id !== "string" || (raw.kind !== "retail_visitor" && raw.kind !== "companion") || typeof raw.displayName !== "string" || !isPixelAppearance(raw.appearance) ||
+      (raw.lifecycle !== "arriving" && raw.lifecycle !== "onsite" && raw.lifecycle !== "departing" && raw.lifecycle !== "departed") || !Array.isArray(raw.path) ||
+      typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) || typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)) return [];
+    const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
+    return [{ id: raw.id, kind: raw.kind, displayName: raw.displayName, appearance: raw.appearance, linkedServiceOperationId: typeof raw.linkedServiceOperationId === "string" ? raw.linkedServiceOperationId : null,
+      linkedEncounterId: typeof raw.linkedEncounterId === "string" ? raw.linkedEncounterId : null, lifecycle: raw.lifecycle, location: isGridPoint(raw.location) ? { ...raw.location } : null,
+      path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0, lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+      activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null } satisfies RetailExternalActorState];
+  });
+}
+
+function normalizeRetailOrders(candidate: unknown): RetailOrderState[] {
+  if (!Array.isArray(candidate)) return [];
+  return candidate.flatMap((raw) => isRecord(raw) && typeof raw.id === "string" && typeof raw.actorKind === "string" && RETAIL_ACTOR_KINDS.has(raw.actorKind as RetailActorKind) && typeof raw.actorId === "string" &&
+    typeof raw.incomeLineId === "string" && getServiceIncomeLine(raw.incomeLineId)?.retail?.category === "authorized_order" && typeof raw.allowance === "number" && Number.isSafeInteger(raw.allowance) && raw.allowance > 0 &&
+    typeof raw.fulfilledQuantity === "number" && Number.isSafeInteger(raw.fulfilledQuantity) && raw.fulfilledQuantity >= 0 && raw.fulfilledQuantity <= raw.allowance && typeof raw.createdAtFacilityTick === "number" && Number.isSafeInteger(raw.createdAtFacilityTick)
+    ? [{ id: raw.id, actorKind: raw.actorKind as RetailActorKind, actorId: raw.actorId, incomeLineId: raw.incomeLineId, allowance: raw.allowance, fulfilledQuantity: raw.fulfilledQuantity, createdAtFacilityTick: raw.createdAtFacilityTick }]
+    : []);
+}
+
+function normalizeRetailActorLedgers(candidate: unknown): Record<string, RetailActorLedgerState> {
+  if (!isRecord(candidate)) return {};
+  return Object.fromEntries(Object.entries(candidate).flatMap(([key, raw]) => isRecord(raw) && typeof raw.dayNumber === "number" && Number.isSafeInteger(raw.dayNumber) && raw.dayNumber >= 0 &&
+    typeof raw.discretionarySpent === "number" && Number.isFinite(raw.discretionarySpent) && raw.discretionarySpent >= 0 && typeof raw.foodDrinkPurchases === "number" && Number.isSafeInteger(raw.foodDrinkPurchases) && raw.foodDrinkPurchases >= 0 &&
+    typeof raw.giftSupplyPurchases === "number" && Number.isSafeInteger(raw.giftSupplyPurchases) && raw.giftSupplyPurchases >= 0 && (raw.lastTripAtFacilityTick === null || typeof raw.lastTripAtFacilityTick === "number" && Number.isSafeInteger(raw.lastTripAtFacilityTick))
+    ? [[key, { dayNumber: raw.dayNumber, foodDayNumber: typeof raw.foodDayNumber === "number" && Number.isSafeInteger(raw.foodDayNumber) ? raw.foodDayNumber : raw.dayNumber, discretionarySpent: raw.discretionarySpent, foodDrinkPurchases: raw.foodDrinkPurchases, giftSupplyPurchases: raw.giftSupplyPurchases, lastTripAtFacilityTick: raw.lastTripAtFacilityTick } satisfies RetailActorLedgerState]] : []));
 }
 
 function normalizeFounder(
@@ -944,6 +1199,23 @@ function normalizePendingResult(
       candidate.patientTravel,
       context.balanceRelease.facility.characterTravelTilesPerTick,
     ),
+    patientRemainsOnsite:
+      candidate.patientRemainsOnsite === true ? true : undefined,
+    serviceIncomeEligible:
+      candidate.serviceIncomeEligible === true &&
+      typeof candidate.serviceIncomeLineId === "string" &&
+      typeof candidate.serviceIncomeFee === "number" &&
+      Number.isFinite(candidate.serviceIncomeFee) && candidate.serviceIncomeFee >= 0
+        ? true
+        : undefined,
+    serviceIncomeLineId:
+      candidate.serviceIncomeEligible === true && typeof candidate.serviceIncomeLineId === "string"
+        ? candidate.serviceIncomeLineId
+        : undefined,
+    serviceIncomeFee:
+      candidate.serviceIncomeEligible === true && typeof candidate.serviceIncomeFee === "number" && Number.isFinite(candidate.serviceIncomeFee) && candidate.serviceIncomeFee >= 0
+        ? candidate.serviceIncomeFee
+        : undefined,
     timingPhases: Array.isArray(candidate.timingPhases)
       ? candidate.timingPhases.filter(isRecord).map((phase) => ({ id: typeof phase.id === "string" ? phase.id : "phase.legacy", durationTicks: typeof phase.durationTicks === "number" ? phase.durationTicks : 1, resourceBound: phase.resourceBound === true, startsAtTick: typeof phase.startsAtTick === "number" ? phase.startsAtTick : 0, endsAtTick: typeof phase.endsAtTick === "number" ? phase.endsAtTick : 1 }))
       : [],
@@ -955,6 +1227,10 @@ function normalizePendingResult(
             : [],
         )
       : [],
+    imagingTechnicianId:
+      typeof candidate.imagingTechnicianId === "string"
+        ? candidate.imagingTechnicianId
+        : null,
     providerReservation: isRecord(candidate.providerReservation)
       ? candidate.providerReservation.kind === "founder"
         ? { kind: "founder" }
@@ -1215,6 +1491,42 @@ function normalizeEncounter(
         }
       : null;
   const lifecycle = candidate.lifecycle as EncounterState["lifecycle"];
+  const checkInStatus: EncounterState["checkInStatus"] =
+    candidate.checkInStatus === "approaching" ||
+    candidate.checkInStatus === "awaiting_staff" ||
+    candidate.checkInStatus === "checked_in"
+      ? candidate.checkInStatus
+      : patientMovement?.kind === "arriving_for_check_in"
+        ? "approaching"
+        : "checked_in";
+  const checkInWaitingSinceTick =
+    checkInStatus === "awaiting_staff" &&
+    typeof candidate.checkInWaitingSinceTick === "number" &&
+    Number.isSafeInteger(candidate.checkInWaitingSinceTick) &&
+    candidate.checkInWaitingSinceTick >= 0 &&
+    candidate.checkInWaitingSinceTick <= facilityTick
+      ? candidate.checkInWaitingSinceTick
+      : checkInStatus === "awaiting_staff"
+        ? facilityTick
+        : null;
+  const waitingDestination =
+    isRecord(candidate.waitingDestination) &&
+    isGridPoint(candidate.waitingDestination.location) &&
+    (candidate.waitingDestination.kind === "chair" ||
+      candidate.waitingDestination.kind === "standing" ||
+      candidate.waitingDestination.kind === "public_wander")
+      ? {
+          roomInstanceId:
+            typeof candidate.waitingDestination.roomInstanceId === "string"
+              ? candidate.waitingDestination.roomInstanceId
+              : null,
+          location: { ...candidate.waitingDestination.location },
+          kind: candidate.waitingDestination.kind as
+            | "chair"
+            | "standing"
+            | "public_wander",
+        }
+      : null;
   const legacyResolutionReason = candidate.resolutionReason;
   const resolutionReason =
     legacyResolutionReason === "completed"
@@ -1320,7 +1632,7 @@ function normalizeEncounter(
       : null;
   const legacyFeedAttentionKind: EncounterState["feedAttentionKind"] =
     lifecycle === "waiting_unopened" &&
-    patientMovement?.kind !== "arriving_for_check_in"
+    checkInStatus === "checked_in"
       ? "checked_in"
       : lifecycle === "active_action_required" &&
           idleWaitingSinceTick !== null
@@ -1331,10 +1643,13 @@ function normalizeEncounter(
           : "clinical_decision"
         : null;
   const feedAttentionKind =
-    persistedFeedAttentionKind ??
-    (persistedFeedAttentionStartedAtTick === null
-      ? legacyFeedAttentionKind
-      : null);
+    checkInStatus !== "checked_in" &&
+    persistedFeedAttentionKind === "checked_in"
+      ? null
+      : (persistedFeedAttentionKind ??
+        (persistedFeedAttentionStartedAtTick === null
+          ? legacyFeedAttentionKind
+          : null));
   const feedAttentionStartedAtTick =
     feedAttentionKind === null
       ? null
@@ -1400,8 +1715,13 @@ function normalizeEncounter(
       normalizeFacilityExperienceAtCheckIn(
         candidate.facilityExperienceAtCheckIn,
         arrivedAtTick,
-        patientMovement?.kind !== "arriving_for_check_in",
+        checkInStatus === "checked_in",
       ),
+    checkInStatus,
+    checkInWaitingSinceTick,
+    unstaffedCheckInOverdueApplied:
+      candidate.unstaffedCheckInOverdueApplied === true,
+    waitingDestination,
     finalPatientSatisfaction:
       typeof candidate.finalPatientSatisfaction === "number" &&
       Number.isFinite(candidate.finalPatientSatisfaction)
@@ -1455,6 +1775,10 @@ function normalizeEncounter(
     answers,
     steps,
     pendingResult,
+    retailFoodDrinkAllowed:
+      typeof candidate.retailFoodDrinkAllowed === "boolean"
+        ? candidate.retailFoodDrinkAllowed
+        : undefined,
   };
 }
 
@@ -1596,10 +1920,31 @@ function migrateVersionTwo(
       : Math.max(0, Math.round(parsedCash * 100));
   const postingInterval =
     context.balanceRelease.economy.postingIntervalMinutes;
+  const serviceIncomeReceipts = Array.isArray(parsed.serviceIncomeReceipts)
+    ? parsed.serviceIncomeReceipts.flatMap((candidate) =>
+        isRecord(candidate) &&
+        typeof candidate.id === "string" &&
+        typeof candidate.transactionKey === "string" &&
+        typeof candidate.incomeLineId === "string" &&
+        (candidate.routeId === null || typeof candidate.routeId === "string") &&
+        (candidate.actorKind === "patient" || candidate.actorKind === "visitor" || candidate.actorKind === "employee" || candidate.actorKind === "founder" || candidate.actorKind === "remote" || candidate.actorKind === "retail_visitor" || candidate.actorKind === "companion") &&
+        typeof candidate.actorId === "string" &&
+        typeof candidate.grossAmount === "number" && Number.isFinite(candidate.grossAmount) &&
+        typeof candidate.stockCost === "number" && Number.isFinite(candidate.stockCost) &&
+        typeof candidate.netCashDelta === "number" && Number.isFinite(candidate.netCashDelta) &&
+        typeof candidate.completedAtFacilityTick === "number" && Number.isSafeInteger(candidate.completedAtFacilityTick)
+          ? [{ id: candidate.id, transactionKey: candidate.transactionKey, incomeLineId: candidate.incomeLineId, catalogVersion: 1 as const, routeId: candidate.routeId, actorKind: candidate.actorKind as "patient" | "visitor" | "employee" | "founder" | "remote" | "retail_visitor" | "companion", actorId: candidate.actorId, ...(isRecord(candidate.displayAnchor) && ((candidate.displayAnchor.actorKind === "employee" && typeof candidate.displayAnchor.actorId === "string") || (candidate.displayAnchor.actorKind === "founder" && candidate.displayAnchor.actorId === "founder")) ? { displayAnchor: candidate.displayAnchor as { actorKind: "employee"; actorId: string } | { actorKind: "founder"; actorId: "founder" } } : {}), grossAmount: candidate.grossAmount, stockCost: candidate.stockCost, netCashDelta: candidate.netCashDelta, completedAtFacilityTick: candidate.completedAtFacilityTick }]
+          : [],
+      )
+    : [];
+  const serviceOperations = normalizeServiceOperations(parsed.serviceOperations);
+  const retailOperations = normalizeRetailOperations(parsed.retailOperations);
+  const retailExternalActors = normalizeRetailExternalActors(parsed.retailExternalActors);
+  const retailOrders = normalizeRetailOrders(parsed.retailOrders);
   const next: GameState = {
     ...baseline,
     ...(parsed as unknown as GameState),
-    schemaVersion: 6 as const,
+    schemaVersion: 7 as const,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     founder: normalizeFounder(parsed.founder, campaignSeed),
     facilityTick: parsedFacilityTick,
@@ -1609,6 +1954,53 @@ function migrateVersionTwo(
         : 1,
     cashCents: parsedCashCents,
     cash: parsedCashCents / 100,
+    serviceIncomeReceipts,
+    serviceAppointmentsEnabled:
+      typeof parsed.serviceAppointmentsEnabled === "boolean"
+        ? parsed.serviceAppointmentsEnabled
+        : baseline.serviceAppointmentsEnabled,
+    nextServiceAppointmentTicks: isRecord(parsed.nextServiceAppointmentTicks)
+      ? Object.fromEntries(Object.entries(parsed.nextServiceAppointmentTicks).filter(([, tick]) =>
+          typeof tick === "number" && Number.isSafeInteger(tick) && tick > parsedFacilityTick,
+        )) as Record<string, number>
+      : {},
+    lastServiceAppointmentArrivalTick:
+      typeof parsed.lastServiceAppointmentArrivalTick === "number" &&
+      Number.isSafeInteger(parsed.lastServiceAppointmentArrivalTick) &&
+      parsed.lastServiceAppointmentArrivalTick <= parsedFacilityTick
+        ? parsed.lastServiceAppointmentArrivalTick
+        : null,
+    lastServiceAppointmentLineId:
+      typeof parsed.lastServiceAppointmentLineId === "string" ? parsed.lastServiceAppointmentLineId : null,
+    lastServiceAppointmentTicks: isRecord(parsed.lastServiceAppointmentTicks)
+      ? Object.fromEntries(Object.entries(parsed.lastServiceAppointmentTicks).filter(([, tick]) => typeof tick === "number" && Number.isSafeInteger(tick) && tick <= parsedFacilityTick)) as Record<string, number>
+      : {},
+    serviceOperationSequence: Math.max(
+      serviceOperations.length,
+      typeof parsed.serviceOperationSequence === "number" &&
+        Number.isSafeInteger(parsed.serviceOperationSequence) &&
+        parsed.serviceOperationSequence >= 0
+        ? parsed.serviceOperationSequence
+        : 0,
+    ),
+    serviceOperations,
+    retailOperationSequence: Math.max(retailOperations.length, typeof parsed.retailOperationSequence === "number" && Number.isSafeInteger(parsed.retailOperationSequence) && parsed.retailOperationSequence >= 0 ? parsed.retailOperationSequence : 0),
+    retailOperations,
+    retailExternalActors,
+    retailOrders,
+    retailActorLedgers: normalizeRetailActorLedgers(parsed.retailActorLedgers),
+    retailNextOpportunityTicks: isRecord(parsed.retailNextOpportunityTicks)
+      ? Object.fromEntries(Object.entries(parsed.retailNextOpportunityTicks).filter(([, tick]) => typeof tick === "number" && Number.isSafeInteger(tick) && tick >= parsedFacilityTick)) as Record<string, number>
+      : {},
+    nextExternalRetailOpportunityTick: typeof parsed.nextExternalRetailOpportunityTick === "number" && Number.isSafeInteger(parsed.nextExternalRetailOpportunityTick) && parsed.nextExternalRetailOpportunityTick > parsedFacilityTick ? parsed.nextExternalRetailOpportunityTick : parsedFacilityTick + 120,
+    externalRetailSequence: typeof parsed.externalRetailSequence === "number" && Number.isSafeInteger(parsed.externalRetailSequence) && parsed.externalRetailSequence >= 0 ? parsed.externalRetailSequence : 0,
+    companionSequence: typeof parsed.companionSequence === "number" && Number.isSafeInteger(parsed.companionSequence) && parsed.companionSequence >= 0 ? parsed.companionSequence : 0,
+    nextServiceIncomeReceiptSequence: Math.max(
+      serviceIncomeReceipts.length,
+      typeof parsed.nextServiceIncomeReceiptSequence === "number" && Number.isSafeInteger(parsed.nextServiceIncomeReceiptSequence) && parsed.nextServiceIncomeReceiptSequence >= 0
+        ? parsed.nextServiceIncomeReceiptSequence
+        : 0,
+    ),
     operatingAccrualSixtiethCents:
       typeof parsed.operatingAccrualSixtiethCents === "number" &&
       Number.isSafeInteger(parsed.operatingAccrualSixtiethCents) &&
@@ -1634,6 +2026,8 @@ function migrateVersionTwo(
       parsed.alertHumor,
       parsedFacilityTick,
       campaignSeed,
+      parsed,
+      context,
     ),
   };
   delete (next as unknown as Record<string, unknown>).satisfaction;
@@ -1710,7 +2104,9 @@ function migrateVersionTwo(
     const facilityTask =
       (rawFacilityTask?.kind === "refill_water" ||
         rawFacilityTask?.kind === "collect_litter" ||
-        rawFacilityTask?.kind === "clean_room") &&
+        rawFacilityTask?.kind === "clean_room" ||
+        rawFacilityTask?.kind === "perform_imaging" ||
+        rawFacilityTask?.kind === "perform_service") &&
       typeof rawFacilityTask.startedAtFacilityTick === "number" &&
       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
       rawFacilityTask.startedAtFacilityTick >= 0 &&
@@ -1718,7 +2114,7 @@ function migrateVersionTwo(
       Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) &&
       rawFacilityTask.workMinutesRemaining > 0
         ? {
-            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room",
+            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service",
             startedAtFacilityTick:
               rawFacilityTask.startedAtFacilityTick,
             workMinutesRemaining:
@@ -1797,6 +2193,72 @@ function migrateVersionTwo(
     };
     return [employee];
   });
+  const activeIdentifiedImagingResults = Object.values(next.encounters)
+    .flatMap((encounter) => {
+      const pending = encounter.pendingResult;
+      const resourceActive = Boolean(
+        pending &&
+          pending.deliveredAtTick === null &&
+          (encounter.steps[pending.originatingNodeIndex]?.status ===
+            "feedback_pending" ||
+            !(pending.timingPhases?.length) ||
+            pending.timingPhases.some(
+              (phase) =>
+                phase.resourceBound && next.facilityTick < phase.endsAtTick,
+            )),
+      );
+      return resourceActive && pending ? [pending] : [];
+    })
+    .filter(
+      (pending): pending is PendingResult =>
+        Boolean(
+          pending &&
+            typeof pending.imagingTechnicianId === "string",
+        ),
+    );
+  const activeImagingByOperationId = new Map(
+    activeIdentifiedImagingResults.map((pending) => [
+      pending.operationId,
+      pending,
+    ]),
+  );
+  for (const employee of next.employees) {
+    if (
+      employee.facilityTask?.kind === "perform_imaging" &&
+      (!employee.facilityTask.targetId ||
+        activeImagingByOperationId.get(employee.facilityTask.targetId)
+          ?.imagingTechnicianId !== employee.id)
+    ) {
+      employee.facilityTask = null;
+    }
+  }
+  for (const pending of activeIdentifiedImagingResults) {
+    const imagingTechnicianId = pending.imagingTechnicianId;
+    if (!imagingTechnicianId) continue;
+    const technician = next.employees.find(
+      (employee) => employee.id === imagingTechnicianId,
+    );
+    if (!technician || technician.staffRoleDefinitionId !== "staff.imaging_technician") {
+      // Retain the frozen service and its aggregate reservation. Legacy and
+      // damaged saves may lack the once-concrete actor, but must not lose the
+      // pending result or gain duplicate capacity/rewards.
+      pending.imagingTechnicianId = null;
+      continue;
+    }
+    if (!technician.facilityTask) {
+      technician.facilityTask = {
+        kind: "perform_imaging",
+        startedAtFacilityTick: pending.scheduledAtTick,
+        workMinutesRemaining: 1,
+        targetId: pending.operationId,
+      };
+    } else if (
+      technician.facilityTask.kind !== "perform_imaging" ||
+      technician.facilityTask.targetId !== pending.operationId
+    ) {
+      pending.imagingTechnicianId = null;
+    }
+  }
   next.emergencyGlp1 = normalizeEmergencyGlp1State(
     parsed.emergencyGlp1,
     next,
@@ -1996,7 +2458,13 @@ function migrateVersionTwo(
       (rawFounderActivity.kind === "walk_to_point" ||
         rawFounderActivity.kind === "collect_litter" ||
         rawFounderActivity.kind === "refill_water" ||
-        rawFounderActivity.kind === "praise_employee") &&
+        rawFounderActivity.kind === "praise_employee" ||
+        rawFounderActivity.kind === "attend_encounter" ||
+        rawFounderActivity.kind === "return_to_front_desk" ||
+        rawFounderActivity.kind === "wander_facility" ||
+        rawFounderActivity.kind === "sit_in_chair" ||
+        rawFounderActivity.kind === "visit_bathroom" ||
+        rawFounderActivity.kind === "perform_service") &&
       typeof rawFounderActivity.targetId === "string" &&
       founderActivityPath.length > 0
         ? {
@@ -2100,6 +2568,7 @@ function migrateVersionTwo(
       rawEnvironment.glp1AutomationConsultationsCompleted >= 0
         ? rawEnvironment.glp1AutomationConsultationsCompleted
         : 0,
+    glp1AutomationSlots: [],
     glp1AutomationNextPayoutTicks: [],
     glp1AutomationNextPayoutTick:
       typeof rawEnvironment.glp1AutomationNextPayoutTick === "number" &&
@@ -2144,6 +2613,32 @@ function migrateVersionTwo(
         : facilityConditionOccurrences.length,
     facilityConditionOccurrences,
   };
+  const operationalGlp1Assignments =
+    getOperationalGlp1AutomationAssignments(next, context);
+  const rawSlots = Array.isArray(rawEnvironment.glp1AutomationSlots)
+    ? rawEnvironment.glp1AutomationSlots.filter(isRecord)
+    : [];
+  next.environment.glp1AutomationSlots = rawSlots.flatMap((slot) => {
+    if (
+      typeof slot.suiteRoomInstanceId !== "string" ||
+      typeof slot.employeeId !== "string" ||
+      typeof slot.nextPayoutTick !== "number" ||
+      !Number.isSafeInteger(slot.nextPayoutTick) ||
+      slot.nextPayoutTick <= next.facilityTick ||
+      !operationalGlp1Assignments.some(
+        (assignment) =>
+          assignment.suiteRoomInstanceId === slot.suiteRoomInstanceId &&
+          assignment.employeeId === slot.employeeId,
+      )
+    ) {
+      return [];
+    }
+    return [{
+      suiteRoomInstanceId: slot.suiteRoomInstanceId,
+      employeeId: slot.employeeId,
+      nextPayoutTick: slot.nextPayoutTick,
+    }];
+  });
   const rawPayoutTicks = Array.isArray(rawEnvironment.glp1AutomationNextPayoutTicks)
     ? rawEnvironment.glp1AutomationNextPayoutTicks.filter(
         (tick): tick is number =>
@@ -2159,10 +2654,26 @@ function migrateVersionTwo(
           { length: getOperationalGlp1AutomationCapacity(next, context) },
           () => legacyPayoutTick,
         );
+  if (next.environment.glp1AutomationSlots.length === 0) {
+    next.environment.glp1AutomationSlots = operationalGlp1Assignments.flatMap(
+      (assignment, index) => {
+        const nextPayoutTick = normalizedPayoutTicks[index];
+        return nextPayoutTick && nextPayoutTick > next.facilityTick
+          ? [{ ...assignment, nextPayoutTick }]
+          : [];
+      },
+    );
+  }
   next.environment.glp1AutomationNextPayoutTicks = normalizedPayoutTicks
     .filter((tick) => tick > next.facilityTick)
     .sort((left, right) => left - right)
     .slice(0, getOperationalGlp1AutomationCapacity(next, context));
+  if (next.environment.glp1AutomationSlots.length > 0) {
+    next.environment.glp1AutomationNextPayoutTicks =
+      next.environment.glp1AutomationSlots
+        .map((slot) => slot.nextPayoutTick)
+        .sort((left, right) => left - right);
+  }
   next.environment.glp1AutomationNextPayoutTick =
     next.environment.glp1AutomationNextPayoutTicks[0] ?? null;
   if (
@@ -2230,6 +2741,17 @@ function validateVersionSix(
   return state;
 }
 
+function validateVersionSeven(
+  parsed: Record<string, unknown>,
+  context: DomainContext,
+): GameState {
+  const state = migrateVersionTwo(parsed, context);
+  if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error("The saved campaign uses an incompatible randomness contract.");
+  }
+  return state;
+}
+
 export function deserializeGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -2258,6 +2780,9 @@ export function deserializeGameState(
   }
   if (parsed.schemaVersion === 6) {
     return validateVersionSix(parsed, context);
+  }
+  if (parsed.schemaVersion === 7) {
+    return validateVersionSeven(parsed, context);
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }

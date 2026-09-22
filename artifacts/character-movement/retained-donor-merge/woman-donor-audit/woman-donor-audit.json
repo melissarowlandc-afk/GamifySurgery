@@ -1,0 +1,511 @@
+{
+  "schemaVersion": 1,
+  "status": "donor-exclusivity-review-only-no-pose-render",
+  "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+  "sourceSha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d",
+  "sourceCrop": {
+    "x": 1000,
+    "y": 360,
+    "width": 240,
+    "height": 310
+  },
+  "configSha256": "9c5139b77c5e478dd459451922407fe71c06c623227b5886f614fb052baf559e",
+  "sourcePolygonOverlay": {
+    "file": "source-polygon-overlay.png",
+    "sha256": "3b9b800ca5e4d4593368e71e72028e3b0e01075cc6487b9ffcec1f0703a9c2e7"
+  },
+  "alternateCandidate": {
+    "file": "standing-west-mirrored-polygon-overlay.png",
+    "sha256": "8af4ec5a2dc0d10a592b8ae94689ced1a5c02f146b976cda37b4d5b5b0cc3d55",
+    "sourceCrop": {
+      "x": 550,
+      "y": 20,
+      "width": 210,
+      "height": 340
+    },
+    "operation": "horizontal reflection for anatomical-left donor inspection and registration"
+  },
+  "contactSheet": {
+    "file": "woman-donor-contact-sheet.png",
+    "width": 1680,
+    "height": 2150,
+    "sha256": "ae792c116d4bfffd53426bd5fe30cfa8848d1ae0be6f328665e626c19bf506dc"
+  },
+  "pieces": [
+    {
+      "id": "head",
+      "intendedSurface": "complete original head, hair, glasses, face and neck; no shoulder or arm",
+      "polygon": [
+        [
+          55,
+          20
+        ],
+        [
+          169,
+          20
+        ],
+        [
+          173,
+          91
+        ],
+        [
+          157,
+          111
+        ],
+        [
+          132,
+          117
+        ],
+        [
+          89,
+          116
+        ],
+        [
+          58,
+          105
+        ]
+      ],
+      "file": "pieces/01-head.png",
+      "sha256": "d142e46bc53c6ce862adf85838d8c03fcfa23149b58ba856acf13573aee2bdb7",
+      "overlayColor": "#ff2f78"
+    },
+    {
+      "id": "torso-core",
+      "intendedSurface": "arm-free central jacket and cream-knit torso only; intentionally incomplete on both side silhouettes",
+      "polygon": [
+        [
+          99,
+          105
+        ],
+        [
+          137,
+          105
+        ],
+        [
+          140,
+          127
+        ],
+        [
+          139,
+          178
+        ],
+        [
+          136,
+          201
+        ],
+        [
+          99,
+          203
+        ],
+        [
+          94,
+          183
+        ],
+        [
+          95,
+          139
+        ]
+      ],
+      "file": "pieces/02-torso-core.png",
+      "sha256": "ab44ab3f38f125356025ff4368984719de98b77ac8c0bbd11529ff7ad7ee9d0b",
+      "overlayColor": "#28a9ff"
+    },
+    {
+      "id": "near-right-upper-arm",
+      "intendedSurface": "backward near/right upper sleeve only; excludes hair, torso outline and hand",
+      "polygon": [
+        [
+          80,
+          113
+        ],
+        [
+          96,
+          117
+        ],
+        [
+          93,
+          132
+        ],
+        [
+          84,
+          151
+        ],
+        [
+          77,
+          159
+        ],
+        [
+          68,
+          152
+        ],
+        [
+          73,
+          133
+        ]
+      ],
+      "file": "pieces/03-near-right-upper-arm.png",
+      "sha256": "a687ee80b7a734c94c4166e667e2d5e341de4b1fcb546fe13df1c49a594abc31",
+      "overlayColor": "#ffc447"
+    },
+    {
+      "id": "near-right-forearm-hand",
+      "intendedSurface": "backward near/right lower sleeve and one complete hand",
+      "polygon": [
+        [
+          68,
+          143
+        ],
+        [
+          86,
+          151
+        ],
+        [
+          79,
+          169
+        ],
+        [
+          69,
+          190
+        ],
+        [
+          61,
+          199
+        ],
+        [
+          51,
+          197
+        ],
+        [
+          44,
+          187
+        ],
+        [
+          51,
+          171
+        ]
+      ],
+      "file": "pieces/04-near-right-forearm-hand.png",
+      "sha256": "96d35483fa47248651928a2ecc35bc8f52c7da114ed4bbcb6f4d7613fd5abbb0",
+      "overlayColor": "#36d18a"
+    },
+    {
+      "id": "far-left-upper-arm",
+      "source": "standingWestMirror",
+      "intendedSurface": "anatomical-left upper sleeve from the west-facing idle, horizontally registered for east-view donor inspection",
+      "polygon": [
+        [
+          92,
+          124
+        ],
+        [
+          111,
+          127
+        ],
+        [
+          121,
+          148
+        ],
+        [
+          123,
+          181
+        ],
+        [
+          116,
+          198
+        ],
+        [
+          102,
+          196
+        ],
+        [
+          96,
+          171
+        ]
+      ],
+      "file": "pieces/05-far-left-upper-arm.png",
+      "sha256": "07b0d192016b9aa1d8b7c040c64ee287eece0ebfec9fc1369ab77cee534a822f",
+      "overlayColor": "#b774ff"
+    },
+    {
+      "id": "far-left-forearm-hand",
+      "source": "standingWestMirror",
+      "intendedSurface": "anatomical-left lower sleeve and one complete hand from west-facing idle, horizontally registered for east-view donor inspection",
+      "polygon": [
+        [
+          101,
+          181
+        ],
+        [
+          122,
+          181
+        ],
+        [
+          121,
+          205
+        ],
+        [
+          119,
+          222
+        ],
+        [
+          113,
+          234
+        ],
+        [
+          101,
+          236
+        ],
+        [
+          93,
+          226
+        ],
+        [
+          96,
+          207
+        ]
+      ],
+      "file": "pieces/06-far-left-forearm-hand.png",
+      "sha256": "7167c0ae27a563e5eb06cba9a18afc0ea0e1b572e1ece74f45bf1063f07b4ea0",
+      "overlayColor": "#ff7a35"
+    },
+    {
+      "id": "far-left-thigh",
+      "intendedSurface": "backward far/left thigh only; hip overlap intentionally omitted",
+      "polygon": [
+        [
+          82,
+          199
+        ],
+        [
+          111,
+          199
+        ],
+        [
+          115,
+          207
+        ],
+        [
+          108,
+          222
+        ],
+        [
+          98,
+          238
+        ],
+        [
+          81,
+          240
+        ],
+        [
+          69,
+          220
+        ]
+      ],
+      "file": "pieces/07-far-left-thigh.png",
+      "sha256": "26a16166e87331fabd7230efebf8d3bd6ca33964a95ece50cb6543ff849c9306",
+      "overlayColor": "#2cc7c9"
+    },
+    {
+      "id": "far-left-shin",
+      "intendedSurface": "backward far/left lower trouser leg only; shoe overlap omitted",
+      "polygon": [
+        [
+          73,
+          217
+        ],
+        [
+          102,
+          224
+        ],
+        [
+          98,
+          239
+        ],
+        [
+          82,
+          248
+        ],
+        [
+          65,
+          249
+        ],
+        [
+          54,
+          246
+        ],
+        [
+          60,
+          236
+        ]
+      ],
+      "file": "pieces/08-far-left-shin.png",
+      "sha256": "7a2b9af54cb03de33614670e66c4a064bc1252f71d950c66dac6d8ff93e24828",
+      "overlayColor": "#e65454"
+    },
+    {
+      "id": "far-left-shoe",
+      "intendedSurface": "complete backward shoe including heel, sole and toe",
+      "polygon": [
+        [
+          43,
+          246
+        ],
+        [
+          72,
+          245
+        ],
+        [
+          88,
+          257
+        ],
+        [
+          88,
+          276
+        ],
+        [
+          81,
+          281
+        ],
+        [
+          48,
+          280
+        ],
+        [
+          37,
+          265
+        ]
+      ],
+      "file": "pieces/09-far-left-shoe.png",
+      "sha256": "495e968983a7a0d83d3c76277dec7f70371463b74479c69d74acd1cf722e59f1",
+      "overlayColor": "#79b84a"
+    },
+    {
+      "id": "near-right-thigh",
+      "intendedSurface": "forward near/right thigh only; hip overlap intentionally omitted",
+      "polygon": [
+        [
+          116,
+          199
+        ],
+        [
+          145,
+          199
+        ],
+        [
+          151,
+          207
+        ],
+        [
+          159,
+          226
+        ],
+        [
+          151,
+          242
+        ],
+        [
+          136,
+          240
+        ],
+        [
+          122,
+          218
+        ]
+      ],
+      "file": "pieces/10-near-right-thigh.png",
+      "sha256": "a35a473027ccc585d8a6b7df5edcefd0fcefd7b2ddea7b2a37b7275c4f58b32a",
+      "overlayColor": "#b88642"
+    },
+    {
+      "id": "near-right-shin",
+      "intendedSurface": "forward near/right lower trouser leg only; shoe overlap omitted",
+      "polygon": [
+        [
+          134,
+          214
+        ],
+        [
+          163,
+          210
+        ],
+        [
+          171,
+          236
+        ],
+        [
+          167,
+          247
+        ],
+        [
+          159,
+          250
+        ],
+        [
+          147,
+          249
+        ],
+        [
+          137,
+          245
+        ],
+        [
+          131,
+          239
+        ]
+      ],
+      "file": "pieces/11-near-right-shin.png",
+      "sha256": "ba867a892fa1aad46a85fc26f69a736b28027d26630f0b5d44a7e4f6798f11d7",
+      "overlayColor": "#526cff"
+    },
+    {
+      "id": "near-right-shoe",
+      "intendedSurface": "complete forward shoe including heel, sole and toe",
+      "polygon": [
+        [
+          136,
+          246
+        ],
+        [
+          171,
+          243
+        ],
+        [
+          184,
+          256
+        ],
+        [
+          183,
+          276
+        ],
+        [
+          176,
+          281
+        ],
+        [
+          139,
+          281
+        ],
+        [
+          128,
+          267
+        ]
+      ],
+      "file": "pieces/12-near-right-shoe.png",
+      "sha256": "595ea3c13cfac46184862608112feedcdabc88cd9332943ac39f56169109afa2",
+      "overlayColor": "#cf4eb5"
+    }
+  ],
+  "reviewQuestions": [
+    "Does torso-core contain zero arm or hand pixels?",
+    "Does each upper-arm donor exclude head, hair and torso-edge pixels?",
+    "Does each forearm-hand donor contain exactly one hand?",
+    "Does each leg segment exclude shirt and the opposite leg?",
+    "Does each shoe retain complete heel, sole and toe pixels?"
+  ],
+  "limitations": [
+    "Torso-core is intentionally incomplete and is not yet a finished reconstructed silhouette.",
+    "The anatomical-left arm comes from the same character west-facing idle and is reflected only for east-view donor registration.",
+    "No phase render is produced by this audit.",
+    "Only the auburn-hair/glasses/olive-jacket retained source is in scope."
+  ]
+}

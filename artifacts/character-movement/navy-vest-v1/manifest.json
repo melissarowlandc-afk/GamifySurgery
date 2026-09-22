@@ -1,0 +1,1364 @@
+{
+  "schemaVersion": "navy-vest-fit/v1",
+  "characterId": "patient.adult.035",
+  "canvas": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "floorY": 287
+  },
+  "source": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-ee82180f-799f-4617-9159-27eefa97f158.png",
+    "sha256": "9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+  },
+  "seatedSource": {
+    "path": "tools/character-mapping/layered-pilot/navy-vest-v1/assets/seated-generated-v1.png",
+    "sha256": "e5004724f74a8284f4efe88efbb6467160bdc6211142c92b8b8d24967d24d713",
+    "promptPath": "tools/character-mapping/layered-pilot/navy-vest-v1/assets/seated-generated-v1-prompt.txt",
+    "promptSha256": "55c76b628425df42078dc5b9f983c55879f0903f811e77b84085a4e30d79e31d",
+    "scaleReference": {
+      "originalCrop": {
+        "x": 1000,
+        "y": 20,
+        "width": 210,
+        "height": 330
+      },
+      "originalContentBounds": {
+        "x": 68,
+        "y": 71,
+        "width": 97,
+        "height": 239,
+        "right": 164,
+        "bottom": 309
+      },
+      "generatedSouthContentBounds": {
+        "x": 158,
+        "y": 231,
+        "width": 247,
+        "height": 565,
+        "right": 404,
+        "bottom": 795
+      },
+      "scale": 0.4230088495575221
+    }
+  },
+  "atlas": {
+    "file": "tools/character-mapping/layered-pilot/navy-vest-v1/manifest-v1.json",
+    "sha256": "2385e9383dad3e15f667b935a6f306fd69d38d099e86af713881429c3c57d263"
+  },
+  "frozenBaselines": {
+    "tools/character-mapping/whole-body-static-v1/registry-v1.json": "5e9ba1ad208e1db6bdd1752939f43f6f684da4a9afcab0cdc2e074886959df54",
+    "artifacts/character-movement/layered-pilot/v8-motion/manifest.json": "36c22f3b951e1eccb5b8cecdafb05f5ecd37130e2204e0faefea4edefd5754c7",
+    "artifacts/character-movement/layered-pilot/directional-v1/manifest.json": "7c8ebc5615ad3bd425957376acc1fc99a523e9a024bc1fb6e6bdcf835ee45932",
+    "artifacts/character-movement/gray-braid-v1/manifest.json": "e954be5d89fedea444381c51ec7c5441ffa55e336452223b81e3a079a24989a2",
+    "artifacts/character-movement/gray-overshirt-v2/manifest.json": "2237b42a100316adcba0624290663e4b03d490d23806cce333d986f2d2d8b09c",
+    "artifacts/character-movement/brown-beanie-v1/manifest.json": "2f349824947cd327ce78f60b2ac547f2dcd90f2c9077dfd18896e769a74de3ac"
+  },
+  "frameCount": 40,
+  "frames": {
+    "stand": {
+      "south": {
+        "file": "frames/stand/south.png",
+        "sha256": "5bf7649105cd737c258acf1bd4234ae4f9d0628835aadc9a6a1e8b6aff3a497e",
+        "width": 160,
+        "height": 320
+      },
+      "east": {
+        "file": "frames/stand/east.png",
+        "sha256": "a9f6a6073e1813215ada8ca6d073c27ef7d200c3a0df9574e8a528c51d4806d7",
+        "width": 160,
+        "height": 320
+      },
+      "west": {
+        "file": "frames/stand/west.png",
+        "sha256": "f593a1b4c27e50c5583dc6e1de7dd7c7bed91ea965979a58c5e5f22715aff5ca",
+        "width": 160,
+        "height": 320
+      },
+      "north": {
+        "file": "frames/stand/north.png",
+        "sha256": "fa49ba5847bdfbc1e4facc8cc0634f07c8777bdaec50de8d2bba03a1ed488e3b",
+        "width": 160,
+        "height": 320
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "frames/sit/south.png",
+        "sha256": "b909b4c2f48c83a4d6d3d8091a3fc2d293f1612e0eb692c6359414b8dacba7bd",
+        "width": 160,
+        "height": 320
+      },
+      "east": {
+        "file": "frames/sit/east.png",
+        "sha256": "06233f7f20b7927ca3d20a24cb9b246de4a47002361aebf3ece790398edf07ed",
+        "width": 160,
+        "height": 320
+      },
+      "west": {
+        "file": "frames/sit/west.png",
+        "sha256": "5bf88286f0b7222fa8ad3591cf5c332ec73b451ca7a804f805830159a81057b5",
+        "width": 160,
+        "height": 320
+      },
+      "north": {
+        "file": "frames/sit/north.png",
+        "sha256": "0fdf82e8b10b3e2d6378ba4880c6831f5d35af498655bdd179bfed98800c326d",
+        "width": 160,
+        "height": 320
+      }
+    },
+    "walk": {
+      "south": {
+        "01": {
+          "file": "frames/walk/south/01.png",
+          "sha256": "9ebccb47c8307ac0e99320fc19c91a76535d168c824587065aa7a577675db0d4",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/south/02.png",
+          "sha256": "451e0afb02d02a37174554cf142ab93d8f67a491f2e4edaf2c105dc03ed9dbfc",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/south/03.png",
+          "sha256": "d9b45fa7590320ee03210353aa4215c52a7426c8e03b07a938939015bd485bd9",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/south/04.png",
+          "sha256": "7f51c35fd1bff28673b13534c7c13ca43b22112fc3c654b1f5f616b39362d599",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/south/05.png",
+          "sha256": "c6152064601b6a167ef185ce6a390a1ccaa3f5bfa0ab18f5b0e779005247f97e",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/south/06.png",
+          "sha256": "2715b4e060426c4866dbae94a277517767fb976ecb12b4455ba9e677bdf24147",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/south/07.png",
+          "sha256": "32d92102ac39eaa2592c7d49448aa394b01ffb46463f5d9b6ee58d02967fdc2f",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/south/08.png",
+          "sha256": "d1673b036091bc5e67f6c8038f3e37cfa2d105b1a72a1d32277976c633ecc9ba",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "east": {
+        "01": {
+          "file": "frames/walk/east/01.png",
+          "sha256": "f2312c115629a29c4aaa93c022173bda7438c3d0c05fedd733bdfe79f50d1401",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/east/02.png",
+          "sha256": "f3ab97156c29e3a8589827e83aafea2780d728616f877dc6ab785fb7888b93f5",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/east/03.png",
+          "sha256": "921b7b3b73ae2eab0e42ecd114347264e0db700a59863e362ca8ba1cb2f44953",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/east/04.png",
+          "sha256": "0a7b7d7fd434b48934c6cb2a312ca3ee8002f5fbe05962a794ecaf88cc079ac6",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/east/05.png",
+          "sha256": "44d2c06f3e872440247916e674ed6bde350fa18619cd00c909d7c7b3b6baac7b",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/east/06.png",
+          "sha256": "a61c74dbe865ac6895c5caba6104081f239d23477159df84ccc9d415909f8417",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/east/07.png",
+          "sha256": "804d8ebf27f07817a1e71cb112add52cdbddeac01d85ce5ee71af2d33130c126",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/east/08.png",
+          "sha256": "eaf76a0c3c2f78eda524d96cd0c3a32847d6b1253d09ad5d313e57b81048cdaa",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "west": {
+        "01": {
+          "file": "frames/walk/west/01.png",
+          "sha256": "9646145d1d7ad39ed2255c7bc26586b4cde60176f14b5f68eec038aebc391cf0",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/west/02.png",
+          "sha256": "ecf622d15c25bca58e24d3b6fd5e31631c52cf422bee4c020522d18e5687b8a4",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/west/03.png",
+          "sha256": "fb4720ed5fec3dcee804ee675f581fe7623b02c10c4ab4b5a5553beb66cf2801",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/west/04.png",
+          "sha256": "7b0f89e72504b59c684929c50c2563632239e2a3eadf2bff951307ae81460e23",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/west/05.png",
+          "sha256": "f6ee117e017bb8ff71502edcfda83b973b69fbc08457369f6102cc15a3375e95",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/west/06.png",
+          "sha256": "ba67825b160b83f50f18455f2cdebb798b0ce9bed64cc7d8c87327e68f898532",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/west/07.png",
+          "sha256": "19bec9f22570ae3947b3d5fb8ed7ff3f0f645b0ede06267f1935b8dea451b5d1",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/west/08.png",
+          "sha256": "2d654010553f9ebf57ff30c36921a17fe63bf95a94b43eea47ba4c966bed3e9d",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "north": {
+        "01": {
+          "file": "frames/walk/north/01.png",
+          "sha256": "e421f4be412ffac1cabeddecd9d54ff18e633248d9cd851634e1c41b43ce3299",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/north/02.png",
+          "sha256": "9ebd5c0b29c36bb4f0a8dc145cc7861b9f34b1ca0f2b1f4fd6f8a0fbc140535e",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/north/03.png",
+          "sha256": "f554e6f58948de9926f013d36ecb244466f5584cc7e75cae1698f892fa780801",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/north/04.png",
+          "sha256": "a0dd0259dd284a88acec554ae63da8854d0a0607e7afac59038128638816e486",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/north/05.png",
+          "sha256": "daf1ecce1d13cac00ae362ac279d4aa22ff1e83422936563d05c52e21ad2e674",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/north/06.png",
+          "sha256": "6f436d74ccda90f8c207717313ea8468eb4d206ebc5506436b92a234c927d851",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/north/07.png",
+          "sha256": "d6df47a8fb878c41d66e0d722e722f27c84008309e61e8679544da68965af1d8",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/north/08.png",
+          "sha256": "2cc44af1e57f6e8fc739c0d5d0f7555f48fc3580bbf16ad3d24039d3951718de",
+          "width": 160,
+          "height": 320
+        }
+      }
+    }
+  },
+  "statics": {
+    "stand": {
+      "south": {
+        "file": "frames/stand/south.png",
+        "sha256": "5bf7649105cd737c258acf1bd4234ae4f9d0628835aadc9a6a1e8b6aff3a497e",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 50,
+          "y": 20,
+          "width": 240,
+          "height": 330
+        },
+        "sourceContentBounds": {
+          "x": 50,
+          "y": 60,
+          "width": 96,
+          "height": 251,
+          "right": 145,
+          "bottom": 310
+        },
+        "matrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": 1,
+          "e": -18,
+          "f": -23
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 98,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 310,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 40,
+            "y": 37,
+            "width": 81,
+            "height": 91
+          }
+        },
+        "extraction": {
+          "method": "border-connected neutral removal plus largest component",
+          "backgroundPixels": 61703,
+          "componentPixels": 17497,
+          "discardedComponents": 0
+        }
+      },
+      "east": {
+        "file": "frames/stand/east.png",
+        "sha256": "a9f6a6073e1813215ada8ca6d073c27ef7d200c3a0df9574e8a528c51d4806d7",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 300,
+          "y": 20,
+          "width": 240,
+          "height": 330
+        },
+        "sourceContentBounds": {
+          "x": 69,
+          "y": 59,
+          "width": 68,
+          "height": 252,
+          "right": 136,
+          "bottom": 310
+        },
+        "matrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": 1,
+          "e": -23,
+          "f": -23
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 103,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 310,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 46,
+            "y": 36,
+            "width": 68,
+            "height": 87
+          }
+        },
+        "extraction": {
+          "method": "border-connected neutral removal plus largest component",
+          "backgroundPixels": 66072,
+          "componentPixels": 13128,
+          "discardedComponents": 0
+        }
+      },
+      "west": {
+        "file": "frames/stand/west.png",
+        "sha256": "f593a1b4c27e50c5583dc6e1de7dd7c7bed91ea965979a58c5e5f22715aff5ca",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 550,
+          "y": 20,
+          "width": 240,
+          "height": 330
+        },
+        "sourceContentBounds": {
+          "x": 51,
+          "y": 59,
+          "width": 67,
+          "height": 252,
+          "right": 117,
+          "bottom": 310
+        },
+        "matrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": 1,
+          "e": -4,
+          "f": -23
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 84,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 310,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 47,
+            "y": 36,
+            "width": 67,
+            "height": 87
+          }
+        },
+        "extraction": {
+          "method": "border-connected neutral removal plus largest component",
+          "backgroundPixels": 66228,
+          "componentPixels": 12971,
+          "discardedComponents": 1
+        }
+      },
+      "north": {
+        "file": "frames/stand/north.png",
+        "sha256": "fa49ba5847bdfbc1e4facc8cc0634f07c8777bdaec50de8d2bba03a1ed488e3b",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 800,
+          "y": 20,
+          "width": 240,
+          "height": 330
+        },
+        "sourceContentBounds": {
+          "x": 26,
+          "y": 59,
+          "width": 98,
+          "height": 252,
+          "right": 123,
+          "bottom": 310
+        },
+        "matrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": 1,
+          "e": 5,
+          "f": -23
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 75,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 310,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 45,
+            "y": 36,
+            "width": 70,
+            "height": 84
+          }
+        },
+        "extraction": {
+          "method": "border-connected neutral removal plus largest component",
+          "backgroundPixels": 61679,
+          "componentPixels": 17520,
+          "discardedComponents": 1
+        }
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "frames/sit/south.png",
+        "sha256": "b909b4c2f48c83a4d6d3d8091a3fc2d293f1612e0eb692c6359414b8dacba7bd",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 0,
+          "y": 0,
+          "width": 443,
+          "height": 887
+        },
+        "sourceContentBounds": {
+          "x": 158,
+          "y": 231,
+          "width": 247,
+          "height": 565,
+          "right": 404,
+          "bottom": 795
+        },
+        "matrix": {
+          "a": 0.4230088495575221,
+          "b": 0,
+          "c": 0,
+          "d": 0.4230088495575221,
+          "e": -38.865486725663715,
+          "f": -49.2920353982301
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 281,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 795,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 47.428318584070794,
+            "y": 48.423008849557505,
+            "width": 65.98938053097345,
+            "height": 76.14159292035397
+          },
+          "seatContact": {
+            "sourceY": 640,
+            "y": 221.43362831858406
+          }
+        },
+        "extraction": {
+          "method": "true alpha plus largest component",
+          "componentPixels": 98688,
+          "discardedComponents": 0
+        }
+      },
+      "east": {
+        "file": "frames/sit/east.png",
+        "sha256": "06233f7f20b7927ca3d20a24cb9b246de4a47002361aebf3ece790398edf07ed",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 443,
+          "y": 0,
+          "width": 444,
+          "height": 887
+        },
+        "sourceContentBounds": {
+          "x": 144,
+          "y": 234,
+          "width": 260,
+          "height": 562,
+          "right": 403,
+          "bottom": 795
+        },
+        "matrix": {
+          "a": 0.4230088495575221,
+          "b": 0,
+          "c": 0,
+          "d": 0.4230088495575221,
+          "e": -35.904424778761054,
+          "f": -49.2920353982301
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 274,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 795,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 28.815929203539824,
+            "y": 49.692035398230075,
+            "width": 67.68141592920354,
+            "height": 74.87256637168142
+          },
+          "seatContact": {
+            "sourceY": 644,
+            "y": 223.12566371681413
+          }
+        },
+        "extraction": {
+          "method": "true alpha plus largest component",
+          "componentPixels": 77374,
+          "discardedComponents": 0
+        }
+      },
+      "west": {
+        "file": "frames/sit/west.png",
+        "sha256": "5bf88286f0b7222fa8ad3591cf5c332ec73b451ca7a804f805830159a81057b5",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 887,
+          "y": 0,
+          "width": 443,
+          "height": 887
+        },
+        "sourceContentBounds": {
+          "x": 36,
+          "y": 234,
+          "width": 261,
+          "height": 562,
+          "right": 296,
+          "bottom": 795
+        },
+        "matrix": {
+          "a": 0.4230088495575221,
+          "b": 0,
+          "c": 0,
+          "d": 0.4230088495575221,
+          "e": 9.780530973451334,
+          "f": -49.2920353982301
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 166,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 795,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 64.34867256637168,
+            "y": 49.692035398230075,
+            "width": 68.10442477876106,
+            "height": 74.87256637168142
+          },
+          "seatContact": {
+            "sourceY": 644,
+            "y": 223.12566371681413
+          }
+        },
+        "extraction": {
+          "method": "true alpha plus largest component",
+          "componentPixels": 77431,
+          "discardedComponents": 1
+        }
+      },
+      "north": {
+        "file": "frames/sit/north.png",
+        "sha256": "0fdf82e8b10b3e2d6378ba4880c6831f5d35af498655bdd179bfed98800c326d",
+        "width": 160,
+        "height": 320,
+        "sourceCrop": {
+          "x": 1330,
+          "y": 0,
+          "width": 444,
+          "height": 887
+        },
+        "sourceContentBounds": {
+          "x": 38,
+          "y": 231,
+          "width": 249,
+          "height": 561,
+          "right": 286,
+          "bottom": 791
+        },
+        "matrix": {
+          "a": 0.4230088495575221,
+          "b": 0,
+          "c": 0,
+          "d": 0.4230088495575221,
+          "e": 11.472566371681424,
+          "f": -47.599999999999966
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 162,
+            "x": 80
+          },
+          "sole": {
+            "sourceY": 791,
+            "y": 287
+          },
+          "floor": {
+            "y": 287
+          },
+          "headBounds": {
+            "x": 47.4283185840708,
+            "y": 50.11504424778764,
+            "width": 65.1433628318584,
+            "height": 76.14159292035397
+          },
+          "seatContact": {
+            "sourceY": 642,
+            "y": 223.9716814159292
+          }
+        },
+        "extraction": {
+          "method": "true alpha plus largest component",
+          "componentPixels": 95805,
+          "discardedComponents": 3
+        }
+      }
+    }
+  },
+  "fitMeasurements": {
+    "south": {
+      "torsoRows": {
+        "150": {
+          "static": {
+            "left": 51,
+            "right": 107,
+            "width": 57
+          },
+          "fit": {
+            "left": 50,
+            "right": 107,
+            "width": 58
+          }
+        },
+        "170": {
+          "static": {
+            "left": 48,
+            "right": 109,
+            "width": 62
+          },
+          "fit": {
+            "left": 51,
+            "right": 107,
+            "width": 57
+          }
+        },
+        "190": {
+          "static": {
+            "left": 49,
+            "right": 109,
+            "width": 61
+          },
+          "fit": {
+            "left": 50,
+            "right": 109,
+            "width": 60
+          }
+        }
+      },
+      "hemAlignment": {
+        "row": 194,
+        "torso": {
+          "left": 47,
+          "right": 112,
+          "width": 66,
+          "center": 79.5
+        },
+        "lower": {
+          "left": 51,
+          "right": 108,
+          "width": 58,
+          "center": 79.5
+        },
+        "widthRatio": 0.8787878787878788,
+        "centerDelta": 0
+      },
+      "lowerIndividualRows": {
+        "left": {
+          "210": {
+            "left": 81,
+            "right": 108,
+            "width": 28
+          },
+          "220": {
+            "left": 81,
+            "right": 107,
+            "width": 27
+          },
+          "230": {
+            "left": 81,
+            "right": 108,
+            "width": 28
+          },
+          "240": {
+            "left": 81,
+            "right": 107,
+            "width": 27
+          },
+          "250": {
+            "left": 81,
+            "right": 107,
+            "width": 27
+          },
+          "260": {
+            "left": 81,
+            "right": 107,
+            "width": 27
+          },
+          "270": {
+            "left": 79,
+            "right": 99,
+            "width": 21
+          }
+        },
+        "right": {
+          "210": {
+            "left": 51,
+            "right": 77,
+            "width": 27
+          },
+          "220": {
+            "left": 52,
+            "right": 77,
+            "width": 26
+          },
+          "230": {
+            "left": 51,
+            "right": 78,
+            "width": 28
+          },
+          "240": {
+            "left": 52,
+            "right": 77,
+            "width": 26
+          },
+          "250": {
+            "left": 52,
+            "right": 78,
+            "width": 27
+          },
+          "260": {
+            "left": 51,
+            "right": 78,
+            "width": 28
+          },
+          "270": {
+            "left": 53,
+            "right": 74,
+            "width": 22
+          }
+        }
+      }
+    },
+    "east": {
+      "torsoRows": {
+        "150": {
+          "static": {
+            "left": 76,
+            "right": 105,
+            "width": 30
+          },
+          "fit": {
+            "left": 68,
+            "right": 100,
+            "width": 33
+          }
+        },
+        "170": {
+          "static": {
+            "left": 74,
+            "right": 104,
+            "width": 31
+          },
+          "fit": {
+            "left": 64,
+            "right": 96,
+            "width": 33
+          }
+        },
+        "190": {
+          "static": {
+            "left": 78,
+            "right": 102,
+            "width": 25
+          },
+          "fit": {
+            "left": 69,
+            "right": 95,
+            "width": 27
+          }
+        }
+      },
+      "hemAlignment": {
+        "row": 194,
+        "torso": {
+          "left": 57,
+          "right": 97,
+          "width": 41,
+          "center": 77
+        },
+        "lower": {
+          "left": 61,
+          "right": 98,
+          "width": 38,
+          "center": 79.5
+        },
+        "widthRatio": 0.926829268292683,
+        "centerDelta": 2.5
+      },
+      "lowerIndividualRows": {
+        "left": {
+          "210": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "220": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "230": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "240": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "250": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "260": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "270": {
+            "left": 60,
+            "right": 81,
+            "width": 22
+          }
+        },
+        "right": {
+          "210": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "220": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "230": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "240": {
+            "left": 74,
+            "right": 98,
+            "width": 25
+          },
+          "250": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "260": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "270": {
+            "left": 74,
+            "right": 95,
+            "width": 22
+          }
+        }
+      }
+    },
+    "west": {
+      "torsoRows": {
+        "150": {
+          "static": {
+            "left": 57,
+            "right": 84,
+            "width": 28
+          },
+          "fit": {
+            "left": 62,
+            "right": 92,
+            "width": 31
+          }
+        },
+        "170": {
+          "static": {
+            "left": 57,
+            "right": 86,
+            "width": 30
+          },
+          "fit": {
+            "left": 58,
+            "right": 96,
+            "width": 39
+          }
+        },
+        "190": {
+          "static": {
+            "left": 57,
+            "right": 82,
+            "width": 26
+          },
+          "fit": {
+            "left": 63,
+            "right": 91,
+            "width": 29
+          }
+        }
+      },
+      "hemAlignment": {
+        "row": 194,
+        "torso": {
+          "left": 61,
+          "right": 102,
+          "width": 42,
+          "center": 81.5
+        },
+        "lower": {
+          "left": 61,
+          "right": 98,
+          "width": 38,
+          "center": 79.5
+        },
+        "widthRatio": 0.9047619047619048,
+        "centerDelta": -2
+      },
+      "lowerIndividualRows": {
+        "left": {
+          "210": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "220": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "230": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "240": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "250": {
+            "left": 61,
+            "right": 85,
+            "width": 25
+          },
+          "260": {
+            "left": 62,
+            "right": 85,
+            "width": 24
+          },
+          "270": {
+            "left": 72,
+            "right": 93,
+            "width": 22
+          }
+        },
+        "right": {
+          "210": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "220": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "230": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "240": {
+            "left": 74,
+            "right": 98,
+            "width": 25
+          },
+          "250": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "260": {
+            "left": 74,
+            "right": 97,
+            "width": 24
+          },
+          "270": {
+            "left": 80,
+            "right": 102,
+            "width": 23
+          }
+        }
+      }
+    },
+    "north": {
+      "torsoRows": {
+        "150": {
+          "static": {
+            "left": 49,
+            "right": 109,
+            "width": 61
+          },
+          "fit": {
+            "left": 47,
+            "right": 111,
+            "width": 65
+          }
+        },
+        "170": {
+          "static": {
+            "left": 48,
+            "right": 110,
+            "width": 63
+          },
+          "fit": {
+            "left": 46,
+            "right": 113,
+            "width": 68
+          }
+        },
+        "190": {
+          "static": {
+            "left": 49,
+            "right": 110,
+            "width": 62
+          },
+          "fit": {
+            "left": 47,
+            "right": 111,
+            "width": 65
+          }
+        }
+      },
+      "hemAlignment": {
+        "row": 194,
+        "torso": {
+          "left": 43,
+          "right": 116,
+          "width": 74,
+          "center": 79.5
+        },
+        "lower": {
+          "left": 48,
+          "right": 111,
+          "width": 64,
+          "center": 79.5
+        },
+        "widthRatio": 0.8648648648648649,
+        "centerDelta": 0
+      },
+      "lowerIndividualRows": {
+        "left": {
+          "210": {
+            "left": 49,
+            "right": 79,
+            "width": 31
+          },
+          "220": {
+            "left": 49,
+            "right": 79,
+            "width": 31
+          },
+          "230": {
+            "left": 48,
+            "right": 79,
+            "width": 32
+          },
+          "240": {
+            "left": 48,
+            "right": 79,
+            "width": 32
+          },
+          "250": {
+            "left": 49,
+            "right": 79,
+            "width": 31
+          },
+          "260": {
+            "left": 49,
+            "right": 78,
+            "width": 30
+          },
+          "270": {
+            "left": 61,
+            "right": 85,
+            "width": 25
+          }
+        },
+        "right": {
+          "210": {
+            "left": 80,
+            "right": 111,
+            "width": 32
+          },
+          "220": {
+            "left": 80,
+            "right": 111,
+            "width": 32
+          },
+          "230": {
+            "left": 80,
+            "right": 111,
+            "width": 32
+          },
+          "240": {
+            "left": 80,
+            "right": 111,
+            "width": 32
+          },
+          "250": {
+            "left": 80,
+            "right": 111,
+            "width": 32
+          },
+          "260": {
+            "left": 80,
+            "right": 111,
+            "width": 32
+          },
+          "270": {
+            "left": 68,
+            "right": 106,
+            "width": 39
+          }
+        }
+      }
+    }
+  },
+  "proofs": {
+    "lower-detail-east": {
+      "file": "proofs/lower-detail-east-all8.png",
+      "sha256": "3e9926bec6c03b47c4acd4702d362a01bd9b87f2c444f0767ac7211e84ec86a1",
+      "width": 1280,
+      "height": 220
+    },
+    "lower-detail-west": {
+      "file": "proofs/lower-detail-west-all8.png",
+      "sha256": "39eea1dde43e35b32075c373970283f7a124c95e76af128ef36526ae728814b8",
+      "width": 1280,
+      "height": 220
+    },
+    "sourceVsFit": {
+      "file": "proofs/source-vs-fitted-neutral.png",
+      "sha256": "5fb4f7dd75b55e40717a6e334995e6b1606464a8803239e9671a20d86cfcb09b",
+      "width": 1280,
+      "height": 342
+    },
+    "statics": {
+      "file": "proofs/statics-contact.png",
+      "sha256": "f3a131c88f8ef038cc74d8d17d37fc21e5cc34bb66c7e527eacf261907fa7794",
+      "width": 1280,
+      "height": 342
+    },
+    "compare-south": {
+      "file": "proofs/compare-green-south.png",
+      "sha256": "73c135f946dab860d99a0e4e4e1b805252cbb437853c85a67cc547f14b401f2d",
+      "width": 1280,
+      "height": 684
+    },
+    "compare-east": {
+      "file": "proofs/compare-green-east.png",
+      "sha256": "8853f042b5491f491d7943030aac33e27073a63cdb437868cd1c37a83c172d93",
+      "width": 1280,
+      "height": 684
+    },
+    "compare-west": {
+      "file": "proofs/compare-green-west.png",
+      "sha256": "f5bcce379b311e49815cd00dff6cdf307b0bc5727bdaaa298086a6971028dd86",
+      "width": 1280,
+      "height": 684
+    },
+    "compare-north": {
+      "file": "proofs/compare-green-north.png",
+      "sha256": "5b3ec56f72d2ee45a9bda834eaf3d7ab5ab22087d9e4b9ad304f8e40e5bd48e9",
+      "width": 1280,
+      "height": 684
+    },
+    "walk-south": {
+      "file": "proofs/walk-south-all8.png",
+      "sha256": "5877cfe4e2113f7af122898f7ebc3489120bb184b383f6b531664e8a39e06a9f",
+      "width": 1280,
+      "height": 342
+    },
+    "walk-east": {
+      "file": "proofs/walk-east-all8.png",
+      "sha256": "e7066f86c8f97a9769d3d2c0d5f577d0ac24b7dff1eaee8d83200dba8e7f1380",
+      "width": 1280,
+      "height": 342
+    },
+    "walk-west": {
+      "file": "proofs/walk-west-all8.png",
+      "sha256": "fd4653a505b1c26cc45224bf0d18b70b0a2325e6d38d62ef1c5904da7f67a835",
+      "width": 1280,
+      "height": 342
+    },
+    "walk-north": {
+      "file": "proofs/walk-north-all8.png",
+      "sha256": "527ee1839e51f0bee528f9910085d12baee56b187a52e556ff77524b4157ef07",
+      "width": 1280,
+      "height": 342
+    }
+  }
+}

@@ -1,0 +1,41 @@
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
+
+const repo=resolve(import.meta.dirname,'../../..');
+const priorRoot=resolve(repo,'artifacts/character-movement/layered-pilot');
+const output=resolve(priorRoot,'v4-arm-free-torso');
+const torsoPath=resolve(import.meta.dirname,'assets/green-south-torso-arm-free-v4.png');
+const sourcePath=resolve(repo,'Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png');
+const sourceHash='fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63';
+if(!existsSync(torsoPath))throw new Error(`awaiting standalone arm-free torso asset: ${torsoPath}`);
+const sha=path=>createHash('sha256').update(readFileSync(path)).digest('hex');
+if(sha(sourcePath)!==sourceHash)throw new Error('immutable Green source changed');
+mkdirSync(output,{recursive:true});
+const partIds=['head','sleeveLeft','sleeveRight','handLeft','handRight','thighLeft','thighRight','shinLeft','shinRight','shoeLeft','shoeRight'];
+const parts=Object.fromEntries(await Promise.all(partIds.map(async id=>[id,await loadImage(resolve(priorRoot,'green-south-parts-v3',`${id}.png`))])));
+parts.torsoBefore=await loadImage(resolve(priorRoot,'green-south-parts-v3/torso.png'));
+parts.torso=await loadImage(torsoPath);
+function rgba(image){const canvas=createCanvas(image.width,image.height),context=canvas.getContext('2d');context.drawImage(image,0,0);return context.getImageData(0,0,image.width,image.height);}
+function alphaBounds(image,threshold=1){const data=rgba(image).data;let left=image.width,top=image.height,right=-1,bottom=-1,visible=0,transparent=0,partial=0;for(let y=0;y<image.height;y+=1)for(let x=0;x<image.width;x+=1){const alpha=data[(y*image.width+x)*4+3];if(!alpha)transparent+=1;else{visible+=1;if(alpha!==255)partial+=1;}if(alpha<threshold)continue;left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}if(right<left)throw new Error('replacement torso has no visible pixels');return{x:left,y:top,width:right-left+1,height:bottom-top+1,visible,transparent,partial,threshold};}
+const torsoAlpha=alphaBounds(parts.torso),torsoBounds=alphaBounds(parts.torso,128),beforeBounds=alphaBounds(parts.torsoBefore);
+if(!torsoAlpha.transparent)throw new Error('replacement torso must have genuine transparency');
+const torsoScale=97/torsoBounds.height,torsoPlacement={x:80-(torsoBounds.x+torsoBounds.width/2)*torsoScale,y:110-torsoBounds.y*torsoScale,scale:torsoScale};
+const placements={
+  thighLeft:{x:48,y:198,scale:.225},thighRight:{x:79,y:198,scale:.225},shinLeft:{x:52,y:231,scale:.21},shinRight:{x:82,y:231,scale:.21},shoeLeft:{x:45,y:258,scale:.20},shoeRight:{x:80,y:258,scale:.20},
+  sleeveLeft:{x:24,y:115,scale:.37,pivot:{x:47,y:5}},sleeveRight:{x:94,y:115,scale:.37,pivot:{x:47,y:5}},handLeft:{x:26,y:177,scale:.25,pivot:{x:45,y:4}},handRight:{x:104,y:177,scale:.25,pivot:{x:45,y:4}},head:{x:41,y:39,scale:.325},torso:torsoPlacement,
+};
+function drawSimple(context,id){const p=placements[id];context.drawImage(parts[id],p.x,p.y,parts[id].width*p.scale,parts[id].height*p.scale);}
+function rotatePoint(point,center,angle){const cosine=Math.cos(angle),sine=Math.sin(angle),dx=point.x-center.x,dy=point.y-center.y;return{x:center.x+dx*cosine-dy*sine,y:center.y+dx*sine+dy*cosine};}
+function drawPivoted(context,id,placement,angle,worldPivot){context.save();context.translate(worldPivot.x,worldPivot.y);context.rotate(angle);context.scale(placement.scale,placement.scale);context.drawImage(parts[id],-placement.pivot.x,-placement.pivot.y);context.restore();}
+function drawArm(context,side,angle){const sleeve=placements[`sleeve${side}`],hand=placements[`hand${side}`],shoulder={x:sleeve.x+sleeve.pivot.x*sleeve.scale,y:sleeve.y+sleeve.pivot.y*sleeve.scale},handPivot={x:hand.x+hand.pivot.x*hand.scale,y:hand.y+hand.pivot.y*hand.scale},rotatedHand=rotatePoint(handPivot,shoulder,angle);drawPivoted(context,`sleeve${side}`,sleeve,angle,shoulder);drawPivoted(context,`hand${side}`,hand,angle,rotatedHand);return{shoulder,angleRadians:angle,handPivot:rotatedHand};}
+function renderPose(angles,{width=160,offsetX=0}={}){const canvas=createCanvas(width,320),context=canvas.getContext('2d');context.save();context.translate(offsetX,0);for(const id of['thighLeft','thighRight','shinLeft','shinRight','shoeLeft','shoeRight'])drawSimple(context,id);const localArms={left:drawArm(context,'Left',angles.left),right:drawArm(context,'Right',angles.right)};drawSimple(context,'torso');drawSimple(context,'head');context.restore();const shift=arm=>({...arm,shoulder:{...arm.shoulder,x:arm.shoulder.x+offsetX},handPivot:{...arm.handPivot,x:arm.handPivot.x+offsetX}});return{canvas,arms:{left:shift(localArms.left),right:shift(localArms.right)}};}
+const standing=renderPose({left:0,right:0}),raised=renderPose({left:Math.PI*.38,right:-Math.PI*.38},{width:320,offsetX:80});
+const png=(canvas,name)=>{const bytes=canvas.toBuffer('image/png');writeFileSync(resolve(output,name),bytes);return{file:name,sha256:createHash('sha256').update(bytes).digest('hex'),width:canvas.width,height:canvas.height};};
+const standingRecord=png(standing.canvas,'green-south-standing-v4.png'),raisedRecord=png(raised.canvas,'green-south-arms-raised-v4.png');
+const isolated=createCanvas(520,310),isolatedContext=isolated.getContext('2d');isolatedContext.fillStyle='#172026';isolatedContext.fillRect(0,0,isolated.width,isolated.height);isolatedContext.fillStyle='#fff';isolatedContext.font='bold 15px sans-serif';isolatedContext.fillText('Before: torso with sleeve remnants',20,24);isolatedContext.fillText('After: standalone torso',280,24);const fit=(image,x)=>{const scale=Math.min(220/image.width,240/image.height);isolatedContext.drawImage(image,x+(220-image.width*scale)/2,42,image.width*scale,image.height*scale);};fit(parts.torsoBefore,20);fit(parts.torso,280);const isolatedRecord=png(isolated,'green-south-torso-before-after-v4.png');
+const source=await loadImage(sourcePath),comparison=createCanvas(680,370),compare=comparison.getContext('2d');compare.fillStyle='#263039';compare.fillRect(0,0,comparison.width,comparison.height);compare.fillStyle='#fff';compare.font='bold 14px sans-serif';compare.fillText('Immutable source',18,20);compare.fillText('Arm-free standing',188,20);compare.fillText('Separate arm motion',418,20);for(const [x,width] of [[10,160],[175,160],[340,320]]){compare.fillStyle='#f7f3e7';compare.fillRect(x,30,width,320);}compare.drawImage(source,75,30,160,320,10,30,160,320);compare.drawImage(standing.canvas,175,30);compare.drawImage(raised.canvas,340,30);const comparisonRecord=png(comparison,'green-south-source-standing-raised-v4.png');
+const promptPath=resolve(repo,'docs/execplans/layered-torso-edit-prompt.txt');
+const manifest={schemaVersion:4,character:'patient.adult.046',source:{path:'Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png',sha256:sourceHash},replacementTorso:{path:'tools/character-mapping/layered-pilot/assets/green-south-torso-arm-free-v4.png',sha256:sha(torsoPath),generationPrompt:{path:'docs/execplans/layered-torso-edit-prompt.txt',sha256:sha(promptPath)},dimensions:{width:parts.torso.width,height:parts.torso.height},alpha:torsoAlpha,alignmentBounds:torsoBounds,uniformScale:torsoScale,placement:torsoPlacement},beforeTorso:{path:'artifacts/character-movement/layered-pilot/green-south-parts-v3/torso.png',sha256:sha(resolve(priorRoot,'green-south-parts-v3/torso.png')),alphaBounds:beforeBounds},shoulderPivots:{standing:{left:standing.arms.left.shoulder,right:standing.arms.right.shoulder},raised:{left:raised.arms.left.shoulder,right:raised.arms.right.shoulder}},armMotion:{leftRadians:raised.arms.left.angleRadians,rightRadians:raised.arms.right.angleRadians},placements,outputs:{standing:standingRecord,raised:raisedRecord,isolated:isolatedRecord,comparison:comparisonRecord},scope:'standing and raised-arm diagnostic only; no walk or sit'};
+writeFileSync(resolve(output,'manifest.json'),`${JSON.stringify(manifest,null,2)}\n`);console.log(JSON.stringify({torso:manifest.replacementTorso,shoulders:manifest.shoulderPivots.standing,outputs:manifest.outputs},null,2));

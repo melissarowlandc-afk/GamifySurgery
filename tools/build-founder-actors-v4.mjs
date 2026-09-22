@@ -11,6 +11,7 @@ import { createCanvas, loadImage } from "@napi-rs/canvas";
 const root = resolve(import.meta.dirname, "..");
 const source = resolve(root, "generated_images/founder-character-mockups-v3/pose-sheets");
 const target = resolve(root, "apps/player/public/art/characters/founders-v4");
+const acceptedFootRepairDirectory = resolve(root, "tools/comfyui/accepted-assets/founder-11-foot-repair");
 const columns = 5;
 const rows = 6;
 const cellWidth = 128;
@@ -23,6 +24,11 @@ const poses = {
   "right-walk-a": [1, 1], "right-walk-b": [1, 0], "back-walk-a": [1, 3], "back-walk-b": [1, 4],
   "front-seated": [1, 5], "left-seated": [1, 6], "right-seated": [2, 0], "front-working": [2, 1],
   clipboard: [2, 2], "jump-recovery": [2, 3], "star-jump": [2, 4], portrait: [2, 5],
+};
+const acceptedFootRepairs = {
+  "front-idle": "founder-11-front-idle-composed-candidate.png",
+  "left-idle": "founder-11-left-idle-composed-candidate.png",
+  "right-idle": "founder-11-right-idle-composed-candidate.png",
 };
 
 function sheetCell(image, row, column) {
@@ -377,6 +383,22 @@ for (let variant = 0; variant < sources.length; variant += 1) {
     out.getContext("2d").drawImage(cell, x, y);
   }
 }
+// Founder 11 (zero-based identity 10) has three explicitly accepted,
+// mask-bounded Cortan repairs for the dark trouser cuffs that read as missing
+// shoes in the map.  Replace the complete 128x192 idle cells after ordinary
+// extraction so the accepted transparent pixels remain exact and no other
+// founder or pose is regenerated from this repair.
+for (const [pose, filename] of Object.entries(acceptedFootRepairs)) {
+  const cell = await loadImage(resolve(acceptedFootRepairDirectory, filename));
+  if (cell.width !== cellWidth || cell.height !== cellHeight) {
+    throw new Error(`Accepted founder 11 ${pose} foot repair must be ${cellWidth}x${cellHeight}, received ${cell.width}x${cell.height}.`);
+  }
+  const x = (10 % columns) * cellWidth;
+  const y = Math.floor(10 / columns) * cellHeight;
+  const context = atlases[pose].getContext("2d");
+  context.clearRect(x, y, cellWidth, cellHeight);
+  context.drawImage(cell, x, y);
+}
 for (const [pose, canvas] of Object.entries(atlases)) writeFileSync(resolve(target, `founders-${pose}-v4.png`), canvas.toBuffer("image/png"));
 // Human-readable proof from the exact runtime cells, not a separate mockup.
 const reviewFounders = [0, 3, 10, 13, 20, 21, 23, 29];
@@ -427,7 +449,7 @@ for (let variant = 0; variant < 30; variant += 1) {
 }
 writeFileSync(resolve(root, "artifacts/screenshots/character-resolution-alpha-founder-v4-clipboard-proof.png"), clipboardProof.toBuffer("image/png"));
 writeFileSync(resolve(target, "manifest.json"), JSON.stringify({
-  version: 4, contentRevision: "founders-v4-r9-hires", cells: { width: cellWidth, height: cellHeight, columns, rows }, floorAnchor: { x: 64, y: mapFloorAnchor },
+  version: 4, contentRevision: "founders-v4-r10-feet", cells: { width: cellWidth, height: cellHeight, columns, rows }, floorAnchor: { x: 64, y: mapFloorAnchor },
   clipboardExtraction: { sourceTopInset: 4, completeHeadRequired: true },
   variants: sources.map((name, index) => ({ id: `founder.${String(index + 1).padStart(2, "0")}`, source: name })),
   // These source slots are part of the gait contract: authored sheet row 2

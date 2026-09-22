@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 5,
+  "character": "patient.adult.046",
+  "source": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+  },
+  "head": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-source-head-v5.png",
+    "sha256": "2453f22e72bffc066e4aed5e5348b0d4ba623e4a053bb71bd267de7596bbdc2b",
+    "sourceRect": [
+      111,
+      58,
+      86,
+      88
+    ],
+    "alphaBounds": {
+      "x": 5,
+      "y": 9,
+      "width": 73,
+      "height": 79,
+      "visible": 4573,
+      "transparent": 2995,
+      "partial": 0,
+      "threshold": 128
+    },
+    "placement": {
+      "x": 36,
+      "y": 28,
+      "scale": 1
+    },
+    "scaleMode": "rigid original scale"
+  },
+  "legs": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-continuous-legs-v5.png",
+    "sha256": "67708ba76d4538602314d25a484d87a5ffc8383f747acc6865fde3143545dc71",
+    "generationPrompt": {
+      "path": "docs/execplans/layered-leg-edit-prompt.txt",
+      "sha256": "e9930d356025c4d8bb2846a1567ea19b366cf16db842457223cd31b23249c129"
+    },
+    "dimensions": {
+      "width": 1310,
+      "height": 1200
+    },
+    "leftBounds": {
+      "x": 260,
+      "y": 67,
+      "width": 395,
+      "height": 1073,
+      "visible": 345095,
+      "transparent": 440905,
+      "partial": 343723,
+      "threshold": 128
+    },
+    "rightBounds": {
+      "x": 655,
+      "y": 67,
+      "width": 411,
+      "height": 1073,
+      "visible": 350804,
+      "transparent": 435196,
+      "partial": 349501,
+      "threshold": 128
+    },
+    "uniformScale": 0.08387698042870456,
+    "placements": {
+      "left": {
+        "sourceRect": [
+          0,
+          0,
+          655,
+          1200
+        ],
+        "bounds": {
+          "x": 260,
+          "y": 67,
+          "width": 395,
+          "height": 1073,
+          "visible": 345095,
+          "transparent": 440905,
+          "partial": 343723,
+          "threshold": 128
+        },
+        "targetCenterX": 60,
+        "x": 21.626281453867662,
+        "y": 191.3802423112768,
+        "scale": 0.08387698042870456
+      },
+      "right": {
+        "sourceRect": [
+          655,
+          0,
+          655,
+          1200
+        ],
+        "bounds": {
+          "x": 655,
+          "y": 67,
+          "width": 411,
+          "height": 1073,
+          "visible": 350804,
+          "transparent": 435196,
+          "partial": 349501,
+          "threshold": 128
+        },
+        "targetCenterX": 100,
+        "x": 82.76328052190121,
+        "y": 191.3802423112768,
+        "scale": 0.08387698042870456
+      }
+    },
+    "target": {
+      "topY": 197,
+      "floorY": 287,
+      "sourcePairWidthApprox": 78
+    },
+    "renderedStrongAlphaWidth": 73.80242311276794
+  },
+  "torso": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-torso-arm-free-v4.png",
+    "sha256": "609454d343fa5406df44b911655f98127ff5fd540802093d7ce9e846019ee86f",
+    "generationPrompt": {
+      "path": "docs/execplans/layered-torso-edit-prompt.txt",
+      "sha256": "42ab80a1aad28bffc7f1bef78b79d2a23542aa23d547c19f107f3bb73c1b5a06"
+    },
+    "alphaBounds": {
+      "x": 136,
+      "y": 17,
+      "width": 944,
+      "height": 1204,
+      "visible": 998452,
+      "transparent": 575417,
+      "partial": 996476,
+      "threshold": 128
+    },
+    "uniformScale": 0.08056478405315615,
+    "placement": {
+      "x": 31.01661129568106,
+      "y": 108.63039867109634,
+      "scale": 0.08056478405315615
+    }
+  },
+  "shoulderPivots": {
+    "left": {
+      "x": 46,
+      "y": 128
+    },
+    "right": {
+      "x": 108,
+      "y": 128
+    }
+  },
+  "sleevePivots": {
+    "left": {
+      "x": 47,
+      "y": 35
+    },
+    "right": {
+      "x": 47,
+      "y": 35
+    }
+  },
+  "motion": {
+    "raisedRadians": {
+      "left": 1.1938052083641213,
+      "right": -1.1938052083641213
+    },
+    "raisedShoulders": {
+      "left": {
+        "x": 126,
+        "y": 128
+      },
+      "right": {
+        "x": 188,
+        "y": 128
+      }
+    }
+  },
+  "outputs": {
+    "standing": {
+      "file": "green-south-standing-v5.png",
+      "sha256": "870188de5ddedffe63eb093e586c8bba270d19bbb27cd62abe5276b0fa474cd7",
+      "width": 160,
+      "height": 320
+    },
+    "raised": {
+      "file": "green-south-arms-raised-v5.png",
+      "sha256": "a8896b7d143a4ac9cb77c0b8ddbcfa526832a0a504e2ff7e54feadb2b23f40fc",
+      "width": 320,
+      "height": 320
+    },
+    "comparison": {
+      "file": "green-south-source-v4-v5-raised.png",
+      "sha256": "e09056bf29d072ffda942be2cedca926641c2c9177db0d8c46847dca3a8de9d1",
+      "width": 850,
+      "height": 370
+    },
+    "extractions": {
+      "file": "green-south-head-legs-v5.png",
+      "sha256": "81594e8f522066f2e9d8eae92c332333667f4ab647dd564056f37cc8f9e73b95",
+      "width": 500,
+      "height": 300
+    }
+  },
+  "scope": "faithful standing and separate-arm diagnostic only; no walk or sit"
+}

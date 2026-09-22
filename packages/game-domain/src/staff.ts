@@ -33,6 +33,17 @@ export function advanceEmployeeMovement(
   }
 
   for (const employee of state.employees) {
+    const hasActiveRetailTrip = state.retailOperations.some(
+      (operation) =>
+        operation.actorKind === "employee" &&
+        operation.actorId === employee.id &&
+        operation.status !== "completed" &&
+        operation.status !== "abandoned" &&
+        operation.status !== "cancelled",
+    );
+    if (hasActiveRetailTrip && !employee.facilityTask) {
+      continue;
+    }
     if (
       employee.path.length > 0 &&
       employee.pathIndex < employee.path.length - 1
@@ -54,6 +65,42 @@ export function advanceEmployeeMovement(
     }
     if (employee.facilityTask) {
       continue;
+    }
+    // Reception is a post, not an idle-wander role. The water-cooler task is
+    // the intentional exception above; once it is complete, route back to the
+    // staff-side Front Desk anchor and remain there for arriving patients.
+    if (employee.staffRoleDefinitionId === "staff.receptionist") {
+      const homeRoom = employee.homeRoomInstanceId
+        ? state.rooms.find((room) => room.id === employee.homeRoomInstanceId)
+        : null;
+      const definition = homeRoom
+        ? getRoomDefinition(homeRoom.roomDefinitionId, context)
+        : null;
+      if (homeRoom && definition) {
+        const staffAnchor = getRoomNavigationAnchor(
+          homeRoom,
+          definition,
+          "staff",
+        );
+        if (samePoint(employee.location, staffAnchor)) {
+          employee.path = [];
+          employee.pathIndex = 0;
+          continue;
+        }
+        const path = findDeterministicFacilityPath(
+          employee.location,
+          staffAnchor,
+          state.rooms,
+          state.doors,
+          (definitionId) => getRoomDefinition(definitionId, context),
+        );
+        if (path.length > 1) {
+          employee.path = path;
+          employee.pathIndex = 0;
+          employee.lastMovedAtFacilityTick = state.facilityTick;
+          continue;
+        }
+      }
     }
     if (state.facilityTick % interval !== 0) {
       continue;
@@ -146,8 +193,12 @@ export function getEmployeeHomeLocation(
   context: DomainContext,
 ): { homeRoomInstanceId: string | null; location: GridPoint } {
   const role = getStaffRoleDefinition(employeeRoleId, context);
+  const requiredRoomDefinitionIds = [
+    ...(role?.requiredRoomDefinitionIds ?? []),
+    ...(role?.requiredAnyRoomDefinitionIds ?? []),
+  ];
   const homeRoom =
-    role?.requiredRoomDefinitionIds
+    requiredRoomDefinitionIds
       .map((definitionId) =>
         state.rooms
           .filter((room) => room.roomDefinitionId === definitionId)

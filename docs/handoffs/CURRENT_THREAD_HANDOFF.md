@@ -1,5 +1,606 @@
 # Current Thread Handoff
 
+> GS-023 THREE APPROVED ROUTINES IMPLEMENTED LOCALLY (2026-09-18).
+> Management/trash/water tips appear during the second tutorial patient's
+> offsite wait, with saved progress and pause restoration. Founder desk/chair
+> seating and task returns work until secretary hire; secretary empty-water
+> refill yields to patients and returns to desk. Domain512/player466, all7
+> typechecks, boundaries, isolated build and parent browser3/3 passed.
+> Owner playtest pending. Separate all-wrong Level0 graduation gap discovered;
+> existing GS-016 funding/build proof remains valid. Narrow graduation-rule
+> exception approved by owner ("Yes you may") and now verified: both completed
+> tutorials + accessible Examination Room permit manual Level1 advancement.
+> Real scores/later gates preserved. Final domain516/player467, all7 typechecks,
+> boundaries/build and natural all-wrong browser1/1 passed; parent visual review.
+> See docs/handoffs/GS-023_TUTORIAL_DAILY_ROUTINES.md for evidence/limitations.
+> Local/uncommitted; no push/deployment. START_GAME.cmd /127.0.0.1:4173 unchanged.
+> Owner server/save not operated; test4198 stopped and native netstat verified.
+
+> GS-021 COMPLETE WITH VERIFIED GITHUB BACKUP (2026-09-18).
+> Owner-approved 32-entry catalog, actual service visitors, shared resources,
+> same-character staff/patient retail, outside shoppers, companions, durable
+> gross/stock/net receipts, and Management desk Services & income tab.
+> Bladder scans use Ultrasound Room; GLP-1 pays $50 and the staffed suite hides
+> the left-side box, with earnings above the NP. No cafeteria.
+> Later-level handlers remain capability-gated; playable progression stays Level 2.
+> Full domain503/player455/clinical360/balance27 tests pass; all7 typechecks pass.
+> Final browser/evidence details: docs/handoffs/GS-021_CLINIC_INCOME.md.
+> Owner accepted completion: "Okay we can complete this thread" (2026-09-17).
+> Owner directly approved the exact public backup package: "Yes, push".
+> Pushed and independently verified the remote branch
+> backup/gs-021-income-2026-09-17 at 765968a17f65ed53b3d937c7e7e5fa5a4630c4c7.
+> Earlier approval blocker resolved. Recovery package, not a standalone release.
+> Task complete and ready for archival; no merge or deployment.
+> START_GAME.cmd / http://127.0.0.1:4173 remains canonical; no owner-save action.
+
+> GS-006 BREAD-AND-BUTTER BATCH COMPLETE LOCALLY (2026-09-17).
+> Added 20 concepts / 80 variants / 52 cases for the first three levels.
+> Current total: 183 concepts / 450 cases / 703 nodes. Editorial acceptance only;
+> clinical records remain needs_clinician_review. GS-006 remains open.
+> Root verified 1,286 tests, all seven typechecks, boundaries, isolated build and
+> unchanged prior content. Bedside scan routing/save restoration is covered.
+> Receipt: docs/clinical-workbench/approvals/owner-delegated-bread-and-butter-2026-09-17.md.
+> This batch is not committed or pushed. Say "push to GitHub" for a scoped backup.
+> START_GAME.cmd / http://127.0.0.1:4173 remains canonical; saves/server untouched.
+
+
+> GS-017 COMPLETE WITH VERIFIED GITHUB BACKUP (2026-09-17).
+> Owner accepted the final alert and chart-close changes and directly approved
+> the exact reconstruction package/public destination in this task.
+> Pushed backup/gs-017-alerts-2026-09-17 to
+> https://github.com/melissarowlandc-afk/GamifySurgery.git.
+> git ls-remote verified abb2279b3a18f808d10f29eff5ae192fc8c50bb7.
+> Package contains 34 scoped reconstructed files and six synthetic screenshots;
+> exact hashes were verified from the committed Git archive. It remains backup
+> evidence, not a standalone runnable or merge-ready release. No deployment.
+> Historical day-six shortage remains a diagnosed limitation/content follow-up.
+> Shared beta/source/index and owner4173/save preserved. Task ready for archival.
+> This supersedes the historical blocked-push notes below.
+
+
+> GS-017 PUSH STILL BLOCKED AFTER RELAYED CONSENT (2026-09-17).
+> GS Manager relayed the owner's specific package/public-destination approval.
+> Approval review rejected the new push because that consent was present only
+> in a tool/delegation message; it requires direct user confirmation in this task.
+> Prepared branch tip is now abb2279b3a18f808d10f29eff5ae192fc8c50bb7,
+> adding only the narrow owner-acceptance/consent record to a226ce8.
+> Audited reconstruction patch remains SHA256
+> 72efcb37b1679c52c62d883e5b6a7f4540519eccdc36b969f3991df970da9a82.
+> No push completed; no workaround, merge, deployment or archival performed.
+> Ask the owner directly here to approve the same prerequisite-source/six-
+> screenshot package to the public GamifySurgery repository and backup branch.
+
+
+> GS-017 OWNER ACCEPTED; BACKUP STILL PENDING (2026-09-17). Owner reported
+> “I finished and completed GS-017” to GS Manager. Final alert and chart-close
+> changes are owner-confirmed. Historical day-six shortage remains a diagnosed
+> limitation/content follow-up, not a proven fix. Local commit a226ce8 remains
+> unpushed. Specific consent for the reconstruction package (prerequisite source
+> snapshots and six synthetic screenshots) to the public GamifySurgery repository
+> on backup/gs-017-alerts-2026-09-17 is still required by automatic approval review.
+> GS Manager is asking the owner; general completion does not resolve the rejection.
+> No push retry, peer message or archival performed. Await verified backup.
+
+> GS-017 BACKUP PREPARED; PUSH BLOCKED (2026-09-17). Owner requested push
+> before final task closeout. Local branch backup/gs-017-alerts-2026-09-17
+> has commit a226ce8fb9cf4f600381f1ea91ffded1405a127f in isolated checkout
+> C:/Users/Kyle Kent/Projects/GamifySurgery-gs017-closeout.
+> Scoped reconstruction package includes 34 accepted files, baseline dependencies,
+> all alert follow-ups, chart-close fix, diagnostic tests and six synthetic screenshots.
+> Sol prepared it; Astra reviewed exclusions, scanned credentials and independently
+> verified all34 restored hashes twice, including from the committed Git archive.
+> Latest player46/46, domain alerts33/33, player typecheck and boundaries pass.
+> Automatic approval review rejected the GitHub push: it requires explicit consent
+> for this private baseline/archive payload and destination, beyond 'push changes'.
+> Do not retry through a workaround. Request exact package/destination approval.
+> No remote backup claimed. Shared beta HEAD/index and owner4173/save untouched.
+> Task remains open; no merge, deployment or archival.
+
+
+> GS-006 SEPTEMBER 17 CLINICAL BATCH COMPLETE, LOCAL ONLY. Added 20 brief early-level
+> concepts / 80 questions / 48 patients, including 32 diagnostic-result pathways.
+> Current bank: 163 concepts / 398 cases / 623 nodes; all prior content preserved.
+> Root reviewed Sol/Terra implementation and independently passed 1,208 tests,
+> all workspace typechecks, boundaries and isolated production build. Editorially
+> accepted; clinician review remains pending in the unapproved prototype.
+> See GS-006_CONCEPT_REVIEW_HANDOFF.md and the September 17 review receipt.
+> No commit, push or deployment for this batch. Remind owner: "push to GitHub".
+> Keep GS-006 open. Canonical START_GAME.cmd / http://127.0.0.1:4173 and saves unchanged.
+
+> GS-020 CLOSED WITH VERIFIED GITHUB BACKUP (2026-09-17). Level1 requires
+> ultrasound; X-ray is an optional Level2 purchase. New imaging control rooms
+> and special control-door dependencies are removed. Existing saves/rooms and
+> pending services remain compatible; legacy control space has no upkeep.
+> Terra implemented catalog/access/UI; Sol completed mobile staffing/save
+> scheduling and browser proof; Astra reviewed diffs and independently validated.
+> Player438/438, direct imaging10/10, seven typechecks, isolated production build
+> and parent browser2/2 passed. Full domain342/343 plus isolated timeout rerun3/3.
+> See GS-020_ULTRASOUND_FIRST_IMAGING.md for scope, evidence and limitations.
+> Owner authorized step-2 closeout; no hands-on gameplay acceptance inferred.
+> Scoped reconstruction backup: backup/gs-020-imaging-2026-09-17 at
+> fdd5bf7cd75d1c4b7926c06447d8ed2dd988ed3d, verified on origin. Package restores
+> all23 accepted hashes; it is not a standalone runnable or merge-ready release.
+> Integrated source remains in shared beta; beta HEAD/index unchanged. No deployment.
+> Temporary4187 preview stopped. Canonical owner pathway remains START_GAME.cmd
+> -> http://127.0.0.1:4173. Owner reports completion to GS Manager.
+
+> GS-013 CLOSED BY TRANSFER TO GS-018/GS-019. Dedicated split handoff complete;
+> no new fitting or successor work. Reviewed backup commit exists LOCALLY ONLY:
+> 5654ca11c0fd9f3403c9661e2a50a483655963ea on
+> backup/gs-013-character-snapshot-2026-09-17, isolated checkout
+> C:/Users/Kyle Kent/Projects/GamifySurgery-gs013-closeout-audit.
+> Automatic approval review rejected push authorization for exactpayload/remote;
+> parent read-only remotecheck also could not reachgithub.com:443. No remoteSHA
+> verified. See docs/execplans/gs-013-split-closeout.md for exactrecovery.
+> Private rasterart excluded; approvedstatics and rejectedwalking remain distinct.
+
+> GS-013 OWNER-DIRECTED TRANSFER/CLOSEOUT: remaining work split into two new
+> standalone tasks managed by PM. See GS-013_STATICS_AND_MOTION_SPLIT.md for
+> exact scopes, frozen inputs, approval status and private-source constraints.
+> All art production here stopped. Parent closes by transfer, not approval of
+> rejected walking. Scoped backup audit/remote verification is recorded in
+> docs/execplans/gs-013-split-closeout.md; no website deployment or PM-board edit.
+
+> WALKING APPROVAL REOPENED / BLUE STATICS ACCEPTED, latest owner feedback.
+> Navy West shin/ankle cutoff remains unacceptable; supersedes the earlier Navy
+> approval below. Blue whole-body statics accepted; walking rejected for visible
+> arm segmentation, shoulder placement, narrow/textured legs and ankle seams.
+> Pause further character walking fits. Active reset plan:
+> docs/execplans/walking-appearance-reset.md. Separate static production from
+> walking acceptance. Passing technical checks is not appearance approval.
+
+> GS-016 OWNER ACCEPTED, 2026-09-17. Owner confirmed the examination room is
+> absent at a fresh start and requested resolution. Technical validation passed:
+> 768 unit tests, 3 browser checks, typechecks and build. Existing saves retain
+> rooms/progress; normal $160 construction and $120 starting cash are unchanged.
+> GitHub backup verified: 28e3bed42748bb60be63420f890388f6d0b7a845 on
+> backup/gs-016-accepted-2026-09-17 (owner explicitly approved package push).
+> Exact reconstruction evidence, not a standalone release. Ready for archival.
+> Preserve shared beta. See GS-016_PREBUILT_EXAMINATION_ROOM.md for evidence.
+> Canonical opening remains START_GAME.cmd -> http://127.0.0.1:4173.
+> No deployment or next feedback batch is authorized in this task.
+
+> NAVY APPROVED / BLUE GLASSES READY FOR REVIEW, 2026-09-17. Blue core and UI
+> complete; owner appearance approval pending. Sol implemented isolated48part
+> atlas/rig,8wholebodystatics and32walks; Terra built review. Parent visually
+> inspected allposes and independently passed core,18foundationtests, prior
+> staticvalidation and browsercontrols. Blue manifest
+> 2f5efba7c624429a16467b9877fb31d02e273d0aec6047689404983cc0673d83;
+> atlas ecc4c3d14ad7ab94558d2feb3551818edc7be17b210410ca397f7c676426a3fa.
+> Review blue-glasses-hybrid-review.html in currentthread visualizationdir.
+> Protocol nowrequires measuredsource cuffs/hands and isolatedforeground shoe
+> with actualshaft ankle. All5earlier designs unchanged. No runtimeintegration
+> or push. Plan docs/execplans/blue-glasses-hybrid-fit.md contains completion.
+>
+> NAVY APPROVED / BLUE GLASSES STARTED, 2026-09-17. Owner said Navy approved after
+> fixing planted back knees and ankle disconnection. Sol fixed both; parent
+> visually reviewed all16profileframes and independently passed finalvalidation.
+> Navy freeze1a6938d11630dde23024d4d7c85a4c44cc3b4587ecc3d77db6ffbc85678c16c7;
+> upper freeze704d2a3e... unchanged. Terra refreshes existingNavyreview.
+> Next authorized character patient.adult.039 Blue Glasses. Activeplan:
+> docs/execplans/blue-glasses-hybrid-fit.md. Parent generated upperparts,4seats,
+> armfree trunks with builtinimagegen; exactprompts/lineage under blue-glasses-v1/
+> assets. Sol owns isolatednewcore; Terra nextowns reviewUI only afterNavyrefresh.
+> Preserve allfive approvedbaselines. No gameintegration/commit/push authorized.
+
+> NAVY UPPER APPROVED / STRAIGHT LOWER REVISION, 2026-09-17. Owner approved upper
+> body in all walking poses; rejected narrow hips and oversized thighs relative
+> to shins. Sol corrected lower cloth only: torso-relative hip width, straight
+> trouser widths, source joint-range sampling, cuffs and North shoe width.
+> Parent inspected all32 walk frames/neutral comparison, independently passed
+> core and immutable-upper validation. Upper freeze704d2a3e615e4045df0c96682358c6bcf37aabee64b4b5b5ba25c5f561048bbc
+> pins all upper/head/arm layers and geometry byte-identically for32frames.
+> Final manifest1bae070aefe866a1e690dc5bf87ada9f9d7c42b6295f07be8df8fb07be5240ab;
+> atlas2385e9383dad3e15f667b935a6f306fd69d38d099e86af713881429c3c57d263 unchanged.
+> All8statics and first4character baselines frozen; standard16tests passed.
+> Protocol contains reusable approved-upper recipe and straight-trouser checks.
+> Terra refreshed three-panel review,521349bytes, matching finalcorehash. Parent
+> independently passed browser validation and inspected finalhostscreenshots.
+> Lower appearance approval pending; upper remains approved.
+> No integration, commit or push; preserve unrelated work.
+
+> NAVY VEST WALKING CORRECTION, 2026-09-17. Owner requested inward North thumbs,
+> static-matched torso and profile hip/thigh volume, and less rearward arms.
+> Sol corrected actual North donor assignment/markers, South vest extraction,
+> isolated Navy rigid profile cloth contour, and forward wrist/rest travel.
+> Parent inspected neutral/static comparison and every walk phase, rejecting
+> interim knee flaps and baggy contours before accepting the revised review fit.
+> Core manifest 3bcbe210ef88693ac6bfc98ae9cdb7b48f73aa643546ef58662e154a1a994742;
+> atlas 2385e9383dad3e15f667b935a6f306fd69d38d099e86af713881429c3c57d263.
+> Parent independently passed core validation, standard16 tests, approved static
+> registry/128walk preservation. All eight Navy static poses remain byte-identical.
+> Terra updates walking review to own standing/fitted walk/Approved Green, with
+> all-eight-phase browser checks. Parent independently passed final UI validation
+> and inspected host comparisons/mobile layout; 507933-byte review matches freeze.
+> Protocol records own-static proportion checks. Await owner appearance review.
+> Appearance approval remains pending; no game integration, commit or push.
+
+> NAVY VEST READY FOR OWNER REVIEW, 2026-09-17. Fifth character patient.adult.035:
+> eight whole-body statics and 32 fitted walking frames from the standard atlas.
+> Plan: docs/execplans/next-character-hybrid-fit.md. Sol implemented the isolated
+> core and corrections; Terra diagnosed North extraction and built/checked UI.
+> Parent generated donors with built-in imagegen (exact prompts and lineage in
+> tools/character-mapping/layered-pilot/navy-vest-v1/assets/generation-record.md),
+> inspected all directions/phases, and independently passed core/UI validation.
+> Final manifest b6203a555acc3cbca4bb3f53f04e5d1a911bc3a559c81d882ded1c16eb34b9c3.
+> Final UI provenance matches; fragment 513535 bytes. Actual hem alpha 255,
+> profile far-arm leakage zero; first four approved character baselines unchanged.
+> Standard tests 16/16 and approved registry/128 walk files passed validation.
+> Review: thread visualization navy-vest-hybrid-review.html. Whole-body standing
+> retains original art; sitting uses complete generated artwork. Walking alone
+> uses fitted parts. No clipboard/jump for this nonfounder. Owner approval pending.
+> Next: respond to owner appearance review, then select the next character.
+> No game integration, commit or push; local checkpoint needs GitHub backup when
+> owner says "push to GitHub". Preserve unrelated dirty work.
+
+> WHOLE-BODY STATIC REVIEW OWNER-APPROVED, 2026-09-17. Supersedes below.
+> Owner accepted Brown Beanie walking and authorized whole-body static review
+> of Green, Gray Braid, Gray Overshirt and Brown Beanie before further characters.
+> Active plan: docs/execplans/whole-body-static-review.md. Sol completed importer,
+> registry, validation and protocol; Terra owns combined UI and browser checks.
+> Parent generated four seated sheets with built-in imagegen, saved exact prompts
+> in tools/character-mapping/whole-body-static-v1/assets/generation-record.md,
+> inspected all32 scaled poses and source/static/walk comparison, reviewed code,
+> independently passed core validator and checked frozen baseline manifests.
+> 16 original1x stands and16 generated complete seats; all128 walk files unchanged.
+> Registry5e9ba1ad208e1db6bdd1752939f43f6f684da4a9afcab0cdc2e074886959df54.
+> None of these four is a verified founder; no new clipboard/star-jump work.
+> Terra completed combined UI; parent independently reran final browser validator
+> PASS (decode/failure, controls, themes,32statics/128walks,736/320) and inspected
+> host East chair/mobile and North chair screenshots. Fragment986344bytes.
+> Owner said "Looks good!" and approved all32 reviewed static poses. First four
+> now establish the baseline: whole-body stands/sits, standardized atlas walking,
+> clipboard/star jump only for founders. No fifth character started this turn.
+> Existing old handoff whitespace findings
+> from git diff --check were left untouched with unrelated work.
+> Local-only checkpoint; say "push to GitHub" for backup. No game integration/push.
+
+> BROWN WALK CORRECTION READY FOR OWNER REVIEW, 2026-09-17. Supersedes below.
+> Sol corrected S/N anatomical-left thumbs, widened E/W trousers, and moved far
+> arms behind both legs and torso. Terra rebuilt the Green preview; parent
+> inspected all walks, shared-source regressions, code and browser proofs.
+> Independent PASS: Brown49, 19 standard/lower tests, approved Overshirt49,
+> saved frame/comparison hashes and final Chrome UI validation. Pixel occlusion
+> tests cover actual overlaps and show zero far-arm contribution through legs.
+> Atlas611b9039143ca5a86222f4dd6ea384408f275818d4a42b4f5f87a6d7719a4894;
+> render2f349824947cd327ce78f60b2ac547f2dcd90f2c9077dfd18896e769a74de3ac.
+> Same preview874272bytes pins final Brown and frozen Green. Hybrid future
+> workflow is documented: whole-body statics and fitted walking, with common
+> anchors/head scale/colors. No new static artwork this pass. Some existing
+> poses inherit corrected shared hands/leg width. Owner approval pending.
+> Local-only checkpoint; say "push to GitHub" for backup. No integration/push.
+> BROWN BEANIE OWNER PASS 2 READY FOR REVIEW, 2026-09-15. Supersedes below.
+> Sol corrected E/W seated waist transform, enlarged sleeves and clipboard arms,
+> biased profile swing forward, replaced shearing profile cloth with stable
+> segments/rounded hidden overlap, and corrected South anatomical boot ownership.
+> Terra rebuilt Green comparison; parent inspected all poses, code and browser
+> proofs, independently passed Brown49, standard/lower18, approved Overshirt49+36
+> and Chrome interaction/theme/mobile checks. Six approved manifests unchanged.
+> Final atlas c700fbcbe12afb927599162600c063517337bfc98b364bb1581519ba133f6a4c;
+> render18c9faa19b5970c8919f3180f709438c73eee6dc5d768012bbfc8d559ebc0ea7.
+> Same brown-beanie-standard-fit.html878657bytes with final provenance. Owner
+> appearance approval pending. Only founders require future clipboard/star jump;
+> Brown retains practice poses. Protocol/prompts and active plan updated.
+> Local-only checkpoint, no integration or push. Say "push to GitHub" for backup.
+> BROWN BEANIE CORRECTION READY FOR OWNER REVIEW, 2026-09-15. Supersedes the
+> fourth-fit checkpoint below. Owner requested Approved Green comparison, wider
+> arms, intact chin, aligned pelvis and removal of side torso sleeve remnants.
+> Sol corrected original beard masks, imported parent imagegen arm-free E/W
+> torso and broader sleeve/hand sources, and refined profile shoulder/rest pose.
+> Terra changed synchronized preview reference to frozen Approved Green.
+> Parent inspected all49 poses, code, Green E/W/chair browser screenshots and
+> independently ran Brown validator,18 standard/lower tests and browser checks:
+> PASS. Atlas c6fa5408deb8f3ae214e5c1dd2e475e9205020182d17151de5ce514d481bb624;
+> render954bcd68d2207868a79a9db184854cd0c05b3d807d238c2b2dba5d73202c6684.
+> Same brown-beanie-standard-fit.html870749bytes; provenance pins all three
+> Green manifests. Original artwork/prompts and reusable fitting notes saved.
+> Owner appearance approval pending. Local-only, no game integration or push.
+
+> FOURTH CHARACTER FIT READY FOR OWNER REVIEW, 2026-09-15. Brown Beanie
+> patient.adult.043 uses54 standard atlas records and49 poses. Owner accepted
+> final Gray Overshirt (third); fourth appearance approval is pending. Terra
+> handled inventory and preview; Sol handled fitting and separate seam diagnosis.
+> Parent inspected source, all3 comparison sheets, code, all direction/actions,
+> desktop/mobile review and four chair-context seats. Independent PASS: Brown49,
+> combined standard/lower19 tests, approved Overshirt49 byte-identical renders,
+> browser decode/failure/RAF/controls/actions/themes/320+736. All156 comparison
+> inputs and49 saved frame hashes verified; all six approved manifests frozen.
+> Brown atlasf7d2cad5c6502e6870a91c0b4b2eb0378f6014f084edf41498397f8344ac47e0;
+> render93abda3d401c224b72e33318f6fd6007aaca731c269028c683bfb3c7695e0588.
+> New brown-beanie-standard-fit.html881946bytes in this thread's visualization
+> directory; artifacts/character-movement/brown-beanie-v1/review/ui-provenance.json.
+> Reproduction and discoveries: docs/features/character-atlas-protocol.md and
+> docs/execplans/fourth-character-standard-fit.md. Local checkpoint only; no game
+> integration, commit, push or deployment. Invite "push to GitHub" for backup.
+
+> CHARACTER SHOULDER/ACTION REFINEMENT READY FOR OWNER REVIEW: supersedes the
+> torso/sleeve status below. Sol torso_sleeve_correction implemented narrower S/N
+> shoulders with preserved wrist paths, higher E/W attachments, shared straight
+> jump arms and compact clipboard. Only four E/W upper pieces use parent-supplied
+> upper-sleeve-cleanup-v5.png; built-in imagegen prompt saved beside that asset.
+> Parent inspected source art, actual implementation and all direction/actions;
+> independent core49frames, foundation16, lower36 and Chrome review all PASS.
+> Render2237b42a100316adcba0624290663e4b03d490d23806cce333d986f2d2d8b09c;
+> atlased5d4da9fe27b849301c837571b005f08258bec548262c1fb0604a0552286e3b.
+> Same gray-overshirt-standard-fit.html916935bytes; provenance matches. Frozen
+> Green/Gray Braid manifests unchanged. See final section of standard atlas plan.
+> No runtime integration/commit/push. Await owner appearance feedback; automated
+> PASS is not owner approval or proof of autonomous fitting for a new character.
+
+> GS-014 closeout, 2026-09-15: owner accepted “We can complete and close 014.”
+> Verified source `680f9cdb5c42ddb414f41d4cb571252482ebccdf` on main and
+> evidence `b0f9626414f3c54e3a1a538e8357ed174252bd37` on
+> `release/gs-014-2026-09-14`. The documentation-only acceptance record is
+> backed up on that release branch before archiving GS-014. No redeployment,
+> main change, or other-task messages. See `GS-014_WEBSITE_RELEASE.md`.
+
+> TORSO/SLEEVE PASS READY FOR OWNER REVIEW. Fresh Sol torso_sleeve_correction
+> replaced generated South/North torsos with original cloth pixels, separated
+> body-axis centering from neck registration, lowered South cuffs by restoring
+> measured sleeve length, and retained visible upper sleeves through all South
+> poses. Clipboard support contact moved along boardbottom; shoulders stay at
+> torso sockets and paired scale remains balanced. Parent reviewed actual code,
+> source/fit sheets, all direction/actions, enlarged sleeves and final preview.
+> Independent PASS: core49frames, atlas15tests, lower36comparison, Chrome review.
+> South cloth width60–62px centered79.5; North58–64px. Protocol adds original
+> trunk proportion/body-row and visible-sleeve checks. Plan complete for this pass.
+> Render f79c71e5ce4116d954cc7fb2698c1c36bb48c995740dbdf0468bec0df9e25bf9;
+> atlas91473e17b46758d85500432e1204817730492bbc7a8fd47b8b4b2d74c7662f85.
+> Same gray-overshirt-standard-fit.html922518bytes. Existing motion/neck/arm-balance
+> fixes and lower/Green/Gray Braid preserved; frozen manifest hashes match.
+> No new imagegen/runtime integration/commit/push. Owner approval still pending.
+> Say "push to GitHub" for a scoped checkpoint backup.
+
+> SEPTEMBER 15 CORRECTION READY FOR OWNER REVIEW. Sol corrected true palm-root
+> wrist anchors, East head/nape +8px, South cap-behind/hand-ahead layers, visible
+> South/North projected arm swing, and balanced clipboard source scales. Parent
+> reviewed all directions/actions, enlarged before/after neck and paired arms,
+> actual renderer/protocol and final preview. Independent PASS: core49frames,
+> atlas15tests, lower36framecomparison, final Chrome Motion/Parts validator.
+> South relative wrist excursion6.1087px; North8.1719px. Final render manifest:
+> ba2938f4765c13b19827928e45948531e0bc7c7b06f12a1eb555532304ba37c4.
+> Atlas:0b06392f208a598ffa14b277d4783ae92520aa9fc214edbd7103d0246191e94c.
+> Same gray-overshirt-standard-fit.html936810bytes. Protocol updated with wrist
+> versus watch, paired source scale, actual motion and nape/occlusion checks.
+> Plan docs/execplans/standard-character-atlas.md complete for this correction.
+> Lower gait and Green/Gray Braid baseline hashes unchanged. No new imagegen.
+> Local only; no runtime integration/commit/push. Owner approval still pending.
+> Next action: review corrected preview. Say "push to GitHub" for checkpoint backup.
+
+> STANDARD ATLAS / OVERSHIRT V2 READY FOR OWNER REVIEW. Supersedes v1 below.
+> Fixed five-page atlas, anatomical slot IDs, explicit neck/joint registration,
+> arm-free torso, separate rigid arm segments, accessory side and layer rules.
+> Reusable protocol: docs/features/character-atlas-protocol.md. Plan completed:
+> docs/execplans/standard-character-atlas.md. Implementation/templates in
+> tools/character-mapping/standard-atlas; character in layered-pilot/gray-overshirt-v2.
+> Sol implemented core/actions/final UI; Terra accepted lower migration and draft UI.
+> Parent reviewed actual atlas/all direction and action contacts, enlarged joints,
+> source/protocol/renderer and light/dark/mobile review. Independent PASS: 15 atlas
+> tests, 36 lower comparison frames, core 36 base + 13 action frames, Chrome review
+> decode/failure, play/pause/scrub/speed, actions/chair, Parts and responsive checks.
+> Render manifest a34acf866769bb8ecce952fe25a2ba847bb7954abb31388bc4298b9851951635.
+> Atlas manifest 45617421ba0dc27168fe799d897b9b297545f7aa33d99d3a389b01c6cf5aa02d.
+> New thread visualization gray-overshirt-standard-fit.html is 948518 bytes.
+> Review provenance/screenshots: artifacts/character-movement/gray-overshirt-v2/review.
+> Source-referenced built-in imagegen prompts: v2/assets/generation-prompts.md.
+> Green and Gray Braid manifest hashes unchanged. Local only; no game integration,
+> commit, push or deployment. Invite "push to GitHub" for a scoped checkpoint backup.
+> Next: owner visual review, then apply this same protocol to future characters.
+
+> THIRD CHARACTER READY: Gray overshirt patient.adult.032 has stand/walk S/E/W/N,
+> South jump/clipboard and four static sitting poses. Original heads preserved;
+> reused prepared base parts, built-in imagegen for missing action limbs (full
+> prompt saved). Sol base/actions; Terra final watch/layering correction and
+> comparison packaging. Parent reviewed source/frames/closeups/code and reran
+> core/browser validators PASS. Final manifest
+> df451d8cf9d97209749aea6558a56d2224a7c0a086bc960b45f3f0bca07c7ec6.
+> New gray-overshirt-character-fit.html854201bytes in same thread visualization
+> directory. All third-character files under gray-overshirt tools and
+> gray-overshirt-v1 artifacts. Plan third-character-fit.md; reusable guide
+> tools/character-mapping/layered-pilot/gray-overshirt/fitting-review.md.
+> Await owner visual approval. Green/Gray braid remain approved and frozen.
+> Local checkpoint only; no runtime integration/commit/push.
+
+> THIRD CHARACTER IN PROGRESS: owner approved final Gray braid, wants next
+> character with fewer corrections. Selected patient.adult.032, Gray overshirt
+> (short dark hair/beard, rolled sleeves, watch). Sol base adapter underway in
+> tools/character-mapping/layered-pilot/gray-overshirt; outputs gray-overshirt-v1.
+> Reusing existing prepared base art; original heads preserved. Parent generated
+> missing action parts with built-in imagegen; saved asset and full prompt under
+> gray-overshirt/assets. Active plan third-character-fit.md includes reusable
+> acceptance gates. Green and Gray braid frozen. No integration/commit/push.
+
+> LATEST WEST TRAILING FOOT: owner liked leading foot but trailing cuff overhung
+> heel. Terra now measures rendered trailing cuff edge and positions heel1px
+> beyond it, preserving leading feet and other directions/actions. Parent rejected
+> insufficient first blend, accepted clean4x final and independently passed core/
+> browser checks. Same preview777971bytes. Final manifest
+> e954be5d89fedea444381c51ec7c5441ffa55e336452223b81e3a079a24989a2.
+> Await owner review. Local only, no runtime/commit/push.
+
+> LATEST WEST HEEL: owner noted ankle still landed midfoot. Terra moved West
+> shoe4.72px forward using rear/right heel-band anchor, preserving soleY/gait.
+> Other directions/actions byte-identical. Parent reviewed West cycle/closeups,
+> code and independently passed core/browser validators. Same preview777119bytes.
+> Manifest f7ea2c69ad2b9c787c4c5681a46abf51592941758688233c3cf82352ce272da3.
+> Await owner visual feedback. Local only; no runtime integration/commit/push.
+
+> LATEST FOOT ATTACHMENT: owner liked Gray corrections but noticed uneven leg/
+> foot alignment. Sol removed the trouser stub from profile shoe crops, anchored
+> shoe ankle entry correctly, and joined trouser hem with2px overlap. Parent
+> reviewed before/after leg closeups/full cycles and independently passed core
+> and browser validators. Terra refreshed comparison (778347bytes). S/N legs,
+> actions, head/arms and gait retained. Final Gray manifest
+> d6bafa77de4ce2707e5c0fadec5eab2e60a51fbc7fc40113db2c6f1d18d75e03.
+> Same gray-braid-character-fit.html. Awaiting owner feedback; local only.
+
+> LATEST GRAY CORRECTIONS: owner approved S/N walk and all action poses, reported
+> clipped crown/West chin and E/W backward elbows/feet plus far-arm leakage.
+> Sol restored source head coverage, selected E-left/W-right sleeve/shoe donors,
+> moved far arm behind torso, and covered near socket with original shoulder art.
+> Parent reviewed full E/W cycles/head proof and independently passed core tests.
+> Terra refreshed comparison; parent independently passed browser checks and
+> inspected screenshot. Corrected manifest
+> 0831d294c0e67798b2e325ea4fc5e3df6636e28b1d3607fe7c8169f6aadef346;
+> gray-braid-character-fit.html 777971 bytes. Accepted movement/action garment
+> art unchanged, head restoration applies throughout. Awaiting owner feedback.
+> Plan gray-braid-character-fit.md; local only, no game integration/commit/push.
+
+> LATEST GRAY BRAID FIT: owner approved Green actions and requested another
+> character. Sol implemented Gray standing/walk S/E/W/N, South jump/clipboard,
+> and four static seated poses. Original face/crown and braid are separate exact
+> source layers at native scale; prepared torso/sleeves/hands/legs use built-in
+> imagegen assets with saved prompts. Seated long jacket uses folded torso art.
+> Parent reviewed/corrected fits and independently passed core validator (32 walk,
+> 13 action frames). Terra built comparison preview; parent reviewed code/screens
+> and independently passed browser validator. Preview gray-braid-character-fit.html
+> in existing thread visualization directory. Gray awaits owner visual approval;
+> Green remains approved and unchanged. Gray manifest:
+> c2dcadbe52fe8375852aa6efc382d3a7db56dd84867250d028e8f4ee58b4a8c6.
+> Plan docs/execplans/gray-braid-character-fit.md; code/parts at
+> tools/character-mapping/layered-pilot/gray-braid; artifacts/character-movement/
+> gray-braid-v1. No secondary braid physics yet. Local checkpoint only, no game
+> integration/commit/push. Next: owner review, then adjust or approve this fit.
+
+> LATEST ACTION REVIEW: owner likes directional walk. Terra reduced E/W
+> backward arm reach30% (forward unchanged), final walk manifest7c8ebc56…e45932.
+> Sol built South star jump, S/E/W/N static sitting and South clipboard using
+> original rigid heads/approved torso plus source-referenced bent-pose assets.
+> Final actions manifest40ec1233…e7b3dc59. Parent reviewed clean frames, rejected
+> intermediate sleeve seams/oversized arms, and independently passed core and
+> browser validators. Terra packaged green-actions-review.html; parent made tiny
+> UI/semantic/chair corrections and reran validation. Existing walk preview also
+> refreshed. Both previews in thread visualization directory.
+> New parts/prompts: tools/character-mapping/layered-pilot/actions/assets (built-in
+> imagegen; magenta preparation then RGB-preserving alpha import). Seated floor287,
+> waist205 and true seat236; chair is separate optional UI context. Jump plays
+> once with pause/scrub/replay and final frame exactly v8 stand. Owner must approve
+> these actions before second-character fitting. Local checkpoint only; no game
+> integration, commit/push or roster rollout. Plan: restore-walk-baseline.md.
+
+> LATEST INLINE FIX: green-directional-walk.html now clamps frame indices,
+> uses its own clock, and enables controls after image decode. Terra implemented;
+> parent reviewed runtime and independently passed browser regressions including
+> malformed RAF timestamps, delayed loading, playback, pause, scrub, stand and
+> narrow layouts. Core artwork and directional manifest remain unchanged.
+
+> LATEST SKULL/SOCKET FIX: restored missing original E/W skull-base pixels;
+> profile/back arms now map measured sleeve caps/cuffs to torso sockets at
+> E134/W131/N128. Final directional manifest1eebdaf9…320f56; refreshed
+> green-directional-walk.html. Sol implemented, Terra audited and packaged;
+> parent reviewed clean/overlay closeups and independently passed core/browser
+> validators (108anchor mappings,36thumb checks,local shoulder overlap).
+> South fit and runtime unchanged. Local only; no commit/push. Owner review
+> next; active plan docs/execplans/restore-walk-baseline.md.
+
+> LATEST CORRECTION: directional heads now register3px lower with exact source
+> neck-skin connection; E/W near arms use correctly oriented matched sleeve/hand
+> donors, both profile thumbs forward. Final directional manifest8473daade9…9ec71.
+> Sol implemented; Terra independently audited donors and refreshed existing
+> green-directional-walk.html; parent inspected8phase closeups/static/UI and
+> independently passed core+browser checks(36thumb,48neckoverlap checks).
+> South approved shoulders and game runtime unchanged. No commit/push. Active
+> plan docs/execplans/restore-walk-baseline.md; owner review remains next.
+
+> LATEST DIRECTIONAL CHECK: South v8 hands now draw in front of torso, approved
+> shoulder geometry unchanged; manifest36c22f3b…5754c7 and refreshed
+> green-arm-leg-fit.html. New green-directional-walk.html shows East/West/North
+> together:24frames8x180ms, original directional heads plus prepared bodies.
+> Sol implemented core, Terra inventory/headmask diagnosis and review packaging;
+> parent inspected code/static/contact/UI and independently passed core/browser
+> validators. Directional manifestd9f7631f…d1d9f8. Source sheet unchanged.
+> New directional torso/limbs still need owner visual review; this is an in-place
+> motion proof, not live-game integration. No commit/push. Plan remains
+> docs/execplans/restore-walk-baseline.md. Earlier notes below are history.
+
+> LATEST: v8 corrects owner's sleeve size, shoulder attachment, cuff/hand motion
+> and leg-spacing feedback. Review green-arm-leg-fit.html (corrected vs v7).
+> Sol owns v8 rig/build/core validator; Terra built review; parent inspected
+> code/contact/UI and independently passed both validators. Hip span30px,
+> sleeve scale across0.29, transformed cuffs drive hands; corrected standing,
+> instant unchanged sitting. Source artwork preserved. Manifest0f1e463c…7921b.
+> No game integration/push; owner visual review pending. Plan remains
+> docs/execplans/restore-walk-baseline.md. Earlier v7 notes below are history.
+
+> CURRENT: same-art v7 south walk proof completed after owner said keep going.
+> Review green-restored-walk.html in the active visualization directory.
+> Sol repaired canonical gait binding; Terra packaged comparison with v6.
+> Parent reviewed contact/UI and independently passed core and browser validators;
+> frozen asset hashes unchanged. Manifest5babda5e…bae3. Eight180ms phases,
+> rigid head/torso, connected knee/ankle and arm binding, instant v6 stand/sit.
+> This remains a subtle front-facing in-place proof awaiting owner motion review,
+> not a live-game replacement. Plan: docs/execplans/restore-walk-baseline.md.
+> Local checkpoint only, no commit or push. Historical reset notes follow.
+
+> NEW OWNER RESET: v6 front walking rejected as regression; instant stand/sit
+> explicitly accepted, no smooth transition required. Active plan now
+> docs/execplans/restore-walk-baseline.md. Freeze artwork and recover earlier
+> accepted canonical gait from saved raster-retry frames. Terra completed a
+> non-destructive earlier-vs-latest comparison, motion-only by default with
+> optional saved art; archived artwork fit remains rejected. No new gait/art,
+> no live-game change or push. Earlier v6 validation below is technical history.
+> Comparison: walk-rollback-comparison.html in the active visualization directory.
+> Parent reviewed the corrected visuals and independently reran the rollback
+> validator: PASS; frozen asset hashes unchanged. Instant standing/sitting,
+> native walking cadence and shared floor registration checked. Next: owner
+> reviews recovered motion; no same-art retarget or approved replacement yet.
+
+> V6 motion core complete (local prototype, not appearance-approved). Sol added
+> front/in-place walk16frames, sit-down16,seated8,stand-up16, exact source head,
+> continuous trousers and separate/bent seated arms. Parent reviewed code and
+> contact sheets and independently ran validate-green-v6-motion.mjs:PASS,
+> support error<=0.408px,56deterministic frames,rigid head,exact reversals.
+> Outputs artifacts/character-movement/layered-pilot/v6-motion, manifest hash
+> fd66a2c69edd852cfee33b4d9bafea74b02069d06750553857f125803ea355dd.
+> Sit artwork switch at frame10 remains visible; clothing still differs in
+> width/detail from source. No Gray,travel or game integration yet. Terra
+> motion_review_finish completed inline playback packaging after Spark stopped;
+> parent independently reran browser validation:4sequences,320/736px,zero errors.
+> Review green-layered-motion.html is741497bytes with final locked frame data.
+> Active plan docs/execplans/layered-character-pilot.md; all source/master files
+> remain unchanged. No push performed.
+
+> Active torso correction: owner explicitly requested removing arms from the
+> torso. Built-in ImageGen edited isolated torso, preserving real alpha; saved
+> as tools/character-mapping/layered-pilot/assets/green-south-torso-arm-free-v4.png.
+> Sol completed versioned v4 standing and raised-arm diagnostics; parent visually
+> confirms sleeve remnants removed and independently reran validation. Raised
+> arms/hands are unclipped. Wider-angle shoulder overlap still needs refinement.
+> Full source-fidelity gate still open for head/leg artwork. Prompt is recorded
+> in docs/execplans/layered-torso-edit-prompt.txt. No game integration.
+
+> NEW character direction: owner rejected the complete raster fitting retry for
+> stretched heads/faces, repeated/misplaced torso colors/lines, and braid
+> distortion. Approved rebuilding existing designs as layered animation-ready
+> artwork, with the rig following source proportions instead of a fixed circle
+> silhouette. Active plan: docs/execplans/layered-character-pilot.md. First Green
+> faithful standing, walk and sit-down sequence; then Gray on the shared system.
+> Terra layered_character_pilot investigated runtime/tools and now owns the
+> standing assembly proof. First ImageGen parts atlas is a candidate only.
+> Previous fitting completion reports below are technical history, not accepted
+> visual results. Preserve originals/old master; no broad integration or push.
+
+> September 14: owner authorized programmatic background removal. Sol completed
+> v3 transparent atlas under tools/character-mapping/layered-pilot/assets;
+> parent independently verified all 382,614 retained pixels keep exact RGB and
+> original input hashes are unchanged. Light/dark atlas and standing comparisons
+> are in artifacts/character-movement/layered-pilot. Transparency is resolved.
+> Standing visual gate FAILED: generated facial/torso differences and knee seams
+> remain. Correct artwork before animation/Gray expansion. No game integration.
+
+> Character fitting retry: simplified vector fittings remain rejected. Green
+> cardigan and Gray braid now use source-derived raster surfaces in all 73
+> approved states (146 fitted frames). Sol implemented and root visually reviewed
+> and independently validated: 171,926 original RGB checks, 73 actual geometry
+> comparisons, 146 mutation/determinism checks and 328 attachment bounds. All 163
+> approved baseline files remain unchanged. Interactive raster review is complete:
+> three source-faithful-character previews pass Chrome playback, all73states,
+> source-direction, overlay and responsive checks. Root independently checked
+> movement736/jumping320 and exact pause. Owner approval is still required before broad
+> conversion or gameplay integration. Tiny Gray West braid/neck pale edge remains
+> a review item. See docs/execplans/approved-character-surface-fitting.md and
+> artifacts/character-movement/surface-fitting/raster-retry/. Local/unpushed.
+
 > GS-006 clinical backup verified (September 13): checkpoint
 > `b4ba1bfa9d9c84c51bea1db2c43594bc636d3487` is on `origin/beta`; remote
 > SHA independently verified. Includes clinical batches through September 13,
@@ -10,9 +611,326 @@
 > Unrelated graphics, movement and browser-storage edits remain local. No merge,
 > deployment, Pages publication or save change. GS-006 remains open.
 
-**Prepared:** 2026-09-01; active persistence handoff updated 2026-09-09
+> GS-006 early-level batch (September 13): 20 more editorially accepted concepts,
+> 80 questions, 52 patients (28 diagnostic multistep), eligible in the first three
+> facility levels. Runtime totals 143 concepts / 350 cases / 543 nodes; previous
+> 123 concepts and 298 cases preserved exactly. Sol/Terra authored and integrated;
+> root reviewed actual diffs and validation. All 1,118 covered tests pass after
+> one stale admission-list correction; build/typechecks pass. Clinical records
+> remain needs_clinician_review in the unapproved prototype.
+> [Exact batch receipt](../clinical-workbench/approvals/owner-delegated-early-levels-2026-09-13.md).
+> Local/unpushed, no deployment or save changes. Say "push to GitHub" for backup.
+> GS-006 remains open for continued owner-directed concept work.
+
+> GS-006 patient-library repair (September 13): 298 concise complaints, 962
+> named base/profile presentations, corrected HSIL virus task, coherent
+> demographics/characters, and exact saved-chart display compatibility.
+> Sol/Terra implementation reviewed by root; 1,034 tests and build/typechecks
+> pass. [Report](../clinical-workbench/audits/2026-09-13-library-repair-coverage.md).
+> [Future diagnostic timing design](../features/diagnostic-timing-future-design.md)
+> recorded for owner discussion. Local/unpushed; GS-006 remains open.
+
+> Approved character surface fitting (2026-09-13): additive local-coordinate
+> surface renderer and named-anchor attachments implemented for Green cardigan
+> and Gray braid only. Root independently verified 74 exact neutral rasters,
+> 74 approved geometry hashes, 148 fitted connectivity/margin/no-mutation checks,
+> 12 isolated rotated-surface checks and 296 attachment-bound traces. All 163
+> baseline master source/artifact files remain unchanged. Three interactive
+> reviews are ready for owner aesthetic review: movement/standing, jumping,
+> sitting/clipboard. Root independently passed the saved browser validator:
+> 73 distinct states per identity, exact pause/resume, real guide overlays,
+> eight source-direction comparisons, native scale and 320/736/1024 layouts;
+> no browser or console errors. Source identity aesthetics remain unapproved.
+> [Fitting plan](../execplans/approved-character-surface-fitting.md).
+> No gameplay integration, batch conversion, commit, push or deployment.
+
+Review files are in
+`C:/Users/Kyle Kent/.codex/visualizations/2026/09/13/01a09b55-147e-72f0-b413-e8b6827c7287/`:
+`approved-character-fitting-movement.html`,
+`approved-character-fitting-jumping.html`, and
+`approved-character-fitting-statics.html`. Open the inline reviews in this task;
+these are local visual comparisons, not game pages and do not change game saves.
+Source references are in the movement review. The rejected single-fragment draft
+was removed. Accepted evidence is under
+`artifacts/character-movement/surface-fitting/review/`: `manifest.json`,
+`build-report.json`, raw lossless PNGs and contact sheets; the core technical
+report is `../validation/technical-validation.json`.
+
+Implementation is additive under `tools/character-mapping/surface-fitting/`.
+Rebuild with `node tools/character-mapping/surface-fitting/build-review.mjs`;
+validate with `node tools/character-mapping/surface-fitting/validate-review.mjs`
+and `node tools/character-mapping/surface-fitting/validate-surface-fitting.mjs`.
+Terra performed inventory and initial drafts; Sol completed the corrected
+pipeline and review. Root inspected the code, every fitted pose in the sheets,
+source strips, and browser screenshots and independently ran the checks.
+Next action: owner reviews identity/appearance. Keep Gray braid's preview ID
+`retained.gray-braid`; its production catalog identity remains unresolved.
+No broader fitting or runtime integration before owner approval. This valuable
+checkpoint is local/uncommitted; say **"push to GitHub"** to authorize a backup.
+
+> Successor created: Approved character surface fitting,
+> 01a09b55-147e-72f0-b413-e8b6827c7287, local Gamify Surgery project. GS-012
+> archived after delivering the approved master and scoped handoff.
+
+> GS-012 complete: owner approves master poses and requests new dedicated fitting
+> task. [Successor handoff](APPROVED_CHARACTER_SURFACE_FITTING.md) contains exact
+> baselines, source designs and texture/attachment-only scope. Local uncommitted
+> artifacts; no runtime integration or push. Earlier pending master review stale.
+
+> GS-012 latest915cc7a0...fad7de9: South clipboard raised12; all other poses
+> unchanged. Root validated geometry/browser and refreshed action preview.
+> Owner South review next; local only.
+
+> GS-012 latest3b804c23...8fbcab clipboard: South left arm in front/right behind,
+> top edge tilts away torso. Fourview/source reviewed; geometry/browser checks
+> pass; approved other poses unchanged. Owner clipboard review next, local only.
+
+> GS-012 clipboard revision03ffa95a...ddece1: anatomical left supports underneath,
+> right rests on upper board surface. Action preview opens Holding clipboard
+> South. Approved walking/sitting/jumping unchanged. Owner clipboard review next.
+
+> GS-012 new action review ebd077d0...dc359c: sitting and clipboard holding in
+> four directions, eight-phase star jumps in four directions; new separate
+> canonical-master-actions preview. Root validated40 poses and browser pause;
+> approved walking assets unchanged. Owner action review next, no runtime/push.
+
+> GS-012 latest: c9ccf24d...18c309 master narrows frontal torso to reveal standing
+> arms and fixes backward elbow bending. Full 32-pose preview rebuilt and
+> geometry/browser checks pass; lower-body gait unchanged. Owner review next.
+> Local only; no game integration or push.
+
+> GS-012 correction: canonical master 532d2d22...996c26 retains all 32 walking
+> poses, E/W legs behind torso, medial/forward thumbs hidden from North.
+> Root verified unchanged gait and passed geometry/browser validation; local
+> preview updated. Owner motion review next; no runtime or GitHub push.
+
+> GS-012 plain master review: shared canonical geometry now supplies 32 walking
+> poses plus South standing/sitting. Manifest 12128590...439dd8; independent
+> semantic and browser validation passed. Native lossless motion preview
+> delivered locally as canonical-master-walks.html. Owner master review next,
+> then two costumes on identical geometry. No runtime change or GitHub push.
+> See character-movement ExecPlan for full pin and validation.
+
+> GS-012 revised checkpoint: batch02 anatomy corrected and native240x310 pair
+> preview delivered. New manifest be69cfe3...2d32; approved original pair remains
+> a70e4915...dd79. See GS-012 handoff for full pins/validation. Owner review next;
+> no runtime integration or GitHub push.
+
+> GS-012 checkpoint, 2026-09-12: four-character motion review delivered locally.
+> Two new approved identities fitted; all four use arms-behind-torso North/South.
+> See [GS-012 handoff](GS-012_CHARACTER_MOVEMENT.md) for pinned manifests,
+> validation and owner-review next action. No runtime integration or GitHub push.
+
+> **Graphics-thread transfer (2026-09-07):** A new account continuing the
+> map/room/character graphics work should read
+> [GRAPHICS_THREAD_HANDOFF_2026-09-07.md](GRAPHICS_THREAD_HANDOFF_2026-09-07.md)
+> first. It consolidates the graphics-only scope, owner references, canonical
+> visual rules, Cortan/ComfyUI workflow, local dirty paths, validation caveat,
+> and exact next action without superseding the unrelated gameplay/system notes
+> in this broader handoff.
+
+**Prepared:** 2026-09-02; active persistence handoff updated 2026-09-09
 **Workspace:** repository worktree
 **Branch:** `beta` tracking `origin/beta`
+
+## GS-006 additional board concept expansion (2026-09-12)
+
+Another20 scored groups are implemented and editorially accepted:80 variants,
+40 two-node patients and40 diagnostic gates. The active unapproved prototype
+now contains123 concepts,298 cases and463 nodes. All new clinical records remain
+needs_clinician_review with no named sign-off. The live concept sheet was read;
+the new receipt records exact SCORE mappings and source/claim limitations.
+
+Terra authored12 groups/helper and initial registry wiring; Sol authored8 groups
+and completed integration, corrections and browser fixtures. Astra reviewed
+actual content and shared-file diffs, then ran full acceptance. All1,029 affected
+tests pass (332 content,258 domain,427 player,12 balance), as do the full build,
+seven workspace typechecks and boundary checks. Two isolated desktop browser
+scenarios passed together; six screenshots were inspected. Domain regression
+used one worker after an older monolithic test timed out under parallel load.
+
+Read the [exact review receipt](../clinical-workbench/approvals/owner-delegated-board-expansion-2026-09-12.md)
+and [completed plan](../execplans/implement-board-concept-expansion-2026-09-12.md).
+No work remains for this batch. GS-006 remains open for owner-directed additions.
+The day-six shortage is not declared fixed. No owner storage was reset. The
+temporary canonical-origin test server was stopped; normal owner opening remains
+START_GAME.cmd at http://127.0.0.1:4173 in the usual persistent browser profile.
+Local and unpushed: remind the owner to say **"push to GitHub"** for a scoped
+audited backup. No commit, deployment or publication occurred. Preserve all
+unrelated dirty graphics, movement and persistence work.
+
+## GS-006 board concept expansion (2026-09-11)
+
+Twenty additional scored concept groups are implemented:80 variants in40
+two-node patients, each with a diagnostic result gate. The active prototype
+contains103 concepts,258 cases and383 nodes. The owner's live concept sheet and
+GS-011 concept-review notes were reviewed. All test choices receive neutral
+game-time estimates, including distractors. GS-011-003/004 feedback changes are
+implemented; celiac content is retained as supplemental (007), and the reported
+day-six shortage (009) remains undiagnosed.
+
+Terra and Sol completed delegated source/content/integration milestones; Astra
+reviewed the actual changes and evidence. All973 affected-package tests and the
+full build/typechecks/boundaries pass. Three isolated browser scenarios passed
+individually; Astra reviewed the final spec, logs and eight screenshots. No
+required work remains. Read the [GS-006 handoff](GS-006_CONCEPT_REVIEW_HANDOFF.md),
+[review receipt](../clinical-workbench/approvals/owner-delegated-board-expansion-2026-09-11.md)
+and [active plan](../execplans/implement-board-concept-expansion-2026-09-11.md).
+The content is editorially accepted for the unapproved prototype, with named
+clinician review still pending. Keep this continuing task open. Local and
+unpushed; remind the owner to say **"push to GitHub"**. Owner launch remains
+START_GAME.cmd at http://127.0.0.1:4173 in the usual persistent browser profile.
+No owner save reset, server restart, commit or deployment occurred.
+
+## GS-006 patient wording and test-choice timing (2026-09-10)
+
+The latest change replaces pilonidal pre-answer "natal cleft" wording with
+descriptive anatomy, including display-only compatibility for known saved
+patients. A complete 303-node registry assigns game-time estimates to all 357
+test choices across 106 decision nodes, including distractors. Mixed choices
+show "No test wait" for actions without testing. This supersedes the earlier
+concealment of surgery-center pre-answer timing described below. All test
+captions are neutral; timing is independent of correctness and gate presence.
+
+Terra diagnosed gaps; Sol implemented and completed full validation/browser
+acceptance; Astra reviewed scoped changes, the complete classification, logs and
+four screenshots. All 916 affected-package tests and three browser tests passed,
+along with full build, boundaries and all seven workspace typechecks. The long
+domain flow timed out under concurrent load and passed the full isolated rerun;
+its assertions and timeout were unchanged. The final test-only TypeScript fix
+also passed all eight focused domain timing tests. No required work remains.
+Read the [GS-006 handoff](GS-006_CONCEPT_REVIEW_HANDOFF.md) and
+[active plan](../execplans/patient-wording-and-answer-test-times.md) for authoring
+requirements and acceptance status. Keep this continuing task open. Owner launch
+remains `START_GAME.cmd` at `http://127.0.0.1:4173` in the usual browser profile;
+browser validation uses isolated test storage. Existing saves and review status
+are preserved. This checkpoint remains local and unpushed.
+
+## GS-006 future concepts: official board scope (2026-09-10)
+
+The owner asked to retain the ureteral-stone question and use authoritative
+ABSITE/general surgery board resources to guide future concepts. Read the
+[board-content scope guide](../clinical-workbench/BOARD_CONTENT_SCOPE.md) and
+[GS-006 handoff](GS-006_CONCEPT_REVIEW_HANDOFF.md) before another content batch.
+Prioritize explicit SCORE general surgery topics and ABS exam category emphasis,
+then facility fit. Keep the existing stone concepts as supplemental; absence of
+an explicit SCORE topic does not mean never tested. Preserve patient-based,
+clinically purposeful multi-step questions. Terra researched SCORE and authored
+the guide; Astra verified ABS resources and reviewed the result. Only guidance
+and handoffs changed; existing content, approvals, and gameplay remain intact.
+
+## GS-006 additional surgery-center batch: complete (2026-09-10)
+
+The owner's new request for twenty surgery-center concepts is implemented in
+the local unapproved prototype: 20 additional concepts, 80 variants, 40 two-step
+encounters, 32 real test/procedure gates. Ten families cover thyroid nodules,
+symptomatic PHPT, inguinal hernia, fissure, hemorrhoids, dysphagia/Barrett,
+achalasia, pigmented lesions/melanoma, postoperative seroma, and chronic
+pilonidal disease. Each concept has four variants and coherent generated
+patient identity/appearance with shuffled frozen choices. Stage 1 has 36 cases;
+the four EGD cases require Stage 2 and operational endoscopy capability.
+
+Read the updated [GS-006 handoff](GS-006_CONCEPT_REVIEW_HANDOFF.md),
+[execution plan](../execplans/implement-surgery-center-concepts-2026-09-10.md),
+[source brief](../execplans/surgery-center-source-brief-2026-09-10.md), and
+[exact 12-file review receipt](../clinical-workbench/approvals/owner-delegated-surgery-center-batch-2026-09-10.md).
+This is owner-delegated agent editorial approval; every new clinical record
+remains `needs_clinician_review` with null named-clinician review. The existing
+release ID/schema and `synthetic_unapproved_prototype` boundary are preserved.
+
+Terra authored six concepts and integrated the batch; Sol authored fourteen,
+finished wording/recovery, full validation, and final browser acceptance.
+Astra verified sources, actual diffs, exact recovery/preservation, and independently
+passed 14 focused clinical and 8 domain tests. Full suites passed 892 tests
+(clinical 302/domain 168/balance 10/player 412), all seven workspace typechecks,
+boundaries, and build. The initial concurrent domain timeout passed the full
+isolated rerun. Final combined browser acceptance passed 2/2 in 3.0 minutes,
+including elapsed pending reload with stable generated identity/portrait/order,
+real onsite EGD rooms/nurses/endoscopist/phases/round trip, one returned result
+and two FSRS histories per pathway. Astra reviewed the actual spec, full logs,
+and all five final screenshots. Seven new family files received LF/EOF-only
+cleanup and refreshed exact hashes; focused clinical 14 and independent receipt 3
+checks passed afterward. Final scoped whitespace checks passed, including 22
+new files. No required batch work remains. No qualifying implementation was
+kept local instead of delegated.
+
+New external services are thyroid FNA, anoscopy, manometry, and excisional skin
+biopsy. Endoscopy now has 180 editorial simulation ticks: original 120 resource
+phases plus 60 non-resource-bound return/report. This fixes a real route-start
+failure without a reducer/migration change; older frozen 120-tick encounters
+retain their timing. New preanswer route/ETA cues are hidden; postanswer route,
+onsite/external status, countdown, and results remain available. Legacy omitted
+flags preserve previous presentation.
+
+All 74 protected prior files remain unchanged, including the September 9 batch,
+exact approval artifacts, patient-text logic/tests, and queue. Queue totals
+remain 121/81 pending. Extensive unrelated dirty graphics/save/PM work is
+preserved. The batch is **local and unpushed** on `beta`, HEAD
+`40638f677b674bc59f74f6742d55c8dda027bae1`; remind the owner to say
+**"push to GitHub"** for a scoped backup. No commit/push, merge, publication,
+deployment, dependency install, external PM message, or new task was performed.
+Keep this Concept review task open until the owner explicitly finishes.
+
+The opening pathway remains **START_GAME.cmd → http://127.0.0.1:4173** in the
+owner's usual persistent profile. Browser acceptance uses isolated contexts at
+that exact origin; it does not alter the owner's save or the launcher.
+
+## GS-006 twenty-concept batch: implemented and validated (2026-09-09)
+
+**Lifecycle update, 2026-09-10:** Keep the Concept review task open for continued
+concept additions and reviews until the owner explicitly says they are finished.
+Do not archive it after accepting or backing up a concept or batch. This owner
+override preserves exact-version clinical approval and scoped-backup rules and
+does not itself authorize starting new work. The owner is opening a separate
+task for additional patients and employees.
+
+The owner clarified "Add 14; implement all 20" after six exact Graves/RAI
+approvals. All twenty are now active together in the local development game:
+80 question variants, 52 patient cases, 24 multi-step cases, and 28 actual test
+gates. New families cover gallstones, nephrolithiasis, celiac disease, colorectal
+evaluation, iron-deficiency anemia, and concerning extremity masses. Generated
+patient names are materialized after coherent profile selection; appearance and
+demographics stay attached to the encounter, and previously frozen saves stay
+unchanged. New external services cover colonoscopy, upper endoscopy with
+duodenal biopsy, and extremity MRI.
+
+Read [GS-006_CONCEPT_REVIEW_HANDOFF.md](GS-006_CONCEPT_REVIEW_HANDOFF.md) and
+[the active execution plan](../execplans/implement-autonomous-multistep-clinical-batch-2026-09-09.md)
+for exact scope, sources, ownership, and validation. The
+[hash-bound batch receipt](../clinical-workbench/approvals/owner-delegated-twenty-concept-batch-2026-09-09.md)
+distinguishes six historical clinician approvals from fourteen concepts
+reviewed by Astra under owner delegation. New clinical metadata still requires
+clinician review; the release ID/schema and unapproved prototype status remain
+unchanged. All fourteen original artifacts and six exact-review entries are
+preserved. Queue totals remain 121 records / 81 pending; only row 61's current
+admission and its guide sections changed.
+
+Terra recorded the sixth approval and performed bounded investigation. Sol
+authored/corrected the content, implemented the runtime integration, completed
+browser acceptance, and fixed two misleading service-label fallback expressions.
+Astra verified sources, reviewed actual changes and all five final screenshots,
+and independently validated. Final clinical-content tests passed 288, domain
+tests passed 164, all workspace typechecks and the build passed. Other workspace
+checks passed; initial graphics timeout/research worker-exit failures passed
+isolated retries without unrelated edits. Final browser acceptance passed 2/2
+in 4.8 minutes, including both celiac tests, a pending-service reload, stable
+generated identity/appearance/order, hidden future questions/results, three FSRS
+reviews, and a full external MRI pathway. Only the known exact favicon.ico 404
+is excluded from console checks. Parent focused UI checks passed 3 tests and
+the full build passed again after the display correction. Required batch work
+is complete; new clinical metadata remains under the review status above.
+
+This task's changes remain **local and unpushed** on `beta`; starting and current
+HEAD is `40638f677b674bc59f74f6742d55c8dda027bae1`. Preserve the extensive unrelated
+dirty work and inspect scoped hunks before any future backup. Remind the owner
+to say **"push to GitHub"** to authorize the scoped backup. No merge, deployment,
+publication, or automatic new task is authorized.
+
+Owner opening pathway remains **START_GAME.cmd → http://127.0.0.1:4173** in the
+usual persistent browser profile. Browser tests use fresh isolated contexts
+with separate storage on that exact origin and do not touch the owner's save.
+They use the existing Playwright server configuration and installed dependencies;
+the launcher and durable opening pathway are unchanged.
 
 ## GS-001 complete: scoped backup verified (2026-09-09)
 
@@ -202,7 +1120,7 @@ for compatibility.
   training, coffee kiosk, and GLP-1 suite, with related staff and bounded
   automation.
 - React plus Phaser; browser-local named resumable/archived campaigns,
-  deterministic simulation, campaign-scoped FSRS, save schema v6. Local/Pages
+  deterministic simulation, campaign-scoped FSRS, save schema v7. Local/Pages
   remains an intentionally non-authenticating, non-cloud prototype adapter.
 - Runtime clinical material is an approved allowlist/synthetic prototype
   fixture. Hospital/future material is deferred; new clinical content requires
@@ -314,6 +1232,7 @@ work.
 | `approve-obstructive-jaundice-vitamin-k-row-115.md` | Historical | Its proposed row-92 review is already complete; do not replay it. |
 | `approve-row-057-and-pages-showcase-release.md` | Complete / deployed and recorded | Owner remote playtest, then a new bounded concept-review thread. |
 | `correct-horizontal-character-gaits.md` | Complete / owner playtest | Owner playtests direction-locked patient gait; act only on a concrete defect. |
+| `durable-browser-persistence.md` | Active / interrupted after accepted M1 | Read `DURABLE_BROWSER_PERSISTENCE_RESUME.md`; delegate the isolated M2 correction to Terra and do not wire the unaccepted repository into the live game. |
 | `exterior-landscaping-sidewalk-pass.md` | Complete / owner review | Owner visual review; no implementation planned. |
 | `implement-level-2-expanded-outpatient-endoscopy.md` | Complete / walkthrough | Owner local walkthrough on beta; no release action authorized. |
 | `implement-room-character-visual-upgrade.md` | Complete / visual review | Inspect Milestone 6 captures against `exec-44a3...`; no domain follow-up. |
@@ -335,6 +1254,7 @@ work.
 | `shorten-backed-north-room-walls.md` | Complete / owner review, local only | Review/playtest adjacency-aware shallow north walls; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
 | `correct-front-desk-four-row-floor-and-door-layout.md` | Complete / owner review, local only | Review/playtest the true 5-by-4 Front Desk and destination-aware door runs; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
 | `render-doorways-as-full-floor-continuous-cutouts.md` | Complete / owner review, local only | Review/playtest full-tile persisted doorway cutouts and direct floor seams; name only a concrete graphics correction, or explicitly say "push to GitHub" for backup/release. |
+| `staffed-checkin-patient-routing-and-chart-timing.md` | Complete / owner playtest, local only | Playtest the staffed check-in, waiting hierarchy, shared Examination route, chart-close disposition, and overdue Front Desk alert at the canonical local origin; say "push to GitHub" for backup. |
 | `world-anchored-exterior-correction.md` | Complete / owner review | Owner playthrough review; no further implementation planned. |
 
 ## Latest scoped validation evidence
@@ -1497,7 +2417,12 @@ No gameplay or system behavior was changed for this milestone, and nothing was
 staged, committed, pushed, deployed, or released. Say **"push to GitHub"** if
 this accepted graphics checkpoint should be backed up.
 
-## Local save failure diagnosis and durable persistence design checkpoint
+## Historical local-save diagnosis (superseded by active resume record)
+
+This section preserves the original diagnosis checkpoint. Its old statements
+that runtime work had not begun and that Milestone 1 was next are superseded by
+`docs/handoffs/DURABLE_BROWSER_PERSISTENCE_RESUME.md`: Milestone 1 is accepted,
+and the incomplete Milestone 2 first pass must be corrected before integration.
 
 The read-only diagnosis and design in
 `docs/execplans/durable-browser-persistence.md` is complete. The current warning
@@ -1572,9 +2497,437 @@ Pages have independent browser storage. Repository instructions now require
 future work to name the exact local or remote opening pathway and explicitly
 warn the owner whenever it changes or isolates saves.
 
+## Front Desk actor, crop, occlusion, and shared-wall polish checkpoint
+
+The graphics-only milestone in
+`docs/execplans/polish-front-desk-occlusion-and-actors.md` is complete. The
+stationary Front Desk staff/founder presentation now retains canonical scale
+`1`, so sitting no longer shrinks the founder; the public-side presentation
+remains `0.82`. Existing 128-by-192 founder cells were audited rather than
+regenerated because their head and foot pixels, transparent gutters, and
+181/192 floor anchor were already complete.
+
+The Front Desk counter/computer source rectangle is now the measured
+four-pixel safety crop `{ x: 476, y: 78, width: 520, height: 314 }`. This
+restores the 26 source pixels previously omitted above the computer and the 24
+source pixels omitted from the east edge without changing the source PNG.
+
+Canonical room and hallway shells now duplicate every solid, doorway-
+subtracted north, west, east, and backed-short component in a
+`structural-occluder` layer. The existing south `front-occluder` keeps its
+baseline contract, so interior fixtures, characters, procedural shadows, and
+authored contact shadows stay behind walls while exterior actors below the
+building may still sort in front. Generic wall decoration and the authored
+Front Desk/Examination wall art render one stable depth above their supporting
+structural copies. Door apertures remain floor-only and no route, collision,
+room footprint, buildability, save, or gameplay rule changed.
+
+Backed north wall segments between north/south-adjacent constructed spaces are
+now exactly `0.18` tile high instead of `0.10`. They remain in the southern
+space's footprint, much shorter than tall rear and front walls, single-owned
+at shared boundaries, and absent through live door gaps.
+
+The focused desktop-Chrome proof
+`tests/e2e/front-desk-occlusion-polish.spec.ts` checks the live 128-by-192
+founder cells, 181/192 anchor, equal seated/standing display dimensions, exact
+counter crop, foreground wall depths, non-vacuous wall-decoration depth, and a
+persisted north-door aperture in normal and Build modes. Sol rejected the
+initial standing images because the desk obscured their feet, moved the proof
+poses from occupied C3 to open C4, reran the spec, and inspected the corrected
+native captures:
+
+- `front-desk-founder-seated-100-desktop.png`
+- `front-desk-founder-standing-front-100-desktop.png`
+- `front-desk-founder-standing-side-100-desktop.png`
+- `front-desk-occlusion-normal-100-desktop.png`
+- `front-desk-occlusion-build-100-desktop.png`
+
+The final images show the seated head intact, complete front/side standing
+feet, the full computer and east counter edge, readable furniture behind the
+walls, clean floor-to-floor door space, and the taller shared wall in normal
+and Build modes.
+
+Final Sol validation passed: 50 focused Vitest tests; the new focused
+desktop-Chrome Playwright proof (1 passed); the existing Front Desk, backed-
+north-wall, floor-continuity, top-down-side-cap, and character-resolution
+desktop regressions (5 passed in 3.2 minutes); workspace typecheck; production
+build; and scoped diff validation. The build retains its existing large-chunk
+and plugin-timing advisories.
+
+No Cortan or Codex-native raster generation was used because no pixels were
+missing: the changes reuse the complete local atlases and renderer geometry.
+No gameplay/domain file was changed.
+
+Accountability: read-only explorers `founder_pose_frontdesk_audit`,
+`frontdesk_occlusion_wall_audit`, and `frontdesk_visual_proof_audit` mapped the
+source, renderer, depth, and E2E contracts. Spark `frontdesk_crop_scale`
+attempted the fully specified crop/scale milestone but hit its model usage
+limit before completing work; per the fallback rule it was reassigned once to
+Terra `frontdesk_crop_scale_terra`. That Terra completed the crop/scale,
+shared-shell/depth, and live-proof milestones. Sol reviewed the actual diffs,
+reran every acceptance layer, inspected all five final images, and made only
+the tiny C3-to-C4 proof-location correction described above. Planning, final
+acceptance, and this handoff were Sol integration responsibilities; no
+qualifying implementation work was left undelegated.
+
+Nothing was staged, committed, pushed, deployed, or released. Say **"push to
+GitHub"** if this accepted graphics checkpoint should be backed up.
+
+## Wall corner continuity and clarified north-wall layering checkpoint
+
+The graphics-only milestone in
+`docs/execplans/fix-wall-corner-continuity-and-layering.md` is complete. It
+implements the owner's annotated `Photos for Codex 2/Wall fix.PNG` correction
+through the shared canonical shell used by the Front Desk, both Examination
+orientations, canonical enclosed rooms, and exposed hallway edges.
+
+At every exposed corner, the existing west/east cap now begins at the top of
+its adjacent tall north wall and continues through its ordinary owned side
+run. The shared width remains `0.15` tile and every room continues to use the
+same `westCap` / `eastCap` source family; there is no Examination-only width.
+When the matching north corner is backed by constructed space, the side begins
+at the floor edge and meets the short north strip without recreating a tall
+shoulder. A first-slot north door or northmost side door likewise suppresses
+the extension so the complete doorway stays floor-to-floor.
+
+This checkpoint supersedes the immediately preceding Front Desk checkpoint's
+broader occluder interpretation. North and backed-short north walls are now
+base-only and stay behind room contents. North-wall decor remains above its
+supporting wall but below sortable furniture and actors. Doorway-subtracted
+west/east copies remain structural foreground occluders, and the south wall
+retains its existing front-occluder contract. Consequently furniture,
+characters, procedural shadows, and authored contact shadows layer behind
+west/east/south walls but in front of every north-facing wall, as clarified by
+the owner.
+
+The focused live proof
+`tests/e2e/wall-corner-continuity.spec.ts` renders an isolated Front Desk,
+horizontal and vertical Examination Rooms, a waiting room with a backed
+northwest corner, and a waiting room with first-slot north and west doors. In
+both normal and real Build mode it asserts exact live Phaser cap tops and
+heights, equal Front Desk/Examination display widths, the unextended backed
+corner, complete one-tile door gaps, and the ordering north wall < north decor
+< founder < west/east/south occluders. Sol natively inspected the final proof
+images:
+
+- `artifacts/screenshots/wall-corner-continuity-normal-100-desktop.png`
+- `artifacts/screenshots/wall-corner-continuity-build-100-desktop.png`
+
+Both show the requested exposed A/B continuations, the short backed junction,
+the shoulder-free two-door corner, and matching Front Desk/Examination side
+thickness. The test fixture is paused deterministically, while a test-only CSS
+rule hides the pause banner from the evidence image.
+
+Final Sol validation passed: 36 focused Vitest tests; workspace typecheck;
+production build and boundary checks; the new focused browser proof; and all
+10 relevant desktop-Chrome scenarios covering side caps, backed north walls,
+Examination compositions and doors, Front Desk occlusion, door/floor
+continuity, and normal/Build parity. In the one-worker combined run, 9 passed
+and the pre-existing two-page Examination door capture exceeded its global
+60-second test ceiling while waiting for screenshot stability. Its isolated
+120-second diagnostic rerun passed 1/1 in about 1.1 minutes. Vite retains its
+existing large-chunk advisory. Scoped diff validation passed.
+
+No room footprint, tile ownership, buildability, door legality, route,
+collision, save, simulation, staffing, clinical content, or other gameplay
+behavior changed. No Cortan/ComfyUI or Codex-native raster generation was used
+because this correction reuses the existing wall sprites and changes only
+shared renderer geometry and depth.
+
+Accountability: read-only explorer `wall_fix_geometry_audit` mapped shared
+room/hallway ownership, depth paths, and the controlled E2E design. Terra
+`frontdesk_crop_scale_terra` implemented the shared shell/depth milestone and
+the live browser-proof milestone. Sol rejected two insufficient unit-test
+passes and the first shallow/offscreen browser proof, reviewed the resulting
+actual diffs and images, independently reran acceptance, and made only the
+tiny test-only pause/overlay determinism correction. No Spark worker ran for
+this milestone because geometry ownership, doorway exceptions, depth ordering,
+and native visual acceptance required judgment. Planning, final validation,
+that tiny integration correction, and this handoff were Sol responsibilities;
+no qualifying implementation milestone was left undelegated.
+
+Nothing was staged, committed, pushed, deployed, or released. Continue using
+`START_GAME.cmd` and the canonical local origin `http://127.0.0.1:4173` for
+playtesting. Say **"push to GitHub"** if this accepted graphics checkpoint
+should be backed up.
+
+## Founder visible-extents diagnosis (awaiting refreshed owner confirmation)
+
+The graphics-only diagnostic in
+`docs/execplans/fix-founder-head-feet-clipping.md` audited the owner's repeated
+report that the Front Desk seated head and standing feet looked cut off. The
+current founder atlases contain complete 128-by-192 frames: applicable alpha
+stays inside at least a 10-pixel top gutter and an 11-pixel bottom gutter, and
+the live renderer retains the 181/192 floor origin with no crop or mask.
+
+The focused live proof
+`tests/e2e/front-desk-founder-anatomy.spec.ts` now distinguishes actual opaque
+composition from conservative rectangular texture envelopes. It captures the
+default human, high-extents nonhumans, and the shoulder-waves woman (identity
+10) visible in `Photos for Codex 2/Wall fix.PNG`. At exact B3, the Front Desk
+counter intentionally covers the seated lower body but no higher-depth object
+crosses the head. At open C4, the standing front and side frames show complete
+feet; identity 10 is visibly complete at both 100% and 160% zoom. An artificial
+standing pose behind the desk is correctly covered at the feet by the counter.
+
+Sol rejected three earlier diagnostic revisions: one silently re-selected the
+seated atlas for its alleged standing proof, one treated expected seated-counter
+coverage as a defect, and one treated a transparent counter-shadow rectangle as
+opaque clipping. After correction, Sol independently ran the exact one-worker
+desktop-Chrome proof to exit code 0 (1 passed in 52.3 seconds), reviewed the
+emitted bounds report, inspected every task screenshot natively, and confirmed
+the identity-10 160% capture was re-posed after zoom.
+
+No production renderer, raster, gameplay, or domain file changed. A separate
+read-only cache audit found that an already-open Phaser scene can retain an old
+decoded texture because existing texture keys and frames are reused for the
+life of the canvas. A normal hard refresh at the canonical
+`http://127.0.0.1:4173` origin reconstructs Phaser and revalidates the current
+PNG without changing the local-save origin. A revision bump alone would not
+replace textures inside the already-running scene.
+
+Exact next action: the owner should hard-refresh the canonical local game. If
+the symptom remains, add a screenshot with the avatar, pose, map location, and
+zoom to `Photos for Codex 2`; do not alter global anchors, scale, wall depth, or
+existing raster art without that refreshed reproduction. No Cortan or native
+image generation was used because the current source pixels are complete.
+
+## Staffed check-in, patient routing, and chart timing checkpoint
+
+The gameplay milestone in
+`docs/execplans/staffed-checkin-patient-routing-and-chart-timing.md` is complete.
+A newly arriving clinic patient now walks to the public side of the Front Desk
+and remains operationally `awaiting_staff` until either the founder or an
+operational receptionist is stationary at the staff-side desk anchor. The
+clinical lifecycle remains separate from this operational gate. Staffed check-
+in immediately exposes the chart in Waiting and starts the patient's best
+available waiting route in this exact order: Waiting Room chair, Front Desk
+visitor chair, another room's authored chair, an open standing tile in the
+Waiting Room, then a public standing/wandering tile elsewhere in the connected
+facility. Persisted endpoint reservations prevent two actors from claiming the
+same waiting place.
+
+Opening an eligible chart immediately reserves one reachable Examination Room,
+redirects the patient from their current tile to the semantic bed anchor, and
+routes the founder to the same room's clinician stool. The question remains
+usable while they walk. Closing an unfinished chart releases the room and sends
+the patient back through the waiting preference selector. Closing or
+acknowledging terminal care preserves the correct departure behavior; testing
+decisions retain their frozen on-site/off-site route and timing while releasing
+the Examination Room. Reopening unfinished or unacknowledged terminal care
+reacquires an available exam and restores the founder escort.
+
+When no operational receptionist exists, the founder automatically returns to
+the Front Desk after examination attendance. With reception coverage, the
+founder can choose a deterministic low-priority public wander, chair, or
+bathroom destination. A player-issued founder movement or facility task
+replaces these automatic plans. Receptionists hold or return to the Front Desk;
+their intended routine exception is refilling the water cooler, after which
+they return to post.
+
+At exactly 60 facility minutes of unstaffed check-in waiting, no consequence is
+emitted. On the first tick strictly after 60 minutes, the game applies the
+configurable two-point `no_receptionist` satisfaction loss and creates one
+durable, patient-specific Front Desk alert. The alert offers `Show Front Desk`,
+never `Open chart`, and its persisted one-shot marker prevents duplicates after
+later ticks or reloads. Save schema v7 persists check-in state, the overdue
+marker, waiting reservations, and founder automatic activities; legacy states
+normalize without losing frozen encounters, learning history, or service
+routes.
+
+The real fresh-campaign browser walkthrough found one integration deadlock that
+unit fixtures had hidden: the first checked-in chart could not open because a
+new Level 0 clinic contained no Examination Room. New campaigns therefore now
+start with one connected Examination Room and internal door. It has ordinary
+authored upkeep and does not change starting cash or add a hidden subsidy. The
+later construction tutorial teaches adding another Examination Room for
+capacity. No room or door is injected into an existing v6 or v7 save.
+
+Sol independently reran and accepted the focused desktop-Chrome proof at
+exactly `http://127.0.0.1:4173`: both scenarios passed in 50.9 seconds. The
+first proves the no-chart approach state, staffed check-in, immediate usable
+chart, shared starter-exam bed/stool routes, and unfinished close/room release.
+The second proves no minute-60 event, exactly one tick-61 Front Desk alert and
+satisfaction loss, no unavailable chart action, and no duplicate after opening
+the persisted campaign on another page. Sol inspected
+`artifacts/screenshots/staffed-checkin-chart-route-desktop.png` at native
+resolution; it shows the usable paper chart while the live patient status is
+`WALKING TO EXAMINATION`.
+
+Final validation passed all 150 unit-test files / 998 tests, all seven workspace
+typechecks, the production player build (298 transformed modules), both focused
+desktop-Chrome scenarios, and `git diff --check`. The build retains only its
+existing large-chunk advisory.
+
+Implementation accountability: Terra `staffed_checkin_m1` delivered the
+persisted staffing gate and waiting/exam routing milestones through corrected
+passes; Terra `founder_autonomy_m3a` delivered founder post-exam autonomy;
+Terra `patient_disposition_m3b` delivered chart-close, testing, departure, and
+reopen behavior through corrected passes. Terra `pathing_integration_m4`
+performed the first integrated audit, and Terra `integration_fixture_repairs`
+reconciled stale test fixtures without changing the accepted product contract.
+Terra `starter_exam_bootstrap_m4b` corrected the fresh-campaign bootstrap and
+tutorial while proving old saves remain unchanged. Terra
+`staffed_checkin_browser_proof_m4c` added the exact-origin semantic browser
+regression and proof image. Sol planned each milestone, reviewed the actual
+diffs, returned gaps for correction, independently reran unit/browser/build
+acceptance, inspected the native proof, and updated this handoff. No Spark
+worker ran because persistence, actor reservations, clinical-service routes,
+and integration behavior required product and debugging judgment. No
+qualifying implementation milestone was left undelegated.
+
+Nothing in this checkpoint has been staged, committed, pushed, deployed, or
+released. The shared tree also contains unrelated accepted graphics work; keep
+all of it intact and audit explicit paths before any future checkpoint. For
+local playtesting, continue to use `START_GAME.cmd` and exactly
+`http://127.0.0.1:4173` in the same browser profile. `localhost`, another port,
+another browser profile, incognito mode, and GitHub Pages each have separate
+browser saves. Say **"push to GitHub"** when this substantial validated local
+checkpoint should be backed up; that instruction will authorize a backup of the
+audited branch, not a merge or Pages deployment.
+
+## Non-editable interface cursor checkpoint
+
+The player interface now behaves as a direct-manipulation game rather than a
+selectable document. Passive opening, campaign, HUD, map, desk, chart, menu,
+and panel copy inherits a normal default cursor, blocks text selection, and
+hides the text caret. This is CSS-only; there is no click interception or
+`preventDefault` behavior.
+
+Purpose-built controls retain their cues: ordinary buttons, links, summaries,
+and checkbox/radio/range controls use a pointer; disabled controls retain
+`not-allowed`; and the map/desk divider retains `row-resize`. The founder-name
+and clinic-name fields explicitly retain selectable text, a text cursor, and a
+visible caret. Account email/password fields retain the same necessary behavior
+when authentication is configured; they are outside the gameplay surface.
+
+Sol reviewed the actual three-path change and returned the first Terra pass
+because a broad `input` selector incorrectly gave the development checkbox an
+I-beam. Terra `suppress_noneditable_text_cursor` narrowed the selectors and
+added `tests/e2e/non-editable-cursor.spec.ts`. Sol independently passed the
+exact-origin desktop-Chrome regression (1 scenario), all 61 player test files /
+364 tests, the player typecheck, the production build (299 transformed
+modules), and `git diff --check`. The browser test covers passive opening and
+game text, both naming inputs, a normal button, the actual development
+checkbox, and the map/desk divider.
+
+No Spark worker ran because even this small CSS change required distinguishing
+gameplay controls, real text entry, authentication, and the existing drag
+contract. No qualifying implementation work was left undelegated. Nothing was
+committed, pushed, deployed, or released. Continue local playtesting through
+`START_GAME.cmd` at exactly `http://127.0.0.1:4173` in the same browser profile.
+Say **"push to GitHub"** when the combined validated local checkpoint should be
+backed up.
+
+## Floor-pattern camera anchoring checkpoint
+
+The graphics-only floor-drift correction in
+`docs/execplans/fix-floor-pattern-camera-drift.md` is implementation- and
+validation-complete. Authored sidewalk and room TileSprites now derive their
+positive, scale-aware repeat phase from logical facility coordinates instead
+of rendered screen coordinates. Adjacent floor fragments therefore retain one
+continuous source phase while the camera moves. The default clinical speckle
+row and sidewalk slab joints are also relative to their owning room/site
+rectangle; the already room-relative hallway plank/seam renderer was preserved.
+
+The live Canvas diagnosis found a second presentation issue: the fractionally
+sized host could map a pointer drag to a fractional layout origin. Phaser then
+floored TileSprite placement while procedural Graphics retained fractional
+coordinates, producing a one-pixel shimmer between layers. Only the final,
+already-clamped rendered origin is now rounded to the whole-pixel Canvas grid.
+Camera intent, persisted pan, drag controls, zoom, clamp bounds, room
+footprints, doors, buildability, navigation, collision, saves, simulation, and
+all gameplay/domain behavior are unchanged.
+
+The focused live proof
+`tests/e2e/floor-pattern-pan-stability.spec.ts` performs real, non-pattern-
+multiple mouse drags in normal and Build mode. It verifies nonzero whole-pixel
+layout movement; exact TileSprite translation, phase, and scale invariance for
+the sidewalk, both Examination orientations, Waiting, and X-ray; and stable
+room-local Canvas pixels across widened sidewalk-joint and hallway
+plank/seam patches. Sol natively inspected the retained 1020-by-421 images:
+
+- `artifacts/screenshots/floor-pattern-pan-normal-100-desktop.png`
+- `artifacts/screenshots/floor-pattern-pan-build-100-desktop.png`
+
+Both show the representative rooms, long hallway, and sidewalk at 100%; only
+the Build capture includes the expected Build grid and labels.
+
+Final Sol validation passed 5 focused Vitest files / 12 tests; 7 focused
+desktop-Chrome browser scenarios in 3.3 minutes covering the new pan proof,
+canonical hallway edges, door/floor continuity, both Examination compositions,
+Front Desk pan and occlusion, and wall-corner continuity; all seven workspace
+typechecks; the production player build with 301 transformed modules; native
+image review; and scoped `git diff --check`. The build retains only its existing
+large-chunk advisory.
+
+Accountability: read-only explorer `floor_pattern_drift_audit` located the
+shared TileSprite phase bug and distinguished procedural hallway rendering.
+Terra `floor_pattern_phase_m1` implemented Milestones 1, 1b, 1c, and 2: logical
+TileSprite phase, procedural sidewalk/clinical phase correction, whole-pixel
+presentation origins, and the real normal/Build browser proof. Sol rejected
+Terra's first negative phase sign, required actual shared-edge source equality,
+identified the two procedural phase bugs, stopped a misleading initial Canvas
+comparison, directed layer-by-layer diagnosis, reviewed every actual diff and
+test, added only the tiny explicit integer-origin E2E assertion, independently
+reran acceptance, and inspected both final images. No Spark worker ran because
+Canvas transform semantics, layer isolation, camera clamping, and native visual
+acceptance required debugging judgment. No qualifying implementation milestone
+was left undelegated.
+
+No Cortan/ComfyUI or Codex-native raster generation was used because the
+existing artwork is unchanged; this was solely renderer coordinate and phase
+work. Nothing in this checkpoint has been staged, committed, pushed, deployed,
+or released. Continue local playtesting through `START_GAME.cmd` at exactly
+`http://127.0.0.1:4173` in the same browser profile. Say **"push to GitHub"**
+when this substantial validated local graphics checkpoint should be backed up.
+
 ## Historical GS-001 pre-review report (2026-09-07; superseded)
 
 This earlier report preceded standalone technical review and owner acceptance.
 Current GS-001 status and backup evidence are in the GS-001 section at the top
 of this handoff and `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md`. The task
 remains repository-only, not live-game integration.
+
+
+
+
+
+## GS-018 local asset completion — 2026-09-17
+
+All88 existing identities now have704/704 approved standing/seated cardinal stills;
+seated East/West are full90-degree profiles. All30 founder clipboard poses are
+owner-approved, including Founder18's parent-reviewed278px size correction.
+Independent validator/hash checks passed (704 baseline+30 clipboard PNGs,0drift).
+See GS-018_EXISTING_CHARACTER_STATICS.md for scope, provenance and exact paths.
+This is local artwork completion only; no runtime integration or Git backup.
+Whole-task owner acceptance precedes the agreed scoped backup/remote verification
+and archive. Say "push to GitHub" to request the backup. Preserve unrelated work.
+
+## Twenty new employee stills complete — 2026-09-17
+
+All20 approved GS022 employees now have160 local cardinal stills:20 original
+fronts reused byte-for-byte and140 new standing/seated views. Full90-degree
+East/West; all artwork and80 seated contact anchors production-reviewed.
+Parent independent complete/reference/GS018 validation passed; prior704+30
+stills unchanged. Sol packaged/validated; Terra generated, repaired and audited;
+parent reviewed actual tooling and visual proofs. See EMPLOYEE20_CARDINAL_STATICS.md
+and artifacts/character-statics/employee20-statics-v1/manifest.json.
+This checkpoint is local artwork only, without runtime integration or Git backup.
+Say "push to GitHub" for a scoped backup. Preserve the separate patient/public
+concept task and unrelated dirty work.
+
+## Twenty patient/public cardinal sets complete — 2026-09-18
+
+All20 approved GS022 patient/public identities now have160 local stills:
+20 original South fronts reused byte-for-byte plus140 new views. Standing and
+seated S/E/W/N, full90-degree East/West, and80 reviewed seat-contact anchors.
+Parent independent strict validation PASS_COMPLETE with0pending; reference
+validation20/20, syntax and whitespace checks passed. Previous894 completed
+stills plus20 intake fronts remain unchanged (914 preservation guards).
+Sol packaged/validated; Terra workers generated and independently audited;
+parent reviewed actual tooling, allnative-light andallcontactoverlays.
+See PATIENT_PUBLIC20_CARDINAL_STATICS.md and
+artifacts/character-statics/patient-public20-statics-v1/manifest.json.
+Localartworkonly; no runtimeintegration,Gitcommit,push or deployment.
+Say "push to GitHub" to request a scoped backup. Preserve unrelated work.

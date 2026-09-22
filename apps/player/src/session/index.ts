@@ -4,4 +4,5 @@ export * from "./alertViewModels";
 export * from "./clinicalText";
 export * from "./tutorialViewModels";
 export * from "./prototypeStorage";
+export * from "./localCampaignRepository";
 export * from "./questionReviewFlags";

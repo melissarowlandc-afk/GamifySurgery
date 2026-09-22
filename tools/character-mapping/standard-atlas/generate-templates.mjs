@@ -1,0 +1,14 @@
+import { createHash } from 'node:crypto';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { createCanvas } from '@napi-rs/canvas';
+import { ATLAS_SCHEMA_VERSION, CELL_SIZE, PAGE_DEFINITIONS, REST_PLACEMENT, SLOT_DEFINITIONS, SLOT_PADDING, restPlacementForSlot, slotRect } from './schema-v1.mjs';
+
+const output=resolve(import.meta.dirname,'templates');mkdirSync(output,{recursive:true});const sha256=b=>createHash('sha256').update(b).digest('hex'),files={};
+for(const[pageId,page]of Object.entries(PAGE_DEFINITIONS)){
+  const blank=createCanvas(page.width,page.height),blankBytes=blank.toBuffer('image/png'),blankFile=`${pageId}-blank-v1.png`;writeFileSync(resolve(output,blankFile),blankBytes);
+  const labeled=createCanvas(page.width,page.height),c=labeled.getContext('2d');c.fillStyle='#161a20';c.fillRect(0,0,labeled.width,labeled.height);c.font='bold 14px monospace';c.textBaseline='top';
+  for(const slot of Object.values(SLOT_DEFINITIONS).filter(x=>x.page===pageId)){const r=slotRect(slot.id),placement=restPlacementForSlot(slot);c.fillStyle=slot.optional?'#273245':'#26392f';c.fillRect(r.x+1,r.y+1,r.width-2,r.height-2);c.strokeStyle='#7f8b99';c.strokeRect(r.x+.5,r.y+.5,r.width-1,r.height-1);c.strokeStyle='#546170';c.setLineDash([5,4]);c.strokeRect(r.x+SLOT_PADDING+.5,r.y+SLOT_PADDING+.5,r.width-SLOT_PADDING*2-1,r.height-SLOT_PADDING*2-1);c.setLineDash([]);c.strokeStyle='#ffcb6b';c.lineWidth=2;c.beginPath();c.moveTo(r.x+placement.targetStart.x,r.y+placement.targetStart.y);c.lineTo(r.x+placement.targetEnd.x,r.y+placement.targetEnd.y);c.stroke();c.fillStyle='#ffcb6b';c.beginPath();c.arc(r.x+placement.targetStart.x,r.y+placement.targetStart.y,4,0,Math.PI*2);c.fill();c.lineWidth=1;c.fillStyle='#f3f5f7';const words=slot.id.split('.');c.fillText(words.slice(1).join('\n'),r.x+12,r.y+12);c.fillStyle='#aeb8c4';c.fillText(slot.optional?'OPTIONAL':'REQUIRED',r.x+12,r.y+CELL_SIZE-28);}
+  const labeledBytes=labeled.toBuffer('image/png'),labeledFile=`${pageId}-labeled-v1.png`;writeFileSync(resolve(output,labeledFile),labeledBytes);files[pageId]={blank:{file:blankFile,sha256:sha256(blankBytes),width:page.width,height:page.height},labeled:{file:labeledFile,sha256:sha256(labeledBytes),width:page.width,height:page.height}};
+}
+const record={schemaVersion:ATLAS_SCHEMA_VERSION,cellSize:CELL_SIZE,padding:SLOT_PADDING,pages:files,restPlacement:REST_PLACEMENT,slots:Object.fromEntries(Object.entries(SLOT_DEFINITIONS).map(([id,s])=>[id,{page:s.page,column:s.column,row:s.row,columnIndex:s.columnIndex,rowIndex:s.rowIndex,optional:s.optional,type:s.type,anatomicalSide:s.anatomicalSide,direction:s.direction,requiredLandmarks:s.requiredLandmarks}]))};const bytes=Buffer.from(`${JSON.stringify(record,null,2)}\n`);writeFileSync(resolve(output,'standard-atlas-v1-layout.json'),bytes);console.log(JSON.stringify({status:'PASS',output,layoutSha256:sha256(bytes),pages:files},null,2));

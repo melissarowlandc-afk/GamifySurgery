@@ -61,7 +61,7 @@ export interface LevelTwoOperationalGuidance {
 export function getLevelTwoOperationalGuidance(
   state: GameState,
 ): LevelTwoOperationalGuidance[] {
-  if (state.facilityLevel !== 2) return [];
+  if (state.facilityLevel === 0) return [];
   const roomsFor = (definitionId: string) => state.rooms.filter(
     (room) => room.roomDefinitionId === definitionId,
   );
@@ -86,15 +86,17 @@ export function getLevelTwoOperationalGuidance(
     (!hasAssignedStaff("staff.endoscopy_nurse") || !hasAssignedStaff("staff.periop_nurse"))) {
     rows.push({ definitionId: "alert.facility.endoscopy-inoperable", targetType: "staff_role", targetId: !hasAssignedStaff("staff.endoscopy_nurse") ? "staff.endoscopy_nurse" : "staff.periop_nurse", actionLabel: "Show hiring" });
   }
-  const builtImaging = ["room.ultrasound", "room.ct"].find(hasBuilt);
-  const inoperableImaging = ["room.ultrasound", "room.ct"].find(
+  const builtImaging = ["room.ultrasound", "room.xray", "room.ct"].find(hasBuilt);
+  const inoperableImaging = ["room.ultrasound", "room.xray", "room.ct"].find(
     (definitionId) => hasBuilt(definitionId) && !hasOperationalRoom(definitionId),
   );
-  if (builtImaging &&
-    (inoperableImaging || !hasOperationalRoom("room.imaging_control"))) {
+  if (builtImaging && inoperableImaging) {
     rows.push({ definitionId: "alert.facility.imaging-inoperable", ...roomAction(inoperableImaging ?? builtImaging) });
   } else if (builtImaging && !hasAssignedStaff("staff.imaging_technician")) {
     rows.push({ definitionId: "alert.facility.imaging-inoperable", targetType: "staff_role", targetId: "staff.imaging_technician", actionLabel: "Show hiring" });
+  }
+  if (state.facilityLevel !== 2) {
+    return rows.map((row) => ({ ...row, message: renderPrototypeAlert(row.definitionId, {}).body }));
   }
   if (hasBuilt("room.phlebotomy") && !hasOperationalRoom("room.phlebotomy")) {
     rows.push({ definitionId: "alert.facility.phlebotomy-inoperable", ...roomAction("room.phlebotomy") });
@@ -134,6 +136,16 @@ function eventTarget(
     return {
       targetType: "water_cooler",
       actionLabel: "Show water cooler",
+    };
+  }
+  if (
+    event.definitionId === "alert.patient.check-in-unattended" &&
+    event.target?.kind === "room"
+  ) {
+    return {
+      targetType: "room",
+      targetId: event.target.id,
+      actionLabel: "Show Front Desk",
     };
   }
   if (event.target?.kind === "encounter" || event.encounterId) {
@@ -231,6 +243,18 @@ function conditionOccurrenceTarget(
   }
 }
 
+const CLINIC_WIDE_COMPLAINT_DEFINITION_IDS = new Set([
+  "alert.facility.private-exam-needed",
+  "alert.staff.receptionist-recommended",
+  "alert.facility.onsite-imaging-requested",
+  "alert.staff.imaging-technician-needed",
+  "alert.facility.waiting-room-needed",
+  "alert.facility.bathroom-needed",
+  "alert.patient.cleanliness-complaint",
+  "alert.patient.room-upgrade-requested",
+  "alert.facility.waiting-room-crowded",
+]);
+
 function conditionOccurrenceToMessage(
   occurrence: FacilityConditionOccurrenceState,
   isLatestForCondition: boolean,
@@ -241,6 +265,11 @@ function conditionOccurrenceToMessage(
     isLatestForCondition &&
     occurrence.priority === "action_required";
   const rendered = renderPrototypeAlert(occurrence.definitionId);
+  const message = CLINIC_WIDE_COMPLAINT_DEFINITION_IDS.has(
+    occurrence.definitionId,
+  )
+    ? rendered.body
+    : occurrence.message;
   return {
     id: occurrence.id,
     priority: requiresAttention
@@ -249,7 +278,7 @@ function conditionOccurrenceToMessage(
     category: requiresAttention ? "action_required" : "guidance",
     showAttentionMarker: requiresAttention,
     title: rendered.title,
-    message: occurrence.message,
+    message,
     timeLabel: facilityTimeLabel(occurrence.occurredAtFacilityTick),
     sortKey: occurrence.occurredAtFacilityTick,
     persistent: false,
@@ -480,6 +509,9 @@ function attentionConditionActive(
   const encounter = event.encounterId
     ? state.encounters[event.encounterId]
     : undefined;
+  if (definitionId === "alert.patient.check-in-unattended") {
+    return encounter?.checkInStatus === "awaiting_staff";
+  }
   if (
     event.type === "patient_arrived" ||
     event.type === "patience_warning" ||
@@ -580,12 +612,14 @@ function persistentPatientMessages(
   recentEvents: readonly DomainEvent[],
 ): MessageBoardItemView[] {
   return Object.values(state.encounters).flatMap((encounter) => {
+    const idleWaitingSinceTick = encounter.idleWaitingSinceTick;
     if (encounter.lifecycle === "waiting_unopened") {
       if (
+        encounter.checkInStatus !== "checked_in" ||
         encounter.feedAttentionKind !== "checked_in" ||
-        encounter.feedAttentionStartedAtTick === null ||
+        idleWaitingSinceTick === null ||
         state.facilityTick -
-          encounter.feedAttentionStartedAtTick <=
+          idleWaitingSinceTick <=
           PROTOTYPE_ALERT_SCHEDULING.patientAttentionDelayMinutes ||
         state.openChartEncounterId === encounter.id ||
         encounter.patientMovement?.kind === "arriving_for_check_in" ||
@@ -597,9 +631,9 @@ function persistentPatientMessages(
         recentEvents.some(
           (event) =>
             event.encounterId === encounter.id &&
-            (event.type === "patient_arrived" ||
-              (event.type === "patience_warning" &&
-                event.definitionId !== "alert.patient.leaving")),
+            event.type === "patience_warning" &&
+            event.definitionId === "alert.patient.waiting" &&
+            event.facilityTick > idleWaitingSinceTick,
         )
       ) {
         return [];
@@ -610,7 +644,7 @@ function persistentPatientMessages(
       const configuredCopy = configuredAlertCopy(
         leaveWarningActive
           ? "alert.patient.patience"
-          : "alert.patient.arrived",
+          : "alert.patient.waiting",
         {
           patient_name: encounter.patientDisplayName,
         },
@@ -626,7 +660,7 @@ function persistentPatientMessages(
           title: configuredCopy.title,
           message: configuredCopy.message,
           timeLabel: facilityTimeLabel(
-            encounter.feedAttentionStartedAtTick +
+            idleWaitingSinceTick +
               PROTOTYPE_ALERT_SCHEDULING
                 .patientAttentionDelayMinutes +
               1,
@@ -635,7 +669,7 @@ function persistentPatientMessages(
           targetType: "patient",
           targetId: encounter.id,
           sortKey:
-            encounter.feedAttentionStartedAtTick +
+            idleWaitingSinceTick +
             PROTOTYPE_ALERT_SCHEDULING
               .patientAttentionDelayMinutes +
             1 +
@@ -645,46 +679,38 @@ function persistentPatientMessages(
       ];
     }
     if (encounter.lifecycle === "active_action_required") {
-      const isResultReady =
-        encounter.feedAttentionKind === "result_ready";
       if (
-        encounter.feedAttentionStartedAtTick === null ||
-        (encounter.feedAttentionKind !== "clinical_decision" &&
-          encounter.feedAttentionKind !== "result_ready") ||
+        idleWaitingSinceTick === null ||
         state.facilityTick -
-          encounter.feedAttentionStartedAtTick <=
+          idleWaitingSinceTick <=
           PROTOTYPE_ALERT_SCHEDULING.patientAttentionDelayMinutes ||
         state.openChartEncounterId === encounter.id ||
         recentEvents.some(
           (event) =>
             event.encounterId === encounter.id &&
-            (event.type === "result_ready" ||
-              (event.type === "patient_arrived" &&
-                event.definitionId ===
-                  "alert.patient.decision-required")),
+            event.type === "patience_warning" &&
+            event.definitionId === "alert.patient.waiting" &&
+            event.facilityTick > idleWaitingSinceTick,
         )
       ) {
         return [];
       }
       const configuredCopy = configuredAlertCopy(
-        isResultReady
-          ? "alert.patient.result-ready"
-          : "alert.patient.decision-required",
+        "alert.patient.waiting",
         {
           patient_name: encounter.patientDisplayName,
-          result_name: "New information",
         },
       );
       return [
         {
-          id: `persistent.patient.${encounter.id}.decision`,
+          id: `persistent.patient.${encounter.id}.waiting`,
           priority: "action_required",
           category: "action_required",
           showAttentionMarker: true,
           title: configuredCopy.title,
           message: configuredCopy.message,
           timeLabel: facilityTimeLabel(
-            encounter.feedAttentionStartedAtTick +
+            idleWaitingSinceTick +
               PROTOTYPE_ALERT_SCHEDULING
                 .patientAttentionDelayMinutes +
               1,
@@ -693,7 +719,7 @@ function persistentPatientMessages(
           targetType: "patient",
           targetId: encounter.id,
           sortKey:
-            encounter.feedAttentionStartedAtTick +
+            idleWaitingSinceTick +
             PROTOTYPE_ALERT_SCHEDULING
               .patientAttentionDelayMinutes +
             1.08,
@@ -1316,10 +1342,35 @@ function persistentSystemMessages(
 }
 
 function isSuppressedFromPlayerFeed(event: DomainEvent): boolean {
+  if (event.type === "result_ready") {
+    return true;
+  }
+  if (event.type === "patient_arrived") {
+    return true;
+  }
   return isPrototypeEventSuppressedFromPlayerFeed(
     event.type,
     event.definitionId,
   );
+}
+
+function isCadenceManagedPersistentMessage(
+  item: MessageBoardItemView,
+): boolean {
+  return [
+    "persistent.finance.low-cash",
+    "persistent.facility.waiting-room-needed",
+    "persistent.facility.private-exam-needed",
+    "persistent.facility.bathroom-needed",
+    "persistent.staff.receptionist-recommended",
+    "persistent.facility.onsite-imaging-requested",
+    "persistent.staff.imaging-technician-needed",
+    "persistent.environment.trash-visible",
+    "persistent.environment.trash-accumulated",
+    "persistent.environment.water-cooler-low",
+    "persistent.advertising.recommended",
+    "persistent.facility.waiting-room-crowded",
+  ].includes(item.id) || item.id.startsWith("persistent.room-upgrade-requested.");
 }
 
 export function createMessageBoardView(
@@ -1367,7 +1418,13 @@ export function createMessageBoardView(
       occurrence.id,
     );
   }
-  const conditionItems = recentConditionOccurrences.map(
+  const conditionItems = recentConditionOccurrences
+    .filter(
+      (occurrence) =>
+        occurrence.conditionKey !== "room_upgrade_requested" ||
+        state.facilityLevel >= 3,
+    )
+    .map(
     (occurrence) =>
       conditionOccurrenceToMessage(
         occurrence,
@@ -1387,7 +1444,7 @@ export function createMessageBoardView(
       state,
       recentEvents,
       materializedConditionKeys,
-    ),
+    ).filter((item) => !isCadenceManagedPersistentMessage(item)),
   ];
   const retainedHistory = [...eventItems, ...conditionItems]
     .sort(

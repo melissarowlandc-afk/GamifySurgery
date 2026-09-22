@@ -1,8 +1,185 @@
 import { describe, expect, it } from "vitest";
 import { createInitialGameState } from "@gamify-surgery/game-domain";
+import { getRoomCareAnchor } from "@gamify-surgery/game-domain";
+import { getRoomNavigationAnchor } from "@gamify-surgery/game-domain";
+import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("patient movement presentation", () => {
+  it("seats an available founder at an unstaffed Front Desk without seating reserved work", () => {
+    const state = createInitialGameState();
+    const frontDesk = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    )!;
+    const definition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find(
+      (room) => room.id === "room.front_desk",
+    )!;
+    state.environment.founderLocation = getRoomNavigationAnchor(
+      frontDesk,
+      definition,
+      "staff",
+    );
+    state.environment.founderActivity = null;
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(true);
+
+    state.serviceOperations.push({
+      id: "service.test.founder-reserved",
+      incomeLineId: "income.test",
+      catalogVersion: 1,
+      actorKind: "visitor",
+      actorId: "visitor.test",
+      displayName: "Reserved Visitor",
+      appearance: state.founder.appearance,
+      status: "waiting_for_resources",
+      createdAtFacilityTick: state.facilityTick,
+      waitDeadlineFacilityTick: state.facilityTick + 60,
+      startedAtFacilityTick: null,
+      completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null,
+      quoteFee: 0,
+      phaseIndex: 0,
+      phaseStartedAtFacilityTick: null,
+      phaseEndsAtFacilityTick: null,
+      reservedRoomInstanceIds: [],
+      reservedEmployeeIds: [],
+      providerReservation: { kind: "founder" },
+      location: null,
+      path: [],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      cancellationReason: null,
+    });
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(false);
+
+    state.serviceOperations = [];
+    const encounter = Object.values(state.encounters)[0]!;
+    encounter.steps[0]!.status = "feedback_pending";
+    encounter.pendingResult = {
+      operationId: "result.test.founder-reserved",
+      gateId: "gate.test.founder-reserved",
+      originatingNodeIndex: 0,
+      resultTypeId: "service.test",
+      pendingLabel: "Reserved work pending",
+      resultNarrative: "fixture",
+      routeId: "route.test",
+      routeDisplayName: "Reserved work",
+      scheduledAtTick: state.facilityTick - 2,
+      dueTick: state.facilityTick + 10,
+      deliveredAtTick: null,
+      serviceDurationTicks: 1,
+      durationTicks: 1,
+      offsiteReturnStartedAtTick: null,
+      offsiteTravel: null,
+      patientTravel: null,
+      resourceReservations: [],
+      providerReservation: { kind: "founder" },
+      timingPhases: [{
+        id: "phase.test.expired",
+        durationTicks: 1,
+        resourceBound: true,
+        startsAtTick: state.facilityTick - 2,
+        endsAtTick: state.facilityTick - 1,
+      }],
+    };
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(false);
+
+    encounter.pendingResult = null;
+    state.employees.push({
+      id: "employee.test.receptionist",
+      staffRoleDefinitionId: "staff.receptionist",
+      displayName: "Receptionist",
+      appearance: state.founder.appearance,
+      hiredAtFacilityTick: state.facilityTick,
+      salaryPerExpenseInterval: 18,
+      morale: 80,
+      trainingLevel: 1,
+      homeRoomInstanceId: frontDesk.id,
+      location: { ...state.environment.founderLocation },
+      path: [{ ...state.environment.founderLocation }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: state.facilityTick + 60,
+      facilityTask: null,
+    });
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(false);
+  });
+
+  it("projects every waiting reservation kind and semantic examination attendance", () => {
+    const state = createInitialGameState();
+    const encounter = Object.values(state.encounters)[0]!;
+    const frontDesk = state.rooms.find((room) => room.roomDefinitionId === "room.front_desk")!;
+    state.rooms.push(
+      { id: "room.test.waiting-matrix", roomDefinitionId: "room.waiting", x: 10, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+      { id: "room.test.exam-matrix", roomDefinitionId: "room.examination", x: 16, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+      { id: "room.test.other-chair", roomDefinitionId: "room.periop_recovery", x: 22, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    );
+    encounter.lifecycle = "waiting_unopened";
+    encounter.patientMovement = null;
+    const patient = () => createPrototypePlayerView(state, null, false, null).facility.patients!.find((candidate) => candidate.instanceId === encounter.id)!;
+    for (const [roomId, location] of [["room.test.waiting-matrix", { x: 11, y: 10 }], [frontDesk.id, { x: frontDesk.x + 4, y: frontDesk.y + 3 }], ["room.test.other-chair", { x: 24, y: 11 }]] as const) {
+      encounter.assignedRoomInstanceId = roomId;
+      encounter.patientLocation = location;
+      encounter.waitingDestination = { roomInstanceId: roomId, location, kind: "chair" };
+      expect(patient().seated).toBe(true);
+    }
+    encounter.assignedRoomInstanceId = "room.test.waiting-matrix";
+    encounter.patientLocation = { x: 10, y: 10 };
+    encounter.waitingDestination = { roomInstanceId: "room.test.waiting-matrix", location: { x: 10, y: 10 }, kind: "standing" };
+    expect(patient().seated).toBe(false);
+    encounter.assignedRoomInstanceId = frontDesk.id;
+    encounter.patientLocation = { x: frontDesk.x + 1, y: frontDesk.y + 3 };
+    encounter.waitingDestination = { roomInstanceId: frontDesk.id, location: { ...encounter.patientLocation }, kind: "public_wander" };
+    expect(patient().seated).toBe(false);
+    const exam = state.rooms.find((room) => room.id === "room.test.exam-matrix")!;
+    const examDefinition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find((room) => room.id === "room.examination")!;
+    encounter.assignedRoomInstanceId = exam.id;
+    encounter.patientLocation = getRoomCareAnchor(exam, examDefinition, "patient");
+    encounter.waitingDestination = null;
+    expect(patient().pose).toBe("exam-table");
+    state.environment.founderActivity = { kind: "attend_encounter", targetId: encounter.id, path: [{ ...state.environment.founderLocation }, getRoomCareAnchor(exam, examDefinition, "clinician")], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, workMinutesRemaining: 1 };
+    expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(false);
+    state.environment.founderLocation = getRoomCareAnchor(exam, examDefinition, "clinician");
+    state.environment.founderActivity.pathIndex = 1;
+    expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(true);
+  });
+
+  it("only seats the founder after a chair auto-plan arrives", () => {
+    const state = createInitialGameState();
+    const location = { ...state.environment.founderLocation };
+    const chair = { x: location.x + 1, y: location.y };
+    state.environment.founderActivity = {
+      kind: "sit_in_chair",
+      targetId: "chair.test",
+      path: [location, chair],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      workMinutesRemaining: 10,
+    };
+    expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(false);
+    state.environment.founderLocation = chair;
+    state.environment.founderActivity.pathIndex = 1;
+    expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(true);
+    for (const kind of ["wander_facility", "visit_bathroom"] as const) {
+      state.environment.founderActivity = {
+        kind,
+        targetId: `auto.${kind}`,
+        path: [chair],
+        pathIndex: 0,
+        lastMovedAtFacilityTick: state.facilityTick,
+        workMinutesRemaining: 10,
+      };
+      expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(false);
+    }
+  });
   it("derives a seated pose only for a stationary patient on a Waiting Room chair", () => {
     const state = createInitialGameState();
     const encounter = Object.values(state.encounters)[0]!;

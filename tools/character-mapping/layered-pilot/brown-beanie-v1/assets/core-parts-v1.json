@@ -1,0 +1,1798 @@
+{
+  "schemaVersion": "character-atlas/v1",
+  "source": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-092d31ac-7592-4634-8883-167ddac564df.png",
+    "sha256": "1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636"
+  },
+  "generatedUpper": {
+    "path": "tools/character-mapping/layered-pilot/brown-beanie-v1/assets/upper-broader-v3-corrected-v2.png",
+    "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+    "dimensions": [
+      1122,
+      1402
+    ],
+    "base": {
+      "path": "tools/character-mapping/layered-pilot/brown-beanie-v1/assets/upper-broader-v3.png",
+      "sha256": "7f8a5a9edd3c3b41144e83ad49402c60fbdba7400f7eb1ea2226eb5dba2ed3f5"
+    },
+    "derivation": "transparent strip removal at four internal elbow source borders plus horizontal reflection of only South/North anatomical-left forearm cells with landmarks; no raster recoloring"
+  },
+  "generatedProfileTorso": {
+    "path": "tools/character-mapping/layered-pilot/brown-beanie-v1/assets/profile-arm-free-torso-v2.png",
+    "sha256": "ab611f630387e87cd574c8ec327ab9d6eb239fe39755d0ebd7b442b4c7258509",
+    "dimensions": [
+      1774,
+      887
+    ],
+    "views": [
+      "east",
+      "west"
+    ]
+  },
+  "pages": {
+    "upper": {
+      "file": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-v1.png",
+      "sha256": "09797e5171d7a48c37adc4eebd98a7934f177b07722925342dc99663b5f25bb4",
+      "width": 1024,
+      "height": 1280
+    },
+    "identity": {
+      "file": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\identity-v1.png",
+      "sha256": "56b4d79be3fa0f20eaf356f430cfa7bc2eab8f1afe8ab53c31568c1a7e67c65b",
+      "width": 1024,
+      "height": 768
+    }
+  },
+  "parts": {
+    "upper.south.torso": {
+      "slotId": "upper.south.torso",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\torso-south-original-v1.png",
+        "sha256": "a6774573b225542386df66cde00bb2ad960727384f2a2ada2b05ca1790657516",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact original RGB torso extraction from 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; neutral checkerboard and non-torso anatomy removed by authored polygon",
+        "requireSingleComponent": true
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120.5,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 135.5,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 110
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 152.5,
+              "y": 56
+            },
+            "right": {
+              "x": 102.5,
+              "y": 56
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 153.5,
+              "y": 126
+            },
+            "right": {
+              "x": 102.5,
+              "y": 126
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 15,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 23.5,
+          "y": -95
+        }
+      },
+      "contentBounds": {
+        "x": 95,
+        "y": 39,
+        "width": 65,
+        "height": 90
+      }
+    },
+    "upper.south.upperArm.left": {
+      "slotId": "upper.south.upperArm.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 78,
+          "y": 312,
+          "width": 136,
+          "height": 218
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical left selected by visible thumb orientation; upper1 in south source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56.00000000000003
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 148.48472075869336,
+            "y": 135.54899894625925
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.6012446026470722,
+        "rotationRadians": 0.0836035527061727,
+        "translation": {
+          "x": 64.33335399491725,
+          "y": -149.0446910060125
+        }
+      },
+      "contentBounds": {
+        "x": 94,
+        "y": 46,
+        "width": 75,
+        "height": 126
+      }
+    },
+    "upper.south.forearmHand.left": {
+      "slotId": "upper.south.forearmHand.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 77,
+          "y": 1098,
+          "width": 131,
+          "height": 233
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical left selected by visible thumb orientation; fore2 in south source layout; source cell reflected with all landmarks to correct duplicated generated thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 129.73529411764707,
+            "y": 131.77450980392155
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 107.75490196078431,
+            "y": 146.81372549019613
+          },
+          "anterior": {
+            "x": 108.33333333333334,
+            "y": 106.32352941176475
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5784313725490197,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 46.44117647058823,
+          "y": -590.686274509804
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 52,
+        "width": 74,
+        "height": 127
+      }
+    },
+    "upper.south.upperArm.right": {
+      "slotId": "upper.south.upperArm.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 74,
+          "y": 572,
+          "width": 144,
+          "height": 214
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical right selected by visible thumb orientation; upper2 in south source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 163.99999999999994
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 107.19963661140133,
+            "y": 135.4240290710879
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.6151774290394371,
+        "rotationRadians": -0.07982998571223732,
+        "translation": {
+          "x": 11.218714512832186,
+          "y": -300.6232114467408
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 43,
+        "width": 82,
+        "height": 128
+      }
+    },
+    "upper.south.forearmHand.right": {
+      "slotId": "upper.south.forearmHand.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 73,
+          "y": 825,
+          "width": 131,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical right selected by visible thumb orientation; fore1 in south source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 126.87850648563463,
+            "y": 133.2771972360286
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174.00000000000006
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 146.3329858164626,
+            "y": 143.73397987634866
+          },
+          "anterior": {
+            "x": 145.74076857800947,
+            "y": 104.77066311068012
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5810270522503413,
+        "rotationRadians": 0.029548047901893776,
+        "translation": {
+          "x": 65.29649654503575,
+          "y": -438.19813310704336
+        }
+      },
+      "contentBounds": {
+        "x": 94,
+        "y": 50,
+        "width": 74,
+        "height": 130
+      }
+    },
+    "upper.east.torso": {
+      "slotId": "upper.east.torso",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\profile-arm-free-torso-v2.png",
+        "sha256": "ab611f630387e87cd574c8ec327ab9d6eb239fe39755d0ebd7b442b4c7258509",
+        "crop": {
+          "x": 485,
+          "y": 245,
+          "width": 260,
+          "height": 400
+        },
+        "derivation": "source-referenced arm-free east sweater torso from original 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; full pelvic cloth width restored without sleeve, cuff or hand pixels",
+        "requireSingleComponent": true
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 118,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 137.99999999999997,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 138
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 105.42857142857142,
+              "y": 60.85714285714285
+            },
+            "right": {
+              "x": 109.7142857142857,
+              "y": 60.85714285714285
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 108.28571428571428,
+              "y": 140.85714285714283
+            },
+            "right": {
+              "x": 148.28571428571428,
+              "y": 140.85714285714283
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 20,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.2857142857142857,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -48.85714285714286,
+          "y": -33.42857142857143
+        }
+      },
+      "contentBounds": {
+        "x": 91,
+        "y": 37,
+        "width": 73,
+        "height": 113
+      }
+    },
+    "upper.east.upperArm.left": {
+      "slotId": "upper.east.upperArm.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 354,
+          "y": 312,
+          "width": 132,
+          "height": 218
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical left selected by visible thumb orientation; upper1 in east source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 105.56445549168868,
+            "y": 135.33646108435602
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.602000703470026,
+        "rotationRadians": -0.06693894610959226,
+        "translation": {
+          "x": -143.60901040857544,
+          "y": -125.50107192791677
+        }
+      },
+      "contentBounds": {
+        "x": 89,
+        "y": 46,
+        "width": 74,
+        "height": 126
+      }
+    },
+    "upper.east.forearmHand.left": {
+      "slotId": "upper.east.forearmHand.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 350,
+          "y": 825,
+          "width": 145,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical left selected by visible thumb orientation; fore1 in east source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 123.73828989131479,
+            "y": 133.1023372126574
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 127.99999999999997,
+            "y": 173.9999999999999
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 141.97114552274692,
+            "y": 149.06530730018278
+          },
+          "anterior": {
+            "x": 138.60036549004516,
+            "y": 105.95450610753096
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5786260603587321,
+        "rotationRadians": 0.13773619096034456,
+        "translation": {
+          "x": -49.44262768106179,
+          "y": -463.37818601519655
+        }
+      },
+      "contentBounds": {
+        "x": 82,
+        "y": 47,
+        "width": 72,
+        "height": 133
+      }
+    },
+    "upper.east.upperArm.right": {
+      "slotId": "upper.east.upperArm.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 354,
+          "y": 572,
+          "width": 131,
+          "height": 214
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical right selected by visible thumb orientation; upper2 in east source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128.00000000000003,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128.00000000000003,
+            "y": 163.99999999999994
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 106.9681798896903,
+            "y": 134.85787017394995
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.6169817074564873,
+        "rotationRadians": -0.02285316354080822,
+        "translation": {
+          "x": -142.50931758101885,
+          "y": -303.78264416957666
+        }
+      },
+      "contentBounds": {
+        "x": 86,
+        "y": 44,
+        "width": 78,
+        "height": 125
+      }
+    },
+    "upper.east.forearmHand.right": {
+      "slotId": "upper.east.forearmHand.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 354,
+          "y": 1098,
+          "width": 137,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical right selected by visible thumb orientation; fore2 in east source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 127.09094799914405,
+            "y": 132.25936229402942
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 173.9999999999999
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 141.52635708681075,
+            "y": 149.36300734717167
+          },
+          "anterior": {
+            "x": 140.61730508595477,
+            "y": 107.6223696412012
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5753907317109884,
+        "rotationRadians": 0.10257985241829469,
+        "translation": {
+          "x": -51.10007846494037,
+          "y": -609.1230472929594
+        }
+      },
+      "contentBounds": {
+        "x": 84,
+        "y": 44,
+        "width": 72,
+        "height": 135
+      }
+    },
+    "upper.west.torso": {
+      "slotId": "upper.west.torso",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\profile-arm-free-torso-v2.png",
+        "sha256": "ab611f630387e87cd574c8ec327ab9d6eb239fe39755d0ebd7b442b4c7258509",
+        "crop": {
+          "x": 1028,
+          "y": 245,
+          "width": 260,
+          "height": 400
+        },
+        "derivation": "source-referenced arm-free west sweater torso from original 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; full pelvic cloth width restored without sleeve, cuff or hand pixels",
+        "requireSingleComponent": true
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 118,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 138,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 140.6470588235294
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 152.41176470588232,
+              "y": 61.23529411764706
+            },
+            "right": {
+              "x": 149.4705882352941,
+              "y": 61.23529411764706
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 153.29411764705884,
+              "y": 143.58823529411762
+            },
+            "right": {
+              "x": 103.29411764705878,
+              "y": 143.58823529411762
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 20,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.29411764705882354,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -211.41176470588238,
+          "y": -35.82352941176471
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 36,
+        "width": 75,
+        "height": 117
+      }
+    },
+    "upper.west.upperArm.left": {
+      "slotId": "upper.west.upperArm.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 614,
+          "y": 312,
+          "width": 132,
+          "height": 218
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical left selected by visible thumb orientation; upper1 in west source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164.00000000000003
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 149.83489203044894,
+            "y": 135.2961938791362
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.602000703470026,
+        "rotationRadians": 0.06693894610959226,
+        "translation": {
+          "x": -274.3230697529906,
+          "y": -170.68087618455806
+        }
+      },
+      "contentBounds": {
+        "x": 81,
+        "y": 45,
+        "width": 73,
+        "height": 130
+      }
+    },
+    "upper.west.forearmHand.left": {
+      "slotId": "upper.west.forearmHand.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 606,
+          "y": 825,
+          "width": 146,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical left selected by visible thumb orientation; fore1 in west source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 131.68856400884863,
+            "y": 133.18178320669415
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 173.9999999999999
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 114.02885447725305,
+            "y": 149.06530730018278
+          },
+          "anterior": {
+            "x": 117.39963450995481,
+            "y": 105.95450610753096
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5786260603587321,
+        "rotationRadians": -0.13773619096034456,
+        "translation": {
+          "x": -337.0541502356448,
+          "y": -374.3192267000095
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 49,
+        "width": 72,
+        "height": 132
+      }
+    },
+    "upper.west.upperArm.right": {
+      "slotId": "upper.west.upperArm.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 615,
+          "y": 572,
+          "width": 131,
+          "height": 214
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical right selected by visible thumb orientation; upper2 in west source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 149.194779771615,
+            "y": 134.98270799347472
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.616891116215743,
+        "rotationRadians": 0.028563657838759995,
+        "translation": {
+          "x": -290.7334420880914,
+          "y": -321.9295269168027
+        }
+      },
+      "contentBounds": {
+        "x": 79,
+        "y": 44,
+        "width": 78,
+        "height": 125
+      }
+    },
+    "upper.west.forearmHand.right": {
+      "slotId": "upper.west.forearmHand.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 608,
+          "y": 1098,
+          "width": 137,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical right selected by visible thumb orientation; fore2 in west source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 129.6463162890023,
+            "y": 132.16732708506345
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128.00000000000006,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 114.24989915766992,
+            "y": 149.5208447028117
+          },
+          "anterior": {
+            "x": 113.61153161703646,
+            "y": 107.94575869023606
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5747897014162605,
+        "rotationRadians": -0.11227099061754693,
+        "translation": {
+          "x": -340.3881836516788,
+          "y": -537.8778028235854
+        }
+      },
+      "contentBounds": {
+        "x": 88,
+        "y": 45,
+        "width": 71,
+        "height": 136
+      }
+    },
+    "upper.north.torso": {
+      "slotId": "upper.north.torso",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\torso-north-original-v1.png",
+        "sha256": "6d610f33117fb2d812d8e1b9cb84fcde7559f409ee62ad60f9d0794c042fa8ee",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact original RGB torso extraction from 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; neutral checkerboard and non-torso anatomy removed by authored polygon",
+        "requireSingleComponent": true
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 117,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 139,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 118
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 101,
+              "y": 63
+            },
+            "right": {
+              "x": 155,
+              "y": 63
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 99,
+              "y": 134
+            },
+            "right": {
+              "x": 156,
+              "y": 134
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 22,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 64,
+          "y": -87
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 43,
+        "width": 71,
+        "height": 94
+      }
+    },
+    "upper.north.upperArm.left": {
+      "slotId": "upper.north.upperArm.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 900,
+          "y": 312,
+          "width": 135,
+          "height": 218
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical left selected by visible thumb orientation; upper1 in north source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128.00000000000006,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128.00000000000006,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 105.86531004746104,
+            "y": 135.5636070353941
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.6015149778978234,
+        "rotationRadians": -0.07805339419918858,
+        "translation": {
+          "x": -479.4124763470547,
+          "y": -96.20237615162705
+        }
+      },
+      "contentBounds": {
+        "x": 83,
+        "y": 47,
+        "width": 75,
+        "height": 125
+      }
+    },
+    "upper.north.forearmHand.left": {
+      "slotId": "upper.north.forearmHand.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 905,
+          "y": 1098,
+          "width": 130,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical left selected by visible thumb orientation; fore2 in north source layout; source cell reflected with all landmarks to correct duplicated generated thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 125.10784313725492,
+            "y": 132.3529411764706
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 157.5,
+            "y": 146.81372549019613
+          },
+          "anterior": {
+            "x": 155.76470588235304,
+            "y": 106.32352941176475
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5784313725490197,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -427.87254901960785,
+          "y": -590.686274509804
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 52,
+        "width": 72,
+        "height": 127
+      }
+    },
+    "upper.north.upperArm.right": {
+      "slotId": "upper.north.upperArm.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 895,
+          "y": 572,
+          "width": 144,
+          "height": 214
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated upperArm garment art; actual anatomical right selected by visible thumb orientation; upper2 in north source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 127.99999999999994,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128.00000000000006,
+            "y": 164.00000000000006
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 148.6011560693642,
+            "y": 135.9075144508671
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.6154470619441815,
+        "rotationRadians": 0.0741495196586207,
+        "translation": {
+          "x": -445.21647074105357,
+          "y": -352.54750925504976
+        }
+      },
+      "contentBounds": {
+        "x": 76,
+        "y": 43,
+        "width": 83,
+        "height": 127
+      }
+    },
+    "upper.north.forearmHand.right": {
+      "slotId": "upper.north.forearmHand.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\upper-broader-v3-corrected-v2.png",
+        "sha256": "7a1ccf420b4b1d1a6b9f40decb778df960e680cbe8eac178a84387490ffa1288",
+        "crop": {
+          "x": 909,
+          "y": 825,
+          "width": 130,
+          "height": 234
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced isolated forearmHand garment art; actual anatomical right selected by visible thumb orientation; fore1 in north source layout"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128.00000000000006,
+            "y": 56
+          },
+          "wrist": {
+            "x": 129.32211281951783,
+            "y": 133.27778047242572
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 127.99999999999994,
+            "y": 173.99999999999994
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 109.27579182228254,
+            "y": 145.3971479846728
+          },
+          "anterior": {
+            "x": 108.27419120143571,
+            "y": 104.73216277828982
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.5811045474167059,
+        "rotationRadians": -0.02462556286646863,
+        "translation": {
+          "x": -457.49565892224854,
+          "y": -421.92375224329425
+        }
+      },
+      "contentBounds": {
+        "x": 85,
+        "y": 50,
+        "width": 73,
+        "height": 130
+      }
+    },
+    "identity.south.head": {
+      "slotId": "identity.south.head",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\head-south-original-v1.png",
+        "sha256": "7f4eb5cd1e1f215fc418b02ec0e0346284cf917beda40db7cae43b9b748901c3",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact original RGB head extraction from 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; neutral checkerboard and non-head anatomy removed by authored polygon"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 108
+          },
+          "chin": {
+            "x": 129,
+            "y": 190
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 24,
+          "y": 55
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 107,
+        "width": 73,
+        "height": 93
+      }
+    },
+    "identity.east.head": {
+      "slotId": "identity.east.head",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\head-east-original-v1.png",
+        "sha256": "65c889b346e05e34d9943fe7b60f6fbb86ce0c14fad1b6a6ed58750c32513c2d",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact original RGB head extraction from 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; neutral checkerboard and non-head anatomy removed by authored polygon"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 118,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 138,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 129,
+            "y": 109
+          },
+          "chin": {
+            "x": 156,
+            "y": 190
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 20,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 24,
+          "y": 55
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 110,
+        "width": 76,
+        "height": 89
+      }
+    },
+    "identity.west.head": {
+      "slotId": "identity.west.head",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\head-west-original-v1.png",
+        "sha256": "dd7a005a2eb10a3fd440b50d5c5bed7b96bb52c03e09c121861673119aa36e3f",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact original RGB head extraction from 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; neutral checkerboard and non-head anatomy removed by authored polygon"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 118,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 138,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 129,
+            "y": 109
+          },
+          "chin": {
+            "x": 104,
+            "y": 191
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 20,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 44,
+          "y": 55
+        }
+      },
+      "contentBounds": {
+        "x": 91,
+        "y": 110,
+        "width": 74,
+        "height": 89
+      }
+    },
+    "identity.north.head": {
+      "slotId": "identity.north.head",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\head-north-original-v1.png",
+        "sha256": "d2997fab5cc1e199c900632b5341686d2430c96e253cbf002ab6c0bf3950445f",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact original RGB head extraction from 1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636; neutral checkerboard and non-head anatomy removed by authored polygon"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 117,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 139,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 115
+          },
+          "chin": {
+            "x": 128,
+            "y": 188
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 22,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 64,
+          "y": 62
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 114,
+        "width": 69,
+        "height": 85
+      }
+    }
+  },
+  "sourceProportions": {
+    "south": {
+      "neck": [
+        [
+          97,
+          143
+        ],
+        [
+          112,
+          143
+        ]
+      ],
+      "shoulder": {
+        "left": [
+          129,
+          151
+        ],
+        "right": [
+          79,
+          151
+        ]
+      },
+      "hip": {
+        "left": [
+          130,
+          221
+        ],
+        "right": [
+          79,
+          221
+        ]
+      },
+      "axis": [
+        104.5,
+        205
+      ],
+      "headCrown": [
+        104,
+        53
+      ],
+      "headChin": [
+        105,
+        135
+      ],
+      "armRowMapping": {
+        "upperLeft": "upper1",
+        "upperRight": "upper2",
+        "foreLeft": "fore2-reflected",
+        "foreRight": "fore1"
+      }
+    },
+    "east": {
+      "neck": [
+        [
+          95,
+          142
+        ],
+        [
+          115,
+          142
+        ]
+      ],
+      "shoulder": {
+        "left": [
+          91,
+          150
+        ],
+        "right": [
+          96,
+          150
+        ]
+      },
+      "hip": {
+        "left": [
+          124,
+          219
+        ],
+        "right": [
+          101,
+          219
+        ]
+      },
+      "axis": [
+        105.5,
+        205
+      ],
+      "headCrown": [
+        105,
+        54
+      ],
+      "headChin": [
+        132,
+        135
+      ],
+      "armRowMapping": {
+        "upperLeft": "upper1",
+        "upperRight": "upper2",
+        "foreLeft": "fore1",
+        "foreRight": "fore2"
+      }
+    },
+    "west": {
+      "neck": [
+        [
+          74,
+          142
+        ],
+        [
+          94,
+          142
+        ]
+      ],
+      "shoulder": {
+        "left": [
+          96,
+          150
+        ],
+        "right": [
+          91,
+          150
+        ]
+      },
+      "hip": {
+        "left": [
+          88,
+          219
+        ],
+        "right": [
+          63,
+          219
+        ]
+      },
+      "axis": [
+        84,
+        205
+      ],
+      "headCrown": [
+        85,
+        54
+      ],
+      "headChin": [
+        60,
+        136
+      ],
+      "armRowMapping": {
+        "upperLeft": "upper1",
+        "upperRight": "upper2",
+        "foreLeft": "fore1",
+        "foreRight": "fore2"
+      }
+    },
+    "north": {
+      "neck": [
+        [
+          53,
+          135
+        ],
+        [
+          75,
+          135
+        ]
+      ],
+      "shoulder": {
+        "left": [
+          37,
+          150
+        ],
+        "right": [
+          91,
+          150
+        ]
+      },
+      "hip": {
+        "left": [
+          35,
+          221
+        ],
+        "right": [
+          92,
+          221
+        ]
+      },
+      "axis": [
+        64,
+        205
+      ],
+      "headCrown": [
+        64,
+        53
+      ],
+      "headChin": [
+        64,
+        126
+      ],
+      "armRowMapping": {
+        "upperLeft": "upper1",
+        "upperRight": "upper2",
+        "foreLeft": "fore2-reflected",
+        "foreRight": "fore1"
+      }
+    }
+  }
+}

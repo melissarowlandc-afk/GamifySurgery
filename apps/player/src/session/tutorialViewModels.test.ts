@@ -38,6 +38,10 @@ function tick(state: GameState): GameState {
   return reduce(state, { type: "ADVANCE_TICK" });
 }
 
+function createTutorialState(): GameState {
+  return createInitialGameState();
+}
+
 function advanceUntil(
   state: GameState,
   predicate: (candidate: GameState) => boolean,
@@ -80,6 +84,7 @@ function view(
     selectedRoomDefinitionId?: string | null;
     selectedRoomInstanceId?: string | null;
     acknowledged?: string[];
+    dailyRoutineTipsStarted?: boolean;
     summaryVisible?: boolean;
   } = {},
 ) {
@@ -92,6 +97,7 @@ function view(
         (id) => `${state.campaignId}:${id}`,
       ),
     ),
+    dailyRoutineTipsStarted: options.dailyRoutineTipsStarted ?? false,
     buildMode: options.buildMode ?? false,
     selectedRoomDefinitionId:
       options.selectedRoomDefinitionId ?? null,
@@ -103,7 +109,7 @@ function view(
 
 describe("state-driven tutorial coach", () => {
   it("keeps the first tutorial to one immediate decision and gates every explanation on acknowledgment", () => {
-    let state = createInitialGameState();
+    let state = createTutorialState();
     const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     expect(first.frozenCase.id).toBe(FIRST_TUTORIAL_CASE_ID);
     expect(first.frozenCase.decisionNodes).toHaveLength(1);
@@ -117,7 +123,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters[TUTORIAL_ENCOUNTER_ID]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     expect(view(state)?.id).toBe("first-patient-arriving");
     expect(
@@ -199,12 +205,12 @@ describe("state-driven tutorial coach", () => {
   });
 
   it("uses the protected second patient to explain a timed facility service and returned decision", () => {
-    let state = createInitialGameState();
+    let state = createTutorialState();
     state = advanceUntil(
       state,
       (candidate) =>
-        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.patientMovement ===
-        null,
+        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus ===
+        "checked_in",
     );
     state = reduce(state, {
       type: "OPEN_CHART",
@@ -246,7 +252,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     expect(
       view(state, {
@@ -313,6 +319,28 @@ describe("state-driven tutorial coach", () => {
 
     state = advanceUntil(
       state,
+      (candidate) => {
+        const second = candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!;
+        return second.lifecycle === "active_pending_result" && second.patientLocation === null && second.patientMovement === null;
+      },
+    );
+    expect(view(state, { acknowledged: [...acknowledged, "second-first-decision", "second-plan-feedback", "second-sendout-wait"] })?.id).toBe("sendout-management");
+    expect(view(state, { acknowledged: [...acknowledged, "second-first-decision", "second-plan-feedback", "second-sendout-wait", "sendout-management"] })?.id).toBe("sendout-trash");
+    expect(view(state, { acknowledged: [...acknowledged, "second-first-decision", "second-plan-feedback", "second-sendout-wait", "sendout-management", "sendout-trash"] })?.id).toBe("sendout-water");
+
+    expect(
+      view(state, {
+        acknowledged: [
+          ...acknowledged,
+          "second-first-decision",
+          "second-plan-feedback",
+        ],
+        dailyRoutineTipsStarted: true,
+      })?.id,
+    ).toBe("sendout-management");
+
+    state = advanceUntil(
+      state,
       (candidate) =>
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
           .lifecycle === "active_action_required",
@@ -322,6 +350,9 @@ describe("state-driven tutorial coach", () => {
       "second-first-decision",
       "second-plan-feedback",
       "second-sendout-wait",
+      "sendout-management",
+      "sendout-trash",
+      "sendout-water",
     ];
     expect(view(state, { acknowledged: throughWait })?.id).toBe(
       "second-result-ready",
@@ -367,13 +398,13 @@ describe("state-driven tutorial coach", () => {
     ).toBe("resolve-second-chart");
   });
 
-  it("teaches the room footprint and explicit $0 door before allowing build exit", () => {
-    let state = createInitialGameState();
+  it("teaches the first Examination Room and its explicit $0 door before allowing build exit", () => {
+    let state = createTutorialState();
     state = advanceUntil(
       state,
       (candidate) =>
-        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.patientMovement ===
-        null,
+        candidate.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus ===
+        "checked_in",
     );
     state = reduce(state, {
       type: "OPEN_CHART",
@@ -393,7 +424,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     state = reduce(state, {
       type: "OPEN_CHART",
@@ -426,7 +457,6 @@ describe("state-driven tutorial coach", () => {
       type: "CLOSE_CHART",
       encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
-
     const beforeBuild = [
       "first-patient-arriving",
       "open-first-chart",
@@ -553,8 +583,59 @@ describe("state-driven tutorial coach", () => {
     );
   });
 
+  it("keeps the first-room construction lesson for a fresh campaign", () => {
+    const state = createInitialGameState();
+    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    first.lifecycle = "resolved";
+    first.firstOpenedAtTick = 0;
+    first.answers = [{}] as typeof first.answers;
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...first,
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      answers: [{}, {}] as typeof first.answers,
+    };
+
+    expect(
+      view(state, {
+        acknowledged: [
+          "between-tutorial-patients",
+          "resolve-second-chart",
+          "alerts-tour",
+        ],
+      })?.id,
+    ).toBe("enter-build-mode");
+
+    state.rooms.push({
+      id: "room.legacy.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.legacy.examination",
+      roomId: "room.legacy.examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
+    expect(
+      view(state, {
+        buildMode: true,
+        acknowledged: [
+          "between-tutorial-patients",
+          "resolve-second-chart",
+          "alerts-tour",
+        ],
+      })?.id,
+    ).toBe("exit-build-mode");
+  });
+
   it("keeps the completion prompt as the only Level 1 tutorial step", () => {
-    let state = createInitialGameState();
+    let state = createTutorialState();
     state.facilityLevel = 1;
     state.encounters = {};
     state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
@@ -580,6 +661,23 @@ describe("state-driven tutorial coach", () => {
     };
 
     state.paused = false;
+    state.rooms.push({
+      id: "room.level-one.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.level-one.examination",
+      roomId: "room.level-one.examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
     expectCompletionPrompt(state);
 
     state = reduce(state, {
@@ -595,7 +693,7 @@ describe("state-driven tutorial coach", () => {
       state,
       (candidate) =>
         candidate.encounters["encounter.level-one.service-drill"]!
-          .patientMovement === null,
+          .checkInStatus === "checked_in",
     );
     expectCompletionPrompt(state);
 
@@ -648,5 +746,17 @@ describe("state-driven tutorial coach", () => {
         selectedRoomDefinitionId: null,
       }),
     ).toBeNull();
+  });
+
+  it("never introduces operations tips outside the true off-site wait", () => {
+    const state = createInitialGameState();
+    state.facilityLevel = 1;
+    expect(view(state, { acknowledged: ["sendout-management"] })?.id).not.toMatch(/^sendout-/);
+    state.facilityLevel = 0;
+    const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+    expect(second).toBeUndefined();
+    // Before the second patient exists, durable future-tip markers must not
+    // rewind the between-patients tutorial.
+    expect(view(state, { acknowledged: ["sendout-management"] })?.id).toBe("first-patient-arriving");
   });
 });

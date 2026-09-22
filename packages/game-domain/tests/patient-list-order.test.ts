@@ -30,6 +30,9 @@ function createEncounter(
       ...template.waiting,
       arrivedAtTick: input.arrivedAtTick,
     },
+    checkInStatus: "checked_in",
+    checkInWaitingSinceTick: null,
+    waitingDestination: null,
   };
 }
 

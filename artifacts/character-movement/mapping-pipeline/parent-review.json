@@ -1,0 +1,477 @@
+{
+  "scope": "GS-012 MOV-006 M7A independent numeric/tool review only",
+  "status": "passed",
+  "at": "2026-09-10T23:23:36.318Z",
+  "assertions": 8809,
+  "referenceRegression": {
+    "targets": 32,
+    "comparedPoints": 2480,
+    "comparedScalars": 592,
+    "maxCoordinateDeviation": 0,
+    "maxScalarDeviation": 0,
+    "numericalAllowance": 0.0001,
+    "note": "Numerical publication-rounding allowance, not raster tolerance."
+  },
+  "registration": {
+    "maxFrameRoundTripError": 0.000009465478839842945,
+    "framePixelAllowance": 0.0001
+  },
+  "changedAnatomy": {
+    "wholeBodyScale": 1.1,
+    "targets": 32,
+    "synthetic": true
+  },
+  "regressionSuite": {
+    "status": 0,
+    "stdoutPath": "artifacts/character-movement/mapping-pipeline/parent-tests.tap"
+  },
+  "compilerCodeFingerprint": "e2061adf31ca3e02a345cf8fa8c827591ad1881be23f8b3550df771c93824aa3",
+  "sourceHashes": {
+    "tools/character-mapping/math.mjs": "fd40fcc8486de4355a1d9fc4a65198f44ef7ccaab0e1377aafa06ea9e5ca0d6b",
+    "tools/character-mapping/compiler.mjs": "ec631e484a7fd95612dacd72e9dcecc0b15c4d8454e8fe48bbdfbe2abdf541a5",
+    "tools/character-mapping/cli.mjs": "d19db6c2522209bf435f1f6eb0e731d708339107b8b6f194e6323d36850247c4",
+    "tools/character-mapping/compiler.test.mjs": "108dd82a32028667542405dbc8ed80f482ee8106453f81f5318a3517e7405198",
+    "tools/character-mapping/README.md": "c537ff68dd69d94aaa7caadace41377c50b52c448a994dbe29538d001635603a",
+    "docs/features/character-movement/recipes/patient-01.json": "de5787f83f692dc79324b42934b1e0a9505445733dac502c7cc53ce3cc461c01",
+    "docs/features/character-movement/batches/first-existing-four.json": "d41be9c98503ba4f3b614d9e2c9e51bdf06879104f162398ddb3e6fcbf729903"
+  },
+  "validatedTarget": {
+    "path": "artifacts/character-movement/mapping-pipeline/parent-runs/mixed-20260910-patient-01/5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda/targets.json",
+    "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+    "sha256": "f5c016d0575d0e22d0a6cbed5c12707b55076864a892924a3fa3ae169564f05c"
+  },
+  "validatedBatch": {
+    "path": "artifacts/character-movement/mapping-pipeline/parent-runs/worker-batches/first-existing-four/96a5ba85f7081cfda300ca2d3b1c03ca0a95f0b0aaea61c97b7942d11d49d764/summary.json",
+    "fingerprint": "96a5ba85f7081cfda300ca2d3b1c03ca0a95f0b0aaea61c97b7942d11d49d764",
+    "sha256": "06ef931872ae0f7fbec7da9bf4424b058e34cf2f9f71bbfd5cd89929976019b5",
+    "counts": {
+      "selected": 4,
+      "compiled": 1,
+      "pending": 3,
+      "targets": 32
+    }
+  },
+  "cliResults": [
+    {
+      "args": [
+        "compile",
+        "--recipe",
+        "docs/features/character-movement/recipes/patient-01.json",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 0,
+      "response": {
+        "ok": true,
+        "command": "compile",
+        "localToolMilliseconds": 131.003,
+        "unmeasuredManualAndRasterWork": "not measured; no art work was performed",
+        "result": {
+          "identityKey": "mixed-20260910-patient-01",
+          "outputKey": "mixed-20260910-patient-01",
+          "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\artifacts\\character-movement\\mapping-pipeline\\parent-runs\\mixed-20260910-patient-01\\5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda\\targets.json",
+          "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+          "disposition": "written",
+          "targetCount": 32
+        }
+      }
+    },
+    {
+      "args": [
+        "compile",
+        "--recipe",
+        "docs/features/character-movement/recipes/patient-01.json",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 0,
+      "response": {
+        "ok": true,
+        "command": "compile",
+        "localToolMilliseconds": 89.136,
+        "unmeasuredManualAndRasterWork": "not measured; no art work was performed",
+        "result": {
+          "identityKey": "mixed-20260910-patient-01",
+          "outputKey": "mixed-20260910-patient-01",
+          "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\artifacts\\character-movement\\mapping-pipeline\\parent-runs\\mixed-20260910-patient-01\\5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda\\targets.json",
+          "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+          "disposition": "reused",
+          "targetCount": 32
+        }
+      }
+    },
+    {
+      "args": [
+        "check",
+        "--recipe",
+        "docs/features/character-movement/recipes/patient-01.json",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 0,
+      "response": {
+        "ok": true,
+        "command": "check",
+        "localToolMilliseconds": 55.743,
+        "unmeasuredManualAndRasterWork": "not measured; no art work was performed",
+        "result": {
+          "identityKey": "mixed-20260910-patient-01",
+          "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\artifacts\\character-movement\\mapping-pipeline\\parent-runs\\mixed-20260910-patient-01\\5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda\\targets.json",
+          "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+          "status": "verified",
+          "targetCount": 32
+        }
+      }
+    },
+    {
+      "args": [
+        "batch",
+        "--manifest",
+        "docs/features/character-movement/batches/first-existing-four.json",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 0,
+      "response": {
+        "ok": true,
+        "command": "batch",
+        "localToolMilliseconds": 75.126,
+        "unmeasuredManualAndRasterWork": "not measured; no art work was performed",
+        "result": {
+          "schemaVersion": 1,
+          "batchKey": "first-existing-four",
+          "status": "measurement_blocked",
+          "outputClass": "target_only",
+          "compilerCodeFingerprint": "e2061adf31ca3e02a345cf8fa8c827591ad1881be23f8b3550df771c93824aa3",
+          "selectedKeys": [
+            "mixed-20260910-nurse-01",
+            "mixed-20260910-patient-01",
+            "mixed-20260910-patient-02",
+            "mixed-20260910-receptionist-01"
+          ],
+          "compiled": [
+            {
+              "identityKey": "mixed-20260910-patient-01",
+              "outputKey": "mixed-20260910-patient-01",
+              "path": "mixed-20260910-patient-01/5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda/targets.json",
+              "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+              "targetCount": 32
+            }
+          ],
+          "pending": [
+            {
+              "identityKey": "mixed-20260910-patient-02",
+              "outputKey": "mixed-20260910-patient-02",
+              "blockers": [
+                "character-specific lateral and front/back proportions",
+                "per-view registration",
+                "long-coat overlap and hidden-joint evidence",
+                "approved reflection lineage inputs"
+              ]
+            },
+            {
+              "identityKey": "mixed-20260910-receptionist-01",
+              "outputKey": "mixed-20260910-receptionist-01",
+              "blockers": [
+                "Marisol-specific lateral and front/back proportions",
+                "per-view registration",
+                "uniform and hidden-joint evidence",
+                "approved reflection lineage inputs"
+              ]
+            },
+            {
+              "identityKey": "mixed-20260910-nurse-01",
+              "outputKey": "mixed-20260910-nurse-01",
+              "blockers": [
+                "Caleb-specific lateral and front/back proportions",
+                "per-view registration",
+                "uniform and hidden-joint evidence",
+                "approved reflection lineage inputs"
+              ]
+            }
+          ],
+          "counts": {
+            "selected": 4,
+            "compiled": 1,
+            "pending": 3,
+            "targets": 32
+          },
+          "timing": {
+            "localToolMilliseconds": null,
+            "unmeasuredManualAndRasterWork": "not measured; no art work was performed"
+          },
+          "invocationDispositions": [
+            {
+              "identityKey": "mixed-20260910-patient-01",
+              "disposition": "reused"
+            }
+          ],
+          "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\artifacts\\character-movement\\mapping-pipeline\\parent-runs\\worker-batches\\first-existing-four\\96a5ba85f7081cfda300ca2d3b1c03ca0a95f0b0aaea61c97b7942d11d49d764\\summary.json",
+          "fingerprint": "96a5ba85f7081cfda300ca2d3b1c03ca0a95f0b0aaea61c97b7942d11d49d764"
+        }
+      }
+    },
+    {
+      "args": [
+        "batch",
+        "--manifest",
+        "docs/features/character-movement/batches/first-existing-four.json",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 0,
+      "response": {
+        "ok": true,
+        "command": "batch",
+        "localToolMilliseconds": 60.291,
+        "unmeasuredManualAndRasterWork": "not measured; no art work was performed",
+        "result": {
+          "schemaVersion": 1,
+          "batchKey": "first-existing-four",
+          "status": "measurement_blocked",
+          "outputClass": "target_only",
+          "compilerCodeFingerprint": "e2061adf31ca3e02a345cf8fa8c827591ad1881be23f8b3550df771c93824aa3",
+          "selectedKeys": [
+            "mixed-20260910-nurse-01",
+            "mixed-20260910-patient-01",
+            "mixed-20260910-patient-02",
+            "mixed-20260910-receptionist-01"
+          ],
+          "compiled": [
+            {
+              "identityKey": "mixed-20260910-patient-01",
+              "outputKey": "mixed-20260910-patient-01",
+              "path": "mixed-20260910-patient-01/5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda/targets.json",
+              "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+              "targetCount": 32
+            }
+          ],
+          "pending": [
+            {
+              "identityKey": "mixed-20260910-patient-02",
+              "outputKey": "mixed-20260910-patient-02",
+              "blockers": [
+                "character-specific lateral and front/back proportions",
+                "per-view registration",
+                "long-coat overlap and hidden-joint evidence",
+                "approved reflection lineage inputs"
+              ]
+            },
+            {
+              "identityKey": "mixed-20260910-receptionist-01",
+              "outputKey": "mixed-20260910-receptionist-01",
+              "blockers": [
+                "Marisol-specific lateral and front/back proportions",
+                "per-view registration",
+                "uniform and hidden-joint evidence",
+                "approved reflection lineage inputs"
+              ]
+            },
+            {
+              "identityKey": "mixed-20260910-nurse-01",
+              "outputKey": "mixed-20260910-nurse-01",
+              "blockers": [
+                "Caleb-specific lateral and front/back proportions",
+                "per-view registration",
+                "uniform and hidden-joint evidence",
+                "approved reflection lineage inputs"
+              ]
+            }
+          ],
+          "counts": {
+            "selected": 4,
+            "compiled": 1,
+            "pending": 3,
+            "targets": 32
+          },
+          "timing": {
+            "localToolMilliseconds": null,
+            "unmeasuredManualAndRasterWork": "not measured; no art work was performed"
+          },
+          "invocationDispositions": [
+            {
+              "identityKey": "mixed-20260910-patient-01",
+              "disposition": "reused"
+            }
+          ],
+          "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\artifacts\\character-movement\\mapping-pipeline\\parent-runs\\worker-batches\\first-existing-four\\96a5ba85f7081cfda300ca2d3b1c03ca0a95f0b0aaea61c97b7942d11d49d764\\summary.json",
+          "fingerprint": "96a5ba85f7081cfda300ca2d3b1c03ca0a95f0b0aaea61c97b7942d11d49d764"
+        }
+      }
+    },
+    {
+      "args": [
+        "batch",
+        "--manifest",
+        "docs/features/character-movement/batches/first-existing-four.json",
+        "--member",
+        "mixed-20260910-patient-01",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 0,
+      "response": {
+        "ok": true,
+        "command": "batch",
+        "localToolMilliseconds": 70.165,
+        "unmeasuredManualAndRasterWork": "not measured; no art work was performed",
+        "result": {
+          "schemaVersion": 1,
+          "batchKey": "first-existing-four",
+          "status": "targets_compiled_pending_raster_review",
+          "outputClass": "target_only",
+          "compilerCodeFingerprint": "e2061adf31ca3e02a345cf8fa8c827591ad1881be23f8b3550df771c93824aa3",
+          "selectedKeys": [
+            "mixed-20260910-patient-01"
+          ],
+          "compiled": [
+            {
+              "identityKey": "mixed-20260910-patient-01",
+              "outputKey": "mixed-20260910-patient-01",
+              "path": "mixed-20260910-patient-01/5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda/targets.json",
+              "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+              "targetCount": 32
+            }
+          ],
+          "pending": [],
+          "counts": {
+            "selected": 1,
+            "compiled": 1,
+            "pending": 0,
+            "targets": 32
+          },
+          "timing": {
+            "localToolMilliseconds": null,
+            "unmeasuredManualAndRasterWork": "not measured; no art work was performed"
+          },
+          "invocationDispositions": [
+            {
+              "identityKey": "mixed-20260910-patient-01",
+              "disposition": "reused"
+            }
+          ],
+          "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\artifacts\\character-movement\\mapping-pipeline\\parent-runs\\worker-batches\\first-existing-four\\d8758a7475ddda5628b2e633240fe6b229c021749c9f1f0fe3d0b42bb6c5ee68\\summary.json",
+          "fingerprint": "d8758a7475ddda5628b2e633240fe6b229c021749c9f1f0fe3d0b42bb6c5ee68"
+        }
+      }
+    },
+    {
+      "args": [
+        "batch",
+        "--manifest",
+        "docs/features/character-movement/batches/first-existing-four.json",
+        "--memberr",
+        "mixed-20260910-patient-01",
+        "--output-root",
+        "parent-runs"
+      ],
+      "status": 1,
+      "response": {
+        "ok": false,
+        "error": "unsupported option for batch: --memberr"
+      }
+    },
+    {
+      "args": [
+        "compile",
+        "--recipe",
+        "docs/features/character-movement/recipes/patient-01.json",
+        "--output-root",
+        "../escape"
+      ],
+      "status": 1,
+      "response": {
+        "ok": false,
+        "error": "output-root escapes its allowed root"
+      }
+    }
+  ],
+  "preservation": [
+    {
+      "path": "docs/features/character-movement/patient-01-fit.json",
+      "sha256": "5e2ab5bcb5b390acb74fb45ef63b85e83df13ebaf2db102f32e38222700dd571",
+      "actualSha256": "5e2ab5bcb5b390acb74fb45ef63b85e83df13ebaf2db102f32e38222700dd571"
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-fit.json",
+      "sha256": "7523c59921ec730ec343265e422f8b5d2c8cec5cf442504ea1f52b92ac3e50b2",
+      "actualSha256": "7523c59921ec730ec343265e422f8b5d2c8cec5cf442504ea1f52b92ac3e50b2"
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-fitted-walk.html",
+      "sha256": "8b75bcb1b717b83d219b304ecdcb51627936cb22089107704da8b1447e330b24",
+      "actualSha256": "8b75bcb1b717b83d219b304ecdcb51627936cb22089107704da8b1447e330b24"
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-walk.html",
+      "sha256": "d1b45d2796e4070b1db405424ea1478853638e42be76bf47571fc0e5dd32378a",
+      "actualSha256": "d1b45d2796e4070b1db405424ea1478853638e42be76bf47571fc0e5dd32378a"
+    },
+    {
+      "path": "docs/features/character-movement/character-template-mapping.md",
+      "sha256": "fea5e3fca308b1b63a7ac9a18abc105109fb6dd9672a3c8a649883966f815080",
+      "actualSha256": "fea5e3fca308b1b63a7ac9a18abc105109fb6dd9672a3c8a649883966f815080"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "sha256": "fd77c7a140aad311dd6e20494c91960cd1d403f2144e1dc3e3e190152c1a1c78",
+      "actualSha256": "fd77c7a140aad311dd6e20494c91960cd1d403f2144e1dc3e3e190152c1a1c78"
+    },
+    {
+      "path": "apps/player/src/facility/characterMotionPresentation.ts",
+      "sha256": "19749b952daa5ec01be223f2d7cfa5feeaec0e0359ab5ad4ea69ba41589937b0",
+      "actualSha256": "19749b952daa5ec01be223f2d7cfa5feeaec0e0359ab5ad4ea69ba41589937b0"
+    },
+    {
+      "path": "apps/player/src/facility/characterMotionPresentation.test.ts",
+      "sha256": "b3dd4c98591563abbdb9abcb2ac7c44aa979d9046a6ac6c04c92b37ba4c0376f",
+      "actualSha256": "b3dd4c98591563abbdb9abcb2ac7c44aa979d9046a6ac6c04c92b37ba4c0376f"
+    },
+    {
+      "path": "apps/player/src/facility/characterPauseArrival.test.ts",
+      "sha256": "2720760ce42bde70bc2e5d8ad17612dd7ae596df6b34cad66469aaa1c10bc492",
+      "actualSha256": "2720760ce42bde70bc2e5d8ad17612dd7ae596df6b34cad66469aaa1c10bc492"
+    },
+    {
+      "path": "apps/player/src/art/characterArt.ts",
+      "sha256": "9a721c34ed64bea7e12acf359258003dece7cf4698a861dbe6b33a74cc04c7fb",
+      "actualSha256": "9a721c34ed64bea7e12acf359258003dece7cf4698a861dbe6b33a74cc04c7fb"
+    },
+    {
+      "path": "apps/player/src/art/characterBitmapArt.ts",
+      "sha256": "a0bff0290991bceb5ee8a4f95a9b9b457fc6b3359c16fb7dd4882d392fe0e8df",
+      "actualSha256": "a0bff0290991bceb5ee8a4f95a9b9b457fc6b3359c16fb7dd4882d392fe0e8df"
+    },
+    {
+      "path": "apps/player/src/art/lateralGaitCycle.ts",
+      "sha256": "60538c8fef611693268a3c597cac92ba2cf61b206b2ab220a207efcd147983b3",
+      "actualSha256": "60538c8fef611693268a3c597cac92ba2cf61b206b2ab220a207efcd147983b3"
+    },
+    {
+      "path": "apps/player/src/art/bitmapAssetManifest.ts",
+      "sha256": "494a2880678aa04d757b0ba29973899834135c14d6817e831d150b55c7dd79ba",
+      "actualSha256": "494a2880678aa04d757b0ba29973899834135c14d6817e831d150b55c7dd79ba"
+    },
+    {
+      "path": "package.json",
+      "sha256": "194978d6c1c6e0f4cb385db704a38107b727ea5e364b964529d8ec114e0b3a53",
+      "actualSha256": "194978d6c1c6e0f4cb385db704a38107b727ea5e364b964529d8ec114e0b3a53"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "340e1833a8dfd854b090f3a67c24c2460c3be322318f1d5025bdb055b79585cd",
+      "actualSha256": "340e1833a8dfd854b090f3a67c24c2460c3be322318f1d5025bdb055b79585cd"
+    },
+    {
+      "path": "START_GAME.cmd",
+      "sha256": "4dd926b486295912a564b36254cad58f18e6da50a487ff1716733d46cd9b4214",
+      "actualSha256": "4dd926b486295912a564b36254cad58f18e6da50a487ff1716733d46cd9b4214"
+    }
+  ],
+  "limitations": [
+    "Numeric-only; no private raster files were read or processed.",
+    "Synthetic processing capacity does not measure manual or raster production effort.",
+    "Actual donor/compositor art proof and owner appearance acceptance remain pending GS-010.",
+    "No game build/server/browser/save/runtime operation performed."
+  ]
+}

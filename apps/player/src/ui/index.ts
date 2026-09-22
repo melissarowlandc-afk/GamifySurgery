@@ -9,6 +9,7 @@ export { EventMessageBoard } from "./EventMessageBoard";
 export { GoalsPanel } from "./GoalsPanel";
 export { HelpDialog } from "./HelpDialog";
 export { ManagementPanel } from "./ManagementPanel";
+export { ServiceIncomePanel } from "./ServiceIncomePanel";
 export { OpeningSequence } from "./OpeningSequence";
 export { PatientLists } from "./PatientLists";
 export { PixelAvatar } from "./PixelAvatar";
@@ -45,6 +46,10 @@ export type {
   ProgressionGoalView,
   ProgressionView,
   ResourceBarView,
+  ServiceIncomeCatalogLineView,
+  ServiceIncomeOperationView,
+  ServiceIncomeReceiptView,
+  ServiceIncomeView,
   RoomBuildOptionView,
   SelectedRoomBuildView,
   StaffHireOptionView,

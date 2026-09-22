@@ -32,7 +32,7 @@ function advanceMinutes(
 }
 
 describe("manual GLP-1 side-business action", () => {
-  it("awards $25 cash only", () => {
+  it("awards the configured cash once and records a founder receipt", () => {
     const initial = createInitialGameState();
     const histories = JSON.parse(
       JSON.stringify(initial.learningHistories),
@@ -47,6 +47,14 @@ describe("manual GLP-1 side-business action", () => {
     expect(next.clinicalXp).toBe(0);
     expect(next.learningHistories).toEqual(histories);
     expect(next.emergencyGlp1.usesToday).toBe(1);
+    expect(next.serviceIncomeReceipts).toEqual([
+      expect.objectContaining({
+        incomeLineId: "income.glp1_telehealth",
+        actorKind: "founder",
+        grossAmount: 50,
+        netCashDelta: 50,
+      }),
+    ]);
     expect(next.events.at(-1)).toMatchObject({
       type: "emergency_glp1_consultation",
       reward: {
@@ -122,7 +130,7 @@ describe("manual GLP-1 side-business action", () => {
       }
     }
 
-    expect(payments).toEqual([25, 25, 25, 25, 25, 25, 25, 25, 25]);
+    expect(payments).toEqual([50, 50, 50, 50, 50, 50, 50, 50, 50]);
     expect(flavor.slice(0, 4)).toEqual([
       "Your commitment to comprehensive metabolic care has been noted.",
       "Another individualized 90-second consultation completed.",
@@ -134,7 +142,7 @@ describe("manual GLP-1 side-business action", () => {
     state.cashCents = 0;
     const tenth = consult(state, 10);
     expect(tenth.operationReceipts["test.glp1.10"]?.status).toBe("applied");
-    expect(tenth.cash).toBe(25);
+    expect(tenth.cash).toBe(50);
   });
 
   it("resets daily usage at the continuous ten-hour day rollover", () => {

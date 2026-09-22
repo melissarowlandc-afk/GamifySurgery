@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "visualizationPath": "C:/Users/Kyle Kent/.codex/visualizations/2026/09/13/01a09b55-147e-72f0-b413-e8b6827c7287/whole-body-static-review.html",
+  "registry": {
+    "path": "tools/character-mapping/whole-body-static-v1/registry-v1.json",
+    "sha256": "5e9ba1ad208e1db6bdd1752939f43f6f684da4a9afcab0cdc2e074886959df54"
+  },
+  "artifactManifest": {
+    "path": "artifacts/character-movement/whole-body-static-v1/manifest.json",
+    "sha256": "5e9ba1ad208e1db6bdd1752939f43f6f684da4a9afcab0cdc2e074886959df54"
+  },
+  "characters": {
+    "green": {
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+        "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/green-seated-v1.png",
+        "sha256": "87e25b700083a2a0785ac9f7bcfc2d3295acc728620e5f29fe9416607ff90325",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/green-seated-v1-prompt.txt",
+        "promptSha256": "62aa3c33e90e3859527b45ddf3e8110aa7b0b38219187140acde3d651198b212",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 58,
+            "y": 62,
+            "width": 107,
+            "height": 237,
+            "right": 164,
+            "bottom": 298
+          },
+          "generatedSouthContentBounds": {
+            "x": 132,
+            "y": 146,
+            "width": 288,
+            "height": 617,
+            "right": 419,
+            "bottom": 762
+          },
+          "scale": 0.3841166936790924
+        }
+      },
+      "walkingManifests": [
+        {
+          "path": "artifacts/character-movement/layered-pilot/v8-motion/manifest.json",
+          "sha256": "36c22f3b951e1eccb5b8cecdafb05f5ecd37130e2204e0faefea4edefd5754c7"
+        },
+        {
+          "path": "artifacts/character-movement/layered-pilot/directional-v1/manifest.json",
+          "sha256": "7c8ebc5615ad3bd425957376acc1fc99a523e9a024bc1fb6e6bdcf835ee45932"
+        }
+      ],
+      "staticPoseHashes": {
+        "stand": {
+          "south": "18070ca8a8c00c2a25291507638b9dbceb23a887aecfae4a784d685f7663ba69",
+          "east": "b567e725d7b548fa98159cbb0c839f632305467ef42b977a4077a5dded8c995d",
+          "west": "fa619daa606071b85e7cfded92f70296cdf6aca50de63e6e8fcae8bf975683b7",
+          "north": "b8e0787275fcaa337bdf174826295434d8578586edf61df5dbb99026772436d9"
+        },
+        "sit": {
+          "south": "e38a27002faef360ef89130c8332f41307f81a39876e498e5ac238862c09db00",
+          "east": "2e4ab031ada18d26ac0cd580be483f3f1d2831497268dfce30ffddc356ac6c4a",
+          "west": "7473ee4c10fda921bbce71db10ba9bcfbf420bc792b087a5bb2e815a53a7f27b",
+          "north": "8590be4a6cd23450de36eac5c807dff6d3f4a39e9152b1971d44e05e91b28d7e"
+        }
+      }
+    },
+    "gray-braid": {
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-16c48adf-2478-4b2a-b0e3-9ce1f2bfc2cb.png",
+        "sha256": "1368999e0dbd28c250fd41c2a5ab97bcb8905de71862e4cdbfc3d75a6b4b62e4",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/gray-braid-seated-v1.png",
+        "sha256": "cab7cef6fa4ee3358e7a13ea7ceb25207a30c59822cbd93a717daf2660b3390c",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/gray-braid-seated-v1-prompt.txt",
+        "promptSha256": "ac2293a01830571ea3b7b5a56aa5c683fc4b9fe6fbbd75a90cbfdac2f3ea2473",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 53,
+            "y": 56,
+            "width": 104,
+            "height": 255,
+            "right": 156,
+            "bottom": 310
+          },
+          "generatedSouthContentBounds": {
+            "x": 113,
+            "y": 134,
+            "width": 289,
+            "height": 683,
+            "right": 401,
+            "bottom": 816
+          },
+          "scale": 0.3733528550512445
+        }
+      },
+      "walkingManifests": [
+        {
+          "path": "artifacts/character-movement/gray-braid-v1/manifest.json",
+          "sha256": "e954be5d89fedea444381c51ec7c5441ffa55e336452223b81e3a079a24989a2"
+        }
+      ],
+      "staticPoseHashes": {
+        "stand": {
+          "south": "fcd42137698a6f738a62cf2a9706c60c8c7567d83e9e661d444b252008f30f12",
+          "east": "ba90b1cb7c1756c47a701605a189e87d775e0fd9f466ec6b3500706169d8a7a8",
+          "west": "0b82cc0294fad1e865591adbc717376d086c59e061d8276ab92de47c6cd294a7",
+          "north": "8a753d32409cef7f88ab7cb1c10c2523aa0a8ae6623251bc05b39d7e6b0bd591"
+        },
+        "sit": {
+          "south": "7ce7fd58ab3462183fcdc03cd565492eda5294236a32eae55d04f1b3c8171db1",
+          "east": "8e889026459995a9ada2e7ccf79289d9137cac3f307c19a20aa10f59a9ddb301",
+          "west": "4680231d3b288e439b8268b53b91ae5e7a536cf012ae2b16842dc39cf93a6dec",
+          "north": "fd9ddc9f1a7b7b835e5640dcbaee46dc540ce739388e1514c9eda2d6bb80ed19"
+        }
+      }
+    },
+    "gray-overshirt": {
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+        "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/gray-overshirt-seated-v1.png",
+        "sha256": "208f3ccb2960150b42f54e0a9d8cbc9c8e17aed26ff76f51ce936090363135e0",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/gray-overshirt-seated-v1-prompt.txt",
+        "promptSha256": "39dbca21f42e8273575be192f0fc9319f356dad0ed7ca236cb0792008567e85d",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 69,
+            "y": 69,
+            "width": 104,
+            "height": 244,
+            "right": 172,
+            "bottom": 312
+          },
+          "generatedSouthContentBounds": {
+            "x": 118,
+            "y": 164,
+            "width": 287,
+            "height": 655,
+            "right": 404,
+            "bottom": 818
+          },
+          "scale": 0.37251908396946565
+        }
+      },
+      "walkingManifests": [
+        {
+          "path": "artifacts/character-movement/gray-overshirt-v2/manifest.json",
+          "sha256": "2237b42a100316adcba0624290663e4b03d490d23806cce333d986f2d2d8b09c"
+        }
+      ],
+      "staticPoseHashes": {
+        "stand": {
+          "south": "f929efad1981298771232f337e73e521cfc79138e7968951a25556f40d3e8aff",
+          "east": "49fe5a80c30546156a0d7863f324962b229f3c2249542f350160971da7bc5fc5",
+          "west": "1cd1c2c943c5fa48ac54eb73f9714cf4800fdc90b4d7584a0d1a7f1fbba2a9d4",
+          "north": "021cfa7a074dd7f3b404a3cc158de8f6dcf2dfcfb866f97eb85f9e13e512b88e"
+        },
+        "sit": {
+          "south": "3325f34509f7b57ca7e3c9b14d2479f5941ed57662c5876ff282bcbb51f51524",
+          "east": "15385be53b9e999d4228cd6a28415084cf90846b4c37fda81e4456a52ae996b0",
+          "west": "16dc480f197f84c5070f212c6d6ceacc0eb089fdceb95320ff2bb7b098867292",
+          "north": "99e7514ac60abcc0f729f3a35dcc1da187e5f5e54f1d80cad76bbadf46d2ea1f"
+        }
+      }
+    },
+    "brown-beanie": {
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-092d31ac-7592-4634-8883-167ddac564df.png",
+        "sha256": "1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/brown-beanie-seated-v1.png",
+        "sha256": "c68bc9d004684d966a7f257d7b7620e8af0c8230ef9de717a563f7fc38ae1e90",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/brown-beanie-seated-v1-prompt.txt",
+        "promptSha256": "8f24af799d804b267f53bfc973dadd34cc151eed49f1836ffc381dc7b0c991d9",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 59,
+            "y": 63,
+            "width": 109,
+            "height": 248,
+            "right": 167,
+            "bottom": 310
+          },
+          "generatedSouthContentBounds": {
+            "x": 98,
+            "y": 177,
+            "width": 274,
+            "height": 611,
+            "right": 371,
+            "bottom": 787
+          },
+          "scale": 0.40589198036006546
+        }
+      },
+      "walkingManifests": [
+        {
+          "path": "artifacts/character-movement/brown-beanie-v1/manifest.json",
+          "sha256": "2f349824947cd327ce78f60b2ac547f2dcd90f2c9077dfd18896e769a74de3ac"
+        }
+      ],
+      "staticPoseHashes": {
+        "stand": {
+          "south": "cf82082bed6bad6387544e985d4389a18945600764efd4ebf5a7fe16bafd2dd5",
+          "east": "ff69c073ae4f41e0298a16e43aba1d9ba792c13a87d46a1562e765bf99a27841",
+          "west": "86f72901eed78847831c03551b5b36deb66ef6d4a29f16fc39cd2ce556e78801",
+          "north": "0cbe98cf242258e02d496011a935cc762387a6b6a7b7ddc2da4102256126afa8"
+        },
+        "sit": {
+          "south": "11f2b0e5c3cec09ae01bb4e80492386c1dc33a51190ae2b5d786cc8a7e57901a",
+          "east": "86bef5db8e61794e35d600b1e70875fb74f321d3ea966be4de7a9245b9189ecf",
+          "west": "5a95e8b14292770aebc003f47b2eb81497d004cc30fa948522bf23191392ec0b",
+          "north": "41b255a0280ca9913325dee72b63f252f1c40fbc30c3b417ac25d5656cd1d085"
+        }
+      }
+    }
+  },
+  "bytes": 986344
+}

@@ -6,6 +6,8 @@ import {
   getNextRoomUpgradeCost,
   getRoomResaleValue,
   getStaffRoleCount,
+  deserializeGameState,
+  serializeGameState,
   validateFacilityAccess,
   type CardinalDirection,
   type GameState,
@@ -20,6 +22,14 @@ function sandbox(seed: string, level: 0 | 1 | 2 = 1): GameState {
   state.facilityLevel = level;
   state.cashCents = 500_000;
   state.cash = 5_000;
+  // Construction scenarios deliberately start from the legacy blank clinic so
+  // each test owns the Examination Room footprint and door it exercises.
+  state.rooms = state.rooms.filter(
+    (room) => room.id !== "room.instance.starter_examination",
+  );
+  state.doors = state.doors.filter(
+    (door) => door.roomId !== "room.instance.starter_examination",
+  );
   state.encounters = {};
   return state;
 }
@@ -74,6 +84,33 @@ function access(state: GameState) {
 }
 
 describe("explicit-door construction and renovation", () => {
+  it("does not construct a legacy imaging control room and preserves one on reload", () => {
+    let state = sandbox("legacy-control", 2);
+    state = placeRoom(state, "room.control", "room.imaging_control", 31, 24);
+    expect(state.operationReceipts["place.room.control"]?.status).toBe("rejected");
+
+    state.rooms.push({
+      id: "room.legacy.control",
+      roomDefinitionId: "room.imaging_control",
+      x: 31,
+      y: 24,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 3,
+      cleanliness: 100,
+    });
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.rooms.find((room) => room.id === "room.legacy.control")).toMatchObject({
+      roomDefinitionId: "room.imaging_control",
+      upgradeLevel: 3,
+    });
+    const rejectedUpgrade = gameReducer(restored, {
+      type: "UPGRADE_ROOM",
+      operationId: "upgrade.legacy.control",
+      roomId: "room.legacy.control",
+    });
+    expect(rejectedUpgrade.operationReceipts["upgrade.legacy.control"]?.status).toBe("rejected");
+  });
   it("places the room footprint first and makes a $0 explicit door operational", () => {
     let state = sandbox("explicit-door", 0);
     const startingCash = state.cash;
@@ -224,8 +261,8 @@ describe("explicit-door construction and renovation", () => {
     ).toBe(true);
   });
 
-  it("requires X-ray patient access and a separate direct control-room door", () => {
-    let state = sandbox("xray-access");
+  it("uses ordinary reachable doors for later X-ray without a control room", () => {
+    let state = sandbox("xray-access", 2);
     state = placeRoom(state, "room.exam", "room.examination", 34, 26);
     state = placeDoor(state, "door.exam", "room.exam", "south", 1);
 
@@ -242,20 +279,6 @@ describe("explicit-door construction and renovation", () => {
       "room.instance.founder_desk",
       "west",
       0,
-    );
-    state = placeRoom(
-      state,
-      "room.control",
-      "room.imaging_control",
-      31,
-      24,
-    );
-    state = placeDoor(
-      state,
-      "door.control.public",
-      "room.control",
-      "south",
-      1,
     );
     state = placeRoom(state, "room.xray", "room.xray", 33, 23);
     expect(
@@ -275,40 +298,21 @@ describe("explicit-door construction and renovation", () => {
       2,
     );
 
-    expect(access(state).issues).toContain(
-      "X-ray Room must share a wall and internal door with an Imaging Control Room.",
-    );
-
-    state = placeDoor(
-      state,
-      "door.xray.control",
-      "room.xray",
-      "west",
-      1,
-    );
     expect(access(state).valid).toBe(true);
     expect(
       PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions[1]
         ?.requiredRoomDefinitionIds,
-    ).toEqual(["room.xray", "room.minor_procedure"]);
+    ).toEqual(["room.ultrasound", "room.minor_procedure"]);
   });
 
-  it("applies the same Imaging Control and patient-access validation to Level 2 ultrasound and CT", () => {
-    for (const [roomDefinitionId, roomId, y, patientDoorOffset, controlDoorOffset] of [
-      ["room.ultrasound", "room.ultrasound", 23, 2, 1],
-      ["room.ct", "room.ct", 22, 1, 2],
+  it("uses ordinary reachable doors for ultrasound and CT", () => {
+    for (const [roomDefinitionId, roomId, y, patientDoorOffset] of [
+      ["room.ultrasound", "room.ultrasound", 23, 2],
+      ["room.ct", "room.ct", 22, 1],
     ] as const) {
       let state = sandbox(`imaging-${roomDefinitionId}`, 2);
       state = placeRoom(state, "room.exam", "room.examination", 34, 26);
       state = placeDoor(state, "door.exam", "room.exam", "south", 1);
-      state = placeRoom(state, "room.control", "room.imaging_control", 31, 24);
-      state = placeDoor(
-        state,
-        "door.control.public",
-        "room.control",
-        "south",
-        1,
-      );
       state = placeRoom(state, roomId, roomDefinitionId, 33, y);
       state = placeDoor(
         state,
@@ -318,19 +322,6 @@ describe("explicit-door construction and renovation", () => {
         patientDoorOffset,
       );
 
-      expect(access(state).issues).toContain(
-        `${
-          roomDefinitionId === "room.ultrasound" ? "Ultrasound Room" : "CT Suite"
-        } must share a wall and internal door with an Imaging Control Room.`,
-      );
-
-      state = placeDoor(
-        state,
-        `door.${roomId}.control`,
-        roomId,
-        "west",
-        controlDoorOffset,
-      );
       expect(access(state).valid).toBe(true);
     }
   });

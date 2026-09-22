@@ -1,0 +1,6840 @@
+{
+  "generatedBy": "tools/character-mapping/surface-fitting/build-raster-retry.mjs",
+  "status": "owner-review-required",
+  "coverage": {
+    "directions": [
+      "south",
+      "east",
+      "west",
+      "north"
+    ],
+    "statesPerIdentity": 73,
+    "identities": [
+      "patient.adult.046.raster-source-uv",
+      "retained.gray-braid.raster-source-uv"
+    ],
+    "modes": [
+      "walking",
+      "standing",
+      "jumping",
+      "seated",
+      "clipboard"
+    ]
+  },
+  "sources": {
+    "green": {
+      "source": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+        "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+      },
+      "views": {
+        "south": {
+          "crop": {
+            "x": 50,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-green-south.png",
+            "sha256": "d70240360054e9f518797a7038cc6db7a08e313948dd2d76c5848f4d3449b35f",
+            "width": 240,
+            "height": 310
+          }
+        },
+        "east": {
+          "crop": {
+            "x": 300,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-green-east.png",
+            "sha256": "2c742e948a0a744b56446e4a315a3ab4c2ea950fcdea5b5d0f3fa6842f656d1d",
+            "width": 240,
+            "height": 310
+          }
+        },
+        "west": {
+          "crop": {
+            "x": 550,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-green-west.png",
+            "sha256": "1ba7ff05fc83d4464fa68fd0d3468ff83eeb50cb5c8e750608d633029f2a7355",
+            "width": 240,
+            "height": 310
+          }
+        },
+        "north": {
+          "crop": {
+            "x": 800,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-green-north.png",
+            "sha256": "42b9a2cfdd52fe8a0dfd6b86408c7cc5cb2d244d7ecd5ccfc03145180c7d3127",
+            "width": 240,
+            "height": 310
+          }
+        }
+      }
+    },
+    "gray": {
+      "source": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-16c48adf-2478-4b2a-b0e3-9ce1f2bfc2cb.png",
+        "sha256": "1368999e0dbd28c250fd41c2a5ab97bcb8905de71862e4cdbfc3d75a6b4b62e4"
+      },
+      "views": {
+        "south": {
+          "crop": {
+            "x": 50,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-gray-south.png",
+            "sha256": "9313f4cc2ec697a0aaaadfae181466946c2fe102e7336afba1297cca3de0610d",
+            "width": 240,
+            "height": 310
+          }
+        },
+        "east": {
+          "crop": {
+            "x": 300,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-gray-east.png",
+            "sha256": "607b38c1b755232f5cf064fac0bf6667beb8854cc9df625f66be8c58ae6f8f0a",
+            "width": 240,
+            "height": 310
+          }
+        },
+        "west": {
+          "crop": {
+            "x": 550,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-gray-west.png",
+            "sha256": "f01953028d054a9588c31157645feb20eb8916e4feb4f33951c7d655c77c40f0",
+            "width": 240,
+            "height": 310
+          }
+        },
+        "north": {
+          "crop": {
+            "x": 800,
+            "y": 20,
+            "width": 240,
+            "height": 310
+          },
+          "output": {
+            "file": "source-gray-north.png",
+            "sha256": "e19536cc70482acf803a76e66a840be0140cc11a43f63bae8fe6b1dc05ee4d50",
+            "width": 240,
+            "height": 310
+          }
+        }
+      }
+    }
+  },
+  "samplingPolicy": {
+    "sourcePixels": "immutable approved PNGs",
+    "background": "connected neutral matte transparent except explicit protected light-hair masks",
+    "masks": "explicit source-pixel polygons",
+    "targetGeometry": "approved master/action only",
+    "rasterMapping": "local region affine; source-y follows axial limb u",
+    "interpolation": "linear"
+  },
+  "sourceUVAssets": {
+    "green": {
+      "eastHead": {
+        "crop": {
+          "x": 384,
+          "y": 69,
+          "width": 58,
+          "height": 71
+        },
+        "polygons": [
+          [
+            [
+              5,
+              0
+            ],
+            [
+              50,
+              0
+            ],
+            [
+              57,
+              13
+            ],
+            [
+              57,
+              62
+            ],
+            [
+              48,
+              70
+            ],
+            [
+              8,
+              70
+            ],
+            [
+              0,
+              61
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "Tight East skull interior with source eye, brow, skin, bald crown, and in-bounds fringe.",
+        "keyBackground": false,
+        "file": "source-uv-plates/green-eastHead.png",
+        "sha256": "ef06e6449a9622ed8ec1619f7f08f1a5513dff883aa5e73c1a78e2bc7425a939",
+        "extractedWidth": 58,
+        "extractedHeight": 71
+      },
+      "eastHeadEdge": {
+        "crop": {
+          "x": 378,
+          "y": 66,
+          "width": 78,
+          "height": 77
+        },
+        "polygons": [
+          [
+            [
+              0,
+              18
+            ],
+            [
+              29,
+              7
+            ],
+            [
+              34,
+              70
+            ],
+            [
+              8,
+              76
+            ],
+            [
+              0,
+              68
+            ]
+          ],
+          [
+            [
+              65,
+              25
+            ],
+            [
+              78,
+              28
+            ],
+            [
+              78,
+              61
+            ],
+            [
+              64,
+              65
+            ]
+          ]
+        ],
+        "purpose": "East hair, ear, nose, and moustache pixels extending beyond the approved head surface.",
+        "file": "source-uv-plates/green-eastHeadEdge.png",
+        "sha256": "c2fbf875e02991fa6b659be6fbbb6af1ad53d7b17672b8cddcb22bcf1d273893",
+        "extractedWidth": 78,
+        "extractedHeight": 77
+      },
+      "eastMoustache": {
+        "crop": {
+          "x": 433,
+          "y": 126,
+          "width": 18,
+          "height": 12
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              18,
+              0
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "East white moustache lobes and dark lower outline.",
+        "keyBackground": false,
+        "file": "source-uv-plates/green-eastMoustache.png",
+        "sha256": "d68afe9398f8b6a718edc5c0d426e967d279701560bf53d5cb4454c938084798",
+        "extractedWidth": 18,
+        "extractedHeight": 12
+      },
+      "eastNeck": {
+        "crop": {
+          "x": 425,
+          "y": 105,
+          "width": 6,
+          "height": 8
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ],
+        "purpose": "East clean cheek skin for the neck.",
+        "file": "source-uv-plates/green-eastNeck.png",
+        "sha256": "ef73c7d806006c188fe589acad8af55f2a7034040ee6ea2316c5ee2f2d61104e",
+        "extractedWidth": 6,
+        "extractedHeight": 8
+      },
+      "eastTorsoKnit": {
+        "crop": {
+          "x": 392,
+          "y": 158,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "East cardigan knit underpaint.",
+        "file": "source-uv-plates/green-eastTorsoKnit.png",
+        "sha256": "5b88291c7347e7f04f253f711e45046a5f533c826c61c809887ce186ce01ead8",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "eastTorso": {
+        "crop": {
+          "x": 398,
+          "y": 139,
+          "width": 55,
+          "height": 99
+        },
+        "polygons": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              43,
+              0
+            ],
+            [
+              54,
+              18
+            ],
+            [
+              54,
+              98
+            ],
+            [
+              18,
+              98
+            ],
+            [
+              18,
+              88
+            ],
+            [
+              1,
+              88
+            ],
+            [
+              0,
+              18
+            ]
+          ]
+        ],
+        "purpose": "East cardigan profile with collar, opening, buttons, hem, and shading; the lower-left source hand is excluded.",
+        "file": "source-uv-plates/green-eastTorso.png",
+        "sha256": "bebed65edbec1f0639c864d4dfa87a143827c3c02852ea9a829c33ddcedbaf79",
+        "extractedWidth": 55,
+        "extractedHeight": 99
+      },
+      "eastSleeve": {
+        "crop": {
+          "x": 380,
+          "y": 148,
+          "width": 20,
+          "height": 75
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              20,
+              0
+            ],
+            [
+              20,
+              75
+            ],
+            [
+              0,
+              75
+            ]
+          ]
+        ],
+        "purpose": "East profile sage sleeve and cuff.",
+        "file": "source-uv-plates/green-eastSleeve.png",
+        "sha256": "c2078613a72e948d1f3e4ef6400acbe1bb67fb8053c0cc63d24ed78857a4bb5f",
+        "extractedWidth": 20,
+        "extractedHeight": 75
+      },
+      "eastHand": {
+        "crop": {
+          "x": 386,
+          "y": 215,
+          "width": 29,
+          "height": 31
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              29,
+              0
+            ],
+            [
+              29,
+              31
+            ],
+            [
+              0,
+              31
+            ]
+          ]
+        ],
+        "purpose": "East source hand skin.",
+        "file": "source-uv-plates/green-eastHand.png",
+        "sha256": "d3dbb13d7568f8a7ae7784a60cf019d45ab098e662fb14f6c069163b7da0db16",
+        "extractedWidth": 29,
+        "extractedHeight": 31
+      },
+      "eastThigh": {
+        "crop": {
+          "x": 389,
+          "y": 248,
+          "width": 27,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "East pants-only brown trouser thigh below the source hand.",
+        "file": "source-uv-plates/green-eastThigh.png",
+        "sha256": "762ab7f92e1b011f3cff27929b22a007da7ca971db9cf2611f7b236008193e72",
+        "extractedWidth": 27,
+        "extractedHeight": 30
+      },
+      "eastShin": {
+        "crop": {
+          "x": 389,
+          "y": 264,
+          "width": 27,
+          "height": 42
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              42
+            ],
+            [
+              0,
+              42
+            ]
+          ]
+        ],
+        "purpose": "East brown trouser shin.",
+        "file": "source-uv-plates/green-eastShin.png",
+        "sha256": "30473be2c39e95e17d944de8d97b96f4151bb5ab088f8f973be7ed1e3089cc3d",
+        "extractedWidth": 27,
+        "extractedHeight": 42
+      },
+      "eastFoot": {
+        "crop": {
+          "x": 386,
+          "y": 298,
+          "width": 67,
+          "height": 24
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              67,
+              0
+            ],
+            [
+              67,
+              24
+            ],
+            [
+              0,
+              24
+            ]
+          ]
+        ],
+        "purpose": "East profile brown shoe and pale sole.",
+        "file": "source-uv-plates/green-eastFoot.png",
+        "sha256": "8c4e03b5ee21ff1fb753d47fab79dc25fec434840880d377a070692a27e33aa8",
+        "extractedWidth": 67,
+        "extractedHeight": 24
+      },
+      "westHead": {
+        "crop": {
+          "x": 618,
+          "y": 69,
+          "width": 58,
+          "height": 75
+        },
+        "polygons": [
+          [
+            [
+              7,
+              0
+            ],
+            [
+              52,
+              0
+            ],
+            [
+              58,
+              13
+            ],
+            [
+              58,
+              65
+            ],
+            [
+              50,
+              74
+            ],
+            [
+              9,
+              74
+            ],
+            [
+              0,
+              65
+            ],
+            [
+              0,
+              13
+            ]
+          ]
+        ],
+        "purpose": "Tight West skull interior with source eye, brow, skin, bald crown, and in-bounds fringe.",
+        "keyBackground": false,
+        "file": "source-uv-plates/green-westHead.png",
+        "sha256": "361bced6473c34975405ae5d64821a6fef52d287a75d8a89c64478f4ba62ef5b",
+        "extractedWidth": 58,
+        "extractedHeight": 75
+      },
+      "westHeadEdge": {
+        "crop": {
+          "x": 604,
+          "y": 66,
+          "width": 80,
+          "height": 86
+        },
+        "polygons": [
+          [
+            [
+              47,
+              7
+            ],
+            [
+              80,
+              18
+            ],
+            [
+              80,
+              76
+            ],
+            [
+              55,
+              84
+            ]
+          ],
+          [
+            [
+              0,
+              28
+            ],
+            [
+              15,
+              25
+            ],
+            [
+              17,
+              70
+            ],
+            [
+              0,
+              69
+            ]
+          ]
+        ],
+        "purpose": "West hair, ear, nose, and moustache pixels extending beyond the approved head surface.",
+        "file": "source-uv-plates/green-westHeadEdge.png",
+        "sha256": "e179fbaf0d22c1f9cd9691182c4fc8d4b532d93a94b7d0fe22746ac92f5fd542",
+        "extractedWidth": 80,
+        "extractedHeight": 86
+      },
+      "westMoustache": {
+        "crop": {
+          "x": 607,
+          "y": 126,
+          "width": 18,
+          "height": 12
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              18,
+              0
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "West white moustache lobes and dark lower outline.",
+        "keyBackground": false,
+        "file": "source-uv-plates/green-westMoustache.png",
+        "sha256": "abfa0446ed28b81467a3a9b2ec7d258cf852a8f987825ff8530aa62fbe898173",
+        "extractedWidth": 18,
+        "extractedHeight": 12
+      },
+      "westNeck": {
+        "crop": {
+          "x": 626,
+          "y": 105,
+          "width": 6,
+          "height": 8
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ],
+        "purpose": "West clean cheek skin for the neck.",
+        "file": "source-uv-plates/green-westNeck.png",
+        "sha256": "1eed01cf51f4adcc258e8e4d791a94c2cb885a22a0fb39f4cb01c5cfdc3e2a05",
+        "extractedWidth": 6,
+        "extractedHeight": 8
+      },
+      "westTorsoKnit": {
+        "crop": {
+          "x": 664,
+          "y": 160,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "West cardigan knit underpaint.",
+        "file": "source-uv-plates/green-westTorsoKnit.png",
+        "sha256": "7aa7b0e09992dd039713bcf1018fa2a8c37f2fef003204798e7e8f4ae28d2332",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "westTorso": {
+        "crop": {
+          "x": 618,
+          "y": 140,
+          "width": 52,
+          "height": 102
+        },
+        "polygons": [
+          [
+            [
+              10,
+              0
+            ],
+            [
+              44,
+              0
+            ],
+            [
+              51,
+              19
+            ],
+            [
+              51,
+              78
+            ],
+            [
+              39,
+              78
+            ],
+            [
+              39,
+              101
+            ],
+            [
+              1,
+              101
+            ],
+            [
+              0,
+              19
+            ]
+          ]
+        ],
+        "purpose": "West cardigan profile with collar, opening, buttons, hem, and shading; the lower-right source hand is excluded.",
+        "file": "source-uv-plates/green-westTorso.png",
+        "sha256": "7d4e7137ac20fbf71e263ee9bb4785e6f30306e22a140985bae49adbb8e1989d",
+        "extractedWidth": 52,
+        "extractedHeight": 102
+      },
+      "westSleeve": {
+        "crop": {
+          "x": 669,
+          "y": 150,
+          "width": 20,
+          "height": 74
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              20,
+              0
+            ],
+            [
+              20,
+              74
+            ],
+            [
+              0,
+              74
+            ]
+          ]
+        ],
+        "purpose": "West profile sage sleeve and cuff.",
+        "file": "source-uv-plates/green-westSleeve.png",
+        "sha256": "f8c3b5345f6daabdeb3a1d0999c2cb665cca080ed6016a7b944573990e3399ad",
+        "extractedWidth": 20,
+        "extractedHeight": 74
+      },
+      "westHand": {
+        "crop": {
+          "x": 663,
+          "y": 215,
+          "width": 28,
+          "height": 31
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              28,
+              0
+            ],
+            [
+              28,
+              31
+            ],
+            [
+              0,
+              31
+            ]
+          ]
+        ],
+        "purpose": "West source hand skin.",
+        "file": "source-uv-plates/green-westHand.png",
+        "sha256": "96eccd2986a79e542da96ff00c44cf374904c06edfe054ec12fda6146d744ca6",
+        "extractedWidth": 28,
+        "extractedHeight": 31
+      },
+      "westThigh": {
+        "crop": {
+          "x": 641,
+          "y": 248,
+          "width": 28,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              28,
+              0
+            ],
+            [
+              28,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "West pants-only brown trouser thigh below the source hand.",
+        "file": "source-uv-plates/green-westThigh.png",
+        "sha256": "57b2c2194291ded19ca8593449918cad3379c42d9ed306ddbbecb88145a4a16b",
+        "extractedWidth": 28,
+        "extractedHeight": 30
+      },
+      "westShin": {
+        "crop": {
+          "x": 641,
+          "y": 265,
+          "width": 28,
+          "height": 41
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              28,
+              0
+            ],
+            [
+              28,
+              41
+            ],
+            [
+              0,
+              41
+            ]
+          ]
+        ],
+        "purpose": "West brown trouser shin.",
+        "file": "source-uv-plates/green-westShin.png",
+        "sha256": "82841fe15e59f48d2e8630b32dfe5ccd3d363eaca6b2132832d27cc936e13464",
+        "extractedWidth": 28,
+        "extractedHeight": 41
+      },
+      "westFoot": {
+        "crop": {
+          "x": 615,
+          "y": 298,
+          "width": 70,
+          "height": 24
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              70,
+              0
+            ],
+            [
+              70,
+              24
+            ],
+            [
+              0,
+              24
+            ]
+          ]
+        ],
+        "purpose": "West profile brown shoe and pale sole.",
+        "file": "source-uv-plates/green-westFoot.png",
+        "sha256": "357fb0ac125f078de66f3d3ed1f1098e0e6a0162fe611de7758571e04e2f2632",
+        "extractedWidth": 70,
+        "extractedHeight": 24
+      },
+      "northHead": {
+        "crop": {
+          "x": 848,
+          "y": 70,
+          "width": 59,
+          "height": 63
+        },
+        "polygons": [
+          [
+            [
+              5,
+              0
+            ],
+            [
+              54,
+              0
+            ],
+            [
+              59,
+              10
+            ],
+            [
+              59,
+              54
+            ],
+            [
+              51,
+              62
+            ],
+            [
+              8,
+              62
+            ],
+            [
+              0,
+              54
+            ],
+            [
+              0,
+              10
+            ]
+          ]
+        ],
+        "purpose": "Tight North skull interior with bald crown and white rear fringe.",
+        "keyBackground": false,
+        "file": "source-uv-plates/green-northHead.png",
+        "sha256": "48394ea641a1508181fb8f10c45abc1c4a02989b7404a765551056a3baae9a13",
+        "extractedWidth": 59,
+        "extractedHeight": 63
+      },
+      "northHeadEdge": {
+        "crop": {
+          "x": 839,
+          "y": 66,
+          "width": 77,
+          "height": 86
+        },
+        "polygons": [
+          [
+            [
+              0,
+              28
+            ],
+            [
+              18,
+              25
+            ],
+            [
+              20,
+              82
+            ],
+            [
+              0,
+              77
+            ]
+          ],
+          [
+            [
+              57,
+              25
+            ],
+            [
+              77,
+              28
+            ],
+            [
+              77,
+              77
+            ],
+            [
+              55,
+              82
+            ]
+          ]
+        ],
+        "purpose": "North ears and white side-fringe extensions only.",
+        "file": "source-uv-plates/green-northHeadEdge.png",
+        "sha256": "4237fa4a8ce9a1331f876a62a74530e8621e4008fc0fc3b60d3885679ac6be23",
+        "extractedWidth": 77,
+        "extractedHeight": 86
+      },
+      "northNeck": {
+        "crop": {
+          "x": 868,
+          "y": 139,
+          "width": 8,
+          "height": 8
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ],
+        "purpose": "North source cardigan collar texture for the rear neck bridge.",
+        "file": "source-uv-plates/green-northNeck.png",
+        "sha256": "8d291efa78b5924bd0081fea135c0abeece9bd38328b9889010467b2eb52e871",
+        "extractedWidth": 8,
+        "extractedHeight": 8
+      },
+      "northTorsoKnit": {
+        "crop": {
+          "x": 850,
+          "y": 155,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "North cardigan knit underpaint.",
+        "file": "source-uv-plates/green-northTorsoKnit.png",
+        "sha256": "a6cb193e7c7b9893a644da6d633ebd598d2157c4cc1704604845daf9dee25faf",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "northTorso": {
+        "crop": {
+          "x": 845,
+          "y": 139,
+          "width": 66,
+          "height": 101
+        },
+        "polygons": [
+          [
+            [
+              9,
+              0
+            ],
+            [
+              57,
+              0
+            ],
+            [
+              65,
+              18
+            ],
+            [
+              65,
+              100
+            ],
+            [
+              1,
+              100
+            ],
+            [
+              0,
+              18
+            ]
+          ]
+        ],
+        "purpose": "North cloth-only cardigan back, seams, and hem ribbing.",
+        "file": "source-uv-plates/green-northTorso.png",
+        "sha256": "149c796b9ba0a416fe3171eea2bc6b6b98096fc33d9d1222290cc6327bfba59c",
+        "extractedWidth": 66,
+        "extractedHeight": 101
+      },
+      "northUpperRight": {
+        "crop": {
+          "x": 827,
+          "y": 151,
+          "width": 18,
+          "height": 38
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              18,
+              0
+            ],
+            [
+              18,
+              38
+            ],
+            [
+              0,
+              38
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left upper sleeve.",
+        "file": "source-uv-plates/green-northUpperRight.png",
+        "sha256": "fa78119e6fc990e598af63dd0ac66d162674f4464ade4b81b992a1c58c08a417",
+        "extractedWidth": 18,
+        "extractedHeight": 38
+      },
+      "northForeRight": {
+        "crop": {
+          "x": 826,
+          "y": 182,
+          "width": 19,
+          "height": 43
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              19,
+              0
+            ],
+            [
+              19,
+              43
+            ],
+            [
+              0,
+              43
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left forearm and cuff.",
+        "file": "source-uv-plates/green-northForeRight.png",
+        "sha256": "41b94be0e5085c8dad6e092cf413f616155d5a6cff6145320d133ad0ba721feb",
+        "extractedWidth": 19,
+        "extractedHeight": 43
+      },
+      "northHandRight": {
+        "crop": {
+          "x": 822,
+          "y": 218,
+          "width": 26,
+          "height": 29
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              26,
+              29
+            ],
+            [
+              0,
+              29
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left source hand.",
+        "file": "source-uv-plates/green-northHandRight.png",
+        "sha256": "4c70c844507c1a606c7e0fd2e2ca2e66a8a2ce52323734b64ccd79113ea87ca0",
+        "extractedWidth": 26,
+        "extractedHeight": 29
+      },
+      "northUpperLeft": {
+        "crop": {
+          "x": 911,
+          "y": 151,
+          "width": 18,
+          "height": 38
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              18,
+              0
+            ],
+            [
+              18,
+              38
+            ],
+            [
+              0,
+              38
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right upper sleeve.",
+        "file": "source-uv-plates/green-northUpperLeft.png",
+        "sha256": "2e480d6c86376c6221b4ec867363bd99f3e1b788a6ad2f0ff28bfaaa8dc8bb24",
+        "extractedWidth": 18,
+        "extractedHeight": 38
+      },
+      "northForeLeft": {
+        "crop": {
+          "x": 911,
+          "y": 182,
+          "width": 19,
+          "height": 43
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              19,
+              0
+            ],
+            [
+              19,
+              43
+            ],
+            [
+              0,
+              43
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right forearm and cuff.",
+        "file": "source-uv-plates/green-northForeLeft.png",
+        "sha256": "8f3d1b5f3346e264dd5fb4a7a43e8d026246598d429c2218941cd3ccc4bcad85",
+        "extractedWidth": 19,
+        "extractedHeight": 43
+      },
+      "northHandLeft": {
+        "crop": {
+          "x": 908,
+          "y": 218,
+          "width": 26,
+          "height": 29
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              26,
+              29
+            ],
+            [
+              0,
+              29
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right source hand.",
+        "file": "source-uv-plates/green-northHandLeft.png",
+        "sha256": "49aa8f68d90bfe54a94caa72cc67cc4c92384b95b6f82f1ed9f0b74ea3b45650",
+        "extractedWidth": 26,
+        "extractedHeight": 29
+      },
+      "northThighRight": {
+        "crop": {
+          "x": 850,
+          "y": 231,
+          "width": 27,
+          "height": 40
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              40
+            ],
+            [
+              0,
+              40
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left trouser thigh.",
+        "file": "source-uv-plates/green-northThighRight.png",
+        "sha256": "21163340ca86c92c800c87630a9ced4b7d05a57a11d30711cf29b7f600a518ef",
+        "extractedWidth": 27,
+        "extractedHeight": 40
+      },
+      "northShinRight": {
+        "crop": {
+          "x": 850,
+          "y": 265,
+          "width": 27,
+          "height": 42
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              42
+            ],
+            [
+              0,
+              42
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left trouser shin.",
+        "file": "source-uv-plates/green-northShinRight.png",
+        "sha256": "00bd30a8302b1d86c48e489ac8545bfd61c6d21e717d2282f29688198bd06852",
+        "extractedWidth": 27,
+        "extractedHeight": 42
+      },
+      "northFootRight": {
+        "crop": {
+          "x": 840,
+          "y": 298,
+          "width": 42,
+          "height": 24
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              42,
+              0
+            ],
+            [
+              42,
+              24
+            ],
+            [
+              0,
+              24
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left shoe and sole.",
+        "file": "source-uv-plates/green-northFootRight.png",
+        "sha256": "626aad6e8fc528ab8321e217ef3340a587c2b73970703dbe8688cd8b5178c2b1",
+        "extractedWidth": 42,
+        "extractedHeight": 24
+      },
+      "northThighLeft": {
+        "crop": {
+          "x": 886,
+          "y": 231,
+          "width": 27,
+          "height": 40
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              40
+            ],
+            [
+              0,
+              40
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right trouser thigh.",
+        "file": "source-uv-plates/green-northThighLeft.png",
+        "sha256": "d1b0378846b7167e6eeaca7f782710c225623caaab29caf192f913ab01546083",
+        "extractedWidth": 27,
+        "extractedHeight": 40
+      },
+      "northShinLeft": {
+        "crop": {
+          "x": 886,
+          "y": 265,
+          "width": 27,
+          "height": 42
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              42
+            ],
+            [
+              0,
+              42
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right trouser shin.",
+        "file": "source-uv-plates/green-northShinLeft.png",
+        "sha256": "129666f7066b408bab66905322136e94e1ff19bb1de06289757a23c9371d7be1",
+        "extractedWidth": 27,
+        "extractedHeight": 42
+      },
+      "northFootLeft": {
+        "crop": {
+          "x": 881,
+          "y": 298,
+          "width": 43,
+          "height": 24
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              43,
+              0
+            ],
+            [
+              43,
+              24
+            ],
+            [
+              0,
+              24
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right shoe and sole.",
+        "file": "source-uv-plates/green-northFootLeft.png",
+        "sha256": "4681f47d6edecf27b45a8466e9492be14927f5ae88846cfa26ab84c08b90d8a5",
+        "extractedWidth": 43,
+        "extractedHeight": 24
+      },
+      "head": {
+        "crop": {
+          "x": 121,
+          "y": 69,
+          "width": 63,
+          "height": 74
+        },
+        "polygons": [
+          [
+            [
+              7,
+              0
+            ],
+            [
+              55,
+              0
+            ],
+            [
+              62,
+              16
+            ],
+            [
+              62,
+              58
+            ],
+            [
+              52,
+              73
+            ],
+            [
+              10,
+              73
+            ],
+            [
+              0,
+              58
+            ],
+            [
+              0,
+              16
+            ]
+          ]
+        ],
+        "purpose": "Painted face, eyes, brows, moustache, bald crown, and in-bounds white fringe.",
+        "file": "source-uv-plates/green-head.png",
+        "sha256": "8e06b8ced13630127dc22bf96ee774d536f3edd0448c469acb40f047678d80fa",
+        "extractedWidth": 63,
+        "extractedHeight": 74
+      },
+      "headSides": {
+        "crop": {
+          "x": 110,
+          "y": 62,
+          "width": 92,
+          "height": 88
+        },
+        "polygons": [
+          [
+            [
+              0,
+              34
+            ],
+            [
+              15,
+              31
+            ],
+            [
+              17,
+              70
+            ],
+            [
+              1,
+              72
+            ]
+          ],
+          [
+            [
+              76,
+              31
+            ],
+            [
+              92,
+              34
+            ],
+            [
+              91,
+              72
+            ],
+            [
+              75,
+              70
+            ]
+          ]
+        ],
+        "purpose": "Source side fringe and ears extending beyond the shared head surface.",
+        "file": "source-uv-plates/green-headSides.png",
+        "sha256": "c9efa0e2cd9a896cc3df62b05015243f61aa5b94e93d3661cd1e16c5e611bee5",
+        "extractedWidth": 92,
+        "extractedHeight": 88
+      },
+      "neck": {
+        "crop": {
+          "x": 150,
+          "y": 80,
+          "width": 8,
+          "height": 10
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ]
+        ],
+        "purpose": "Interior source skin texture without chin outline or source silhouette geometry.",
+        "file": "source-uv-plates/green-neck.png",
+        "sha256": "b82fa4ca5edf34a77c0981946edb0298dbc83f0585413d8a6aa2a1f26be91692",
+        "extractedWidth": 8,
+        "extractedHeight": 10
+      },
+      "torsoKnit": {
+        "crop": {
+          "x": 125,
+          "y": 174,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "Interior source cardigan knit underpaint for the approved torso shoulder corners.",
+        "file": "source-uv-plates/green-torsoKnit.png",
+        "sha256": "21137faeebcf32aba530f8d10678cfe4e44df94cf6c2a611803629d0dad4564b",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "torso": {
+        "crop": {
+          "x": 116,
+          "y": 136,
+          "width": 76,
+          "height": 101
+        },
+        "polygons": [
+          [
+            [
+              24,
+              0
+            ],
+            [
+              52,
+              0
+            ],
+            [
+              72,
+              20
+            ],
+            [
+              74,
+              99
+            ],
+            [
+              2,
+              99
+            ],
+            [
+              4,
+              20
+            ]
+          ]
+        ],
+        "purpose": "Cardigan knit, cream pointed collar, V opening, placket, buttons, and hem ribbing.",
+        "file": "source-uv-plates/green-torso.png",
+        "sha256": "348700d06744cd82ebd450112bf24c90f64f552828cf93b7d1711c235c955908",
+        "extractedWidth": 76,
+        "extractedHeight": 101
+      },
+      "upperRight": {
+        "crop": {
+          "x": 106,
+          "y": 151,
+          "width": 14,
+          "height": 34
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              34
+            ],
+            [
+              0,
+              34
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left interior source upper sleeve for the anatomical right arm.",
+        "file": "source-uv-plates/green-upperRight.png",
+        "sha256": "03b8e81e6e3f0b9e5f3700f2c50cbfb9f92f09cce5b68dba4a919a26dc05cf5a",
+        "extractedWidth": 14,
+        "extractedHeight": 34
+      },
+      "foreRight": {
+        "crop": {
+          "x": 105,
+          "y": 181,
+          "width": 15,
+          "height": 39
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              39
+            ],
+            [
+              0,
+              39
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left source forearm knit and cuff ribbing.",
+        "file": "source-uv-plates/green-foreRight.png",
+        "sha256": "ba7e085bf02c77c4cc71d4b5d38fb31475cf338b4409160e592f62c90a824c2e",
+        "extractedWidth": 15,
+        "extractedHeight": 39
+      },
+      "handRight": {
+        "crop": {
+          "x": 103,
+          "y": 226,
+          "width": 22,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              22,
+              0
+            ],
+            [
+              22,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left source hand skin texture, clipped to the shared palm.",
+        "file": "source-uv-plates/green-handRight.png",
+        "sha256": "55fd511e845d7a87eab1e2987b07ae8587f757f2cf786636dcd94623a2725696",
+        "extractedWidth": 22,
+        "extractedHeight": 20
+      },
+      "upperLeft": {
+        "crop": {
+          "x": 189,
+          "y": 151,
+          "width": 14,
+          "height": 34
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              34
+            ],
+            [
+              0,
+              34
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right interior source upper sleeve for the anatomical left arm.",
+        "file": "source-uv-plates/green-upperLeft.png",
+        "sha256": "cc1073e663dc482f1a30f110e1a9fc04c00743236a788089a17f27f73fd5756b",
+        "extractedWidth": 14,
+        "extractedHeight": 34
+      },
+      "foreLeft": {
+        "crop": {
+          "x": 189,
+          "y": 181,
+          "width": 15,
+          "height": 39
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              39
+            ],
+            [
+              0,
+              39
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right source forearm knit and cuff ribbing.",
+        "file": "source-uv-plates/green-foreLeft.png",
+        "sha256": "5da702cbb372224c1149b0e8432dc0b56a6c8ffed31e173ca5574c48e1655c10",
+        "extractedWidth": 15,
+        "extractedHeight": 39
+      },
+      "handLeft": {
+        "crop": {
+          "x": 184,
+          "y": 226,
+          "width": 23,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              23,
+              0
+            ],
+            [
+              23,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right source hand skin texture, clipped to the shared palm.",
+        "file": "source-uv-plates/green-handLeft.png",
+        "sha256": "86a063ef7f0b3e56756f348c5cad21a4baa8030524100cfd9e8f8a2fcd6204bf",
+        "extractedWidth": 23,
+        "extractedHeight": 20
+      },
+      "thighRight": {
+        "crop": {
+          "x": 124,
+          "y": 232,
+          "width": 24,
+          "height": 34
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              24,
+              0
+            ],
+            [
+              24,
+              34
+            ],
+            [
+              0,
+              34
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left interior brown trouser thigh texture.",
+        "file": "source-uv-plates/green-thighRight.png",
+        "sha256": "b80dbd730554dd55bf5e823516f4075d6d210d5d50bdae374b3ad1dad882d820",
+        "extractedWidth": 24,
+        "extractedHeight": 34
+      },
+      "shinRight": {
+        "crop": {
+          "x": 124,
+          "y": 260,
+          "width": 24,
+          "height": 32
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              24,
+              0
+            ],
+            [
+              24,
+              32
+            ],
+            [
+              0,
+              32
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left interior brown trouser shin texture.",
+        "file": "source-uv-plates/green-shinRight.png",
+        "sha256": "6496eb403a201f31771fa1af91e1fbe54b89aa83634c13ea9f6ca4b62290594c",
+        "extractedWidth": 24,
+        "extractedHeight": 32
+      },
+      "footRight": {
+        "crop": {
+          "x": 112,
+          "y": 299,
+          "width": 44,
+          "height": 22
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              44,
+              0
+            ],
+            [
+              44,
+              22
+            ],
+            [
+              0,
+              22
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left brown shoe and pale sole.",
+        "file": "source-uv-plates/green-footRight.png",
+        "sha256": "bb4e4a8e81dd8518cfb31ec07d35472d24efb97df8181547aaa9bb7db5b5f58c",
+        "extractedWidth": 44,
+        "extractedHeight": 22
+      },
+      "thighLeft": {
+        "crop": {
+          "x": 158,
+          "y": 232,
+          "width": 24,
+          "height": 34
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              24,
+              0
+            ],
+            [
+              24,
+              34
+            ],
+            [
+              0,
+              34
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right interior brown trouser thigh texture.",
+        "file": "source-uv-plates/green-thighLeft.png",
+        "sha256": "b8b8759558121b8714ca7c96bdd4abd97aeafaf59df45e6c95078462f3c9226e",
+        "extractedWidth": 24,
+        "extractedHeight": 34
+      },
+      "shinLeft": {
+        "crop": {
+          "x": 158,
+          "y": 260,
+          "width": 24,
+          "height": 32
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              24,
+              0
+            ],
+            [
+              24,
+              32
+            ],
+            [
+              0,
+              32
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right interior brown trouser shin texture.",
+        "file": "source-uv-plates/green-shinLeft.png",
+        "sha256": "9489c1d7ed2072f8196565b2b52e5c6563805fc7967c9ff02fabd6e858f39129",
+        "extractedWidth": 24,
+        "extractedHeight": 32
+      },
+      "footLeft": {
+        "crop": {
+          "x": 152,
+          "y": 299,
+          "width": 48,
+          "height": 22
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              48,
+              0
+            ],
+            [
+              48,
+              22
+            ],
+            [
+              0,
+              22
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right brown shoe and pale sole.",
+        "file": "source-uv-plates/green-footLeft.png",
+        "sha256": "22aaf13f2d1f3ede3bc458511eeecad0adc4fa491d4aa2836406223195b0adf0",
+        "extractedWidth": 48,
+        "extractedHeight": 22
+      }
+    },
+    "gray": {
+      "eastHead": {
+        "crop": {
+          "x": 377,
+          "y": 62,
+          "width": 64,
+          "height": 77
+        },
+        "polygons": [
+          [
+            [
+              7,
+              0
+            ],
+            [
+              54,
+              0
+            ],
+            [
+              63,
+              9
+            ],
+            [
+              64,
+              62
+            ],
+            [
+              56,
+              71
+            ],
+            [
+              45,
+              76
+            ],
+            [
+              12,
+              76
+            ],
+            [
+              2,
+              68
+            ],
+            [
+              0,
+              14
+            ]
+          ]
+        ],
+        "purpose": "Tight East skull interior with swept silver hair, warm face, black glasses, and eye.",
+        "keyBackground": false,
+        "file": "source-uv-plates/gray-eastHead.png",
+        "sha256": "dc3ffbff670936a571ddedb3ad2ba4af84fe57a3587e093c167148039a9cbbe0",
+        "extractedWidth": 64,
+        "extractedHeight": 77
+      },
+      "eastHeadEdge": {
+        "crop": {
+          "x": 369,
+          "y": 54,
+          "width": 84,
+          "height": 90
+        },
+        "polygons": [
+          [
+            [
+              0,
+              29
+            ],
+            [
+              31,
+              1
+            ],
+            [
+              39,
+              87
+            ],
+            [
+              3,
+              74
+            ]
+          ],
+          [
+            [
+              70,
+              20
+            ],
+            [
+              84,
+              22
+            ],
+            [
+              81,
+              76
+            ],
+            [
+              67,
+              80
+            ]
+          ]
+        ],
+        "purpose": "East silver hair, ear, glasses, and nose pixels outside the approved head surface.",
+        "file": "source-uv-plates/gray-eastHeadEdge.png",
+        "sha256": "66343da27e97b3f0d7f5a959057f07c584572270454c846353951c09df0d8cc6",
+        "extractedWidth": 84,
+        "extractedHeight": 90
+      },
+      "eastNeck": {
+        "crop": {
+          "x": 417,
+          "y": 111,
+          "width": 6,
+          "height": 8
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ],
+        "purpose": "East clean warm cheek skin for the neck.",
+        "file": "source-uv-plates/gray-eastNeck.png",
+        "sha256": "854e20a2af5fed3b0b5c9b5f8a8fe0c5d678e5cb204ec68f64e0f35c6b9c6b22",
+        "extractedWidth": 6,
+        "extractedHeight": 8
+      },
+      "eastBraid": {
+        "crop": {
+          "x": 369,
+          "y": 110,
+          "width": 28,
+          "height": 104
+        },
+        "polygons": [
+          [
+            [
+              4,
+              0
+            ],
+            [
+              23,
+              0
+            ],
+            [
+              27,
+              12
+            ],
+            [
+              26,
+              90
+            ],
+            [
+              20,
+              103
+            ],
+            [
+              7,
+              101
+            ],
+            [
+              1,
+              88
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "Tight East source braid behind the head, with connected silver mass and dark strand outlines.",
+        "file": "source-uv-plates/gray-eastBraid.png",
+        "sha256": "acd99140451a6b765a8b357c509490237e261fe73a923fd1ae6b765bd18f09cb",
+        "extractedWidth": 28,
+        "extractedHeight": 104
+      },
+      "eastTorsoCoat": {
+        "crop": {
+          "x": 385,
+          "y": 160,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "East charcoal coat underpaint.",
+        "file": "source-uv-plates/gray-eastTorsoCoat.png",
+        "sha256": "648ac3855d7a85041fd2892268a09d0afa4fa03cfb5da2f2939ec64a2657b02d",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "eastTorso": {
+        "crop": {
+          "x": 395,
+          "y": 137,
+          "width": 61,
+          "height": 108
+        },
+        "polygons": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              50,
+              0
+            ],
+            [
+              60,
+              18
+            ],
+            [
+              60,
+              107
+            ],
+            [
+              20,
+              107
+            ],
+            [
+              20,
+              80
+            ],
+            [
+              1,
+              80
+            ],
+            [
+              0,
+              18
+            ]
+          ]
+        ],
+        "purpose": "East charcoal coat, blouse edge, belt, pocket, seams, and shading; the lower-left source hand is excluded.",
+        "file": "source-uv-plates/gray-eastTorso.png",
+        "sha256": "541aa705667434acc2c198fc6922b19a1dda7d3a17b97da6372b71076f093b8f",
+        "extractedWidth": 61,
+        "extractedHeight": 108
+      },
+      "eastCoat": {
+        "crop": {
+          "x": 395,
+          "y": 137,
+          "width": 61,
+          "height": 114
+        },
+        "polygons": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              50,
+              0
+            ],
+            [
+              60,
+              18
+            ],
+            [
+              60,
+              113
+            ],
+            [
+              20,
+              113
+            ],
+            [
+              20,
+              80
+            ],
+            [
+              1,
+              80
+            ],
+            [
+              0,
+              18
+            ]
+          ]
+        ],
+        "purpose": "East long-coat panel with the adjacent lower-left source hand excluded.",
+        "file": "source-uv-plates/gray-eastCoat.png",
+        "sha256": "ccc37c7a3652953d3b0f6c9f2bf54db1d1879e743c2e69e60f2876335df1b8bd",
+        "extractedWidth": 61,
+        "extractedHeight": 114
+      },
+      "eastSleeve": {
+        "crop": {
+          "x": 375,
+          "y": 148,
+          "width": 21,
+          "height": 80
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              21,
+              0
+            ],
+            [
+              21,
+              80
+            ],
+            [
+              0,
+              80
+            ]
+          ]
+        ],
+        "purpose": "East charcoal sleeve and cuff.",
+        "file": "source-uv-plates/gray-eastSleeve.png",
+        "sha256": "dc7658af27401b21d5006759f4072fb1598844bd70e1badf15f84f7a57fbb26e",
+        "extractedWidth": 21,
+        "extractedHeight": 80
+      },
+      "eastHand": {
+        "crop": {
+          "x": 386,
+          "y": 218,
+          "width": 28,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              28,
+              0
+            ],
+            [
+              28,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "East warm hand texture.",
+        "file": "source-uv-plates/gray-eastHand.png",
+        "sha256": "fefee4932e3486dd8133d0a41ec01e5b26798a1dbb0e2a0494995492bf2fda07",
+        "extractedWidth": 28,
+        "extractedHeight": 30
+      },
+      "eastThigh": {
+        "crop": {
+          "x": 400,
+          "y": 252,
+          "width": 25,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "East pants-only dark trouser thigh below the source hand.",
+        "file": "source-uv-plates/gray-eastThigh.png",
+        "sha256": "2549f5fa23f4eaa5871cca1220ba5fe699015319a0abb4844e08f6d66dd67b40",
+        "extractedWidth": 25,
+        "extractedHeight": 30
+      },
+      "eastShin": {
+        "crop": {
+          "x": 400,
+          "y": 270,
+          "width": 25,
+          "height": 37
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              37
+            ],
+            [
+              0,
+              37
+            ]
+          ]
+        ],
+        "purpose": "East dark trouser shin.",
+        "file": "source-uv-plates/gray-eastShin.png",
+        "sha256": "b4cc7a53399efa4adecb63b52d7e97091a978aa4a01bad58ee70ddfd5c21a3b4",
+        "extractedWidth": 25,
+        "extractedHeight": 37
+      },
+      "eastFoot": {
+        "crop": {
+          "x": 387,
+          "y": 302,
+          "width": 66,
+          "height": 28
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              66,
+              0
+            ],
+            [
+              66,
+              28
+            ],
+            [
+              0,
+              28
+            ]
+          ]
+        ],
+        "purpose": "East profile dark shoe and brown sole.",
+        "file": "source-uv-plates/gray-eastFoot.png",
+        "sha256": "cf1664414e3eaa5517c2483fde61c325229ff3afba94de09da29c28405905a06",
+        "extractedWidth": 66,
+        "extractedHeight": 28
+      },
+      "westHead": {
+        "crop": {
+          "x": 599,
+          "y": 62,
+          "width": 63,
+          "height": 77
+        },
+        "polygons": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              55,
+              0
+            ],
+            [
+              63,
+              10
+            ],
+            [
+              62,
+              65
+            ],
+            [
+              54,
+              72
+            ],
+            [
+              44,
+              76
+            ],
+            [
+              11,
+              76
+            ],
+            [
+              2,
+              68
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "Tight West skull interior with swept silver hair, warm face, black glasses, and eye.",
+        "keyBackground": false,
+        "file": "source-uv-plates/gray-westHead.png",
+        "sha256": "d9309b27d7ec1f29065a14496dd5d04abb76d31ba650260b5d40a70ffdefef63",
+        "extractedWidth": 63,
+        "extractedHeight": 77
+      },
+      "westHeadEdge": {
+        "crop": {
+          "x": 588,
+          "y": 54,
+          "width": 83,
+          "height": 90
+        },
+        "polygons": [
+          [
+            [
+              44,
+              1
+            ],
+            [
+              83,
+              20
+            ],
+            [
+              78,
+              72
+            ],
+            [
+              58,
+              76
+            ]
+          ],
+          [
+            [
+              0,
+              27
+            ],
+            [
+              15,
+              20
+            ],
+            [
+              17,
+              79
+            ],
+            [
+              2,
+              77
+            ]
+          ]
+        ],
+        "purpose": "West silver hair, ear, glasses, and nose pixels outside the approved head surface.",
+        "file": "source-uv-plates/gray-westHeadEdge.png",
+        "sha256": "b258d61f2234d6343c17c0cb16ee9986f0219dfee6beb1fc54d2d384fe54947a",
+        "extractedWidth": 83,
+        "extractedHeight": 90
+      },
+      "westNeck": {
+        "crop": {
+          "x": 618,
+          "y": 111,
+          "width": 6,
+          "height": 8
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ],
+        "purpose": "West clean warm cheek skin for the neck.",
+        "file": "source-uv-plates/gray-westNeck.png",
+        "sha256": "bec16d7bf13134dd55f71572907569ec85790c0c74dda76b3022b8f3ec41fc5b",
+        "extractedWidth": 6,
+        "extractedHeight": 8
+      },
+      "westBraid": {
+        "crop": {
+          "x": 660,
+          "y": 110,
+          "width": 28,
+          "height": 104
+        },
+        "polygons": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              20,
+              0
+            ],
+            [
+              27,
+              12
+            ],
+            [
+              27,
+              88
+            ],
+            [
+              21,
+              101
+            ],
+            [
+              8,
+              103
+            ],
+            [
+              2,
+              91
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "Tight West source braid behind the head, with connected silver mass and dark strand outlines.",
+        "file": "source-uv-plates/gray-westBraid.png",
+        "sha256": "bb58baadbd3d5d0c31f0f4087a737a6211599da2a470f6a68768b4d5f97e8afc",
+        "extractedWidth": 28,
+        "extractedHeight": 104
+      },
+      "westTorsoCoat": {
+        "crop": {
+          "x": 658,
+          "y": 160,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "West charcoal coat underpaint.",
+        "file": "source-uv-plates/gray-westTorsoCoat.png",
+        "sha256": "c68721db821d3631ffaf5ed0179aa2c7bae36206d3af537e3cb7b3d3c89764b0",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "westTorso": {
+        "crop": {
+          "x": 586,
+          "y": 137,
+          "width": 60,
+          "height": 108
+        },
+        "polygons": [
+          [
+            [
+              12,
+              0
+            ],
+            [
+              54,
+              0
+            ],
+            [
+              59,
+              19
+            ],
+            [
+              59,
+              78
+            ],
+            [
+              42,
+              78
+            ],
+            [
+              42,
+              107
+            ],
+            [
+              1,
+              107
+            ],
+            [
+              0,
+              19
+            ]
+          ]
+        ],
+        "purpose": "West charcoal coat, blouse edge, belt, pocket, seams, and shading; the lower-right source hand is excluded.",
+        "file": "source-uv-plates/gray-westTorso.png",
+        "sha256": "eeb7f7be668ec166b41e92bfebb3a4e7c2ff54545b556f69deff8a9141fe55c2",
+        "extractedWidth": 60,
+        "extractedHeight": 108
+      },
+      "westCoat": {
+        "crop": {
+          "x": 586,
+          "y": 137,
+          "width": 60,
+          "height": 114
+        },
+        "polygons": [
+          [
+            [
+              12,
+              0
+            ],
+            [
+              54,
+              0
+            ],
+            [
+              59,
+              19
+            ],
+            [
+              59,
+              78
+            ],
+            [
+              42,
+              78
+            ],
+            [
+              42,
+              113
+            ],
+            [
+              1,
+              113
+            ],
+            [
+              0,
+              19
+            ]
+          ]
+        ],
+        "purpose": "West long-coat panel with the adjacent lower-right source hand excluded.",
+        "file": "source-uv-plates/gray-westCoat.png",
+        "sha256": "4adc97516d3015ed9f6b9a7b3fe78fde17f015231b1cb9a80fffff7b4759a055",
+        "extractedWidth": 60,
+        "extractedHeight": 114
+      },
+      "westSleeve": {
+        "crop": {
+          "x": 650,
+          "y": 148,
+          "width": 21,
+          "height": 80
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              21,
+              0
+            ],
+            [
+              21,
+              80
+            ],
+            [
+              0,
+              80
+            ]
+          ]
+        ],
+        "purpose": "West charcoal sleeve and cuff.",
+        "file": "source-uv-plates/gray-westSleeve.png",
+        "sha256": "dbe26c0c7b07437f0d8091a0ce7f61e0b3d03c9c5dc3f2aaa8c26f1cffd3f8c0",
+        "extractedWidth": 21,
+        "extractedHeight": 80
+      },
+      "westHand": {
+        "crop": {
+          "x": 648,
+          "y": 218,
+          "width": 29,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              29,
+              0
+            ],
+            [
+              29,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "West warm hand texture.",
+        "file": "source-uv-plates/gray-westHand.png",
+        "sha256": "9f2ad0d6666f2f945b34bcd09a864cb90f279990ed9e18963b298d119aff9175",
+        "extractedWidth": 29,
+        "extractedHeight": 30
+      },
+      "westThigh": {
+        "crop": {
+          "x": 625,
+          "y": 252,
+          "width": 25,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "West pants-only dark trouser thigh below the source hand.",
+        "file": "source-uv-plates/gray-westThigh.png",
+        "sha256": "697eb7d0c11e2982b93ad59ed3b6b9fb67f7155c2ba8255148efcd83f3575868",
+        "extractedWidth": 25,
+        "extractedHeight": 30
+      },
+      "westShin": {
+        "crop": {
+          "x": 625,
+          "y": 270,
+          "width": 25,
+          "height": 37
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              37
+            ],
+            [
+              0,
+              37
+            ]
+          ]
+        ],
+        "purpose": "West dark trouser shin.",
+        "file": "source-uv-plates/gray-westShin.png",
+        "sha256": "2c46c4b7588f05b6cecc665a10289489daaf1d998c8103b81f4e01b5bb5042d0",
+        "extractedWidth": 25,
+        "extractedHeight": 37
+      },
+      "westFoot": {
+        "crop": {
+          "x": 611,
+          "y": 302,
+          "width": 67,
+          "height": 28
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              67,
+              0
+            ],
+            [
+              67,
+              28
+            ],
+            [
+              0,
+              28
+            ]
+          ]
+        ],
+        "purpose": "West profile dark shoe and brown sole.",
+        "file": "source-uv-plates/gray-westFoot.png",
+        "sha256": "ecce828f94ce2695128bb0a5ec8b0b8202188e94d5b981274318b56eee213328",
+        "extractedWidth": 67,
+        "extractedHeight": 28
+      },
+      "northHead": {
+        "crop": {
+          "x": 840,
+          "y": 63,
+          "width": 65,
+          "height": 72
+        },
+        "polygons": [
+          [
+            [
+              7,
+              0
+            ],
+            [
+              57,
+              0
+            ],
+            [
+              64,
+              8
+            ],
+            [
+              65,
+              60
+            ],
+            [
+              57,
+              68
+            ],
+            [
+              48,
+              71
+            ],
+            [
+              14,
+              71
+            ],
+            [
+              5,
+              68
+            ],
+            [
+              0,
+              60
+            ],
+            [
+              0,
+              9
+            ]
+          ]
+        ],
+        "purpose": "Tight North skull interior with the complete silver crown.",
+        "keyBackground": false,
+        "file": "source-uv-plates/gray-northHead.png",
+        "sha256": "8a12a51da86264a4fc5d8b9e9d882eb6f59df9d78ebc94652f250cde202e349b",
+        "extractedWidth": 65,
+        "extractedHeight": 72
+      },
+      "northHeadEdge": {
+        "crop": {
+          "x": 829,
+          "y": 54,
+          "width": 86,
+          "height": 89
+        },
+        "polygons": [
+          [
+            [
+              0,
+              25
+            ],
+            [
+              22,
+              0
+            ],
+            [
+              29,
+              87
+            ],
+            [
+              2,
+              79
+            ]
+          ],
+          [
+            [
+              65,
+              0
+            ],
+            [
+              86,
+              18
+            ],
+            [
+              86,
+              78
+            ],
+            [
+              58,
+              88
+            ]
+          ]
+        ],
+        "purpose": "North silver side hair and ears outside the approved head surface.",
+        "file": "source-uv-plates/gray-northHeadEdge.png",
+        "sha256": "a689d81922e88483d6e2fdcff80269c75cbfbaccceacfae7f5331e09f5b9b817",
+        "extractedWidth": 86,
+        "extractedHeight": 89
+      },
+      "northNeck": {
+        "crop": {
+          "x": 868,
+          "y": 137,
+          "width": 8,
+          "height": 8
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              0,
+              8
+            ]
+          ]
+        ],
+        "purpose": "North source charcoal collar texture for the rear neck bridge.",
+        "file": "source-uv-plates/gray-northNeck.png",
+        "sha256": "3d40975afc1fba01e5606820d2459ce1662f493b6bbd431b011427f2a10b9cef",
+        "extractedWidth": 8,
+        "extractedHeight": 8
+      },
+      "northBraid": {
+        "crop": {
+          "x": 860,
+          "y": 110,
+          "width": 31,
+          "height": 115
+        },
+        "polygons": [
+          [
+            [
+              3,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              30,
+              12
+            ],
+            [
+              30,
+              98
+            ],
+            [
+              24,
+              113
+            ],
+            [
+              8,
+              114
+            ],
+            [
+              1,
+              99
+            ],
+            [
+              0,
+              12
+            ]
+          ]
+        ],
+        "purpose": "Tight North centered source braid with connected silver mass and dark interlocking strands.",
+        "keyBackground": false,
+        "file": "source-uv-plates/gray-northBraid.png",
+        "sha256": "0bebd089a33d2a24cf5c8c3ee56d321b5044ca3ac12ef0f399cba6ae2ee29186",
+        "extractedWidth": 31,
+        "extractedHeight": 115
+      },
+      "northTorsoCoat": {
+        "crop": {
+          "x": 850,
+          "y": 160,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "North charcoal coat underpaint.",
+        "file": "source-uv-plates/gray-northTorsoCoat.png",
+        "sha256": "67486506a9633d37c4dc3f11bac77a229ed879b6ca44e8e1cee1c00552c2819e",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "northTorso": {
+        "crop": {
+          "x": 844,
+          "y": 137,
+          "width": 63,
+          "height": 111
+        },
+        "polygons": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              55,
+              0
+            ],
+            [
+              62,
+              19
+            ],
+            [
+              62,
+              110
+            ],
+            [
+              1,
+              110
+            ],
+            [
+              0,
+              19
+            ]
+          ]
+        ],
+        "purpose": "North cloth-only charcoal coat back with central seam, pockets, and shading.",
+        "file": "source-uv-plates/gray-northTorso.png",
+        "sha256": "79291892f2335cf983708fd7b902428c75cd268e9e49a7cc19ad227648c993ec",
+        "extractedWidth": 63,
+        "extractedHeight": 111
+      },
+      "northCoat": {
+        "crop": {
+          "x": 844,
+          "y": 137,
+          "width": 63,
+          "height": 115
+        },
+        "polygons": [
+          [
+            [
+              8,
+              0
+            ],
+            [
+              55,
+              0
+            ],
+            [
+              62,
+              19
+            ],
+            [
+              62,
+              114
+            ],
+            [
+              1,
+              114
+            ],
+            [
+              0,
+              19
+            ]
+          ]
+        ],
+        "purpose": "North cloth-only complete long-coat back panel.",
+        "file": "source-uv-plates/gray-northCoat.png",
+        "sha256": "cf9157c786c28f6c5d98e95876468ac3cdc7af16530ad7b63efbfb50dc3f93d5",
+        "extractedWidth": 63,
+        "extractedHeight": 115
+      },
+      "northUpperRight": {
+        "crop": {
+          "x": 826,
+          "y": 151,
+          "width": 19,
+          "height": 40
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              19,
+              0
+            ],
+            [
+              19,
+              40
+            ],
+            [
+              0,
+              40
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left upper sleeve.",
+        "file": "source-uv-plates/gray-northUpperRight.png",
+        "sha256": "cd6bfbdb647f901fe8030663bdfe330902399e05aca7981dbcf29291eda3517e",
+        "extractedWidth": 19,
+        "extractedHeight": 40
+      },
+      "northForeRight": {
+        "crop": {
+          "x": 825,
+          "y": 183,
+          "width": 20,
+          "height": 45
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              20,
+              0
+            ],
+            [
+              20,
+              45
+            ],
+            [
+              0,
+              45
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left forearm and cuff.",
+        "file": "source-uv-plates/gray-northForeRight.png",
+        "sha256": "6ec2847fec64ec5f771d5f69a7d9e890ace87f8b3362eb33adcc3fa3311d09c2",
+        "extractedWidth": 20,
+        "extractedHeight": 45
+      },
+      "northHandRight": {
+        "crop": {
+          "x": 821,
+          "y": 219,
+          "width": 27,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left warm hand.",
+        "file": "source-uv-plates/gray-northHandRight.png",
+        "sha256": "6afff0847900512ad54bb3f3e5afc9fa92db235b7568327b06470764c0a08c6a",
+        "extractedWidth": 27,
+        "extractedHeight": 30
+      },
+      "northUpperLeft": {
+        "crop": {
+          "x": 910,
+          "y": 151,
+          "width": 19,
+          "height": 40
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              19,
+              0
+            ],
+            [
+              19,
+              40
+            ],
+            [
+              0,
+              40
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right upper sleeve.",
+        "file": "source-uv-plates/gray-northUpperLeft.png",
+        "sha256": "9735b27046d1209cbbb7a680b939960c72bb22f0578205d3f69c7cb0bef94fd3",
+        "extractedWidth": 19,
+        "extractedHeight": 40
+      },
+      "northForeLeft": {
+        "crop": {
+          "x": 910,
+          "y": 183,
+          "width": 20,
+          "height": 45
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              20,
+              0
+            ],
+            [
+              20,
+              45
+            ],
+            [
+              0,
+              45
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right forearm and cuff.",
+        "file": "source-uv-plates/gray-northForeLeft.png",
+        "sha256": "756d7b5d98c57d03e35167d263088eeb0df76f418f126a504b3dacba46931b19",
+        "extractedWidth": 20,
+        "extractedHeight": 45
+      },
+      "northHandLeft": {
+        "crop": {
+          "x": 907,
+          "y": 219,
+          "width": 27,
+          "height": 30
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              27,
+              0
+            ],
+            [
+              27,
+              30
+            ],
+            [
+              0,
+              30
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right warm hand.",
+        "file": "source-uv-plates/gray-northHandLeft.png",
+        "sha256": "7ec6a6d14542b83b2c1a60ab0450f05591704128ceaa0befb6797e33025a296e",
+        "extractedWidth": 27,
+        "extractedHeight": 30
+      },
+      "northThighRight": {
+        "crop": {
+          "x": 850,
+          "y": 239,
+          "width": 26,
+          "height": 39
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              26,
+              39
+            ],
+            [
+              0,
+              39
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left dark trouser thigh.",
+        "file": "source-uv-plates/gray-northThighRight.png",
+        "sha256": "267383165f3a7f7fd81718836609d2f5c900bdd2cd6778a249acbd8c60d586fe",
+        "extractedWidth": 26,
+        "extractedHeight": 39
+      },
+      "northShinRight": {
+        "crop": {
+          "x": 850,
+          "y": 271,
+          "width": 26,
+          "height": 38
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              26,
+              38
+            ],
+            [
+              0,
+              38
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left dark trouser shin.",
+        "file": "source-uv-plates/gray-northShinRight.png",
+        "sha256": "69638bd71ca0752d0c84d3f2cae21c53fd0d1fd5f64217d5bb5b1c41e499c042",
+        "extractedWidth": 26,
+        "extractedHeight": 38
+      },
+      "northFootRight": {
+        "crop": {
+          "x": 840,
+          "y": 302,
+          "width": 42,
+          "height": 28
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              42,
+              0
+            ],
+            [
+              42,
+              28
+            ],
+            [
+              0,
+              28
+            ]
+          ]
+        ],
+        "purpose": "North viewer-left dark shoe.",
+        "file": "source-uv-plates/gray-northFootRight.png",
+        "sha256": "a9a6f749cf5b6ea31c59dc83c1a07ed296b4f099c407bc4e61c39721024a5a65",
+        "extractedWidth": 42,
+        "extractedHeight": 28
+      },
+      "northThighLeft": {
+        "crop": {
+          "x": 887,
+          "y": 239,
+          "width": 26,
+          "height": 39
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              26,
+              39
+            ],
+            [
+              0,
+              39
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right dark trouser thigh.",
+        "file": "source-uv-plates/gray-northThighLeft.png",
+        "sha256": "d015eef965d64ef14c9577f23fae9efa1b3b55ecf5058a3092be883b42e77ad7",
+        "extractedWidth": 26,
+        "extractedHeight": 39
+      },
+      "northShinLeft": {
+        "crop": {
+          "x": 887,
+          "y": 271,
+          "width": 26,
+          "height": 38
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              26,
+              0
+            ],
+            [
+              26,
+              38
+            ],
+            [
+              0,
+              38
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right dark trouser shin.",
+        "file": "source-uv-plates/gray-northShinLeft.png",
+        "sha256": "dd8ad7149132da23cc7dbc8988a74a5b64d3f8d1150f1860c949fe5ce81d33ba",
+        "extractedWidth": 26,
+        "extractedHeight": 38
+      },
+      "northFootLeft": {
+        "crop": {
+          "x": 882,
+          "y": 302,
+          "width": 42,
+          "height": 28
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              42,
+              0
+            ],
+            [
+              42,
+              28
+            ],
+            [
+              0,
+              28
+            ]
+          ]
+        ],
+        "purpose": "North viewer-right dark shoe.",
+        "file": "source-uv-plates/gray-northFootLeft.png",
+        "sha256": "d053205e13e9d49afa65a78d70f5960f4e14fa61d781531cd9e7a52116b7fc69",
+        "extractedWidth": 42,
+        "extractedHeight": 28
+      },
+      "head": {
+        "crop": {
+          "x": 118,
+          "y": 62,
+          "width": 67,
+          "height": 82
+        },
+        "keyBackground": false,
+        "polygons": [
+          [
+            [
+              12,
+              0
+            ],
+            [
+              49,
+              0
+            ],
+            [
+              64,
+              10
+            ],
+            [
+              66,
+              55
+            ],
+            [
+              58,
+              75
+            ],
+            [
+              45,
+              81
+            ],
+            [
+              12,
+              81
+            ],
+            [
+              2,
+              72
+            ],
+            [
+              0,
+              17
+            ]
+          ]
+        ],
+        "purpose": "Warm painted face, black rectangular glasses, dark eyes, and complete swept silver crown.",
+        "file": "source-uv-plates/gray-head.png",
+        "sha256": "d8466db5f5c753a4e82751f6f31581b84912ba5e8dd9150e40f2e96f5847be0f",
+        "extractedWidth": 67,
+        "extractedHeight": 82
+      },
+      "headSides": {
+        "crop": {
+          "x": 111,
+          "y": 54,
+          "width": 87,
+          "height": 91
+        },
+        "polygons": [
+          [
+            [
+              1,
+              24
+            ],
+            [
+              21,
+              1
+            ],
+            [
+              25,
+              90
+            ],
+            [
+              3,
+              84
+            ]
+          ],
+          [
+            [
+              63,
+              1
+            ],
+            [
+              85,
+              18
+            ],
+            [
+              86,
+              77
+            ],
+            [
+              65,
+              90
+            ]
+          ]
+        ],
+        "purpose": "Swept silver side hair and ears extending beyond the shared head ellipse.",
+        "file": "source-uv-plates/gray-headSides.png",
+        "sha256": "2e21968cd465c1a42cf5975ea1bdbdcb32e71f37bc22092ef1d2f764950cd213",
+        "extractedWidth": 87,
+        "extractedHeight": 91
+      },
+      "braid": {
+        "crop": {
+          "x": 158,
+          "y": 111,
+          "width": 45,
+          "height": 94
+        },
+        "polygons": [
+          [
+            [
+              7,
+              5
+            ],
+            [
+              35,
+              5
+            ],
+            [
+              42,
+              23
+            ],
+            [
+              39,
+              75
+            ],
+            [
+              30,
+              88
+            ],
+            [
+              17,
+              84
+            ],
+            [
+              8,
+              65
+            ],
+            [
+              5,
+              24
+            ]
+          ]
+        ],
+        "purpose": "Complete source silver braid, including dark outline and interlocking painted strands.",
+        "file": "source-uv-plates/gray-braid.png",
+        "sha256": "34d2698f6d9ff05d6c4ab5aae3eef5bc6b2f52758adb2a43438d46b282bef7f2",
+        "extractedWidth": 45,
+        "extractedHeight": 94
+      },
+      "neck": {
+        "crop": {
+          "x": 148,
+          "y": 92,
+          "width": 8,
+          "height": 10
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ]
+        ],
+        "purpose": "Interior source warm skin texture without facial outlines.",
+        "file": "source-uv-plates/gray-neck.png",
+        "sha256": "2b0f78b1ac55c2be22954f5c404ba9589b90ddbaa5130821865fefcb6862fec6",
+        "extractedWidth": 8,
+        "extractedHeight": 10
+      },
+      "torsoCoat": {
+        "crop": {
+          "x": 124,
+          "y": 174,
+          "width": 14,
+          "height": 20
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              20
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        ],
+        "purpose": "Interior charcoal coat texture underpainting the approved torso.",
+        "file": "source-uv-plates/gray-torsoCoat.png",
+        "sha256": "aa93aa65ca0b5e930f965220578451260ca16df8b6404f4d6be6b5e9c2f93094",
+        "extractedWidth": 14,
+        "extractedHeight": 20
+      },
+      "torso": {
+        "crop": {
+          "x": 112,
+          "y": 140,
+          "width": 86,
+          "height": 103
+        },
+        "polygons": [
+          [
+            [
+              17,
+              0
+            ],
+            [
+              68,
+              0
+            ],
+            [
+              84,
+              20
+            ],
+            [
+              85,
+              101
+            ],
+            [
+              1,
+              101
+            ],
+            [
+              2,
+              20
+            ]
+          ]
+        ],
+        "purpose": "Source charcoal lapels, cream blouse, placket, belt, buckle, pockets, seams, and coat shading.",
+        "file": "source-uv-plates/gray-torso.png",
+        "sha256": "893de812b054bfd795ec377204ab5c1011c1514b1574e3360f583f009f289058",
+        "extractedWidth": 86,
+        "extractedHeight": 103
+      },
+      "coatTails": {
+        "crop": {
+          "x": 116,
+          "y": 140,
+          "width": 77,
+          "height": 104
+        },
+        "polygons": [
+          [
+            [
+              10,
+              5
+            ],
+            [
+              35,
+              5
+            ],
+            [
+              35,
+              88
+            ],
+            [
+              28,
+              101
+            ],
+            [
+              2,
+              99
+            ],
+            [
+              0,
+              25
+            ]
+          ],
+          [
+            [
+              42,
+              5
+            ],
+            [
+              67,
+              5
+            ],
+            [
+              77,
+              25
+            ],
+            [
+              75,
+              99
+            ],
+            [
+              49,
+              101
+            ],
+            [
+              42,
+              88
+            ]
+          ]
+        ],
+        "purpose": "Source long charcoal coat panels extending below the shared torso in front of the legs.",
+        "file": "source-uv-plates/gray-coatTails.png",
+        "sha256": "29beb6be3afbd0fefff63f299a05ffe02e6ea96ff30d9bb1d458516a4910aece",
+        "extractedWidth": 77,
+        "extractedHeight": 104
+      },
+      "upperRight": {
+        "crop": {
+          "x": 108,
+          "y": 151,
+          "width": 15,
+          "height": 34
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              34
+            ],
+            [
+              0,
+              34
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left interior charcoal upper sleeve.",
+        "file": "source-uv-plates/gray-upperRight.png",
+        "sha256": "811be53e841a18b688deaf3bfe7e9a55cf50b965b62330bec5a8b4e96893a308",
+        "extractedWidth": 15,
+        "extractedHeight": 34
+      },
+      "foreRight": {
+        "crop": {
+          "x": 107,
+          "y": 181,
+          "width": 16,
+          "height": 40
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              16,
+              0
+            ],
+            [
+              16,
+              40
+            ],
+            [
+              0,
+              40
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left charcoal forearm and cuff texture.",
+        "file": "source-uv-plates/gray-foreRight.png",
+        "sha256": "673d9f9945017530be59899bdca0983f41ec08f6fc4c788e5298fc58c501308d",
+        "extractedWidth": 16,
+        "extractedHeight": 40
+      },
+      "handRight": {
+        "crop": {
+          "x": 104,
+          "y": 226,
+          "width": 22,
+          "height": 21
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              22,
+              0
+            ],
+            [
+              22,
+              21
+            ],
+            [
+              0,
+              21
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left warm hand texture clipped to the shared palm.",
+        "file": "source-uv-plates/gray-handRight.png",
+        "sha256": "443e487eb3045f8d1bb43084348862c2894a542a5138a0a8a0833bf9c2a63006",
+        "extractedWidth": 22,
+        "extractedHeight": 21
+      },
+      "upperLeft": {
+        "crop": {
+          "x": 188,
+          "y": 151,
+          "width": 15,
+          "height": 34
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              34
+            ],
+            [
+              0,
+              34
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right interior charcoal upper sleeve.",
+        "file": "source-uv-plates/gray-upperLeft.png",
+        "sha256": "d8f2892413c20f887e6b0172f0172853466764edda66ef72322370e7fbdf6c28",
+        "extractedWidth": 15,
+        "extractedHeight": 34
+      },
+      "foreLeft": {
+        "crop": {
+          "x": 188,
+          "y": 181,
+          "width": 16,
+          "height": 40
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              16,
+              0
+            ],
+            [
+              16,
+              40
+            ],
+            [
+              0,
+              40
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right charcoal forearm and cuff texture.",
+        "file": "source-uv-plates/gray-foreLeft.png",
+        "sha256": "c538149147c6dd89e29f4c9765e3a21e9d2f90c1bf5ded529e04035ecb30f761",
+        "extractedWidth": 16,
+        "extractedHeight": 40
+      },
+      "handLeft": {
+        "crop": {
+          "x": 185,
+          "y": 226,
+          "width": 22,
+          "height": 21
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              22,
+              0
+            ],
+            [
+              22,
+              21
+            ],
+            [
+              0,
+              21
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right warm hand texture clipped to the shared palm.",
+        "file": "source-uv-plates/gray-handLeft.png",
+        "sha256": "44556ac16eb27f049536e40450eb776625364cedd95b46300cbcd9e3bea26eed",
+        "extractedWidth": 22,
+        "extractedHeight": 21
+      },
+      "thighRight": {
+        "crop": {
+          "x": 124,
+          "y": 239,
+          "width": 25,
+          "height": 35
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              35
+            ],
+            [
+              0,
+              35
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left interior dark brown trouser thigh.",
+        "file": "source-uv-plates/gray-thighRight.png",
+        "sha256": "9d43091ba14e368535fd1d97ad9b62ec8562e1e8d02da50541ec72ebf23bc9ad",
+        "extractedWidth": 25,
+        "extractedHeight": 35
+      },
+      "shinRight": {
+        "crop": {
+          "x": 124,
+          "y": 269,
+          "width": 25,
+          "height": 36
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              36
+            ],
+            [
+              0,
+              36
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left interior dark brown trouser shin.",
+        "file": "source-uv-plates/gray-shinRight.png",
+        "sha256": "672a423db2e215488416f7b290fc1509c2909bc851c20e881cc0740077bf3d07",
+        "extractedWidth": 25,
+        "extractedHeight": 36
+      },
+      "footRight": {
+        "crop": {
+          "x": 113,
+          "y": 302,
+          "width": 43,
+          "height": 27
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              43,
+              0
+            ],
+            [
+              43,
+              27
+            ],
+            [
+              0,
+              27
+            ]
+          ]
+        ],
+        "purpose": "Viewer-left dark brown shoe and sole.",
+        "file": "source-uv-plates/gray-footRight.png",
+        "sha256": "8e181476a7d3e8e957dc269fc2a7fe3ba310e469eff58d6e80be402d95f47997",
+        "extractedWidth": 43,
+        "extractedHeight": 27
+      },
+      "thighLeft": {
+        "crop": {
+          "x": 158,
+          "y": 239,
+          "width": 25,
+          "height": 35
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              35
+            ],
+            [
+              0,
+              35
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right interior dark brown trouser thigh.",
+        "file": "source-uv-plates/gray-thighLeft.png",
+        "sha256": "1690fa02bc771aae9c881f80916e6dd7cf4c46868612f019ecad7affc527cc1f",
+        "extractedWidth": 25,
+        "extractedHeight": 35
+      },
+      "shinLeft": {
+        "crop": {
+          "x": 158,
+          "y": 269,
+          "width": 25,
+          "height": 36
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              36
+            ],
+            [
+              0,
+              36
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right interior dark brown trouser shin.",
+        "file": "source-uv-plates/gray-shinLeft.png",
+        "sha256": "62d3913c83a10e50a2bcf2a8a4eb103aba939828973a8e550b5a3a81b3c0d09a",
+        "extractedWidth": 25,
+        "extractedHeight": 36
+      },
+      "footLeft": {
+        "crop": {
+          "x": 153,
+          "y": 302,
+          "width": 43,
+          "height": 27
+        },
+        "polygons": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              43,
+              0
+            ],
+            [
+              43,
+              27
+            ],
+            [
+              0,
+              27
+            ]
+          ]
+        ],
+        "purpose": "Viewer-right dark brown shoe and sole.",
+        "file": "source-uv-plates/gray-footLeft.png",
+        "sha256": "fae12604a8e1aeedccf94773c13baad48a9579b068753b00cc59f52e119c5fe6",
+        "extractedWidth": 43,
+        "extractedHeight": 27
+      }
+    }
+  },
+  "states": [
+    {
+      "key": "walking-south-01",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "c1d5629e5751a2895f5b0e92249a2028b13a4eb9f871833e19ab2ba22dc53193",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-01.png",
+        "sha256": "e868efcd7a93fe704e081fcacb1ff24eeb373d638541407878da9f0e6d446dd4",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-01.png",
+          "sha256": "b6a60b8e3a76cf11e7f73d2cb5be0c5bddee7eae13ea663f30aeb66ffa79aa74",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-01.png",
+          "sha256": "1e533b8d753cd2bccb6749ff8b33e27d1f1de420c498e4c963e9c09095daa370",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-02",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "6b78d331f0c05c6b71d397ee8aaf874e9132d833f38876870973a2f8ac54f3c9",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-02.png",
+        "sha256": "5546da175201cfa53977820b2a4cb4005c6c6fbcaf6ed7beaf1a4289ec9a278f",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-02.png",
+          "sha256": "8db75f9522474a23399a08cfb9b01188f6b0824750c0986d52db7a98aed11539",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-02.png",
+          "sha256": "095b72feecdd3532ad30c4f3958b3d3422d3e59ac8a1ed36d3b465e753db486c",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-03",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "143c01601bb30cff1337fe0c7adc63f8bb1fc0e779e0e899ef07cc15aea01d6a",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-03.png",
+        "sha256": "18f234cf76e56675b914e0ab07ad7d549f1c690d7e1259d7856bf7d73a172f23",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-03.png",
+          "sha256": "2eb0070dfdb85fe8b522cc11fcd073e0c5b358bcd130b1c01a1622f619dbc0d9",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-03.png",
+          "sha256": "f99ebdb0f87588121ad09e14d6a62f699e9cdbc1441b9488457d5f9cb6962c62",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-04",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "479f11903df787dc0b384c7baa14e1af34251029f40e596e5ee6f1ed1b93d038",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-04.png",
+        "sha256": "ca7c01726163e0d260959b4dd738c1d0277977505c8e01202003b1f02dc430b8",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-04.png",
+          "sha256": "d734a747973404742f17f1cd0403cbf8210e106262d6ade3841303e16373789f",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-04.png",
+          "sha256": "319dda62e9a2a638eadd7eb5da5329308598fd2bff22a1ead22bb393eece825e",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-05",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "ac64b52975c13b08553f18954b6f2265813a33a01bf567c77502c86319259895",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-05.png",
+        "sha256": "e32003f6fba3733ee0f5dc8dc6cf54208d09f1e24cb0c603f9468276ad37eead",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-05.png",
+          "sha256": "336a5248ae1a0e7773b42b9ac41006f39b56a45a197be0f3eb12e91fbf5d585e",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-05.png",
+          "sha256": "1a140c654e298f08ca51b1b23aadb4a5b073c404f0d3e4c4be21008da57c41c4",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-06",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "0f0855451811bc1851f9aba1c2139732528466f5984195c6afd63ce08e91d248",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-06.png",
+        "sha256": "81851d30b1900f149b1bf624ff10f05f62e7fadcd286e1b8eff0a81dedb11eec",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-06.png",
+          "sha256": "2dfcd04a7012bd2ef2817451707a6efba384474256d8507d615b28d12f1524a0",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-06.png",
+          "sha256": "714897ee15aea07bcc80623569639faa2a58a480bd34db65faeb0852ebcf451f",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-07",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "23323365d19678cc6c7efa72f514db9df7441ac56a3ee17220e90ca95a9604e3",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-07.png",
+        "sha256": "212b7c0925f00c0925aa282e72024a61a0a1ebb82241653a9076088c50a9c75c",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-07.png",
+          "sha256": "ad4f6dc36389aaa20a01e4920ca97d3b93a8d221ce9f9034a63ad758d4bc1e5b",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-07.png",
+          "sha256": "a6492a49a07a8dcc793e0f5cf27d023bf299728b1229553e3bc4c811dd5ff6ae",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-south-08",
+      "mode": "walking",
+      "direction": "south",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "dd282cf393b7edff7a95d7aa629664b1a050d95abc35791c6c40e3c21a7f1157",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-south-08.png",
+        "sha256": "d5b78859b283103932114c805b5e4f44f2fc87117a04acfc8c879e5651ec9955",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-south-08.png",
+          "sha256": "ab665afd3520bbec80f20905287a667df57f590c7a3c99d6b2ee14a67b334343",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-south-08.png",
+          "sha256": "8006d0dd1c3f835753cc1bb3faf81f0e4256d9c04a8de487a60ea07574136f9f",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-01",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "75e98c3217cbab2c5f044ccd6ff87a972cb702ee04694fae743abf0492c0639d",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-01.png",
+        "sha256": "88a14f75d87228d2532452865f5bde1f99721ad880c67f692475c7f987bcf605",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-01.png",
+          "sha256": "d21cde648463c44eee32bd09a29ce3a0060811e81dc6dd00a1f3b9f73ce7aa71",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-01.png",
+          "sha256": "eaeac36184a1b5077af7570fa3984478a257f6e15d9b9648c0b404a6bf92bc48",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-02",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "4d495475f3ae1412062c701f8336a969c36407cac8733a372a3e03131c81e4cb",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-02.png",
+        "sha256": "703c4ebd89ce0725d9ea0e95e3eaddc39ecf1c0e470d6cae73dccce4a44436df",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-02.png",
+          "sha256": "6e4ed16f2bcdf0e1597459f0d51885f70bbb5efce2b7529d3796d924fb078bda",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-02.png",
+          "sha256": "b992bd60c1c89b8c18752f1d22be92a073a79de08ca3f3e5ae45f143420ff5c3",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-03",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "003583292cad7343b2d76214d6cbf84d00a66c8136f04e595a6bce31d68d82d1",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-03.png",
+        "sha256": "00bc6349617f607e14aab880014b5cd79a718752bbd8508c0d9a3fc3c25cc200",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-03.png",
+          "sha256": "4b30af33dba9640265d666717f351c7f90dc0047cc611dc360e497448fb0a0a1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-03.png",
+          "sha256": "bb348ebdd97de0ef88b849f7d020345037c83b0ff75aa20a873d85d2f0eb71ca",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-04",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "75180076524f0b1201560046cadb7ec74133e5dec0971364dfa96d0afe4459af",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-04.png",
+        "sha256": "8cd52a95050b08e782da02aeb24395781931809fffcf5261e2a07e074f0dbbfd",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-04.png",
+          "sha256": "627474b560edad96283d0c714ec6bad1d3ef2d3b2e9d39666ab94e1250550176",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-04.png",
+          "sha256": "3901cb00c33062c3f6debd31e0a4ad193479f77667244b06cae1bfdffb67ce4a",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-05",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "0716629d647e892fdf4ad7649dde1ad9ea7dbc503371ddd4baceaf7543c280e4",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-05.png",
+        "sha256": "61ff792ec7dfb280e6781ed5b6519ddcb4746ea768f9bae952a39035d5d70627",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-05.png",
+          "sha256": "4551ad817ec942ada2289b9c6f54764aa3e50ca05419e56e35ede9e0a9eb8bdf",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-05.png",
+          "sha256": "026b38b19b2c21b0690867992840f55e10700e03c4e75050d64874ee7e4f2943",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-06",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "443e7741724cfe5275faa702cc5aa5d375178200818c39b25d31b7fbfe998c91",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-06.png",
+        "sha256": "c44125e370b78c3c260b9946b94e035b85e24ff2de2bd1fd34d3e37189b36006",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-06.png",
+          "sha256": "f23db026fd71de0e68f78fb044fc66c38ef3c5125ab70fee3f4ee3e37feeef75",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-06.png",
+          "sha256": "458467f19fcdd2db0352286f7e21fe3c60709e27b392139869dd7f8ad0774435",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-07",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "4f7b30b4e4b0cf5d64b3ccfe9ae900f17a2e83e32a3b1c9de84430aa1f0ab43f",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-07.png",
+        "sha256": "aacde8d232de64ee01985b5117f94c3593bf6847f120efdf68062a0009e7feff",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-07.png",
+          "sha256": "33ed984f26b51851c0142b4217c7d91f71fd21f20bbd713f9206d563b857183f",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-07.png",
+          "sha256": "62933b219a463d32559e981bd9ee129a4705f41eeedc76427efc99308b62af9e",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-east-08",
+      "mode": "walking",
+      "direction": "east",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "c6804beeff14c8cf329409e903556fe7abda9eaaa9f7227d365993fa98b7f122",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-east-08.png",
+        "sha256": "c4822ca5a326db7fc23b5c2645c8282da3bf1cd425656fe4e13f04f133945edd",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-east-08.png",
+          "sha256": "25e2642fa81acfc047df68db6f2eef6111b47ab8a1c9054bf558521506efae05",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-east-08.png",
+          "sha256": "4d11f6a842ab6a69eef4cc35f63ab8ca9da1e935a5e9457ab27cf495feedf3d5",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-01",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "8957a261c0966dc3d36ef0aa66089c54b10f1a4946d90eec3bbe2c79b8ed8715",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-01.png",
+        "sha256": "fb286a588059991fb34981c314c1fab2ebfe34d3eaf9f3ce237ff3a45f6af110",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-01.png",
+          "sha256": "50e8f29fc702cbdc2d78cff5b090c63c0c1d70132aadf0c7c826dafefe603f60",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-01.png",
+          "sha256": "d790af0b41014cade989ab5812b6b777389cec045e00c87b286deb8c5e875aae",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-02",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "56fe1207e6d11f7c143788231c29d978fb71644ecb66e2ddeff58a5fa04455ce",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-02.png",
+        "sha256": "424f492e5a9b21b271528d36619cdcdffa75e92b70b789436f6537d1413df255",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-02.png",
+          "sha256": "326dec6bc76a3f13fde8061b250d0efabbea151e695f2cf6e083bd3230ae1d30",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-02.png",
+          "sha256": "819d2e9a001768954470c1fb3dfff030ac5448c0ab05da686ce5d91378c15300",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-03",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "5ca5bdba011688e7535fc4bc13eb662931cc2f4964588aee948fd5ba355c111f",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-03.png",
+        "sha256": "76f6e47fc9b3195c546b66fcdeb86c2eee1daeb327896c99e30896c90cc425fd",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-03.png",
+          "sha256": "438a23b119ffd3cf9f35d5e5da27f2926000df72104df979ad0a376d45625d09",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-03.png",
+          "sha256": "57300982e9943bd25039a81bbb369cfa8f6b139d3a311a70d9a032aea8f4f4be",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-04",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "0359a5d08dd80affa1e3178018f498c84edaf438d312aa46ac01345519990500",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-04.png",
+        "sha256": "06b15c3f3baf1f7b5309732ce09def4d5a56f7a12e9eb17a324b1a034d6fcfae",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-04.png",
+          "sha256": "d142185175e780db864029378587ec7437d045f72d133decbe4b196cdec612e1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-04.png",
+          "sha256": "a66cb29a473466a1013efc6c15c0d3f2e79e7a7cff135681f6329c8f7641d69f",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-05",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "1e3bfee34f46caddd40656b27e1e2e5c132dfa706e24abd83337a4a0175b7b35",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-05.png",
+        "sha256": "8ab21eeafc098ceec1dfc0f90558077515f0490d3bea2294a0662142822a6121",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-05.png",
+          "sha256": "1cb9d356e3158ee052a3e28831b5b3ec4a5b7d1bb35fe0f5a54b72b09975bae1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-05.png",
+          "sha256": "89e8c0e860525222753975cdbf75071e91ffa7d3e2674510fd39de5fadd994e7",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-06",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "974d4ca559329d8d00bb2b05e942d812458ec3fbcad1f0762d49ae011cf98a01",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-06.png",
+        "sha256": "2e4e668c39cb3657d7cb33b6b602411799b9e098a5a2fcd965db97575ac706a4",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-06.png",
+          "sha256": "37d4cee855535536946d51dc204aaddb4ae4ad3a4add8f209534409503465036",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-06.png",
+          "sha256": "a768bbcaea081072b37ec324d46fa4b23a42c9d7a305c091142bed6da9fa7731",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-07",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "44be9a822f6b3b771e90cdf46ca4a42f1c792879c968b360f649b410eb11128a",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-07.png",
+        "sha256": "a5b4516076f95a37c335f0b45501b4b0898682fc563301e0304e27466c3fdee1",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-07.png",
+          "sha256": "d55e1d91ac75321bfad2c7a1ba04a41aa438a4794ab59d1cd1b337003cd3184f",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-07.png",
+          "sha256": "90992fc987e609aad7624f200d7285aaafcc3ec712fd983e87a8694742c811d7",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-west-08",
+      "mode": "walking",
+      "direction": "west",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "2ecded27cccb9fd53de7a95542a1a0704013622dfc3ab84db40e98a61b311651",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-west-08.png",
+        "sha256": "6d0ed0af3729842d05e1bed36970f58047f600af2b8793b17435819b34a3e9ee",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-west-08.png",
+          "sha256": "6b85317df1d2868db48da1471cef26a6a2da49ea970fb986cee934a43333b1dd",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-west-08.png",
+          "sha256": "9f419e43b8e8cddaf89fc460b1695220fc705a885566e1742245e088c0051b25",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-01",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "75d9beba5cf129b969f3d00356ec141ebdfd408f21102771839b5612716ea112",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-01.png",
+        "sha256": "c62bb05688dc721457376d49a729986aba029feb0cfb3ca1080338bdbe736816",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-01.png",
+          "sha256": "848447e5be789473a2053520ca74e87918f3d8143e97263f4e83dd0786361066",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-01.png",
+          "sha256": "9bf80e1462cf3e98ee5182e1a17dacd084b72dd57c87966e65a6ab1b0e8bc814",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-02",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "f00a1e357e33d81b7cc5344bed1a21fde8326cf768f476e9f1b6933c0b2ff0f9",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-02.png",
+        "sha256": "08c6ba32ddb4d24aaf0c0e5739c19a3846fc69f1ead0045f1a4c66689104c59b",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-02.png",
+          "sha256": "5ba62c7fbd986fa6ef36c485422671a6aa9bdef16e1c299b07e4b4846a9681ba",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-02.png",
+          "sha256": "3ed52b9833ae5ad20a6f02069fd273486832f290212e5a83a2ce56a3e271cb3a",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-03",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "8f8bbd2b6efc8af8bf435cd6bf144c0b18e9be9ab80493832db9940e97aee8ba",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-03.png",
+        "sha256": "ce74e92e3571d9ac23a1d2dd590f9a40857d79a6101e92e59bb4b4b78a1dddd7",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-03.png",
+          "sha256": "2f3b7e37d5daa6f903866e18308b28fa0cf2d0ac55d65f67e22703a7a063c7cf",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-03.png",
+          "sha256": "dab109d3caa7b669eeae7b8c3f352ead3b04c89245d9448066211082fca0877f",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-04",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "d744a6bb288c9bd95fa4b8e3569a449a39f09defb572ff24cbf390923954cc3a",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-04.png",
+        "sha256": "00de6b3c22cf9c43d078dd1a2a1c065cead2d14f2faec8576f10d8c65b7d1843",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-04.png",
+          "sha256": "71a5c90f86d8f0ccae18f3ad9401ded59feeef17d5b1025df39a61d868fb4fb3",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-04.png",
+          "sha256": "b771dd9b45f557ed348d8e85054116468469bdfbd673246dbd657014a884173d",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-05",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "c2938dd9058cf6ee0ad095357de7d8a59c363b31894918894b7bcbd6ca761914",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-05.png",
+        "sha256": "7cf0cedfedb6220b4e6b6b1cf479721e8454d52f092f231ff3fd9772074c910b",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-05.png",
+          "sha256": "672e99e274f365f699dd529f25708973b0700a0feeb299834e2a16ea7c3a30c1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-05.png",
+          "sha256": "4845fdad87ae1364ee395c806a470765ec7bb6d18f5ab838696c112b4652598a",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-06",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "db47793c9622d4471daeab5adbf04dfc3726e2051cc469a9e2e1d04070bcc1eb",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-06.png",
+        "sha256": "d0cfdee5060cbe88a4803563f91038c98c161f7085f401c31d0e4f9e67ed12e2",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-06.png",
+          "sha256": "de2ee94e96e0b7b06d42bdfb6b843dbcce8b9d6d7313f2f111a8d621df6acb3b",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-06.png",
+          "sha256": "e87330bab2e32142492a89f8b36683961282e9db465f9fa832b1084da0e079f8",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-07",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "c78943d54e59408de78b29d1cc1c09e7b62298e39c735563368a6d6f03392ba4",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-07.png",
+        "sha256": "b67b8d0bddc8301ce01e82df1729a9e58b327f854022c3fc85e8760964ead939",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-07.png",
+          "sha256": "deba54017cb1abd86a6e848d76168ae691d88467437fb190cdf1692a1636a05d",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-07.png",
+          "sha256": "d416b426cbae6815b9eefdc3e86a752ceb0508019c7d9e7a15fb836fef81b356",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walking-north-08",
+      "mode": "walking",
+      "direction": "north",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "a0f5047115c887115d5c5306b1cf7895bec444f1e8e993fe0421b12b34718606",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-walking-north-08.png",
+        "sha256": "3a253fb9d334ef5a3fe57421536ead76d07b1d55a2a8104058230f71da4b5b27",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-walking-north-08.png",
+          "sha256": "6b70dcbb2c7e303fde076f469762296d355017a6caefc587e5a1fd3a6eb49d43",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-walking-north-08.png",
+          "sha256": "6eb718c7c1e7036d83758d426439951bffc44f3bac2029a8a501ff50ad8f391a",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "standing-south",
+      "mode": "standing",
+      "direction": "south",
+      "family": "master",
+      "approvedGeometrySha256": "a5c375b58065ac53e7ad8d084ff37a7da44d2bb394255c82e75ee58b574e4a6f",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-standing-south.png",
+        "sha256": "10b94aaf942901f15cc28458eaa6f56acf65186e99c721b98d58061b75da352a",
+        "width": 240,
+        "height": 310
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-standing-south.png",
+          "sha256": "717df221c7dcfe41731d5d669c6694c797e76409922be8cc2cbb94571b901b47",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "gray-raster-standing-south.png",
+          "sha256": "0d5f2fe12512a2c0c20e0c1a0fb26c5972224ae52f4572c2ccada968a0265ec5",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "jumping-south-01",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "787b663badcbc8bece63252feaa04f3471c68b0ada7dbb13a87d806005881b53",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-01.png",
+        "sha256": "1d44a5fa2dc537d9dc80f5710566a90b0fa79462cf4fad2c556e50061ea67e73",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-01.png",
+          "sha256": "8c0c41a2064e9407c2294be7315d2a4ad4887e82b3049fb0130fb56d5c2e2e02",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-01.png",
+          "sha256": "39b0c6afd7a9ee8594830201ba7c103081e35f9e1d003b173ec35e893e557ae9",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-02",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "060477419869cd864cfe2ab4ed18d370b23cc98201b262211c80fa8feb115619",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-02.png",
+        "sha256": "c34d613c1262431c36e6cf0b9ea75adf78bf8b07336656e2350ec8ba8ca397ed",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-02.png",
+          "sha256": "c1f88e58186efdd533ee9fe38509120952825da01f6f7166659f38d6d08339a9",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-02.png",
+          "sha256": "48e6e6b1b7930240948ff786bdcaa787187a9c9aeb1a0f59ebee06cfa5ae2dd9",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-03",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "8734623c8233d73ddfc69d9e9351047abf57e3aef032b0e1f0b907d74a844a67",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-03.png",
+        "sha256": "188151a62e2eb7e89e7f53d0ca82177e0ad5aa36c481cc9bb8f93f3069f24306",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-03.png",
+          "sha256": "55a142b5bf785848133eb8831bf05cd6a49fde0586508c8831e87f9ec44774d8",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-03.png",
+          "sha256": "d1a41e309f19997896773be1298e1fa756838c39299faa921409b2b051d2194b",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-04",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "f12cad2579fb1f334747a2a96e1dd4a1bff307931a38ebe6415a7702f735458a",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-04.png",
+        "sha256": "c62dcedc341346591f19274270a2bf651de49ba6fc8342463fdf9184f14a9beb",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-04.png",
+          "sha256": "1275ad4de39d85b625353caf55071b1ae5409e8dd98a2bed52f803c355abf5b3",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-04.png",
+          "sha256": "2828982c3929b3a2b8ca8fdec931cb8fd7834355d1a20eedb4c70eaa10a92d94",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-05",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "2d4bf41f898b46545672c83af8879524eec1e4d8629bb90cb0c17c2c0846b87f",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-05.png",
+        "sha256": "f45218d142f1185223ad2d5b3f057c06326ce671245fc5fdb016363f28c3151a",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-05.png",
+          "sha256": "91fdce53891fa51388ee1559992e48f58ee047367afca8d9d1f042b926bdc1e5",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-05.png",
+          "sha256": "b87f1dce6ee1980fe81417c00fe795a6949050d79c3ea8e412ab107d6f4adc5a",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-06",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "bc3d64a9ddc12b53c387735788f9152f74e9cba5abbf49b1b2982061190ff1fe",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-06.png",
+        "sha256": "fdb260a8a517d90dfea46283277b05da899f25feba9ac42a19b62544e06f49e6",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-06.png",
+          "sha256": "4b3eeb492eaad282b760bde902ddf809f5946e4015f3c21a5c4490f82a862e56",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-06.png",
+          "sha256": "e9979af757a15647f24109060d4a3de530956d3df0edf5e9934efd57399e7cd0",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-07",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "f796ca17eae12223a13259727fc86de499b6e3a0e83d073eaa44c5397c0ea87f",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-07.png",
+        "sha256": "a96365af2e98e51d7743aaec4a8c522062de7aece69afc1a54df6b77a625f014",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-07.png",
+          "sha256": "a5b37ce1cc9d2b0b776e915053fcec7c5985e77ad8cabd3c602b766f647d0213",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-07.png",
+          "sha256": "e96df2193f1bde82d52ea021a01e73f8d5ffcce9db9f98dd2710fde0031948fe",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-08",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "26f1fbf58aa7cbf54b09a3675553b1b64372643056040aa4dfbe963a0e62631a",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-south-08.png",
+        "sha256": "287398b6ba00f057d9b3494a32573a10e83be9e7fc3b90f01a93bc2476e0b527",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-south-08.png",
+          "sha256": "325d07bb090e1a4e61aeaaeeaf32d2617de348aea77f967213d63c7825788fa8",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-south-08.png",
+          "sha256": "66e3326235668a0aacb2c9b062d4b39ce4b21d59f14d98541a28112f5256f4e5",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-01",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "05aa53df4ed25285191414c02b6c866e481e241826126faf2d415ca3f8472f2e",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-01.png",
+        "sha256": "4fd84cf4b38b26d8d5b478764f4199827d42d7f6386f51e7626509b86761bc31",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-01.png",
+          "sha256": "908b854c65d3f24a35c128cf13a302630b9608a566e27468854286f263219d86",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-01.png",
+          "sha256": "05bc8e87ab9a1541c83582bbc5f7fd66fde1d570ef15403306f2e9bc2bc3810e",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-02",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "f9454e5be1387c785f037d52e280799c32cb109acbf1dc99b119d481ced420c3",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-02.png",
+        "sha256": "62abde261a6771df6144f18469e94321a090b588e3e5acf97ea76502353f18c2",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-02.png",
+          "sha256": "15f00232bfc133bb75a3fe46e9d495b4cbdabdfd0b1aebd5c1eeb8ee3e2dd317",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-02.png",
+          "sha256": "69e4ec8edd97cc0c78f43df8cad0c6f8e7dc415b8ae370cb5dcc577c84d5b0d1",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-03",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "90f1cd43e10d49464d6b4398b5a517d015e8e8c1dbb3df26c558149f859d7f5b",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-03.png",
+        "sha256": "9935563d6ab0afc35d8391d120cc3d10319df13e7a560a99f8b0098690c54ae6",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-03.png",
+          "sha256": "2c8f3b300527a78550c7ba329ef4601c8ebca9fcb48ec9d0831dc80290fbed32",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-03.png",
+          "sha256": "9b5153eb568b5a547b905596036fa6cb27bb272e2311e7e6089e19a43c4df25b",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-04",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "20f38c38c9a87cb9c8cda90037b05a01dfddf55e03b711ff34e7f1af9c4b48cf",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-04.png",
+        "sha256": "105bd8fb5920440379de220e22f975db48dc4a5eba7366d007d57f718b179019",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-04.png",
+          "sha256": "f4e4d6ec361edb426d263a3682cd3619552664038fb2a87cfe38f85e2a3b06e6",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-04.png",
+          "sha256": "1414093ea2b063ba50229d01a84bbaa52549bb8a1e610f80c3e7b2887909a894",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-05",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "d12410258e6931e436905a9f109bfc0d20620604ae62daaa828ff33c48056717",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-05.png",
+        "sha256": "153f247acaca65fc57b44d9c70868e5025a9955ceba20370f9d347cb4b056481",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-05.png",
+          "sha256": "cfc14f7f2f525d748d828b0a815eb4a2694ced87bcd22316cc1c5bb4e5c076a0",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-05.png",
+          "sha256": "d4d878b51423fa9c72e36c08e52f77c92872c323953ad38fb55e6d94e56e4f58",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-06",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "60c1cf37a280ef2fd957f915d5be4c8a799c4089b0064264b740bdf4098bec52",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-06.png",
+        "sha256": "c5bdee472faad6e6d25d470e939229d0f2949701ca7d96797ec6da67ef225f91",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-06.png",
+          "sha256": "5c637c3da5dc51325fe22d96b8e1b9c43c2aa7d29091ba70ad600f916109769e",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-06.png",
+          "sha256": "3d6cf44894e0f543d67a6f27f0e3901688ec94d87c52b0c3be6ca87423846794",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-07",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "f8058b7cf7937b414f23817dfc2b96b9eae6ba6d671df6fa5b048a7820a32784",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-07.png",
+        "sha256": "195a16729f0fd9ee32dfc3832007040a0e427bce1463acb23dddf703fdd94732",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-07.png",
+          "sha256": "32180d641522e0c6ff91ea55c20111beabeb5c157c8f24afb19ed8aed20bbecc",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-07.png",
+          "sha256": "02b3bd97d1db5afd8f4804a017f17529bcc44dea78a1614e272e5d88030d6dfc",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-08",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "2d28f445894c11a72f897f377b01d09950c8af641dd7b44eff267863befa6e8b",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-east-08.png",
+        "sha256": "f6370a1b23f9f90dce623f580111614e65c0d3b4e7489b9132f267429ff28a73",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-east-08.png",
+          "sha256": "8b889cdc410638baab359092e9626a01d67f8ce58c1dbb1e37e2ef2bd4787a72",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-east-08.png",
+          "sha256": "52dae8eda20226b40dfc73e6c9e106aab018846e75fe16f76abbe02ce99daea2",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-01",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "05d91f9d5e2f130374d6d7c85e5959d36433d9aba7ba56142b723327ba876bb1",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-01.png",
+        "sha256": "a46748f99419cdc75b3a40d394158c173149bc69b9cc55c27278c4dc1279ddb3",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-01.png",
+          "sha256": "d4e07616b9a72cc55027c20bd4e93285cb2c46d10dd42c9d95f664fc31e68456",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-01.png",
+          "sha256": "992920c423d86cab71f22f4a737105bb24e53007139ca496ca2cc31d7e767def",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-02",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "e4c2f3f890ba29b2e1dc478dc717d013fd12eb9e3b9aff83697390e8765d2bff",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-02.png",
+        "sha256": "c6edc46413555b80767f802691315d0dbe59f2f236265f9197ee64328b059b6c",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-02.png",
+          "sha256": "09dfc1a06f1b83ef9ac54b501b2e2bf34deabc678616584cfed2d70bfcedf6fa",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-02.png",
+          "sha256": "2a605c7b02c1fd0300130faf05df11bf426182c957ab3f157c053370803aff96",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-03",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "6818aec9e41f2f4f01314087738d077c860c98ba2ddda140a7d57faae3811489",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-03.png",
+        "sha256": "b181506dea188944aeb1e17d9901d34bb6717e06d2cd51bdd6719eb631a36f33",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-03.png",
+          "sha256": "34eea550d190d51592dbc7b21b5a04b11773420a29c3b0e66b37cc2d56938ad8",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-03.png",
+          "sha256": "0f13b815e368714dcaa18348c9ff0d6b8ccb1889f6ce768f39bb27c15da2f290",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-04",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "7a7e16e60dc01c08c5378a10ad2ee445277c86259146f7ac2fefa363ac497c26",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-04.png",
+        "sha256": "ccdca19f76003cdeafedcaed5c7959341c3976dc9946ea32e4ca8268b53618d0",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-04.png",
+          "sha256": "0576013a502c1d72826f65774ad0f97a8e659e1ff2f6ab0c29c4f8781caa61f4",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-04.png",
+          "sha256": "db5bfde15509aeae780b40a470811913cbefd2f75c44673501f1b6dee524c710",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-05",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "d4dca2bd48af56a66bcf48069818846a8820123b4e2f9b2dd15b6a69d611224e",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-05.png",
+        "sha256": "e1ea45238a129b7fccbe04e627da3f6a346eda3204ac7c30105c307281e94819",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-05.png",
+          "sha256": "c711acf261b06147559eb3209351dec2be19aa01fbbf0a7cb8fc25f384ca0224",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-05.png",
+          "sha256": "d9bb07ccef80d71a53d7fc005684ae7a341781f6f06c29e23ea2f1adf57ea904",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-06",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "619518781ebaf3ae1454bba84457e94c03b7ae7eeda82cf6f7f9bfaec29f77cd",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-06.png",
+        "sha256": "fe2409a1d09ad7e0aac873a279cf66f42fe44f916cc250edfdf5675c0ddbbfdf",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-06.png",
+          "sha256": "6b6e9b009d35020713635d3f379f4c50868dae95f7493aef4461527381683461",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-06.png",
+          "sha256": "a9a700fb4440540a57352912a9f4f44e6ebd8f793f7e06463fab82efa3203f30",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-07",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "8f0b4472f5931e3f827928538c9f6bdeaa1ef14aa375c440dc03754655bdadad",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-07.png",
+        "sha256": "0e45d550dda980fd7e4aacae9a847175c3af5b5295cc0560dd809b84d673ae61",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-07.png",
+          "sha256": "de2380e4990cf5f3f62a5e0dab60c4034960855ef1bdfc356313350b3847c109",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-07.png",
+          "sha256": "4907df6b58621371ddb3b81a399d195154ebca7d41e591bfc3cad07888dc2f3d",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-08",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "4b77889ab407d5b678b9df1ce01e2beb89b78585ddd287252a37552779f546e5",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-west-08.png",
+        "sha256": "35d507bf680b2ea38a4ba4ec423636da580ba5d706f13b8cf44e57c6de52d4d0",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-west-08.png",
+          "sha256": "3e4a67c163678c68ac0c1f546cbfbf7a834da1f6e1e7ae8c51525e6872b5a153",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-west-08.png",
+          "sha256": "e5d24179d2e5399d25af3121351b48c937666d7313d8204ba0e050ed8da4a527",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-01",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "53d336b8dd136d8a82f9860bef01f585f12636d77567b34be069953de60e5469",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-01.png",
+        "sha256": "5da53931770bafb2f6dfc96cd98a59fe01a677909c6684b44340637ed15d3cd1",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-01.png",
+          "sha256": "a855eefe08e2f68eb25afd1f64dd51d88d77e811b96edcda7bbffba273daa162",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-01.png",
+          "sha256": "36a088c886a084acdc289050a16ae6438995ee792e128c6c324ba0d3cdfd4a4f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-02",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "c480887a355d3d568ee211a847628970c6e3721e4a8a185148d7f2d9b7deb58b",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-02.png",
+        "sha256": "bfeabc1e57251f5291a8d855c11ca4254ca481e691c4d643f9c0b7d9e0286c4b",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-02.png",
+          "sha256": "3963886caa7bc4ad4ad93d5de0dce70da62afddb925db00d4ac2873b944abb89",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-02.png",
+          "sha256": "807089c7d9641413762b428ddb99bdbd8a15002af6aad107342e47f5a2df88f2",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-03",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "ea0dbe125592329797060c086619883f6e7ddabac4cb61f97394c1fece8bd078",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-03.png",
+        "sha256": "31f9a42bc3b31fc27e65e6b0f3bf455a37d4244bfbf30143772165e5b18127bf",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-03.png",
+          "sha256": "596bfa07e2bce93f5160b3f7fd13e5a084bf765be68b073c9e9ba0a497cb81a0",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-03.png",
+          "sha256": "3d7a08f08160bfda2c6744c43902f13311dc6da47c0611fa914e4257dc140d73",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-04",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "ef09fc76b99134213ad49d13762dbb68badcfe92df6301f9dbb840f35cc77f4d",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-04.png",
+        "sha256": "b43c28403f55200d8307d7802890acdcad3652e29af0ecb1861409a6b9db3b1c",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-04.png",
+          "sha256": "db88fd70468e0e7eea12383a18105d9f661ecc39a13659a7003a9297cf3a4b45",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-04.png",
+          "sha256": "8b0f666eb32cf19c05853e26318f25ff2324f30d920b3f8426e3739ae094871f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-05",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "a90cad30b885f29c881e2f5e2656354c3ae1904f1ef3c4a1519cbf3cb4c0686d",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-05.png",
+        "sha256": "4d36e2605b585d4fcd066a60e1b404839ebb06b07105ce4efc655d80b01504f1",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-05.png",
+          "sha256": "76705138364302497ae6625dc44aa27be88091250e6a833f5762214829184725",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-05.png",
+          "sha256": "21fc74045f76c5d0b9b6c190c1f19507c7a707bbf3c08fd170367f265c19e0eb",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-06",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "da6626d2ff001b06733af43a5743391640881e38514629cd9bc6a947b95d5878",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-06.png",
+        "sha256": "2a3b63712c0f132d55b11ddfe46bd2aeb0527f40b8b370b491c56898cba6ed69",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-06.png",
+          "sha256": "145c9dc48787cfe9c168fb553812dade6b805ab1232c64cba65c8061ff740eed",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-06.png",
+          "sha256": "1a058e671cb572313dddc70c664023ed20fe1c519f61cbba834e96ea63513d81",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-07",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "e48d8996c96a995e587c4563b9f93246b2853f801716ada2f4b0471c0ecef319",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-07.png",
+        "sha256": "9fb8ddee80eff2ddcccc546ecc7f90e008696c0322033023cbdefb8817f8d496",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-07.png",
+          "sha256": "01faa66f5011e74143231f6fe4f58c0af3c3bc0e4b7b80c78ee7d98267e748cd",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-07.png",
+          "sha256": "95e7305963d25d99aba5dbb23f68710881165d51c0b60c7a45a1ce103c068284",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-08",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "b7a78a8f41897e42fae4baa88d5e2280ff819510c70194f1c3d8de3f0876e7a0",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-jumping-north-08.png",
+        "sha256": "eaab86cdf940ec416b2b00217ca2083158ccd144e3b09c0eda19fc9dfad7b79d",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-jumping-north-08.png",
+          "sha256": "4b15738c521a68dc4cb2a430596b73ee580186d3487039f9c0a03d94f12d719a",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-jumping-north-08.png",
+          "sha256": "8e0934e4126fab3229777d6c60bdc19bc1c35978f7b4632c4c63c326ab2fd3e7",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "seated-south",
+      "mode": "seated",
+      "direction": "south",
+      "family": "action",
+      "approvedGeometrySha256": "d71ea727a9d1bcc35a388475b88e6ef5179b463d9a313992dbeb13abe5e53130",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-seated-south.png",
+        "sha256": "0703bb53f13b0edb972997d9b220adb0a99aa43f6c16a5ead3a95b14dc5bfd2b",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-seated-south.png",
+          "sha256": "ee4e34f051b6022d3ce34f838c5f8597e6226f0c20d71c1ae6a288bfad7ab617",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-seated-south.png",
+          "sha256": "f40d3afffd3f35869976b78f1b2531172b511db2c7248bd131177723d6b75ca8",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "seated-east",
+      "mode": "seated",
+      "direction": "east",
+      "family": "action",
+      "approvedGeometrySha256": "67bd61006e3188bcf30866f12a127922dea05aa070db02cdd972017c59644714",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-seated-east.png",
+        "sha256": "3db3062030d5abf4efb339356772a8ace03074701f71cd4471c9104f3dbb8264",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-seated-east.png",
+          "sha256": "8311a66267c9dd3d1672dacef84aee3a63e944729e68c3066820eb4dcec88f0c",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-seated-east.png",
+          "sha256": "5b76903aebc53c2b9ba7e14e9e14bf4c2fa327c5acd07c653671c550459cec1f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "seated-west",
+      "mode": "seated",
+      "direction": "west",
+      "family": "action",
+      "approvedGeometrySha256": "6e4314674d35d35b0f8f5d2fb300bf0607a862c62a1ef0d6dee262af02cdbdcf",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-seated-west.png",
+        "sha256": "a492a3d9bbc8f62396b4035f8c29b0e695dc5e5c24f422566734aa3628688696",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-seated-west.png",
+          "sha256": "c728b685fdcae96367ce46ba352ba227efd0b73f9a6a3f46d724b2d99fefea28",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-seated-west.png",
+          "sha256": "2d9ad8191fe405db7f5b6f20e6479b842d8f318643e9ac4ef4cb232fdc16b0b4",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "seated-north",
+      "mode": "seated",
+      "direction": "north",
+      "family": "action",
+      "approvedGeometrySha256": "7eaa62de2bcb0bb37f33f76bd5440338e15955737bb2617d903e85e26b5afbd8",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-seated-north.png",
+        "sha256": "089c483147007a97e292a4d439542f04816371841ee9ee9aa81a7c3b5eb4c0b7",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-seated-north.png",
+          "sha256": "871ebc49cc1c6b9954a305b33ce72584203860969d0630065d764a0c6130c50b",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-seated-north.png",
+          "sha256": "80d9a0645492808232210dfaf5c8cacd7aca173dfdbfe050f4adcf341534e412",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-south",
+      "mode": "clipboard",
+      "direction": "south",
+      "family": "action",
+      "approvedGeometrySha256": "bc38810232b2188f0dcb3ec5e566624b7481b3a57c22a2c0dc1eeb06b49aa22b",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-clipboard-south.png",
+        "sha256": "673e56b1ee06e992fe7cf3107d1ac269aa3cf31fc1f94ee833cc8213215a844d",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-clipboard-south.png",
+          "sha256": "ee8cce9c924ea86cc7c82471105857b16b62321250d1bde9b685ad4fe372c4b0",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-clipboard-south.png",
+          "sha256": "1f5456b2f0a14f84b0f564a7db75e19c062ec55862db068e5226cd38a6d4441b",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-east",
+      "mode": "clipboard",
+      "direction": "east",
+      "family": "action",
+      "approvedGeometrySha256": "b1a138fd1dc122744eddae9d61bb27c18040b9726c722d481fa63978d3602b0d",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-clipboard-east.png",
+        "sha256": "23cfef09424b9fd106a9e8d900dbdee849243ac6a21142da7b505dbd40a39650",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-clipboard-east.png",
+          "sha256": "72b45afe6a11e1bdacfff13c5eeb3a5d3bc0f02096d8df7b8ae0f4bb04167d9f",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-clipboard-east.png",
+          "sha256": "7b907d30ce8497de633ca436c12e904240af732d4eef9a656dc8f15913012f74",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-west",
+      "mode": "clipboard",
+      "direction": "west",
+      "family": "action",
+      "approvedGeometrySha256": "1d130c354d6fc7f83104199809aa2e616b6be2dd1b2879faa4317b3d6fd4d0bd",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-clipboard-west.png",
+        "sha256": "2e55633cfbbe809a7a9b366531328d52b271a0f75ef24cfe39f4c7f55b5474d7",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-clipboard-west.png",
+          "sha256": "1f46de0d7d541340a9a1b82f6df20d27d164da5386bb6d610af0f085b8689edf",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-clipboard-west.png",
+          "sha256": "f75ec9608b38ad5848f5fa83c15ff8aee04e7cf2b0ff1a1a2193bee8f376dea1",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-north",
+      "mode": "clipboard",
+      "direction": "north",
+      "family": "action",
+      "approvedGeometrySha256": "bcc58badfe98b2d94687a69a6fe8fe27dbda99d00ef3e2af95d281fa06fa3567",
+      "geometryMatchesApproved": true,
+      "neutral": {
+        "file": "neutral-clipboard-north.png",
+        "sha256": "702da00f1c7b32c69c39b7b915d35451f7d38a375b25993379cdd2630fd7881e",
+        "width": 280,
+        "height": 350
+      },
+      "fitted": {
+        "green": {
+          "file": "green-raster-clipboard-north.png",
+          "sha256": "09ffb4c71f316443d62e0bf15b75711660cfedc5eb75810079cdc84b31606585",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "gray-raster-clipboard-north.png",
+          "sha256": "970d69ef8681487ff6811160aec98d664422730f9fc6cdc85d7a1a14aa54c1b8",
+          "width": 280,
+          "height": 350
+        }
+      }
+    }
+  ],
+  "comparisons": {
+    "greenStandingNative": {
+      "file": "green-standing-source-neutral-fitted-native.png",
+      "sha256": "4f88e8c186869e911694dd997f4bc38cc35038fdc89cf5497d5b312fdfb87922",
+      "width": 840,
+      "height": 378
+    },
+    "greenStandingNearest2x": {
+      "file": "green-standing-source-neutral-fitted-nearest-2x.png",
+      "sha256": "fe00add6ab00b1277f4b3810205352760ef7bafe8bfce0c08ebe1419eeb135a6",
+      "width": 1680,
+      "height": 756
+    },
+    "grayStandingNative": {
+      "file": "gray-standing-source-neutral-fitted-native.png",
+      "sha256": "38f729497eac06b6b32eca42d5b58e34354e29a9bffcf912f51e2d747e6591ca",
+      "width": 840,
+      "height": 378
+    },
+    "grayStandingNearest2x": {
+      "file": "gray-standing-source-neutral-fitted-nearest-2x.png",
+      "sha256": "5bb4004c087b33164f2422d04691f916548778d36bfff59a93ae8bc2023af8dd",
+      "width": 1680,
+      "height": 756
+    },
+    "greeneastNative": {
+      "file": "green-east-source-neutral-fitted-native.png",
+      "sha256": "ff5eb71ef1334189af74845f5eb5bd81b94a90acdf0b7941efaf1fdc66b39226",
+      "width": 840,
+      "height": 378
+    },
+    "greeneastNearest2x": {
+      "file": "green-east-source-neutral-fitted-nearest-2x.png",
+      "sha256": "0359af3945e5625fd2ff9d22b4f55f02be6cc30315ab349c722fb44d0eff39df",
+      "width": 1680,
+      "height": 756
+    },
+    "grayeastNative": {
+      "file": "gray-east-source-neutral-fitted-native.png",
+      "sha256": "a457abd4ab4767d8e3e3f7e09237e8a1af8201612bfc94e2686811600fedc0c2",
+      "width": 840,
+      "height": 378
+    },
+    "grayeastNearest2x": {
+      "file": "gray-east-source-neutral-fitted-nearest-2x.png",
+      "sha256": "94253df84e1c59de3d867913e634df604fe9e342dc3400774cc73ae7f53b590f",
+      "width": 1680,
+      "height": 756
+    },
+    "greenwestNative": {
+      "file": "green-west-source-neutral-fitted-native.png",
+      "sha256": "f760f44f898052d34f9a195b7edfee8b0631ab121383927c3ee81ead392112e5",
+      "width": 840,
+      "height": 378
+    },
+    "greenwestNearest2x": {
+      "file": "green-west-source-neutral-fitted-nearest-2x.png",
+      "sha256": "367b4bbc93fd1914ea4b29a5a85c23533cad00d5d11ce04431d9b9caaf284346",
+      "width": 1680,
+      "height": 756
+    },
+    "graywestNative": {
+      "file": "gray-west-source-neutral-fitted-native.png",
+      "sha256": "3de6b7c474689deae2b1148daaa86e61205f8f59c08cf7ea99920bc25b34d098",
+      "width": 840,
+      "height": 378
+    },
+    "graywestNearest2x": {
+      "file": "gray-west-source-neutral-fitted-nearest-2x.png",
+      "sha256": "21dd2d3eeebc68734459363100707deb00e11eb98dcb41032010432901ba3e39",
+      "width": 1680,
+      "height": 756
+    },
+    "greennorthNative": {
+      "file": "green-north-source-neutral-fitted-native.png",
+      "sha256": "f98a2d03ee53cfb5bb93fd25532f43f4e6283f2afc9bfe377679f0f2ed6ad193",
+      "width": 840,
+      "height": 378
+    },
+    "greennorthNearest2x": {
+      "file": "green-north-source-neutral-fitted-nearest-2x.png",
+      "sha256": "5ed7e9f79e56b7189db13bb75b3ed5fc16b6ec1f2e4025d41e84b1171519a134",
+      "width": 1680,
+      "height": 756
+    },
+    "graynorthNative": {
+      "file": "gray-north-source-neutral-fitted-native.png",
+      "sha256": "6f03c5a49a396d235ab68c4b508a5dabcbb3abd3a5db293394ef1364c1ea3d56",
+      "width": 840,
+      "height": 378
+    },
+    "graynorthNearest2x": {
+      "file": "gray-north-source-neutral-fitted-nearest-2x.png",
+      "sha256": "4aea8acd69e70da090ccf50ff7e999203584104b459ea41d54d9915eefd411b9",
+      "width": 1680,
+      "height": 756
+    },
+    "southActionReview": {
+      "file": "both-south-jump-seated-clipboard-contact.png",
+      "sha256": "05522d026d0ebee2ea23d78954c36410ea7744d2378da2b2e325aa93f132f4d3",
+      "width": 1400,
+      "height": 1512
+    },
+    "southWalkReview": {
+      "file": "both-south-walk-contact.png",
+      "sha256": "0b1420ede709086d57da81b957ae1bf4fa23e14faec937da1e5e9039480da682",
+      "width": 1120,
+      "height": 1512
+    },
+    "eastReview": {
+      "file": "both-east-all-states-contact.png",
+      "sha256": "4c73d675fde6c966b34a618631c2243319ed435e13af1ea17a362db86805d0f0",
+      "width": 1400,
+      "height": 3024
+    },
+    "westReview": {
+      "file": "both-west-all-states-contact.png",
+      "sha256": "a62fc1c103f660ec836cf9aaa9287e4692540fc603cf10c00d8a81775e24a6fe",
+      "width": 1400,
+      "height": 3024
+    },
+    "northReview": {
+      "file": "both-north-all-states-contact.png",
+      "sha256": "3103b2216d95cbaee07be5327b9385d0648db262f6d1af41de365d48f3d55b67",
+      "width": 1400,
+      "height": 3024
+    }
+  }
+}

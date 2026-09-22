@@ -1,7 +1,71 @@
 # GS-006: owner clinical concept review
 
-Updated: 2026-09-13. Status: early-level batch and prior clinical dependencies backed up to GitHub beta as b4ba1bfa9d9c84c51bea1db2c43594bc636d3487; remote SHA verified. See the September 13 completion entry below for current counts; earlier entries are historical. No merge/deployment; unrelated graphics and persistence changes remain local. Keep GS-006 open.
+Updated: 2026-09-17. Status: twenty bread-and-butter concept groups implemented and editorially accepted locally. Current totals are 183 concepts / 450 cases / 703 nodes. This batch is not committed or pushed. Keep GS-006 open.
 Task: `01a08678-2899-7410-8bf1-613839be60f7`.
+
+## September 17: twenty bread-and-butter concept groups
+
+20 concepts / 80 question variants / 52 cases: 24 single-step and 28 two-step,
+including 16 diagnostic-result pathways. First three levels only (internal
+stages 0/1/2: 28/20/4 cases), with 208 coherent patient profiles. Topics: groin
+hernia decisions/anatomy, cutaneous and perianal abscesses, wound complications,
+postoperative retention, solid breast masses, high-output ileostomy, perioperative
+medications and postoperative antibiotic/VTE prophylaxis.
+
+Brief format retained: complaints 2-3 words, presentations 23-40 (median 32),
+prompts 5-9. Every testing choice has a central runtime estimate. A narrow
+stationary-onsite marker fixes bedside bladder scans incorrectly generating
+an off-site trip, preserving room occupancy and the marker through save/restore.
+Existing routes and prior 163 concepts / 398 cases / 623 nodes remain unchanged.
+
+Sol authored/source-checked content, wrote 72 complete reducer-flow tests and
+fixed bedside routing. Terra integrated content and clinical/player regressions.
+Root reviewed actual content, sources, production diffs and tests; independently
+passed 1,286 tests (clinical 360, domain 466, player 445, balance 15), seven
+workspace typechecks, boundaries and isolated build. A stale deterministic supply
+snapshot was updated without weakening assertions; an initial load timeout passed
+on the full two-worker rerun. No new browser visual acceptance is claimed.
+
+[Versioned receipt and exact 20 IDs](../clinical-workbench/approvals/owner-delegated-bread-and-butter-2026-09-17.md)
+includes twelve content fingerprints and source limitations. Editorial acceptance
+is not clinician sign-off: all new records remain `needs_clinician_review`.
+No commit/push/deployment. Local opening remains `START_GAME.cmd` at
+`http://127.0.0.1:4173`; owner saves and canonical server untouched.
+Remind the owner to say **"push to GitHub"** for a scoped backup.
+
+## September 17: twenty brief early-level concept groups
+
+Added 20 scored objectives / 80 questions across 48 cases, including 32 real
+diagnostic-result pathways and 192 coherent patient profiles. Ten families cover
+adrenal incidentaloma, mammary Paget disease, inflammatory breast cancer, AAA,
+fecal incontinence, H. pylori ulcer, mild diverticulitis, thyroglossal duct cyst,
+external rectal prolapse and EoE. Public SCORE mappings and source limitations,
+including EoE's inferred esophageal-care relevance, are in the
+[versioned review receipt](../clinical-workbench/approvals/owner-delegated-brief-early-levels-2026-09-17.md).
+
+Continue the brief format in future batches: 1–5-word complaints, a specific named
+patient with coherent age/sex/character, a short complete task and only the clinical
+facts needed for one best answer. Move teaching detail into feedback. This batch's
+authored complaints are 2–3 words, presentations 27–44 (median 33), and prompts 5–8;
+runtime names may add a word. All diagnostic choices, including distractors and
+surveillance, have central game-time estimates. Five external services and twelve
+timing profiles were added, preserving GS-020 imaging behavior. Future equipment-
+dependent timing remains tracked in the existing diagnostic-timing design note.
+
+Sol authored/source-checked the families and built complete gameplay-flow tests;
+Terra finished corrections, integration, provenance and player/clinical regressions.
+Root inspected actual content/diffs and independently passed 1,208 tests (clinical
+357, domain 394, player 444, balance 13), all seven workspace typechecks, boundaries
+and isolated production build. All 143 prior concepts / 350 cases / 543 nodes remain
+deeply unchanged. The receipt pins 20 IDs and 12 source hashes. No new browser visual
+acceptance is claimed. Existing bundle-size/plugin-timing advisories remain.
+
+Editorial acceptance is not clinician sign-off: new records remain
+`needs_clinician_review` in the unapproved prototype. No commit/push/deployment in
+this batch. Remind the owner to say **"push to GitHub"** for a scoped backup,
+preserving other active work. Launch remains `START_GAME.cmd` at exactly
+`http://127.0.0.1:4173` in the usual persistent profile; owner saves were untouched.
+Seeded supply diagnostics changed with the expanded bank; no scheduler fix is claimed.
 
 ## September 11: twenty additional board concept groups
 

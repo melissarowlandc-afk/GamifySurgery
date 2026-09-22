@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  SECOND_TUTORIAL_ENCOUNTER_ID,
+  TUTORIAL_ENCOUNTER_ID,
   createInitialGameState,
   deserializeGameState,
   serializeGameState,
@@ -7,7 +9,7 @@ import {
 } from "../src";
 
 describe("durable operational alert conditions", () => {
-  it("resolves a low-cash row in place and creates a new occurrence on recurrence", () => {
+  it("paces low-cash recurrences across a rolling operating day and survives reload", () => {
     const state = createInitialGameState();
     state.cash = 50;
     state.cashCents = 5_000;
@@ -37,13 +39,28 @@ describe("durable operational alert conditions", () => {
     state.cash = 50;
     state.cashCents = 5_000;
     synchronizeFacilityOperationalAlertOccurrences(state);
-    const lowCashOccurrences =
+    expect(
       state.environment.facilityConditionOccurrences.filter(
+        (occurrence) => occurrence.conditionKey === "low_cash"),
+    ).toHaveLength(1);
+
+    const restored = deserializeGameState(serializeGameState(state));
+    restored.facilityTick = 599;
+    synchronizeFacilityOperationalAlertOccurrences(restored);
+    expect(
+      restored.environment.facilityConditionOccurrences.filter(
+        (occurrence) => occurrence.conditionKey === "low_cash"),
+    ).toHaveLength(1);
+
+    restored.facilityTick = 600;
+    synchronizeFacilityOperationalAlertOccurrences(restored);
+    const lowCashOccurrences =
+      restored.environment.facilityConditionOccurrences.filter(
         (occurrence) => occurrence.conditionKey === "low_cash",
       );
     expect(lowCashOccurrences).toHaveLength(2);
     expect(lowCashOccurrences[1]).toMatchObject({
-      occurredAtFacilityTick: 20,
+      occurredAtFacilityTick: 600,
       resolvedAtFacilityTick: null,
     });
     expect(lowCashOccurrences[1]?.id).not.toBe(first?.id);
@@ -75,14 +92,34 @@ describe("durable operational alert conditions", () => {
     ).toBe(false);
   });
 
-  it("materializes and resolves advertising guidance without changing satisfaction keys", () => {
+  it("paces inner-peace guidance from actual arrivals regardless of advertising or active patients", () => {
     const state = createInitialGameState();
-    state.facilityLevel = 1;
-    state.encounters = {};
-    state.advertisingLevel = 0;
-    state.nextRoutineArrivalTick = state.facilityTick + 60;
+    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    first.resolutionReason = "completed";
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...JSON.parse(JSON.stringify(first)),
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      resolutionReason: "completed",
+    };
+    state.encounters["encounter.active"] = {
+      ...JSON.parse(JSON.stringify(first)),
+      id: "encounter.active",
+      resolutionReason: null,
+      lifecycle: "active_pending_result",
+    };
+    state.advertisingLevel = 1;
+    state.alertHumor.lastPatientArrivalTick = 0;
+    state.facilityTick = 60;
     synchronizeFacilityOperationalAlertOccurrences(state);
+    expect(
+      state.environment.facilityConditionOccurrences.filter(
+        (candidate) =>
+          candidate.conditionKey === "advertising_recommended",
+      ),
+    ).toHaveLength(0);
 
+    state.facilityTick = 61;
+    synchronizeFacilityOperationalAlertOccurrences(state);
     const occurrence =
       state.environment.facilityConditionOccurrences.find(
         (candidate) =>
@@ -96,9 +133,25 @@ describe("durable operational alert conditions", () => {
       },
     });
 
-    state.facilityTick = 1;
-    state.advertisingLevel = 1;
+    state.facilityTick = 62;
+    state.alertHumor.lastPatientArrivalTick = 62;
     synchronizeFacilityOperationalAlertOccurrences(state);
-    expect(occurrence?.resolvedAtFacilityTick).toBe(1);
+    expect(occurrence?.resolvedAtFacilityTick).toBe(62);
+
+    state.facilityTick = 123;
+    synchronizeFacilityOperationalAlertOccurrences(state);
+    expect(
+      state.environment.facilityConditionOccurrences.filter(
+        (candidate) => candidate.conditionKey === "advertising_recommended",
+      ),
+    ).toHaveLength(1);
+
+    state.facilityTick = 662;
+    synchronizeFacilityOperationalAlertOccurrences(state);
+    expect(
+      state.environment.facilityConditionOccurrences.filter(
+        (candidate) => candidate.conditionKey === "advertising_recommended",
+      ),
+    ).toHaveLength(2);
   });
 });

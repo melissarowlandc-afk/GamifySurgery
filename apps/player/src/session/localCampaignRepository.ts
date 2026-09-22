@@ -56,6 +56,8 @@ export interface StoredProfileMetadata {
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
   tutorialIntroDismissedCampaignIds: string[];
+  tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
+  tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
   campaigns: CampaignSummary[];
 }
 
@@ -322,6 +324,12 @@ function validateStoredProfile(value: unknown): StoredProfile | undefined {
   }
 
   const dismissedCampaignIds = value.tutorialIntroDismissedCampaignIds as string[];
+  const tipAcknowledgments = isRecord(value.tutorialDailyRoutineTipAcknowledgments)
+    ? Object.fromEntries(Object.entries(value.tutorialDailyRoutineTipAcknowledgments).filter(([, tips]) => Array.isArray(tips)).map(([id, tips]) => [id, (tips as unknown[]).filter((tip): tip is string => typeof tip === "string")]))
+    : {};
+  const pauseByCampaign = isRecord(value.tutorialDailyRoutinePauseByCampaign)
+    ? Object.fromEntries(Object.entries(value.tutorialDailyRoutinePauseByCampaign).filter(([, paused]) => typeof paused === "boolean")) as Record<string, boolean>
+    : {};
   if (new Set(dismissedCampaignIds).size !== dismissedCampaignIds.length) {
     throw namedError("MetadataValidationError", "Stored tutorial metadata contains duplicate campaigns.");
   }
@@ -345,6 +353,8 @@ function validateStoredProfile(value: unknown): StoredProfile | undefined {
     nextCampaignNumber: value.nextCampaignNumber as number,
     tutorialsEnabled: value.tutorialsEnabled,
     tutorialIntroDismissedCampaignIds: [...dismissedCampaignIds],
+    tutorialDailyRoutineTipAcknowledgments: tipAcknowledgments,
+    tutorialDailyRoutinePauseByCampaign: pauseByCampaign,
     campaigns,
   };
 }
@@ -487,6 +497,18 @@ function buildStoredProfile(
     ...(storedProfile?.tutorialIntroDismissedCampaignIds ?? []),
     ...callerProfile.tutorialIntroDismissedCampaignIds,
   ]);
+  const tipAcknowledgments = {
+    ...(storedProfile?.tutorialDailyRoutineTipAcknowledgments ?? {}),
+  };
+  const pauseByCampaign = {
+    ...(storedProfile?.tutorialDailyRoutinePauseByCampaign ?? {}),
+  };
+  const callerTips = callerProfile.tutorialDailyRoutineTipAcknowledgments[targetCampaign.campaignId];
+  const callerPause = callerProfile.tutorialDailyRoutinePauseByCampaign[targetCampaign.campaignId];
+  if (callerTips) tipAcknowledgments[targetCampaign.campaignId] = [...callerTips];
+  else delete tipAcknowledgments[targetCampaign.campaignId];
+  if (callerPause !== undefined) pauseByCampaign[targetCampaign.campaignId] = callerPause;
+  else delete pauseByCampaign[targetCampaign.campaignId];
 
   return {
     key: PROFILE_KEY,
@@ -500,6 +522,8 @@ function buildStoredProfile(
     tutorialIntroDismissedCampaignIds: [...dismissedCampaignIds].filter((campaignId) =>
       resultingIds.has(campaignId),
     ),
+    tutorialDailyRoutineTipAcknowledgments: Object.fromEntries(Object.entries(tipAcknowledgments).filter(([campaignId]) => resultingIds.has(campaignId))),
+    tutorialDailyRoutinePauseByCampaign: Object.fromEntries(Object.entries(pauseByCampaign).filter(([campaignId]) => resultingIds.has(campaignId))),
     campaigns,
   };
 }
@@ -521,6 +545,8 @@ function migrationMetadataMatches(
     storedProfile.nextCampaignNumber >= sourceProfile.nextCampaignNumber &&
     storedProfile.tutorialsEnabled === sourceProfile.tutorialsEnabled &&
     (!sourceDismissed || storedDismissed)
+      && JSON.stringify(storedProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? []) === JSON.stringify(sourceProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? [])
+      && storedProfile.tutorialDailyRoutinePauseByCampaign[campaignId] === sourceProfile.tutorialDailyRoutinePauseByCampaign[campaignId]
   );
 }
 
@@ -1217,6 +1243,8 @@ export class LocalCampaignRepository {
           tutorialIntroDismissedCampaignIds: [
             ...profile.tutorialIntroDismissedCampaignIds,
           ],
+          tutorialDailyRoutineTipAcknowledgments: profile.tutorialDailyRoutineTipAcknowledgments,
+          tutorialDailyRoutinePauseByCampaign: profile.tutorialDailyRoutinePauseByCampaign,
           campaigns,
         },
       };

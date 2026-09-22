@@ -73,9 +73,18 @@ export const serviceRouteDefinitionSchema = z
       .strict()
       .nullable()
       .default(null),
+    patientRemainsOnsite: z.literal(true).optional(),
   })
   .strict()
   .superRefine((route, context) => {
+    if (route.patientRemainsOnsite && route.patientTravel) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "A stationary onsite route cannot also define patient travel.",
+        path: ["patientRemainsOnsite"],
+      });
+    }
     if (route.timingPhases.length === 0) {
       return;
     }
@@ -135,6 +144,8 @@ export const roomDefinitionSchema = z
     height: z.number().int().positive(),
     defaultDoorSide: cardinalDirectionSchema.nullable(),
     constructionCost: z.number().int().nonnegative(),
+    /** Legacy rooms may remain loadable without being offered for new construction. */
+    buildable: z.boolean().default(true),
     upkeepPerExpenseInterval: z.number().int().nonnegative(),
     satisfactionOnBuild: z.number().int().min(0).max(20),
     workloadLimitContribution: z.number().int().nonnegative(),
@@ -183,6 +194,15 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           })
           .nullable(),
+        patientCareAnchor: z
+          .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
+          .nullable()
+          .optional(),
+        clinicianCareAnchor: z
+          .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
+          .nullable()
+          .optional(),
+        publicWaitingArea: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -262,6 +282,14 @@ export const roomDefinitionSchema = z
         "navigation",
         "staffAnchor",
       ]);
+      validateAnchor(navigation.patientCareAnchor ?? null, [
+        "navigation",
+        "patientCareAnchor",
+      ]);
+      validateAnchor(navigation.clinicianCareAnchor ?? null, [
+        "navigation",
+        "clinicianCareAnchor",
+      ]);
       const waitingKeys = new Set<string>();
       navigation.waitingAnchors.forEach((point, index) => {
         validateAnchor(point, [
@@ -298,6 +326,8 @@ export const staffRoleDefinitionSchema = z
     maximumTrainingLevel: z.number().int().min(1).max(5),
     workloadLimitContribution: z.number().int().nonnegative(),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
+    /** At least one of these room types is required when nonempty. */
+    requiredAnyRoomDefinitionIds: z.array(stableIdSchema).default([]),
     capabilityIds: z.array(stableIdSchema),
   })
   .strict()
@@ -456,6 +486,12 @@ export const prototypeBalanceReleaseSchema = z
         maximumAmenityCompletionBonus: z.number().int().nonnegative().max(20),
         roomCleanlinessLossPerEncounter: z.number().int().nonnegative().max(20),
         rollingWindowSize: z.number().int().positive().max(100),
+        unstaffedCheckInDelayMinutes: z.number().int().positive().max(240),
+        unstaffedCheckInSatisfactionPenalty: z
+          .number()
+          .int()
+          .nonnegative()
+          .max(20),
         facilityConditionPenalties: z
           .object({
             maximumTotal: z.number().int().nonnegative().max(50),
@@ -820,6 +856,15 @@ export const prototypeBalanceReleaseSchema = z
               roleIndex,
               "requiredRoomDefinitionIds",
             ],
+          });
+        }
+      });
+      role.requiredAnyRoomDefinitionIds.forEach((requiredId) => {
+        if (!roomDefinitions.has(requiredId)) {
+          context.addIssue({
+            code: "custom",
+            message: `Staff role ${role.id} requires one missing room definition ${requiredId}.`,
+            path: ["facility", "staffRoleDefinitions", roleIndex, "requiredAnyRoomDefinitionIds"],
           });
         }
       });

@@ -1,0 +1,486 @@
+{
+  "pages": {
+    "actions": {
+      "file": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\actions-v1.png",
+      "sha256": "0facfa96fcc25e3805e30ef70d3d1eac30001a946a305923a1dae544bc5f8c9c",
+      "width": 1024,
+      "height": 1024
+    },
+    "clipboard": {
+      "file": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\clipboard-v1.png",
+      "sha256": "1eadc3f5b02363916ea5c8367dc3abba58b3c85dc2e00057f05292d6a8e972c4",
+      "width": 512,
+      "height": 256
+    }
+  },
+  "parts": {
+    "actions.south.seatedLower": {
+      "slotId": "actions.south.seatedLower",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\seated-lower-generated-v2.png",
+        "sha256": "f42d50f2ad0f86a95b52ab8e7f7e78705ca1a45a5951beb2979bec5e456e41a7",
+        "crop": {
+          "x": 94,
+          "y": 271,
+          "width": 233,
+          "height": 328
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "source-referenced transparent darker-charcoal seated trousers and brown boots; waist, seat support and soles annotated from actual art"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 103.00000000000001
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 151.79432624113474,
+            "y": 168.53191489361706
+          },
+          "right": {
+            "x": 100.6950354609929,
+            "y": 168.53191489361706
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 55,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.3900709219858156,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 44.13475177304964,
+          "y": -61.219858156028366
+        }
+      },
+      "contentBounds": {
+        "x": 81,
+        "y": 45,
+        "width": 91,
+        "height": 127
+      }
+    },
+    "actions.east.seatedLower": {
+      "slotId": "actions.east.seatedLower",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\seated-lower-generated-v2.png",
+        "sha256": "f42d50f2ad0f86a95b52ab8e7f7e78705ca1a45a5951beb2979bec5e456e41a7",
+        "crop": {
+          "x": 510,
+          "y": 269,
+          "width": 327,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "source-referenced transparent darker-charcoal seated trousers and brown boots; waist, seat support and soles annotated from actual art"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 127.99999999999997,
+            "y": 48
+          },
+          "contact": {
+            "x": 127.99999999999997,
+            "y": 103
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 224.96724118251345,
+            "y": 163.66887341627668
+          },
+          "right": {
+            "x": 217.97688620020548,
+            "y": 164.68274169615339
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 55,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.41549983101865684,
+        "rotationRadians": -0.14403380348899497,
+        "translation": {
+          "x": -135.00622075105585,
+          "y": -31.41131149412169
+        }
+      },
+      "contentBounds": {
+        "x": 94,
+        "y": 40,
+        "width": 150,
+        "height": 132
+      }
+    },
+    "actions.west.seatedLower": {
+      "slotId": "actions.west.seatedLower",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\seated-lower-generated-v2.png",
+        "sha256": "f42d50f2ad0f86a95b52ab8e7f7e78705ca1a45a5951beb2979bec5e456e41a7",
+        "crop": {
+          "x": 937,
+          "y": 269,
+          "width": 328,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "source-referenced transparent darker-charcoal seated trousers and brown boots; waist, seat support and soles annotated from actual art"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 103
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 34.5952106174264,
+            "y": 168.46364685516446
+          },
+          "right": {
+            "x": 41.66301211771491,
+            "y": 169.16503173687246
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 55,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.4177951634654455,
+        "rotationRadians": 0.09891279473639282,
+        "translation": {
+          "x": -351.86785920369306,
+          "y": -117.17772648586268
+        }
+      },
+      "contentBounds": {
+        "x": 14,
+        "y": 41,
+        "width": 147,
+        "height": 134
+      }
+    },
+    "actions.north.seatedLower": {
+      "slotId": "actions.north.seatedLower",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\seated-lower-generated-v2.png",
+        "sha256": "f42d50f2ad0f86a95b52ab8e7f7e78705ca1a45a5951beb2979bec5e456e41a7",
+        "crop": {
+          "x": 1436,
+          "y": 269,
+          "width": 240,
+          "height": 326
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "source-referenced transparent darker-charcoal seated trousers and brown boots; waist, seat support and soles annotated from actual art"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 103.00000000000001
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 100.69503546099293,
+            "y": 168.53191489361706
+          },
+          "right": {
+            "x": 151.404255319149,
+            "y": 168.53191489361706
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 55,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.3900709219858156,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -480.51063829787233,
+          "y": -61.219858156028366
+        }
+      },
+      "contentBounds": {
+        "x": 80,
+        "y": 44,
+        "width": 93,
+        "height": 127
+      }
+    },
+    "clipboard.right.clipboardArm": {
+      "slotId": "clipboard.right.clipboardArm",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\clipboard-broader-v2.png",
+        "sha256": "4ab0b77a89911e8cdde356b2f947f343ab54dc63c121eb6b46e485c00a5eb2c4",
+        "crop": {
+          "x": 432,
+          "y": 250,
+          "width": 315,
+          "height": 385
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced complete long-sleeve bent arm; actual anatomical right assigned from shoulder and inward hand direction, opposite source image ordering"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 48
+          },
+          "elbow": {
+            "x": 106.83100130960939,
+            "y": 77.39058853648689
+          },
+          "wrist": {
+            "x": 118.69015429758657,
+            "y": 100.71069448683988
+          }
+        },
+        "hand": {
+          "contact": {
+            "x": 128,
+            "y": 108
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 130.14933485628762,
+            "y": 104.88529594218025
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "clipboardArm",
+        "targetLength": 60,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "hand.contact",
+        "scale": 0.1882765877523607,
+        "rotationRadians": 0.5043554451339198,
+        "translation": {
+          "x": 63.328534714495305,
+          "y": -48.341955748988255
+        }
+      },
+      "contentBounds": {
+        "x": 88,
+        "y": 44,
+        "width": 51,
+        "height": 77
+      }
+    },
+    "clipboard.left.clipboardArm": {
+      "slotId": "clipboard.left.clipboardArm",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\brown-beanie-v1\\assets\\clipboard-broader-v2.png",
+        "sha256": "4ab0b77a89911e8cdde356b2f947f343ab54dc63c121eb6b46e485c00a5eb2c4",
+        "crop": {
+          "x": 1026,
+          "y": 250,
+          "width": 314,
+          "height": 385
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced complete long-sleeve bent arm; actual anatomical left assigned from shoulder and inward hand direction, opposite source image ordering"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 48
+          },
+          "elbow": {
+            "x": 149.38161898965305,
+            "y": 77.19659160073037
+          },
+          "wrist": {
+            "x": 137.60438222763236,
+            "y": 100.51369446135118
+          }
+        },
+        "hand": {
+          "contact": {
+            "x": 127.99999999999997,
+            "y": 108
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 126.00973828362748,
+            "y": 104.80462568472306
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "clipboardArm",
+        "targetLength": 60,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "hand.contact",
+        "scale": 0.1879908120691479,
+        "rotationRadians": -0.507098504392337,
+        "translation": {
+          "x": -99.05416920267797,
+          "y": 113.49604382227632
+        }
+      },
+      "contentBounds": {
+        "x": 117,
+        "y": 44,
+        "width": 51,
+        "height": 77
+      }
+    }
+  },
+  "fallbacks": {
+    "actions.south.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.south.torso"
+      ]
+    },
+    "actions.south.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.south.upperArm.left",
+        "upper.south.forearmHand.left"
+      ]
+    },
+    "actions.south.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.south.upperArm.right",
+        "upper.south.forearmHand.right"
+      ]
+    },
+    "actions.east.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.east.torso"
+      ]
+    },
+    "actions.east.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.east.upperArm.left",
+        "upper.east.forearmHand.left"
+      ]
+    },
+    "actions.east.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.east.upperArm.right",
+        "upper.east.forearmHand.right"
+      ]
+    },
+    "actions.west.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.west.torso"
+      ]
+    },
+    "actions.west.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.west.upperArm.left",
+        "upper.west.forearmHand.left"
+      ]
+    },
+    "actions.west.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.west.upperArm.right",
+        "upper.west.forearmHand.right"
+      ]
+    },
+    "actions.north.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.north.torso"
+      ]
+    },
+    "actions.north.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.north.upperArm.left",
+        "upper.north.forearmHand.left"
+      ]
+    },
+    "actions.north.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.north.upperArm.right",
+        "upper.north.forearmHand.right"
+      ]
+    }
+  },
+  "sourceLineage": {
+    "seated": {
+      "path": "tools/character-mapping/layered-pilot/brown-beanie-v1/assets/seated-lower-generated-v2.png",
+      "sha256": "f42d50f2ad0f86a95b52ab8e7f7e78705ca1a45a5951beb2979bec5e456e41a7"
+    },
+    "clipboard": {
+      "path": "tools/character-mapping/layered-pilot/brown-beanie-v1/assets/clipboard-broader-v2.png",
+      "sha256": "4ab0b77a89911e8cdde356b2f947f343ab54dc63c121eb6b46e485c00a5eb2c4"
+    }
+  }
+}

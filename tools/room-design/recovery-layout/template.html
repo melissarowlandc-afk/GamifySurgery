@@ -1,0 +1,17 @@
+<section id="recovery-layout-proof" aria-labelledby="recovery-title">
+  <style>
+    #recovery-layout-proof{max-width:900px;margin-inline:auto}#recovery-layout-proof .recovery-art-wrap{position:relative;max-width:840px;margin:12px auto 0}#recovery-layout-proof .recovery-art{position:relative;z-index:1;display:block;width:100%;height:auto}#recovery-layout-proof .recovery-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#recovery-layout-proof .recovery-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#recovery-layout-proof .recovery-controls{max-width:840px;margin:10px auto 0}#recovery-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#recovery-layout-proof legend{font-weight:500;margin-bottom:4px}#recovery-layout-proof .recovery-buttons{display:flex;gap:4px;flex-wrap:wrap}#recovery-layout-proof .recovery-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;align-items:start}#recovery-layout-proof .recovery-label{color:var(--muted-foreground);display:block;margin-bottom:3px}#recovery-layout-proof .recovery-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:3em}@media(max-width:560px){#recovery-layout-proof .recovery-row{grid-template-columns:1fr}}
+  </style>
+  <h2 id="recovery-title">Peri-op / Recovery Room preview</h2>
+  <div class="recovery-art-wrap">
+    <canvas id="recovery-art" class="recovery-art" width="1680" height="1840" role="img" aria-label="Square peri-op and recovery room with eight perimeter bed bays, short solid partitions, a central nursing counter, two nurse stools, selectable doors, and route clearance."></canvas>
+    <div id="recovery-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="recovery-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="recovery-adjacency" class="recovery-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="recovery-row"><div><span class="recovery-label text-small">North</span><span id="recovery-north" class="recovery-buttons"></span></div><div><span class="recovery-label text-small">South</span><span id="recovery-south" class="recovery-buttons"></span></div><div><span class="recovery-label text-small">West</span><span id="recovery-west" class="recovery-buttons"></span></div><div><span class="recovery-label text-small">East</span><span id="recovery-east" class="recovery-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="recovery-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, seats, and approaches</span></label>
+    <div id="recovery-status" class="recovery-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__RECOVERY_SCRIPT__</script>
+</section>

@@ -1,0 +1,14 @@
+import {readFile,mkdir} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const base='tools/room-design/minor-procedure-layout',html=await readFile(`${base}/minor-procedure-layout.html`,'utf8');await mkdir(`${base}/evidence`,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'}),page=await browser.newPage({viewport:{width:820,height:980}});await page.setContent(`<main>${html}</main>`);await page.waitForFunction(()=>window.__minorProcedureLayout?.ready());
+await page.screenshot({path:`${base}/evidence/minor-default.png`,fullPage:true});
+await page.getByLabel('Show optional N2 wall light').uncheck();await page.screenshot({path:`${base}/evidence/minor-wall-light-off.png`,fullPage:true});await page.getByLabel('Show optional N2 wall light').check();
+await page.getByRole('button',{name:'Toggle door at N2'}).click();await page.screenshot({path:`${base}/evidence/minor-wall-light-n2-door.png`,fullPage:true});await page.getByRole('button',{name:'Toggle door at N2'}).click();
+await page.locator('[data-adjacent="N2"]').check();await page.screenshot({path:`${base}/evidence/minor-wall-light-n2-backed.png`,fullPage:true});await page.locator('[data-adjacent="N2"]').uncheck();
+await page.getByLabel('Show footprints, selected-door route, and seat/use points').check();await page.screenshot({path:`${base}/evidence/minor-overlay.png`,fullPage:true});
+await page.getByLabel('Show footprints, selected-door route, and seat/use points').uncheck();
+for(const button of await page.locator('.minor-controls [data-segment]').all())if(await button.getAttribute('aria-pressed')!=='true')await button.click();
+for(const input of await page.locator('[data-adjacent]').all())if(!await input.isChecked())await input.check();
+await page.screenshot({path:`${base}/evidence/minor-all-open-backed.png`,fullPage:true});
+await browser.close();

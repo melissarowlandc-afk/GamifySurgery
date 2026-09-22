@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "immutableSource": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+  },
+  "generatedPlates": {
+    "initial": {
+      "path": "tools/character-mapping/layered-pilot/directional/assets/green-directional-parts-initial-v1.png",
+      "sha256": "2d9456a21476956b834ba27f9d1b59a19dff00c1aa3e517268c0bc82df1c120f",
+      "role": "first source-referenced E/W/N layered plate; top torso row rejected because sleeve lobes remained"
+    },
+    "correctedOpaque": {
+      "path": "tools/character-mapping/layered-pilot/directional/assets/green-directional-parts-corrected-v1-opaque.png",
+      "sha256": "a1068656b268ee275d369fade9f4ddab281120ec4a6c274adb9b7281b7f8996b",
+      "role": "targeted top-row edit removing arms; matte magenta background",
+      "sourceGeneratedPath": "C:/Users/Kyle Kent/.codex/generated_images/01a09b55-147e-72f0-b413-e8b6827c7287/exec-1e74c3b6-4728-4769-aa40-2e7418884cd7.png"
+    },
+    "transparent": {
+      "path": "tools/character-mapping/layered-pilot/directional/assets/green-directional-parts-corrected-v1-transparent.png",
+      "sha256": "6e8371c16c2eaa2f6a0bf53bbec7a0fcf336e3b74efa25b8cc1f3cbe36dd2178",
+      "method": "8-connected exterior flood over magenta-dominant pixels; alpha changed only",
+      "alpha": {
+        "removed": 1252007,
+        "retained": 320857
+      },
+      "retainedRgbChanges": 0
+    }
+  },
+  "promptProvenance": {
+    "initialGeneratedPath": "C:/Users/Kyle Kent/.codex/generated_images/01a09b55-147e-72f0-b413-e8b6827c7287/exec-65608186-eeee-4ebb-8f44-022af7c98415.png",
+    "correctionInstruction": "Targeted edit of only the top row to remove arms fully and use a matte magenta background. Exact prompt text was supplied outside this owned directory."
+  },
+  "heads": {
+    "east": {
+      "file": "tools/character-mapping/layered-pilot/directional/assets/green-head-east-source-v1.png",
+      "sourceRect": [
+        373,
+        58,
+        90,
+        90
+      ],
+      "sha256": "b176bf09274eb8909bc7dc9d2f4e63c3fc3cddafc090b8d677550f121bea87f1",
+      "removed": 3517,
+      "retained": 4583,
+      "removedOriginalGarment": 167,
+      "retainedRgbChanges": 0,
+      "bounds": {
+        "left": 7,
+        "top": 11,
+        "right": 80,
+        "bottom": 88,
+        "width": 74,
+        "height": 78,
+        "pixels": 4416
+      }
+    },
+    "west": {
+      "file": "tools/character-mapping/layered-pilot/directional/assets/green-head-west-source-v1.png",
+      "sourceRect": [
+        600,
+        58,
+        90,
+        90
+      ],
+      "sha256": "a16cbc8319080ea7668d274a4c2c5d5eef267265a9243b01b2ca5851c9c8d32b",
+      "removed": 3420,
+      "retained": 4680,
+      "removedOriginalGarment": 167,
+      "retainedRgbChanges": 0,
+      "bounds": {
+        "left": 6,
+        "top": 11,
+        "right": 79,
+        "bottom": 88,
+        "width": 74,
+        "height": 78,
+        "pixels": 4513
+      }
+    },
+    "north": {
+      "file": "tools/character-mapping/layered-pilot/directional/assets/green-head-north-source-v1.png",
+      "sourceRect": [
+        831,
+        58,
+        90,
+        90
+      ],
+      "sha256": "c0d81a3f9e85d53232e947229c10b042efeb7ded22380421ba88e980f2e16994",
+      "removed": 3644,
+      "retained": 4456,
+      "removedOriginalGarment": 414,
+      "retainedRgbChanges": 0,
+      "bounds": {
+        "left": 10,
+        "top": 10,
+        "right": 80,
+        "bottom": 81,
+        "width": 71,
+        "height": 72,
+        "pixels": 4042
+      }
+    }
+  },
+  "neckBridges": {
+    "east": {
+      "file": "tools/character-mapping/layered-pilot/directional/assets/green-neck-east-source-v1.png",
+      "sourceRect": [
+        390,
+        128,
+        70,
+        33
+      ],
+      "keepPolygon": [
+        20,
+        0,
+        70,
+        0,
+        70,
+        33,
+        15,
+        33,
+        0,
+        20
+      ],
+      "sha256": "4661574b06c2d9c3cd3acc73983971dc67b008fbf58a737bbee1ccb04e9b68e9",
+      "retained": 891,
+      "removed": 1419,
+      "retainedRgbChanges": 0,
+      "bounds": {
+        "left": 7,
+        "top": 0,
+        "right": 55,
+        "bottom": 32,
+        "width": 49,
+        "height": 33,
+        "pixels": 891
+      }
+    },
+    "west": {
+      "file": "tools/character-mapping/layered-pilot/directional/assets/green-neck-west-source-v1.png",
+      "sourceRect": [
+        595,
+        128,
+        85,
+        33
+      ],
+      "keepPolygon": [
+        0,
+        0,
+        65,
+        0,
+        85,
+        20,
+        70,
+        33,
+        0,
+        33
+      ],
+      "sha256": "71dd712b9f9dd963c5d33f1de080380c4ad3fe3525bd83bdc32eaedc5dbb8dfd",
+      "retained": 952,
+      "removed": 1853,
+      "retainedRgbChanges": 0,
+      "bounds": {
+        "left": 19,
+        "top": 0,
+        "right": 68,
+        "bottom": 32,
+        "width": 50,
+        "height": 33,
+        "pixels": 952
+      }
+    },
+    "north": {
+      "file": "tools/character-mapping/layered-pilot/directional/assets/green-neck-north-source-v1.png",
+      "sourceRect": [
+        830,
+        128,
+        90,
+        33
+      ],
+      "keepPolygon": [
+        0,
+        0,
+        90,
+        0,
+        90,
+        33,
+        0,
+        33
+      ],
+      "sha256": "4b05c90c318d5729816ee1b43fd4faad26cb9c6417ba0f9dfb6bf1accc647dfa",
+      "retained": 376,
+      "removed": 2594,
+      "retainedRgbChanges": 0,
+      "bounds": {
+        "left": 22,
+        "top": 0,
+        "right": 70,
+        "bottom": 11,
+        "width": 49,
+        "height": 12,
+        "pixels": 376
+      }
+    }
+  }
+}

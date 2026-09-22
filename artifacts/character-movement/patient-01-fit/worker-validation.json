@@ -1,0 +1,153 @@
+{
+  "status": "PASS",
+  "checks": 2446,
+  "hashes": {
+    "fit": "5e2ab5bcb5b390acb74fb45ef63b85e83df13ebaf2db102f32e38222700dd571",
+    "fragment": "8b75bcb1b717b83d219b304ecdcb51627936cb22089107704da8b1447e330b24",
+    "displayCopy": "8b75bcb1b717b83d219b304ecdcb51627936cb22089107704da8b1447e330b24",
+    "generator": "d105c38834f267f23db887118184d624a2d46b353e96694fe46bb8ec53898c58",
+    "rightSource": "0452d5fbef808dec3edcd2c71f033c6d71a7cd1b3dc69220f494c86dd80fcff6",
+    "leftSource": "85e35c92c93e6631c2838e8f2e53d5b292b4fc919100c5798389128b6d425ee2",
+    "acceptedM1Preview": "4cf509ce2a0d579aad1eff38d04cf2ebb8489a2a02a9496cac9680dd7e933e75"
+  },
+  "sourceMetrics": {
+    "right": {
+      "dimensions": [
+        448,
+        1024
+      ],
+      "alphaBBoxExclusive": [
+        129,
+        48,
+        326,
+        941
+      ],
+      "lastOpaqueRow": 940
+    },
+    "left": {
+      "dimensions": [
+        448,
+        1024
+      ],
+      "alphaBBoxExclusive": [
+        130,
+        49,
+        334,
+        941
+      ],
+      "lastOpaqueRow": 940
+    }
+  },
+  "geometry": {
+    "phases": 8,
+    "uniquePhases": 8,
+    "frameSegmentLengths": {
+      "upperArm": 28,
+      "forearm": 28,
+      "hand": 8,
+      "thigh": 29,
+      "shin": 28
+    },
+    "nativeSegmentLengths": {
+      "upperArm": 146.2222,
+      "forearm": 146.2222,
+      "hand": 41.7778,
+      "thigh": 151.4444,
+      "shin": 146.2222
+    },
+    "floorEdge": 181,
+    "labeledReflection": "same phase and labels; far/near order swapped",
+    "plainFlipPermutation": {
+      "1": 5,
+      "2": 6,
+      "3": 7,
+      "4": 8,
+      "5": 1,
+      "6": 2,
+      "7": 3,
+      "8": 4
+    }
+  },
+  "browser": {
+    "runtime": {
+      "phaseCount": 8,
+      "pathCounts": [
+        18,
+        18
+      ],
+      "ellipseCounts": [
+        1,
+        1
+      ],
+      "dash": "7px, 17px",
+      "phaseLive": false
+    },
+    "layout736": {
+      "sideBySide": true,
+      "svg": [
+        {
+          "width": 360,
+          "viewBoxWidth": 360
+        },
+        {
+          "width": 360,
+          "viewBoxWidth": 360
+        }
+      ]
+    },
+    "layout320": {
+      "stacked": true,
+      "noOverflow": true,
+      "svg": [
+        {
+          "width": 320,
+          "viewBoxWidth": 320
+        },
+        {
+          "width": 320,
+          "viewBoxWidth": 320
+        }
+      ]
+    },
+    "controls": {
+      "beforeStep": 7,
+      "steppedTo": 8,
+      "autoBefore": 7,
+      "autoAfter": 8
+    },
+    "dynamicReduced": {
+      "index": 7,
+      "wantsPlayback": false,
+      "pageVisible": true,
+      "onScreen": true,
+      "running": false
+    },
+    "afterPreferenceReturn": {
+      "index": 7,
+      "wantsPlayback": false,
+      "pageVisible": true,
+      "onScreen": true,
+      "running": false
+    },
+    "reducedInitial": {
+      "pose": "1",
+      "state": {
+        "index": 0,
+        "wantsPlayback": false,
+        "pageVisible": true,
+        "onScreen": true,
+        "running": false
+      },
+      "button": "Play"
+    },
+    "errors": [],
+    "networkRequests": []
+  },
+  "screenshots": [
+    "worker-pose-1-736-light.png",
+    "worker-pose-3-736-light.png",
+    "worker-pose-7-736-light.png",
+    "worker-pose-1-320-dark.png"
+  ],
+  "isolation": "Fresh headless Chrome; fragment in sandboxed inline iframe; all network requests blocked; no game URL, server, profile, or save access."
+}

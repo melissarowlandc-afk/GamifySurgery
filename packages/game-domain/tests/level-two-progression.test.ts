@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
+  SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
   createInitialGameState,
   deserializeGameState,
@@ -113,6 +114,31 @@ describe("Level 2 facility progression", () => {
     ]);
   });
 
+  it("does not apply the tutorial-only graduation exception to Level 1", () => {
+    const state = createInitialGameState();
+    state.facilityLevel = 1;
+    state.clinicalXp = 0;
+    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    first.resolutionReason = "completed";
+    first.resolvedAtFacilityTick = 1;
+    first.finalPatientSatisfaction = 20;
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...JSON.parse(JSON.stringify(first)),
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      resolvedAtFacilityTick: 2,
+    };
+
+    const progression = getFacilityProgressionStatus(state);
+    expect(progression.eligible).toBe(false);
+    expect(progression.requirements.map((requirement) => requirement.id)).toEqual([
+      "progression.clinical_xp",
+      "progression.satisfaction",
+      "progression.room.room.ultrasound",
+      "progression.room.room.minor_procedure",
+      "progression.staff.staff.imaging_technician",
+    ]);
+  });
+
   it("loads existing Level 0/1 saves and round-trips a Level 2 state without a schema bump", () => {
     const levelZero = createInitialGameState();
     const levelOne = createInitialGameState();
@@ -124,7 +150,7 @@ describe("Level 2 facility progression", () => {
     expect(deserializeGameState(serializeGameState(levelZero)).facilityLevel).toBe(0);
     expect(deserializeGameState(serializeGameState(levelOne)).facilityLevel).toBe(1);
     const restored = deserializeGameState(serializeGameState(levelTwo));
-    expect(restored.schemaVersion).toBe(6);
+    expect(restored.schemaVersion).toBe(7);
     expect(restored.facilityLevel).toBe(2);
     expect(restored.clinicalXp).toBe(123);
   });

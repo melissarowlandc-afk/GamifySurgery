@@ -13,6 +13,8 @@ import type {
   FacilityDoorView,
   FacilityDoorSlotView,
   FacilityPatientView,
+  FacilityServiceVisitorView,
+  FacilityRetailExternalActorView,
   FacilityRoomView,
   FacilityViewModel,
   MoveFounderRequest,
@@ -20,10 +22,17 @@ import type {
   PlaceRoomRequest,
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
+  SeatFounderAtFrontDeskRequest,
   RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";
+import {
+  formatEarningsPopupAmount,
+  getEarningsPopupLabelY,
+  reconcileEarningsPopups,
+  type EarningsPopupState,
+} from "./earningsPopupPresentation";
 import {
   getCharacterPresentationMetrics,
   getAuthoredCharacterPresentationMetrics,
@@ -58,6 +67,15 @@ import {
   characterAtlasFrameKey,
 } from "../art/characterBitmapArt";
 import { selectCharacterWalkingPose } from "../art/lateralGaitCycle";
+import {
+  captureCharacterMotionPresentation,
+  replayCharacterMotionPresentation,
+  resolveCharacterMotionPresentation,
+  stationaryFloorDirection,
+  type CharacterMotionCandidate,
+  type CharacterMotionPresentation,
+  type CharacterRenderRepresentation,
+} from "./characterMotionPresentation";
 import {
   FIXTURE_SPRITES,
   getFixtureSpriteForOrientation,
@@ -124,6 +142,7 @@ import {
 } from "./routeMotion";
 import {
   FRONT_DESK_PRESENTATION,
+  getFrontDeskFounderSeatedAdjacentReceptionistSeparation,
   getFrontDeskV5StationaryActorDisplay,
   shouldRenderEmptyFrontDeskChair,
   shouldRenderFounderSeatedAtFrontDesk,
@@ -158,6 +177,9 @@ import {
   SURGERY_CENTER_WALL_GEOMETRY,
 } from "./surgeryCenterArchitecture";
 import { getFixturePresentationSize } from "./fixturePresentation";
+import { getEnvironmentTileLogicalPhase } from "./environmentTilePhase";
+import { getProceduralSurfaceRow } from "./proceduralSurfacePhase";
+import { snapPresentationOrigin } from "./presentationOrigin";
 import {
   getExteriorLandscapeCandidates,
   getVisibleExteriorLandscape,
@@ -201,6 +223,7 @@ export interface FacilitySceneBridge {
   onRequestRoomUpgrade?: RequestRoomUpgrade;
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
+  onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
   onPraiseEmployee?: PraiseEmployeeRequest;
   onMoveFounder?: MoveFounderRequest;
   onCameraChange?: FacilityCameraChangeRequest;
@@ -345,6 +368,11 @@ export class FacilityScene extends Phaser.Scene {
     string,
     Phaser.GameObjects.Graphics
   >();
+  /** Wall-band decor sits above base north walls and below sortable contents. */
+  private readonly wallDecorGraphics = new Map<
+    string,
+    Phaser.GameObjects.Graphics
+  >();
   private readonly environmentSprites = new Map<
     string,
     Phaser.GameObjects.TileSprite
@@ -372,6 +400,7 @@ export class FacilityScene extends Phaser.Scene {
   >();
   private activeFixtureGraphics = new Set<string>();
   private activeRoomFixtureGraphics = new Set<string>();
+  private activeWallDecorGraphics = new Set<string>();
   private activeEnvironmentSprites = new Set<string>();
   private activeFixtureBitmapImages = new Set<string>();
   private activeLandscapingBitmapImages = new Set<string>();
@@ -386,6 +415,12 @@ export class FacilityScene extends Phaser.Scene {
   private waterCoolerLabelText?: Phaser.GameObjects.Text;
   private litterHighlightText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
+  /** Local-only receipt cursor; it never participates in simulation state. */
+  private earningsPopupState: EarningsPopupState | undefined;
+  private readonly earningsPopupTexts = new Map<
+    string,
+    Phaser.GameObjects.Text
+  >();
 
   private layout: GridLayout = {
     originX: 0,
@@ -403,10 +438,17 @@ export class FacilityScene extends Phaser.Scene {
   private placementGhost: PlacementGhost | null = null;
   private characterPhase = 0;
   private frameDeltaMilliseconds = 0;
+  private characterPresentationWasFrozen = false;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
   /** Last horizontal render orientation survives a stationary frame without
    * affecting the domain route or persisted character state. */
   private readonly characterFacingRight = new Map<string, boolean>();
+  /** Presentation-only records. They deliberately do not enter saves or routes. */
+  private readonly characterMotionSnapshots = new Map<
+    string,
+    CharacterMotionPresentation<PixelAppearanceDescriptor>
+  >();
+  private readonly characterGaitOffsets = new Map<string, number>();
   private readonly characterRenderCache = new WeakMap<
     Phaser.GameObjects.Graphics,
     { signature: string; width: number; height: number }
@@ -855,19 +897,28 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
-  public update(_time: number, delta: number): void {
+  public update(time: number, delta: number): void {
     const motionFrozen =
       this.bridge.viewModel.paused ||
       Boolean(this.bridge.viewModel.buildMode);
-    this.frameDeltaMilliseconds = motionFrozen ? 0 : delta;
+    // A browser/tab pause can leave the first resumed Phaser delta covering
+    // the entire pause interval. Drop that one delta so presentation resumes
+    // from the exact frozen phase and route sample.
+    const resumedFromFrozen = !motionFrozen && this.characterPresentationWasFrozen;
+    this.frameDeltaMilliseconds = motionFrozen || resumedFromFrozen ? 0 : delta;
     if (!motionFrozen) {
       // Preserve the existing beat duration. Side travel uses those beats for
       // a stride/neutral/stride/neutral cycle; front/back remain two-frame.
-      this.characterPhase += delta * 0.0025;
+      this.characterPhase += this.frameDeltaMilliseconds * 0.0025;
     }
+    this.characterPresentationWasFrozen = motionFrozen;
 
     this.refreshLayout();
     this.drawCharacters();
+    this.drawEarningsPopups(time);
+    // Atlas completion callbacks can redraw outside update(). Delta belongs to
+    // this update only, never to a later event-driven redraw.
+    this.frameDeltaMilliseconds = 0;
   }
 
   private refreshLayout(force = false): void {
@@ -1000,14 +1051,14 @@ export class FacilityScene extends Phaser.Scene {
     const maximumOriginX = Math.max(0, width - gridWidth);
     const minimumOriginY = Math.min(0, height - worldHeight);
     const maximumOriginY = Math.max(0, height - worldHeight);
-    const originX = Math.max(
+    const originX = snapPresentationOrigin(Math.max(
       minimumOriginX,
       Math.min(maximumOriginX, requestedOriginX),
-    );
-    const originY = Math.max(
+    ));
+    const originY = snapPresentationOrigin(Math.max(
       minimumOriginY,
       Math.min(maximumOriginY, requestedOriginY),
-    );
+    ));
     const exterior = getWorldExteriorLayout({
       originX,
       originY,
@@ -1046,6 +1097,7 @@ export class FacilityScene extends Phaser.Scene {
 
     this.activeFixtureGraphics = new Set<string>();
     this.activeRoomFixtureGraphics = new Set<string>();
+    this.activeWallDecorGraphics = new Set<string>();
     this.activeEnvironmentSprites = new Set<string>();
     this.activeFixtureBitmapImages = new Set<string>();
     this.activeLandscapingBitmapImages = new Set<string>();
@@ -1090,6 +1142,10 @@ export class FacilityScene extends Phaser.Scene {
     this.removeInactiveGraphics(
       this.roomFixtureGraphics,
       this.activeRoomFixtureGraphics,
+    );
+    this.removeInactiveGraphics(
+      this.wallDecorGraphics,
+      this.activeWallDecorGraphics,
     );
     this.removeInactiveEnvironmentSprites();
     this.removeInactiveFixtureBitmapImages();
@@ -1426,10 +1482,9 @@ export class FacilityScene extends Phaser.Scene {
         bounds.y + bounds.height / 2,
         bounds.width,
         bounds.height,
-        component.layer === "front-occluder"
-          // The low south wall shares the same baseline depth contract as
-          // actors and fixtures. Interior contacts sort behind it; sidewalk
-          // contacts below the building naturally remain in front.
+        component.layer !== "base"
+          // West/east side copies plus the south foreground share the
+          // south-boundary depth contract; north walls remain behind contents.
           ? getFacilitySceneDepth(projection.southEntranceY, "fixture", 63)
           : FACILITY_DEPTH_WORLD + 4,
       );
@@ -1467,7 +1522,7 @@ export class FacilityScene extends Phaser.Scene {
         bounds.y + bounds.height / 2,
         bounds.width,
         bounds.height,
-        component.layer === "front-occluder"
+        component.layer !== "base"
           ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
           : FACILITY_DEPTH_WORLD + 4,
         tint,
@@ -1522,7 +1577,7 @@ export class FacilityScene extends Phaser.Scene {
         bounds.y + bounds.height / 2,
         bounds.width,
         bounds.height,
-        component.layer === "front-occluder"
+        component.layer !== "base"
           ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
           : FACILITY_DEPTH_WORLD + 4,
         PIXEL_PALETTE_NUMBER.paper,
@@ -1850,7 +1905,7 @@ export class FacilityScene extends Phaser.Scene {
         bounds.y + bounds.height / 2,
         bounds.width,
         bounds.height,
-        component.layer === "front-occluder"
+        component.layer !== "base"
           ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
           : FACILITY_DEPTH_WORLD + 4,
       );
@@ -1955,10 +2010,18 @@ export class FacilityScene extends Phaser.Scene {
       .setAlpha(alpha)
       .setDepth(depth)
       .setVisible(true);
-    // Align repeated material with map coordinates so a room redraw or resize
-    // cannot make a floor texture shimmer beneath a stationary character.
-    sprite.tilePositionX = Math.round(-x / Math.max(0.02, tileScale));
-    sprite.tilePositionY = Math.round(-y / Math.max(0.02, tileScale));
+    // Phaser samples at local / scale + phase. Anchor that phase to logical
+    // world coordinates: `x`/`y` move with the camera, but the material does
+    // not, and adjacent fragments retain their shared source seam.
+    const phase = getEnvironmentTileLogicalPhase(
+      x,
+      y,
+      this.layout.originX,
+      this.layout.originY,
+      tileScale,
+    );
+    sprite.tilePositionX = phase.x;
+    sprite.tilePositionY = phase.y;
     this.activeEnvironmentSprites.add(key);
   }
 
@@ -2970,7 +3033,7 @@ export class FacilityScene extends Phaser.Scene {
       for (let x = left + 6; x < right - 2; x += speckle + 2) {
         graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.24);
         graphics.fillRect(
-          x + (Math.floor(y / speckle) % 2) * 3,
+          x + (getProceduralSurfaceRow(y, top, speckle) % 2) * 3,
           y,
           1,
           1,
@@ -3487,7 +3550,9 @@ export class FacilityScene extends Phaser.Scene {
     graphics.lineBetween(originX, sidewalkBottom, originX + width, sidewalkBottom);
     graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.warmGray, 0.4);
     const slabWidth = Math.max(32, Math.round(tileSize * 1.25));
-    const firstSlab = Math.floor(originX / slabWidth) * slabWidth;
+    // Sidewalk joints are relative to the semantic site edge, never the
+    // screen's current coordinate system, so they move with the pavement.
+    const firstSlab = originX;
     for (let x = firstSlab; x <= originX + width; x += slabWidth) {
       graphics.lineBetween(x, sidewalkTop + 2, x, sidewalkBottom - 2);
     }
@@ -3563,6 +3628,13 @@ export class FacilityScene extends Phaser.Scene {
         id: `room-skin:${room.definitionId}`,
       }, backedNorthRuns)
       : undefined;
+    const wallDecorationGraphics = canonicalShell
+      ? this.getSortableGraphics(
+        this.wallDecorGraphics,
+        this.activeWallDecorGraphics,
+        `room-wall-decor:${room.instanceId}`,
+      ).setDepth(FACILITY_DEPTH_WORLD + 21)
+      : graphics;
     const wallHeight = canonicalShell?.geometry.northHeight ?? this.roomWallFaceHeight(rectangle);
     const wallCapHeight = getSurgeryCenterArchitectureAtScale(
       this.layout.tileSize,
@@ -3808,7 +3880,7 @@ export class FacilityScene extends Phaser.Scene {
         );
         if (visibleFragments.length === 0) return;
         this.drawPixelFrameSized(
-          graphics,
+          wallDecorationGraphics,
           fixture,
           Math.round(x),
           Math.round(y),
@@ -3889,7 +3961,7 @@ export class FacilityScene extends Phaser.Scene {
         return;
       }
       this.drawPixelFrameSized(
-        graphics,
+        wallDecorationGraphics,
         fixture,
         Math.round(x),
         Math.round(y),
@@ -3985,6 +4057,7 @@ export class FacilityScene extends Phaser.Scene {
               centerY,
               width,
               height,
+              // North decor sits on its base wall, below floor contents.
               FACILITY_DEPTH_WORLD + 21,
             );
           });
@@ -4037,6 +4110,7 @@ export class FacilityScene extends Phaser.Scene {
             );
             const centerX = rectangle.x + rectangle.width * fixture.centerXRatio;
             const centerY = rectangle.y - canonicalNorthHeight + canonicalNorthHeight * fixture.centerYRatio;
+            // North wall art remains above its base wall and below contents.
             const depth = FACILITY_DEPTH_WORLD + 22;
             if (this.drawAuthoredFixture(
               `examination-v3:wall:${room.instanceId}:${fixture.id}`,
@@ -4304,10 +4378,58 @@ export class FacilityScene extends Phaser.Scene {
     offsetIndex: number,
   ): CharacterPose {
     return selectCharacterWalkingPose(
-      moving && !this.bridge.viewModel.paused && !this.bridge.viewModel.buildMode,
+      moving,
       direction,
       Math.floor(this.characterPhase * 2 + offsetIndex),
     );
+  }
+
+  private characterPresentationFrozen(): boolean {
+    return this.bridge.viewModel.paused || Boolean(this.bridge.viewModel.buildMode);
+  }
+
+  private characterGaitOffset(key: string, initialOffset: number): number {
+    const existing = this.characterGaitOffsets.get(key);
+    if (existing !== undefined) return existing;
+    this.characterGaitOffsets.set(key, initialOffset);
+    return initialOffset;
+  }
+
+  private drawCharacterPresentation(
+    graphics: Phaser.GameObjects.Graphics,
+    key: string,
+    candidate: CharacterMotionCandidate<PixelAppearanceDescriptor>,
+    offsetIndex: number,
+  ): number {
+    const frozen = this.characterPresentationFrozen()
+      ? this.characterMotionSnapshots.get(key)
+      : undefined;
+    const resolved = resolveCharacterMotionPresentation(
+      frozen,
+      candidate,
+      this.layout,
+    );
+    const drawn = this.drawPixelPerson(
+      graphics,
+      resolved.centerX,
+      resolved.baseY,
+      offsetIndex,
+      resolved.appearance,
+      0x555555,
+      resolved.direction,
+      resolved.pose,
+      resolved.rightFacing,
+      resolved.displayScale,
+      resolved.representation,
+    );
+    if (!frozen) {
+      this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
+        resolved,
+        this.layout,
+        drawn.representation,
+      ));
+    }
+    return drawn.baseY;
   }
 
   private founderPose(
@@ -4319,12 +4441,6 @@ export class FacilityScene extends Phaser.Scene {
     const movingPose = this.characterPose(moving, direction, 0);
     if (movingPose !== "idle") {
       return movingPose;
-    }
-    // Activity labels are emitted only for persisted, live founder tasks
-    // (cleaning, refilling, praise, and similar interactions). They are a
-    // safe presentation seam: this does not alter task timing or routing.
-    if (activityLabel?.trim()) {
-      return "interaction";
     }
     return shouldRenderFounderSeatedAtFrontDesk(
       location,
@@ -4359,10 +4475,7 @@ export class FacilityScene extends Phaser.Scene {
     ) {
       return "seated";
     }
-    // An assigned staff member who is already at a persisted home/work room
-    // can use a quiet working pose. Unassigned staff remain idle rather than
-    // inventing a workplace state from presentation alone.
-    return homeRoomInstanceId ? "working" : "idle";
+    return "idle";
   }
 
   private getCharacterRoutePresentation(
@@ -4380,6 +4493,31 @@ export class FacilityScene extends Phaser.Scene {
     moving: boolean;
     rightFacing: boolean;
   } {
+    // A paused redraw must never sync, hand off, prune, or advance a route.
+    // The final visual state is selected by drawCharacterPresentation below.
+    if (this.characterPresentationFrozen()) {
+      const path = input.path;
+      const routeIndex = path?.length
+        ? Math.max(0, Math.min(path.length - 1, input.pathIndex ?? 0))
+        : 0;
+      const routeStart = path?.[routeIndex];
+      const routeEnd = path?.[Math.min((path?.length ?? 1) - 1, routeIndex + 1)];
+      const initialRouteFacingRight = Boolean(
+        routeStart &&
+        routeEnd &&
+        routeEnd.x !== routeStart.x &&
+        routeEnd.x > routeStart.x,
+      );
+      return {
+        location: input.location,
+        direction: input.direction ?? "front",
+        moving: input.moving ?? false,
+        // An actor may first become visible while already paused. Derive its
+        // initial horizontal facing without constructing or advancing a track,
+        // so the first zero-delta resume does not flip the frozen frame.
+        rightFacing: this.characterFacingRight.get(key) ?? initialRouteFacingRight,
+      };
+    }
     const previous = this.routeMotionTracks.get(key);
     const canonicalTilesPerFacilityMinute = Math.max(
       0,
@@ -4489,6 +4627,11 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawCharacters(): void {
+    if (this.characterPresentationFrozen()) {
+      // Atlas callbacks may redraw while paused without update() observing the
+      // pause. Mark it so the next update also discards a stale resume delta.
+      this.characterPresentationWasFrozen = true;
+    }
     this.activeCharacterGraphics = new Set<string>();
     this.activeCharacterBitmapContainers = new Set<string>();
     this.locatorGraphics?.clear();
@@ -4499,54 +4642,69 @@ export class FacilityScene extends Phaser.Scene {
       founderKey,
       this.bridge.viewModel.founder,
     );
+    const frozenFounder = this.characterPresentationFrozen()
+      ? this.characterMotionSnapshots.get(founderKey)
+      : undefined;
     const founderLocation = founderPresentation.location;
-    if (founderLocation) {
+    if (founderLocation || frozenFounder) {
+      const candidateFounderLocation = founderLocation ?? { x: 0, y: 0 };
       const graphics = this.getCharacterGraphics(founderKey);
       const founderPose = this.founderPose(
         founderPresentation.moving,
         founderPresentation.direction,
         this.bridge.viewModel.founder.activityLabel,
-        founderLocation,
+        candidateFounderLocation,
       );
-      const founderDisplay = founderPose === "seated"
+      const resolvedFounderPose = this.bridge.viewModel.founder.seated && !founderPresentation.moving
+        ? "seated"
+        : founderPose;
+      const founderDisplay = resolvedFounderPose === "seated"
         ? this.getFrontDeskV5ActorDisplayPosition(
-            founderLocation,
+            candidateFounderLocation,
             founderPresentation.moving,
             "staff",
           )
         : undefined;
+      const founderAtFrontDesk = founderDisplay !== undefined;
       const founderCenterX = founderDisplay?.centerX ??
-        this.layout.originX + (founderLocation.x + 0.5) * this.layout.tileSize;
-      const founderBaseY = this.drawPixelPerson(
-        graphics,
-        founderCenterX,
-        founderDisplay?.baseY ?? this.actorBaseY(
-            founderLocation.y,
-            0.72 +
-              (founderPose === "seated"
-                ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
-                : 0),
-          ),
-        0,
-        this.bridge.viewModel.founder.appearance,
-        0x111111,
-        founderPresentation.direction,
-        founderPose,
-        founderPresentation.rightFacing,
-        founderDisplay?.scale ?? 1,
-      );
+        this.layout.originX + (candidateFounderLocation.x + 0.5) * this.layout.tileSize;
+      const founderBaseY = this.drawCharacterPresentation(graphics, founderKey, {
+        centerX: founderCenterX,
+        baseY: founderDisplay?.baseY ?? this.actorBaseY(
+          candidateFounderLocation.y,
+          0.72 +
+            (founderAtFrontDesk && resolvedFounderPose === "seated"
+              ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
+              : 0),
+        ),
+        appearance: this.bridge.viewModel.founder.appearance,
+        direction: stationaryFloorDirection(
+          founderPresentation.moving,
+          founderPresentation.direction,
+          resolvedFounderPose === "seated",
+        ),
+        pose: resolvedFounderPose,
+        rightFacing: founderPresentation.rightFacing,
+        displayScale: founderDisplay?.scale ?? 1,
+      }, this.characterGaitOffset(founderKey, 0));
       graphics.setDepth(
         getFacilitySceneDepth(founderBaseY, "character", 0),
       );
       const activityLabel = this.bridge.viewModel.founder.activityLabel;
+      const founderLabelPosition = frozenFounder
+        ? replayCharacterMotionPresentation(frozenFounder, this.layout)
+        : undefined;
       this.founderActivityText
         ?.setText(activityLabel ?? "")
         .setPosition(
-          founderCenterX,
+          founderLabelPosition?.centerX ?? founderCenterX,
           founderBaseY - Math.max(22, this.layout.tileSize * 0.88),
         )
         .setVisible(Boolean(activityLabel));
     } else {
+      // A normal off-site update is a genuine disappearance once any route
+      // tail has finished; do not let a later pause resurrect this actor.
+      this.characterMotionSnapshots.delete(founderKey);
       this.founderActivityText?.setVisible(false);
     }
 
@@ -4557,48 +4715,69 @@ export class FacilityScene extends Phaser.Scene {
         key,
         employee,
       );
-      if (!employeePresentation.location) {
+      const frozenEmployee = this.characterPresentationFrozen()
+        ? this.characterMotionSnapshots.get(key)
+        : undefined;
+      if (!employeePresentation.location && !frozenEmployee) {
         // Map actors render only from persisted locations or persisted route
         // samples. Inferring a room-center fallback makes reloads and route
         // transitions look like teleportation.
+        this.characterMotionSnapshots.delete(key);
         return;
       }
+      const employeeLocation = employeePresentation.location ?? { x: 0, y: 0 };
       const graphics = this.getCharacterGraphics(key);
       const employeePose = this.staffPose(
         employeePresentation.moving,
         employeePresentation.direction,
-        index + 1,
+        this.characterGaitOffset(key, index + 1),
         employee.homeRoomInstanceId,
-        employeePresentation.location,
+        employeeLocation,
         employee.staffRoleDefinitionId,
       );
       const employeeDisplay = employeePose === "seated"
         ? this.getFrontDeskV5ActorDisplayPosition(
-            employeePresentation.location,
+            employeeLocation,
             employeePresentation.moving,
             "staff",
           )
         : undefined;
-      const employeeBaseY = this.drawPixelPerson(
-        graphics,
-        employeeDisplay?.centerX ??
-          this.layout.originX +
-            (employeePresentation.location.x + 0.5) * this.layout.tileSize,
-        employeeDisplay?.baseY ?? this.actorBaseY(
-            employeePresentation.location.y,
-            0.72 +
-              (employeePose === "seated"
-                ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
-                : 0),
-          ),
-        index + 1,
-        employee.appearance,
-        0x555555,
-        employeePresentation.direction,
-        employeePose,
-        employeePresentation.rightFacing,
-        employeeDisplay?.scale ?? 1,
+      const founderSeatedAdjacentReceptionist =
+        getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
+          {
+            location: employeeLocation,
+            moving: employeePresentation.moving,
+            staffRoleDefinitionId: employee.staffRoleDefinitionId,
+          },
+          this.bridge.viewModel.founder,
+          this.bridge.viewModel.rooms,
+        );
+      const employeeCenterX = employeeDisplay?.centerX ??
+        this.layout.originX +
+          (employeeLocation.x + 0.5) * this.layout.tileSize +
+          (founderSeatedAdjacentReceptionist?.centerOffsetTiles ?? 0) *
+            this.layout.tileSize;
+      const employeeDisplayBaseY = employeeDisplay?.baseY ?? this.actorBaseY(
+        employeeLocation.y,
+        0.72 +
+          (employeePose === "seated"
+            ? FRONT_DESK_PRESENTATION.seatedPresentation.towardCounterTiles
+            : 0) +
+          (founderSeatedAdjacentReceptionist?.baseOffsetTiles ?? 0),
       );
+      const employeeBaseY = this.drawCharacterPresentation(graphics, key, {
+        centerX: employeeCenterX,
+        baseY: employeeDisplayBaseY,
+        appearance: employee.appearance ?? FALLBACK_APPEARANCE,
+        direction: stationaryFloorDirection(
+          employeePresentation.moving,
+          employeePresentation.direction,
+          employeePose === "seated",
+        ),
+        pose: employeePose,
+        rightFacing: employeePresentation.rightFacing,
+        displayScale: employeeDisplay?.scale ?? 1,
+      }, this.characterGaitOffset(key, index + 1));
       graphics.setDepth(
         getFacilitySceneDepth(
           employeeBaseY,
@@ -4615,22 +4794,29 @@ export class FacilityScene extends Phaser.Scene {
           key,
           pedestrian,
         );
-        if (!presentation.location) {
+        const frozenPedestrian = this.characterPresentationFrozen()
+          ? this.characterMotionSnapshots.get(key)
+          : undefined;
+        if (!presentation.location && !frozenPedestrian) {
+          this.characterMotionSnapshots.delete(key);
           return;
         }
+        const pedestrianLocation = presentation.location ?? { x: 0, y: 0 };
         const graphics = this.getCharacterGraphics(key);
-        const baseY = this.drawPixelPerson(
-          graphics,
-          this.layout.originX +
-            (presentation.location.x + 0.5) * this.layout.tileSize,
-          this.actorBaseY(presentation.location.y),
-          200 + index,
-          pedestrian.appearance,
-          0x555555,
-          presentation.direction,
-          this.characterPose(presentation.moving, presentation.direction, 200 + index),
-          presentation.rightFacing,
-        );
+        const baseY = this.drawCharacterPresentation(graphics, key, {
+          centerX: this.layout.originX +
+            (pedestrianLocation.x + 0.5) * this.layout.tileSize,
+          baseY: this.actorBaseY(pedestrianLocation.y),
+          appearance: pedestrian.appearance,
+          direction: stationaryFloorDirection(presentation.moving, presentation.direction, false),
+          pose: this.characterPose(
+            presentation.moving,
+            presentation.direction,
+            this.characterGaitOffset(key, 200 + index),
+          ),
+          rightFacing: presentation.rightFacing,
+          displayScale: 1,
+        }, this.characterGaitOffset(key, 200 + index));
         graphics.setDepth(
           getFacilitySceneDepth(
             baseY,
@@ -4660,6 +4846,27 @@ export class FacilityScene extends Phaser.Scene {
         index,
       );
     });
+    this.bridge.viewModel.serviceVisitors?.forEach((visitor, index) => {
+      const key = `character:service-visitor:${visitor.actorId}`;
+      representedKeys.add(key);
+      const presentation = this.getCharacterRoutePresentation(key, visitor);
+      this.drawServiceVisitor(
+        {
+          ...visitor,
+          ...(presentation.location ? { location: presentation.location } : { location: undefined }),
+          direction: presentation.direction,
+          moving: presentation.moving,
+          rightFacing: presentation.rightFacing,
+        },
+        index,
+      );
+    });
+    this.bridge.viewModel.retailExternalActors?.forEach((actor, index) => {
+      const key = `character:retail-${actor.actorKind}:${actor.instanceId}`;
+      representedKeys.add(key);
+      const presentation = this.getCharacterRoutePresentation(key, actor);
+      this.drawRetailExternalActor({ ...actor, ...(presentation.location ? { location: presentation.location } : { location: undefined }), direction: presentation.direction, moving: presentation.moving, rightFacing: presentation.rightFacing }, index);
+    });
     for (const key of this.routeMotionTracks.keys()) {
       if (!representedKeys.has(key)) {
         this.routeMotionTracks.delete(key);
@@ -4670,11 +4877,190 @@ export class FacilityScene extends Phaser.Scene {
         this.characterFacingRight.delete(key);
       }
     }
+    for (const key of this.characterMotionSnapshots.keys()) {
+      if (!representedKeys.has(key)) {
+        this.characterMotionSnapshots.delete(key);
+      }
+    }
+    for (const key of this.characterGaitOffsets.keys()) {
+      if (!representedKeys.has(key)) {
+        this.characterGaitOffsets.delete(key);
+      }
+    }
     this.removeInactiveGraphics(
       this.characterGraphics,
       this.activeCharacterGraphics,
     );
     this.removeInactiveCharacterBitmapContainers();
+  }
+
+  /**
+   * Receipts arrive from the domain only after it has credited cash. This
+   * layer turns newly observed receipts into short-lived world labels and
+   * deliberately never dispatches a command or changes the view model.
+   */
+  private drawEarningsPopups(nowMilliseconds: number): void {
+    const model = this.bridge.viewModel;
+    const actorAnchors = {
+      patient: Object.fromEntries(
+        (model.patients ?? [])
+          .filter((patient) => this.getEarningsPopupPosition("patient", patient.instanceId))
+          .map((patient) => [patient.instanceId, true] as const),
+      ),
+      employee: Object.fromEntries(
+        model.staff
+          .filter((employee) => this.getEarningsPopupPosition("employee", employee.instanceId))
+          .map((employee) => [employee.instanceId, true] as const),
+      ),
+      founder: this.getEarningsPopupPosition("founder", "founder")
+        ? { founder: true }
+        : undefined,
+      remote: Object.fromEntries(
+        (model.earningsReceipts ?? [])
+          .filter((receipt) => receipt.actorKind === "remote" && this.getEarningsPopupPosition("remote", receipt.actorId))
+          .map((receipt) => [receipt.actorId, true] as const),
+      ),
+      visitor: Object.fromEntries(
+        (model.serviceVisitors ?? [])
+          .filter((visitor) => this.getEarningsPopupPosition("visitor", visitor.actorId))
+          .map((visitor) => [visitor.actorId, true] as const),
+      ),
+      retail_visitor: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "retail_visitor" && this.getEarningsPopupPosition("retail_visitor", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
+      companion: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "companion" && this.getEarningsPopupPosition("companion", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
+    };
+    this.earningsPopupState = reconcileEarningsPopups(
+      this.earningsPopupState,
+      {
+        campaignId: model.campaignId ?? "campaign.legacy.local",
+        receipts: model.earningsReceipts ?? [],
+        actorAnchors,
+        nowMilliseconds,
+      },
+    );
+
+    const activeKeys = new Set<string>();
+    for (const [popupIndex, popup] of this.earningsPopupState.activePopups.entries()) {
+      activeKeys.add(popup.transactionKey);
+      const position = this.getEarningsPopupPosition(
+        popup.actorKind,
+        popup.actorId,
+      );
+      let text = this.earningsPopupTexts.get(popup.transactionKey);
+      if (!position) {
+        text?.setVisible(false);
+        continue;
+      }
+      if (!text) {
+        text = this.add
+          .text(0, 0, "", {
+            color: "#2a9d4b",
+            fontFamily: '"Courier New", Courier, monospace',
+            fontSize: "14px",
+            fontStyle: "bold",
+            stroke: "#f7f3df",
+            strokeThickness: 2,
+            resolution: 2,
+          })
+          .setOrigin(0.5, 1);
+        this.earningsPopupTexts.set(popup.transactionKey, text);
+      }
+      text
+        .setText(formatEarningsPopupAmount(popup.grossAmount))
+        .setPosition(
+          position.x,
+          getEarningsPopupLabelY(
+            position.y,
+            this.layout.tileSize,
+            this.earningsPopupState.activePopups
+              .slice(0, popupIndex)
+              .filter(
+                (candidate) =>
+                  candidate.actorKind === popup.actorKind &&
+                  candidate.actorId === popup.actorId,
+              ).length,
+          ),
+        )
+        .setDepth(FACILITY_DEPTH_LOCATOR + 1)
+        .setVisible(true);
+    }
+    for (const [transactionKey, text] of this.earningsPopupTexts) {
+      if (!activeKeys.has(transactionKey)) {
+        text.destroy();
+        this.earningsPopupTexts.delete(transactionKey);
+      }
+    }
+  }
+
+  /** Resolves to the same interpolated world position currently used by the sprite. */
+  private getEarningsPopupPosition(
+    actorKind: "patient" | "employee" | "founder" | "remote" | "visitor" | "retail_visitor" | "companion",
+    actorId: string,
+  ): Readonly<{ x: number; y: number }> | undefined {
+    if (actorKind === "remote") {
+      // Visitors deliberately need their own projected anchor. They are not
+      // educational encounters and must never borrow a patient sprite.
+      const receipt = this.bridge.viewModel.earningsReceipts?.find(
+        (candidate) => candidate.actorKind === "remote" && candidate.actorId === actorId,
+      );
+      if (receipt?.displayAnchor) {
+        return this.getEarningsPopupPosition(
+          receipt.displayAnchor.actorKind,
+          receipt.displayAnchor.actorId,
+        );
+      }
+      const location = this.bridge.viewModel.remoteReceiptAnchors?.[actorId];
+      return location
+        ? {
+            x: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
+            y: this.actorBaseY(location.y) - Math.max(18, this.layout.tileSize * 0.8),
+          }
+        : undefined;
+    }
+    const key = actorKind === "founder"
+      ? "character:founder"
+      : actorKind === "visitor"
+        ? `character:service-visitor:${actorId}`
+        : actorKind === "retail_visitor" || actorKind === "companion"
+          ? `character:retail-${actorKind}:${actorId}`
+        : `character:${actorKind === "employee" ? "staff" : "patient"}:${actorId}`;
+    const snapshot = this.characterMotionSnapshots.get(key);
+    if (!snapshot) return undefined;
+    const position = replayCharacterMotionPresentation(snapshot, this.layout);
+    return {
+      x: position.centerX,
+      y: this.getEarningsPopupHeadY(snapshot, position.baseY),
+    };
+  }
+
+  /** Matches the rendered bitmap/procedural actor's top edge, not its feet. */
+  private getEarningsPopupHeadY(
+    snapshot: CharacterMotionPresentation<PixelAppearanceDescriptor>,
+    baseY: number,
+  ): number {
+    if (snapshot.representation === "bitmap") {
+      const layers = characterBitmapLayers(
+        snapshot.appearance,
+        snapshot.direction,
+        snapshot.pose,
+        snapshot.rightFacing,
+      );
+      const registration = characterBitmapRegistration(layers);
+      const metrics = getAuthoredCharacterPresentationMetrics(
+        registration.cell,
+        this.layout.tileSize,
+        snapshot.displayScale,
+      );
+      return baseY - metrics.height * registration.floorAnchorY;
+    }
+    const frame = getCharacterPixelFrame(snapshot.appearance, {
+      direction: snapshot.direction,
+      pose: snapshot.pose,
+    });
+    const metrics = getCharacterPresentationMetrics(
+      frame,
+      this.layout.tileSize * snapshot.displayScale,
+    );
+    return baseY - metrics.height;
   }
 
   private getCharacterBitmapContainer(
@@ -4707,14 +5093,18 @@ export class FacilityScene extends Phaser.Scene {
     patient: FacilityPatientView & { rightFacing?: boolean },
     index: number,
   ): void {
-    if (!patient.location) {
+    const key = `character:patient:${patient.instanceId}`;
+    const frozenPatient = this.characterPresentationFrozen()
+      ? this.characterMotionSnapshots.get(key)
+      : undefined;
+    if (!patient.location && !frozenPatient) {
       // Off-site or otherwise absent patients stay absent until the domain
       // supplies their persisted return route/location.
+      this.characterMotionSnapshots.delete(key);
       return;
     }
-    const graphics = this.getCharacterGraphics(
-      `character:patient:${patient.instanceId}`,
-    );
+    const location = patient.location ?? { x: 0, y: 0 };
+    const graphics = this.getCharacterGraphics(key);
     const finishCharacter = (baseY: number, centerX: number) => {
       graphics.setDepth(
         getFacilitySceneDepth(
@@ -4725,33 +5115,94 @@ export class FacilityScene extends Phaser.Scene {
       );
       this.drawPatientLocator(centerX, baseY, patient);
     };
-    const appearanceColor =
-      patient.status === "action-ready" ? 0x111111 : 0x666666;
+    const moving = Boolean(patient.moving);
     const direction = patient.direction ?? "front";
-    const pose = patient.seated
-      ? "seated"
-      : this.characterPose(patient.moving ?? false, direction, 100 + index);
+    // Semantic arrival can commit before the retained render tail reaches its
+    // destination. Furniture poses begin only after both have arrived.
+    const destinationPose = !moving
+      ? patient.pose ?? (patient.seated ? "seated" : undefined)
+      : undefined;
+    const pose = destinationPose ?? this.characterPose(
+      moving,
+      direction,
+      this.characterGaitOffset(`character:patient:${patient.instanceId}`, 100 + index),
+    );
 
     const frontDeskDisplay = this.getFrontDeskV5ActorDisplayPosition(
-      patient.location,
+      location,
       Boolean(patient.moving),
       "public",
     );
     const centerX = frontDeskDisplay?.centerX ??
-      this.layout.originX + (patient.location.x + 0.5) * this.layout.tileSize;
-    const baseY = this.drawPixelPerson(
+      this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
+    const baseY = this.drawCharacterPresentation(
       graphics,
-      centerX,
-      frontDeskDisplay?.baseY ?? this.actorBaseY(patient.location.y),
-      100 + index,
-      patient.appearance,
-      appearanceColor,
-      direction,
-      pose,
-      patient.rightFacing ?? false,
-      frontDeskDisplay?.scale ?? 1,
+      `character:patient:${patient.instanceId}`,
+      {
+        centerX,
+        baseY: frontDeskDisplay?.baseY ?? this.actorBaseY(location.y),
+        appearance: patient.appearance,
+        direction: stationaryFloorDirection(moving, direction, destinationPose !== undefined),
+        pose,
+        rightFacing: patient.rightFacing ?? false,
+        displayScale: frontDeskDisplay?.scale ?? 1,
+      },
+      this.characterGaitOffset(`character:patient:${patient.instanceId}`, 100 + index),
     );
-    finishCharacter(baseY, centerX);
+    finishCharacter(
+      baseY,
+      frozenPatient
+        ? replayCharacterMotionPresentation(frozenPatient, this.layout).centerX
+        : centerX,
+    );
+  }
+
+  /** Visitors are service actors only: separate render identity and no chart locator. */
+  private drawServiceVisitor(
+    visitor: FacilityServiceVisitorView,
+    index: number,
+  ): void {
+    const key = `character:service-visitor:${visitor.actorId}`;
+    const frozenVisitor = this.characterPresentationFrozen()
+      ? this.characterMotionSnapshots.get(key)
+      : undefined;
+    if (!visitor.location && !frozenVisitor) {
+      this.characterMotionSnapshots.delete(key);
+      return;
+    }
+    const location = visitor.location ?? { x: 0, y: 0 };
+    const graphics = this.getCharacterGraphics(key);
+    const moving = Boolean(visitor.moving);
+    const direction = visitor.direction ?? "front";
+    const centerX = this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
+    const baseY = this.drawCharacterPresentation(graphics, key, {
+      centerX,
+      baseY: this.actorBaseY(location.y),
+      appearance: visitor.appearance ?? FALLBACK_APPEARANCE,
+      direction: stationaryFloorDirection(moving, direction, false),
+      pose: this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index)),
+      rightFacing: visitor.rightFacing ?? false,
+      displayScale: 1,
+    }, this.characterGaitOffset(key, 300 + index));
+    graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 32) % 64));
+  }
+
+  private drawRetailExternalActor(actor: FacilityRetailExternalActorView, index: number): void {
+    const key = `character:retail-${actor.actorKind}:${actor.instanceId}`;
+    const frozen = this.characterPresentationFrozen() ? this.characterMotionSnapshots.get(key) : undefined;
+    if (!actor.location && !frozen) { this.characterMotionSnapshots.delete(key); return; }
+    const location = actor.location ?? { x: 0, y: 0 };
+    const moving = Boolean(actor.moving);
+    const direction = actor.direction ?? "front";
+    const graphics = this.getCharacterGraphics(key);
+    const baseY = this.drawCharacterPresentation(graphics, key, {
+      centerX: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
+      baseY: this.actorBaseY(location.y), appearance: actor.appearance,
+      direction: stationaryFloorDirection(moving, direction, false),
+      pose: this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
+      rightFacing: actor.rightFacing ?? false, displayScale: 1,
+    }, this.characterGaitOffset(key, 400 + index));
+    graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 40) % 64));
   }
 
   private drawPatientLocator(
@@ -4814,13 +5265,14 @@ export class FacilityScene extends Phaser.Scene {
     pose: CharacterPose = "idle",
     movingRight = false,
     displayScale = 1,
-  ): number {
+    frozenRepresentation?: CharacterRenderRepresentation,
+  ): Readonly<{ baseY: number; representation: CharacterRenderRepresentation }> {
     // Map characters use the canonical detailed frame at a crisp 3:2
     // nearest-neighbor presentation scale. This makes people readable among
     // dense room furnishings without changing their route or foot anchor.
     const resolvedAppearance = appearance ?? FALLBACK_APPEARANCE;
     const key = graphics.getData("character-key") as string | undefined;
-    if (this.characterAtlasesReady && key) {
+    if (this.characterAtlasesReady && key && frozenRepresentation !== "procedural") {
       const authoredLayers = characterBitmapLayers(
         resolvedAppearance,
         direction,
@@ -4869,7 +5321,7 @@ export class FacilityScene extends Phaser.Scene {
         .setPosition(Math.round(centerX), Math.round(baseY))
         .setDepth(getFacilitySceneDepth(baseY, "character", offsetIndex % 64));
       graphics.setVisible(false);
-      return baseY;
+      return { baseY, representation: "bitmap" };
       }
     }
     const renderSignature = [
@@ -4918,7 +5370,7 @@ export class FacilityScene extends Phaser.Scene {
     // normal animation frame only moves that object; it no longer reconstructs
     // every hair, face, clothing, outline, and shadow pixel for every actor.
     graphics.setPosition(Math.round(centerX), Math.round(baseY));
-    return baseY;
+    return { baseY, representation: "procedural" };
   }
 
   private drawPixelFrameSizedOutline(
@@ -5474,6 +5926,19 @@ export class FacilityScene extends Phaser.Scene {
           return;
         }
       }
+      if (
+        this.frontDeskSeatInteractionAtPointer(pointer) &&
+        this.bridge.onSeatFounderAtFrontDesk
+      ) {
+        const accepted = this.bridge.onSeatFounderAtFrontDesk();
+        this.setInteractionHint(
+          accepted
+            ? "FOUNDER RETURNING TO FRONT DESK"
+            : "FRONT DESK UNAVAILABLE",
+          pointer,
+        );
+        return;
+      }
     }
 
     this.dragStart = {
@@ -5936,6 +6401,41 @@ export class FacilityScene extends Phaser.Scene {
 
   private getFounderRoom(): FacilityRoomView | undefined {
     return this.bridge.viewModel.rooms.find((room) => room.isFounderRoom);
+  }
+
+  /** Uses the displayed fixture envelopes rather than their blocked grid tiles. */
+  private frontDeskSeatInteractionAtPointer(
+    pointer: Phaser.Input.Pointer,
+  ): boolean {
+    const room = this.bridge.viewModel.rooms.find(
+      (candidate) => candidate.definitionId === "room.front_desk",
+    );
+    if (!room) return false;
+    const rectangle = this.toPixels({
+      tileX: room.tileX,
+      tileY: room.tileY,
+      ...orientedSize(room),
+    });
+    const bounds = this.canRenderFrontDeskV5Architecture()
+      ? getFrontDeskV5Projection(rectangle).floorBounds
+      : rectangle;
+    return FRONT_DESK_PRESENTATION.fixtures
+      .filter(
+        (fixture) =>
+          fixture.id === "frontDesk" || fixture.id === "secretaryChair",
+      )
+      .some((fixture) => {
+        const centerX = bounds.x + bounds.width * fixture.x;
+        const contactY = bounds.y + bounds.height * fixture.contact.y;
+        const width = bounds.width * fixture.width;
+        const height = bounds.height * fixture.height;
+        return (
+          pointer.x >= centerX - width / 2 &&
+          pointer.x <= centerX + width / 2 &&
+          pointer.y >= contactY - height &&
+          pointer.y <= contactY
+        );
+      });
   }
 
   private toPixels(rectangle: TileRectangle): {

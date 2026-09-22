@@ -1,0 +1,18 @@
+<section id="bathroom-layout-proof" aria-labelledby="bathroom-title">
+  <style>
+    #bathroom-layout-proof{max-width:720px;margin-inline:auto}#bathroom-layout-proof .bath-art-wrap{position:relative;max-width:360px;margin:12px auto 0}#bathroom-layout-proof .bath-art{display:block;width:100%;height:auto}#bathroom-layout-proof .bath-hit{position:absolute;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#bathroom-layout-proof .bath-controls{max-width:520px;margin:10px auto 0}#bathroom-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#bathroom-layout-proof legend{font-weight:var(--font-weight-medium);margin-bottom:4px}#bathroom-layout-proof .bath-buttons{display:flex;gap:5px;flex-wrap:wrap}#bathroom-layout-proof .bath-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#bathroom-layout-proof .bath-label{color:var(--muted-foreground);margin-right:3px}#bathroom-layout-proof .bath-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:2.5em}#bathroom-layout-proof .bath-note{margin-top:6px;color:var(--muted-foreground)}
+  </style>
+  <h2 id="bathroom-title">Bathroom preview</h2>
+  <div class="bath-art-wrap">
+    <canvas id="bathroom-art" class="bath-art" width="720" height="860" role="img" aria-label="Two by two Bathroom with permanent sink and toilet, selectable doorways, use points, and provisional walking clearance."></canvas>
+    <div id="bathroom-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="bath-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="bathroom-adjacency" class="bath-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="bath-row"><div><span class="bath-label text-small">North</span><span id="bathroom-north" class="bath-buttons"></span></div><div><span class="bath-label text-small">South</span><span id="bathroom-south" class="bath-buttons"></span></div><div><span class="bath-label text-small">West</span><span id="bathroom-west" class="bath-buttons"></span></div><div><span class="bath-label text-small">East</span><span id="bathroom-east" class="bath-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="bathroom-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, and use points</span></label>
+    <div class="bath-note text-small"><strong>Use directions:</strong> sink faces North; toilet seat faces South. Clearance radius is a provisional 0.16 tile.</div>
+    <div id="bathroom-status" class="bath-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__BATHROOM_SCRIPT__</script>
+</section>

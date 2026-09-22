@@ -192,6 +192,7 @@ export interface ChartView {
   decisionSteps?: ChartDecisionStepView[];
   reward?: ChartRewardView;
   primaryActionLabel?: string;
+  primaryActionClosesChart?: boolean;
 }
 
 export interface ResourceBarView {
@@ -221,6 +222,46 @@ export interface EmergencyGlp1View {
   flavorMessage?: string;
   automationCapacity: number;
   nextPayoutLabel?: string;
+}
+
+export interface ServiceIncomeCatalogLineView {
+  id: string;
+  displayName: string;
+  kind: "clinical" | "retail" | "remote";
+  feeLabel: string;
+  stockCostLabel?: string;
+  contributionLabel?: string;
+  minimumFacilityLevel: number;
+  requirementLabel: string;
+  available: boolean;
+  unavailableReason?: string;
+}
+
+export interface ServiceIncomeOperationView {
+  id: string;
+  displayName: string;
+  actorLabel: string;
+  statusLabel: string;
+  quoteFeeLabel: string;
+}
+
+export interface ServiceIncomeReceiptView {
+  id: string;
+  displayName: string;
+  actorLabel: string;
+  grossLabel: string;
+  stockCostLabel: string;
+  netLabel: string;
+}
+
+export interface ServiceIncomeView {
+  appointmentsEnabled: boolean;
+  catalogLines: ServiceIncomeCatalogLineView[];
+  activeOperations: ServiceIncomeOperationView[];
+  recentReceipts: ServiceIncomeReceiptView[];
+  grossTotalLabel: string;
+  stockCostTotalLabel: string;
+  netTotalLabel: string;
 }
 
 export interface AdvertisingView {

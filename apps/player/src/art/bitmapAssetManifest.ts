@@ -350,8 +350,8 @@ export const FOUNDER_CHARACTER_ATLASES_V4 = [
   // generated walk sheets changed could combine a newly selected frame name
   // with a stale decoded sheet.  A content revision makes every live founder
   // frame resolve as one matching asset family after a reload/HMR update.
-  `character:founders-${pose}-v4-r9-hires`,
-  `art/characters/founders-v4/founders-${pose}-v4.png?rev=founders-v4-r9-hires`,
+  `character:founders-${pose}-v4-r10-feet`,
+  `art/characters/founders-v4/founders-${pose}-v4.png?rev=founders-v4-r10-feet`,
   640,
   1152,
 )) as readonly BitmapAssetDescriptor[];
@@ -670,7 +670,7 @@ export const EXAMINATION_V2_ARCHITECTURE_FRAMES = {
 export const FRONT_DESK_V2_FIXTURE_OVERRIDES: Readonly<
   Partial<Record<LevelOneBitmapFixtureId, BitmapAtlasFrameDescriptor>>
 > = {
-  frontDesk: fixtureAtlasFrame("frontDesk", "room-fixtures:front-desk-v2", { x: 476, y: 108, width: 492, height: 281 }),
+  frontDesk: fixtureAtlasFrame("frontDesk", "room-fixtures:front-desk-v2", { x: 476, y: 78, width: 520, height: 314 }),
   filingCabinet: fixtureAtlasFrame("filingCabinet", "room-fixtures:front-desk-v2", { x: 48, y: 19, width: 209, height: 374 }),
   secretaryChair: fixtureAtlasFrame("secretaryChair", "room-fixtures:front-desk-v2", { x: 293, y: 56, width: 152, height: 272 }),
   // The Front Desk's southeast visitor chair uses the mirrored, left-facing

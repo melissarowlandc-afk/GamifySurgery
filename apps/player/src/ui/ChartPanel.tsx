@@ -581,7 +581,11 @@ export function ChartPanel({
                 className="button button-primary chart-resolve-button"
                 data-tutorial-anchor="decision-feedback-action"
                 type="button"
-                onClick={onAcknowledgeTerminalFeedback}
+                onClick={
+                  chart.primaryActionClosesChart
+                    ? onClose
+                    : onAcknowledgeTerminalFeedback
+                }
               >
                 {chart.primaryActionLabel ?? "Continue"}
               </button>

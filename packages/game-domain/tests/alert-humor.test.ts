@@ -71,6 +71,25 @@ function resolveSingleDecisionRoutine(
   state: GameState,
   encounterId: string,
 ): GameState {
+  if (!state.rooms.some((room) => room.roomDefinitionId === "room.examination")) {
+    state.rooms.push({
+      id: "room.test.alert-humor-examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.test.alert-humor-examination",
+      roomId: "room.test.alert-humor-examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
+  }
   state.openChartEncounterId = null;
   state.attendedEncounterId = null;
   for (const previous of Object.values(state.encounters)) {
@@ -95,6 +114,8 @@ function resolveSingleDecisionRoutine(
   };
   encounter.assignedRoomInstanceId =
     "room.instance.founder_desk";
+  encounter.checkInStatus = "checked_in";
+  encounter.checkInWaitingSinceTick = null;
   encounter.idleWaitingSinceTick = next.facilityTick;
   next = gameReducer(next, {
     type: "OPEN_CHART",
@@ -132,11 +153,12 @@ describe("persisted alert humor scheduler", () => {
     expect(next.alertHumor).toMatchObject({
       alertsTutorialAcknowledgedAtTick: null,
       nextAmbientAlertTick: null,
+      ambientCadenceVersion: 1,
       ambientSequence: 0,
     });
   });
 
-  it("schedules the first message 10-20 facility minutes after an idempotent acknowledgement", () => {
+  it("schedules the first message at least 120 facility minutes after acknowledgement", () => {
     const state = makeTutorialsResolved("first-alert-delay");
     const acknowledged = acknowledgeAlertsTutorial(state);
     const dueTick = acknowledged.alertHumor.nextAmbientAlertTick!;
@@ -165,7 +187,7 @@ describe("persisted alert humor scheduler", () => {
     ).toBe(acknowledged.facilityTick);
   });
 
-  it("emits at the persisted deadline, avoids repeats, and schedules 45-90 minutes later", () => {
+  it("emits at the persisted deadline, avoids repeats, and schedules at least 120 minutes later", () => {
     let state = acknowledgeAlertsTutorial(
       makeTutorialsResolved("ambient-sequence"),
     );
@@ -278,10 +300,15 @@ describe("persisted alert humor scheduler", () => {
       .dissatisfactionByCause;
 
     const restored = deserializeGameState(JSON.stringify(legacy));
-    expect(restored.schemaVersion).toBe(6);
+    expect(restored.schemaVersion).toBe(7);
     expect(restored.alertHumor).toEqual({
       alertsTutorialAcknowledgedAtTick: null,
       nextAmbientAlertTick: null,
+      ambientCadenceVersion: 1,
+      lastPatientArrivalTick: restored.facilityTick,
+      conditionActiveSinceTicks: {},
+      conditionLastEmittedTicks: {},
+      lastComplaintAlertTick: null,
       ambientSequence: 0,
       ambientCycle: 0,
       ambientUsedDefinitionIds: [],
@@ -292,6 +319,95 @@ describe("persisted alert humor scheduler", () => {
       restored.encounters[TUTORIAL_ENCOUNTER_ID]!
         .dissatisfactionByCause.general?.pointsLost,
     ).toBe(18);
+  });
+
+  it("preserves explicit no-arrival state and migrates missing cadence without a reload burst", () => {
+    const state = createInitialGameState();
+    state.facilityTick = 100;
+    state.alertHumor.lastPatientArrivalTick = null;
+    state.alertHumor.conditionActiveSinceTicks = { visible_litter: 40 };
+    state.alertHumor.conditionLastEmittedTicks = {
+      "environment.litter": 70,
+    };
+    state.alertHumor.lastComplaintAlertTick = 70;
+    const roundTrip = deserializeGameState(serializeGameState(state));
+    expect(roundTrip.alertHumor).toMatchObject({
+      lastPatientArrivalTick: null,
+      conditionActiveSinceTicks: { visible_litter: 40 },
+      conditionLastEmittedTicks: { "environment.litter": 70 },
+      lastComplaintAlertTick: 70,
+    });
+
+    const legacy = JSON.parse(serializeGameState(state)) as {
+      alertHumor: Record<string, unknown>;
+      environment: {
+        facilityConditionOccurrences: unknown[];
+        facilityConditionOccurrenceSequence: number;
+      };
+    };
+    delete legacy.alertHumor.lastPatientArrivalTick;
+    delete legacy.alertHumor.conditionActiveSinceTicks;
+    delete legacy.alertHumor.conditionLastEmittedTicks;
+    delete legacy.alertHumor.lastComplaintAlertTick;
+    legacy.environment.facilityConditionOccurrenceSequence = 1;
+    legacy.environment.facilityConditionOccurrences = [{
+      id: "facility-condition.visible_litter.1",
+      conditionKey: "visible_litter",
+      kind: "onset",
+      occurredAtFacilityTick: 50,
+      resolvedAtFacilityTick: null,
+      definitionId: "alert.environment.trash-visible",
+      message: "Select the trash to clean it up.",
+      priority: "informational",
+      target: { kind: "litter", id: "litter.legacy" },
+    }];
+    const migrated = deserializeGameState(JSON.stringify(legacy));
+    expect(migrated.alertHumor).toMatchObject({
+      lastPatientArrivalTick: 100,
+      conditionActiveSinceTicks: { visible_litter: 50 },
+      conditionLastEmittedTicks: { "environment.litter": 100 },
+      lastComplaintAlertTick: 100,
+    });
+  });
+
+  it("migrates old ambient deadlines once and preserves the migrated deadline on reload", () => {
+    const state = acknowledgeAlertsTutorial(
+      makeTutorialsResolved("legacy-ambient-cadence"),
+    );
+    state.facilityTick = 110;
+    state.alertHumor.ambientSequence = 1;
+    state.alertHumor.nextAmbientAlertTick = 130;
+    state.events.push({
+      id: "event.ambient.legacy",
+      type: "ambient_message",
+      facilityTick: 100,
+      encounterId: null,
+      message: "Legacy ambient message.",
+      priority: "flavor",
+      definitionId: "alert.ambient.01",
+      alertCategory: "ambient_flavor",
+      alertVariantId: "alert.ambient.01.default",
+      target: { kind: "campaign", id: state.campaignId },
+    });
+    const legacy = JSON.parse(serializeGameState(state)) as {
+      alertHumor: Record<string, unknown>;
+      events: unknown[];
+    };
+    delete legacy.alertHumor.ambientCadenceVersion;
+
+    const migrated = deserializeGameState(JSON.stringify(legacy));
+    expect(migrated.alertHumor).toMatchObject({
+      ambientCadenceVersion: 1,
+      nextAmbientAlertTick: 220,
+    });
+    expect(
+      deserializeGameState(serializeGameState(migrated)).alertHumor
+        .nextAmbientAlertTick,
+    ).toBe(220);
+
+    legacy.events = [];
+    const withoutHistory = deserializeGameState(JSON.stringify(legacy));
+    expect(withoutHistory.alertHumor.nextAmbientAlertTick).toBe(230);
   });
 
   it("freezes first-ordinary and true satisfaction-crossing success copy into events", () => {

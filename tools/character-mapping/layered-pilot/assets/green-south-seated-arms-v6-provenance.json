@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "opaqueSource": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-arms-v6-opaque-source.png",
+    "sha256": "108096c692837041d385a17d26191098d3ede921ec2cbad3575f8dbcfdc914f2",
+    "dimensions": [
+      1536,
+      1024
+    ]
+  },
+  "transparentOutput": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-arms-v6.png",
+    "sha256": "6e7c2e7a5d0544db840a9fde9094b1839e57fc51473ff1066d3fda310410d882"
+  },
+  "prompt": {
+    "path": "docs/execplans/layered-seated-arm-edit-prompt.txt",
+    "sha256": "b802e26c763cdd4a4af8aad9372c91c41ab9e74d745dbe70aff2a79ed9ef38a3"
+  },
+  "method": "8-connected exterior neutral flood; range <=30; mean >=155; alpha only",
+  "alpha": {
+    "removed": 1317267,
+    "retained": 255597,
+    "retainedLight": 20,
+    "partial": 0
+  },
+  "retainedRgb": "byte-identical where alpha is nonzero"
+}

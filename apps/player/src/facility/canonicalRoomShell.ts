@@ -20,7 +20,10 @@ export interface CanonicalRoomWallRun {
   length: number;
 }
 
-export type CanonicalRoomShellLayer = "base" | "front-occluder";
+export type CanonicalRoomShellLayer =
+  | "base"
+  | "front-occluder"
+  | "structural-occluder";
 
 export interface CanonicalRoomShellComponent {
   key: string;
@@ -145,7 +148,7 @@ const FRONT_HEIGHT_PER_TILE =
   (FRONT_DESK_COLUMNS / FRONT_DESK_VISIBLE_FLOOR_ASPECT_RATIO) * (0.27 / 2);
 // Backed north edges are deliberately only a baseboard plus a sliver of the
 // room's wallpaper.  They must never read as the cutaway's south foreground.
-const SHORT_NORTH_HEIGHT_PER_TILE = 0.10;
+const SHORT_NORTH_HEIGHT_PER_TILE = 0.18;
 /** A persisted doorway owns its entire logical wall tile, with no shoulders. */
 const DOOR_APERTURE_RATIO = 1;
 const DEFAULT_SKIN: CanonicalRoomShellSkin = { id: "front-desk-v3" };
@@ -206,6 +209,16 @@ function subtractWallRuns(
   return remaining;
 }
 
+function reachesTallNorthCorner(
+  tallNorthRuns: readonly CanonicalRoomWallRun[],
+  side: "west" | "east",
+  floorWidth: number,
+): boolean {
+  return tallNorthRuns.some((run) => side === "west"
+    ? run.start <= 0.5
+    : run.start + run.length >= floorWidth - 0.5);
+}
+
 /**
  * Produces only the component strips needed around an open circulation floor.
  * It shares the enclosed-shell geometry exactly, but intentionally has no
@@ -236,7 +249,9 @@ export function getCanonicalHallwayEdgeComponents(
     const x = side === "west" ? floor.x - geometry.sideWidth / 2 : floor.x + floor.width - geometry.sideWidth / 2;
     runs.forEach((run, index) => components.push({
       key: `hallway-${side}-${index}`, frameId,
-      bounds: { x, y: floor.y + run.start, width: geometry.sideWidth, height: run.length },
+      bounds: run.start <= 0.5 && reachesTallNorthCorner(exposed.north, side, floor.width)
+        ? { x, y: floor.y - geometry.northHeight, width: geometry.sideWidth, height: run.length + geometry.northHeight }
+        : { x, y: floor.y + run.start, width: geometry.sideWidth, height: run.length },
       layer: "base", side, skinId: skin.id,
     }));
   };
@@ -250,7 +265,16 @@ export function getCanonicalHallwayEdgeComponents(
     };
     components.push(component, { ...component, key: component.key.replace("-base", "-occluder"), layer: "front-occluder" });
   });
-  return components;
+  return [
+    ...components,
+    ...components
+      .filter((component) => component.layer === "base" && (component.side === "west" || component.side === "east"))
+      .map((component) => ({
+        ...component,
+        key: `${component.key}-occluder`,
+        layer: "structural-occluder" as const,
+      })),
+  ];
 }
 
 /**
@@ -309,8 +333,8 @@ export function getCanonicalRoomShellLayout(
     ? [{ key: "floor", frameId: "floorPlate", bounds: floor, layer: "base", skinId: skin.id }]
     : [];
   tallNorthRuns.forEach((run, index) => base.push({ key: `north-wall-${index}`, frameId: "northWall", bounds: { x: floor.x + run.start, y: floor.y - northHeight, width: run.length, height: northHeight }, layer: "base", side: "north", skinId: skin.id }));
-  // A backed north boundary uses only a compressed baseboard/wallpaper strip
-  // inside the southern floor. It is never repeated as a foreground occluder.
+  // A backed north boundary uses a compressed baseboard/wallpaper strip
+  // inside the southern floor; north-facing strips stay behind contents.
   shortNorthRuns.forEach((run, index) => base.push({ key: `north-short-${index}-base`, frameId: run.start === 0 ? "frontWest" : "frontEast", bounds: { x: floor.x + run.start, y: floor.y, width: run.length, height: shortNorthHeight }, layer: "base", side: "north", skinId: skin.id }));
   const addSide = (side: "west" | "east", runs: readonly CanonicalRoomWallRun[], frameId: FrontDeskV3ArchitectureId) => {
     // Side caps straddle a global tile border. Shared-boundary ownership in
@@ -318,10 +342,17 @@ export function getCanonicalRoomShellLayout(
     const x = side === "west" ? floor.x - sideWidth / 2 : floor.x + floor.width - sideWidth / 2;
     runs.forEach((run, index) => {
       if (run.length > 0.5) {
+        const extendsTallNorthCorner = run.start <= 0.5 && reachesTallNorthCorner(
+          tallNorthRuns,
+          side,
+          floor.width,
+        );
         base.push({
           key: `${side}-return-${index}`,
           frameId,
-          bounds: { x, y: floor.y + run.start, width: sideWidth, height: run.length },
+          bounds: extendsTallNorthCorner
+            ? { x, y: floor.y - northHeight, width: sideWidth, height: run.length + northHeight }
+            : { x, y: floor.y + run.start, width: sideWidth, height: run.length },
           layer: "base",
           side,
           skinId: skin.id,
@@ -332,8 +363,22 @@ export function getCanonicalRoomShellLayout(
   addSide("west", westRuns, "westCap");
   addSide("east", eastRuns, "eastCap");
   southRuns.forEach((run, index) => base.push({ key: `front-${index}-base`, frameId: run.start === 0 ? "frontWest" : "frontEast", bounds: { x: floor.x + run.start, y: frontTop, width: run.length, height: frontHeight }, layer: "base", side: "south", skinId: skin.id }));
+  const structuralOccluders = base
+    .filter((component) => component.side === "west" || component.side === "east")
+    .map((component) => ({
+      ...component,
+      key: `${component.key}-occluder`,
+      layer: "structural-occluder" as const,
+    }));
+  const frontOccluders = base
+    .filter((component) => component.side === "south")
+    .map((component) => ({
+      ...component,
+      key: component.key.replace("-base", "-occluder"),
+      layer: "front-occluder" as const,
+    }));
   return {
-    components: [...base, ...base.filter((component) => component.side === "south").map((component) => ({ ...component, key: component.key.replace("-base", "-occluder"), layer: "front-occluder" as const }))],
+    components: [...base, ...structuralOccluders, ...frontOccluders],
     geometry,
     northWallFaceRuns: tallNorthRuns,
   };

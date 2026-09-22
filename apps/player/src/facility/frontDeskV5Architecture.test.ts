@@ -82,15 +82,41 @@ describe("Front Desk v5 architecture projection", () => {
     );
   });
 
-  it("repeats only low south architecture as foreground occlusion", () => {
+  it("foregrounds side walls plus the south lip while keeping north walls base-only", () => {
     const projection = getFrontDeskV5Projection(logical);
-    const occluders = getFrontDeskV5ArchitectureComponents(projection)
-      .filter((component) => component.layer === "front-occluder");
-    expect(occluders.map((component) => component.frameId)).toEqual(["frontWest"]);
-    expect(occluders.every((component) => component.bounds.y >= projection.floorBounds.y)).toBe(true);
+    const components = getFrontDeskV5ArchitectureComponents(projection);
+    const southOccluders = components.filter((component) => component.layer === "front-occluder");
+    const structuralOccluders = components.filter((component) => component.layer === "structural-occluder");
+    expect(southOccluders.map((component) => component.frameId)).toEqual(["frontWest"]);
+    expect(southOccluders.every((component) => component.bounds.y >= projection.floorBounds.y)).toBe(true);
+    expect(structuralOccluders.map((component) => component.frameId)).toEqual([
+      "westCap", "eastCap",
+    ]);
+    expect(components.filter((component) =>
+      component.layer === "structural-occluder" && component.key.startsWith("north-"),
+    )).toEqual([]);
     // The shared shell uses a constant tile-relative front lip, so a Front
     // Desk's restored fourth row does not make the foreground wall taller.
-    expect(occluders[0]!.bounds.height).toBeCloseTo(projection.scaleX * 0.4411764705882353, 8);
+    expect(southOccluders[0]!.bounds.height).toBeCloseTo(projection.scaleX * 0.4411764705882353, 8);
+  });
+
+  it("keeps side structural occluders door-subtracted while north remains base-only", () => {
+    const projection = getFrontDeskV5Projection(logical);
+    const components = getFrontDeskV5ArchitectureComponents(projection, [
+      { side: "north", offset: 2 }, { side: "south", offset: 2 },
+      { side: "west", offset: 1 }, { side: "east", offset: 2 },
+    ]);
+    const baseWalls = components.filter((component) =>
+      component.layer === "base" && (component.key.startsWith("west-") || component.key.startsWith("east-")),
+    );
+    const occluders = components.filter((component) => component.layer === "structural-occluder");
+    expect(occluders).toHaveLength(baseWalls.length);
+    for (const base of baseWalls) {
+      expect(occluders).toContainEqual(expect.objectContaining({
+        frameId: base.frameId,
+        bounds: base.bounds,
+      }));
+    }
   });
 
   it("keeps v5 architecture active when Front Desk shares a designed horizontal opening", () => {

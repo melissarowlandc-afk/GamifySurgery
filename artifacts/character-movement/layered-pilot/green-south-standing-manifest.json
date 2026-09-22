@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 3,
+  "character": "patient.adult.046",
+  "view": "south",
+  "immutableSource": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+  },
+  "generatedPartsAtlas": {
+    "originalPath": "tools/character-mapping/layered-pilot/assets/green-south-parts-atlas-v1.png",
+    "originalSha256": "22739b5d50fa0e08bb36e6df074612b9ec805d24788d277beee3c56d5afd22b3",
+    "transparentPath": "tools/character-mapping/layered-pilot/assets/green-south-parts-atlas-v3-transparent.png",
+    "transparentSha256": "c31a4940b6b0e98c144a61fed4a5f1279b9335158318d2ed2789c5c786cba84c",
+    "method": "8-connected flood seeded from atlas exterior and declared cell borders; neutral range <=30; mean RGB >=155; alpha-only removal",
+    "alpha": {
+      "total": 1572516,
+      "removed": 1189902,
+      "retained": 382614,
+      "retainedBrightNeutral": 10547,
+      "partial": 0
+    }
+  },
+  "ignoredAtlasCells": {
+    "wholePants": [
+      985,
+      145,
+      230,
+      300
+    ],
+    "assembledReference": [
+      50,
+      30,
+      245,
+      440
+    ]
+  },
+  "landmarks": {
+    "crownY": 39,
+    "shouldersY": 118,
+    "hemY": 207,
+    "floorY": 287,
+    "coordinateOrigin": "original South crop x=75,y=30"
+  },
+  "parts": {
+    "head": {
+      "sourceRect": [
+        340,
+        105,
+        270,
+        280
+      ],
+      "extractedBounds": {
+        "x": 19,
+        "y": 27,
+        "width": 220,
+        "height": 228
+      },
+      "alpha": {
+        "visible": 38106,
+        "transparent": 13862
+      },
+      "output": "green-south-parts-v3/head.png"
+    },
+    "torso": {
+      "sourceRect": [
+        640,
+        125,
+        310,
+        310
+      ],
+      "extractedBounds": {
+        "x": 29,
+        "y": 40,
+        "width": 229,
+        "height": 242
+      },
+      "alpha": {
+        "visible": 47138,
+        "transparent": 10180
+      },
+      "output": "green-south-parts-v3/torso.png"
+    },
+    "sleeveLeft": {
+      "sourceRect": [
+        675,
+        475,
+        185,
+        245
+      ],
+      "extractedBounds": {
+        "x": 47,
+        "y": 34,
+        "width": 103,
+        "height": 181
+      },
+      "alpha": {
+        "visible": 14217,
+        "transparent": 5578
+      },
+      "output": "green-south-parts-v3/sleeveLeft.png"
+    },
+    "sleeveRight": {
+      "sourceRect": [
+        1025,
+        475,
+        185,
+        245
+      ],
+      "extractedBounds": {
+        "x": 30,
+        "y": 33,
+        "width": 101,
+        "height": 181
+      },
+      "alpha": {
+        "visible": 13989,
+        "transparent": 5436
+      },
+      "output": "green-south-parts-v3/sleeveRight.png"
+    },
+    "handLeft": {
+      "sourceRect": [
+        75,
+        755,
+        185,
+        195
+      ],
+      "extractedBounds": {
+        "x": 38,
+        "y": 32,
+        "width": 93,
+        "height": 133
+      },
+      "alpha": {
+        "visible": 9525,
+        "transparent": 3764
+      },
+      "output": "green-south-parts-v3/handLeft.png"
+    },
+    "handRight": {
+      "sourceRect": [
+        375,
+        755,
+        185,
+        195
+      ],
+      "extractedBounds": {
+        "x": 46,
+        "y": 32,
+        "width": 93,
+        "height": 132
+      },
+      "alpha": {
+        "visible": 9478,
+        "transparent": 3714
+      },
+      "output": "green-south-parts-v3/handRight.png"
+    },
+    "thighLeft": {
+      "sourceRect": [
+        675,
+        715,
+        200,
+        255
+      ],
+      "extractedBounds": {
+        "x": 32,
+        "y": 25,
+        "width": 136,
+        "height": 203
+      },
+      "alpha": {
+        "visible": 22727,
+        "transparent": 6253
+      },
+      "output": "green-south-parts-v3/thighLeft.png"
+    },
+    "thighRight": {
+      "sourceRect": [
+        1015,
+        715,
+        200,
+        255
+      ],
+      "extractedBounds": {
+        "x": 19,
+        "y": 24,
+        "width": 138,
+        "height": 203
+      },
+      "alpha": {
+        "visible": 22901,
+        "transparent": 6493
+      },
+      "output": "green-south-parts-v3/thighRight.png"
+    },
+    "shinLeft": {
+      "sourceRect": [
+        75,
+        945,
+        185,
+        260
+      ],
+      "extractedBounds": {
+        "x": 33,
+        "y": 38,
+        "width": 117,
+        "height": 203
+      },
+      "alpha": {
+        "visible": 21124,
+        "transparent": 3923
+      },
+      "output": "green-south-parts-v3/shinLeft.png"
+    },
+    "shinRight": {
+      "sourceRect": [
+        375,
+        945,
+        185,
+        260
+      ],
+      "extractedBounds": {
+        "x": 27,
+        "y": 38,
+        "width": 117,
+        "height": 203
+      },
+      "alpha": {
+        "visible": 21221,
+        "transparent": 3826
+      },
+      "output": "green-south-parts-v3/shinRight.png"
+    },
+    "shoeLeft": {
+      "sourceRect": [
+        665,
+        1015,
+        220,
+        205
+      ],
+      "extractedBounds": {
+        "x": 30,
+        "y": 32,
+        "width": 152,
+        "height": 138
+      },
+      "alpha": {
+        "visible": 16788,
+        "transparent": 5364
+      },
+      "output": "green-south-parts-v3/shoeLeft.png"
+    },
+    "shoeRight": {
+      "sourceRect": [
+        1000,
+        1015,
+        220,
+        205
+      ],
+      "extractedBounds": {
+        "x": 32,
+        "y": 33,
+        "width": 150,
+        "height": 137
+      },
+      "alpha": {
+        "visible": 16653,
+        "transparent": 5061
+      },
+      "output": "green-south-parts-v3/shoeRight.png"
+    }
+  },
+  "standing": {
+    "nativeCanvas": {
+      "width": 160,
+      "height": 320
+    },
+    "placements": [
+      {
+        "id": "thighLeft",
+        "x": 48,
+        "y": 198,
+        "scale": 0.225,
+        "pivot": {
+          "x": 56.1,
+          "y": 198.9
+        },
+        "width": 31.5,
+        "height": 46.575
+      },
+      {
+        "id": "thighRight",
+        "x": 79,
+        "y": 198,
+        "scale": 0.225,
+        "pivot": {
+          "x": 87.1,
+          "y": 198.9
+        },
+        "width": 31.95,
+        "height": 46.575
+      },
+      {
+        "id": "shinLeft",
+        "x": 52,
+        "y": 231,
+        "scale": 0.21,
+        "pivot": {
+          "x": 58.51,
+          "y": 231.63
+        },
+        "width": 25.41,
+        "height": 43.47
+      },
+      {
+        "id": "shinRight",
+        "x": 82,
+        "y": 231,
+        "scale": 0.21,
+        "pivot": {
+          "x": 88.51,
+          "y": 231.63
+        },
+        "width": 25.41,
+        "height": 43.47
+      },
+      {
+        "id": "shoeLeft",
+        "x": 45,
+        "y": 258,
+        "scale": 0.2,
+        "pivot": {
+          "x": 54.6,
+          "y": 261
+        },
+        "width": 31.200000000000003,
+        "height": 28.400000000000002
+      },
+      {
+        "id": "shoeRight",
+        "x": 80,
+        "y": 258,
+        "scale": 0.2,
+        "pivot": {
+          "x": 89.6,
+          "y": 261
+        },
+        "width": 30.8,
+        "height": 28.200000000000003
+      },
+      {
+        "id": "sleeveLeft",
+        "x": 24,
+        "y": 115,
+        "scale": 0.37,
+        "pivot": {
+          "x": 41.39,
+          "y": 116.85
+        },
+        "width": 39.589999999999996,
+        "height": 68.45
+      },
+      {
+        "id": "sleeveRight",
+        "x": 94,
+        "y": 115,
+        "scale": 0.37,
+        "pivot": {
+          "x": 111.39,
+          "y": 116.85
+        },
+        "width": 38.85,
+        "height": 68.45
+      },
+      {
+        "id": "handLeft",
+        "x": 26,
+        "y": 177,
+        "scale": 0.25,
+        "pivot": {
+          "x": 37.25,
+          "y": 178
+        },
+        "width": 24.25,
+        "height": 34.25
+      },
+      {
+        "id": "handRight",
+        "x": 104,
+        "y": 177,
+        "scale": 0.25,
+        "pivot": {
+          "x": 115.25,
+          "y": 178
+        },
+        "width": 24.25,
+        "height": 34
+      },
+      {
+        "id": "torso",
+        "x": 33,
+        "y": 110,
+        "scale": 0.39,
+        "pivot": {
+          "x": 79.80000000000001,
+          "y": 113.9
+        },
+        "width": 90.87,
+        "height": 95.94
+      },
+      {
+        "id": "head",
+        "x": 41,
+        "y": 39,
+        "scale": 0.325,
+        "pivot": {
+          "x": 77.4,
+          "y": 110.5
+        },
+        "width": 72.8,
+        "height": 75.4
+      }
+    ]
+  },
+  "proofs": [
+    "green-south-standing-source-vs-assembled.png",
+    "green-south-standing-source-vs-assembled-3x-nearest.png",
+    "green-south-standing-light.png",
+    "green-south-standing-dark.png",
+    "green-south-parts-atlas-v3-light.png",
+    "green-south-parts-atlas-v3-dark.png",
+    "green-south-standing-exploded-rig-overlay.png"
+  ],
+  "limitations": [
+    "Generated layered head and sleeve drawing differ from the immutable source; separate thigh and shin drawings retain a visible standing knee seam; visual acceptance remains pending."
+  ]
+}

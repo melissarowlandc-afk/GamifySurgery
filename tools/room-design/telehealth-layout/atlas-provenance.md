@@ -1,0 +1,9 @@
+# GLP-1 Telehealth Suite proof asset provenance
+
+The isolated proof uses these GS-015 sources without bitmap rotation or non-uniform scaling. New desks, chairs and plants were created with built-in image generation and await owner approval; their original PNGs and exact prompts are saved under `Photos for Codex 2/Codex Rooms 2/GS-015/`. The window is reused from the approved Phlebotomy design.
+
+- `telehealth-desks-cardinal-02.png` with `telehealth-desks-cardinal-02.prompt.txt`. The file supplies fresh South and West views of the same two-person workstation. `telehealth.json` records alpha crops, source contacts, physical base spans, and the shared 120-pixel rendered base width. South registers source contact `(462,778)` to floor `(1.5,1.5)`; West registers `(1338,780)` to `(1,2)`.
+- `telehealth-chairs-plants-01.png` with `telehealth-chairs-plants-01.prompt.txt`. `props.json` records independent east-, west-, north-, and south-facing chair crops plus snake and rubber plants. Chair ground and seat contacts are stored separately. The north-facing chair cushion is substantially occluded by its backrest in the source view, so its source seat `(1249,285)` is an inferred attachment reference, not a directly visible cushion-edge measurement. The other source seat contacts are visible approximations for isolated layout review and remain unvalidated for runtime character attachment.
+- The closed-sheer window is reused from the accepted Phlebotomy technical pack `tools/room-design/phlebotomy-layout/window.webp`, derived from `phlebotomy-curtained-window-02.png` and `phlebotomy-curtained-window-02.prompt.txt`. The sheer contains no tree, sky, or recognizable exterior imagery.
+
+`pack-assets.py` and `pack-props.py` reproduce the crop-only WebP atlases and JSON metadata. These technical files support this self-contained proof and are not runtime assets.

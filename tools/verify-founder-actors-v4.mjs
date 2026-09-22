@@ -5,6 +5,7 @@ import { verifyFounderActors } from "./verify-character-resolution-alpha.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 const directory = resolve(root, "apps/player/public/art/characters/founders-v4");
+const acceptedFootRepairDirectory = resolve(root, "tools/comfyui/accepted-assets/founder-11-foot-repair");
 const manifest = JSON.parse(readFileSync(resolve(directory, "manifest.json"), "utf8"));
 const directions = ["front", "left", "right", "back"];
 function lowerBodyHashes(image) {
@@ -117,6 +118,46 @@ function assertFrontIdleFeet(image) {
     if (lowerBodyPixels === 0) throw new Error(`front-idle founder ${founder + 1} has no visible feet in the floor band.`);
   }
 }
+async function assertFounderElevenAcceptedFootwear(pose) {
+  const filename = `founders-${pose}-v4.png`;
+  const repairName = `founder-11-${pose}-composed-candidate.png`;
+  const [atlas, repair] = await Promise.all([
+    loadImage(resolve(directory, filename)),
+    loadImage(resolve(acceptedFootRepairDirectory, repairName)),
+  ]);
+  if (atlas.width !== 640 || atlas.height !== 1152 || repair.width !== 128 || repair.height !== 192) {
+    throw new Error(`Founder 11 ${pose} footwear repair has invalid atlas or cell geometry.`);
+  }
+  const atlasCanvas = createCanvas(atlas.width, atlas.height); const atlasContext = atlasCanvas.getContext("2d"); atlasContext.drawImage(atlas, 0, 0);
+  const repairCanvas = createCanvas(128, 192); const repairContext = repairCanvas.getContext("2d"); repairContext.drawImage(repair, 0, 0);
+  const atlasData = atlasContext.getImageData(0, 0, atlas.width, atlas.height).data;
+  const repairData = repairContext.getImageData(0, 0, 128, 192).data;
+  const left = (10 % 5) * 128; const top = Math.floor(10 / 5) * 192;
+  let upperMin = 128; let upperMax = -1; let toeMin = 128; let toeMax = -1; let toeDarkPixels = 0; let floor = -1;
+  for (let y = 0; y < 192; y += 1) for (let x = 0; x < 128; x += 1) {
+    const atlasOffset = ((top + y) * atlas.width + left + x) * 4;
+    const repairOffset = (y * 128 + x) * 4;
+    for (let channel = 0; channel < 4; channel += 1) if (atlasData[atlasOffset + channel] !== repairData[repairOffset + channel]) {
+      throw new Error(`Founder 11 ${pose} runtime cell differs from its accepted Cortan repair at ${x},${y}.`);
+    }
+    if (repairData[repairOffset + 3] <= 12) continue;
+    floor = Math.max(floor, y);
+    const dark = repairData[repairOffset] < 75 && repairData[repairOffset + 1] < 75 && repairData[repairOffset + 2] < 75;
+    if (dark && y >= 160 && y <= 168) { upperMin = Math.min(upperMin, x); upperMax = Math.max(upperMax, x); }
+    if (dark && y >= 170 && y <= 179) { toeMin = Math.min(toeMin, x); toeMax = Math.max(toeMax, x); toeDarkPixels += 1; }
+  }
+  if (floor > 181) throw new Error(`Founder 11 ${pose} footwear exceeds the 181px floor baseline (${floor}).`);
+  if (toeDarkPixels < 20) throw new Error(`Founder 11 ${pose} lacks a dark shoe/toe zone below the former flat trouser cuffs.`);
+  if (pose === "front-idle" && (upperMin - toeMin < 3 || toeMax - upperMax < 5)) {
+    throw new Error("Founder 11 front idle toe zone does not extend on both sides of the flat trouser cuffs.");
+  }
+  if (pose === "left-idle" && upperMin - toeMin < 8) {
+    throw new Error("Founder 11 left idle toe zone does not extend forward of the flat trouser cuff.");
+  }
+  if (pose === "right-idle" && toeMax - upperMax < 8) {
+    throw new Error("Founder 11 right idle toe zone does not extend forward of the flat trouser cuff.");
+  }
+}
 function assertFrontWalkCoverage(image, phase) {
   const canvas = createCanvas(image.width, image.height); const context = canvas.getContext("2d"); context.drawImage(image, 0, 0);
   const data = context.getImageData(0, 0, image.width, image.height).data;
@@ -197,7 +238,7 @@ async function assertCompleteClipboardHeads() {
   }
 }
 if (manifest.variants.length !== 30) throw new Error("Founder manifest must contain exactly 30 identities.");
-if (manifest.contentRevision !== "founders-v4-r9-hires") throw new Error("Founder manifest must declare the active r8 content revision.");
+if (manifest.contentRevision !== "founders-v4-r10-feet") throw new Error("Founder manifest must declare the active r10 feet content revision.");
 if (manifest.clipboardExtraction?.sourceTopInset > 6 || manifest.clipboardExtraction?.completeHeadRequired !== true) throw new Error("Clipboard atlas must retain the complete source head above the panel-label inset.");
 if (manifest.floorAnchor?.y !== 181) throw new Error("Founder feet must use the approved-pose floor baseline.");
 if (!manifest.sourceIdentitySignatures) throw new Error("Founder manifest must include source-driven identity signatures.");
@@ -261,6 +302,7 @@ assertExactHorizontalMirror(leftB, rightA, "left walk B");
 assertExactHorizontalMirror(rightB, leftA, "right walk B");
 const frontIdle = await loadImage(resolve(directory, manifest.poses["front-idle"]));
 assertFrontIdleFeet(frontIdle);
+await Promise.all(["front-idle", "left-idle", "right-idle"].map(assertFounderElevenAcceptedFootwear));
 await assertCompleteClipboardHeads();
 const [frontWalkA, frontWalkB] = await Promise.all(["a", "b"].map((phase) => loadImage(resolve(directory, manifest.poses[`front-walk-${phase}`]))));
 const idleUpper = upperIdentityHashes(frontIdle);

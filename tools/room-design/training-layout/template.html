@@ -1,0 +1,17 @@
+<section id="training-layout-proof" aria-labelledby="training-title">
+  <style>
+    #training-layout-proof{max-width:700px;margin-inline:auto}#training-layout-proof .training-art-wrap{position:relative;max-width:540px;margin:12px auto 0}#training-layout-proof .training-art{position:relative;z-index:1;display:block;width:100%;height:auto}#training-layout-proof .training-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#training-layout-proof .training-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#training-layout-proof .training-controls{max-width:540px;margin:10px auto 0}#training-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#training-layout-proof legend{font-weight:500;margin-bottom:4px}#training-layout-proof .training-buttons{display:flex;gap:4px;flex-wrap:wrap}#training-layout-proof .training-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;align-items:start}#training-layout-proof .training-label{color:var(--muted-foreground);display:block;margin-bottom:3px}#training-layout-proof .training-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:3em}@media(max-width:560px){#training-layout-proof .training-row{grid-template-columns:1fr}}
+  </style>
+  <h2 id="training-title">Training Room preview</h2>
+  <div class="training-art-wrap">
+    <canvas id="training-art" class="training-art" width="1080" height="1280" role="img" aria-label="Compact hands-on training lab with a central two-person practice bench, two stools, selectable doors, and route clearance."></canvas>
+    <div id="training-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="training-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="training-adjacency" class="training-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="training-row"><div><span class="training-label text-small">North</span><span id="training-north" class="training-buttons"></span></div><div><span class="training-label text-small">South</span><span id="training-south" class="training-buttons"></span></div><div><span class="training-label text-small">West</span><span id="training-west" class="training-buttons"></span></div><div><span class="training-label text-small">East</span><span id="training-east" class="training-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="training-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprint, selected-door route, seats, and use points</span></label>
+    <div id="training-status" class="training-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__TRAINING_SCRIPT__</script>
+</section>

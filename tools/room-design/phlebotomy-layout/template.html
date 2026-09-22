@@ -1,0 +1,21 @@
+<section id="phlebotomy-layout-proof" aria-labelledby="phlebotomy-title">
+  <style>
+    #phlebotomy-layout-proof{max-width:760px;margin-inline:auto}#phlebotomy-layout-proof .phleb-art-wrap{position:relative;max-width:480px;margin:12px auto 0}#phlebotomy-layout-proof .phleb-art{position:relative;z-index:1;display:block;width:100%;height:auto}#phlebotomy-layout-proof .phleb-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#phlebotomy-layout-proof .phleb-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#phlebotomy-layout-proof .phleb-controls{max-width:680px;margin:10px auto 0}#phlebotomy-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#phlebotomy-layout-proof legend{font-weight:500;margin-bottom:4px}#phlebotomy-layout-proof .phleb-buttons{display:flex;gap:5px;flex-wrap:wrap}#phlebotomy-layout-proof .phleb-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#phlebotomy-layout-proof .phleb-label{color:var(--muted-foreground);margin-right:3px}#phlebotomy-layout-proof .phleb-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:3em}#phlebotomy-layout-proof .phleb-note{margin-top:6px;color:var(--muted-foreground)}#phlebotomy-layout-proof select{margin-bottom:8px}
+  </style>
+  <h2 id="phlebotomy-title">Phlebotomy Station preview</h2>
+  <label for="phlebotomy-orientation">Orientation</label>
+  <select id="phlebotomy-orientation"><option value="south">Patient South · 3 × 2</option><option value="east">Patient East · 2 × 3 (90° counterclockwise)</option></select>
+  <div class="phleb-art-wrap">
+    <canvas id="phlebotomy-art" class="phleb-art" width="960" height="860" role="img" aria-label="Rotatable Phlebotomy Station with a permanent patient chair and staff stool, an optional sink cabinet and tubes, selectable doors, use points, and provisional clearance."></canvas>
+    <div id="phlebotomy-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="phleb-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="phlebotomy-adjacency" class="phleb-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway (current-view wall labels)</legend><div class="phleb-row"><div><span class="phleb-label text-small">North</span><span id="phlebotomy-north" class="phleb-buttons"></span></div><div><span class="phleb-label text-small">South</span><span id="phlebotomy-south" class="phleb-buttons"></span></div><div><span class="phleb-label text-small">West</span><span id="phlebotomy-west" class="phleb-buttons"></span></div><div><span class="phleb-label text-small">East</span><span id="phlebotomy-east" class="phleb-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="phlebotomy-optional" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional sink cabinet and tubes when clear</span></label>
+    <label class="form-check"><input id="phlebotomy-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, seats, and approaches</span></label>
+    <div class="phleb-note text-small"><strong>Use directions:</strong> patient sits South and staff sits North; after rotation they face East and West. The chair is the only walking blocker. The 0.16-tile route model is provisional.</div>
+    <div id="phlebotomy-status" class="phleb-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__PHLEBOTOMY_SCRIPT__</script>
+</section>

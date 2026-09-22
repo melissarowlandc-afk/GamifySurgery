@@ -9,7 +9,7 @@ describe("EmergencyGlp1Panel", () => {
         view={{
           visible: true,
           enabled: true,
-          paymentLabel: "+$25",
+          paymentLabel: "+$50",
           statusLabel: "Ready now; one consult per facility hour.",
           cooldownProgressPercent: 100,
           automationCapacity: 0,
@@ -18,7 +18,7 @@ describe("EmergencyGlp1Panel", () => {
       />,
     );
 
-    expect(markup).toContain("Complete consult (+$25)");
+    expect(markup).toContain("Complete consult (+$50)");
     expect(markup).toContain("one consult per facility hour");
     expect(markup).not.toContain("min cooldown");
     expect(markup).not.toContain("Today:");
@@ -30,7 +30,7 @@ describe("EmergencyGlp1Panel", () => {
         view={{
           visible: true,
           enabled: false,
-          paymentLabel: "+$25",
+          paymentLabel: "+$50",
           statusLabel: "Available in 42 minutes.",
           cooldownProgressPercent: 30,
           automationCapacity: 0,
@@ -43,13 +43,13 @@ describe("EmergencyGlp1Panel", () => {
     expect(markup).not.toContain("min cooldown");
   });
 
-  it("replaces the manual action with staffed automation status", () => {
+  it("renders no markup for staffed automation even when the view is visible", () => {
     const markup = renderToStaticMarkup(
       <EmergencyGlp1Panel
         view={{
           visible: true,
           enabled: false,
-          paymentLabel: "+$25",
+          paymentLabel: "+$50",
           statusLabel: "Staffed GLP-1 suites handle consultations automatically.",
           cooldownProgressPercent: 0,
           automationCapacity: 2,
@@ -59,8 +59,6 @@ describe("EmergencyGlp1Panel", () => {
       />,
     );
 
-    expect(markup).toContain("2 staffed suites active");
-    expect(markup).toContain("Next payout in 1 hour");
-    expect(markup).not.toContain("Complete consult");
+    expect(markup).toBe("");
   });
 });

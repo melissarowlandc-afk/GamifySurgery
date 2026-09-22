@@ -1,0 +1,1389 @@
+{
+  "schemaVersion": 1,
+  "scope": "metadata-only preservation coverage; no artwork readiness or pose completion is inferred",
+  "evidencePaths": {
+    "retainedSourceDirectory": "Photos for Codex 2/Patients or Staff or Other Characters",
+    "patientManifest": "apps/player/public/art/characters/patients-v1/manifest.json",
+    "founderManifest": "apps/player/public/art/characters/founders-v4/manifest.json",
+    "candidateManifest": "artifacts/character-movement/retained-donor-merge/all-directions-v1/all-directions-manifest.json",
+    "founderExceptionPlan": "docs/execplans/redesign-30-authored-founders.md"
+  },
+  "counts": {
+    "retainedPngFiles": 55,
+    "exactPatientHashJoins": 50,
+    "unmatchedRetainedReferences": 5,
+    "founders": 30,
+    "founderNonhumanExceptions": 10
+  },
+  "retainedSources": [
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+      "sourceSha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.033",
+      "mappingStatus": "repair_required",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seatedSouth": 1,
+        "status": "not_production_accepted"
+      },
+      "renderedCoverage": {
+        "east": 8,
+        "west": 8,
+        "south": 8,
+        "north": 8,
+        "walkFrames": 32,
+        "standSouth": 1,
+        "sitSouth": 1
+      },
+      "visualStatus": "user_rejected",
+      "rejection": {
+        "date": "2026-09-11",
+        "feedback": "walking poor all directions; chunky/cut-off arms and legs"
+      },
+      "candidateEvidence": {
+        "manifest": "artifacts/character-movement/retained-donor-merge/all-directions-v1/all-directions-manifest.json",
+        "schemaVersion": 1,
+        "manifestStatus": "expansion-review-candidate",
+        "candidateId": "retained-auburn-glasses-olive-jacket",
+        "manifestSha256": "3736df231f28dbcb5eaa8b4420ca7cdb726cddfb69d72b565209aef0ab788ee7",
+        "scope": "all directions and south stills remain pinned rendered evidence; user-rejected pending structural repair, with no production or full-roster acceptance"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06ec25a8-1bcb-4c30-a406-8752b2235e0a.png",
+      "sourceSha256": "038fac252afb2f6276e82380102d0685b069086800adb5a3f100c3bf2ec6ed3f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "unresolved_retained_reference",
+      "mappingStatus": "identity_resolution_required",
+      "exception": "no_exact_patient_manifest_hash_match",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "pending_role"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-092d31ac-7592-4634-8883-167ddac564df.png",
+      "sourceSha256": "1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.043",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+      "sourceSha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.046",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-16c48adf-2478-4b2a-b0e3-9ce1f2bfc2cb.png",
+      "sourceSha256": "1368999e0dbd28c250fd41c2a5ab97bcb8905de71862e4cdbfc3d75a6b4b62e4",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "unresolved_retained_reference",
+      "mappingStatus": "identity_resolution_required",
+      "exception": "no_exact_patient_manifest_hash_match",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "pending_role"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-16f78be2-d866-46da-9abf-e6ece7fe114e.png",
+      "sourceSha256": "fecc06cf6812f49c796cb1b4d620aae6ea603ce43f5ab5586e9e0e3cdf5c8241",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.042",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-1c8c13b2-3240-4649-94f0-1b43660195fd.png",
+      "sourceSha256": "9d1c2b20540988a1fe553fe8ceb456f3bd3c111e2979648e7cc3f56964b1d871",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.040",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-24a3689e-3dc9-469d-b5c0-bb89a0fa1144.png",
+      "sourceSha256": "72df0908b47b8bd9b9bbd53138644e702b114a29fce13ceb1837db8a4376e385",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.048",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-27614d15-bac4-41b3-839d-c7bf530f93b9.png",
+      "sourceSha256": "30c25cb6ad44d22e449cf9abcc9f44c7024ee6b46cfa0ca8b43a6c926366533f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.020",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-2852606e-a7c8-4afb-b5eb-463cf19852ba.png",
+      "sourceSha256": "31b2e392a06211caf392d26f7146a2274121e14e01add10861b07e4cd05dbf58",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.037",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-28ccb8bb-574f-4f05-983a-61e0fc5a4695.png",
+      "sourceSha256": "bc55e22e2214af55c795e0d1d44f98f4f767fde89f50bda7c6266c676c5f3d9d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.011",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-2a169bc0-34d5-4080-b9c4-17eb1da968d7.png",
+      "sourceSha256": "e40476443a17725ffef98c8648a4837d0612cbd5c61309cdeb6f41bf557fe661",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.026",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-31487c69-4201-42cb-818e-3ce31ed871b1.png",
+      "sourceSha256": "ef2c975342406c076ad0247ac09d071b865910113ce3e06861f18c4da22cd39e",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.014",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+      "sourceSha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.032",
+      "mappingStatus": "repair_required",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seatedSouth": 1,
+        "status": "not_production_accepted"
+      },
+      "renderedCoverage": {
+        "east": 8,
+        "west": 8,
+        "south": 8,
+        "north": 8,
+        "walkFrames": 32,
+        "standSouth": 1,
+        "sitSouth": 1
+      },
+      "visualStatus": "user_rejected",
+      "rejection": {
+        "date": "2026-09-11",
+        "feedback": "walking poor all directions; chunky/cut-off arms and legs"
+      },
+      "candidateEvidence": {
+        "manifest": "artifacts/character-movement/retained-donor-merge/all-directions-v1/all-directions-manifest.json",
+        "schemaVersion": 1,
+        "manifestStatus": "expansion-review-candidate",
+        "candidateId": "retained-dark-hair-beard-gray-overshirt",
+        "manifestSha256": "3736df231f28dbcb5eaa8b4420ca7cdb726cddfb69d72b565209aef0ab788ee7",
+        "scope": "all directions and south stills remain pinned rendered evidence; user-rejected pending structural repair, with no production or full-roster acceptance"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-350bd22d-bc45-4d82-8008-5f1b60d0f40b.png",
+      "sourceSha256": "f060ca96bfc5a606110157791c827e5f4dba292882124adbeeb9c391b33663fd",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.027",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-37e584ff-0961-47d3-898a-0f2511802a40.png",
+      "sourceSha256": "54c78cba8df7a02bf508d79a38f23e07284c764a1f607b6ce0358aa20b39517e",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "unresolved_retained_reference",
+      "mappingStatus": "identity_resolution_required",
+      "exception": "no_exact_patient_manifest_hash_match",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "pending_role"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-4822e04b-10eb-4881-b414-1d5554d04e78.png",
+      "sourceSha256": "f38bbc1dd9f64fda91fa4b9f64fa6e0deaab7f4c214e607ae3a1b9777f9b1aa5",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.021",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-492d528d-52f8-422a-a1dc-fe63b3cd04cb.png",
+      "sourceSha256": "248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.039",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-4947e76b-f346-4f03-8e9f-dda1acea4786.png",
+      "sourceSha256": "bcd699464406759a1128f56b5435cfceb678b85ff1815b8ba7f3159ecbd07f87",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.005",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-4cf5342a-a6cc-47ea-a0ae-5862fadbcc41.png",
+      "sourceSha256": "f7847ebc00d4eb81de03ad30b174ac57943eaabf8630800d0e5bf2e9da30df16",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.010",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-539da82c-422a-4516-9b47-9d39473469e2.png",
+      "sourceSha256": "772ca1b91300d0efd2c58f8b35effcd4d6cd127419fcdcd9d42b910709f0cdaf",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.045",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-5acac942-bdc1-4730-bfff-12b7386f1303.png",
+      "sourceSha256": "954f9bea232fe8b53735e6c798c9a187c67f2a56c4fa52150cf5aec15e019d90",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.023",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-5c024bc2-b197-4386-b4ec-31eb6086dd2a.png",
+      "sourceSha256": "0b47d746bd8bd45172ee0f794c4d8893a1a56989291e6adba55739669086cf24",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.009",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-67c155c5-de18-40dc-b474-09830d6c6bdf.png",
+      "sourceSha256": "5c390cf6e2e73c48b837b08b4ca2b1c0299a74fcf3122295686ae85e3db96fce",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.030",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-70197ab5-dd0a-4446-bd91-da0c4080c410.png",
+      "sourceSha256": "969e4d631a58dfeb37be034c92559d007ff2f73d0b0c5ab6fe710b95402c1293",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.016",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-7349e415-c65c-40fd-84f2-9615056b6989.png",
+      "sourceSha256": "6ee809492fc0dcbb82c3319e3c4f2c66bcec509aa779b35f66dec8601ac272e5",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "unresolved_retained_reference",
+      "mappingStatus": "identity_resolution_required",
+      "exception": "no_exact_patient_manifest_hash_match",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "pending_role"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-7b7eaec9-8c99-4f41-8148-87f46f10b1a1.png",
+      "sourceSha256": "4949ea82790bc1a6d2a96587a6978e84a8086a7db8fe07d3bcaef42c4fceb266",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.018",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-8505a03b-7e62-4e44-80ba-00626485d021.png",
+      "sourceSha256": "ddba801b93a82020799d0eb8fae07cb77340ea118e698d451a282bf6c9779f94",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.004",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-9359c6d8-2c06-40ae-bea4-3797b2b920df.png",
+      "sourceSha256": "92aeb79c179a007271c9396df940045603dab4896f926416b9b198fa9e951f2f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.025",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-975f2a48-cba9-4783-91e7-0c1b087215ef.png",
+      "sourceSha256": "0c497964322f5e6159d21ceba2a3141936f70e351405dd684b6f67a2ac278c6f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.036",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-977bf056-1733-45ce-a57c-3f647570c232.png",
+      "sourceSha256": "d687093acb96b10c6183754770a1cf45f3ad11bf89d6b69dd40a98c7de75b406",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.024",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-99f8973b-6116-4671-b7e5-27f1a227e7c4.png",
+      "sourceSha256": "bee6e4e19d77a8154d60119c9495a74fcf96d7988fe76bc6a83e6bb0ad57aa36",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.031",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-a6cae1dc-450e-4bac-a05a-8ea4926e41b2.png",
+      "sourceSha256": "2196a5ef5920c153e84a938c8f1cc16a5c74188279f118ac33f81d780f2d1b6a",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.022",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-ab1be92f-9657-44a8-8568-0a71e2c9b7ec.png",
+      "sourceSha256": "8e73c5495b48843e55ea86bc80983361b019b84d588718a4a4b60c909008028a",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.041",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-ad3894b6-d3b6-4f9b-b0b0-ad7633385d75.png",
+      "sourceSha256": "b15795d91aa851a95f8c56b1608af220008589fc2338db7ccdd968b637d82a39",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.029",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-b980a5e7-aca9-4226-8179-d9c93429193d.png",
+      "sourceSha256": "c85fc609d2acba05385bf1633dc6137e2b7528e81ed460bf59e8eceba273b0ff",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.038",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-ba30a4ff-e1a1-4e42-9e7a-8979654c57c7.png",
+      "sourceSha256": "ca5273781afbde5a4de5a78834b24284aa24233c28cf0488a972a15607232031",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.007",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-bac7304c-11ed-4415-8c1b-e837f5017303.png",
+      "sourceSha256": "d55bf50156cb1ea2668f9755e0ba52a48e6ceb7c44555001b64fb4f464b7a790",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.003",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-bcd4d2bc-984a-4fcd-9739-e9c99054decb.png",
+      "sourceSha256": "7ffacaaaa89fb66879500d383e6cc6e514c1a474bbe7fd0b38dcf5ff38e20e61",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.044",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-beab922d-5e88-415a-a275-5776cb2a2520.png",
+      "sourceSha256": "373fcfe22d6297c90e6d821094abf4c61738dbbf3e33643a23ece712eb9248d4",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.012",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-c8a91274-831f-4c10-9879-75815e1ed307.png",
+      "sourceSha256": "23460037fe8e162158d0e65ab81a83c9cfe3c22133b29d1edbe19b539f8b9dac",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.028",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-cc636b20-ce10-4c09-933a-7e5d2b86388b.png",
+      "sourceSha256": "daec8f3ffa89db4adcbb75ec98440c916605106c3b0879a921d81864d6c67548",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.050",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-cc73e87c-55bf-4f09-9a9d-79f8b570669d.png",
+      "sourceSha256": "58c92ba1d98ea261a6009873675a029d6684a53dff93ee0d6ed6e9616904b75c",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.008",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-cd6277a8-149f-4ad4-9185-215c95764764.png",
+      "sourceSha256": "15fac32fc24202c2aca2515674c09e6e51c21cf6101298b1a0ec33d0e049774d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.034",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-d663561c-121a-4b37-a34d-95b0f12ca7f5.png",
+      "sourceSha256": "4bf7447780530f607b6d11f6405e87eaa2a98ef2cae3661c6d802eed6bc3e996",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.001",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-e437fcce-2e35-4a8e-8792-0d3b0b6c257c.png",
+      "sourceSha256": "7dfb92ee3661a68709ea355602d81573f7b5ca3bc4f9b69c5042a6a4718cb461",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.017",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-e644a34b-c74e-4787-b593-d009b00768ac.png",
+      "sourceSha256": "93f978c57ab340e0c0207e61a04aa615696ef09cb2d5aa82e4777d331fe68e82",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "unresolved_retained_reference",
+      "mappingStatus": "identity_resolution_required",
+      "exception": "documented_style_guide",
+      "expectedCoverage": {
+        "status": "not_applicable_pending_role",
+        "evidence": "docs/handoffs/PATIENT_EMPLOYEE_CHARACTERS_HANDOFF.md#reference-style-and-execution-findings"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-ee82180f-799f-4617-9159-27eefa97f158.png",
+      "sourceSha256": "9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.035",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-f050f75a-ccfa-4793-9576-534c790b7db3.png",
+      "sourceSha256": "30f0cab073a53d0d5cbf827d17b489996f0e2cc49ef9b78b298e7664f5a68479",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.049",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-f28045e3-888f-430d-a4f5-ec02f84f9863.png",
+      "sourceSha256": "2fc314f71f5ec61dd9b91d6061562dd2ed17c3c4ce9563b1413b3b0e38759d53",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.019",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-fa6efeb5-f2c8-4583-9384-b44281e39b3d.png",
+      "sourceSha256": "c2e7986114a7968617c8bacfd5ec73bf55da9c514037f482d8e37a9531758666",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.013",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-fafa4cce-7db0-4e6f-9d68-9c176db545fe.png",
+      "sourceSha256": "7b65b6fe19439998e07bc2e8c5efe478ff85c3f63659252cc9a5cc9311554d7f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.047",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-fbdd29f2-5241-4c8e-aa0e-3e908f8b6312.png",
+      "sourceSha256": "4080d642071de760763bb62073d8236ab47b84d9e886e23640f41ed837bb48f8",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.015",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-fc664b7e-258f-47b1-9078-4879e841861c.png",
+      "sourceSha256": "25566ad1dae8cc0a9f6468eb0037d3debec2ec7a463584ae37b5fff7ffd97f73",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.006",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "file": "Photos for Codex 2/Patients or Staff or Other Characters/exec-fecb4ad1-79da-4be7-b2b2-a2641b5fdd74.png",
+      "sourceSha256": "86a110a7d99f50972c0f3bc82bca5d6afe714f41f42f2d838f9a688e9341a78f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "family": "patient",
+      "stableId": "patient.adult.002",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    }
+  ],
+  "founders": [
+    {
+      "stableId": "founder.01",
+      "source": "founder-01-the-attending.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.02",
+      "source": "founder-02-the-chart-keeper.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.03",
+      "source": "founder-03-the-quick-study.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.04",
+      "source": "founder-04-the-rounds-doctor.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.05",
+      "source": "founder-05-the-evening-consult.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.06",
+      "source": "founder-06-the-clinic-runner.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.07",
+      "source": "founder-07-the-senior-fellow.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.08",
+      "source": "founder-08-the-night-shift.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.09",
+      "source": "founder-09-the-procedure-lead.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.10",
+      "source": "founder-10-the-on-call-surgeon.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.11",
+      "source": "founder-11-the-lead-clinician.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.12",
+      "source": "founder-12-the-analyst.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.13",
+      "source": "founder-13-the-organizer.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.14",
+      "source": "founder-14-the-consult-specialist.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.15",
+      "source": "founder-15-the-quick-consult.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.16",
+      "source": "founder-16-the-long-call.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.17",
+      "source": "founder-17-the-note-taker.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.18",
+      "source": "founder-18-the-clinic-builder.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.19",
+      "source": "founder-19-the-after-hours-doctor.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.20",
+      "source": "founder-20-the-headwrap-scholar.png",
+      "family": "founder",
+      "silhouetteClass": "human",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.21",
+      "source": "founder-21-cat-clinician.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.22",
+      "source": "founder-22-penguin-resident.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.23",
+      "source": "founder-23-fox-specialist.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.24",
+      "source": "founder-24-rabbit-fellow.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.25",
+      "source": "founder-25-owl-consultant.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.26",
+      "source": "founder-26-frog-practitioner.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.27",
+      "source": "founder-27-moon-alien.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.28",
+      "source": "founder-28-antenna-alien.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.29",
+      "source": "founder-29-robot-clinician.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    },
+    {
+      "stableId": "founder.30",
+      "source": "founder-30-axolotl-clinician.png",
+      "family": "founder",
+      "silhouetteClass": "nonhuman_exception",
+      "mappingStatus": "pending_mapping",
+      "expectedCoverage": {
+        "walkFrames": 32,
+        "standingSouth": 1,
+        "seated": 1,
+        "status": "unverified"
+      }
+    }
+  ]
+}

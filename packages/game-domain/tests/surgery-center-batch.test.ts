@@ -20,6 +20,18 @@ function preparedState(seed: string, level: 1 | 2): GameState {
   state.facilityLevel = level;
   state.encounters = {};
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+  if (level === 1) {
+    state.rooms.push(
+      { id: "room.sc.examination", roomDefinitionId: "room.examination", x: 29, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+      { id: "room.sc.minor-procedure", roomDefinitionId: "room.minor_procedure", x: 33, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+      ...([24, 25, 26, 27, 28] as const).map((y) => ({ id: `room.sc.level-one-hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
+    );
+    state.doors.push(
+      { id: "door.sc.examination", roomId: "room.sc.examination", side: "east", offset: 1, exterior: false },
+      { id: "door.sc.minor-procedure", roomId: "room.sc.minor-procedure", side: "west", offset: 1, exterior: false },
+      { id: "door.sc.level-one-front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
+    );
+  }
   if (level === 2) {
     let examination = state.rooms.find((room) => room.roomDefinitionId === "room.examination");
     if (!examination) {

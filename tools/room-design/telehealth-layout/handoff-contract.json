@@ -1,0 +1,24 @@
+{
+  "status": "isolated-design-proof",
+  "dimensions": {"south": [3, 2], "west": [2, 3]},
+  "rotation": "90-degrees-counterclockwise",
+  "pointTransform": "(x,y) -> (y,3-x)",
+  "desk": {
+    "permanence": "permanent",
+    "collision": "solid",
+    "south": {"ground": [1.5, 1.5], "footprint": [1, 0.5, 1, 1]},
+    "west": {"ground": [1, 2], "footprint": [0.5, 1, 1, 1]}
+  },
+  "chairs": {
+    "permanence": "permanent",
+    "collision": "nonblocking",
+    "southFacings": ["east", "west"],
+    "westFacings": ["north", "south"]
+  },
+  "plants": [
+    {"id": "snake-plant", "southGround": [0.25, 0.33], "westGround": [0.33, 2.75], "worldDoorOwners": ["N1", "WA"], "westLocalOwners": ["WC", "S1"]},
+    {"id": "rubber-plant", "southGround": [2.75, 0.33], "westGround": [0.33, 0.25], "worldDoorOwners": ["N3", "EA"], "westLocalOwners": ["WA", "N1"]}
+  ],
+  "backingRule": "Only a fixture whose owner is on the current view's north wall hides for current north backing.",
+  "scope": "Proof only. No runtime, clinical, balance, save, service, or timing changes."
+}

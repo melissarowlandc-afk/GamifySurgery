@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "sourceHash": "4cf509ce2a0d579aad1eff38d04cf2ebb8489a2a02a9496cac9680dd7e933e75",
+  "isolation": "Fresh headless Chrome with the fragment loaded in a sandboxed inline iframe; no game URL, server, user profile, network resource, or game source was accessed.",
+  "runtimeErrors": [],
+  "geometry": {
+    "poseCount": 8,
+    "distinctPoseCount": 8,
+    "mainPoseIndices": [1, 3, 5, 7],
+    "intermediatePoseIndices": [2, 4, 6, 8],
+    "passingSupports": {
+      "pose3": "right",
+      "pose7": "left"
+    },
+    "segmentLengthRange": [29.999999999999996, 44.00000000000002],
+    "expectedArmLengths": [30, 31],
+    "expectedLegLengths": [44, 44],
+    "maximumEastWestMirrorError": 0,
+    "feetBelowContactLine": false,
+    "renderedPathsPerView": 14,
+    "renderedCirclesPerView": 1
+  },
+  "gaitAssertions": {
+    "fullStridesUseOppositeArmsAndLegs": true,
+    "rightPassingSupportIsStraightAndGrounded": true,
+    "rightPassingLeftFootLift": 5,
+    "leftPassingSupportIsStraightAndGrounded": true,
+    "leftPassingRightFootLift": 5,
+    "bothPassingPosesHaveArmsDown": true,
+    "swingKneesBendForward": true,
+    "directionMirrorsAllJoints": true
+  },
+  "controls": {
+    "previousAndNextSelectExactAdjacentPoses": true,
+    "manualStepPausesPlayback": true,
+    "playbackIntervalMs": 180,
+    "automaticPlaybackAdvanced": true,
+    "automaticFramesExcludedFromLiveRegion": true,
+    "manualChangesAnnounced": true
+  },
+  "responsive": {
+    "width736": {
+      "viewsSideBySide": true,
+      "actualSvgWidths": [360, 360],
+      "matchingViewBoxWidths": [360, 360]
+    },
+    "width320": {
+      "viewsStacked": true,
+      "horizontalOverflow": false,
+      "actualSvgWidths": [320, 320],
+      "matchingViewBoxWidths": [320, 320]
+    }
+  },
+  "reducedMotion": {
+    "freshReducedContextStartsPausedAtPose1": true,
+    "poseAfter250Ms": 1,
+    "runtimePreferenceChangePausesPlayback": true,
+    "preferenceReturnDoesNotAutoResume": true
+  }
+}

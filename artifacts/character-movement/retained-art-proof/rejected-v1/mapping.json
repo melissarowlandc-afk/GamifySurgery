@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-east-phase01-phase03-art-proof",
+  "sourceCrop": { "x": 1000, "y": 360, "width": 240, "height": 310 },
+  "characters": [
+    {
+      "id": "retained-auburn-glasses-olive-jacket",
+      "label": "Auburn hair · glasses · olive jacket",
+      "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+      "sourceSha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d",
+      "sourceDimensions": { "width": 1536, "height": 1024 },
+      "sourceHip": { "x": 122, "y": 177 },
+      "recipe": {
+        "frame": { "width": 240, "height": 310, "axisX": 122, "floorY": 285 },
+        "centers": { "headY": 58.7, "shoulderLeftX": 116, "shoulderRightX": 128, "shoulderY": 98, "chestY": 135, "hipX": 122, "hipY": 170, "ankleY": 273 },
+        "foot": { "heelBack": 14, "toeForward": 25 },
+        "envelope": { "headRadiusX": 40, "headRadiusY": 47, "torsoShoulderHalfDepth": 30, "torsoChestHalfDepth": 32, "torsoHipHalfDepth": 23 },
+        "segmentLengths": { "upperArm": 35, "forearm": 34, "hand": 9, "thigh": 53, "shin": 50 },
+        "motion": { "bobStride": 7.265993502831, "bobTransition": 4, "bobPassing": 0, "strideReach": 38, "transitionReach": 20, "recoveryLift": 8, "passingLift": 7, "transitionLift": 4, "armStrideReach": 33, "armTransitionReach": 17, "armStrideDrop": 52, "armTransitionDrop": 59, "armPassingDrop": 64 }
+      },
+      "pieces": [
+        { "id": "far-thigh", "side": "left", "segment": "thigh", "polygon": [[101,169],[127,169],[116,202],[98,230],[75,223],[87,194]], "pivot": [116,177], "distal": [89,220] },
+        { "id": "far-shin", "side": "left", "segment": "shin", "polygon": [[75,210],[102,217],[83,260],[63,275],[47,263],[61,243]], "pivot": [89,220], "distal": [61,260] },
+        { "id": "far-shoe", "side": "left", "segment": "shoe", "polygon": [[43,252],[67,255],[82,272],[75,286],[50,283],[39,271]], "pivot": [61,260], "distal": [49,273] },
+        { "id": "near-upper-arm", "side": "right", "segment": "upperArm", "polygon": [[88,98],[113,101],[104,133],[91,151],[74,145],[78,123]], "pivot": [105,105], "distal": [92,137] },
+        { "id": "near-forearm", "side": "right", "segment": "forearm", "polygon": [[75,132],[99,135],[86,155],[66,171],[54,159],[62,146]], "pivot": [92,137], "distal": [64,160] },
+        { "id": "head-torso", "side": "none", "segment": "body", "polygon": [[71,16],[168,16],[176,91],[146,94],[146,178],[140,196],[106,196],[94,177],[94,94],[70,92]] },
+        { "id": "near-thigh", "side": "right", "segment": "thigh", "polygon": [[117,169],[141,169],[168,218],[152,233],[132,209]], "pivot": [124,177], "distal": [158,220] },
+        { "id": "near-shin", "side": "right", "segment": "shin", "polygon": [[149,208],[172,211],[192,258],[178,273],[157,247]], "pivot": [158,220], "distal": [187,260] },
+        { "id": "near-shoe", "side": "right", "segment": "shoe", "polygon": [[173,250],[195,251],[211,265],[207,280],[181,288],[169,278]], "pivot": [187,260], "distal": [204,270] },
+        { "id": "far-upper-arm", "side": "left", "segment": "upperArm", "polygon": [[136,98],[156,98],[171,131],[162,147],[147,139]], "pivot": [145,105], "distal": [158,136] },
+        { "id": "far-forearm", "side": "left", "segment": "forearm", "polygon": [[151,126],[174,136],[191,157],[179,172],[159,151]], "pivot": [158,136], "distal": [178,158] }
+      ]
+    },
+    {
+      "id": "retained-dark-hair-beard-gray-overshirt",
+      "label": "Dark hair · beard · gray overshirt",
+      "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+      "sourceSha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+      "sourceDimensions": { "width": 1536, "height": 1024 },
+      "sourceHip": { "x": 121, "y": 176 },
+      "recipe": {
+        "frame": { "width": 240, "height": 310, "axisX": 121, "floorY": 285 },
+        "centers": { "headY": 56.6, "shoulderLeftX": 115, "shoulderRightX": 127, "shoulderY": 97, "chestY": 132, "hipX": 121, "hipY": 169, "ankleY": 273 },
+        "foot": { "heelBack": 14, "toeForward": 25 },
+        "envelope": { "headRadiusX": 39, "headRadiusY": 45, "torsoShoulderHalfDepth": 29, "torsoChestHalfDepth": 31, "torsoHipHalfDepth": 23 },
+        "segmentLengths": { "upperArm": 35, "forearm": 34, "hand": 9, "thigh": 54, "shin": 50 },
+        "motion": { "bobStride": 7.5895, "bobTransition": 4, "bobPassing": 0, "strideReach": 39, "transitionReach": 20, "recoveryLift": 8, "passingLift": 7, "transitionLift": 4, "armStrideReach": 33, "armTransitionReach": 17, "armStrideDrop": 52, "armTransitionDrop": 59, "armPassingDrop": 64 }
+      },
+      "pieces": [
+        { "id": "far-thigh", "side": "left", "segment": "thigh", "polygon": [[100,168],[127,168],[115,202],[97,231],[74,223],[86,193]], "pivot": [115,176], "distal": [88,220] },
+        { "id": "far-shin", "side": "left", "segment": "shin", "polygon": [[74,210],[101,218],[81,261],[61,276],[46,263],[60,242]], "pivot": [88,220], "distal": [59,260] },
+        { "id": "far-shoe", "side": "left", "segment": "shoe", "polygon": [[42,252],[66,255],[81,272],[74,286],[49,283],[38,271]], "pivot": [59,260], "distal": [48,273] },
+        { "id": "near-upper-arm", "side": "right", "segment": "upperArm", "polygon": [[87,97],[112,101],[103,134],[90,153],[73,146],[77,122]], "pivot": [104,104], "distal": [91,138] },
+        { "id": "near-forearm", "side": "right", "segment": "forearm", "polygon": [[74,132],[98,136],[85,157],[65,172],[53,160],[61,146]], "pivot": [91,138], "distal": [65,162] },
+        { "id": "head-torso", "side": "none", "segment": "body", "polygon": [[76,17],[169,17],[176,92],[146,94],[146,177],[140,193],[104,193],[94,176],[94,94],[75,93]] },
+        { "id": "near-thigh", "side": "right", "segment": "thigh", "polygon": [[116,168],[141,168],[169,219],[153,234],[131,208]], "pivot": [125,176], "distal": [160,220] },
+        { "id": "near-shin", "side": "right", "segment": "shin", "polygon": [[150,208],[173,211],[194,258],[179,273],[158,247]], "pivot": [160,220], "distal": [190,260] },
+        { "id": "near-shoe", "side": "right", "segment": "shoe", "polygon": [[176,250],[197,251],[213,265],[209,280],[183,288],[172,278]], "pivot": [190,260], "distal": [207,270] },
+        { "id": "far-upper-arm", "side": "left", "segment": "upperArm", "polygon": [[135,97],[156,98],[171,131],[162,147],[147,139]], "pivot": [144,104], "distal": [158,136] },
+        { "id": "far-forearm", "side": "left", "segment": "forearm", "polygon": [[151,126],[175,136],[192,157],[180,172],[159,151]], "pivot": [158,136], "distal": [179,158] }
+      ]
+    }
+  ]
+}

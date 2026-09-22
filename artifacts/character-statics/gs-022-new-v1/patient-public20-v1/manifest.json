@@ -1,0 +1,1896 @@
+{
+  "schemaVersion": 1,
+  "batchId": "gs022-new-patient-public20-v1",
+  "status": "patient-public-identities-and-front-concepts-owner-approved",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false
+  },
+  "canvas": {
+    "production": [
+      160,
+      320
+    ],
+    "native": [
+      32,
+      64
+    ],
+    "bodyAxisX": 80,
+    "floorY": 287
+  },
+  "demographicPolicy": "Each character requires an exact intended age, Woman or Man label, and supplied demographic evidence before art extraction. No demographic values are inferred by this package.",
+  "records": [
+    {
+      "id": "gs022-new-person-001",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Young adult woman with medium-brown skin, short asymmetrical black textured bob, slim build; muted rust cropped utility jacket over cream shirt, navy tapered trousers and plum sneakers.",
+      "intendedAge": 28,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-1-v1.png",
+        "sha256": "7f1c43403d5ffaa0056dde191fcf493519731f460e4c0a93da61b57da2518f8f",
+        "visibleBand": {
+          "left": 60,
+          "right": 297,
+          "top": 91,
+          "bottom": 764,
+          "width": 238,
+          "height": 674
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": 12.875,
+          "translateY": 0.125,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "80ee7ba3f6fae95a70fc54c3c797fa84f941e48d1e5e28b865bfc013a30b0c30"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-001/stand-south-candidate.png",
+            "sha256": "8c463e890542f0b2dd9c60e773da3245f2db9fa669bfad063b8ae1bbc12b6f6f",
+            "alpha": {
+              "observedTransparentPixels": 34332,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 35,
+              "top": 34,
+              "right": 124,
+              "bottom": 286,
+              "width": 90,
+              "height": 253
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-002",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Adult woman with deep brown skin, long black locs swept over one shoulder, broad build; ochre knit tunic, dark slate leggings and simple brown ankle boots.",
+      "intendedAge": 35,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-1-v1.png",
+        "sha256": "7f1c43403d5ffaa0056dde191fcf493519731f460e4c0a93da61b57da2518f8f",
+        "visibleBand": {
+          "left": 415,
+          "right": 733,
+          "top": 65,
+          "bottom": 764,
+          "width": 319,
+          "height": 700
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -135.4375,
+          "translateY": 0.125,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "80ee7ba3f6fae95a70fc54c3c797fa84f941e48d1e5e28b865bfc013a30b0c30"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-002/stand-south-candidate.png",
+            "sha256": "d805b1aad28df854d8f205dfdf2e88038ac226facba355ffc563dcc0f1d4a6e9",
+            "alpha": {
+              "observedTransparentPixels": 29057,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 20,
+              "top": 25,
+              "right": 139,
+              "bottom": 286,
+              "width": 120,
+              "height": 262
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-003",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Adult man with light freckled skin, sandy-blond short crew cut, clean-shaven, stocky build; muted brick-red crewneck sweatshirt, light khaki chinos and cream sneakers.",
+      "intendedAge": 36,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-1-v1.png",
+        "sha256": "7f1c43403d5ffaa0056dde191fcf493519731f460e4c0a93da61b57da2518f8f",
+        "visibleBand": {
+          "left": 830,
+          "right": 1153,
+          "top": 65,
+          "bottom": 764,
+          "width": 324,
+          "height": 700
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -292,
+          "translateY": 0.125,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "80ee7ba3f6fae95a70fc54c3c797fa84f941e48d1e5e28b865bfc013a30b0c30"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-003/stand-south-candidate.png",
+            "sha256": "ef633bd62f2cdd41e281770074206143e618365cf54f5750e69af0b7367879ad",
+            "alpha": {
+              "observedTransparentPixels": 28808,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 19,
+              "top": 25,
+              "right": 140,
+              "bottom": 286,
+              "width": 122,
+              "height": 262
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-004",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Adult woman with medium olive skin, dense shoulder-length dark curls, medium build; dusty-blue collared denim shirt-dress to the knees, beige leggings and dark brown ankle shoes.",
+      "intendedAge": 38,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-1-v1.png",
+        "sha256": "7f1c43403d5ffaa0056dde191fcf493519731f460e4c0a93da61b57da2518f8f",
+        "visibleBand": {
+          "left": 1264,
+          "right": 1528,
+          "top": 81,
+          "bottom": 764,
+          "width": 265,
+          "height": 684
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -443.6875,
+          "translateY": 0.125,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "80ee7ba3f6fae95a70fc54c3c797fa84f941e48d1e5e28b865bfc013a30b0c30"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-004/stand-south-candidate.png",
+            "sha256": "9e0f362535c29e86e1283bad5ec8fc4eb57fa5f86e9d112357749eecfc60f8ae",
+            "alpha": {
+              "observedTransparentPixels": 31333,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 30,
+              "top": 31,
+              "right": 129,
+              "bottom": 286,
+              "width": 100,
+              "height": 256
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-005",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Adult man with medium-brown skin, neatly side-swept black hair, small subtle chin beard, tall lean build; muted plum V-neck sweater over cream tee, charcoal chinos and brown shoes.",
+      "intendedAge": 41,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-1-v1.png",
+        "sha256": "7f1c43403d5ffaa0056dde191fcf493519731f460e4c0a93da61b57da2518f8f",
+        "visibleBand": {
+          "left": 1651,
+          "right": 1932,
+          "top": 34,
+          "bottom": 764,
+          "width": 282,
+          "height": 731
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -592,
+          "translateY": 0.125,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "80ee7ba3f6fae95a70fc54c3c797fa84f941e48d1e5e28b865bfc013a30b0c30"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-005/stand-south-candidate.png",
+            "sha256": "4c4010bb8a4c96c79e9a30f1e1f02a530036ed6b2699ae1599f2f95825ddfe8d",
+            "alpha": {
+              "observedTransparentPixels": 30846,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 27,
+              "top": 13,
+              "right": 132,
+              "bottom": 286,
+              "width": 106,
+              "height": 274
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-006",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Adult woman with fair warm skin, strawberry-blond hair in a compact braided crown, athletic build; muted teal short quilted jacket over cream shirt, rust trousers and dark flats.",
+      "intendedAge": 42,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-2-v1.png",
+        "sha256": "a28688614c0fdd69a88bcd5621f6bdfb8038f94a2a6324bf5fd72f4037123818",
+        "visibleBand": {
+          "left": 48,
+          "right": 333,
+          "top": 52,
+          "bottom": 759,
+          "width": 286,
+          "height": 708
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": 8.375,
+          "translateY": 2,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "b4d84bb5f8d0d7a76adb6d4f11cab35625f32fe914b9ef25883b4e6ae5a48746"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-006/stand-south-candidate.png",
+            "sha256": "6053280ab01554b6e1eefc2330e267e6884076515a03feb3a4c49ec7488c6c6d",
+            "alpha": {
+              "observedTransparentPixels": 31513,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 26,
+              "top": 22,
+              "right": 133,
+              "bottom": 286,
+              "width": 108,
+              "height": 265
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-007",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Middle-aged woman with deep brown skin, short tapered natural black hair with a few silver strands, broad build; mustard long-sleeve blouse, dark navy calf-length A-line skirt, brown flat shoes. Subtle adult facial age lines.",
+      "intendedAge": 47,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-2-v1.png",
+        "sha256": "a28688614c0fdd69a88bcd5621f6bdfb8038f94a2a6324bf5fd72f4037123818",
+        "visibleBand": {
+          "left": 430,
+          "right": 743,
+          "top": 38,
+          "bottom": 760,
+          "width": 314,
+          "height": 723
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -140.125,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "b4d84bb5f8d0d7a76adb6d4f11cab35625f32fe914b9ef25883b4e6ae5a48746"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-007/stand-south-candidate.png",
+            "sha256": "5aa51428ded8182e2ea9488bd37f5083954c56aae4f3050fff755889a84f7a79",
+            "alpha": {
+              "observedTransparentPixels": 27958,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 21,
+              "top": 16,
+              "right": 138,
+              "bottom": 286,
+              "width": 118,
+              "height": 271
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-008",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Middle-aged man with medium tan skin, bald scalp, short dark stubble, sturdy build; dusty-blue bomber jacket over cream polo shirt, dark olive trousers and brown boots. Subtle adult age lines.",
+      "intendedAge": 47,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-2-v1.png",
+        "sha256": "a28688614c0fdd69a88bcd5621f6bdfb8038f94a2a6324bf5fd72f4037123818",
+        "visibleBand": {
+          "left": 819,
+          "right": 1163,
+          "top": 57,
+          "bottom": 760,
+          "width": 345,
+          "height": 704
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -291.8125,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "b4d84bb5f8d0d7a76adb6d4f11cab35625f32fe914b9ef25883b4e6ae5a48746"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-008/stand-south-candidate.png",
+            "sha256": "355c19a9366d43280995bdd1cb64f612223fb154ec251c819d3d46e24c4ce83f",
+            "alpha": {
+              "observedTransparentPixels": 27900,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 15,
+              "top": 23,
+              "right": 144,
+              "bottom": 286,
+              "width": 130,
+              "height": 264
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-009",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Middle-aged woman with fair warm skin, auburn chin-length bob with one silver streak, dark rectangular glasses, medium build; plum wrap cardigan over ochre shirt, navy trousers and cream loafers. Visible gentle midlife face lines.",
+      "intendedAge": 51,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-2-v1.png",
+        "sha256": "a28688614c0fdd69a88bcd5621f6bdfb8038f94a2a6324bf5fd72f4037123818",
+        "visibleBand": {
+          "left": 1250,
+          "right": 1536,
+          "top": 65,
+          "bottom": 760,
+          "width": 287,
+          "height": 696
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -442.5625,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "b4d84bb5f8d0d7a76adb6d4f11cab35625f32fe914b9ef25883b4e6ae5a48746"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-009/stand-south-candidate.png",
+            "sha256": "14e291ffd539565e8d5b231bae26217f1ea2704788a9f6ee1383481b8de0d116",
+            "alpha": {
+              "observedTransparentPixels": 30981,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 26,
+              "top": 26,
+              "right": 133,
+              "bottom": 286,
+              "width": 108,
+              "height": 261
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-010",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Middle-aged man with deep brown skin, close-cropped black hair with a few gray strands at temples, clean-shaven, tall broad build; ochre short-sleeve polo shirt, slate trousers and cream trainers. Gentle midlife face lines.",
+      "intendedAge": 51,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-2-v1.png",
+        "sha256": "a28688614c0fdd69a88bcd5621f6bdfb8038f94a2a6324bf5fd72f4037123818",
+        "visibleBand": {
+          "left": 1636,
+          "right": 1944,
+          "top": 37,
+          "bottom": 760,
+          "width": 309,
+          "height": 724
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -591.4375,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "b4d84bb5f8d0d7a76adb6d4f11cab35625f32fe914b9ef25883b4e6ae5a48746"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-010/stand-south-candidate.png",
+            "sha256": "283a2aefc87d64ccc3ffbac97afab47c1a7f069081b28747092ad06eafa37a2a",
+            "alpha": {
+              "observedTransparentPixels": 28503,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 22,
+              "top": 16,
+              "right": 137,
+              "bottom": 286,
+              "width": 116,
+              "height": 271
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-011",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Middle-aged woman with medium olive skin, dark hair in a low coiled bun with silver temples, curvy build; brick-red turtleneck sweater, cream wide-leg trousers and brown closed shoes. Clearly mature face.",
+      "intendedAge": 54,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-3-v1.png",
+        "sha256": "86dd6f79325b8fd85a6aed0c8b39326cdbc1f9dfbe158aa266e805c1f7f25541",
+        "visibleBand": {
+          "left": 43,
+          "right": 361,
+          "top": 63,
+          "bottom": 761,
+          "width": 319,
+          "height": 699
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": 4.0625,
+          "translateY": 1.25,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "7aa255d2b13111b392cac6c0eb8409530de73159bcf81cf51e9d5af26bdbf22d"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-011/stand-south-candidate.png",
+            "sha256": "2fb5a76efce32f41154ba44bb0f9eb5570ccaf1780d8844c289a2a18916fb94c",
+            "alpha": {
+              "observedTransparentPixels": 28117,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 20,
+              "top": 25,
+              "right": 139,
+              "bottom": 286,
+              "width": 120,
+              "height": 262
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-012",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Middle-aged man with light skin, wavy dark-brown hair gray at the temples, full neat salt-and-pepper moustache, medium build; moss-green pullover with one broad cream chest stripe, charcoal chinos and tan loafers. Clearly mature face.",
+      "intendedAge": 54,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-3-v1.png",
+        "sha256": "86dd6f79325b8fd85a6aed0c8b39326cdbc1f9dfbe158aa266e805c1f7f25541",
+        "visibleBand": {
+          "left": 437,
+          "right": 741,
+          "top": 41,
+          "bottom": 761,
+          "width": 305,
+          "height": 721
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -141.0625,
+          "translateY": 1.25,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "7aa255d2b13111b392cac6c0eb8409530de73159bcf81cf51e9d5af26bdbf22d"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-012/stand-south-candidate.png",
+            "sha256": "41727ee73a2e13df7f24fb7c587b51acbd1d145516a5ef566aeceaafa803ccf4",
+            "alpha": {
+              "observedTransparentPixels": 29942,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 23,
+              "top": 17,
+              "right": 136,
+              "bottom": 286,
+              "width": 114,
+              "height": 270
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-013",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Late-middle-aged woman with deep brown skin, short gray twists, sturdy broad build; dark blue open jacket over a light sage blouse, tan straight trousers and brown shoes. Mature eyes and gentle smile lines.",
+      "intendedAge": 59,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-3-v1.png",
+        "sha256": "86dd6f79325b8fd85a6aed0c8b39326cdbc1f9dfbe158aa266e805c1f7f25541",
+        "visibleBand": {
+          "left": 823,
+          "right": 1159,
+          "top": 60,
+          "bottom": 760,
+          "width": 337,
+          "height": 701
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -291.8125,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "7aa255d2b13111b392cac6c0eb8409530de73159bcf81cf51e9d5af26bdbf22d"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-013/stand-south-candidate.png",
+            "sha256": "5a81c1e760b16f545c21c0783a7b5a2682ec884319899d88bca77a02c6332b2d",
+            "alpha": {
+              "observedTransparentPixels": 28491,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 17,
+              "top": 24,
+              "right": 142,
+              "bottom": 286,
+              "width": 126,
+              "height": 263
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-014",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Late-middle-aged man with warm tan skin, shaved head and short gray boxed beard, lean build; cream short-sleeve linen shirt, muted rust trousers and dark loafers. Mature eyes and gentle smile lines.",
+      "intendedAge": 59,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-3-v1.png",
+        "sha256": "86dd6f79325b8fd85a6aed0c8b39326cdbc1f9dfbe158aa266e805c1f7f25541",
+        "visibleBand": {
+          "left": 1256,
+          "right": 1528,
+          "top": 64,
+          "bottom": 760,
+          "width": 273,
+          "height": 697
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -442.1875,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "7aa255d2b13111b392cac6c0eb8409530de73159bcf81cf51e9d5af26bdbf22d"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-014/stand-south-candidate.png",
+            "sha256": "64f364921d84ba057fece4e996dfe7fe2d1090b1eb37a231a5e170f0abe2225f",
+            "alpha": {
+              "observedTransparentPixels": 31741,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 29,
+              "top": 26,
+              "right": 130,
+              "bottom": 286,
+              "width": 102,
+              "height": 261
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-015",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Older middle-aged man with medium olive skin, silver hair in a short side wave, clean-shaven, broad build; mustard sleeveless vest over a slate turtleneck, charcoal trousers and brown boots. Clearly older face with subtle wrinkles.",
+      "intendedAge": 61,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-3-v1.png",
+        "sha256": "86dd6f79325b8fd85a6aed0c8b39326cdbc1f9dfbe158aa266e805c1f7f25541",
+        "visibleBand": {
+          "left": 1620,
+          "right": 1950,
+          "top": 60,
+          "bottom": 762,
+          "width": 331,
+          "height": 703
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -589.5625,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "7aa255d2b13111b392cac6c0eb8409530de73159bcf81cf51e9d5af26bdbf22d"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-015/stand-south-candidate.png",
+            "sha256": "cc6a25b65120f0a648713057af02f6ba051c3c796f17212cad87aca172be2a19",
+            "alpha": {
+              "observedTransparentPixels": 28794,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 18,
+              "top": 23,
+              "right": 141,
+              "bottom": 286,
+              "width": 124,
+              "height": 264
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-016",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Older middle-aged woman with light skin, short softly waved silver pixie hair, no glasses, medium build; dusty-teal long-sleeved calf-length dress, dark ankle boots. Clearly older face with subtle wrinkles.",
+      "intendedAge": 62,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-4-v1.png",
+        "sha256": "8d2dafc2d862cb17a8ba77d26c4d9880e38fdf0be934027e8c77e163759370d5",
+        "visibleBand": {
+          "left": 66,
+          "right": 333,
+          "top": 63,
+          "bottom": 738,
+          "width": 268,
+          "height": 676
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": 5,
+          "translateY": 9.875,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "dea838302ac4602d3ec6dbbdf1fc367ee3462c012f4fe12e5a7453fc7df99448"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-016/stand-south-candidate.png",
+            "sha256": "185e5b94554b96632dcf62fc9e837684ccf3e1a880546a23d45382f7414c1097",
+            "alpha": {
+              "observedTransparentPixels": 33116,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 30,
+              "top": 33,
+              "right": 129,
+              "bottom": 286,
+              "width": 100,
+              "height": 254
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-017",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Older woman with medium brown skin, silver shoulder-length hair drawn half-up, medium build; muted terracotta long cardigan over ivory blouse, navy trousers and cream walking sneakers. Clearly aged face with warm wrinkles.",
+      "intendedAge": 67,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-4-v1.png",
+        "sha256": "8d2dafc2d862cb17a8ba77d26c4d9880e38fdf0be934027e8c77e163759370d5",
+        "visibleBand": {
+          "left": 452,
+          "right": 736,
+          "top": 60,
+          "bottom": 739,
+          "width": 285,
+          "height": 680
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -142.9375,
+          "translateY": 9.5,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "dea838302ac4602d3ec6dbbdf1fc367ee3462c012f4fe12e5a7453fc7df99448"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-017/stand-south-candidate.png",
+            "sha256": "e2f080d9a9a4199500cc04307806ecbad1122b3b8f6fbfa455f9b32f9aca7b9e",
+            "alpha": {
+              "observedTransparentPixels": 31718,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 27,
+              "top": 32,
+              "right": 132,
+              "bottom": 286,
+              "width": 106,
+              "height": 255
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-018",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Older man with deep brown skin, very short white hair, thin white moustache and small round glasses, slim build; brick collared knit pullover, tan trousers and dark walking shoes. Clearly aged face with warm wrinkles.",
+      "intendedAge": 67,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-4-v1.png",
+        "sha256": "8d2dafc2d862cb17a8ba77d26c4d9880e38fdf0be934027e8c77e163759370d5",
+        "visibleBand": {
+          "left": 868,
+          "right": 1115,
+          "top": 67,
+          "bottom": 738,
+          "width": 248,
+          "height": 672
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -292,
+          "translateY": 9.875,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "dea838302ac4602d3ec6dbbdf1fc367ee3462c012f4fe12e5a7453fc7df99448"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-018/stand-south-candidate.png",
+            "sha256": "42337966ec37938c61426e586350fd56b9e148a044fcd3072f053c081667b0b6",
+            "alpha": {
+              "observedTransparentPixels": 34329,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 34,
+              "top": 35,
+              "right": 126,
+              "bottom": 286,
+              "width": 93,
+              "height": 252
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    },
+    {
+      "id": "gs022-new-person-019",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Older woman with light olive skin, silver hair in a loose low bun, small simple earrings, short broad build; moss-green open long coat over plum tunic, charcoal trousers and cream shoes. Clearly elderly face, gentle wrinkles.",
+      "intendedAge": 70,
+      "intendedSex": "Female",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-4-v1.png",
+        "sha256": "8d2dafc2d862cb17a8ba77d26c4d9880e38fdf0be934027e8c77e163759370d5",
+        "visibleBand": {
+          "left": 1225,
+          "right": 1545,
+          "top": 90,
+          "bottom": 739,
+          "width": 321,
+          "height": 650
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -439.5625,
+          "translateY": 9.5,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "dea838302ac4602d3ec6dbbdf1fc367ee3462c012f4fe12e5a7453fc7df99448"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-019/stand-south-candidate.png",
+            "sha256": "79a29de639eb09e981be70655f4e2480fba0f0537cb5c5340c27198e95ec7fc2",
+            "alpha": {
+              "observedTransparentPixels": 30489,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 20,
+              "top": 43,
+              "right": 139,
+              "bottom": 286,
+              "width": 120,
+              "height": 244
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Woman"
+    },
+    {
+      "id": "gs022-new-person-020",
+      "category": "patient-or-general-population",
+      "appearanceSpec": "Older man with light skin, bald crown with wispy white hair at the sides, clean-shaven, medium build; dusty-blue cardigan over muted mustard sweater, dark brown trousers and brown boots. Clearly elderly face, gentle wrinkles.",
+      "intendedAge": 70,
+      "intendedSex": "Male",
+      "demographicEvidence": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+        "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+        "status": "audit-frozen",
+        "coverage": {
+          "totalCases": 450,
+          "knownCases": 348,
+          "missingCasesExcluded": 102
+        }
+      },
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/sources/sheet-4-v1.png",
+        "sha256": "8d2dafc2d862cb17a8ba77d26c4d9880e38fdf0be934027e8c77e163759370d5",
+        "visibleBand": {
+          "left": 1643,
+          "right": 1928,
+          "top": 67,
+          "bottom": 739,
+          "width": 286,
+          "height": 673
+        },
+        "transform": {
+          "scale": 0.375,
+          "translateX": -589.75,
+          "translateY": 9.5,
+          "policy": "uniform scale and translation of original source; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "dea838302ac4602d3ec6dbbdf1fc367ee3462c012f4fe12e5a7453fc7df99448"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/candidates/gs022-new-person-020/stand-south-candidate.png",
+            "sha256": "0cdc1f7af8a81f1e80f5ca48cfb9c827918f021987643908894bfede648a864c",
+            "alpha": {
+              "observedTransparentPixels": 32333,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 26,
+              "top": 35,
+              "right": 133,
+              "bottom": 286,
+              "width": 108,
+              "height": 252
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      },
+      "displayGender": "Man"
+    }
+  ],
+  "artDirectionStatus": "identity-and-front-concepts-owner-approved",
+  "designSpecs": {
+    "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/design-specs.json",
+    "sha256": "9982e5a97fa7c025b2d778e4b479283fe998b9f99898a5c1b56e2ef8ec1daaac"
+  },
+  "demographicEvidence": {
+    "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/demographics/question-bank-demographics.json",
+    "sha256": "653aef4fcbdbfe81c9b468eb8aa4197cf348de3e394f627d65eede734264a96d",
+    "status": "audit-frozen"
+  },
+  "proofs": {
+    "status": "candidate-not-owner-approved",
+    "files": [
+      "proofs/patient-public20-production-light-CANDIDATE-NOT-APPROVED.png",
+      "proofs/patient-public20-production-dark-CANDIDATE-NOT-APPROVED.png",
+      "proofs/patient-public20-enlarged-2x-light-CANDIDATE-NOT-APPROVED.png",
+      "proofs/patient-public20-enlarged-2x-dark-CANDIDATE-NOT-APPROVED.png",
+      "proofs/patient-public20-native-32x64-dark-CANDIDATE-NOT-APPROVED.png"
+    ]
+  },
+  "proofLedger": [
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/proofs/patient-public20-production-light-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "b674282bff8e26251daf6f8ba5dd26ad975d676e9e8508a0c1e343fe98fbd470",
+      "status": "candidate-not-owner-approved"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/proofs/patient-public20-production-dark-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "3c7e77bb40217c4e0dfc7a8debcde874b240d63b101851a1333ec7e0b4213cf7",
+      "status": "candidate-not-owner-approved"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/proofs/patient-public20-enlarged-2x-light-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "44bd541ae92c42d462bd1d88235122d34cd13c2075fd0591d2047ac58df62d71",
+      "status": "candidate-not-owner-approved"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/proofs/patient-public20-enlarged-2x-dark-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "eff3662861e1e2bcef4521988d2e4767f36df3d8d52cc1f257f41a911fcdff64",
+      "status": "candidate-not-owner-approved"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/proofs/patient-public20-native-32x64-dark-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "96b4414b3e8ab3bf3fd0bf4d7a8e85644c73c0ffbdd576ed553ca09dcc6ea86f",
+      "status": "candidate-not-owner-approved"
+    }
+  ],
+  "approvalReceipt": {
+    "path": "artifacts/character-statics/gs-022-new-v1/patient-public20-v1/approvals/patient-public20-front-concepts-owner-approval-v1.json",
+    "sha256": "40cad211a558cc98e28e8916b49014b9fd8a1a2a957979fb8ae1c124c25ac59e",
+    "scope": "new patient/general-population visual identity and front-standing concept only"
+  }
+}

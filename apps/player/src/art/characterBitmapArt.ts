@@ -105,7 +105,7 @@ function resolveActorAtlas(
 ): { id: string; view: CharacterAtlasView } {
   if (pose === "walk-a") return { id: "character:actors-left-walk-a-v3", view: "left" };
   if (pose === "walk-b") return { id: "character:actors-left-walk-b-v3", view: "left" };
-  if (pose === "seated") return { id: "character:actors-front-seated-v3", view: "front" };
+  if (pose === "seated" || pose === "exam-table") return { id: "character:actors-front-seated-v3", view: "front" };
   if (pose === "working") return { id: "character:actors-front-working-v3", view: "front" };
   if (pose === "interaction") return { id: "character:actors-left-interaction-v3", view: "left" };
   if (pose === "jump-recovery") return { id: "character:actors-front-idle-v3", view: "front" };
@@ -119,15 +119,15 @@ function resolveFounderV4Atlas(direction: CharacterDirection, pose: CharacterPos
   if (pose === "walk-a" || pose === "walk-b") {
     const phase = pose === "walk-a" ? "a" : "b";
     const view = direction === "front" ? "front" : direction === "back" ? "back" : movingRight ? "right" : "left";
-    return { id: `character:founders-${view}-walk-${phase}-v4-r9-hires`, view };
+    return { id: `character:founders-${view}-walk-${phase}-v4-r10-feet`, view };
   }
-  if (pose === "seated") return { id: "character:founders-front-seated-v4-r9-hires", view: "front" };
-  if (pose === "working") return { id: "character:founders-front-working-v4-r9-hires", view: "front" };
-  if (pose === "interaction") return { id: "character:founders-clipboard-v4-r9-hires", view: "front" };
-  if (pose === "jump-recovery") return { id: "character:founders-jump-recovery-v4-r9-hires", view: "front" };
-  if (pose === "star-jump") return { id: "character:founders-star-jump-v4-r9-hires", view: "front" };
+  if (pose === "seated") return { id: "character:founders-front-seated-v4-r10-feet", view: "front" };
+  if (pose === "working") return { id: "character:founders-front-working-v4-r10-feet", view: "front" };
+  if (pose === "interaction") return { id: "character:founders-clipboard-v4-r10-feet", view: "front" };
+  if (pose === "jump-recovery") return { id: "character:founders-jump-recovery-v4-r10-feet", view: "front" };
+  if (pose === "star-jump") return { id: "character:founders-star-jump-v4-r10-feet", view: "front" };
   const view = direction === "front" ? "front" : direction === "back" ? "back" : movingRight ? "right" : "left";
-  return { id: `character:founders-${view}-idle-v4-r9-hires`, view };
+  return { id: `character:founders-${view}-idle-v4-r10-feet`, view };
 }
 
 function resolvePatientV1Atlas(
@@ -157,6 +157,9 @@ function resolvePatientV1Atlas(
   if (pose === "seated") {
     const seatedView = direction === "side" ? view : "front";
     return { id: `character:patients-seated-${seatedView}-v1-r7-hires`, view: seatedView };
+  }
+  if (pose === "exam-table") {
+    return { id: "character:patients-exam-table-v1-r7-hires", view: "front" };
   }
   return { id: `character:patients-${view}-idle-v1-r7-hires`, view };
 }
@@ -190,7 +193,7 @@ export function characterBitmapLayers(
   const selected = patientV1
     ? resolvePatientV1Atlas(direction, pose, movingRight, representation)
     : founder && representation === "portrait"
-    ? { id: "character:founders-portrait-v4-r9-hires", view: "front" as const }
+    ? { id: "character:founders-portrait-v4-r10-feet", view: "front" as const }
     : founder ? resolveFounderV4Atlas(direction, pose, movingRight) : resolveActorAtlas(direction, pose);
   const actor: CharacterBitmapLayer = {
     atlas: atlas(selected.id),

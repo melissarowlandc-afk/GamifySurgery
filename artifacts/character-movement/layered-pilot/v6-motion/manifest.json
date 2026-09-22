@@ -1,0 +1,3710 @@
+{
+  "schemaVersion": 6,
+  "status": "motion-pilot-awaiting-visual-review",
+  "rig": {
+    "id": "patient.adult.046",
+    "view": "south",
+    "canvas": {
+      "width": 160,
+      "height": 320
+    },
+    "floorY": 287,
+    "head": {
+      "x": 36,
+      "y": 28,
+      "scale": 1,
+      "rigid": true
+    },
+    "torso": {
+      "topY": 110,
+      "height": 97
+    },
+    "hips": {
+      "left": {
+        "x": 60,
+        "y": 197
+      },
+      "right": {
+        "x": 100,
+        "y": 197
+      }
+    },
+    "shoulders": {
+      "left": {
+        "x": 46,
+        "y": 128
+      },
+      "right": {
+        "x": 108,
+        "y": 128
+      }
+    },
+    "arms": {
+      "sleeveScale": 0.42,
+      "sleevePivot": {
+        "x": 47,
+        "y": 35
+      },
+      "handScale": 0.25,
+      "handPivot": {
+        "x": 45,
+        "y": 4
+      },
+      "restHands": {
+        "left": {
+          "x": 42,
+          "y": 187
+        },
+        "right": {
+          "x": 112,
+          "y": 187
+        }
+      }
+    },
+    "seated": {
+      "lowerTopY": 205,
+      "lowerHeight": 82,
+      "seatY": 217,
+      "replacementFrame": 10,
+      "armScale": 0.14,
+      "armRects": {
+        "left": [
+          224,
+          212,
+          381,
+          595
+        ],
+        "right": [
+          931,
+          212,
+          375,
+          595
+        ]
+      },
+      "armPivots": {
+        "left": {
+          "x": 171.075,
+          "y": 36.906
+        },
+        "right": {
+          "x": 209.109,
+          "y": 36.737
+        }
+      }
+    }
+  },
+  "assetPins": {
+    "source": {
+      "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+      "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+    },
+    "head": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-source-head-v5.png",
+      "sha256": "2453f22e72bffc066e4aed5e5348b0d4ba623e4a053bb71bd267de7596bbdc2b"
+    },
+    "torso": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-torso-arm-free-v4.png",
+      "sha256": "609454d343fa5406df44b911655f98127ff5fd540802093d7ce9e846019ee86f"
+    },
+    "legs": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-continuous-legs-v5.png",
+      "sha256": "67708ba76d4538602314d25a484d87a5ffc8383f747acc6865fde3143545dc71"
+    },
+    "seated": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-lowerbody-v6.png",
+      "sha256": "cdce1e801d28d293b132962b49911414414740869666154489af3eb4350760b3"
+    },
+    "seatedArms": {
+      "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-arms-v6.png",
+      "sha256": "6e7c2e7a5d0544db840a9fde9094b1839e57fc51473ff1066d3fda310410d882",
+      "provenance": {
+        "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-arms-v6-provenance.json",
+        "sha256": "e39462a7a91a9caafc0e37729542f742917e51e6dab206b904a6f44722b488b9"
+      },
+      "prompt": {
+        "path": "docs/execplans/layered-seated-arm-edit-prompt.txt",
+        "sha256": "b802e26c763cdd4a4af8aad9372c91c41ab9e74d745dbe70aff2a79ed9ef38a3"
+      }
+    }
+  },
+  "sequences": [
+    {
+      "id": "walk",
+      "label": "South walk cycle",
+      "fps": 10,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/walk/00.png",
+          "sha256": "eb6ec754bb7be6d3b7901b9d9d85a357564e204d3361d558ae1e81bfbfc1f635",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 0,
+            "headScale": 1,
+            "bodyBob": 0,
+            "legAngles": {
+              "left": 0,
+              "right": 0
+            },
+            "armAngles": {
+              "left": 0,
+              "right": 0
+            },
+            "armOffsetsY": {
+              "left": 0,
+              "right": 0
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 280
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.690909090909088,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.81578947368421,
+              "hip": {
+                "x": 62.69090909090909,
+                "y": 197
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 280,
+              "planted": false,
+              "shiftX": -2.0704225352112644,
+              "shiftY": -6,
+              "supportX": 100,
+              "actualSupportX": 99.65068493150685,
+              "hip": {
+                "x": 97.92957746478874,
+                "y": 191
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 131,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 1,
+          "file": "frames/walk/01.png",
+          "sha256": "edbf72a69fa888b457350b631f2aa2b4e0c33a39d4503133427d0ea68976aa9e",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 1,
+            "headScale": 1,
+            "bodyBob": 0.07612046748871326,
+            "legAngles": {
+              "left": 0.0068883017825716155,
+              "right": 0.0068883017825716155
+            },
+            "armAngles": {
+              "left": 0.017220754456429038,
+              "right": 0.017220754456429038
+            },
+            "armOffsetsY": {
+              "left": -1.1480502970952693,
+              "right": 1.1480502970952693
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 280.532843272421
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.767857142857146,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.73275862068966,
+              "hip": {
+                "x": 62.767857142857146,
+                "y": 197.07612046748872
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 281,
+              "planted": false,
+              "shiftX": -1.3617021276595693,
+              "shiftY": -5.467156727578981,
+              "supportX": 100,
+              "actualSupportX": 99.86301369863014,
+              "hip": {
+                "x": 98.63829787234043,
+                "y": 191.60896373990974
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.076120467488714,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 26,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 2,
+          "file": "frames/walk/02.png",
+          "sha256": "4c691faa511113616daf5937c29541fcd72c2bfd3b84eda2f8268b2152480df9",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 2,
+            "headScale": 1,
+            "bodyBob": 0.2928932188134524,
+            "legAngles": {
+              "left": 0.012727922061357854,
+              "right": 0.012727922061357854
+            },
+            "armAngles": {
+              "left": 0.03181980515339464,
+              "right": 0.03181980515339464
+            },
+            "armOffsetsY": {
+              "left": -2.1213203435596424,
+              "right": 2.1213203435596424
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 282.0502525316942
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.103999999999999,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 60.40769230769231,
+              "hip": {
+                "x": 63.104,
+                "y": 197.29289321881345
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 283,
+              "planted": false,
+              "shiftX": -1.1832061068702302,
+              "shiftY": -4.949747468305816,
+              "supportX": 100,
+              "actualSupportX": 100.30508474576271,
+              "hip": {
+                "x": 98.81679389312977,
+                "y": 192.34314575050763
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.292893218813454,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 25,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 3,
+          "file": "frames/walk/03.png",
+          "sha256": "fb08ac2b711e55fde16bc9122f1f354fdc22eca68467353e2be1c87199ebe6b2",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 3,
+            "headScale": 1,
+            "bodyBob": 0.6173165676349102,
+            "legAngles": {
+              "left": 0.01662983158520316,
+              "right": 0.01662983158520316
+            },
+            "armAngles": {
+              "left": 0.041574578963007904,
+              "right": 0.041574578963007904
+            },
+            "armOffsetsY": {
+              "left": -2.77163859753386,
+              "right": 2.77163859753386
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 284.3212159734444
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.379562043795623,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 60.02836879432624,
+              "hip": {
+                "x": 63.37956204379562,
+                "y": 197.6173165676349
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 285,
+              "planted": false,
+              "shiftX": -0.7629629629629591,
+              "shiftY": -2.678784026555604,
+              "supportX": 100,
+              "actualSupportX": 100.16546762589928,
+              "hip": {
+                "x": 99.23703703703704,
+                "y": 194.9385325410793
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.61731656763491,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 25,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 4,
+          "file": "frames/walk/04.png",
+          "sha256": "f311ee848106f179b73dcceac1f8f876514bb8e5aeaeb3fdcb34052a33e433c2",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 4,
+            "headScale": 1,
+            "bodyBob": 0.9999999999999999,
+            "legAngles": {
+              "left": 0.018,
+              "right": 0.018
+            },
+            "armAngles": {
+              "left": 0.045,
+              "right": 0.045
+            },
+            "armOffsetsY": {
+              "left": -3,
+              "right": 3
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.7727272727272734,
+              "shiftY": -1,
+              "supportX": 60,
+              "actualSupportX": 59.728070175438596,
+              "hip": {
+                "x": 63.77272727272727,
+                "y": 197
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": false,
+              "shiftX": -0.810810810810807,
+              "shiftY": -1,
+              "supportX": 100,
+              "actualSupportX": 100.29565217391304,
+              "hip": {
+                "x": 99.1891891891892,
+                "y": 197
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 29,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 25,
+            "top": 38,
+            "right": 129,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 5,
+          "file": "frames/walk/05.png",
+          "sha256": "d8e171c5ae89915c5fb2393bd74c22c7ba513500c177beeeec0f92ea61833750",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 5,
+            "headScale": 1,
+            "bodyBob": 0.6173165676349103,
+            "legAngles": {
+              "left": 0.01662983158520316,
+              "right": 0.01662983158520316
+            },
+            "armAngles": {
+              "left": 0.041574578963007904,
+              "right": 0.041574578963007904
+            },
+            "armOffsetsY": {
+              "left": -2.77163859753386,
+              "right": 2.77163859753386
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 284.3212159734444,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 285,
+              "planted": false,
+              "shiftX": 3.379562043795623,
+              "shiftY": -2.678784026555604,
+              "supportX": 60,
+              "actualSupportX": 59.84172661870504,
+              "hip": {
+                "x": 63.37956204379562,
+                "y": 194.9385325410793
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -0.7629629629629591,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 100.16546762589928,
+              "hip": {
+                "x": 99.23703703703704,
+                "y": 197.6173165676349
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.61731656763491,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 25,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 6,
+          "file": "frames/walk/06.png",
+          "sha256": "d450932f0408b72d7cdcbe1e16d3bc808b393ace0682aa5796b123178cbe4308",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 6,
+            "headScale": 1,
+            "bodyBob": 0.29289321881345254,
+            "legAngles": {
+              "left": 0.012727922061357855,
+              "right": 0.012727922061357855
+            },
+            "armAngles": {
+              "left": 0.03181980515339464,
+              "right": 0.03181980515339464
+            },
+            "armOffsetsY": {
+              "left": -2.121320343559643,
+              "right": 2.121320343559643
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 282.0502525316942,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 282,
+              "planted": false,
+              "shiftX": 3.103999999999999,
+              "shiftY": -4.949747468305816,
+              "supportX": 60,
+              "actualSupportX": 60.12328767123287,
+              "hip": {
+                "x": 63.104,
+                "y": 192.34314575050763
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -1.1832061068702302,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 99.85074626865672,
+              "hip": {
+                "x": 98.81679389312977,
+                "y": 197.29289321881345
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.292893218813454,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 25,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 7,
+          "file": "frames/walk/07.png",
+          "sha256": "009931ff830005f609a67a685d208601bf2a6ae3df15da8df1c6f81a85aeb42f",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 7,
+            "headScale": 1,
+            "bodyBob": 0.07612046748871326,
+            "legAngles": {
+              "left": 0.006888301782571617,
+              "right": 0.006888301782571617
+            },
+            "armAngles": {
+              "left": 0.017220754456429045,
+              "right": 0.017220754456429045
+            },
+            "armOffsetsY": {
+              "left": -1.1480502970952697,
+              "right": 1.1480502970952697
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 280.532843272421,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 280,
+              "planted": false,
+              "shiftX": 2.767857142857146,
+              "shiftY": -6.467156727578981,
+              "supportX": 60,
+              "actualSupportX": 59.93150684931507,
+              "hip": {
+                "x": 62.767857142857146,
+                "y": 190.60896373990974
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -1.3617021276595693,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.86301369863014,
+              "hip": {
+                "x": 98.63829787234043,
+                "y": 198.07612046748872
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.076120467488714,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 26,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 8,
+          "file": "frames/walk/08.png",
+          "sha256": "fb0ab684299cddc710cab2ed0d595d53a497cd0d3f8b00c928ffe5c9a62494b3",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 8,
+            "headScale": 1,
+            "bodyBob": 0,
+            "legAngles": {
+              "left": 2.2043642384652355e-18,
+              "right": 2.2043642384652355e-18
+            },
+            "armAngles": {
+              "left": 5.5109105961630896e-18,
+              "right": 5.5109105961630896e-18
+            },
+            "armOffsetsY": {
+              "left": -3.6739403974420594e-16,
+              "right": 3.6739403974420594e-16
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 280,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 280,
+              "planted": false,
+              "shiftX": 2.690909090909088,
+              "shiftY": -7,
+              "supportX": 60,
+              "actualSupportX": 59.81578947368421,
+              "hip": {
+                "x": 62.69090909090909,
+                "y": 190
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.0704225352112644,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.65068493150685,
+              "hip": {
+                "x": 97.92957746478874,
+                "y": 198
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 131,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 9,
+          "file": "frames/walk/09.png",
+          "sha256": "88e939f38c63243247edfa575b63e038c03ef8dcb15a2673c4bcd5897836ccce",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 9,
+            "headScale": 1,
+            "bodyBob": 0.07612046748871315,
+            "legAngles": {
+              "left": -0.006888301782571614,
+              "right": -0.006888301782571614
+            },
+            "armAngles": {
+              "left": -0.017220754456429035,
+              "right": -0.017220754456429035
+            },
+            "armOffsetsY": {
+              "left": 1.148050297095269,
+              "right": -1.148050297095269
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 280.532843272421,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 281,
+              "planted": false,
+              "shiftX": 1.574468085106382,
+              "shiftY": -5.467156727578981,
+              "supportX": 60,
+              "actualSupportX": 59.92465753424658,
+              "hip": {
+                "x": 61.57446808510638,
+                "y": 191.60896373990974
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.35664335664336,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.85810810810811,
+              "hip": {
+                "x": 97.64335664335664,
+                "y": 198.07612046748872
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.076120467488714,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 132,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 10,
+          "file": "frames/walk/10.png",
+          "sha256": "618d8f500f71e93619d28e1c1584f5937423b6dab4361fe118ab5c91a540b284",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 10,
+            "headScale": 1,
+            "bodyBob": 0.2928932188134523,
+            "legAngles": {
+              "left": -0.012727922061357854,
+              "right": -0.012727922061357854
+            },
+            "armAngles": {
+              "left": -0.03181980515339464,
+              "right": -0.03181980515339464
+            },
+            "armOffsetsY": {
+              "left": 2.1213203435596424,
+              "right": -2.1213203435596424
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 282.0502525316942,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 283,
+              "planted": false,
+              "shiftX": 1.7307692307692335,
+              "shiftY": -4.949747468305816,
+              "supportX": 60,
+              "actualSupportX": 59.36666666666667,
+              "hip": {
+                "x": 61.73076923076923,
+                "y": 192.34314575050763
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.6451612903225765,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 99.98425196850394,
+              "hip": {
+                "x": 97.35483870967742,
+                "y": 197.29289321881345
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.292893218813454,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 37,
+            "right": 132,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 11,
+          "file": "frames/walk/11.png",
+          "sha256": "0eb7786ae186c89fc55aff6fb1d5c4a4742bf256efdb5807ff3df5a370756ce6",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 11,
+            "headScale": 1,
+            "bodyBob": 0.6173165676349097,
+            "legAngles": {
+              "left": -0.016629831585203154,
+              "right": -0.016629831585203154
+            },
+            "armAngles": {
+              "left": -0.04157457896300789,
+              "right": -0.04157457896300789
+            },
+            "armOffsetsY": {
+              "left": 2.7716385975338595,
+              "right": -2.7716385975338595
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 284.3212159734444,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 285,
+              "planted": false,
+              "shiftX": 0.9635036496350367,
+              "shiftY": -2.678784026555604,
+              "supportX": 60,
+              "actualSupportX": 59.638297872340424,
+              "hip": {
+                "x": 60.96350364963504,
+                "y": 194.9385325410793
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.165467625899282,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 99.76223776223776,
+              "hip": {
+                "x": 96.83453237410072,
+                "y": 197.6173165676349
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.61731656763491,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 37,
+            "right": 133,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 12,
+          "file": "frames/walk/12.png",
+          "sha256": "308279a12368557df2d231ebdeb2aa4fde6ef140ca9931d452bdfeb0b5c246ad",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 12,
+            "headScale": 1,
+            "bodyBob": 0.9999999999999998,
+            "legAngles": {
+              "left": -0.018,
+              "right": -0.018
+            },
+            "armAngles": {
+              "left": -0.045,
+              "right": -0.045
+            },
+            "armOffsetsY": {
+              "left": 3,
+              "right": -3
+            },
+            "planted": "right",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": false,
+              "shiftX": 1.0180180180180187,
+              "shiftY": -1,
+              "supportX": 60,
+              "actualSupportX": 60.230088495575224,
+              "hip": {
+                "x": 61.01801801801802,
+                "y": 197
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.156028368794324,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 99.75862068965517,
+              "hip": {
+                "x": 96.84397163120568,
+                "y": 198
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 29,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 38,
+            "right": 133,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 13,
+          "file": "frames/walk/13.png",
+          "sha256": "c6959695ac0f93fd57aac876f3822a1964a8fc2db604db8e247103f72c81f76f",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 13,
+            "headScale": 1,
+            "bodyBob": 0.6173165676349099,
+            "legAngles": {
+              "left": -0.016629831585203158,
+              "right": -0.016629831585203158
+            },
+            "armAngles": {
+              "left": -0.0415745789630079,
+              "right": -0.0415745789630079
+            },
+            "armOffsetsY": {
+              "left": 2.77163859753386,
+              "right": -2.77163859753386
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 284.3212159734444
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 0.9635036496350367,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.638297872340424,
+              "hip": {
+                "x": 60.96350364963504,
+                "y": 197.6173165676349
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 285,
+              "planted": false,
+              "shiftX": -3.165467625899282,
+              "shiftY": -2.678784026555604,
+              "supportX": 100,
+              "actualSupportX": 99.67605633802818,
+              "hip": {
+                "x": 96.83453237410072,
+                "y": 194.9385325410793
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.61731656763491,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 37,
+            "right": 133,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 14,
+          "file": "frames/walk/14.png",
+          "sha256": "53d861f16b7eeb225491ed20bfee470ae54ef52e188b6a0e8759bad2a58172e3",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 14,
+            "headScale": 1,
+            "bodyBob": 0.29289321881345265,
+            "legAngles": {
+              "left": -0.012727922061357857,
+              "right": -0.012727922061357857
+            },
+            "armAngles": {
+              "left": -0.031819805153394644,
+              "right": -0.031819805153394644
+            },
+            "armOffsetsY": {
+              "left": 2.121320343559643,
+              "right": -2.121320343559643
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 282.0502525316942
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 1.7307692307692335,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.762962962962966,
+              "hip": {
+                "x": 61.73076923076923,
+                "y": 197.29289321881345
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 282,
+              "planted": false,
+              "shiftX": -2.6451612903225765,
+              "shiftY": -4.949747468305816,
+              "supportX": 100,
+              "actualSupportX": 100.13103448275862,
+              "hip": {
+                "x": 97.35483870967742,
+                "y": 192.34314575050763
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.292893218813454,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 37,
+            "right": 132,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 15,
+          "file": "frames/walk/15.png",
+          "sha256": "309b463a3de7a97189c014d865438d8f17d3ac1fa218efeb32607647597e9bda",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "walk",
+            "frame": 15,
+            "headScale": 1,
+            "bodyBob": 0.07612046748871348,
+            "legAngles": {
+              "left": -0.006888301782571627,
+              "right": -0.006888301782571627
+            },
+            "armAngles": {
+              "left": -0.017220754456429066,
+              "right": -0.017220754456429066
+            },
+            "armOffsetsY": {
+              "left": 1.148050297095271,
+              "right": -1.148050297095271
+            },
+            "planted": "left",
+            "footTargets": {
+              "left": 287,
+              "right": 280.532843272421
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 1.574468085106382,
+              "shiftY": 1,
+              "supportX": 60,
+              "actualSupportX": 59.92465753424658,
+              "hip": {
+                "x": 61.57446808510638,
+                "y": 198.07612046748872
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 281,
+              "planted": false,
+              "shiftX": -2.35664335664336,
+              "shiftY": -5.467156727578981,
+              "supportX": 100,
+              "actualSupportX": 99.85810810810811,
+              "hip": {
+                "x": 97.64335664335664,
+                "y": 191.60896373990974
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.076120467488714,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 132,
+            "bottom": 287
+          }
+        }
+      ]
+    },
+    {
+      "id": "sit-down",
+      "label": "Sit down",
+      "fps": 10,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/sit-down/00.png",
+          "sha256": "05bbb67220c22f3aedf56339bfe172e759965cb533af71509cf8579d071b3ed2",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 0,
+            "headScale": 1,
+            "progress": 0,
+            "replacement": false,
+            "bodyDrop": 0,
+            "legAngles": {
+              "left": 0,
+              "right": 0
+            },
+            "armAngles": {
+              "left": 0,
+              "right": 0
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.690909090909088,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.81578947368421,
+              "hip": {
+                "x": 62.69090909090909,
+                "y": 197
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.0704225352112644,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.65068493150685,
+              "hip": {
+                "x": 97.92957746478874,
+                "y": 198
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 131,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 1,
+          "file": "frames/sit-down/01.png",
+          "sha256": "115a0dcb2506188388e7c47c776940001fd12ea803785e21ee193a296ff53b9c",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 1,
+            "headScale": 1,
+            "progress": 0.012740740740740742,
+            "replacement": false,
+            "bodyDrop": 0.20385185185185187,
+            "legAngles": {
+              "left": 0.0005733333333333334,
+              "right": -0.0005733333333333334
+            },
+            "armAngles": {
+              "left": -0.007007407407407408,
+              "right": 0.007007407407407408
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.558558558558559,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.947826086956525,
+              "hip": {
+                "x": 62.55855855855856,
+                "y": 197.20385185185185
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.1538461538461604,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.75510204081633,
+              "hip": {
+                "x": 97.84615384615384,
+                "y": 198.20385185185185
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.20385185185185,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 131,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 2,
+          "file": "frames/sit-down/02.png",
+          "sha256": "58fe5ed1882fb9c8a9767594e88b516685b18b9b4f682a266ed552547ca6b3f7",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 2,
+            "headScale": 1,
+            "progress": 0.0485925925925926,
+            "replacement": false,
+            "bodyDrop": 0.7774814814814816,
+            "legAngles": {
+              "left": 0.0021866666666666666,
+              "right": -0.0021866666666666666
+            },
+            "armAngles": {
+              "left": -0.02672592592592593,
+              "right": 0.02672592592592593
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.442857142857143,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 60.136986301369866,
+              "hip": {
+                "x": 62.44285714285714,
+                "y": 197.7774814814815
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.1366906474820127,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 99.83802816901408,
+              "hip": {
+                "x": 97.86330935251799,
+                "y": 197.7774814814815
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.77748148148148,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 3,
+          "file": "frames/sit-down/03.png",
+          "sha256": "490acb58fa76f45eb4d3d4c6febf4c9c1f8be7f8e3d60fd753d8a62dce385ad7",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 3,
+            "headScale": 1,
+            "progress": 0.10400000000000002,
+            "replacement": false,
+            "bodyDrop": 1.6640000000000004,
+            "legAngles": {
+              "left": 0.004680000000000001,
+              "right": -0.004680000000000001
+            },
+            "armAngles": {
+              "left": -0.057200000000000015,
+              "right": 0.057200000000000015
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.477941176470587,
+              "shiftY": -1,
+              "supportX": 60,
+              "actualSupportX": 60.02127659574468,
+              "hip": {
+                "x": 62.47794117647059,
+                "y": 197.664
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.065217391304344,
+              "shiftY": -1,
+              "supportX": 100,
+              "actualSupportX": 99.66197183098592,
+              "hip": {
+                "x": 97.93478260869566,
+                "y": 197.664
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 29.664,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 29,
+            "top": 38,
+            "right": 129,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 4,
+          "file": "frames/sit-down/04.png",
+          "sha256": "3d0a32c71718496873eb54cafedd38950da03de22a644cadd9b779104ef8a07c",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 4,
+            "headScale": 1,
+            "progress": 0.17540740740740743,
+            "replacement": false,
+            "bodyDrop": 2.806518518518519,
+            "legAngles": {
+              "left": 0.007893333333333334,
+              "right": -0.007893333333333334
+            },
+            "armAngles": {
+              "left": -0.09647407407407409,
+              "right": 0.09647407407407409
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.9716312056737593,
+              "shiftY": -2,
+              "supportX": 60,
+              "actualSupportX": 59.929577464788736,
+              "hip": {
+                "x": 62.97163120567376,
+                "y": 197.80651851851852
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.3741007194244617,
+              "shiftY": -2,
+              "supportX": 100,
+              "actualSupportX": 99.875,
+              "hip": {
+                "x": 97.62589928057554,
+                "y": 197.80651851851852
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 30.80651851851852,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 30,
+            "top": 39,
+            "right": 128,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 5,
+          "file": "frames/sit-down/05.png",
+          "sha256": "33992e5c719952d63e3660fd5dce2be5964952cccb8a44801b12dfe19e700562",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 5,
+            "headScale": 1,
+            "progress": 0.25925925925925924,
+            "replacement": false,
+            "bodyDrop": 4.148148148148148,
+            "legAngles": {
+              "left": 0.011666666666666665,
+              "right": -0.011666666666666665
+            },
+            "armAngles": {
+              "left": -0.1425925925925926,
+              "right": 0.1425925925925926
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.3035714285714306,
+              "shiftY": -4,
+              "supportX": 60,
+              "actualSupportX": 60.18103448275862,
+              "hip": {
+                "x": 63.30357142857143,
+                "y": 197.14814814814815
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.982142857142861,
+              "shiftY": -4,
+              "supportX": 100,
+              "actualSupportX": 100.10619469026548,
+              "hip": {
+                "x": 97.01785714285714,
+                "y": 197.14814814814815
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 32.148148148148145,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 31,
+            "top": 41,
+            "right": 127,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 6,
+          "file": "frames/sit-down/06.png",
+          "sha256": "0a9f9e462db0a4e3e8296fece4e044b71d36b7c43dea4a7ebd0778c46f7278df",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 6,
+            "headScale": 1,
+            "progress": 0.3520000000000001,
+            "replacement": false,
+            "bodyDrop": 5.6320000000000014,
+            "legAngles": {
+              "left": 0.015840000000000003,
+              "right": -0.015840000000000003
+            },
+            "armAngles": {
+              "left": -0.19360000000000008,
+              "right": 0.19360000000000008
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.379562043795623,
+              "shiftY": -5,
+              "supportX": 60,
+              "actualSupportX": 60.02836879432624,
+              "hip": {
+                "x": 63.37956204379562,
+                "y": 197.632
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.065217391304344,
+              "shiftY": -5,
+              "supportX": 100,
+              "actualSupportX": 99.66197183098592,
+              "hip": {
+                "x": 96.93478260869566,
+                "y": 197.632
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 33.632000000000005,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 32,
+            "top": 42,
+            "right": 125,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 7,
+          "file": "frames/sit-down/07.png",
+          "sha256": "0a7bca42c7a93383ab85c96f358c9083d732de5f17e409c44851921cd249422e",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 7,
+            "headScale": 1,
+            "progress": 0.45007407407407407,
+            "replacement": false,
+            "bodyDrop": 7.201185185185185,
+            "legAngles": {
+              "left": 0.02025333333333333,
+              "right": -0.02025333333333333
+            },
+            "armAngles": {
+              "left": -0.24754074074074076,
+              "right": 0.24754074074074076
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.521367521367523,
+              "shiftY": -7,
+              "supportX": 60,
+              "actualSupportX": 59.99173553719008,
+              "hip": {
+                "x": 63.52136752136752,
+                "y": 197.20118518518518
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.1120689655172384,
+              "shiftY": -7,
+              "supportX": 100,
+              "actualSupportX": 99.73949579831933,
+              "hip": {
+                "x": 96.88793103448276,
+                "y": 197.20118518518518
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 35.20118518518518,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 33,
+            "top": 44,
+            "right": 124,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 8,
+          "file": "frames/sit-down/08.png",
+          "sha256": "480c7245630214a926e53b1751ed326823d882947937bf0b85a5e06e2134147e",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 8,
+            "headScale": 1,
+            "progress": 0.5499259259259259,
+            "replacement": false,
+            "bodyDrop": 8.798814814814815,
+            "legAngles": {
+              "left": 0.024746666666666667,
+              "right": -0.024746666666666667
+            },
+            "armAngles": {
+              "left": -0.30245925925925926,
+              "right": 0.30245925925925926
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 4.064285714285717,
+              "shiftY": -8,
+              "supportX": 60,
+              "actualSupportX": 60.21678321678322,
+              "hip": {
+                "x": 64.06428571428572,
+                "y": 197.79881481481482
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.847826086956516,
+              "shiftY": -8,
+              "supportX": 100,
+              "actualSupportX": 100.2394366197183,
+              "hip": {
+                "x": 96.15217391304348,
+                "y": 197.79881481481482
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 36.79881481481482,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 34,
+            "top": 45,
+            "right": 123,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 9,
+          "file": "frames/sit-down/09.png",
+          "sha256": "54432e8669e7cbe760b216cd9c3df26491ad6156118862f6b426ffab191be658",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 9,
+            "headScale": 1,
+            "progress": 0.648,
+            "replacement": false,
+            "bodyDrop": 10.368,
+            "legAngles": {
+              "left": 0.02916,
+              "right": -0.02916
+            },
+            "armAngles": {
+              "left": -0.35640000000000005,
+              "right": 0.35640000000000005
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 4.00787401574803,
+              "shiftY": -10,
+              "supportX": 60,
+              "actualSupportX": 60.23255813953488,
+              "hip": {
+                "x": 64.00787401574803,
+                "y": 197.368
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.3983739837398304,
+              "shiftY": -10,
+              "supportX": 100,
+              "actualSupportX": 99.890625,
+              "hip": {
+                "x": 96.60162601626017,
+                "y": 197.368
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 38.368,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 34,
+            "top": 47,
+            "right": 123,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 10,
+          "file": "frames/sit-down/10.png",
+          "sha256": "90eea346c4797a91d21b3035e3a5c680ac6df9286fbf22ebab175b4995025511",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 10,
+            "headScale": 1,
+            "progress": 0.7407407407407407,
+            "replacement": true,
+            "bodyDrop": 11.851851851851851,
+            "legAngles": {
+              "left": 0.03333333333333333,
+              "right": -0.03333333333333333
+            },
+            "armAngles": {
+              "left": -0.40740740740740744,
+              "right": 0.40740740740740744
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 39.85185185185185,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 48,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 11,
+          "file": "frames/sit-down/11.png",
+          "sha256": "86050902136dd6bd482c33f98012ad118d0f4059d391e3c68e7165a7791c72a3",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 11,
+            "headScale": 1,
+            "progress": 0.8245925925925925,
+            "replacement": true,
+            "bodyDrop": 13.19348148148148,
+            "legAngles": {
+              "left": 0.03710666666666666,
+              "right": -0.03710666666666666
+            },
+            "armAngles": {
+              "left": -0.45352592592592594,
+              "right": 0.45352592592592594
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 41.193481481481484,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 50,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 12,
+          "file": "frames/sit-down/12.png",
+          "sha256": "ce173148cb158d64d3d7216e238ecef6a2eb5c30d38b4bc3b9100e0dfdcfd417",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 12,
+            "headScale": 1,
+            "progress": 0.8960000000000001,
+            "replacement": true,
+            "bodyDrop": 14.336000000000002,
+            "legAngles": {
+              "left": 0.04032,
+              "right": -0.04032
+            },
+            "armAngles": {
+              "left": -0.4928000000000001,
+              "right": 0.4928000000000001
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 42.336,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 51,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 13,
+          "file": "frames/sit-down/13.png",
+          "sha256": "4380511310ed7e39b328f8b3906dc75e6b59d0e94c7e090a863fc0d9bf869608",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 13,
+            "headScale": 1,
+            "progress": 0.9514074074074075,
+            "replacement": true,
+            "bodyDrop": 15.22251851851852,
+            "legAngles": {
+              "left": 0.042813333333333335,
+              "right": -0.042813333333333335
+            },
+            "armAngles": {
+              "left": -0.5232740740740741,
+              "right": 0.5232740740740741
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 43.22251851851852,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 52,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 14,
+          "file": "frames/sit-down/14.png",
+          "sha256": "8d078a60a7a7fedaf4215ec407f2ca3f2f4ef583e4231a6d968e19e99ce945a0",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 14,
+            "headScale": 1,
+            "progress": 0.9872592592592593,
+            "replacement": true,
+            "bodyDrop": 15.796148148148148,
+            "legAngles": {
+              "left": 0.04442666666666666,
+              "right": -0.04442666666666666
+            },
+            "armAngles": {
+              "left": -0.5429925925925927,
+              "right": 0.5429925925925927
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 43.79614814814815,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 52,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 15,
+          "file": "frames/sit-down/15.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        }
+      ]
+    },
+    {
+      "id": "seated-hold",
+      "label": "Seated hold",
+      "fps": 6,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/seated-hold/00.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 1,
+          "file": "frames/seated-hold/01.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 2,
+          "file": "frames/seated-hold/02.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 3,
+          "file": "frames/seated-hold/03.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 4,
+          "file": "frames/seated-hold/04.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 5,
+          "file": "frames/seated-hold/05.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 6,
+          "file": "frames/seated-hold/06.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 7,
+          "file": "frames/seated-hold/07.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        }
+      ]
+    },
+    {
+      "id": "stand-up",
+      "label": "Stand up",
+      "fps": 10,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/stand-up/00.png",
+          "sha256": "d150648bcc88a0d566b78f995ca41944decdc1ade1a1729c8377a3ed8d67db09",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 15,
+            "headScale": 1,
+            "progress": 1,
+            "replacement": true,
+            "bodyDrop": 16,
+            "legAngles": {
+              "left": 0.045,
+              "right": -0.045
+            },
+            "armAngles": {
+              "left": -0.55,
+              "right": 0.55
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 44,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 53,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 1,
+          "file": "frames/stand-up/01.png",
+          "sha256": "8d078a60a7a7fedaf4215ec407f2ca3f2f4ef583e4231a6d968e19e99ce945a0",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 14,
+            "headScale": 1,
+            "progress": 0.9872592592592593,
+            "replacement": true,
+            "bodyDrop": 15.796148148148148,
+            "legAngles": {
+              "left": 0.04442666666666666,
+              "right": -0.04442666666666666
+            },
+            "armAngles": {
+              "left": -0.5429925925925927,
+              "right": 0.5429925925925927
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 43.79614814814815,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 52,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 2,
+          "file": "frames/stand-up/02.png",
+          "sha256": "4380511310ed7e39b328f8b3906dc75e6b59d0e94c7e090a863fc0d9bf869608",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 13,
+            "headScale": 1,
+            "progress": 0.9514074074074075,
+            "replacement": true,
+            "bodyDrop": 15.22251851851852,
+            "legAngles": {
+              "left": 0.042813333333333335,
+              "right": -0.042813333333333335
+            },
+            "armAngles": {
+              "left": -0.5232740740740741,
+              "right": 0.5232740740740741
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 43.22251851851852,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 52,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 3,
+          "file": "frames/stand-up/03.png",
+          "sha256": "ce173148cb158d64d3d7216e238ecef6a2eb5c30d38b4bc3b9100e0dfdcfd417",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 12,
+            "headScale": 1,
+            "progress": 0.8960000000000001,
+            "replacement": true,
+            "bodyDrop": 14.336000000000002,
+            "legAngles": {
+              "left": 0.04032,
+              "right": -0.04032
+            },
+            "armAngles": {
+              "left": -0.4928000000000001,
+              "right": 0.4928000000000001
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 42.336,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 51,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 4,
+          "file": "frames/stand-up/04.png",
+          "sha256": "86050902136dd6bd482c33f98012ad118d0f4059d391e3c68e7165a7791c72a3",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 11,
+            "headScale": 1,
+            "progress": 0.8245925925925925,
+            "replacement": true,
+            "bodyDrop": 13.19348148148148,
+            "legAngles": {
+              "left": 0.03710666666666666,
+              "right": -0.03710666666666666
+            },
+            "armAngles": {
+              "left": -0.45352592592592594,
+              "right": 0.45352592592592594
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 41.193481481481484,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 50,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 5,
+          "file": "frames/stand-up/05.png",
+          "sha256": "90eea346c4797a91d21b3035e3a5c680ac6df9286fbf22ebab175b4995025511",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 10,
+            "headScale": 1,
+            "progress": 0.7407407407407407,
+            "replacement": true,
+            "bodyDrop": 11.851851851851851,
+            "legAngles": {
+              "left": 0.03333333333333333,
+              "right": -0.03333333333333333
+            },
+            "armAngles": {
+              "left": -0.40740740740740744,
+              "right": 0.40740740740740744
+            },
+            "planted": "seated",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "seatedLowerBody",
+              "floorY": 287,
+              "kind": "replacement",
+              "shiftY": 1
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 39.85185185185185,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 22,
+            "top": 48,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 6,
+          "file": "frames/stand-up/06.png",
+          "sha256": "54432e8669e7cbe760b216cd9c3df26491ad6156118862f6b426ffab191be658",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 9,
+            "headScale": 1,
+            "progress": 0.648,
+            "replacement": false,
+            "bodyDrop": 10.368,
+            "legAngles": {
+              "left": 0.02916,
+              "right": -0.02916
+            },
+            "armAngles": {
+              "left": -0.35640000000000005,
+              "right": 0.35640000000000005
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 4.00787401574803,
+              "shiftY": -10,
+              "supportX": 60,
+              "actualSupportX": 60.23255813953488,
+              "hip": {
+                "x": 64.00787401574803,
+                "y": 197.368
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.3983739837398304,
+              "shiftY": -10,
+              "supportX": 100,
+              "actualSupportX": 99.890625,
+              "hip": {
+                "x": 96.60162601626017,
+                "y": 197.368
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 38.368,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 34,
+            "top": 47,
+            "right": 123,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 7,
+          "file": "frames/stand-up/07.png",
+          "sha256": "480c7245630214a926e53b1751ed326823d882947937bf0b85a5e06e2134147e",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 8,
+            "headScale": 1,
+            "progress": 0.5499259259259259,
+            "replacement": false,
+            "bodyDrop": 8.798814814814815,
+            "legAngles": {
+              "left": 0.024746666666666667,
+              "right": -0.024746666666666667
+            },
+            "armAngles": {
+              "left": -0.30245925925925926,
+              "right": 0.30245925925925926
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 4.064285714285717,
+              "shiftY": -8,
+              "supportX": 60,
+              "actualSupportX": 60.21678321678322,
+              "hip": {
+                "x": 64.06428571428572,
+                "y": 197.79881481481482
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.847826086956516,
+              "shiftY": -8,
+              "supportX": 100,
+              "actualSupportX": 100.2394366197183,
+              "hip": {
+                "x": 96.15217391304348,
+                "y": 197.79881481481482
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 36.79881481481482,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 34,
+            "top": 45,
+            "right": 123,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 8,
+          "file": "frames/stand-up/08.png",
+          "sha256": "0a7bca42c7a93383ab85c96f358c9083d732de5f17e409c44851921cd249422e",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 7,
+            "headScale": 1,
+            "progress": 0.45007407407407407,
+            "replacement": false,
+            "bodyDrop": 7.201185185185185,
+            "legAngles": {
+              "left": 0.02025333333333333,
+              "right": -0.02025333333333333
+            },
+            "armAngles": {
+              "left": -0.24754074074074076,
+              "right": 0.24754074074074076
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.521367521367523,
+              "shiftY": -7,
+              "supportX": 60,
+              "actualSupportX": 59.99173553719008,
+              "hip": {
+                "x": 63.52136752136752,
+                "y": 197.20118518518518
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.1120689655172384,
+              "shiftY": -7,
+              "supportX": 100,
+              "actualSupportX": 99.73949579831933,
+              "hip": {
+                "x": 96.88793103448276,
+                "y": 197.20118518518518
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 35.20118518518518,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 33,
+            "top": 44,
+            "right": 124,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 9,
+          "file": "frames/stand-up/09.png",
+          "sha256": "0a9f9e462db0a4e3e8296fece4e044b71d36b7c43dea4a7ebd0778c46f7278df",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 6,
+            "headScale": 1,
+            "progress": 0.3520000000000001,
+            "replacement": false,
+            "bodyDrop": 5.6320000000000014,
+            "legAngles": {
+              "left": 0.015840000000000003,
+              "right": -0.015840000000000003
+            },
+            "armAngles": {
+              "left": -0.19360000000000008,
+              "right": 0.19360000000000008
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.379562043795623,
+              "shiftY": -5,
+              "supportX": 60,
+              "actualSupportX": 60.02836879432624,
+              "hip": {
+                "x": 63.37956204379562,
+                "y": 197.632
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -3.065217391304344,
+              "shiftY": -5,
+              "supportX": 100,
+              "actualSupportX": 99.66197183098592,
+              "hip": {
+                "x": 96.93478260869566,
+                "y": 197.632
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 33.632000000000005,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 32,
+            "top": 42,
+            "right": 125,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 10,
+          "file": "frames/stand-up/10.png",
+          "sha256": "33992e5c719952d63e3660fd5dce2be5964952cccb8a44801b12dfe19e700562",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 5,
+            "headScale": 1,
+            "progress": 0.25925925925925924,
+            "replacement": false,
+            "bodyDrop": 4.148148148148148,
+            "legAngles": {
+              "left": 0.011666666666666665,
+              "right": -0.011666666666666665
+            },
+            "armAngles": {
+              "left": -0.1425925925925926,
+              "right": 0.1425925925925926
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 3.3035714285714306,
+              "shiftY": -4,
+              "supportX": 60,
+              "actualSupportX": 60.18103448275862,
+              "hip": {
+                "x": 63.30357142857143,
+                "y": 197.14814814814815
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.982142857142861,
+              "shiftY": -4,
+              "supportX": 100,
+              "actualSupportX": 100.10619469026548,
+              "hip": {
+                "x": 97.01785714285714,
+                "y": 197.14814814814815
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 32.148148148148145,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 31,
+            "top": 41,
+            "right": 127,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 11,
+          "file": "frames/stand-up/11.png",
+          "sha256": "3d0a32c71718496873eb54cafedd38950da03de22a644cadd9b779104ef8a07c",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 4,
+            "headScale": 1,
+            "progress": 0.17540740740740743,
+            "replacement": false,
+            "bodyDrop": 2.806518518518519,
+            "legAngles": {
+              "left": 0.007893333333333334,
+              "right": -0.007893333333333334
+            },
+            "armAngles": {
+              "left": -0.09647407407407409,
+              "right": 0.09647407407407409
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.9716312056737593,
+              "shiftY": -2,
+              "supportX": 60,
+              "actualSupportX": 59.929577464788736,
+              "hip": {
+                "x": 62.97163120567376,
+                "y": 197.80651851851852
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.3741007194244617,
+              "shiftY": -2,
+              "supportX": 100,
+              "actualSupportX": 99.875,
+              "hip": {
+                "x": 97.62589928057554,
+                "y": 197.80651851851852
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 30.80651851851852,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 30,
+            "top": 39,
+            "right": 128,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 12,
+          "file": "frames/stand-up/12.png",
+          "sha256": "490acb58fa76f45eb4d3d4c6febf4c9c1f8be7f8e3d60fd753d8a62dce385ad7",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 3,
+            "headScale": 1,
+            "progress": 0.10400000000000002,
+            "replacement": false,
+            "bodyDrop": 1.6640000000000004,
+            "legAngles": {
+              "left": 0.004680000000000001,
+              "right": -0.004680000000000001
+            },
+            "armAngles": {
+              "left": -0.057200000000000015,
+              "right": 0.057200000000000015
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.477941176470587,
+              "shiftY": -1,
+              "supportX": 60,
+              "actualSupportX": 60.02127659574468,
+              "hip": {
+                "x": 62.47794117647059,
+                "y": 197.664
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.065217391304344,
+              "shiftY": -1,
+              "supportX": 100,
+              "actualSupportX": 99.66197183098592,
+              "hip": {
+                "x": 97.93478260869566,
+                "y": 197.664
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 29.664,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 29,
+            "top": 38,
+            "right": 129,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 13,
+          "file": "frames/stand-up/13.png",
+          "sha256": "58fe5ed1882fb9c8a9767594e88b516685b18b9b4f682a266ed552547ca6b3f7",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 2,
+            "headScale": 1,
+            "progress": 0.0485925925925926,
+            "replacement": false,
+            "bodyDrop": 0.7774814814814816,
+            "legAngles": {
+              "left": 0.0021866666666666666,
+              "right": -0.0021866666666666666
+            },
+            "armAngles": {
+              "left": -0.02672592592592593,
+              "right": 0.02672592592592593
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.442857142857143,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 60.136986301369866,
+              "hip": {
+                "x": 62.44285714285714,
+                "y": 197.7774814814815
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.1366906474820127,
+              "shiftY": 0,
+              "supportX": 100,
+              "actualSupportX": 99.83802816901408,
+              "hip": {
+                "x": 97.86330935251799,
+                "y": 197.7774814814815
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.77748148148148,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 28,
+            "top": 37,
+            "right": 130,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 14,
+          "file": "frames/stand-up/14.png",
+          "sha256": "115a0dcb2506188388e7c47c776940001fd12ea803785e21ee193a296ff53b9c",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 1,
+            "headScale": 1,
+            "progress": 0.012740740740740742,
+            "replacement": false,
+            "bodyDrop": 0.20385185185185187,
+            "legAngles": {
+              "left": 0.0005733333333333334,
+              "right": -0.0005733333333333334
+            },
+            "armAngles": {
+              "left": -0.007007407407407408,
+              "right": 0.007007407407407408
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.558558558558559,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.947826086956525,
+              "hip": {
+                "x": 62.55855855855856,
+                "y": 197.20385185185185
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.1538461538461604,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.75510204081633,
+              "hip": {
+                "x": 97.84615384615384,
+                "y": 198.20385185185185
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28.20385185185185,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 131,
+            "bottom": 287
+          }
+        },
+        {
+          "index": 15,
+          "file": "frames/stand-up/15.png",
+          "sha256": "05bbb67220c22f3aedf56339bfe172e759965cb533af71509cf8579d071b3ed2",
+          "width": 160,
+          "height": 320,
+          "pose": {
+            "kind": "sit",
+            "frame": 0,
+            "headScale": 1,
+            "progress": 0,
+            "replacement": false,
+            "bodyDrop": 0,
+            "legAngles": {
+              "left": 0,
+              "right": 0
+            },
+            "armAngles": {
+              "left": 0,
+              "right": 0
+            },
+            "planted": "both",
+            "footTargets": {
+              "left": 287,
+              "right": 287
+            },
+            "travelX": 0
+          },
+          "contacts": [
+            {
+              "part": "leftFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": 2.690909090909088,
+              "shiftY": 0,
+              "supportX": 60,
+              "actualSupportX": 59.81578947368421,
+              "hip": {
+                "x": 62.69090909090909,
+                "y": 197
+              }
+            },
+            {
+              "part": "rightFoot",
+              "floorY": 287,
+              "planted": true,
+              "shiftX": -2.0704225352112644,
+              "shiftY": 1,
+              "supportX": 100,
+              "actualSupportX": 99.65068493150685,
+              "hip": {
+                "x": 97.92957746478874,
+                "y": 198
+              }
+            }
+          ],
+          "head": {
+            "x": 36,
+            "y": 28,
+            "scale": 1
+          },
+          "bounds": {
+            "left": 27,
+            "top": 37,
+            "right": 131,
+            "bottom": 287
+          }
+        }
+      ]
+    }
+  ],
+  "atlas": {
+    "file": "green-south-v6-atlas.png",
+    "sha256": "125f55110731320fed31e756ad2831c965ae824cff094d3873a11dbfcd19ba1c",
+    "tile": {
+      "width": 160,
+      "height": 320
+    },
+    "columns": 8,
+    "rows": 7,
+    "frameOrder": [
+      "frames/walk/00.png",
+      "frames/walk/01.png",
+      "frames/walk/02.png",
+      "frames/walk/03.png",
+      "frames/walk/04.png",
+      "frames/walk/05.png",
+      "frames/walk/06.png",
+      "frames/walk/07.png",
+      "frames/walk/08.png",
+      "frames/walk/09.png",
+      "frames/walk/10.png",
+      "frames/walk/11.png",
+      "frames/walk/12.png",
+      "frames/walk/13.png",
+      "frames/walk/14.png",
+      "frames/walk/15.png",
+      "frames/sit-down/00.png",
+      "frames/sit-down/01.png",
+      "frames/sit-down/02.png",
+      "frames/sit-down/03.png",
+      "frames/sit-down/04.png",
+      "frames/sit-down/05.png",
+      "frames/sit-down/06.png",
+      "frames/sit-down/07.png",
+      "frames/sit-down/08.png",
+      "frames/sit-down/09.png",
+      "frames/sit-down/10.png",
+      "frames/sit-down/11.png",
+      "frames/sit-down/12.png",
+      "frames/sit-down/13.png",
+      "frames/sit-down/14.png",
+      "frames/sit-down/15.png",
+      "frames/seated-hold/00.png",
+      "frames/seated-hold/01.png",
+      "frames/seated-hold/02.png",
+      "frames/seated-hold/03.png",
+      "frames/seated-hold/04.png",
+      "frames/seated-hold/05.png",
+      "frames/seated-hold/06.png",
+      "frames/seated-hold/07.png",
+      "frames/stand-up/00.png",
+      "frames/stand-up/01.png",
+      "frames/stand-up/02.png",
+      "frames/stand-up/03.png",
+      "frames/stand-up/04.png",
+      "frames/stand-up/05.png",
+      "frames/stand-up/06.png",
+      "frames/stand-up/07.png",
+      "frames/stand-up/08.png",
+      "frames/stand-up/09.png",
+      "frames/stand-up/10.png",
+      "frames/stand-up/11.png",
+      "frames/stand-up/12.png",
+      "frames/stand-up/13.png",
+      "frames/stand-up/14.png",
+      "frames/stand-up/15.png"
+    ]
+  },
+  "contacts": {
+    "walk": {
+      "file": "green-south-walk-contact.png",
+      "sha256": "d290c54aac501f909121cb6cff8735ce9fff9e336ec48863867320a0d5d66df2",
+      "columns": 4,
+      "rows": 4,
+      "cell": {
+        "width": 200,
+        "height": 344
+      }
+    },
+    "sit": {
+      "file": "green-south-sit-sequence-contact.png",
+      "sha256": "98c1183d0d6f5760cbb9cf048c5b472009d39b312485876f43b766705009ca86",
+      "columns": 8,
+      "rows": 5,
+      "cell": {
+        "width": 200,
+        "height": 344
+      }
+    }
+  },
+  "sourceComparison": {
+    "file": "green-source-south.png",
+    "sha256": "31bd43fcd92920ebe044a0b5dc0d11ad071b9f4e92764688f487dfcdccb89648"
+  },
+  "replacementContract": {
+    "seatedLowerBodyAndArmsBeginAtFrame": 10,
+    "noCrossfade": true,
+    "noDoubleExposure": true,
+    "drawOrder": [
+      "seated lower body",
+      "torso",
+      "complete seated arms",
+      "rigid head"
+    ]
+  },
+  "limitations": [
+    "South only; this is an in-place walk diagnostic, not a traveling walk.",
+    "Seated lower-body and complete bent-arm replacements occur together at a documented low-motion frame.",
+    "Generated cardigan and arm artwork remains narrower/different from the immutable source."
+  ]
+}

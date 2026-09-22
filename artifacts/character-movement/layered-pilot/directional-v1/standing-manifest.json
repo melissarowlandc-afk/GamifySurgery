@@ -1,0 +1,1662 @@
+{
+  "schemaVersion": 1,
+  "status": "standing-proportion-gate-awaiting-review",
+  "source": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63",
+    "displayRects": {
+      "east": [
+        300,
+        30,
+        240,
+        310
+      ],
+      "west": [
+        550,
+        30,
+        240,
+        310
+      ],
+      "north": [
+        800,
+        30,
+        240,
+        310
+      ]
+    }
+  },
+  "calibration": {
+    "plate": {
+      "path": "tools/character-mapping/layered-pilot/directional/assets/green-directional-parts-corrected-v1-transparent.png",
+      "rectangles": {
+        "east": {
+          "torso": [
+            216,
+            68,
+            136,
+            235
+          ],
+          "sleeves": {
+            "left": [
+              163,
+              343,
+              82,
+              193
+            ],
+            "right": [
+              323,
+              343,
+              82,
+              192
+            ]
+          },
+          "hands": {
+            "left": [
+              177,
+              576,
+              64,
+              78
+            ],
+            "right": [
+              340,
+              576,
+              60,
+              79
+            ]
+          },
+          "legs": {
+            "left": [
+              141,
+              685,
+              125,
+              260
+            ],
+            "right": [
+              320,
+              684,
+              135,
+              261
+            ]
+          }
+        },
+        "west": {
+          "torso": [
+            684,
+            69,
+            139,
+            234
+          ],
+          "sleeves": {
+            "left": [
+              635,
+              343,
+              85,
+              192
+            ],
+            "right": [
+              793,
+              342,
+              82,
+              193
+            ]
+          },
+          "hands": {
+            "left": [
+              640,
+              576,
+              60,
+              79
+            ],
+            "right": [
+              798,
+              576,
+              64,
+              78
+            ]
+          },
+          "legs": {
+            "left": [
+              586,
+              685,
+              135,
+              260
+            ],
+            "right": [
+              781,
+              684,
+              124,
+              261
+            ]
+          }
+        },
+        "north": {
+          "torso": [
+            1173,
+            71,
+            168,
+            232
+          ],
+          "sleeves": {
+            "left": [
+              1116,
+              342,
+              86,
+              192
+            ],
+            "right": [
+              1306,
+              342,
+              86,
+              192
+            ]
+          },
+          "hands": {
+            "left": [
+              1129,
+              574,
+              63,
+              79
+            ],
+            "right": [
+              1319,
+              574,
+              63,
+              79
+            ]
+          },
+          "legs": {
+            "left": [
+              1117,
+              685,
+              105,
+              260
+            ],
+            "right": [
+              1291,
+              683,
+              107,
+              262
+            ]
+          }
+        }
+      }
+    },
+    "target": {
+      "visibleHeadTop": 39,
+      "torsoTop": {
+        "east": 117,
+        "west": 114,
+        "north": 109
+      },
+      "torsoHem": 207,
+      "hipY": 204,
+      "floorY": 287,
+      "shoulderY": 134,
+      "cuffY": 196
+    },
+    "torsoScale": {
+      "east": 0.3829787234042553,
+      "west": 0.3974358974358974,
+      "north": 0.4224137931034483
+    },
+    "legScale": {
+      "east": 0.3076923076923077,
+      "west": 0.3076923076923077,
+      "north": 0.3076923076923077
+    },
+    "sleeveScale": {
+      "east": 0.32124352331606215,
+      "west": 0.32124352331606215,
+      "north": 0.3229166666666667
+    },
+    "handScale": {
+      "east": 0.3,
+      "west": 0.3,
+      "north": 0.3
+    },
+    "thumbSourceLandmarks": {
+      "east": {
+        "left": {
+          "x": 61,
+          "y": 45
+        },
+        "right": {
+          "x": 2,
+          "y": 45
+        }
+      },
+      "west": {
+        "left": {
+          "x": 57,
+          "y": 45
+        },
+        "right": {
+          "x": 2,
+          "y": 45
+        }
+      }
+    },
+    "shoulderSockets": {
+      "east": {
+        "left": {
+          "x": 65,
+          "y": 134
+        },
+        "right": {
+          "x": 62,
+          "y": 134
+        }
+      },
+      "west": {
+        "left": {
+          "x": 98,
+          "y": 131
+        },
+        "right": {
+          "x": 95,
+          "y": 131
+        }
+      },
+      "north": {
+        "left": {
+          "x": 50,
+          "y": 128
+        },
+        "right": {
+          "x": 110,
+          "y": 128
+        }
+      }
+    },
+    "restingCuffs": {
+      "east": {
+        "left": {
+          "x": 66,
+          "y": 196
+        },
+        "right": {
+          "x": 62,
+          "y": 196
+        }
+      },
+      "west": {
+        "left": {
+          "x": 98,
+          "y": 196
+        },
+        "right": {
+          "x": 94,
+          "y": 196
+        }
+      },
+      "north": {
+        "left": {
+          "x": 51,
+          "y": 196
+        },
+        "right": {
+          "x": 109,
+          "y": 196
+        }
+      }
+    },
+    "headBounds": {
+      "east": {
+        "left": 7,
+        "top": 11,
+        "right": 80,
+        "bottom": 89
+      },
+      "west": {
+        "left": 6,
+        "top": 11,
+        "right": 79,
+        "bottom": 89
+      },
+      "north": {
+        "left": 10,
+        "top": 10,
+        "right": 80,
+        "bottom": 89
+      }
+    },
+    "headRegistrationY": {
+      "east": 3,
+      "west": 3,
+      "north": 3
+    },
+    "nearSide": {
+      "east": "right",
+      "west": "left"
+    },
+    "neckBridgePlacement": {
+      "east": {
+        "x": 53,
+        "y": 98
+      },
+      "west": {
+        "x": 32,
+        "y": 98
+      },
+      "north": {
+        "x": 33.5,
+        "y": 99
+      }
+    }
+  },
+  "standing": {
+    "east": {
+      "file": "standing/green-east-stand.png",
+      "sha256": "09458e03cef8ed3904643c45097504bb9c5b1cc321e4522c52fe80bda6ba509a",
+      "view": "east",
+      "pose": "stand",
+      "geometry": {
+        "view": "east",
+        "phaseId": "stand",
+        "hipCenter": {
+          "x": 112,
+          "y": 200
+        },
+        "joints": {
+          "left": {
+            "hip": {
+              "x": 110.7,
+              "y": 200
+            },
+            "knee": {
+              "x": 110.7,
+              "y": 242
+            },
+            "ankle": {
+              "x": 110.7,
+              "y": 284
+            },
+            "heel": {
+              "x": 100.7,
+              "y": 296
+            },
+            "toe": {
+              "x": 128.7,
+              "y": 296
+            },
+            "soleContact": {
+              "x": 110.7,
+              "y": 296
+            },
+            "shoulder": {
+              "x": 108.6,
+              "y": 122
+            },
+            "elbow": {
+              "x": 108.6,
+              "y": 160
+            },
+            "wrist": {
+              "x": 108.6,
+              "y": 197
+            },
+            "palm": {
+              "x": 108.6,
+              "y": 207
+            },
+            "thumbTip": {
+              "x": 115.2,
+              "y": 208
+            },
+            "thumbLatent": {
+              "lateral": -28,
+              "forward": 6,
+              "height": 88
+            },
+            "thumbVisibility": "visible",
+            "thumbSurface": "medial-anterior",
+            "latent": {
+              "hip": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 96
+              },
+              "knee": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 54
+              },
+              "ankle": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 12
+              },
+              "shoulder": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 174
+              },
+              "elbow": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 136
+              },
+              "wrist": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 99
+              },
+              "hand": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 89
+              }
+            },
+            "footLift": 0
+          },
+          "right": {
+            "hip": {
+              "x": 113.3,
+              "y": 200
+            },
+            "knee": {
+              "x": 113.3,
+              "y": 242
+            },
+            "ankle": {
+              "x": 113.3,
+              "y": 284
+            },
+            "heel": {
+              "x": 103.3,
+              "y": 296
+            },
+            "toe": {
+              "x": 131.3,
+              "y": 296
+            },
+            "soleContact": {
+              "x": 113.3,
+              "y": 296
+            },
+            "shoulder": {
+              "x": 115.4,
+              "y": 122
+            },
+            "elbow": {
+              "x": 115.4,
+              "y": 160
+            },
+            "wrist": {
+              "x": 115.4,
+              "y": 197
+            },
+            "palm": {
+              "x": 115.4,
+              "y": 207
+            },
+            "thumbTip": {
+              "x": 120.8,
+              "y": 208
+            },
+            "thumbLatent": {
+              "lateral": 28,
+              "forward": 6,
+              "height": 88
+            },
+            "thumbVisibility": "visible",
+            "thumbSurface": "medial-anterior",
+            "latent": {
+              "hip": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 96
+              },
+              "knee": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 54
+              },
+              "ankle": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 12
+              },
+              "shoulder": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 174
+              },
+              "elbow": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 136
+              },
+              "wrist": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 99
+              },
+              "hand": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 89
+              }
+            },
+            "footLift": 0
+          }
+        },
+        "dimensions": {
+          "width": 240,
+          "height": 310,
+          "axisX": 112,
+          "floorY": 296
+        },
+        "layerPolicy": [
+          "farArm",
+          "farLeg",
+          "nearLeg",
+          "torso",
+          "head",
+          "nearArm"
+        ]
+      },
+      "torso": {
+        "x": 53.95744680851064,
+        "y": 117,
+        "width": 52.08510638297872,
+        "height": 90,
+        "scale": 0.3829787234042553,
+        "sourceRect": [
+          216,
+          68,
+          136,
+          235
+        ],
+        "mirrorAcross": false
+      },
+      "neckBridge": {
+        "x": 53,
+        "y": 101,
+        "scale": 1
+      },
+      "head": {
+        "x": 36,
+        "y": 31,
+        "scale": 1,
+        "sourceBounds": {
+          "left": 7,
+          "top": 11,
+          "right": 80,
+          "bottom": 89
+        }
+      },
+      "parts": {
+        "legs": {
+          "left": {
+            "x": 57.76923076923077,
+            "y": 207,
+            "width": 38.46153846153847,
+            "height": 80,
+            "scale": 0.3076923076923077,
+            "sourceRect": [
+              141,
+              685,
+              125,
+              260
+            ],
+            "mirrorAcross": false
+          },
+          "right": {
+            "x": 62.230769230769226,
+            "y": 207,
+            "width": 41.53846153846154,
+            "height": 80.3076923076923,
+            "scale": 0.3076923076923077,
+            "sourceRect": [
+              320,
+              684,
+              135,
+              261
+            ],
+            "mirrorAcross": false
+          }
+        },
+        "arms": {
+          "left": {
+            "shoulder": {
+              "x": 65,
+              "y": 134
+            },
+            "cuff": {
+              "x": 66,
+              "y": 196
+            },
+            "handAnchor": {
+              "x": 66,
+              "y": 196
+            },
+            "sleeve": {
+              "sourceRect": [
+                323,
+                343,
+                82,
+                192
+              ],
+              "sourceAnchors": {
+                "cap": {
+                  "x": 23.5,
+                  "y": 1.75
+                },
+                "cuff": {
+                  "x": 50.96699669966997,
+                  "y": 187.13201320132012
+                }
+              },
+              "shoulder": {
+                "x": 65,
+                "y": 134
+              },
+              "cuff": {
+                "x": 66,
+                "y": 196
+              },
+              "matrix": {
+                "a": -0.3169510662918093,
+                "b": 0.05361302127285359,
+                "c": 0.05235510028286222,
+                "d": 0.326500992606591,
+                "e": 72.35672863236252,
+                "f": 132.1687172630264
+              },
+              "mappedCap": {
+                "x": 65.00000000000001,
+                "y": 134
+              },
+              "mappedCuff": {
+                "x": 66,
+                "y": 195.99999999999997
+              },
+              "acrossScale": 0.32124352331606215,
+              "alongScale": 0.330875940345802,
+              "mirrorAcross": true
+            },
+            "hand": {
+              "sourceRect": [
+                340,
+                576,
+                60,
+                79
+              ],
+              "scale": 0.3,
+              "radians": -0.016127633843636247,
+              "mirrorAcross": true
+            },
+            "donor": {
+              "side": "right",
+              "mirrorAcross": true
+            },
+            "thumbLandmark": {
+              "x": 74.60049428524809,
+              "y": 208.36290815501818
+            },
+            "thumbReference": {
+              "x": 66.20158668397825,
+              "y": 208.49837440665155
+            }
+          },
+          "right": {
+            "shoulder": {
+              "x": 62,
+              "y": 134
+            },
+            "cuff": {
+              "x": 62,
+              "y": 196
+            },
+            "handAnchor": {
+              "x": 62,
+              "y": 196
+            },
+            "sleeve": {
+              "sourceRect": [
+                163,
+                343,
+                82,
+                193
+              ],
+              "sourceAnchors": {
+                "cap": {
+                  "x": 55,
+                  "y": 1.7692307692307692
+                },
+                "cuff": {
+                  "x": 31.5,
+                  "y": 187.74822695035462
+                }
+              },
+              "shoulder": {
+                "x": 62,
+                "y": 134
+              },
+              "cuff": {
+                "x": 62,
+                "y": 196
+              },
+              "matrix": {
+                "a": 0.3187092737214379,
+                "b": -0.0414622048993992,
+                "c": 0.04027157951298784,
+                "d": 0.32813188283601447,
+                "e": 44.399740227721004,
+                "f": 135.69988024598786
+              },
+              "mappedCap": {
+                "x": 61.99999999999999,
+                "y": 134
+              },
+              "mappedCuff": {
+                "x": 61.99999999999999,
+                "y": 196
+              },
+              "acrossScale": 0.32124352331606215,
+              "alongScale": 0.3307410572768789,
+              "mirrorAcross": false
+            },
+            "hand": {
+              "sourceRect": [
+                177,
+                576,
+                64,
+                78
+              ],
+              "scale": 0.3,
+              "radians": 0,
+              "mirrorAcross": false
+            },
+            "donor": {
+              "side": "left",
+              "mirrorAcross": false
+            },
+            "thumbLandmark": {
+              "x": 70.7,
+              "y": 208.5
+            },
+            "thumbReference": {
+              "x": 62,
+              "y": 208.5
+            }
+          }
+        }
+      }
+    },
+    "west": {
+      "file": "standing/green-west-stand.png",
+      "sha256": "12539475959116e89ce34d6cd81dd32ddca0b0627632d9587f8368811a88b766",
+      "view": "west",
+      "pose": "stand",
+      "geometry": {
+        "view": "west",
+        "phaseId": "stand",
+        "hipCenter": {
+          "x": 112,
+          "y": 200
+        },
+        "joints": {
+          "left": {
+            "hip": {
+              "x": 110.7,
+              "y": 200
+            },
+            "knee": {
+              "x": 110.7,
+              "y": 242
+            },
+            "ankle": {
+              "x": 110.7,
+              "y": 284
+            },
+            "heel": {
+              "x": 120.7,
+              "y": 296
+            },
+            "toe": {
+              "x": 92.7,
+              "y": 296
+            },
+            "soleContact": {
+              "x": 110.7,
+              "y": 296
+            },
+            "shoulder": {
+              "x": 108.6,
+              "y": 122
+            },
+            "elbow": {
+              "x": 108.6,
+              "y": 160
+            },
+            "wrist": {
+              "x": 108.6,
+              "y": 197
+            },
+            "palm": {
+              "x": 108.6,
+              "y": 207
+            },
+            "thumbTip": {
+              "x": 103.2,
+              "y": 208
+            },
+            "thumbLatent": {
+              "lateral": -28,
+              "forward": 6,
+              "height": 88
+            },
+            "thumbVisibility": "visible",
+            "thumbSurface": "medial-anterior",
+            "latent": {
+              "hip": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 96
+              },
+              "knee": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 54
+              },
+              "ankle": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 12
+              },
+              "shoulder": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 174
+              },
+              "elbow": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 136
+              },
+              "wrist": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 99
+              },
+              "hand": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 89
+              }
+            },
+            "footLift": 0
+          },
+          "right": {
+            "hip": {
+              "x": 113.3,
+              "y": 200
+            },
+            "knee": {
+              "x": 113.3,
+              "y": 242
+            },
+            "ankle": {
+              "x": 113.3,
+              "y": 284
+            },
+            "heel": {
+              "x": 123.3,
+              "y": 296
+            },
+            "toe": {
+              "x": 95.3,
+              "y": 296
+            },
+            "soleContact": {
+              "x": 113.3,
+              "y": 296
+            },
+            "shoulder": {
+              "x": 115.4,
+              "y": 122
+            },
+            "elbow": {
+              "x": 115.4,
+              "y": 160
+            },
+            "wrist": {
+              "x": 115.4,
+              "y": 197
+            },
+            "palm": {
+              "x": 115.4,
+              "y": 207
+            },
+            "thumbTip": {
+              "x": 108.8,
+              "y": 208
+            },
+            "thumbLatent": {
+              "lateral": 28,
+              "forward": 6,
+              "height": 88
+            },
+            "thumbVisibility": "visible",
+            "thumbSurface": "medial-anterior",
+            "latent": {
+              "hip": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 96
+              },
+              "knee": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 54
+              },
+              "ankle": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 12
+              },
+              "shoulder": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 174
+              },
+              "elbow": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 136
+              },
+              "wrist": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 99
+              },
+              "hand": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 89
+              }
+            },
+            "footLift": 0
+          }
+        },
+        "dimensions": {
+          "width": 240,
+          "height": 310,
+          "axisX": 112,
+          "floorY": 296
+        },
+        "layerPolicy": [
+          "farArm",
+          "farLeg",
+          "nearLeg",
+          "torso",
+          "head",
+          "nearArm"
+        ]
+      },
+      "torso": {
+        "x": 52.37820512820513,
+        "y": 114,
+        "width": 55.24358974358974,
+        "height": 93,
+        "scale": 0.3974358974358974,
+        "sourceRect": [
+          684,
+          69,
+          139,
+          234
+        ],
+        "mirrorAcross": false
+      },
+      "neckBridge": {
+        "x": 32,
+        "y": 101,
+        "scale": 1
+      },
+      "head": {
+        "x": 37,
+        "y": 31,
+        "scale": 1,
+        "sourceBounds": {
+          "left": 6,
+          "top": 11,
+          "right": 79,
+          "bottom": 89
+        }
+      },
+      "parts": {
+        "legs": {
+          "right": {
+            "x": 57.92307692307692,
+            "y": 207,
+            "width": 38.15384615384615,
+            "height": 80.3076923076923,
+            "scale": 0.3076923076923077,
+            "sourceRect": [
+              781,
+              684,
+              124,
+              261
+            ],
+            "mirrorAcross": false
+          },
+          "left": {
+            "x": 62.230769230769226,
+            "y": 207,
+            "width": 41.53846153846154,
+            "height": 80,
+            "scale": 0.3076923076923077,
+            "sourceRect": [
+              586,
+              685,
+              135,
+              260
+            ],
+            "mirrorAcross": false
+          }
+        },
+        "arms": {
+          "right": {
+            "shoulder": {
+              "x": 95,
+              "y": 131
+            },
+            "cuff": {
+              "x": 94,
+              "y": 196
+            },
+            "handAnchor": {
+              "x": 94,
+              "y": 196
+            },
+            "sleeve": {
+              "sourceRect": [
+                635,
+                343,
+                85,
+                192
+              ],
+              "sourceAnchors": {
+                "cap": {
+                  "x": 58.41935483870968,
+                  "y": 1.7580645161290323
+                },
+                "cuff": {
+                  "x": 29.637931034482758,
+                  "y": 186.95862068965516
+                }
+              },
+              "shoulder": {
+                "x": 95,
+                "y": 131
+              },
+              "cuff": {
+                "x": 94,
+                "y": 196
+              },
+              "matrix": {
+                "a": -0.3165762865629251,
+                "b": -0.05814004044270354,
+                "c": -0.05459765607000561,
+                "d": 0.34193551123404253,
+                "e": 113.59016862004106,
+                "f": 133.79535896385423
+              },
+              "mappedCap": {
+                "x": 95,
+                "y": 131
+              },
+              "mappedCuff": {
+                "x": 94,
+                "y": 196.00000000000003
+              },
+              "acrossScale": 0.32124352331606215,
+              "alongScale": 0.3468489673263532,
+              "mirrorAcross": true
+            },
+            "hand": {
+              "sourceRect": [
+                640,
+                576,
+                60,
+                79
+              ],
+              "scale": 0.3,
+              "radians": 0.015383401780595385,
+              "mirrorAcross": true
+            },
+            "donor": {
+              "side": "left",
+              "mirrorAcross": true
+            },
+            "thumbLandmark": {
+              "x": 85.70867347171306,
+              "y": 208.3739203327533
+            },
+            "thumbReference": {
+              "x": 93.80771506195995,
+              "y": 208.49852097260325
+            }
+          },
+          "left": {
+            "shoulder": {
+              "x": 98,
+              "y": 131
+            },
+            "cuff": {
+              "x": 98,
+              "y": 196
+            },
+            "handAnchor": {
+              "x": 98,
+              "y": 196
+            },
+            "sleeve": {
+              "sourceRect": [
+                793,
+                342,
+                82,
+                193
+              ],
+              "sourceAnchors": {
+                "cap": {
+                  "x": 25.271186440677965,
+                  "y": 1.8305084745762712
+                },
+                "cuff": {
+                  "x": 50.69184290030211,
+                  "y": 188.17824773413898
+                }
+              },
+              "shoulder": {
+                "x": 98,
+                "y": 131
+              },
+              "cuff": {
+                "x": 98,
+                "y": 196
+              },
+              "matrix": {
+                "a": 0.3182955783271007,
+                "b": 0.04671370476776216,
+                "c": -0.04342034189102941,
+                "d": 0.3424377843954326,
+                "e": 90.03577440065295,
+                "f": 129.19265399112814
+              },
+              "mappedCap": {
+                "x": 98,
+                "y": 131
+              },
+              "mappedCuff": {
+                "x": 98,
+                "y": 196.00000000000003
+              },
+              "acrossScale": 0.32124352331606215,
+              "alongScale": 0.34560932625550256,
+              "mirrorAcross": false
+            },
+            "hand": {
+              "sourceRect": [
+                798,
+                576,
+                64,
+                78
+              ],
+              "scale": 0.3,
+              "radians": 0,
+              "mirrorAcross": false
+            },
+            "donor": {
+              "side": "right",
+              "mirrorAcross": false
+            },
+            "thumbLandmark": {
+              "x": 89,
+              "y": 208.5
+            },
+            "thumbReference": {
+              "x": 98,
+              "y": 208.5
+            }
+          }
+        }
+      }
+    },
+    "north": {
+      "file": "standing/green-north-stand.png",
+      "sha256": "118c85dfb5e1164106ee73465dfe0d8e7ecd9c5af25dddcf1c753cde6a24cfe0",
+      "view": "north",
+      "pose": "stand",
+      "geometry": {
+        "view": "north",
+        "phaseId": "stand",
+        "hipCenter": {
+          "x": 112,
+          "y": 200
+        },
+        "joints": {
+          "left": {
+            "hip": {
+              "x": 99,
+              "y": 200
+            },
+            "knee": {
+              "x": 99,
+              "y": 242
+            },
+            "ankle": {
+              "x": 99,
+              "y": 284
+            },
+            "heel": {
+              "x": 104,
+              "y": 296
+            },
+            "toe": {
+              "x": 87,
+              "y": 296
+            },
+            "soleContact": {
+              "x": 99,
+              "y": 296
+            },
+            "shoulder": {
+              "x": 78,
+              "y": 122
+            },
+            "elbow": {
+              "x": 78,
+              "y": 160
+            },
+            "wrist": {
+              "x": 78,
+              "y": 197
+            },
+            "palm": {
+              "x": 78,
+              "y": 207
+            },
+            "thumbTip": {
+              "x": 84,
+              "y": 206.92
+            },
+            "thumbLatent": {
+              "lateral": -28,
+              "forward": 6,
+              "height": 88
+            },
+            "thumbVisibility": "guide-only-occluded",
+            "thumbSurface": "medial-anterior",
+            "latent": {
+              "hip": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 96
+              },
+              "knee": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 54
+              },
+              "ankle": {
+                "lateral": -13,
+                "forward": 0,
+                "height": 12
+              },
+              "shoulder": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 174
+              },
+              "elbow": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 136
+              },
+              "wrist": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 99
+              },
+              "hand": {
+                "lateral": -34,
+                "forward": 0,
+                "height": 89
+              }
+            },
+            "footLift": 0
+          },
+          "right": {
+            "hip": {
+              "x": 125,
+              "y": 200
+            },
+            "knee": {
+              "x": 125,
+              "y": 242
+            },
+            "ankle": {
+              "x": 125,
+              "y": 284
+            },
+            "heel": {
+              "x": 120,
+              "y": 296
+            },
+            "toe": {
+              "x": 137,
+              "y": 296
+            },
+            "soleContact": {
+              "x": 125,
+              "y": 296
+            },
+            "shoulder": {
+              "x": 146,
+              "y": 122
+            },
+            "elbow": {
+              "x": 146,
+              "y": 160
+            },
+            "wrist": {
+              "x": 146,
+              "y": 197
+            },
+            "palm": {
+              "x": 146,
+              "y": 207
+            },
+            "thumbTip": {
+              "x": 140,
+              "y": 206.92
+            },
+            "thumbLatent": {
+              "lateral": 28,
+              "forward": 6,
+              "height": 88
+            },
+            "thumbVisibility": "guide-only-occluded",
+            "thumbSurface": "medial-anterior",
+            "latent": {
+              "hip": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 96
+              },
+              "knee": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 54
+              },
+              "ankle": {
+                "lateral": 13,
+                "forward": 0,
+                "height": 12
+              },
+              "shoulder": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 174
+              },
+              "elbow": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 136
+              },
+              "wrist": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 99
+              },
+              "hand": {
+                "lateral": 34,
+                "forward": 0,
+                "height": 89
+              }
+            },
+            "footLift": 0
+          }
+        },
+        "dimensions": {
+          "width": 240,
+          "height": 310,
+          "axisX": 112,
+          "floorY": 296
+        },
+        "layerPolicy": [
+          "leftArm",
+          "rightArm",
+          "leftLeg",
+          "rightLeg",
+          "torso",
+          "head"
+        ]
+      },
+      "torso": {
+        "x": 44.51724137931034,
+        "y": 109,
+        "width": 70.96551724137932,
+        "height": 98,
+        "scale": 0.4224137931034483,
+        "sourceRect": [
+          1173,
+          71,
+          168,
+          232
+        ],
+        "mirrorAcross": false
+      },
+      "neckBridge": {
+        "x": 33.5,
+        "y": 102,
+        "scale": 1
+      },
+      "head": {
+        "x": 34.5,
+        "y": 32,
+        "scale": 1,
+        "sourceBounds": {
+          "left": 10,
+          "top": 10,
+          "right": 80,
+          "bottom": 89
+        }
+      },
+      "parts": {
+        "legs": {
+          "left": {
+            "x": 47.84615384615385,
+            "y": 207,
+            "width": 32.30769230769231,
+            "height": 80,
+            "scale": 0.3076923076923077,
+            "sourceRect": [
+              1117,
+              685,
+              105,
+              260
+            ],
+            "mirrorAcross": false
+          },
+          "right": {
+            "x": 79.53846153846153,
+            "y": 207,
+            "width": 32.92307692307693,
+            "height": 80.61538461538461,
+            "scale": 0.3076923076923077,
+            "sourceRect": [
+              1291,
+              683,
+              107,
+              262
+            ],
+            "mirrorAcross": false
+          }
+        },
+        "arms": {
+          "left": {
+            "shoulder": {
+              "x": 50,
+              "y": 128
+            },
+            "cuff": {
+              "x": 51,
+              "y": 196
+            },
+            "handAnchor": {
+              "x": 51,
+              "y": 196
+            },
+            "sleeve": {
+              "sourceRect": [
+                1116,
+                342,
+                86,
+                192
+              ],
+              "sourceAnchors": {
+                "cap": {
+                  "x": 60.09836065573771,
+                  "y": 1.7868852459016393
+                },
+                "cuff": {
+                  "x": 30.463722397476342,
+                  "y": 187.01892744479494
+                }
+              },
+              "shoulder": {
+                "x": 50,
+                "y": 128
+              },
+              "cuff": {
+                "x": 51,
+                "y": 196
+              },
+              "matrix": {
+                "a": 0.3179850788482128,
+                "b": -0.06195506728033046,
+                "c": 0.05627197465112103,
+                "d": 0.35719513323638374,
+                "e": 30.789066486975077,
+                "f": 131.08513126437583
+              },
+              "mappedCap": {
+                "x": 50,
+                "y": 128
+              },
+              "mappedCuff": {
+                "x": 51,
+                "y": 196
+              },
+              "acrossScale": 0.3229166666666667,
+              "alongScale": 0.3625364332858114,
+              "mirrorAcross": false
+            },
+            "hand": {
+              "sourceRect": [
+                1129,
+                574,
+                63,
+                79
+              ],
+              "scale": 0.3,
+              "radians": -0.014704822377851423,
+              "mirrorAcross": false
+            },
+            "donor": {
+              "side": "left",
+              "mirrorAcross": false
+            },
+            "thumbLandmark": null,
+            "thumbReference": null
+          },
+          "right": {
+            "shoulder": {
+              "x": 110,
+              "y": 128
+            },
+            "cuff": {
+              "x": 109,
+              "y": 196
+            },
+            "handAnchor": {
+              "x": 109,
+              "y": 196
+            },
+            "sleeve": {
+              "sourceRect": [
+                1306,
+                342,
+                86,
+                192
+              ],
+              "sourceAnchors": {
+                "cap": {
+                  "x": 24.810344827586206,
+                  "y": 1.7758620689655173
+                },
+                "cuff": {
+                  "x": 54.325,
+                  "y": 187.025
+                }
+              },
+              "shoulder": {
+                "x": 110,
+                "y": 128
+              },
+              "cuff": {
+                "x": 109,
+                "y": 196
+              },
+              "matrix": {
+                "a": 0.31802135416034105,
+                "b": 0.06172493083490299,
+                "c": -0.05606660695702245,
+                "d": 0.3572389631065594,
+                "e": 102.2093471013766,
+                "f": 125.83417605738964
+              },
+              "mappedCap": {
+                "x": 110,
+                "y": 128
+              },
+              "mappedCuff": {
+                "x": 109,
+                "y": 196
+              },
+              "acrossScale": 0.3229166666666667,
+              "alongScale": 0.3625403651382317,
+              "mirrorAcross": false
+            },
+            "hand": {
+              "sourceRect": [
+                1319,
+                574,
+                63,
+                79
+              ],
+              "scale": 0.3,
+              "radians": 0.014704822377851645,
+              "mirrorAcross": false
+            },
+            "donor": {
+              "side": "right",
+              "mirrorAcross": false
+            },
+            "thumbLandmark": null,
+            "thumbReference": null
+          }
+        }
+      }
+    }
+  },
+  "comparison": {
+    "file": "green-directional-standing-source-vs-assembled.png",
+    "sha256": "2e853700b251e7d1f00ff505b895b0943be32adfc6f86fcf6e8952af0a0f2ebc"
+  },
+  "note": "Standing assembly gate only; automated checks and this export do not establish visual approval."
+}

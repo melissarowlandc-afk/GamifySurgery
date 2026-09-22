@@ -1,0 +1,247 @@
+ M apps/player/public/art/characters/founders-v4/founders-front-idle-v4.png
+ M apps/player/public/art/characters/founders-v4/founders-left-idle-v4.png
+ M apps/player/public/art/characters/founders-v4/founders-right-idle-v4.png
+ M apps/player/public/art/characters/founders-v4/manifest.json
+ M apps/player/src/App.tsx
+ M apps/player/src/AppShell.tsx
+ M apps/player/src/art/bitmapAssetManifest.test.ts
+ M apps/player/src/art/bitmapAssetManifest.ts
+ M apps/player/src/art/characterArt.ts
+ M apps/player/src/art/characterBitmapArt.test.ts
+ M apps/player/src/art/characterBitmapArt.ts
+ M apps/player/src/facility/FacilityScene.ts
+ M apps/player/src/facility/canonicalRoomShell.test.ts
+ M apps/player/src/facility/canonicalRoomShell.ts
+ M apps/player/src/facility/examinationV3Architecture.test.ts
+ M apps/player/src/facility/frontDeskPresentation.test.ts
+ M apps/player/src/facility/frontDeskPresentation.ts
+ M apps/player/src/facility/frontDeskV5Architecture.test.ts
+ M apps/player/src/facility/frontDeskV5Architecture.ts
+ M apps/player/src/facility/types.ts
+ M apps/player/src/session/alertViewModels.test.ts
+ M apps/player/src/session/alertViewModels.ts
+ M apps/player/src/session/buildViewModels.test.ts
+ M apps/player/src/session/clinicalText.ts
+ M apps/player/src/session/index.ts
+ M apps/player/src/session/multistepChoiceTiming.test.ts
+ M apps/player/src/session/patientMovementViewModels.test.ts
+ M apps/player/src/session/prototypeStorage.test.ts
+ M apps/player/src/session/prototypeStorage.ts
+ M apps/player/src/session/tutorialViewModels.test.ts
+ M apps/player/src/session/tutorialViewModels.ts
+ M apps/player/src/session/usePrototypeSession.ts
+ M apps/player/src/session/viewModels.ts
+ M apps/player/src/styles/global.css
+ M apps/player/src/ui/ChartPanel.tsx
+ M apps/player/src/ui/OpeningSequence.css
+ M apps/player/src/ui/SaveCloseDialog.tsx
+ M apps/player/src/ui/types.ts
+ M artifacts/screenshots/backed-north-room-walls-100-desktop.png
+ M artifacts/screenshots/canonical-hallway-100-edges-desktop.png
+ M artifacts/screenshots/character-resolution-zoom-100.png
+ M artifacts/screenshots/character-resolution-zoom-160.png
+ M artifacts/screenshots/character-resolution-zoom-70.png
+ M artifacts/screenshots/door-cutout-floor-continuity-100-desktop.png
+ M artifacts/screenshots/door-cutout-floor-continuity-build-100-desktop.png
+ M artifacts/screenshots/examination-room-v3-build-door-zones.png
+ M artifacts/screenshots/examination-room-v3-closed-wall-adjacency.png
+ M artifacts/screenshots/examination-room-v3-explicit-south-door.png
+ M artifacts/screenshots/examination-room-v3-horizontal.png
+ M artifacts/screenshots/examination-room-v3-vertical.png
+ M artifacts/screenshots/front-desk-exterior-panned.png
+ M artifacts/screenshots/front-desk-grounded-occupied.png
+ M artifacts/screenshots/front-desk-grounded-vacant.png
+ M artifacts/screenshots/front-desk-redesign-entrance-close.png
+ M artifacts/screenshots/front-desk-v4-shell-detail.png
+ M artifacts/screenshots/front-desk-v4-shell-normal.png
+ M artifacts/screenshots/top-down-side-caps-100-east-west-door-gaps-desktop.png
+ M artifacts/screenshots/top-down-side-caps-100-normal-desktop.png
+ M docs/clinical-workbench/CONCEPT_RELEASE_POINT_REVIEW_QUEUE.md
+ M docs/clinical-workbench/concept-release-point-review-queue.json
+ M docs/execplans/durable-browser-persistence.md
+ M docs/handoffs/CURRENT_THREAD_HANDOFF.md
+ M packages/balance-config/src/prototype-alerts.ts
+ M packages/balance-config/src/prototype-balance.test.ts
+ M packages/balance-config/src/prototype-balance.ts
+ M packages/balance-config/src/schema.ts
+ M packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
+ M packages/clinical-content/src/index.ts
+ M packages/clinical-content/src/patient-presentation-revisions.test.ts
+ M packages/clinical-content/src/pilot-content.test.ts
+ M packages/clinical-content/src/pilot-content.ts
+ M packages/clinical-content/src/pilot-generator.ts
+ M packages/clinical-content/src/pilot-schema.ts
+ M packages/clinical-content/src/playable-patient-narrative.test.ts
+ M packages/clinical-content/src/schema.ts
+ M packages/clinical-content/src/synthetic-content.ts
+ M packages/game-domain/src/index.ts
+ M packages/game-domain/src/persistence.ts
+ M packages/game-domain/src/reducer.ts
+ M packages/game-domain/src/selectors.ts
+ M packages/game-domain/src/spatial.ts
+ M packages/game-domain/src/staff.ts
+ M packages/game-domain/src/types.ts
+ M packages/game-domain/tests/alert-humor.test.ts
+ M packages/game-domain/tests/approved-clinical-admission.test.ts
+ M packages/game-domain/tests/clinical-content-withdrawal.test.ts
+ M packages/game-domain/tests/facility-experience.test.ts
+ M packages/game-domain/tests/facility-management.test.ts
+ M packages/game-domain/tests/founder-map-movement.test.ts
+ M packages/game-domain/tests/game-domain.test.ts
+ M packages/game-domain/tests/level-two-endoscopy.test.ts
+ M packages/game-domain/tests/level-two-persistence.test.ts
+ M packages/game-domain/tests/level-two-progression.test.ts
+ M packages/game-domain/tests/opening-founder.test.ts
+ M packages/game-domain/tests/patient-alert-delay.test.ts
+ M packages/game-domain/tests/patient-list-order.test.ts
+ M packages/game-domain/tests/receptionist-water-refill.test.ts
+ M packages/game-domain/tests/spatial.test.ts
+ M packages/game-domain/tests/timing-encounters.test.ts
+ M tests/e2e/character-resolution-zoom.spec.ts
+ M tools/build-founder-actors-v4.mjs
+ M tools/verify-character-resolution-alpha.mjs
+ M tools/verify-founder-actors-v4.mjs
+?? apps/player/src/facility/characterMotionPresentation.test.ts
+?? apps/player/src/facility/characterMotionPresentation.ts
+?? apps/player/src/facility/characterPauseArrival.test.ts
+?? apps/player/src/facility/environmentTilePhase.test.ts
+?? apps/player/src/facility/environmentTilePhase.ts
+?? apps/player/src/facility/presentationOrigin.test.ts
+?? apps/player/src/facility/presentationOrigin.ts
+?? apps/player/src/facility/proceduralSurfacePhase.test.ts
+?? apps/player/src/facility/proceduralSurfacePhase.ts
+?? apps/player/src/session/answerChoiceTimingPresentation.test.ts
+?? apps/player/src/session/chartFeedbackPresentation.test.tsx
+?? apps/player/src/session/clinicalServiceLabels.test.ts
+?? apps/player/src/session/surgeryCenterServicePreviews.test.ts
+?? apps/player/src/ui/SaveCloseDialog.test.tsx
+?? artifacts/character-movement/
+?? artifacts/screenshots/autonomous-clinical-batch-celiac-final.png
+?? artifacts/screenshots/autonomous-clinical-batch-celiac-initial.png
+?? artifacts/screenshots/autonomous-clinical-batch-celiac-labs-pending.png
+?? artifacts/screenshots/autonomous-clinical-batch-celiac-labs-result.png
+?? artifacts/screenshots/autonomous-clinical-batch-mri-final.png
+?? artifacts/screenshots/board-expansion-20260912-anal-initial.png
+?? artifacts/screenshots/board-expansion-20260912-anal-pending.png
+?? artifacts/screenshots/board-expansion-20260912-anal-returned.png
+?? artifacts/screenshots/board-expansion-20260912-dvt-initial.png
+?? artifacts/screenshots/board-expansion-20260912-dvt-pending.png
+?? artifacts/screenshots/board-expansion-20260912-dvt-returned.png
+?? artifacts/screenshots/board-expansion-breast-feedback.png
+?? artifacts/screenshots/board-expansion-breast-returned.png
+?? artifacts/screenshots/board-expansion-pad-initial.png
+?? artifacts/screenshots/board-expansion-pad-pending.png
+?? artifacts/screenshots/board-expansion-pad-returned.png
+?? artifacts/screenshots/board-expansion-rectal-initial.png
+?? artifacts/screenshots/board-expansion-rectal-pending.png
+?? artifacts/screenshots/board-expansion-rectal-returned.png
+?? artifacts/screenshots/examination-room-v3-horizontal-north-door-diagnostic.png
+?? artifacts/screenshots/examination-room-v3-vertical-north-door-diagnostic.png
+?? artifacts/screenshots/five-room-waiting-bathroom-100-vertical-north-door.png
+?? artifacts/screenshots/floor-pattern-pan-build-100-desktop.png
+?? artifacts/screenshots/floor-pattern-pan-normal-100-desktop.png
+?? artifacts/screenshots/founder-render-clip-source-id10-front-idle.png
+?? artifacts/screenshots/founder-render-clip-source-id10-front-seated.png
+?? artifacts/screenshots/front-desk-founder-anatomy-open-floor-side-human-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-open-floor-wall-fix-identity-10-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-open-floor-wall-fix-identity-10-160-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-seated-extents-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-seated-human-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-seated-wall-fix-identity-10-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-seated-wall-fix-identity-10-build-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-standing-front-human-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-anatomy-standing-side-human-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-seated-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-standing-front-100-desktop.png
+?? artifacts/screenshots/front-desk-founder-standing-side-100-desktop.png
+?? artifacts/screenshots/front-desk-occlusion-build-100-desktop.png
+?? artifacts/screenshots/front-desk-occlusion-normal-100-desktop.png
+?? artifacts/screenshots/patient-wording-test-times-fhh.png
+?? artifacts/screenshots/patient-wording-test-times-pilonidal-current.png
+?? artifacts/screenshots/patient-wording-test-times-pilonidal-legacy.png
+?? artifacts/screenshots/patient-wording-test-times-thyroid.png
+?? artifacts/screenshots/staffed-checkin-chart-route-desktop.png
+?? artifacts/screenshots/surgery-center-egd-procedure.png
+?? artifacts/screenshots/surgery-center-egd-return.png
+?? artifacts/screenshots/surgery-center-skin-initial.png
+?? artifacts/screenshots/surgery-center-skin-pending.png
+?? artifacts/screenshots/surgery-center-skin-return.png
+?? artifacts/screenshots/wall-corner-continuity-build-100-desktop.png
+?? artifacts/screenshots/wall-corner-continuity-normal-100-desktop.png
+?? docs/clinical-workbench/BOARD_CONTENT_SCOPE.md
+?? docs/clinical-workbench/approvals/owner-delegated-board-expansion-2026-09-11.md
+?? docs/clinical-workbench/approvals/owner-delegated-board-expansion-2026-09-12.md
+?? docs/clinical-workbench/approvals/owner-delegated-surgery-center-batch-2026-09-10.md
+?? docs/clinical-workbench/approvals/owner-delegated-twenty-concept-batch-2026-09-09.md
+?? docs/clinical-workbench/approvals/owner-row-061-graves-pattern-recognition-2026-09-09.md
+?? docs/clinical-workbench/approvals/owner-row-061-graves-rai-active-ted-avoidance-2026-09-09.md
+?? docs/clinical-workbench/approvals/owner-row-061-graves-rai-appropriate-candidate-2026-09-09.md
+?? docs/clinical-workbench/approvals/owner-row-061-graves-rai-lactation-contraindication-2026-09-09.md
+?? docs/clinical-workbench/approvals/owner-row-061-graves-rai-pregnancy-contraindication-2026-09-09.md
+?? docs/clinical-workbench/approvals/owner-row-061-graves-trab-diagnostic-support-2026-09-09.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-pattern-recognition-v1.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-pattern-recognition-v2.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-rai-active-ted-avoidance-v1.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-rai-appropriate-candidate-v1.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-rai-lactation-contraindication-v1.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-rai-pregnancy-contraindication-v1.md
+?? docs/clinical-workbench/workthroughs/owner-row-061-graves-trab-diagnostic-support-v1.md
+?? docs/execplans/audit-ten-random-patients-2026-09-13.md
+?? docs/execplans/autonomous-clinical-batch-source-brief-2026-09-09.md
+?? docs/execplans/character-movement.md
+?? docs/execplans/concept-expansion-colorectal-sources-2026-09-12.md
+?? docs/execplans/concept-expansion-colorectal-vascular-sources-2026-09-11.md
+?? docs/execplans/concept-expansion-complex-sources-2026-09-12.md
+?? docs/execplans/concept-expansion-endocrine-pancreas-sources-2026-09-11.md
+?? docs/execplans/concept-expansion-hematology-sources-2026-09-12.md
+?? docs/execplans/concept-expansion-source-review-2026-09-11.md
+?? docs/execplans/create-mixed-character-walk-seated-exam-poses.md
+?? docs/execplans/create-mixed-patient-staff-character-batch.md
+?? docs/execplans/fix-floor-pattern-camera-drift.md
+?? docs/execplans/fix-founder-head-feet-clipping.md
+?? docs/execplans/fix-wall-corner-continuity-and-layering.md
+?? docs/execplans/implement-autonomous-multistep-clinical-batch-2026-09-09.md
+?? docs/execplans/implement-board-concept-expansion-2026-09-11.md
+?? docs/execplans/implement-board-concept-expansion-2026-09-12.md
+?? docs/execplans/implement-surgery-center-concepts-2026-09-10.md
+?? docs/execplans/patient-wording-and-answer-test-times.md
+?? docs/execplans/polish-front-desk-occlusion-and-actors.md
+?? docs/execplans/staffed-checkin-patient-routing-and-chart-timing.md
+?? docs/execplans/surgery-center-source-brief-2026-09-10.md
+?? docs/features/character-movement-review.md
+?? docs/features/character-movement/
+?? docs/handoffs/APPROVED_CHARACTER_SURFACE_FITTING.md
+?? docs/handoffs/GRAPHICS_THREAD_HANDOFF_2026-09-07.md
+?? docs/handoffs/GS-006_CONCEPT_REVIEW_HANDOFF.md
+?? docs/handoffs/GS-012_CHARACTER_MOVEMENT.md
+?? docs/handoffs/PATIENT_EMPLOYEE_CHARACTERS_HANDOFF.md
+?? docs/playtests/
+?? docs/project-management/
+?? packages/clinical-content/src/answer-choice-timing.test.ts
+?? packages/clinical-content/src/answer-choice-timing.ts
+?? packages/clinical-content/src/development-batch/
+?? packages/game-domain/src/patientText.ts
+?? packages/game-domain/tests/answer-choice-timing.test.ts
+?? packages/game-domain/tests/board-expansion-20260912-batch.test.ts
+?? packages/game-domain/tests/board-expansion-batch.test.ts
+?? packages/game-domain/tests/patientText.test.ts
+?? packages/game-domain/tests/surgery-center-batch.test.ts
+?? packages/game-domain/tests/twenty-concept-batch.test.ts
+?? packages/game-domain/tests/waiting-destination-routing.test.ts
+?? tests/e2e/autonomous-clinical-batch.spec.ts
+?? tests/e2e/board-concept-expansion-20260912.spec.ts
+?? tests/e2e/board-concept-expansion.spec.ts
+?? tests/e2e/floor-pattern-pan-stability.spec.ts
+?? tests/e2e/front-desk-founder-anatomy.spec.ts
+?? tests/e2e/front-desk-occlusion-polish.spec.ts
+?? tests/e2e/non-editable-cursor.spec.ts
+?? tests/e2e/patient-wording-test-times.spec.ts
+?? tests/e2e/staffed-checkin-pathing.spec.ts
+?? tests/e2e/surgery-center-concepts.spec.ts
+?? tests/e2e/wall-corner-continuity.spec.ts
+?? tools/character-mapping/
+?? tools/character-pose-process/
+?? tools/comfyui/accepted-assets/
+?? tools/comfyui/compose-founder-foot-repair.mjs
+?? tools/comfyui/prepare-founder-foot-repair.mjs
+?? tools/comfyui/run-managed-incremental-edit.mjs

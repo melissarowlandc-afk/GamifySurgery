@@ -1,0 +1,20 @@
+<section id="ultrasound-layout-proof" aria-labelledby="ultrasound-title">
+  <style>
+    #ultrasound-layout-proof{max-width:760px;margin-inline:auto}#ultrasound-layout-proof .ultrasound-art-wrap{position:relative;max-width:480px;margin:12px auto 0}#ultrasound-layout-proof .ultrasound-art{display:block;width:100%;height:auto}#ultrasound-layout-proof .ultrasound-hit{position:absolute;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#ultrasound-layout-proof .ultrasound-controls{max-width:640px;margin:10px auto 0}#ultrasound-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#ultrasound-layout-proof legend{font-weight:var(--font-weight-medium);margin-bottom:4px}#ultrasound-layout-proof .ultrasound-buttons{display:flex;gap:5px;flex-wrap:wrap}#ultrasound-layout-proof .ultrasound-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#ultrasound-layout-proof .ultrasound-label{color:var(--muted-foreground);margin-right:3px}#ultrasound-layout-proof .ultrasound-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:2.5em}#ultrasound-layout-proof .ultrasound-note{margin-top:6px;color:var(--muted-foreground)}
+  </style>
+  <h2 id="ultrasound-title">Ultrasound Room preview</h2>
+  <div class="ultrasound-art-wrap">
+    <canvas id="ultrasound-art" class="ultrasound-art" width="960" height="1100" role="img" aria-label="Three by three Ultrasound Room with permanent table, ultrasound console and technician stool, selectable doors, use points, and provisional clearance."></canvas>
+    <div id="ultrasound-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="ultrasound-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="ultrasound-adjacency" class="ultrasound-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="ultrasound-row"><div><span class="ultrasound-label text-small">North</span><span id="ultrasound-north" class="ultrasound-buttons"></span></div><div><span class="ultrasound-label text-small">South</span><span id="ultrasound-south" class="ultrasound-buttons"></span></div><div><span class="ultrasound-label text-small">West</span><span id="ultrasound-west" class="ultrasound-buttons"></span></div><div><span class="ultrasound-label text-small">East</span><span id="ultrasound-east" class="ultrasound-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="ultrasound-optional" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional cabinet and wall print</span></label>
+    <label class="form-check"><input id="ultrasound-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, and seat/use points</span></label>
+    <div class="ultrasound-note text-small"><strong>Seat directions:</strong> patient South at the east table foot; technician North at the stool. The console hugs the north edge of C1; its south/front passage remains open. Only B2 blocks walking; clearance radius is a provisional 0.16 tile.</div>
+    <div id="ultrasound-status" class="ultrasound-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__ULTRASOUND_SCRIPT__</script>
+</section>
+

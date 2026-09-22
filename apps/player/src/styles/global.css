@@ -4819,6 +4819,53 @@ body {
   box-shadow: none;
   flex: 1 1 auto;
 }
+.management-tabs { display: flex; border-bottom: 2px solid var(--ink); flex: 0 0 auto; }
+.management-tabs button { flex: 1; border: 0; border-right: 1px solid var(--ink); padding: 0.38rem; background: var(--paper); color: var(--ink-soft); font: inherit; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; }
+.management-tabs button[aria-selected="true"] { background: var(--paper-raised); color: var(--ink); box-shadow: inset 0 -3px 0 var(--accent); }
+.management-panel > .service-income-panel { flex: 1 1 auto; }
+
+.service-income-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-top: 2px solid var(--ink);
+  background: var(--paper);
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.service-income-heading,
+.service-income-totals,
+.service-income-note {
+  flex: 0 0 auto;
+}
+
+.service-income-heading,
+.service-income-totals,
+.service-income-list > li {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.service-income-heading { padding: 0.45rem 0.55rem; }
+.service-income-heading h2, .service-income-panel h3 { margin: 0; font-size: 0.74rem; text-transform: uppercase; }
+.service-income-heading span, .service-income-list span, .service-income-list small, .service-income-empty { color: var(--ink-soft); font-size: 0.64rem; }
+.service-appointment-toggle { display: flex; gap: 0.25rem; align-items: center; font-size: 0.66rem; font-weight: 800; }
+.service-income-totals { margin: 0; padding: 0.35rem 0.55rem; border-top: 1px solid var(--ink-soft); border-bottom: 1px solid var(--ink-soft); }
+.service-income-totals div { display: grid; gap: 0.05rem; }
+.service-income-totals dt { color: var(--ink-soft); font-size: 0.58rem; text-transform: uppercase; }
+.service-income-totals dd { margin: 0; font-weight: 900; font-size: 0.7rem; }
+.service-income-note { margin: 0; padding: 0.25rem 0.55rem; color: var(--ink-soft); font-size: 0.6rem; }
+.service-income-scroll { height: auto; min-height: 0; overflow: auto; padding: 0.45rem 0.55rem; flex: 1 1 auto; }
+.service-income-scroll section + section { margin-top: 0.6rem; }
+.service-income-list { display: grid; margin: 0.3rem 0 0; padding: 0; list-style: none; }
+.service-income-list > li { padding: 0.3rem 0; border-top: 1px dotted var(--ink-soft); align-items: start; }
+.service-income-list > li > div { display: grid; gap: 0.04rem; }
+.service-income-list > li.is-locked { opacity: 0.62; }
+.service-income-list > li small { text-align: right; max-width: 44%; }
+.service-income-empty { margin: 0.3rem 0; }
 
 .build-mode-topbar {
   position: sticky;
@@ -7548,4 +7595,44 @@ body {
     top: 0.35rem;
     right: 0.35rem;
   }
+}
+
+/*
+ * The clinic is a direct-manipulation interface, not a document editor.
+ * Keep passive copy from advertising text selection or a text caret while
+ * leaving real form fields and purpose-built controls with their native cues.
+ */
+body {
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  caret-color: transparent;
+}
+
+button:not(:disabled),
+a[href],
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+select {
+  cursor: pointer;
+  caret-color: currentcolor;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+  cursor: pointer;
+}
+
+/* This semantic separator is a drag handle, not a generic control. */
+.workspace-splitter {
+  cursor: row-resize;
 }

@@ -1,0 +1,95 @@
+<section id="gs019-blue-west-review" aria-labelledby="gs019-title">
+  <style>
+    #gs019-blue-west-review { color: var(--foreground); }
+    #gs019-blue-west-review .gs019-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-block: 0.75rem; }
+    #gs019-blue-west-review .gs019-comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    #gs019-blue-west-review figure { margin: 0; min-width: 0; }
+    #gs019-blue-west-review canvas { display: block; image-rendering: pixelated; background: var(--muted); }
+    #gs019-blue-west-review .gs019-native { width: 160px; height: auto; aspect-ratio: 1 / 2; max-width: 100%; }
+    #gs019-blue-west-review .gs019-game { width: 32px; height: 64px; }
+    #gs019-blue-west-review .gs019-detail { width: 320px; height: auto; aspect-ratio: 1 / 2; max-width: 100%; }
+    #gs019-blue-west-review .gs019-strip { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    #gs019-blue-west-review .gs019-phase canvas { width: 32px; height: 64px; pointer-events: none; }
+    #gs019-blue-west-review figcaption { color: var(--muted-foreground); margin-top: 0.35rem; }
+    @media (max-width: 600px) { #gs019-blue-west-review .gs019-native-comparison { grid-template-columns: 1fr; } }
+  </style>
+  <h2 id="gs019-title">Blue Glasses West walking pilot</h2>
+  <div class="viz-controls gs019-controls">
+    <button class="btn btn-primary" id="gs019-play" type="button" disabled>Play</button>
+    <label class="form-label" for="gs019-phase">Phase <output id="gs019-phase-output" for="gs019-phase" class="tabular-nums">01</output>
+      <input class="form-range" id="gs019-phase" type="range" min="1" max="8" value="1" disabled>
+    </label>
+    <span id="gs019-status" class="text-muted">Loading frames</span>
+  </div>
+  <h3>Actual game size: 32×64</h3>
+  <div class="gs019-comparison">
+    <figure><canvas class="gs019-game" id="gs019-game-stand" width="32" height="64" role="img" aria-label="Approved standing at game size"></canvas><figcaption>Approved standing</figcaption></figure>
+    <figure><canvas class="gs019-game" id="gs019-game-old" width="32" height="64" role="img" aria-label="Prior rejected frame at game size"></canvas><figcaption>Prior rejected</figcaption></figure>
+    <figure><canvas class="gs019-game" id="gs019-game-fresh" width="32" height="64" role="img" aria-label="New complete-limb frame at game size"></canvas><figcaption>New complete limbs</figcaption></figure>
+  </div>
+  <h3>Native 160×320</h3>
+  <div class="gs019-comparison gs019-native-comparison">
+    <figure><canvas class="gs019-native" id="gs019-stand" width="160" height="320" role="img" aria-label="Approved standing reference"></canvas><figcaption>Approved standing</figcaption></figure>
+    <figure><canvas class="gs019-native" id="gs019-old" width="160" height="320" role="img" aria-label="Prior rejected walking frame"></canvas><figcaption>Prior rejected</figcaption></figure>
+    <figure><canvas class="gs019-native" id="gs019-fresh" width="160" height="320" role="img" aria-label="New complete-limb walking frame"></canvas><figcaption>New complete limbs</figcaption></figure>
+  </div>
+  <h3>Enlarged selected frame</h3>
+  <canvas class="gs019-detail" id="gs019-detail" width="320" height="640" role="img" aria-label="Enlarged new complete-limb walking frame"></canvas>
+  <h3>All eight at game size</h3>
+  <div class="gs019-strip" id="gs019-strip" aria-label="Choose a walking phase"></div>
+  <script>
+    (() => {
+      const data = __GS019_PAYLOAD__;
+      const root = document.getElementById('gs019-blue-west-review');
+      const phase = root.querySelector('#gs019-phase');
+      const output = root.querySelector('#gs019-phase-output');
+      const play = root.querySelector('#gs019-play');
+      const status = root.querySelector('#gs019-status');
+      const images = { standing: new Image(), rejected: data.rejected.map(() => new Image()), fresh: data.fresh.map(() => new Image()) };
+      let index = 0;
+      let timer = null;
+      const draw = (id, image, width, height) => {
+        const canvas = root.querySelector('#' + id);
+        const context = canvas.getContext('2d');
+        context.imageSmoothingEnabled=false;
+        context.clearRect(0, 0, width, height);
+        context.drawImage(image, 0, 0, width, height);
+      };
+      const render = () => {
+        phase.value = String(index + 1);
+        output.value = data.phases[index];
+        status.textContent = (timer ? 'Playing' : 'Paused') + ' · phase ' + data.phases[index];
+        draw('gs019-stand', images.standing, 160, 320);
+        draw('gs019-old', images.rejected[index], 160, 320);
+        draw('gs019-fresh', images.fresh[index], 160, 320);
+        draw('gs019-game-stand', images.standing, 32, 64);
+        draw('gs019-game-old', images.rejected[index], 32, 64);
+        draw('gs019-game-fresh', images.fresh[index], 32, 64);
+        draw('gs019-detail', images.fresh[index], 320, 640);
+        root.querySelectorAll('.gs019-phase').forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(buttonIndex === index)));
+      };
+      const stop = () => { if (timer) clearInterval(timer); timer = null; play.textContent = 'Play'; };
+      images.standing.src = data.standing;
+      data.rejected.forEach((src, imageIndex) => { images.rejected[imageIndex].src = src; });
+      data.fresh.forEach((src, imageIndex) => { images.fresh[imageIndex].src = src; });
+      const ready = [images.standing, ...images.rejected, ...images.fresh].map(image => image.decode());
+      data.phases.forEach((phaseId, phaseIndex) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn viz-tile gs019-phase';
+        button.disabled = true;
+        button.setAttribute('aria-label', 'Show phase ' + phaseId);
+        button.setAttribute('aria-pressed', String(phaseIndex === 0));
+        const canvas = document.createElement('canvas');
+        canvas.width = 32; canvas.height = 64;
+        button.append(canvas);
+        button.addEventListener('click', () => { stop(); index = phaseIndex; render(); });
+        root.querySelector('#gs019-strip').append(button);
+        button.dataset.phaseIndex = String(phaseIndex);
+      });
+      phase.addEventListener('input', () => { stop(); index = Number(phase.value) - 1; render(); });
+      play.addEventListener('click', () => { if (timer) { stop(); render(); return; } play.textContent = 'Pause'; timer = setInterval(() => { index = (index + 1) % 8; render(); }, data.cadenceMs); render(); });
+      Promise.all(ready).then(() => { play.disabled = false; phase.disabled = false; root.querySelectorAll('.gs019-phase').forEach((button, phaseIndex) => { button.disabled = false; const canvas = button.querySelector('canvas'), context = canvas.getContext('2d'); context.imageSmoothingEnabled=false; context.drawImage(images.fresh[phaseIndex], 0, 0, 32, 64); }); render(); }).catch(error => { status.textContent = 'Review images failed to load'; status.setAttribute('role', 'alert'); play.disabled = true; phase.disabled = true; console.error(error); });
+    })();
+  </script>
+</section>

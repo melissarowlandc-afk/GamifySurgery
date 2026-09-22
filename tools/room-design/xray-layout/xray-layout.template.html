@@ -1,0 +1,20 @@
+<section id="xray-layout-proof" aria-labelledby="xray-title">
+  <style>
+    #xray-layout-proof{max-width:760px;margin-inline:auto}#xray-layout-proof .xray-art-wrap{position:relative;max-width:480px;margin:12px auto 0}#xray-layout-proof .xray-art{display:block;width:100%;height:auto}#xray-layout-proof .xray-hit{position:absolute;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#xray-layout-proof .xray-controls{max-width:640px;margin:10px auto 0}#xray-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#xray-layout-proof legend{font-weight:var(--font-weight-medium);margin-bottom:4px}#xray-layout-proof .xray-buttons{display:flex;gap:5px;flex-wrap:wrap}#xray-layout-proof .xray-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#xray-layout-proof .xray-label{color:var(--muted-foreground);margin-right:3px}#xray-layout-proof .xray-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:2.5em}#xray-layout-proof .xray-note{margin-top:6px;color:var(--muted-foreground)}
+  </style>
+  <h2 id="xray-title">X-ray Room preview</h2>
+  <div class="xray-art-wrap">
+    <canvas id="xray-art" class="xray-art" width="960" height="1100" role="img" aria-label="Three by three X-ray Room with permanent table, upright detector, tube stand and console, selectable doors, use points, and provisional clearance."></canvas>
+    <div id="xray-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="xray-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="xray-adjacency" class="xray-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="xray-row"><div><span class="xray-label text-small">North</span><span id="xray-north" class="xray-buttons"></span></div><div><span class="xray-label text-small">South</span><span id="xray-south" class="xray-buttons"></span></div><div><span class="xray-label text-small">West</span><span id="xray-west" class="xray-buttons"></span></div><div><span class="xray-label text-small">East</span><span id="xray-east" class="xray-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="xray-optional" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional hanging apron</span></label>
+    <label class="form-check"><input id="xray-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, and standing/use points</span></label>
+    <div class="xray-note text-small"><strong>Use directions:</strong> standing patient faces North at the detector; technician faces North at the South-facing console. Only B2 blocks walking; clearance radius is a provisional 0.16 tile.</div>
+    <div id="xray-status" class="xray-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__XRAY_SCRIPT__</script>
+</section>
+

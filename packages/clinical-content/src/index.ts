@@ -45,3 +45,5 @@ export * from "./development-batch/2026-09-11/board-expansion-batch";
 
 export * from "./development-batch/2026-09-12/board-expansion-batch";
 export * from "./development-batch/2026-09-13/early-levels-batch";
+export * from "./development-batch/2026-09-17/brief-early-levels-batch";
+export * from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";

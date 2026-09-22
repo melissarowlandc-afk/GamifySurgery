@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceAtlas": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-parts-atlas-v1.png",
+    "sha256": "22739b5d50fa0e08bb36e6df074612b9ec805d24788d277beee3c56d5afd22b3"
+  },
+  "transparentAtlas": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-parts-atlas-v3-transparent.png",
+    "sha256": "c31a4940b6b0e98c144a61fed4a5f1279b9335158318d2ed2789c5c786cba84c"
+  },
+  "method": "8-connected flood seeded from atlas exterior and declared cell borders; neutral range <=30; mean RGB >=155; alpha-only removal",
+  "alpha": {
+    "total": 1572516,
+    "removed": 1189902,
+    "retained": 382614,
+    "retainedBrightNeutral": 10547,
+    "partial": 0
+  },
+  "retainedRgb": "byte-identical where alpha is nonzero"
+}

@@ -1,0 +1,64 @@
+<section id="gs019-blue-directional-review" aria-labelledby="gs019-directional-title">
+  <style>
+    #gs019-blue-directional-review { color: var(--foreground); }
+    #gs019-blue-directional-review .gs019-controls { display:flex; flex-wrap:wrap; align-items:center; gap:.75rem; margin-block:.75rem; }
+    #gs019-blue-directional-review .gs019-game-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    #gs019-blue-directional-review .gs019-native-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    #gs019-blue-directional-review figure { margin:0; min-width:0; }
+    #gs019-blue-directional-review canvas { display:block; image-rendering:pixelated; background:var(--muted); }
+    #gs019-blue-directional-review .gs019-game { width:32px; height:64px; }
+    #gs019-blue-directional-review .gs019-native { width:160px; height:auto; max-width:100%; aspect-ratio:1 / 2; }
+    #gs019-blue-directional-review .gs019-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.5rem; }
+    #gs019-blue-directional-review .gs019-strip { display:flex; flex-wrap:wrap; gap:.5rem; }
+    #gs019-blue-directional-review .gs019-phase canvas { width:32px; height:64px; pointer-events:none; }
+    #gs019-blue-directional-review figcaption { color:var(--muted-foreground); margin-top:.35rem; }
+    @media (max-width:600px) { #gs019-blue-directional-review .gs019-game-grid, #gs019-blue-directional-review .gs019-native-grid { grid-template-columns:1fr; } }
+  </style>
+  <h2 id="gs019-directional-title">Blue Glasses directional walking</h2>
+  <div class="viz-controls gs019-controls">
+    <button class="btn btn-primary" id="gs019-directional-play" type="button" disabled>Play</button>
+    <label class="form-label" for="gs019-directional-phase">Phase <output id="gs019-directional-phase-output" for="gs019-directional-phase" class="tabular-nums">01</output>
+      <input class="form-range" id="gs019-directional-phase" type="range" min="1" max="8" value="1" disabled>
+    </label>
+    <span id="gs019-directional-status" class="text-muted">Loading frames</span>
+  </div>
+  <h3>Actual game size: 32×64</h3>
+  <div class="gs019-game-grid" id="gs019-directional-game" aria-label="East, North, and South selected walking phase at actual game size"></div>
+  <h3>Native 160×320: approved standing and selected walk</h3>
+  <div class="gs019-native-grid" id="gs019-directional-native"></div>
+  <h3>All eight phases at game size</h3>
+  <div class="gs019-strip" id="gs019-directional-strip" aria-label="Choose a shared walking phase"></div>
+  <script>
+    (() => {
+      const data = __GS019_DIRECTIONAL_PAYLOAD__;
+      const root = document.getElementById('gs019-blue-directional-review');
+      const phase = root.querySelector('#gs019-directional-phase');
+      const output = root.querySelector('#gs019-directional-phase-output');
+      const play = root.querySelector('#gs019-directional-play');
+      const status = root.querySelector('#gs019-directional-status');
+      const frames = data.directions.map(direction => ({ standing:new Image(), walk:direction.frames.map(() => new Image()) }));
+      let index = 0, timer = null;
+      const draw = (canvas, image, width, height) => { const context=canvas.getContext('2d'); context.imageSmoothingEnabled=false; context.clearRect(0,0,width,height); context.drawImage(image,0,0,width,height); };
+      const stop = () => { if (timer) clearInterval(timer); timer=null; play.textContent='Play'; };
+      const render = () => {
+        phase.value=String(index+1); output.value=data.phases[index]; status.textContent=(timer?'Playing':'Paused')+' · phase '+data.phases[index];
+        data.directions.forEach((direction,directionIndex) => {
+          draw(root.querySelector('#gs019-game-'+direction.id),frames[directionIndex].walk[index],32,64);
+          draw(root.querySelector('#gs019-native-stand-'+direction.id),frames[directionIndex].standing,160,320);
+          draw(root.querySelector('#gs019-native-walk-'+direction.id),frames[directionIndex].walk[index],160,320);
+        });
+        root.querySelectorAll('.gs019-phase').forEach((button,buttonIndex)=>button.setAttribute('aria-pressed',String(buttonIndex===index)));
+      };
+      data.directions.forEach((direction,directionIndex) => {
+        const game=document.createElement('figure'); game.innerHTML='<canvas class="gs019-game" id="gs019-game-'+direction.id+'" width="32" height="64" role="img" aria-label="'+direction.label+' walking at game size"></canvas><figcaption>'+direction.label+' walk</figcaption>'; root.querySelector('#gs019-directional-game').append(game);
+        const native=document.createElement('figure'); native.innerHTML='<figcaption>'+direction.label+'</figcaption><div class="gs019-pair"><div><canvas class="gs019-native" id="gs019-native-stand-'+direction.id+'" width="160" height="320" role="img" aria-label="Approved '+direction.label+' standing"></canvas><span class="text-small text-muted">Standing</span></div><div><canvas class="gs019-native" id="gs019-native-walk-'+direction.id+'" width="160" height="320" role="img" aria-label="'+direction.label+' walking phase"></canvas><span class="text-small text-muted">Walk</span></div></div>'; root.querySelector('#gs019-directional-native').append(native);
+        frames[directionIndex].standing.src=direction.standing; direction.frames.forEach((src,frameIndex)=>frames[directionIndex].walk[frameIndex].src=src);
+      });
+      data.phases.forEach((phaseId,phaseIndex) => { const button=document.createElement('button'); button.type='button'; button.className='btn viz-tile gs019-phase'; button.disabled=true; button.setAttribute('aria-label','Show phase '+phaseId); button.setAttribute('aria-pressed',String(phaseIndex===0)); data.directions.forEach(direction=>{ const canvas=document.createElement('canvas'); canvas.width=32; canvas.height=64; canvas.setAttribute('aria-label',direction.label+' phase '+phaseId); button.append(canvas); }); button.addEventListener('click',()=>{stop();index=phaseIndex;render();}); root.querySelector('#gs019-directional-strip').append(button); });
+      phase.addEventListener('input',()=>{stop();index=Number(phase.value)-1;render();});
+      play.addEventListener('click',()=>{if(timer){stop();render();return;}play.textContent='Pause';timer=setInterval(()=>{index=(index+1)%8;render();},data.cadenceMs);render();});
+      const ready=frames.flatMap(item=>[item.standing,...item.walk]).map(image=>image.decode());
+      Promise.all(ready).then(()=>{play.disabled=false;phase.disabled=false;root.querySelectorAll('.gs019-phase').forEach((button,phaseIndex)=>{button.disabled=false;button.querySelectorAll('canvas').forEach((canvas,directionIndex)=>draw(canvas,frames[directionIndex].walk[phaseIndex],32,64));});render();}).catch(error=>{status.textContent='Review images failed to load';status.setAttribute('role','alert');console.error(error);});
+    })();
+  </script>
+</section>

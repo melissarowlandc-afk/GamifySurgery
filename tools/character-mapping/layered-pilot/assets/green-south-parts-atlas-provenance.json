@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "asset": "green-south-parts-atlas",
+  "source": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-parts-atlas-v1.png",
+    "sha256": "22739b5d50fa0e08bb36e6df074612b9ec805d24788d277beee3c56d5afd22b3",
+    "dimensions": [1254, 1254],
+    "alpha": { "transparent": 0, "partial": 0, "opaque": 1572516 },
+    "finding": "Baked checkerboard; not valid for assembly."
+  },
+  "backgroundExtractionAttempt": {
+    "mode": "built-in image_gen",
+    "useCase": "background-extraction",
+    "output": "tools/character-mapping/layered-pilot/assets/green-south-parts-atlas-v2-background-extraction-attempt.png",
+    "sha256": "ec529641656ef11f14b509dd9ee364950e7eba42e3b7fe6c6f0d38e5507bd6a7",
+    "dimensions": [1254, 1254],
+    "alpha": { "transparent": 0, "partial": 0, "opaque": 1572516 },
+    "result": "Rejected: still opaque; no local keying, repainting, or retry performed.",
+    "prompt": "Use case: background-extraction\\nAsset type: animation-ready 2D game character parts atlas\\nInput image: edit target — preserve every illustrated component exactly.\\nPrimary request: Remove only the gray-and-white checkerboard background and return this same parts atlas on a genuinely transparent alpha background.\\nConstraints: Preserve the canvas size, component positions, colors, painted/pixel texture, black outlines, clothing seams, face, hair, hands, legs, shoes, and all component edges exactly. Do not redesign, crop, move, resize, rotate, retouch, add, or remove any character part. Keep the fully assembled character reference cell and each isolated component cell. The checkerboard must become true transparency, including between and around all parts. No checkerboard, white matte, halo, shadows, labels, text, or new elements."
+  }
+}

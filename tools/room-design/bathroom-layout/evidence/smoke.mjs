@@ -1,0 +1,13 @@
+import {readFile,mkdir} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const base='tools/room-design/bathroom-layout',html=await readFile(`${base}/bathroom-layout.html`,'utf8');
+await mkdir(`${base}/evidence`,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'}),page=await browser.newPage({viewport:{width:760,height:900}});
+await page.setContent(`<main>${html}</main>`);await page.waitForFunction(()=>window.__bathroomLayout?.ready());
+await page.screenshot({path:`${base}/evidence/bathroom-default.png`,fullPage:true});
+await page.getByLabel('Show footprints, selected-door route, and use points').check();
+await page.screenshot({path:`${base}/evidence/bathroom-overlay.png`,fullPage:true});
+await page.getByLabel('N1',{exact:true}).check();
+await page.getByRole('button',{name:'Toggle door at N1'}).click();
+await page.screenshot({path:`${base}/evidence/bathroom-backed-n1.png`,fullPage:true});
+await browser.close();

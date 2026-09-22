@@ -1,0 +1,11 @@
+import {readFile,mkdir} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const base='tools/room-design/ultrasound-layout',html=await readFile(`${base}/ultrasound-layout.html`,'utf8');await mkdir(`${base}/evidence`,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'}),page=await browser.newPage({viewport:{width:820,height:980}});await page.setContent(`<main>${html}</main>`);await page.waitForFunction(()=>window.__ultrasoundLayout?.ready());
+await page.screenshot({path:`${base}/evidence/ultrasound-default.png`,fullPage:true});
+await page.getByLabel('Show footprints, selected-door route, and seat/use points').check();await page.screenshot({path:`${base}/evidence/ultrasound-overlay.png`,fullPage:true});
+await page.getByLabel('Show footprints, selected-door route, and seat/use points').uncheck();
+for(const button of await page.locator('.ultrasound-controls [data-segment]').all())if(await button.getAttribute('aria-pressed')!=='true')await button.click();
+for(const input of await page.locator('[data-adjacent]').all())if(!await input.isChecked())await input.check();
+await page.screenshot({path:`${base}/evidence/ultrasound-all-open-backed.png`,fullPage:true});
+await browser.close();

@@ -1,0 +1,5 @@
+const fs=require('fs'),p=require('path'),h=__dirname;
+const art=p.join(h,'telehealth.webp'),props=p.join(h,'props.webp'),win=p.join(h,'window.webp');
+if(!fs.existsSync(art)||!fs.existsSync(props)||!fs.existsSync(win)) throw new Error('Run asset packs before building.');
+const js=fs.readFileSync(p.join(h,'preview.js'),'utf8').replace('__SOURCE__',JSON.stringify(JSON.parse(fs.readFileSync(p.join(h,'telehealth.json'))))).replace('__PROPS__',JSON.stringify(JSON.parse(fs.readFileSync(p.join(h,'props.json'))))).replace('__WINDOW__',JSON.stringify(JSON.parse(fs.readFileSync(p.join(h,'window.json'))))).replace('__ATLAS__',fs.readFileSync(art).toString('base64')).replace('__PROPS_ATLAS__',fs.readFileSync(props).toString('base64')).replace('__WINDOW_ATLAS__',fs.readFileSync(win).toString('base64'));
+const output=fs.readFileSync(p.join(h,'template.html'),'utf8').replace('__TELEHEALTH_SCRIPT__',js);fs.writeFileSync(p.join(h,'telehealth-layout.html'),output);console.log(Buffer.byteLength(output)+' bytes');

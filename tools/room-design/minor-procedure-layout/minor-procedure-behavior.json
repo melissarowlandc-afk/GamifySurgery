@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "owner-approved-pose-contract-pending-runtime-integration",
+  "scope": "Pose and attachment behavior only for a patient and a founder or employee already assigned to use the Minor Procedure Room. This contract does not define eligibility, assignment, staffing, duration, or care logic.",
+  "room": {
+    "dimensionsTiles": { "columns": 3, "rows": 3 },
+    "orientation": "north-up",
+    "tileScalePreviewPixels": 120,
+    "navigation": {
+      "onlyBlockedTile": "B2",
+      "blockerRectTiles": { "left": 1, "top": 1, "width": 1, "height": 1 },
+      "A2Traversable": true,
+      "A2WalkingLayer": "behind the procedure table artwork",
+      "note": "The patient's explicit seat attachment is not a walking destination inside blocked B2."
+    }
+  },
+  "uses": [
+    {
+      "actor": "patient",
+      "fixture": "procedureTable",
+      "pose": "existing static seated pose",
+      "facing": "south",
+      "floorProjectionTiles": { "x": 1.5, "y": 1.95 },
+      "elevatedAttachment": {
+        "previewCanvasPixels": { "x": 240, "y": 316.92972972972973 },
+        "previewRoomLocalTiles": { "x": 1.5, "y": 1.5577477477477478 },
+        "riseAboveFloorProjectionPixels": 47.07027027027027,
+        "source": "registered replacement-table seat point"
+      },
+      "navigationApproachTiles": { "x": 1.5, "y": 2.2 }
+    },
+    {
+      "actor": "founder_or_employee",
+      "fixture": "clinicianStool",
+      "pose": "existing static seated pose",
+      "facing": "north",
+      "floorProjectionTiles": { "x": 1.5, "y": 2.75 },
+      "elevatedAttachment": {
+        "previewCanvasPixels": { "x": 240, "y": 409.32932330827066 },
+        "previewRoomLocalTiles": { "x": 1.5, "y": 2.3277443609022554 },
+        "riseAboveFloorProjectionPixels": 50.67067669172933,
+        "source": "registered stool cushion point"
+      },
+      "navigationApproachTiles": { "x": 1.5, "y": 2.84 }
+    }
+  ],
+  "runtimeIntegration": {
+    "implemented": false,
+    "required": "Map the approved actors to existing cardinal static seated poses and transform the recorded room-local attachments into runtime coordinates.",
+    "notSpecified": [
+      "which characters are eligible",
+      "how a patient or staff member is assigned",
+      "staffing requirements",
+      "activity duration",
+      "clinical or gameplay effects",
+      "occupied-body clearance and final sprite registration"
+    ]
+  }
+}

@@ -19,7 +19,8 @@ export type TutorialActionId =
   | "enter-build-mode"
   | "select-exam-room"
   | "exit-build-mode"
-  | "level-up";
+  | "level-up"
+  | "open-management";
 
 export type TutorialTarget =
   | "waiting-patient"
@@ -41,7 +42,8 @@ export type TutorialTarget =
   | "room-selection"
   | "door-tool"
   | "exit-build-mode"
-  | "level-up";
+  | "level-up"
+  | "management";
 
 export interface TutorialActionView {
   id: TutorialActionId;
@@ -96,9 +98,12 @@ export interface TutorialStepView {
     | "exit-build-mode"
     | "remaining-goals"
     | "advance-level"
-    | "level-one-ready"
-    | "level-one-resume-time"
-    | "level-one-await-first-arrival";
+  | "level-one-ready"
+  | "level-one-resume-time"
+  | "level-one-await-first-arrival"
+  | "sendout-management"
+  | "sendout-trash"
+  | "sendout-water";
   eyebrow: string;
   title: string;
   body: string;
@@ -118,6 +123,8 @@ interface TutorialViewInput {
   tutorialsEnabled: boolean;
   introDismissed: boolean;
   acknowledgedStepIds: ReadonlySet<string>;
+  /** A persisted pause owner means the operations-card sequence already started. */
+  dailyRoutineTipsStarted?: boolean;
   buildMode: boolean;
   selectedRoomDefinitionId: string | null;
   selectedRoomInstanceId?: string | null;
@@ -309,6 +316,7 @@ function createLevelZeroTutorialStepView(
     state,
     introDismissed,
     acknowledgedStepIds,
+    dailyRoutineTipsStarted = false,
     summaryVisible = false,
   } = input;
   const acknowledged = (id: TutorialStepView["id"]): boolean =>
@@ -509,7 +517,10 @@ function createLevelZeroTutorialStepView(
   }
 
   const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
-  if (!acknowledged("between-tutorial-patients")) {
+  if (
+    (!second || second.firstOpenedAtTick === null) &&
+    !acknowledged("between-tutorial-patients")
+  ) {
     return step({
       id: "between-tutorial-patients",
       eyebrow: "Level 0 tutorial · Between patients",
@@ -653,7 +664,18 @@ function createLevelZeroTutorialStepView(
       (second.pendingResult?.dueTick ?? state.facilityTick) -
         state.facilityTick,
     );
-    if (!acknowledged("second-sendout-wait")) {
+    // New durable operations acknowledgements prove this legacy in-memory
+    // send-out explanation was already passed before a reload.
+    const resumedOperationsTips = [
+      "sendout-management",
+      "sendout-trash",
+      "sendout-water",
+    ].some((id) => acknowledged(id as TutorialStepView["id"]));
+    if (
+      !acknowledged("second-sendout-wait") &&
+      !resumedOperationsTips &&
+      !dailyRoutineTipsStarted
+    ) {
       return step({
         id: "second-sendout-wait",
         eyebrow: "Level 0 tutorial · Facility time",
@@ -666,6 +688,42 @@ function createLevelZeroTutorialStepView(
         target: "facility-clock",
         targetSelector: ".facility-time-chip",
         patientEncounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
+      });
+    }
+    // The operations tips are a real off-site waiting activity. Do not cover
+    // the departure animation or replay them after the patient has returned.
+    if (second.patientLocation !== null || second.patientMovement !== null) {
+      return null;
+    }
+    if (!acknowledged("sendout-management")) {
+      return step({
+        id: "sendout-management",
+        eyebrow: "Level 0 tutorial · Clinic operations",
+        title: "Management keeps the clinic running",
+        body: "Management pauses the clinic while you review Employees and Services & income. You can hire staff there when you are ready.",
+        target: "management",
+        targetSelector: ".management-mode-trigger",
+        secondaryAction: { id: "open-management", label: "Open Management" },
+      });
+    }
+    if (!acknowledged("sendout-trash")) {
+      return step({
+        id: "sendout-trash",
+        eyebrow: "Level 0 tutorial · Clinic operations",
+        title: "Keep an eye on trash",
+        body: "When litter appears in the clinic, click it to send the founder to clean it up. This tip does not require a cleanup now.",
+        target: "facility-placement",
+        targetSelector: "[data-tutorial-anchor='facility-surface']",
+      });
+    }
+    if (!acknowledged("sendout-water")) {
+      return step({
+        id: "sendout-water",
+        eyebrow: "Level 0 tutorial · Clinic operations",
+        title: "The water cooler is a clinic task",
+        body: "Click the cooler when its water runs low. Later, a secretary can refill an empty cooler during a quiet front-desk gap.",
+        target: "facility-placement",
+        targetSelector: "[data-tutorial-anchor='facility-surface']",
       });
     }
     return null;
@@ -822,6 +880,7 @@ export function createTutorialStepView({
   tutorialsEnabled,
   introDismissed,
   acknowledgedStepIds,
+  dailyRoutineTipsStarted = false,
   buildMode,
   selectedRoomDefinitionId,
   selectedRoomInstanceId = null,
@@ -878,6 +937,7 @@ export function createTutorialStepView({
     tutorialsEnabled,
     introDismissed,
     acknowledgedStepIds,
+    dailyRoutineTipsStarted,
     buildMode,
     selectedRoomDefinitionId,
     selectedRoomInstanceId,

@@ -362,47 +362,6 @@ export function validateFacilityAccess(
     issues.push(`${displayName} needs a reachable door.`);
   }
 
-  const imagingRoomIds = new Set([
-    "room.xray",
-    "room.ultrasound",
-    "room.ct",
-    "room.mri",
-  ]);
-  for (const room of rooms.filter((candidate) =>
-    imagingRoomIds.has(candidate.roomDefinitionId),
-  )) {
-    const displayName =
-      getDefinition(room.roomDefinitionId)?.displayName ??
-      room.roomDefinitionId;
-    const connections = doorConnections.get(room.id) ?? [];
-    const controlConnections = connections.filter(({ adjacentRoomId }) => {
-      const adjacent = rooms.find(
-        (candidate) => candidate.id === adjacentRoomId,
-      );
-      const adjacentDefinition = adjacent
-        ? getDefinition(adjacent.roomDefinitionId)
-        : null;
-      return adjacentDefinition?.capabilityIds.includes(
-        "capability.imaging_control",
-      );
-    });
-    const patientConnections = connections.filter(
-      ({ adjacentRoomId }) =>
-        adjacentRoomId !== null &&
-        !controlConnections.some(
-          (control) => control.adjacentRoomId === adjacentRoomId,
-        ),
-    );
-    if (patientConnections.length === 0) {
-      issues.push(`${displayName} requires a patient-facing door.`);
-    }
-    if (controlConnections.length === 0) {
-      issues.push(
-        `${displayName} must share a wall and internal door with an Imaging Control Room.`,
-      );
-    }
-  }
-
   const uniqueIssues = [...new Set(issues)];
   return {
     valid: uniqueIssues.length === 0,

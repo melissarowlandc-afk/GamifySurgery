@@ -33,7 +33,7 @@ const HELP_STEPS = [
   ],
   [
     "Rooms, doors, and hallways",
-    "Rooms may connect directly to rooms or hallways. Imaging rooms also need a separate shared-wall door to an Imaging Control Room. Patients and employees visibly walk the resulting routes, so layout affects task time.",
+    "Rooms may connect directly to rooms or hallways. Imaging rooms need ordinary reachable doors and an Imaging Technician. Patients and employees visibly walk the resulting routes, so layout affects task time.",
   ],
   [
     "Employees",

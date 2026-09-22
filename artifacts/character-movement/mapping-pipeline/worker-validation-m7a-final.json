@@ -1,0 +1,99 @@
+{
+  "milestone": "M7A offline character fit-target compiler and batch tooling",
+  "validatedAt": "2026-09-10",
+  "status": "numeric_targets_validated_pending_raster_pilot",
+  "outputClass": "target_only",
+  "correctionsAfterParentReview": [
+    "cardinal views now map to shared-contract right/left/front/back asset keys",
+    "persisted batch summaries exclude invocation-only written/reused disposition",
+    "north/south lift values now use paired latentFootLift/latentFootLiftUnits and projectedFootLift/projectedFootLiftUnits fields without orphan footLiftUnits"
+  ],
+  "commands": [
+    {
+      "command": "node --check tools/character-mapping/math.mjs; node --check tools/character-mapping/compiler.mjs; node --check tools/character-mapping/cli.mjs; node --check tools/character-mapping/compiler.test.mjs",
+      "result": "pass"
+    },
+    {
+      "command": "node --test tools/character-mapping/compiler.test.mjs",
+      "result": "10 passed, 0 failed",
+      "totalMilliseconds": 1989.1733,
+      "syntheticCapacity": {
+        "classification": "synthetic local numeric work only",
+        "characters": 300,
+        "targets": 9600,
+        "localToolMilliseconds": 1536.2839
+      }
+    },
+    {
+      "command": "node tools/character-mapping/cli.mjs compile --recipe docs/features/character-movement/recipes/patient-01.json",
+      "result": "written then available for verified reuse",
+      "localToolMilliseconds": 46.641,
+      "targets": 32,
+      "dependencyFingerprint": "fcc59486421df3647055d1e17b6415bbab2a148a6b1be088013f197cce30acc1"
+    },
+    {
+      "command": "node tools/character-mapping/cli.mjs check --recipe docs/features/character-movement/recipes/patient-01.json",
+      "result": "verified",
+      "localToolMilliseconds": 52.237,
+      "targets": 32
+    },
+    {
+      "command": "node tools/character-mapping/cli.mjs batch --manifest docs/features/character-movement/batches/first-existing-four.json (twice)",
+      "result": "both succeeded with identical persisted summary bytes and fingerprint; one compiled target set and three explicitly pending measurement",
+      "localToolMilliseconds": [48.196, 45.712],
+      "counts": {
+        "selected": 4,
+        "compiled": 1,
+        "pending": 3,
+        "targets": 32
+      },
+      "batchFingerprint": "944954ab8a606213b336ddc9b3f373783fec0748f71cfc24cf3ec333efad6009"
+    },
+    {
+      "command": "protected SHA-256 baseline comparison",
+      "result": "16 checked, 0 mismatches"
+    }
+  ],
+  "numericEvidence": {
+    "patient01AcceptedTargetsCompared": 32,
+    "patient01ExpectedAssetKeysCompared": 32,
+    "patient01MaximumDeviation": 0,
+    "patient01RegressionAllowance": 0.0001,
+    "regressionAllowanceIsDistinctFromRasterTolerance": true,
+    "retargetMutation": "changed lateral thigh/shin to 30/27, north-south thigh/shin to 35/31, and head radius; joints recomputed while fixed-length and support invariants remained valid",
+    "batchRerunCoverage": "ordinary run twice plus interrupted run, resume and third stable run; persisted bytes and fingerprints matched",
+    "coveredFailures": [
+      "missing, null, string, nonfinite and negative nested numeric inputs",
+      "unreachable IK and out-of-frame geometry",
+      "bad or missing reference provenance",
+      "north-south, self, cyclic, arbitrary and unapproved reflection lineage",
+      "unsafe Windows keys, trailing dots, traversal and input/output overlap",
+      "duplicate identity and output keys",
+      "changed dependencies, stale, tampered, missing and partial outputs",
+      "interrupted batch safe rerun"
+    ]
+  },
+  "outputs": {
+    "patient01Targets": "worker-runs/mixed-20260910-patient-01/fcc59486421df3647055d1e17b6415bbab2a148a6b1be088013f197cce30acc1/targets.json",
+    "patient01TargetsSha256": "7c9b4daaaa2398e86c623d86f7e9d80249c1251c2f69bd00bbed292c7760655a",
+    "firstBatchSummary": "worker-runs/worker-batches/first-existing-four/944954ab8a606213b336ddc9b3f373783fec0748f71cfc24cf3ec333efad6009/summary.json",
+    "firstBatchSummarySha256": "c96fbfa076d97e0b5f7689462faec4ce9d6d163b25cb1e2821f1f16a425d0951"
+  },
+  "sourceHashes": {
+    "tools/character-mapping/math.mjs": "fd40fcc8486de4355a1d9fc4a65198f44ef7ccaab0e1377aafa06ea9e5ca0d6b",
+    "tools/character-mapping/compiler.mjs": "ca82bf0c469d4b365f82df72a220fd08bab71510e28b4c518275d2396adf8f13",
+    "tools/character-mapping/cli.mjs": "8f0b320d9b89be40916b87cafe3d6e2b71d2d018fe22abdba955ad5edacd3291",
+    "tools/character-mapping/compiler.test.mjs": "b7ca09eccc18c9493982bf8d47e44d5d09e7cd26980e6092b6880eb629f1b483",
+    "tools/character-mapping/README.md": "9c2ac8cab682f2e22b7273f04c8d108482954d2656680b2105e23266e821fd1c",
+    "docs/features/character-movement/recipes/patient-01.json": "de5787f83f692dc79324b42934b1e0a9505445733dac502c7cc53ce3cc461c01",
+    "docs/features/character-movement/batches/first-existing-four.json": "d41be9c98503ba4f3b614d9e2c9e51bdf06879104f162398ddb3e6fcbf729903"
+  },
+  "evidenceBoundary": {
+    "imageIoPerformed": false,
+    "sourceAndDonorImageHashState": "declared, not verified by this numeric tool",
+    "actualImageHashVerificationOwner": "GS-010 art-side audit",
+    "manualMeasurementTime": "unmeasured",
+    "rasterCompositionTime": "unmeasured",
+    "productionReadiness": "not claimed before GS-010 raster pilot and owner review"
+  }
+}

@@ -1,0 +1,1718 @@
+{
+  "schemaVersion": 1,
+  "batchId": "gs022-new-employee20-v1",
+  "status": "employee-identities-and-front-concepts-owner-approved",
+  "artDirectionStatus": "identity-and-front-concepts-owner-approved",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false
+  },
+  "sourcePolicy": "Original sources and prompts remain byte-identical. Candidate extraction is deferred until an owner-directed source manifest is supplied.",
+  "canvas": {
+    "production": [
+      160,
+      320
+    ],
+    "native": [
+      32,
+      64
+    ],
+    "bodyAxisX": 80,
+    "floorY": 287
+  },
+  "roleAssignments": {
+    "staff.receptionist": [
+      "gs022-new-employee-001",
+      "gs022-new-employee-002",
+      "gs022-new-employee-003"
+    ],
+    "staff.imaging_technician": [
+      "gs022-new-employee-004",
+      "gs022-new-employee-005",
+      "gs022-new-employee-006"
+    ],
+    "staff.periop_nurse": [
+      "gs022-new-employee-007",
+      "gs022-new-employee-008",
+      "gs022-new-employee-009"
+    ],
+    "staff.endoscopy_nurse": [
+      "gs022-new-employee-010",
+      "gs022-new-employee-011",
+      "gs022-new-employee-012"
+    ],
+    "staff.endoscopist": [
+      "gs022-new-employee-013",
+      "gs022-new-employee-014"
+    ],
+    "staff.phlebotomist": [
+      "gs022-new-employee-015",
+      "gs022-new-employee-016"
+    ],
+    "staff.evs_worker": [
+      "gs022-new-employee-017",
+      "gs022-new-employee-018"
+    ],
+    "staff.glp1_np": [
+      "gs022-new-employee-019",
+      "gs022-new-employee-020"
+    ]
+  },
+  "records": [
+    {
+      "id": "gs022-new-employee-001",
+      "role": "staff.receptionist",
+      "appearanceSpec": "Older broad-built woman, deep brown skin, close salt-and-pepper natural curls, small plum glasses; light sage cardigan over cream blouse, deep olive trousers, charcoal flats, small blank badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-1-v1.png",
+        "sha256": "1ccc1b65d09f549fa8fccf81199b400644144baa9d0946b37865b656ff572f92",
+        "visibleBand": {
+          "left": 30,
+          "right": 362,
+          "top": 63,
+          "bottom": 751,
+          "width": 333,
+          "height": 689
+        },
+        "sourceBoundaryAlphaPixels": 6,
+        "sourceBoundaryAlphaNote": "Residual alpha is retained from the original sheet and is not removed by this package.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": 6.3125,
+          "translateY": 5,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "1b181df8e6deedc7561be474808f77b1ffdef74648b7363869ae3611c7e3d397"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-001/stand-south-candidate.png",
+            "sha256": "132ece31fcf919b786350046a3959987862af100ab261922ee6d5cdb72d6ae69",
+            "alpha": {
+              "observedTransparentPixels": 27660,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 18,
+              "top": 29,
+              "right": 141,
+              "bottom": 286,
+              "width": 124,
+              "height": 258
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-002",
+      "role": "staff.receptionist",
+      "appearanceSpec": "Young slim man, light warm skin, straight copper-red side-parted hair, clean-shaven; light sage button-up shirt with rolled sleeves, deep olive trousers, brown shoes, small blank badge. No cardigan.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-1-v1.png",
+        "sha256": "1ccc1b65d09f549fa8fccf81199b400644144baa9d0946b37865b656ff572f92",
+        "visibleBand": {
+          "left": 467,
+          "right": 719,
+          "top": 63,
+          "bottom": 755,
+          "width": 253,
+          "height": 693
+        },
+        "sourceBoundaryAlphaPixels": 6,
+        "sourceBoundaryAlphaNote": "Residual alpha is retained from the original sheet and is not removed by this package.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -142.5625,
+          "translateY": 3.5,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "1b181df8e6deedc7561be474808f77b1ffdef74648b7363869ae3611c7e3d397"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-002/stand-south-candidate.png",
+            "sha256": "e0fc99afc01dd32a3c98a3f1de7fa372966caa5fd6607205861fcbed36b08eef",
+            "alpha": {
+              "observedTransparentPixels": 33027,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 33,
+              "top": 27,
+              "right": 126,
+              "bottom": 286,
+              "width": 94,
+              "height": 260
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-003",
+      "role": "staff.receptionist",
+      "appearanceSpec": "Middle-aged woman, medium olive skin, muted dusty-blue hijab closely framing face, rounded build; light sage long tunic with cream placket, dark olive straight trousers and charcoal shoes, blank badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-1-v1.png",
+        "sha256": "1ccc1b65d09f549fa8fccf81199b400644144baa9d0946b37865b656ff572f92",
+        "visibleBand": {
+          "left": 829,
+          "right": 1144,
+          "top": 101,
+          "bottom": 755,
+          "width": 316,
+          "height": 655
+        },
+        "sourceBoundaryAlphaPixels": 6,
+        "sourceBoundaryAlphaNote": "Residual alpha is retained from the original sheet and is not removed by this package.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -290.125,
+          "translateY": 3.5,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "1b181df8e6deedc7561be474808f77b1ffdef74648b7363869ae3611c7e3d397"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-003/stand-south-candidate.png",
+            "sha256": "c5f38853168093c27e9bee8dc7e1b7909dbb85705c2c14d2a7a60a8747962284",
+            "alpha": {
+              "observedTransparentPixels": 30357,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 21,
+              "top": 41,
+              "right": 138,
+              "bottom": 286,
+              "width": 118,
+              "height": 246
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-004",
+      "role": "staff.imaging_technician",
+      "appearanceSpec": "Middle-aged tall man, deep brown skin, bald head and short neat gray beard, sturdy shoulders; moss-green V-neck scrub top, charcoal trousers, sage trim, black trainers, tiny blank square chest badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-1-v1.png",
+        "sha256": "1ccc1b65d09f549fa8fccf81199b400644144baa9d0946b37865b656ff572f92",
+        "visibleBand": {
+          "left": 1245,
+          "right": 1569,
+          "top": 37,
+          "bottom": 756,
+          "width": 325,
+          "height": 720
+        },
+        "sourceBoundaryAlphaPixels": 6,
+        "sourceBoundaryAlphaNote": "Residual alpha is retained from the original sheet and is not removed by this package.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -447.8125,
+          "translateY": 3.125,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "1b181df8e6deedc7561be474808f77b1ffdef74648b7363869ae3611c7e3d397"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-004/stand-south-candidate.png",
+            "sha256": "03e469ef1f0a6ffa91f0a7592064487045fa57dde47bf423341e0e1d06f73f34",
+            "alpha": {
+              "observedTransparentPixels": 27610,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 19,
+              "top": 17,
+              "right": 140,
+              "bottom": 286,
+              "width": 122,
+              "height": 270
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-005",
+      "role": "staff.imaging_technician",
+      "appearanceSpec": "Young petite woman, light skin, straight dark chin-length blunt bob with bangs, no glasses; moss-green V-neck scrub top, charcoal trousers, sage trim, charcoal trainers, tiny blank square chest badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-1-v1.png",
+        "sha256": "1ccc1b65d09f549fa8fccf81199b400644144baa9d0946b37865b656ff572f92",
+        "visibleBand": {
+          "left": 1696,
+          "right": 1920,
+          "top": 132,
+          "bottom": 755,
+          "width": 225,
+          "height": 624
+        },
+        "sourceBoundaryAlphaPixels": 6,
+        "sourceBoundaryAlphaNote": "Residual alpha is retained from the original sheet and is not removed by this package.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -598.1875,
+          "translateY": 3.5,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-1-v1.txt",
+        "sha256": "1b181df8e6deedc7561be474808f77b1ffdef74648b7363869ae3611c7e3d397"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-005/stand-south-candidate.png",
+            "sha256": "7e8a3aeb2e5124866a5d89f79febba81aac88b1c34511426ba6601d58071fdd2",
+            "alpha": {
+              "observedTransparentPixels": 35944,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 38,
+              "top": 53,
+              "right": 121,
+              "bottom": 286,
+              "width": 84,
+              "height": 234
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-006",
+      "role": "staff.imaging_technician",
+      "appearanceSpec": "Older medium-build woman, medium warm-brown skin, dark hair in compact high bun with silver streak, narrow oval glasses; moss-green scrub top, charcoal trousers, sage trim, charcoal shoes and blank badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-2-v1.png",
+        "sha256": "23be395f4e4975f86f54044d57503f45ad73ef094ef93f9386c466f47e773633",
+        "visibleBand": {
+          "left": 91,
+          "right": 356,
+          "top": 75,
+          "bottom": 761,
+          "width": 266,
+          "height": 687
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -4,
+          "translateY": 1.25,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "561f9082e64e8e37e44f7d5e8a9c8e65ec73dc3e34210832f59787db0f65cba1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-006/stand-south-candidate.png",
+            "sha256": "667358808bb8c2ae21e4cdd1cf5f8c1e7c4d7f425c8dbcc2b47fcead592b17f1",
+            "alpha": {
+              "observedTransparentPixels": 32453,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 30,
+              "top": 29,
+              "right": 129,
+              "bottom": 286,
+              "width": 100,
+              "height": 258
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-007",
+      "role": "staff.periop_nurse",
+      "appearanceSpec": "Young stocky man, light freckled skin, short wavy auburn hair, clean-shaven; pale sage scrub top with cream trim, moss-green scrub trousers, off-white trainers, small blank badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-2-v1.png",
+        "sha256": "23be395f4e4975f86f54044d57503f45ad73ef094ef93f9386c466f47e773633",
+        "visibleBand": {
+          "left": 454,
+          "right": 763,
+          "top": 90,
+          "bottom": 762,
+          "width": 310,
+          "height": 673
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -148.375,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "561f9082e64e8e37e44f7d5e8a9c8e65ec73dc3e34210832f59787db0f65cba1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-007/stand-south-candidate.png",
+            "sha256": "279a76f8883adbbfb2f00cb45d8bdc74ce4b53d8c33686263521e21ef6117b16",
+            "alpha": {
+              "observedTransparentPixels": 29556,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 22,
+              "top": 35,
+              "right": 137,
+              "bottom": 286,
+              "width": 116,
+              "height": 252
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-008",
+      "role": "staff.periop_nurse",
+      "appearanceSpec": "Middle-aged tall slim woman, deep brown skin, black braids gathered in compact high bun; pale sage scrub top with cream trim, moss-green scrub trousers, dark trainers, small blank badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-2-v1.png",
+        "sha256": "23be395f4e4975f86f54044d57503f45ad73ef094ef93f9386c466f47e773633",
+        "visibleBand": {
+          "left": 873,
+          "right": 1103,
+          "top": 29,
+          "bottom": 762,
+          "width": 231,
+          "height": 734
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -290.6875,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "561f9082e64e8e37e44f7d5e8a9c8e65ec73dc3e34210832f59787db0f65cba1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-008/stand-south-candidate.png",
+            "sha256": "b7f9bbef015d8604cabe1ce409d2f1ca8fe29a9f751dc1214ad7f170ad7150f9",
+            "alpha": {
+              "observedTransparentPixels": 33443,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 37,
+              "top": 12,
+              "right": 122,
+              "bottom": 286,
+              "width": 86,
+              "height": 275
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-009",
+      "role": "staff.periop_nurse",
+      "appearanceSpec": "Older short broad man, medium olive skin, receding silver hair at sides and silver mustache, no glasses; pale sage scrub top with cream trim, moss-green scrub trousers, charcoal trainers, small blank badge.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-2-v1.png",
+        "sha256": "23be395f4e4975f86f54044d57503f45ad73ef094ef93f9386c466f47e773633",
+        "visibleBand": {
+          "left": 1209,
+          "right": 1534,
+          "top": 144,
+          "bottom": 762,
+          "width": 326,
+          "height": 619
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -434.5,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "561f9082e64e8e37e44f7d5e8a9c8e65ec73dc3e34210832f59787db0f65cba1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-009/stand-south-candidate.png",
+            "sha256": "e5854056342c0beb4a17d1ef5315f621aa4304353be1e6f05cb87f4c5e8cb323",
+            "alpha": {
+              "observedTransparentPixels": 30099,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 19,
+              "top": 55,
+              "right": 140,
+              "bottom": 286,
+              "width": 122,
+              "height": 232
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-010",
+      "role": "staff.endoscopy_nurse",
+      "appearanceSpec": "Young woman, medium tan skin, thick dark hair in low ponytail, curvy build; medium sage scrub top, deep olive scrub trousers, small cream chest badge and waist seam, charcoal trainers.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-2-v1.png",
+        "sha256": "23be395f4e4975f86f54044d57503f45ad73ef094ef93f9386c466f47e773633",
+        "visibleBand": {
+          "left": 1622,
+          "right": 1897,
+          "top": 106,
+          "bottom": 762,
+          "width": 276,
+          "height": 657
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -580,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-2-v1.txt",
+        "sha256": "561f9082e64e8e37e44f7d5e8a9c8e65ec73dc3e34210832f59787db0f65cba1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-010/stand-south-candidate.png",
+            "sha256": "94856d037096ebbf21865166b02a7f5700d8070a424b1e2f9f052dc57f936e88",
+            "alpha": {
+              "observedTransparentPixels": 31838,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 28,
+              "top": 41,
+              "right": 131,
+              "bottom": 286,
+              "width": 104,
+              "height": 246
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-011",
+      "role": "staff.endoscopy_nurse",
+      "appearanceSpec": "Middle-aged broad man, dark brown skin, compact short black locs, clean-shaven; medium sage scrub top, deep olive trousers, cream chest badge and waist seam, dark trainers.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-3-v1.png",
+        "sha256": "92a97b50959c0274f58c9bd8e75af071924f33344d0fcb84c38435835b07f5f3",
+        "visibleBand": {
+          "left": 54,
+          "right": 380,
+          "top": 41,
+          "bottom": 762,
+          "width": 327,
+          "height": 722
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -1.5625,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "80ae5c37b113769839f4c1f054c414dd520c2c8fc747f31f0de0c9d014714ab1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-011/stand-south-candidate.png",
+            "sha256": "5440a5480b47d0159ac115ad3f877f08df55ce5fcf854cc1a90b17712a7fc6a6",
+            "alpha": {
+              "observedTransparentPixels": 26396,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 19,
+              "top": 16,
+              "right": 140,
+              "bottom": 286,
+              "width": 122,
+              "height": 271
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-012",
+      "role": "staff.endoscopy_nurse",
+      "appearanceSpec": "Older slim woman, light skin, short silver pixie hair, dark rectangular glasses; medium sage scrub top, deep olive trousers, cream chest badge and waist seam, charcoal trainers.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-3-v1.png",
+        "sha256": "92a97b50959c0274f58c9bd8e75af071924f33344d0fcb84c38435835b07f5f3",
+        "visibleBand": {
+          "left": 488,
+          "right": 732,
+          "top": 73,
+          "bottom": 762,
+          "width": 245,
+          "height": 690
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -148.9375,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "80ae5c37b113769839f4c1f054c414dd520c2c8fc747f31f0de0c9d014714ab1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-012/stand-south-candidate.png",
+            "sha256": "bf64a05fb92d339c904bfef3e18a8bc97274933fbd189841ed940ffd1d521ad8",
+            "alpha": {
+              "observedTransparentPixels": 33165,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 34,
+              "top": 28,
+              "right": 125,
+              "bottom": 286,
+              "width": 92,
+              "height": 259
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-013",
+      "role": "staff.endoscopist",
+      "appearanceSpec": "Middle-aged woman, medium brown skin, dark wavy hair tied in low bun, athletic build; knee-length cream clinical coat over moss-green shirt, deep olive trousers, brown closed shoes, blank badge, empty hands.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-3-v1.png",
+        "sha256": "92a97b50959c0274f58c9bd8e75af071924f33344d0fcb84c38435835b07f5f3",
+        "visibleBand": {
+          "left": 851,
+          "right": 1131,
+          "top": 63,
+          "bottom": 763,
+          "width": 281,
+          "height": 701
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -291.8125,
+          "translateY": 0.5,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "80ae5c37b113769839f4c1f054c414dd520c2c8fc747f31f0de0c9d014714ab1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-013/stand-south-candidate.png",
+            "sha256": "070404e16c521cc0e14d60f301fbf5a0ee86ef1664ddea4ffab4d9a421b381ed",
+            "alpha": {
+              "observedTransparentPixels": 31099,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 27,
+              "top": 24,
+              "right": 132,
+              "bottom": 286,
+              "width": 106,
+              "height": 263
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-014",
+      "role": "staff.endoscopist",
+      "appearanceSpec": "Older tall lean man, light skin, white swept-back hair, narrow white beard, small round dark glasses; cream clinical coat over moss-green shirt, deep olive trousers, dark shoes, blank badge, empty hands.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-3-v1.png",
+        "sha256": "92a97b50959c0274f58c9bd8e75af071924f33344d0fcb84c38435835b07f5f3",
+        "visibleBand": {
+          "left": 1217,
+          "right": 1509,
+          "top": 20,
+          "bottom": 763,
+          "width": 293,
+          "height": 744
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -431.3125,
+          "translateY": 0.5,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "80ae5c37b113769839f4c1f054c414dd520c2c8fc747f31f0de0c9d014714ab1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-014/stand-south-candidate.png",
+            "sha256": "ea5630e6d58314078addcb019b8d9286c22ffe4cd382e1597424e433d95b3eec",
+            "alpha": {
+              "observedTransparentPixels": 29210,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 25,
+              "top": 8,
+              "right": 134,
+              "bottom": 286,
+              "width": 110,
+              "height": 279
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-015",
+      "role": "staff.phlebotomist",
+      "appearanceSpec": "Young short broad woman, deep brown skin, close-cropped copper-tinted natural hair, no glasses; warm-gray scrub top with light-sage trim, charcoal trousers, cream blank chest badge, charcoal trainers.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-3-v1.png",
+        "sha256": "92a97b50959c0274f58c9bd8e75af071924f33344d0fcb84c38435835b07f5f3",
+        "visibleBand": {
+          "left": 1602,
+          "right": 1922,
+          "top": 110,
+          "bottom": 762,
+          "width": 321,
+          "height": 653
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -580.9375,
+          "translateY": 0.875,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-3-v1.txt",
+        "sha256": "80ae5c37b113769839f4c1f054c414dd520c2c8fc747f31f0de0c9d014714ab1"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-015/stand-south-candidate.png",
+            "sha256": "a2a06ffeed5d0dbd8df21fc52b25d5015ebb654d57a41cbd591d3b524d7b35c2",
+            "alpha": {
+              "observedTransparentPixels": 30427,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 20,
+              "top": 42,
+              "right": 139,
+              "bottom": 286,
+              "width": 120,
+              "height": 245
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-016",
+      "role": "staff.phlebotomist",
+      "appearanceSpec": "Middle-aged slim man, medium tan skin, straight black side-part hair, small mustache, no glasses; warm-gray scrub top, light-sage trim, charcoal trousers, cream blank chest badge, dark trainers.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-4-v1.png",
+        "sha256": "bfb4b65d2070f39de52a5ffdff74ea0ca77d598ecadab6c67da24e617544801f",
+        "visibleBand": {
+          "left": 66,
+          "right": 325,
+          "top": 104,
+          "bottom": 760,
+          "width": 260,
+          "height": 657
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": 6.5,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "64fc28133d57b7ef7e36a6d1829f199a5fff32d1eef6374fe0ea618e4efe5919"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-016/stand-south-candidate.png",
+            "sha256": "e9fe6dd2641605f6e12fc7454e9285bc99635e1153895dd540dbb14715e89189",
+            "alpha": {
+              "observedTransparentPixels": 33546,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 31,
+              "top": 41,
+              "right": 128,
+              "bottom": 286,
+              "width": 98,
+              "height": 246
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-017",
+      "role": "staff.evs_worker",
+      "appearanceSpec": "Older short sturdy woman, light skin, tightly curled gray hair, no glasses; moss-green collared work tunic with pale sage edging, charcoal trousers, sturdy dark closed shoes, small blank badge, no cleaning tools.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-4-v1.png",
+        "sha256": "bfb4b65d2070f39de52a5ffdff74ea0ca77d598ecadab6c67da24e617544801f",
+        "visibleBand": {
+          "left": 449,
+          "right": 740,
+          "top": 141,
+          "bottom": 760,
+          "width": 292,
+          "height": 620
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -143.125,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "64fc28133d57b7ef7e36a6d1829f199a5fff32d1eef6374fe0ea618e4efe5919"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-017/stand-south-candidate.png",
+            "sha256": "235e24c882df6af3bb91b49242fbe3a7a26a9b392db8bdcd484db3af51550c36",
+            "alpha": {
+              "observedTransparentPixels": 32420,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 25,
+              "top": 55,
+              "right": 134,
+              "bottom": 286,
+              "width": 110,
+              "height": 232
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-018",
+      "role": "staff.evs_worker",
+      "appearanceSpec": "Young tall broad-shouldered man, medium-deep brown skin, short dark curly high-top hair, clean-shaven; moss-green collared work shirt with pale sage edging, charcoal trousers, sturdy dark closed shoes, small blank badge, no cleaning tools.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-4-v1.png",
+        "sha256": "bfb4b65d2070f39de52a5ffdff74ea0ca77d598ecadab6c67da24e617544801f",
+        "visibleBand": {
+          "left": 833,
+          "right": 1146,
+          "top": 54,
+          "bottom": 760,
+          "width": 314,
+          "height": 707
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -291.25,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "64fc28133d57b7ef7e36a6d1829f199a5fff32d1eef6374fe0ea618e4efe5919"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-018/stand-south-candidate.png",
+            "sha256": "68141ebd59a84b254df9d046ad01014c68e1293efaedb70cce2d0880e5d33fab",
+            "alpha": {
+              "observedTransparentPixels": 29087,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 21,
+              "top": 22,
+              "right": 138,
+              "bottom": 286,
+              "width": 118,
+              "height": 265
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-019",
+      "role": "staff.glp1_np",
+      "appearanceSpec": "Middle-aged woman, light warm skin, dark auburn shoulder-length wavy hair, medium build, slim dark glasses; short off-white clinical jacket over sage blouse, deep olive trousers, dark flats, small blank badge, empty hands.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-4-v1.png",
+        "sha256": "bfb4b65d2070f39de52a5ffdff74ea0ca77d598ecadab6c67da24e617544801f",
+        "visibleBand": {
+          "left": 1245,
+          "right": 1513,
+          "top": 131,
+          "bottom": 760,
+          "width": 269,
+          "height": 630
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -437.3125,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "64fc28133d57b7ef7e36a6d1829f199a5fff32d1eef6374fe0ea618e4efe5919"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-019/stand-south-candidate.png",
+            "sha256": "81797423451858fba8bbde743d3c906674e052c64172999281181bd82958c6da",
+            "alpha": {
+              "observedTransparentPixels": 32926,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 30,
+              "top": 51,
+              "right": 129,
+              "bottom": 286,
+              "width": 100,
+              "height": 236
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    },
+    {
+      "id": "gs022-new-employee-020",
+      "role": "staff.glp1_np",
+      "appearanceSpec": "Older stocky man, medium olive skin, close gray hair and neatly trimmed gray goatee, no glasses; short off-white clinical jacket over sage shirt, deep olive trousers, brown shoes, small blank badge, empty hands.",
+      "ownerApproval": "approved-identity-and-front-concept-only",
+      "runtimeReady": false,
+      "source": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/sources/sheet-4-v1.png",
+        "sha256": "bfb4b65d2070f39de52a5ffdff74ea0ca77d598ecadab6c67da24e617544801f",
+        "visibleBand": {
+          "left": 1606,
+          "right": 1947,
+          "top": 115,
+          "bottom": 760,
+          "width": 342,
+          "height": 646
+        },
+        "sourceBoundaryAlphaPixels": 0,
+        "sourceBoundaryAlphaNote": "No decoded nonzero alpha on the source perimeter.",
+        "transform": {
+          "scale": 0.375,
+          "translateX": -586.375,
+          "translateY": 1.625,
+          "policy": "uniform scale and translation of the original transparent sheet; no retouch, cleanup, segmentation, or equal-grid crop"
+        }
+      },
+      "prompt": {
+        "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/prompts/sheet-4-v1.txt",
+        "sha256": "64fc28133d57b7ef7e36a6d1829f199a5fff32d1eef6374fe0ea618e4efe5919"
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "status": "candidate-generated-pending-owner-review",
+            "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/candidates/gs022-new-employee-020/stand-south-candidate.png",
+            "sha256": "4bfd25969d2cfa4db940dbe81078d4214aa521f1b9e42dd488412c910b522ae2",
+            "alpha": {
+              "observedTransparentPixels": 29609,
+              "observedAlphaMethod": "decoded RGBA pixel inspection; reports observed transparency only"
+            },
+            "visibleBounds": {
+              "left": 16,
+              "top": 45,
+              "right": 143,
+              "bottom": 286,
+              "width": 128,
+              "height": 242
+            },
+            "anchors": {
+              "bodyAxisX": 80,
+              "floorY": 287
+            },
+            "ownerApproval": "approved-identity-and-front-concept-only"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        },
+        "sit": {
+          "south": {
+            "status": "pending"
+          },
+          "east": {
+            "status": "pending"
+          },
+          "west": {
+            "status": "pending"
+          },
+          "north": {
+            "status": "pending"
+          }
+        }
+      }
+    }
+  ],
+  "proofs": {
+    "candidateOnly": true,
+    "files": [
+      "proofs/employee20-native-32x64-dark-CANDIDATE-NOT-APPROVED.png",
+      "proofs/employee20-production-light-CANDIDATE-NOT-APPROVED.png",
+      "proofs/employee20-production-dark-CANDIDATE-NOT-APPROVED.png",
+      "proofs/employee20-enlarged-2x-light-CANDIDATE-NOT-APPROVED.png"
+    ]
+  },
+  "designSpecs": {
+    "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/design-specs.json",
+    "sha256": "4b52afcb557d7ffcc2a44dc4244b8aeb741c36905aefd638fa18713cfe48154c"
+  },
+  "proofLedger": [
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-native-32x64-dark-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "28f3a5ad3eda12d9c35af214dcb88f07c8278677bb53866d18eeb7fd4f9ad6e2",
+      "status": "approved-identity-and-front-concept-only"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-production-light-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "086c2890f1c8d4ef054e9e6adfab31f73fbeef82a155d71d4d8f37ff976cc715",
+      "status": "approved-identity-and-front-concept-only"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-production-dark-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "32843f4fb69e1fc504d557e4654fa85adbeccc498857986e6d378f718098e493",
+      "status": "approved-identity-and-front-concept-only"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-enlarged-2x-light-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "86673e83b119eeda60d036deac52d37343d2ba113461e39ac14b412886e0c338",
+      "status": "approved-identity-and-front-concept-only"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-owner-review-light-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "f9b8e4616e314784c838c4092cbb7e67cc6441a00194e41c58a044ad119925bd",
+      "status": "approved-identity-and-front-concept-only"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-owner-review-dark-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "c79c44a9e48e91a9b1f31fd0c306a3b6050a89840a779d46dec283e4e687f609",
+      "status": "approved-identity-and-front-concept-only"
+    },
+    {
+      "file": "artifacts/character-statics/gs-022-new-v1/employee20-v1/proofs/employee20-owner-review-enlarged-2x-light-CANDIDATE-NOT-APPROVED.png",
+      "sha256": "1c31c1fa363e40a3d3b115653f86d1f016c81f3b8446e8366f6432049383ff8d",
+      "status": "approved-identity-and-front-concept-only"
+    }
+  ],
+  "approvalReceipt": {
+    "path": "artifacts/character-statics/gs-022-new-v1/employee20-v1/approvals/employee20-front-concepts-owner-approval-v1.json",
+    "sha256": "80122f533f056a4a5da26c393d971e1dfd83728bac7244fa427cb14665769de5",
+    "scope": "new employee visual identity and front-standing concept only"
+  }
+}

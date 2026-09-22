@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "status": "visual-review-required",
+  "sourceCrop": { "x": 1000, "y": 360, "width": 240, "height": 310 },
+  "standingCrop": { "x": 300, "y": 20, "width": 210, "height": 340 },
+  "characters": [
+    {
+      "id": "retained-auburn-glasses-olive-jacket",
+      "label": "Auburn hair · glasses · olive jacket",
+      "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+      "sourceSha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d",
+      "sourceDimensions": { "width": 1536, "height": 1024 },
+      "standingRegistration": { "scale": 1, "x": 0, "y": 0 },
+      "body": {
+        "headMask": [[55,20],[170,20],[172,113],[56,116]],
+        "torsoMask": [[91,101],[148,101],[151,181],[141,205],[89,205],[79,184],[86,137]],
+        "patches": [{ "source": [103,124,12,73], "destination": [87,124,12,73], "purpose": "copy one narrow adjacent olive-jacket strip over the lower near-arm overlap without stretching" }]
+      },
+      "recipe": { "frame":{"width":240,"height":310,"axisX":112,"floorY":275}, "centers":{"headY":73,"shoulderLeftX":126,"shoulderRightX":100,"shoulderY":112,"chestY":158,"hipX":112,"hipY":191,"ankleY":263}, "foot":{"heelBack":12,"toeForward":19}, "envelope":{"headRadiusX":44,"headRadiusY":44,"torsoShoulderHalfDepth":23,"torsoChestHalfDepth":23,"torsoHipHalfDepth":18}, "segmentLengths":{"upperArm":36,"forearm":37,"hand":9,"thigh":38,"shin":34}, "motion":{"bobStride":7.5789,"bobTransition":2.5263,"bobPassing":0,"strideReach":31.5789,"transitionReach":16.4211,"recoveryLift":6.3158,"passingLift":5.0526,"transitionLift":2.5263,"armStrideReach":37.7679,"armTransitionReach":19.5536,"armStrideDrop":61.2679,"armTransitionDrop":69.0893,"armPassingDrop":73} },
+      "pieces": [
+        {"id":"far-left-upper-arm","side":"left","kind":"upperArm","start":[145,119],"end":[148,145],"polygon":[[139,115],[153,115],[157,134],[156,149],[149,156],[140,151],[138,130]]},
+        {"id":"far-left-forearm","side":"left","kind":"forearm","start":[148,145],"end":[157,184],"polygon":[[141,138],[158,136],[164,158],[171,176],[169,193],[158,198],[147,187],[143,167]]},
+        {"id":"near-right-upper-arm","side":"right","kind":"upperArm","start":[85,130],"end":[76,150],"polygon":[[78,126],[91,129],[87,142],[81,154],[73,158],[69,151],[74,136]]},
+        {"id":"near-right-forearm","side":"right","kind":"forearm","start":[76,150],"end":[58,188],"polygon":[[69,143],[88,151],[80,169],[67,193],[54,199],[45,187],[52,172]]},
+        {"id":"far-left-thigh","side":"left","kind":"thigh","start":[106,202],"end":[88,231],"polygon":[[76,186],[113,185],[121,207],[109,229],[94,242],[77,238],[68,218]]},
+        {"id":"far-left-shin","side":"left","kind":"shin","start":[88,231],"end":[68,257],"polygon":[[73,219],[104,224],[99,243],[79,266],[56,267],[49,254],[62,237]]},
+        {"id":"far-left-shoe","side":"left","kind":"shoe","start":[48,258],"end":[81,273],"polygon":[[42,247],[73,245],[88,258],[87,278],[48,280],[37,265]]},
+        {"id":"near-right-thigh","side":"right","kind":"thigh","start":[118,202],"end":[145,232],"polygon":[[106,185],[143,183],[151,207],[159,229],[150,243],[134,238],[121,218]]},
+        {"id":"near-right-shin","side":"right","kind":"shin","start":[145,232],"end":[156,258],"polygon":[[132,217],[162,211],[171,237],[174,259],[158,271],[139,262],[130,239]]},
+        {"id":"near-right-shoe","side":"right","kind":"shoe","start":[141,274],"end":[174,259],"polygon":[[135,246],[171,243],[184,256],[182,278],[139,281],[128,267]]}
+      ]
+    },
+    {
+      "id": "retained-dark-hair-beard-gray-overshirt",
+      "label": "Dark hair · beard · gray overshirt",
+      "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+      "sourceSha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+      "sourceDimensions": { "width": 1536, "height": 1024 },
+      "standingRegistration": { "scale": 1, "x": 0, "y": 0 },
+      "body": {
+        "headMask": [[72,10],[174,10],[176,109],[70,112]],
+        "torsoMask": [[91,98],[150,98],[152,179],[143,204],[88,204],[78,185],[85,135]],
+        "patches": [{ "source": [104,121,12,76], "destination": [87,121,12,76], "purpose": "copy one narrow adjacent gray-overshirt strip over the lower near-arm overlap without stretching" }]
+      },
+      "recipe": { "frame":{"width":240,"height":310,"axisX":112,"floorY":278}, "centers":{"headY":67,"shoulderLeftX":128,"shoulderRightX":96,"shoulderY":108,"chestY":151,"hipX":112,"hipY":187,"ankleY":266}, "foot":{"heelBack":14,"toeForward":24}, "envelope":{"headRadiusX":38,"headRadiusY":46,"torsoShoulderHalfDepth":25,"torsoChestHalfDepth":25,"torsoHipHalfDepth":19}, "segmentLengths":{"upperArm":36,"forearm":38,"hand":9,"thigh":41,"shin":38}, "motion":{"bobStride":8.3158,"bobTransition":2.7719,"bobPassing":0,"strideReach":34.6491,"transitionReach":18.0175,"recoveryLift":6.9298,"passingLift":5.5439,"transitionLift":2.7719,"armStrideReach":38.3214,"armTransitionReach":19.8214,"armStrideDrop":62.1071,"armTransitionDrop":70.0357,"armPassingDrop":74} },
+      "pieces": [
+        {"id":"far-left-upper-arm","side":"left","kind":"upperArm","start":[146,118],"end":[149,144],"polygon":[[139,114],[154,114],[158,135],[157,149],[149,156],[140,151],[138,129]]},
+        {"id":"far-left-forearm","side":"left","kind":"forearm","start":[149,144],"end":[158,186],"polygon":[[142,137],[159,135],[165,158],[172,177],[170,195],[159,200],[147,188],[143,166]]},
+        {"id":"near-right-upper-arm","side":"right","kind":"upperArm","start":[84,130],"end":[76,150],"polygon":[[77,126],[91,129],[87,143],[81,155],[73,159],[68,151],[73,135]]},
+        {"id":"near-right-forearm","side":"right","kind":"forearm","start":[76,150],"end":[59,190],"polygon":[[68,142],[88,151],[81,171],[69,196],[55,202],[46,189],[52,171]]},
+        {"id":"far-left-thigh","side":"left","kind":"thigh","start":[105,198],"end":[88,230],"polygon":[[75,181],[114,181],[122,205],[110,228],[95,242],[76,239],[67,216]]},
+        {"id":"far-left-shin","side":"left","kind":"shin","start":[88,230],"end":[69,260],"polygon":[[72,216],[105,223],[101,244],[81,270],[58,271],[49,255],[61,235]]},
+        {"id":"far-left-shoe","side":"left","kind":"shoe","start":[58,258],"end":[99,275],"polygon":[[52,245],[91,244],[105,258],[104,282],[59,283],[48,267]]},
+        {"id":"near-right-thigh","side":"right","kind":"thigh","start":[119,198],"end":[145,230],"polygon":[[106,181],[144,179],[152,207],[160,230],[151,244],[135,239],[121,216]]},
+        {"id":"near-right-shin","side":"right","kind":"shin","start":[145,230],"end":[157,261],"polygon":[[132,214],[164,208],[173,238],[176,263],[159,274],[139,263],[130,237]]},
+        {"id":"near-right-shoe","side":"right","kind":"shoe","start":[143,276],"end":[180,261],"polygon":[[136,244],[174,240],[191,257],[191,285],[136,287],[125,267]]}
+      ]
+    }
+  ]
+}

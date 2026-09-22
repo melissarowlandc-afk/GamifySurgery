@@ -6,6 +6,7 @@ import {
   getEmergencyGlp1Status,
   getFacilityAccessValidation,
   getCurrentCapabilities,
+  getOperationalGlp1AutomationCapacity,
   isEmployeeAssignedToOperationalRoom,
   getWorkloadSnapshot,
   serializeGameState,
@@ -66,31 +67,62 @@ function supportState(): GameState {
 }
 
 describe("Level 2 nonclinical support operations", () => {
-  it("automates only staffed GLP-1 suites on independent full-hour schedules", () => {
+  it("binds staggered GLP-1 timers and receipts to the concrete operational NP", () => {
     let state = supportState();
     expect(getFacilityAccessValidation(state).unreachableRoomIds).toEqual([]);
     state.employees = [];
     expect(getEmergencyGlp1Status(state).eligible).toBe(true);
-    state = advance(state, 60);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
+    state = advance(state, 10);
     state.employees.push({ ...supportState().employees[1]!, id: "employee.glp.one" });
-    state = advance(state, 60);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
-    const cashAfterOne = state.cash;
+    expect(getOperationalGlp1AutomationCapacity(state)).toBe(1);
+    state.employees.at(-1)!.facilityTask = {
+      kind: "perform_imaging",
+      targetId: "room.missing",
+      startedAtFacilityTick: state.facilityTick,
+      workMinutesRemaining: 5,
+    };
+    expect(getOperationalGlp1AutomationCapacity(state)).toBe(0);
+    state.employees.at(-1)!.facilityTask = null;
+    state = advance(state, 30);
     state.employees.push({ ...supportState().employees[2]!, id: "employee.glp.two" });
-    state = advance(state, 59);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
+    state.employees.push({
+      ...supportState().employees[2]!,
+      id: "employee.aaa.nonoperational",
+      homeRoomInstanceId: "room.missing",
+    });
+    state = advance(state, 29);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
     state = advance(state, 1);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(3);
-    expect(state.cash).toBe(cashAfterOne + 50);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
+    expect(state.serviceIncomeReceipts.at(-1)).toMatchObject({
+      incomeLineId: "income.glp1_telehealth",
+      actorId: "employee.glp.one",
+      grossAmount: 50,
+      netCashDelta: 50,
+    });
+    const afterFirstPayout = deserializeGameState(serializeGameState(state));
+    state = advance(afterFirstPayout, 30);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
+    expect(state.serviceIncomeReceipts.at(-1)).toMatchObject({
+      actorId: "employee.glp.two",
+      grossAmount: 50,
+    });
+    expect(state.serviceIncomeReceipts.some(
+      (receipt) => receipt.actorId === "employee.aaa.nonoperational",
+    )).toBe(false);
+    const receiptKeys = state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey);
+    const cashAfterTwo = state.cash;
+    state = advance(deserializeGameState(serializeGameState(state)), 1);
+    expect(state.cash).toBe(cashAfterTwo);
+    expect(state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey)).toEqual(receiptKeys);
     expect(getEmergencyGlp1Status(state).eligible).toBe(false);
     const learning = JSON.stringify(state.learningHistories);
     state.paused = true;
     state = advance(state, 120);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(3);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
     state.paused = false;
     const restored = deserializeGameState(serializeGameState(state));
-    expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(3);
+    expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(2);
     expect(JSON.stringify(restored.learningHistories)).toBe(learning);
   });
 

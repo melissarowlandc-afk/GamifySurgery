@@ -1,0 +1,54 @@
+{
+  "manifest": "artifacts/character-movement/layered-pilot/v6-motion/manifest.json",
+  "manifestSha256": "fd66a2c69edd852cfee33b4d9bafea74b02069d06750553857f125803ea355dd",
+  "output": {
+    "html": "../../.codex/visualizations/2026/09/13/01a09b55-147e-72f0-b413-e8b6827c7287/green-layered-motion.html",
+    "htmlBytes": 741497
+  },
+  "sourceRect": [
+    75,
+    30,
+    160,
+    320
+  ],
+  "sourcePin": {
+    "output": "green-source-south.png",
+    "cropSha256": "73068fd1302013a0de51df2f3a0533362c51617a7416b5c9a7bc179acfd05bbc",
+    "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sourceSha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+  },
+  "sequences": [
+    {
+      "id": "walk",
+      "label": "Walk in place",
+      "fps": 10,
+      "loop": true,
+      "frameCount": 16
+    },
+    {
+      "id": "sit-down",
+      "label": "Sit down",
+      "fps": 10,
+      "loop": false,
+      "frameCount": 16
+    },
+    {
+      "id": "seated-hold",
+      "label": "Seated hold",
+      "fps": 6,
+      "loop": false,
+      "frameCount": 8
+    },
+    {
+      "id": "stand-up",
+      "label": "Stand up",
+      "fps": 10,
+      "loop": false,
+      "frameCount": 16
+    }
+  ],
+  "encoding": {
+    "format": "webp",
+    "quality": 80
+  }
+}

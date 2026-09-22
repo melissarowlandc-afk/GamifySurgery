@@ -21,6 +21,8 @@ import {
   SURGERY_CENTER_CASES,
   BOARD_EXPANSION_CASES,
   BOARD_EXPANSION_20260912_CASES,
+  BRIEF_EARLY_LEVELS_20260917_CASES,
+  BREAD_BUTTER_20260917_CASES,
   EARLY_LEVELS_20260913_CASES,
   TWENTY_CONCEPT_BATCH_CASES,
 } from "@gamify-surgery/clinical-content";
@@ -93,6 +95,8 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ...BOARD_EXPANSION_CASES.map((clinicalCase) => clinicalCase.id),
       ...BOARD_EXPANSION_20260912_CASES.map((clinicalCase) => clinicalCase.id),
       ...EARLY_LEVELS_20260913_CASES.map((clinicalCase) => clinicalCase.id),
+      ...BRIEF_EARLY_LEVELS_20260917_CASES.map((clinicalCase) => clinicalCase.id),
+      ...BREAD_BUTTER_20260917_CASES.map((clinicalCase) => clinicalCase.id),
     ]);
   });
 

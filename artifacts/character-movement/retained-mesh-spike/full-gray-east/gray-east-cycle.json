@@ -1,0 +1,63 @@
+{
+  "status": "review-required",
+  "method": "four connected source-textured strips plus whole masked rigid hand/shoe terminals, source-local checker key, frozen arm-free body",
+  "records": [
+    {
+      "phaseId": "01",
+      "file": "gray-east-01.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    },
+    {
+      "phaseId": "02",
+      "file": "gray-east-02.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    },
+    {
+      "phaseId": "03",
+      "file": "gray-east-03.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    },
+    {
+      "phaseId": "04",
+      "file": "gray-east-04.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    },
+    {
+      "phaseId": "05",
+      "file": "gray-east-05.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    },
+    {
+      "phaseId": "06",
+      "file": "gray-east-06.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    },
+    {
+      "phaseId": "07",
+      "file": "gray-east-07.png",
+      "triangles": 32,
+      "alphaComponents": 2
+    },
+    {
+      "phaseId": "08",
+      "file": "gray-east-08.png",
+      "triangles": 32,
+      "alphaComponents": 1
+    }
+  ],
+  "outputs": {
+    "cycle": "gray-east-cycle-contact-sheet.png",
+    "donors": "gray-east-donor-contact-sheet.png",
+    "oldVsMesh": "gray-east-old-vs-mesh-comparison.png"
+  },
+  "limitations": [
+    "terminal silhouettes require visual source-mask review before acceptance",
+    "far-left arm source mask needs proximal sleeve contour refinement before acceptance"
+  ]
+}

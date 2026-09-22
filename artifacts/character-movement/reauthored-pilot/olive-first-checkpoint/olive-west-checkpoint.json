@@ -1,0 +1,3219 @@
+{
+  "status": "west-cycle-review",
+  "source": {
+    "path": "artifacts/character-movement/reauthored-pilot/sources/olive-rig-ready-v1.png",
+    "sha256": "2a7cadb8462a18dcf87bd36ee12f54ee49fd46da798ea84d47b98e99707eba5f",
+    "width": 1536,
+    "height": 1024
+  },
+  "identityHead": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+    "sha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d"
+  },
+  "acceptedSolver": "tools/character-mapping/math.mjs#compileLateral",
+  "phaseIds": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08"
+  ],
+  "direction": "west",
+  "renderPolicy": {
+    "opaqueLayerOrder": [
+      "farArm",
+      "farLeg",
+      "nearLeg",
+      "body",
+      "head",
+      "nearArm"
+    ],
+    "farArmBehindBothLegs": true,
+    "neutralNearArmBehindBody": false
+  },
+  "headRegistration": {
+    "offsetX": 3,
+    "method": "target hip minus measured source hip plus explicit per-view horizontal fit"
+  },
+  "sourceOrientation": {
+    "completeArmLocalTransformByAnatomicalSide": {
+      "left": "mirror-x-local",
+      "right": "authored"
+    },
+    "provenance": "per-view local source-surface chirality correction; anatomical IDs and watch ownership unchanged"
+  },
+  "armTargetRegistration": {
+    "neutralShoulderHeightAboveHip": 79,
+    "neutralUsesFixedStandingJointHeights": true
+  },
+  "neutralGeometry": {
+    "joints": {
+      "left": {
+        "shoulder": {
+          "x": 126,
+          "y": 112
+        },
+        "elbow": {
+          "x": 126,
+          "y": 148
+        },
+        "wrist": {
+          "x": 126,
+          "y": 185
+        },
+        "hand": {
+          "x": 126,
+          "y": 194
+        },
+        "hip": {
+          "x": 106,
+          "y": 191
+        },
+        "knee": {
+          "x": 106,
+          "y": 229
+        },
+        "ankle": {
+          "x": 106,
+          "y": 263
+        },
+        "shoeContact": {
+          "x": 106,
+          "y": 275
+        }
+      },
+      "right": {
+        "shoulder": {
+          "x": 100,
+          "y": 112
+        },
+        "elbow": {
+          "x": 100,
+          "y": 148
+        },
+        "wrist": {
+          "x": 100,
+          "y": 185
+        },
+        "hand": {
+          "x": 100,
+          "y": 194
+        },
+        "hip": {
+          "x": 118,
+          "y": 191
+        },
+        "knee": {
+          "x": 118,
+          "y": 229
+        },
+        "ankle": {
+          "x": 118,
+          "y": 263
+        },
+        "shoeContact": {
+          "x": 118,
+          "y": 275
+        }
+      }
+    }
+  },
+  "neutralDiagnostics": {
+    "leftLeg": {
+      "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+      "sourceCuffY": 913,
+      "overlapPixels": 5,
+      "upper": {
+        "mesh": {
+          "opaquePixelCount": 6081,
+          "componentCount": 1,
+          "components": [
+            {
+              "pixelCount": 6081,
+              "bounds": {
+                "x": 1094,
+                "y": 804,
+                "width": 59,
+                "height": 114
+              }
+            }
+          ],
+          "vertexCount": 520,
+          "triangleCount": 624,
+          "activeCellCount": 312,
+          "transparentCellCount": 163,
+          "coversEveryOpaquePixel": true,
+          "connectedSurface": true
+        },
+        "deformation": {
+          "triangleCount": 624,
+          "minimumAbsoluteArea2": 0.21410714285713683,
+          "foldedTriangleCount": 0,
+          "degenerateTriangleCount": 0,
+          "unsafeSamples": []
+        }
+      },
+      "terminal": {
+        "mesh": {
+          "opaquePixelCount": 3320,
+          "componentCount": 1,
+          "components": [
+            {
+              "pixelCount": 3320,
+              "bounds": {
+                "x": 1068,
+                "y": 908,
+                "width": 82,
+                "height": 50
+              }
+            }
+          ],
+          "vertexCount": 280,
+          "triangleCount": 366,
+          "activeCellCount": 183,
+          "transparentCellCount": 64,
+          "coversEveryOpaquePixel": true,
+          "connectedSurface": true
+        },
+        "deformation": {
+          "triangleCount": 366,
+          "minimumAbsoluteArea2": 0.3025000000000047,
+          "foldedTriangleCount": 0,
+          "degenerateTriangleCount": 0,
+          "unsafeSamples": []
+        }
+      },
+      "outputAlpha": {
+        "opaquePixelCount": 2761,
+        "componentCount": 1,
+        "components": [
+          {
+            "pixelCount": 2761,
+            "bounds": {
+              "x": 75,
+              "y": 190,
+              "width": 47,
+              "height": 86
+            }
+          }
+        ]
+      }
+    },
+    "rightLeg": {
+      "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+      "sourceCuffY": 913,
+      "overlapPixels": 5,
+      "upper": {
+        "mesh": {
+          "opaquePixelCount": 6179,
+          "componentCount": 1,
+          "components": [
+            {
+              "pixelCount": 6179,
+              "bounds": {
+                "x": 1336,
+                "y": 803,
+                "width": 61,
+                "height": 115
+              }
+            }
+          ],
+          "vertexCount": 520,
+          "triangleCount": 628,
+          "activeCellCount": 314,
+          "transparentCellCount": 161,
+          "coversEveryOpaquePixel": true,
+          "connectedSurface": true
+        },
+        "deformation": {
+          "triangleCount": 628,
+          "minimumAbsoluteArea2": 0.42821428571427367,
+          "foldedTriangleCount": 0,
+          "degenerateTriangleCount": 0,
+          "unsafeSamples": []
+        }
+      },
+      "terminal": {
+        "mesh": {
+          "opaquePixelCount": 3359,
+          "componentCount": 1,
+          "components": [
+            {
+              "pixelCount": 3359,
+              "bounds": {
+                "x": 1310,
+                "y": 908,
+                "width": 83,
+                "height": 50
+              }
+            }
+          ],
+          "vertexCount": 280,
+          "triangleCount": 362,
+          "activeCellCount": 181,
+          "transparentCellCount": 66,
+          "coversEveryOpaquePixel": true,
+          "connectedSurface": true
+        },
+        "deformation": {
+          "triangleCount": 362,
+          "minimumAbsoluteArea2": 0.6050000000000094,
+          "foldedTriangleCount": 0,
+          "degenerateTriangleCount": 0,
+          "unsafeSamples": []
+        }
+      },
+      "outputAlpha": {
+        "opaquePixelCount": 2778,
+        "componentCount": 1,
+        "components": [
+          {
+            "pixelCount": 2778,
+            "bounds": {
+              "x": 87,
+              "y": 190,
+              "width": 48,
+              "height": 86
+            }
+          }
+        ]
+      }
+    },
+    "leftArm": {
+      "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+      "mesh": {
+        "opaquePixelCount": 5461,
+        "componentCount": 1,
+        "components": [
+          {
+            "pixelCount": 5461,
+            "bounds": {
+              "x": 644,
+              "y": 798,
+              "width": 49,
+              "height": 140
+            }
+          }
+        ],
+        "vertexCount": 429,
+        "triangleCount": 620,
+        "activeCellCount": 310,
+        "transparentCellCount": 74,
+        "coversEveryOpaquePixel": true,
+        "connectedSurface": true
+      },
+      "deformation": {
+        "triangleCount": 620,
+        "minimumAbsoluteArea2": 0.31360000000000254,
+        "foldedTriangleCount": 0,
+        "degenerateTriangleCount": 0,
+        "unsafeSamples": []
+      }
+    },
+    "rightArm": {
+      "sourceOrientation": "authored",
+      "mesh": {
+        "opaquePixelCount": 5450,
+        "componentCount": 1,
+        "components": [
+          {
+            "pixelCount": 5450,
+            "bounds": {
+              "x": 870,
+              "y": 798,
+              "width": 49,
+              "height": 140
+            }
+          }
+        ],
+        "vertexCount": 429,
+        "triangleCount": 602,
+        "activeCellCount": 301,
+        "transparentCellCount": 83,
+        "coversEveryOpaquePixel": true,
+        "connectedSurface": true
+      },
+      "deformation": {
+        "triangleCount": 602,
+        "minimumAbsoluteArea2": 0.31360000000000254,
+        "foldedTriangleCount": 0,
+        "degenerateTriangleCount": 0,
+        "unsafeSamples": []
+      }
+    },
+    "headBodyContact": {
+      "overlapPixels": 215,
+      "overlapRows": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121
+      ]
+    },
+    "layerPolicy": {
+      "nearArmBehindBody": false
+    }
+  },
+  "frames": {
+    "01": {
+      "clean": "frames/olive-west-01.png",
+      "guide": null,
+      "sha256": {
+        "clean": "f1eab365d5b28fa382889e95acfe73b8ce6d7e2b56a5e47229fd7627093ffd67",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 123.5789
+            },
+            "elbow": {
+              "x": 107.5742,
+              "y": 156.9817
+            },
+            "wrist": {
+              "x": 83.2321,
+              "y": 184.8468
+            },
+            "hand": {
+              "x": 78.5094,
+              "y": 192.5081
+            },
+            "hip": {
+              "x": 112,
+              "y": 198.5789
+            },
+            "knee": {
+              "x": 125.9575,
+              "y": 233.9228
+            },
+            "ankle": {
+              "x": 143.5789,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 143.5789,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 155.5789,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 124.5789,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 123.5789
+            },
+            "elbow": {
+              "x": 140.8098,
+              "y": 150.5807
+            },
+            "wrist": {
+              "x": 154.7679,
+              "y": 184.8468
+            },
+            "hand": {
+              "x": 159.4906,
+              "y": 192.5081
+            },
+            "hip": {
+              "x": 112,
+              "y": 198.5789
+            },
+            "knee": {
+              "x": 92.6117,
+              "y": 231.2606
+            },
+            "ankle": {
+              "x": 80.4211,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 80.4211,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 92.4211,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 61.4211,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.23964157266562328,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000125,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2802,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2802,
+                "bounds": {
+                  "x": 97,
+                  "y": 193,
+                  "width": 61,
+                  "height": 83
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.4523826680356185,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2821,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2821,
+                "bounds": {
+                  "x": 50,
+                  "y": 190,
+                  "width": 76,
+                  "height": 86
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.3135999999999885,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.3135999999999901,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    },
+    "02": {
+      "clean": "frames/olive-west-02.png",
+      "guide": null,
+      "sha256": {
+        "clean": "c175a61e292e997a17315fced326284aec2e7f42fc01531d36f9c4f7c2b35df9",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 117.6949,
+              "y": 154.3742
+            },
+            "wrist": {
+              "x": 101.4464,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 98.9955,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 106.0725,
+              "y": 231.0612
+            },
+            "ankle": {
+              "x": 128.4211,
+              "y": 256.6842
+            },
+            "shoeContact": {
+              "x": 128.4211,
+              "y": 268.6842
+            },
+            "shoeHeel": {
+              "x": 140.4211,
+              "y": 268.6842
+            },
+            "shoeToe": {
+              "x": 109.4211,
+              "y": 268.6842
+            },
+            "footLift": 6.3158,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 132.9717,
+              "y": 150.7894
+            },
+            "wrist": {
+              "x": 136.5536,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 139.0045,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 98.7744,
+              "y": 229.1505
+            },
+            "ankle": {
+              "x": 95.5789,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 95.5789,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 107.5789,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 76.5789,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.25604312668327656,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2802,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2802,
+                "bounds": {
+                  "x": 90,
+                  "y": 191,
+                  "width": 53,
+                  "height": 78
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.4298654590870836,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2793,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2793,
+                "bounds": {
+                  "x": 65,
+                  "y": 187,
+                  "width": 63,
+                  "height": 89
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.3135999999999857,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.31359999999999333,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    },
+    "03": {
+      "clean": "frames/olive-west-03.png",
+      "guide": null,
+      "sha256": {
+        "clean": "e98906350879bec5fe4d0bdb1730026084449e7290e3ec96e2d678218df1bb68",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 116
+            },
+            "elbow": {
+              "x": 121,
+              "y": 152
+            },
+            "wrist": {
+              "x": 121,
+              "y": 189
+            },
+            "hand": {
+              "x": 121,
+              "y": 198
+            },
+            "hip": {
+              "x": 112,
+              "y": 191
+            },
+            "knee": {
+              "x": 98.7756,
+              "y": 226.6246
+            },
+            "ankle": {
+              "x": 112,
+              "y": 257.9474
+            },
+            "shoeContact": {
+              "x": 112,
+              "y": 269.9474
+            },
+            "shoeHeel": {
+              "x": 124,
+              "y": 269.9474
+            },
+            "shoeToe": {
+              "x": 93,
+              "y": 269.9474
+            },
+            "footLift": 5.0526,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 116
+            },
+            "elbow": {
+              "x": 117,
+              "y": 152
+            },
+            "wrist": {
+              "x": 117,
+              "y": 189
+            },
+            "hand": {
+              "x": 117,
+              "y": 198
+            },
+            "hip": {
+              "x": 112,
+              "y": 191
+            },
+            "knee": {
+              "x": 112,
+              "y": 229
+            },
+            "ankle": {
+              "x": 112,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 112,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 124,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 93,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": true
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.2283490032090736,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2747,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2747,
+                "bounds": {
+                  "x": 81,
+                  "y": 186,
+                  "width": 45,
+                  "height": 84
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.42821428571427367,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2778,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2778,
+                "bounds": {
+                  "x": 81,
+                  "y": 190,
+                  "width": 48,
+                  "height": 86
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.31360000000000254,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.31360000000000254,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    },
+    "04": {
+      "clean": "frames/olive-west-04.png",
+      "guide": null,
+      "sha256": {
+        "clean": "5c0d640d61b9fca9f4061de6a9e87490815f11db3c23f1f95a2271617e7cc25c",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 136.9717,
+              "y": 150.7894
+            },
+            "wrist": {
+              "x": 140.55360000000002,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 143.0045,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 93.2111,
+              "y": 226.5563
+            },
+            "ankle": {
+              "x": 95.5789,
+              "y": 260.4737
+            },
+            "shoeContact": {
+              "x": 95.5789,
+              "y": 272.4737
+            },
+            "shoeHeel": {
+              "x": 107.5789,
+              "y": 272.4737
+            },
+            "shoeToe": {
+              "x": 76.5789,
+              "y": 272.4737
+            },
+            "footLift": 2.5263,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 113.6949,
+              "y": 154.3742
+            },
+            "wrist": {
+              "x": 97.4464,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 94.9955,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 116.1234,
+              "y": 231.3019
+            },
+            "ankle": {
+              "x": 128.4211,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 128.4211,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 140.4211,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 109.4211,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.21455987798307735,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2732,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2732,
+                "bounds": {
+                  "x": 65,
+                  "y": 186,
+                  "width": 60,
+                  "height": 87
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.45281337383158515,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2805,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2805,
+                "bounds": {
+                  "x": 96,
+                  "y": 190,
+                  "width": 47,
+                  "height": 86
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.31359999999999333,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.3135999999999857,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    },
+    "05": {
+      "clean": "frames/olive-west-05.png",
+      "guide": null,
+      "sha256": {
+        "clean": "0247a3cfc1d2a34449465a44fd3107337980f27e0a854fcf3bbbac93476ce928",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 123.5789
+            },
+            "elbow": {
+              "x": 144.8098,
+              "y": 150.5807
+            },
+            "wrist": {
+              "x": 158.7679,
+              "y": 184.8468
+            },
+            "hand": {
+              "x": 163.4906,
+              "y": 192.5081
+            },
+            "hip": {
+              "x": 112,
+              "y": 198.5789
+            },
+            "knee": {
+              "x": 92.6117,
+              "y": 231.2606
+            },
+            "ankle": {
+              "x": 80.4211,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 80.4211,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 92.4211,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 61.4211,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 123.5789
+            },
+            "elbow": {
+              "x": 103.5742,
+              "y": 156.9817
+            },
+            "wrist": {
+              "x": 79.2321,
+              "y": 184.8468
+            },
+            "hand": {
+              "x": 74.5094,
+              "y": 192.5081
+            },
+            "hip": {
+              "x": 112,
+              "y": 198.5789
+            },
+            "knee": {
+              "x": 125.9575,
+              "y": 233.9228
+            },
+            "ankle": {
+              "x": 143.5789,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 143.5789,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 155.5789,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 124.5789,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.22619133401780864,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2781,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2781,
+                "bounds": {
+                  "x": 50,
+                  "y": 191,
+                  "width": 75,
+                  "height": 85
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.479283145331247,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2831,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2831,
+                "bounds": {
+                  "x": 98,
+                  "y": 192,
+                  "width": 60,
+                  "height": 84
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.3135999999999901,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.3135999999999885,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    },
+    "06": {
+      "clean": "frames/olive-west-06.png",
+      "guide": null,
+      "sha256": {
+        "clean": "da866962184758112b73064601f6040de00224317a2a6a11b3d1da7d9c24d4ec",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 136.9717,
+              "y": 150.7894
+            },
+            "wrist": {
+              "x": 140.55360000000002,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 143.0045,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 98.7744,
+              "y": 229.1505
+            },
+            "ankle": {
+              "x": 95.5789,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 95.5789,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 107.5789,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 76.5789,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 113.6949,
+              "y": 154.3742
+            },
+            "wrist": {
+              "x": 97.4464,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 94.9955,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 106.0725,
+              "y": 231.0612
+            },
+            "ankle": {
+              "x": 128.4211,
+              "y": 256.6842
+            },
+            "shoeContact": {
+              "x": 128.4211,
+              "y": 268.6842
+            },
+            "shoeHeel": {
+              "x": 140.4211,
+              "y": 268.6842
+            },
+            "shoeToe": {
+              "x": 109.4211,
+              "y": 268.6842
+            },
+            "footLift": 6.3158,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.21493272954353826,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2755,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2755,
+                "bounds": {
+                  "x": 65,
+                  "y": 188,
+                  "width": 61,
+                  "height": 88
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.5120862533665713,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2813,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2813,
+                "bounds": {
+                  "x": 91,
+                  "y": 190,
+                  "width": 52,
+                  "height": 79
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.31359999999999333,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.3135999999999857,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    },
+    "07": {
+      "clean": "frames/olive-west-07.png",
+      "guide": null,
+      "sha256": {
+        "clean": "c4cb5bc7b040fc09642b1c44835d43da30ca28408d32c70419c5dd0e1a9a2533",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 116
+            },
+            "elbow": {
+              "x": 121,
+              "y": 152
+            },
+            "wrist": {
+              "x": 121,
+              "y": 189
+            },
+            "hand": {
+              "x": 121,
+              "y": 198
+            },
+            "hip": {
+              "x": 112,
+              "y": 191
+            },
+            "knee": {
+              "x": 112,
+              "y": 229
+            },
+            "ankle": {
+              "x": 112,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 112,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 124,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 93,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": true
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 116
+            },
+            "elbow": {
+              "x": 117,
+              "y": 152
+            },
+            "wrist": {
+              "x": 117,
+              "y": 189
+            },
+            "hand": {
+              "x": 117,
+              "y": 198
+            },
+            "hip": {
+              "x": 112,
+              "y": 191
+            },
+            "knee": {
+              "x": 98.7756,
+              "y": 226.6246
+            },
+            "ankle": {
+              "x": 112,
+              "y": 257.9474
+            },
+            "shoeContact": {
+              "x": 112,
+              "y": 269.9474
+            },
+            "shoeHeel": {
+              "x": 124,
+              "y": 269.9474
+            },
+            "shoeToe": {
+              "x": 93,
+              "y": 269.9474
+            },
+            "footLift": 5.0526,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.21410714285713683,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2761,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2761,
+                "bounds": {
+                  "x": 81,
+                  "y": 190,
+                  "width": 47,
+                  "height": 86
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.45669800641814234,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2791,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2791,
+                "bounds": {
+                  "x": 81,
+                  "y": 185,
+                  "width": 46,
+                  "height": 85
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.31360000000000254,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.31360000000000254,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      },
+      "supportLegStraightness": {
+        "anatomicalSide": "left",
+        "perpendicularDistance": 0,
+        "upperLength": 38,
+        "lowerLength": 46
+      }
+    },
+    "08": {
+      "clean": "frames/olive-west-08.png",
+      "guide": null,
+      "sha256": {
+        "clean": "93f1a56f15d9c3a7dc72533514f85e3a1f4aa0d48817ada510c1f383cc3b3ca7",
+        "guide": null
+      },
+      "geometry": {
+        "registration": {
+          "frameAxisX": 112,
+          "frameFloorY": 275
+        },
+        "joints": {
+          "left": {
+            "shoulder": {
+              "x": 121,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 117.6949,
+              "y": 154.3742
+            },
+            "wrist": {
+              "x": 101.4464,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 98.9955,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 116.1234,
+              "y": 231.3019
+            },
+            "ankle": {
+              "x": 128.4211,
+              "y": 263
+            },
+            "shoeContact": {
+              "x": 128.4211,
+              "y": 275
+            },
+            "shoeHeel": {
+              "x": 140.4211,
+              "y": 275
+            },
+            "shoeToe": {
+              "x": 109.4211,
+              "y": 275
+            },
+            "footLift": 0,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          },
+          "right": {
+            "shoulder": {
+              "x": 117,
+              "y": 118.5263
+            },
+            "elbow": {
+              "x": 132.9717,
+              "y": 150.7894
+            },
+            "wrist": {
+              "x": 136.5536,
+              "y": 187.6156
+            },
+            "hand": {
+              "x": 139.0045,
+              "y": 196.2755
+            },
+            "hip": {
+              "x": 112,
+              "y": 193.5263
+            },
+            "knee": {
+              "x": 93.2111,
+              "y": 226.5563
+            },
+            "ankle": {
+              "x": 95.5789,
+              "y": 260.4737
+            },
+            "shoeContact": {
+              "x": 95.5789,
+              "y": 272.4737
+            },
+            "shoeHeel": {
+              "x": 107.5789,
+              "y": 272.4737
+            },
+            "shoeToe": {
+              "x": 76.5789,
+              "y": 272.4737
+            },
+            "footLift": 2.5263,
+            "footLiftUnits": "frame-pixels",
+            "support": false
+          }
+        }
+      },
+      "targetRegistration": {
+        "sourceCuffY": 913,
+        "sourceSoleY": 957
+      },
+      "diagnostics": {
+        "leftLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6081,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6081,
+                  "bounds": {
+                    "x": 1094,
+                    "y": 804,
+                    "width": 59,
+                    "height": 114
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 624,
+              "activeCellCount": 312,
+              "transparentCellCount": 163,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 624,
+              "minimumAbsoluteArea2": 0.22640668691579258,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3320,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3320,
+                  "bounds": {
+                    "x": 1068,
+                    "y": 908,
+                    "width": 82,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 366,
+              "activeCellCount": 183,
+              "transparentCellCount": 64,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 366,
+              "minimumAbsoluteArea2": 0.3025000000000047,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2781,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2781,
+                "bounds": {
+                  "x": 96,
+                  "y": 191,
+                  "width": 47,
+                  "height": 85
+                }
+              }
+            ]
+          }
+        },
+        "rightLeg": {
+          "method": "authored-cuff-overlap-plus-rigid-complete-shoe",
+          "sourceCuffY": 913,
+          "overlapPixels": 5,
+          "upper": {
+            "mesh": {
+              "opaquePixelCount": 6179,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 6179,
+                  "bounds": {
+                    "x": 1336,
+                    "y": 803,
+                    "width": 61,
+                    "height": 115
+                  }
+                }
+              ],
+              "vertexCount": 520,
+              "triangleCount": 628,
+              "activeCellCount": 314,
+              "transparentCellCount": 161,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 628,
+              "minimumAbsoluteArea2": 0.42911975596615465,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "terminal": {
+            "mesh": {
+              "opaquePixelCount": 3359,
+              "componentCount": 1,
+              "components": [
+                {
+                  "pixelCount": 3359,
+                  "bounds": {
+                    "x": 1310,
+                    "y": 908,
+                    "width": 83,
+                    "height": 50
+                  }
+                }
+              ],
+              "vertexCount": 280,
+              "triangleCount": 362,
+              "activeCellCount": 181,
+              "transparentCellCount": 66,
+              "coversEveryOpaquePixel": true,
+              "connectedSurface": true
+            },
+            "deformation": {
+              "triangleCount": 362,
+              "minimumAbsoluteArea2": 0.6050000000000094,
+              "foldedTriangleCount": 0,
+              "degenerateTriangleCount": 0,
+              "unsafeSamples": []
+            }
+          },
+          "outputAlpha": {
+            "opaquePixelCount": 2766,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 2766,
+                "bounds": {
+                  "x": 65,
+                  "y": 185,
+                  "width": 61,
+                  "height": 88
+                }
+              }
+            ]
+          }
+        },
+        "leftArm": {
+          "sourceOrientation": "locally-reflected-horizontal-with-rig-reindexed",
+          "mesh": {
+            "opaquePixelCount": 5461,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5461,
+                "bounds": {
+                  "x": 644,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 620,
+            "activeCellCount": 310,
+            "transparentCellCount": 74,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 620,
+            "minimumAbsoluteArea2": 0.3135999999999857,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "rightArm": {
+          "sourceOrientation": "authored",
+          "mesh": {
+            "opaquePixelCount": 5450,
+            "componentCount": 1,
+            "components": [
+              {
+                "pixelCount": 5450,
+                "bounds": {
+                  "x": 870,
+                  "y": 798,
+                  "width": 49,
+                  "height": 140
+                }
+              }
+            ],
+            "vertexCount": 429,
+            "triangleCount": 602,
+            "activeCellCount": 301,
+            "transparentCellCount": 83,
+            "coversEveryOpaquePixel": true,
+            "connectedSurface": true
+          },
+          "deformation": {
+            "triangleCount": 602,
+            "minimumAbsoluteArea2": 0.31359999999999333,
+            "foldedTriangleCount": 0,
+            "degenerateTriangleCount": 0,
+            "unsafeSamples": []
+          }
+        },
+        "headBodyContact": {
+          "overlapPixels": 215,
+          "overlapRows": [
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124
+          ]
+        },
+        "layerPolicy": {
+          "nearArmBehindBody": false
+        }
+      }
+    }
+  },
+  "outputs": {
+    "contact": {
+      "file": "olive-west-01-08-contact.png",
+      "sha256": "c9dcc175d2aebbd6f4f4c81e7f80aeb395737277e6ee6121c53abe3fe84ed2dc"
+    }
+  },
+  "limitations": [
+    "pilot preview assembly requires visual review",
+    "torso uses one recorded width/height calibration; every complete limb uses one uniform scale",
+    "shoe region is independently rigid-transformed and overlaps the authored trouser cuff"
+  ]
+}

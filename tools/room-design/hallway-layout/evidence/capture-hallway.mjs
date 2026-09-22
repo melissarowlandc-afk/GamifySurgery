@@ -1,0 +1,13 @@
+import {readFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const html=await readFile('tools/room-design/hallway-layout/hallway-layout.html','utf8');
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+const page=await browser.newPage({viewport:{width:1100,height:900}});
+await page.setContent(`<main>${html}</main>`);await page.waitForFunction(()=>window.__hallwayLayout?.ready());
+await page.screenshot({path:'tools/room-design/hallway-layout/evidence/hallway-cross-default.png',fullPage:true});
+await page.locator('[data-adjacent]').first().check();
+await page.screenshot({path:'tools/room-design/hallway-layout/evidence/hallway-cross-backed-north.png',fullPage:true});
+await page.getByLabel('Hall shape').selectOption('corner');
+await page.screenshot({path:'tools/room-design/hallway-layout/evidence/hallway-corner-default.png',fullPage:true});
+await page.setViewportSize({width:320,height:900});await page.screenshot({path:'tools/room-design/hallway-layout/evidence/hallway-320.png',fullPage:true});
+await browser.close();

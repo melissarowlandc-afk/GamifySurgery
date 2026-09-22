@@ -48,9 +48,9 @@ describe("September 13 early-level batch admission", () => {
     expect(EARLY_LEVELS_20260913_CLAIMS).toHaveLength(21);
     expect(EARLY_LEVELS_20260913_SOURCES).toHaveLength(20);
     expect(EARLY_LEVELS_20260913_BATCH_MANIFEST).toMatchObject({authoringConceptCount:20,testedConceptCount:20,questionVariantCount:80,caseCount:52,decisionNodeCount:80,multistepCaseCount:28,resultGateCount:28,caseReviewCount:52,sourceCount:20,evidenceClaimCount:21,serviceContractCount:7,timingEntryCount:80,publicReleaseAuthorized:false});
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(143);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(350);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(543);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(183);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(450);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(703);
     for (const clinicalCase of EARLY_LEVELS_20260913_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(SYNTHETIC_CLINICAL_RELEASE.cases.filter((item) => item.id === clinicalCase.id)).toHaveLength(1);
@@ -66,7 +66,8 @@ describe("September 13 early-level batch admission", () => {
     for(const source of EARLY_LEVELS_20260913_SOURCES)for(const id of source.evidenceClaimIds)expect(claimIds.has(id)).toBe(true);
     for(const concept of EARLY_LEVELS_20260913_AUTHORING_CONCEPTS)for(const id of concept.evidenceClaimIds)expect(claimIds.has(id)).toBe(true);
     for(const question of EARLY_LEVELS_20260913_QUESTIONS)for(const id of question.supportingEvidenceClaimIds)expect(claimIds.has(id)).toBe(true);
-    expect(EARLY_LEVELS_20260913_SERVICE_CONTRACTS.filter((item)=>item.delivery==="new_external_contract_required").map((item)=>item.serviceId).sort()).toEqual(["service.ambulatory_reflux_monitoring","service.cutaneous_lesion_biopsy","service.hepatobiliary_contrast_mrcp","service.tumor_mmr_ihc"]);
+    expect(EARLY_LEVELS_20260913_SERVICE_CONTRACTS.filter((item)=>item.delivery==="new_external_contract_required").map((item)=>item.serviceId).sort()).toEqual(["service.ambulatory_reflux_monitoring","service.hepatobiliary_contrast_mrcp","service.tumor_mmr_ihc"]);
+    expect(EARLY_LEVELS_20260913_SERVICE_CONTRACTS.find((item)=>item.serviceId==="service.cutaneous_lesion_biopsy")).toMatchObject({delivery:"existing_balance_contract",allowedRouteIds:["route.cutaneous_lesion_biopsy.in_house","route.cutaneous_lesion_biopsy.outsourced"]});
   });
 
   it("binds ordered concepts and LF-normalized source hashes in the owner receipt", () => {

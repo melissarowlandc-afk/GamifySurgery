@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 4,
+  "character": "patient.adult.046",
+  "source": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+  },
+  "replacementTorso": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-torso-arm-free-v4.png",
+    "sha256": "609454d343fa5406df44b911655f98127ff5fd540802093d7ce9e846019ee86f",
+    "generationPrompt": {
+      "path": "docs/execplans/layered-torso-edit-prompt.txt",
+      "sha256": "42ab80a1aad28bffc7f1bef78b79d2a23542aa23d547c19f107f3bb73c1b5a06"
+    },
+    "dimensions": {
+      "width": 1221,
+      "height": 1289
+    },
+    "alpha": {
+      "x": 0,
+      "y": 14,
+      "width": 1199,
+      "height": 1251,
+      "visible": 998452,
+      "transparent": 575417,
+      "partial": 996476,
+      "threshold": 1
+    },
+    "alignmentBounds": {
+      "x": 136,
+      "y": 17,
+      "width": 944,
+      "height": 1204,
+      "visible": 998452,
+      "transparent": 575417,
+      "partial": 996476,
+      "threshold": 128
+    },
+    "uniformScale": 0.08056478405315615,
+    "placement": {
+      "x": 31.01661129568106,
+      "y": 108.63039867109634,
+      "scale": 0.08056478405315615
+    }
+  },
+  "beforeTorso": {
+    "path": "artifacts/character-movement/layered-pilot/green-south-parts-v3/torso.png",
+    "sha256": "4fb2b322378f3b4571af4d7518254552b187890af4b52c9e3b3ed759f9b5f1b3",
+    "alphaBounds": {
+      "x": 2,
+      "y": 2,
+      "width": 229,
+      "height": 242,
+      "visible": 47138,
+      "transparent": 10180,
+      "partial": 0,
+      "threshold": 1
+    }
+  },
+  "shoulderPivots": {
+    "standing": {
+      "left": {
+        "x": 41.39,
+        "y": 116.85
+      },
+      "right": {
+        "x": 111.39,
+        "y": 116.85
+      }
+    },
+    "raised": {
+      "left": {
+        "x": 121.39,
+        "y": 116.85
+      },
+      "right": {
+        "x": 191.39,
+        "y": 116.85
+      }
+    }
+  },
+  "armMotion": {
+    "leftRadians": 1.1938052083641213,
+    "rightRadians": -1.1938052083641213
+  },
+  "placements": {
+    "thighLeft": {
+      "x": 48,
+      "y": 198,
+      "scale": 0.225
+    },
+    "thighRight": {
+      "x": 79,
+      "y": 198,
+      "scale": 0.225
+    },
+    "shinLeft": {
+      "x": 52,
+      "y": 231,
+      "scale": 0.21
+    },
+    "shinRight": {
+      "x": 82,
+      "y": 231,
+      "scale": 0.21
+    },
+    "shoeLeft": {
+      "x": 45,
+      "y": 258,
+      "scale": 0.2
+    },
+    "shoeRight": {
+      "x": 80,
+      "y": 258,
+      "scale": 0.2
+    },
+    "sleeveLeft": {
+      "x": 24,
+      "y": 115,
+      "scale": 0.37,
+      "pivot": {
+        "x": 47,
+        "y": 5
+      }
+    },
+    "sleeveRight": {
+      "x": 94,
+      "y": 115,
+      "scale": 0.37,
+      "pivot": {
+        "x": 47,
+        "y": 5
+      }
+    },
+    "handLeft": {
+      "x": 26,
+      "y": 177,
+      "scale": 0.25,
+      "pivot": {
+        "x": 45,
+        "y": 4
+      }
+    },
+    "handRight": {
+      "x": 104,
+      "y": 177,
+      "scale": 0.25,
+      "pivot": {
+        "x": 45,
+        "y": 4
+      }
+    },
+    "head": {
+      "x": 41,
+      "y": 39,
+      "scale": 0.325
+    },
+    "torso": {
+      "x": 31.01661129568106,
+      "y": 108.63039867109634,
+      "scale": 0.08056478405315615
+    }
+  },
+  "outputs": {
+    "standing": {
+      "file": "green-south-standing-v4.png",
+      "sha256": "79278daf1e5e598bc6a9a2e693674e5834bd86c18a70aa3e1a95988b45d54837",
+      "width": 160,
+      "height": 320
+    },
+    "raised": {
+      "file": "green-south-arms-raised-v4.png",
+      "sha256": "1e56b81301155879c084ede591e38becb543c8707e767e930f2477a8d118a38c",
+      "width": 320,
+      "height": 320
+    },
+    "isolated": {
+      "file": "green-south-torso-before-after-v4.png",
+      "sha256": "017a5f509d3ec88360ca44a6017dd576f3dff5a502d0e76340a3c42baae12b31",
+      "width": 520,
+      "height": 310
+    },
+    "comparison": {
+      "file": "green-south-source-standing-raised-v4.png",
+      "sha256": "5cfd530be4d8e7a1885e399a673549a06291c22531ac1ca6c78b7191ef463a6a",
+      "width": 680,
+      "height": 370
+    }
+  },
+  "scope": "standing and raised-arm diagnostic only; no walk or sit"
+}

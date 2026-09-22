@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
+import { renderPrototypeAlert } from "@gamify-surgery/balance-config";
 import {
   TUTORIAL_ENCOUNTER_ID,
+  SECOND_TUTORIAL_ENCOUNTER_ID,
   createInitialGameState,
   deserializeGameState,
   gameReducer,
   serializeGameState,
+  synchronizeFacilityConditionOccurrences,
   type DomainEvent,
   type GameState,
 } from "@gamify-surgery/game-domain";
@@ -32,11 +35,144 @@ function checkInTutorialPatient(state: GameState): void {
   encounter.patientMovement = null;
   encounter.patientLocation = { x: 34, y: 29 };
   encounter.assignedRoomInstanceId = "room.instance.founder_desk";
+  encounter.checkInStatus = "checked_in";
+  encounter.checkInWaitingSinceTick = null;
   encounter.feedAttentionKind = "checked_in";
   encounter.feedAttentionStartedAtTick = state.facilityTick;
+  encounter.idleWaitingSinceTick = state.facilityTick;
 }
 
 describe("createMessageBoardView data-driven alerts", () => {
+  it("keeps retained alert history as plain chronological rows", () => {
+    let state = createInitialGameState();
+    const firstTutorial = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...firstTutorial,
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+    };
+    for (const encounter of Object.values(state.encounters)) {
+      encounter.resolutionReason = "completed";
+      encounter.patientMovement = null;
+      encounter.patientLocation = null;
+    }
+    state.alertHumor.alertsTutorialAcknowledgedAtTick = 0;
+    state.alertHumor.nextAmbientAlertTick = 120;
+    for (let minute = 1; minute <= 240; minute += 1) {
+      state = gameReducer(state, {
+        type: "ADVANCE_TICK",
+        operationId: `routine-ambient.${minute}`,
+      });
+    }
+
+    const rawAmbientEvents = state.events.filter(
+      (candidate) => candidate.type === "ambient_message",
+    );
+    state.events = rawAmbientEvents;
+    state.environment.facilityConditionOccurrences = [
+      {
+        id: "condition.water.onset",
+        conditionKey: "empty_water_cooler",
+        kind: "onset",
+        occurredAtFacilityTick: 30,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.environment.water-empty",
+        message: "The water cooler is empty.",
+        priority: "action_required",
+        target: { kind: "water_cooler", id: "water-cooler.front-desk" },
+      },
+      {
+        id: "condition.water.reminder",
+        conditionKey: "empty_water_cooler",
+        kind: "reminder",
+        occurredAtFacilityTick: 90,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.environment.water-empty",
+        message: "The water cooler is still empty.",
+        priority: "action_required",
+        target: { kind: "water_cooler", id: "water-cooler.front-desk" },
+      },
+      {
+        id: "condition.water.latest",
+        conditionKey: "empty_water_cooler",
+        kind: "reminder",
+        occurredAtFacilityTick: 180,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.environment.water-empty",
+        message: "The water cooler is still empty; refill it.",
+        priority: "action_required",
+        target: { kind: "water_cooler", id: "water-cooler.front-desk" },
+      },
+    ];
+    state.cash = 100_000;
+    state.cashCents = 10_000_000;
+    const items = createMessageBoardView(state);
+    expect(rawAmbientEvents).toHaveLength(2);
+    expect(items.filter((item) => !item.persistent)).toHaveLength(5);
+    expect(new Set(items.map((item) => item.id))).toEqual(new Set([
+      ...rawAmbientEvents.map((entry) => entry.id),
+      "condition.water.onset",
+      "condition.water.reminder",
+      "condition.water.latest",
+    ]));
+    expect(items.find((item) => item.id === "condition.water.latest")).toMatchObject({
+      priority: "action_required",
+      showAttentionMarker: true,
+      targetType: "water_cooler",
+    });
+  });
+
+  it("suppresses legacy check-in and result-return rows while retaining generic waits", () => {
+    const state = createInitialGameState();
+    state.events = [
+      event({
+        id: "event.patient-a.resolved",
+        type: "patience_warning",
+        facilityTick: 1,
+        definitionId: "alert.patient.arrived",
+        priority: "action_required",
+        encounterId: "encounter.a",
+        target: { kind: "encounter", id: "encounter.a" },
+        message: "A is ready.",
+      }),
+      event({
+        id: "event.patient-result",
+        type: "result_ready",
+        facilityTick: 2,
+        definitionId: "alert.patient.result-ready",
+        priority: "action_required",
+        encounterId: "encounter.a",
+        target: { kind: "encounter", id: "encounter.a" },
+        message: "Result ready.",
+      }),
+      event({
+        id: "event.patient-decision",
+        type: "patient_arrived",
+        facilityTick: 3,
+        definitionId: "alert.patient.waiting",
+        priority: "action_required",
+        encounterId: TUTORIAL_ENCOUNTER_ID,
+        target: { kind: "encounter", id: TUTORIAL_ENCOUNTER_ID },
+        message: "Decision ready.",
+      }),
+      event({
+        id: "event.patient-waiting",
+        type: "patience_warning",
+        facilityTick: 4,
+        definitionId: "alert.patient.waiting",
+        priority: "action_required",
+        encounterId: TUTORIAL_ENCOUNTER_ID,
+        target: { kind: "encounter", id: TUTORIAL_ENCOUNTER_ID },
+        message: "The patient has been waiting for clinical attention.",
+      }),
+    ];
+
+    const items = createMessageBoardView(state);
+    expect(items.some((item) => item.id === "event.patient-a.resolved")).toBe(false);
+    expect(items.some((item) => item.id === "event.patient-result")).toBe(false);
+    expect(items.some((item) => item.id === "event.patient-decision")).toBe(false);
+    expect(items.some((item) => item.id === "event.patient-waiting")).toBe(true);
+  });
+
   it("adds non-attention Level 2 phlebotomy guidance only for the accepted station ID", () => {
     const state = createInitialGameState();
     state.facilityLevel = 2;
@@ -110,6 +246,17 @@ describe("createMessageBoardView data-driven alerts", () => {
         alertVariantId: "alert.ambient.01.default",
       }),
     ];
+    state.environment.facilityConditionOccurrences = [{
+      id: "condition.receptionist.recency",
+      conditionKey: "no_receptionist",
+      kind: "onset",
+      occurredAtFacilityTick: 30,
+      resolvedAtFacilityTick: null,
+      definitionId: "alert.staff.receptionist-recommended",
+      message: "Hire a receptionist to keep the Front Desk moving.",
+      priority: "informational",
+      target: { kind: "staff_role", id: "staff.receptionist" },
+    }];
 
     const initialItems = createMessageBoardView(state);
     const flavor = initialItems.find(
@@ -117,7 +264,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     )!;
     const guidance = initialItems.find(
       (item) =>
-        item.id === "persistent.staff.receptionist-recommended",
+        item.id === "condition.receptionist.recency",
     )!;
     expect(flavor.sortKey).toBe(100);
     expect(flavor.sortKey!).toBeGreaterThan(guidance.sortKey!);
@@ -128,7 +275,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     )!;
     const laterGuidance = createMessageBoardView(state).find(
       (item) =>
-        item.id === "persistent.staff.receptionist-recommended",
+        item.id === "condition.receptionist.recency",
     )!;
     expect(laterFlavor.sortKey).toBe(flavor.sortKey);
     expect(laterGuidance.sortKey).toBe(guidance.sortKey);
@@ -141,7 +288,21 @@ describe("createMessageBoardView data-driven alerts", () => {
     state.cash = 1_000;
     state.cashCents = 100_000;
     state.facilityTick = 6;
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.lifecycle = "active_action_required";
+    encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
+    encounter.feedAttentionKind = "clinical_decision";
+    encounter.feedAttentionStartedAtTick = 0;
     state.events = [
+      event({
+        id: "event.decision.marker-test",
+        type: "patience_warning",
+        facilityTick: 0,
+        encounterId: encounter.id,
+        priority: "action_required",
+        definitionId: "alert.patient.waiting",
+        target: { kind: "encounter", id: encounter.id },
+      }),
       event({
         id: "event.ambient.marker-test",
         type: "ambient_message",
@@ -164,6 +325,17 @@ describe("createMessageBoardView data-driven alerts", () => {
         alertCategory: "success",
       }),
     ];
+    state.environment.facilityConditionOccurrences = [{
+      id: "condition.guidance.marker-test",
+      conditionKey: "no_receptionist",
+      kind: "onset",
+      occurredAtFacilityTick: 1,
+      resolvedAtFacilityTick: null,
+      definitionId: "alert.staff.receptionist-recommended",
+      message: "Hire a receptionist.",
+      priority: "informational",
+      target: { kind: "staff_role", id: "staff.receptionist" },
+    }];
 
     const items = createMessageBoardView(state);
     expect(items.some((item) => item.category === "action_required")).toBe(
@@ -197,26 +369,61 @@ describe("createMessageBoardView data-driven alerts", () => {
         spawnedAtFacilityTick: 30,
       },
     ];
+    state.environment.facilityConditionOccurrences = [
+      {
+        id: "condition.receptionist.guidance",
+        conditionKey: "no_receptionist",
+        kind: "onset",
+        occurredAtFacilityTick: 1,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.staff.receptionist-recommended",
+        message: "Hire a receptionist to support patient check-in.",
+        priority: "informational",
+        target: { kind: "staff_role", id: "staff.receptionist" },
+      },
+      {
+        id: "condition.waiting.guidance",
+        conditionKey: "missing_waiting_room",
+        kind: "onset",
+        occurredAtFacilityTick: 2,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.facility.waiting-room-needed",
+        message: "Build a waiting room.",
+        priority: "informational",
+        target: { kind: "build_mode", id: "room.waiting" },
+      },
+      {
+        id: "condition.litter.guidance",
+        conditionKey: "visible_litter",
+        kind: "onset",
+        occurredAtFacilityTick: 3,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.environment.trash-visible",
+        message: "Select the trash to clean it up.",
+        priority: "informational",
+        target: { kind: "litter", id: "litter.guidance" },
+      },
+    ];
 
     const items = createMessageBoardView(state);
 
     expect(
       items.find(
         (item) =>
-          item.id === "persistent.staff.receptionist-recommended",
+          item.id === "condition.receptionist.guidance",
       ),
     ).toMatchObject({
       category: "guidance",
       showAttentionMarker: false,
       targetType: "staff_role",
       targetId: "staff.receptionist",
-      actionLabel: "Show receptionist hiring",
+      actionLabel: "Show hiring",
       message: expect.stringContaining("Hire a receptionist"),
     });
     expect(
       items.find(
         (item) =>
-          item.id === "persistent.facility.waiting-room-needed",
+          item.id === "condition.waiting.guidance",
       ),
     ).toMatchObject({
       category: "guidance",
@@ -226,7 +433,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     });
     expect(
       items.find(
-        (item) => item.id === "persistent.environment.trash-visible",
+        (item) => item.id === "condition.litter.guidance",
       ),
     ).toMatchObject({
       category: "guidance",
@@ -239,36 +446,23 @@ describe("createMessageBoardView data-driven alerts", () => {
 
   it("distinguishes missing onsite X-ray from an X-ray room without a technician", () => {
     const state = createInitialGameState();
-    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
-    state.facilityLevel = 1;
-    state.cash = 1_000;
-    state.cashCents = 100_000;
-    encounter.lifecycle = "active_pending_result";
-    encounter.patientMovement = null;
-    encounter.pendingResult = {
-      operationId: "result.guidance",
-      gateId: "gate.guidance",
-      originatingNodeIndex: 0,
-      resultTypeId: "service.xray",
-      pendingLabel: "Chest X-ray",
-      resultNarrative: "Result",
-      routeId: "route.xray.outsourced",
-      routeDisplayName: "Offsite X-ray",
-      scheduledAtTick: 0,
-      serviceDurationTicks: 120,
-      durationTicks: 120,
-      dueTick: 120,
-      deliveredAtTick: null,
-      offsiteReturnStartedAtTick: null,
-      offsiteTravel: null,
-      patientTravel: null,
-    };
+    state.environment.facilityConditionOccurrences = [{
+      id: "condition.xray.room",
+      conditionKey: "unavailable_onsite_xray",
+      kind: "onset",
+      occurredAtFacilityTick: 1,
+      resolvedAtFacilityTick: null,
+      definitionId: "alert.facility.onsite-imaging-requested",
+      message: "Build an X-ray room to keep imaging onsite.",
+      priority: "informational",
+      target: { kind: "build_mode", id: "room.xray" },
+    }];
 
     expect(
       createMessageBoardView(state).find(
         (item) =>
           item.id ===
-          "persistent.facility.onsite-imaging-requested",
+          "condition.xray.room",
       ),
     ).toMatchObject({
       category: "guidance",
@@ -277,36 +471,38 @@ describe("createMessageBoardView data-driven alerts", () => {
       message: expect.stringContaining("Build an X-ray room"),
     });
 
-    state.rooms.push({
-      id: "room.xray.guidance",
-      roomDefinitionId: "room.xray",
-      x: 20,
-      y: 20,
-      orientation: 0,
-      doorSide: null,
-      upgradeLevel: 1,
-      cleanliness: 100,
+    state.environment.facilityConditionOccurrences[0]!.resolvedAtFacilityTick = 2;
+    state.environment.facilityConditionOccurrences.push({
+      id: "condition.xray.staff",
+      conditionKey: "unavailable_onsite_xray",
+      kind: "onset",
+      occurredAtFacilityTick: 2,
+      resolvedAtFacilityTick: null,
+      definitionId: "alert.staff.imaging-technician-needed",
+      message: "Hire an imaging technician.",
+      priority: "informational",
+      target: { kind: "staff_role", id: "staff.imaging_technician" },
     });
     const withRoom = createMessageBoardView(state);
     expect(
       withRoom.some(
         (item) =>
           item.id ===
-          "persistent.facility.onsite-imaging-requested",
+          "condition.xray.room",
       ),
-    ).toBe(false);
+    ).toBe(true);
     expect(
       withRoom.find(
         (item) =>
           item.id ===
-          "persistent.staff.imaging-technician-needed",
+          "condition.xray.staff",
       ),
     ).toMatchObject({
       category: "guidance",
       showAttentionMarker: false,
       targetType: "staff_role",
       targetId: "staff.imaging_technician",
-      actionLabel: "Show imaging technician hiring",
+      actionLabel: "Show hiring",
     });
   });
 
@@ -358,7 +554,6 @@ describe("createMessageBoardView data-driven alerts", () => {
       persistent: false,
     });
     for (const historicalId of [
-      "event.patient-arrived.duplicate",
       "event.patience-warning.duplicate.1",
     ]) {
       expect(
@@ -437,7 +632,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     expect(resolvedLeaving?.actionLabel).toBeUndefined();
   });
 
-  it("retains event-backed patient and water alerts without duplicate live-condition rows", () => {
+  it("suppresses legacy check-in and water aliases without synthesizing live duplicates", () => {
     const state = createInitialGameState();
     checkInTutorialPatient(state);
     state.environment.waterCoolerFillPercent = 10;
@@ -510,37 +705,11 @@ describe("createMessageBoardView data-driven alerts", () => {
       "event.water.1",
       "event.water.2",
     ]) {
-      expect(items.some((item) => item.id === eventId)).toBe(true);
+      expect(items.some((item) => item.id === eventId)).toBe(false);
     }
-    expect(
-      items.find((item) => item.id === "event.arrival.1"),
-    ).toMatchObject({
-      category: "guidance",
-      showAttentionMarker: false,
-    });
-    expect(
-      items.find((item) => item.id === "event.arrival.2"),
-    ).toMatchObject({
-      category: "action_required",
-      showAttentionMarker: true,
-      targetType: "patient",
-    });
-    expect(
-      items.find((item) => item.id === "event.water.1"),
-    ).toMatchObject({
-      category: "guidance",
-      showAttentionMarker: false,
-    });
-    expect(
-      items.find((item) => item.id === "event.water.2"),
-    ).toMatchObject({
-      category: "action_required",
-      showAttentionMarker: true,
-      targetType: "water_cooler",
-    });
   });
 
-  it("keeps routine accounting, correct-XP, GLP-1, litter-spawn, and build audit events out of the player feed", () => {
+  it("keeps routine accounting, staff success, correct-XP, GLP-1, litter-spawn, and build audit events out of the player feed", () => {
     const state = createInitialGameState();
     state.encounters = {};
     state.cash = 1_000;
@@ -561,6 +730,8 @@ describe("createMessageBoardView data-driven alerts", () => {
       "litter_appeared",
       "litter_collected",
       "water_cooler_refilled",
+      "staff_hired",
+      "employee_praised",
     ] as const;
     state.events = [
       ...suppressedTypes.map((type, index) =>
@@ -597,7 +768,46 @@ describe("createMessageBoardView data-driven alerts", () => {
     }
   });
 
-  it("ends visible-trash teaching on the first accepted cleanup click and later uses one deduped patient complaint", () => {
+  it("suppresses hired and praised staff rows including first-hire aliases", () => {
+    const state = createInitialGameState();
+    state.encounters = {};
+    state.cash = 1_000;
+    state.cashCents = 100_000;
+    state.events = [
+      event({
+        id: "event.staff.hired.base",
+        type: "staff_hired",
+        facilityTick: 10,
+        definitionId: "alert.staff.hired",
+      }),
+      event({
+        id: "event.staff.hired.receptionist",
+        type: "staff_hired",
+        facilityTick: 11,
+        definitionId: "alert.success.receptionist-hired",
+      }),
+      event({
+        id: "event.staff.hired.imaging",
+        type: "staff_hired",
+        facilityTick: 12,
+        definitionId: "alert.success.imaging-technician-hired",
+      }),
+      event({
+        id: "event.staff.praised",
+        type: "employee_praised",
+        facilityTick: 13,
+        definitionId: "alert.staff.praised",
+      }),
+    ];
+
+    const items = createMessageBoardView(state);
+    for (const id of state.events.map((candidate) => candidate.id)) {
+      expect(items.some((item) => item.id === id)).toBe(false);
+    }
+    expect(state.events).toHaveLength(4);
+  });
+
+  it("shows one durable litter occurrence only after the continuous delay", () => {
     const state = createInitialGameState();
     state.cash = 1_000;
     state.cashCents = 100_000;
@@ -612,12 +822,24 @@ describe("createMessageBoardView data-driven alerts", () => {
       },
     ];
 
+    synchronizeFacilityConditionOccurrences(state);
+    expect(
+      createMessageBoardView(state).some(
+        (item) => item.targetId === "litter.lesson",
+      ),
+    ).toBe(false);
+
+    state.facilityTick = 61;
+    synchronizeFacilityConditionOccurrences(state);
     expect(
       createMessageBoardView(state).find(
-        (item) =>
-          item.id === "persistent.environment.trash-visible",
+        (item) => item.targetId === "litter.lesson",
       ),
-    ).toBeDefined();
+    ).toMatchObject({
+      persistent: false,
+      targetType: "litter",
+      actionLabel: "Show trash",
+    });
 
     const started = gameReducer(state, {
       type: "COLLECT_LITTER",
@@ -641,7 +863,7 @@ describe("createMessageBoardView data-driven alerts", () => {
       serializeGameState(started),
     );
     restored.facilityLevel = 1;
-    restored.facilityTick = 90;
+    restored.facilityTick = 100;
     restored.environment.founderActivity = null;
     restored.environment.lastLitterCleanupAtTick = 1;
     restored.environment.litterItems = [
@@ -658,9 +880,11 @@ describe("createMessageBoardView data-driven alerts", () => {
         spawnedAtFacilityTick: 45,
       },
     ];
+    synchronizeFacilityConditionOccurrences(restored);
+    restored.facilityTick = 662;
+    synchronizeFacilityConditionOccurrences(restored);
     const complaintItems = createMessageBoardView(restored).filter(
-      (item) =>
-        item.id === "persistent.environment.trash-accumulated",
+      (item) => item.targetId === "litter.accumulated.1",
     );
     expect(complaintItems).toHaveLength(1);
     expect(complaintItems[0]).toMatchObject({
@@ -668,17 +892,10 @@ describe("createMessageBoardView data-driven alerts", () => {
       showAttentionMarker: false,
       targetType: "litter",
       actionLabel: "Show trash",
-      message: expect.stringContaining("visible trash"),
     });
-    expect(
-      createMessageBoardView(restored).some(
-        (item) =>
-          item.id === "persistent.environment.trash-visible",
-      ),
-    ).toBe(false);
   });
 
-  it("does not dismiss visible-trash teaching when a cleanup click is rejected", () => {
+  it("keeps a delayed litter occurrence actionable when cleanup is rejected", () => {
     const state = createInitialGameState();
     state.environment.litterItems = [
       {
@@ -696,6 +913,9 @@ describe("createMessageBoardView data-driven alerts", () => {
       lastMovedAtFacilityTick: state.facilityTick,
       workMinutesRemaining: 1,
     };
+    synchronizeFacilityConditionOccurrences(state);
+    state.facilityTick = 61;
+    synchronizeFacilityConditionOccurrences(state);
 
     const rejected = gameReducer(state, {
       type: "COLLECT_LITTER",
@@ -714,12 +934,12 @@ describe("createMessageBoardView data-driven alerts", () => {
         (item) =>
           item.targetType === "litter" &&
           item.targetId === "litter.lesson" &&
-          item.message.includes("Select the trash"),
+          item.persistent === false,
       ),
     ).toBe(true);
   });
 
-  it("uses a patient complaint to recommend an occupied base-level room upgrade", () => {
+  it("hides legacy room-upgrade complaint rows below facility level three", () => {
     const state = createInitialGameState();
     state.facilityLevel = 1;
     state.facilityTick = 61;
@@ -742,28 +962,22 @@ describe("createMessageBoardView data-driven alerts", () => {
       cleanliness: 100,
     });
 
-    const complaint = createMessageBoardView(state).find(
-      (item) =>
-        item.id ===
-        "persistent.room-upgrade-requested.room.exam.complaint",
-    );
-    expect(complaint).toMatchObject({
-      category: "guidance",
-      showAttentionMarker: false,
-      targetType: "room",
-      targetId: "room.exam.complaint",
-      actionLabel: "Show room",
-      message: expect.stringContaining("Upgrade Examination Room"),
+    state.environment.facilityConditionOccurrences.push({
+      id: "condition.legacy.room-upgrade",
+      conditionKey: "room_upgrade_requested",
+      kind: "onset",
+      occurredAtFacilityTick: 60,
+      resolvedAtFacilityTick: null,
+      definitionId: "alert.patient.room-upgrade-requested",
+      message: "Upgrade Examination Room.",
+      priority: "informational",
+      target: { kind: "room", id: "room.exam.complaint" },
     });
-
-    state.rooms.find(
-      (room) => room.id === "room.exam.complaint",
-    )!.upgradeLevel = 2;
     expect(
       createMessageBoardView(state).some(
         (item) =>
-          item.id ===
-          "persistent.room-upgrade-requested.room.exam.complaint",
+          item.id === "condition.legacy.room-upgrade" ||
+          item.id.startsWith("persistent.room-upgrade-requested."),
       ),
     ).toBe(false);
   });
@@ -950,6 +1164,145 @@ describe("createMessageBoardView data-driven alerts", () => {
     });
   });
 
+  it("keeps an active low-cash marker at its real occurrence time behind newer feed history", () => {
+    const state = createInitialGameState();
+    state.encounters = {};
+    state.facilityTick = 100;
+    state.cash = 50;
+    state.cashCents = 5_000;
+    state.environment.facilityConditionOccurrences = [
+      {
+        id: "condition.low-cash.onset",
+        conditionKey: "low_cash",
+        kind: "onset",
+        occurredAtFacilityTick: 40,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.finance.low-cash",
+        message: "Less than $200 remains.",
+        priority: "action_required",
+        target: { kind: "emergency_glp1", id: "emergency-glp1" },
+      },
+    ];
+    state.events = [
+      event({
+        id: "event.ambient.newer",
+        type: "ambient_message",
+        facilityTick: 80,
+        alertCategory: "ambient_flavor",
+        priority: "flavor",
+      }),
+    ];
+
+    const items = createMessageBoardView(state);
+    const lowCash = items.find(
+      (item) => item.id === "condition.low-cash.onset",
+    );
+    const newer = items.find((item) => item.id === "event.ambient.newer");
+    expect(lowCash).toMatchObject({
+      showAttentionMarker: true,
+      sortKey: 40,
+      targetType: "emergency_glp1",
+      targetId: "emergency-glp1",
+    });
+    expect(items.indexOf(lowCash!)).toBeLessThan(items.indexOf(newer!));
+  });
+
+  it("renders clinic-wide complaint copy and normalizes saved patient-specific complaint history", () => {
+    const rendered = [
+      "alert.facility.private-exam-needed",
+      "alert.staff.receptionist-recommended",
+      "alert.facility.onsite-imaging-requested",
+      "alert.staff.imaging-technician-needed",
+      "alert.facility.waiting-room-needed",
+      "alert.facility.bathroom-needed",
+      "alert.patient.cleanliness-complaint",
+      "alert.patient.room-upgrade-requested",
+      "alert.facility.waiting-room-crowded",
+    ].map((definitionId) =>
+      renderPrototypeAlert(definitionId, {
+        patient_name: "Avery Patient",
+        room_name: "Examination Room",
+      }).body,
+    );
+    for (const message of rendered) {
+      expect(message).not.toContain("Avery Patient");
+      expect(message).not.toContain("{{patient_name}}");
+    }
+    expect(rendered).toContain("Patients are asking for a restroom. Build a bathroom.");
+    expect(rendered).toContain(
+      "Patients would appreciate a Waiting Room instead of waiting beside the Front Desk. Build a Waiting Room.",
+    );
+
+    const state = createInitialGameState();
+    state.encounters = {};
+    state.facilityTick = 100;
+    state.environment.facilityConditionOccurrences = [
+      {
+        id: "condition.cleanliness.legacy",
+        conditionKey: "visible_litter",
+        kind: "onset",
+        occurredAtFacilityTick: 40,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.patient.cleanliness-complaint",
+        message: "Avery Patient has started reviewing the visible trash.",
+        priority: "informational",
+        target: { kind: "litter", id: "litter.legacy" },
+      },
+      {
+        id: "condition.cleanliness.measured",
+        conditionKey: "dirty_cleanliness",
+        kind: "onset",
+        occurredAtFacilityTick: 41,
+        resolvedAtFacilityTick: null,
+        definitionId: "alert.facility.cleanliness-low",
+        message: "Clinic cleanliness is 23%. Even the dust looks concerned.",
+        priority: "informational",
+        target: { kind: "litter", id: "litter.measured" },
+      },
+    ];
+    expect(
+      createMessageBoardView(state).find(
+        (item) => item.id === "condition.cleanliness.legacy",
+      )?.message,
+    ).toBe("Visible trash is distracting patients. Select it to send the founder to clean it.");
+    expect(
+      createMessageBoardView(state).find(
+        (item) => item.id === "condition.cleanliness.measured",
+      )?.message,
+    ).toBe("Clinic cleanliness is 23%. Even the dust looks concerned.");
+    expect(
+      state.environment.facilityConditionOccurrences[1]?.message,
+    ).toBe("Clinic cleanliness is 23%. Even the dust looks concerned.");
+  });
+
+  it("keeps individual patient waiting copy patient-specific", () => {
+    const state = createInitialGameState();
+    checkInTutorialPatient(state);
+    state.facilityTick = 61;
+    state.encounters[TUTORIAL_ENCOUNTER_ID]!.idleWaitingSinceTick = 0;
+
+    const waiting = createMessageBoardView(state).find(
+      (item) => item.id === `persistent.patient.${TUTORIAL_ENCOUNTER_ID}.waiting`,
+    );
+    expect(waiting?.message).toContain(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]!.patientDisplayName,
+    );
+  });
+
+  it("does not synthesize a low-cash fallback while saved cadence is cooling down", () => {
+    const state = createInitialGameState();
+    state.encounters = {};
+    state.facilityTick = 200;
+    state.cash = 50;
+    state.cashCents = 5_000;
+    state.alertHumor.conditionLastEmittedTicks["finance.low-cash"] = 100;
+    state.environment.facilityConditionOccurrences = [];
+
+    expect(createMessageBoardView(state)).not.toContainEqual(
+      expect.objectContaining({ id: "persistent.finance.low-cash" }),
+    );
+  });
+
   it("gives attention and clickability only to the latest unresolved occurrence of one facility condition", () => {
     const state = createInitialGameState();
     state.encounters = {};
@@ -1096,6 +1449,39 @@ describe("createMessageBoardView data-driven alerts", () => {
     ).toBe(false);
   });
 
+  it("routes an overdue unstaffed check-in alert to the Front Desk, not an unavailable chart", () => {
+    const state = createInitialGameState();
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.checkInStatus = "awaiting_staff";
+    state.events = [
+      event({
+        id: "event.patient-check-in-overdue.tutorial.0",
+        type: "patience_warning",
+        facilityTick: 61,
+        encounterId: encounter.id,
+        definitionId: "alert.patient.check-in-unattended",
+        priority: "action_required",
+        target: { kind: "room", id: "room.instance.founder_desk" },
+      }),
+    ];
+
+    const active = createMessageBoardView(state).find(
+      (item) => item.id === "event.patient-check-in-overdue.tutorial.0",
+    );
+    expect(active).toMatchObject({
+      targetType: "room",
+      targetId: "room.instance.founder_desk",
+      actionLabel: "Show Front Desk",
+    });
+
+    encounter.checkInStatus = "checked_in";
+    const resolved = createMessageBoardView(state).find(
+      (item) => item.id === "event.patient-check-in-overdue.tutorial.0",
+    );
+    expect(resolved?.actionLabel).toBeUndefined();
+    expect(resolved?.targetType).toBeUndefined();
+  });
+
   it("keeps encounter settlement audit events out of Alerts and Events", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
@@ -1131,7 +1517,7 @@ describe("createMessageBoardView data-driven alerts", () => {
     ).toBe(false);
   });
 
-  it("uses the existing decision event instead of synthesizing a duplicate active-decision row", () => {
+  it("hides a legacy decision-ready row without deleting raw history", () => {
     const state = createInitialGameState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "active_action_required";
@@ -1156,20 +1542,10 @@ describe("createMessageBoardView data-driven alerts", () => {
     expect(
       items.filter(
         (item) =>
-          item.id === "event.patient-ready.tutorial" ||
-          item.id ===
-            `persistent.patient.${encounter.id}.decision`,
+          item.id === "event.patient-ready.tutorial",
       ),
-    ).toHaveLength(1);
-    expect(
-      items.find(
-        (item) => item.id === "event.patient-ready.tutorial",
-      ),
-    ).toMatchObject({
-      showAttentionMarker: true,
-      targetType: "patient",
-      targetId: encounter.id,
-    });
+    ).toHaveLength(0);
+    expect(state.events).toHaveLength(1);
   });
 
   it("does not describe a 25-percent-full cooler as empty", () => {

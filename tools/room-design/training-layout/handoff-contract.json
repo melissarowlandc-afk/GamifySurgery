@@ -1,0 +1,14 @@
+{
+  "status": "isolated-design-proof",
+  "dimensions": {"cols": 3, "rows": 3},
+  "doors": ["N1", "N2", "N3", "S1", "S2", "S3", "WA", "WB", "WC", "EA", "EB", "EC"],
+  "northBacking": ["N1", "N2", "N3"],
+  "bench": {"footprint": {"left": 0.65, "top": 0.85, "width": 1.7, "height": 0.6}, "collision": "solid", "permanence": "permanent", "stations": ["training-arm", "suture-pad"]},
+  "stools": {"count": 2, "collision": "nonblocking", "facing": "north", "ground": [{"x": 1.05, "y": 1.7}, {"x": 1.95, "y": 1.7}]},
+  "optionalFixtures": [
+    {"id": "cabinet-anatomy", "hiddenByDoors": ["N1", "WA"], "hiddenByBacking": "N1"},
+    {"id": "whiteboard", "hiddenByDoors": ["N2"], "hiddenByBacking": "N2"},
+    {"id": "graduation-cap-skeleton", "hiddenByDoors": ["N3", "EA"], "hiddenByBacking": "N3"}
+  ],
+  "scope": "Proof only. No runtime room, domain, save, balance, timing, or clinical-content changes."
+}

@@ -1,0 +1,71 @@
+{
+  "contractId": "shared-character-walk-v1",
+  "contractVersion": 1,
+  "status": "complete_numeric_fit",
+  "identity": {
+    "templateId": "mixed-20260910-patient-01",
+    "outputKey": "mixed-20260910-patient-01",
+    "displayLabel": "Patient 01",
+    "namePolicy": "random_per_encounter_visual_template"
+  },
+  "references": [
+    {
+      "path": "docs/features/character-movement/character-template-mapping.md",
+      "sha256": "fea5e3fca308b1b63a7ac9a18abc105109fb6dd9672a3c8a649883966f815080",
+      "role": "authoritative_motion_contract"
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-fit.json",
+      "sha256": "5e2ab5bcb5b390acb74fb45ef63b85e83df13ebaf2db102f32e38222700dd571",
+      "role": "accepted_lateral_numeric_reference"
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-fit.json",
+      "sha256": "7523c59921ec730ec343265e422f8b5d2c8cec5cf442504ea1f52b92ac3e50b2",
+      "role": "accepted_north_south_numeric_reference"
+    }
+  ],
+  "evidence": [
+    { "field": "lateral.registration", "classification": "measured", "source": "accepted Patient 01 lateral fit and approved directional-master registration", "uncertainty": "published continuous coordinates; source packing rounds only at export" },
+    { "field": "lateral.segmentLengths", "classification": "estimated", "source": "accepted Patient 01 hidden-joint authoring fit", "uncertainty": "clothing occludes anatomical centers; see reference joint uncertainty" },
+    { "field": "lateral.envelope", "classification": "estimated", "source": "accepted side silhouette fit", "uncertainty": "head and torso envelopes are fitting guides, not recovered anatomy" },
+    { "field": "northSouth.registration", "classification": "measured", "source": "accepted Patient 01 front/back source registration", "uncertainty": "fixed isotropic per-view transform" },
+    { "field": "northSouth.segmentLengths3D", "classification": "estimated", "source": "accepted latent 3D Patient 01 authoring fit", "uncertainty": "authored lengths; projected 2D lengths foreshorten" },
+    { "field": "northSouth.body", "classification": "estimated", "source": "front/back silhouette and hidden-joint review", "uncertainty": "joints beneath jacket and trousers remain estimated" },
+    { "field": "northSouth.projection", "classification": "estimated", "source": "accepted vector projection", "uncertainty": "stylized, not camera calibrated" },
+    { "field": "foot geometry", "classification": "estimated", "source": "accepted geometric sole targets", "uncertainty": "raster shoe silhouette tolerance remains pending GS-010 inspection" }
+  ],
+  "lineage": {
+    "east": { "kind": "independent", "sourcePath": "production-foundation-v2/characters/patient-01/right-idle-master.png", "sourceSha256": "0452d5fbef808dec3edcd2c71f033c6d71a7cd1b3dc69220f494c86dd80fcff6", "acceptanceState": "accepted_numeric_source_registration" },
+    "west": { "kind": "independent", "sourcePath": "production-foundation-v2/characters/patient-01/left-idle-master.png", "sourceSha256": "85e35c92c93e6631c2838e8f2e53d5b292b4fc919100c5798389128b6d425ee2", "acceptanceState": "accepted_numeric_source_registration" },
+    "south": { "kind": "independent", "sourcePath": "production-foundation-v2/characters/patient-01/standing-master.png", "sourceSha256": "ed1e2e6a5b425081f8f237e8793107e66c9caf5f72117a88c432f90d9c941166", "acceptanceState": "accepted_numeric_source_registration" },
+    "north": { "kind": "independent", "sourcePath": "production-foundation-v2/characters/patient-01/back-idle-master.png", "sourceSha256": "9345fc8de8466010ea82008d9c0ddd84664a9b8807c79a15e913e880dbd73511", "acceptanceState": "accepted_numeric_source_registration" }
+  },
+  "lateral": {
+    "frame": { "width": 128, "height": 192, "axisX": 64, "floorY": 181 },
+    "registration": {
+      "east": { "scale": 0.19148936170212766, "sourceAxisX": 228, "sourceFloorY": 941, "sourceWidth": 448, "sourceHeight": 1024 },
+      "west": { "scale": 0.19148936170212766, "sourceAxisX": 232, "sourceFloorY": 941, "sourceWidth": 448, "sourceHeight": 1024 }
+    },
+    "centers": { "headY": 31, "shoulderLeftX": 62, "shoulderRightX": 66, "shoulderY": 59, "chestY": 82, "hipX": 64, "hipY": 116, "ankleY": 173 },
+    "envelope": { "headRadiusX": 19, "headRadiusY": 21, "torsoShoulderHalfDepth": 14, "torsoChestHalfDepth": 15, "torsoHipHalfDepth": 12 },
+    "segmentLengths": { "upperArm": 28, "forearm": 28, "hand": 8, "thigh": 29, "shin": 28 },
+    "foot": { "heelBack": 5, "toeForward": 12 },
+    "motion": { "bobStride": 6, "bobTransition": 2, "bobPassing": 0, "strideReach": 25, "transitionReach": 13, "recoveryLift": 5, "passingLift": 4, "transitionLift": 2, "armStrideReach": 29, "armTransitionReach": 15, "armStrideDrop": 47, "armTransitionDrop": 53, "armPassingDrop": 56 }
+  },
+  "northSouth": {
+    "frame": { "width": 128, "height": 192, "axisX": 64, "floorY": 181 },
+    "registration": {
+      "south": { "scale": 0.19042316258351893, "sourceAxisX": 238, "sourceFloorY": 941, "sourceWidth": 448, "sourceHeight": 1024 },
+      "north": { "scale": 0.19042316258351893, "sourceAxisX": 238.5, "sourceFloorY": 941, "sourceWidth": 448, "sourceHeight": 1024 }
+    },
+    "segmentLengths3D": { "thigh": 34, "shin": 32, "upperArm": 32, "forearm": 31, "hand": 9 },
+    "lanes": { "hipHalfWidth": 10, "kneeBendLateralPreference": 0.055 },
+    "body": { "shoulderHeightAboveHip": 65, "headHeightAboveHip": 95, "shoulderHalfWidth": 20, "wristHalfWidth": 25, "torsoShoulderHalfWidth": 23, "torsoChestHalfWidth": 25, "torsoHipHalfWidth": 18, "torsoChestHeightAboveHip": 37, "headRadiusLateral": 18, "headRadiusHeight": 25 },
+    "projection": { "verticalScale": 0.88, "depthScale": 0.22, "lateralScale": 1 },
+    "foot": { "ankleHeight": 8, "contactForwardOffset": 2, "heelForwardOffset": -4, "toeForwardOffset": 8, "heelHalfWidth": 5, "toeHalfWidth": 8, "liftedHeelRise": 1, "liftedToeRise": 3 },
+    "motion": { "strideReach": 24, "transitionReach": 12, "recoveryLift": 3, "passingLift": 5, "transitionLift": 2, "armStrideReach": 22, "armTransitionReach": 11, "armStrideSpan": 61, "armTransitionSpan": 61.5, "armPassingSpan": 63 }
+  },
+  "donorContract": null,
+  "outputPolicy": { "status": "authoring_target_pending_raster_review", "outputClass": "target_only", "rasterReviewRequired": true }
+}

@@ -1,0 +1,6 @@
+Built-in imagegen background correction after opaque checkerboard output:
+Replace EVERY checkerboard background square and all gaps with uniform pure
+magenta #FF00FF. Preserve the supplied sprite parts, positions, proportions,
+clothing colors and complete silhouettes. Do not resize, redraw or add objects.
+The flat matte is removed during deterministic sprite import, retaining every
+non-matte RGB byte from the final generated atlas.

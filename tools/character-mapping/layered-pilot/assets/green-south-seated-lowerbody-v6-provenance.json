@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "opaqueSource": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-lowerbody-v6-opaque-source.png",
+    "sha256": "f854d5e181cd0daab4540e7aa2ed0dadf41a57ab673370474227a812394f3d55",
+    "dimensions": [
+      1278,
+      1230
+    ]
+  },
+  "transparentOutput": {
+    "path": "tools/character-mapping/layered-pilot/assets/green-south-seated-lowerbody-v6.png",
+    "sha256": "cdce1e801d28d293b132962b49911414414740869666154489af3eb4350760b3"
+  },
+  "prompt": {
+    "path": "docs/execplans/layered-seated-leg-edit-prompt.txt",
+    "sha256": "d71269a4b58b01fc1da7c88eb71c1a802102b6cd8f50b4be751bad4af062ea6f"
+  },
+  "method": "8-connected exterior neutral flood; range <=30; mean >=155; alpha only",
+  "alpha": {
+    "removed": 1359665,
+    "retained": 212275,
+    "retainedLight": 3220,
+    "partial": 0
+  },
+  "retainedRgb": "byte-identical where alpha is nonzero"
+}

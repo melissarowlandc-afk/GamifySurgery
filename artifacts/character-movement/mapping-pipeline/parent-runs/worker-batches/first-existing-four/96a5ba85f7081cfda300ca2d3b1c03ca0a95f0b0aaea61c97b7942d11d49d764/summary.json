@@ -1,0 +1,64 @@
+{
+  "batchKey": "first-existing-four",
+  "compiled": [
+    {
+      "dependencyFingerprint": "5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda",
+      "identityKey": "mixed-20260910-patient-01",
+      "outputKey": "mixed-20260910-patient-01",
+      "path": "mixed-20260910-patient-01/5da58c99ef43e60b192fd8b2e71ab5eea7a27701ea262a66684e1b7635f37dda/targets.json",
+      "targetCount": 32
+    }
+  ],
+  "compilerCodeFingerprint": "e2061adf31ca3e02a345cf8fa8c827591ad1881be23f8b3550df771c93824aa3",
+  "counts": {
+    "compiled": 1,
+    "pending": 3,
+    "selected": 4,
+    "targets": 32
+  },
+  "outputClass": "target_only",
+  "pending": [
+    {
+      "blockers": [
+        "character-specific lateral and front/back proportions",
+        "per-view registration",
+        "long-coat overlap and hidden-joint evidence",
+        "approved reflection lineage inputs"
+      ],
+      "identityKey": "mixed-20260910-patient-02",
+      "outputKey": "mixed-20260910-patient-02"
+    },
+    {
+      "blockers": [
+        "Marisol-specific lateral and front/back proportions",
+        "per-view registration",
+        "uniform and hidden-joint evidence",
+        "approved reflection lineage inputs"
+      ],
+      "identityKey": "mixed-20260910-receptionist-01",
+      "outputKey": "mixed-20260910-receptionist-01"
+    },
+    {
+      "blockers": [
+        "Caleb-specific lateral and front/back proportions",
+        "per-view registration",
+        "uniform and hidden-joint evidence",
+        "approved reflection lineage inputs"
+      ],
+      "identityKey": "mixed-20260910-nurse-01",
+      "outputKey": "mixed-20260910-nurse-01"
+    }
+  ],
+  "schemaVersion": 1,
+  "selectedKeys": [
+    "mixed-20260910-nurse-01",
+    "mixed-20260910-patient-01",
+    "mixed-20260910-patient-02",
+    "mixed-20260910-receptionist-01"
+  ],
+  "status": "measurement_blocked",
+  "timing": {
+    "localToolMilliseconds": null,
+    "unmeasuredManualAndRasterWork": "not measured; no art work was performed"
+  }
+}

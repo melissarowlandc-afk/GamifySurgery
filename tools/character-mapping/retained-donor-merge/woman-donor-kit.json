@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "status": "donor-exclusivity-review-only",
+  "characterId": "retained-auburn-glasses-olive-jacket",
+  "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+  "sourceSha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d",
+  "sourceCrop": { "x": 1000, "y": 360, "width": 240, "height": 310 },
+  "bodySourceHip":{"x":112,"y":202},
+  "torsoClip":[[98,104],[137,104],[139,121],[138,181],[136,202],[98,205],[92,160],[94,120]],
+  "backFill":{"sourceRect":[66,132,70,82],"destinationRect":[92,104,47,101]},
+  "guideWidths":{"upperArm":16,"forearm":15,"thigh":29,"shin":25,"shoe":17,"provenance":"measured extents of isolated source polygons; torso envelope fitted to x92..139; outer garment contour remains approximate"},
+  "pieces": [
+    { "id":"head", "intendedSurface":"complete original head, hair, glasses, face and neck; no shoulder or arm", "polygon":[[55,20],[169,20],[173,91],[157,111],[132,117],[89,116],[58,105]] },
+    { "id":"torso-core", "intendedSurface":"arm-free central jacket and cream-knit torso only; intentionally incomplete on both side silhouettes", "polygon":[[99,105],[137,105],[140,127],[139,178],[136,201],[99,203],[94,183],[95,139]] },
+    { "id":"near-right-upper-arm", "anchors":[[88,120],[76,150]], "intendedSurface":"backward near/right upper sleeve only; excludes hair, torso outline and hand", "polygon":[[80,113],[96,117],[93,132],[84,151],[77,159],[68,152],[73,133]] },
+    { "id":"near-right-forearm-hand", "anchors":[[76,150],[58,188]], "intendedSurface":"backward near/right lower sleeve and one complete hand", "polygon":[[68,143],[86,151],[79,169],[69,190],[61,199],[51,197],[44,187],[51,171]] },
+    { "id":"far-left-upper-arm", "source":"standingWestMirror", "anchors":[[99,128],[116,190]], "intendedSurface":"anatomical-left upper sleeve from the west-facing idle, horizontally registered for east-view donor inspection", "polygon":[[92,124],[111,127],[121,148],[123,181],[116,198],[102,196],[96,171]] },
+    { "id":"far-left-forearm-hand", "source":"standingWestMirror", "anchors":[[116,190],[106,229]], "intendedSurface":"anatomical-left lower sleeve and one complete hand from west-facing idle, horizontally registered for east-view donor inspection", "polygon":[[101,181],[122,181],[121,205],[119,222],[113,234],[101,236],[93,226],[96,207]] },
+    { "id":"far-left-thigh", "anchors":[[106,202],[88,231]], "intendedSurface":"backward far/left thigh only; hip overlap intentionally omitted", "polygon":[[82,199],[111,199],[115,207],[108,222],[98,238],[81,240],[69,220]] },
+    { "id":"far-left-shin", "anchors":[[88,231],[68,257]], "intendedSurface":"backward far/left lower trouser leg only; shoe overlap omitted", "polygon":[[73,217],[102,224],[98,239],[82,248],[65,249],[54,246],[60,236]] },
+    { "id":"far-left-shoe", "anchors":[[48,258],[81,273]], "intendedSurface":"complete backward shoe including heel, sole and toe", "polygon":[[43,246],[72,245],[88,257],[88,276],[81,281],[48,280],[37,265]] },
+    { "id":"near-right-thigh", "anchors":[[118,202],[145,232]], "intendedSurface":"forward near/right thigh only; hip overlap intentionally omitted", "polygon":[[116,199],[145,199],[151,207],[159,226],[151,242],[136,240],[122,218]] },
+    { "id":"near-right-shin", "anchors":[[145,232],[156,258]], "intendedSurface":"forward near/right lower trouser leg only; shoe overlap omitted", "polygon":[[134,214],[163,210],[171,236],[167,247],[159,250],[147,249],[137,245],[131,239]] },
+    { "id":"near-right-shoe", "anchors":[[141,274],[174,259]], "intendedSurface":"complete forward shoe including heel, sole and toe", "polygon":[[136,246],[171,243],[184,256],[183,276],[176,281],[139,281],[128,267]] }
+  ]
+}

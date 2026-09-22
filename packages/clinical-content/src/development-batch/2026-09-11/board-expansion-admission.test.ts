@@ -47,9 +47,9 @@ describe("September 11 board-expansion batch admission", () => {
     expect(BOARD_EXPANSION_CASE_REVIEWS).toHaveLength(40);
     expect(BOARD_EXPANSION_CASES.flatMap((item) => item.decisionNodes).filter((node) => node.resultGateAfter)).toHaveLength(40);
     expect(BOARD_EXPANSION_BATCH_MANIFEST).toMatchObject({ authoringConceptCount: 20, questionVariantCount: 80, caseCount: 40, resultGateCount: 40, sourceCount: 21, evidenceClaimCount: 21, admissionScope: "active_synthetic_unapproved_prototype", publicReleaseAuthorized: false });
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(143);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(350);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(543);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(183);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(450);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(703);
     for (const clinicalCase of BOARD_EXPANSION_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(clinicalCase.approvedInstantiationProfiles).toHaveLength(4);

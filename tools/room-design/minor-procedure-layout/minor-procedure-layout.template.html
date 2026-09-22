@@ -1,0 +1,20 @@
+<section id="minor-procedure-layout-proof" aria-labelledby="minor-title">
+  <style>
+    #minor-procedure-layout-proof{max-width:760px;margin-inline:auto}#minor-procedure-layout-proof .minor-art-wrap{position:relative;max-width:480px;margin:12px auto 0}#minor-procedure-layout-proof .minor-art{display:block;width:100%;height:auto}#minor-procedure-layout-proof .minor-hit{position:absolute;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#minor-procedure-layout-proof .minor-controls{max-width:640px;margin:10px auto 0}#minor-procedure-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#minor-procedure-layout-proof legend{font-weight:var(--font-weight-medium);margin-bottom:4px}#minor-procedure-layout-proof .minor-buttons{display:flex;gap:5px;flex-wrap:wrap}#minor-procedure-layout-proof .minor-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#minor-procedure-layout-proof .minor-label{color:var(--muted-foreground);margin-right:3px}#minor-procedure-layout-proof .minor-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:2.5em}#minor-procedure-layout-proof .minor-note{margin-top:6px;color:var(--muted-foreground)}
+  </style>
+  <h2 id="minor-title">Minor Procedure Room preview</h2>
+  <div class="minor-art-wrap">
+    <canvas id="minor-art" class="minor-art" width="960" height="1100" role="img" aria-label="Three by three Minor Procedure Room with permanent procedure table, stool and light, selectable doors, use points, and provisional clearance."></canvas>
+    <div id="minor-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="minor-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="minor-adjacency" class="minor-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="minor-row"><div><span class="minor-label text-small">North</span><span id="minor-north" class="minor-buttons"></span></div><div><span class="minor-label text-small">South</span><span id="minor-south" class="minor-buttons"></span></div><div><span class="minor-label text-small">West</span><span id="minor-west" class="minor-buttons"></span></div><div><span class="minor-label text-small">East</span><span id="minor-east" class="minor-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="minor-optional" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional sink, supply cabinet, and trolley</span></label>
+    <label class="form-check"><input id="minor-lamp" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional N2 wall light</span></label>
+    <label class="form-check"><input id="minor-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, and seat/use points</span></label>
+    <div class="minor-note text-small"><strong>Seat directions:</strong> patient South at the table foot; clinician North on the stool. Only B2 blocks walking; clearance radius is a provisional 0.16 tile.</div>
+    <div id="minor-status" class="minor-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__MINOR_SCRIPT__</script>
+</section>

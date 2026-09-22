@@ -1,0 +1,2136 @@
+{
+  "schemaVersion": 1,
+  "characters": {
+    "patient.adult.033": {
+      "id": "patient.adult.033",
+      "views": {
+        "south": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/olive-rig-ready-v1.png",
+            "sha256": "2a7cadb8462a18dcf87bd36ee12f54ee49fd46da798ea84d47b98e99707eba5f",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+              "sha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d"
+            },
+            "crop": {
+              "x": 50,
+              "y": 20,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                53,
+                42
+              ],
+              [
+                147,
+                42
+              ],
+              [
+                147,
+                132
+              ],
+              [
+                116,
+                132
+              ],
+              [
+                112,
+                146
+              ],
+              [
+                82,
+                146
+              ],
+              [
+                78,
+                132
+              ],
+              [
+                53,
+                132
+              ]
+            ],
+            "registration": "approved original south head only; neck-aligned to reauthored torso",
+            "sourceHip": {
+              "x": 95,
+              "y": 218
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armChainInsetPixels": 10,
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "mirror-x-local"
+            },
+            "walkingShoulderHeightAboveHip": 79,
+            "neutralNearArmBehindBody": true
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 374,
+                "y": 134,
+                "width": 109,
+                "height": 99
+              },
+              "anchor": {
+                "x": 429,
+                "y": 233
+              },
+              "calibration": {
+                "scaleX": 0.72,
+                "scaleY": 0.84,
+                "basis": "approved original frontal torso envelope"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 647,
+                "y": 88,
+                "width": 48,
+                "height": 136
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 671,
+                  "y": 94
+                },
+                "joint": {
+                  "x": 671,
+                  "y": 139
+                },
+                "terminal": {
+                  "x": 671,
+                  "y": 188
+                },
+                "end": {
+                  "x": 671,
+                  "y": 222
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 866,
+                "y": 85,
+                "width": 50,
+                "height": 139
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 891,
+                  "y": 91
+                },
+                "joint": {
+                  "x": 891,
+                  "y": 139
+                },
+                "terminal": {
+                  "x": 891,
+                  "y": 188
+                },
+                "end": {
+                  "x": 891,
+                  "y": 222
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1094,
+                "y": 83,
+                "width": 63,
+                "height": 150
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1125,
+                  "y": 97
+                },
+                "joint": {
+                  "x": 1125,
+                  "y": 145
+                },
+                "terminal": {
+                  "x": 1125,
+                  "y": 190
+                },
+                "end": {
+                  "x": 1125,
+                  "y": 230
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1335,
+                "y": 83,
+                "width": 63,
+                "height": 150
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1366,
+                  "y": 97
+                },
+                "joint": {
+                  "x": 1366,
+                  "y": 145
+                },
+                "terminal": {
+                  "x": 1366,
+                  "y": 190
+                },
+                "end": {
+                  "x": 1366,
+                  "y": 230
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        },
+        "east": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/olive-rig-ready-v1.png",
+            "sha256": "2a7cadb8462a18dcf87bd36ee12f54ee49fd46da798ea84d47b98e99707eba5f",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+              "sha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d"
+            },
+            "crop": {
+              "x": 1000,
+              "y": 360,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                55,
+                20
+              ],
+              [
+                169,
+                20
+              ],
+              [
+                173,
+                91
+              ],
+              [
+                157,
+                111
+              ],
+              [
+                132,
+                117
+              ],
+              [
+                89,
+                116
+              ],
+              [
+                58,
+                105
+              ]
+            ],
+            "registration": "source crop already uses the approved 240x310 lateral frame; translate by target hip minus source hip",
+            "sourceHip": {
+              "x": 112,
+              "y": 196
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armShoulderTargetX": {
+              "left": 107,
+              "right": 103
+            },
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "authored"
+            },
+            "armChainOffsetY": 4
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 372,
+                "y": 354,
+                "width": 109,
+                "height": 122
+              },
+              "anchor": {
+                "x": 427,
+                "y": 468
+              },
+              "calibration": {
+                "scaleX": 0.58,
+                "scaleY": 0.84,
+                "basis": "approved original lateral torso envelope and first rendered source-scale review"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 642,
+                "y": 314,
+                "width": 52,
+                "height": 145
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 668,
+                  "y": 320
+                },
+                "joint": {
+                  "x": 668,
+                  "y": 369
+                },
+                "terminal": {
+                  "x": 668,
+                  "y": 420
+                },
+                "end": {
+                  "x": 668,
+                  "y": 433
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 870,
+                "y": 314,
+                "width": 53,
+                "height": 145
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 896,
+                  "y": 320
+                },
+                "joint": {
+                  "x": 896,
+                  "y": 369
+                },
+                "terminal": {
+                  "x": 896,
+                  "y": 420
+                },
+                "end": {
+                  "x": 896,
+                  "y": 433
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1094,
+                "y": 317,
+                "width": 87,
+                "height": 151
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1124,
+                  "y": 320
+                },
+                "joint": {
+                  "x": 1124,
+                  "y": 371
+                },
+                "terminal": {
+                  "x": 1124,
+                  "y": 432
+                },
+                "end": {
+                  "x": 1124,
+                  "y": 466
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1338,
+                "y": 317,
+                "width": 81,
+                "height": 152
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1366,
+                  "y": 320
+                },
+                "joint": {
+                  "x": 1366,
+                  "y": 371
+                },
+                "terminal": {
+                  "x": 1366,
+                  "y": 432
+                },
+                "end": {
+                  "x": 1366,
+                  "y": 466
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        },
+        "north": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/olive-rig-ready-v1.png",
+            "sha256": "2a7cadb8462a18dcf87bd36ee12f54ee49fd46da798ea84d47b98e99707eba5f",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+              "sha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d"
+            },
+            "crop": {
+              "x": 800,
+              "y": 20,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                30,
+                42
+              ],
+              [
+                128,
+                42
+              ],
+              [
+                128,
+                124
+              ],
+              [
+                114,
+                124
+              ],
+              [
+                109,
+                140
+              ],
+              [
+                48,
+                140
+              ],
+              [
+                43,
+                124
+              ],
+              [
+                30,
+                124
+              ]
+            ],
+            "registration": "approved original north head only; neck-aligned to reauthored torso",
+            "sourceHip": {
+              "x": 80,
+              "y": 218
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armChainInsetPixels": 5,
+            "armSourceOrientationBySide": {
+              "left": "authored",
+              "right": "authored"
+            },
+            "armChainOffsetY": 0
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 376,
+                "y": 614,
+                "width": 105,
+                "height": 103
+              },
+              "anchor": {
+                "x": 429,
+                "y": 717
+              },
+              "calibration": {
+                "scaleX": 0.72,
+                "scaleY": 0.86,
+                "basis": "approved original rear torso envelope"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 648,
+                "y": 574,
+                "width": 46,
+                "height": 132
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 671,
+                  "y": 580
+                },
+                "joint": {
+                  "x": 671,
+                  "y": 623
+                },
+                "terminal": {
+                  "x": 671,
+                  "y": 665
+                },
+                "end": {
+                  "x": 671,
+                  "y": 703
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 870,
+                "y": 574,
+                "width": 45,
+                "height": 132
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 892,
+                  "y": 580
+                },
+                "joint": {
+                  "x": 892,
+                  "y": 623
+                },
+                "terminal": {
+                  "x": 892,
+                  "y": 665
+                },
+                "end": {
+                  "x": 892,
+                  "y": 703
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1092,
+                "y": 576,
+                "width": 65,
+                "height": 143
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1124,
+                  "y": 590
+                },
+                "joint": {
+                  "x": 1124,
+                  "y": 632
+                },
+                "terminal": {
+                  "x": 1124,
+                  "y": 679
+                },
+                "end": {
+                  "x": 1124,
+                  "y": 716
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1335,
+                "y": 575,
+                "width": 64,
+                "height": 144
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1367,
+                  "y": 590
+                },
+                "joint": {
+                  "x": 1367,
+                  "y": 632
+                },
+                "terminal": {
+                  "x": 1367,
+                  "y": 679
+                },
+                "end": {
+                  "x": 1367,
+                  "y": 716
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        },
+        "west": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/olive-rig-ready-v1.png",
+            "sha256": "2a7cadb8462a18dcf87bd36ee12f54ee49fd46da798ea84d47b98e99707eba5f",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-06e158f5-4ec0-4b07-b336-befe1f93b121.png",
+              "sha256": "769d93e7a29a9c2b02b8cb8efa8054ec93260cc7e85c0894c1dbd00fce0ce79d"
+            },
+            "crop": {
+              "x": 550,
+              "y": 20,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                40,
+                42
+              ],
+              [
+                132,
+                42
+              ],
+              [
+                132,
+                139
+              ],
+              [
+                105,
+                139
+              ],
+              [
+                102,
+                128
+              ],
+              [
+                92,
+                128
+              ],
+              [
+                90,
+                143
+              ],
+              [
+                76,
+                143
+              ],
+              [
+                76,
+                128
+              ],
+              [
+                55,
+                128
+              ],
+              [
+                40,
+                118
+              ]
+            ],
+            "registration": "independent approved west head crop; translate by target hip minus source hip",
+            "sourceHip": {
+              "x": 90,
+              "y": 212
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armShoulderTargetX": {
+              "left": 121,
+              "right": 117
+            },
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "authored"
+            },
+            "armChainOffsetY": 4,
+            "headOffsetX": 3
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 372,
+                "y": 856,
+                "width": 110,
+                "height": 104
+              },
+              "anchor": {
+                "x": 427,
+                "y": 952
+              },
+              "calibration": {
+                "scaleX": 0.58,
+                "scaleY": 0.84,
+                "basis": "approved original lateral torso envelope; shared east/west calibration"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 642,
+                "y": 795,
+                "width": 53,
+                "height": 143
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 668,
+                  "y": 801
+                },
+                "joint": {
+                  "x": 668,
+                  "y": 850
+                },
+                "terminal": {
+                  "x": 668,
+                  "y": 899
+                },
+                "end": {
+                  "x": 668,
+                  "y": 931
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 870,
+                "y": 795,
+                "width": 51,
+                "height": 143
+              },
+              "normalizationScale": 0.56,
+              "rig": {
+                "proximal": {
+                  "x": 896,
+                  "y": 801
+                },
+                "joint": {
+                  "x": 896,
+                  "y": 850
+                },
+                "terminal": {
+                  "x": 896,
+                  "y": 899
+                },
+                "end": {
+                  "x": 896,
+                  "y": 931
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1068,
+                "y": 802,
+                "width": 89,
+                "height": 158
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1124,
+                  "y": 805
+                },
+                "joint": {
+                  "x": 1124,
+                  "y": 857
+                },
+                "terminal": {
+                  "x": 1124,
+                  "y": 913
+                },
+                "end": {
+                  "x": 1124,
+                  "y": 957
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  40,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1309,
+                "y": 802,
+                "width": 90,
+                "height": 158
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1366,
+                  "y": 805
+                },
+                "joint": {
+                  "x": 1366,
+                  "y": 857
+                },
+                "terminal": {
+                  "x": 1366,
+                  "y": 913
+                },
+                "end": {
+                  "x": 1366,
+                  "y": 957
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  40,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "patient.adult.032": {
+      "id": "patient.adult.032",
+      "views": {
+        "south": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/gray-rig-ready-v1.png",
+            "sha256": "ee1cdc49ee7ab74471c3883475be95a632a5f49a3006d86da357ff75dd67999e",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+              "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670"
+            },
+            "crop": {
+              "x": 50,
+              "y": 20,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                53,
+                52
+              ],
+              [
+                147,
+                52
+              ],
+              [
+                147,
+                141
+              ],
+              [
+                133,
+                141
+              ],
+              [
+                132,
+                147
+              ],
+              [
+                68,
+                147
+              ],
+              [
+                67,
+                141
+              ],
+              [
+                53,
+                141
+              ]
+            ],
+            "registration": "approved original head only; neck-aligned to reauthored torso",
+            "sourceHip": {
+              "x": 98,
+              "y": 218
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armChainInsetPixels": 10,
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "mirror-x-local"
+            },
+            "walkingShoulderHeightAboveHip": 79,
+            "neutralNearArmBehindBody": true
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 362,
+                "y": 126,
+                "width": 92,
+                "height": 116
+              },
+              "anchor": {
+                "x": 408,
+                "y": 242
+              },
+              "calibration": {
+                "scaleX": 0.72,
+                "scaleY": 0.8,
+                "basis": "approved original view envelope"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 637,
+                "y": 91,
+                "width": 46,
+                "height": 146
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 660,
+                  "y": 97
+                },
+                "joint": {
+                  "x": 660,
+                  "y": 143
+                },
+                "terminal": {
+                  "x": 660,
+                  "y": 184
+                },
+                "end": {
+                  "x": 660,
+                  "y": 229
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 863,
+                "y": 91,
+                "width": 47,
+                "height": 146
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 886,
+                  "y": 97
+                },
+                "joint": {
+                  "x": 886,
+                  "y": 143
+                },
+                "terminal": {
+                  "x": 886,
+                  "y": 184
+                },
+                "end": {
+                  "x": 886,
+                  "y": 229
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1094,
+                "y": 91,
+                "width": 61,
+                "height": 149
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1124,
+                  "y": 105
+                },
+                "joint": {
+                  "x": 1124,
+                  "y": 155
+                },
+                "terminal": {
+                  "x": 1124,
+                  "y": 203
+                },
+                "end": {
+                  "x": 1124,
+                  "y": 238
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1336,
+                "y": 91,
+                "width": 59,
+                "height": 149
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1365,
+                  "y": 105
+                },
+                "joint": {
+                  "x": 1365,
+                  "y": 155
+                },
+                "terminal": {
+                  "x": 1365,
+                  "y": 203
+                },
+                "end": {
+                  "x": 1365,
+                  "y": 238
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        },
+        "east": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/gray-rig-ready-v1.png",
+            "sha256": "ee1cdc49ee7ab74471c3883475be95a632a5f49a3006d86da357ff75dd67999e",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+              "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670"
+            },
+            "crop": {
+              "x": 1000,
+              "y": 360,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                72,
+                10
+              ],
+              [
+                174,
+                10
+              ],
+              [
+                176,
+                109
+              ],
+              [
+                70,
+                112
+              ]
+            ],
+            "registration": "approved original head only; neck-aligned to reauthored torso",
+            "sourceHip": {
+              "x": 112,
+              "y": 188
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armShoulderTargetX": {
+              "left": 107,
+              "right": 103
+            },
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "authored"
+            },
+            "armChainOffsetY": 4,
+            "headOffsetX": -3
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 364,
+                "y": 380,
+                "width": 91,
+                "height": 105
+              },
+              "anchor": {
+                "x": 409,
+                "y": 485
+              },
+              "calibration": {
+                "scaleX": 0.68,
+                "scaleY": 0.8,
+                "basis": "approved original view envelope"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 638,
+                "y": 323,
+                "width": 48,
+                "height": 146
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 662,
+                  "y": 329
+                },
+                "joint": {
+                  "x": 662,
+                  "y": 374
+                },
+                "terminal": {
+                  "x": 662,
+                  "y": 423
+                },
+                "end": {
+                  "x": 662,
+                  "y": 462
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 857,
+                "y": 323,
+                "width": 48,
+                "height": 146
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 881,
+                  "y": 329
+                },
+                "joint": {
+                  "x": 881,
+                  "y": 374
+                },
+                "terminal": {
+                  "x": 881,
+                  "y": 423
+                },
+                "end": {
+                  "x": 881,
+                  "y": 462
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1094,
+                "y": 326,
+                "width": 81,
+                "height": 145
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1125,
+                  "y": 334
+                },
+                "joint": {
+                  "x": 1125,
+                  "y": 383
+                },
+                "terminal": {
+                  "x": 1125,
+                  "y": 437
+                },
+                "end": {
+                  "x": 1125,
+                  "y": 468
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1336,
+                "y": 326,
+                "width": 84,
+                "height": 145
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1370,
+                  "y": 334
+                },
+                "joint": {
+                  "x": 1370,
+                  "y": 383
+                },
+                "terminal": {
+                  "x": 1370,
+                  "y": 437
+                },
+                "end": {
+                  "x": 1370,
+                  "y": 468
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        },
+        "north": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/gray-rig-ready-v1.png",
+            "sha256": "ee1cdc49ee7ab74471c3883475be95a632a5f49a3006d86da357ff75dd67999e",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+              "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670"
+            },
+            "crop": {
+              "x": 800,
+              "y": 20,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                31,
+                51
+              ],
+              [
+                121,
+                51
+              ],
+              [
+                121,
+                140
+              ],
+              [
+                108,
+                140
+              ],
+              [
+                107,
+                147
+              ],
+              [
+                47,
+                147
+              ],
+              [
+                46,
+                140
+              ],
+              [
+                31,
+                140
+              ]
+            ],
+            "registration": "approved original head only; neck-aligned to reauthored torso",
+            "sourceHip": {
+              "x": 77,
+              "y": 218
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armChainInsetPixels": 5,
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "mirror-x-local"
+            },
+            "armChainOffsetY": 0
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 364,
+                "y": 603,
+                "width": 89,
+                "height": 120
+              },
+              "anchor": {
+                "x": 408,
+                "y": 723
+              },
+              "calibration": {
+                "scaleX": 0.72,
+                "scaleY": 0.8,
+                "basis": "approved original view envelope"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 638,
+                "y": 569,
+                "width": 48,
+                "height": 145
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 662,
+                  "y": 575
+                },
+                "joint": {
+                  "x": 662,
+                  "y": 619
+                },
+                "terminal": {
+                  "x": 662,
+                  "y": 670
+                },
+                "end": {
+                  "x": 662,
+                  "y": 708
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 859,
+                "y": 569,
+                "width": 48,
+                "height": 146
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 883,
+                  "y": 575
+                },
+                "joint": {
+                  "x": 883,
+                  "y": 619
+                },
+                "terminal": {
+                  "x": 883,
+                  "y": 670
+                },
+                "end": {
+                  "x": 883,
+                  "y": 708
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1091,
+                "y": 570,
+                "width": 63,
+                "height": 150
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1123,
+                  "y": 583
+                },
+                "joint": {
+                  "x": 1123,
+                  "y": 628
+                },
+                "terminal": {
+                  "x": 1123,
+                  "y": 685
+                },
+                "end": {
+                  "x": 1123,
+                  "y": 718
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1338,
+                "y": 570,
+                "width": 62,
+                "height": 150
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1369,
+                  "y": 583
+                },
+                "joint": {
+                  "x": 1369,
+                  "y": 628
+                },
+                "terminal": {
+                  "x": 1369,
+                  "y": 685
+                },
+                "end": {
+                  "x": 1369,
+                  "y": 718
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        },
+        "west": {
+          "status": "measured",
+          "source": {
+            "path": "artifacts/character-movement/reauthored-pilot/sources/gray-rig-ready-v1.png",
+            "sha256": "ee1cdc49ee7ab74471c3883475be95a632a5f49a3006d86da357ff75dd67999e",
+            "width": 1536,
+            "height": 1024
+          },
+          "identityHead": {
+            "source": {
+              "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+              "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670"
+            },
+            "crop": {
+              "x": 550,
+              "y": 20,
+              "width": 240,
+              "height": 310
+            },
+            "polygon": [
+              [
+                54,
+                53
+              ],
+              [
+                125,
+                53
+              ],
+              [
+                125,
+                139
+              ],
+              [
+                113,
+                139
+              ],
+              [
+                112,
+                145
+              ],
+              [
+                77,
+                145
+              ],
+              [
+                76,
+                139
+              ],
+              [
+                54,
+                139
+              ]
+            ],
+            "registration": "approved original head only; neck-aligned to reauthored torso",
+            "sourceHip": {
+              "x": 94,
+              "y": 212
+            }
+          },
+          "targetFrame": {
+            "width": 240,
+            "height": 310
+          },
+          "targetRegistration": {
+            "bodyAnchor": {
+              "x": 112,
+              "y": 191
+            },
+            "headBodyMinOverlapRows": 2,
+            "armShoulderTargetX": {
+              "left": 121,
+              "right": 117
+            },
+            "armSourceOrientationBySide": {
+              "left": "mirror-x-local",
+              "right": "authored"
+            },
+            "armChainOffsetY": 4,
+            "headOffsetX": 3
+          },
+          "parts": {
+            "body": {
+              "bounds": {
+                "x": 364,
+                "y": 849,
+                "width": 95,
+                "height": 118
+              },
+              "anchor": {
+                "x": 411,
+                "y": 967
+              },
+              "calibration": {
+                "scaleX": 0.68,
+                "scaleY": 0.8,
+                "basis": "approved original view envelope"
+              }
+            },
+            "leftArm": {
+              "bounds": {
+                "x": 637,
+                "y": 799,
+                "width": 48,
+                "height": 146
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 661,
+                  "y": 805
+                },
+                "joint": {
+                  "x": 661,
+                  "y": 849
+                },
+                "terminal": {
+                  "x": 661,
+                  "y": 900
+                },
+                "end": {
+                  "x": 661,
+                  "y": 939
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "rightArm": {
+              "bounds": {
+                "x": 863,
+                "y": 799,
+                "width": 47,
+                "height": 145
+              },
+              "normalizationScale": 0.54,
+              "rig": {
+                "proximal": {
+                  "x": 886,
+                  "y": 805
+                },
+                "joint": {
+                  "x": 886,
+                  "y": 849
+                },
+                "terminal": {
+                  "x": 886,
+                  "y": 900
+                },
+                "end": {
+                  "x": 886,
+                  "y": 939
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  9,
+                  4
+                ],
+                "terminalTransition": {
+                  "before": 6,
+                  "after": 0
+                }
+              }
+            },
+            "leftLeg": {
+              "bounds": {
+                "x": 1067,
+                "y": 805,
+                "width": 88,
+                "height": 148
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1124,
+                  "y": 813
+                },
+                "joint": {
+                  "x": 1124,
+                  "y": 862
+                },
+                "terminal": {
+                  "x": 1124,
+                  "y": 918
+                },
+                "end": {
+                  "x": 1124,
+                  "y": 950
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            },
+            "rightLeg": {
+              "bounds": {
+                "x": 1312,
+                "y": 805,
+                "width": 87,
+                "height": 148
+              },
+              "normalizationScale": 0.55,
+              "rig": {
+                "proximal": {
+                  "x": 1355,
+                  "y": 813
+                },
+                "joint": {
+                  "x": 1355,
+                  "y": 862
+                },
+                "terminal": {
+                  "x": 1355,
+                  "y": 918
+                },
+                "end": {
+                  "x": 1355,
+                  "y": 950
+                }
+              },
+              "mesh": {
+                "cellSize": 5,
+                "alphaThreshold": 0,
+                "trimTransparentCells": true
+              },
+              "skinning": {
+                "jointBlendPixels": [
+                  30,
+                  0
+                ],
+                "terminalTransition": {
+                  "before": 0,
+                  "after": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

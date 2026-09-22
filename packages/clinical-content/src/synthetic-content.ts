@@ -75,6 +75,8 @@ import {
 } from "./development-batch/2026-09-11/board-expansion-batch";
 import { BOARD_EXPANSION_20260912_CASES, BOARD_EXPANSION_20260912_TESTED_CONCEPTS } from "./development-batch/2026-09-12/board-expansion-batch";
 import { EARLY_LEVELS_20260913_CASES, EARLY_LEVELS_20260913_TESTED_CONCEPTS } from "./development-batch/2026-09-13/early-levels-batch";
+import { BRIEF_EARLY_LEVELS_20260917_CASES, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS } from "./development-batch/2026-09-17/brief-early-levels-batch";
+import { BREAD_BUTTER_20260917_CASES, BREAD_BUTTER_20260917_TESTED_CONCEPTS } from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
 
 const PROTOTYPE_REVIEW_NOTICE =
   "Original prototype draft; requires Melissa's clinical review before any learner pilot.";
@@ -1122,6 +1124,8 @@ export const ACTIVE_SYNTHETIC_CLINICAL_SOURCE_CASES = [
   ...BOARD_EXPANSION_CASES,
   ...BOARD_EXPANSION_20260912_CASES,
   ...EARLY_LEVELS_20260913_CASES,
+  ...BRIEF_EARLY_LEVELS_20260917_CASES,
+  ...BREAD_BUTTER_20260917_CASES,
 ];
 
 /** Exact pre-repair assembly used by the literal September 13 wording bindings. */
@@ -1187,10 +1191,14 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     ...BOARD_EXPANSION_TESTED_CONCEPTS,
     ...BOARD_EXPANSION_20260912_TESTED_CONCEPTS,
     ...EARLY_LEVELS_20260913_TESTED_CONCEPTS,
+    ...BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS,
+    ...BREAD_BUTTER_20260917_TESTED_CONCEPTS,
   ],
   cases: [
     ...applyPatientLibraryWordingRepair(PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES),
     ...EARLY_LEVELS_20260913_CASES,
+    ...BRIEF_EARLY_LEVELS_20260917_CASES,
+    ...BREAD_BUTTER_20260917_CASES,
   ],
 });
 

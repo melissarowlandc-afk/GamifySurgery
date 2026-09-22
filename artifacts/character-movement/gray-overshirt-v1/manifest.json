@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "status": "gray-overshirt-actions-parent-review",
+  "character": {
+    "runtimeId": "patient.adult.032",
+    "label": "Gray overshirt"
+  },
+  "frameContract": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "floorY": 287,
+    "phaseDurationMs": 180
+  },
+  "sourcePins": {
+    "provenance": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt/assets/overshirt-assets-v1-provenance.json",
+      "sha256": "595449b3d8d4525d045247d9fead6cf046f14071a12838129ea3c56a9ede3aae"
+    },
+    "plate": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt/assets/overshirt-base-parts-v1-transparent.png",
+      "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732"
+    },
+    "actionPlate": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt/assets/overshirt-action-parts-v1.png",
+      "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1"
+    },
+    "original": {
+      "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+      "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670"
+    }
+  },
+  "sourceReferences": {
+    "south": {
+      "file": "source-reference/south.png",
+      "sha256": "eeacd7d7dbab755db6b52ed9300650f15a4f6371713a543ba9dae79014f700b7",
+      "width": 160,
+      "height": 320
+    },
+    "east": {
+      "file": "source-reference/east.png",
+      "sha256": "02b20b7fdf24d32d2ab620acee12990dab49aaf495ee52038a7f029bce03b704",
+      "width": 160,
+      "height": 320
+    },
+    "west": {
+      "file": "source-reference/west.png",
+      "sha256": "10a8c89d84e3c99c2b374caa2b458c224a21a59e3949f5853a749787a02cdb61",
+      "width": 160,
+      "height": 320
+    },
+    "north": {
+      "file": "source-reference/north.png",
+      "sha256": "f42afc4aa845cf38ea3c812269223efd00b6651af81bb23319c222a3d2dcc677",
+      "width": 160,
+      "height": 320
+    }
+  },
+  "frames": {
+    "stand": {
+      "south": {
+        "file": "frames/stand/south.png",
+        "sha256": "f7103e04403cc292602aa5f6c03679ad43f75f50ebd119c54083c48ffc51ad88",
+        "width": 160,
+        "height": 320
+      },
+      "east": {
+        "file": "frames/stand/east.png",
+        "sha256": "617037ab9e82d189acf70cba56ed2594db871e84443f3f6f644fe37f0b84d7de",
+        "width": 160,
+        "height": 320
+      },
+      "west": {
+        "file": "frames/stand/west.png",
+        "sha256": "e5c2ec026b9654769a1a85b768b4ea60540fdc8cd2aa9861d892da8c381e3b7e",
+        "width": 160,
+        "height": 320
+      },
+      "north": {
+        "file": "frames/stand/north.png",
+        "sha256": "6ca7ded8febb26fd6227eaeb6370e299221325ae18bcf12f26a3739f3121e783",
+        "width": 160,
+        "height": 320
+      }
+    },
+    "walk": {
+      "south": {
+        "01": {
+          "file": "frames/walk/south/01.png",
+          "sha256": "2bbdd3e5cf9e4d0973b368abc314ab68bd9dba1cf98bfdb10da1ec42cf01851e",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/south/02.png",
+          "sha256": "57bfb7adb9b98e6f70fa964dbd564e7115db5863d08d8b1d696529f2eb426bfd",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/south/03.png",
+          "sha256": "6c8ea43af6b97d47e56779448b33bca4c412f75dded7d25567e13f7424c4c1c4",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/south/04.png",
+          "sha256": "66a7a9c74eadf862ff5e543847864154501bdb10009ef3781bec77c2f591a149",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/south/05.png",
+          "sha256": "9dc8c8b98e9d9a77471deceaa314faa490edd1c6ca5bbdabe4058f5711881f0e",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/south/06.png",
+          "sha256": "175764929756ff0d03c34ad46a9b1b7a3410d2f1b8cd185a3c5208fecd0dd04f",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/south/07.png",
+          "sha256": "9a10499c9cbefe718e43aa473a50e5218f1fdabf87cf50dd4fbb6d9694006af8",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/south/08.png",
+          "sha256": "c70ddac8642d3399fe1404076636be5c81b6d0e7654c4da2c749601f662d4772",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "east": {
+        "01": {
+          "file": "frames/walk/east/01.png",
+          "sha256": "c1b6030416e0789136229dea8dcc7131070273b6e710f4fae4b460c695282de6",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/east/02.png",
+          "sha256": "88c6848c2bd5f476c51c8ca0888b849d98107567717520558ff5861d68041a7f",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/east/03.png",
+          "sha256": "3ec754dc61674d392e2ea4ee6c738338de27605bedc75360b8ae6e2f03deba9f",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/east/04.png",
+          "sha256": "4441b29aa4528058dadf09377246edb9cab52fae59e6fef9ee18b4c9b4455d26",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/east/05.png",
+          "sha256": "0c604cff6a70e5029b220db72f044bba1ee0a966c04766c6b1c10218651493c6",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/east/06.png",
+          "sha256": "0ffb82c841a703db128d6651466ece76a729d9ca23afbbbdb4056c00d04548d4",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/east/07.png",
+          "sha256": "d37a87f7f51b387589ac48fdde05153a86923e6d561bbb91f2c6f3d34b952322",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/east/08.png",
+          "sha256": "59653765ae8596a73d9a0eea55edb88e58ad3b52af2cebe3d119393c509855db",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "west": {
+        "01": {
+          "file": "frames/walk/west/01.png",
+          "sha256": "ed0f0e29b29842704b99e2f653cc1a0b9ab9fd863a5a215d28fa4922a46d0686",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/west/02.png",
+          "sha256": "33218201196b56d28845df745489a5da5b86019452d8a4a0dd02b19b44cf2ad3",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/west/03.png",
+          "sha256": "56b76482d9d4d74a173ced4f7df4de39dff69477d9019f3b28d76f9ed813c7c2",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/west/04.png",
+          "sha256": "e6703331e618f073582dc0b5f37b0f95876cb78b01475068b4ea6845062f8564",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/west/05.png",
+          "sha256": "4259e255fdb3b3db991cc65733a5cde77e041c8d42842d6995a5d8b60e1985b5",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/west/06.png",
+          "sha256": "428dca57633c0191dac9d372d2449f77dbce9cd22c3ed90c0eed6822617ffcd7",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/west/07.png",
+          "sha256": "576d3c9c59fdc14b7bdf4f5a0ad2519e032eb6617f7bdedbce3ff88651afca38",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/west/08.png",
+          "sha256": "8b45a2c996a68664ace76d80979ecd086e6439c6a4a840e27316456815cde856",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "north": {
+        "01": {
+          "file": "frames/walk/north/01.png",
+          "sha256": "5138471cf4bd341df6c5ecd65037af9c511fdea62edec67d4f4d6229265f1cda",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/north/02.png",
+          "sha256": "ba0e8cb0518de7e2fce00abeb06f220601c86aa9c4697acb49a36fa937606f8e",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/north/03.png",
+          "sha256": "bcecfc5615efd2ac617b4e88153f9f26771b9d02933bfd374f0e7b74ccb0225f",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/north/04.png",
+          "sha256": "b2a2f0e9fa49988e0884fabca5e932f57349be0c29772e9be3c2b3b186deff26",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/north/05.png",
+          "sha256": "7e8c1ea02c5aa1dacd7b6d10027d5edf4ceec406d36f3925ccf8a7e22cc35979",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/north/06.png",
+          "sha256": "3f8d3301b23175549d1db3b978a8b068edf625355559b8c722077d24f585f054",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/north/07.png",
+          "sha256": "a9f3fea5fab62ae5ec6b7bb8992c8ec8a39ce798981bb379484320fdea284983",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/north/08.png",
+          "sha256": "d3bd7eb978a772a0be2e4495b227b30f3e3d68c4fade5211199aa7d3ecfe8aaa",
+          "width": 160,
+          "height": 320
+        }
+      }
+    }
+  },
+  "actions": {
+    "starJump": {
+      "south": {
+        "01": {
+          "file": "frames/star-jump/south/01.png",
+          "sha256": "be59c267d036309dfb99e2972f0de6ac35519bd061728525617bb759a0013b9a",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/star-jump/south/02.png",
+          "sha256": "9dcb1f163c908988fb72194954c3ea00bc5d2d8b5a1176dea90cfd816daa43fa",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/star-jump/south/03.png",
+          "sha256": "4a6b4ce513a24b0c51f6c0015b08bcf1c86239f48194c74653ae1d15e79d5577",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/star-jump/south/04.png",
+          "sha256": "843ecf69113675acb2a6f1d643f263e7b665c9721159406dfe5353576003df93",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/star-jump/south/05.png",
+          "sha256": "1d42aa16888d20830dfc8dec7952dc2f217b14b11c6956a5dd7b0b8143cfeb6b",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/star-jump/south/06.png",
+          "sha256": "c24979206532ce2e7ed6c5bb06277a3cc2e7445927e918193ef9ac8f9a787874",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/star-jump/south/07.png",
+          "sha256": "24576911aaea1ab02c7210c0ef2feb5291b3a611038ed3a28693c199df2d8681",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/star-jump/south/08.png",
+          "sha256": "f7103e04403cc292602aa5f6c03679ad43f75f50ebd119c54083c48ffc51ad88",
+          "width": 160,
+          "height": 320
+        }
+      }
+    },
+    "sitting": {
+      "south": {
+        "file": "frames/sit/south.png",
+        "sha256": "0f052d7a9f40217810da606d9b3ea3dea7abe922f24b734581b5a8d3760739e8",
+        "width": 160,
+        "height": 320
+      },
+      "east": {
+        "file": "frames/sit/east.png",
+        "sha256": "02d60aba0aa383d891d916d1c3ce915fa024d463cf976496a529db2917996c6c",
+        "width": 160,
+        "height": 320
+      },
+      "west": {
+        "file": "frames/sit/west.png",
+        "sha256": "9662bd60e535dc049664e15903cef6ac76a530787a3873b895f570b3838357c8",
+        "width": 160,
+        "height": 320
+      },
+      "north": {
+        "file": "frames/sit/north.png",
+        "sha256": "aa8f928a5a70cfb9fe945ad56b8712ce080fecb645be5e0d371a1cbc5d34b4d5",
+        "width": 160,
+        "height": 320
+      }
+    },
+    "clipboard": {
+      "south": {
+        "file": "frames/clipboard/south.png",
+        "sha256": "9f52e6273620a29046c05a864230081386aa2276bc8941f2e90d11697bcd5814",
+        "width": 160,
+        "height": 320
+      }
+    }
+  },
+  "actionMetadata": {
+    "jumpStages": {
+      "01": "gather",
+      "02": "takeoff",
+      "03": "opening",
+      "04": "open-star",
+      "05": "closing",
+      "06": "soft-landing",
+      "07": "recover",
+      "08": "ready"
+    },
+    "sitting": {
+      "seatY": 236,
+      "floorY": 287,
+      "chairPolicy": "separate preview prop"
+    },
+    "clipboard": {
+      "view": "south"
+    }
+  },
+  "review": {
+    "proportions": {
+      "file": "overshirt-source-vs-fitted-stands.png",
+      "sha256": "7f93a48c676074912eede5d9488bf481785300c7750631853da7d1b81c85b48a",
+      "width": 960,
+      "height": 684
+    },
+    "headCoverage": {
+      "file": "overshirt-head-light-dark-proof.png",
+      "sha256": "7376ab73addbd979b35e8bfbd8d50bbe5dc5aa8d0dc4c20d2c515f87844beb47",
+      "width": 800,
+      "height": 424
+    },
+    "representative": {
+      "file": "overshirt-all-view-representative.png",
+      "sha256": "9ecdd402ba501cde861edc55a243a3fa45d87613d374e9d0923219e5b4cad7e1",
+      "width": 640,
+      "height": 1026
+    },
+    "directions": {
+      "south": {
+        "file": "overshirt-walk-south-contact.png",
+        "sha256": "3139eddaabd944dad5ccc734afd0f9755349d4df50b801c24c34a7bc8c712458",
+        "width": 640,
+        "height": 684
+      },
+      "east": {
+        "file": "overshirt-walk-east-contact.png",
+        "sha256": "c0eb62baae5ec3cd40de93e0a4af14e4b90b539f843260b2f770d3cbb7e56842",
+        "width": 640,
+        "height": 684
+      },
+      "west": {
+        "file": "overshirt-walk-west-contact.png",
+        "sha256": "433e31d47ba63b4609b0f45b4c98a09dcf475d6a6001cb22fcababad3b09cc6a",
+        "width": 640,
+        "height": 684
+      },
+      "north": {
+        "file": "overshirt-walk-north-contact.png",
+        "sha256": "b346f1f66038008f62ab162d69798a0422d1344e73a315d8cc4629157d585fd1",
+        "width": 640,
+        "height": 684
+      }
+    },
+    "legExtremes": {
+      "file": "overshirt-profile-leg-extremes-4x.png",
+      "sha256": "ebb4534de6013895b3902507951d3c73c60a5e047c2218763611e05385f1bdb7",
+      "width": 880,
+      "height": 520
+    },
+    "kneeCloseups": {
+      "file": "overshirt-front-back-knee-closeups.png",
+      "sha256": "d99e4c846308ed461f5b802de72df2dc800ede56e48c5409b1e148ec6b993d0a",
+      "width": 1280,
+      "height": 662
+    },
+    "watchProof": {
+      "file": "overshirt-south-watch-source-stand-jump-4x.png",
+      "sha256": "337690db0c671aa95868d88749b577f84edc3d10c71912c93e5ad8393bd77e66",
+      "width": 1920,
+      "height": 1302
+    },
+    "actions": {
+      "jump": {
+        "file": "overshirt-star-jump-south-contact.png",
+        "sha256": "dd7f62fc15a5ccc40082b271c490f6749db27b9eaf30fd43650d3ed0d487207a",
+        "width": 640,
+        "height": 684
+      },
+      "sitting": {
+        "file": "overshirt-sitting-four-view-contact.png",
+        "sha256": "f4ba0c3702124876a4fe0c064833b76af0b25b341a74b9656981a77fcb48021a",
+        "width": 640,
+        "height": 342
+      },
+      "clipboard": {
+        "file": "overshirt-clipboard-south-4x.png",
+        "sha256": "d3ed8af858a56a1f8e1d8c632d16d4a0e59d53861676e258a62f85456d3fec8f",
+        "width": 640,
+        "height": 1302
+      }
+    }
+  },
+  "notes": [
+    "Original heads are translated rigidly at native scale.",
+    "Existing arm-free torso, complete arms, and continuous legs are reused with character-specific anchors.",
+    "Canonical approved gait and 0.70 profile rearward arm scale are reused.",
+    "Base stand and walk hashes are frozen while actions are added.",
+    "Visual approval remains a parent/owner gate."
+  ]
+}

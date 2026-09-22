@@ -67,25 +67,42 @@ function advance(state: GameState, minutes: number): GameState {
 }
 
 describe("receptionist water-cooler work", () => {
-  it("waits one full facility hour, pauses with the simulation, then refills", () => {
+  it("returns an idle receptionist to the Front Desk staff post instead of wandering", () => {
     let state = preparedState();
+    state.environment.waterCoolerFillPercent = 100;
+    state.environment.waterCoolerEmptySinceTick = null;
+    const receptionist = state.employees[0]!;
+    const frontDesk = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    )!;
+    receptionist.location = { x: frontDesk.x + 4, y: frontDesk.y + 1 };
+    receptionist.path = [{ ...receptionist.location }];
+    receptionist.pathIndex = 0;
 
-    state = advance(state, 59);
-    expect(state.facilityTick).toBe(159);
-    expect(state.environment.waterCoolerFillPercent).toBe(0);
+    state = advance(state, 1);
+    expect(state.employees[0]!.path.at(-1)).toEqual(
+      state.environment.founderLocation,
+    );
+    state = advance(state, 20);
+    expect(state.employees[0]!.location).toEqual(
+      state.environment.founderLocation,
+    );
     expect(state.employees[0]!.facilityTask).toBeNull();
+  });
 
+  it("starts in the next idle desk gap, pauses with the simulation, then refills", () => {
+    let state = preparedState();
     state.paused = true;
     state = advance(state, 1);
-    expect(state.facilityTick).toBe(159);
+    expect(state.facilityTick).toBe(100);
     expect(state.employees[0]!.facilityTask).toBeNull();
 
     state.paused = false;
     state = advance(state, 1);
-    expect(state.facilityTick).toBe(160);
+    expect(state.facilityTick).toBe(101);
     expect(state.employees[0]!.facilityTask).toMatchObject({
       kind: "refill_water",
-      startedAtFacilityTick: 160,
+      startedAtFacilityTick: 101,
       workMinutesRemaining: 1,
     });
     expect(state.environment.waterCoolerFillPercent).toBe(0);
@@ -95,25 +112,22 @@ describe("receptionist water-cooler work", () => {
     expect(state.employees[0]!.facilityTask).toBeNull();
   });
 
-  it("starts the hour from hiring when the cooler was already empty", () => {
+  it("does not add a post-hire delay when the cooler is already empty", () => {
     let state = preparedState({
       facilityTick: 100,
       emptySinceTick: 0,
       hiredAtFacilityTick: 100,
     });
 
-    state = advance(state, 59);
-    expect(state.employees[0]!.facilityTask).toBeNull();
-
     state = advance(state, 1);
     expect(state.employees[0]!.facilityTask).toMatchObject({
       kind: "refill_water",
-      startedAtFacilityTick: 160,
+      startedAtFacilityTick: 101,
     });
   });
 
   it("routes receptionist refill work to B5 beside the occupied A5 cooler", () => {
-    let state = advance(preparedState(), 60);
+    let state = advance(preparedState(), 1);
     const frontDesk = state.rooms.find(
       (room) => room.roomDefinitionId === "room.front_desk",
     );
@@ -148,7 +162,7 @@ describe("receptionist water-cooler work", () => {
   });
 
   it("persists an in-progress refill and prevents a duplicate founder action", () => {
-    let state = advance(preparedState(), 60);
+    let state = advance(preparedState(), 1);
     expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
 
     state = gameReducer(state, {
@@ -167,12 +181,115 @@ describe("receptionist water-cooler work", () => {
     const restored = deserializeGameState(serializeGameState(state));
     expect(restored.employees[0]!.facilityTask).toMatchObject({
       kind: "refill_water",
-      startedAtFacilityTick: 160,
+      startedAtFacilityTick: 101,
       workMinutesRemaining: 1,
     });
 
     const completed = advance(restored, 1);
     expect(completed.environment.waterCoolerFillPercent).toBe(100);
     expect(completed.employees[0]!.facilityTask).toBeNull();
+  });
+
+  it("does not leave the desk for a full or missing cooler", () => {
+    const full = preparedState();
+    full.environment.waterCoolerFillPercent = 100;
+    full.environment.waterCoolerEmptySinceTick = null;
+    expect(advance(full, 3).employees[0]!.facilityTask).toBeNull();
+
+    const missing = preparedState();
+    missing.rooms = missing.rooms.filter(
+      (room) => room.roomDefinitionId !== "room.front_desk",
+    );
+    missing.doors = missing.doors.filter(
+      (door) => missing.rooms.some((room) => room.id === door.roomId),
+    );
+    const after = advance(missing, 3);
+    expect(after.environment.waterCoolerFillPercent).toBe(0);
+    expect(after.employees[0]!.facilityTask).toBeNull();
+  });
+
+  it("does not credit a refill when the cooler is removed after assignment", () => {
+    let state = advance(preparedState(), 1);
+    expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
+    const frontDeskId = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    )!.id;
+    state.rooms = state.rooms.filter((room) => room.id !== frontDeskId);
+    state.doors = state.doors.filter((door) => door.roomId !== frontDeskId);
+    state = advance(state, 2);
+    expect(state.environment.waterCoolerFillPercent).toBe(0);
+    expect(state.employees[0]!.facilityTask).toBeNull();
+    expect(
+      state.events.some((event) => event.type === "water_cooler_refilled"),
+    ).toBe(false);
+  });
+
+  it("keeps an approaching patient ahead of refill work", () => {
+    let state = preparedState();
+    const source = Object.values(createInitialGameState().encounters)[0]!;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT",
+      operationId: "water-refill.patient-priority.admit",
+      encounterId: "encounter.water-refill.priority",
+      caseId: source.frozenCase.id,
+      patientDisplayName: "Priority Patient",
+      arrivalClass: "routine",
+    });
+    state = advance(state, 1);
+    expect(state.encounters["encounter.water-refill.priority"]?.checkInStatus).toBe(
+      "approaching",
+    );
+    expect(state.employees[0]!.facilityTask).toBeNull();
+    expect(state.environment.waterCoolerFillPercent).toBe(0);
+  });
+
+  it("cancels travel on patient arrival, preserves empty water, and retries after check-in", () => {
+    let state = advance(preparedState(), 1);
+    expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
+    const source = Object.values(createInitialGameState().encounters)[0]!;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT",
+      operationId: "water-refill.interrupt.admit",
+      encounterId: "encounter.water-refill.interrupt",
+      caseId: source.frozenCase.id,
+      patientDisplayName: "Interrupting Patient",
+      arrivalClass: "routine",
+    });
+    state = advance(state, 1);
+    expect(state.environment.waterCoolerFillPercent).toBe(0);
+    expect(state.employees[0]!.facilityTask).toBeNull();
+    expect(state.employees[0]!.path.at(-1)).toEqual(
+      state.environment.founderLocation,
+    );
+
+    const patient = state.encounters["encounter.water-refill.interrupt"]!;
+    patient.checkInStatus = "checked_in";
+    patient.patientMovement = null;
+    state = advance(state, 1);
+    expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
+  });
+
+  it("cancels a completion on the exact tick a scheduled patient is admitted", () => {
+    let state = preparedState();
+    const receptionist = state.employees[0]!;
+    const frontDesk = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    )!;
+    const approach = { x: frontDesk.x + 4, y: frontDesk.y + 1 };
+    receptionist.location = approach;
+    receptionist.path = [approach];
+    receptionist.pathIndex = 0;
+    receptionist.facilityTask = {
+      kind: "refill_water",
+      startedAtFacilityTick: state.facilityTick,
+      workMinutesRemaining: 1,
+    };
+    state.nextRoutineArrivalTick = state.facilityTick + 1;
+    state = advance(state, 1);
+
+    expect(Object.values(state.encounters)).toHaveLength(1);
+    expect(Object.values(state.encounters)[0]!.checkInStatus).toBe("approaching");
+    expect(state.environment.waterCoolerFillPercent).toBe(0);
+    expect(state.employees[0]!.facilityTask).toBeNull();
   });
 });

@@ -1,0 +1,15 @@
+<section id="telehealth-layout-proof" aria-labelledby="telehealth-title">
+  <style>
+    #telehealth-layout-proof{max-width:720px;margin-inline:auto}#telehealth-layout-proof .tele-wrap{position:relative;max-width:540px;margin:12px auto 0}#telehealth-layout-proof canvas{display:block;width:100%;height:auto;position:relative;z-index:1}#telehealth-layout-proof .tele-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#telehealth-layout-proof .tele-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#telehealth-layout-proof .tele-controls{max-width:540px;margin:10px auto}#telehealth-layout-proof fieldset{border:0;margin:0 0 10px;padding:0}#telehealth-layout-proof legend{font-weight:600;margin-bottom:4px}#telehealth-layout-proof .tele-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}.tele-label{display:block;color:var(--muted-foreground);margin-bottom:3px}.tele-buttons{display:flex;flex-wrap:wrap;gap:4px}.tele-status{border-left:3px solid var(--primary);padding-left:10px;min-height:3em;margin-top:8px}@media(max-width:560px){#telehealth-layout-proof .tele-row{grid-template-columns:1fr}}
+  </style>
+  <h2 id="telehealth-title">GLP-1 Telehealth Suite preview</h2>
+  <div class="tele-wrap"><canvas id="tele-art" width="1080" height="1100" role="img" aria-label="GLP-1 telehealth suite with two opposing computer cubicles, curtained north windows, decorative plants, selectable doorway positions, and a rotated view."></canvas><div id="tele-targets" aria-label="Direct wall door targets"></div></div>
+  <div class="tele-controls">
+    <fieldset><legend>View</legend><select id="tele-orientation" class="form-select"><option value="south">3 × 2 · from South</option><option value="west">2 × 3 · from West</option></select></fieldset>
+    <fieldset><legend>Room immediately north of</legend><div id="tele-adjacent" class="tele-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="tele-row"><div><span class="tele-label text-small">North</span><span id="tele-north" class="tele-buttons"></span></div><div><span class="tele-label text-small">South</span><span id="tele-south" class="tele-buttons"></span></div><div><span class="tele-label text-small">West</span><span id="tele-west" class="tele-buttons"></span></div><div><span class="tele-label text-small">East</span><span id="tele-east" class="tele-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="tele-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show workstation footprint, seats, and selected-door route</span></label>
+    <div id="tele-status" class="tele-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__TELEHEALTH_SCRIPT__</script>
+</section>

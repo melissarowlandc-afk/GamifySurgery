@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "character-atlas-v1",
+  "title": "Standard character atlas manifest v1",
+  "type": "object",
+  "required": ["schemaVersion", "characterId", "pages", "parts", "capabilities", "layerOrder"],
+  "properties": {
+    "schemaVersion": { "const": "character-atlas/v1" },
+    "characterId": { "type": "string", "minLength": 1 },
+    "capabilities": {
+      "type": "object",
+      "required": ["sitting", "clipboard"],
+      "properties": { "sitting": { "type": "boolean" }, "clipboard": { "type": "boolean" } },
+      "additionalProperties": false
+    },
+    "pages": { "type": "object" },
+    "parts": { "type": "object" },
+    "fallbacks": { "type": "object" },
+    "accessoryPolicy": { "type": "object" },
+    "layerOrder": { "type": "object" },
+    "sourceLineage": { "type": "object" },
+    "profile": { "type": "object" }
+  },
+  "additionalProperties": false,
+  "$comment": "The executable linter enforces immutable slot IDs, page dimensions, landmark paths, alpha proximity, orientation, provenance, accessories, and capability-dependent requirements beyond this portable envelope schema."
+}

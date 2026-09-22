@@ -1,0 +1,3406 @@
+{
+  "schemaVersion": 1,
+  "status": "technical-preview-awaiting-owner-aesthetic-review",
+  "pins": {
+    "master": {
+      "path": "artifacts/character-movement/canonical-master/preview/manifest.json",
+      "sha256": "c9ccf24da87a4f89e1f464a65819d205bf0b2930950f9c60105a64c6d618c309"
+    },
+    "action": {
+      "path": "artifacts/character-movement/canonical-actions/preview/manifest.json",
+      "sha256": "915cc7a0501fb8df50f2a0e7b19304acbbadfa99b9243f2db796fe413fad7de9"
+    }
+  },
+  "sources": {
+    "green": {
+      "costumeId": "patient.adult.046.raster-source-uv",
+      "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+      "sourceSha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63",
+      "file": "source-crops/green-top-row.webp",
+      "sha256": "9c7567e3aafe178d8482a98d14b0d520880aff19486bff1aef128419e4719451",
+      "mime": "image/webp",
+      "quality": 80,
+      "tile": {
+        "width": 128,
+        "height": 280
+      },
+      "crop": {
+        "xByDirection": {
+          "south": 88,
+          "east": 350,
+          "west": 580,
+          "north": 812
+        },
+        "y": 50,
+        "width": 128,
+        "height": 280
+      },
+      "columns": 4,
+      "directions": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ]
+    },
+    "gray": {
+      "costumeId": "retained.gray-braid.raster-source-uv",
+      "sourcePath": "Photos for Codex 2/Patients or Staff or Other Characters/exec-16c48adf-2478-4b2a-b0e3-9ce1f2bfc2cb.png",
+      "sourceSha256": "1368999e0dbd28c250fd41c2a5ab97bcb8905de71862e4cdbfc3d75a6b4b62e4",
+      "file": "source-crops/gray-top-row.webp",
+      "sha256": "aafb8fcf8aaeaf198a7fcf956f16139bad9312282dd967b1b4b74ec4d31b45d7",
+      "mime": "image/webp",
+      "quality": 80,
+      "tile": {
+        "width": 128,
+        "height": 280
+      },
+      "crop": {
+        "xByDirection": {
+          "south": 88,
+          "east": 350,
+          "west": 580,
+          "north": 812
+        },
+        "y": 50,
+        "width": 128,
+        "height": 280
+      },
+      "columns": 4,
+      "directions": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ]
+    }
+  },
+  "states": [
+    {
+      "key": "walk-south-01",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "c1d5629e5751a2895f5b0e92249a2028b13a4eb9f871833e19ab2ba22dc53193",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "c1d5629e5751a2895f5b0e92249a2028b13a4eb9f871833e19ab2ba22dc53193",
+        "retained.gray-braid": "c1d5629e5751a2895f5b0e92249a2028b13a4eb9f871833e19ab2ba22dc53193"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-01.png",
+          "sha256": "b6a60b8e3a76cf11e7f73d2cb5be0c5bddee7eae13ea663f30aeb66ffa79aa74",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-01.png",
+          "sha256": "1e533b8d753cd2bccb6749ff8b33e27d1f1de420c498e4c963e9c09095daa370",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-01.png",
+          "sha256": "e868efcd7a93fe704e081fcacb1ff24eeb373d638541407878da9f0e6d446dd4",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-01.png",
+          "sha256": "1fd2aaeb9ace707ea59f09f0f0df70cf9bba3431638a6a9b5e05aedcc1dd0ebb",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-02",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "6b78d331f0c05c6b71d397ee8aaf874e9132d833f38876870973a2f8ac54f3c9",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "6b78d331f0c05c6b71d397ee8aaf874e9132d833f38876870973a2f8ac54f3c9",
+        "retained.gray-braid": "6b78d331f0c05c6b71d397ee8aaf874e9132d833f38876870973a2f8ac54f3c9"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-02.png",
+          "sha256": "8db75f9522474a23399a08cfb9b01188f6b0824750c0986d52db7a98aed11539",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-02.png",
+          "sha256": "095b72feecdd3532ad30c4f3958b3d3422d3e59ac8a1ed36d3b465e753db486c",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-02.png",
+          "sha256": "5546da175201cfa53977820b2a4cb4005c6c6fbcaf6ed7beaf1a4289ec9a278f",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-02.png",
+          "sha256": "144d04db7405c2a24c47725ac0d55e2ef30a3998a05ccf776faea5ad809dafad",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-03",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "143c01601bb30cff1337fe0c7adc63f8bb1fc0e779e0e899ef07cc15aea01d6a",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "143c01601bb30cff1337fe0c7adc63f8bb1fc0e779e0e899ef07cc15aea01d6a",
+        "retained.gray-braid": "143c01601bb30cff1337fe0c7adc63f8bb1fc0e779e0e899ef07cc15aea01d6a"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-03.png",
+          "sha256": "2eb0070dfdb85fe8b522cc11fcd073e0c5b358bcd130b1c01a1622f619dbc0d9",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-03.png",
+          "sha256": "f99ebdb0f87588121ad09e14d6a62f699e9cdbc1441b9488457d5f9cb6962c62",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-03.png",
+          "sha256": "18f234cf76e56675b914e0ab07ad7d549f1c690d7e1259d7856bf7d73a172f23",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-03.png",
+          "sha256": "92c3bfa71866b8ddc5620837eb2bc7b2527612be099157e0cf3d366f0f38e3e0",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-04",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "479f11903df787dc0b384c7baa14e1af34251029f40e596e5ee6f1ed1b93d038",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "479f11903df787dc0b384c7baa14e1af34251029f40e596e5ee6f1ed1b93d038",
+        "retained.gray-braid": "479f11903df787dc0b384c7baa14e1af34251029f40e596e5ee6f1ed1b93d038"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-04.png",
+          "sha256": "d734a747973404742f17f1cd0403cbf8210e106262d6ade3841303e16373789f",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-04.png",
+          "sha256": "319dda62e9a2a638eadd7eb5da5329308598fd2bff22a1ead22bb393eece825e",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-04.png",
+          "sha256": "ca7c01726163e0d260959b4dd738c1d0277977505c8e01202003b1f02dc430b8",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-04.png",
+          "sha256": "b02bfc3234f516cc3b5bceaf1c6f2676e36df538be629fe31c285bc3875d47ed",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-05",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "ac64b52975c13b08553f18954b6f2265813a33a01bf567c77502c86319259895",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "ac64b52975c13b08553f18954b6f2265813a33a01bf567c77502c86319259895",
+        "retained.gray-braid": "ac64b52975c13b08553f18954b6f2265813a33a01bf567c77502c86319259895"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-05.png",
+          "sha256": "336a5248ae1a0e7773b42b9ac41006f39b56a45a197be0f3eb12e91fbf5d585e",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-05.png",
+          "sha256": "1a140c654e298f08ca51b1b23aadb4a5b073c404f0d3e4c4be21008da57c41c4",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-05.png",
+          "sha256": "e32003f6fba3733ee0f5dc8dc6cf54208d09f1e24cb0c603f9468276ad37eead",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-05.png",
+          "sha256": "df724dad50441599b191cad7d6dd12b3cc2ca1038a15cadcb0dd75cef99cdcc4",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-06",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "0f0855451811bc1851f9aba1c2139732528466f5984195c6afd63ce08e91d248",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "0f0855451811bc1851f9aba1c2139732528466f5984195c6afd63ce08e91d248",
+        "retained.gray-braid": "0f0855451811bc1851f9aba1c2139732528466f5984195c6afd63ce08e91d248"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-06.png",
+          "sha256": "2dfcd04a7012bd2ef2817451707a6efba384474256d8507d615b28d12f1524a0",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-06.png",
+          "sha256": "714897ee15aea07bcc80623569639faa2a58a480bd34db65faeb0852ebcf451f",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-06.png",
+          "sha256": "81851d30b1900f149b1bf624ff10f05f62e7fadcd286e1b8eff0a81dedb11eec",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-06.png",
+          "sha256": "ebcae44e21ed84e465db3fe29df327c278fc0270e1996af743728a8df3cc1c91",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-07",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "23323365d19678cc6c7efa72f514db9df7441ac56a3ee17220e90ca95a9604e3",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "23323365d19678cc6c7efa72f514db9df7441ac56a3ee17220e90ca95a9604e3",
+        "retained.gray-braid": "23323365d19678cc6c7efa72f514db9df7441ac56a3ee17220e90ca95a9604e3"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-07.png",
+          "sha256": "ad4f6dc36389aaa20a01e4920ca97d3b93a8d221ce9f9034a63ad758d4bc1e5b",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-07.png",
+          "sha256": "a6492a49a07a8dcc793e0f5cf27d023bf299728b1229553e3bc4c811dd5ff6ae",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-07.png",
+          "sha256": "212b7c0925f00c0925aa282e72024a61a0a1ebb82241653a9076088c50a9c75c",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-07.png",
+          "sha256": "9aba206fe19ca2910019de44d5015bbbbb6dbf1e0dd51113971516e8e43d132e",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-south-08",
+      "mode": "walk",
+      "direction": "south",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "dd282cf393b7edff7a95d7aa629664b1a050d95abc35791c6c40e3c21a7f1157",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "dd282cf393b7edff7a95d7aa629664b1a050d95abc35791c6c40e3c21a7f1157",
+        "retained.gray-braid": "dd282cf393b7edff7a95d7aa629664b1a050d95abc35791c6c40e3c21a7f1157"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-south-08.png",
+          "sha256": "ab665afd3520bbec80f20905287a667df57f590c7a3c99d6b2ee14a67b334343",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-south-08.png",
+          "sha256": "8006d0dd1c3f835753cc1bb3faf81f0e4256d9c04a8de487a60ea07574136f9f",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-south-08.png",
+          "sha256": "d5b78859b283103932114c805b5e4f44f2fc87117a04acfc8c879e5651ec9955",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-south-08.png",
+          "sha256": "3c0f81ede12e654359bd6ed7b4f622e568d92044308415d0610db594e6278d48",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-01",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "75e98c3217cbab2c5f044ccd6ff87a972cb702ee04694fae743abf0492c0639d",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "75e98c3217cbab2c5f044ccd6ff87a972cb702ee04694fae743abf0492c0639d",
+        "retained.gray-braid": "75e98c3217cbab2c5f044ccd6ff87a972cb702ee04694fae743abf0492c0639d"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-01.png",
+          "sha256": "d21cde648463c44eee32bd09a29ce3a0060811e81dc6dd00a1f3b9f73ce7aa71",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-01.png",
+          "sha256": "eaeac36184a1b5077af7570fa3984478a257f6e15d9b9648c0b404a6bf92bc48",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-01.png",
+          "sha256": "88a14f75d87228d2532452865f5bde1f99721ad880c67f692475c7f987bcf605",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-01.png",
+          "sha256": "c7081502abedb7da9d06c2f4780f229040b8495e0e256d49d680ad6945866a60",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-02",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "4d495475f3ae1412062c701f8336a969c36407cac8733a372a3e03131c81e4cb",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "4d495475f3ae1412062c701f8336a969c36407cac8733a372a3e03131c81e4cb",
+        "retained.gray-braid": "4d495475f3ae1412062c701f8336a969c36407cac8733a372a3e03131c81e4cb"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-02.png",
+          "sha256": "6e4ed16f2bcdf0e1597459f0d51885f70bbb5efce2b7529d3796d924fb078bda",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-02.png",
+          "sha256": "b992bd60c1c89b8c18752f1d22be92a073a79de08ca3f3e5ae45f143420ff5c3",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-02.png",
+          "sha256": "703c4ebd89ce0725d9ea0e95e3eaddc39ecf1c0e470d6cae73dccce4a44436df",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-02.png",
+          "sha256": "dc7384b3a25267d6c69537bca7406f9afe779ddece51f9ad0788cbb47bcec7e0",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-03",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "003583292cad7343b2d76214d6cbf84d00a66c8136f04e595a6bce31d68d82d1",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "003583292cad7343b2d76214d6cbf84d00a66c8136f04e595a6bce31d68d82d1",
+        "retained.gray-braid": "003583292cad7343b2d76214d6cbf84d00a66c8136f04e595a6bce31d68d82d1"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-03.png",
+          "sha256": "4b30af33dba9640265d666717f351c7f90dc0047cc611dc360e497448fb0a0a1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-03.png",
+          "sha256": "bb348ebdd97de0ef88b849f7d020345037c83b0ff75aa20a873d85d2f0eb71ca",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-03.png",
+          "sha256": "00bc6349617f607e14aab880014b5cd79a718752bbd8508c0d9a3fc3c25cc200",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-03.png",
+          "sha256": "652fe3977d790e852a0bfd621dc2cb945e09d3c8b890ebeddf46eae12ef2df5c",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-04",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "75180076524f0b1201560046cadb7ec74133e5dec0971364dfa96d0afe4459af",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "75180076524f0b1201560046cadb7ec74133e5dec0971364dfa96d0afe4459af",
+        "retained.gray-braid": "75180076524f0b1201560046cadb7ec74133e5dec0971364dfa96d0afe4459af"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-04.png",
+          "sha256": "627474b560edad96283d0c714ec6bad1d3ef2d3b2e9d39666ab94e1250550176",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-04.png",
+          "sha256": "3901cb00c33062c3f6debd31e0a4ad193479f77667244b06cae1bfdffb67ce4a",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-04.png",
+          "sha256": "8cd52a95050b08e782da02aeb24395781931809fffcf5261e2a07e074f0dbbfd",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-04.png",
+          "sha256": "1e134c538f214c37796ca52cd6d3cf5070ca54b95952465cd6ac3377fe914d1b",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-05",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "0716629d647e892fdf4ad7649dde1ad9ea7dbc503371ddd4baceaf7543c280e4",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "0716629d647e892fdf4ad7649dde1ad9ea7dbc503371ddd4baceaf7543c280e4",
+        "retained.gray-braid": "0716629d647e892fdf4ad7649dde1ad9ea7dbc503371ddd4baceaf7543c280e4"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-05.png",
+          "sha256": "4551ad817ec942ada2289b9c6f54764aa3e50ca05419e56e35ede9e0a9eb8bdf",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-05.png",
+          "sha256": "026b38b19b2c21b0690867992840f55e10700e03c4e75050d64874ee7e4f2943",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-05.png",
+          "sha256": "61ff792ec7dfb280e6781ed5b6519ddcb4746ea768f9bae952a39035d5d70627",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-05.png",
+          "sha256": "3225e1c7deb3b25af65f589b5ebbc5b20ba4011f990d39ea3e02fe9f05a89244",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-06",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "443e7741724cfe5275faa702cc5aa5d375178200818c39b25d31b7fbfe998c91",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "443e7741724cfe5275faa702cc5aa5d375178200818c39b25d31b7fbfe998c91",
+        "retained.gray-braid": "443e7741724cfe5275faa702cc5aa5d375178200818c39b25d31b7fbfe998c91"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-06.png",
+          "sha256": "f23db026fd71de0e68f78fb044fc66c38ef3c5125ab70fee3f4ee3e37feeef75",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-06.png",
+          "sha256": "458467f19fcdd2db0352286f7e21fe3c60709e27b392139869dd7f8ad0774435",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-06.png",
+          "sha256": "c44125e370b78c3c260b9946b94e035b85e24ff2de2bd1fd34d3e37189b36006",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-06.png",
+          "sha256": "40e0a51ae2d006e9c7977b00aadb09801e3303d170b81f42e1d8eadb7b6d12c6",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-07",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "4f7b30b4e4b0cf5d64b3ccfe9ae900f17a2e83e32a3b1c9de84430aa1f0ab43f",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "4f7b30b4e4b0cf5d64b3ccfe9ae900f17a2e83e32a3b1c9de84430aa1f0ab43f",
+        "retained.gray-braid": "4f7b30b4e4b0cf5d64b3ccfe9ae900f17a2e83e32a3b1c9de84430aa1f0ab43f"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-07.png",
+          "sha256": "33ed984f26b51851c0142b4217c7d91f71fd21f20bbd713f9206d563b857183f",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-07.png",
+          "sha256": "62933b219a463d32559e981bd9ee129a4705f41eeedc76427efc99308b62af9e",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-07.png",
+          "sha256": "aacde8d232de64ee01985b5117f94c3593bf6847f120efdf68062a0009e7feff",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-07.png",
+          "sha256": "56e3f88b1b01bce5a4e82bff631e88da684d5ffec5f69cfdf519be74ebf7ddfa",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-east-08",
+      "mode": "walk",
+      "direction": "east",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "c6804beeff14c8cf329409e903556fe7abda9eaaa9f7227d365993fa98b7f122",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "c6804beeff14c8cf329409e903556fe7abda9eaaa9f7227d365993fa98b7f122",
+        "retained.gray-braid": "c6804beeff14c8cf329409e903556fe7abda9eaaa9f7227d365993fa98b7f122"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-east-08.png",
+          "sha256": "25e2642fa81acfc047df68db6f2eef6111b47ab8a1c9054bf558521506efae05",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-east-08.png",
+          "sha256": "4d11f6a842ab6a69eef4cc35f63ab8ca9da1e935a5e9457ab27cf495feedf3d5",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-east-08.png",
+          "sha256": "c4822ca5a326db7fc23b5c2645c8282da3bf1cd425656fe4e13f04f133945edd",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-east-08.png",
+          "sha256": "583d10108d84ee0fac129add1a1fa57a1a6215f7d7716065b1d7302888b70f31",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-01",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "8957a261c0966dc3d36ef0aa66089c54b10f1a4946d90eec3bbe2c79b8ed8715",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "8957a261c0966dc3d36ef0aa66089c54b10f1a4946d90eec3bbe2c79b8ed8715",
+        "retained.gray-braid": "8957a261c0966dc3d36ef0aa66089c54b10f1a4946d90eec3bbe2c79b8ed8715"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-01.png",
+          "sha256": "50e8f29fc702cbdc2d78cff5b090c63c0c1d70132aadf0c7c826dafefe603f60",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-01.png",
+          "sha256": "d790af0b41014cade989ab5812b6b777389cec045e00c87b286deb8c5e875aae",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-01.png",
+          "sha256": "fb286a588059991fb34981c314c1fab2ebfe34d3eaf9f3ce237ff3a45f6af110",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-01.png",
+          "sha256": "370b83db40bdb06ee6f070741dc3d80d678e902e3c02863da1d38894c9c92f6a",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-02",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "56fe1207e6d11f7c143788231c29d978fb71644ecb66e2ddeff58a5fa04455ce",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "56fe1207e6d11f7c143788231c29d978fb71644ecb66e2ddeff58a5fa04455ce",
+        "retained.gray-braid": "56fe1207e6d11f7c143788231c29d978fb71644ecb66e2ddeff58a5fa04455ce"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-02.png",
+          "sha256": "326dec6bc76a3f13fde8061b250d0efabbea151e695f2cf6e083bd3230ae1d30",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-02.png",
+          "sha256": "819d2e9a001768954470c1fb3dfff030ac5448c0ab05da686ce5d91378c15300",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-02.png",
+          "sha256": "424f492e5a9b21b271528d36619cdcdffa75e92b70b789436f6537d1413df255",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-02.png",
+          "sha256": "e99ff3467fa01f5ff64522b7a02d4019daf6016782124d53b7640405804fbab1",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-03",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "5ca5bdba011688e7535fc4bc13eb662931cc2f4964588aee948fd5ba355c111f",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "5ca5bdba011688e7535fc4bc13eb662931cc2f4964588aee948fd5ba355c111f",
+        "retained.gray-braid": "5ca5bdba011688e7535fc4bc13eb662931cc2f4964588aee948fd5ba355c111f"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-03.png",
+          "sha256": "438a23b119ffd3cf9f35d5e5da27f2926000df72104df979ad0a376d45625d09",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-03.png",
+          "sha256": "57300982e9943bd25039a81bbb369cfa8f6b139d3a311a70d9a032aea8f4f4be",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-03.png",
+          "sha256": "76f6e47fc9b3195c546b66fcdeb86c2eee1daeb327896c99e30896c90cc425fd",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-03.png",
+          "sha256": "f1144838df73d62a92129d159cd29b938acca9dc94003f81862a3e1e42483575",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-04",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "0359a5d08dd80affa1e3178018f498c84edaf438d312aa46ac01345519990500",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "0359a5d08dd80affa1e3178018f498c84edaf438d312aa46ac01345519990500",
+        "retained.gray-braid": "0359a5d08dd80affa1e3178018f498c84edaf438d312aa46ac01345519990500"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-04.png",
+          "sha256": "d142185175e780db864029378587ec7437d045f72d133decbe4b196cdec612e1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-04.png",
+          "sha256": "a66cb29a473466a1013efc6c15c0d3f2e79e7a7cff135681f6329c8f7641d69f",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-04.png",
+          "sha256": "06b15c3f3baf1f7b5309732ce09def4d5a56f7a12e9eb17a324b1a034d6fcfae",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-04.png",
+          "sha256": "69eb091d8f1b63b41aed8777128a5bc64496ce2478715b13cd1d504e11f938b3",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-05",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "1e3bfee34f46caddd40656b27e1e2e5c132dfa706e24abd83337a4a0175b7b35",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "1e3bfee34f46caddd40656b27e1e2e5c132dfa706e24abd83337a4a0175b7b35",
+        "retained.gray-braid": "1e3bfee34f46caddd40656b27e1e2e5c132dfa706e24abd83337a4a0175b7b35"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-05.png",
+          "sha256": "1cb9d356e3158ee052a3e28831b5b3ec4a5b7d1bb35fe0f5a54b72b09975bae1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-05.png",
+          "sha256": "89e8c0e860525222753975cdbf75071e91ffa7d3e2674510fd39de5fadd994e7",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-05.png",
+          "sha256": "8ab21eeafc098ceec1dfc0f90558077515f0490d3bea2294a0662142822a6121",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-05.png",
+          "sha256": "8c3db3080d29024c73518dcf67338bce1d1882b0b19a80678aaafa8c5a393e4e",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-06",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "974d4ca559329d8d00bb2b05e942d812458ec3fbcad1f0762d49ae011cf98a01",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "974d4ca559329d8d00bb2b05e942d812458ec3fbcad1f0762d49ae011cf98a01",
+        "retained.gray-braid": "974d4ca559329d8d00bb2b05e942d812458ec3fbcad1f0762d49ae011cf98a01"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-06.png",
+          "sha256": "37d4cee855535536946d51dc204aaddb4ae4ad3a4add8f209534409503465036",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-06.png",
+          "sha256": "a768bbcaea081072b37ec324d46fa4b23a42c9d7a305c091142bed6da9fa7731",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-06.png",
+          "sha256": "2e4e668c39cb3657d7cb33b6b602411799b9e098a5a2fcd965db97575ac706a4",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-06.png",
+          "sha256": "5d3555c7314c751a1a2b0111205e9a0b459d88638f1583ff72ce1d055c37a86e",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-07",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "44be9a822f6b3b771e90cdf46ca4a42f1c792879c968b360f649b410eb11128a",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "44be9a822f6b3b771e90cdf46ca4a42f1c792879c968b360f649b410eb11128a",
+        "retained.gray-braid": "44be9a822f6b3b771e90cdf46ca4a42f1c792879c968b360f649b410eb11128a"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-07.png",
+          "sha256": "d55e1d91ac75321bfad2c7a1ba04a41aa438a4794ab59d1cd1b337003cd3184f",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-07.png",
+          "sha256": "90992fc987e609aad7624f200d7285aaafcc3ec712fd983e87a8694742c811d7",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-07.png",
+          "sha256": "a5b4516076f95a37c335f0b45501b4b0898682fc563301e0304e27466c3fdee1",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-07.png",
+          "sha256": "cbf13e902ed54030e4ae64ca9b876d1281dbfb4c6540dc2da96fc54bb13ec2c1",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-west-08",
+      "mode": "walk",
+      "direction": "west",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "2ecded27cccb9fd53de7a95542a1a0704013622dfc3ab84db40e98a61b311651",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "2ecded27cccb9fd53de7a95542a1a0704013622dfc3ab84db40e98a61b311651",
+        "retained.gray-braid": "2ecded27cccb9fd53de7a95542a1a0704013622dfc3ab84db40e98a61b311651"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-west-08.png",
+          "sha256": "6b85317df1d2868db48da1471cef26a6a2da49ea970fb986cee934a43333b1dd",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-west-08.png",
+          "sha256": "9f419e43b8e8cddaf89fc460b1695220fc705a885566e1742245e088c0051b25",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-west-08.png",
+          "sha256": "6d0ed0af3729842d05e1bed36970f58047f600af2b8793b17435819b34a3e9ee",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-west-08.png",
+          "sha256": "736274a92c7a10939e5b989ea7cf6d3c8e2ff485bd5e005bda3464a04502775c",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-01",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "01",
+      "family": "master",
+      "approvedGeometrySha256": "75d9beba5cf129b969f3d00356ec141ebdfd408f21102771839b5612716ea112",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "75d9beba5cf129b969f3d00356ec141ebdfd408f21102771839b5612716ea112",
+        "retained.gray-braid": "75d9beba5cf129b969f3d00356ec141ebdfd408f21102771839b5612716ea112"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-01.png",
+          "sha256": "848447e5be789473a2053520ca74e87918f3d8143e97263f4e83dd0786361066",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-01.png",
+          "sha256": "9bf80e1462cf3e98ee5182e1a17dacd084b72dd57c87966e65a6ab1b0e8bc814",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-01.png",
+          "sha256": "c62bb05688dc721457376d49a729986aba029feb0cfb3ca1080338bdbe736816",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-01.png",
+          "sha256": "179de3afe9baf5abd3f971e15bb198647e3d1cad7b094d5d5eacd2e92feb72e8",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-02",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "02",
+      "family": "master",
+      "approvedGeometrySha256": "f00a1e357e33d81b7cc5344bed1a21fde8326cf768f476e9f1b6933c0b2ff0f9",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "f00a1e357e33d81b7cc5344bed1a21fde8326cf768f476e9f1b6933c0b2ff0f9",
+        "retained.gray-braid": "f00a1e357e33d81b7cc5344bed1a21fde8326cf768f476e9f1b6933c0b2ff0f9"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-02.png",
+          "sha256": "5ba62c7fbd986fa6ef36c485422671a6aa9bdef16e1c299b07e4b4846a9681ba",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-02.png",
+          "sha256": "3ed52b9833ae5ad20a6f02069fd273486832f290212e5a83a2ce56a3e271cb3a",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-02.png",
+          "sha256": "08c6ba32ddb4d24aaf0c0e5739c19a3846fc69f1ead0045f1a4c66689104c59b",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-02.png",
+          "sha256": "cc8ba948272d3357934b9694bc9befdea80e69754bdee8eb264758668a0d83de",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-03",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "03",
+      "family": "master",
+      "approvedGeometrySha256": "8f8bbd2b6efc8af8bf435cd6bf144c0b18e9be9ab80493832db9940e97aee8ba",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "8f8bbd2b6efc8af8bf435cd6bf144c0b18e9be9ab80493832db9940e97aee8ba",
+        "retained.gray-braid": "8f8bbd2b6efc8af8bf435cd6bf144c0b18e9be9ab80493832db9940e97aee8ba"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-03.png",
+          "sha256": "2f3b7e37d5daa6f903866e18308b28fa0cf2d0ac55d65f67e22703a7a063c7cf",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-03.png",
+          "sha256": "dab109d3caa7b669eeae7b8c3f352ead3b04c89245d9448066211082fca0877f",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-03.png",
+          "sha256": "ce74e92e3571d9ac23a1d2dd590f9a40857d79a6101e92e59bb4b4b78a1dddd7",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-03.png",
+          "sha256": "327e24eaf32930bd3784d4096deccaf2f7a06b53506660efc4fcb47c4ac26e26",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-04",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "04",
+      "family": "master",
+      "approvedGeometrySha256": "d744a6bb288c9bd95fa4b8e3569a449a39f09defb572ff24cbf390923954cc3a",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "d744a6bb288c9bd95fa4b8e3569a449a39f09defb572ff24cbf390923954cc3a",
+        "retained.gray-braid": "d744a6bb288c9bd95fa4b8e3569a449a39f09defb572ff24cbf390923954cc3a"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-04.png",
+          "sha256": "71a5c90f86d8f0ccae18f3ad9401ded59feeef17d5b1025df39a61d868fb4fb3",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-04.png",
+          "sha256": "b771dd9b45f557ed348d8e85054116468469bdfbd673246dbd657014a884173d",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-04.png",
+          "sha256": "00de6b3c22cf9c43d078dd1a2a1c065cead2d14f2faec8576f10d8c65b7d1843",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-04.png",
+          "sha256": "979bc4f36128553104b458c89a2fc167f92078aa2cf8bc06f82183a3fff2f36b",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-05",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "05",
+      "family": "master",
+      "approvedGeometrySha256": "c2938dd9058cf6ee0ad095357de7d8a59c363b31894918894b7bcbd6ca761914",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "c2938dd9058cf6ee0ad095357de7d8a59c363b31894918894b7bcbd6ca761914",
+        "retained.gray-braid": "c2938dd9058cf6ee0ad095357de7d8a59c363b31894918894b7bcbd6ca761914"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-05.png",
+          "sha256": "672e99e274f365f699dd529f25708973b0700a0feeb299834e2a16ea7c3a30c1",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-05.png",
+          "sha256": "4845fdad87ae1364ee395c806a470765ec7bb6d18f5ab838696c112b4652598a",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-05.png",
+          "sha256": "7cf0cedfedb6220b4e6b6b1cf479721e8454d52f092f231ff3fd9772074c910b",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-05.png",
+          "sha256": "4aafa469e527782d356b5d77029646a3885b5a0201d8c456f0e1ab4bc6d3cd4c",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-06",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "06",
+      "family": "master",
+      "approvedGeometrySha256": "db47793c9622d4471daeab5adbf04dfc3726e2051cc469a9e2e1d04070bcc1eb",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "db47793c9622d4471daeab5adbf04dfc3726e2051cc469a9e2e1d04070bcc1eb",
+        "retained.gray-braid": "db47793c9622d4471daeab5adbf04dfc3726e2051cc469a9e2e1d04070bcc1eb"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-06.png",
+          "sha256": "de2ee94e96e0b7b06d42bdfb6b843dbcce8b9d6d7313f2f111a8d621df6acb3b",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-06.png",
+          "sha256": "e87330bab2e32142492a89f8b36683961282e9db465f9fa832b1084da0e079f8",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-06.png",
+          "sha256": "d0cfdee5060cbe88a4803563f91038c98c161f7085f401c31d0e4f9e67ed12e2",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-06.png",
+          "sha256": "c08a3fd08d5430e6bfed599dcb7fa171043895e985e8ca4a09b8f616277e56af",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-07",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "07",
+      "family": "master",
+      "approvedGeometrySha256": "c78943d54e59408de78b29d1cc1c09e7b62298e39c735563368a6d6f03392ba4",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "c78943d54e59408de78b29d1cc1c09e7b62298e39c735563368a6d6f03392ba4",
+        "retained.gray-braid": "c78943d54e59408de78b29d1cc1c09e7b62298e39c735563368a6d6f03392ba4"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-07.png",
+          "sha256": "deba54017cb1abd86a6e848d76168ae691d88467437fb190cdf1692a1636a05d",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-07.png",
+          "sha256": "d416b426cbae6815b9eefdc3e86a752ceb0508019c7d9e7a15fb836fef81b356",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-07.png",
+          "sha256": "b67b8d0bddc8301ce01e82df1729a9e58b327f854022c3fc85e8760964ead939",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-07.png",
+          "sha256": "dac8ecfe4d86317b3d734706e804984b03a6c98cac06bca97b734063b9be7fdc",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "walk-north-08",
+      "mode": "walk",
+      "direction": "north",
+      "phase": "08",
+      "family": "master",
+      "approvedGeometrySha256": "a0f5047115c887115d5c5306b1cf7895bec444f1e8e993fe0421b12b34718606",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "a0f5047115c887115d5c5306b1cf7895bec444f1e8e993fe0421b12b34718606",
+        "retained.gray-braid": "a0f5047115c887115d5c5306b1cf7895bec444f1e8e993fe0421b12b34718606"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-walk-north-08.png",
+          "sha256": "6b70dcbb2c7e303fde076f469762296d355017a6caefc587e5a1fd3a6eb49d43",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-walk-north-08.png",
+          "sha256": "6eb718c7c1e7036d83758d426439951bffc44f3bac2029a8a501ff50ad8f391a",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-walk-north-08.png",
+          "sha256": "3a253fb9d334ef5a3fe57421536ead76d07b1d55a2a8104058230f71da4b5b27",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-walk-north-08.png",
+          "sha256": "9d3eeb01470a3a10c2ee6fc59da2fadb4572234b9e921cf414841abc94095f97",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "standing-south",
+      "mode": "standing",
+      "direction": "south",
+      "family": "master",
+      "approvedGeometrySha256": "a5c375b58065ac53e7ad8d084ff37a7da44d2bb394255c82e75ee58b574e4a6f",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "a5c375b58065ac53e7ad8d084ff37a7da44d2bb394255c82e75ee58b574e4a6f",
+        "retained.gray-braid": "a5c375b58065ac53e7ad8d084ff37a7da44d2bb394255c82e75ee58b574e4a6f"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-standing-south.png",
+          "sha256": "717df221c7dcfe41731d5d669c6694c797e76409922be8cc2cbb94571b901b47",
+          "width": 240,
+          "height": 310
+        },
+        "gray": {
+          "file": "raw/gray-standing-south.png",
+          "sha256": "0d5f2fe12512a2c0c20e0c1a0fb26c5972224ae52f4572c2ccada968a0265ec5",
+          "width": 240,
+          "height": 310
+        },
+        "neutral": {
+          "file": "raw/neutral-standing-south.png",
+          "sha256": "10b94aaf942901f15cc28458eaa6f56acf65186e99c721b98d58061b75da352a",
+          "width": 240,
+          "height": 310
+        },
+        "guide": {
+          "file": "raw/guide-standing-south.png",
+          "sha256": "ae8300c50306069255bc24d05653c00fcf38ca9b2617b7c96efef112f49a9b98",
+          "width": 240,
+          "height": 310
+        }
+      }
+    },
+    {
+      "key": "sitting-south",
+      "mode": "sitting",
+      "direction": "south",
+      "family": "action",
+      "approvedGeometrySha256": "d71ea727a9d1bcc35a388475b88e6ef5179b463d9a313992dbeb13abe5e53130",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "d71ea727a9d1bcc35a388475b88e6ef5179b463d9a313992dbeb13abe5e53130",
+        "retained.gray-braid": "d71ea727a9d1bcc35a388475b88e6ef5179b463d9a313992dbeb13abe5e53130"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-sitting-south.png",
+          "sha256": "ee4e34f051b6022d3ce34f838c5f8597e6226f0c20d71c1ae6a288bfad7ab617",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-sitting-south.png",
+          "sha256": "f40d3afffd3f35869976b78f1b2531172b511db2c7248bd131177723d6b75ca8",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-sitting-south.png",
+          "sha256": "0703bb53f13b0edb972997d9b220adb0a99aa43f6c16a5ead3a95b14dc5bfd2b",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-sitting-south.png",
+          "sha256": "ca0bd738c86045a8d1cc618a53b60f2be2b486678da79469f228ecdf9e9ed181",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "sitting-east",
+      "mode": "sitting",
+      "direction": "east",
+      "family": "action",
+      "approvedGeometrySha256": "67bd61006e3188bcf30866f12a127922dea05aa070db02cdd972017c59644714",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "67bd61006e3188bcf30866f12a127922dea05aa070db02cdd972017c59644714",
+        "retained.gray-braid": "67bd61006e3188bcf30866f12a127922dea05aa070db02cdd972017c59644714"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-sitting-east.png",
+          "sha256": "8311a66267c9dd3d1672dacef84aee3a63e944729e68c3066820eb4dcec88f0c",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-sitting-east.png",
+          "sha256": "5b76903aebc53c2b9ba7e14e9e14bf4c2fa327c5acd07c653671c550459cec1f",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-sitting-east.png",
+          "sha256": "3db3062030d5abf4efb339356772a8ace03074701f71cd4471c9104f3dbb8264",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-sitting-east.png",
+          "sha256": "41873acbf016f06d8e13ff95e1249d2a453e3646a5f45763fc4e7392ffda4b95",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "sitting-west",
+      "mode": "sitting",
+      "direction": "west",
+      "family": "action",
+      "approvedGeometrySha256": "6e4314674d35d35b0f8f5d2fb300bf0607a862c62a1ef0d6dee262af02cdbdcf",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "6e4314674d35d35b0f8f5d2fb300bf0607a862c62a1ef0d6dee262af02cdbdcf",
+        "retained.gray-braid": "6e4314674d35d35b0f8f5d2fb300bf0607a862c62a1ef0d6dee262af02cdbdcf"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-sitting-west.png",
+          "sha256": "c728b685fdcae96367ce46ba352ba227efd0b73f9a6a3f46d724b2d99fefea28",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-sitting-west.png",
+          "sha256": "2d9ad8191fe405db7f5b6f20e6479b842d8f318643e9ac4ef4cb232fdc16b0b4",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-sitting-west.png",
+          "sha256": "a492a3d9bbc8f62396b4035f8c29b0e695dc5e5c24f422566734aa3628688696",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-sitting-west.png",
+          "sha256": "70afd70f85d1d6fa6a8ced11d4882c89fd03844d507c742a4582e6d9ff13586f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "sitting-north",
+      "mode": "sitting",
+      "direction": "north",
+      "family": "action",
+      "approvedGeometrySha256": "7eaa62de2bcb0bb37f33f76bd5440338e15955737bb2617d903e85e26b5afbd8",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "7eaa62de2bcb0bb37f33f76bd5440338e15955737bb2617d903e85e26b5afbd8",
+        "retained.gray-braid": "7eaa62de2bcb0bb37f33f76bd5440338e15955737bb2617d903e85e26b5afbd8"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-sitting-north.png",
+          "sha256": "871ebc49cc1c6b9954a305b33ce72584203860969d0630065d764a0c6130c50b",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-sitting-north.png",
+          "sha256": "80d9a0645492808232210dfaf5c8cacd7aca173dfdbfe050f4adcf341534e412",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-sitting-north.png",
+          "sha256": "089c483147007a97e292a4d439542f04816371841ee9ee9aa81a7c3b5eb4c0b7",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-sitting-north.png",
+          "sha256": "c2b355ffda2d28272d9c4a15f80f22371bb033a183e4f99af302ea7f9d047798",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-01",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "787b663badcbc8bece63252feaa04f3471c68b0ada7dbb13a87d806005881b53",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "787b663badcbc8bece63252feaa04f3471c68b0ada7dbb13a87d806005881b53",
+        "retained.gray-braid": "787b663badcbc8bece63252feaa04f3471c68b0ada7dbb13a87d806005881b53"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-01.png",
+          "sha256": "8c0c41a2064e9407c2294be7315d2a4ad4887e82b3049fb0130fb56d5c2e2e02",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-01.png",
+          "sha256": "39b0c6afd7a9ee8594830201ba7c103081e35f9e1d003b173ec35e893e557ae9",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-01.png",
+          "sha256": "1d44a5fa2dc537d9dc80f5710566a90b0fa79462cf4fad2c556e50061ea67e73",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-01.png",
+          "sha256": "35143fa3774c540348add724920cd2838fc59ec5a999addac18dbc6e9543b138",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-02",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "060477419869cd864cfe2ab4ed18d370b23cc98201b262211c80fa8feb115619",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "060477419869cd864cfe2ab4ed18d370b23cc98201b262211c80fa8feb115619",
+        "retained.gray-braid": "060477419869cd864cfe2ab4ed18d370b23cc98201b262211c80fa8feb115619"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-02.png",
+          "sha256": "c1f88e58186efdd533ee9fe38509120952825da01f6f7166659f38d6d08339a9",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-02.png",
+          "sha256": "48e6e6b1b7930240948ff786bdcaa787187a9c9aeb1a0f59ebee06cfa5ae2dd9",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-02.png",
+          "sha256": "c34d613c1262431c36e6cf0b9ea75adf78bf8b07336656e2350ec8ba8ca397ed",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-02.png",
+          "sha256": "121d790c8f4617f1bc966076419a8629e5098d8bbbc0a9fe9de1f51c65920b29",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-03",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "8734623c8233d73ddfc69d9e9351047abf57e3aef032b0e1f0b907d74a844a67",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "8734623c8233d73ddfc69d9e9351047abf57e3aef032b0e1f0b907d74a844a67",
+        "retained.gray-braid": "8734623c8233d73ddfc69d9e9351047abf57e3aef032b0e1f0b907d74a844a67"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-03.png",
+          "sha256": "55a142b5bf785848133eb8831bf05cd6a49fde0586508c8831e87f9ec44774d8",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-03.png",
+          "sha256": "d1a41e309f19997896773be1298e1fa756838c39299faa921409b2b051d2194b",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-03.png",
+          "sha256": "188151a62e2eb7e89e7f53d0ca82177e0ad5aa36c481cc9bb8f93f3069f24306",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-03.png",
+          "sha256": "4f56c89b32d975958e69976fb78e3d497dccf78a4ac6ec97fa43bb9070c9c470",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-04",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "f12cad2579fb1f334747a2a96e1dd4a1bff307931a38ebe6415a7702f735458a",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "f12cad2579fb1f334747a2a96e1dd4a1bff307931a38ebe6415a7702f735458a",
+        "retained.gray-braid": "f12cad2579fb1f334747a2a96e1dd4a1bff307931a38ebe6415a7702f735458a"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-04.png",
+          "sha256": "1275ad4de39d85b625353caf55071b1ae5409e8dd98a2bed52f803c355abf5b3",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-04.png",
+          "sha256": "2828982c3929b3a2b8ca8fdec931cb8fd7834355d1a20eedb4c70eaa10a92d94",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-04.png",
+          "sha256": "c62dcedc341346591f19274270a2bf651de49ba6fc8342463fdf9184f14a9beb",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-04.png",
+          "sha256": "8aeff86aabb7c501fbe171aa64bcbc00d4f09b8e973444498854a09a76afea16",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-05",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "2d4bf41f898b46545672c83af8879524eec1e4d8629bb90cb0c17c2c0846b87f",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "2d4bf41f898b46545672c83af8879524eec1e4d8629bb90cb0c17c2c0846b87f",
+        "retained.gray-braid": "2d4bf41f898b46545672c83af8879524eec1e4d8629bb90cb0c17c2c0846b87f"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-05.png",
+          "sha256": "91fdce53891fa51388ee1559992e48f58ee047367afca8d9d1f042b926bdc1e5",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-05.png",
+          "sha256": "b87f1dce6ee1980fe81417c00fe795a6949050d79c3ea8e412ab107d6f4adc5a",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-05.png",
+          "sha256": "f45218d142f1185223ad2d5b3f057c06326ce671245fc5fdb016363f28c3151a",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-05.png",
+          "sha256": "679df2a52ef51d6d4f1a364f93f7ea228eb4fdccc48cf43ae27611fccf9b314e",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-06",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "bc3d64a9ddc12b53c387735788f9152f74e9cba5abbf49b1b2982061190ff1fe",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "bc3d64a9ddc12b53c387735788f9152f74e9cba5abbf49b1b2982061190ff1fe",
+        "retained.gray-braid": "bc3d64a9ddc12b53c387735788f9152f74e9cba5abbf49b1b2982061190ff1fe"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-06.png",
+          "sha256": "4b3eeb492eaad282b760bde902ddf809f5946e4015f3c21a5c4490f82a862e56",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-06.png",
+          "sha256": "e9979af757a15647f24109060d4a3de530956d3df0edf5e9934efd57399e7cd0",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-06.png",
+          "sha256": "fdb260a8a517d90dfea46283277b05da899f25feba9ac42a19b62544e06f49e6",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-06.png",
+          "sha256": "706b0fe86ec0ad37c023f7db7ea52b8051845efdfa963ad0b5df7b7c7ad714d9",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-07",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "f796ca17eae12223a13259727fc86de499b6e3a0e83d073eaa44c5397c0ea87f",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "f796ca17eae12223a13259727fc86de499b6e3a0e83d073eaa44c5397c0ea87f",
+        "retained.gray-braid": "f796ca17eae12223a13259727fc86de499b6e3a0e83d073eaa44c5397c0ea87f"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-07.png",
+          "sha256": "a5b37ce1cc9d2b0b776e915053fcec7c5985e77ad8cabd3c602b766f647d0213",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-07.png",
+          "sha256": "e96df2193f1bde82d52ea021a01e73f8d5ffcce9db9f98dd2710fde0031948fe",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-07.png",
+          "sha256": "a96365af2e98e51d7743aaec4a8c522062de7aece69afc1a54df6b77a625f014",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-07.png",
+          "sha256": "027db2dd140d41efd3755c88311ba9b6a9ca7f186318f2d2b23f2bf505727516",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-south-08",
+      "mode": "jumping",
+      "direction": "south",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "26f1fbf58aa7cbf54b09a3675553b1b64372643056040aa4dfbe963a0e62631a",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "26f1fbf58aa7cbf54b09a3675553b1b64372643056040aa4dfbe963a0e62631a",
+        "retained.gray-braid": "26f1fbf58aa7cbf54b09a3675553b1b64372643056040aa4dfbe963a0e62631a"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-south-08.png",
+          "sha256": "325d07bb090e1a4e61aeaaeeaf32d2617de348aea77f967213d63c7825788fa8",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-south-08.png",
+          "sha256": "66e3326235668a0aacb2c9b062d4b39ce4b21d59f14d98541a28112f5256f4e5",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-south-08.png",
+          "sha256": "287398b6ba00f057d9b3494a32573a10e83be9e7fc3b90f01a93bc2476e0b527",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-south-08.png",
+          "sha256": "64ad4cabe2661dc76a9afac6d7a6d10cb63fe86096876056e222f43cb60c4b25",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-01",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "05aa53df4ed25285191414c02b6c866e481e241826126faf2d415ca3f8472f2e",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "05aa53df4ed25285191414c02b6c866e481e241826126faf2d415ca3f8472f2e",
+        "retained.gray-braid": "05aa53df4ed25285191414c02b6c866e481e241826126faf2d415ca3f8472f2e"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-01.png",
+          "sha256": "908b854c65d3f24a35c128cf13a302630b9608a566e27468854286f263219d86",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-01.png",
+          "sha256": "05bc8e87ab9a1541c83582bbc5f7fd66fde1d570ef15403306f2e9bc2bc3810e",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-01.png",
+          "sha256": "4fd84cf4b38b26d8d5b478764f4199827d42d7f6386f51e7626509b86761bc31",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-01.png",
+          "sha256": "603d21a0391a5dfcebb4c96e0b0b948e652a7d8655a77cdc85884745592764aa",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-02",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "f9454e5be1387c785f037d52e280799c32cb109acbf1dc99b119d481ced420c3",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "f9454e5be1387c785f037d52e280799c32cb109acbf1dc99b119d481ced420c3",
+        "retained.gray-braid": "f9454e5be1387c785f037d52e280799c32cb109acbf1dc99b119d481ced420c3"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-02.png",
+          "sha256": "15f00232bfc133bb75a3fe46e9d495b4cbdabdfd0b1aebd5c1eeb8ee3e2dd317",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-02.png",
+          "sha256": "69e4ec8edd97cc0c78f43df8cad0c6f8e7dc415b8ae370cb5dcc577c84d5b0d1",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-02.png",
+          "sha256": "62abde261a6771df6144f18469e94321a090b588e3e5acf97ea76502353f18c2",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-02.png",
+          "sha256": "57b3387b7ba79d2c193e25004b5b77b97b2ddf7f67022dac7c9db590641b7be2",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-03",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "90f1cd43e10d49464d6b4398b5a517d015e8e8c1dbb3df26c558149f859d7f5b",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "90f1cd43e10d49464d6b4398b5a517d015e8e8c1dbb3df26c558149f859d7f5b",
+        "retained.gray-braid": "90f1cd43e10d49464d6b4398b5a517d015e8e8c1dbb3df26c558149f859d7f5b"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-03.png",
+          "sha256": "2c8f3b300527a78550c7ba329ef4601c8ebca9fcb48ec9d0831dc80290fbed32",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-03.png",
+          "sha256": "9b5153eb568b5a547b905596036fa6cb27bb272e2311e7e6089e19a43c4df25b",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-03.png",
+          "sha256": "9935563d6ab0afc35d8391d120cc3d10319df13e7a560a99f8b0098690c54ae6",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-03.png",
+          "sha256": "c41b24ce58560c6fec5301e48dd98d4c92dfb350c64975401bea531b4110132f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-04",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "20f38c38c9a87cb9c8cda90037b05a01dfddf55e03b711ff34e7f1af9c4b48cf",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "20f38c38c9a87cb9c8cda90037b05a01dfddf55e03b711ff34e7f1af9c4b48cf",
+        "retained.gray-braid": "20f38c38c9a87cb9c8cda90037b05a01dfddf55e03b711ff34e7f1af9c4b48cf"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-04.png",
+          "sha256": "f4e4d6ec361edb426d263a3682cd3619552664038fb2a87cfe38f85e2a3b06e6",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-04.png",
+          "sha256": "1414093ea2b063ba50229d01a84bbaa52549bb8a1e610f80c3e7b2887909a894",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-04.png",
+          "sha256": "105bd8fb5920440379de220e22f975db48dc4a5eba7366d007d57f718b179019",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-04.png",
+          "sha256": "51040db4892741f6d83d78a4011c0b274446969bc237ffc6707ac86d98e5db67",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-05",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "d12410258e6931e436905a9f109bfc0d20620604ae62daaa828ff33c48056717",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "d12410258e6931e436905a9f109bfc0d20620604ae62daaa828ff33c48056717",
+        "retained.gray-braid": "d12410258e6931e436905a9f109bfc0d20620604ae62daaa828ff33c48056717"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-05.png",
+          "sha256": "cfc14f7f2f525d748d828b0a815eb4a2694ced87bcd22316cc1c5bb4e5c076a0",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-05.png",
+          "sha256": "d4d878b51423fa9c72e36c08e52f77c92872c323953ad38fb55e6d94e56e4f58",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-05.png",
+          "sha256": "153f247acaca65fc57b44d9c70868e5025a9955ceba20370f9d347cb4b056481",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-05.png",
+          "sha256": "5fedd7cde7b11fe8273b85c5315854aad98775365d8cd13628fe22e270204cc4",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-06",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "60c1cf37a280ef2fd957f915d5be4c8a799c4089b0064264b740bdf4098bec52",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "60c1cf37a280ef2fd957f915d5be4c8a799c4089b0064264b740bdf4098bec52",
+        "retained.gray-braid": "60c1cf37a280ef2fd957f915d5be4c8a799c4089b0064264b740bdf4098bec52"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-06.png",
+          "sha256": "5c637c3da5dc51325fe22d96b8e1b9c43c2aa7d29091ba70ad600f916109769e",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-06.png",
+          "sha256": "3d6cf44894e0f543d67a6f27f0e3901688ec94d87c52b0c3be6ca87423846794",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-06.png",
+          "sha256": "c5bdee472faad6e6d25d470e939229d0f2949701ca7d96797ec6da67ef225f91",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-06.png",
+          "sha256": "f51a6df0575be06ba51700e7aa8cba599c78146178f842b603c0b410d14f9fa5",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-07",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "f8058b7cf7937b414f23817dfc2b96b9eae6ba6d671df6fa5b048a7820a32784",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "f8058b7cf7937b414f23817dfc2b96b9eae6ba6d671df6fa5b048a7820a32784",
+        "retained.gray-braid": "f8058b7cf7937b414f23817dfc2b96b9eae6ba6d671df6fa5b048a7820a32784"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-07.png",
+          "sha256": "32180d641522e0c6ff91ea55c20111beabeb5c157c8f24afb19ed8aed20bbecc",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-07.png",
+          "sha256": "02b3bd97d1db5afd8f4804a017f17529bcc44dea78a1614e272e5d88030d6dfc",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-07.png",
+          "sha256": "195a16729f0fd9ee32dfc3832007040a0e427bce1463acb23dddf703fdd94732",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-07.png",
+          "sha256": "d2d129509c05586512a462dfec4b6a8f075fa31c12919dd8cbaaf9ddc4a7c180",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-east-08",
+      "mode": "jumping",
+      "direction": "east",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "2d28f445894c11a72f897f377b01d09950c8af641dd7b44eff267863befa6e8b",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "2d28f445894c11a72f897f377b01d09950c8af641dd7b44eff267863befa6e8b",
+        "retained.gray-braid": "2d28f445894c11a72f897f377b01d09950c8af641dd7b44eff267863befa6e8b"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-east-08.png",
+          "sha256": "8b889cdc410638baab359092e9626a01d67f8ce58c1dbb1e37e2ef2bd4787a72",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-east-08.png",
+          "sha256": "52dae8eda20226b40dfc73e6c9e106aab018846e75fe16f76abbe02ce99daea2",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-east-08.png",
+          "sha256": "f6370a1b23f9f90dce623f580111614e65c0d3b4e7489b9132f267429ff28a73",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-east-08.png",
+          "sha256": "0d40a72c9f828fbaac4bf275afeea7fdd1e630018c294853b4776d402baa7baf",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-01",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "05d91f9d5e2f130374d6d7c85e5959d36433d9aba7ba56142b723327ba876bb1",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "05d91f9d5e2f130374d6d7c85e5959d36433d9aba7ba56142b723327ba876bb1",
+        "retained.gray-braid": "05d91f9d5e2f130374d6d7c85e5959d36433d9aba7ba56142b723327ba876bb1"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-01.png",
+          "sha256": "d4e07616b9a72cc55027c20bd4e93285cb2c46d10dd42c9d95f664fc31e68456",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-01.png",
+          "sha256": "992920c423d86cab71f22f4a737105bb24e53007139ca496ca2cc31d7e767def",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-01.png",
+          "sha256": "a46748f99419cdc75b3a40d394158c173149bc69b9cc55c27278c4dc1279ddb3",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-01.png",
+          "sha256": "dff717b75ce9ebf669f3c4b64780b71bb959294a996529ce9bc4522584b7a34d",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-02",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "e4c2f3f890ba29b2e1dc478dc717d013fd12eb9e3b9aff83697390e8765d2bff",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "e4c2f3f890ba29b2e1dc478dc717d013fd12eb9e3b9aff83697390e8765d2bff",
+        "retained.gray-braid": "e4c2f3f890ba29b2e1dc478dc717d013fd12eb9e3b9aff83697390e8765d2bff"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-02.png",
+          "sha256": "09dfc1a06f1b83ef9ac54b501b2e2bf34deabc678616584cfed2d70bfcedf6fa",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-02.png",
+          "sha256": "2a605c7b02c1fd0300130faf05df11bf426182c957ab3f157c053370803aff96",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-02.png",
+          "sha256": "c6edc46413555b80767f802691315d0dbe59f2f236265f9197ee64328b059b6c",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-02.png",
+          "sha256": "eb4ca1c7ec595aaf2fb2d150825616dc1f5fca9317fda7115bf12f9f78d8b341",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-03",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "6818aec9e41f2f4f01314087738d077c860c98ba2ddda140a7d57faae3811489",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "6818aec9e41f2f4f01314087738d077c860c98ba2ddda140a7d57faae3811489",
+        "retained.gray-braid": "6818aec9e41f2f4f01314087738d077c860c98ba2ddda140a7d57faae3811489"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-03.png",
+          "sha256": "34eea550d190d51592dbc7b21b5a04b11773420a29c3b0e66b37cc2d56938ad8",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-03.png",
+          "sha256": "0f13b815e368714dcaa18348c9ff0d6b8ccb1889f6ce768f39bb27c15da2f290",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-03.png",
+          "sha256": "b181506dea188944aeb1e17d9901d34bb6717e06d2cd51bdd6719eb631a36f33",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-03.png",
+          "sha256": "0d868e2491f3cfc0e031ceb2ac5729f46360d706b236b7f27d35f7a33f82d4cc",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-04",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "7a7e16e60dc01c08c5378a10ad2ee445277c86259146f7ac2fefa363ac497c26",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "7a7e16e60dc01c08c5378a10ad2ee445277c86259146f7ac2fefa363ac497c26",
+        "retained.gray-braid": "7a7e16e60dc01c08c5378a10ad2ee445277c86259146f7ac2fefa363ac497c26"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-04.png",
+          "sha256": "0576013a502c1d72826f65774ad0f97a8e659e1ff2f6ab0c29c4f8781caa61f4",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-04.png",
+          "sha256": "db5bfde15509aeae780b40a470811913cbefd2f75c44673501f1b6dee524c710",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-04.png",
+          "sha256": "ccdca19f76003cdeafedcaed5c7959341c3976dc9946ea32e4ca8268b53618d0",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-04.png",
+          "sha256": "02bb9d24fae018845de5a6b358733b724640c96ff08bd6bd3dd2412bff25ea4f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-05",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "d4dca2bd48af56a66bcf48069818846a8820123b4e2f9b2dd15b6a69d611224e",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "d4dca2bd48af56a66bcf48069818846a8820123b4e2f9b2dd15b6a69d611224e",
+        "retained.gray-braid": "d4dca2bd48af56a66bcf48069818846a8820123b4e2f9b2dd15b6a69d611224e"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-05.png",
+          "sha256": "c711acf261b06147559eb3209351dec2be19aa01fbbf0a7cb8fc25f384ca0224",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-05.png",
+          "sha256": "d9bb07ccef80d71a53d7fc005684ae7a341781f6f06c29e23ea2f1adf57ea904",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-05.png",
+          "sha256": "e1ea45238a129b7fccbe04e627da3f6a346eda3204ac7c30105c307281e94819",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-05.png",
+          "sha256": "caea59e3ea7bcb3239aaaac890927c708e33ad082d34677a14728373f4ed9af4",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-06",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "619518781ebaf3ae1454bba84457e94c03b7ae7eeda82cf6f7f9bfaec29f77cd",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "619518781ebaf3ae1454bba84457e94c03b7ae7eeda82cf6f7f9bfaec29f77cd",
+        "retained.gray-braid": "619518781ebaf3ae1454bba84457e94c03b7ae7eeda82cf6f7f9bfaec29f77cd"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-06.png",
+          "sha256": "6b6e9b009d35020713635d3f379f4c50868dae95f7493aef4461527381683461",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-06.png",
+          "sha256": "a9a700fb4440540a57352912a9f4f44e6ebd8f793f7e06463fab82efa3203f30",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-06.png",
+          "sha256": "fe2409a1d09ad7e0aac873a279cf66f42fe44f916cc250edfdf5675c0ddbbfdf",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-06.png",
+          "sha256": "bb81ea00394d8c2b3eabe6f0c50c78a2e53a04f993666ca42d2344c4ef96eb10",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-07",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "8f0b4472f5931e3f827928538c9f6bdeaa1ef14aa375c440dc03754655bdadad",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "8f0b4472f5931e3f827928538c9f6bdeaa1ef14aa375c440dc03754655bdadad",
+        "retained.gray-braid": "8f0b4472f5931e3f827928538c9f6bdeaa1ef14aa375c440dc03754655bdadad"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-07.png",
+          "sha256": "de2380e4990cf5f3f62a5e0dab60c4034960855ef1bdfc356313350b3847c109",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-07.png",
+          "sha256": "4907df6b58621371ddb3b81a399d195154ebca7d41e591bfc3cad07888dc2f3d",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-07.png",
+          "sha256": "0e45d550dda980fd7e4aacae9a847175c3af5b5295cc0560dd809b84d673ae61",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-07.png",
+          "sha256": "fe52fc3d458ec5681a4b87c89b80b99f0480fec615d52a13a8b23f96660f1c20",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-west-08",
+      "mode": "jumping",
+      "direction": "west",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "4b77889ab407d5b678b9df1ce01e2beb89b78585ddd287252a37552779f546e5",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "4b77889ab407d5b678b9df1ce01e2beb89b78585ddd287252a37552779f546e5",
+        "retained.gray-braid": "4b77889ab407d5b678b9df1ce01e2beb89b78585ddd287252a37552779f546e5"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-west-08.png",
+          "sha256": "3e4a67c163678c68ac0c1f546cbfbf7a834da1f6e1e7ae8c51525e6872b5a153",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-west-08.png",
+          "sha256": "e5d24179d2e5399d25af3121351b48c937666d7313d8204ba0e050ed8da4a527",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-west-08.png",
+          "sha256": "35d507bf680b2ea38a4ba4ec423636da580ba5d706f13b8cf44e57c6de52d4d0",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-west-08.png",
+          "sha256": "441f06a4c0e554ad0f7352b2afaf7c391d8e64e83cf65858dec66cbdc09902bf",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-01",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "01",
+      "family": "action",
+      "approvedGeometrySha256": "53d336b8dd136d8a82f9860bef01f585f12636d77567b34be069953de60e5469",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "53d336b8dd136d8a82f9860bef01f585f12636d77567b34be069953de60e5469",
+        "retained.gray-braid": "53d336b8dd136d8a82f9860bef01f585f12636d77567b34be069953de60e5469"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-01.png",
+          "sha256": "a855eefe08e2f68eb25afd1f64dd51d88d77e811b96edcda7bbffba273daa162",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-01.png",
+          "sha256": "36a088c886a084acdc289050a16ae6438995ee792e128c6c324ba0d3cdfd4a4f",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-01.png",
+          "sha256": "5da53931770bafb2f6dfc96cd98a59fe01a677909c6684b44340637ed15d3cd1",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-01.png",
+          "sha256": "c7394cf763749b805b2765c5fb327ac49bbf9bebc011359d6f7b3c2434030055",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-02",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "02",
+      "family": "action",
+      "approvedGeometrySha256": "c480887a355d3d568ee211a847628970c6e3721e4a8a185148d7f2d9b7deb58b",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "c480887a355d3d568ee211a847628970c6e3721e4a8a185148d7f2d9b7deb58b",
+        "retained.gray-braid": "c480887a355d3d568ee211a847628970c6e3721e4a8a185148d7f2d9b7deb58b"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-02.png",
+          "sha256": "3963886caa7bc4ad4ad93d5de0dce70da62afddb925db00d4ac2873b944abb89",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-02.png",
+          "sha256": "807089c7d9641413762b428ddb99bdbd8a15002af6aad107342e47f5a2df88f2",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-02.png",
+          "sha256": "bfeabc1e57251f5291a8d855c11ca4254ca481e691c4d643f9c0b7d9e0286c4b",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-02.png",
+          "sha256": "349dc1301b9a26df091ec106cc42392d37043d2ec6f0b849e7f056653d928a1f",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-03",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "03",
+      "family": "action",
+      "approvedGeometrySha256": "ea0dbe125592329797060c086619883f6e7ddabac4cb61f97394c1fece8bd078",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "ea0dbe125592329797060c086619883f6e7ddabac4cb61f97394c1fece8bd078",
+        "retained.gray-braid": "ea0dbe125592329797060c086619883f6e7ddabac4cb61f97394c1fece8bd078"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-03.png",
+          "sha256": "596bfa07e2bce93f5160b3f7fd13e5a084bf765be68b073c9e9ba0a497cb81a0",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-03.png",
+          "sha256": "3d7a08f08160bfda2c6744c43902f13311dc6da47c0611fa914e4257dc140d73",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-03.png",
+          "sha256": "31f9a42bc3b31fc27e65e6b0f3bf455a37d4244bfbf30143772165e5b18127bf",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-03.png",
+          "sha256": "74f51ec678b1e3da43ea41f99bf768fdae3d0c12ea47a59c2b5a219413b33ce8",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-04",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "04",
+      "family": "action",
+      "approvedGeometrySha256": "ef09fc76b99134213ad49d13762dbb68badcfe92df6301f9dbb840f35cc77f4d",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "ef09fc76b99134213ad49d13762dbb68badcfe92df6301f9dbb840f35cc77f4d",
+        "retained.gray-braid": "ef09fc76b99134213ad49d13762dbb68badcfe92df6301f9dbb840f35cc77f4d"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-04.png",
+          "sha256": "db88fd70468e0e7eea12383a18105d9f661ecc39a13659a7003a9297cf3a4b45",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-04.png",
+          "sha256": "8b0f666eb32cf19c05853e26318f25ff2324f30d920b3f8426e3739ae094871f",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-04.png",
+          "sha256": "b43c28403f55200d8307d7802890acdcad3652e29af0ecb1861409a6b9db3b1c",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-04.png",
+          "sha256": "c413e02468fe5eb14641e745eb0688608d82fa015d76d1f3aadd86386296f044",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-05",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "05",
+      "family": "action",
+      "approvedGeometrySha256": "a90cad30b885f29c881e2f5e2656354c3ae1904f1ef3c4a1519cbf3cb4c0686d",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "a90cad30b885f29c881e2f5e2656354c3ae1904f1ef3c4a1519cbf3cb4c0686d",
+        "retained.gray-braid": "a90cad30b885f29c881e2f5e2656354c3ae1904f1ef3c4a1519cbf3cb4c0686d"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-05.png",
+          "sha256": "76705138364302497ae6625dc44aa27be88091250e6a833f5762214829184725",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-05.png",
+          "sha256": "21fc74045f76c5d0b9b6c190c1f19507c7a707bbf3c08fd170367f265c19e0eb",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-05.png",
+          "sha256": "4d36e2605b585d4fcd066a60e1b404839ebb06b07105ce4efc655d80b01504f1",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-05.png",
+          "sha256": "5b626006a94373125fd122448fc40dd3a9b75bb0ed6dbbbe5ffb3c9fb0fc6bcf",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-06",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "06",
+      "family": "action",
+      "approvedGeometrySha256": "da6626d2ff001b06733af43a5743391640881e38514629cd9bc6a947b95d5878",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "da6626d2ff001b06733af43a5743391640881e38514629cd9bc6a947b95d5878",
+        "retained.gray-braid": "da6626d2ff001b06733af43a5743391640881e38514629cd9bc6a947b95d5878"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-06.png",
+          "sha256": "145c9dc48787cfe9c168fb553812dade6b805ab1232c64cba65c8061ff740eed",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-06.png",
+          "sha256": "1a058e671cb572313dddc70c664023ed20fe1c519f61cbba834e96ea63513d81",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-06.png",
+          "sha256": "2a3b63712c0f132d55b11ddfe46bd2aeb0527f40b8b370b491c56898cba6ed69",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-06.png",
+          "sha256": "16e9d5cde6a936d15e8bad4ce9c0a868e28b1f61c3ab600300ee68263422e158",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-07",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "07",
+      "family": "action",
+      "approvedGeometrySha256": "e48d8996c96a995e587c4563b9f93246b2853f801716ada2f4b0471c0ecef319",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "e48d8996c96a995e587c4563b9f93246b2853f801716ada2f4b0471c0ecef319",
+        "retained.gray-braid": "e48d8996c96a995e587c4563b9f93246b2853f801716ada2f4b0471c0ecef319"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-07.png",
+          "sha256": "01faa66f5011e74143231f6fe4f58c0af3c3bc0e4b7b80c78ee7d98267e748cd",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-07.png",
+          "sha256": "95e7305963d25d99aba5dbb23f68710881165d51c0b60c7a45a1ce103c068284",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-07.png",
+          "sha256": "9fb8ddee80eff2ddcccc546ecc7f90e008696c0322033023cbdefb8817f8d496",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-07.png",
+          "sha256": "01be4eb51d1e60f12e5cfdd481b57caa4ec44495271ed228ec4f80fbb10b669d",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "jumping-north-08",
+      "mode": "jumping",
+      "direction": "north",
+      "phase": "08",
+      "family": "action",
+      "approvedGeometrySha256": "b7a78a8f41897e42fae4baa88d5e2280ff819510c70194f1c3d8de3f0876e7a0",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "b7a78a8f41897e42fae4baa88d5e2280ff819510c70194f1c3d8de3f0876e7a0",
+        "retained.gray-braid": "b7a78a8f41897e42fae4baa88d5e2280ff819510c70194f1c3d8de3f0876e7a0"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-jumping-north-08.png",
+          "sha256": "4b15738c521a68dc4cb2a430596b73ee580186d3487039f9c0a03d94f12d719a",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-jumping-north-08.png",
+          "sha256": "8e0934e4126fab3229777d6c60bdc19bc1c35978f7b4632c4c63c326ab2fd3e7",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-jumping-north-08.png",
+          "sha256": "eaab86cdf940ec416b2b00217ca2083158ccd144e3b09c0eda19fc9dfad7b79d",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-jumping-north-08.png",
+          "sha256": "76df72b749054880abd6eef593b8215623d55845d2d10399887ba8d0af9963c1",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-south",
+      "mode": "clipboard",
+      "direction": "south",
+      "family": "action",
+      "approvedGeometrySha256": "bc38810232b2188f0dcb3ec5e566624b7481b3a57c22a2c0dc1eeb06b49aa22b",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "bc38810232b2188f0dcb3ec5e566624b7481b3a57c22a2c0dc1eeb06b49aa22b",
+        "retained.gray-braid": "bc38810232b2188f0dcb3ec5e566624b7481b3a57c22a2c0dc1eeb06b49aa22b"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-clipboard-south.png",
+          "sha256": "ee8cce9c924ea86cc7c82471105857b16b62321250d1bde9b685ad4fe372c4b0",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-clipboard-south.png",
+          "sha256": "1f5456b2f0a14f84b0f564a7db75e19c062ec55862db068e5226cd38a6d4441b",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-clipboard-south.png",
+          "sha256": "673e56b1ee06e992fe7cf3107d1ac269aa3cf31fc1f94ee833cc8213215a844d",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-clipboard-south.png",
+          "sha256": "34cc448519df506fc7b2e0bd176207852dc56fbfc4134f0831e2d228cd7a060a",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-east",
+      "mode": "clipboard",
+      "direction": "east",
+      "family": "action",
+      "approvedGeometrySha256": "b1a138fd1dc122744eddae9d61bb27c18040b9726c722d481fa63978d3602b0d",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "b1a138fd1dc122744eddae9d61bb27c18040b9726c722d481fa63978d3602b0d",
+        "retained.gray-braid": "b1a138fd1dc122744eddae9d61bb27c18040b9726c722d481fa63978d3602b0d"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-clipboard-east.png",
+          "sha256": "72b45afe6a11e1bdacfff13c5eeb3a5d3bc0f02096d8df7b8ae0f4bb04167d9f",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-clipboard-east.png",
+          "sha256": "7b907d30ce8497de633ca436c12e904240af732d4eef9a656dc8f15913012f74",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-clipboard-east.png",
+          "sha256": "23cfef09424b9fd106a9e8d900dbdee849243ac6a21142da7b505dbd40a39650",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-clipboard-east.png",
+          "sha256": "17ca0d29bd235a21f553e7a6cb39623b39921ef3ea2175df88cd0a08554c8113",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-west",
+      "mode": "clipboard",
+      "direction": "west",
+      "family": "action",
+      "approvedGeometrySha256": "1d130c354d6fc7f83104199809aa2e616b6be2dd1b2879faa4317b3d6fd4d0bd",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "1d130c354d6fc7f83104199809aa2e616b6be2dd1b2879faa4317b3d6fd4d0bd",
+        "retained.gray-braid": "1d130c354d6fc7f83104199809aa2e616b6be2dd1b2879faa4317b3d6fd4d0bd"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-clipboard-west.png",
+          "sha256": "1f46de0d7d541340a9a1b82f6df20d27d164da5386bb6d610af0f085b8689edf",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-clipboard-west.png",
+          "sha256": "f75ec9608b38ad5848f5fa83c15ff8aee04e7cf2b0ff1a1a2193bee8f376dea1",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-clipboard-west.png",
+          "sha256": "2e55633cfbbe809a7a9b366531328d52b271a0f75ef24cfe39f4c7f55b5474d7",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-clipboard-west.png",
+          "sha256": "34848192f1e8919cacda5c149c7529212795dc0b97a8780e3967b8beeb7f79c7",
+          "width": 280,
+          "height": 350
+        }
+      }
+    },
+    {
+      "key": "clipboard-north",
+      "mode": "clipboard",
+      "direction": "north",
+      "family": "action",
+      "approvedGeometrySha256": "bcc58badfe98b2d94687a69a6fe8fe27dbda99d00ef3e2af95d281fa06fa3567",
+      "geometrySha256ByCostume": {
+        "patient.adult.046": "bcc58badfe98b2d94687a69a6fe8fe27dbda99d00ef3e2af95d281fa06fa3567",
+        "retained.gray-braid": "bcc58badfe98b2d94687a69a6fe8fe27dbda99d00ef3e2af95d281fa06fa3567"
+      },
+      "images": {
+        "green": {
+          "file": "raw/green-clipboard-north.png",
+          "sha256": "09ffb4c71f316443d62e0bf15b75711660cfedc5eb75810079cdc84b31606585",
+          "width": 280,
+          "height": 350
+        },
+        "gray": {
+          "file": "raw/gray-clipboard-north.png",
+          "sha256": "970d69ef8681487ff6811160aec98d664422730f9fc6cdc85d7a1a14aa54c1b8",
+          "width": 280,
+          "height": 350
+        },
+        "neutral": {
+          "file": "raw/neutral-clipboard-north.png",
+          "sha256": "702da00f1c7b32c69c39b7b915d35451f7d38a375b25993379cdd2630fd7881e",
+          "width": 280,
+          "height": 350
+        },
+        "guide": {
+          "file": "raw/guide-clipboard-north.png",
+          "sha256": "55c5b75e2abce394151a4ef44de9ac401e4d14c6707f6479c859adf003c5b9e9",
+          "width": 280,
+          "height": 350
+        }
+      }
+    }
+  ],
+  "atlases": {
+    "movement": {
+      "file": "atlases/movement-bundle.webp",
+      "sha256": "f612b9c11c894d12aa0609db86111189dd7d111b2ca6b8a66853fda793713572",
+      "mime": "image/webp",
+      "quality": 80,
+      "tile": {
+        "width": 240,
+        "height": 310
+      },
+      "columns": 8,
+      "rows": 5,
+      "variants": [
+        "green",
+        "gray",
+        "neutral"
+      ],
+      "states": [
+        "walk-south-01",
+        "walk-south-02",
+        "walk-south-03",
+        "walk-south-04",
+        "walk-south-05",
+        "walk-south-06",
+        "walk-south-07",
+        "walk-south-08",
+        "walk-east-01",
+        "walk-east-02",
+        "walk-east-03",
+        "walk-east-04",
+        "walk-east-05",
+        "walk-east-06",
+        "walk-east-07",
+        "walk-east-08",
+        "walk-west-01",
+        "walk-west-02",
+        "walk-west-03",
+        "walk-west-04",
+        "walk-west-05",
+        "walk-west-06",
+        "walk-west-07",
+        "walk-west-08",
+        "walk-north-01",
+        "walk-north-02",
+        "walk-north-03",
+        "walk-north-04",
+        "walk-north-05",
+        "walk-north-06",
+        "walk-north-07",
+        "walk-north-08",
+        "standing-south"
+      ],
+      "guide": {
+        "file": "atlases/movement-guide.webp",
+        "sha256": "8533ce2435bcac303177371624174a360067e6bcffb61fa5d544a6483c70466e",
+        "mime": "image/webp",
+        "quality": 80
+      }
+    },
+    "jumping": {
+      "file": "atlases/jumping-bundle.webp",
+      "sha256": "487512d9bed4b909ed59c65d8a812d6b1e3ef4b1603b269f9a5a730cb78dbf01",
+      "mime": "image/webp",
+      "quality": 80,
+      "tile": {
+        "width": 280,
+        "height": 350
+      },
+      "columns": 8,
+      "rows": 4,
+      "variants": [
+        "green",
+        "gray",
+        "neutral"
+      ],
+      "states": [
+        "jumping-south-01",
+        "jumping-south-02",
+        "jumping-south-03",
+        "jumping-south-04",
+        "jumping-south-05",
+        "jumping-south-06",
+        "jumping-south-07",
+        "jumping-south-08",
+        "jumping-east-01",
+        "jumping-east-02",
+        "jumping-east-03",
+        "jumping-east-04",
+        "jumping-east-05",
+        "jumping-east-06",
+        "jumping-east-07",
+        "jumping-east-08",
+        "jumping-west-01",
+        "jumping-west-02",
+        "jumping-west-03",
+        "jumping-west-04",
+        "jumping-west-05",
+        "jumping-west-06",
+        "jumping-west-07",
+        "jumping-west-08",
+        "jumping-north-01",
+        "jumping-north-02",
+        "jumping-north-03",
+        "jumping-north-04",
+        "jumping-north-05",
+        "jumping-north-06",
+        "jumping-north-07",
+        "jumping-north-08"
+      ],
+      "guide": {
+        "file": "atlases/jumping-guide.webp",
+        "sha256": "99ac14f0d4176a2d98cb84dc303f178042cf17d971c952b9d2c41e0e3ea79597",
+        "mime": "image/webp",
+        "quality": 80
+      }
+    },
+    "statics": {
+      "file": "atlases/statics-bundle.webp",
+      "sha256": "235dcae8723dc9b7309bea4278b325923f41421f9a7039ca030f0f282d8cc021",
+      "mime": "image/webp",
+      "quality": 80,
+      "tile": {
+        "width": 280,
+        "height": 350
+      },
+      "columns": 8,
+      "rows": 1,
+      "variants": [
+        "green",
+        "gray",
+        "neutral"
+      ],
+      "states": [
+        "sitting-south",
+        "sitting-east",
+        "sitting-west",
+        "sitting-north",
+        "clipboard-south",
+        "clipboard-east",
+        "clipboard-west",
+        "clipboard-north"
+      ],
+      "guide": {
+        "file": "atlases/statics-guide.webp",
+        "sha256": "c2636d418d6e0abfb10b8a3279e2d8e3abf979b33397dd5a1422244252528ed1",
+        "mime": "image/webp",
+        "quality": 80
+      }
+    }
+  },
+  "contactSheets": [
+    {
+      "file": "contact-sheets/walk-south-green.png",
+      "sha256": "c2f4a4ac14188ada4e144125059635f5305da293126b2ea1e2a4ca8337b51c43",
+      "states": [
+        "walk-south-01",
+        "walk-south-02",
+        "walk-south-03",
+        "walk-south-04",
+        "walk-south-05",
+        "walk-south-06",
+        "walk-south-07",
+        "walk-south-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-south-gray.png",
+      "sha256": "68694ca76f1629af839782c0aa15355fbb5c88a3b1fb009794d378a99579f598",
+      "states": [
+        "walk-south-01",
+        "walk-south-02",
+        "walk-south-03",
+        "walk-south-04",
+        "walk-south-05",
+        "walk-south-06",
+        "walk-south-07",
+        "walk-south-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-east-green.png",
+      "sha256": "6aba7fdb8b205cad11b212da619eb2803db15e4c530f064b804be00830e20444",
+      "states": [
+        "walk-east-01",
+        "walk-east-02",
+        "walk-east-03",
+        "walk-east-04",
+        "walk-east-05",
+        "walk-east-06",
+        "walk-east-07",
+        "walk-east-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-east-gray.png",
+      "sha256": "d6a34b5fb826b630757ba1b48e4442d9d0885d9d266a04a64fd488021634d5f5",
+      "states": [
+        "walk-east-01",
+        "walk-east-02",
+        "walk-east-03",
+        "walk-east-04",
+        "walk-east-05",
+        "walk-east-06",
+        "walk-east-07",
+        "walk-east-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-west-green.png",
+      "sha256": "170ed2103851526c71d028b7f5321024c579a8b683a1b9520c1179380ae2de1e",
+      "states": [
+        "walk-west-01",
+        "walk-west-02",
+        "walk-west-03",
+        "walk-west-04",
+        "walk-west-05",
+        "walk-west-06",
+        "walk-west-07",
+        "walk-west-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-west-gray.png",
+      "sha256": "1d7e31a400e735ceac1d37498d6ea2a0b70dcd32df03ed42813541a96e18abf1",
+      "states": [
+        "walk-west-01",
+        "walk-west-02",
+        "walk-west-03",
+        "walk-west-04",
+        "walk-west-05",
+        "walk-west-06",
+        "walk-west-07",
+        "walk-west-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-north-green.png",
+      "sha256": "1149b584cfc29a0c8e5c9cbd7afa20bfd87a7e1f9bd275ea70eb4431f7c485a9",
+      "states": [
+        "walk-north-01",
+        "walk-north-02",
+        "walk-north-03",
+        "walk-north-04",
+        "walk-north-05",
+        "walk-north-06",
+        "walk-north-07",
+        "walk-north-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/walk-north-gray.png",
+      "sha256": "abda0b895de247638826c10dd49b99dfda5ca1da89d432a23abe52bdb44e626e",
+      "states": [
+        "walk-north-01",
+        "walk-north-02",
+        "walk-north-03",
+        "walk-north-04",
+        "walk-north-05",
+        "walk-north-06",
+        "walk-north-07",
+        "walk-north-08"
+      ],
+      "cell": {
+        "width": 240,
+        "height": 310
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-south-green.png",
+      "sha256": "8d153cd9a595d85077cbf86e53d7d7a8b6fa9007e385b82ac6fc013219d68b7e",
+      "states": [
+        "jumping-south-01",
+        "jumping-south-02",
+        "jumping-south-03",
+        "jumping-south-04",
+        "jumping-south-05",
+        "jumping-south-06",
+        "jumping-south-07",
+        "jumping-south-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-south-gray.png",
+      "sha256": "c4542b52d468309d3c0226cc23d19594442daba639b848830d1f76b0499ede08",
+      "states": [
+        "jumping-south-01",
+        "jumping-south-02",
+        "jumping-south-03",
+        "jumping-south-04",
+        "jumping-south-05",
+        "jumping-south-06",
+        "jumping-south-07",
+        "jumping-south-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-east-green.png",
+      "sha256": "10432727e7b955c445b8b6c572a5855b62d3d9ccbae5bbdf07b4b196f67de837",
+      "states": [
+        "jumping-east-01",
+        "jumping-east-02",
+        "jumping-east-03",
+        "jumping-east-04",
+        "jumping-east-05",
+        "jumping-east-06",
+        "jumping-east-07",
+        "jumping-east-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-east-gray.png",
+      "sha256": "6d8693cf3e07e3efaf13927e7c8e0a919631b020ecfb6f40ea99542e7f7c3c98",
+      "states": [
+        "jumping-east-01",
+        "jumping-east-02",
+        "jumping-east-03",
+        "jumping-east-04",
+        "jumping-east-05",
+        "jumping-east-06",
+        "jumping-east-07",
+        "jumping-east-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-west-green.png",
+      "sha256": "2935f5efd5971bb3fb4644f19901b221f3c5d4e781dd299335d5510d1098502f",
+      "states": [
+        "jumping-west-01",
+        "jumping-west-02",
+        "jumping-west-03",
+        "jumping-west-04",
+        "jumping-west-05",
+        "jumping-west-06",
+        "jumping-west-07",
+        "jumping-west-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-west-gray.png",
+      "sha256": "51d3f7a76396fd9e3fbdc6ba7aaa39f7667e7375386990de64f8a8af59b8e220",
+      "states": [
+        "jumping-west-01",
+        "jumping-west-02",
+        "jumping-west-03",
+        "jumping-west-04",
+        "jumping-west-05",
+        "jumping-west-06",
+        "jumping-west-07",
+        "jumping-west-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-north-green.png",
+      "sha256": "6cfd890b07b1f639778e9347bfde8e203f7a9e6cb62d594ff109364f609af993",
+      "states": [
+        "jumping-north-01",
+        "jumping-north-02",
+        "jumping-north-03",
+        "jumping-north-04",
+        "jumping-north-05",
+        "jumping-north-06",
+        "jumping-north-07",
+        "jumping-north-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/jumping-north-gray.png",
+      "sha256": "6517252654626b8cd031728092df6da7e630598680aa280d48aece103437c80f",
+      "states": [
+        "jumping-north-01",
+        "jumping-north-02",
+        "jumping-north-03",
+        "jumping-north-04",
+        "jumping-north-05",
+        "jumping-north-06",
+        "jumping-north-07",
+        "jumping-north-08"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/statics-green.png",
+      "sha256": "e7b0137edad211a3cdaeee2cd5d96c67dc5dff20fd0d6bb93b584cb95647c5be",
+      "states": [
+        "standing-south",
+        "sitting-south",
+        "sitting-east",
+        "sitting-west",
+        "sitting-north",
+        "clipboard-south",
+        "clipboard-east",
+        "clipboard-west",
+        "clipboard-north"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/statics-gray.png",
+      "sha256": "67117dfc3f778865e2b8260a0bf31a31b7e90ea76222e21c3d8f4e0067fac9f0",
+      "states": [
+        "standing-south",
+        "sitting-south",
+        "sitting-east",
+        "sitting-west",
+        "sitting-north",
+        "clipboard-south",
+        "clipboard-east",
+        "clipboard-west",
+        "clipboard-north"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/native-comparison-neutral.png",
+      "sha256": "4abeec84db07c967b9ba8a6445b0d46d9d4eeed0373407afe9385325e9b085f2",
+      "states": [
+        "standing-south",
+        "walk-east-03",
+        "sitting-south",
+        "jumping-south-04",
+        "clipboard-south"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/native-comparison-green.png",
+      "sha256": "dc5c2f2b92f5d7bdb3b7a709b368124d8608247641b69f825bf92eb6b1aee0bc",
+      "states": [
+        "standing-south",
+        "walk-east-03",
+        "sitting-south",
+        "jumping-south-04",
+        "clipboard-south"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    },
+    {
+      "file": "contact-sheets/native-comparison-gray.png",
+      "sha256": "46bb722719639c9339af336b23874530fda07a1a1d88c2406b07fb809d233670",
+      "states": [
+        "standing-south",
+        "walk-east-03",
+        "sitting-south",
+        "jumping-south-04",
+        "clipboard-south"
+      ],
+      "cell": {
+        "width": 280,
+        "height": 350
+      },
+      "nativeFrames": true
+    }
+  ],
+  "fragments": {
+    "movement": {
+      "file": "C:\\Users\\Kyle Kent\\.codex\\visualizations\\2026\\09\\13\\01a09b55-147e-72f0-b413-e8b6827c7287\\source-faithful-character-movement.html",
+      "bytes": 963587,
+      "sha256": "07ca267e2c0eb7339456855d4fafc09117656817fe3d6b5854953fe6e7861087"
+    },
+    "jumping": {
+      "file": "C:\\Users\\Kyle Kent\\.codex\\visualizations\\2026\\09\\13\\01a09b55-147e-72f0-b413-e8b6827c7287\\source-faithful-character-jumping.html",
+      "bytes": 994868,
+      "sha256": "fe2583e487405e389f22b1a6ff8b00b4c37ff3c6f0fc71000ee06a39308f3e73"
+    },
+    "statics": {
+      "file": "C:\\Users\\Kyle Kent\\.codex\\visualizations\\2026\\09\\13\\01a09b55-147e-72f0-b413-e8b6827c7287\\source-faithful-character-statics.html",
+      "bytes": 280414,
+      "sha256": "32484651ee65d8c5f54056171d2536e6412d9c4809bdbcdeadb34523731bfa64"
+    }
+  }
+}

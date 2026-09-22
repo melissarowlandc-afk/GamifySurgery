@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 5,
+  "source": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+    "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63"
+  },
+  "head": {
+    "sourceRect": [
+      111,
+      58,
+      86,
+      88
+    ],
+    "output": "tools/character-mapping/layered-pilot/assets/green-south-source-head-v5.png",
+    "sha256": "2453f22e72bffc066e4aed5e5348b0d4ba623e4a053bb71bd267de7596bbdc2b",
+    "backgroundMethod": "8-connected exterior neutral flood; range <=30; mean >=155; alpha only",
+    "alpha": {
+      "removed": 2995,
+      "retained": 4573,
+      "retainedLight": 423
+    },
+    "placementAtOriginalScale": {
+      "x": 36,
+      "y": 28,
+      "scale": 1
+    }
+  },
+  "legExtractionBlocker": {
+    "left": "hand overlaps source leg at approximately x115..121/y234..251",
+    "right": "hand overlaps source leg at approximately x187..194/y234..251",
+    "decision": "No leg asset emitted: a plain rectangle either retains hand pixels or cuts visible trousers."
+  }
+}

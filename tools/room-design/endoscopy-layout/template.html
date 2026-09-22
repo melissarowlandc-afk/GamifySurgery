@@ -1,0 +1,22 @@
+<section id="endoscopy-layout-proof" aria-labelledby="endoscopy-title">
+  <style>
+    #endoscopy-layout-proof{max-width:800px;margin-inline:auto}#endoscopy-layout-proof .endo-art-wrap{position:relative;max-width:600px;margin:12px auto 0}#endoscopy-layout-proof .endo-art{position:relative;z-index:1;display:block;width:100%;height:auto}#endoscopy-layout-proof .endo-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#endoscopy-layout-proof .endo-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#endoscopy-layout-proof .endo-controls{max-width:740px;margin:10px auto 0}#endoscopy-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#endoscopy-layout-proof legend{font-weight:500;margin-bottom:4px}#endoscopy-layout-proof .endo-buttons{display:flex;gap:5px;flex-wrap:wrap}#endoscopy-layout-proof .endo-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#endoscopy-layout-proof .endo-label{color:var(--muted-foreground);margin-right:3px}#endoscopy-layout-proof .endo-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:3em}#endoscopy-layout-proof .endo-note{margin-top:6px;color:var(--muted-foreground)}#endoscopy-layout-proof select{margin-bottom:8px}
+  </style>
+  <h2 id="endoscopy-title">Endoscopy Room preview</h2>
+  <label for="endoscopy-orientation">Orientation</label>
+  <select id="endoscopy-orientation"><option value="south">Head North · 4 × 3</option><option value="east">Head West · 3 × 4 (90° counterclockwise)</option></select>
+  <div class="endo-art-wrap">
+    <canvas id="endoscopy-art" class="endo-art" width="1200" height="1100" role="img" aria-label="Rotatable dark Endoscopy Room with a procedure table, endoscopy tower, optional cabinet and sink, selectable doors, and route clearance."></canvas>
+    <div id="endoscopy-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="endo-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="endoscopy-adjacency" class="endo-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway (current-view wall labels)</legend><div class="endo-row"><div><span class="endo-label text-small">North</span><span id="endoscopy-north" class="endo-buttons"></span></div><div><span class="endo-label text-small">South</span><span id="endoscopy-south" class="endo-buttons"></span></div><div><span class="endo-label text-small">West</span><span id="endoscopy-west" class="endo-buttons"></span></div><div><span class="endo-label text-small">East</span><span id="endoscopy-east" class="endo-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="endoscopy-procedure" class="form-check-input" type="checkbox"><span class="form-check-label">During procedure (replace empty table with covered patient)</span></label>
+    <label class="form-check"><input id="endoscopy-optional" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional cabinet and sink when clear</span></label>
+    <label class="form-check"><input id="endoscopy-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints, selected-door route, and use points</span></label>
+    <div class="endo-note text-small"><strong>Procedure behavior:</strong> the individual patient disappears at the table use point; the empty table is replaced by its covered-patient state. The endoscopist stands east of the table and faces west. After rotation, staff stands north and faces south.</div>
+    <div id="endoscopy-status" class="endo-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__ENDOSCOPY_SCRIPT__</script>
+</section>

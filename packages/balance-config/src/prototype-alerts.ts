@@ -119,12 +119,12 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     trigger: "imaging_inoperable",
     priority: "informational",
     titleTemplate: "Onsite imaging setup incomplete",
-    bodyTemplate: "Onsite ultrasound and CT need operational Imaging Control and an assigned Imaging Technician. Check access and assignments.",
+    bodyTemplate: "Onsite imaging needs an ordinary reachable room and an assigned Imaging Technician. Check access and assignments.",
     targetKind: "staff_role",
     clickAction: "open_staff_role",
     persistent: true,
     tickerEligible: false,
-    eligibleFacilityLevels: [2],
+    eligibleFacilityLevels: [1, 2],
     consolidationKeyTemplate: "facility:imaging-inoperable",
   },
   {
@@ -178,6 +178,20 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     tickerEligible: false,
     eligibleFacilityLevels: [0, 1],
     consolidationKeyTemplate: "patient:{{patient_id}}:arrival",
+  },
+  {
+    id: "alert.patient.waiting",
+    trigger: "patience_warning",
+    priority: "action_required",
+    titleTemplate: "Patient waiting",
+    bodyTemplate:
+      "{{patient_name}} has been waiting for clinical attention. Open the chart when you are ready.",
+    targetKind: "patient",
+    clickAction: "open_patient",
+    persistent: true,
+    tickerEligible: false,
+    eligibleFacilityLevels: [0, 1],
+    consolidationKeyTemplate: "patient:{{patient_id}}:waiting",
   },
   {
     id: "alert.patient.patience",
@@ -303,7 +317,7 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     priority: "action_required",
     titleTemplate: "Private exam space needed",
     bodyTemplate:
-      "{{patient_name}} would prefer not to discuss protected health information at the Front Desk. Build an Examination Room.",
+      "Patients would appreciate private exam space instead of discussing protected health information at the Front Desk. Build an Examination Room.",
     targetKind: "task",
     clickAction: "open_task",
     persistent: true,
@@ -343,7 +357,7 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     priority: "informational",
     titleTemplate: "Receptionist recommended",
     bodyTemplate:
-      "Patients are checking themselves in with the confidence of people who did not read the form. Hire a receptionist to speed up check-in.",
+      "Patients are asking for help checking in. Hire a receptionist to speed up check-in.",
     targetKind: "staff_role",
     clickAction: "open_staff_role",
     persistent: true,
@@ -352,12 +366,26 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     consolidationKeyTemplate: "staff:receptionist-recommended",
   },
   {
+    id: "alert.patient.check-in-unattended",
+    trigger: "patient_check_in_unattended",
+    priority: "action_required",
+    titleTemplate: "Patient waiting at Front Desk",
+    bodyTemplate:
+      "{{patient_name}} has been waiting to check in. Return to the Front Desk or arrange reception coverage.",
+    targetKind: "room",
+    clickAction: "open_room",
+    persistent: true,
+    tickerEligible: true,
+    eligibleFacilityLevels: [0, 1, 2],
+    consolidationKeyTemplate: "patient:{{patient_id}}:check-in-unattended",
+  },
+  {
     id: "alert.facility.onsite-imaging-requested",
     trigger: "onsite_imaging_requested",
     priority: "informational",
     titleTemplate: "Onsite X-ray requested",
     bodyTemplate:
-      "I have to leave and come back for an X-ray? The patient has a point. Build an X-ray room to offer imaging onsite.",
+      "Patients would appreciate X-ray imaging without an offsite trip. Build an X-ray room to offer imaging onsite.",
     targetKind: "build_mode",
     clickAction: "open_build_mode",
     persistent: true,
@@ -371,7 +399,7 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     priority: "informational",
     titleTemplate: "Imaging technician recommended",
     bodyTemplate:
-      "The X-ray room looks excellent. It would look even better with someone who can operate it. Hire an imaging technician.",
+      "Patients need reliable onsite imaging. Hire an imaging technician to operate the X-ray room.",
     targetKind: "staff_role",
     clickAction: "open_staff_role",
     persistent: true,
@@ -385,7 +413,7 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     priority: "informational",
     titleTemplate: "Waiting Room recommended",
     bodyTemplate:
-      "A patient is waiting beside the Front Desk and now knows everyone's business. Build a Waiting Room.",
+      "Patients would appreciate a Waiting Room instead of waiting beside the Front Desk. Build a Waiting Room.",
     targetKind: "build_mode",
     clickAction: "open_build_mode",
     persistent: true,
@@ -399,7 +427,7 @@ const BASE_PROTOTYPE_ALERT_DEFINITIONS = [
     priority: "informational",
     titleTemplate: "Bathroom recommended",
     bodyTemplate:
-      "\"Is there a restroom?\" is now the clinic's most frequently asked question. Build a bathroom.",
+      "Patients are asking for a restroom. Build a bathroom.",
     targetKind: "build_mode",
     clickAction: "open_build_mode",
     persistent: true,
@@ -830,9 +858,9 @@ const CONTEXTUAL_AND_SUCCESS_ALERTS = [
     id: "alert.patient.cleanliness-complaint",
     trigger: "dirty_clinic_patient_complaint",
     category: "guidance",
-    title: "Patient noticed the clinic",
+    title: "Clinic cleanliness needs attention",
     body:
-      "{{patient_name}} has started reviewing the visible trash instead of the magazine. Select it to send the founder to clean it.",
+      "Visible trash is distracting patients. Select it to send the founder to clean it.",
     targetKind: "litter",
     clickAction: "open_litter",
     cooldownMinutes: 45,
@@ -843,9 +871,9 @@ const CONTEXTUAL_AND_SUCCESS_ALERTS = [
     id: "alert.patient.room-upgrade-requested",
     trigger: "patient_room_upgrade_request",
     category: "guidance",
-    title: "Patient noticed the room",
+    title: "Room comfort needs attention",
     body:
-      "{{patient_name}} has begun reviewing the fixtures. Upgrade {{room_name}} to improve comfort and care efficiency.",
+      "Patients are noticing the fixtures. Upgrade {{room_name}} to improve comfort and care efficiency.",
     targetKind: "room",
     clickAction: "open_room",
     cooldownMinutes: 60,
@@ -894,7 +922,7 @@ const CONTEXTUAL_AND_SUCCESS_ALERTS = [
     category: "guidance",
     title: "Waiting Room crowded",
     body:
-      "The Waiting Room has become a small convention. Add capacity or move patients through the clinic faster.",
+      "Patients are finding the Waiting Room crowded. Add capacity or move patients through the clinic faster.",
     targetKind: "build_mode",
     clickAction: "open_build_mode",
     cooldownMinutes: 45,
@@ -1182,12 +1210,12 @@ export const PROTOTYPE_ALERT_SCHEDULING = {
    * underlying condition must remain unresolved for strictly longer than this
    * many facility minutes before the feed records it.
    */
-  patientAttentionDelayMinutes: 5,
-  firstAmbientMinimumMinutes: 10,
-  firstAmbientMaximumMinutes: 20,
-  recurringAmbientMinimumMinutes: 45,
-  recurringAmbientMaximumMinutes: 90,
-  minimumAmbientSeparationMinutes: 30,
+  patientAttentionDelayMinutes: 60,
+  firstAmbientMinimumMinutes: 120,
+  firstAmbientMaximumMinutes: 120,
+  recurringAmbientMinimumMinutes: 120,
+  recurringAmbientMaximumMinutes: 120,
+  minimumAmbientSeparationMinutes: 120,
   // Keeps a newly emitted flavor line near the live portion of the mixed
   // feed long enough to be read without pinning it above later clinic events.
   ambientFeedRecencyBoostMinutes: 30,
@@ -1217,10 +1245,15 @@ export const PROTOTYPE_PLAYER_FEED_POLICY = {
     "door_removed",
     "litter_appeared",
     "litter_collected",
+    "water_cooler_low",
     "water_cooler_refilled",
+    "staff_hired",
+    "employee_praised",
   ],
   suppressedDefinitionIds: [
     "event.clinical.decision-correct",
+    "alert.patient.arrived",
+    "alert.patient.result-ready",
     "alert.success.trash-cleaned",
     "alert.success.water-refilled",
   ],

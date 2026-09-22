@@ -1,0 +1,10 @@
+<section id="endoscopy-scale-comparison" aria-labelledby="esc-title">
+  <style>
+    #endoscopy-scale-comparison{max-width:920px;margin-inline:auto}#endoscopy-scale-comparison .esc-view{margin-top:14px}#endoscopy-scale-comparison .esc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}#endoscopy-scale-comparison figure{margin:0;min-width:0}#endoscopy-scale-comparison canvas{display:block;width:100%;height:auto;background:color-mix(in srgb,var(--muted) 25%,transparent)}#endoscopy-scale-comparison figcaption{margin-top:4px}#endoscopy-scale-comparison .esc-status{margin-top:10px;border-left:3px solid var(--primary);padding-left:10px}#endoscopy-scale-comparison .esc-note{color:var(--muted-foreground)}@media(max-width:520px){#endoscopy-scale-comparison .esc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+  <h2 id="esc-title">Endoscopy patient scale comparison</h2>
+  <p class="esc-note text-small">Occupied-bed art stays at its accepted room-proof size. Approved offline stills use one provisional scale derived from the live P01 visible standing height at a 120px tile. The live atlas frame is shown as calibration.</p>
+  <div id="esc-views"></div>
+  <div id="esc-status" class="esc-status text-small" role="status" aria-live="polite"></div>
+  <script>__ENDOSCOPY_SCALE_SCRIPT__</script>
+</section>

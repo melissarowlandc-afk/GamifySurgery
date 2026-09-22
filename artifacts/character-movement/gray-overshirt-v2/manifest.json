@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 2,
+  "status": "gray-overshirt-v2-actions-parent-review",
+  "character": {
+    "runtimeId": "patient.adult.032",
+    "label": "Gray overshirt v2"
+  },
+  "atlas": {
+    "manifest": "tools/character-mapping/layered-pilot/gray-overshirt-v2/manifest-v2.json",
+    "sha256": "ed5d4da9fe27b849301c837571b005f08258bec548262c1fb0604a0552286e3b"
+  },
+  "frameContract": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "floorY": 287,
+    "phaseDurationMs": 180
+  },
+  "sourceReferences": {
+    "south": {
+      "file": "source-reference/south.png",
+      "sha256": "702298b2080cd2f6da6afe683ca14f0768759a1af21f360461ab54218eb7da24",
+      "width": 160,
+      "height": 320
+    },
+    "east": {
+      "file": "source-reference/east.png",
+      "sha256": "a442a4fc1df7129b8619e32fcd4abd4a97f311002db9ba511b27bbf43edf9cd2",
+      "width": 160,
+      "height": 320
+    },
+    "west": {
+      "file": "source-reference/west.png",
+      "sha256": "9ed711039ac055b7889ec23c2fc981453c6b47278c8e2cc7a1898bcad9193e62",
+      "width": 160,
+      "height": 320
+    },
+    "north": {
+      "file": "source-reference/north.png",
+      "sha256": "7464502da1473b52eabe5842f9eb6800365dfc0b4630edfddcc44b836cc8e7fd",
+      "width": 160,
+      "height": 320
+    }
+  },
+  "frames": {
+    "stand": {
+      "south": {
+        "file": "frames/stand/south.png",
+        "sha256": "8283c71f1d1da202e0a2c6b154fbdc2b3186bde1419b777365be6e14168afafe",
+        "width": 160,
+        "height": 320
+      },
+      "east": {
+        "file": "frames/stand/east.png",
+        "sha256": "ed6fec1f73574f776fbde89d88d2b92bb7068c6f6749db0120f48a3c6c3f26c3",
+        "width": 160,
+        "height": 320
+      },
+      "west": {
+        "file": "frames/stand/west.png",
+        "sha256": "a7115cc82c57bb4aff32cfd280d0649f405ccd5288ef42657fac4f193b7506ad",
+        "width": 160,
+        "height": 320
+      },
+      "north": {
+        "file": "frames/stand/north.png",
+        "sha256": "b573b86d9462022319f27e1eec3a338ea70c4f9540759ef8f99df9804602ed51",
+        "width": 160,
+        "height": 320
+      }
+    },
+    "walk": {
+      "south": {
+        "01": {
+          "file": "frames/walk/south/01.png",
+          "sha256": "95150753f5f9ed5143bb1bcade3212242a1aa1247b090cf42a9ffc73faacdd45",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/south/02.png",
+          "sha256": "9f9db4402c21f182563872edd7667aa4d6a2c3b0092059e6a124d0d869ed36bc",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/south/03.png",
+          "sha256": "59101c6862a8c07844ec3676c902cec7403849cf33d5325cec3d8d0d11c179f2",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/south/04.png",
+          "sha256": "2a604b8777e1655eff81aed90dbb427536fe5dad05bafe91ab058d94ac1eb2f3",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/south/05.png",
+          "sha256": "3dc00d76e3ffa09b974073db7ce870712ff4e676a3b97c7e40ddb1c8d946a39f",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/south/06.png",
+          "sha256": "4b5e47a1eee223dd875a6319838efe42936a0d7449a436b03d9df4fb1d30e3e3",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/south/07.png",
+          "sha256": "f7caadfd1890d833cc6fe8f007aba462fed10300229e8d2a630d0c0b6a9192a8",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/south/08.png",
+          "sha256": "7dd2883660ba3c757385f7e21d064e823f31a0972791e588f7ff175a6aef3147",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "east": {
+        "01": {
+          "file": "frames/walk/east/01.png",
+          "sha256": "0563b5fdf4ca730dc5f8dc3458e6b71e2f589dfef1780237692273cf7d1ff44e",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/east/02.png",
+          "sha256": "74d089a8ef1efbb95bc47a7c1ab6b8cd62326979b778e90b4a5129867261c433",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/east/03.png",
+          "sha256": "c642705552b6fb1f48487589311d8bd18c12cbd89bb6b4be0c95b81481d4d407",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/east/04.png",
+          "sha256": "0066dcf23fb5fb9e2c6cf6d5550bca0e6349598e84acd64f6defc7d84f603c2f",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/east/05.png",
+          "sha256": "6168764408a2d9a976007db7efbec09ec980e993c57ab839323c7c726f483b02",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/east/06.png",
+          "sha256": "3ab4b133fc74767ca6336f1eb20c6423984d4a9c3d2f2c3adc1fb6eb43ce5556",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/east/07.png",
+          "sha256": "840eb3b8bf2be9e98271886124a5ec2f22cefffdbc1ef83b8508ad620ad3bcd6",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/east/08.png",
+          "sha256": "2a6ea8f4370e5b4941e50ffa46963b58d75efe9cd2cdc4bcfa956504cfff3132",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "west": {
+        "01": {
+          "file": "frames/walk/west/01.png",
+          "sha256": "e6240dd895c86fd1bf571a71342bf34707937a50f87ec15d985b980ea85affc1",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/west/02.png",
+          "sha256": "c3794b944544db966fafe20606b358bd338b65bc89cd1c6d841a9970ed6f0496",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/west/03.png",
+          "sha256": "25067dfc022ee7f6fa5a46c9d05a326b49d5e440c54517d845560b57992d6a82",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/west/04.png",
+          "sha256": "b896e32e652e9ef5fbc2df9002d330f56a670a6ac4afffdfd8962d4611b08089",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/west/05.png",
+          "sha256": "879aa8b47443d97fda552068bd3afe474e2410f5556a6ebc83a55796e7b3544e",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/west/06.png",
+          "sha256": "0d54d338d5a5c90e9535aba95170e52c27dad36abba2e667a40530e76d0d2500",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/west/07.png",
+          "sha256": "cf4dfefb06a52afb021ee415516d0248e7897a7f7f83c26e865691fbb708a6d7",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/west/08.png",
+          "sha256": "edc7385e29d6efb312039dd643e86b8fdb040ad681a10be69fde9b2824a1704d",
+          "width": 160,
+          "height": 320
+        }
+      },
+      "north": {
+        "01": {
+          "file": "frames/walk/north/01.png",
+          "sha256": "c1a1d7908843f30fb1565902390a4f1fa3d15fe0e9d53a15bb24f236a4190a3b",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/walk/north/02.png",
+          "sha256": "e658fe3e4d5118fe98644392d5c8285aafef0769d278332ba1508254c28c96c3",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/walk/north/03.png",
+          "sha256": "2d9cfc63f955e2c4c99a6c336ef1b92f1b8bdfe5228177d7af07f514c79a71d8",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/walk/north/04.png",
+          "sha256": "5517cd2453055fa694e77fabc6022be3beead005e57becb3553e797fb8ba6da9",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/walk/north/05.png",
+          "sha256": "fd589abc6e6c7562df2a0e16c9014798332af7bf8cc7da07edfd537cf2dc15ae",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/walk/north/06.png",
+          "sha256": "2d9d9ec7965a2160d7fbbc5f59d9d09f5d9dcd902d2b9aecbf5e45ca382b6aa4",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/walk/north/07.png",
+          "sha256": "e73ad4c4da096fc9b70fd6d5fb75cbed951bc139b338dcdc8f2f72263a08a65b",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/walk/north/08.png",
+          "sha256": "2f414ed0e98d220871e3ff66e1796bb6d35018ded2bafa3369ce65068392712c",
+          "width": 160,
+          "height": 320
+        }
+      }
+    }
+  },
+  "actions": {
+    "starJump": {
+      "south": {
+        "01": {
+          "file": "frames/star-jump/south/01.png",
+          "sha256": "dbb6a8df4fca9f61f08fd6a9e1553596f3172e2592fa8ae256fbc753da7b807b",
+          "width": 160,
+          "height": 320
+        },
+        "02": {
+          "file": "frames/star-jump/south/02.png",
+          "sha256": "38db69bc50513c104a62b44b46a30d2958397b7b06adfb523e269976fffd37dd",
+          "width": 160,
+          "height": 320
+        },
+        "03": {
+          "file": "frames/star-jump/south/03.png",
+          "sha256": "a83a00bdf9744082d1809bc76a7be21a0a443ca090be04dd04d5a2dc10875a15",
+          "width": 160,
+          "height": 320
+        },
+        "04": {
+          "file": "frames/star-jump/south/04.png",
+          "sha256": "ab54d72573ffef263fbdce85f7bdb14a8068ba6d3b0bbe946ab760a12762b79f",
+          "width": 160,
+          "height": 320
+        },
+        "05": {
+          "file": "frames/star-jump/south/05.png",
+          "sha256": "bfed6a5b735cc0aabbd3babef77d9684b4ecd7a125c67eefc1e304fb9efd3f80",
+          "width": 160,
+          "height": 320
+        },
+        "06": {
+          "file": "frames/star-jump/south/06.png",
+          "sha256": "686877a531116dd5c0cc66f417d389008b56359924af481cd4a1163b0b04d674",
+          "width": 160,
+          "height": 320
+        },
+        "07": {
+          "file": "frames/star-jump/south/07.png",
+          "sha256": "f0b9a39db4f18eab15d17997075d1a6b17a0abcdee5226ba70e66c2f1a0879f1",
+          "width": 160,
+          "height": 320
+        },
+        "08": {
+          "file": "frames/star-jump/south/08.png",
+          "sha256": "8283c71f1d1da202e0a2c6b154fbdc2b3186bde1419b777365be6e14168afafe",
+          "width": 160,
+          "height": 320
+        }
+      }
+    },
+    "sitting": {
+      "south": {
+        "file": "frames/sit/south.png",
+        "sha256": "1e1f261664b5943e2a1045b3451b9a966aa30fe27286c33fdfa63d93b7fdd878",
+        "width": 160,
+        "height": 320
+      },
+      "east": {
+        "file": "frames/sit/east.png",
+        "sha256": "b9a1eeb913aa57849c98f14b72528aba655c22eb67c7a7d32b306ed7bb3d45d5",
+        "width": 160,
+        "height": 320
+      },
+      "west": {
+        "file": "frames/sit/west.png",
+        "sha256": "02b2a829566528d8e4394991c4ad62daca67a990d5d90b99c31b57838b2e8b55",
+        "width": 160,
+        "height": 320
+      },
+      "north": {
+        "file": "frames/sit/north.png",
+        "sha256": "4e2a1f18d3ab59b70f8d3bebf187dc63fe0b081361fe86d0eb247998481b2efa",
+        "width": 160,
+        "height": 320
+      }
+    },
+    "clipboard": {
+      "south": {
+        "file": "frames/clipboard/south.png",
+        "sha256": "e828c08d05d9c12387df5d3bfd0e3ba7e278105a58cc53e4c494dfd6594fc4f2",
+        "width": 160,
+        "height": 320
+      }
+    }
+  },
+  "actionMetadata": {
+    "jumpStages": {
+      "01": "gather",
+      "02": "takeoff",
+      "03": "opening",
+      "04": "open-star",
+      "05": "closing",
+      "06": "soft-landing",
+      "07": "recover",
+      "08": "ready"
+    },
+    "sitting": {
+      "seatY": 236,
+      "floorY": 287,
+      "chairPolicy": "separate preview prop"
+    },
+    "clipboard": {
+      "view": "south"
+    }
+  },
+  "review": {
+    "sourceVsFit": {
+      "file": "source-vs-fit-stands.png",
+      "sha256": "6f241160e8678d7a29ca00042e270de74fd9076bb1ce846dd65f9604377f4580",
+      "width": 1280,
+      "height": 684
+    },
+    "walkContacts": {
+      "south": {
+        "file": "overshirt-v2-walk-south-contact.png",
+        "sha256": "a5f6a2cc05ad20695d086e294f879b7005756e9aff372f8b7a3272d19a857e80",
+        "width": 640,
+        "height": 684
+      },
+      "east": {
+        "file": "overshirt-v2-walk-east-contact.png",
+        "sha256": "7474765bdcec2e5d0b9cebae465313a069ca89cba44e6d5f7a8d54c3f40a847a",
+        "width": 640,
+        "height": 684
+      },
+      "west": {
+        "file": "overshirt-v2-walk-west-contact.png",
+        "sha256": "92f5acbe101bb06cbca3a1d16c2d21888dc6dce73520c6e6d23503f478182509",
+        "width": 640,
+        "height": 684
+      },
+      "north": {
+        "file": "overshirt-v2-walk-north-contact.png",
+        "sha256": "0eee0cc4f90485134dc656fbee15f4fc021052f6be94fd44b86f7f791b765ab2",
+        "width": 640,
+        "height": 684
+      }
+    },
+    "upperBodyContacts": {
+      "south": {
+        "file": "overshirt-v2-upper-south-contact.png",
+        "sha256": "c0fb554a385a78caa563e42a03625d399975905fa070d56da79b4193a684066b",
+        "width": 640,
+        "height": 504
+      },
+      "east": {
+        "file": "overshirt-v2-upper-east-contact.png",
+        "sha256": "9b33c9b46627c6acc20dacfe856f38e0a1f253cbbb5a871e0b03b3b959f6888b",
+        "width": 640,
+        "height": 504
+      },
+      "west": {
+        "file": "overshirt-v2-upper-west-contact.png",
+        "sha256": "c17356c6dac14e8fb3a98224ca3096f5570c4a998aaaaff7d805ef86f62939bf",
+        "width": 640,
+        "height": 504
+      },
+      "north": {
+        "file": "overshirt-v2-upper-north-contact.png",
+        "sha256": "0dd859106922a597f49dc5612dde472317bcd8ea1ab394542ecdb0239377c90d",
+        "width": 640,
+        "height": 504
+      }
+    },
+    "torsoShoulderCuff": {
+      "file": "south-torso-shoulder-cuff-3x-contact.png",
+      "sha256": "d44d958b257892ce6b711002c414da7641ed655bdb17112678dbe7627cb02acd",
+      "width": 1320,
+      "height": 824
+    },
+    "neckElbow": {
+      "file": "neck-elbow-proof-4x.png",
+      "sha256": "d1174e0064651c55ce74afb68b55d7fa55f0ea62da59af33c8e03b45a1139776",
+      "width": 1280,
+      "height": 662
+    },
+    "eastNeckBeforeAfter": {
+      "file": "east-neck-before-after-4x.png",
+      "sha256": "af813841d1f0eb67aef101b2d901542189914ef6676a7db186d3081334cafb44",
+      "width": 800,
+      "height": 562
+    },
+    "armPairSourceScale": {
+      "file": "arm-pair-original-scale-proof.png",
+      "sha256": "3961ac4b9ef1f2e8c4b7c72e6b61a4e1289e8a14b7353b6d1245694bc0ae036a",
+      "width": 1280,
+      "height": 570
+    },
+    "sourceUpperLandmarks": {
+      "file": "source-upper-explicit-landmarks.png"
+    },
+    "packedUpperLandmarks": {
+      "file": "standard-upper-packed-landmarks.png"
+    },
+    "actions": {
+      "jump": {
+        "file": "overshirt-v2-star-jump-south-contact.png",
+        "sha256": "7827516d71da1c96934a1342349a0f2af09405be116fe7906a19344103f74f84",
+        "width": 640,
+        "height": 684
+      },
+      "sitting": {
+        "file": "overshirt-v2-sitting-four-view-contact.png",
+        "sha256": "ec7623d22ee6399071c5601e6457834b4718520c2305cf1dd9ca26df6f4adee8",
+        "width": 640,
+        "height": 342
+      },
+      "clipboard": {
+        "file": "overshirt-v2-clipboard-south-4x.png",
+        "sha256": "eca2a7de1ccb8a4c9577d03f88c849528a50e5d2e40a7d376a77c6bde8f61dc5",
+        "width": 640,
+        "height": 1302
+      }
+    }
+  },
+  "notes": [
+    "Original heads retain source RGB at scale 1 and integer translation.",
+    "South/North torso slots extract exact original source cloth; source body axes center the visible trunk independently of neck sockets.",
+    "Upper sleeves and forearm/hands are separate rigid bones; S/N use a small common projected depth scale per pose.",
+    "South sleeve caps pass behind torso while distal hands/cuffs pass in front.",
+    "Lower art is repacked into standard slots; gait geometry is preserved.",
+    "Jump and seated fallback arms use the same rigid two-bone chains as walking.",
+    "Visual approval remains a parent/owner gate."
+  ]
+}

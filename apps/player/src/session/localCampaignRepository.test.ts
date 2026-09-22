@@ -823,6 +823,146 @@ describe("LocalCampaignRepository", () => {
     }
   });
 
+  it("round-trips routine-tip state for two campaigns and clears only the saved target", async () => {
+    const first = createCampaignProfile("First Clinic", "first-routine");
+    const second = appendLocalCampaign(
+      first.profile,
+      founder,
+      "Second Clinic",
+      124,
+      "second-routine",
+    );
+    const profile: LocalPrototypeProfile = {
+      ...second.profile,
+      tutorialDailyRoutineTipAcknowledgments: {
+        [first.campaign.campaignId]: ["sendout-management"],
+        [second.campaign.campaignId]: [
+          "sendout-management",
+          "sendout-trash",
+        ],
+      },
+      tutorialDailyRoutinePauseByCampaign: {
+        [first.campaign.campaignId]: false,
+        [second.campaign.campaignId]: true,
+      },
+    };
+    const repository = createRepository();
+
+    expect(
+      (await repository.saveCampaign(profile, first.campaign, 0)).ok,
+    ).toBe(true);
+    expect(
+      (await repository.saveCampaign(profile, second.campaign, 0)).ok,
+    ).toBe(true);
+    expect(await repository.loadProfile()).toMatchObject({
+      ok: true,
+      value: {
+        tutorialDailyRoutineTipAcknowledgments:
+          profile.tutorialDailyRoutineTipAcknowledgments,
+        tutorialDailyRoutinePauseByCampaign:
+          profile.tutorialDailyRoutinePauseByCampaign,
+      },
+    });
+
+    const withoutFirstRoutineState: LocalPrototypeProfile = {
+      ...profile,
+      tutorialDailyRoutineTipAcknowledgments: {
+        [second.campaign.campaignId]: [
+          "sendout-management",
+          "sendout-trash",
+        ],
+      },
+      tutorialDailyRoutinePauseByCampaign: {
+        [second.campaign.campaignId]: true,
+      },
+    };
+    expect(
+      (
+        await repository.saveCampaign(
+          withoutFirstRoutineState,
+          first.campaign,
+          1,
+        )
+      ).ok,
+    ).toBe(true);
+    expect(await repository.loadProfile()).toMatchObject({
+      ok: true,
+      value: {
+        tutorialDailyRoutineTipAcknowledgments: {
+          [second.campaign.campaignId]: [
+            "sendout-management",
+            "sendout-trash",
+          ],
+        },
+        tutorialDailyRoutinePauseByCampaign: {
+          [second.campaign.campaignId]: true,
+        },
+      },
+    });
+  });
+
+  it("loads pre-routine IndexedDB metadata with empty compatibility maps", async () => {
+    const created = createCampaignProfile("Legacy Metadata", "legacy-metadata");
+    const repository = createRepository();
+    expect(
+      (await repository.saveCampaign(created.profile, created.campaign, 0)).ok,
+    ).toBe(true);
+    await changeProfile((profile) => {
+      delete profile.tutorialDailyRoutineTipAcknowledgments;
+      delete profile.tutorialDailyRoutinePauseByCampaign;
+    });
+
+    expect(await repository.loadProfile()).toMatchObject({
+      ok: true,
+      value: {
+        tutorialDailyRoutineTipAcknowledgments: {},
+        tutorialDailyRoutinePauseByCampaign: {},
+      },
+    });
+  });
+
+  it("migrates legacy campaigns with their per-campaign routine progress", async () => {
+    const first = createCampaignProfile("Legacy One", "legacy-routine-one");
+    const second = appendLocalCampaign(
+      first.profile,
+      founder,
+      "Legacy Two",
+      124,
+      "legacy-routine-two",
+    );
+    const source: LocalPrototypeProfile = {
+      ...second.profile,
+      tutorialDailyRoutineTipAcknowledgments: {
+        [first.campaign.campaignId]: ["sendout-management"],
+        [second.campaign.campaignId]: ["sendout-water"],
+      },
+      tutorialDailyRoutinePauseByCampaign: {
+        [second.campaign.campaignId]: false,
+      },
+    };
+    const repository = createRepository();
+
+    expect(await repository.migrateLegacyProfile(source)).toMatchObject({
+      ok: true,
+      value: {
+        migratedCampaignIds: [
+          first.campaign.campaignId,
+          second.campaign.campaignId,
+        ],
+        skippedCampaignIds: [],
+      },
+    });
+    expect(await repository.loadProfile()).toMatchObject({
+      ok: true,
+      value: {
+        tutorialDailyRoutineTipAcknowledgments:
+          source.tutorialDailyRoutineTipAcknowledgments,
+        tutorialDailyRoutinePauseByCampaign:
+          source.tutorialDailyRoutinePauseByCampaign,
+      },
+    });
+  });
+
   it("migrates into populated storage, reports interruption, and resumes without source mutation", async () => {
     const unrelated = createCampaignProfile("Existing Clinic", "existing");
     const repository = createRepository();

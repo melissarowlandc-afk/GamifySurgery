@@ -1,0 +1,4255 @@
+{
+  "schemaVersion": "character-atlas/v1",
+  "characterId": "patient.adult.032.gray-overshirt-v2",
+  "capabilities": {
+    "sitting": true,
+    "clipboard": true
+  },
+  "pages": {
+    "upper": {
+      "file": "assets/upper-v2.png",
+      "sha256": "337327efe01c4e9115382382c657ca660ba8ebb46b7054e6d293540a91f6360d"
+    },
+    "lower": {
+      "file": "assets/lower-v2.png",
+      "sha256": "01be43db6301a84d616abb57776b36490a23a01c12400282f61d74fbce2b292f"
+    },
+    "actions": {
+      "file": "assets/actions-v2.png",
+      "sha256": "ae87be2ff9bd2f343ebfd386ba74f9ae6ed6370e68155b213e93f0ab15f5fd2b"
+    },
+    "clipboard": {
+      "file": "assets/clipboard-v2.png",
+      "sha256": "cc84e3ad058a1b3843584459daa161f0e17856789b85528c800446cf6f6318fb"
+    },
+    "identity": {
+      "file": "assets/identity-v2.png",
+      "sha256": "8a58c3f41ea7b3752cea4739c956297390d3881e3ded6f1aba9da95bbd2791ba"
+    }
+  },
+  "parts": {
+    "upper.south.torso": {
+      "slotId": "upper.south.torso",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\torso-south-original-v4.png",
+        "sha256": "23eccf073052130f8de6c7d33c6942bdd17a978d660560ca4aee19168e5171f1",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB torso extraction from b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670; neutral background and sleeves removed by authored body polygon; independent neck socket and body axis"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 116
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 156,
+              "y": 55
+            },
+            "right": {
+              "x": 100,
+              "y": 55
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 157,
+              "y": 129
+            },
+            "right": {
+              "x": 99,
+              "y": 129
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 28,
+          "y": -95
+        }
+      },
+      "contentBounds": {
+        "x": 94,
+        "y": 37,
+        "width": 69,
+        "height": 100
+      }
+    },
+    "upper.south.upperArm.left": {
+      "slotId": "upper.south.upperArm.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 109,
+          "y": 366,
+          "width": 93,
+          "height": 159
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component; explicit authored shoulder/cuff-elbow/outer-sleeve points"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 167.0252100840336,
+            "y": 114.08403361344534
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.907563025210084,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -12.672268907563023,
+          "y": -283.42857142857144
+        }
+      },
+      "contentBounds": {
+        "x": 87,
+        "y": 49,
+        "width": 84,
+        "height": 144
+      }
+    },
+    "upper.south.forearmHand.left": {
+      "slotId": "upper.south.forearmHand.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 124,
+          "y": 860,
+          "width": 70,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks; anatomical-left watch center separate from wrist joint"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.01657458563534
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 109.0939226519337,
+            "y": 146.61878453038673
+          },
+          "anterior": {
+            "x": 148.20994475138122,
+            "y": 91.20441988950279
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [
+        {
+          "id": "watch",
+          "anatomicalSide": "left",
+          "landmark": {
+            "x": 128,
+            "y": 122.49723756906076
+          },
+          "sourceRoi": {
+            "x": 124,
+            "y": 860,
+            "width": 70,
+            "height": 198
+          }
+        }
+      ],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6519337016574586,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 24.34254143646409,
+          "y": -508.5745856353591
+        }
+      },
+      "contentBounds": {
+        "x": 105,
+        "y": 52,
+        "width": 46,
+        "height": 129
+      }
+    },
+    "upper.south.upperArm.right": {
+      "slotId": "upper.south.upperArm.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 118,
+          "y": 614,
+          "width": 96,
+          "height": 161
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component; explicit authored shoulder/cuff-elbow/outer-sleeve points"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 87.5,
+            "y": 117.19999999999993
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.9,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -21.400000000000006,
+          "y": -503.80000000000007
+        }
+      },
+      "contentBounds": {
+        "x": 85,
+        "y": 49,
+        "width": 86,
+        "height": 145
+      }
+    },
+    "upper.south.forearmHand.right": {
+      "slotId": "upper.south.forearmHand.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 127,
+          "y": 1124,
+          "width": 69,
+          "height": 200
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.10869565217388
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 145.95652173913044,
+            "y": 148.98913043478262
+          },
+          "anterior": {
+            "x": 109.40217391304347,
+            "y": 94.47826086956513
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6413043478260869,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 24.75,
+          "y": -668.6739130434783
+        }
+      },
+      "contentBounds": {
+        "x": 106,
+        "y": 52,
+        "width": 44,
+        "height": 128
+      }
+    },
+    "upper.east.torso": {
+      "slotId": "upper.east.torso",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v3.png",
+        "sha256": "843f6572dca53421682075dbf3d8dc23f63649d6080858acef54727ca258067d",
+        "crop": {
+          "x": 387,
+          "y": 77,
+          "width": 120,
+          "height": 219
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced generated arm-free torso; v3 removes profile shoulder ovals; retained alpha/RGB; explicit authored sockets"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 109,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 147,
+            "y": 48
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 102.42307692307696,
+              "y": 56.769230769230774
+            },
+            "right": {
+              "x": 106.80769230769232,
+              "y": 58.96153846153847
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 95.84615384615387,
+              "y": 181.73076923076923
+            },
+            "right": {
+              "x": 154.30769230769232,
+              "y": 181.73076923076923
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 38,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.7307692307692307,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -200.11538461538458,
+          "y": -27.26923076923076
+        }
+      },
+      "contentBounds": {
+        "x": 83,
+        "y": 29,
+        "width": 87,
+        "height": 160
+      }
+    },
+    "upper.east.upperArm.left": {
+      "slotId": "upper.east.upperArm.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-sleeve-cleanup-v5.png",
+        "sha256": "ce8e28735b630a1d224f9202ddd860496e53c852bb04dcf61a73acc53360861c",
+        "crop": {
+          "x": 381,
+          "y": 363,
+          "width": 105,
+          "height": 176
+        },
+        "requireSingleComponent": true,
+        "derivation": "isolated v5 profile sleeve without collar flap; authored shoulder/elbow/outer points retained"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128.00000000000006,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 94.3430238406599,
+            "y": 157.63363846695506
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.765938183980869,
+        "rotationRadians": 0.007092079674319706,
+        "translation": {
+          "x": -201.66019515139322,
+          "y": -225.91248365355602
+        }
+      },
+      "contentBounds": {
+        "x": 88,
+        "y": 56,
+        "width": 79,
+        "height": 132
+      }
+    },
+    "upper.east.forearmHand.left": {
+      "slotId": "upper.east.forearmHand.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 395,
+          "y": 860,
+          "width": 88,
+          "height": 196
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks; anatomical-left watch center separate from wrist joint"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.01657458563534
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 152.12154696132598,
+            "y": 145.3149171270719
+          },
+          "anterior": {
+            "x": 140.38674033149175,
+            "y": 91.20441988950279
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [
+        {
+          "id": "watch",
+          "anatomicalSide": "left",
+          "landmark": {
+            "x": 128,
+            "y": 122.49723756906076
+          },
+          "sourceRoi": {
+            "x": 395,
+            "y": 860,
+            "width": 88,
+            "height": 196
+          }
+        }
+      ],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6519337016574586,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -157.54696132596683,
+          "y": -508.5745856353591
+        }
+      },
+      "contentBounds": {
+        "x": 100,
+        "y": 52,
+        "width": 57,
+        "height": 128
+      }
+    },
+    "upper.east.upperArm.right": {
+      "slotId": "upper.east.upperArm.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-sleeve-cleanup-v5.png",
+        "sha256": "ce8e28735b630a1d224f9202ddd860496e53c852bb04dcf61a73acc53360861c",
+        "crop": {
+          "x": 378,
+          "y": 613,
+          "width": 107,
+          "height": 177
+        },
+        "requireSingleComponent": true,
+        "derivation": "isolated v5 profile sleeve without collar flap; authored shoulder/elbow/outer points retained"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 163.99999999999994
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 91.18181818181813,
+            "y": 157.45454545454544
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.8181818181818182,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -224.63636363636368,
+          "y": -448.00000000000006
+        }
+      },
+      "contentBounds": {
+        "x": 86,
+        "y": 55,
+        "width": 85,
+        "height": 142
+      }
+    },
+    "upper.east.forearmHand.right": {
+      "slotId": "upper.east.forearmHand.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 391,
+          "y": 1123,
+          "width": 87,
+          "height": 201
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.98918918918923
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 150.96216216216214,
+            "y": 148.48648648648657
+          },
+          "anterior": {
+            "x": 141.3945945945946,
+            "y": 94.27027027027032
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6378378378378379,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -148.82162162162166,
+          "y": -664.7567567567568
+        }
+      },
+      "contentBounds": {
+        "x": 101,
+        "y": 52,
+        "width": 55,
+        "height": 128
+      }
+    },
+    "upper.west.torso": {
+      "slotId": "upper.west.torso",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v3.png",
+        "sha256": "843f6572dca53421682075dbf3d8dc23f63649d6080858acef54727ca258067d",
+        "crop": {
+          "x": 618,
+          "y": 77,
+          "width": 118,
+          "height": 219
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced generated arm-free torso; v3 removes profile shoulder ovals; retained alpha/RGB; explicit authored sockets"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 109,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 147,
+            "y": 48
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 158.8222222222222,
+              "y": 58.977777777777774
+            },
+            "right": {
+              "x": 153.7555555555556,
+              "y": 56.44444444444444
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 165.57777777777778,
+              "y": 201.6888888888889
+            },
+            "right": {
+              "x": 98.02222222222224,
+              "y": 201.6888888888889
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 38,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.8444444444444444,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -440.73333333333335,
+          "y": -39.82222222222222
+        }
+      },
+      "contentBounds": {
+        "x": 81,
+        "y": 25,
+        "width": 100,
+        "height": 185
+      }
+    },
+    "upper.west.upperArm.left": {
+      "slotId": "upper.west.upperArm.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-sleeve-cleanup-v5.png",
+        "sha256": "ce8e28735b630a1d224f9202ddd860496e53c852bb04dcf61a73acc53360861c",
+        "crop": {
+          "x": 635,
+          "y": 363,
+          "width": 108,
+          "height": 176
+        },
+        "requireSingleComponent": true,
+        "derivation": "isolated v5 profile sleeve without collar flap; authored shoulder/elbow/outer points retained"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 162.468085106383,
+            "y": 157.8723404255319
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7659574468085106,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -398.97872340425533,
+          "y": -223.5744680851064
+        }
+      },
+      "contentBounds": {
+        "x": 89,
+        "y": 56,
+        "width": 79,
+        "height": 132
+      }
+    },
+    "upper.west.forearmHand.left": {
+      "slotId": "upper.west.forearmHand.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 640,
+          "y": 859,
+          "width": 88,
+          "height": 195
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks; anatomical-left watch center separate from wrist joint"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.42222222222222
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 104.40000000000003,
+            "y": 145.81111111111113
+          },
+          "anterior": {
+            "x": 115.54444444444448,
+            "y": 92.05555555555554
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [
+        {
+          "id": "watch",
+          "anatomicalSide": "left",
+          "landmark": {
+            "x": 128,
+            "y": 122.86666666666667
+          },
+          "sourceRoi": {
+            "x": 640,
+            "y": 859,
+            "width": 88,
+            "height": 195
+          }
+        }
+      ],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6555555555555556,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -320.4,
+          "y": -511.05555555555554
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 52,
+        "width": 58,
+        "height": 128
+      }
+    },
+    "upper.west.upperArm.right": {
+      "slotId": "upper.west.upperArm.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-sleeve-cleanup-v5.png",
+        "sha256": "ce8e28735b630a1d224f9202ddd860496e53c852bb04dcf61a73acc53360861c",
+        "crop": {
+          "x": 637,
+          "y": 613,
+          "width": 109,
+          "height": 177
+        },
+        "requireSingleComponent": true,
+        "derivation": "isolated v5 profile sleeve without collar flap; authored shoulder/elbow/outer points retained"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 163.99999999999994
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 165.63636363636363,
+            "y": 157.45454545454544
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.8181818181818182,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -437.3636363636364,
+          "y": -448.00000000000006
+        }
+      },
+      "contentBounds": {
+        "x": 85,
+        "y": 55,
+        "width": 86,
+        "height": 142
+      }
+    },
+    "upper.west.forearmHand.right": {
+      "slotId": "upper.west.forearmHand.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 645,
+          "y": 1123,
+          "width": 87,
+          "height": 200
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.75
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 105.55434782608694,
+            "y": 148.3478260869565
+          },
+          "anterior": {
+            "x": 115.17391304347825,
+            "y": 94.47826086956513
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6413043478260869,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -313.2173913043478,
+          "y": -668.6739130434783
+        }
+      },
+      "contentBounds": {
+        "x": 101,
+        "y": 51,
+        "width": 55,
+        "height": 129
+      }
+    },
+    "upper.north.torso": {
+      "slotId": "upper.north.torso",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\torso-north-original-v4.png",
+        "sha256": "bc1a595b5c98188dfdb7c57a09ceeb974d5b54990dab7bb2a4c095b6bba684e1",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB torso extraction from b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670; neutral background and sleeves removed by authored body polygon; independent neck socket and body axis"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 112,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 144,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 129
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 100,
+              "y": 65
+            },
+            "right": {
+              "x": 156,
+              "y": 65
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 98,
+              "y": 142
+            },
+            "right": {
+              "x": 155,
+              "y": 142
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 32,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 50,
+          "y": -82
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 43,
+        "width": 72,
+        "height": 107
+      }
+    },
+    "upper.north.upperArm.left": {
+      "slotId": "upper.north.upperArm.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 919,
+          "y": 366,
+          "width": 94,
+          "height": 159
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component; explicit authored shoulder/cuff-elbow/outer-sleeve points"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 88.97478991596631,
+            "y": 157.6470588235294
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.907563025210084,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -748.7058823529412,
+          "y": -283.42857142857144
+        }
+      },
+      "contentBounds": {
+        "x": 85,
+        "y": 49,
+        "width": 86,
+        "height": 144
+      }
+    },
+    "upper.north.forearmHand.left": {
+      "slotId": "upper.north.forearmHand.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 927,
+          "y": 859,
+          "width": 72,
+          "height": 196
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks; anatomical-left watch center separate from wrist joint"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 130.07777777777778
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 145.04444444444448,
+            "y": 147.77777777777783
+          },
+          "anterior": {
+            "x": 148.97777777777787,
+            "y": 92.05555555555554
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [
+        {
+          "id": "watch",
+          "anatomicalSide": "left",
+          "landmark": {
+            "x": 128,
+            "y": 123.52222222222224
+          },
+          "sourceRoi": {
+            "x": 927,
+            "y": 859,
+            "width": 72,
+            "height": 196
+          }
+        }
+      ],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6555555555555556,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -503.29999999999995,
+          "y": -511.05555555555554
+        }
+      },
+      "contentBounds": {
+        "x": 105,
+        "y": 52,
+        "width": 47,
+        "height": 129
+      }
+    },
+    "upper.north.upperArm.right": {
+      "slotId": "upper.north.upperArm.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 908,
+          "y": 614,
+          "width": 97,
+          "height": 161
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component; explicit authored shoulder/cuff-elbow/outer-sleeve points"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 167.60000000000002,
+            "y": 157.69999999999993
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.9,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -732.4,
+          "y": -503.80000000000007
+        }
+      },
+      "contentBounds": {
+        "x": 85,
+        "y": 49,
+        "width": 87,
+        "height": 145
+      }
+    },
+    "upper.north.forearmHand.right": {
+      "slotId": "upper.north.forearmHand.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\upper-parts-generated-v2.png",
+        "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+        "crop": {
+          "x": 924,
+          "y": 1123,
+          "width": 73,
+          "height": 200
+        },
+        "requireSingleComponent": true,
+        "derivation": "complete isolated source component with explicit elbow/wrist/hand/thumb landmarks"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.10869565217388
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 110.68478260869563,
+            "y": 148.98913043478262
+          },
+          "anterior": {
+            "x": 148.52173913043475,
+            "y": 94.47826086956513
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6413043478260869,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -488.2934782608695,
+          "y": -668.6739130434783
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 51,
+        "width": 47,
+        "height": 129
+      }
+    },
+    "lower.south.thigh.left": {
+      "slotId": "lower.south.thigh.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1094,
+          "y": 91,
+          "width": 61,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 1094,
+          "y": 91,
+          "width": 61,
+          "height": 55
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 72
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.5,
+            "y": 61
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 24,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -968,
+          "y": -58
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 33,
+        "width": 61,
+        "height": 63
+      }
+    },
+    "lower.south.shin.left": {
+      "slotId": "lower.south.shin.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1094,
+          "y": 138,
+          "width": 61,
+          "height": 65
+        },
+        "nominalRenderRect": {
+          "x": 1094,
+          "y": 146,
+          "width": 61,
+          "height": 57
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 104
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 150.5,
+            "y": 77
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 56,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -971,
+          "y": -98
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 40,
+        "width": 52,
+        "height": 65
+      }
+    },
+    "lower.south.shoe.left": {
+      "slotId": "lower.south.shoe.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1094,
+          "y": 203,
+          "width": 61,
+          "height": 37
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 97.5,
+            "y": 144
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 116,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 116,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 96,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 116,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 97.5,
+            "y": 144
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 40,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1024,
+          "y": -63
+        }
+      },
+      "contentBounds": {
+        "x": 72,
+        "y": 140,
+        "width": 50,
+        "height": 37
+      }
+    },
+    "lower.south.thigh.right": {
+      "slotId": "lower.south.thigh.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1336,
+          "y": 91,
+          "width": 59,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 1336,
+          "y": 91,
+          "width": 59,
+          "height": 55
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 78
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 153.5,
+            "y": 64
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 30,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1212,
+          "y": -55
+        }
+      },
+      "contentBounds": {
+        "x": 124,
+        "y": 36,
+        "width": 59,
+        "height": 63
+      }
+    },
+    "lower.south.shin.right": {
+      "slotId": "lower.south.shin.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1336,
+          "y": 138,
+          "width": 59,
+          "height": 65
+        },
+        "nominalRenderRect": {
+          "x": 1336,
+          "y": 146,
+          "width": 59,
+          "height": 57
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 96
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 151.5,
+            "y": 73
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 48,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1215,
+          "y": -102
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 36,
+        "width": 50,
+        "height": 65
+      }
+    },
+    "lower.south.shoe.right": {
+      "slotId": "lower.south.shoe.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1336,
+          "y": 203,
+          "width": 59,
+          "height": 37
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 94.5,
+            "y": 144
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 116,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 116,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 96,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 116,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 94.5,
+            "y": 144
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 40,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1272,
+          "y": -63
+        }
+      },
+      "contentBounds": {
+        "x": 71,
+        "y": 140,
+        "width": 50,
+        "height": 37
+      }
+    },
+    "lower.east.thigh.left": {
+      "slotId": "lower.east.thigh.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1094,
+          "y": 326,
+          "width": 81,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 1094,
+          "y": 326,
+          "width": 81,
+          "height": 55
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 84
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 154,
+            "y": 67
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 36,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -970,
+          "y": -287
+        }
+      },
+      "contentBounds": {
+        "x": 124,
+        "y": 39,
+        "width": 61,
+        "height": 63
+      }
+    },
+    "lower.east.shin.left": {
+      "slotId": "lower.east.shin.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1094,
+          "y": 373,
+          "width": 81,
+          "height": 65
+        },
+        "nominalRenderRect": {
+          "x": 1094,
+          "y": 381,
+          "width": 81,
+          "height": 57
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 74
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 150.5,
+            "y": 62
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 26,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -970,
+          "y": -348
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 25,
+        "width": 56,
+        "height": 65
+      }
+    },
+    "lower.east.shoe.left": {
+      "slotId": "lower.east.shoe.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1094,
+          "y": 438,
+          "width": 81,
+          "height": 33
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 102,
+            "y": 148
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 143,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 143,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 109.5,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 143,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 102,
+            "y": 148
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 67,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1022,
+          "y": -294
+        }
+      },
+      "contentBounds": {
+        "x": 73,
+        "y": 144,
+        "width": 80,
+        "height": 33
+      }
+    },
+    "lower.east.thigh.right": {
+      "slotId": "lower.east.thigh.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1336,
+          "y": 326,
+          "width": 84,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 1336,
+          "y": 326,
+          "width": 84,
+          "height": 55
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 68
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 153,
+            "y": 59
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 20,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1212,
+          "y": -295
+        }
+      },
+      "contentBounds": {
+        "x": 124,
+        "y": 31,
+        "width": 60,
+        "height": 63
+      }
+    },
+    "lower.east.shin.right": {
+      "slotId": "lower.east.shin.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1336,
+          "y": 373,
+          "width": 84,
+          "height": 65
+        },
+        "nominalRenderRect": {
+          "x": 1336,
+          "y": 381,
+          "width": 84,
+          "height": 57
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 104
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 150.5,
+            "y": 77
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 56,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1214,
+          "y": -333
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 40,
+        "width": 52,
+        "height": 65
+      }
+    },
+    "lower.east.shoe.right": {
+      "slotId": "lower.east.shoe.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1336,
+          "y": 438,
+          "width": 84,
+          "height": 33
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 100.5,
+            "y": 148
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 143,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 143,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 109.5,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 143,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 100.5,
+            "y": 148
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 67,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1267,
+          "y": -294
+        }
+      },
+      "contentBounds": {
+        "x": 73,
+        "y": 144,
+        "width": 80,
+        "height": 33
+      }
+    },
+    "lower.west.thigh.left": {
+      "slotId": "lower.west.thigh.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1067,
+          "y": 805,
+          "width": 88,
+          "height": 64
+        },
+        "nominalRenderRect": {
+          "x": 1067,
+          "y": 805,
+          "width": 88,
+          "height": 56
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 83
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.5,
+            "y": 66
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 35,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -968,
+          "y": -767
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 38,
+        "width": 61,
+        "height": 64
+      }
+    },
+    "lower.west.shin.left": {
+      "slotId": "lower.west.shin.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1067,
+          "y": 853,
+          "width": 88,
+          "height": 67
+        },
+        "nominalRenderRect": {
+          "x": 1067,
+          "y": 861,
+          "width": 88,
+          "height": 59
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 106
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 153.5,
+            "y": 78
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 58,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -971,
+          "y": -813
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 40,
+        "width": 54,
+        "height": 67
+      }
+    },
+    "lower.west.shoe.left": {
+      "slotId": "lower.west.shoe.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1067,
+          "y": 920,
+          "width": 88,
+          "height": 33
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 121,
+            "y": 148
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 147,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 147,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 111.5,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 147,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 121,
+            "y": 148
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 71,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1000,
+          "y": -776
+        }
+      },
+      "contentBounds": {
+        "x": 67,
+        "y": 144,
+        "width": 85,
+        "height": 33
+      }
+    },
+    "lower.west.thigh.right": {
+      "slotId": "lower.west.thigh.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1312,
+          "y": 805,
+          "width": 87,
+          "height": 64
+        },
+        "nominalRenderRect": {
+          "x": 1312,
+          "y": 805,
+          "width": 87,
+          "height": 56
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 87
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 153.5,
+            "y": 68
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 39,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1214,
+          "y": -765
+        }
+      },
+      "contentBounds": {
+        "x": 124,
+        "y": 40,
+        "width": 61,
+        "height": 64
+      }
+    },
+    "lower.west.shin.right": {
+      "slotId": "lower.west.shin.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1312,
+          "y": 853,
+          "width": 87,
+          "height": 67
+        },
+        "nominalRenderRect": {
+          "x": 1312,
+          "y": 861,
+          "width": 87,
+          "height": 59
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 102
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 153.5,
+            "y": 76
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 54,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1216,
+          "y": -815
+        }
+      },
+      "contentBounds": {
+        "x": 127,
+        "y": 38,
+        "width": 52,
+        "height": 67
+      }
+    },
+    "lower.west.shoe.right": {
+      "slotId": "lower.west.shoe.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1312,
+          "y": 920,
+          "width": 87,
+          "height": 33
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 119.5,
+            "y": 148
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 147,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 147,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 111.5,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 147,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 119.5,
+            "y": 148
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 71,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1245,
+          "y": -776
+        }
+      },
+      "contentBounds": {
+        "x": 67,
+        "y": 144,
+        "width": 84,
+        "height": 33
+      }
+    },
+    "lower.north.thigh.left": {
+      "slotId": "lower.north.thigh.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1091,
+          "y": 570,
+          "width": 63,
+          "height": 61
+        },
+        "nominalRenderRect": {
+          "x": 1091,
+          "y": 570,
+          "width": 63,
+          "height": 53
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 84
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 156,
+            "y": 67
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 36,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -966,
+          "y": -530
+        }
+      },
+      "contentBounds": {
+        "x": 125,
+        "y": 40,
+        "width": 63,
+        "height": 61
+      }
+    },
+    "lower.north.shin.left": {
+      "slotId": "lower.north.shin.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1091,
+          "y": 615,
+          "width": 63,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 1091,
+          "y": 623,
+          "width": 63,
+          "height": 55
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 90
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 152,
+            "y": 70
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 42,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -969,
+          "y": -581
+        }
+      },
+      "contentBounds": {
+        "x": 126,
+        "y": 34,
+        "width": 53,
+        "height": 63
+      }
+    },
+    "lower.north.shoe.left": {
+      "slotId": "lower.north.shoe.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1091,
+          "y": 678,
+          "width": 63,
+          "height": 42
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 95,
+            "y": 140
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 112,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 112,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 94,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 112,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 95,
+            "y": 140
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 36,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1027,
+          "y": -543
+        }
+      },
+      "contentBounds": {
+        "x": 71,
+        "y": 135,
+        "width": 48,
+        "height": 42
+      }
+    },
+    "lower.north.thigh.right": {
+      "slotId": "lower.north.thigh.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1338,
+          "y": 570,
+          "width": 62,
+          "height": 61
+        },
+        "nominalRenderRect": {
+          "x": 1338,
+          "y": 570,
+          "width": 62,
+          "height": 53
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 76
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.5,
+            "y": 63
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 28,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1213,
+          "y": -534
+        }
+      },
+      "contentBounds": {
+        "x": 125,
+        "y": 36,
+        "width": 62,
+        "height": 61
+      }
+    },
+    "lower.north.shin.right": {
+      "slotId": "lower.north.shin.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1338,
+          "y": 615,
+          "width": 62,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 1338,
+          "y": 623,
+          "width": 62,
+          "height": 55
+        },
+        "overlapPixels": 8,
+        "derivation": "integer translation-only v1 trousers with 8px hidden continuous-cloth knee overlap"
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 100
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 152,
+            "y": 75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 52,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1216,
+          "y": -576
+        }
+      },
+      "contentBounds": {
+        "x": 128,
+        "y": 39,
+        "width": 52,
+        "height": 63
+      }
+    },
+    "lower.north.shoe.right": {
+      "slotId": "lower.north.shoe.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-base-parts-v1-transparent.png",
+        "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+        "crop": {
+          "x": 1338,
+          "y": 678,
+          "width": 62,
+          "height": 42
+        },
+        "derivation": "integer translation-only accepted v1 shoe with horizontal sole registration"
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 94.5,
+            "y": 140
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 114,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 114,
+            "y": 176
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 95,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 114,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 94.5,
+            "y": 140
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 38,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -1273,
+          "y": -543
+        }
+      },
+      "contentBounds": {
+        "x": 71,
+        "y": 135,
+        "width": 49,
+        "height": 42
+      }
+    },
+    "actions.south.seatedLower": {
+      "slotId": "actions.south.seatedLower",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-action-parts-v1.png",
+        "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+        "crop": {
+          "x": 81,
+          "y": 105,
+          "width": 168,
+          "height": 208
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "true-alpha authored seated lower body; explicit waist, seat support, and sole landmarks"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 83
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 99.89393939393939,
+            "y": 155.12121212121212
+          },
+          "right": {
+            "x": 154.5151515151515,
+            "y": 155.12121212121212
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 35,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.5303030303030303,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 40.5,
+          "y": -9.272727272727266
+        }
+      },
+      "contentBounds": {
+        "x": 83,
+        "y": 46,
+        "width": 90,
+        "height": 111
+      }
+    },
+    "actions.east.seatedLower": {
+      "slotId": "actions.east.seatedLower",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-action-parts-v1.png",
+        "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+        "crop": {
+          "x": 387,
+          "y": 98,
+          "width": 211,
+          "height": 213
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "true-alpha authored seated lower body; explicit waist, seat support, and sole landmarks"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 83
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 181.42105263157893,
+            "y": 142.86842105263156
+          },
+          "right": {
+            "x": 187.8684210526316,
+            "y": 142.86842105263156
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 35,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.4605263157894737,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -74.63157894736841,
+          "y": 1.94736842105263
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 47,
+        "width": 97,
+        "height": 98
+      }
+    },
+    "actions.west.seatedLower": {
+      "slotId": "actions.west.seatedLower",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-action-parts-v1.png",
+        "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+        "crop": {
+          "x": 678,
+          "y": 98,
+          "width": 214,
+          "height": 213
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "true-alpha authored seated lower body; explicit waist, seat support, and sole landmarks"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 83
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 69.97368421052636,
+            "y": 142.86842105263156
+          },
+          "right": {
+            "x": 77.34210526315792,
+            "y": 142.86842105263156
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 35,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.4605263157894737,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -258.84210526315786,
+          "y": 1.94736842105263
+        }
+      },
+      "contentBounds": {
+        "x": 53,
+        "y": 47,
+        "width": 99,
+        "height": 98
+      }
+    },
+    "actions.north.seatedLower": {
+      "slotId": "actions.north.seatedLower",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-action-parts-v1.png",
+        "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+        "crop": {
+          "x": 1044,
+          "y": 101,
+          "width": 167,
+          "height": 212
+        },
+        "requireSingleComponent": true,
+        "componentIslandMaxRatio": 0.08,
+        "derivation": "true-alpha authored seated lower body; explicit waist, seat support, and sole landmarks"
+      },
+      "landmarks": {
+        "seat": {
+          "waist": {
+            "x": 128,
+            "y": 48
+          },
+          "contact": {
+            "x": 128,
+            "y": 83
+          }
+        },
+        "sole": {
+          "left": {
+            "x": 106.1884057971015,
+            "y": 151.9855072463768
+          },
+          "right": {
+            "x": 153.36231884057975,
+            "y": 151.9855072463768
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "seatedLower",
+        "targetLength": 35,
+        "sourceStartLandmark": "seat.waist",
+        "sourceEndLandmark": "seat.contact",
+        "scale": 0.5072463768115942,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -442.6521739130435,
+          "y": -5.260869565217398
+        }
+      },
+      "contentBounds": {
+        "x": 87,
+        "y": 46,
+        "width": 85,
+        "height": 108
+      }
+    },
+    "clipboard.right.clipboardArm": {
+      "slotId": "clipboard.right.clipboardArm",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-action-parts-v1.png",
+        "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+        "crop": {
+          "x": 1353,
+          "y": 394,
+          "width": 145,
+          "height": 180
+        },
+        "requireSingleComponent": true,
+        "derivation": "approved true-alpha bent clipboard arm with explicit anatomical joints and hand contact"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 48
+          },
+          "elbow": {
+            "x": 112.15322145962841,
+            "y": 69.82974594847099
+          },
+          "wrist": {
+            "x": 111.85137805885944,
+            "y": 87.38840777606094
+          }
+        },
+        "hand": {
+          "contact": {
+            "x": 128,
+            "y": 108
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 119.52682453555639,
+            "y": 95.1824355887743
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "clipboardArm",
+        "targetLength": 60,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "hand.contact",
+        "scale": 0.3596685383410966,
+        "rotationRadians": 0.6279148410729755,
+        "translation": {
+          "x": -191.5874806856158,
+          "y": -363.99683783103956
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 44,
+        "width": 44,
+        "height": 70
+      }
+    },
+    "clipboard.left.clipboardArm": {
+      "slotId": "clipboard.left.clipboardArm",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt\\assets\\overshirt-action-parts-v1.png",
+        "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+        "crop": {
+          "x": 1380,
+          "y": 681,
+          "width": 144,
+          "height": 164
+        },
+        "requireSingleComponent": true,
+        "derivation": "approved true-alpha bent clipboard arm with explicit anatomical joints and hand contact"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 48
+          },
+          "elbow": {
+            "x": 147.1788202508128,
+            "y": 74.51370181142593
+          },
+          "wrist": {
+            "x": 143.26056665118438,
+            "y": 95.54853692522065
+          }
+        },
+        "hand": {
+          "contact": {
+            "x": 128.0000000000001,
+            "y": 108.00000000000003
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 125.29122155132382,
+            "y": 100.43660009289366
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [
+        {
+          "id": "watch",
+          "anatomicalSide": "left",
+          "landmark": {
+            "x": 144.27217835578267,
+            "y": 94.8546214584301
+          },
+          "sourceRoi": {
+            "x": 1380,
+            "y": 681,
+            "width": 144,
+            "height": 164
+          }
+        }
+      ],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "clipboardArm",
+        "targetLength": 60,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "hand.contact",
+        "scale": 0.4089114160971595,
+        "rotationRadians": -0.6012343454711561,
+        "translation": {
+          "x": -529.9879238272177,
+          "y": 157.19832791453783
+        }
+      },
+      "contentBounds": {
+        "x": 120,
+        "y": 42,
+        "width": 50,
+        "height": 77
+      }
+    },
+    "identity.south.head": {
+      "slotId": "identity.south.head",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\head-south-v2.png",
+        "sha256": "032d2365f970c81a33024f41feb56236480a4accf7d9aab7606408ea718d4818",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact RGB extraction from original b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670; neutral background removed; garment excluded at neck"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 127,
+            "y": 108
+          },
+          "chin": {
+            "x": 128,
+            "y": 185
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 28,
+          "y": 53
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 107,
+        "width": 69,
+        "height": 91
+      }
+    },
+    "identity.east.head": {
+      "slotId": "identity.east.head",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\head-east-v2.png",
+        "sha256": "506d5a9bec72949530b594377effa9249171952ac50769cd2b9df1ac9bada94d",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact RGB extraction from original b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670; neutral background removed; garment excluded at neck"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 115,
+            "y": 109
+          },
+          "chin": {
+            "x": 144,
+            "y": 181
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 24,
+          "y": 56
+        }
+      },
+      "contentBounds": {
+        "x": 83,
+        "y": 109,
+        "width": 70,
+        "height": 89
+      }
+    },
+    "identity.west.head": {
+      "slotId": "identity.west.head",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\head-west-v2.png",
+        "sha256": "81f34ab17ba8edf2e9ac3b06a8ccfdff15c8ed83e601e10305b79cb4274d1edb",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact RGB extraction from original b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670; neutral background removed; garment excluded at neck"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 124,
+            "y": 108
+          },
+          "chin": {
+            "x": 111,
+            "y": 182
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 36,
+          "y": 55
+        }
+      },
+      "contentBounds": {
+        "x": 90,
+        "y": 108,
+        "width": 71,
+        "height": 90
+      }
+    },
+    "identity.north.head": {
+      "slotId": "identity.north.head",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\gray-overshirt-v2\\assets\\head-north-v2.png",
+        "sha256": "52d88707c9cc77e308496f3c673d352b134f5e130e90d1e1b6c8bf8a72600236",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 310
+        },
+        "derivation": "exact RGB extraction from original b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670; neutral background removed; garment excluded at neck"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 112,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 144,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 119
+          },
+          "chin": {
+            "x": 128,
+            "y": 191
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 32,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 50,
+          "y": 66
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 119,
+        "width": 69,
+        "height": 79
+      }
+    }
+  },
+  "fallbacks": {
+    "actions.south.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.south.torso"
+      ]
+    },
+    "actions.south.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.south.upperArm.left",
+        "upper.south.forearmHand.left"
+      ]
+    },
+    "actions.south.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.south.upperArm.right",
+        "upper.south.forearmHand.right"
+      ]
+    },
+    "actions.east.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.east.torso"
+      ]
+    },
+    "actions.east.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.east.upperArm.left",
+        "upper.east.forearmHand.left"
+      ]
+    },
+    "actions.east.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.east.upperArm.right",
+        "upper.east.forearmHand.right"
+      ]
+    },
+    "actions.west.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.west.torso"
+      ]
+    },
+    "actions.west.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.west.upperArm.left",
+        "upper.west.forearmHand.left"
+      ]
+    },
+    "actions.west.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.west.upperArm.right",
+        "upper.west.forearmHand.right"
+      ]
+    },
+    "actions.north.seatedTorso": {
+      "kind": "base-slot",
+      "slots": [
+        "upper.north.torso"
+      ]
+    },
+    "actions.north.seatedArm.left": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.north.upperArm.left",
+        "upper.north.forearmHand.left"
+      ]
+    },
+    "actions.north.seatedArm.right": {
+      "kind": "articulated-chain",
+      "slots": [
+        "upper.north.upperArm.right",
+        "upper.north.forearmHand.right"
+      ]
+    }
+  },
+  "accessoryPolicy": {
+    "watch": {
+      "anatomicalSide": "left"
+    }
+  },
+  "layerOrder": {
+    "south": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "upperArmsBack",
+      "torso",
+      "forearmsFront",
+      "cuffsFront",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "north": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "arms",
+      "torso",
+      "shoulderCaps",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "east": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "west": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedSouth": [
+      "seatedLower",
+      "backHair",
+      "upperArmsBack",
+      "torso",
+      "forearmsFront",
+      "cuffsFront",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedNorth": [
+      "seatedLower",
+      "backHair",
+      "arms",
+      "torso",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedEast": [
+      "seatedLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedWest": [
+      "seatedLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "clipboardSouth": [
+      "lower",
+      "backHair",
+      "torso",
+      "head",
+      "prop",
+      "arms",
+      "frontHair"
+    ]
+  },
+  "sourceLineage": {
+    "generatedArms": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt-v2/assets/upper-parts-generated-v2.png",
+      "sha256": "27d7c7f3881e174c69182bd21f89cabfd66835c08626b275f2a5bfb288303ec9",
+      "dimensions": [
+        1122,
+        1402
+      ]
+    },
+    "cleanedProfileSleeves": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt-v2/assets/upper-sleeve-cleanup-v5.png",
+      "sha256": "ce8e28735b630a1d224f9202ddd860496e53c852bb04dcf61a73acc53360861c",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "scope": "only East/West upper-arm slots; collar flaps removed; rounded caps and cuffs retained"
+    },
+    "generatedTorso": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt-v2/assets/upper-parts-generated-v3.png",
+      "sha256": "843f6572dca53421682075dbf3d8dc23f63649d6080858acef54727ca258067d",
+      "dimensions": [
+        1122,
+        1402
+      ]
+    },
+    "lower": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt/assets/overshirt-base-parts-v1-transparent.png",
+      "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732",
+      "authoredShoeSeams": {
+        "south": 203,
+        "east": 438,
+        "west": 920,
+        "north": 678
+      },
+      "legRects": {
+        "south": {
+          "left": {
+            "x": 1094,
+            "y": 91,
+            "width": 61,
+            "height": 149
+          },
+          "right": {
+            "x": 1336,
+            "y": 91,
+            "width": 59,
+            "height": 149
+          }
+        },
+        "east": {
+          "left": {
+            "x": 1094,
+            "y": 326,
+            "width": 81,
+            "height": 145
+          },
+          "right": {
+            "x": 1336,
+            "y": 326,
+            "width": 84,
+            "height": 145
+          }
+        },
+        "west": {
+          "left": {
+            "x": 1067,
+            "y": 805,
+            "width": 88,
+            "height": 148
+          },
+          "right": {
+            "x": 1312,
+            "y": 805,
+            "width": 87,
+            "height": 148
+          }
+        },
+        "north": {
+          "left": {
+            "x": 1091,
+            "y": 570,
+            "width": 63,
+            "height": 150
+          },
+          "right": {
+            "x": 1338,
+            "y": 570,
+            "width": 62,
+            "height": 150
+          }
+        }
+      },
+      "kneeOverlapPixels": 8,
+      "derivation": "all accepted v1 lower source pixels copied by integer translation only"
+    },
+    "original": {
+      "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+      "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    "actions": {
+      "path": "tools/character-mapping/layered-pilot/gray-overshirt/assets/overshirt-action-parts-v1.png",
+      "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1",
+      "alphaPolicy": "true source alpha and RGB retained",
+      "authoredLandmarks": {
+        "seated": {
+          "south": {
+            "crop": {
+              "x": 81,
+              "y": 105,
+              "width": 168,
+              "height": 208
+            },
+            "waist": [
+              165,
+              108
+            ],
+            "contact": [
+              165,
+              174
+            ],
+            "soles": [
+              [
+                112,
+                310
+              ],
+              [
+                215,
+                310
+              ]
+            ]
+          },
+          "east": {
+            "crop": {
+              "x": 387,
+              "y": 98,
+              "width": 211,
+              "height": 213
+            },
+            "waist": [
+              440,
+              100
+            ],
+            "contact": [
+              440,
+              176
+            ],
+            "soles": [
+              [
+                556,
+                306
+              ],
+              [
+                570,
+                306
+              ]
+            ]
+          },
+          "west": {
+            "crop": {
+              "x": 678,
+              "y": 98,
+              "width": 214,
+              "height": 213
+            },
+            "waist": [
+              840,
+              100
+            ],
+            "contact": [
+              840,
+              176
+            ],
+            "soles": [
+              [
+                714,
+                306
+              ],
+              [
+                730,
+                306
+              ]
+            ]
+          },
+          "north": {
+            "crop": {
+              "x": 1044,
+              "y": 101,
+              "width": 167,
+              "height": 212
+            },
+            "waist": [
+              1125,
+              105
+            ],
+            "contact": [
+              1125,
+              174
+            ],
+            "soles": [
+              [
+                1082,
+                310
+              ],
+              [
+                1175,
+                310
+              ]
+            ]
+          }
+        },
+        "clipboard": {
+          "right": {
+            "crop": {
+              "x": 1353,
+              "y": 394,
+              "width": 145,
+              "height": 180
+            },
+            "shoulder": [
+              1392,
+              405
+            ],
+            "elbow": [
+              1392,
+              480
+            ],
+            "wrist": [
+              1420,
+              520
+            ],
+            "contact": [
+              1490,
+              540
+            ],
+            "thumb": [
+              1450,
+              525
+            ]
+          },
+          "left": {
+            "crop": {
+              "x": 1380,
+              "y": 681,
+              "width": 144,
+              "height": 164
+            },
+            "shoulder": [
+              1478,
+              690
+            ],
+            "elbow": [
+              1480,
+              770
+            ],
+            "wrist": [
+              1443,
+              807
+            ],
+            "contact": [
+              1395,
+              811
+            ],
+            "thumb": [
+              1400,
+              792
+            ],
+            "watch": [
+              1446,
+              807
+            ]
+          }
+        }
+      }
+    }
+  },
+  "profile": {
+    "canvas": {
+      "width": 160,
+      "height": 320,
+      "axisX": 80,
+      "floorY": 287
+    },
+    "neckY": {
+      "south": 121,
+      "east": 118,
+      "west": 119,
+      "north": 107
+    },
+    "torsoHemY": {
+      "south": 210,
+      "east": 210,
+      "west": 210,
+      "north": 210
+    },
+    "profileBackwardArmScale": 0.7
+  }
+}

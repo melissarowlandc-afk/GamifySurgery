@@ -1,0 +1,78 @@
+<section id="gs019-navy-v2-review" aria-labelledby="gs019-navy-v2-review-title">
+  <style>
+    #gs019-navy-v2-review { color: var(--foreground); }
+    #gs019-navy-v2-review .gs019-navy-v2-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    #gs019-navy-v2-review figure { margin: 0; min-width: 0; }
+    #gs019-navy-v2-review canvas { display: block; background: var(--muted); image-rendering: pixelated; max-width: 100%; }
+    #gs019-navy-v2-review .gs019-navy-v2-game { width: 32px; height: 64px; aspect-ratio: 1 / 2; }
+    #gs019-navy-v2-review .gs019-navy-v2-native { width: 160px; height: auto; aspect-ratio: 1 / 2; }
+    #gs019-navy-v2-review .gs019-navy-v2-frames { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: .5rem; }
+    #gs019-navy-v2-review .gs019-navy-v2-phase { min-width: 0; }
+    #gs019-navy-v2-review .gs019-navy-v2-phase canvas { width: 32px; height: 64px; margin-top: .25rem; }
+    @media (max-width: 600px) { #gs019-navy-v2-review .gs019-navy-v2-panels { grid-template-columns: 1fr; } #gs019-navy-v2-review .gs019-navy-v2-frames { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  </style>
+  <h2 id="gs019-navy-v2-review-title">Navy Vest corrected walking</h2>
+  <div class="viz-controls">
+    <button class="btn btn-primary" id="gs019-navy-v2-play" type="button" disabled>Play</button>
+    <label class="form-label" for="gs019-navy-v2-phase">Phase <output id="gs019-navy-v2-phase-output" class="tabular-nums">01</output>
+      <input class="form-range" id="gs019-navy-v2-phase" type="range" min="1" max="8" value="1" disabled>
+    </label>
+    <span class="text-muted" id="gs019-navy-v2-status">Loading frames</span>
+  </div>
+  <h3>Actual game size: 32×64</h3>
+  <div class="gs019-navy-v2-panels" id="gs019-navy-v2-game"></div>
+  <h3>Native: 160×320</h3>
+  <div class="gs019-navy-v2-panels" id="gs019-navy-v2-native"></div>
+  <h3>All walking phases</h3>
+  <div class="gs019-navy-v2-frames" id="gs019-navy-v2-frames" aria-label="Select walking phase"></div>
+  <script>
+    (() => {
+      const root = document.getElementById('gs019-navy-v2-review');
+      const payload = __GS019_NAVY_PAYLOAD__;
+      const phaseInput = root.querySelector('#gs019-navy-v2-phase');
+      const phaseOutput = root.querySelector('#gs019-navy-v2-phase-output');
+      const play = root.querySelector('#gs019-navy-v2-play');
+      const status = root.querySelector('#gs019-navy-v2-status');
+      const makeImage = source => { const image = new Image(); image.src = source; return image; };
+      const images = { standing: makeImage(payload.standing), west: payload.west.map(makeImage), east: payload.east.map(makeImage) };
+      const sets = [
+        { id: 'standing', label: 'Native standing West', image: () => images.standing },
+        { id: 'west', label: 'Corrected West', image: index => images.west[index] },
+        { id: 'east', label: 'Corrected East', image: index => images.east[index] }
+      ];
+      let index = 0;
+      let timer = null;
+      const canvases = { game: {}, native: {}, phases: {} };
+      const draw = (canvas, image) => { const context = canvas.getContext('2d'); context.imageSmoothingEnabled = false; context.clearRect(0, 0, canvas.width, canvas.height); context.drawImage(image, 0, 0, canvas.width, canvas.height); };
+      for (const set of sets) {
+        for (const [kind, width, height, host] of [['game', 32, 64, 'gs019-navy-v2-game'], ['native', 160, 320, 'gs019-navy-v2-native']]) {
+          const figure = document.createElement('figure');
+          const canvas = document.createElement('canvas');
+          canvas.className = `gs019-navy-v2-${kind}`; canvas.width = width; canvas.height = height;
+          figure.append(canvas, document.createTextNode(set.label)); root.querySelector(`#${host}`).append(figure); canvases[kind][set.id] = canvas;
+        }
+      }
+      payload.phases.forEach((phase, phaseIndex) => {
+        const button = document.createElement('button');
+        button.className = 'btn viz-tile gs019-navy-v2-phase'; button.type = 'button'; button.disabled = true; button.dataset.phase = phase; button.setAttribute('aria-pressed', 'false'); button.append(document.createTextNode(phase));
+        const westCanvas = document.createElement('canvas'); westCanvas.width = 32; westCanvas.height = 64; westCanvas.className = 'gs019-navy-v2-west-thumbnail';
+        const eastCanvas = document.createElement('canvas'); eastCanvas.width = 32; eastCanvas.height = 64; eastCanvas.className = 'gs019-navy-v2-east-thumbnail';
+        button.append(westCanvas, eastCanvas); root.querySelector('#gs019-navy-v2-frames').append(button);
+        canvases.phases[phase] = { button, westCanvas, eastCanvas, phaseIndex };
+        button.addEventListener('click', () => { stop(); index = phaseIndex; render(); });
+      });
+      const stop = () => { if (timer) { clearInterval(timer); timer = null; } play.textContent = 'Play'; };
+      const render = () => {
+        phaseInput.value = String(index + 1); phaseOutput.textContent = payload.phases[index]; status.textContent = `${timer ? 'Playing' : 'Paused'} · phase ${payload.phases[index]}`;
+        for (const set of sets) { draw(canvases.game[set.id], set.image(index)); draw(canvases.native[set.id], set.image(index)); }
+        Object.values(canvases.phases).forEach(item => item.button.setAttribute('aria-pressed', String(item.phaseIndex === index)));
+      };
+      phaseInput.addEventListener('input', event => { stop(); index = Number(event.target.value) - 1; render(); });
+      play.addEventListener('click', () => { if (timer) { stop(); render(); return; } timer = setInterval(() => { index = (index + 1) % payload.phases.length; render(); }, payload.cadenceMs); play.textContent = 'Pause'; render(); });
+      Promise.all([images.standing, ...images.west, ...images.east].map(image => image.decode())).then(() => {
+        Object.values(canvases.phases).forEach(item => { draw(item.westCanvas, images.west[item.phaseIndex]); draw(item.eastCanvas, images.east[item.phaseIndex]); item.button.disabled = false; });
+        play.disabled = false; phaseInput.disabled = false; render();
+      }).catch(error => { status.textContent = `Frame loading failed: ${error.message}`; status.setAttribute('role', 'alert'); });
+    })();
+  </script>
+</section>

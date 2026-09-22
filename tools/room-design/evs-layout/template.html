@@ -1,0 +1,19 @@
+<section id="evs-layout-proof" aria-labelledby="evs-title">
+  <style>
+    #evs-layout-proof{max-width:680px;margin-inline:auto}#evs-layout-proof .evs-art-wrap{position:relative;max-width:360px;margin:12px auto 0}#evs-layout-proof .evs-art{position:relative;z-index:1;display:block;width:100%;height:auto}#evs-layout-proof .evs-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#evs-layout-proof .evs-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#evs-layout-proof .evs-controls{max-width:620px;margin:10px auto 0}#evs-layout-proof fieldset{border:0;margin:0 0 9px;padding:0}#evs-layout-proof legend{font-weight:500;margin-bottom:4px}#evs-layout-proof .evs-buttons{display:flex;gap:5px;flex-wrap:wrap}#evs-layout-proof .evs-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}#evs-layout-proof .evs-label{color:var(--muted-foreground);margin-right:3px}#evs-layout-proof .evs-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:3em}#evs-layout-proof .evs-note{margin-top:6px;color:var(--muted-foreground)}
+  </style>
+  <h2 id="evs-title">Environmental-Services Closet preview</h2>
+  <div class="evs-art-wrap">
+    <canvas id="evs-art" class="evs-art" width="720" height="860" role="img" aria-label="Fixed north-up two by two Environmental-Services Closet with two optional supply shelves, two optional lateral clutter groups, a permanent mop bucket, selectable doors, and provisional routes."></canvas>
+    <div id="evs-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="evs-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="evs-adjacency" class="evs-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="evs-row"><div><span class="evs-label text-small">North</span><span id="evs-north" class="evs-buttons"></span></div><div><span class="evs-label text-small">South</span><span id="evs-south" class="evs-buttons"></span></div><div><span class="evs-label text-small">West</span><span id="evs-west" class="evs-buttons"></span></div><div><span class="evs-label text-small">East</span><span id="evs-east" class="evs-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="evs-optional" class="form-check-input" type="checkbox" checked><span class="form-check-label">Show optional shelves and lateral clutter when clear</span></label>
+    <label class="form-check"><input id="evs-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprints and selected-door route</span></label>
+    <div class="evs-note text-small">Fixed north-up 2 × 2 layout. Shelves and mop bucket are nonblocking. The 0.16-tile route model is provisional.</div>
+    <div id="evs-status" class="evs-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__EVS_SCRIPT__</script>
+</section>

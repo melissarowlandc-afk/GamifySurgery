@@ -19,6 +19,7 @@ export type CharacterPose =
   | "walk-b"
   | "walk-neutral"
   | "seated"
+  | "exam-table"
   | "working"
   | "interaction"
   | "jump-recovery"

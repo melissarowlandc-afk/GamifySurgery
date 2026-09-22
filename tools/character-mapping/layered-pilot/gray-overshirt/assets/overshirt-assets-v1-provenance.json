@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "original": {
+    "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+    "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+    "dimensions": [
+      1536,
+      1024
+    ]
+  },
+  "baseAtlas": {
+    "source": {
+      "path": "artifacts/character-movement/reauthored-pilot/sources/gray-rig-ready-v1.png",
+      "sha256": "ee1cdc49ee7ab74471c3883475be95a632a5f49a3006d86da357ff75dd67999e"
+    },
+    "output": {
+      "file": "overshirt-base-parts-v1-transparent.png",
+      "sha256": "863d1d8dca61361d148ac39159f04f0ef6cd1368ae32d831107784ef75202732"
+    },
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "removedMattePixels": 1343549,
+    "retainedRgbPolicy": "every retained non-matte pixel keeps source RGB",
+    "parts": {
+      "south": {
+        "torso": {
+          "x": 362,
+          "y": 126,
+          "width": 92,
+          "height": 116
+        },
+        "arms": {
+          "left": {
+            "x": 637,
+            "y": 91,
+            "width": 46,
+            "height": 146
+          },
+          "right": {
+            "x": 863,
+            "y": 91,
+            "width": 47,
+            "height": 146
+          }
+        },
+        "legs": {
+          "left": {
+            "x": 1094,
+            "y": 91,
+            "width": 61,
+            "height": 149
+          },
+          "right": {
+            "x": 1336,
+            "y": 91,
+            "width": 59,
+            "height": 149
+          }
+        }
+      },
+      "east": {
+        "torso": {
+          "x": 364,
+          "y": 380,
+          "width": 91,
+          "height": 105
+        },
+        "arms": {
+          "left": {
+            "x": 638,
+            "y": 323,
+            "width": 48,
+            "height": 146
+          },
+          "right": {
+            "x": 857,
+            "y": 323,
+            "width": 48,
+            "height": 146
+          }
+        },
+        "legs": {
+          "left": {
+            "x": 1094,
+            "y": 326,
+            "width": 81,
+            "height": 145
+          },
+          "right": {
+            "x": 1336,
+            "y": 326,
+            "width": 84,
+            "height": 145
+          }
+        }
+      },
+      "west": {
+        "torso": {
+          "x": 364,
+          "y": 849,
+          "width": 95,
+          "height": 118
+        },
+        "arms": {
+          "left": {
+            "x": 637,
+            "y": 799,
+            "width": 48,
+            "height": 146
+          },
+          "right": {
+            "x": 863,
+            "y": 799,
+            "width": 47,
+            "height": 145
+          }
+        },
+        "legs": {
+          "left": {
+            "x": 1067,
+            "y": 805,
+            "width": 88,
+            "height": 148
+          },
+          "right": {
+            "x": 1312,
+            "y": 805,
+            "width": 87,
+            "height": 148
+          }
+        }
+      },
+      "north": {
+        "torso": {
+          "x": 364,
+          "y": 603,
+          "width": 89,
+          "height": 120
+        },
+        "arms": {
+          "left": {
+            "x": 638,
+            "y": 569,
+            "width": 48,
+            "height": 145
+          },
+          "right": {
+            "x": 859,
+            "y": 569,
+            "width": 48,
+            "height": 146
+          }
+        },
+        "legs": {
+          "left": {
+            "x": 1091,
+            "y": 570,
+            "width": 63,
+            "height": 150
+          },
+          "right": {
+            "x": 1338,
+            "y": 570,
+            "width": 62,
+            "height": 150
+          }
+        }
+      }
+    }
+  },
+  "actionAtlas": {
+    "source": {
+      "file": "overshirt-action-parts-v1.png",
+      "sha256": "5fade06922c79d0b0b755118fa771dc8a463199fc7337f7ad2f412462bed2af1"
+    },
+    "dimensions": [
+      1619,
+      972
+    ],
+    "alphaPolicy": "original true alpha and RGB retained without keying",
+    "parts": {
+      "sitting": {
+        "south": {
+          "lowerBody": {
+            "x": 81,
+            "y": 105,
+            "width": 168,
+            "height": 208
+          },
+          "rightArm": {
+            "x": 143,
+            "y": 399,
+            "width": 105,
+            "height": 193
+          },
+          "leftArm": {
+            "x": 114,
+            "y": 674,
+            "width": 108,
+            "height": 199
+          }
+        },
+        "east": {
+          "lowerBody": {
+            "x": 387,
+            "y": 98,
+            "width": 211,
+            "height": 213
+          },
+          "rightArm": {
+            "x": 380,
+            "y": 393,
+            "width": 183,
+            "height": 178
+          },
+          "leftArm": {
+            "x": 380,
+            "y": 674,
+            "width": 183,
+            "height": 178
+          }
+        },
+        "west": {
+          "lowerBody": {
+            "x": 678,
+            "y": 98,
+            "width": 214,
+            "height": 213
+          },
+          "rightArm": {
+            "x": 717,
+            "y": 393,
+            "width": 186,
+            "height": 177
+          },
+          "leftArm": {
+            "x": 717,
+            "y": 674,
+            "width": 186,
+            "height": 178
+          }
+        },
+        "north": {
+          "lowerBody": {
+            "x": 1044,
+            "y": 101,
+            "width": 167,
+            "height": 212
+          },
+          "rightArm": {
+            "x": 1066,
+            "y": 398,
+            "width": 77,
+            "height": 197
+          },
+          "leftArm": {
+            "x": 1055,
+            "y": 680,
+            "width": 89,
+            "height": 203
+          }
+        }
+      },
+      "clipboard": {
+        "rightArm": {
+          "x": 1353,
+          "y": 394,
+          "width": 145,
+          "height": 180
+        },
+        "leftArm": {
+          "x": 1380,
+          "y": 681,
+          "width": 144,
+          "height": 164
+        }
+      }
+    }
+  },
+  "identity": {
+    "south": {
+      "crop": [
+        50,
+        20,
+        240,
+        310
+      ],
+      "sourceHipX": 98,
+      "head": {
+        "file": "overshirt-south-head-v1.png",
+        "sha256": "16848cfeaea4859cf47ba62b43b72d8e7d958791e8b189f576fd14b0a0d44575",
+        "bounds": {
+          "x": 62,
+          "y": 54,
+          "width": 76,
+          "height": 97
+        },
+        "polygon": [
+          [
+            53,
+            47
+          ],
+          [
+            145,
+            47
+          ],
+          [
+            151,
+            62
+          ],
+          [
+            151,
+            131
+          ],
+          [
+            139,
+            145
+          ],
+          [
+            132,
+            151
+          ],
+          [
+            67,
+            151
+          ],
+          [
+            59,
+            143
+          ],
+          [
+            49,
+            130
+          ],
+          [
+            49,
+            62
+          ]
+        ],
+        "exclusions": []
+      }
+    },
+    "east": {
+      "crop": [
+        300,
+        20,
+        240,
+        310
+      ],
+      "sourceHipX": 112,
+      "head": {
+        "file": "overshirt-east-head-v1.png",
+        "sha256": "b6e856e7742296a0f115298007b862878bf4a473348e51447794d7337bf95b1d",
+        "bounds": {
+          "x": 59,
+          "y": 53,
+          "width": 70,
+          "height": 90
+        },
+        "polygon": [
+          [
+            48,
+            42
+          ],
+          [
+            137,
+            42
+          ],
+          [
+            151,
+            56
+          ],
+          [
+            153,
+            112
+          ],
+          [
+            143,
+            129
+          ],
+          [
+            130,
+            143
+          ],
+          [
+            76,
+            143
+          ],
+          [
+            61,
+            130
+          ],
+          [
+            50,
+            112
+          ]
+        ],
+        "exclusions": []
+      }
+    },
+    "west": {
+      "crop": [
+        550,
+        20,
+        240,
+        310
+      ],
+      "sourceHipX": 94,
+      "head": {
+        "file": "overshirt-west-head-v1.png",
+        "sha256": "869b71307ce2be621af6977df030854bfe5ecf67f198bab414986dbfe547335c",
+        "bounds": {
+          "x": 54,
+          "y": 53,
+          "width": 71,
+          "height": 93
+        },
+        "polygon": [
+          [
+            50,
+            47
+          ],
+          [
+            130,
+            47
+          ],
+          [
+            133,
+            61
+          ],
+          [
+            133,
+            126
+          ],
+          [
+            124,
+            139
+          ],
+          [
+            113,
+            146
+          ],
+          [
+            76,
+            146
+          ],
+          [
+            59,
+            138
+          ],
+          [
+            50,
+            124
+          ]
+        ],
+        "exclusions": []
+      }
+    },
+    "north": {
+      "crop": [
+        800,
+        20,
+        240,
+        310
+      ],
+      "sourceHipX": 77,
+      "head": {
+        "file": "overshirt-north-head-v1.png",
+        "sha256": "22fdbc73c819a9278c16038ae166c4f65af800d43d8ec7075dbe41220cff84a9",
+        "bounds": {
+          "x": 40,
+          "y": 53,
+          "width": 73,
+          "height": 97
+        },
+        "polygon": [
+          [
+            27,
+            46
+          ],
+          [
+            125,
+            46
+          ],
+          [
+            128,
+            61
+          ],
+          [
+            128,
+            128
+          ],
+          [
+            117,
+            142
+          ],
+          [
+            108,
+            150
+          ],
+          [
+            46,
+            150
+          ],
+          [
+            35,
+            141
+          ],
+          [
+            27,
+            127
+          ]
+        ],
+        "exclusions": []
+      }
+    }
+  }
+}

@@ -65,8 +65,8 @@ describe("bitmap art asset seam", () => {
     for (const asset of FOUNDER_CHARACTER_ATLASES_V4) {
       expect(asset.nativeWidth).toBe(640);
       expect(asset.nativeHeight).toBe(1152);
-      expect(asset.id).toContain("-v4-r9-hires");
-      expect(asset.relativePath).toContain("?rev=founders-v4-r9-hires");
+      expect(asset.id).toContain("-v4-r10-feet");
+      expect(asset.relativePath).toContain("?rev=founders-v4-r10-feet");
     }
   });
 
@@ -131,6 +131,9 @@ describe("bitmap art asset seam", () => {
       .toBe("room-fixtures:front-desk-v1");
     expect(FRONT_DESK_V2_FIXTURE_OVERRIDES.frontDesk?.atlasId)
       .toBe("room-fixtures:front-desk-v2");
+    expect(FRONT_DESK_V2_FIXTURE_OVERRIDES.frontDesk?.sourceRect).toEqual({
+      x: 476, y: 78, width: 520, height: 314,
+    });
     expect(getRoomBitmapFixtureFrame("room.front_desk", "frontDesk")?.atlasId)
       .toBe("room-fixtures:front-desk-v2");
     expect(getRoomBitmapFixtureFrame("room.front_desk", "visitorChair")).toMatchObject({

@@ -1,0 +1,37 @@
+import { readFile } from 'node:fs/promises';
+import { chromium } from 'playwright';
+
+const fragment = await readFile('tools/room-design/examination-layout/examination-layout.html', 'utf8');
+const browser = await chromium.launch({ headless: true, executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' });
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+await page.setContent(`<main>${fragment}</main>`);
+await page.waitForFunction(() => window.__examinationLayout?.atlasReady());
+const capture = name => page.screenshot({ path: `tools/room-design/examination-layout/evidence/art-${name}.png`, fullPage: true });
+
+await capture('default');
+for (const id of ['N1','N2','N3','S1','S3','WA','WB','EA','EB']) await page.getByRole('button', { name: `Wall door ${id}` }).click();
+await capture('all-open');
+for (const id of ['N1','N3','S1','S2','S3','WA','WB','EA','EB']) await page.getByRole('button', { name: `Wall door ${id}` }).click();
+await page.getByLabel('N1', { exact: true }).check();
+await page.getByLabel('N2', { exact: true }).check();
+await capture('mixed-neighbor');
+await page.getByLabel('N1', { exact: true }).uncheck();
+await page.getByLabel('N2', { exact: true }).uncheck();
+await page.getByRole('button', { name: 'Wall door N2' }).click();
+await page.getByLabel('Show walking space and footprints').check();
+await capture('clearance');
+await page.setViewportSize({ width: 320, height: 840 });
+await capture('320');
+await page.setViewportSize({ width: 1280, height: 1050 });
+await page.getByLabel('Room orientation').selectOption('90');
+await page.getByLabel('Show walking space and footprints').uncheck();
+await capture('west-view');
+await page.getByRole('button', { name: 'Wall door S1' }).click();
+await capture('west-s1-sink-hidden');
+await page.getByRole('button', { name: 'Wall door S1' }).click();
+await page.getByRole('button', { name: 'Wall door S2' }).click();
+await capture('west-s2-sink-visible');
+await page.getByRole('button', { name: 'Wall door S2' }).click();
+await page.getByLabel('Show walking space and footprints').check();
+await capture('west-view-clearance');
+await browser.close();

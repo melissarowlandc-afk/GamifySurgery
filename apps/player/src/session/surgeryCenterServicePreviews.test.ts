@@ -28,6 +28,8 @@ function actionableThyroid(): GameState {
   state.facilityLevel = 1;
   state.encounters = {};
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+  state.rooms.push({ id: "room.preview.examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+  state.doors.push({ id: "door.preview.examination", roomId: "room.preview.examination", side: "south", offset: 1, exterior: false });
   state = gameReducer(state, {
     type: "ADMIT_PATIENT", operationId: "sc.thyroid.admit", encounterId: "encounter.sc.thyroid",
     caseId: "case.thyroid-nodule.palpable-referral", patientDisplayName: "Preview Patient", arrivalClass: "routine",

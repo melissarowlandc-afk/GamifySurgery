@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reauthored-character-source-profile-v1",
+  "title": "Measured reauthored character source profiles",
+  "type": "object",
+  "required": ["schemaVersion", "characters"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "characters": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/character" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "point": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": { "x": { "type": "number" }, "y": { "type": "number" } },
+      "additionalProperties": false
+    },
+    "rect": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": { "type": "integer", "minimum": 0 }, "y": { "type": "integer", "minimum": 0 },
+        "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 }, "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "rig": {
+      "type": "object",
+      "required": ["proximal", "joint", "terminal", "end"],
+      "properties": {
+        "proximal": { "$ref": "#/$defs/point" }, "joint": { "$ref": "#/$defs/point" },
+        "terminal": { "$ref": "#/$defs/point" }, "end": { "$ref": "#/$defs/point" }
+      },
+      "additionalProperties": false
+    },
+    "limb": {
+      "type": "object",
+      "required": ["bounds", "normalizationScale", "rig", "mesh", "skinning"],
+      "properties": {
+        "bounds": { "$ref": "#/$defs/rect" }, "normalizationScale": { "type": "number", "exclusiveMinimum": 0 }, "rig": { "$ref": "#/$defs/rig" },
+        "mesh": {
+          "type": "object", "required": ["cellSize"],
+          "properties": { "cellSize": { "type": "integer", "minimum": 1 }, "alphaThreshold": { "type": "integer", "minimum": 0, "maximum": 254 }, "trimTransparentCells": { "type": "boolean" } },
+          "additionalProperties": false
+        },
+        "skinning": {
+          "type": "object", "required": ["jointBlendPixels", "terminalTransition"],
+          "properties": {
+            "jointBlendPixels": { "type": "array", "prefixItems": [{ "type": "number", "minimum": 0 }, { "type": "number", "minimum": 0 }], "items": false },
+            "terminalTransition": {
+              "type": "object", "required": ["before", "after"],
+              "properties": { "before": { "type": "number", "minimum": 0 }, "after": { "type": "number", "minimum": 0 } }, "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "body": {
+      "type": "object", "required": ["bounds", "anchor", "calibration"],
+      "properties": {
+        "bounds": { "$ref": "#/$defs/rect" }, "anchor": { "$ref": "#/$defs/point" },
+        "calibration": {
+          "type": "object", "required": ["scaleX", "scaleY", "basis"],
+          "properties": { "scaleX": { "type": "number", "exclusiveMinimum": 0 }, "scaleY": { "type": "number", "exclusiveMinimum": 0 }, "basis": { "type": "string", "minLength": 1 } },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "measuredView": {
+      "type": "object", "required": ["status", "source", "targetFrame", "targetRegistration", "parts"],
+      "properties": {
+        "status": { "const": "measured" }, "source": { "$ref": "#/$defs/source" },
+        "targetFrame": {
+          "type": "object", "required": ["width", "height"],
+          "properties": { "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 } }, "additionalProperties": false
+        },
+        "targetRegistration": {
+          "type": "object", "required": ["bodyAnchor"],
+          "properties": { "bodyAnchor": { "$ref": "#/$defs/point" } }, "additionalProperties": true
+        },
+        "parts": {
+          "type": "object", "required": ["body", "leftArm", "rightArm", "leftLeg", "rightLeg"],
+          "properties": {
+            "body": { "$ref": "#/$defs/body" }, "leftArm": { "$ref": "#/$defs/limb" }, "rightArm": { "$ref": "#/$defs/limb" },
+            "leftLeg": { "$ref": "#/$defs/limb" }, "rightLeg": { "$ref": "#/$defs/limb" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "pendingView": {
+      "type": "object", "required": ["status"],
+      "properties": { "status": { "const": "pending-source-measurement" } }, "additionalProperties": false
+    },
+    "view": { "oneOf": [{ "$ref": "#/$defs/measuredView" }, { "$ref": "#/$defs/pendingView" }] },
+    "character": {
+      "type": "object", "required": ["id", "views"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "views": {
+          "type": "object", "required": ["south", "east", "north", "west"],
+          "properties": { "south": { "$ref": "#/$defs/view" }, "east": { "$ref": "#/$defs/view" }, "north": { "$ref": "#/$defs/view" }, "west": { "$ref": "#/$defs/view" } },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

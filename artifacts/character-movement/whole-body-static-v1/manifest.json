@@ -1,0 +1,2997 @@
+{
+  "schemaVersion": "whole-body-static/v1",
+  "canvas": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "floorY": 287
+  },
+  "capabilities": {
+    "clipboard": false,
+    "founderCount": 0
+  },
+  "characters": {
+    "green": {
+      "label": "Green",
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-0b03b9bb-45a8-4d1a-a785-7654d39c0478.png",
+        "sha256": "fa38e9e41e85bd96b85338b6c747c580ae68cdd9af48e9f16cf49478d3c4fd63",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/green-seated-v1.png",
+        "sha256": "87e25b700083a2a0785ac9f7bcfc2d3295acc728620e5f29fe9416607ff90325",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/green-seated-v1-prompt.txt",
+        "promptSha256": "62aa3c33e90e3859527b45ddf3e8110aa7b0b38219187140acde3d651198b212",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 58,
+            "y": 62,
+            "width": 107,
+            "height": 237,
+            "right": 164,
+            "bottom": 298
+          },
+          "generatedSouthContentBounds": {
+            "x": 132,
+            "y": 146,
+            "width": 288,
+            "height": 617,
+            "right": 419,
+            "bottom": 762
+          },
+          "scale": 0.3841166936790924
+        }
+      },
+      "walking": {
+        "manifests": [
+          {
+            "path": "artifacts/character-movement/layered-pilot/v8-motion/manifest.json",
+            "sha256": "36c22f3b951e1eccb5b8cecdafb05f5ecd37130e2204e0faefea4edefd5754c7"
+          },
+          {
+            "path": "artifacts/character-movement/layered-pilot/directional-v1/manifest.json",
+            "sha256": "7c8ebc5615ad3bd425957376acc1fc99a523e9a024bc1fb6e6bdcf835ee45932"
+          }
+        ],
+        "frames": {
+          "south": {
+            "01": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/00.png",
+              "sha256": "71ec7016a8104f16b7211c1c26705cb9e0550f474f69269c8f946893fdfaa9f6"
+            },
+            "02": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/01.png",
+              "sha256": "400e47c6251b02b7364f1bd646e23acf019d9fefd61f46053c09d25ff59fa8e9"
+            },
+            "03": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/02.png",
+              "sha256": "45b14210b28f5293bfdb6c6e55c5ca617d16d98d7177597c20a352b48823b613"
+            },
+            "04": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/03.png",
+              "sha256": "b621f3f187e663451eee22662ca41802acaccdc27133238455892ece2cd68199"
+            },
+            "05": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/04.png",
+              "sha256": "f588b17cdbe9a636bfad78f4c186d00805b2ac3e6c33d3474dc7b857072f43da"
+            },
+            "06": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/05.png",
+              "sha256": "bf67f45801cba3441304af2add845d774b19479805dfdc045eae01702b903557"
+            },
+            "07": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/06.png",
+              "sha256": "16fdf4f7395d17d345ad6bed574af6d840f10a020f902744d2c8ee4753b3ac7b"
+            },
+            "08": {
+              "file": "artifacts/character-movement/layered-pilot/v8-motion/frames/walk/07.png",
+              "sha256": "4a29501f637b7a1db2599b02238f463298a76740bdf28770b2afc938f8d413bc"
+            }
+          },
+          "east": {
+            "01": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/01.png",
+              "sha256": "70e41d274eb782271077ebc75470fd2cf32e727039e466f0a096e471bfdaa390"
+            },
+            "02": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/02.png",
+              "sha256": "b84ab18e4cf58070daa20bc0cf66746055d9eee8fa687b7921ebd8f2e8bf80d2"
+            },
+            "03": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/03.png",
+              "sha256": "c6cd749b6945c0b248448eacdbfd5eb6940ed782b8472450003b9be7deaa685d"
+            },
+            "04": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/04.png",
+              "sha256": "025b5270ab7673e25c5ed5d4ed3322765742e3a02870c0f150fbbab79763ee39"
+            },
+            "05": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/05.png",
+              "sha256": "06fb7cb4c81f40939a5950e6ffa060280c70eae7cb0952d9508ed4bea0a1844f"
+            },
+            "06": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/06.png",
+              "sha256": "fb6ca0c59d2ec6f94900072c01d441e11333e414c5df86694bb3a546fbbce81e"
+            },
+            "07": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/07.png",
+              "sha256": "21d7e6c456b8daad51c71a65d022647c404323185ec225e0c9e5c18c51127a5c"
+            },
+            "08": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/east/08.png",
+              "sha256": "795219f340150344d3a190a97823868bebbc98daf4f50a565cf4a4d313bde04f"
+            }
+          },
+          "west": {
+            "01": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/01.png",
+              "sha256": "cf8f7f4edca9d2cc01c40a454261821e456489d35713f4982bc42e4e3f3f0f89"
+            },
+            "02": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/02.png",
+              "sha256": "b58423afcfb7f87b97203fed5cf6d0199a942e6c2068289548f66088fcf7a44f"
+            },
+            "03": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/03.png",
+              "sha256": "4d92f55146c43b62df6a85e5074ec23bd227a889ef759bc1279a2e0cc0315bd9"
+            },
+            "04": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/04.png",
+              "sha256": "11ceffb8bd2726bb957c5e256a9d773f3c7f1df7cb08ca1c96973299741205e6"
+            },
+            "05": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/05.png",
+              "sha256": "5a38ee5cdbcfffae359d06c86ddf63defc43ed02e38da58e4e9c5365603bcacf"
+            },
+            "06": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/06.png",
+              "sha256": "c09af32c56f9cf3e22d3af5fd1d263839732df80ab7c5800f72700a84fb59634"
+            },
+            "07": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/07.png",
+              "sha256": "f3153fe020096ff12ac28c7e0ce07fb0577a1d54707f711c7ee456498a1a871c"
+            },
+            "08": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/west/08.png",
+              "sha256": "440c51b9aebb1bf7238c10299ffe60a8fc923ab88df5e5027c8b0f623fe4f68d"
+            }
+          },
+          "north": {
+            "01": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/01.png",
+              "sha256": "50d998e64955ab6ddfa28551eded20c599110e0baab6543ede2ee3a5d60e2ed7"
+            },
+            "02": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/02.png",
+              "sha256": "03ab967df5827906d70bbef1fedbd07ffe0c008df4d26acdd000d7f2a3991885"
+            },
+            "03": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/03.png",
+              "sha256": "1747eb31608de669fae7b57b1294d659af5df8b62d10558fb91b2c84fd74a972"
+            },
+            "04": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/04.png",
+              "sha256": "d9ac31fa5136292f36b4c066a37e1eeaa56618fa1959b36734db39d13a59b84a"
+            },
+            "05": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/05.png",
+              "sha256": "cbc1da46e285c1a88c6a2e350b4ad0954dda3aea6c4b6205a3930e963a0aa39e"
+            },
+            "06": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/06.png",
+              "sha256": "d70951502ffdba7c5b0a2f059a5aad5f0ca864e314dffeed70b14313440c99aa"
+            },
+            "07": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/07.png",
+              "sha256": "4a74253ffdd36067751d34f179ceb8500e0e00b9688793169e870e053848a02f"
+            },
+            "08": {
+              "file": "artifacts/character-movement/layered-pilot/directional-v1/frames/north/08.png",
+              "sha256": "d574d9c7eee39bfb4b5d7274e0cf46d2084d697c423a2db8310e18d28242737c"
+            }
+          }
+        }
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/stand-south.png",
+            "sha256": "18070ca8a8c00c2a25291507638b9dbceb23a887aecfae4a784d685f7663ba69",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 50,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 50,
+              "y": 47,
+              "width": 107,
+              "height": 251,
+              "right": 156,
+              "bottom": 297
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -23,
+              "f": -10
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 103,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 297,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 43,
+                "y": 39,
+                "width": 74,
+                "height": 77
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 37,
+              "width": 107,
+              "height": 251,
+              "right": 133,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 59821,
+              "componentPixels": 19378,
+              "discardedComponents": 1
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/stand-east.png",
+            "sha256": "b567e725d7b548fa98159cbb0c839f632305467ef42b977a4077a5dded8c995d",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 300,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 79,
+              "y": 48,
+              "width": 75,
+              "height": 250,
+              "right": 153,
+              "bottom": 297
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -36,
+              "f": -10
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 116,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 297,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 43,
+                "y": 38,
+                "width": 75,
+                "height": 85
+              }
+            },
+            "visibleBounds": {
+              "x": 43,
+              "y": 38,
+              "width": 75,
+              "height": 250,
+              "right": 117,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 64770,
+              "componentPixels": 14430,
+              "discardedComponents": 0
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/stand-west.png",
+            "sha256": "fa619daa606071b85e7cfded92f70296cdf6aca50de63e6e8fcae8bf975683b7",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 550,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 56,
+              "y": 48,
+              "width": 75,
+              "height": 250,
+              "right": 130,
+              "bottom": 297
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -13,
+              "f": -10
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 93,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 297,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 43,
+                "y": 38,
+                "width": 75,
+                "height": 85
+              }
+            },
+            "visibleBounds": {
+              "x": 43,
+              "y": 38,
+              "width": 75,
+              "height": 250,
+              "right": 117,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 64859,
+              "componentPixels": 14340,
+              "discardedComponents": 1
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/stand-north.png",
+            "sha256": "b8e0787275fcaa337bdf174826295434d8578586edf61df5dbb99026772436d9",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 800,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 23,
+              "y": 48,
+              "width": 106,
+              "height": 250,
+              "right": 128,
+              "bottom": 297
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": 4,
+              "f": -10
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 76,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 297,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 44,
+                "y": 40,
+                "width": 73,
+                "height": 77
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 38,
+              "width": 106,
+              "height": 250,
+              "right": 132,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 60320,
+              "componentPixels": 18877,
+              "discardedComponents": 2
+            }
+          }
+        },
+        "sit": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/sit-south.png",
+            "sha256": "e38a27002faef360ef89130c8332f41307f81a39876e498e5ac238862c09db00",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 0,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 132,
+              "y": 146,
+              "width": 288,
+              "height": 617,
+              "right": 419,
+              "bottom": 762
+            },
+            "matrix": {
+              "a": 0.3841166936790924,
+              "b": 0,
+              "c": 0,
+              "d": 0.3841166936790924,
+              "e": -26.01620745542951,
+              "f": -5.696920583468398
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 276,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 762,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 42.74068071312803,
+                "y": 50.38411669367909,
+                "width": 73.75040518638573,
+                "height": 74.90275526742302
+              },
+              "seatContact": {
+                "sourceY": 605,
+                "y": 226.6936790923825
+              }
+            },
+            "visibleBounds": {
+              "x": 25,
+              "y": 50,
+              "width": 110,
+              "height": 237,
+              "right": 134,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 122360,
+              "discardedComponents": 1
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/sit-east.png",
+            "sha256": "2e4ab031ada18d26ac0cd580be483f3f1d2831497268dfce30ffddc356ac6c4a",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 443,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 137,
+              "y": 146,
+              "width": 279,
+              "height": 621,
+              "right": 415,
+              "bottom": 766
+            },
+            "matrix": {
+              "a": 0.3841166936790924,
+              "b": 0,
+              "c": 0,
+              "d": 0.3841166936790924,
+              "e": -26.01620745542951,
+              "f": -7.233387358184757
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 276,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 766,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 29.2965964343598,
+                "y": 48.84764991896273,
+                "width": 75.28687196110211,
+                "height": 74.13452188006484
+              },
+              "seatContact": {
+                "sourceY": 610,
+                "y": 227.0777957860616
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 49,
+              "width": 107,
+              "height": 238,
+              "right": 133,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 97322,
+              "discardedComponents": 0
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/sit-west.png",
+            "sha256": "7473ee4c10fda921bbce71db10ba9bcfbf420bc792b087a5bb2e815a53a7f27b",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 887,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 28,
+              "y": 146,
+              "width": 278,
+              "height": 621,
+              "right": 305,
+              "bottom": 766
+            },
+            "matrix": {
+              "a": 0.3841166936790924,
+              "b": 0,
+              "c": 0,
+              "d": 0.3841166936790924,
+              "e": 15.852512155591569,
+              "f": -7.233387358184757
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 167,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 766,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 55.416531604538086,
+                "y": 48.84764991896273,
+                "width": 74.90275526742302,
+                "height": 74.13452188006484
+              },
+              "seatContact": {
+                "sourceY": 610,
+                "y": 227.0777957860616
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 49,
+              "width": 106,
+              "height": 238,
+              "right": 132,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 97135,
+              "discardedComponents": 3
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/green/sit-north.png",
+            "sha256": "8590be4a6cd23450de36eac5c807dff6d3f4a39e9152b1971d44e05e91b28d7e",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 1330,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 24,
+              "y": 146,
+              "width": 285,
+              "height": 617,
+              "right": 308,
+              "bottom": 762
+            },
+            "matrix": {
+              "a": 0.3841166936790924,
+              "b": 0,
+              "c": 0,
+              "d": 0.3841166936790924,
+              "e": 16.23662884927066,
+              "f": -5.696920583468398
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 166,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 762,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 42.740680713128036,
+                "y": 50.38411669367909,
+                "width": 75.28687196110211,
+                "height": 72.21393841166937
+              },
+              "seatContact": {
+                "sourceY": 600,
+                "y": 224.77309562398705
+              }
+            },
+            "visibleBounds": {
+              "x": 25,
+              "y": 50,
+              "width": 110,
+              "height": 237,
+              "right": 134,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 121310,
+              "discardedComponents": 3
+            }
+          }
+        }
+      },
+      "extractionMetrics": {
+        "stand.south": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 59821,
+          "componentPixels": 19378,
+          "discardedComponents": 1
+        },
+        "sit.south": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 122360,
+          "discardedComponents": 1
+        },
+        "stand.east": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 64770,
+          "componentPixels": 14430,
+          "discardedComponents": 0
+        },
+        "sit.east": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 97322,
+          "discardedComponents": 0
+        },
+        "stand.west": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 64859,
+          "componentPixels": 14340,
+          "discardedComponents": 1
+        },
+        "sit.west": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 97135,
+          "discardedComponents": 3
+        },
+        "stand.north": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 60320,
+          "componentPixels": 18877,
+          "discardedComponents": 2
+        },
+        "sit.north": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 121310,
+          "discardedComponents": 3
+        }
+      }
+    },
+    "gray-braid": {
+      "label": "Gray Braid",
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-16c48adf-2478-4b2a-b0e3-9ce1f2bfc2cb.png",
+        "sha256": "1368999e0dbd28c250fd41c2a5ab97bcb8905de71862e4cdbfc3d75a6b4b62e4",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/gray-braid-seated-v1.png",
+        "sha256": "cab7cef6fa4ee3358e7a13ea7ceb25207a30c59822cbd93a717daf2660b3390c",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/gray-braid-seated-v1-prompt.txt",
+        "promptSha256": "ac2293a01830571ea3b7b5a56aa5c683fc4b9fe6fbbd75a90cbfdac2f3ea2473",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 53,
+            "y": 56,
+            "width": 104,
+            "height": 255,
+            "right": 156,
+            "bottom": 310
+          },
+          "generatedSouthContentBounds": {
+            "x": 113,
+            "y": 134,
+            "width": 289,
+            "height": 683,
+            "right": 401,
+            "bottom": 816
+          },
+          "scale": 0.3733528550512445
+        }
+      },
+      "walking": {
+        "manifests": [
+          {
+            "path": "artifacts/character-movement/gray-braid-v1/manifest.json",
+            "sha256": "e954be5d89fedea444381c51ec7c5441ffa55e336452223b81e3a079a24989a2"
+          }
+        ],
+        "frames": {
+          "south": {
+            "01": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/01.png",
+              "sha256": "ba239fb5a02cf92b1389cb5968850e4aa3bf46b2415d1034b64c6c9ab20acb7b"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/02.png",
+              "sha256": "8ca1bcc093dd97186b78ceb81e226a6d59678955ae488f8f37aa3d483e0cae93"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/03.png",
+              "sha256": "679b20ec289024b8e88c811e6ffc604b8bba787774cdcefc0e33919350fd45f0"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/04.png",
+              "sha256": "520be6a3c55c25c33fcb1d7d590082d74df7ebc8b0ae4e87a74d1003be297e0e"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/05.png",
+              "sha256": "deffb40aec5da561614a546504f21d4392e0d55295f6c1452d212e5b683258d5"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/06.png",
+              "sha256": "a58b8569df286121318d388515e35fa5ca39356f38054c16dfe81d8a88daabe6"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/07.png",
+              "sha256": "bc18075ee6272a36110649fe7835f1b2462aea7b45a17f8ed4ef76542dad13d0"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/south/08.png",
+              "sha256": "54ed97bf6ed6f5ae0528de5ae3fa5c816fd5d416a89db10727e0d1cf32628f45"
+            }
+          },
+          "east": {
+            "01": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/01.png",
+              "sha256": "38e74143cc7b66f38280ca5608254b74e395942ba9061ab161bd87a59227a211"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/02.png",
+              "sha256": "98027914080f2c68b90a7ac57c970040636689cb88b246c5b9d5d98da209e45c"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/03.png",
+              "sha256": "0a4389c20b789941853823f63126e3c84f02e50a3c3f8a3af125bf258429d891"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/04.png",
+              "sha256": "d57eb868e4e3a89d74207aa3a59a5a6c379bbdf7cc5ed08af421ee725ca51ae0"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/05.png",
+              "sha256": "2c3d7badb36834cc628f6b0c3ff75b8b3c388aa5c54155a2a7d18329acd30cff"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/06.png",
+              "sha256": "8d1c7a27935a7f318cddff8442d8f59feff02debf44853b663840d27b6bb6d4a"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/07.png",
+              "sha256": "7ce397d4764db333a515bde94a0b03e7da622600f9a408e5c8555e88b068e3b5"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/east/08.png",
+              "sha256": "c011550fddb92fae4ec7174802d8e4eacc584d6994ee5ccebc2c7f790cca5361"
+            }
+          },
+          "west": {
+            "01": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/01.png",
+              "sha256": "f3cfd9a88b34a2bee992d5fce6f6b5bbc85769f5393c3401c0ed14f77f14e29f"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/02.png",
+              "sha256": "089872fb13d59062334c10be3c91cca2e33a1787b6887f547bcce112b96a9769"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/03.png",
+              "sha256": "4dabb6fce32ae42305390fe065122b7201c01c0b7c7c0b6b1065f5f3e3971097"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/04.png",
+              "sha256": "76c56d56e82b9dcc20e2c2d90a20932e053c9275366a1b73abb598156e48ea81"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/05.png",
+              "sha256": "c7bbbd23a333e2069fa85072b7c1634c094421ab2438aa51808040fdae33e23c"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/06.png",
+              "sha256": "89fde8440175c10c277662c0b5c8e9afc7666b38eb912c11b23b50d5135e04e0"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/07.png",
+              "sha256": "08b6a6b47d37431270ab9293f05e8cb9ccc684e6292c81d07f330e4385307943"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/west/08.png",
+              "sha256": "83a33a442ae675bb0cf256d08ceb7f9a28ab3227684da25888b09f49b1260a29"
+            }
+          },
+          "north": {
+            "01": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/01.png",
+              "sha256": "fed37784da62b61e17b53f90b746c77594ccd58145161babbf3eea9498312ed8"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/02.png",
+              "sha256": "b347da4cb2a4ff4674fe6afe4f09ed598371d32d0053563727f6f84b66fde885"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/03.png",
+              "sha256": "c9de5b407a3d23360bb33a1429bbe7f7481584fb54b7face45b668051d238cd7"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/04.png",
+              "sha256": "da02b50820a990118b0be3dd83ca8764c0aeb149a0ba4a314691325c226af764"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/05.png",
+              "sha256": "fbb06882cad4a28f53d2705aadfa92c7de2f658ee42c142d2c5a3af063c48e31"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/06.png",
+              "sha256": "37e9062177f025e229b0dde87b2701727ee3c7bf707f71efb2b14cebf84919d6"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/07.png",
+              "sha256": "03ff592f2b7bce11b3c0eaca8a3c21d38ce79919b984ce3325342554963fb0b1"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-braid-v1/frames/walk/north/08.png",
+              "sha256": "3bbf6b5fec83ffdf9e940e5b8c795793131e3a43438fd25282145f3ac162de81"
+            }
+          }
+        }
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/stand-south.png",
+            "sha256": "fcd42137698a6f738a62cf2a9706c60c8c7567d83e9e661d444b252008f30f12",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 50,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 49,
+              "y": 40,
+              "width": 108,
+              "height": 272,
+              "right": 156,
+              "bottom": 311
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -23,
+              "f": -24
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 103,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 311,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 41,
+                "y": 16,
+                "width": 77,
+                "height": 85
+              }
+            },
+            "visibleBounds": {
+              "x": 26,
+              "y": 16,
+              "width": 108,
+              "height": 272,
+              "right": 133,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 57937,
+              "componentPixels": 21263,
+              "discardedComponents": 0
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/stand-east.png",
+            "sha256": "ba90b1cb7c1756c47a701605a189e87d775e0fd9f466ec6b3500706169d8a7a8",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 300,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 69,
+              "y": 39,
+              "width": 79,
+              "height": 273,
+              "right": 147,
+              "bottom": 311
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -28,
+              "f": -24
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 108,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 311,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 44,
+                "y": 15,
+                "width": 76,
+                "height": 92
+              }
+            },
+            "visibleBounds": {
+              "x": 41,
+              "y": 15,
+              "width": 79,
+              "height": 273,
+              "right": 119,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 63281,
+              "componentPixels": 15916,
+              "discardedComponents": 1
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/stand-west.png",
+            "sha256": "0b82cc0294fad1e865591adbc717376d086c59e061d8276ab92de47c6cd294a7",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 550,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 42,
+              "y": 39,
+              "width": 79,
+              "height": 273,
+              "right": 120,
+              "bottom": 311
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -1,
+              "f": -24
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 81,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 311,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 41,
+                "y": 15,
+                "width": 75,
+                "height": 94
+              }
+            },
+            "visibleBounds": {
+              "x": 41,
+              "y": 15,
+              "width": 79,
+              "height": 273,
+              "right": 119,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 63543,
+              "componentPixels": 15656,
+              "discardedComponents": 1
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/stand-north.png",
+            "sha256": "8a753d32409cef7f88ab7cb1c10c2523aa0a8ae6623251bc05b39d7e6b0bd591",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 800,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 19,
+              "y": 39,
+              "width": 106,
+              "height": 272,
+              "right": 124,
+              "bottom": 310
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": 8,
+              "f": -23
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 72,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 310,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 43,
+                "y": 16,
+                "width": 74,
+                "height": 90
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 16,
+              "width": 106,
+              "height": 272,
+              "right": 132,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 58572,
+              "componentPixels": 20628,
+              "discardedComponents": 0
+            }
+          }
+        },
+        "sit": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/sit-south.png",
+            "sha256": "7ce7fd58ab3462183fcdc03cd565492eda5294236a32eae55d04f1b3c8171db1",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 0,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 113,
+              "y": 134,
+              "width": 289,
+              "height": 683,
+              "right": 401,
+              "bottom": 816
+            },
+            "matrix": {
+              "a": 0.3733528550512445,
+              "b": 0,
+              "c": 0,
+              "d": 0.3733528550512445,
+              "e": -15.951683748169827,
+              "f": -17.655929721815482
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 257,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 816,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 37.43777452415814,
+                "y": 32.37335285505128,
+                "width": 85.87115666178623,
+                "height": 92.2181551976574
+              },
+              "seatContact": {
+                "sourceY": 640,
+                "y": 221.289897510981
+              }
+            },
+            "visibleBounds": {
+              "x": 26,
+              "y": 32,
+              "width": 108,
+              "height": 255,
+              "right": 133,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 139733,
+              "discardedComponents": 2
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/sit-east.png",
+            "sha256": "8e889026459995a9ada2e7ccf79289d9137cac3f307c19a20aa10f59a9ddb301",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 443,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 100,
+              "y": 133,
+              "width": 303,
+              "height": 684,
+              "right": 402,
+              "bottom": 816
+            },
+            "matrix": {
+              "a": 0.3733528550512445,
+              "b": 0,
+              "c": 0,
+              "d": 0.3733528550512445,
+              "e": -13.711566617862374,
+              "f": -17.655929721815482
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 251,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 816,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 30.71742313323572,
+                "y": 32.000000000000036,
+                "width": 76.16398243045387,
+                "height": 90.72474377745242
+              },
+              "seatContact": {
+                "sourceY": 642,
+                "y": 222.03660322108348
+              }
+            },
+            "visibleBounds": {
+              "x": 24,
+              "y": 32,
+              "width": 113,
+              "height": 255,
+              "right": 136,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 119168,
+              "discardedComponents": 2
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/sit-west.png",
+            "sha256": "4680231d3b288e439b8268b53b91ae5e7a536cf012ae2b16842dc39cf93a6dec",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 887,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 35,
+              "y": 133,
+              "width": 302,
+              "height": 684,
+              "right": 336,
+              "bottom": 816
+            },
+            "matrix": {
+              "a": 0.3733528550512445,
+              "b": 0,
+              "c": 0,
+              "d": 0.3733528550512445,
+              "e": 10.556368960468518,
+              "f": -17.655929721815482
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 186,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 816,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 52.3718887262079,
+                "y": 32.000000000000036,
+                "width": 77.28404099560761,
+                "height": 90.72474377745242
+              },
+              "seatContact": {
+                "sourceY": 642,
+                "y": 222.03660322108348
+              }
+            },
+            "visibleBounds": {
+              "x": 24,
+              "y": 32,
+              "width": 112,
+              "height": 255,
+              "right": 135,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 120018,
+              "discardedComponents": 0
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-braid/sit-north.png",
+            "sha256": "fd9ddc9f1a7b7b835e5640dcbaee46dc540ce739388e1514c9eda2d6bb80ed19",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 1330,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 40,
+              "y": 133,
+              "width": 284,
+              "height": 684,
+              "right": 323,
+              "bottom": 816
+            },
+            "matrix": {
+              "a": 0.3733528550512445,
+              "b": 0,
+              "c": 0,
+              "d": 0.3733528550512445,
+              "e": 12.049780380673496,
+              "f": -17.655929721815482
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 182,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 816,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 43.03806734992679,
+                "y": 32.000000000000036,
+                "width": 74.29721815519765,
+                "height": 86.99121522693997
+              },
+              "seatContact": {
+                "sourceY": 632,
+                "y": 218.30307467057105
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 32,
+              "width": 106,
+              "height": 255,
+              "right": 132,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 133341,
+              "discardedComponents": 1
+            }
+          }
+        }
+      },
+      "extractionMetrics": {
+        "stand.south": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 57937,
+          "componentPixels": 21263,
+          "discardedComponents": 0
+        },
+        "sit.south": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 139733,
+          "discardedComponents": 2
+        },
+        "stand.east": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 63281,
+          "componentPixels": 15916,
+          "discardedComponents": 1
+        },
+        "sit.east": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 119168,
+          "discardedComponents": 2
+        },
+        "stand.west": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 63543,
+          "componentPixels": 15656,
+          "discardedComponents": 1
+        },
+        "sit.west": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 120018,
+          "discardedComponents": 0
+        },
+        "stand.north": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 58572,
+          "componentPixels": 20628,
+          "discardedComponents": 0
+        },
+        "sit.north": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 133341,
+          "discardedComponents": 1
+        }
+      }
+    },
+    "gray-overshirt": {
+      "label": "Gray Overshirt",
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-33437146-564e-4cb1-a7e2-ad41504ea752.png",
+        "sha256": "b1fc32d443e65c5dcae0237ed51cbdc6838ef37a83fce9eefb0b5a254286d670",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/gray-overshirt-seated-v1.png",
+        "sha256": "208f3ccb2960150b42f54e0a9d8cbc9c8e17aed26ff76f51ce936090363135e0",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/gray-overshirt-seated-v1-prompt.txt",
+        "promptSha256": "39dbca21f42e8273575be192f0fc9319f356dad0ed7ca236cb0792008567e85d",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 69,
+            "y": 69,
+            "width": 104,
+            "height": 244,
+            "right": 172,
+            "bottom": 312
+          },
+          "generatedSouthContentBounds": {
+            "x": 118,
+            "y": 164,
+            "width": 287,
+            "height": 655,
+            "right": 404,
+            "bottom": 818
+          },
+          "scale": 0.37251908396946565
+        }
+      },
+      "walking": {
+        "manifests": [
+          {
+            "path": "artifacts/character-movement/gray-overshirt-v2/manifest.json",
+            "sha256": "2237b42a100316adcba0624290663e4b03d490d23806cce333d986f2d2d8b09c"
+          }
+        ],
+        "frames": {
+          "south": {
+            "01": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/01.png",
+              "sha256": "95150753f5f9ed5143bb1bcade3212242a1aa1247b090cf42a9ffc73faacdd45"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/02.png",
+              "sha256": "9f9db4402c21f182563872edd7667aa4d6a2c3b0092059e6a124d0d869ed36bc"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/03.png",
+              "sha256": "59101c6862a8c07844ec3676c902cec7403849cf33d5325cec3d8d0d11c179f2"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/04.png",
+              "sha256": "2a604b8777e1655eff81aed90dbb427536fe5dad05bafe91ab058d94ac1eb2f3"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/05.png",
+              "sha256": "3dc00d76e3ffa09b974073db7ce870712ff4e676a3b97c7e40ddb1c8d946a39f"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/06.png",
+              "sha256": "4b5e47a1eee223dd875a6319838efe42936a0d7449a436b03d9df4fb1d30e3e3"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/07.png",
+              "sha256": "f7caadfd1890d833cc6fe8f007aba462fed10300229e8d2a630d0c0b6a9192a8"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/south/08.png",
+              "sha256": "7dd2883660ba3c757385f7e21d064e823f31a0972791e588f7ff175a6aef3147"
+            }
+          },
+          "east": {
+            "01": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/01.png",
+              "sha256": "0563b5fdf4ca730dc5f8dc3458e6b71e2f589dfef1780237692273cf7d1ff44e"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/02.png",
+              "sha256": "74d089a8ef1efbb95bc47a7c1ab6b8cd62326979b778e90b4a5129867261c433"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/03.png",
+              "sha256": "c642705552b6fb1f48487589311d8bd18c12cbd89bb6b4be0c95b81481d4d407"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/04.png",
+              "sha256": "0066dcf23fb5fb9e2c6cf6d5550bca0e6349598e84acd64f6defc7d84f603c2f"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/05.png",
+              "sha256": "6168764408a2d9a976007db7efbec09ec980e993c57ab839323c7c726f483b02"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/06.png",
+              "sha256": "3ab4b133fc74767ca6336f1eb20c6423984d4a9c3d2f2c3adc1fb6eb43ce5556"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/07.png",
+              "sha256": "840eb3b8bf2be9e98271886124a5ec2f22cefffdbc1ef83b8508ad620ad3bcd6"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/east/08.png",
+              "sha256": "2a6ea8f4370e5b4941e50ffa46963b58d75efe9cd2cdc4bcfa956504cfff3132"
+            }
+          },
+          "west": {
+            "01": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/01.png",
+              "sha256": "e6240dd895c86fd1bf571a71342bf34707937a50f87ec15d985b980ea85affc1"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/02.png",
+              "sha256": "c3794b944544db966fafe20606b358bd338b65bc89cd1c6d841a9970ed6f0496"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/03.png",
+              "sha256": "25067dfc022ee7f6fa5a46c9d05a326b49d5e440c54517d845560b57992d6a82"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/04.png",
+              "sha256": "b896e32e652e9ef5fbc2df9002d330f56a670a6ac4afffdfd8962d4611b08089"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/05.png",
+              "sha256": "879aa8b47443d97fda552068bd3afe474e2410f5556a6ebc83a55796e7b3544e"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/06.png",
+              "sha256": "0d54d338d5a5c90e9535aba95170e52c27dad36abba2e667a40530e76d0d2500"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/07.png",
+              "sha256": "cf4dfefb06a52afb021ee415516d0248e7897a7f7f83c26e865691fbb708a6d7"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/west/08.png",
+              "sha256": "edc7385e29d6efb312039dd643e86b8fdb040ad681a10be69fde9b2824a1704d"
+            }
+          },
+          "north": {
+            "01": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/01.png",
+              "sha256": "c1a1d7908843f30fb1565902390a4f1fa3d15fe0e9d53a15bb24f236a4190a3b"
+            },
+            "02": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/02.png",
+              "sha256": "e658fe3e4d5118fe98644392d5c8285aafef0769d278332ba1508254c28c96c3"
+            },
+            "03": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/03.png",
+              "sha256": "2d9cfc63f955e2c4c99a6c336ef1b92f1b8bdfe5228177d7af07f514c79a71d8"
+            },
+            "04": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/04.png",
+              "sha256": "5517cd2453055fa694e77fabc6022be3beead005e57becb3553e797fb8ba6da9"
+            },
+            "05": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/05.png",
+              "sha256": "fd589abc6e6c7562df2a0e16c9014798332af7bf8cc7da07edfd537cf2dc15ae"
+            },
+            "06": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/06.png",
+              "sha256": "2d9d9ec7965a2160d7fbbc5f59d9d09f5d9dcd902d2b9aecbf5e45ca382b6aa4"
+            },
+            "07": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/07.png",
+              "sha256": "e73ad4c4da096fc9b70fd6d5fb75cbed951bc139b338dcdc8f2f72263a08a65b"
+            },
+            "08": {
+              "file": "artifacts/character-movement/gray-overshirt-v2/frames/walk/north/08.png",
+              "sha256": "2f414ed0e98d220871e3ff66e1796bb6d35018ded2bafa3369ce65068392712c"
+            }
+          }
+        }
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/stand-south.png",
+            "sha256": "f929efad1981298771232f337e73e521cfc79138e7968951a25556f40d3e8aff",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 50,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 49,
+              "y": 54,
+              "width": 102,
+              "height": 259,
+              "right": 150,
+              "bottom": 312
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -20,
+              "f": -25
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 100,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 312,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 45,
+                "y": 30,
+                "width": 70,
+                "height": 78
+              }
+            },
+            "visibleBounds": {
+              "x": 29,
+              "y": 29,
+              "width": 102,
+              "height": 259,
+              "right": 130,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 60326,
+              "componentPixels": 18871,
+              "discardedComponents": 3
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/stand-east.png",
+            "sha256": "49fe5a80c30546156a0d7863f324962b229f3c2249542f350160971da7bc5fc5",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 300,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 58,
+              "y": 53,
+              "width": 71,
+              "height": 260,
+              "right": 128,
+              "bottom": 312
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -13,
+              "f": -25
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 93,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 312,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 45,
+                "y": 28,
+                "width": 71,
+                "height": 73
+              }
+            },
+            "visibleBounds": {
+              "x": 45,
+              "y": 28,
+              "width": 71,
+              "height": 260,
+              "right": 115,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 65102,
+              "componentPixels": 14098,
+              "discardedComponents": 0
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/stand-west.png",
+            "sha256": "1cd1c2c943c5fa48ac54eb73f9714cf4800fdc90b4d7584a0d1a7f1fbba2a9d4",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 550,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 54,
+              "y": 53,
+              "width": 72,
+              "height": 260,
+              "right": 125,
+              "bottom": 312
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -10,
+              "f": -25
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 90,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 312,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 44,
+                "y": 28,
+                "width": 72,
+                "height": 75
+              }
+            },
+            "visibleBounds": {
+              "x": 44,
+              "y": 28,
+              "width": 72,
+              "height": 260,
+              "right": 115,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 65048,
+              "componentPixels": 14152,
+              "discardedComponents": 0
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/stand-north.png",
+            "sha256": "021cfa7a074dd7f3b404a3cc158de8f6dcf2dfcfb866f97eb85f9e13e512b88e",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 800,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 27,
+              "y": 53,
+              "width": 99,
+              "height": 260,
+              "right": 125,
+              "bottom": 312
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": 4,
+              "f": -25
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 76,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 312,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 46,
+                "y": 28,
+                "width": 69,
+                "height": 73
+              }
+            },
+            "visibleBounds": {
+              "x": 31,
+              "y": 28,
+              "width": 99,
+              "height": 260,
+              "right": 129,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 60983,
+              "componentPixels": 18217,
+              "discardedComponents": 0
+            }
+          }
+        },
+        "sit": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/sit-south.png",
+            "sha256": "3325f34509f7b57ca7e3c9b14d2479f5941ed57662c5876ff282bcbb51f51524",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 0,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 118,
+              "y": 164,
+              "width": 287,
+              "height": 655,
+              "right": 404,
+              "bottom": 818
+            },
+            "matrix": {
+              "a": 0.37251908396946565,
+              "b": 0,
+              "c": 0,
+              "d": 0.37251908396946565,
+              "e": -17.22748091603053,
+              "f": -17.720610687022884
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 261,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 818,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 41.25801526717558,
+                "y": 43.37251908396948,
+                "width": 78.22900763358778,
+                "height": 84.5618320610687
+              },
+              "seatContact": {
+                "sourceY": 635,
+                "y": 218.8290076335878
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 43,
+              "width": 107,
+              "height": 244,
+              "right": 133,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 123699,
+              "discardedComponents": 5
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/sit-east.png",
+            "sha256": "15385be53b9e999d4228cd6a28415084cf90846b4c37fda81e4456a52ae996b0",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 443,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 117,
+              "y": 167,
+              "width": 291,
+              "height": 650,
+              "right": 407,
+              "bottom": 816
+            },
+            "matrix": {
+              "a": 0.37251908396946565,
+              "b": 0,
+              "c": 0,
+              "d": 0.37251908396946565,
+              "e": -17.599999999999994,
+              "f": -16.975572519083983
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 262,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 816,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 33.062595419847334,
+                "y": 45.23511450381678,
+                "width": 63.32824427480916,
+                "height": 81.58167938931298
+              },
+              "seatContact": {
+                "sourceY": 638,
+                "y": 220.6916030534351
+              }
+            },
+            "visibleBounds": {
+              "x": 26,
+              "y": 45,
+              "width": 108,
+              "height": 242,
+              "right": 133,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 98731,
+              "discardedComponents": 1
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/sit-west.png",
+            "sha256": "16dc480f197f84c5070f212c6d6ceacc0eb089fdceb95320ff2bb7b098867292",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 887,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 20,
+              "y": 166,
+              "width": 288,
+              "height": 651,
+              "right": 307,
+              "bottom": 816
+            },
+            "matrix": {
+              "a": 0.37251908396946565,
+              "b": 0,
+              "c": 0,
+              "d": 0.37251908396946565,
+              "e": 18.906870229007637,
+              "f": -16.975572519083983
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 164,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 816,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 60.256488549618325,
+                "y": 44.86259541984732,
+                "width": 65.56335877862595,
+                "height": 81.95419847328245
+              },
+              "seatContact": {
+                "sourceY": 638,
+                "y": 220.6916030534351
+              }
+            },
+            "visibleBounds": {
+              "x": 26,
+              "y": 45,
+              "width": 108,
+              "height": 242,
+              "right": 133,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 98956,
+              "discardedComponents": 1
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/gray-overshirt/sit-north.png",
+            "sha256": "99e7514ac60abcc0f729f3a35dcc1da187e5f5e54f1d80cad76bbadf46d2ea1f",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 1330,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 36,
+              "y": 164,
+              "width": 277,
+              "height": 655,
+              "right": 312,
+              "bottom": 818
+            },
+            "matrix": {
+              "a": 0.37251908396946565,
+              "b": 0,
+              "c": 0,
+              "d": 0.37251908396946565,
+              "e": 15.181679389312976,
+              "f": -17.720610687022884
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 174,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 818,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 49.08091603053435,
+                "y": 43.37251908396948,
+                "width": 62.58320610687023,
+                "height": 78.97404580152671
+              },
+              "seatContact": {
+                "sourceY": 630,
+                "y": 216.96641221374048
+              }
+            },
+            "visibleBounds": {
+              "x": 29,
+              "y": 43,
+              "width": 103,
+              "height": 244,
+              "right": 131,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 121266,
+              "discardedComponents": 3
+            }
+          }
+        }
+      },
+      "extractionMetrics": {
+        "stand.south": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 60326,
+          "componentPixels": 18871,
+          "discardedComponents": 3
+        },
+        "sit.south": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 123699,
+          "discardedComponents": 5
+        },
+        "stand.east": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 65102,
+          "componentPixels": 14098,
+          "discardedComponents": 0
+        },
+        "sit.east": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 98731,
+          "discardedComponents": 1
+        },
+        "stand.west": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 65048,
+          "componentPixels": 14152,
+          "discardedComponents": 0
+        },
+        "sit.west": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 98956,
+          "discardedComponents": 1
+        },
+        "stand.north": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 60983,
+          "componentPixels": 18217,
+          "discardedComponents": 0
+        },
+        "sit.north": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 121266,
+          "discardedComponents": 3
+        }
+      }
+    },
+    "brown-beanie": {
+      "label": "Brown Beanie",
+      "founder": false,
+      "originalSource": {
+        "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-092d31ac-7592-4634-8883-167ddac564df.png",
+        "sha256": "1ded19438dc0df3f0fa7f4cdadddddbfa3750632d47a27c7c721c8e9cdacb636",
+        "background": "baked neutral checkerboard removed deterministically"
+      },
+      "seatedSource": {
+        "path": "tools/character-mapping/whole-body-static-v1/assets/brown-beanie-seated-v1.png",
+        "sha256": "c68bc9d004684d966a7f257d7b7620e8af0c8230ef9de717a563f7fc38ae1e90",
+        "promptPath": "tools/character-mapping/whole-body-static-v1/assets/brown-beanie-seated-v1-prompt.txt",
+        "promptSha256": "8f24af799d804b267f53bfc973dadd34cc151eed49f1836ffc381dc7b0c991d9",
+        "background": "true RGBA alpha",
+        "scaleReference": {
+          "method": "uniform scale matching original whole-body South seated height",
+          "originalCrop": {
+            "x": 1000,
+            "y": 20,
+            "width": 210,
+            "height": 330
+          },
+          "originalContentBounds": {
+            "x": 59,
+            "y": 63,
+            "width": 109,
+            "height": 248,
+            "right": 167,
+            "bottom": 310
+          },
+          "generatedSouthContentBounds": {
+            "x": 98,
+            "y": 177,
+            "width": 274,
+            "height": 611,
+            "right": 371,
+            "bottom": 787
+          },
+          "scale": 0.40589198036006546
+        }
+      },
+      "walking": {
+        "manifests": [
+          {
+            "path": "artifacts/character-movement/brown-beanie-v1/manifest.json",
+            "sha256": "2f349824947cd327ce78f60b2ac547f2dcd90f2c9077dfd18896e769a74de3ac"
+          }
+        ],
+        "frames": {
+          "south": {
+            "01": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/01.png",
+              "sha256": "e7889e7e0a7c727c48984673e86543257e6999e58949f8bedc84d2cf4de12b06"
+            },
+            "02": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/02.png",
+              "sha256": "435798e545a605ea73a4899598e712598871f92d14b0a22260ffee57ce93ad8c"
+            },
+            "03": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/03.png",
+              "sha256": "831bb9665fab98c6a1e4b0f57784726d665ae8864bff84ba884b98bf5fb73932"
+            },
+            "04": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/04.png",
+              "sha256": "fad6de90037760790f10fc50d62f53753ad960618bd3c1999989bf572a944575"
+            },
+            "05": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/05.png",
+              "sha256": "3a98d801c5ef826f70e325453659b01b125e19307b2e98197555323948b2b065"
+            },
+            "06": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/06.png",
+              "sha256": "e7a2514f1c9ee280ebc897eaa98b9b7c530350d2e5b1d2bb3273d867911e592c"
+            },
+            "07": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/07.png",
+              "sha256": "be7449bcc4522f125139ecb7a55b99baf962d5f316880879a6009ac4d7fcc4de"
+            },
+            "08": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/south/08.png",
+              "sha256": "c2a6c63290c6127139b7b9b2af4005c247209a77f66ae390beac18ca8bdef967"
+            }
+          },
+          "east": {
+            "01": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/01.png",
+              "sha256": "a5894b2b4409d31b27da4d5590f9af82c04c48ee1c083b3be95aca1c5ce0f141"
+            },
+            "02": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/02.png",
+              "sha256": "d269d0d3b2b709999dffe9f06057090a3efabff99a1ef60ed8a874ce4d061f12"
+            },
+            "03": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/03.png",
+              "sha256": "53e78a99a66d24b77c777e7ef8fb1747062ff1e0463ecbab5960644c544f0b01"
+            },
+            "04": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/04.png",
+              "sha256": "dc31c2bd061c0d3348036ce3c3b63a77aecfa2582968a61ed50504e773400751"
+            },
+            "05": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/05.png",
+              "sha256": "d15841edd5a597f9e2bba518775d5e2bfc3249629248e9e6c1458811cc0cb7b8"
+            },
+            "06": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/06.png",
+              "sha256": "bbc995c79bc0c2820e0a567dea67311bbcf5c31c9b20f53191171b94476d7073"
+            },
+            "07": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/07.png",
+              "sha256": "da0cba7aadc22abe173f3a9a244a47f04d8953ed1e5a277e1634057ed7d6dede"
+            },
+            "08": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/east/08.png",
+              "sha256": "b9920cd66acc9b51bfd4af051ddcee26aeab32349a347391868a4d26ef8033c6"
+            }
+          },
+          "west": {
+            "01": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/01.png",
+              "sha256": "76a02be8d5fd9e9dea780859aa41c8a1f67c62fbd4eaac9673411a7b4d3af5dc"
+            },
+            "02": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/02.png",
+              "sha256": "dce36f651e525d837e0e5163d5b41bcf614ec67f69b13df53e22130c415c65c2"
+            },
+            "03": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/03.png",
+              "sha256": "402c3304e89caca91d1fe382b80f0278aae6b9e4baca723438bf245c3b0bd0c0"
+            },
+            "04": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/04.png",
+              "sha256": "65e68a75ef77019ccc5e9d44f58742aebd96555b39defc0ced1037eb7b0c322c"
+            },
+            "05": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/05.png",
+              "sha256": "d285d51096b5a21a6f7f84902b2c619cf8237b2694bdc827587010acd4bae6c8"
+            },
+            "06": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/06.png",
+              "sha256": "e96cda12ed9aa6e98ed1add7c38c1aca40160aaf59696c8399791b217a018547"
+            },
+            "07": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/07.png",
+              "sha256": "e5491b0a2161154365fdf2bc16fc613e11c4d517298feaa6125944c7d3a788bb"
+            },
+            "08": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/west/08.png",
+              "sha256": "5cf38428122a8d90802ff0512ac166b0b2af17afd84aa5aa8eddc7ff73704934"
+            }
+          },
+          "north": {
+            "01": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/01.png",
+              "sha256": "62a0285a3c6b2b65d2a745445edc0158e5bc1d9edb114567b44b8634449a261a"
+            },
+            "02": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/02.png",
+              "sha256": "7288a228133eec66e0ada66c9134537bd9021197140b1267b2b91bc2e59f6ff3"
+            },
+            "03": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/03.png",
+              "sha256": "622c0ef831a95cf04e4281857bff9d523b284180f5aa600c42d6e5d8126c56cc"
+            },
+            "04": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/04.png",
+              "sha256": "ae5272dec498d9bcc31e3196e9c5bd6da70bb6487e591e3080596cb323875869"
+            },
+            "05": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/05.png",
+              "sha256": "60fe29cc9629c4d8aa3a104ac9a78112057ed0450843885b9445f9b93336bb86"
+            },
+            "06": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/06.png",
+              "sha256": "d9c806bcfd6faec20884a9f0057909e3c32f957c92d9d098cd479fc75a6c839c"
+            },
+            "07": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/07.png",
+              "sha256": "ee68c573a01e83a47a5d090265c4ffc63f52db131f742da6089e5199c01274c0"
+            },
+            "08": {
+              "file": "artifacts/character-movement/brown-beanie-v1/frames/walk/north/08.png",
+              "sha256": "ad6489d00e3bec12e3c2f4518e6c51c8a08252cdfb848508cae847b1598f1d83"
+            }
+          }
+        }
+      },
+      "poses": {
+        "stand": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/stand-south.png",
+            "sha256": "cf82082bed6bad6387544e985d4389a18945600764efd4ebf5a7fe16bafd2dd5",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 50,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 52,
+              "y": 52,
+              "width": 106,
+              "height": 259,
+              "right": 157,
+              "bottom": 310
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -25,
+              "f": -23
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 105,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 310,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 41,
+                "y": 29,
+                "width": 77,
+                "height": 94
+              }
+            },
+            "visibleBounds": {
+              "x": 27,
+              "y": 29,
+              "width": 106,
+              "height": 259,
+              "right": 132,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 59427,
+              "componentPixels": 19772,
+              "discardedComponents": 1
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/stand-east.png",
+            "sha256": "ff69c073ae4f41e0298a16e43aba1d9ba792c13a87d46a1562e765bf99a27841",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 300,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 67,
+              "y": 55,
+              "width": 80,
+              "height": 255,
+              "right": 146,
+              "bottom": 309
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -27,
+              "f": -22
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 107,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 309,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 40,
+                "y": 33,
+                "width": 80,
+                "height": 90
+              }
+            },
+            "visibleBounds": {
+              "x": 40,
+              "y": 33,
+              "width": 80,
+              "height": 255,
+              "right": 119,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 64025,
+              "componentPixels": 15174,
+              "discardedComponents": 1
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/stand-west.png",
+            "sha256": "86f72901eed78847831c03551b5b36deb66ef6d4a29f16fc39cd2ce556e78801",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 550,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 44,
+              "y": 55,
+              "width": 81,
+              "height": 255,
+              "right": 124,
+              "bottom": 309
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": -4,
+              "f": -22
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 84,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 309,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 40,
+                "y": 33,
+                "width": 81,
+                "height": 90
+              }
+            },
+            "visibleBounds": {
+              "x": 40,
+              "y": 33,
+              "width": 81,
+              "height": 255,
+              "right": 120,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 64320,
+              "componentPixels": 14880,
+              "discardedComponents": 0
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/stand-north.png",
+            "sha256": "0cbe98cf242258e02d496011a935cc762387a6b6a7b7ddc2da4102256126afa8",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 800,
+              "y": 20,
+              "width": 240,
+              "height": 330
+            },
+            "sourceContentBounds": {
+              "x": 12,
+              "y": 52,
+              "width": 104,
+              "height": 258,
+              "right": 115,
+              "bottom": 309
+            },
+            "matrix": {
+              "a": 1,
+              "b": 0,
+              "c": 0,
+              "d": 1,
+              "e": 16,
+              "f": -22
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 64,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 309,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 44,
+                "y": 30,
+                "width": 72,
+                "height": 86
+              }
+            },
+            "visibleBounds": {
+              "x": 28,
+              "y": 30,
+              "width": 104,
+              "height": 258,
+              "right": 131,
+              "bottom": 287
+            },
+            "extraction": {
+              "method": "border-connected-neutral-background then largest opaque component",
+              "backgroundPixels": 59863,
+              "componentPixels": 19336,
+              "discardedComponents": 1
+            }
+          }
+        },
+        "sit": {
+          "south": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/sit-south.png",
+            "sha256": "11f2b0e5c3cec09ae01bb4e80492386c1dc33a51190ae2b5d786cc8a7e57901a",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 0,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 98,
+              "y": 177,
+              "width": 274,
+              "height": 611,
+              "right": 371,
+              "bottom": 787
+            },
+            "matrix": {
+              "a": 0.40589198036006546,
+              "b": 0,
+              "c": 0,
+              "d": 0.40589198036006546,
+              "e": -15.384615384615387,
+              "f": -32.43698854337151
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 235,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 787,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 41.84615384615385,
+                "y": 39.40589198036007,
+                "width": 75.90180032733224,
+                "height": 90.91980360065466
+              },
+              "seatContact": {
+                "sourceY": 615,
+                "y": 217.18657937806876
+              }
+            },
+            "visibleBounds": {
+              "x": 24,
+              "y": 39,
+              "width": 112,
+              "height": 248,
+              "right": 135,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 118663,
+              "discardedComponents": 2
+            }
+          },
+          "east": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/sit-east.png",
+            "sha256": "86bef5db8e61794e35d600b1e70875fb74f321d3ea966be4de7a9245b9189ecf",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 443,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 86,
+              "y": 176,
+              "width": 316,
+              "height": 614,
+              "right": 401,
+              "bottom": 789
+            },
+            "matrix": {
+              "a": 0.40589198036006546,
+              "b": 0,
+              "c": 0,
+              "d": 0.40589198036006546,
+              "e": -19.03764320785598,
+              "f": -33.248772504091676
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 244,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 789,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 15.86906710310965,
+                "y": 38.18821603927985,
+                "width": 83.20785597381342,
+                "height": 91.32569558101473
+              },
+              "seatContact": {
+                "sourceY": 620,
+                "y": 218.40425531914892
+              }
+            },
+            "visibleBounds": {
+              "x": 16,
+              "y": 38,
+              "width": 128,
+              "height": 249,
+              "right": 143,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 101004,
+              "discardedComponents": 6
+            }
+          },
+          "west": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/sit-west.png",
+            "sha256": "5a95e8b14292770aebc003f47b2eb81497d004cc30fa948522bf23191392ec0b",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 887,
+              "y": 0,
+              "width": 443,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 38,
+              "y": 175,
+              "width": 315,
+              "height": 615,
+              "right": 352,
+              "bottom": 789
+            },
+            "matrix": {
+              "a": 0.40589198036006546,
+              "b": 0,
+              "c": 0,
+              "d": 0.40589198036006546,
+              "e": 0.8510638297872362,
+              "f": -33.248772504091676
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 195,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 789,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 59.705400981996725,
+                "y": 37.782324058919784,
+                "width": 84.42553191489361,
+                "height": 91.7315875613748
+              },
+              "seatContact": {
+                "sourceY": 620,
+                "y": 218.40425531914892
+              }
+            },
+            "visibleBounds": {
+              "x": 16,
+              "y": 38,
+              "width": 128,
+              "height": 249,
+              "right": 143,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 101185,
+              "discardedComponents": 0
+            }
+          },
+          "north": {
+            "file": "artifacts/character-movement/whole-body-static-v1/brown-beanie/sit-north.png",
+            "sha256": "41b255a0280ca9913325dee72b63f252f1c40fbc30c3b417ac25d5656cd1d085",
+            "width": 160,
+            "height": 320,
+            "sourceCrop": {
+              "x": 1330,
+              "y": 0,
+              "width": 444,
+              "height": 887
+            },
+            "sourceContentBounds": {
+              "x": 71,
+              "y": 174,
+              "width": 273,
+              "height": 613,
+              "right": 343,
+              "bottom": 786
+            },
+            "matrix": {
+              "a": 0.40589198036006546,
+              "b": 0,
+              "c": 0,
+              "d": 0.40589198036006546,
+              "e": -4.019639934533558,
+              "f": -32.03109656301143
+            },
+            "anchors": {
+              "bodyAxis": {
+                "sourceX": 207,
+                "x": 80
+              },
+              "sole": {
+                "sourceY": 786,
+                "y": 287
+              },
+              "floor": {
+                "y": 287
+              },
+              "headBounds": {
+                "x": 43.4697217675941,
+                "y": 38.59410801963996,
+                "width": 75.49590834697217,
+                "height": 86.04909983633388
+              },
+              "seatContact": {
+                "sourceY": 610,
+                "y": 215.5630114566285
+              }
+            },
+            "visibleBounds": {
+              "x": 25,
+              "y": 39,
+              "width": 111,
+              "height": 248,
+              "right": 135,
+              "bottom": 286
+            },
+            "extraction": {
+              "method": "true source alpha then largest opaque component",
+              "componentPixels": 115702,
+              "discardedComponents": 0
+            }
+          }
+        }
+      },
+      "extractionMetrics": {
+        "stand.south": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 59427,
+          "componentPixels": 19772,
+          "discardedComponents": 1
+        },
+        "sit.south": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 118663,
+          "discardedComponents": 2
+        },
+        "stand.east": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 64025,
+          "componentPixels": 15174,
+          "discardedComponents": 1
+        },
+        "sit.east": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 101004,
+          "discardedComponents": 6
+        },
+        "stand.west": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 64320,
+          "componentPixels": 14880,
+          "discardedComponents": 0
+        },
+        "sit.west": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 101185,
+          "discardedComponents": 0
+        },
+        "stand.north": {
+          "method": "border-connected-neutral-background then largest opaque component",
+          "backgroundPixels": 59863,
+          "componentPixels": 19336,
+          "discardedComponents": 1
+        },
+        "sit.north": {
+          "method": "true source alpha then largest opaque component",
+          "componentPixels": 115702,
+          "discardedComponents": 0
+        }
+      }
+    }
+  },
+  "stands-contact": {
+    "file": "artifacts/character-movement/whole-body-static-v1/proofs/stands-contact.png",
+    "sha256": "bbce2f15a9989fddd716b21ece22609453ae357a4f7b2b596f33861237dceb6b",
+    "width": 640,
+    "height": 1368
+  },
+  "sits-contact": {
+    "file": "artifacts/character-movement/whole-body-static-v1/proofs/sits-contact.png",
+    "sha256": "41aed1151494a1db19de99a66283bd4fc5b9ced59a1f1bcfcea383f4d331122b",
+    "width": 640,
+    "height": 1368
+  },
+  "source-static-walk-comparison": {
+    "file": "artifacts/character-movement/whole-body-static-v1/proofs/source-static-walk-comparison.png",
+    "sha256": "a4d192ec6bcf8ae45b23201e5cab5c9af79a579eaf7aac4dfd7c70d71c70b500",
+    "width": 640,
+    "height": 1368
+  }
+}

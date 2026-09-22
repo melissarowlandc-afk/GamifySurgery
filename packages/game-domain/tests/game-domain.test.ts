@@ -9,10 +9,14 @@ import {
 } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
+  SECOND_TUTORIAL_ENCOUNTER_ID,
   TUTORIAL_ENCOUNTER_ID,
   createInitialGameState,
   deserializeGameState,
   gameReducer,
+  getEmergencyGlp1Status,
+  getFacilityAccessValidation,
+  getFacilityProgressionStatus,
   getCurrentQuestion,
   getEncounterSettlement,
   serializeGameState,
@@ -27,13 +31,19 @@ function tick(state: GameState, id: string): GameState {
   });
 }
 
+function createTutorialState(
+  options?: Parameters<typeof createInitialGameState>[1],
+): GameState {
+  return createInitialGameState(undefined, options);
+}
+
 function makeQuestionReady(
   state: GameState,
   encounterId: string,
   prefix: string,
 ): GameState {
   let next = state;
-  for (let attempt = 0; attempt < 120; attempt += 1) {
+  for (let attempt = 0; attempt < 500; attempt += 1) {
     if (getCurrentQuestion(next, encounterId)) {
       return next;
     }
@@ -43,7 +53,7 @@ function makeQuestionReady(
     }
     if (
       encounter.lifecycle === "waiting_unopened" &&
-      encounter.patientMovement === null
+      encounter.checkInStatus === "checked_in"
     ) {
       next = gameReducer(next, {
         type: "OPEN_CHART",
@@ -118,7 +128,534 @@ function completeTutorialCorrectly(
   return next;
 }
 
+function completeEncounterIncorrectly(
+  state: GameState,
+  encounterId: string,
+  prefix: string,
+): GameState {
+  let next = state;
+  let decision = 0;
+  while (next.encounters[encounterId]!.resolutionReason === null) {
+    next = makeQuestionReady(
+      next,
+      encounterId,
+      `${prefix}.ready.${decision}`,
+    );
+    next = answerCurrent(
+      next,
+      encounterId,
+      false,
+      `${prefix}.decision.${decision}`,
+    );
+    const encounter = next.encounters[encounterId]!;
+    const step = encounter.steps[encounter.currentNodeIndex];
+    if (step?.status === "feedback_pending") {
+      next = gameReducer(next, {
+        type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+        operationId: `${prefix}.ack.${decision}`,
+        encounterId,
+        decisionNodeId: step.decisionNodeId,
+      });
+    }
+    decision += 1;
+  }
+  next = gameReducer(next, {
+    type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+    operationId: `${prefix}.ack-terminal`,
+    encounterId,
+  });
+  next = gameReducer(next, {
+    type: "CLOSE_CHART",
+    operationId: `${prefix}.close`,
+    encounterId,
+  });
+  return next;
+}
+
+function completeEncounterCorrectly(
+  state: GameState,
+  encounterId: string,
+  prefix: string,
+): GameState {
+  let next = state;
+  let decision = 0;
+  while (next.encounters[encounterId]!.resolutionReason === null) {
+    next = makeQuestionReady(next, encounterId, `${prefix}.ready.${decision}`);
+    next = answerCurrent(next, encounterId, true, `${prefix}.decision.${decision}`);
+    const encounter = next.encounters[encounterId]!;
+    const step = encounter.steps[encounter.currentNodeIndex];
+    if (step?.status === "feedback_pending") {
+      next = gameReducer(next, {
+        type: "ACKNOWLEDGE_DECISION_FEEDBACK",
+        operationId: `${prefix}.ack.${decision}`,
+        encounterId,
+        decisionNodeId: step.decisionNodeId,
+      });
+    }
+    decision += 1;
+  }
+  next = gameReducer(next, {
+    type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+    operationId: `${prefix}.ack-terminal`,
+    encounterId,
+  });
+  return gameReducer(next, {
+    type: "CLOSE_CHART",
+    operationId: `${prefix}.close`,
+    encounterId,
+  });
+}
+
 describe("current prototype contracts", () => {
+  it("starts without an Examination Room and lets only the two protected tutorial visits use the Front Desk", () => {
+    let state = createInitialGameState();
+    expect(state.rooms).toEqual([
+      expect.objectContaining({
+        id: "room.instance.founder_desk",
+        roomDefinitionId: "room.front_desk",
+      }),
+    ]);
+    expect(state.rooms.some((room) => room.roomDefinitionId === "room.examination")).toBe(false);
+    expect(state.doors).toEqual([
+      expect.objectContaining({
+        id: "door.instance.front_entrance",
+        roomId: "room.instance.founder_desk",
+      }),
+    ]);
+    expect(getFacilityAccessValidation(state)).toMatchObject({
+      valid: true,
+      unreachableRoomIds: [],
+    });
+
+    for (let tickIndex = 0; tickIndex < 120; tickIndex += 1) {
+      state = tick(state, `starter-exam.arrive.${tickIndex}`);
+      if (state.encounters[TUTORIAL_ENCOUNTER_ID]?.checkInStatus === "checked_in") break;
+    }
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]?.checkInStatus).toBe("checked_in");
+    state = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "first-tutorial.front-desk",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(state.operationReceipts["first-tutorial.front-desk"]?.status).toBe("applied");
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      lifecycle: "active_action_required",
+    });
+    expect(
+      state.encounters[TUTORIAL_ENCOUNTER_ID]?.patientMovement
+        ?.destinationRoomInstanceId,
+    ).toBe("room.instance.founder_desk");
+    expect(state.environment.founderActivity).toBeNull();
+
+    state = completeTutorialCorrectly(state, "front-desk-bridge");
+    expect(state.cash).toBeGreaterThanOrEqual(160);
+  });
+
+  it("graduates after both protected tutorials are answered incorrectly and the player builds an Examination Room", () => {
+    let state = createTutorialState({
+      campaignId: "campaign.player-built-exam",
+      campaignSeed: "player-built-exam",
+      createdAtRealMs: 0,
+    });
+
+    state = completeEncounterIncorrectly(
+      state,
+      TUTORIAL_ENCOUNTER_ID,
+      "incorrect.first-tutorial",
+    );
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      resolutionReason: "completed",
+    });
+    expect(getEncounterSettlement(state, TUTORIAL_ENCOUNTER_ID)).toMatchObject({
+      netCashDelta: 25,
+      correctAnswers: 0,
+      incorrectAnswers: 1,
+    });
+
+    for (let attempt = 0; attempt < 120; attempt += 1) {
+      if (state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]) break;
+      state = tick(state, `incorrect.second-tutorial.spawn.${attempt}`);
+    }
+    expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]).toBeDefined();
+    state = completeEncounterIncorrectly(
+      state,
+      SECOND_TUTORIAL_ENCOUNTER_ID,
+      "incorrect.second-tutorial",
+    );
+    expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      resolutionReason: "completed",
+    });
+    expect(
+      getEncounterSettlement(state, SECOND_TUTORIAL_ENCOUNTER_ID),
+    ).toMatchObject({
+      netCashDelta: 35,
+      correctAnswers: 0,
+      incorrectAnswers: 2,
+    });
+    expect({
+      facilityTick: state.facilityTick,
+      cash: state.cash,
+    }).toEqual({ facilityTick: 196, cash: 160.5 });
+    expect(state.cash).toBeGreaterThanOrEqual(160);
+
+    let delayed = deserializeGameState(serializeGameState(state));
+    while (delayed.facilityTick < 210) {
+      delayed = tick(delayed, `delayed-reader.${delayed.facilityTick}`);
+    }
+    expect(delayed.cash).toBeLessThan(160);
+    expect(getEmergencyGlp1Status(delayed)).toMatchObject({
+      eligible: true,
+      blockedReason: null,
+    });
+    delayed = gameReducer(delayed, {
+      type: "RUN_EMERGENCY_GLP1_CONSULTATION",
+      operationId: "delayed-reader.emergency-consult",
+    });
+    expect(
+      delayed.operationReceipts["delayed-reader.emergency-consult"]?.status,
+    ).toBe("applied");
+    expect(delayed.cash).toBeGreaterThanOrEqual(160);
+    delayed = gameReducer(delayed, {
+      type: "PLACE_ROOM",
+      operationId: "delayed-reader.build-exam",
+      roomId: "room.delayed-reader.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+    });
+    expect(
+      delayed.operationReceipts["delayed-reader.build-exam"]?.status,
+    ).toBe("applied");
+
+    const cashBeforeRoom = state.cash;
+    state = gameReducer(state, {
+      type: "PLACE_ROOM",
+      operationId: "player-build.exam-room",
+      roomId: "room.player-built.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+    });
+    expect(state.operationReceipts["player-build.exam-room"]?.status).toBe(
+      "applied",
+    );
+    expect(state.cash).toBe(cashBeforeRoom - 160);
+    expect(state.rooms).toContainEqual(
+      expect.objectContaining({
+        id: "room.player-built.examination",
+        roomDefinitionId: "room.examination",
+      }),
+    );
+
+    state = gameReducer(state, {
+      type: "PLACE_DOOR",
+      operationId: "player-build.exam-door",
+      doorId: "door.player-built.examination",
+      roomId: "room.player-built.examination",
+      side: "south",
+      offset: 1,
+    });
+    expect(state.operationReceipts["player-build.exam-door"]?.status).toBe(
+      "applied",
+    );
+    expect(getFacilityAccessValidation(state)).toMatchObject({ valid: true });
+
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.rooms).toContainEqual(
+      expect.objectContaining({
+        id: "room.player-built.examination",
+        roomDefinitionId: "room.examination",
+      }),
+    );
+    expect(restored.doors).toContainEqual(
+      expect.objectContaining({
+        id: "door.player-built.examination",
+        roomId: "room.player-built.examination",
+      }),
+    );
+    expect(restored.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      resolutionReason: "completed",
+    });
+    expect(restored.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+      resolutionReason: "completed",
+    });
+    expect(restored.cash).toBe(state.cash);
+    expect(restored.clinicalXp).toBe(state.clinicalXp);
+
+    const graduation = getFacilityProgressionStatus(restored);
+    expect(graduation).toMatchObject({ eligible: true, nextFacilityLevel: 1 });
+    expect(graduation.requirements).toEqual([
+      expect.objectContaining({
+        id: "progression.tutorial_completion",
+        current: 2,
+        required: 2,
+        met: true,
+      }),
+      expect.objectContaining({
+        id: "progression.room.room.examination",
+        met: true,
+      }),
+    ]);
+    expect(restored.clinicalXp).toBe(6);
+    const answersBeforeAdvance = JSON.parse(
+      JSON.stringify(restored.encounters),
+    ) as typeof restored.encounters;
+    const learningHistoriesBeforeAdvance = JSON.parse(
+      JSON.stringify(restored.learningHistories),
+    ) as typeof restored.learningHistories;
+    const advanced = gameReducer(restored, {
+      type: "LEVEL_UP",
+      operationId: "player-build.advance-level",
+    });
+    expect(advanced.operationReceipts["player-build.advance-level"]?.status).toBe(
+      "applied",
+    );
+    expect(advanced.facilityLevel).toBe(1);
+    expect(advanced.clinicalXp).toBe(0);
+    expect(advanced.encounters).toEqual(answersBeforeAdvance);
+    expect(advanced.learningHistories).toEqual(learningHistoriesBeforeAdvance);
+    const advancedReloaded = deserializeGameState(serializeGameState(advanced));
+    expect(advancedReloaded.facilityLevel).toBe(1);
+    expect(advancedReloaded.clinicalXp).toBe(0);
+    expect(advancedReloaded.encounters).toEqual(answersBeforeAdvance);
+    expect(advancedReloaded.learningHistories).toEqual(
+      learningHistoriesBeforeAdvance,
+    );
+  });
+
+  it("requires both protected tutorial completions and a reachable Examination Room for the Level 0 exception", () => {
+    const state = createInitialGameState();
+    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    first.resolutionReason = "completed";
+    first.resolvedAtFacilityTick = 1;
+    first.finalPatientSatisfaction = 20;
+    state.rooms.push({
+      id: "room.exception.exam",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.exception.exam",
+      roomId: "room.exception.exam",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
+    expect(getFacilityProgressionStatus(state).eligible).toBe(false);
+
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...JSON.parse(JSON.stringify(first)),
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      resolutionReason: "walkout",
+      resolvedAtFacilityTick: 2,
+      finalPatientSatisfaction: 20,
+    };
+    expect(getFacilityProgressionStatus(state).eligible).toBe(false);
+
+    state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.resolutionReason =
+      "completed";
+    expect(getFacilityProgressionStatus(state)).toMatchObject({
+      eligible: true,
+      nextFacilityLevel: 1,
+    });
+
+    const inaccessible = JSON.parse(JSON.stringify(state)) as GameState;
+    inaccessible.doors = inaccessible.doors.filter(
+      (door) => door.id !== "door.exception.exam",
+    );
+    expect(getFacilityProgressionStatus(inaccessible).eligible).toBe(false);
+
+    const noRoom = createInitialGameState();
+    const noRoomFirst = noRoom.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    noRoomFirst.resolutionReason = "completed";
+    noRoomFirst.resolvedAtFacilityTick = 1;
+    noRoomFirst.finalPatientSatisfaction = 20;
+    noRoom.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] = {
+      ...JSON.parse(JSON.stringify(noRoomFirst)),
+      id: SECOND_TUTORIAL_ENCOUNTER_ID,
+      resolvedAtFacilityTick: 2,
+    };
+    expect(getFacilityProgressionStatus(noRoom).eligible).toBe(false);
+  });
+
+  it("also advances a mixed-answer protected tutorial after the ordinary room build", () => {
+    let state = createTutorialState({
+      campaignId: "campaign.mixed-tutorial-graduation",
+      campaignSeed: "mixed-tutorial-graduation",
+      createdAtRealMs: 0,
+    });
+    state = completeTutorialCorrectly(state, "mixed.first");
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      operationId: "mixed.first.ack-terminal",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "mixed.first.close",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    for (let attempt = 0; !state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] && attempt < 120; attempt += 1) {
+      state = tick(state, `mixed.second.spawn.${attempt}`);
+    }
+    state = completeEncounterIncorrectly(
+      state,
+      SECOND_TUTORIAL_ENCOUNTER_ID,
+      "mixed.second",
+    );
+    state = gameReducer(state, {
+      type: "PLACE_ROOM",
+      operationId: "mixed.exam-room",
+      roomId: "room.mixed.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+    });
+    state = gameReducer(state, {
+      type: "PLACE_DOOR",
+      operationId: "mixed.exam-door",
+      doorId: "door.mixed.examination",
+      roomId: "room.mixed.examination",
+      side: "south",
+      offset: 1,
+    });
+    expect(state.clinicalXp).toBe(24);
+    expect(getFacilityProgressionStatus(state).eligible).toBe(true);
+    state = gameReducer(state, {
+      type: "LEVEL_UP",
+      operationId: "mixed.advance",
+    });
+    expect(state.operationReceipts["mixed.advance"]?.status).toBe("applied");
+    expect(state.facilityLevel).toBe(1);
+  });
+
+  it("advances an all-correct protected tutorial after the ordinary room build", () => {
+    let state = createTutorialState({
+      campaignId: "campaign.correct-tutorial-graduation",
+      campaignSeed: "correct-tutorial-graduation",
+      createdAtRealMs: 0,
+    });
+    state = completeTutorialCorrectly(state, "correct.first");
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      operationId: "correct.first.ack-terminal",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "correct.first.close",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    for (let attempt = 0; !state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID] && attempt < 120; attempt += 1) {
+      state = tick(state, `correct.second.spawn.${attempt}`);
+    }
+    state = completeEncounterCorrectly(
+      state,
+      SECOND_TUTORIAL_ENCOUNTER_ID,
+      "correct.second",
+    );
+    state = gameReducer(state, {
+      type: "PLACE_ROOM",
+      operationId: "correct.exam-room",
+      roomId: "room.correct.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+    });
+    state = gameReducer(state, {
+      type: "PLACE_DOOR",
+      operationId: "correct.exam-door",
+      doorId: "door.correct.examination",
+      roomId: "room.correct.examination",
+      side: "south",
+      offset: 1,
+    });
+    expect(state.clinicalXp).toBe(40);
+    expect(getFacilityProgressionStatus(state).eligible).toBe(true);
+    state = gameReducer(state, {
+      type: "LEVEL_UP",
+      operationId: "correct.advance",
+    });
+    expect(state.operationReceipts["correct.advance"]?.status).toBe("applied");
+    expect(state.facilityLevel).toBe(1);
+  });
+
+  it("keeps ordinary and unreachable-room care gated after the protected tutorials", () => {
+    const protectedWithUnreachableRoom = createInitialGameState();
+    const protectedEncounter =
+      protectedWithUnreachableRoom.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    protectedEncounter.checkInStatus = "checked_in";
+    protectedEncounter.patientMovement = null;
+    protectedWithUnreachableRoom.rooms.push({
+      id: "room.protected.unreachable-examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    const protectedRejected = gameReducer(protectedWithUnreachableRoom, {
+      type: "OPEN_CHART",
+      operationId: "protected.unreachable-exam",
+      encounterId: TUTORIAL_ENCOUNTER_ID,
+    });
+    expect(
+      protectedRejected.operationReceipts["protected.unreachable-exam"]?.status,
+    ).toBe("rejected");
+
+    const state = createInitialGameState();
+    const tutorial = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    state.encounters = {
+      "encounter.ordinary": {
+        ...tutorial,
+        id: "encounter.ordinary",
+        arrivalClass: "routine",
+        checkInStatus: "checked_in",
+        patientMovement: null,
+        lifecycle: "waiting_unopened",
+      },
+    };
+
+    let rejected = gameReducer(state, {
+      type: "OPEN_CHART",
+      operationId: "ordinary.no-exam",
+      encounterId: "encounter.ordinary",
+    });
+    expect(rejected.operationReceipts["ordinary.no-exam"]?.status).toBe("rejected");
+    expect(rejected.operationReceipts["ordinary.no-exam"]?.message).toBe(
+      "No reachable Examination Room is available for this visit.",
+    );
+
+    rejected.rooms.push({
+      id: "room.unreachable.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    rejected = gameReducer(rejected, {
+      type: "OPEN_CHART",
+      operationId: "ordinary.unreachable-exam",
+      encounterId: "encounter.ordinary",
+    });
+    expect(
+      rejected.operationReceipts["ordinary.unreachable-exam"]?.status,
+    ).toBe("rejected");
+    expect(
+      rejected.operationReceipts["ordinary.unreachable-exam"]?.message,
+    ).toBe("No reachable Examination Room is available for this visit.");
+  });
+
   it("validates the approved synthetic content and centralized Level 0-2 balance", () => {
     expect(() =>
       validateSyntheticClinicalRelease(SYNTHETIC_CLINICAL_RELEASE),
@@ -148,9 +685,10 @@ describe("current prototype contracts", () => {
         level: 1,
         minimumClinicalXp: 150,
         requiredRoomDefinitionIds: [
-          "room.xray",
+          "room.ultrasound",
           "room.minor_procedure",
         ],
+        requiredStaffRoleIds: ["staff.imaging_technician"],
         nextFacilityLevel: 2,
       }),
       expect.objectContaining({
@@ -214,7 +752,7 @@ describe("current prototype contracts", () => {
   });
 
   it("routes the tutorial patient, scores one concept per decision, and settles with current formulas", () => {
-    const initial = createInitialGameState(undefined, {
+    const initial = createTutorialState({
       campaignSeed: "current-tutorial",
       createdAtRealMs: 0,
     });
@@ -253,7 +791,7 @@ describe("current prototype contracts", () => {
 
   it("keeps FSRS histories isolated between campaigns", () => {
     const learned = completeTutorialCorrectly(
-      createInitialGameState(undefined, {
+      createTutorialState({
         campaignId: "campaign.learned",
         campaignSeed: "campaign-learned",
         createdAtRealMs: 0,
@@ -288,7 +826,7 @@ describe("current prototype contracts", () => {
     const restored = deserializeGameState(serializeGameState(state));
 
     expect(restored).toMatchObject({
-      schemaVersion: 6,
+      schemaVersion: 7,
       campaignId: state.campaignId,
       campaignSeed: state.campaignSeed,
       clinicalReleaseId: state.clinicalReleaseId,

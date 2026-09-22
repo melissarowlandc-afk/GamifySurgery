@@ -1,0 +1,269 @@
+{
+  "auditVersion": "gs022-question-demographics-v1",
+  "method": {
+    "authoritativeRelease": "SYNTHETIC_CLINICAL_RELEASE",
+    "unit": "450 authored cases; each case has total weight 1, divided equally among its eligible approved instantiation profiles",
+    "excluded": "PILOT_CLINICAL_RELEASE and runtime-completed display demographics",
+    "allocation": "Largest remainder over the known structured 348 case-equivalents, using 20 slots",
+    "representativeAges": "Reviewed representative ages drawn from eligible profile ages in each allocated cell; they do not select or alter clinical cases."
+  },
+  "sourceHashes": {
+    "packages/clinical-content/src/synthetic-content.ts": "a287428733af641c9869d555738bfacbf04d481949a6d066c3fcdf923b9bbde9",
+    "packages/clinical-content/src/schema.ts": "e8672d955b7688ef0ee1b9e190ec18db98884ff5fc8c55bed21219748c0232e4",
+    "docs/clinical-workbench/approvals/owner-delegated-bread-and-butter-2026-09-17.md": "af232c64e7dadc6fa7889ed21af1cb2f9eea16978fde9e0ef89b113541733b48"
+  },
+  "releaseCounts": {
+    "concepts": 183,
+    "cases": 450,
+    "decisionNodes": 703,
+    "profileRows": 1388
+  },
+  "structuredDemographicCoverage": {
+    "knownCaseWeight": 348,
+    "missingCaseCount": 102,
+    "missingStructuredCaseIds": [
+      "case.ventral-hernia.pulmonary-optimization.a",
+      "case.ventral-hernia.pulmonary-optimization.b",
+      "case.ebv-associated-malignancy.burkitt",
+      "case.ebv-associated-malignancy.gastric",
+      "case.ebv-associated-malignancy.nasopharyngeal",
+      "case.desmoid.surveillance-to-progressing-abdominal-wall",
+      "case.desmoid.select-surveillance-patient",
+      "case.desmoid.initial-management-principle",
+      "case.desmoid.stable-follow-up",
+      "case.desmoid.select-abdominal-wall-surgical-candidate",
+      "case.desmoid.function-preserving-margin",
+      "case.desmoid.location-specific-surgery",
+      "case.pancreatic-tail-adenocarcinoma.clinic-counseling",
+      "case.pancreatic-tail-adenocarcinoma.spleen-counseling",
+      "case.pancreatic-tail-adenocarcinoma.operative-candidate",
+      "case.pancreatic-tail-adenocarcinoma.referral-plan",
+      "case.felty-syndrome.recognition-to-refractory-splenectomy",
+      "case.felty-syndrome.no-splenomegaly-boundary",
+      "case.felty-syndrome.reverse-pattern",
+      "case.felty-syndrome.treatment-principle",
+      "case.fhh.evaluation-to-confirmed-management",
+      "case.fhh.suggestive-results-confirmation",
+      "case.fhh.confirmed-asymptomatic-management",
+      "case.fhh.parathyroid-surgery-counseling",
+      "case.lymphangitis.toe-inguinal",
+      "case.lymphangitis.palm-axillary",
+      "case.lymphangitis.heel-inguinal",
+      "case.lymphangitis.reverse-axillary",
+      "case.lymphangitis.finger-axillary",
+      "case.gallbladder-polyp.16mm",
+      "case.gallbladder-polyp.12mm-wall-thickening",
+      "case.gallbladder-polyp.8mm-thick-stalk",
+      "case.gallbladder-polyp.4mm-thin-stalk",
+      "case.gallbladder-polyp.select-surgical-profile",
+      "case.gallbladder-polyp.select-surveillance-profile",
+      "case.distal-cholangiocarcinoma.active-treatment",
+      "case.distal-cholangiocarcinoma.active-location",
+      "case.obstructive-jaundice.vitamin-k.bleeding",
+      "case.obstructive-jaundice.vitamin-k.mechanism",
+      "case.obstructive-jaundice.vitamin-k.lab",
+      "case.obstructive-jaundice.vitamin-k.reverse",
+      "case.hcc.resection.direct-selection",
+      "case.hcc.resection.milan-trap",
+      "case.hcc.resection.candidate-profile",
+      "case.hcc.resection.future-liver-remnant",
+      "case.hcc.resection.combined-milan-to-resection",
+      "case.accessory-spleen.preoperative-counseling",
+      "case.accessory-spleen.imaging-review",
+      "case.accessory-spleen.hospital-planning",
+      "case.accessory-spleen.reverse-location",
+      "case.hs.postsplenectomy.reassess",
+      "case.hs.postsplenectomy.howell-jolly",
+      "case.hs.postsplenectomy.reverse",
+      "case.hs.accessory-spleen.hospital-referral",
+      "case.hs.accessory-spleen.incidental",
+      "case.hs.accessory-spleen.threshold",
+      "case.hs.postsplenectomy.combined-evaluation-to-referral",
+      "case.ipaa.pouchitis.1a",
+      "case.ipaa.pouchitis.1b",
+      "case.ipaa.pouchitis.1c",
+      "case.ipaa.pouchitis.1d",
+      "case.choledochal-cyst.type-iva.2a",
+      "case.choledochal-cyst.type-iva.2b",
+      "case.choledochal-cyst.type-iva.2c",
+      "case.choledochal-cyst.type-iva.2d",
+      "case.anal-hsil.hpv.3a",
+      "case.anal-hsil.hpv.3b",
+      "case.anal-hsil.hpv.3c",
+      "case.anal-hsil.hpv.3d",
+      "case.men2a.1a",
+      "case.men2a.1b",
+      "case.men2a.1c",
+      "case.men2a.1d",
+      "case.men2a.2a",
+      "case.men2a.2b",
+      "case.men2a.2c",
+      "case.men2a.2d",
+      "case.men2a.3a",
+      "case.men2a.3b",
+      "case.men2a.3c",
+      "case.men2a.3d",
+      "case.l2.colonic-lipoma.direct.typical-a",
+      "case.l2.colonic-lipoma.direct.typical-b",
+      "case.l2.wound-healing.vitamin-c.vitamin-identification.v1",
+      "case.l2.wound-healing.vitamin-c.biochemical-step.v1",
+      "case.l2.wound-healing.vitamin-c.mechanism-explanation.v1",
+      "case.l2.wound-healing.vitamin-c.mechanism-consequence.v1",
+      "case.l2.gastric-malt.integrated-diagnosis-to-treatment.v1",
+      "case.l2.gastric-malt.profile-to-followup-boundary.v1",
+      "case.l2.gastric-malt.cd20-boundary.v1",
+      "case.l2.gastric-malt.eradication-patient-selection.v1",
+      "case.l2.gastroparesis.general-confirmatory-testing.v1",
+      "case.l2.gastroparesis.diabetes-confirmatory-testing.v1",
+      "case.l2.gastroparesis.postsurgical-confirmatory-testing.v1",
+      "case.l2.gastroparesis.objective-result-selection.v1",
+      "case.l2.gastric-adenocarcinoma.post-endoscopy-splenic-referral.v1",
+      "case.l2.gastric-adenocarcinoma.spleen-preservation-counseling.v1",
+      "case.l2.peptic-ulcer-bleeding.visible-vessel-hemostasis.v1",
+      "case.l2.peptic-ulcer-bleeding.select-high-risk-stigmata.v1",
+      "case.l2.peptic-ulcer-bleeding.clean-base-reverse.v1",
+      "case.l2.peptic-ulcer-bleeding.visible-vessel-modality-principle.v1",
+      "case.l2.distal-cholangiocarcinoma.deferred-eus-ercp-to-resection"
+    ],
+    "perCaseDemographicFingerprintSha256": "a6dd113bdeaec6d1fb215fdb86c5ee55f2dec1c19ce2203a65a67b05e452880b",
+    "explicitNotSpecifiedSexCaseWeight": 10,
+    "knownAgeRange": [
+      19,
+      76
+    ],
+    "pediatricStructuredCaseWeight": 0
+  },
+  "missingTextScan": {
+    "pattern": "N-year-old woman|man|adult|male|female",
+    "nodePromptFieldsScanned": [
+      "stem",
+      "currentUpdate"
+    ],
+    "presentationMatchCaseIds": [],
+    "nodePromptMatchCaseIds": []
+  },
+  "weightedJointCounts": [
+    {
+      "ageBand": "18-29",
+      "sexLabel": "Female",
+      "caseWeight": 9.75,
+      "percentOfKnownCaseWeight": 2.8017241379310347,
+      "exactTwentySlotQuota": 0.5603448275862069,
+      "allocatedSlots": 1,
+      "representativeAges": [
+        28
+      ]
+    },
+    {
+      "ageBand": "18-29",
+      "sexLabel": "Male",
+      "caseWeight": 5.25,
+      "percentOfKnownCaseWeight": 1.5086206896551724,
+      "exactTwentySlotQuota": 0.3017241379310345,
+      "allocatedSlots": 0,
+      "representativeAges": []
+    },
+    {
+      "ageBand": "30-44",
+      "sexLabel": "Female",
+      "caseWeight": 59.75,
+      "percentOfKnownCaseWeight": 17.169540229885058,
+      "exactTwentySlotQuota": 3.4339080459770117,
+      "allocatedSlots": 3,
+      "representativeAges": [
+        35,
+        38,
+        42
+      ]
+    },
+    {
+      "ageBand": "30-44",
+      "sexLabel": "Male",
+      "caseWeight": 40,
+      "percentOfKnownCaseWeight": 11.494252873563218,
+      "exactTwentySlotQuota": 2.2988505747126435,
+      "allocatedSlots": 2,
+      "representativeAges": [
+        36,
+        41
+      ]
+    },
+    {
+      "ageBand": "45-64",
+      "sexLabel": "Female",
+      "caseWeight": 87.5,
+      "percentOfKnownCaseWeight": 25.143678160919542,
+      "exactTwentySlotQuota": 5.028735632183908,
+      "allocatedSlots": 5,
+      "representativeAges": [
+        47,
+        51,
+        54,
+        59,
+        62
+      ]
+    },
+    {
+      "ageBand": "45-64",
+      "sexLabel": "Male",
+      "caseWeight": 78.25,
+      "percentOfKnownCaseWeight": 22.48563218390805,
+      "exactTwentySlotQuota": 4.497126436781609,
+      "allocatedSlots": 5,
+      "representativeAges": [
+        47,
+        51,
+        54,
+        59,
+        61
+      ]
+    },
+    {
+      "ageBand": "45-64",
+      "sexLabel": "Not specified",
+      "caseWeight": 6.666666666666664,
+      "percentOfKnownCaseWeight": 1.9157088122605355,
+      "exactTwentySlotQuota": 0.3831417624521071,
+      "allocatedSlots": 0,
+      "representativeAges": []
+    },
+    {
+      "ageBand": "65+",
+      "sexLabel": "Female",
+      "caseWeight": 29.5,
+      "percentOfKnownCaseWeight": 8.477011494252872,
+      "exactTwentySlotQuota": 1.6954022988505748,
+      "allocatedSlots": 2,
+      "representativeAges": [
+        67,
+        70
+      ]
+    },
+    {
+      "ageBand": "65+",
+      "sexLabel": "Male",
+      "caseWeight": 28,
+      "percentOfKnownCaseWeight": 8.045977011494253,
+      "exactTwentySlotQuota": 1.6091954022988506,
+      "allocatedSlots": 2,
+      "representativeAges": [
+        67,
+        70
+      ]
+    },
+    {
+      "ageBand": "65+",
+      "sexLabel": "Not specified",
+      "caseWeight": 3.3333333333333335,
+      "percentOfKnownCaseWeight": 0.9578544061302683,
+      "exactTwentySlotQuota": 0.19157088122605365,
+      "allocatedSlots": 0,
+      "representativeAges": []
+    }
+  ],
+  "allocationSummary": {
+    "Female": 11,
+    "Male": 9,
+    "Not specified": 0
+  }
+}

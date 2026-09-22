@@ -1,0 +1,11 @@
+const fs=require('fs'),path=require('path');
+const here=__dirname;
+const webp=fs.readFileSync(path.join(here,'ct-furniture-packed.webp')).toString('base64');
+const atlas=JSON.parse(fs.readFileSync(path.join(here,'atlas.json'),'utf8'));
+const wall=JSON.parse(fs.readFileSync(path.join(here,'cat-wall-art.json'),'utf8'));
+const crops=atlas.packedFrames,wallCrops=wall.packedFrames,wallWebp=fs.readFileSync(path.join(here,'ct-cat-scans-packed.webp')).toString('base64');
+let html=fs.readFileSync(path.join(here,'ct-layout.template.html'),'utf8');
+let js=fs.readFileSync(path.join(here,'ct-preview.js'),'utf8').replace('__CT_CROP_CONFIG__',JSON.stringify(crops)).replace('__CT_ATLAS__',webp).replace('__CT_WALL_CROP_CONFIG__',JSON.stringify(wallCrops)).replace('__CT_WALL_ATLAS__',wallWebp);
+html=html.replace('__CT_SCRIPT__',js);
+fs.writeFileSync(path.join(here,'ct-layout.html'),html);
+console.log(`built ${Buffer.byteLength(html)} bytes`);

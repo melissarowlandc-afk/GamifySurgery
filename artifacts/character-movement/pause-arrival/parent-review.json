@@ -1,0 +1,147 @@
+{
+  "scope": "MOV-004 independent source and behavioral review, no live game playtest",
+  "at": "2026-09-10T21:00:51.553Z",
+  "status": "PASS",
+  "workers": {
+    "Terra": "M5 preflight, implementation and first scene harness",
+    "Sol": "Expanded real-scene regressions and initial-paused-facing correction"
+  },
+  "parentCorrection": "Three-line extension of existing paused/reorder test to explicitly include missing-location founder and resume.",
+  "hashes": {
+    "apps/player/src/facility/FacilityScene.ts": "fd77c7a140aad311dd6e20494c91960cd1d403f2144e1dc3e3e190152c1a1c78",
+    "apps/player/src/facility/characterMotionPresentation.ts": "19749b952daa5ec01be223f2d7cfa5feeaec0e0359ab5ad4ea69ba41589937b0",
+    "apps/player/src/facility/characterMotionPresentation.test.ts": "b3dd4c98591563abbdb9abcb2ac7c44aa979d9046a6ac6c04c92b37ba4c0376f",
+    "apps/player/src/facility/characterPauseArrival.test.ts": "2720760ce42bde70bc2e5d8ad17612dd7ae596df6b34cad66469aaa1c10bc492"
+  },
+  "validation": [
+    {
+      "command": "npm run test --workspace @gamify-surgery/player -- src/facility/routeMotion.test.ts src/art/lateralGaitCycle.test.ts src/facility/frontDeskPresentation.test.ts src/session/patientMovementViewModels.test.ts src/facility/characterPresentation.test.ts",
+      "files": 5,
+      "tests": 41,
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test --workspace @gamify-surgery/player -- src/facility/characterMotionPresentation.test.ts src/facility/characterPauseArrival.test.ts",
+      "files": 2,
+      "tests": 11,
+      "exitCode": 0
+    },
+    {
+      "command": "npm run typecheck --workspace @gamify-surgery/player",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:boundaries",
+      "exitCode": 0,
+      "trackedPaths": 875
+    }
+  ],
+  "preservation": [
+    {
+      "path": "apps/player/src/facility/characterPresentation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/characterPresentation.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/apps/player/src/art/lateralGaitCycle.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/art/lateralGaitCycle.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/START_GAME.cmd",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/package.json",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/apps/player/package.json",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/apps/player/src/session/usePrototypeSession.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/docs/features/character-movement/patient-01-fit.json",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/docs/features/character-movement/patient-01-fitted-walk.html",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-fit.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-walk.html",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/docs/features/character-movement/side-walk-preview.html",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/apps/player/src/art/characterArt.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/apps/player/src/art/characterBitmapArt.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/apps/player/src/art/bitmapAssetManifest.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/Photos for Codex 2/Codex Patients or Staff or Other Characters 2/mixed-batch-2026-09-10/production-foundation-v2/characters/patient-01/right-idle-master.png",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/Photos for Codex 2/Codex Patients or Staff or Other Characters 2/mixed-batch-2026-09-10/production-foundation-v2/characters/patient-01/left-idle-master.png",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/Photos for Codex 2/Codex Patients or Staff or Other Characters 2/mixed-batch-2026-09-10/production-foundation-v2/manifest.json",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/Photos for Codex 2/Codex Patients or Staff or Other Characters 2/mixed-batch-2026-09-10/production-foundation-v2/characters/patient-01/standing-master.png",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/Projects/GamifySurgery/Photos for Codex 2/Codex Patients or Staff or Other Characters 2/mixed-batch-2026-09-10/production-foundation-v2/characters/patient-01/back-idle-master.png",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/Kyle Kent/.codex/visualizations/2026/09/10/01a08bf5-7fc2-7572-8909-8fbc532daecd/patient-01-fitted-walk.html",
+      "unchanged": true
+    }
+  ],
+  "limitations": [
+    "Node/Vitest runs real FacilityScene presentation and bitmap selection with lightweight Phaser/render doubles; no live browser visual playtest.",
+    "Existing available chair/exam art is used; eight-frame raster integration remains separate.",
+    "Snapshots are transient presentation state, not new saved campaign data.",
+    "Changes remain local/uncommitted and are not loaded into the running game build."
+  ]
+}

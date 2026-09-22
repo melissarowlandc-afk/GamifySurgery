@@ -1,0 +1,1536 @@
+{
+  "schemaVersion": "character-atlas/v1",
+  "cellSize": 256,
+  "padding": 8,
+  "pages": {
+    "upper": {
+      "blank": {
+        "file": "upper-blank-v1.png",
+        "sha256": "30286bddd0a7630ace2bc48bc565de0f5eafe3efa30e18fb913d7cc58bcdc88f",
+        "width": 1024,
+        "height": 1280
+      },
+      "labeled": {
+        "file": "upper-labeled-v1.png",
+        "sha256": "4bef21476e2e7d8290bb57ee850c9145dea6ee10f1af4b54715d6ef2d3bef986",
+        "width": 1024,
+        "height": 1280
+      }
+    },
+    "lower": {
+      "blank": {
+        "file": "lower-blank-v1.png",
+        "sha256": "1df7414d166496a75637964d755bf6ae14ecd6bdd350a513969ba917200c58a5",
+        "width": 1024,
+        "height": 1536
+      },
+      "labeled": {
+        "file": "lower-labeled-v1.png",
+        "sha256": "63bf9608e5101da7602498bb49d0c9bf6c39ee91b02d930d2ca2fea1f462e33c",
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    "identity": {
+      "blank": {
+        "file": "identity-blank-v1.png",
+        "sha256": "f0c551c3fa004a8f7014280f387bd2f10b523847357b1fcbad56b238d181d1a1",
+        "width": 1024,
+        "height": 768
+      },
+      "labeled": {
+        "file": "identity-labeled-v1.png",
+        "sha256": "39baa570d2ff54978b357320cb001407bd4ae9a0267a0b9d27a63b9d54048667",
+        "width": 1024,
+        "height": 768
+      }
+    },
+    "actions": {
+      "blank": {
+        "file": "actions-blank-v1.png",
+        "sha256": "9bb75e3b873c3e5cf214a32d7cea97a9863bb880af52135313cba68cc176555e",
+        "width": 1024,
+        "height": 1024
+      },
+      "labeled": {
+        "file": "actions-labeled-v1.png",
+        "sha256": "aa0eba2e2f11cda12f3c4aebf6a52a7ce88816ec1536b674003bc007bd34696f",
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    "clipboard": {
+      "blank": {
+        "file": "clipboard-blank-v1.png",
+        "sha256": "df2ac9fff6c98c2ad4b270366027930dd233fe9b37bd2c6c4e3ccdaf723fa211",
+        "width": 512,
+        "height": 256
+      },
+      "labeled": {
+        "file": "clipboard-labeled-v1.png",
+        "sha256": "bb73faab8a1b032fdd7332da52da664583dfc4e935435ee9bae51a6d37cdf1d7",
+        "width": 512,
+        "height": 256
+      }
+    }
+  },
+  "restPlacement": {
+    "torso": {
+      "anchor": {
+        "x": 128,
+        "y": 48
+      },
+      "anchorMode": "midpoint",
+      "axis": {
+        "x": 1,
+        "y": 0
+      },
+      "defaultLength": 64,
+      "fitPadding": 8,
+      "sourceStart": "neck.screenLeft",
+      "sourceEnd": "neck.screenRight"
+    },
+    "head": {
+      "anchor": {
+        "x": 128,
+        "y": 196
+      },
+      "anchorMode": "midpoint",
+      "axis": {
+        "x": 1,
+        "y": 0
+      },
+      "defaultLength": 64,
+      "fitPadding": 8,
+      "sourceStart": "neck.screenLeft",
+      "sourceEnd": "neck.screenRight",
+      "exactPixels": true
+    },
+    "hair": {
+      "anchor": {
+        "x": 128,
+        "y": 196
+      },
+      "anchorMode": "midpoint",
+      "axis": {
+        "x": 1,
+        "y": 0
+      },
+      "defaultLength": 64,
+      "fitPadding": 8,
+      "sourceStart": "registration.primary",
+      "sourceEnd": "registration.secondary",
+      "exactPixels": true
+    },
+    "upperArm": {
+      "start": {
+        "x": 128,
+        "y": 56
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 112,
+      "fitPadding": 8,
+      "sourceStart": "joint.shoulder",
+      "sourceEnd": "joint.elbow"
+    },
+    "forearmHand": {
+      "start": {
+        "x": 128,
+        "y": 56
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 120,
+      "fitPadding": 8,
+      "sourceStart": "joint.elbow",
+      "sourceEnd": "hand.end"
+    },
+    "thigh": {
+      "start": {
+        "x": 128,
+        "y": 48
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 112,
+      "fitPadding": 8,
+      "sourceStart": "joint.hip",
+      "sourceEnd": "joint.knee"
+    },
+    "shin": {
+      "start": {
+        "x": 128,
+        "y": 48
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 120,
+      "fitPadding": 8,
+      "sourceStart": "joint.knee",
+      "sourceEnd": "joint.ankle"
+    },
+    "shoe": {
+      "anchor": {
+        "x": 76,
+        "y": 176
+      },
+      "anchorMode": "start",
+      "axis": {
+        "x": 1,
+        "y": 0
+      },
+      "defaultLength": 104,
+      "fitPadding": 8,
+      "sourceStart": "registration.baselineLeft",
+      "sourceEnd": "registration.baselineRight"
+    },
+    "seatedTorso": {
+      "anchor": {
+        "x": 128,
+        "y": 48
+      },
+      "anchorMode": "midpoint",
+      "axis": {
+        "x": 1,
+        "y": 0
+      },
+      "defaultLength": 64,
+      "fitPadding": 8,
+      "sourceStart": "neck.screenLeft",
+      "sourceEnd": "neck.screenRight"
+    },
+    "seatedLower": {
+      "start": {
+        "x": 128,
+        "y": 48
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 120,
+      "fitPadding": 8,
+      "sourceStart": "seat.waist",
+      "sourceEnd": "seat.contact"
+    },
+    "seatedArm": {
+      "start": {
+        "x": 128,
+        "y": 48
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 128,
+      "fitPadding": 8,
+      "sourceStart": "joint.shoulder",
+      "sourceEnd": "hand.contact"
+    },
+    "clipboardArm": {
+      "start": {
+        "x": 128,
+        "y": 48
+      },
+      "axis": {
+        "x": 0,
+        "y": 1
+      },
+      "defaultLength": 128,
+      "fitPadding": 8,
+      "sourceStart": "joint.shoulder",
+      "sourceEnd": "hand.contact"
+    }
+  },
+  "slots": {
+    "upper.south.torso": {
+      "page": "upper",
+      "column": "south",
+      "row": "torso",
+      "columnIndex": 0,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "torso",
+      "anatomicalSide": null,
+      "direction": "south",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "joint.hip.left",
+        "joint.hip.right"
+      ]
+    },
+    "upper.east.torso": {
+      "page": "upper",
+      "column": "east",
+      "row": "torso",
+      "columnIndex": 1,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "torso",
+      "anatomicalSide": null,
+      "direction": "east",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "joint.hip.left",
+        "joint.hip.right"
+      ]
+    },
+    "upper.west.torso": {
+      "page": "upper",
+      "column": "west",
+      "row": "torso",
+      "columnIndex": 2,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "torso",
+      "anatomicalSide": null,
+      "direction": "west",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "joint.hip.left",
+        "joint.hip.right"
+      ]
+    },
+    "upper.north.torso": {
+      "page": "upper",
+      "column": "north",
+      "row": "torso",
+      "columnIndex": 3,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "torso",
+      "anatomicalSide": null,
+      "direction": "north",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "joint.hip.left",
+        "joint.hip.right"
+      ]
+    },
+    "upper.south.upperArm.left": {
+      "page": "upper",
+      "column": "south",
+      "row": "upperArm.left",
+      "columnIndex": 0,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.east.upperArm.left": {
+      "page": "upper",
+      "column": "east",
+      "row": "upperArm.left",
+      "columnIndex": 1,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "left",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.west.upperArm.left": {
+      "page": "upper",
+      "column": "west",
+      "row": "upperArm.left",
+      "columnIndex": 2,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "left",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.north.upperArm.left": {
+      "page": "upper",
+      "column": "north",
+      "row": "upperArm.left",
+      "columnIndex": 3,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "left",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.south.upperArm.right": {
+      "page": "upper",
+      "column": "south",
+      "row": "upperArm.right",
+      "columnIndex": 0,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.east.upperArm.right": {
+      "page": "upper",
+      "column": "east",
+      "row": "upperArm.right",
+      "columnIndex": 1,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "right",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.west.upperArm.right": {
+      "page": "upper",
+      "column": "west",
+      "row": "upperArm.right",
+      "columnIndex": 2,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "right",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.north.upperArm.right": {
+      "page": "upper",
+      "column": "north",
+      "row": "upperArm.right",
+      "columnIndex": 3,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "upperArm",
+      "anatomicalSide": "right",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "orientation.outerElbow"
+      ]
+    },
+    "upper.south.forearmHand.left": {
+      "page": "upper",
+      "column": "south",
+      "row": "forearmHand.left",
+      "columnIndex": 0,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.east.forearmHand.left": {
+      "page": "upper",
+      "column": "east",
+      "row": "forearmHand.left",
+      "columnIndex": 1,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "left",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.west.forearmHand.left": {
+      "page": "upper",
+      "column": "west",
+      "row": "forearmHand.left",
+      "columnIndex": 2,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "left",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.north.forearmHand.left": {
+      "page": "upper",
+      "column": "north",
+      "row": "forearmHand.left",
+      "columnIndex": 3,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "left",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.south.forearmHand.right": {
+      "page": "upper",
+      "column": "south",
+      "row": "forearmHand.right",
+      "columnIndex": 0,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.east.forearmHand.right": {
+      "page": "upper",
+      "column": "east",
+      "row": "forearmHand.right",
+      "columnIndex": 1,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "right",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.west.forearmHand.right": {
+      "page": "upper",
+      "column": "west",
+      "row": "forearmHand.right",
+      "columnIndex": 2,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "right",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "upper.north.forearmHand.right": {
+      "page": "upper",
+      "column": "north",
+      "row": "forearmHand.right",
+      "columnIndex": 3,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "forearmHand",
+      "anatomicalSide": "right",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.elbow",
+        "joint.wrist",
+        "hand.end",
+        "orientation.thumbTip",
+        "orientation.anterior"
+      ]
+    },
+    "lower.south.thigh.left": {
+      "page": "lower",
+      "column": "south",
+      "row": "thigh.left",
+      "columnIndex": 0,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.east.thigh.left": {
+      "page": "lower",
+      "column": "east",
+      "row": "thigh.left",
+      "columnIndex": 1,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "left",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.west.thigh.left": {
+      "page": "lower",
+      "column": "west",
+      "row": "thigh.left",
+      "columnIndex": 2,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "left",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.north.thigh.left": {
+      "page": "lower",
+      "column": "north",
+      "row": "thigh.left",
+      "columnIndex": 3,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "left",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.south.thigh.right": {
+      "page": "lower",
+      "column": "south",
+      "row": "thigh.right",
+      "columnIndex": 0,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.east.thigh.right": {
+      "page": "lower",
+      "column": "east",
+      "row": "thigh.right",
+      "columnIndex": 1,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "right",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.west.thigh.right": {
+      "page": "lower",
+      "column": "west",
+      "row": "thigh.right",
+      "columnIndex": 2,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "right",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.north.thigh.right": {
+      "page": "lower",
+      "column": "north",
+      "row": "thigh.right",
+      "columnIndex": 3,
+      "rowIndex": 1,
+      "optional": false,
+      "type": "thigh",
+      "anatomicalSide": "right",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.hip",
+        "joint.knee",
+        "orientation.outer"
+      ]
+    },
+    "lower.south.shin.left": {
+      "page": "lower",
+      "column": "south",
+      "row": "shin.left",
+      "columnIndex": 0,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.east.shin.left": {
+      "page": "lower",
+      "column": "east",
+      "row": "shin.left",
+      "columnIndex": 1,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "left",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.west.shin.left": {
+      "page": "lower",
+      "column": "west",
+      "row": "shin.left",
+      "columnIndex": 2,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "left",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.north.shin.left": {
+      "page": "lower",
+      "column": "north",
+      "row": "shin.left",
+      "columnIndex": 3,
+      "rowIndex": 2,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "left",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.south.shin.right": {
+      "page": "lower",
+      "column": "south",
+      "row": "shin.right",
+      "columnIndex": 0,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.east.shin.right": {
+      "page": "lower",
+      "column": "east",
+      "row": "shin.right",
+      "columnIndex": 1,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "right",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.west.shin.right": {
+      "page": "lower",
+      "column": "west",
+      "row": "shin.right",
+      "columnIndex": 2,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "right",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.north.shin.right": {
+      "page": "lower",
+      "column": "north",
+      "row": "shin.right",
+      "columnIndex": 3,
+      "rowIndex": 3,
+      "optional": false,
+      "type": "shin",
+      "anatomicalSide": "right",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.knee",
+        "joint.ankle",
+        "orientation.outer"
+      ]
+    },
+    "lower.south.shoe.left": {
+      "page": "lower",
+      "column": "south",
+      "row": "shoe.left",
+      "columnIndex": 0,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.east.shoe.left": {
+      "page": "lower",
+      "column": "east",
+      "row": "shoe.left",
+      "columnIndex": 1,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "left",
+      "direction": "east",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.west.shoe.left": {
+      "page": "lower",
+      "column": "west",
+      "row": "shoe.left",
+      "columnIndex": 2,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "left",
+      "direction": "west",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.north.shoe.left": {
+      "page": "lower",
+      "column": "north",
+      "row": "shoe.left",
+      "columnIndex": 3,
+      "rowIndex": 4,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "left",
+      "direction": "north",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.south.shoe.right": {
+      "page": "lower",
+      "column": "south",
+      "row": "shoe.right",
+      "columnIndex": 0,
+      "rowIndex": 5,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.east.shoe.right": {
+      "page": "lower",
+      "column": "east",
+      "row": "shoe.right",
+      "columnIndex": 1,
+      "rowIndex": 5,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "right",
+      "direction": "east",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.west.shoe.right": {
+      "page": "lower",
+      "column": "west",
+      "row": "shoe.right",
+      "columnIndex": 2,
+      "rowIndex": 5,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "right",
+      "direction": "west",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "lower.north.shoe.right": {
+      "page": "lower",
+      "column": "north",
+      "row": "shoe.right",
+      "columnIndex": 3,
+      "rowIndex": 5,
+      "optional": false,
+      "type": "shoe",
+      "anatomicalSide": "right",
+      "direction": "north",
+      "requiredLandmarks": [
+        "registration.baselineLeft",
+        "registration.baselineRight",
+        "joint.ankle",
+        "entry.rear",
+        "entry.front",
+        "heel.rear",
+        "toe.tip",
+        "sole.contact"
+      ]
+    },
+    "identity.south.head": {
+      "page": "identity",
+      "column": "south",
+      "row": "head",
+      "columnIndex": 0,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "head",
+      "anatomicalSide": null,
+      "direction": "south",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "coverage.crown",
+        "coverage.chin"
+      ]
+    },
+    "identity.east.head": {
+      "page": "identity",
+      "column": "east",
+      "row": "head",
+      "columnIndex": 1,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "head",
+      "anatomicalSide": null,
+      "direction": "east",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "coverage.crown",
+        "coverage.chin"
+      ]
+    },
+    "identity.west.head": {
+      "page": "identity",
+      "column": "west",
+      "row": "head",
+      "columnIndex": 2,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "head",
+      "anatomicalSide": null,
+      "direction": "west",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "coverage.crown",
+        "coverage.chin"
+      ]
+    },
+    "identity.north.head": {
+      "page": "identity",
+      "column": "north",
+      "row": "head",
+      "columnIndex": 3,
+      "rowIndex": 0,
+      "optional": false,
+      "type": "head",
+      "anatomicalSide": null,
+      "direction": "north",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "coverage.crown",
+        "coverage.chin"
+      ]
+    },
+    "identity.south.backHair": {
+      "page": "identity",
+      "column": "south",
+      "row": "backHair",
+      "columnIndex": 0,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "south",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.east.backHair": {
+      "page": "identity",
+      "column": "east",
+      "row": "backHair",
+      "columnIndex": 1,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "east",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.west.backHair": {
+      "page": "identity",
+      "column": "west",
+      "row": "backHair",
+      "columnIndex": 2,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "west",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.north.backHair": {
+      "page": "identity",
+      "column": "north",
+      "row": "backHair",
+      "columnIndex": 3,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "north",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.south.frontHair": {
+      "page": "identity",
+      "column": "south",
+      "row": "frontHair",
+      "columnIndex": 0,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "south",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.east.frontHair": {
+      "page": "identity",
+      "column": "east",
+      "row": "frontHair",
+      "columnIndex": 1,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "east",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.west.frontHair": {
+      "page": "identity",
+      "column": "west",
+      "row": "frontHair",
+      "columnIndex": 2,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "west",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "identity.north.frontHair": {
+      "page": "identity",
+      "column": "north",
+      "row": "frontHair",
+      "columnIndex": 3,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "hair",
+      "anatomicalSide": null,
+      "direction": "north",
+      "requiredLandmarks": [
+        "registration.primary",
+        "registration.secondary"
+      ]
+    },
+    "actions.south.seatedTorso": {
+      "page": "actions",
+      "column": "south",
+      "row": "seatedTorso",
+      "columnIndex": 0,
+      "rowIndex": 0,
+      "optional": true,
+      "type": "seatedTorso",
+      "anatomicalSide": null,
+      "direction": "south",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "seat.waist"
+      ]
+    },
+    "actions.east.seatedTorso": {
+      "page": "actions",
+      "column": "east",
+      "row": "seatedTorso",
+      "columnIndex": 1,
+      "rowIndex": 0,
+      "optional": true,
+      "type": "seatedTorso",
+      "anatomicalSide": null,
+      "direction": "east",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "seat.waist"
+      ]
+    },
+    "actions.west.seatedTorso": {
+      "page": "actions",
+      "column": "west",
+      "row": "seatedTorso",
+      "columnIndex": 2,
+      "rowIndex": 0,
+      "optional": true,
+      "type": "seatedTorso",
+      "anatomicalSide": null,
+      "direction": "west",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "seat.waist"
+      ]
+    },
+    "actions.north.seatedTorso": {
+      "page": "actions",
+      "column": "north",
+      "row": "seatedTorso",
+      "columnIndex": 3,
+      "rowIndex": 0,
+      "optional": true,
+      "type": "seatedTorso",
+      "anatomicalSide": null,
+      "direction": "north",
+      "requiredLandmarks": [
+        "neck.screenLeft",
+        "neck.screenRight",
+        "joint.shoulder.left",
+        "joint.shoulder.right",
+        "seat.waist"
+      ]
+    },
+    "actions.south.seatedLower": {
+      "page": "actions",
+      "column": "south",
+      "row": "seatedLower",
+      "columnIndex": 0,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "seatedLower",
+      "anatomicalSide": null,
+      "direction": "south",
+      "requiredLandmarks": [
+        "seat.waist",
+        "seat.contact",
+        "sole.left",
+        "sole.right"
+      ]
+    },
+    "actions.east.seatedLower": {
+      "page": "actions",
+      "column": "east",
+      "row": "seatedLower",
+      "columnIndex": 1,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "seatedLower",
+      "anatomicalSide": null,
+      "direction": "east",
+      "requiredLandmarks": [
+        "seat.waist",
+        "seat.contact",
+        "sole.left",
+        "sole.right"
+      ]
+    },
+    "actions.west.seatedLower": {
+      "page": "actions",
+      "column": "west",
+      "row": "seatedLower",
+      "columnIndex": 2,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "seatedLower",
+      "anatomicalSide": null,
+      "direction": "west",
+      "requiredLandmarks": [
+        "seat.waist",
+        "seat.contact",
+        "sole.left",
+        "sole.right"
+      ]
+    },
+    "actions.north.seatedLower": {
+      "page": "actions",
+      "column": "north",
+      "row": "seatedLower",
+      "columnIndex": 3,
+      "rowIndex": 1,
+      "optional": true,
+      "type": "seatedLower",
+      "anatomicalSide": null,
+      "direction": "north",
+      "requiredLandmarks": [
+        "seat.waist",
+        "seat.contact",
+        "sole.left",
+        "sole.right"
+      ]
+    },
+    "actions.south.seatedArm.left": {
+      "page": "actions",
+      "column": "south",
+      "row": "seatedArm.left",
+      "columnIndex": 0,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.east.seatedArm.left": {
+      "page": "actions",
+      "column": "east",
+      "row": "seatedArm.left",
+      "columnIndex": 1,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "left",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.west.seatedArm.left": {
+      "page": "actions",
+      "column": "west",
+      "row": "seatedArm.left",
+      "columnIndex": 2,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "left",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.north.seatedArm.left": {
+      "page": "actions",
+      "column": "north",
+      "row": "seatedArm.left",
+      "columnIndex": 3,
+      "rowIndex": 2,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "left",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.south.seatedArm.right": {
+      "page": "actions",
+      "column": "south",
+      "row": "seatedArm.right",
+      "columnIndex": 0,
+      "rowIndex": 3,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.east.seatedArm.right": {
+      "page": "actions",
+      "column": "east",
+      "row": "seatedArm.right",
+      "columnIndex": 1,
+      "rowIndex": 3,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "right",
+      "direction": "east",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.west.seatedArm.right": {
+      "page": "actions",
+      "column": "west",
+      "row": "seatedArm.right",
+      "columnIndex": 2,
+      "rowIndex": 3,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "right",
+      "direction": "west",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "actions.north.seatedArm.right": {
+      "page": "actions",
+      "column": "north",
+      "row": "seatedArm.right",
+      "columnIndex": 3,
+      "rowIndex": 3,
+      "optional": true,
+      "type": "seatedArm",
+      "anatomicalSide": "right",
+      "direction": "north",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "clipboard.left.clipboardArm": {
+      "page": "clipboard",
+      "column": "left",
+      "row": "clipboardArm",
+      "columnIndex": 0,
+      "rowIndex": 0,
+      "optional": true,
+      "type": "clipboardArm",
+      "anatomicalSide": "left",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    },
+    "clipboard.right.clipboardArm": {
+      "page": "clipboard",
+      "column": "right",
+      "row": "clipboardArm",
+      "columnIndex": 1,
+      "rowIndex": 0,
+      "optional": true,
+      "type": "clipboardArm",
+      "anatomicalSide": "right",
+      "direction": "south",
+      "requiredLandmarks": [
+        "joint.shoulder",
+        "joint.elbow",
+        "joint.wrist",
+        "hand.contact",
+        "orientation.thumbTip"
+      ]
+    }
+  }
+}

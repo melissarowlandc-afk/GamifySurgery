@@ -1,0 +1,78 @@
+{
+  "scope": "MOV-004 first implementation review",
+  "at": "2026-09-10T20:44:30.480Z",
+  "technicalAcceptance": false,
+  "reason": "Production baseline diff reviewed; new scene tests do not exercise the scene. Returned behavioral validation correction to Terra.",
+  "changed": [
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "unchanged": false
+    },
+    {
+      "path": "apps/player/src/facility/characterPresentation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/characterPresentation.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/routeMotion.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/art/lateralGaitCycle.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/art/lateralGaitCycle.test.ts",
+      "unchanged": true
+    }
+  ],
+  "protectedFiles": [
+    {
+      "path": "START_GAME.cmd",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/package.json",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-fit.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-fitted-walk.html",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-fit.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/patient-01-north-south-walk.html",
+      "unchanged": true
+    },
+    {
+      "path": "docs/features/character-movement/side-walk-preview.html",
+      "unchanged": true
+    }
+  ]
+}

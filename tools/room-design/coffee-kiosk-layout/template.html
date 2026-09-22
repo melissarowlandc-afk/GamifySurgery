@@ -1,0 +1,17 @@
+<section id="coffee-kiosk-proof" aria-labelledby="coffee-title">
+  <style>
+    #coffee-kiosk-proof{max-width:700px;margin-inline:auto}#coffee-kiosk-proof .coffee-art-wrap{position:relative;max-width:540px;margin:12px auto 0}#coffee-kiosk-proof .coffee-art{position:relative;z-index:1;display:block;width:100%;height:auto}#coffee-kiosk-proof .coffee-hit{position:absolute;z-index:2;padding:0;min-width:0;min-height:0;border:0;background:transparent;color:transparent}#coffee-kiosk-proof .coffee-hit:focus-visible{outline:3px solid var(--ring);outline-offset:1px}#coffee-kiosk-proof .coffee-controls{max-width:540px;margin:10px auto 0}#coffee-kiosk-proof fieldset{border:0;margin:0 0 9px;padding:0}#coffee-kiosk-proof legend{font-weight:500;margin-bottom:4px}#coffee-kiosk-proof .coffee-buttons{display:flex;gap:4px;flex-wrap:wrap}#coffee-kiosk-proof .coffee-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;align-items:start}#coffee-kiosk-proof .coffee-label{color:var(--muted-foreground);display:block;margin-bottom:3px}#coffee-kiosk-proof .coffee-status{margin-top:8px;border-left:3px solid var(--primary);padding-left:10px;min-height:3em}@media(max-width:560px){#coffee-kiosk-proof .coffee-row{grid-template-columns:1fr}}
+  </style>
+  <h2 id="coffee-title">Coffee Kiosk preview</h2>
+  <div class="coffee-art-wrap">
+    <canvas id="coffee-art" class="coffee-art" width="1080" height="1040" role="img" aria-label="Compact coffee kiosk with a permanent central coffee island, selectable doors, and route clearance."></canvas>
+    <div id="coffee-targets" aria-label="Direct wall door targets"></div>
+  </div>
+  <div class="coffee-controls">
+    <fieldset><legend>Room immediately north of</legend><div id="coffee-adjacency" class="coffee-buttons"></div></fieldset>
+    <fieldset><legend>Open doorway</legend><div class="coffee-row"><div><span class="coffee-label text-small">North</span><span id="coffee-north" class="coffee-buttons"></span></div><div><span class="coffee-label text-small">South</span><span id="coffee-south" class="coffee-buttons"></span></div><div><span class="coffee-label text-small">West</span><span id="coffee-west" class="coffee-buttons"></span></div><div><span class="coffee-label text-small">East</span><span id="coffee-east" class="coffee-buttons"></span></div></div></fieldset>
+    <label class="form-check"><input id="coffee-overlay" class="form-check-input" type="checkbox"><span class="form-check-label">Show footprint, selected-door route, and coffee service point</span></label>
+    <div id="coffee-status" class="coffee-status text-small" role="status" aria-live="polite"></div>
+  </div>
+  <script>__COFFEE_SCRIPT__</script>
+</section>

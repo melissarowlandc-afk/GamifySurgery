@@ -1,0 +1,166 @@
+{
+  "status": "PASS",
+  "checks": 585,
+  "sourceHash": "4cf509ce2a0d579aad1eff38d04cf2ebb8489a2a02a9496cac9680dd7e933e75",
+  "errors": [],
+  "requests": [],
+  "screenshots": [
+    "artifacts/character-movement/preview-pose-1-desktop.png",
+    "artifacts/character-movement/preview-pose-3-desktop.png",
+    "artifacts/character-movement/preview-pose-7-desktop.png",
+    "artifacts/character-movement/preview-passing-320-light.png",
+    "artifacts/character-movement/preview-passing-736-dark.png"
+  ],
+  "scenarios": [
+    {
+      "width": 736,
+      "theme": "light",
+      "layout": {
+        "width": 736,
+        "scrollWidth": 736,
+        "viewport": 736,
+        "buttons": [
+          {
+            "left": 0,
+            "right": 70.203125
+          },
+          {
+            "left": 78.203125,
+            "right": 121.34375
+          },
+          {
+            "left": 129.34375,
+            "right": 176.3125
+          }
+        ],
+        "views": [
+          {
+            "width": 360,
+            "viewBox": 360,
+            "minX": 24,
+            "maxX": 336
+          },
+          {
+            "width": 360,
+            "viewBox": 360,
+            "minX": 24,
+            "maxX": 336
+          }
+        ]
+      }
+    },
+    {
+      "width": 320,
+      "theme": "light",
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "viewport": 320,
+        "buttons": [
+          {
+            "left": 0,
+            "right": 70.203125
+          },
+          {
+            "left": 78.203125,
+            "right": 121.34375
+          },
+          {
+            "left": 129.34375,
+            "right": 176.3125
+          }
+        ],
+        "views": [
+          {
+            "width": 320,
+            "viewBox": 320,
+            "minX": 24,
+            "maxX": 296
+          },
+          {
+            "width": 320,
+            "viewBox": 320,
+            "minX": 24,
+            "maxX": 296
+          }
+        ]
+      }
+    },
+    {
+      "width": 736,
+      "theme": "dark",
+      "layout": {
+        "width": 736,
+        "scrollWidth": 736,
+        "viewport": 736,
+        "buttons": [
+          {
+            "left": 0,
+            "right": 70.203125
+          },
+          {
+            "left": 78.203125,
+            "right": 121.34375
+          },
+          {
+            "left": 129.34375,
+            "right": 176.3125
+          }
+        ],
+        "views": [
+          {
+            "width": 360,
+            "viewBox": 360,
+            "minX": 24,
+            "maxX": 336
+          },
+          {
+            "width": 360,
+            "viewBox": 360,
+            "minX": 24,
+            "maxX": 336
+          }
+        ]
+      }
+    }
+  ],
+  "isolation": "Fresh headless Chrome; sandboxed inline iframe; all requests blocked; no game URL/server/build/profile/save access.",
+  "preservation": [
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\START_GAME.cmd",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\package.json",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\package.json",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\src\\art\\characterArt.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\src\\art\\characterBitmapArt.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\src\\art\\bitmapAssetManifest.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\src\\art\\lateralGaitCycle.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\src\\facility\\FacilityScene.ts",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\apps\\player\\src\\session\\usePrototypeSession.ts",
+      "unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+Use case: identity-preserve
+Asset type: reusable pixel-art game sprite sheet
+Input image: founder 06 seated v2 is the edit target. Keep identity, poses, clothes, pixel art, framing and transparency unchanged.
+Change only wristwatch visibility:
+- SOUTH: erase only the black bracelet/watch on SCREEN LEFT wrist. Preserve the black watch on SCREEN RIGHT wrist.
+- EAST: erase only the black watch on the near visible wrist; the anatomical-left watch is far and must be occluded.
+- WEST: preserve the existing near visible black watch.
+- NORTH: preserve the anatomical-left wristwatch.
+Do not move, add, or remove badges; do not alter hands, profiles, clothes, or limbs. Genuine transparent RGBA, no background/checkerboard/shadow/text/props.

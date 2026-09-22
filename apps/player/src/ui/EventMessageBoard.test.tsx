@@ -252,4 +252,17 @@ describe("EventMessageBoard", () => {
     expect(markup).not.toContain("<details");
     expect(markup).not.toContain("Recent events");
   });
+
+  it("renders routine updates as an ordinary feed row", () => {
+    const markup = renderItem({
+      id: "expense.30",
+      category: "success",
+      priority: "informational",
+      timeLabel: "Day 1 8:30 AM",
+      message: "Operating costs -$1.50.",
+    });
+
+    expect(markup).not.toContain("<details");
+    expect(markup).toContain("Operating costs -$1.50.");
+  });
 });

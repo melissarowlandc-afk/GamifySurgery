@@ -5,6 +5,29 @@ import {
   PROTOTYPE_BALANCE_RELEASE,
 } from "./prototype-balance";
 import { serviceRouteDefinitionSchema } from "./schema";
+import { SERVICE_INCOME_CATALOG, getServiceIncomeForRoute } from "./service-income-catalog";
+
+describe("service income catalog", () => {
+  it("has unique durable keys and the approved current-route prices", () => {
+    expect(new Set(SERVICE_INCOME_CATALOG.map((line) => line.id)).size).toBe(
+      SERVICE_INCOME_CATALOG.length,
+    );
+    const routeIds = SERVICE_INCOME_CATALOG.flatMap((line) => line.eligibleRouteIds);
+    expect(new Set(routeIds).size).toBe(routeIds.length);
+    expect(getServiceIncomeForRoute("route.bladder_scan.ultrasound_room")).toMatchObject({
+      id: "income.bladder_scan",
+      fee: 20,
+    });
+    expect(getServiceIncomeForRoute("route.bladder_scan.in_house")).toBeNull();
+    expect(getServiceIncomeForRoute("route.endoscopy.in_house")).toMatchObject({
+      id: "income.endoscopy",
+      fee: 400,
+      paymentStage: "resource_completion",
+    });
+    expect(SERVICE_INCOME_CATALOG.find((line) => line.id === "income.glp1_telehealth")?.fee).toBe(50);
+    expect(SERVICE_INCOME_CATALOG.some((line) => line.id.includes("cafeteria"))).toBe(false);
+  });
+});
 
 describe("row 57 off-site functional-study services", () => {
   it("keeps every displayed study off-site with equal editorial prototype timing", () => {
@@ -40,11 +63,25 @@ describe("Front Desk A1-D5 navigation", () => {
       { x: 2, y: 2 },
     ]);
     expect(frontDesk?.navigation?.primaryAnchor).toEqual({ x: 2, y: 3 });
-    expect(frontDesk?.navigation?.waitingAnchors).toEqual([
-      { x: 1, y: 3 },
-      { x: 3, y: 3 },
-    ]);
+    expect(frontDesk?.navigation?.waitingAnchors).toEqual([{ x: 4, y: 3 }]);
     expect(frontDesk?.navigation?.staffAnchor).toEqual({ x: 2, y: 1 });
+  });
+});
+
+describe("fresh campaign construction funding", () => {
+  it("starts with only the Front Desk while retaining the existing examination-room price", () => {
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.initialRooms).toEqual([
+      expect.objectContaining({
+        id: "room.instance.founder_desk",
+        roomDefinitionId: "room.front_desk",
+      }),
+    ]);
+    expect(
+      PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+        (definition) => definition.id === "room.examination",
+      )?.constructionCost,
+    ).toBe(160);
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.startingCash).toBe(120);
   });
 });
 
@@ -94,7 +131,7 @@ describe("Level 2 expanded outpatient definitions", () => {
         ]),
       ),
     ).toEqual({
-      "room.ultrasound": [950, 16, "3x3"],
+      "room.xray": [750, 14, "3x3"],
       "room.ct": [1600, 26, "4x4"],
       "room.phlebotomy": [550, 9, "3x2"],
       "room.evs_closet": [475, 6, "2x2"],
@@ -129,10 +166,10 @@ describe("Level 2 expanded outpatient definitions", () => {
     expect(
       rooms.find((room) => room.id === "room.periop_recovery")?.capabilityIds,
     ).toContain("capability.periop_recovery");
-    for (const id of ["room.ultrasound", "room.ct"]) {
+    for (const id of ["room.xray", "room.ct"]) {
       expect(
         rooms.find((room) => room.id === id)?.requiredRoomDefinitionIds,
-      ).toEqual(["room.imaging_control"]);
+      ).toEqual([]);
     }
 
     expect(facility.stageDefinitions).toEqual(
@@ -175,6 +212,62 @@ describe("service-route timing invariants", () => {
       );
     }
   });
+
+  it("keeps legacy travel defaults while rejecting conflicting stationary travel", () => {
+    const legacy = serviceRouteDefinitionSchema.safeParse({
+      id: "route.test.legacy-default",
+      displayName: "Legacy route fixture",
+      durationTicks: 15,
+      requiredCapabilityId: null,
+      preference: 0,
+    });
+    expect(legacy.success).toBe(true);
+    if (legacy.success) {
+      expect(legacy.data.patientRemainsOnsite).toBeUndefined();
+      expect(legacy.data.patientTravel).toBeNull();
+    }
+
+    const conflicting = serviceRouteDefinitionSchema.safeParse({
+      id: "route.test.conflicting-stationary-travel",
+      displayName: "Conflicting route fixture",
+      durationTicks: 15,
+      requiredCapabilityId: null,
+      preference: 0,
+      patientRemainsOnsite: true,
+      patientTravel: {
+        originRoomDefinitionId: "room.examination",
+        destinationRoomDefinitionId: "room.ultrasound",
+        roundTrip: true,
+      },
+    });
+    expect(conflicting.success).toBe(false);
+    if (!conflicting.success) {
+      expect(conflicting.error.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            message:
+              "A stationary onsite route cannot also define patient travel.",
+            path: ["patientRemainsOnsite"],
+          }),
+        ]),
+      );
+    }
+  });
+
+  it("routes the approved bladder scan through the staffed Ultrasound Room", () => {
+    const routes = PROTOTYPE_BALANCE_RELEASE.services.flatMap(
+      (service) => service.routes,
+    );
+    expect(
+      routes.filter((route) => route.id === "route.bladder_scan.ultrasound_room"),
+    ).toEqual([
+      expect.objectContaining({
+        id: "route.bladder_scan.ultrasound_room",
+        durationTicks: 5,
+        patientTravel: expect.objectContaining({ destinationRoomDefinitionId: "room.ultrasound" }),
+      }),
+    ]);
+  });
 });
 
 describe("owner-delegated batch external services", () => {
@@ -193,8 +286,8 @@ describe("owner-delegated batch external services", () => {
   });
 });
 
-describe("surgery-center external service contracts", () => {
-  it("keeps the four new services external without facility or provider requirements", () => {
+describe("surgery-center service contracts", () => {
+  it("keeps external fallbacks and adds only the approved onsite skin sampling route", () => {
     const expected = {
       "service.thyroid_fna": ["route.thyroid_fna.outsourced", 180],
       "service.anoscopy": ["route.anoscopy.outsourced", 90],
@@ -203,8 +296,8 @@ describe("surgery-center external service contracts", () => {
     } as const;
     for (const [serviceId, [routeId, durationTicks]] of Object.entries(expected)) {
       const service = PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === serviceId);
-      expect(service?.routes).toHaveLength(1);
-      expect(service?.routes[0]).toMatchObject({
+      const route = service?.routes.find((candidate) => candidate.id === routeId);
+      expect(route).toMatchObject({
         id: routeId,
         durationTicks,
         requiredCapabilityId: null,
@@ -212,7 +305,15 @@ describe("surgery-center external service contracts", () => {
         resourceRequirements: [],
         providerRequirement: null,
       });
+      if (serviceId !== "service.skin_excisional_biopsy") expect(service?.routes).toHaveLength(1);
     }
+    expect(PROTOTYPE_BALANCE_RELEASE.services.find((item) => item.id === "service.skin_excisional_biopsy")?.routes[0]).toMatchObject({
+      id: "route.skin_excisional_biopsy.in_house",
+      requiredCapabilityId: "capability.minor_procedure",
+      preference: 0,
+      resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
+      providerRequirement: { founderEligible: true },
+    });
   });
 });
 
@@ -270,8 +371,8 @@ describe("September 12 board-expansion external service contracts", () => {
   });
 });
 
-describe("September 13 early-level external service contracts", () => {
-  it("keeps four new services external with matching centralized timing", () => {
+describe("September 13 early-level service contracts", () => {
+  it("keeps external fallbacks and the approved onsite cutaneous sampling route", () => {
     const expected = {
       "service.hepatobiliary_contrast_mrcp": ["route.hepatobiliary_contrast_mrcp.outsourced", "timing.test.hepatobiliary_contrast_mrcp", 180],
       "service.ambulatory_reflux_monitoring": ["route.ambulatory_reflux_monitoring.outsourced", "timing.test.ambulatory_reflux_monitoring", 180],
@@ -280,10 +381,12 @@ describe("September 13 early-level external service contracts", () => {
     } as const;
     for (const [serviceId, [routeId, timingProfileId, durationTicks]] of Object.entries(expected)) {
       const service=PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id===serviceId);
-      expect(service?.routes).toHaveLength(1);
-      expect(service?.routes[0]).toMatchObject({id:routeId,durationTicks,requiredCapabilityId:null,requiredCapabilityIds:[],resourceRequirements:[],providerRequirement:null});
+      const route=service?.routes.find((candidate)=>candidate.id===routeId);
+      expect(route).toMatchObject({id:routeId,durationTicks,requiredCapabilityId:null,requiredCapabilityIds:[],resourceRequirements:[],providerRequirement:null});
+      if(serviceId!=="service.cutaneous_lesion_biopsy") expect(service?.routes).toHaveLength(1);
       expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId,durationTicks});
     }
+    expect(PROTOTYPE_BALANCE_RELEASE.services.find((item)=>item.id==="service.cutaneous_lesion_biopsy")?.routes[0]).toMatchObject({id:"route.cutaneous_lesion_biopsy.in_house",requiredCapabilityId:"capability.minor_procedure",preference:0,resourceRequirements:[{roomDefinitionId:"room.minor_procedure",staffRoleDefinitionId:null}],providerRequirement:{founderEligible:true}});
     for(const timingProfileId of ["timing.test.ercp","timing.test.therapeutic_ercp","timing.test.bile_leak_ercp","timing.test.pseudocyst_drainage","timing.test.microbiology","timing.test.skin_surgery_histology"]){
       expect(PROTOTYPE_BALANCE_RELEASE.answerChoiceTimingProfiles.find((profile)=>profile.id===timingProfileId)).toMatchObject({serviceId:null});
     }

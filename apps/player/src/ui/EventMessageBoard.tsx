@@ -50,10 +50,10 @@ function getCategory(item: MessageBoardItemView): MessageBoardCategory {
 }
 
 /**
- * Compact, text-first operational feed. Random selection, deduplication keys,
- * persistence, and condition resolution live in the domain. The UI keeps one
- * chronological, scrollable list and prevents repeated input IDs from
- * stacking. Attention markers deliberately do not change a row's position:
+ * Compact, text-first operational feed. Event production, persistence, and
+ * condition resolution live in the domain. The UI keeps one chronological,
+ * scrollable list and prevents repeated input IDs from stacking.
+ * Attention markers deliberately do not change a row's position:
  * newer clinic events push every older row down in the same way.
  */
 export function EventMessageBoard({

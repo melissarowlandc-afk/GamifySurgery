@@ -1,0 +1,1098 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-21",
+  "tilePixels": 120,
+  "scope": "Read-only inventory of 16 owner-confirmed isolated room proofs; not runtime integration or occupied-fit approval.",
+  "comparisonReferences": {
+    "examRollingStool": {
+      "renderedWidthPx": 60,
+      "floorToSeatPx": 50.68,
+      "evidence": "tools/room-design/examination-layout/atlas-provenance.md"
+    },
+    "examBed": {
+      "footprintTiles": [
+        1.55,
+        0.7
+      ],
+      "renderedPhysicalPx": [
+        186,
+        84
+      ],
+      "floorToCushionPx": [
+        42.48,
+        42.95
+      ],
+      "evidence": "tools/room-design/recovery-layout/atlas-provenance.md"
+    },
+    "frontDeskFacade": {
+      "approximateRisePx": 90,
+      "status": "visual measurement reference",
+      "evidence": "docs/execplans/room-design.md"
+    },
+    "gs018P01": {
+      "framePx": [
+        160,
+        320
+      ],
+      "floor": [
+        80,
+        287
+      ],
+      "seatedSupportY": {
+        "south": 213.32,
+        "eastWest": 220.64,
+        "north": 223.57
+      },
+      "comparisonScale": 0.754083,
+      "runtimeIntegrated": false,
+      "evidence": "tools/room-design/endoscopy-scale-comparison/"
+    }
+  },
+  "globalFindings": [
+    {
+      "severity": "high",
+      "id": "occupied-fit-unverified",
+      "detail": "No room has verified GS-018 occupied-character fit. The approved darker Endoscopy replacement is integrated, but its refreshed same-scale comparison remains pending."
+    },
+    {
+      "severity": "high",
+      "id": "operating-room-missing",
+      "detail": "Operating Room has no approved isolated proof or art contract; future behavior mention is not a designed room."
+    },
+    {
+      "severity": "medium",
+      "id": "runtime-proof-divergence",
+      "detail": "Proof geometry and preview atlases are not runtime replacements; current runtime character atlas differs from GS-018 approved stills."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "front-desk",
+      "dimensions": [
+        [
+          5,
+          4
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/front-desk-layout/front-desk-layout.html",
+        "bytes": 989539,
+        "sha256": "E76828C7DCFE56FD56BCE6411C884B2A8677E8B0B7E93B8856B9EF75E4A70F91",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/front-desk-furniture-atlas-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/front-desk-counter-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/front-desk-upkeep-01.png"
+      ],
+      "scale": {
+        "chairsApproxTiles": [
+          0.86,
+          0.95
+        ],
+        "deskFootprintTiles": [
+          2,
+          1
+        ],
+        "deskFacadeRisePx": {
+          "value": 90,
+          "status": "approximate-reference"
+        },
+        "normalizedComparisonNote": "native canvas uses 88 px/tile; desk facade comparisons are normalized to the shared 120 px/tile standard, not raw draw pixels"
+      },
+      "poses": [
+        "receptionist chair cardinal",
+        "visitor chair cardinal"
+      ],
+      "navigation": {
+        "solid": [
+          "desk",
+          "receptionist chair",
+          "visitor chair"
+        ],
+        "passThrough": [
+          "water cooler"
+        ],
+        "exception": "ED may pass through visitor chair at D5"
+      },
+      "depth": [
+        "receptionist drawn before desk",
+        "upkeep service visuals preserve cooler contact"
+      ],
+      "doorOwnership": [
+        "optional decor hides by owned segments",
+        "water cooler never hides"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/front-desk-layout/validate-front-desk-layout.mjs",
+        "docs/handoffs/GS-015_ROOM_DESIGN.md"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "no measured chair cushion anchors",
+        "no GS-018 occupied desk/chair comparison"
+      ],
+      "nativeTilePx": 88
+    },
+    {
+      "id": "examination",
+      "dimensions": [
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "orientations": [
+        "south",
+        "west-90ccw"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/examination-layout/examination-layout.html",
+        "bytes": 294688,
+        "sha256": "F3D4FD3F9B23619AB0956488A85BB372CD830B203FF92DD9A4EF08884E1B5730",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/examination-bed-east-03.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/examination-bed-north-03.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/examination-furniture-atlas-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/examination-sink-west-01.png"
+      ],
+      "scale": {
+        "bedFootprintTiles": [
+          1.55,
+          0.7
+        ],
+        "bedPhysicalPx": [
+          186,
+          84
+        ],
+        "bedCushionRisePx": [
+          42.48,
+          42.95
+        ],
+        "stoolWidthPx": 60,
+        "stoolSeatRisePx": 50.68,
+        "sinkWestWidthTiles": 0.52
+      },
+      "poses": [
+        "south view patient west / employee east",
+        "west view patient south / employee north"
+      ],
+      "navigation": {
+        "solid": [
+          "table"
+        ],
+        "passThrough": [
+          "stool"
+        ],
+        "optional": [
+          "sink"
+        ]
+      },
+      "depth": [
+        "separate floor projection and elevated seat contacts"
+      ],
+      "doorOwnership": [
+        "sink world N1/WA; rotated local WC/S1; not S2"
+      ],
+      "rotation": "(x,y)->(y,3-x)",
+      "evidence": [
+        "tools/room-design/examination-layout/atlas-provenance.md",
+        "tools/room-design/examination-layout/validate-examination-layout.mjs"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "approved pose directions are not character attachment validation"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "hallway",
+      "dimensions": [],
+      "orientations": [
+        "horizontal",
+        "vertical",
+        "corner",
+        "cross"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/hallway-layout/hallway-layout.html",
+        "bytes": 11082,
+        "sha256": "756D38A59E9F420D740AB02798757460B71CB52DDB4239B8BF1E246B898DE4E2",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [],
+      "scale": {
+        "furniture": null
+      },
+      "poses": [],
+      "navigation": {
+        "solid": [],
+        "passThrough": [
+          "continuous hall floor"
+        ]
+      },
+      "depth": [
+        "north-south shared face belongs to southern room",
+        "east-west shared wall is single cap"
+      ],
+      "doorOwnership": [
+        "short backed north frame",
+        "EW half-floor seam",
+        "South floor-to-base seam"
+      ],
+      "rotation": "topology presets, no furniture rotation",
+      "evidence": [
+        "tools/room-design/hallway-layout/validate-hallway-layout.mjs",
+        "docs/execplans/room-consistency-audit.md"
+      ],
+      "occupiedFit": "not-applicable-no-furniture",
+      "unknowns": [
+        "many-actor congestion and turning clearance untested",
+        "historical handoff says visual acceptance pending"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "waiting",
+      "dimensions": [
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "orientations": [
+        "south",
+        "west-90ccw"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/waiting-layout/waiting-layout.html",
+        "bytes": 735141,
+        "sha256": "C8BFBBA607B8E02DFD5083600BE47DDFEF6C72886DC72D7B8F8B644824631FF1",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/waiting-furniture-atlas-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/waiting-west-atlas-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/waiting-bench-east-02.png"
+      ],
+      "scale": {
+        "actorFrameTiles": [
+          1.35,
+          2.025
+        ],
+        "actorFeetSource": [
+          64,
+          181
+        ]
+      },
+      "poses": [
+        "bench south",
+        "left chair east",
+        "right chair west",
+        "rotated east/north/south"
+      ],
+      "navigation": {
+        "solid": [
+          "magazine table"
+        ],
+        "passThrough": [
+          "bench",
+          "left chair",
+          "right chair"
+        ],
+        "lanes": [
+          "pass behind seats"
+        ]
+      },
+      "depth": [
+        "actor depth switches behind/in front by route progress"
+      ],
+      "doorOwnership": [
+        "magazine rack N1 only"
+      ],
+      "rotation": "(x,y)->(y,4-x)",
+      "evidence": [
+        "tools/room-design/waiting-layout/atlas-provenance.md",
+        "tools/room-design/waiting-layout/validate-waiting-layout.mjs"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "seat cushion rises not normalized to Examination",
+        "walk frame is runtime-reference crop, not approved GS-018 still"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "bathroom",
+      "dimensions": [
+        [
+          2,
+          2
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/bathroom-layout/bathroom-layout.html",
+        "bytes": 116975,
+        "sha256": "2983874D486F0E3FDDFAF7F2C09C9C4BF28B8AED698C3B7EA68FF0FB2008CD73",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/bathroom-furniture-atlas-01.png"
+      ],
+      "scale": {
+        "sinkGroundSourceY": 521,
+        "toiletGroundSourceY": 594
+      },
+      "poses": [
+        "toilet static sit south",
+        "sink static stand north"
+      ],
+      "navigation": {
+        "solid": [],
+        "passThrough": [
+          "toilet",
+          "sink"
+        ],
+        "lane": "A1/A2 transit behind both"
+      },
+      "depth": [
+        "walking behind fixtures; use poses in front"
+      ],
+      "doorOwnership": [
+        "mirror N1/backed N1 only",
+        "sink and toilet permanent"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/bathroom-layout/atlas-provenance.md",
+        "tools/room-design/bathroom-layout/bathroom-behavior.json"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "toilet seat attachment exists but body/turn clearance unverified",
+        "historical provenance still says owner review pending"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "minor-procedure",
+      "dimensions": [
+        [
+          3,
+          3
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/minor-procedure-layout/minor-procedure-layout.html",
+        "bytes": 318998,
+        "sha256": "E98B6C92AA8C7F1AFF58FD4C0518D7934023D31D8A2C86A3E6C47170AF75101A",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/minor-procedure-furniture-atlas-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/minor-procedure-table-north-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/minor-procedure-wall-light-01.png"
+      ],
+      "scale": {
+        "tableSeatRisePx": 47.07,
+        "stoolSeatRisePx": 50.67
+      },
+      "poses": [
+        "patient south at table foot",
+        "employee north on stool"
+      ],
+      "navigation": {
+        "solid": [
+          "B2 table"
+        ],
+        "passThrough": [
+          "stool",
+          "other room spaces"
+        ]
+      },
+      "depth": [
+        "separate table/stool seat and floor anchors"
+      ],
+      "doorOwnership": [
+        "north-flush sink/cabinet optional",
+        "wall light N2/backed N2"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/minor-procedure-layout/atlas-provenance.md",
+        "tools/room-design/minor-procedure-layout/minor-procedure-behavior.json"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "table and stool 3.60px rise difference retained",
+        "historical visual approval wording conflicts with active approved-room scope"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "ultrasound",
+      "dimensions": [
+        [
+          3,
+          3
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/ultrasound-layout/ultrasound-layout.html",
+        "bytes": 365970,
+        "sha256": "734E24A73BD83CAFBD7A613381F2A853E1824033C612401A84F117320ED6AC43",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/ultrasound-furniture-atlas-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/ultrasound-wall-print-01.png"
+      ],
+      "scale": {
+        "bedWidthPx": 216,
+        "bedSeatRisePx": 50.1,
+        "stoolWidthPx": 62.4,
+        "stoolSeatRisePx": 48.4,
+        "consoleWidthPx": 93.6
+      },
+      "poses": [
+        "patient south at east foot",
+        "technician north on stool"
+      ],
+      "navigation": {
+        "solid": [
+          "B2 bed"
+        ],
+        "passThrough": [
+          "console",
+          "stool",
+          "cabinet"
+        ],
+        "lane": "front-of-console south lane"
+      },
+      "depth": [
+        "console lane is preview-only layer contract"
+      ],
+      "doorOwnership": [
+        "optional northwest cabinet",
+        "wall print N2/backed N2"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/ultrasound-layout/atlas-provenance.md",
+        "tools/room-design/ultrasound-layout/validate-ultrasound-layout.mjs"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "216px rendered image width is not established as a physical span comparable to Examination's 186px length; measurement needed",
+        "no actual character attachment test"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "xray",
+      "dimensions": [
+        [
+          3,
+          3
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/xray-layout/xray-layout.html",
+        "bytes": 202092,
+        "sha256": "20666FCF3C982AEA07F525FCD5A37528E46BD4EC8A7CA7A5346669C728F6D2D7",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/xray-furniture-atlas-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/xray-tube-north-02.png"
+      ],
+      "scale": {
+        "seatReference": null
+      },
+      "poses": [
+        "standing patient north-facing at upright detector",
+        "technician north-facing at south-facing console"
+      ],
+      "navigation": {
+        "solid": [
+          "B2 detector/tube area"
+        ],
+        "passThrough": [
+          "console approach"
+        ]
+      },
+      "depth": [
+        "standing use points separate from floor contacts"
+      ],
+      "doorOwnership": [
+        "apron N1/backed N1 only"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/xray-layout/atlas-provenance.md",
+        "tools/room-design/xray-layout/validate-xray-layout.cjs"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "standing patient visual alignment with detector untested using GS-018",
+        "standing-console counter/facade appears roughly 40-55 px high in normalized capture versus the approximately 90 px Front Desk reference; exact physical facade contact measurement remains required"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "ct",
+      "dimensions": [
+        [
+          4,
+          4
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/ct-layout/ct-layout.html",
+        "bytes": 893885,
+        "sha256": "5625BF5B988E4B4DEB795BB1CAE11570DE63926F87DDA7566B46274A1550CDC1",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/ct-furniture-atlas-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/ct-cat-scans-01.png"
+      ],
+      "scale": {
+        "scannerSourceFloor": [
+          387,
+          942
+        ],
+        "scannerSourceSeat": [
+          387,
+          762
+        ],
+        "floorToSeatPx": 55.81
+      },
+      "poses": [
+        "patient south at scanner bed foot",
+        "technician north behind divider"
+      ],
+      "navigation": {
+        "solid": [
+          "scanner blocker .5,1,1.8,1.65",
+          "partition .12x2.4"
+        ],
+        "passThrough": [
+          "console"
+        ]
+      },
+      "depth": [
+        "technician separated by observation partition"
+      ],
+      "doorOwnership": [
+        "four cat scans N1-N4 own door/backing"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/ct-layout/ct-preview.js",
+        "tools/room-design/ct-layout/cat-wall-art.json",
+        "tools/room-design/ct-layout/atlas-provenance.md"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "scanner seat rise is source-derived but not GS-018 fit",
+        "standing-console counter/facade appears roughly 40-55 px high in normalized capture versus the approximately 90 px Front Desk reference; exact physical facade contact measurement remains required"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "phlebotomy",
+      "dimensions": [
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "orientations": [
+        "south",
+        "east-90ccw"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/phlebotomy-layout/phlebotomy-layout.html",
+        "bytes": 681994,
+        "sha256": "E4BFD35417FC777D2491832D53F14E92FF694200D56E3D9BA950AC85AF8E7C14",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/phlebotomy-furniture-south-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/phlebotomy-furniture-east-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/phlebotomy-curtained-window-02.png"
+      ],
+      "scale": {
+        "chairRenderedHeightPx": {
+          "south": 143,
+          "east": 164.45
+        },
+        "chairSeatRisePx": {
+          "east": 57.26
+        },
+        "stoolRenderedHeightPx": {
+          "south": 66.25,
+          "east": 76.19
+        },
+        "stoolSeatRisePx": {
+          "east": 55.26
+        },
+        "sinkHeightPx": {
+          "south": 120.73,
+          "east": 138.84
+        }
+      },
+      "poses": [
+        "south patient / north staff",
+        "east patient / west staff"
+      ],
+      "navigation": {
+        "solid": [
+          "chair .9x.48 logical blocker"
+        ],
+        "passThrough": [
+          "stool",
+          "sink"
+        ]
+      },
+      "depth": [
+        "East sink uses art-only registration offset"
+      ],
+      "doorOwnership": [
+        "sink world N1/WA/backed N1 -> rotated WC/S1",
+        "South N1 window permanently omitted",
+        "other sheer windows own N/backing"
+      ],
+      "rotation": "(x,y)->(y,3-x)",
+      "evidence": [
+        "tools/room-design/phlebotomy-layout/atlas-provenance.md",
+        "tools/room-design/phlebotomy-layout/sprite-config.json"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "Phlebotomy seat rise is 4.6-6.6px above Exam/approved stool reference and needs visual character comparison",
+        "South stool appears visibly lower than the rotated East stool in room captures; measure both physical seat contacts at one normalized character scale before correction"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "evs",
+      "dimensions": [
+        [
+          2,
+          2
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/evs-layout/evs-layout.html",
+        "bytes": 491497,
+        "sha256": "5F157AB35C11F50ECE424CF4762E3F4FAB5D843069A16AD5EE85F4A761755DDA",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/evs-furniture-atlas-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/evs-furniture-atlas-01.png"
+      ],
+      "scale": {
+        "shelfVisibleWidthPx": 119,
+        "clutterHeightPx": [
+          80.79,
+          78.67
+        ],
+        "bucketHeightPx": 125
+      },
+      "poses": [],
+      "navigation": {
+        "solid": [],
+        "passThrough": [
+          "shelves",
+          "clutter",
+          "bucket"
+        ]
+      },
+      "depth": [
+        "decorative closet props nonblocking"
+      ],
+      "doorOwnership": [
+        "N shelves own N/backing",
+        "B1 WB/S1",
+        "B2 EB/S2"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/evs-layout/atlas-provenance.md",
+        "tools/room-design/evs-layout/sprite-config.json"
+      ],
+      "occupiedFit": "not-applicable-no-seat",
+      "unknowns": [
+        "no staff use pose or service attachment specified"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "endoscopy",
+      "dimensions": [
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "orientations": [
+        "south",
+        "east-90ccw"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/endoscopy-layout/endoscopy-layout.html",
+        "bytes": 355490,
+        "sha256": "12EEFD3E19BFB8A2E38EAE22DC1A8F65ED4F0586CC704009980811A1AB2F3551",
+        "deliveryMatches": true,
+        "approvedArtIntegrated": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/endoscopy-bed-south-01.png (empty South)",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/endoscopy-bed-east-02.png (empty East)",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/endoscopy-occupied-beds-dark-01.png (occupied both views)"
+      ],
+      "scale": {
+        "bedRenderedHeightPx": {
+          "south": 205,
+          "east": 110
+        },
+        "eastRenderedWidthPx": 195
+      },
+      "poses": [
+        "staff west / rotated south",
+        "generic covered patient faces west / rotated south away from staff"
+      ],
+      "navigation": {
+        "solid": [
+          "table .95,.35,1,1.6 / rotated .35,2.05,1.6,1"
+        ],
+        "passThrough": [
+          "tower",
+          "cabinet",
+          "sink"
+        ]
+      },
+      "depth": [
+        "occupied bed replaces individual patient"
+      ],
+      "doorOwnership": [
+        "cabinet N1/WA",
+        "sink N4/EA"
+      ],
+      "rotation": "(x,y)->(y,4-x)",
+      "evidence": [
+        "tools/room-design/endoscopy-layout/atlas-provenance.md",
+        "tools/room-design/endoscopy-layout/handoff-contract.json",
+        "tools/room-design/endoscopy-scale-comparison/"
+      ],
+      "occupiedFit": "approved-dark-art-integrated; GS-018 occupied comparison pending recapture",
+      "unknowns": [
+        "new approved dark occupied frames require refreshed same-scale GS-018 comparison before occupied fit is verified",
+        "OR behavior mention has no OR proof"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "recovery",
+      "dimensions": [
+        [
+          6,
+          6
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/recovery-layout/recovery-layout.html",
+        "bytes": 608909,
+        "sha256": "1C09C139AA583D025E9C00BA1EB3A21CCDD1C8F807F5D5041080DC68B979895F",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/recovery-beds-cardinal-03.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/recovery-station-04.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/recovery-monitors-cardinal-01.png"
+      ],
+      "scale": {
+        "bedPhysicalPx": [
+          186,
+          84
+        ],
+        "bedFootprintTiles": [
+          1.55,
+          0.7
+        ],
+        "bedCushionRisePx": [
+          41.47,
+          41.85
+        ],
+        "stoolWidthPx": 60,
+        "stoolSeatRisePx": 50.68,
+        "stationWidthPx": 240,
+        "stationFacadeRisePx": 93.24
+      },
+      "poses": [
+        "patients sit inward at bed feet",
+        "two nurses south-facing"
+      ],
+      "navigation": {
+        "solid": [
+          "eight beds",
+          "four partitions",
+          "central station"
+        ],
+        "passThrough": [
+          "two stools",
+          "monitors"
+        ]
+      },
+      "depth": [
+        "separate bed floor/cushion anchors"
+      ],
+      "doorOwnership": [
+        "eight bay doors remove bed+monitor+adjacent partition",
+        "N art owns N1/N3/N4/N6"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/recovery-layout/atlas-provenance.md",
+        "tools/room-design/recovery-layout/handoff-contract.json"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "eight visual beds do not imply runtime multi-patient reservation support",
+        "bed rises are 0.6-1.5px below Exam reference but accepted"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "training",
+      "dimensions": [
+        [
+          3,
+          3
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/training-layout/training-layout.html",
+        "bytes": 326214,
+        "sha256": "0DB0F5C1E1FCF52CA8EE77DDA9203008CF249F2C0DF7C0DA7DC2F226E4B5740E",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/training-bench-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/training-decor-01.png",
+        "tools/room-design/examination-layout/examination-props-01.webp"
+      ],
+      "scale": {
+        "benchBaseWidthPx": 204,
+        "benchWorktopRisePx": 85.94,
+        "stoolWidthPx": 60,
+        "stoolSeatRisePx": 50.68
+      },
+      "poses": [
+        "two employees north-facing"
+      ],
+      "navigation": {
+        "solid": [
+          "bench .65,.85,1.7,.6"
+        ],
+        "passThrough": [
+          "two stools"
+        ]
+      },
+      "depth": [
+        "stools drawn by floor depth relative to bench"
+      ],
+      "doorOwnership": [
+        "cabinet/anatomy N1/WA/backing N1",
+        "whiteboard N2",
+        "skeleton N3/EA"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/training-layout/atlas-provenance.md",
+        "tools/room-design/training-layout/handoff-contract.json"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "bench hand/arm reach and stool character attachment not tested",
+        "provenance approval wording is stale versus active approved-room scope"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "coffee",
+      "dimensions": [
+        [
+          2,
+          2
+        ]
+      ],
+      "orientations": [
+        "north-up"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/coffee-kiosk-layout/coffee-kiosk-layout.html",
+        "bytes": 259604,
+        "sha256": "45F639300E334F00C7DF72654FD8A87D414C11047887364508A58E70E4DD8EDD",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/coffee-island-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/coffee-wall-art-01.png"
+      ],
+      "scale": {
+        "islandBaseWidthPx": 120,
+        "counterFacadeRisePx": 82.5
+      },
+      "poses": [
+        "service standing north"
+      ],
+      "navigation": {
+        "solid": [
+          "island .5,.6,1,.8"
+        ],
+        "passThrough": [],
+        "lane": "continuous perimeter loop"
+      },
+      "depth": [
+        "service point south of island"
+      ],
+      "doorOwnership": [
+        "prints N1/N2 own door/backing",
+        "island permanent"
+      ],
+      "rotation": null,
+      "evidence": [
+        "tools/room-design/coffee-kiosk-layout/atlas-provenance.md",
+        "tools/room-design/coffee-kiosk-layout/preview.js"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "82.5px facade is 7.5px below Front Desk reference but fixture type differs",
+        "service pose has no GS-018 comparison",
+        "provenance approval wording is stale versus active approved-room scope"
+      ],
+      "nativeTilePx": 120
+    },
+    {
+      "id": "telehealth",
+      "dimensions": [
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "orientations": [
+        "south",
+        "west-90ccw"
+      ],
+      "canonicalProof": {
+        "path": "tools/room-design/telehealth-layout/telehealth-layout.html",
+        "bytes": 635148,
+        "sha256": "583BFC3E8813177F1492C0D211EA517BE82EC00ABC5FC269C673D0375EDE3496",
+        "deliveryMatches": true
+      },
+      "sourceAssets": [
+        "Photos for Codex 2/Codex Rooms 2/GS-015/telehealth-desks-cardinal-02.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/telehealth-chairs-plants-01.png",
+        "Photos for Codex 2/Codex Rooms 2/GS-015/phlebotomy-curtained-window-02.png"
+      ],
+      "scale": {
+        "deskPhysicalBaseWidthPx": 120,
+        "chairScaleDenominatorPx": 235,
+        "approxChairSeatRisePx": {
+          "eastWest": 47.74,
+          "northSouth": 48.51
+        }
+      },
+      "poses": [
+        "south view east/west employees",
+        "west view north/south employees"
+      ],
+      "navigation": {
+        "solid": [
+          "desk 1x1"
+        ],
+        "passThrough": [
+          "chairs",
+          "plants"
+        ]
+      },
+      "depth": [
+        "South plants behind chairs behind desk",
+        "West rubber plant, south chair, desk, north chair, snake plant"
+      ],
+      "doorOwnership": [
+        "snake N1/WA -> WC/S1",
+        "rubber N3/EA -> WA/N1",
+        "backing only current N"
+      ],
+      "rotation": "(x,y)->(y,3-x)",
+      "evidence": [
+        "tools/room-design/telehealth-layout/atlas-provenance.md",
+        "tools/room-design/telehealth-layout/handoff-contract.json",
+        "tools/room-design/telehealth-layout/validate-focused.cjs"
+      ],
+      "occupiedFit": "unverified",
+      "unknowns": [
+        "north-chair seat contact is inferred behind backrest",
+        "desk facade rise not recorded",
+        "provenance approval wording is stale versus active approved-room scope"
+      ],
+      "nativeTilePx": 120
+    }
+  ]
+}

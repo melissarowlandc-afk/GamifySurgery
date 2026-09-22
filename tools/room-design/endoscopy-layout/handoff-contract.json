@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "roomType": "endoscopy",
+  "scope": "presentation proof only; owner contract for future Endoscopy and OR runtime handoff; no OR room or art in this proof",
+  "trigger": "individual patient reaches the procedure-table patientApproach use point",
+  "transition": {
+    "hideIndividualPatient": true,
+    "replaceFixtureState": {"fixtureId": "procedureTable", "from": "empty", "to": "occupiedCovered"},
+    "staff": {"baseGround": [2.3, 1.5], "baseFacing": "W", "rotatedFacing": "S"}
+  },
+  "beforeProcedure": {
+    "individualPatientSpriteVisible": true,
+    "baseApproach": [1.5, 2.3],
+    "rotatedApproach": [2.3, 2.5],
+    "transitionalSeatDirections": {"base": "S", "rotated": "E"}
+  },
+  "occupiedCovered": {
+    "genericHumanoid": true,
+    "cover": "procedure drape",
+    "uncovered": ["head"],
+    "hairnet": true,
+    "baseHeadFacing": "W",
+    "rotatedHeadFacing": "S",
+    "facesAwayFromStaff": true,
+    "individualPatientSpriteVisible": false
+  },
+  "disembark": {
+    "replaceFixtureState": {"fixtureId": "procedureTable", "from": "occupiedCovered", "to": "empty"},
+    "restoreIndividualPatient": true
+  },
+  "futureOR": "Use the same generic intraoperative bed-replacement behavior; this contract does not add OR art, timings, or clinical rules.",
+  "collisionInvariant": "empty and occupiedCovered states share the same navigation blocker and ground registration"
+}

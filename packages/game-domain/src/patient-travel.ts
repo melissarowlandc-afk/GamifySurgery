@@ -33,6 +33,7 @@ export function createFrozenServiceRouteTiming(
   state: GameState,
   context: DomainContext,
   route: ServiceRouteDefinition,
+  allowedDestinationRoomIds: ReadonlySet<string> | null = null,
 ): FrozenServiceRouteTiming | null {
   if (route.patientTravel === null) {
     return {
@@ -54,6 +55,11 @@ export function createFrozenServiceRouteTiming(
       (room) =>
         room.roomDefinitionId ===
         route.patientTravel?.destinationRoomDefinitionId,
+    )
+    .filter(
+      (destination) =>
+        allowedDestinationRoomIds === null ||
+        allowedDestinationRoomIds.has(destination.id),
     )
     .filter(
       (destination) =>
