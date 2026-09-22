@@ -1,3 +1,12 @@
+> GS-024 VERIFIED GITHUB CHECKPOINT (2026-09-22 UTC).
+> Clone branch backup/new-computer-2026-09-22 from the existing GitHub repo.
+> Payload6a468d7 was pushed and verified from a clean remote retrieval:
+> locked install,1,577 tests, all7 typechecks/build, rendered game startup and
+> service-income browser acceptance passed. One fresh-campaign browser flow
+> timed out; exact limitation in GS-024_NEW_COMPUTER_TRANSFER.md.
+> Public-safe integrated source/development assets preserved; private material
+> remains excluded. Owner already transferred whole computer via Tailscale.
+> Original shared beta/index, main/live website and owner saves unchanged.
 # Current Thread Handoff
 
 > GS-023 THREE APPROVED ROUTINES IMPLEMENTED LOCALLY (2026-09-18).
@@ -2931,3 +2940,4 @@ See PATIENT_PUBLIC20_CARDINAL_STATICS.md and
 artifacts/character-statics/patient-public20-statics-v1/manifest.json.
 Localartworkonly; no runtimeintegration,Gitcommit,push or deployment.
 Say "push to GitHub" to request a scoped backup. Preserve unrelated work.
+

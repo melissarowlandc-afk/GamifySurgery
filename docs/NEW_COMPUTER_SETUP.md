@@ -38,3 +38,13 @@ secrets or proprietary clinical sources.
 
 Codex task conversations, settings and account credentials are outside Git.
 The repository's handoffs and plans are the durable development record.
+
+For the same bounded-concurrency unit run used to verify this checkpoint, use:
+
+```powershell
+npm run test:boundaries
+npm run test --workspaces --if-present -- --maxWorkers=1
+```
+
+This runs all workspace suites serially per workspace. On a busy Windows host,
+the default parallel run can time out the larger simulation tests.

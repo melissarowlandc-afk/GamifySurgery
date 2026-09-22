@@ -31,3 +31,14 @@ Terra completed initial inventory/copy: 3840 source files 754181313 bytes; local
 Sol completed public art/tool audit; parent independently verified4075 original-source and destination hashes with zero drift. Two private references and577 intermediate proofs excluded;814 safe tool/text records retained. Four generic secret scan hits reviewed as test fixtures and local token-generation code; stronger credential/private-key and embedded-image scans found no matches. All original source files preserved.
 
 Preflight: npm ci112packages; all7 typechecks/build/boundaries green; serial workspace suites43+467+27+81+360+516 passed. Clinical-research nested Node worker intermittently crashed default Vitest forks even outside sandbox. Terra isolated the cause; minimal test-only pool:'threads' config passed83/83 three times and typecheck; parent reviewed actual3-line diff. Total accepted unit coverage1577 tests. No runtime behavior edits in this checkpoint. Next: audited staging, commit/push, clean remote retrieval/validation.
+
+## Completed acceptance (2026-09-22 UTC)
+Payload6a468d7b00dc72d8e7f32d62a48ee050b8a2747a pushed and ls-remote verified.
+Fresh GitHub clone clean; parent4080 SHA256 checks zero mismatches. Locked install,
+1577 unit tests,206 files, all7 typechecks/build/boundaries passed. Game startup
+visually reviewed; isolated service-income browser test passed43.6s. Broader
+fresh-campaign test timed out waiting for Olivia Reed Action required; exact
+failure documented without speculative diagnosis. Remaining browser cases stopped;
+no unrelated gameplay repair. Original source branch/HEAD/index unchanged; remote
+main/beta unchanged. Parent final documentation-only receipt push follows; then
+verify latest remote SHA and retrieve receipt into verification clone. No archive.
