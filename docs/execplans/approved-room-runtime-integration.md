@@ -248,3 +248,16 @@ In progress: read-only runtime mapping delegated; dirty baseline preserved.
 - Scoped checkpoint assembled separately on codex/gs015-approved-rooms from
   cdf984b. Shared beta/index and unrelated dirty work preserved. Final audit,
   commit/push and remote verification are the only remaining actions.
+
+## Complete — verified GitHub checkpoint
+
+Payload commit41923fffa6756dbe1579c308bd078765caf122e7 was pushed to
+codex/gs015-approved-rooms and verified with git ls-remote. Audit included143
+explicit paths,72 text files scanned for credential patterns,259 source/test
+files matching the tested shared workspace exactly, and repeated asset/proof
+hash validation inside the checkpoint. No private inputs or clinical content
+changes were included. Canonical proof bytes retain their original CRLF and
+terminal blank lines; whitespace check passes with CRLF/terminal-blank handling.
+Shared beta HEAD/index and unrelated dirty work remain untouched. No main merge
+or Pages deployment. Final receipt documentation is committed on the same branch.
+All required implementation milestones are complete; next is owner playtesting.

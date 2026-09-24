@@ -17,7 +17,9 @@ Legacy invalid doors reconnect; saved active travel and payout timers remain,
 while completed result history stays immutable. Domain535/player496/balance33,
 three typechecks, build, source validators and browser5/5 passed (parent domain
 rerun had one concurrent-load timeout that passed in an isolated rerun).
-Checkpoint push verification remains the final closeout step. Canonical owner
+Verified GitHub payload:41923fffa6756dbe1579c308bd078765caf122e7 on
+codex/gs015-approved-rooms; push and remote branch hash verified September24.
+Runtime integration and backup are complete. Canonical owner
 pathway stays START_GAME.cmd / http://127.0.0.1:4173 in the same browser profile.
 No Pages deployment or seated character source-proportion repair in this task.
 

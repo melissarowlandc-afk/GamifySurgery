@@ -8,7 +8,10 @@
 > excluded. GS-015 checkpoint work starts from fetched tip cdf984b; the original
 > shared beta/index, main/live website and owner browser saves are preserved.
 
-> GS-015 RUNTIME INTEGRATION VALIDATED LOCALLY (2026-09-24). Owner approved September22
+> GS-015 RUNTIME INTEGRATION COMPLETE / VERIFIED GITHUB CHECKPOINT (2026-09-24).
+> Branch codex/gs015-approved-rooms contains payload commit
+> 41923fffa6756dbe1579c308bd078765caf122e7, pushed and verified by ls-remote.
+> Owner approved September22
 > furniture revisions and explicitly directed replacing old game rooms with
 > all16 approved designs and pushing the result. Owner chose automatic Recovery
 > relocation/reconnection where its new6x6 footprint cannot expand in place.
@@ -27,7 +30,8 @@
 > cdf984b; shared beta dirty work preserved. Launcher no-npm readiness fixed;
 > canonical START_GAME.cmd -> http://127.0.0.1:4173 remains unchanged. Seated
 > character source-proportion repair remains deferred; no deployment authorized.
-> Checkpoint commit/push verification is the remaining closeout step. Fully
+> Implementation and backup are complete. Next action is owner playtesting via
+> the unchanged local launcher; seated sprite proportions remain future work. Fully
 > packed no-solution layouts and unsupported legacy Front Desk90/270 fail
 > atomically, retaining raw saved data rather than resizing through neighbors.
 
