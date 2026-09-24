@@ -1,5 +1,109 @@
 # GS-015 room design handoff
 
+## Approved for runtime integration — September 24, 2026
+
+Owner explicitly approved all September22 furniture size revisions and directed
+replacement of old in-game rooms with the complete approved room set now,
+including implementation and push. Earlier candidate-review/runtime-separate
+notes are historical and superseded for this work. Preserve recorded approvals
+and originals. Seated sprite proportion repair remains deferred.
+Active plan: docs/execplans/approved-room-runtime-integration.md.
+
+Runtime implementation is now validated locally: all16 approved designs and
+September22 revisions render as modular fixtures, with21 authored views and
+live seat/door/backing/Endoscopy occupancy checks. Recovery expands to6x6 and
+automatically relocates/reconnects when necessary, preserving IDs and capacity.
+Legacy invalid doors reconnect; saved active travel and payout timers remain,
+while completed result history stays immutable. Domain535/player496/balance33,
+three typechecks, build, source validators and browser5/5 passed (parent domain
+rerun had one concurrent-load timeout that passed in an isolated rerun).
+Checkpoint push verification remains the final closeout step. Canonical owner
+pathway stays START_GAME.cmd / http://127.0.0.1:4173 in the same browser profile.
+No Pages deployment or seated character source-proportion repair in this task.
+
+## Furniture candidate revision — September 22, 2026
+
+Owner authorized a modestly shorter Front Desk; taller X-ray/CT desks with
+one larger screen and keyboard, removing control panels; taller Endoscopy
+prep cabinet with a larger tray and no linens. Seated P01 correction is
+explicitly deferred for future work. Do not create additional rooms now.
+
+New candidate proofs/builders/metadata are under
+`tools/room-design/furniture-revision-2026-09-22/`. Source art and exact prompts
+are under `Photos for Codex 2/Codex Rooms 2/GS-015/furniture-revision-2026-09-22/`.
+Selected sources: Front Desk03, X-ray02, CT01, Endoscopy South04/East02-alpha.
+Canonical September21 proofs, original artwork and recorded approvals remain
+unchanged. Candidate appearance awaits owner review; runtime remains separate.
+No character, save, launcher, origin, deployment or push changes.
+
+Terra furniture_revision implemented candidates; parent reviewed builder,
+metadata and room captures, reran smoke checks and verified26 baseline hashes
+(all16 canonical proofs plus scoped four proofs/six original assets).
+Parent also reran strengthened interaction checks PASS: each door route,
+both Endoscopy views, cabinet optional/door/backing hide and restoration,
+and 320px overflow. Final East room visually reviewed; enlarged cabinet/tray
+remain clear of the bed. Sol finish_furniture_review is finishing the embedded
+comparison delivery after Terra's incomplete viewer handback. Delivery is now
+complete: parent inspected desktop/320 captures and independently reran
+validate-review.cjs PASS (15 selections, equal scale, state restoration and
+320px overflow). Ten embedded images cover four rooms and both Endoscopy views.
+Current-task review path:
+`C:/Users/rowla/.codex/visualizations/2026/09/22/01a0ca1d-9c4b-7921-847b-5a7b20244b12/furniture-revision-review.html`.
+Next action is owner appearance feedback on this batch; GS-015 remains open.
+This is local/uncommitted work; no new GitHub backup exists.
+
+## Current continuation — September 22, 2026
+
+Latest owner feedback: P01 looks small beside Front Desk, X-ray/CT computer
+stations and Endoscopy rear prep table look small, seated P01 looks larger than
+standing. Sol proportion_diagnosis is preparing current-scale comparisons only
+in tools/room-design/proportion-review/**. Front Desk native88/capture105.6
+mapping is correct; no extra viewer shrink found. Existing GS-018 metadata
+shows seated head envelopes wider (South118 vs100, West106 vs91 source pixels,
+including hair), so common draw scale does not establish matching proportions.
+Endoscopy South prep cabinet total render height is80px including props;
+estimated front worktop rise is only about40–44px. Preserve designs/art while
+reviewing corrections; runtime remains separate.
+
+Sol completed the focused proportion-review/** comparison and findings. Parent
+reviewed both viewport captures and independently reran validation PASS after
+requiring identical responsive scale for furniture/character rows. Source and
+current task delivery hash:
+`D0A58855D803D198ECDF1AE13E6A096D2A7D7AE71316C4EAC3F434CE4A0E7513`.
+These show existing proportions, not new approved sizes; all16 room proof
+hashes remain unchanged. Source seated proportions and furniture worktop sizes
+remain correction work. Report/artifact/docs local only; no push/integration.
+
+Owner clarified that the existing rooms cover the current game levels. Stop
+new-room design for now. Resume furniture sizes/heights/functions, character
+contacts, depth and path consistency before game integration, using
+`docs/execplans/room-consistency-audit.md`. Preserve all recorded approvals;
+Operating Room is deferred, not a required gap for this scope.
+
+Terra verified all 16 canonical proofs against their September 21 inventory
+hashes. Later CT four-cat-scan delivery and approved dark occupied Endoscopy
+entries below supersede earlier discrepancy notes. Historical delivery paths
+belong to the old computer; canonical proofs are recovered in tools/room-design.
+
+The unchanged 16-room/five-rotation comparison viewer was restored to the
+September 22 task visualization folder with matching SHA-256
+`7FAA98E0A9E9CF08FBC64DEB24688EC4801ADBA743DB8D01918345BD6A5F3F9F`.
+Parent browser smoke passed image readiness, all 16 controls, Examination
+rotation/pose/placement and fixed character scale, zero page errors and no
+320-pixel overflow. This foreground-only viewer does not certify actual
+occlusion, attachment or paths. No approved proof or runtime file changed.
+
+Terra also refreshed the separate Endoscopy occupied comparison with the
+approved dark art, preserving previous output/evidence in
+`tools/room-design/endoscopy-scale-comparison/evidence/2026-09-22-pre-dark-refresh/`.
+Parent independently reran its focused validator PASS and inspected both
+orientations. Source/current delivery SHA-256:
+`D8D2C632C61352ED636E96F113C6FC466171C3F26EF30A609A8AAABF795CE87F`.
+The audit report is `tools/room-design/consistency-audit/resume-audit-2026-09-22.md`.
+Next work is X-ray/CT worktop registration and standing fit, then Phlebotomy
+seat comparison; universal character/depth/path fit remains open. Current
+continuation changes are local/uncommitted; no push. GS-015 stays open.
+
 ## Status
 
 Open. The owner requested a ground-up visual rebuild of all rooms. The first

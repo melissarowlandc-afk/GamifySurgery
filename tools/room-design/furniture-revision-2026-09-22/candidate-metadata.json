@@ -1,0 +1,262 @@
+{
+  "status": "owner-approved-for-runtime",
+  "approvalDate": "2026-09-24",
+  "processing": "Source PNG alpha bounds scanned and uniformly scaled in headless Chrome canvas; no source PNG was modified.",
+  "frontDesk": {
+    "source": "front-desk-shorter-03.png",
+    "packed": {
+      "source": [
+        1254,
+        1254
+      ],
+      "alphaBounds": [
+        117,
+        268,
+        1138,
+        1047
+      ],
+      "baseProbe": {
+        "y": 1022,
+        "span": [
+          154,
+          1101
+        ],
+        "width": 947
+      },
+      "packed": [
+        969,
+        799
+      ],
+      "visible": [
+        1021,
+        779
+      ],
+      "scale": 0.9376979936642027,
+      "padding": 0,
+      "placedBase": [
+        41,
+        766,
+        929
+      ],
+      "placedAlphaBounds": [
+        6.3051742344244985,
+        35.533262935586094,
+        963.6948257655755,
+        766
+      ]
+    },
+    "ground": {
+      "baseLeft": 41,
+      "baseRight": 929,
+      "baseBottom": 766
+    },
+    "candidate": "front-desk-candidate.html"
+  },
+  "xray": {
+    "source": "xray-workstation-02.png",
+    "packed": {
+      "source": [
+        1237,
+        1271
+      ],
+      "alphaBounds": [
+        98,
+        17,
+        1140,
+        1247
+      ],
+      "packed": [
+        502,
+        590
+      ],
+      "visible": [
+        1042,
+        1230
+      ],
+      "scale": 0.46641074856046066,
+      "padding": 8
+    },
+    "crop": {
+      "x": 8,
+      "y": 629,
+      "w": 502,
+      "h": 590,
+      "contactX": 251,
+      "contactY": 582
+    },
+    "candidate": "xray-candidate.html",
+    "preserved": {
+      "footprint": [
+        2.15,
+        1.45,
+        0.6,
+        0.3
+      ],
+      "anchor": [
+        2.45,
+        1.75
+      ],
+      "approach": [
+        2.45,
+        2.35
+      ],
+      "collision": "nonblocking"
+    }
+  },
+  "ct": {
+    "source": "ct-workstation-01.png",
+    "packed": {
+      "source": [
+        1237,
+        1272
+      ],
+      "alphaBounds": [
+        97,
+        17,
+        1143,
+        1249
+      ],
+      "packed": [
+        568,
+        666
+      ],
+      "visible": [
+        1046,
+        1232
+      ],
+      "scale": 0.5277246653919694,
+      "padding": 8
+    },
+    "crop": {
+      "x": 786,
+      "y": 0,
+      "w": 568,
+      "h": 666
+    },
+    "contact": [
+      284,
+      658
+    ],
+    "candidate": "ct-candidate.html",
+    "preserved": {
+      "footprint": [
+        2.9,
+        1.72,
+        0.9,
+        0.38
+      ],
+      "anchor": [
+        3.35,
+        2.1
+      ],
+      "approach": [
+        3.35,
+        2.7
+      ],
+      "collision": "nonblocking"
+    }
+  },
+  "endoscopy": {
+    "sources": {
+      "south": "endoscopy-prep-south-04.png",
+      "east": "endoscopy-prep-east-02-alpha.png"
+    },
+    "south": {
+      "source": [
+        1094,
+        1437
+      ],
+      "alphaBounds": [
+        33,
+        195,
+        1057,
+        1198
+      ],
+      "packed": [
+        1040,
+        1019
+      ],
+      "baseProbe": {
+        "y": 1173,
+        "runs": [
+          [
+            68,
+            156
+          ],
+          [
+            935,
+            1023
+          ]
+        ],
+        "outerSpan": [
+          68,
+          1023
+        ]
+      },
+      "worktopSourceY": 540,
+      "worktopRisePx": 72.16350947158524,
+      "renderedHeight": 110,
+      "ground": [
+        520.5,
+        1011
+      ]
+    },
+    "east": {
+      "source": [
+        1024,
+        1536
+      ],
+      "alphaBounds": [
+        237,
+        48,
+        805,
+        1464
+      ],
+      "packed": [
+        584,
+        1432
+      ],
+      "baseProbe": {
+        "y": 1439,
+        "runs": [
+          [
+            276,
+            380
+          ],
+          [
+            646,
+            749
+          ]
+        ],
+        "outerSpan": [
+          276,
+          749
+        ]
+      },
+      "worktopSourceY": 800,
+      "worktopRisePx": 72.68361581920904,
+      "renderedHeight": 155,
+      "ground": [
+        283.5,
+        1424
+      ]
+    },
+    "candidate": "endoscopy-candidate.html",
+    "preserved": {
+      "cabinet": {
+        "footprint": [
+          0.05,
+          0.05,
+          0.9,
+          0.25
+        ],
+        "conflicts": [
+          "N1",
+          "WA"
+        ],
+        "collision": "nonblocking"
+      },
+      "allOtherPackedFrames": "copied unchanged from canonical south.webp/east.webp"
+    }
+  }
+}

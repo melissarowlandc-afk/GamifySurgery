@@ -5,7 +5,11 @@ import type {
   GridPoint,
   PlacedRoom,
 } from "./types";
-import { getOccupiedTiles, getRotatedFootprint } from "./spatial";
+import {
+  getOccupiedTiles,
+  getRotatedFootprint,
+  isRoomDoorThresholdProofNavigable,
+} from "./spatial";
 
 const CARDINAL_OFFSET: Record<CardinalDirection, GridPoint> = {
   north: { x: 0, y: -1 },
@@ -124,6 +128,63 @@ function physicalDoorKey(cells: {
     .join("|");
 }
 
+function doorForPhysicalThreshold(
+  id: string,
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  cells: { inside: GridPoint; outside: GridPoint },
+): DoorState | null {
+  for (const side of ["north", "east", "south", "west"] as const) {
+    for (let offset = 0; offset < getWallLength(room, definition, side); offset += 1) {
+      const candidate: DoorState = { id, roomId: room.id, side, offset, exterior: false };
+      const candidateCells = getDoorCells(candidate, room, definition);
+      if (candidateCells && physicalDoorKey(candidateCells) === physicalDoorKey(cells)) {
+        return candidate;
+      }
+    }
+  }
+  return null;
+}
+
+/** Every clinical room touching a physical opening must accept that threshold. */
+export function areDoorThresholdsProofNavigable(
+  door: DoorState,
+  rooms: readonly PlacedRoom[],
+  doors: readonly DoorState[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): boolean {
+  const owner = rooms.find((room) => room.id === door.roomId);
+  const ownerDefinition = owner ? getDefinition(owner.roomDefinitionId) : null;
+  const cells = owner && ownerDefinition ? getDoorCells(door, owner, ownerDefinition) : null;
+  if (!cells) return false;
+  const touching = rooms.filter((room) => {
+    const definition = getDefinition(room.roomDefinitionId);
+    return Boolean(
+      definition && getOccupiedTiles(room, definition).some((point) =>
+        (point.x === cells.inside.x && point.y === cells.inside.y) ||
+        (point.x === cells.outside.x && point.y === cells.outside.y),
+      ),
+    );
+  });
+  for (const room of touching) {
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition || definition.kind === "hallway") continue;
+    const threshold = doorForPhysicalThreshold(door.id, room, definition, cells);
+    if (
+      !threshold ||
+      !isRoomDoorThresholdProofNavigable(
+        threshold,
+        room,
+        definition,
+        doors,
+        rooms,
+        getDefinition,
+      )
+    ) return false;
+  }
+  return touching.some((room) => getDefinition(room.roomDefinitionId)?.kind !== "hallway");
+}
+
 export interface DoorPlacementValidation {
   valid: boolean;
   reason: string | null;
@@ -158,6 +219,26 @@ export function validateDoorPlacement(
       adjacentRoomId: null,
     };
   }
+  const effectiveDoors = [
+    ...doors.filter((candidate) => candidate.id !== door.id),
+    door,
+  ];
+  if (
+    !isRoomDoorThresholdProofNavigable(
+      door,
+      room,
+      definition,
+      effectiveDoors,
+      rooms,
+      getDefinition,
+    )
+  ) {
+    return {
+      valid: false,
+      reason: "That door position conflicts with fixed room furniture.",
+      adjacentRoomId: null,
+    };
+  }
   const duplicateKey = physicalDoorKey(cells);
   const duplicatesExistingDoor = doors.some((candidate) => {
     if (candidate.id === door.id) {
@@ -185,7 +266,6 @@ export function validateDoorPlacement(
       adjacentRoomId: null,
     };
   }
-
   const outsideFacility =
     cells.outside.x < 0 ||
     cells.outside.y < 0 ||
@@ -222,6 +302,13 @@ export function validateDoorPlacement(
       valid: false,
       reason: "A door must connect two adjacent traversable spaces.",
       adjacentRoomId: null,
+    };
+  }
+  if (!areDoorThresholdsProofNavigable(door, rooms, effectiveDoors, getDefinition)) {
+    return {
+      valid: false,
+      reason: "That door position conflicts with fixed furniture in an adjacent room.",
+      adjacentRoomId: adjacentRoom.id,
     };
   }
   return {

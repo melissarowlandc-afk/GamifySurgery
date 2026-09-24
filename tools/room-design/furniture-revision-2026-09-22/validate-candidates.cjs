@@ -1,0 +1,9 @@
+const { chromium } = require('playwright'); const path=require('path'); const { pathToFileURL }=require('url'); const fs=require('fs');
+const base=__dirname, chrome='C:/Program Files/Google/Chrome/Application/chrome.exe';
+(async()=>{const browser=await chromium.launch({headless:true,executablePath:chrome});const cases=[
+  {file:'front-desk-candidate.html',ready:'window.__frontDeskLayout?.atlasReady()',art:'#fd-art',overlay:'#fd-show-footprints'},
+  {file:'xray-candidate.html',ready:'window.__xrayLayout?.ready()',art:'#xray-art',overlay:'#xray-overlay'},
+  {file:'ct-candidate.html',ready:'window.__ctLayout?.ready()',art:'#ct-art',overlay:'#ct-overlay'},
+  {file:'endoscopy-candidate.html',ready:'window.__endoscopyProof?.ready()',art:'#endoscopy-art',overlay:'#endoscopy-overlay'}
+];
+for(const item of cases){const page=await browser.newPage({viewport:{width:1100,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(pathToFileURL(path.join(base,item.file)).href);await page.waitForFunction(item.ready);await page.locator(item.overlay).check();const state=await page.locator(item.art).evaluate(el=>({width:el.width,height:el.height,model:el.dataset.model||el.dataset.fixtures||el.dataset.deskDraw,nonempty:el.getContext('2d').getImageData(0,0,el.width,el.height).data.some(v=>v!==0)}));if(!state.nonempty||errors.length)throw new Error(JSON.stringify({file:item.file,state,errors}));await page.screenshot({path:path.join(base,item.file.replace('.html','-desktop.png')),fullPage:true});await page.setViewportSize({width:320,height:900});await page.screenshot({path:path.join(base,item.file.replace('.html','-320.png')),fullPage:true});console.log(`PASS ${item.file}: image ready, overlay, desktop/320, nonempty canvas`);await page.close();}await browser.close();})().catch(e=>{console.error(e.stack||e);process.exit(1)});

@@ -357,7 +357,7 @@ describe("prototype staff", () => {
         );
       }),
     ).toBe(true);
-    expect(employee.path.at(-1)).toEqual({ x: 35, y: 29 });
+    expect(employee.path.at(-1)).toEqual({ x: 34, y: 29 });
     expect(employee.nextIdleActionAtFacilityTick).toBeGreaterThanOrEqual(10);
     expect(getStaffRoleCount(state, "staff.receptionist")).toBe(1);
     expect(

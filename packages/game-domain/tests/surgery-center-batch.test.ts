@@ -53,7 +53,7 @@ function preparedState(seed: string, level: 1 | 2): GameState {
     state.doors = state.doors.filter((door) => door.roomId !== examination.id);
     state.rooms.push(
       { id: "room.sc.endoscopy", roomDefinitionId: "room.endoscopy", x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
-      { id: "room.sc.periop", roomDefinitionId: "room.periop_recovery", x: 28, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+      { id: "room.sc.periop", roomDefinitionId: "room.periop_recovery", x: 26, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
       ...[24, 25, 26, 27, 28].map((y) => ({ id: `room.sc.hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
     );
     state.doors.push(
@@ -64,7 +64,7 @@ function preparedState(seed: string, level: 1 | 2): GameState {
     );
     for (const [id, role, roomId, location] of [
       ["employee.sc.endo-nurse", "staff.endoscopy_nurse", "room.sc.endoscopy", { x: 29, y: 24 }],
-      ["employee.sc.periop-nurse", "staff.periop_nurse", "room.sc.periop", { x: 29, y: 27 }],
+      ["employee.sc.periop-nurse", "staff.periop_nurse", "room.sc.periop", { x: 29, y: 28 }],
       ["employee.sc.endoscopist", "staff.endoscopist", "room.sc.endoscopy", { x: 30, y: 24 }],
     ] as const) state.employees.push({ id, staffRoleDefinitionId: role, displayName: id, appearance: state.founder.appearance, hiredAtFacilityTick: 0, salaryPerExpenseInterval: 0, morale: 100, trainingLevel: 1, homeRoomInstanceId: roomId, location, path: [location], pathIndex: 0, lastMovedAtFacilityTick: 0, lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 100 });
   }

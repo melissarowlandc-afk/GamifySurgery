@@ -167,7 +167,7 @@ describe("delayed patient attention events", () => {
     delete arriving.encounters[TUTORIAL_ENCOUNTER_ID]!
       .unstaffedCheckInOverdueApplied;
     const restoredArrival = deserializeGameState(JSON.stringify(arriving));
-    expect(restoredArrival.schemaVersion).toBe(7);
+    expect(restoredArrival.schemaVersion).toBe(8);
     expect(
       restoredArrival.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus,
     ).toBe("approaching");

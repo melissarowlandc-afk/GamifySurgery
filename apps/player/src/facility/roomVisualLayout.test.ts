@@ -59,15 +59,15 @@ describe("room visual layout", () => {
     );
   });
 
-  it("keeps the exact Front Desk visual door-clear tiles requested for its 5x4 floor", () => {
+  it("passes domain-enabled Front Desk segments through while retaining the fixed south entrance", () => {
     const eligible = (side: "north" | "east" | "south" | "west", length: number) =>
       Array.from({ length }, (_, offset) => isRoomVisualDoorSlotClear({
         definitionId: "room.front_desk", orientation: 0, width: 5, height: 4, side, offset,
       }));
-    expect(eligible("north", 5)).toEqual([false, true, true, true, false]);
-    expect(eligible("east", 4)).toEqual([false, true, true, false]);
+    expect(eligible("north", 5)).toEqual([true, true, true, true, true]);
+    expect(eligible("east", 4)).toEqual([true, true, true, true]);
     expect(eligible("south", 5)).toEqual([false, false, true, false, false]);
-    expect(eligible("west", 4)).toEqual([false, true, true, true]);
+    expect(eligible("west", 4)).toEqual([true, true, true, true]);
   });
 
   it("declares all four fixture-clear wall zones for the primary room slice", () => {
@@ -78,7 +78,7 @@ describe("room visual layout", () => {
       );
     }
     expect(getRoomVisualLayout("room.examination").approvedOrientations).toEqual(
-      [0, 90],
+      [0, 270],
     );
     expect(getRoomVisualLayout("room.xray").fixedFurnitureOrientation).toBe(
       true,
@@ -123,14 +123,14 @@ describe("room visual layout", () => {
     for (const definitionId of [
       "room.phlebotomy",
       "room.endoscopy",
-      "room.periop_recovery",
       "room.glp1_telehealth_suite",
     ]) {
       expect(getRoomVisualLayout(definitionId).approvedOrientations).toEqual([
         0,
-        90,
+        270,
       ]);
     }
+    expect(getRoomVisualLayout("room.periop_recovery").approvedOrientations).toEqual([0]);
   });
 
   it("keeps imaging and procedure candidates away from their central equipment approaches", () => {
@@ -183,7 +183,7 @@ describe("room visual layout", () => {
     );
   });
 
-  it("filters new door previews to domain-enabled slots inside authored spans without affecting legacy doors", () => {
+  it("does not re-filter domain-enabled approved proof slots through legacy ratio zones", () => {
     expect(
       isRoomVisualDoorSlotClear({
         definitionId: "room.waiting",
@@ -203,7 +203,7 @@ describe("room visual layout", () => {
         side: "north",
         offset: 2,
       }),
-    ).toBe(false);
+    ).toBe(true);
     // A persisted legacy orientation still maps clear zones deterministically.
     expect(getOrientedDoorClearZones("room.examination", 270)).toHaveLength(4);
     expect(
@@ -226,6 +226,27 @@ describe("room visual layout", () => {
         offset: 1,
       }),
     ).toBe(true);
+    // Front ED hides only its owned visitor chair in the proof.
+    expect(isRoomVisualDoorSlotClear({
+      definitionId: "room.front_desk", orientation: 0, width: 5, height: 4,
+      side: "east", offset: 3,
+    })).toBe(true);
+    // Recovery bay slots are owned individually and must reach Build Mode.
+    for (const offset of [2, 3]) {
+      expect(isRoomVisualDoorSlotClear({
+        definitionId: "room.periop_recovery", orientation: 0, width: 6, height: 6,
+        side: "north", offset,
+      })).toBe(true);
+    }
+    // The rotated proof owns its transformed wall segments directly.
+    expect(isRoomVisualDoorSlotClear({
+      definitionId: "room.endoscopy", orientation: 270, width: 3, height: 4,
+      side: "west", offset: 3,
+    })).toBe(true);
+    expect(isRoomVisualDoorSlotClear({
+      definitionId: "room.endoscopy", orientation: 270, width: 3, height: 4,
+      side: "west", offset: 4,
+    })).toBe(false);
   });
 
   it("keeps at least one fixture-clear candidate on every Examination Room wall in both authored footprints", () => {
@@ -251,9 +272,9 @@ describe("room visual layout", () => {
     }
   });
 
-  it("only offers fixed or approved 0/90 placement orientations", () => {
+  it("only offers fixed or approved GS-015 placement orientations", () => {
     expect(getApprovedPlacementOrientations("room.xray")).toEqual([0]);
-    expect(getApprovedPlacementOrientations("room.examination")).toEqual([0, 90]);
+    expect(getApprovedPlacementOrientations("room.examination")).toEqual([0, 270]);
     expect(getApprovedPlacementOrientations("room.hallway")).toEqual([0]);
   });
 });

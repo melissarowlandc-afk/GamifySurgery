@@ -221,6 +221,12 @@ export interface FacilityViewModel {
   patients?: FacilityPatientView[];
   earningsReceipts?: FacilityEarningsReceiptView[];
   serviceVisitors?: FacilityServiceVisitorView[];
+  /** Presentation-only covered-patient state for the approved Endoscopy table. */
+  endoscopyOccupancy?: Readonly<{
+    roomInstanceIds: readonly string[];
+    patientInstanceIds: readonly string[];
+    serviceVisitorInstanceIds: readonly string[];
+  }>;
   retailExternalActors?: FacilityRetailExternalActorView[];
   /** Optional honest workstation/panel anchors for future remote receipts. */
   remoteReceiptAnchors?: Readonly<Record<string, GridPoint>>;

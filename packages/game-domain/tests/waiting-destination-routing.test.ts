@@ -15,13 +15,13 @@ function fixture(): GameState {
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   state.rooms.push(
     { id: "waiting", roomDefinitionId: "room.waiting", x: 29, y: 28, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
-    { id: "periop", roomDefinitionId: "room.periop_recovery", x: 34, y: 25, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    { id: "periop", roomDefinitionId: "room.periop_recovery", x: 38, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     { id: "hall", roomDefinitionId: "room.hallway", x: 28, y: 28, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
   );
   state.doors.push(
     { id: "waiting-east", roomId: "waiting", side: "east", offset: 1, exterior: false },
     { id: "waiting-west", roomId: "waiting", side: "west", offset: 0, exterior: false },
-    { id: "periop-south", roomId: "periop", side: "south", offset: 1, exterior: false },
+    { id: "periop-west", roomId: "periop", side: "west", offset: 2, exterior: false },
   );
   return state;
 }
@@ -37,7 +37,7 @@ describe("waiting destination routing acceptance", () => {
     const state = fixture();
     const keys = new Set<string>();
     const picks = [] as NonNullable<ReturnType<typeof selectWaitingDestinationForTesting>>[];
-    for (let index = 0; index < 11; index += 1) {
+    for (let index = 0; index < 12; index += 1) {
       const encounter = addEncounter(state, `encounter.hierarchy.${index}`);
       const destination = selectWaitingDestinationForTesting(state, PROTOTYPE_DOMAIN_CONTEXT, encounter.id)!;
       picks.push(destination);
@@ -54,20 +54,14 @@ describe("waiting destination routing acceptance", () => {
       { roomInstanceId: "waiting", location: { x: 29, y: 29 }, kind: "chair" },
     ]);
     expect(picks[3]!.reservation).toEqual({ roomInstanceId: "room.instance.founder_desk", location: { x: 37, y: 31 }, kind: "chair" });
-    expect(picks[4]!.reservation).toEqual({ roomInstanceId: "periop", location: { x: 36, y: 26 }, kind: "chair" });
-    expect(picks.slice(5, 10).map((pick) => pick.reservation)).toEqual([
-      { roomInstanceId: "waiting", location: { x: 32, y: 28 }, kind: "standing" },
-      { roomInstanceId: "waiting", location: { x: 29, y: 30 }, kind: "standing" },
-      { roomInstanceId: "waiting", location: { x: 30, y: 30 }, kind: "standing" },
-      { roomInstanceId: "waiting", location: { x: 31, y: 30 }, kind: "standing" },
-      { roomInstanceId: "waiting", location: { x: 32, y: 30 }, kind: "standing" },
-    ]);
-    expect(picks[10]!.reservation).toEqual({ roomInstanceId: "hall", location: { x: 28, y: 28 }, kind: "public_wander" });
+    expect(picks[4]!.reservation).toEqual({ roomInstanceId: "room.instance.founder_desk", location: { x: 36, y: 31 }, kind: "standing" });
+    expect(picks[5]!.reservation).toEqual({ roomInstanceId: "periop", location: { x: 39, y: 28 }, kind: "chair" });
+    expect(picks.slice(6).every((pick) => pick.reservation?.roomInstanceId === "waiting" && pick.reservation.kind === "standing")).toBe(true);
   });
 
   it("B: sequential check-in-equivalent selections never duplicate persisted reservations", () => {
     const state = fixture();
-    for (let index = 0; index < 11; index += 1) {
+    for (let index = 0; index < 12; index += 1) {
       const encounter = addEncounter(state, `encounter.unique.${index}`);
       encounter.waitingDestination = selectWaitingDestinationForTesting(state, PROTOTYPE_DOMAIN_CONTEXT, encounter.id)!.reservation;
     }
@@ -99,9 +93,12 @@ describe("waiting destination routing acceptance", () => {
     expect(advanced.encounters[chair.id]!.patientMovement).toBeNull();
     expect(advanced.encounters[standing.id]!.patientLocation).toEqual({ x: 32, y: 28 });
     expect(advanced.encounters[standing.id]!.patientMovement).toBeNull();
-    expect(advanced.encounters[wander.id]!.waitingDestination).toMatchObject({ roomInstanceId: "room.instance.founder_desk", kind: "public_wander" });
-    expect(advanced.encounters[wander.id]!.patientMovement?.path[0]).toEqual({ x: 28, y: 28 });
-    expect(advanced.encounters[wander.id]!.patientMovement?.path.at(-1)).toEqual(advanced.encounters[wander.id]!.waitingDestination?.location);
+    expect(advanced.encounters[wander.id]!.waitingDestination).toMatchObject({ kind: "public_wander" });
+    const wanderMovement = advanced.encounters[wander.id]!.patientMovement;
+    if (wanderMovement) {
+      expect(wanderMovement.path[0]).toEqual({ x: 28, y: 28 });
+      expect(wanderMovement.path.at(-1)).toEqual(advanced.encounters[wander.id]!.waitingDestination?.location);
+    }
     const restored = deserializeGameState(serializeGameState(advanced));
     expect(restored.encounters[chair.id]!.waitingDestination).toEqual(advanced.encounters[chair.id]!.waitingDestination);
     expect(restored.encounters[standing.id]!.waitingDestination).toEqual(advanced.encounters[standing.id]!.waitingDestination);

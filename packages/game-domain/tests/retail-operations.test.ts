@@ -35,7 +35,7 @@ function retailState(): GameState {
     { id: "door.retail.coffee", roomId: "room.retail.coffee", side: "east", offset: 1, exterior: false },
     { id: "door.retail.front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
-  state.employees.push(employee(state, "employee.shopper", "staff.imaging_technician", "room.retail.ultrasound", { x: 34, y: 24 }));
+  state.employees.push(employee(state, "employee.shopper", "staff.imaging_technician", "room.retail.ultrasound", { x: 33, y: 25 }));
   state.retailNextOpportunityTicks["employee:employee.shopper"] = Number.MAX_SAFE_INTEGER;
   state.retailNextOpportunityTicks["founder:founder"] = Number.MAX_SAFE_INTEGER;
   return state;
@@ -66,7 +66,7 @@ function addWaitingPatient(state: GameState, id = "encounter.waiting"): void {
   encounter.pendingResult = pending;
   encounter.steps[0]!.status = "result_pending";
   encounter.steps[0]!.result = pending;
-  encounter.patientLocation = { x: 34, y: 24 };
+  encounter.patientLocation = { x: 35, y: 25 };
   encounter.patientMovement = null;
   encounter.assignedRoomInstanceId = "room.retail.ultrasound";
   state.retailNextOpportunityTicks[`encounter:${id}`] = Number.MAX_SAFE_INTEGER;
@@ -159,7 +159,7 @@ describe("retail operations", () => {
 
   it("records founder consumption as exactly-once stock expense with no fabricated gross income", () => {
     let state = retailState();
-    state.environment.founderLocation = { x: 34, y: 24 };
+    state.environment.founderLocation = { x: 35, y: 25 };
     const cash = state.cash;
     state = start(state, "income.coffee", "founder", "founder");
     state = advance(state, 30);
@@ -231,9 +231,12 @@ describe("retail operations", () => {
     expect(Object.values(state.operationReceipts).at(-1)?.status).toBe("rejected");
     state = start(state, "income.coffee", "employee", "employee.shopper");
     state = advance(state, 30);
-    state.facilityTick = 130;
+    state.facilityTick = state.retailActorLedgers["employee:employee.shopper"]!.lastTripAtFacilityTick! + 120;
     state = start(state, "income.kiosk_drink", "employee", "employee.shopper");
-    expect(Object.values(state.operationReceipts).at(-1)?.status).toBe("applied");
+    expect(
+      Object.values(state.operationReceipts).at(-1)?.status,
+      Object.values(state.operationReceipts).at(-1)?.message,
+    ).toBe("applied");
     state = advance(state, 30);
     state.facilityTick = 260;
     state = start(state, "income.kiosk_snack", "employee", "employee.shopper");
@@ -283,18 +286,19 @@ describe("retail operations", () => {
     expect(state.serviceOperations[0]!.status).toBe("completed");
   });
 
-  it("cancels a walking patient trip when a result becomes due, preserves route continuity, and takes no sale", () => {
+  it("cancels a walking patient trip when a result becomes due, preserves patient location, and takes no sale", () => {
     let state = retailState();
     addWaitingPatient(state);
-    state.encounters["encounter.waiting"]!.pendingResult!.dueTick = 3;
+    state.encounters["encounter.waiting"]!.pendingResult!.dueTick = 1;
     state = start(state, "income.coffee", "encounter", "encounter.waiting");
-    state = advance(state, 4);
+    state = advance(state, 2);
     expect(state.retailOperations[0]).toMatchObject({ status: "cancelled" });
     expect(state.serviceIncomeReceipts).toEqual([]);
-    expect(state.encounters["encounter.waiting"]!.patientMovement).not.toBeNull();
     const locationAtPreemption = state.encounters["encounter.waiting"]!.patientLocation;
+    expect(locationAtPreemption).toEqual({ x: 35, y: 25 });
     state = advance(state, 20);
-    expect(locationAtPreemption).not.toEqual(state.encounters["encounter.waiting"]!.patientLocation);
+    expect(state.encounters["encounter.waiting"]!.patientLocation).toEqual({ x: 35, y: 25 });
+    expect(state.encounters["encounter.waiting"]!.patientMovement).toBeNull();
     expect(state.encounters["encounter.waiting"]!.lifecycle).toBe("active_action_required");
   });
 });

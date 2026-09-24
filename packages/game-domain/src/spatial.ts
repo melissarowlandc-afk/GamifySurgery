@@ -18,6 +18,10 @@ function pointKey(point: GridPoint): string {
   return `${point.x},${point.y}`;
 }
 
+function physicalDoorKey(inside: GridPoint, outside: GridPoint): string {
+  return [pointKey(inside), pointKey(outside)].sort().join("|");
+}
+
 function parsePointKey(key: string): GridPoint {
   const [x, y] = key.split(",").map(Number);
   return { x: x!, y: y! };
@@ -131,12 +135,133 @@ export function getRoomWaitingAnchors(
   );
 }
 
+export function getRoomStandingWaitingAnchors(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+): GridPoint[] {
+  return (definition.navigation?.standingWaitingAnchors ?? []).map((point) =>
+    roomLocalToGlobal(room, definition, point),
+  );
+}
+
 function getRoomBlockedTileKeys(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  doors: readonly DoorState[] = [],
+  rooms: readonly PlacedRoom[] = [room],
+  getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
+    definitionId === definition.id ? definition : null,
+): Set<string> {
+  const blocked = new Set(
+    (definition.navigation?.blockedTiles ?? []).map((point) =>
+      pointKey(roomLocalToGlobal(room, definition, point)),
+    ),
+  );
+  const dynamic = definition.navigation?.dynamicBlockers ?? [];
+  const hiddenByFixture = new Map<string, boolean>();
+  for (const owner of dynamic) {
+    const hidden = owner.doorSlots.some((slot) => {
+      const localInside =
+        slot.side === "north"
+          ? { x: slot.offset, y: 0 }
+          : slot.side === "south"
+            ? { x: slot.offset, y: definition.height - 1 }
+            : slot.side === "west"
+              ? { x: 0, y: slot.offset }
+              : { x: definition.width - 1, y: slot.offset };
+      const inside = roomLocalToGlobal(room, definition, localInside);
+      const side = rotateDirection(slot.side, room.orientation);
+      const step =
+        side === "north" ? { x: 0, y: -1 }
+          : side === "east" ? { x: 1, y: 0 }
+            : side === "south" ? { x: 0, y: 1 }
+              : { x: -1, y: 0 };
+      const expected = physicalDoorKey(inside, {
+        x: inside.x + step.x,
+        y: inside.y + step.y,
+      });
+      return doors.some((door) => {
+        const placed = rooms.find((candidate) => candidate.id === door.roomId);
+        const placedDefinition = placed
+          ? getDefinition(placed.roomDefinitionId)
+          : null;
+        const cells = placed && placedDefinition
+          ? getDoorCellsForSpatial(door, placed, placedDefinition)
+          : null;
+        return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
+      });
+    });
+    hiddenByFixture.set(owner.fixtureId, hidden);
+  }
+  const ownersByTile = new Map<string, string[]>();
+  for (const owner of dynamic) {
+    for (const point of owner.tiles) {
+      const key = pointKey(roomLocalToGlobal(room, definition, point));
+      ownersByTile.set(key, [...(ownersByTile.get(key) ?? []), owner.fixtureId]);
+    }
+  }
+  for (const [key, owners] of ownersByTile) {
+    if (owners.every((fixtureId) => hiddenByFixture.get(fixtureId))) blocked.delete(key);
+  }
+  return blocked;
+}
+
+/**
+ * Checks the proof-authored fixture mask at one physical threshold. This does
+ * not apply the coarse-grid doorway exception used by pathfinding: a door may
+ * clear a blocker only when that blocker explicitly owns the matching slot.
+ */
+export function isRoomDoorThresholdProofNavigable(
+  door: DoorState,
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  doors: readonly DoorState[],
+  rooms: readonly PlacedRoom[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): boolean {
+  const cells = getDoorCellsForSpatial(door, room, definition);
+  if (!cells) return false;
+  const matchesSlot = (slot: { side: CardinalDirection; offset: number }): boolean => {
+    const localInside =
+      slot.side === "north"
+        ? { x: slot.offset, y: 0 }
+        : slot.side === "south"
+          ? { x: slot.offset, y: definition.height - 1 }
+          : slot.side === "west"
+            ? { x: 0, y: slot.offset }
+            : { x: definition.width - 1, y: slot.offset };
+    const inside = roomLocalToGlobal(room, definition, localInside);
+    const side = rotateDirection(slot.side, room.orientation);
+    const step =
+      side === "north" ? { x: 0, y: -1 }
+        : side === "east" ? { x: 1, y: 0 }
+          : side === "south" ? { x: 0, y: 1 }
+            : { x: -1, y: 0 };
+    return physicalDoorKey(cells.inside, cells.outside) === physicalDoorKey(inside, {
+      x: inside.x + step.x,
+      y: inside.y + step.y,
+    });
+  };
+  const allowed = definition.navigation?.allowedDoorSlots;
+  if (allowed && !allowed.some(matchesSlot)) return false;
+  const blocked = getRoomBlockedTileKeys(
+    room,
+    definition,
+    doors,
+    rooms,
+    getDefinition,
+  ).has(pointKey(cells.inside));
+  return !blocked || Boolean(
+    definition.navigation?.doorThresholdExceptions?.some(matchesSlot),
+  );
+}
+
+function getRoomEndpointOnlyTileKeys(
   room: PlacedRoom,
   definition: RoomDefinition,
 ): Set<string> {
   return new Set(
-    (definition.navigation?.blockedTiles ?? []).map((point) =>
+    (definition.navigation?.endpointOnlyTiles ?? []).map((point) =>
       pointKey(roomLocalToGlobal(room, definition, point)),
     ),
   );
@@ -146,8 +271,17 @@ export function getRoomNavigableTiles(
   room: PlacedRoom,
   definition: RoomDefinition,
   doors: readonly DoorState[] = [],
+  rooms: readonly PlacedRoom[] = [room],
+  getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
+    definitionId === definition.id ? definition : null,
 ): GridPoint[] {
-  const blocked = getRoomBlockedTileKeys(room, definition);
+  const blocked = getRoomBlockedTileKeys(
+    room,
+    definition,
+    doors,
+    rooms,
+    getDefinition,
+  );
   const forcedOpen = new Set<string>();
   for (const door of doors) {
     if (door.roomId !== room.id) {
@@ -593,6 +727,7 @@ function tileAdjacencyForFacility(
   rooms: readonly PlacedRoom[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
   doors: readonly DoorState[] = [],
+  endpointOnlyTiles: ReadonlySet<string> = new Set(),
 ): Map<string, Set<string>> {
   const adjacency = new Map<string, Set<string>>();
   const roomTiles = new Map<
@@ -616,7 +751,6 @@ function tileAdjacencyForFacility(
       forcedOpenDoorTiles.add(pointKey(cells.outside));
     }
   }
-
   for (const room of rooms) {
     const definition = getDefinition(room.roomDefinitionId);
     if (!definition) {
@@ -625,10 +759,14 @@ function tileAdjacencyForFacility(
     const blocked =
       definition.kind === "hallway"
         ? new Set<string>()
-        : getRoomBlockedTileKeys(room, definition);
+        : getRoomBlockedTileKeys(room, definition, doors, rooms, getDefinition);
     for (const tile of getOccupiedTiles(room, definition)) {
       const key = pointKey(tile);
-      if (blocked.has(key) && !forcedOpenDoorTiles.has(key)) {
+      if (
+        blocked.has(key) &&
+        !forcedOpenDoorTiles.has(key) &&
+        !endpointOnlyTiles.has(key)
+      ) {
         continue;
       }
       adjacency.set(key, adjacency.get(key) ?? new Set());
@@ -838,10 +976,21 @@ export function findDeterministicFacilityPath(
   doors: readonly DoorState[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
 ): GridPoint[] {
+  const requestedEndpointKeys = new Set<string>();
+  for (const room of rooms) {
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition) continue;
+    const endpoints = getRoomEndpointOnlyTileKeys(room, definition);
+    for (const requested of [start, goal]) {
+      const key = pointKey(requested);
+      if (endpoints.has(key)) requestedEndpointKeys.add(key);
+    }
+  }
   const adjacency = tileAdjacencyForFacility(
     rooms,
     getDefinition,
     doors,
+    requestedEndpointKeys,
   );
   const startKey = pointKey(start);
   if (!adjacency.has(startKey)) {
@@ -922,10 +1071,12 @@ export function findDeterministicRoomPath(
   ) {
     return [];
   }
-  return findDeterministicAdjacencyPath(
+  return findDeterministicFacilityPath(
     getRoomNavigationAnchor(origin, originDefinition),
     getRoomNavigationAnchor(destination, destinationDefinition),
-    tileAdjacencyForFacility(rooms, getDefinition, doors),
+    rooms,
+    doors,
+    getDefinition,
   );
 }
 

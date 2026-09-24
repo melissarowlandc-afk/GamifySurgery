@@ -1,0 +1,54 @@
+{
+  "status": "candidate-pending-owner-review",
+  "scope": "furniture-only candidate proof revisions; canonical proofs and runtime read-only",
+  "baselineDate": "2026-09-22",
+  "canonicalProofs": {
+    "frontDesk": {
+      "path": "tools/room-design/front-desk-layout/front-desk-layout.html",
+      "sha256": "E76828C7DCFE56FD56BCE6411C884B2A8677E8B0B7E93B8856B9EF75E4A70F91"
+    },
+    "xray": {
+      "path": "tools/room-design/xray-layout/xray-layout.html",
+      "sha256": "20666FCF3C982AEA07F525FCD5A37528E46BD4EC8A7CA7A5346669C728F6D2D7"
+    },
+    "ct": {
+      "path": "tools/room-design/ct-layout/ct-layout.html",
+      "sha256": "5625BF5B988E4B4DEB795BB1CAE11570DE63926F87DDA7566B46274A1550CDC1"
+    },
+    "endoscopy": {
+      "path": "tools/room-design/endoscopy-layout/endoscopy-layout.html",
+      "sha256": "12EEFD3E19BFB8A2E38EAE22DC1A8F65ED4F0586CC704009980811A1AB2F3551"
+    }
+  },
+  "sourceArt": {
+    "frontDeskCounter": {
+      "path": "Photos for Codex 2/Codex Rooms 2/GS-015/front-desk-counter-02.png",
+      "sha256": "347A797FE74DD70E0339BC2A8C147C4021F2A4968213445CA0C44BD96BDE0DD6"
+    },
+    "frontDeskFurnitureAtlas": {
+      "path": "Photos for Codex 2/Codex Rooms 2/GS-015/front-desk-furniture-atlas-01.png",
+      "sha256": "0E88740E5E59F8BAA585ECAA5D781A67E2E9D9F2C6102260E43D3982656D7434"
+    },
+    "xrayFurnitureAtlas": {
+      "path": "Photos for Codex 2/Codex Rooms 2/GS-015/xray-furniture-atlas-01.png",
+      "sha256": "FF32244EF1CC06D4026C5A26FF38A1729636349588BE2DEDDF55E766C0FF61BE"
+    },
+    "ctFurnitureAtlas": {
+      "path": "Photos for Codex 2/Codex Rooms 2/GS-015/ct-furniture-atlas-02.png",
+      "sha256": "DC5CF994CAA7CB980BD2E73313EA3B3B754AD0F5F47AA1D14D76F8CC788C5271"
+    },
+    "endoscopyEquipmentSouth": {
+      "path": "Photos for Codex 2/Codex Rooms 2/GS-015/endoscopy-equipment-south-01.png",
+      "sha256": "26492AE776B2D23C942EC874856B49050C732202C02919D86B744757135283CF"
+    },
+    "endoscopyEquipmentEast": {
+      "path": "Photos for Codex 2/Codex Rooms 2/GS-015/endoscopy-equipment-east-01.png",
+      "sha256": "1F3D7CB469B18C038A5C278979DBE7CD7878E35F2F0172525E2BAE2A1E9831EF"
+    }
+  },
+  "deferred": [
+    "seated P01 source-art proportions",
+    "runtime integration"
+  ]
+}
+

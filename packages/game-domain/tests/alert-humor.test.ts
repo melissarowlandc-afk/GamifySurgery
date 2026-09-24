@@ -300,7 +300,7 @@ describe("persisted alert humor scheduler", () => {
       .dissatisfactionByCause;
 
     const restored = deserializeGameState(JSON.stringify(legacy));
-    expect(restored.schemaVersion).toBe(7);
+    expect(restored.schemaVersion).toBe(8);
     expect(restored.alertHumor).toEqual({
       alertsTutorialAcknowledgedAtTick: null,
       nextAmbientAlertTick: null,

@@ -859,7 +859,16 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 7;
+  schemaVersion: 8;
+  /** Present only when an older campaign required the approved-room geometry migration. */
+  approvedRoomGeometryMigration?: {
+    version: "approved-room-geometry.v1";
+    relocatedRecoveryRoomIds: string[];
+    addedHallwayRoomIds: string[];
+  };
+  approvedRoomNavigationMigration?: {
+    version: "approved-room-navigation.v1";
+  };
   campaignId: string;
   campaignSeed: string;
   randomGeneratorVersion: "randomness.xoshiro128ss.v1";

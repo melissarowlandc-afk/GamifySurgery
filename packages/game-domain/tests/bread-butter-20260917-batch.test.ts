@@ -24,12 +24,12 @@ function prepared(seed: string, level: 0 | 1 | 2): GameState {
   state.attendedEncounterId = null;
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   state.rooms.push(
-    { id: "room.bread-butter-sept17.examination", roomDefinitionId: "room.examination", x: 29, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    { id: "room.bread-butter-sept17.examination", roomDefinitionId: "room.examination", x: 33, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     { id: "room.bread-butter-sept17.minor-procedure", roomDefinitionId: "room.minor_procedure", x: 33, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     ...([24, 25, 26, 27, 28] as const).map((y) => ({ id: `room.bread-butter-sept17.hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
   );
   state.doors.push(
-    { id: "door.bread-butter-sept17.examination", roomId: "room.bread-butter-sept17.examination", side: "east", offset: 1, exterior: false },
+    { id: "door.bread-butter-sept17.examination", roomId: "room.bread-butter-sept17.examination", side: "west", offset: 1, exterior: false },
     { id: "door.bread-butter-sept17.minor-procedure", roomId: "room.bread-butter-sept17.minor-procedure", side: "west", offset: 1, exterior: false },
     { id: "door.bread-butter-sept17.front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );

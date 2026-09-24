@@ -3,6 +3,8 @@ import {
   createInitialGameState,
   deserializeGameState,
   gameReducer,
+  getFacilityAccessValidation,
+  getOperationalGlp1AutomationCapacity,
   serializeGameState,
   type GameState,
 } from "../src";
@@ -15,6 +17,8 @@ function levelTwoPersistenceFixture(): GameState {
   });
   state.facilityLevel = 2;
   state.paused = false;
+  state.rooms = state.rooms.filter((room) => room.id !== "room.instance.starter_examination");
+  state.doors = state.doors.filter((door) => door.roomId !== "room.instance.starter_examination");
   state.encounters = {};
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER;
@@ -24,15 +28,15 @@ function levelTwoPersistenceFixture(): GameState {
     room("room.test.exam", "room.examination", 33, 25),
     room("room.test.endoscopy", "room.endoscopy", 28, 23),
     room("room.test.periop", "room.periop_recovery", 28, 26),
-    room("room.test.glp", "room.glp1_telehealth_suite", 36, 25),
-    ...[24, 25, 26, 27, 28].map((y) => room(`room.test.hall.${y}`, "room.hallway", 32, y)),
+    room("room.test.glp", "room.glp1_telehealth_suite", 29, 29),
+    ...[24, 25, 26, 27, 28, 29, 30].map((y) => room(`room.test.hall.${y}`, "room.hallway", 32, y)),
   );
   state.doors.push(
     { id: "door.test.front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
     { id: "door.test.exam", roomId: "room.test.exam", side: "west", offset: 1, exterior: false },
     { id: "door.test.endoscopy", roomId: "room.test.endoscopy", side: "east", offset: 1, exterior: false },
     { id: "door.test.periop", roomId: "room.test.periop", side: "east", offset: 1, exterior: false },
-    { id: "door.test.glp", roomId: "room.test.glp", side: "west", offset: 1, exterior: false },
+    { id: "door.test.glp", roomId: "room.test.glp", side: "east", offset: 1, exterior: false },
   );
   const employee = (id: string, role: string, homeRoomInstanceId: string) => ({
     id, staffRoleDefinitionId: role, displayName: id, appearance: state.founder.appearance,
@@ -46,7 +50,7 @@ function levelTwoPersistenceFixture(): GameState {
     employee("employee.test.endoscopist", "staff.endoscopist", "room.test.endoscopy"),
     employee("employee.test.glp", "staff.glp1_np", "room.test.glp"),
   );
-  state.employees.at(-1)!.location = { x: 37, y: 26 };
+  state.employees.at(-1)!.location = { x: 31, y: 30 };
   state.environment.glp1AutomationNextPayoutTicks = [60];
   state.environment.glp1AutomationNextPayoutTick = 60;
   state.encounters["encounter.test.endoscopy"] = {
@@ -76,7 +80,7 @@ describe("Level 2 persistence", () => {
     const expectedRoomIds = state.rooms.map((room) => room.id);
     const expectedDoorIds = state.doors.map((door) => door.id);
 
-    for (const schemaVersion of [7, 6]) {
+    for (const schemaVersion of [8, 7, 6]) {
       const serialized = JSON.parse(serializeGameState(state)) as Record<string, unknown>;
       serialized.schemaVersion = schemaVersion;
       const restored = deserializeGameState(JSON.stringify(serialized));
@@ -108,7 +112,14 @@ describe("Level 2 persistence", () => {
   });
 
   it("retains an active endoscopy reservation and GLP-1 schedule across save/load and ticks", () => {
-    let restored = deserializeGameState(serializeGameState(levelTwoPersistenceFixture()));
+    const fixture = levelTwoPersistenceFixture();
+    const legacy = JSON.parse(serializeGameState(fixture)) as Record<string, unknown>;
+    legacy.schemaVersion = 7;
+    delete legacy.approvedRoomGeometryMigration;
+    delete legacy.approvedRoomNavigationMigration;
+    let restored = deserializeGameState(JSON.stringify(legacy));
+    expect(getFacilityAccessValidation(restored)).toMatchObject({ valid: true, unreachableRoomIds: [] });
+    expect(getOperationalGlp1AutomationCapacity(restored)).toBe(1);
     expect(restored.facilityLevel).toBe(2);
     expect(restored.encounters["encounter.test.endoscopy"]?.pendingResult).toMatchObject({
       providerReservation: { kind: "employee", employeeId: "employee.test.endoscopist", staffRoleDefinitionId: "staff.endoscopist" },

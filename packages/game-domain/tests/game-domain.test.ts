@@ -295,7 +295,7 @@ describe("current prototype contracts", () => {
     expect({
       facilityTick: state.facilityTick,
       cash: state.cash,
-    }).toEqual({ facilityTick: 196, cash: 160.5 });
+    }).toEqual({ facilityTick: 198, cash: 160.5 });
     expect(state.cash).toBeGreaterThanOrEqual(160);
 
     let delayed = deserializeGameState(serializeGameState(state));
@@ -826,7 +826,7 @@ describe("current prototype contracts", () => {
     const restored = deserializeGameState(serializeGameState(state));
 
     expect(restored).toMatchObject({
-      schemaVersion: 7,
+      schemaVersion: 8,
       campaignId: state.campaignId,
       campaignSeed: state.campaignSeed,
       clinicalReleaseId: state.clinicalReleaseId,

@@ -52,6 +52,9 @@ export function getFacilityWorldSignature(
         }:${model.waterCooler.highlighted ? 1 : 0}`
       : "water:-",
   ].join("|");
+  const occupiedEndoscopyRooms = [...(model.endoscopyOccupancy?.roomInstanceIds ?? [])]
+    .sort()
+    .join(",");
 
   return [
     model.buildMode ? 1 : 0,
@@ -65,6 +68,7 @@ export function getFacilityWorldSignature(
     rooms,
     doors,
     environment,
+    `endoscopy:${occupiedEndoscopyRooms}`,
     model.selectedRoomInstanceId ?? "-",
     model.camera
       ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`

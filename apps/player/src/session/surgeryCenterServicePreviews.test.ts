@@ -101,4 +101,31 @@ describe("surgery-center test timing previews", () => {
     };
     expect(chart(state, "encounter.sc.thyroid").decisionSteps![0]!.statusLabel).toBe("Onsite care in progress");
   });
+
+  it("projects only the frozen endoscopy care interval as a covered-table occupancy", () => {
+    const state = actionableThyroid();
+    state.rooms.push({ id: "room.instance.endoscopy", roomDefinitionId: "room.endoscopy", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    encounter.pendingResult = {
+      operationId: "result.egds.covered", originatingNodeIndex: 0, gateId: "gate.egds.covered", resultTypeId: "service.endoscopy", pendingLabel: "EGD pending", resultNarrative: "fixture", routeId: "route.endoscopy.in_house", routeDisplayName: "Onsite endoscopy workflow",
+      scheduledAtTick: 0, dueTick: 21, deliveredAtTick: null, serviceDurationTicks: 20, durationTicks: 20, offsiteReturnStartedAtTick: null, offsiteTravel: null,
+      patientTravel: { version: "patient-travel.v1", originRoomInstanceId: "room.preview.examination", destinationRoomInstanceId: "room.instance.endoscopy", outboundPath: [], returnPath: [], tilesPerTick: 1, outboundStartTick: 0, outboundArrivalTick: 5, serviceCompletionTick: 15, returnArrivalTick: 21 },
+      resourceReservations: [], providerReservation: { kind: "founder" }, timingPhases: [],
+    };
+    state.facilityTick = 4;
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+    state.facilityTick = 5;
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy).toMatchObject({ roomInstanceIds: ["room.instance.endoscopy"], patientInstanceIds: ["encounter.sc.thyroid"] });
+    state.facilityTick = 15;
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+  });
+
+  it("projects an active reserved endoscopy operation and only its visitor actor", () => {
+    const state = actionableThyroid();
+    state.rooms.push({ id: "room.instance.endoscopy", roomDefinitionId: "room.endoscopy", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+    state.serviceOperations.push({ id: "operation.endoscopy", incomeLineId: "income.endoscopy", catalogVersion: 1, actorKind: "visitor", actorId: "visitor.endoscopy", displayName: "Procedure visitor", appearance: null, status: "in_service", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 99, startedAtFacilityTick: 1, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 1, phaseEndsAtFacilityTick: 10, reservedRoomInstanceIds: ["room.instance.endoscopy"], reservedEmployeeIds: [], providerReservation: null, location: null, path: [], pathIndex: 0, lastMovedAtFacilityTick: 1, cancellationReason: null });
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy).toMatchObject({ roomInstanceIds: ["room.instance.endoscopy"], serviceVisitorInstanceIds: ["operation.endoscopy"] });
+    state.serviceOperations[0]!.status = "walking_between_phases";
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+  });
 });

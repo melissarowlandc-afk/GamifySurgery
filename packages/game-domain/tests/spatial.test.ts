@@ -1,17 +1,23 @@
 import { describe, expect, it } from "vitest";
 
-import type { RoomDefinition } from "@gamify-surgery/balance-config";
+import {
+  APPROVED_ROOM_NAVIGATION_CONTRACTS,
+  type RoomDefinition,
+} from "@gamify-surgery/balance-config";
 import {
   findDeterministicFacilityPath,
   findDeterministicRoomPath,
   getRoomNavigableTiles,
   getRoomCareAnchor,
   getRoomNavigationAnchor,
+  getRoomWaitingAnchors,
+  getRotatedFootprint,
   isPlacementAttachedThroughOwnEntrance,
   rotateRoomLocalPoint,
   validateFacilityConnectivity,
 } from "../src/spatial";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "../src/context";
+import { validateDoorPlacement } from "../src/doors";
 import type { DoorState, PlacedRoom } from "../src/types";
 
 const protectedRoomDefinitionIds = new Set(["room.front_desk"]);
@@ -349,7 +355,7 @@ describe("fixed-fixture navigation metadata", () => {
       (definition) => definition.id === id,
     )!;
 
-  it("keeps C2/C4 open and routes from the public anchor around C3 to B3", () => {
+  it("routes around the approved C2/C3 desk and B2/D5 seats", () => {
     const definition = prototypeDefinition("room.front_desk");
     const room: PlacedRoom = {
       id: "room.front-desk.grid-proof",
@@ -361,11 +367,13 @@ describe("fixed-fixture navigation metadata", () => {
       upgradeLevel: 1,
     };
     const navigable = getRoomNavigableTiles(room, definition);
-    expect(navigable).not.toContainEqual({ x: 10, y: 10 }); // A1
-    expect(navigable).not.toContainEqual({ x: 14, y: 10 }); // A5
+    expect(navigable).toContainEqual({ x: 10, y: 10 }); // A1
+    expect(navigable).toContainEqual({ x: 14, y: 10 }); // A5
+    expect(navigable).not.toContainEqual({ x: 11, y: 11 }); // B2 receptionist
+    expect(navigable).not.toContainEqual({ x: 11, y: 12 }); // C2 desk
     expect(navigable).not.toContainEqual({ x: 12, y: 12 }); // C3
-    expect(navigable).toContainEqual({ x: 11, y: 12 }); // C2
     expect(navigable).toContainEqual({ x: 13, y: 12 }); // C4
+    expect(navigable).not.toContainEqual({ x: 14, y: 13 }); // D5 visitor
     const path = findDeterministicFacilityPath(
       { x: 12, y: 13 }, // D3
       { x: 12, y: 11 }, // B3
@@ -384,7 +392,7 @@ describe("fixed-fixture navigation metadata", () => {
       roomDefinitionId: definition.id,
       x: 10,
       y: 10,
-      orientation: 90,
+      orientation: 270,
       doorSide: null,
       upgradeLevel: 1,
     };
@@ -395,9 +403,9 @@ describe("fixed-fixture navigation metadata", () => {
         definition,
         room.orientation,
       ),
-    ).toEqual({ x: 0, y: 1 });
+    ).toEqual({ x: 1, y: 1 });
     expect(getRoomNavigationAnchor(room, definition)).toEqual({
-      x: 10,
+      x: 11,
       y: 11,
     });
     expect(
@@ -411,11 +419,11 @@ describe("fixed-fixture navigation metadata", () => {
       id: "room.exam.horizontal-care", roomDefinitionId: definition.id,
       x: 10, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1,
     };
-    const vertical: PlacedRoom = { ...horizontal, id: "room.exam.vertical-care", orientation: 90 };
-    expect(getRoomCareAnchor(horizontal, definition, "patient")).toEqual({ x: 12, y: 11 });
+    const vertical: PlacedRoom = { ...horizontal, id: "room.exam.vertical-care", orientation: 270 };
+    expect(getRoomCareAnchor(horizontal, definition, "patient")).toEqual({ x: 11, y: 11 });
     expect(getRoomCareAnchor(horizontal, definition, "clinician")).toEqual({ x: 11, y: 11 });
-    expect(getRoomCareAnchor(vertical, definition, "patient")).toEqual({ x: 10, y: 12 });
-    expect(getRoomCareAnchor(vertical, definition, "clinician")).toEqual({ x: 10, y: 11 });
+    expect(getRoomCareAnchor(vertical, definition, "patient")).toEqual({ x: 11, y: 11 });
+    expect(getRoomCareAnchor(vertical, definition, "clinician")).toEqual({ x: 11, y: 11 });
   });
 
   it("reopens a blocked fixture tile when an explicit door occupies it", () => {
@@ -433,17 +441,17 @@ describe("fixed-fixture navigation metadata", () => {
       id: "door.exam.blocked-edge",
       roomId: room.id,
       side: "south",
-      offset: 0,
+      offset: 1,
       exterior: false,
     };
 
     expect(getRoomNavigableTiles(room, definition)).not.toContainEqual({
-      x: 10,
+      x: 11,
       y: 11,
     });
     expect(
       getRoomNavigableTiles(room, definition, [door]),
-    ).toContainEqual({ x: 10, y: 11 });
+    ).toContainEqual({ x: 11, y: 11 });
   });
 
   it("walks a legacy actor off a newly blocked tile without teleporting", () => {
@@ -457,7 +465,7 @@ describe("fixed-fixture navigation metadata", () => {
       doorSide: null,
       upgradeLevel: 1,
     };
-    const blockedLegacyOrigin = { x: 10, y: 11 };
+    const blockedLegacyOrigin = { x: 11, y: 10 };
     const path = findDeterministicFacilityPath(
       blockedLegacyOrigin,
       getRoomNavigationAnchor(room, definition),
@@ -547,5 +555,149 @@ describe("fixed-fixture navigation metadata", () => {
         );
       }),
     ).toBe(true);
+  });
+});
+
+describe("approved room navigation parity", () => {
+  const definitionFor = (id: string) =>
+    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find(
+      (definition) => definition.id === id,
+    ) ?? null;
+
+  it("reaches every required role contact from one doorway in every approved orientation", () => {
+    for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
+      const definition = definitionFor(contract.roomDefinitionId)!;
+      if (definition.kind === "hallway") continue;
+      for (const orientation of contract.allowedOrientations) {
+        const placed: PlacedRoom = {
+          id: `${definition.id}.${orientation}`,
+          roomDefinitionId: definition.id,
+          x: 10,
+          y: 10,
+          orientation,
+          doorSide: null,
+          upgradeLevel: 1,
+        };
+        const size = getRotatedFootprint(definition, orientation);
+        const door: DoorState = {
+          id: `door.${placed.id}`,
+          roomId: placed.id,
+          side: "south",
+          offset: Math.floor((size.width - 1) / 2),
+          exterior: false,
+        };
+        const start = {
+          x: placed.x + door.offset,
+          y: placed.y + size.height - 1,
+        };
+        const contacts = [
+          getRoomNavigationAnchor(placed, definition),
+          ...(definition.navigation?.staffAnchor
+            ? [getRoomNavigationAnchor(placed, definition, "staff")]
+            : []),
+          ...(definition.navigation?.patientCareAnchor
+            ? [getRoomCareAnchor(placed, definition, "patient")]
+            : []),
+          ...(definition.navigation?.clinicianCareAnchor
+            ? [getRoomCareAnchor(placed, definition, "clinician")]
+            : []),
+          ...getRoomWaitingAnchors(placed, definition),
+        ];
+        for (const contact of contacts) {
+          const path = findDeterministicFacilityPath(
+            start,
+            contact,
+            [placed],
+            [door],
+            definitionFor,
+          );
+          expect(path.length, `${definition.id}@${orientation} -> ${contact.x},${contact.y}`).toBeGreaterThan(0);
+          const transit = path.slice(1, -1);
+          const navigable = new Set(
+            getRoomNavigableTiles(placed, definition, [door]).map(
+              (point) => `${point.x},${point.y}`,
+            ),
+          );
+          expect(
+            transit.every((point) => navigable.has(`${point.x},${point.y}`)),
+            `${definition.id}@${orientation} does not route through solid endpoint contacts`,
+          ).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("clears the Front Desk D5 chair blocker only when the ED door is live", () => {
+    const definition = definitionFor("room.front_desk")!;
+    const placed: PlacedRoom = {
+      id: "room.front.dynamic-ed", roomDefinitionId: definition.id,
+      x: 10, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1,
+    };
+    const d5 = { x: 14, y: 13 };
+    expect(getRoomNavigableTiles(placed, definition)).not.toContainEqual(d5);
+    expect(getRoomNavigableTiles(placed, definition, [{
+      id: "door.front.ed", roomId: placed.id, side: "east", offset: 3, exterior: false,
+    }])).toContainEqual(d5);
+  });
+
+  it("clears an entire Recovery bay blocker only for its owning door", () => {
+    const definition = definitionFor("room.periop_recovery")!;
+    const placed: PlacedRoom = {
+      id: "room.recovery.dynamic-bay", roomDefinitionId: definition.id,
+      x: 10, y: 10, orientation: 0, doorSide: null, upgradeLevel: 1,
+    };
+    const n3Tiles = [{ x: 12, y: 10 }, { x: 12, y: 11 }];
+    for (const tile of n3Tiles) {
+      expect(getRoomNavigableTiles(placed, definition)).not.toContainEqual(tile);
+    }
+    const unrelatedDoor: DoorState = {
+      id: "door.recovery.n4", roomId: placed.id, side: "north", offset: 3, exterior: false,
+    };
+    for (const tile of n3Tiles) {
+      expect(getRoomNavigableTiles(placed, definition, [unrelatedDoor])).not.toContainEqual(tile);
+    }
+    const owningDoor: DoorState = {
+      id: "door.recovery.n3", roomId: placed.id, side: "north", offset: 2, exterior: false,
+    };
+    for (const tile of n3Tiles) {
+      expect(getRoomNavigableTiles(placed, definition, [owningDoor])).toContainEqual(tile);
+    }
+    const bathroomDefinition = definitionFor("room.bathroom")!;
+    const neighbor: PlacedRoom = {
+      id: "room.bathroom.reciprocal-owner",
+      roomDefinitionId: bathroomDefinition.id,
+      x: 11,
+      y: 8,
+      orientation: 0,
+      doorSide: null,
+      upgradeLevel: 1,
+    };
+    const reciprocalDoor: DoorState = {
+      id: "door.bathroom.to-recovery-n3",
+      roomId: neighbor.id,
+      side: "south",
+      offset: 1,
+      exterior: false,
+    };
+    for (const tile of n3Tiles) {
+      expect(
+        getRoomNavigableTiles(
+          placed,
+          definition,
+          [reciprocalDoor],
+          [placed, neighbor],
+          definitionFor,
+        ),
+      ).toContainEqual(tile);
+    }
+    expect(validateDoorPlacement(
+      reciprocalDoor,
+      [placed, neighbor],
+      [reciprocalDoor],
+      definitionFor,
+      72,
+      32,
+      protectedRoomDefinitionIds,
+    )).toMatchObject({ valid: true, adjacentRoomId: placed.id });
   });
 });

@@ -376,6 +376,12 @@ describe("ultrasound-first imaging progression", () => {
       "actual-ultrasound",
       "service.ultrasound",
     );
+    const travelingTechnician = state.employees.find(
+      (employee) => employee.id === "employee.test.imaging",
+    )!;
+    travelingTechnician.location = { x: 32, y: 26 };
+    travelingTechnician.path = [{ x: 32, y: 26 }];
+    travelingTechnician.pathIndex = 0;
     state = submitCorrect(state, "actual-ultrasound", "order");
     const beforeAck = state.encounters["actual-ultrasound"]!;
     expect(beforeAck.pendingResult).toMatchObject({

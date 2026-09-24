@@ -24,6 +24,10 @@ import {
   deterministicInteger,
 } from "./randomness";
 import { createInitialGameState } from "./reducer";
+import {
+  migrateApprovedRoomGeometry,
+  normalizeApprovedRoomOrientations,
+} from "./approved-room-geometry-migration";
 import { completePatientDemographics } from "./patientDemographics";
 import {
   getOperationalGlp1AutomationCapacity,
@@ -1944,7 +1948,13 @@ function migrateVersionTwo(
   const next: GameState = {
     ...baseline,
     ...(parsed as unknown as GameState),
-    schemaVersion: 7 as const,
+    schemaVersion: 8 as const,
+    approvedRoomNavigationMigration:
+      isRecord(parsed.approvedRoomNavigationMigration) &&
+      parsed.approvedRoomNavigationMigration.version ===
+        "approved-room-navigation.v1"
+        ? { version: "approved-room-navigation.v1" as const }
+        : undefined,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,
     founder: normalizeFounder(parsed.founder, campaignSeed),
     facilityTick: parsedFacilityTick,
@@ -2613,8 +2623,28 @@ function migrateVersionTwo(
         : facilityConditionOccurrences.length,
     facilityConditionOccurrences,
   };
-  const operationalGlp1Assignments =
-    getOperationalGlp1AutomationAssignments(next, context);
+  normalizeGlp1AutomationState(next, rawEnvironment, context);
+  if (
+    next.openChartEncounterId &&
+    next.encounters[next.openChartEncounterId]
+  ) {
+    next.encounters[next.openChartEncounterId]!.idleWaitingSinceTick = null;
+    next.encounters[next.openChartEncounterId]!.lastSatisfactionDecayAtTick =
+      next.facilityTick;
+    next.encounters[next.openChartEncounterId]!.feedAttentionKind = null;
+    next.encounters[
+      next.openChartEncounterId
+    ]!.feedAttentionStartedAtTick = null;
+  }
+  return next;
+}
+
+function normalizeGlp1AutomationState(
+  next: GameState,
+  rawEnvironment: Record<string, unknown>,
+  context: DomainContext,
+): void {
+  const operationalGlp1Assignments = getOperationalGlp1AutomationAssignments(next, context);
   const rawSlots = Array.isArray(rawEnvironment.glp1AutomationSlots)
     ? rawEnvironment.glp1AutomationSlots.filter(isRecord)
     : [];
@@ -2645,7 +2675,12 @@ function migrateVersionTwo(
           typeof tick === "number" && Number.isSafeInteger(tick) && tick > 0,
       )
     : [];
-  const legacyPayoutTick = next.environment.glp1AutomationNextPayoutTick;
+  const legacyPayoutTick =
+    typeof rawEnvironment.glp1AutomationNextPayoutTick === "number" &&
+    Number.isSafeInteger(rawEnvironment.glp1AutomationNextPayoutTick) &&
+    rawEnvironment.glp1AutomationNextPayoutTick > next.facilityTick
+      ? rawEnvironment.glp1AutomationNextPayoutTick
+      : null;
   const normalizedPayoutTicks = rawPayoutTicks.length > 0
     ? rawPayoutTicks
     : legacyPayoutTick === null
@@ -2676,19 +2711,6 @@ function migrateVersionTwo(
   }
   next.environment.glp1AutomationNextPayoutTick =
     next.environment.glp1AutomationNextPayoutTicks[0] ?? null;
-  if (
-    next.openChartEncounterId &&
-    next.encounters[next.openChartEncounterId]
-  ) {
-    next.encounters[next.openChartEncounterId]!.idleWaitingSinceTick = null;
-    next.encounters[next.openChartEncounterId]!.lastSatisfactionDecayAtTick =
-      next.facilityTick;
-    next.encounters[next.openChartEncounterId]!.feedAttentionKind = null;
-    next.encounters[
-      next.openChartEncounterId
-    ]!.feedAttentionStartedAtTick = null;
-  }
-  return next;
 }
 
 function validateVersionThree(
@@ -2752,6 +2774,31 @@ function validateVersionSeven(
   return state;
 }
 
+function validateVersionEight(
+  parsed: Record<string, unknown>,
+  context: DomainContext,
+): GameState {
+  const state = migrateVersionTwo(parsed, context);
+  if (parsed.randomGeneratorVersion !== RANDOMNESS_CONTRACT_VERSION) {
+    throw new Error("The saved campaign uses an incompatible randomness contract.");
+  }
+  return state;
+}
+
+function finishApprovedRoomMigration(
+  parsed: Record<string, unknown>,
+  state: GameState,
+  context: DomainContext,
+): GameState {
+  const migrated = normalizeApprovedRoomOrientations(state, context);
+  normalizeGlp1AutomationState(
+    migrated,
+    isRecord(parsed.environment) ? parsed.environment : {},
+    context,
+  );
+  return migrated;
+}
+
 export function deserializeGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -2761,28 +2808,38 @@ export function deserializeGameState(
     throw new Error("The saved game is invalid.");
   }
   if (parsed.schemaVersion === 1) {
-    return migrateVersionOne(parsed, context);
+    return finishApprovedRoomMigration(parsed,
+      migrateApprovedRoomGeometry(migrateVersionOne(parsed, context), context),
+      context,
+    );
   }
   if (parsed.schemaVersion === 2) {
-    return migrateVersionTwo(
-      scaleLegacyFacilityTicks(parsed) as Record<string, unknown>,
+    const scaled = scaleLegacyFacilityTicks(parsed) as Record<string, unknown>;
+    return finishApprovedRoomMigration(scaled,
+      migrateApprovedRoomGeometry(
+        migrateVersionTwo(scaled, context),
+        context,
+      ),
       context,
     );
   }
   if (parsed.schemaVersion === 3) {
-    return validateVersionThree(parsed, context);
+    return finishApprovedRoomMigration(parsed, migrateApprovedRoomGeometry(validateVersionThree(parsed, context), context), context);
   }
   if (parsed.schemaVersion === 4) {
-    return validateVersionFour(parsed, context);
+    return finishApprovedRoomMigration(parsed, migrateApprovedRoomGeometry(validateVersionFour(parsed, context), context), context);
   }
   if (parsed.schemaVersion === 5) {
-    return validateVersionFive(parsed, context);
+    return finishApprovedRoomMigration(parsed, migrateApprovedRoomGeometry(validateVersionFive(parsed, context), context), context);
   }
   if (parsed.schemaVersion === 6) {
-    return validateVersionSix(parsed, context);
+    return finishApprovedRoomMigration(parsed, migrateApprovedRoomGeometry(validateVersionSix(parsed, context), context), context);
   }
   if (parsed.schemaVersion === 7) {
-    return validateVersionSeven(parsed, context);
+    return finishApprovedRoomMigration(parsed, migrateApprovedRoomGeometry(validateVersionSeven(parsed, context), context), context);
+  }
+  if (parsed.schemaVersion === 8) {
+    return finishApprovedRoomMigration(parsed, validateVersionEight(parsed, context), context);
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }

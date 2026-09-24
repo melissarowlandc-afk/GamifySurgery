@@ -66,6 +66,7 @@ import {
   getRoomNavigationAnchor,
   getRoomCareAnchor,
   getRoomWaitingAnchors,
+  getRoomStandingWaitingAnchors,
   getRotatedFootprint,
   isInsideFacility,
   roomsOverlap,
@@ -914,6 +915,9 @@ function chooseWaitingDestination(
 
   const frontDefinition = getRoomDefinition(entrance.room.roomDefinitionId, context);
   if (frontDefinition) {
+    const standingKeys = new Set(
+      getRoomStandingWaitingAnchors(entrance.room, frontDefinition).map(pointKey),
+    );
     for (const anchor of getRoomWaitingAnchors(entrance.room, frontDefinition)) {
       if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) {
         continue;
@@ -928,7 +932,11 @@ function chooseWaitingDestination(
         return {
           roomId: entrance.room.id,
           path,
-          reservation: { roomInstanceId: entrance.room.id, location: anchor, kind: "chair" },
+          reservation: {
+            roomInstanceId: entrance.room.id,
+            location: anchor,
+            kind: standingKeys.has(pointKey(anchor)) ? "standing" : "chair",
+          },
         };
       }
     }
@@ -6770,7 +6778,10 @@ export function createInitialGameState(
       )
     : { x: founderRoom.x, y: founderRoom.y };
   const state: GameState = {
-    schemaVersion: 7,
+    schemaVersion: 8,
+    approvedRoomNavigationMigration: {
+      version: "approved-room-navigation.v1",
+    },
     campaignId: options.campaignId ?? "campaign.local.prototype",
     campaignSeed,
     randomGeneratorVersion: RANDOMNESS_CONTRACT_VERSION,

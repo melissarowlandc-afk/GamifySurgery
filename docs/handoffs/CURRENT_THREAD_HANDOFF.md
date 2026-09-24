@@ -1,13 +1,157 @@
-> GS-024 VERIFIED GITHUB CHECKPOINT (2026-09-22 UTC).
-> Clone branch backup/new-computer-2026-09-22 from the existing GitHub repo.
-> Payload6a468d7 was pushed and verified from a clean remote retrieval:
-> locked install,1,577 tests, all7 typechecks/build, rendered game startup and
-> service-income browser acceptance passed. One fresh-campaign browser flow
-> timed out; exact limitation in GS-024_NEW_COMPUTER_TRANSFER.md.
-> Public-safe integrated source/development assets preserved; private material
-> remains excluded. Owner already transferred whole computer via Tailscale.
-> Original shared beta/index, main/live website and owner saves unchanged.
 # Current Thread Handoff
+
+> PRESERVED GS-024 VERIFIED BACKUP (2026-09-22 UTC): branch
+> backup/new-computer-2026-09-22 contains the verified new-computer checkpoint.
+> Its payload6a468d7 passed locked install,1,577 tests, all7 typechecks/build,
+> startup and service-income browser acceptance. One fresh-campaign browser
+> timeout is recorded in GS-024_NEW_COMPUTER_TRANSFER.md. Private material was
+> excluded. GS-015 checkpoint work starts from fetched tip cdf984b; the original
+> shared beta/index, main/live website and owner browser saves are preserved.
+
+> GS-015 RUNTIME INTEGRATION VALIDATED LOCALLY (2026-09-24). Owner approved September22
+> furniture revisions and explicitly directed replacing old game rooms with
+> all16 approved designs and pushing the result. Owner chose automatic Recovery
+> relocation/reconnection where its new6x6 footprint cannot expand in place.
+> Active plan: docs/execplans/approved-room-runtime-integration.md. Runtime work
+> is authorized now; older runtime-separate/pending-review notes are historical.
+> All16 approved room designs now replace active legacy rendering, using29
+> exact source atlases, modular fixtures and approved furniture revisions.
+> Schema8 migrates Recovery to6x6, repairs invalid legacy doors on both sides,
+> reconnects access, normalizes approved rotations, and preserves active timers,
+> distinct waiting reservations and immutable completed result history.
+> Worker full domain535/balance33 PASS; parent player496 PASS and independent
+> domain534 PASS with1 concurrent-load timeout, then isolated4/4 PASS for that
+> file. Three typechecks/build, source validators and browser5/5 PASS; parent
+> reviewed all21 room views plus occupied/door/seat interaction captures.
+> Isolated checkpoint branch codex/gs015-approved-rooms is based on verified
+> cdf984b; shared beta dirty work preserved. Launcher no-npm readiness fixed;
+> canonical START_GAME.cmd -> http://127.0.0.1:4173 remains unchanged. Seated
+> character source-proportion repair remains deferred; no deployment authorized.
+> Checkpoint commit/push verification is the remaining closeout step. Fully
+> packed no-solution layouts and unsupported legacy Front Desk90/270 fail
+> atomically, retaining raw saved data rather than resizing through neighbors.
+
+> GS-015 FURNITURE REVISION (2026-09-22). Owner requested slightly shorter
+> Front Desk, taller X-ray/CT desks with one larger screen/keyboard and no
+> control panels, taller Endoscopy prep cabinet/larger tray/no linens.
+> Terra furniture_revision built isolated candidates under
+> tools/room-design/furniture-revision-2026-09-22; parent reviewed and reran
+> smoke checks/hash preservation PASS. Selected sources are Front03/Xray02/
+> CT01/EndoscopySouth04/East02-alpha. Parent reran strengthened interactions
+> PASS and visually reviewed both Endoscopy views. Sol finish_furniture_review
+> completed comparison delivery; parent reran its15-selection/scale/state/320
+> checks PASS and inspected desktop/320. Candidates await owner review; existing
+> approvals preserved. Seated P01 correction explicitly deferred; runtime
+> integration separate. Local/uncommitted; no new backup or deployment.
+
+> GS-015 PROPORTION FEEDBACK (2026-09-22). Owner flagged Front Desk/character
+> relationship, small X-ray/CT workstations, small Endoscopy prep table and
+> larger-looking seated P01. Sol produced proportion-review/** current-scale
+> evidence; parent inspected desktop320 and reran validation PASS. FrontDesk
+> normalization is correct; P01 source seated head bounds are wider; furniture
+> worktop registration/size corrections remain. No canonical room/character
+> art or runtime edits. Preserve approvals; GS-015 open, local/uncommitted.
+
+> GS-015 RESUMED (2026-09-22). Owner confirmed existing room designs cover
+> current game levels; defer additional rooms. Resume cross-room furniture
+> size/height/function, character-contact, depth and path consistency before
+> integration. All 16 canonical September 21 proof hashes verified by Terra;
+> recorded isolated-design approvals stand. Unchanged comparison viewer
+> restored to current task; parent browser smoke passed 16 rooms, image
+> readiness, rotation/pose/placement, fixed scale and 320px/no errors.
+> See docs/execplans/room-consistency-audit.md for remaining evidence gates.
+> Terra refreshed the dark occupied Endoscopy comparison; parent reran focused
+> validation PASS and visually reviewed both views. All 16 approved proof hashes
+> remain unchanged. Next: X-ray/CT worktop and Phlebotomy seated-fit comparisons.
+> Resume report/comparison/docs are local/uncommitted; no new backup this turn.
+> No runtime, launcher, save, origin, deployment or push changes. GS-015 open.
+
+> GS MANAGER UPDATE (2026-09-22).
+> Owner explicitly accepted GS-001 as complete. Restored filesystem access also
+> revealed its scoped result already records September 9 acceptance and verified
+> origin/beta backup 20701bcf426f56236a99869a1759cf2313f30422. Earlier manager
+> acceptance-pending wording was stale and is superseded. GS-002/003 are separate
+> scopes; neither is launched or claimed complete. No new remote check or push.
+> Owner requests GS-023 and GS-015 continuations. Native task open/create tools
+> are still unavailable on this retry; neither task was reopened or recreated.
+> Their handoffs and current files are readable in this shared project folder.
+> GS-023 resumes with owner playtest of implemented routines/graduation; GS-015
+> resumes from latest September 21 room proofs and per-room review status.
+> This update is coordination only; no workers, game edits or deployment.
+
+> NEW GS MANAGER READY (2026-09-21; current computer).
+> Ongoing planning and coordination uses C:/Users/rowla/Projects/GamifySurgery.
+> PROJECT_BOARD.md now reconciles the queue, checkpoint and scoped backups,
+> acceptance gaps and historical registry. Future owner-directed bounded work
+> uses native standalone tasks in the saved project's local shared folder.
+> Normally one implementation writer; owner reports completion; no monitoring.
+> This manager and GS-006 stay open. Current user/AGENTS authorization governs
+> backups; historical board language grants no fresh publishing permission.
+> GS-023 awaits owner playtest; GS-015 awaits owner-selected next art scope;
+> GS-001 acceptance remains unconfirmed before scheduling GS-002/003.
+> Get-Command finds bundled Node only and no npm on PATH. Launcher readiness
+> remains unresolved. Use START_GAME.cmd -> http://127.0.0.1:4173 in the intended
+> persistent browser profile; project transfer does not transfer browser saves.
+> No implementation workers ran: this setup was planning only. No game code,
+> index, tools, saves, server or deployment changed. Coordination edits are
+> local/uncommitted; no new push. Transfer verification below supersedes older
+> pending-connectivity notes. The board reconciliation is now applied, while
+> checkpoint-only setup/audit files and the Windows test-pool fix remain unapplied.
+
+
+> GITHUB CHECKPOINT COMPARED (2026-09-21).
+> Verified remote backup/new-computer-2026-09-22 at
+> 6a468d7b00dc72d8e7f32d62a48ee050b8a2747a and fetched without merging.
+> Terra compare_github_checkpoint compared all 4,081 checkpoint paths using
+> raw Git blob hashes: 4,070 identical, eight absent, three different.
+> All functional gameplay source, artwork, tests and tools match. Missing paths
+> are .gitattributes, NEW_COMPUTER_SETUP, new-computer-backup ExecPlan, three
+> GS-024 documents, and two generated Python cache files. Differences are this
+> locally updated handoff, checkpoint's Windows Vitest pool=threads fix in
+> packages/clinical-research/vitest.config.ts, and the newer September 21 board
+> in docs/project-management/PROJECT_BOARD.md. Parent reviewed the checkpoint
+> metadata, test-config diff and board headers. These checkpoint-only changes
+> have not been applied; local beta/source/index are preserved. GitHub backup
+> is confirmed; no merge, push or deployment was performed here.
+
+> TRANSFER CONTENT AUDIT (2026-09-21; supersedes readiness scope below).
+> Today's GS-015 room work IS present, including Recovery, Training, Telehealth,
+> Coffee Kiosk, CT delivery revision and dark occupied Endoscopy artwork.
+> Parent compared all 21,910 main-project file records from the delivered
+> migration-20260921T234117Z.manifest.jsonl: 21,256 SHA-256 matches, 646 absent,
+> eight changed. The absent files are 645 historical .local-dev GS-020/GS-021
+> recovery/evidence files and one obsolete generated dist JS file. Changes are
+> Git index, five relocated worktree pointers, rebuilt dist index and this
+> handoff. No other source/art/test/tooling mismatch or omission was found.
+> Full path results: artifacts/transfer-integrity-check.json.
+> All 16 canonical room proofs match the September 21 inventory hashes and
+> all listed evidence paths exist. Old Codex visualization delivery paths are
+> not restored in the current profile; canonical proofs remain in tools/room-design,
+> and delivery entries are present in the migration manifest.
+> Terra compare_project_copies audited sibling backups and loose Projects files:
+> no additional source/test/tool paths missing from the main root; sibling-only
+> files are historical backup/release evidence. Do not overwrite current source
+> with loose historical .ts copies. Parent reviewed comparison evidence.
+> GitHub read succeeded using installed system Git with network permission;
+> beta still points to c26c96a at this check. Owner says the source computer is
+> pushing a new checkpoint; exact branch/commit comparison remains pending.
+> This verifies the transferred snapshot, not changes made on the source after
+> it was captured. No source changes, merge, push or deployment performed.
+
+> TRANSFER READINESS CHECK (2026-09-21). Current root is
+> C:/Users/rowla/Projects/GamifySurgery, branch beta at c26c96a, with 339
+> modified/untracked status entries including the September 18 working state.
+> Terra migration_build_check passed boundary/launcher checks, six no-emit
+> TypeScript projects and a direct Vite build; parent independently repeated
+> the production build (398 modules, existing large-chunk warning only).
+> Full npm build/test suite was not run: this computer lacks normal Node/npm
+> installation; only Codex bundled Node v24.19.0 was available. Install Node
+> with npm before using START_GAME.cmd. Preserve all transferred dirty work.
+> Live GitHub freshness could not be checked because network access failed;
+> cached origin/beta matches HEAD. No commit, push or deployment performed.
+> Canonical playtest remains START_GAME.cmd at http://127.0.0.1:4173 in the
+> intended persistent browser profile. Copying the project does not transfer
+> browser campaign storage. Say "push to GitHub" to request an audited backup.
 
 > GS-023 THREE APPROVED ROUTINES IMPLEMENTED LOCALLY (2026-09-18).
 > Management/trash/water tips appear during the second tutorial patient's
@@ -2940,4 +3084,3 @@ See PATIENT_PUBLIC20_CARDINAL_STATICS.md and
 artifacts/character-statics/patient-public20-statics-v1/manifest.json.
 Localartworkonly; no runtimeintegration,Gitcommit,push or deployment.
 Say "push to GitHub" to request a scoped backup. Preserve unrelated work.
-

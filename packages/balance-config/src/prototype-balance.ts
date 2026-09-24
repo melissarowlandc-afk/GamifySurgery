@@ -1,4 +1,5 @@
 import { validatePrototypeBalanceRelease } from "./schema";
+import { getApprovedRoomNavigation } from "./approved-room-layouts";
 
 export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   id: "balance.synthetic.prototype.v1",
@@ -59,20 +60,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: [],
         capabilityIds: [],
-        navigation: {
-          blockedTiles: [
-            // A1 cabinet, A5 cooler/bin, and C3 counter. The counter artwork
-            // may extend across C2/C4, but navigation keeps both open.
-            { x: 0, y: 0 },
-            { x: 4, y: 0 },
-            { x: 2, y: 2 },
-          ],
-          primaryAnchor: { x: 2, y: 3 },
-          // The visible visitor chair is the southeast seat only.
-          waitingAnchors: [{ x: 4, y: 3 }],
-          staffAnchor: { x: 2, y: 1 },
-          publicWaitingArea: true,
-        },
+        navigation: getApprovedRoomNavigation("room.front_desk"),
       },
       {
         id: "room.hallway",
@@ -94,13 +82,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.walkable_hallway"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 0, y: 0 },
-          waitingAnchors: [],
-          staffAnchor: null,
-          publicWaitingArea: true,
-        },
+        navigation: getApprovedRoomNavigation("room.hallway"),
       },
       {
         id: "room.examination",
@@ -125,17 +107,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           "capability.examination",
           "capability.synthetic.in_house_analysis",
         ],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 1 },
-            { x: 2, y: 0 },
-          ],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 1 },
-          patientCareAnchor: { x: 2, y: 1 },
-          clinicianCareAnchor: { x: 1, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.examination"),
       },
       {
         id: "room.bathroom",
@@ -157,15 +129,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.patient_bathroom"],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 0 },
-            { x: 1, y: 0 },
-          ],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: null,
-        },
+        navigation: getApprovedRoomNavigation("room.bathroom"),
       },
       {
         id: "room.waiting",
@@ -187,21 +151,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.waiting_seats"],
-        navigation: {
-          blockedTiles: [
-            { x: 1, y: 1 },
-            { x: 2, y: 1 },
-          ],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [
-            { x: 1, y: 0 },
-            { x: 2, y: 0 },
-            { x: 0, y: 1 },
-            { x: 3, y: 1 },
-          ],
-          staffAnchor: null,
-          publicWaitingArea: true,
-        },
+        navigation: getApprovedRoomNavigation("room.waiting"),
       },
       {
         id: "room.xray",
@@ -223,18 +173,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 8,
         requiredRoomDefinitionIds: [],
         capabilityIds: ["capability.xray_machine"],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 0 },
-            { x: 2, y: 0 },
-            { x: 0, y: 1 },
-            { x: 2, y: 1 },
-            { x: 2, y: 2 },
-          ],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 1, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.xray"),
       },
       {
         id: "room.imaging_control",
@@ -289,17 +228,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: ["capability.minor_procedure"],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 1 },
-            { x: 1, y: 1 },
-            { x: 2, y: 1 },
-            { x: 2, y: 0 },
-          ],
-          primaryAnchor: { x: 1, y: 2 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.minor_procedure"),
       },
       {
         id: "room.ultrasound",
@@ -321,12 +250,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 8,
         requiredRoomDefinitionIds: [],
         capabilityIds: ["capability.ultrasound_machine"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 2, y: 0 }, { x: 2, y: 1 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 1, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.ultrasound"),
       },
       {
         id: "room.ct",
@@ -348,12 +272,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 8,
         requiredRoomDefinitionIds: [],
         capabilityIds: ["capability.ct_scanner"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 3, y: 0 }, { x: 3, y: 1 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 3 },
-        },
+        navigation: getApprovedRoomNavigation("room.ct"),
       },
       {
         id: "room.phlebotomy",
@@ -375,12 +294,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.phlebotomy_collection"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.phlebotomy"),
       },
       {
         id: "room.evs_closet",
@@ -402,12 +316,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.evs_supply"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 1, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.evs_closet"),
       },
       {
         id: "room.endoscopy",
@@ -429,20 +338,15 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: [],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 3, y: 0 }, { x: 3, y: 1 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.endoscopy"),
       },
       {
         id: "room.periop_recovery",
         displayName: "Peri-op/Recovery Room",
         kind: "room",
         unlockFacilityLevel: 2,
-        width: 4,
-        height: 3,
+        width: 6,
+        height: 6,
         defaultDoorSide: "south",
         constructionCost: 900,
         upkeepPerExpenseInterval: 16,
@@ -456,12 +360,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: ["capability.periop_recovery"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 3, y: 0 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [{ x: 2, y: 1 }],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.periop_recovery"),
       },
       {
         id: "room.training",
@@ -483,12 +382,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.staff_training"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.training"),
       },
       {
         id: "room.coffee_kiosk",
@@ -510,12 +404,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.coffee_kiosk"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: null,
-        },
+        navigation: getApprovedRoomNavigation("room.coffee_kiosk"),
       },
       {
         id: "room.glp1_telehealth_suite",
@@ -537,12 +426,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.glp1_telehealth"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.glp1_telehealth_suite"),
       },
     ],
     staffRoleDefinitions: [

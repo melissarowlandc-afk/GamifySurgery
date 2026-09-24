@@ -204,7 +204,7 @@ function addOperationalXrayService(state: GameState): void {
     exterior: false,
   });
   state.doors.push(
-    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 1, exterior: false },
+    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 2, exterior: false },
     { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
   state.employees.push({
@@ -232,8 +232,8 @@ function addOperationalImagingService(
 ): void {
   const roomDefinitionId = service === "ultrasound" ? "room.ultrasound" : "room.ct";
   const room = service === "ultrasound"
-    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 1 }
-    : { x: 33, y: 22, patientOffset: 1, controlOffset: 2 };
+    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 2 }
+    : { x: 33, y: 22, patientOffset: 1, controlOffset: 3 };
   state.rooms.push(
     {
       id: "room.test.examination",
@@ -381,7 +381,7 @@ function addTwoExamOperationalXrayService(state: GameState): void {
       roomDefinitionId: "room.examination",
       x: 31,
       y: 28,
-      orientation: 90,
+      orientation: 270,
       doorSide: null,
       upgradeLevel: 1,
       cleanliness: 100,
@@ -419,7 +419,7 @@ function addTwoExamOperationalXrayService(state: GameState): void {
       id: "door.test.exam-xray-front",
       roomId: "room.test.exam-xray",
       side: "east",
-      offset: 1,
+      offset: 2,
       exterior: false,
     },
     {

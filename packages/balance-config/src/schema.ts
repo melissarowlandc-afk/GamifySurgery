@@ -176,6 +176,38 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           }),
         ),
+        endpointOnlyTiles: z
+          .array(
+            z.object({
+              x: z.number().int().nonnegative(),
+              y: z.number().int().nonnegative(),
+            }),
+          )
+          .optional(),
+        dynamicBlockers: z
+          .array(
+            z.object({
+              fixtureId: z.string().min(1),
+              tiles: z.array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })),
+              doorSlots: z.array(z.object({
+                side: z.enum(["north", "east", "south", "west"]),
+                offset: z.number().int().nonnegative(),
+              })),
+            }),
+          )
+          .optional(),
+        allowedDoorSlots: z
+          .array(z.object({
+            side: z.enum(["north", "east", "south", "west"]),
+            offset: z.number().int().nonnegative(),
+          }))
+          .optional(),
+        doorThresholdExceptions: z
+          .array(z.object({
+            side: z.enum(["north", "east", "south", "west"]),
+            offset: z.number().int().nonnegative(),
+          }))
+          .optional(),
         primaryAnchor: z
           .object({
             x: z.number().int().nonnegative(),
@@ -188,6 +220,9 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           }),
         ),
+        standingWaitingAnchors: z
+          .array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }))
+          .optional(),
         staffAnchor: z
           .object({
             x: z.number().int().nonnegative(),
@@ -233,6 +268,9 @@ export const roomDefinitionSchema = z
       const blocked = new Set(
         navigation.blockedTiles.map((point) => key(point)),
       );
+      const endpoints = new Set(
+        (navigation.endpointOnlyTiles ?? []).map((point) => key(point)),
+      );
       const seenBlocked = new Set<string>();
       navigation.blockedTiles.forEach((point, index) => {
         if (!inBounds(point)) {
@@ -252,6 +290,57 @@ export const roomDefinitionSchema = z
         }
         seenBlocked.add(pointKey);
       });
+      const seenEndpoints = new Set<string>();
+      (navigation.endpointOnlyTiles ?? []).forEach((point, index) => {
+        const pointKey = key(point);
+        if (!inBounds(point) || !blocked.has(pointKey)) {
+          context.addIssue({
+            code: "custom",
+            message: "An endpoint-only tile must be an in-bounds blocked tile.",
+            path: ["navigation", "endpointOnlyTiles", index],
+          });
+        }
+        if (seenEndpoints.has(pointKey)) {
+          context.addIssue({
+            code: "custom",
+            message: "Endpoint-only navigation tiles must be unique.",
+            path: ["navigation", "endpointOnlyTiles", index],
+          });
+        }
+        seenEndpoints.add(pointKey);
+      });
+      (navigation.dynamicBlockers ?? []).forEach((dynamic, dynamicIndex) => {
+        dynamic.tiles.forEach((point, tileIndex) => {
+          if (!blocked.has(key(point))) {
+            context.addIssue({
+              code: "custom",
+              message: "A dynamic blocker tile must also be a blocked tile.",
+              path: ["navigation", "dynamicBlockers", dynamicIndex, "tiles", tileIndex],
+            });
+          }
+        });
+      });
+      const validateDoorSlot = (
+        slot: { side: "north" | "east" | "south" | "west"; offset: number },
+        path: Array<string | number>,
+      ) => {
+        const limit = slot.side === "north" || slot.side === "south"
+          ? room.width
+          : room.height;
+        if (slot.offset >= limit) {
+          context.addIssue({
+            code: "custom",
+            message: "A navigation door slot is outside the room wall.",
+            path,
+          });
+        }
+      };
+      navigation.allowedDoorSlots?.forEach((slot, index) =>
+        validateDoorSlot(slot, ["navigation", "allowedDoorSlots", index]),
+      );
+      navigation.doorThresholdExceptions?.forEach((slot, index) =>
+        validateDoorSlot(slot, ["navigation", "doorThresholdExceptions", index]),
+      );
       const validateAnchor = (
         point: { x: number; y: number } | null,
         path: Array<string | number>,
@@ -266,7 +355,7 @@ export const roomDefinitionSchema = z
             path,
           });
         }
-        if (blocked.has(key(point))) {
+        if (blocked.has(key(point)) && !endpoints.has(key(point))) {
           context.addIssue({
             code: "custom",
             message: "A navigation anchor cannot occupy a blocked tile.",
@@ -306,6 +395,16 @@ export const roomDefinitionSchema = z
           });
         }
         waitingKeys.add(pointKey);
+      });
+      navigation.standingWaitingAnchors?.forEach((point, index) => {
+        validateAnchor(point, ["navigation", "standingWaitingAnchors", index]);
+        if (!waitingKeys.has(key(point))) {
+          context.addIssue({
+            code: "custom",
+            message: "Standing waiting anchors must also be listed as waiting anchors.",
+            path: ["navigation", "standingWaitingAnchors", index],
+          });
+        }
       });
     }
   });

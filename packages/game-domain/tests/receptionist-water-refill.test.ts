@@ -103,11 +103,11 @@ describe("receptionist water-cooler work", () => {
     expect(state.employees[0]!.facilityTask).toMatchObject({
       kind: "refill_water",
       startedAtFacilityTick: 101,
-      workMinutesRemaining: 1,
+      workMinutesRemaining: 2,
     });
     expect(state.environment.waterCoolerFillPercent).toBe(0);
 
-    state = advance(state, 1);
+    state = advance(state, 2);
     expect(state.environment.waterCoolerFillPercent).toBe(100);
     expect(state.employees[0]!.facilityTask).toBeNull();
   });
@@ -182,10 +182,10 @@ describe("receptionist water-cooler work", () => {
     expect(restored.employees[0]!.facilityTask).toMatchObject({
       kind: "refill_water",
       startedAtFacilityTick: 101,
-      workMinutesRemaining: 1,
+      workMinutesRemaining: 2,
     });
 
-    const completed = advance(restored, 1);
+    const completed = advance(restored, 2);
     expect(completed.environment.waterCoolerFillPercent).toBe(100);
     expect(completed.employees[0]!.facilityTask).toBeNull();
   });

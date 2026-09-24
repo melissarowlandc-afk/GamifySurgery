@@ -23,6 +23,7 @@ import {
   getRoomDefinition,
   getRoomInstanceFootprint,
   getRoomNavigationAnchor,
+  getRoomStandingWaitingAnchors,
   getRoomWaitingAnchors,
   getRoomCareAnchor,
   getRoomResaleValue,
@@ -1147,6 +1148,30 @@ export function createPrototypePlayerView(
       facilityTitle: progressionStatus.displayName,
       campaignId: state.campaignId,
       facilityTick: state.facilityTick,
+      endoscopyOccupancy: (() => {
+        const roomIds = new Set<string>();
+        const patients = new Set<string>();
+        const visitors = new Set<string>();
+        for (const operation of state.serviceOperations) {
+          const phase = SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.operation?.phases[operation.phaseIndex];
+          if (operation.status !== "in_service" || phase?.roomDefinitionId !== "room.endoscopy") continue;
+          const roomId = operation.reservedRoomInstanceIds.find((candidate) => state.rooms.find((room) => room.id === candidate)?.roomDefinitionId === "room.endoscopy");
+          if (!roomId) continue;
+          roomIds.add(roomId);
+          if (operation.actorKind === "visitor") visitors.add(operation.id);
+          if (operation.actorKind === "encounter") patients.add(operation.actorId);
+        }
+        // Legacy frozen clinical travel does not create service operations.
+        // Its frozen timing is the sole presentation clock for covered care.
+        for (const encounter of Object.values(state.encounters)) {
+          const travel = encounter.pendingResult?.patientTravel;
+          if (!travel || state.facilityTick < travel.outboundArrivalTick || state.facilityTick >= travel.serviceCompletionTick) continue;
+          if (state.rooms.find((room) => room.id === travel.destinationRoomInstanceId)?.roomDefinitionId !== "room.endoscopy") continue;
+          roomIds.add(travel.destinationRoomInstanceId);
+          patients.add(encounter.id);
+        }
+        return { roomInstanceIds: [...roomIds], patientInstanceIds: [...patients], serviceVisitorInstanceIds: [...visitors] };
+      })(),
       paused: state.paused,
       simulationSpeed: state.simulationSpeed,
       realMillisecondsPerFacilityMinuteAt1x:
@@ -1277,6 +1302,9 @@ export function createPrototypePlayerView(
             assignedRoomDefinition !== null &&
             assignedRoom !== undefined &&
             getRoomWaitingAnchors(assignedRoom, assignedRoomDefinition).some(
+              (anchor) => anchor.x === location.x && anchor.y === location.y,
+            ) &&
+            !getRoomStandingWaitingAnchors(assignedRoom, assignedRoomDefinition).some(
               (anchor) => anchor.x === location.x && anchor.y === location.y,
             );
           const seated =

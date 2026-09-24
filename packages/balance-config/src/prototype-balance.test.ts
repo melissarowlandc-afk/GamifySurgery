@@ -53,18 +53,29 @@ describe("row 57 off-site functional-study services", () => {
 });
 
 describe("Front Desk A1-D5 navigation", () => {
-  it("blocks only A1, A5, and C3 while preserving the two counter flanks", () => {
+  it("uses the approved C2/C3 desk and B2/D5 seat blockers", () => {
     const frontDesk = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
       (definition) => definition.id === "room.front_desk",
     );
     expect(frontDesk?.navigation?.blockedTiles).toEqual([
-      { x: 0, y: 0 },
-      { x: 4, y: 0 },
+      { x: 1, y: 2 },
       { x: 2, y: 2 },
+      { x: 1, y: 1 },
+      { x: 4, y: 3 },
     ]);
     expect(frontDesk?.navigation?.primaryAnchor).toEqual({ x: 2, y: 3 });
-    expect(frontDesk?.navigation?.waitingAnchors).toEqual([{ x: 4, y: 3 }]);
-    expect(frontDesk?.navigation?.staffAnchor).toEqual({ x: 2, y: 1 });
+    expect(frontDesk?.navigation?.waitingAnchors).toEqual([
+      { x: 4, y: 3 },
+      { x: 3, y: 3 },
+    ]);
+    expect(frontDesk?.navigation?.standingWaitingAnchors).toEqual([
+      { x: 3, y: 3 },
+    ]);
+    expect(frontDesk?.navigation?.staffAnchor).toEqual({ x: 1, y: 1 });
+    expect(frontDesk?.navigation?.endpointOnlyTiles).toEqual([
+      { x: 1, y: 1 },
+      { x: 4, y: 3 },
+    ]);
   });
 });
 
@@ -136,11 +147,14 @@ describe("Level 2 expanded outpatient definitions", () => {
       "room.phlebotomy": [550, 9, "3x2"],
       "room.evs_closet": [475, 6, "2x2"],
       "room.endoscopy": [1450, 24, "4x3"],
-      "room.periop_recovery": [900, 16, "4x3"],
+      "room.periop_recovery": [900, 16, "6x6"],
       "room.training": [650, 8, "3x3"],
       "room.coffee_kiosk": [500, 5, "2x2"],
       "room.glp1_telehealth_suite": [1200, 12, "3x2"],
     });
+    const recovery = rooms.find((room) => room.id === "room.periop_recovery")!;
+    expect(recovery.workloadLimitContribution).toBe(1);
+    expect(recovery.navigation?.waitingAnchors).toHaveLength(1);
     expect(
       Object.fromEntries(
         staff.map((role) => [
