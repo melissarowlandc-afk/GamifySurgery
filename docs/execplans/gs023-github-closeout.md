@@ -58,3 +58,16 @@ Secret-pattern checks found no credential/key signatures. No clinical-content
 source or approval records, private inputs, owner data or unrelated generated art.
 Existing validation is documented; this archive is explicitly recovery-only.
 Next: explicit-path staging, checkpoint commit, beta push and remote verification.
+
+
+## Complete / verified GitHub backup
+
+Checkpoint 1cb146ec23f7ab3b2629270e6b278ebea2e89eaf pushed to origin/beta;
+git ls-remote returned the exact matching SHA. Parent verified all80 staged Git
+blob hashes as well as disk hashes and60 original copies. Only82 audited paths
+were committed (archive plus this plan). Whitespace findings are preserved source
+EOF blanks and meaningful unified-patch context spaces; no runtime edits made.
+Current handoff updated with exact branch/commit via a HEAD-based scoped addition
+to avoid staging other tasks' handoff edits. Sol assembled; parent reviewed/committed/
+pushed/verified. Recovery-only limitation is explicit. No merge/deploy/save changes.
+Owner will complete and archive the thread. No required implementation remains.

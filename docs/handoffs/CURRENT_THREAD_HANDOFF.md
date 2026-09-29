@@ -1,5 +1,18 @@
 # Current Thread Handoff
 
+> GS-023 COMPLETE / VERIFIED GITHUB BACKUP — September 29, 2026.
+> Branch: beta. Checkpoint: 1cb146ec23f7ab3b2629270e6b278ebea2e89eaf.
+> Pushed to origin; exact SHA independently verified with git ls-remote.
+> Recovery archive: artifacts/checkpoints/gs023-20260929/README.md.
+> Covers this continuous GS023 thread and its owner-directed clinic follow-ups.
+> Sol assembled and audited; parent reviewed scope and independently verified
+> all80 payload hashes, all60 exact copies and staged Git blob integrity.
+> Earlier accepted runtime: domain1075/player552/balance41/browser4; types/build pass.
+> Archive is recovery-only, not a standalone runnable or deployable snapshot.
+> Unrelated dirty work and owner saves preserved. No merge or website deployment.
+> START_GAME.cmd -> http://127.0.0.1:4173 remains unchanged. Owner may archive.
+
+
 > GS-006 clinical backup verified (September 13): checkpoint
 > `b4ba1bfa9d9c84c51bea1db2c43594bc636d3487` is on `origin/beta`; remote
 > SHA independently verified. Includes clinical batches through September 13,
