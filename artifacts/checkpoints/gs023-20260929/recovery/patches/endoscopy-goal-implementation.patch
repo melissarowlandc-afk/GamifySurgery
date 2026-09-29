@@ -1,0 +1,816 @@
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\packages__balance-config__src__prototype-balance.ts" b/packages/balance-config/src/prototype-balance.ts
+index b098665..18a0e5b 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\packages__balance-config__src__prototype-balance.ts"
++++ b/packages/balance-config/src/prototype-balance.ts
+@@ -600,12 +600,11 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         minimumClinicalXp: 300,
+         minimumCompletedEncounters: 0,
+         satisfactionMustBeGreaterThan: 90,
+-        requiredRoomDefinitionIds: ["room.endoscopy", "room.periop_recovery"],
+-        requiredStaffRoleIds: [
+-          "staff.periop_nurse",
+-          "staff.endoscopy_nurse",
+-          "staff.endoscopist",
+-        ],
++        // Level 2 tracks a completed endoscopy episode in the domain rather
++        // than exposing its individual construction and staffing prerequisites
++        // as separate progression rows.
++        requiredRoomDefinitionIds: [],
++        requiredStaffRoleIds: [],
+         nextFacilityLevel: null,
+       },
+     ],
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\packages__balance-config__src__prototype-balance.test.ts" b/packages/balance-config/src/prototype-balance.test.ts
+index 57d5995..6176a22 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\packages__balance-config__src__prototype-balance.test.ts"
++++ b/packages/balance-config/src/prototype-balance.test.ts
+@@ -207,12 +207,8 @@ describe("Level 2 expanded outpatient definitions", () => {
+           level: 2,
+           minimumClinicalXp: 300,
+           satisfactionMustBeGreaterThan: 90,
+-          requiredRoomDefinitionIds: ["room.endoscopy", "room.periop_recovery"],
+-          requiredStaffRoleIds: [
+-            "staff.periop_nurse",
+-            "staff.endoscopy_nurse",
+-            "staff.endoscopist",
+-          ],
++          requiredRoomDefinitionIds: [],
++          requiredStaffRoleIds: [],
+           nextFacilityLevel: null,
+         }),
+       ]),
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\packages__game-domain__src__selectors.ts" b/packages/game-domain/src/selectors.ts
+index 8bba0ea..27c5506 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\packages__game-domain__src__selectors.ts"
++++ b/packages/game-domain/src/selectors.ts
+@@ -33,7 +33,7 @@ import {
+ } from "./doors";
+ import { evaluateFacilityExperienceConditions } from "./facility-experience";
+ import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content";
+-import { getServiceIncomeForRoute } from "@gamify-surgery/balance-config";
++import { getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+ 
+ const CAPACITY_LIFECYCLES = new Set([
+@@ -1355,6 +1355,58 @@ export function getFacilityProgressionStatus(
+     state.facilityLevel === 0 &&
+     completedProtectedTutorials === 2 &&
+     hasFunctionalTutorialExaminationRoom;
++  const isInHouseEndoscopyResult = (result: NonNullable<EncounterState["pendingResult"]>) => {
++    const lineIds = result.serviceIncomeLineId
++      ? [result.serviceIncomeLineId]
++      : ["income.endoscopy", "income.advanced_endoscopy"];
++    return lineIds.some((lineId) =>
++      (lineId === "income.endoscopy" || lineId === "income.advanced_endoscopy") &&
++      Boolean(getServiceIncomeLine(lineId)?.eligibleRouteIds.includes(result.routeId)),
++    );
++  };
++  const hasCompletedEndoscopyOperation = state.serviceOperations.some((operation) => {
++    if (
++      operation.status === "cancelled" ||
++      (operation.incomeLineId !== "income.endoscopy" &&
++        operation.incomeLineId !== "income.advanced_endoscopy")
++    ) {
++      return false;
++    }
++    const phases = operation.frozenOperationPhases ??
++      getServiceIncomeLine(operation.incomeLineId)?.operation?.phases ?? [];
++    return phases.some((phase) => phase.roomDefinitionId === "room.endoscopy") &&
++      phases.some((phase) => phase.roomDefinitionId === "room.periop_recovery") &&
++      // `leaving` is the normal post-recovery sidewalk trip. Count the
++      // completed episode there, rather than waiting for the visitor sprite to
++      // leave the map; a legacy terminal completed operation is also valid.
++      ((operation.completedAtFacilityTick !== null && operation.phaseIndex >= phases.length) ||
++        operation.status === "completed");
++  });
++  const hasCompletedFrozenEndoscopy = state.serviceIncomeReceipts.some((receipt) =>
++    (receipt.incomeLineId === "income.endoscopy" || receipt.incomeLineId === "income.advanced_endoscopy") &&
++    receipt.routeId !== null &&
++    Boolean(getServiceIncomeLine(receipt.incomeLineId)?.eligibleRouteIds.includes(receipt.routeId)),
++  ) || Object.values(state.encounters).some((encounter) =>
++    encounter.steps.some((step) => {
++      const result = step.result;
++      return Boolean(
++        step.status === "completed" &&
++          result &&
++          result.deliveredAtTick !== null &&
++          isInHouseEndoscopyResult(result),
++      );
++    }),
++  );
++  const hasCompletedEndoscopy = hasCompletedEndoscopyOperation || hasCompletedFrozenEndoscopy;
++  const endoscopyCompletionRequirement = state.facilityLevel === 2
++    ? [{
++        id: "progression.endoscopy_completion",
++        label: "Complete your first endoscopy",
++        met: hasCompletedEndoscopy,
++        current: hasCompletedEndoscopy ? 1 : 0,
++        required: 1,
++      }]
++    : [];
+   const requirements = [
+     ...(tutorialGraduationEligible
+       ? [
+@@ -1416,6 +1468,7 @@ export function getFacilityProgressionStatus(
+         required: 1,
+       };
+     }),
++    ...endoscopyCompletionRequirement,
+   ];
+   return {
+     facilityLevel: state.facilityLevel,
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\packages__game-domain__tests__level-two-progression.test.ts" b/packages/game-domain/tests/level-two-progression.test.ts
+index 043fe0e..9834a84 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\packages__game-domain__tests__level-two-progression.test.ts"
++++ b/packages/game-domain/tests/level-two-progression.test.ts
+@@ -9,6 +9,7 @@ import {
+   getFacilityProgressionStatus,
+   serializeGameState,
+   type DomainContext,
++  type GameState,
+ } from "../src";
+ 
+ function levelOneReadyContext(): DomainContext {
+@@ -36,6 +37,58 @@ function levelOneReadyContext(): DomainContext {
+ }
+ 
+ describe("Level 2 facility progression", () => {
++  it("counts a scheduled visitor after recovery while leaving, retains the legacy episode after setup removal, and excludes cancelled departure", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    const completedVisitor: GameState["serviceOperations"][number] = {
++      id: "service.endoscopy.visitor.completed", incomeLineId: "income.endoscopy", catalogVersion: 1,
++      actorKind: "visitor", actorId: "visitor.endoscopy.completed", displayName: "Scheduled endoscopy visitor", appearance: null,
++      status: "leaving", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 60, startedAtFacilityTick: 1,
++      completedAtFacilityTick: 121, cancelledAtFacilityTick: null, quoteFee: 450, phaseIndex: 2,
++      phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null,
++      location: { x: 0, y: 0 }, path: [{ x: 0, y: 0 }], pathIndex: 0, lastMovedAtFacilityTick: 121, cancellationReason: null,
++    };
++    state.serviceOperations.push(completedVisitor);
++    const objective = () => getFacilityProgressionStatus(state).requirements.find(
++      (requirement) => requirement.id === "progression.endoscopy_completion",
++    );
++    expect(objective()).toMatchObject({ met: true, current: 1 });
++    state.rooms = [];
++    state.employees = [];
++    expect(objective()).toMatchObject({ met: true, current: 1 });
++
++    state.serviceOperations = [{
++      ...completedVisitor,
++      id: "service.endoscopy.visitor.cancelled",
++      status: "leaving",
++      completedAtFacilityTick: null,
++      cancelledAtFacilityTick: 5,
++      phaseIndex: 0,
++    }];
++    expect(objective()).toMatchObject({ met: false, current: 0 });
++
++    state.serviceOperations = [];
++    state.serviceIncomeReceipts.push({
++      id: "receipt.ordinary.scope", transactionKey: "receipt.ordinary.scope", incomeLineId: "income.endoscopy",
++      catalogVersion: 1, routeId: "route.upper_endoscopy_duodenal_biopsy.in_house", actorKind: "patient",
++      actorId: "encounter.ordinary-scope", grossAmount: 450, stockCost: 0, netCashDelta: 450, completedAtFacilityTick: 120,
++    });
++    expect(objective()).toMatchObject({ met: true, current: 1 });
++    state.serviceIncomeReceipts[0]!.routeId = "route.outside_endoscopy";
++    expect(objective()).toMatchObject({ met: false, current: 0 });
++
++    state.serviceIncomeReceipts = [];
++    const legacyStep = state.encounters[TUTORIAL_ENCOUNTER_ID]!.steps[0]!;
++    legacyStep.status = "completed";
++    legacyStep.result = {
++      operationId: "legacy.scope", gateId: "legacy.scope", originatingNodeIndex: 0, resultTypeId: "service.endoscopy",
++      pendingLabel: "legacy", resultNarrative: "legacy", routeId: "route.colonoscopy.in_house", routeDisplayName: "legacy",
++      scheduledAtTick: 0, serviceDurationTicks: 120, durationTicks: 120, dueTick: 120, deliveredAtTick: 121,
++      offsiteReturnStartedAtTick: null, offsiteTravel: null, patientTravel: null,
++    };
++    expect(objective()).toMatchObject({ met: true, current: 1 });
++  });
++
+   it("advances a qualifying Level 1 campaign exactly once and resets only current-level XP", () => {
+     const context = levelOneReadyContext();
+     const state = createInitialGameState(context, {
+@@ -106,11 +159,7 @@ describe("Level 2 facility progression", () => {
+     expect(progression.requirements.map((requirement) => requirement.id)).toEqual([
+       "progression.clinical_xp",
+       "progression.satisfaction",
+-      "progression.room.room.endoscopy",
+-      "progression.room.room.periop_recovery",
+-      "progression.staff.staff.periop_nurse",
+-      "progression.staff.staff.endoscopy_nurse",
+-      "progression.staff.staff.endoscopist",
++      "progression.endoscopy_completion",
+     ]);
+   });
+ 
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__types.ts" b/apps/player/src/ui/types.ts
+index 64b2b94..be394f8 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__types.ts"
++++ b/apps/player/src/ui/types.ts
+@@ -291,6 +291,7 @@ export interface RoomBuildOptionView {
+ 
+ export interface SelectedRoomBuildView {
+   id: string;
++  roomDefinitionId: string;
+   displayName: string;
+   upgradeLevel: number;
+   nextUpgradeLevel?: number;
+@@ -343,12 +344,25 @@ export interface ProgressionGoalView {
+   progressLabel: string;
+ }
+ 
++export interface EndoscopySetupRequirementView {
++  id: string;
++  label: string;
++  detail: string;
++  met: boolean;
++  action?: {
++    label: "Build" | "Hire";
++    target: "room" | "staff";
++    id: string;
++  };
++}
++
+ export interface ProgressionView {
+   facilityLevelLabel: string;
+   nextLevelLabel: string | null;
+   goals: ProgressionGoalView[];
+   canLevelUp: boolean;
+   prototypeComplete: boolean;
++  endoscopySetupRequirements?: EndoscopySetupRequirementView[];
+ }
+ 
+ export interface DevelopmentView {
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__session__viewModels.ts" b/apps/player/src/session/viewModels.ts
+index ff935fc..eab3137 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__session__viewModels.ts"
++++ b/apps/player/src/session/viewModels.ts
+@@ -15,6 +15,7 @@ import {
+   getNextRoomUpgradeCost,
+   getOperatingExpensePerFacilityHour,
+   isEmployeeOperational,
++  isEmployeeAssignedToOperationalRoom,
+   isRoomOperationalForFacilityWork,
+   getPatientLists,
+   getPendingPatientRoutePresentation,
+@@ -54,6 +55,7 @@ import type {
+   AdvertisingView,
+   ChartView,
+   DevelopmentView,
++  EndoscopySetupRequirementView,
+   EmergencyGlp1View,
+   MessageBoardItemView,
+   PatientFolder,
+@@ -95,6 +97,69 @@ function currency(value: number): string {
+   return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+ }
+ 
++function getEndoscopySetupRequirements(
++  state: GameState,
++): EndoscopySetupRequirementView[] | undefined {
++  if (state.facilityLevel !== 2) return undefined;
++  const roomRequirement = (id: string): EndoscopySetupRequirementView => {
++    const definition = getRoomDefinition(id)!;
++    const existing = state.rooms.filter((room) => room.roomDefinitionId === id);
++    const met = existing.some((room) =>
++      room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id),
++    );
++    return {
++      id: `endoscopy.setup.${id}`,
++      label: definition.displayName,
++      detail: met
++        ? `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`
++        : existing.length > 0
++          ? "Built, but needs a reachable valid layout before it can operate."
++          : `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`,
++      met,
++      ...(!met && existing.length === 0 ? { action: { label: "Build" as const, target: "room" as const, id } } : {}),
++    };
++  };
++  const staffRequirement = (id: string): EndoscopySetupRequirementView => {
++    const definition = getStaffRoleDefinition(id)!;
++    const hired = state.employees.filter((employee) =>
++      employee.staffRoleDefinitionId === id,
++    );
++    const met = hired.some((employee) =>
++      employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id),
++    );
++    return {
++      id: `endoscopy.setup.${id}`,
++      label: definition.displayName,
++      detail: met
++        ? `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`
++        : hired.length > 0
++          ? "Hired, but their home room needs a reachable valid layout before they can operate."
++          : `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`,
++      met,
++      ...(!met && hired.length === 0 ? { action: { label: "Hire" as const, target: "staff" as const, id } } : {}),
++    };
++  };
++  const endoscopist = getStaffRoleDefinition("staff.endoscopist")!;
++  const hiredEndoscopist = state.employees.some((employee) =>
++    employee.staffRoleDefinitionId === "staff.endoscopist" &&
++      isEmployeeAssignedToOperationalRoom(state, employee.id),
++  );
++  return [
++    roomRequirement("room.endoscopy"),
++    roomRequirement("room.periop_recovery"),
++    staffRequirement("staff.endoscopy_nurse"),
++    staffRequirement("staff.periop_nurse"),
++    {
++      id: "endoscopy.setup.provider",
++      label: "Endoscopist or founder",
++      detail: hiredEndoscopist
++        ? "Endoscopist hired."
++        : `Founder can perform endoscopy. Hire an endoscopist to keep yourself available for clinic patients. $${endoscopist.hiringCost.toLocaleString()} hire · $${endoscopist.salaryPerExpenseInterval.toLocaleString()}/hr salary.`,
++      met: true,
++    },
++  ];
++}
++
+ function founderIsIdleAtUnstaffedFrontDesk(state: GameState): boolean {
+   if (
+     state.environment.founderActivity !== null ||
+@@ -1744,6 +1809,7 @@ export function createPrototypePlayerView(
+         progressionStatus.requirements.every(
+           (requirement) => requirement.met,
+         ),
++      endoscopySetupRequirements: getEndoscopySetupRequirements(state),
+     },
+     roomOptions: facilityBalance.roomDefinitions
+       .filter(
+@@ -1977,6 +2043,7 @@ export function createPrototypePlayerView(
+             ];
+       return {
+         id: room.id,
++        roomDefinitionId: room.roomDefinitionId,
+         displayName: definition.displayName,
+         upgradeLevel: room.upgradeLevel,
+         nextUpgradeLevel,
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__GoalsPanel.tsx" b/apps/player/src/ui/GoalsPanel.tsx
+index ec78ff0..29586a4 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__GoalsPanel.tsx"
++++ b/apps/player/src/ui/GoalsPanel.tsx
+@@ -1,23 +1,26 @@
+-import { useEffect, useRef } from "react";
+-import type { ProgressionView } from "./types";
++import { useEffect, useRef, useState } from "react";
++import type { EndoscopySetupRequirementView, ProgressionView } from "./types";
+ 
+ interface GoalsPanelProps {
+   view: ProgressionView;
+   onLevelUp: () => void;
++  onEndoscopySetupAction: (action: NonNullable<EndoscopySetupRequirementView["action"]>) => void;
+ }
+ 
+ export function GoalsPanel({
+   view,
+   onLevelUp,
++  onEndoscopySetupAction,
+ }: GoalsPanelProps) {
+   const panelRef = useRef<HTMLElement>(null);
++  const [setupOpen, setSetupOpen] = useState(false);
+ 
+   useEffect(() => {
+     panelRef.current?.scrollTo({ top: 0 });
+   }, [view.facilityLevelLabel]);
+ 
+   return (
+-    <aside className="panel goals-panel" ref={panelRef}>
++    <aside className={`panel goals-panel${setupOpen ? " has-endoscopy-setup" : ""}`} ref={panelRef}>
+       <div className="panel-heading">
+         <span>{view.facilityLevelLabel} goals</span>
+         <small>
+@@ -30,10 +33,27 @@ export function GoalsPanel({
+         {view.goals.map((goal) => (
+           <li className={goal.complete ? "is-complete" : ""} key={goal.id}>
+             <span aria-hidden="true">{goal.complete ? "■" : "□"}</span>
+-            <span>
+-              {goal.label}
+-              <small>{goal.progressLabel}</small>
+-            </span>
++            <div className="goal-content">
++              <span className="goal-label">{goal.label}<small>{goal.progressLabel}</small></span>
++            {goal.id === "progression.endoscopy_completion" && view.endoscopySetupRequirements ? (
++              <div className="endoscopy-goal-setup">
++                <button className="text-button" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((open) => !open)}>
++                  {setupOpen ? "Hide setup requirements" : "View setup requirements"}
++                </button>
++                {setupOpen ? (
++                  <ul aria-label="Endoscopy setup requirements">
++                    {view.endoscopySetupRequirements.map((requirement) => (
++                      <li key={requirement.id}>
++                        <span aria-hidden="true">{requirement.met ? "■" : "□"}</span>{" "}
++                        <span>{requirement.label} <small>{requirement.met ? "Ready" : "Missing"} · {requirement.detail}</small></span>
++                        {requirement.action ? <button className="text-button" type="button" onClick={() => onEndoscopySetupAction(requirement.action!)}>{requirement.action.label}</button> : null}
++                      </li>
++                    ))}
++                  </ul>
++                ) : null}
++              </div>
++            ) : null}
++            </div>
+           </li>
+         ))}
+       </ul>
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__BuildPanel.tsx" b/apps/player/src/ui/BuildPanel.tsx
+index 3fee83f..02ed506 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__BuildPanel.tsx"
++++ b/apps/player/src/ui/BuildPanel.tsx
+@@ -1,6 +1,7 @@
+ import { useEffect, useMemo, useState } from "react";
+ import { createPortal } from "react-dom";
+ import type {
++  EndoscopySetupRequirementView,
+   RoomBuildOptionView,
+   SelectedRoomBuildView,
+ } from "./types";
+@@ -32,6 +33,8 @@ interface BuildPanelProps {
+   exitBlockedIssues: string[];
+   upgradeRequestRoomId: string | null;
+   onUpgradeRequestHandled: () => void;
++  endoscopySetupRequirements?: EndoscopySetupRequirementView[];
++  onEndoscopySetupAction: (action: NonNullable<EndoscopySetupRequirementView["action"]>) => void;
+ }
+ 
+ export function roomIconName(roomDefinitionId: string): PixelIconName {
+@@ -123,6 +126,8 @@ export function BuildPanel({
+   exitBlockedIssues,
+   upgradeRequestRoomId,
+   onUpgradeRequestHandled,
++  endoscopySetupRequirements,
++  onEndoscopySetupAction,
+ }: BuildPanelProps) {
+   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
+   const [invalidDialogOpen, setInvalidDialogOpen] = useState(false);
+@@ -326,6 +331,18 @@ export function BuildPanel({
+           </div>
+         ) : null}
+ 
++        {selectedPlacement?.id === "room.endoscopy" && endoscopySetupRequirements ? (
++          <section className="endoscopy-setup-guide" aria-label="Endoscopy setup requirements">
++            <strong>Endoscopy setup requirements</strong>
++            {endoscopySetupRequirements.map((requirement) => (
++              <div key={requirement.id}>
++                <span>{requirement.met ? "Ready" : "Missing"}: {requirement.label} · {requirement.detail}</span>
++                {requirement.action ? <button className="text-button" type="button" onClick={() => onEndoscopySetupAction(requirement.action!)}>{requirement.action.label}</button> : null}
++              </div>
++            ))}
++          </section>
++        ) : null}
++
+         <div
+           className={`build-catalog-layout${
+             selectedRoom ? " has-room-inspector" : ""
+@@ -343,6 +360,17 @@ export function BuildPanel({
+                   {selectedRoom.blockedReason}
+                 </p>
+               ) : null}
++              {selectedRoom.roomDefinitionId === "room.endoscopy" && endoscopySetupRequirements ? (
++                <div aria-label="Endoscopy setup requirements">
++                  <strong>Endoscopy setup requirements</strong>
++                  {endoscopySetupRequirements.map((requirement) => (
++                    <div key={requirement.id}>
++                      {requirement.met ? "Ready" : "Missing"}: {requirement.label} · {requirement.detail}
++                      {requirement.action ? <button className="text-button" type="button" onClick={() => onEndoscopySetupAction(requirement.action!)}>{requirement.action.label}</button> : null}
++                    </div>
++                  ))}
++                </div>
++              ) : null}
+               <div className="selected-room-primary-actions">
+                 <button
+                   className="button button-secondary selected-room-upgrade"
+@@ -415,6 +443,7 @@ export function BuildPanel({
+                           {room.blockedReason}
+                         </small>
+                       ) : null}
++                      {room.id === "room.endoscopy" ? <small>Full setup guidance appears when selected.</small> : null}
+                     </span>
+                   </button>
+                 ))}
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__BuildPanel.test.tsx" b/apps/player/src/ui/BuildPanel.test.tsx
+index 9089f65..8c97019 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__ui__BuildPanel.test.tsx"
++++ b/apps/player/src/ui/BuildPanel.test.tsx
+@@ -34,6 +34,7 @@ const roomOptions: RoomBuildOptionView[] = [
+ 
+ const selectedRoom: SelectedRoomBuildView = {
+   id: "room.exam.1",
++  roomDefinitionId: "room.examination",
+   displayName: "Examination Room",
+   upgradeLevel: 1,
+   nextUpgradeLevel: 2,
+@@ -86,6 +87,7 @@ function renderBuildPanel({
+       ]}
+       upgradeRequestRoomId={null}
+       onUpgradeRequestHandled={noop}
++      onEndoscopySetupAction={noop}
+     />,
+   );
+ }
+@@ -235,4 +237,36 @@ describe("Build Mode toolbar", () => {
+     expect(markup).toContain("3 × 2 tiles - $130");
+     expect(markup).not.toContain(">Selected<");
+   });
++
++  it("shows the same endoscopy setup requirements on the pre-purchase room card", () => {
++    const markup = renderToStaticMarkup(
++      <BuildPanel
++        buildMode
++        cashLabel="$500"
++        roomOptions={[...roomOptions, { ...roomOptions[1]!, id: "room.endoscopy", displayName: "Endoscopy Room", selected: true }]}
++        selectedRoom={null}
++        placementOrientation={0}
++        onEnterBuildMode={noop}
++        onExitBuildMode={noop}
++        onSelectRoom={noop}
++        onCancelPlacement={noop}
++        onRotatePlacement={noop}
++        onUpgradeSelectedRoom={noop}
++        onSellSelectedRoom={noop}
++        buildDoorTool={null}
++        onBuildDoorToolChange={noop}
++        onUndoBuildAction={noop}
++        undoCount={0}
++        exitBlockedReason={null}
++        exitBlockedIssues={[]}
++        upgradeRequestRoomId={null}
++        onUpgradeRequestHandled={noop}
++        onEndoscopySetupAction={noop}
++        endoscopySetupRequirements={[{ id: "endoscopy.setup.room.endoscopy", label: "Endoscopy Room", detail: "$1,000 build", met: false }]}
++      />,
++    );
++
++    expect(markup).toContain("Endoscopy setup requirements");
++    expect(markup).toContain("Missing: Endoscopy Room");
++  });
+ });
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__AppShell.tsx" b/apps/player/src/AppShell.tsx
+index 90d5be3..cfa5d67 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__AppShell.tsx"
++++ b/apps/player/src/AppShell.tsx
+@@ -29,6 +29,7 @@ import {
+   type AdvertisingView,
+   type ChartView,
+   type DevelopmentView,
++  type EndoscopySetupRequirementView,
+   type EmergencyGlp1View,
+   type MessageBoardItemView,
+   type MessageBoardTargetType,
+@@ -266,6 +267,7 @@ export function AppShell({
+     useState(0);
+   const [highlightedLitterId, setHighlightedLitterId] =
+     useState<string | null>(null);
++  const [pendingEndoscopySetupAction, setPendingEndoscopySetupAction] = useState<NonNullable<EndoscopySetupRequirementView["action"]> | null>(null);
+   const messageActionFrameRef = useRef<number | null>(null);
+   const dailyRoutineHighlightTipRef = useRef<string | null>(null);
+   const activeCampaignId =
+@@ -315,6 +317,37 @@ export function AppShell({
+     }
+   }, [buildMode]);
+ 
++  useEffect(() => {
++    const action = pendingEndoscopySetupAction;
++    if (!action) return;
++    if (action.target === "room") {
++      if (managementMode) {
++        onExitManagementMode();
++        return;
++      }
++      if (!buildMode) {
++        onEnterBuildMode();
++        return;
++      }
++      onBeginPlacement(action.id);
++      setPendingEndoscopySetupAction(null);
++      return;
++    }
++    if (buildMode) {
++      onExitBuildMode();
++      return;
++    }
++    if (!managementMode) {
++      onEnterManagementMode();
++      return;
++    }
++    setHighlightedStaffRoleId(null);
++    scheduleLatestAnimationFrame(messageActionFrameRef, () => {
++      setHighlightedStaffRoleId(action.id);
++    });
++    setPendingEndoscopySetupAction(null);
++  }, [buildMode, managementMode, onBeginPlacement, onEnterBuildMode, onEnterManagementMode, onExitBuildMode, onExitManagementMode, pendingEndoscopySetupAction]);
++
+   useEffect(() => {
+     if (waterCoolerHighlightKey === 0) {
+       return;
+@@ -767,6 +800,8 @@ export function AppShell({
+               onUpgradeRequestHandled={() =>
+                 setUpgradeRequestRoomId(null)
+               }
++              endoscopySetupRequirements={progression.endoscopySetupRequirements}
++              onEndoscopySetupAction={setPendingEndoscopySetupAction}
+             />
+             <ManagementPanel
+               managementMode={managementMode}
+@@ -808,6 +843,7 @@ export function AppShell({
+           <GoalsPanel
+             view={progression}
+             onLevelUp={onLevelUp}
++            onEndoscopySetupAction={setPendingEndoscopySetupAction}
+           />
+ 
+           {!buildMode ? (
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__session__buildViewModels.test.ts" b/apps/player/src/session/buildViewModels.test.ts
+index 39d056c..b5948ac 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__session__buildViewModels.test.ts"
++++ b/apps/player/src/session/buildViewModels.test.ts
+@@ -8,6 +8,67 @@ import {
+ import { createPrototypePlayerView } from "./viewModels";
+ 
+ describe("Build Mode view models", () => {
++  it("uses a static Level 2 endoscopy goal with actionable setup cost guidance", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    const view = createPrototypePlayerView(state, null, false, null);
++
++    expect(view.progression.goals.map((goal) => goal.id)).toContain(
++      "progression.endoscopy_completion",
++    );
++    expect(view.progression.goals.find((goal) => goal.id === "progression.endoscopy_completion")).toMatchObject({
++      label: "Complete your first endoscopy",
++      progressLabel: "0/1",
++    });
++    expect(view.progression.goals.map((goal) => goal.id)).not.toContain(
++      "progression.room.room.endoscopy",
++    );
++    expect(view.progression.endoscopySetupRequirements).toEqual(expect.arrayContaining([
++      expect.objectContaining({ label: "Endoscopy Room", met: false, action: { label: "Build", target: "room", id: "room.endoscopy" } }),
++      expect.objectContaining({ label: "Endoscopy Nurse", met: false, action: { label: "Hire", target: "staff", id: "staff.endoscopy_nurse" } }),
++      expect.objectContaining({ label: "Endoscopist or founder", met: true, detail: expect.stringContaining("Hire an endoscopist to keep yourself available for clinic patients.") }),
++    ]));
++  });
++
++  it("keeps busy reachable staff ready and gives existing inaccessible setup a repair hint instead of another purchase", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    state.rooms.push({
++      id: "room.test.unreachable-endoscopy", roomDefinitionId: "room.endoscopy",
++      x: 2, y: 2, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100,
++    });
++    const busyNurse = (id: string, role: "staff.endoscopy_nurse" | "staff.periop_nurse") => ({
++      id, staffRoleDefinitionId: role, displayName: id, appearance: state.founder.appearance,
++      hiredAtFacilityTick: 0, salaryPerExpenseInterval: 0, morale: 100, trainingLevel: 1 as const,
++      homeRoomInstanceId: "room.instance.founder_desk", location: { ...state.environment.founderLocation },
++      path: [{ ...state.environment.founderLocation }], pathIndex: 0, lastMovedAtFacilityTick: 0,
++      lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 1,
++      facilityTask: {
++        kind: "perform_service" as const,
++        targetId: `operation.${id}`,
++        startedAtFacilityTick: 0,
++        workMinutesRemaining: 10,
++      },
++    });
++    state.employees.push(
++      busyNurse("employee.busy-endo", "staff.endoscopy_nurse"),
++      busyNurse("employee.busy-periop", "staff.periop_nurse"),
++    );
++
++    const requirements = createPrototypePlayerView(state, null, false, null)
++      .progression.endoscopySetupRequirements!;
++    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.endoscopy_nurse")).toMatchObject({ met: true });
++    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.periop_nurse")).toMatchObject({ met: true });
++    const inaccessibleEndoscopy = requirements.find(
++      (requirement) => requirement.id === "endoscopy.setup.room.endoscopy",
++    )!;
++    expect(inaccessibleEndoscopy).toMatchObject({
++      met: false,
++      detail: expect.stringContaining("reachable valid layout"),
++    });
++    expect(inaccessibleEndoscopy).not.toHaveProperty("action");
++  });
++
+   it("shows the shared imaging-technician hiring capacity through the third hire", () => {
+     const state = createInitialGameState();
+     state.facilityLevel = 2;
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__styles__global.css" b/apps/player/src/styles/global.css
+index 44eca23..53e6f46 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\apps__player__src__styles__global.css"
++++ b/apps/player/src/styles/global.css
+@@ -942,6 +942,7 @@ p {
+   align-items: flex-start;
+ }
+ 
++.goal-list .goal-content,
+ .goal-list li > span:last-child {
+   display: flex;
+   min-width: 0;
+@@ -949,12 +950,69 @@ p {
+   flex-direction: column;
+ }
+ 
++.goal-list .goal-label {
++  display: flex;
++  flex-direction: column;
++}
++
++.endoscopy-goal-setup {
++  margin-top: 0.2rem;
++}
++
++.endoscopy-goal-setup > ul {
++  display: grid;
++  gap: 0.25rem;
++  margin: 0.25rem 0 0;
++  padding: 0.35rem;
++  list-style: none;
++  border: var(--border-thin);
++  color: var(--ink);
++  text-decoration: none;
++}
++
++.endoscopy-goal-setup > ul li {
++  display: grid;
++  grid-template-columns: auto minmax(0, 1fr) auto;
++  gap: 0.3rem;
++  align-items: center;
++  color: var(--ink);
++  text-decoration: none;
++}
++
++.endoscopy-goal-setup .text-button {
++  min-height: 24px;
++  padding: 0.1rem 0.3rem;
++  color: var(--accent-dark);
++  text-decoration: none;
++}
++
++.endoscopy-setup-guide {
++  display: grid;
++  gap: 0.3rem;
++  margin: 0.45rem 0.65rem 0;
++  padding: 0.45rem;
++  border: var(--border-thin);
++}
++
++.endoscopy-setup-guide > div {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) auto;
++  gap: 0.4rem;
++  align-items: center;
++}
++
++.endoscopy-setup-guide .text-button {
++  min-height: 24px;
++  padding: 0.1rem 0.3rem;
++}
++
+ .goal-list li small {
+   color: var(--ink-soft);
+   font-size: 0.68rem;
+ }
+ 
+-.goal-list li.is-complete {
++.goal-list li.is-complete > :first-child,
++.goal-list li.is-complete .goal-label {
+   color: var(--ink-soft);
+   text-decoration: line-through;
+ }
+@@ -5736,6 +5794,10 @@ body {
+     flex: 0 1 auto;
+   }
+ 
++  .operations-column > .goals-panel.has-endoscopy-setup {
++    max-height: min(60%, 520px);
++  }
++
+   .operations-column > .event-message-board {
+     min-height: 140px;
+     flex: 1 1 auto;
+diff --git "a/.local-dev\\endoscopy-goal-baseline\\packages__game-domain__tests__game-domain.test.ts" b/packages/game-domain/tests/game-domain.test.ts
+index d258804..d301950 100644
+--- "a/.local-dev\\endoscopy-goal-baseline\\packages__game-domain__tests__game-domain.test.ts"
++++ b/packages/game-domain/tests/game-domain.test.ts
+@@ -694,15 +694,8 @@ describe("current prototype contracts", () => {
+       expect.objectContaining({
+         level: 2,
+         minimumClinicalXp: 300,
+-        requiredRoomDefinitionIds: [
+-          "room.endoscopy",
+-          "room.periop_recovery",
+-        ],
+-        requiredStaffRoleIds: [
+-          "staff.periop_nurse",
+-          "staff.endoscopy_nurse",
+-          "staff.endoscopist",
+-        ],
++        requiredRoomDefinitionIds: [],
++        requiredStaffRoleIds: [],
+         nextFacilityLevel: null,
+       }),
+     ]);
+
+# Explicit amendments without pristine pre-edit snapshot
+# packages/game-domain/tests/level-two-endoscopy.test.ts
+# Added progression assertions at recovery boundary and reload. The broader file diff predates this task and changed concurrently for periop preparation.
+# apps/player/src/ui/index.ts
+# Exported EndoscopySetupRequirementView only.

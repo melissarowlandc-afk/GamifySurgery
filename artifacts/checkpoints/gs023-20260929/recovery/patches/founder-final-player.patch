@@ -1,0 +1,370 @@
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/player-src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index 38f69e4..0aaabaf 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/player-src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -452,6 +452,7 @@ export class FacilityScene extends Phaser.Scene {
+   private ghostDoorText?: Phaser.GameObjects.Text;
+   private interactionHintText?: Phaser.GameObjects.Text;
+   private founderActivityText?: Phaser.GameObjects.Text;
++  private founderActivityBox?: Phaser.GameObjects.Graphics;
+   private waterCoolerLabelText?: Phaser.GameObjects.Text;
+   private litterHighlightText?: Phaser.GameObjects.Text;
+   private roomTexts: Phaser.GameObjects.Text[] = [];
+@@ -667,14 +668,16 @@ export class FacilityScene extends Phaser.Scene {
+       .text(0, 0, "", {
+         ...textStyle,
+         align: "center",
+-        backgroundColor: "#f0f0ea",
+         color: "#20282a",
+         fontSize: "10px",
+-        padding: { x: 4, y: 2 },
++        padding: { x: 2, y: 1 },
+       })
+       .setOrigin(0.5, 1)
+       .setDepth(FACILITY_DEPTH_UI)
+       .setVisible(false);
++    this.founderActivityBox = this.add.graphics()
++      .setDepth(FACILITY_DEPTH_UI - 0.01)
++      .setVisible(false);
+ 
+     this.waterCoolerLabelText = this.add
+       .text(0, 0, "", {
+@@ -5197,6 +5200,45 @@ export class FacilityScene extends Phaser.Scene {
+       : "idle";
+   }
+ 
++  /** Keeps the founder's task label attached to the actual rendered sprite. */
++  private renderFounderActivityBox(
++    founderKey: string,
++    label: string | undefined,
++    fallbackCenterX: number,
++    fallbackBaseY: number,
++  ): void {
++    const text = this.founderActivityText;
++    const box = this.founderActivityBox;
++    if (!text || !box || !label) {
++      text?.setVisible(false);
++      box?.setVisible(false);
++      return;
++    }
++    const container = this.characterBitmapContainers.get(founderKey);
++    const actor = container?.getByName("actor") as Phaser.GameObjects.Image | null | undefined;
++    // Bitmap actors are normally visible. Their own bounds give the label a
++    // stable head anchor across support fixtures, camera zoom and frozen poses.
++    const bitmapBounds = container?.visible && actor?.visible ? actor.getBounds() : undefined;
++    const bounds = bitmapBounds && bitmapBounds.width > 0 && bitmapBounds.height > 0
++      ? bitmapBounds
++      : undefined;
++    // Procedural Graphics has no reliable Phaser bounds contract. Its known
++    // presentation metrics below are the safe fallback when a bitmap is
++    // loading, absent, or intentionally hidden.
++    const centerX = bounds ? bounds.centerX : fallbackCenterX;
++    const topY = bounds ? bounds.top : fallbackBaseY - Math.max(22, this.layout.tileSize * 0.88);
++    text.setText(label).setPosition(centerX, topY - 4).setVisible(true);
++    const textBounds = text.getBounds();
++    const insetX = 3;
++    const insetY = 2;
++    box.clear();
++    box.fillStyle(0xf0f0ea, 0.97);
++    box.fillRect(textBounds.x - insetX, textBounds.y - insetY, textBounds.width + insetX * 2, textBounds.height + insetY * 2);
++    box.lineStyle(1, 0x20282a, 1);
++    box.strokeRect(textBounds.x - insetX + 0.5, textBounds.y - insetY + 0.5, textBounds.width + insetX * 2 - 1, textBounds.height + insetY * 2 - 1);
++    box.setVisible(true);
++  }
++
+   private staffPose(
+     moving: boolean,
+     direction: CharacterDirection,
+@@ -5576,22 +5618,18 @@ export class FacilityScene extends Phaser.Scene {
+       );
+       this.setCharacterSupportPresentation(founderKey, graphics, founderDisplay, 0);
+       const activityLabel = this.bridge.viewModel.founder.activityLabel;
+-      const founderLabelPosition = frozenFounder
+-        ? replayCharacterMotionPresentation(frozenFounder, this.layout)
+-        : undefined;
+-      this.founderActivityText
+-        ?.setText(activityLabel ?? "")
+-        .setPosition(
+-          founderLabelPosition?.centerX ?? founderCenterX,
+-          founderBaseY - this.characterStepBounceDisplayLift(founderKey) -
+-            Math.max(22, this.layout.tileSize * 0.88),
+-        )
+-        .setVisible(Boolean(activityLabel));
++      this.renderFounderActivityBox(
++        founderKey,
++        activityLabel,
++        founderCenterX,
++        founderBaseY,
++      );
+     } else {
+       // A normal off-site update is a genuine disappearance once any route
+       // tail has finished; do not let a later pause resurrect this actor.
+       this.characterMotionSnapshots.delete(founderKey);
+       this.founderActivityText?.setVisible(false);
++      this.founderActivityBox?.setVisible(false);
+     }
+ 
+     this.bridge.viewModel.staff.forEach((employee, index) => {
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/player-src/facility/characterPauseArrival.test.ts b/apps/player/src/facility/characterPauseArrival.test.ts
+index 6090245..a722760 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/player-src/facility/characterPauseArrival.test.ts
++++ b/apps/player/src/facility/characterPauseArrival.test.ts
+@@ -295,4 +295,37 @@ describe("FacilityScene character pause and arrival presentation", () => {
+     expect(swapped.representation).toBe("neutral");
+     expect(graphics.fillCircle).toHaveBeenCalled();
+   });
++
++  it("puts the bordered founder activity box above the actual visible bitmap bounds and hides it at idle", () => {
++    const scene = new FacilityScene(bridge()) as any;
++    const text = {
++      setText: vi.fn(function (this: object) { return this; }),
++      setPosition: vi.fn(function (this: object) { return this; }),
++      setVisible: vi.fn(function (this: object) { return this; }),
++      getBounds: vi.fn(() => ({ x: 80, y: 44, width: 40, height: 12 })),
++    };
++    const box = {
++      clear: vi.fn(function (this: object) { return this; }),
++      fillStyle: vi.fn(function (this: object) { return this; }),
++      fillRect: vi.fn(function (this: object) { return this; }),
++      lineStyle: vi.fn(function (this: object) { return this; }),
++      strokeRect: vi.fn(function (this: object) { return this; }),
++      setVisible: vi.fn(function (this: object) { return this; }),
++    };
++    scene.founderActivityText = text;
++    scene.founderActivityBox = box;
++    scene.characterBitmapContainers.set("character:founder", {
++      visible: true,
++      getByName: () => ({ visible: true, getBounds: () => ({ centerX: 100, top: 48, width: 24, height: 40 }) }),
++    });
++
++    scene.renderFounderActivityBox("character:founder", "Performing endoscopy", 4, 400);
++    expect(text.setPosition).toHaveBeenCalledWith(100, 44);
++    expect(box.fillRect).toHaveBeenCalledWith(77, 42, 46, 16);
++    expect(box.strokeRect).toHaveBeenCalledWith(77.5, 42.5, 45, 15);
++
++    scene.renderFounderActivityBox("character:founder", undefined, 4, 400);
++    expect(text.setVisible).toHaveBeenLastCalledWith(false);
++    expect(box.setVisible).toHaveBeenLastCalledWith(false);
++  });
+ });
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/player-src/session/economyViewModels.test.ts b/apps/player/src/session/economyViewModels.test.ts
+index 4b9aaf3..820c87f 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/player-src/session/economyViewModels.test.ts
++++ b/apps/player/src/session/economyViewModels.test.ts
+@@ -179,6 +179,9 @@ describe("economy player view models", () => {
+     const state = createInitialGameState();
+     const catalog = createPrototypePlayerView(state, null, false, null).serviceIncome.catalogLines;
+     expect(catalog.find((line) => line.id === "income.coffee")).toMatchObject({ feeLabel: "$5.00", stockCostLabel: "$1.00", contributionLabel: "$4.00" });
++    expect(catalog.find((line) => line.id === "income.endoscopy")).toMatchObject({
++      feeLabel: "$600.00 per scheduled visitor · $450.00 question-ordered",
++    });
+     expect(catalog.find((line) => line.id === "income.wound_supply")).toMatchObject({
+       available: false,
+       requirementLabel: "Pharmacy + Pharmacist or Wound/Ostomy Clinic",
+diff --git a/apps/player/src/session/founderActivityPresentation.test.ts b/apps/player/src/session/founderActivityPresentation.test.ts
+new file mode 100644
+index 0000000..577d2af
+--- /dev/null
++++ b/apps/player/src/session/founderActivityPresentation.test.ts
+@@ -0,0 +1,60 @@
++import { describe, expect, it } from "vitest";
++import type { EncounterState, FounderActivityState, RetailOperationState, ServiceOperationState } from "@gamify-surgery/game-domain";
++import { getFounderActivityLabel } from "./founderActivityPresentation";
++
++const activity = (kind: FounderActivityState["kind"], pathIndex = 0): FounderActivityState => ({
++  kind, targetId: "operation.endoscopy", path: [{ x: 1, y: 1 }, { x: 2, y: 1 }], pathIndex,
++  lastMovedAtFacilityTick: 0, workMinutesRemaining: 5,
++});
++const service = (incomeLineId = "income.endoscopy"): ServiceOperationState => ({
++  id: "operation.endoscopy", incomeLineId, catalogVersion: 1, actorKind: "encounter", actorId: "patient",
++  displayName: "Patient", appearance: null, status: "in_service", createdAtFacilityTick: 0,
++  waitDeadlineFacilityTick: 10, startedAtFacilityTick: 0, completedAtFacilityTick: null, cancelledAtFacilityTick: null,
++  quoteFee: 0, phaseIndex: 0, phaseStartedAtFacilityTick: 0, phaseEndsAtFacilityTick: 10,
++  reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: { kind: "founder" },
++  location: { x: 1, y: 1 }, path: [], pathIndex: 0, lastMovedAtFacilityTick: 0, cancellationReason: null,
++});
++const label = (candidate: FounderActivityState | null, retailOperations: RetailOperationState[] = []) => getFounderActivityLabel({
++  activity: candidate, serviceOperations: [service()], retailOperations, rooms: [],
++});
++
++describe("getFounderActivityLabel", () => {
++  it("describes each modeled founder action and distinguishes endoscopy", () => {
++    expect(label(activity("perform_service", 1))).toBe("Performing endoscopy");
++    expect(label(activity("perform_service", 0))).toBe("Walking to endoscopy");
++    expect(getFounderActivityLabel({ activity: activity("perform_service", 1), serviceOperations: [service("income.office-procedure")], retailOperations: [], rooms: [] })).toBe("Performing procedure");
++    expect(label(activity("collect_litter"))).toBe("Picking up trash");
++    expect(label(activity("refill_water"))).toBe("Refilling water cooler");
++    expect(label(activity("praise_employee"))).toBe("Praising employee");
++    expect(label(activity("visit_bathroom"))).toBe("Going to bathroom");
++  });
++
++  it("describes travel and conversation without narrating truly idle standing or seated states", () => {
++    expect(label(activity("attend_encounter"))).toBe("Walking to patient");
++    expect(label(activity("attend_encounter", 1))).toBe("Talking to patient");
++    expect(label(activity("wander_facility"))).toBe("Walking through clinic");
++    expect(label(activity("sit_in_chair"))).toBe("Walking to a seat");
++    expect(label(activity("wander_facility", 1))).toBeUndefined();
++    expect(label(activity("sit_in_chair", 1))).toBeUndefined();
++    expect(label(null)).toBeUndefined();
++  });
++
++  it("lets a live founder retail trip override stale seated activity and hides it after completion", () => {
++    const coffee = [{
++      actorKind: "founder", actorId: "founder", incomeLineId: "income.coffee", status: "purchasing",
++    }] as RetailOperationState[];
++    expect(label(activity("sit_in_chair", 1), coffee)).toBe("Getting coffee");
++    coffee[0]!.status = "completed";
++    expect(label(activity("sit_in_chair", 1), coffee)).toBeUndefined();
++  });
++
++  it("labels a legacy pending provider endoscopy when no service operation was recorded", () => {
++    const encounter = {
++      pendingResult: { operationId: "operation.endoscopy", serviceIncomeLineId: "income.endoscopy" },
++    } as EncounterState;
++    expect(getFounderActivityLabel({
++      activity: activity("perform_service", 1), serviceOperations: [], retailOperations: [], rooms: [],
++      encounters: [encounter],
++    })).toBe("Performing endoscopy");
++  });
++});
+diff --git a/apps/player/src/session/founderActivityPresentation.ts b/apps/player/src/session/founderActivityPresentation.ts
+new file mode 100644
+index 0000000..0266f44
+--- /dev/null
++++ b/apps/player/src/session/founderActivityPresentation.ts
+@@ -0,0 +1,79 @@
++import type {
++  FounderActivityState,
++  EncounterState,
++  RetailOperationState,
++  PlacedRoom,
++  ServiceOperationState,
++} from "@gamify-surgery/game-domain";
++
++type FounderActivityInput = Pick<FounderActivityState, "kind" | "targetId" | "path" | "pathIndex"> | null;
++
++function hasArrived(activity: Exclude<FounderActivityInput, null>): boolean {
++  return activity.pathIndex >= activity.path.length - 1;
++}
++
++function isEndoscopyOperation(operation: ServiceOperationState | undefined, rooms: readonly PlacedRoom[]): boolean {
++  if (!operation) return false;
++  const isEndoscopy = operation.incomeLineId === "income.endoscopy" ||
++    operation.incomeLineId === "income.advanced_endoscopy" ||
++    operation.reservedRoomInstanceIds.some((roomId) =>
++      rooms.find((room) => room.id === roomId)?.roomDefinitionId === "room.endoscopy",
++    );
++  return isEndoscopy;
++}
++
++function retailLabel(operation: RetailOperationState | undefined): string | undefined {
++  if (!operation) return undefined;
++  const item = operation.incomeLineId === "income.coffee"
++    ? "coffee"
++    : operation.incomeLineId.includes("drink") ? "a drink" : "a snack";
++  if (operation.status === "purchasing") {
++    return `Getting ${item}`;
++  }
++  return operation.status === "returning" ? "Walking through clinic" : "Going to kiosk";
++}
++
++/**
++ * Maps only active founder work to a short visible activity box. Stationary
++ * founder rest deliberately has no label, so a quiet clinic remains quiet.
++ */
++export function getFounderActivityLabel(input: {
++  activity: FounderActivityInput;
++  serviceOperations: readonly ServiceOperationState[];
++  retailOperations: readonly RetailOperationState[];
++  rooms: readonly PlacedRoom[];
++  encounters?: readonly EncounterState[];
++}): string | undefined {
++  const retail = input.retailOperations.find((operation) =>
++    operation.actorKind === "founder" &&
++    !["completed", "abandoned", "cancelled"].includes(operation.status),
++  );
++  const retailActivity = retailLabel(retail);
++  if (retailActivity) return retailActivity;
++
++  const activity = input.activity;
++  if (!activity) return undefined;
++  const arrived = hasArrived(activity);
++  switch (activity.kind) {
++    case "perform_service":
++      const operation = input.serviceOperations.find((candidate) => candidate.id === activity.targetId);
++      const pending = input.encounters?.find((encounter) => encounter.pendingResult?.operationId === activity.targetId)?.pendingResult;
++      const isEndoscopy = isEndoscopyOperation(operation, input.rooms) ||
++        pending?.serviceIncomeLineId === "income.endoscopy" ||
++        pending?.serviceIncomeLineId === "income.advanced_endoscopy" ||
++        pending?.patientTravel?.destinationRoomInstanceId !== undefined &&
++          input.rooms.find((room) => room.id === pending.patientTravel?.destinationRoomInstanceId)?.roomDefinitionId === "room.endoscopy";
++      if (!arrived) return isEndoscopy ? "Walking to endoscopy" : "Walking to procedure";
++      return isEndoscopy ? "Performing endoscopy" : "Performing procedure";
++    case "collect_litter": return "Picking up trash";
++    case "refill_water": return "Refilling water cooler";
++    case "praise_employee": return "Praising employee";
++    case "attend_encounter": return arrived ? "Talking to patient" : "Walking to patient";
++    case "return_to_front_desk": return "Walking to Front Desk";
++    case "wander_facility": return arrived ? undefined : "Walking through clinic";
++    case "sit_in_chair": return arrived ? undefined : "Walking to a seat";
++    case "visit_bathroom": return "Going to bathroom";
++    case "walk_to_point": return arrived ? undefined : "Walking through clinic";
++    default: return undefined;
++  }
++}
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/player-src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 77649b6..d650fbf 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/player-src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -51,6 +51,7 @@ import {
+   normalizeFrozenClinicalText,
+   splitClinicalDecisionStem,
+ } from "./clinicalText";
++import { getFounderActivityLabel } from "./founderActivityPresentation";
+ import {
+   isQuestionFlagOpen,
+   type QuestionReviewFlag,
+@@ -1354,7 +1355,9 @@ export function createPrototypePlayerView(
+         id: line.id,
+         displayName: line.displayName,
+         kind: line.kind,
+-        feeLabel: currency(line.fee),
++        feeLabel: line.scheduledVisitorFee === undefined
++          ? currency(line.fee)
++          : `${currency(line.scheduledVisitorFee)} per scheduled visitor · ${currency(line.fee)} question-ordered`,
+         minimumFacilityLevel: line.minimumFacilityLevel,
+         requirementLabel,
+         available: !levelLocked && unavailableRequirements.length === 0 && (line.retail ? retailOutletAvailable === true : true),
+@@ -1599,25 +1602,13 @@ export function createPrototypePlayerView(
+           location: state.environment.founderLocation,
+           ...movementPresentation(state.environment.founderActivity?.path, state.environment.founderActivity?.pathIndex),
+         }),
+-        activityLabel:
+-          state.environment.founderActivity?.kind === "collect_litter"
+-            ? "Picking up litter"
+-            : state.environment.founderActivity?.kind === "refill_water"
+-              ? "Refilling water cooler"
+-              : state.environment.founderActivity?.kind ===
+-                  "praise_employee"
+-                ? "Praising employee"
+-                : state.environment.founderActivity?.kind === "attend_encounter"
+-                  ? "In examination"
+-                  : state.environment.founderActivity?.kind === "return_to_front_desk"
+-                    ? "Returning to Front Desk"
+-                    : state.environment.founderActivity?.kind === "wander_facility"
+-                      ? "Walking through clinic"
+-                      : state.environment.founderActivity?.kind === "sit_in_chair"
+-                        ? "Taking a seat"
+-                        : state.environment.founderActivity?.kind === "visit_bathroom"
+-                          ? "Visiting bathroom"
+-                  : undefined,
++        activityLabel: getFounderActivityLabel({
++          activity: state.environment.founderActivity,
++          serviceOperations: state.serviceOperations,
++          retailOperations: state.retailOperations,
++          rooms: state.rooms,
++          encounters: Object.values(state.encounters),
++        }),
+         seated:
+           founderIsIdleAtUnstaffedFrontDesk(state) ||
+           ((state.environment.founderActivity?.kind === "attend_encounter" || state.environment.founderActivity?.kind === "sit_in_chair") &&

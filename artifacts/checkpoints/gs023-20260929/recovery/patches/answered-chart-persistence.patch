@@ -1,0 +1,80 @@
+diff --git a/.local-dev/answered-chart-recovery/before/persistence.ts b/packages/game-domain/src/persistence.ts
+index 347aaa0..ae51b8e 100644
+--- a/.local-dev/answered-chart-recovery/before/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -1993,12 +1993,41 @@ function normalizeEncounter(
+         }
+       : undefined;
+ 
++  const terminalFeedback = isRecord(candidate.terminalFeedback)
++    ? ({
++        ...candidate.terminalFeedback,
++        consequence:
++          typeof candidate.terminalFeedback.consequence === "string"
++            ? candidate.terminalFeedback.consequence
++            : isRecord(candidate.terminalFeedback.outcome) &&
++                typeof candidate.terminalFeedback.outcome.narrative === "string"
++              ? candidate.terminalFeedback.outcome.narrative
++              : null,
++      } as unknown as TerminalFeedback)
++    : null;
++  const restoresCompletedTerminalLifecycle =
++    lifecycle === "active_action_required" &&
++    resolutionReason === "completed" &&
++    currentNodeIndex === rawNodes.length - 1 &&
++    steps[currentNodeIndex]?.status === "completed" &&
++    Boolean(steps[currentNodeIndex]?.answer) &&
++    terminalFeedback !== null &&
++    typeof candidate.settlementId === "string";
++  const normalizedLifecycle = restoresCompletedTerminalLifecycle
++    ? ("resolved_summary_available" as const)
++    : lifecycle;
++
+   return {
+     ...(candidate as unknown as EncounterState),
+     frozenCase:
+       frozenCase as unknown as EncounterState["frozenCase"],
+-    feedAttentionKind,
+-    feedAttentionStartedAtTick,
++    lifecycle: normalizedLifecycle,
++    feedAttentionKind: restoresCompletedTerminalLifecycle
++      ? null
++      : feedAttentionKind,
++    feedAttentionStartedAtTick: restoresCompletedTerminalLifecycle
++      ? null
++      : feedAttentionStartedAtTick,
+     patientAppearance:
+       isPixelAppearance(candidate.patientAppearance)
+         ? normalizePatientAppearanceForSex(
+@@ -2013,7 +2042,9 @@ function normalizeEncounter(
+             { sexLabel: patientSexLabel, ageYears: patientAgeYears },
+           ),
+     patientSatisfaction,
+-    idleWaitingSinceTick,
++    idleWaitingSinceTick: restoresCompletedTerminalLifecycle
++      ? null
++      : idleWaitingSinceTick,
+     lastSatisfactionDecayAtTick:
+       typeof candidate.lastSatisfactionDecayAtTick === "number" &&
+       Number.isSafeInteger(candidate.lastSatisfactionDecayAtTick)
+@@ -2080,19 +2111,7 @@ function normalizeEncounter(
+       patientMovement?.path[patientMovement.pathIndex] ??
+       patientLocation,
+     patientMovement,
+-    terminalFeedback: isRecord(candidate.terminalFeedback)
+-      ? ({
+-          ...candidate.terminalFeedback,
+-          consequence:
+-            typeof candidate.terminalFeedback.consequence === "string"
+-              ? candidate.terminalFeedback.consequence
+-              : isRecord(candidate.terminalFeedback.outcome) &&
+-                  typeof candidate.terminalFeedback.outcome.narrative ===
+-                    "string"
+-                ? candidate.terminalFeedback.outcome.narrative
+-                : null,
+-        } as unknown as TerminalFeedback)
+-      : null,
++    terminalFeedback,
+     assignedRoomInstanceId:
+       typeof candidate.assignedRoomInstanceId === "string"
+         ? candidate.assignedRoomInstanceId

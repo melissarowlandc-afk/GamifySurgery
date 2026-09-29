@@ -1,0 +1,703 @@
+
+diff --git "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\service-operations.ts" b/packages/game-domain/src/service-operations.ts
+index f99873d..70258c5 100644
+--- "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\service-operations.ts"
++++ b/packages/game-domain/src/service-operations.ts
+@@ -14,6 +14,7 @@ import {
+   isRoomOperationalForFacilityWork,
+ } from "./selectors";
+ import { findDeterministicFacilityPath, getRoomCareAnchor, getRoomNavigationAnchor } from "./spatial";
++import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
+ import type {
+   DomainContext,
+   EncounterState,
+@@ -67,32 +68,91 @@ function getEntrance(state: GameState, context: DomainContext): { inside: GridPo
+   return null;
+ }
+ 
+-function pathFromEntrance(
++function joinPaths(...paths: readonly GridPoint[][]): GridPoint[] {
++  const joined: GridPoint[] = [];
++  for (const path of paths) {
++    for (const point of path) {
++      const previous = joined.at(-1);
++      if (!previous || previous.x !== point.x || previous.y !== point.y) joined.push({ ...point });
++    }
++  }
++  return joined;
++}
++
++export function straightServiceVisitorSidewalkPath(start: GridPoint, goal: GridPoint): GridPoint[] {
++  const path: GridPoint[] = [{ ...start }];
++  let cursor = { ...start };
++  while (cursor.x !== goal.x) {
++    cursor = { x: cursor.x + Math.sign(goal.x - cursor.x), y: cursor.y };
++    path.push(cursor);
++  }
++  while (cursor.y !== goal.y) {
++    cursor = { x: cursor.x, y: cursor.y + Math.sign(goal.y - cursor.y) };
++    path.push(cursor);
++  }
++  return path;
++}
++
++function visitorOffscreenEndpoint(
++  state: GameState,
++  context: DomainContext,
++  operationId: string,
++): GridPoint | null {
++  const entrance = getEntrance(state, context);
++  if (!entrance) return null;
++  const leftSide = deterministicInteger(
++    state.campaignSeed,
++    RANDOM_STREAMS.routineArrivalTiming,
++    `${operationId}:sidewalk-direction.v1`,
++    2,
++  ) === 0;
++  return {
++    x: leftSide ? -2 : context.balanceRelease.facility.gridWidth + 1,
++    y: entrance.outside.y,
++  };
++}
++
++export function pathServiceVisitorFromCurrentLocation(
+   state: GameState,
+   context: DomainContext,
++  start: GridPoint,
+   target: GridPoint,
+ ): GridPoint[] {
+   const entrance = getEntrance(state, context);
+   if (!entrance) return [];
+-  const internal = findDeterministicFacilityPath(
+-    entrance.inside,
++  const outside = start.y >= context.balanceRelease.facility.gridHeight;
++  if (outside) {
++    const internal = findDeterministicFacilityPath(
++      entrance.inside,
++      target,
++      state.rooms,
++      state.doors,
++      (id) => getRoomDefinition(id, context),
++    );
++    return internal.length > 0
++      ? joinPaths(straightServiceVisitorSidewalkPath(start, entrance.outside), [entrance.inside], internal)
++      : [];
++  }
++  return findDeterministicFacilityPath(
++    start,
+     target,
+     state.rooms,
+     state.doors,
+     (id) => getRoomDefinition(id, context),
+   );
+-  return internal.length > 0
+-    ? [entrance.outside, entrance.inside, ...internal.slice(1)]
+-    : [];
+ }
+ 
+-function pathToExit(
++export function pathServiceVisitorToOffscreenEndpoint(
+   state: GameState,
+   context: DomainContext,
+   start: GridPoint | null,
++  endpoint: GridPoint,
+ ): GridPoint[] {
+   const entrance = getEntrance(state, context);
+   if (!entrance || !start) return [];
++  if (start.y >= context.balanceRelease.facility.gridHeight) {
++    return straightServiceVisitorSidewalkPath(start, endpoint);
++  }
+   const internal = findDeterministicFacilityPath(
+     start,
+     entrance.inside,
+@@ -100,7 +160,9 @@ function pathToExit(
+     state.doors,
+     (id) => getRoomDefinition(id, context),
+   );
+-  return internal.length > 0 ? [...internal, entrance.outside] : [];
++  return internal.length > 0
++    ? joinPaths(internal, [entrance.outside], straightServiceVisitorSidewalkPath(entrance.outside, endpoint))
++    : [];
+ }
+ 
+ function hasActiveClinicalResourcePhase(encounter: EncounterState, facilityTick: number): boolean {
+@@ -291,11 +353,11 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
+     : getRoomNavigationAnchor(firstRoom, firstDefinition, "primary");
+   let actorPath: GridPoint[] = [];
+   if (operation.actorKind !== "remote") {
+-    actorPath = operation.actorKind === "visitor"
+-      ? pathFromEntrance(state, context, patientTarget)
+-      : operation.location
+-        ? findDeterministicFacilityPath(operation.location, patientTarget, state.rooms, state.doors, (id) => getRoomDefinition(id, context))
+-        : [];
++    actorPath = operation.location
++      ? operation.actorKind === "visitor"
++        ? pathServiceVisitorFromCurrentLocation(state, context, operation.location, patientTarget)
++        : findDeterministicFacilityPath(operation.location, patientTarget, state.rooms, state.doors, (id) => getRoomDefinition(id, context))
++      : [];
+     if (actorPath.length === 0) return false;
+   }
+ 
+@@ -334,6 +396,7 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
+   operation.providerReservation = provider;
+   operation.path = actorPath;
+   operation.pathIndex = 0;
++  operation.lastMovedAtFacilityTick = state.facilityTick;
+   operation.status = "walking_to_service";
+   if (operation.actorKind === "encounter") {
+     const encounter = state.encounters[operation.actorId];
+@@ -472,6 +535,54 @@ function advanceActorMovement(state: GameState, operation: ServiceOperationState
+   if (location) setOperationLocation(state, operation, location);
+ }
+ 
++function setOperationPath(
++  state: GameState,
++  operation: ServiceOperationState,
++  path: GridPoint[],
++  status: ServiceOperationState["status"],
++): void {
++  operation.path = path.map((point) => ({ ...point }));
++  operation.pathIndex = 0;
++  operation.lastMovedAtFacilityTick = state.facilityTick;
++  operation.status = status;
++  const start = operation.path[0];
++  if (start) setOperationLocation(state, operation, start);
++}
++
++function ensureVisitorTravel(
++  state: GameState,
++  operation: ServiceOperationState,
++  context: DomainContext,
++): NonNullable<ServiceOperationState["visitorTravel"]> | null {
++  if (operation.actorKind !== "visitor") return null;
++  if (!operation.visitorTravel) {
++    const endpoint = visitorOffscreenEndpoint(state, context, operation.id);
++    if (!endpoint) return null;
++    operation.visitorTravel = {
++      version: "service-visitor-travel.v1",
++      offscreenEndpoint: endpoint,
++      // Existing saved visitors continue from their current position. Only new
++      // operations are explicitly created in the arriving state.
++      arrivedAtFacilityTick: operation.status === "arriving" ? null : operation.createdAtFacilityTick,
++    };
++  }
++  return operation.visitorTravel;
++}
++
++function ensureCompleteVisitorDeparture(
++  state: GameState,
++  operation: ServiceOperationState,
++  context: DomainContext,
++): void {
++  const travel = ensureVisitorTravel(state, operation, context);
++  const location = operationLocation(state, operation);
++  if (!travel || !location) return;
++  const final = operation.path.at(-1);
++  if (final && samePoint(final, travel.offscreenEndpoint)) return;
++  const continuation = pathServiceVisitorToOffscreenEndpoint(state, context, location, travel.offscreenEndpoint);
++  if (continuation.length > 0) setOperationPath(state, operation, continuation, "leaving");
++}
++
+ function resourcesArrived(state: GameState, operation: ServiceOperationState): boolean {
+   const employees = [...operation.reservedEmployeeIds, ...(operation.providerReservation?.kind === "employee" ? [operation.providerReservation.employeeId] : [])];
+   return employees.every((id) => {
+@@ -511,10 +622,9 @@ function cancel(
+   operation.cancellationReason = reason;
+   if (operation.actorKind === "visitor") {
+     const location = operationLocation(state, operation);
+-    const path = pathToExit(state, context, location);
+-    operation.path = path;
+-    operation.pathIndex = 0;
+-    operation.status = "leaving";
++    const travel = ensureVisitorTravel(state, operation, context);
++    const path = travel ? pathServiceVisitorToOffscreenEndpoint(state, context, location, travel.offscreenEndpoint) : [];
++    setOperationPath(state, operation, path, "leaving");
+   } else if (
+     operation.actorKind === "encounter" &&
+     (operation.testChoiceOrder?.purpose === "continuation" ||
+@@ -613,9 +723,9 @@ function moveToNextPhase(
+     operation.completedAtFacilityTick = state.facilityTick;
+     if (operation.actorKind === "visitor") {
+       const location = operationLocation(state, operation);
+-      operation.path = pathToExit(state, context, location);
+-      operation.pathIndex = 0;
+-      operation.status = "leaving";
++      const travel = ensureVisitorTravel(state, operation, context);
++      const path = travel ? pathServiceVisitorToOffscreenEndpoint(state, context, location, travel.offscreenEndpoint) : [];
++      setOperationPath(state, operation, path, "leaving");
+     } else if (
+       operation.actorKind === "encounter" &&
+       (operation.testChoiceOrder?.purpose === "continuation" ||
+@@ -642,6 +752,7 @@ function moveToNextPhase(
+   if (!room || !definition || !location) { cancel(state, operation, "The next service phase became unavailable.", context, departurePlanner); return; }
+   operation.path = findDeterministicFacilityPath(location, getRoomNavigationAnchor(room, definition, "primary"), state.rooms, state.doors, (id) => getRoomDefinition(id, context));
+   operation.pathIndex = 0;
++  operation.lastMovedAtFacilityTick = state.facilityTick;
+   operation.status = "walking_between_phases";
+   operation.phaseStartedAtFacilityTick = null;
+   operation.phaseEndsAtFacilityTick = null;
+@@ -653,7 +764,11 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
+   if (actorKind === "visitor" && !entrance) return null;
+   const actualActorId = actorId ?? id;
+   const excludedDisplayNames = getPresentPatientDisplayNames(state);
+-  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId) : null), status: "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: encounter?.patientLocation ?? entrance?.outside ?? null, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}) };
++  const endpoint = actorKind === "visitor" && context ? visitorOffscreenEndpoint(state, context, id) : null;
++  const arrivalPath = actorKind === "visitor" && endpoint && entrance
++    ? joinPaths(straightServiceVisitorSidewalkPath(endpoint, entrance.outside), [entrance.inside])
++    : [];
++  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}) };
+ }
+ 
+ export function startServiceOperation(state: GameState, lineId: string, actorKind: "visitor" | "remote", context: DomainContext): string | null {
+@@ -667,10 +782,10 @@ export function startServiceOperation(state: GameState, lineId: string, actorKin
+   const sameLine = state.serviceOperations.filter(
+     (operation) => active(operation) && operation.actorKind === actorKind && operation.incomeLineId === lineId,
+   );
+-  if (sameLine.length >= 2 || sameLine.some((operation) => operation.status === "waiting_for_resources")) return null;
++  if (sameLine.length >= 2 || sameLine.some((operation) => operation.status === "arriving" || operation.status === "waiting_for_resources")) return null;
+   if (
+     actorKind === "visitor" &&
+-    state.serviceOperations.filter((operation) => operation.actorKind === "visitor" && operation.status === "waiting_for_resources").length >= MAX_EXTERNAL_WAITING
++    state.serviceOperations.filter((operation) => operation.actorKind === "visitor" && (operation.status === "arriving" || operation.status === "waiting_for_resources")).length >= MAX_EXTERNAL_WAITING
+   ) return null;
+   const operation = createOperation(state, line, actorKind, undefined, undefined, context);
+   if (!operation) return null;
+@@ -731,7 +846,7 @@ function scheduleArrivals(state: GameState, context: DomainContext): void {
+   );
+   for (const line of dueLines) {
+     const lineOperations = state.serviceOperations.filter((operation) => active(operation) && operation.incomeLineId === line.id && operation.actorKind === "visitor");
+-    if (lineOperations.length >= 2 || lineOperations.some((operation) => operation.status === "waiting_for_resources") || state.serviceOperations.filter((operation) => operation.actorKind === "visitor" && operation.status === "waiting_for_resources").length >= MAX_EXTERNAL_WAITING) continue;
++    if (lineOperations.length >= 2 || lineOperations.some((operation) => operation.status === "arriving" || operation.status === "waiting_for_resources") || state.serviceOperations.filter((operation) => operation.actorKind === "visitor" && (operation.status === "arriving" || operation.status === "waiting_for_resources")).length >= MAX_EXTERNAL_WAITING) continue;
+     const operation = createOperation(state, line, "visitor", undefined, undefined, context);
+     if (operation) {
+       state.serviceOperations.push(operation);
+@@ -755,6 +870,19 @@ export function advanceServiceOperations(
+     if (!line?.operation) continue;
+     if (operation.status === "completed" || operation.status === "cancelled") continue;
+     holdResolvedEncounterForActiveOperation(state, operation);
++    if (operation.status === "arriving") {
++      const travel = ensureVisitorTravel(state, operation, context);
++      advanceActorMovement(state, operation, context);
++      if (operation.path.length === 0 || operation.pathIndex >= operation.path.length - 1) {
++        if (travel) travel.arrivedAtFacilityTick = state.facilityTick;
++        operation.status = "waiting_for_resources";
++        operation.waitDeadlineFacilityTick = state.facilityTick + WAIT_TIMEOUT_MINUTES;
++        operation.path = operation.location ? [{ ...operation.location }] : [];
++        operation.pathIndex = 0;
++        operation.lastMovedAtFacilityTick = state.facilityTick;
++      }
++      continue;
++    }
+     if (operation.status === "leaving") {
+       if (operation.actorKind === "encounter") {
+         if (startResolvedEncounterDeparture(state, operation, context, departurePlanner)) {
+@@ -764,6 +892,7 @@ export function advanceServiceOperations(
+         }
+         continue;
+       }
++      ensureCompleteVisitorDeparture(state, operation, context);
+       advanceActorMovement(state, operation, context);
+       if (operation.path.length === 0 || operation.pathIndex >= operation.path.length - 1) {
+         operation.location = null;
+diff --git "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\retail-operations.ts" b/packages/game-domain/src/retail-operations.ts
+index 8959210..3b4c363 100644
+--- "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\retail-operations.ts"
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -1,7 +1,14 @@
+ import { SERVICE_INCOME_CATALOG, getServiceIncomeLine, type RetailOutletContract, type ServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { createPatientDisplayName, createPatientPixelAppearance, getPresentPatientDisplayNames } from "./appearance";
+ import { getDoorCells } from "./doors";
+-import { encounterHasActiveServiceOperation, founderHasActiveServiceOperation, getActiveServiceOperationEmployeeIds, getClinicalResourceReservations } from "./service-operations";
++import {
++  encounterHasActiveServiceOperation,
++  founderHasActiveServiceOperation,
++  getActiveServiceOperationEmployeeIds,
++  getClinicalResourceReservations,
++  pathServiceVisitorFromCurrentLocation,
++  pathServiceVisitorToOffscreenEndpoint,
++} from "./service-operations";
+ import { deterministicInteger } from "./randomness";
+ import { getCurrentCapabilities, getRoomDefinition, isEmployeeOperational, isRoomOperationalForFacilityWork } from "./selectors";
+ import { findDeterministicFacilityPath, getOccupiedTiles, getRoomNavigationAnchor } from "./spatial";
+@@ -131,7 +138,9 @@ function actorCanStart(state: GameState, kind: RetailActorKind, id: string, line
+   if (kind === "encounter") return isWaitingEncounterEligible(state, id, line.retail?.category === "food_drink");
+   if (kind === "service_visitor") {
+     const actor = state.serviceOperations.find((operation) => operation.id === id);
+-    return Boolean(actor && actor.status === "waiting_for_resources" && actor.reservedRoomInstanceIds.length === 0 && !companionLines.has(actor.incomeLineId));
++    return Boolean(actor && actor.status === "waiting_for_resources" &&
++      (!actor.visitorTravel || actor.visitorTravel.arrivedAtFacilityTick !== null) &&
++      actor.reservedRoomInstanceIds.length === 0 && !companionLines.has(actor.incomeLineId));
+   }
+   return Boolean(state.retailExternalActors.some((actor) => actor.id === id && actor.lifecycle !== "departed" && actor.activeRetailOperationId === null));
+ }
+@@ -181,7 +190,11 @@ export function startRetailPurchase(
+   if (!outlet || !location || !identity || (kind === "employee" && outlet.servingEmployeeId === actorId)) return null;
+   const activeAtOutlet = state.retailOperations.filter((operation) => !terminal(operation) && operation.outletRoomInstanceId === outlet.roomId);
+   if (activeAtOutlet.filter((operation) => operation.status === "queued" || operation.status === "walking_to_outlet").length >= MAX_OUTLET_QUEUE) return null;
+-  const path = kind === "retail_visitor" || kind === "service_visitor" ? pathFromEntrance(state, context, outlet.target) : findDeterministicFacilityPath(location, outlet.target, state.rooms, state.doors, (id) => getRoomDefinition(id, context));
++  const path = kind === "retail_visitor"
++    ? pathFromEntrance(state, context, outlet.target)
++    : kind === "service_visitor"
++      ? pathServiceVisitorFromCurrentLocation(state, context, location, outlet.target)
++      : findDeterministicFacilityPath(location, outlet.target, state.rooms, state.doors, (id) => getRoomDefinition(id, context));
+   if (!path.length) return null;
+   const id = `retail-operation.${state.retailOperationSequence++}`;
+   const operation: RetailOperationState = {
+@@ -402,6 +415,32 @@ function advanceCompanions(state: GameState, context: DomainContext): void {
+     const service = actor.linkedServiceOperationId ? state.serviceOperations.find((operation) => operation.id === actor.linkedServiceOperationId) : null;
+     const encounter = actor.linkedEncounterId ? state.encounters[actor.linkedEncounterId] : null;
+     const primaryDone = service ? service.status === "completed" || service.status === "cancelled" : encounter ? encounter.lifecycle !== "active_pending_result" : true;
++    if (service?.actorKind === "visitor") {
++      if (!primaryDone && service.location) {
++        const route = actor.location
++          ? service.location.y >= context.balanceRelease.facility.gridHeight
++            ? pathServiceVisitorToOffscreenEndpoint(state, context, actor.location, service.location)
++            : pathServiceVisitorFromCurrentLocation(state, context, actor.location, service.location)
++          : [];
++        const companionPathIndex = Math.min(1, Math.max(0, route.length - 1));
++        const location = route[companionPathIndex] ?? actor.location ?? service.location;
++        actor.lifecycle = "onsite";
++        actor.path = route.map((point) => ({ ...point }));
++        actor.pathIndex = companionPathIndex;
++        actor.location = { ...location };
++        actor.lastMovedAtFacilityTick = state.facilityTick;
++        continue;
++      }
++      if (primaryDone && actor.lifecycle !== "departing") {
++        const endpoint = service.visitorTravel?.offscreenEndpoint ?? null;
++        actor.path = endpoint && actor.location
++          ? pathServiceVisitorToOffscreenEndpoint(state, context, actor.location, endpoint)
++          : [];
++        actor.pathIndex = 0;
++        actor.lastMovedAtFacilityTick = state.facilityTick;
++        actor.lifecycle = "departing";
++      }
++    }
+     if (primaryDone && actor.lifecycle !== "departing") {
+       actor.path = actor.location ? pathToExit(state, context, actor.location) : [];
+       actor.pathIndex = 0;
+diff --git "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\types.ts" b/packages/game-domain/src/types.ts
+index 9e5ed7d..a6b928f 100644
+--- "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\types.ts"
++++ b/packages/game-domain/src/types.ts
+@@ -481,6 +481,7 @@ export interface ServiceIncomeReceipt {
+ }
+ 
+ export type ServiceOperationStatus =
++  | "arriving"
+   | "waiting_for_resources"
+   | "walking_to_service"
+   | "in_service"
+@@ -518,6 +519,12 @@ export interface ServiceOperationState {
+   pathIndex: number;
+   lastMovedAtFacilityTick: number;
+   cancellationReason: string | null;
++  /** Frozen sidewalk continuity for scheduled diagnostic visitors. */
++  visitorTravel?: {
++    version: "service-visitor-travel.v1";
++    offscreenEndpoint: GridPoint;
++    arrivedAtFacilityTick: number | null;
++  };
+   /** New encounter operations wait indefinitely for installed onsite resources. */
+   resourceQueueVersion?: 1;
+   /** Frozen staged-order work template; ordinary and older operations continue using their catalog template. */
+diff --git "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\persistence.ts" b/packages/game-domain/src/persistence.ts
+index c983524..2917fe6 100644
+--- "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\src\\persistence.ts"
++++ b/packages/game-domain/src/persistence.ts
+@@ -637,6 +637,7 @@ function isPixelAppearance(
+ }
+ 
+ const SERVICE_OPERATION_STATUSES = new Set<ServiceOperationState["status"]>([
++  "arriving",
+   "waiting_for_resources",
+   "walking_to_service",
+   "in_service",
+@@ -736,6 +737,17 @@ function normalizeServiceOperations(
+       raw.phaseIndex > phaseCount ||
+       (raw.phaseIndex === phaseCount && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
+     ) return [];
++    const visitorTravel = isRecord(raw.visitorTravel) &&
++      raw.visitorTravel.version === "service-visitor-travel.v1" &&
++      isGridPoint(raw.visitorTravel.offscreenEndpoint) &&
++      (raw.visitorTravel.arrivedAtFacilityTick === null ||
++        (typeof raw.visitorTravel.arrivedAtFacilityTick === "number" && Number.isSafeInteger(raw.visitorTravel.arrivedAtFacilityTick)))
++      ? {
++          version: "service-visitor-travel.v1" as const,
++          offscreenEndpoint: { ...raw.visitorTravel.offscreenEndpoint },
++          arrivedAtFacilityTick: raw.visitorTravel.arrivedAtFacilityTick as number | null,
++        }
++      : undefined;
+     return [{
+       id: raw.id,
+       incomeLineId: raw.incomeLineId,
+@@ -762,6 +774,7 @@ function normalizeServiceOperations(
+       pathIndex: path.length > 0 ? Math.max(0, Math.min(path.length - 1, raw.pathIndex)) : 0,
+       lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+       cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
++      ...(visitorTravel ? { visitorTravel } : {}),
+       resourceQueueVersion: raw.resourceQueueVersion === 1 ? 1 : undefined,
+       ...(rawFrozenPhases.length > 0 && frozenOperationPhases.length === rawFrozenPhases.length ? { frozenOperationPhases } : {}),
+       testChoiceOrder,
+diff --git "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\tests\\service-operations.test.ts" b/packages/game-domain/tests/service-operations.test.ts
+index dc55a8b..1cad858 100644
+--- "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\tests\\service-operations.test.ts"
++++ b/packages/game-domain/tests/service-operations.test.ts
+@@ -17,10 +17,10 @@ import {
+ 
+ let sequence = 0;
+ 
+-function serviceState(): GameState {
++function serviceState(campaignSeed = "service-operations"): GameState {
+   const state = createInitialGameState(undefined, {
+     campaignId: `campaign.service-operations.${sequence++}`,
+-    campaignSeed: "service-operations",
++    campaignSeed,
+     createdAtRealMs: 0,
+   });
+   state.facilityLevel = 1;
+@@ -59,6 +59,18 @@ function advance(state: GameState, minutes: number, context: DomainContext = PRO
+   return next;
+ }
+ 
++function advanceUntil(
++  state: GameState,
++  predicate: (candidate: GameState) => boolean,
++  maximumMinutes = 240,
++  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++): GameState {
++  let next = state;
++  for (let minute = 0; minute < maximumMinutes && !predicate(next); minute += 1) next = advance(next, 1, context);
++  expect(predicate(next)).toBe(true);
++  return next;
++}
++
+ function startUltrasound(state: GameState): GameState {
+   return gameReducer(state, {
+     type: "START_SERVICE_OPERATION",
+@@ -80,12 +92,13 @@ describe("service-only operations", () => {
+     state = startUltrasound(state);
+     expect(Object.values(state.operationReceipts).at(-1)).toMatchObject({ status: "applied" });
+     const operation = state.serviceOperations[0]!;
+-    expect(operation).toMatchObject({ actorKind: "visitor", status: "waiting_for_resources", quoteFee: 120 });
++    expect(operation).toMatchObject({ actorKind: "visitor", status: "arriving", quoteFee: 120 });
++    expect(operation.location).toEqual(operation.visitorTravel?.offscreenEndpoint);
+     const line = getServiceIncomeLine("income.ultrasound")! as { fee: number };
+     const originalFee = line.fee;
+     line.fee = 999;
+     try {
+-      state = advance(state, 100);
++      state = advance(state, 180);
+     } finally {
+       line.fee = originalFee;
+     }
+@@ -99,16 +112,111 @@ describe("service-only operations", () => {
+     expect(reloaded.serviceIncomeReceipts).toHaveLength(1);
+   });
+ 
++  it("persists complete arrivals and departures from both deterministic sidewalk sides", () => {
++    const bySide = new Map<number, GameState>();
++    for (let seed = 0; seed < 32 && bySide.size < 2; seed += 1) {
++      const candidate = startUltrasound(serviceState(`visitor-side.${seed}`));
++      const endpoint = candidate.serviceOperations[0]!.visitorTravel!.offscreenEndpoint;
++      bySide.set(Math.sign(endpoint.x), candidate);
++    }
++    expect([...bySide.keys()].sort()).toEqual([-1, 1]);
++    for (const state of bySide.values()) {
++      const operation = state.serviceOperations[0]!;
++      const actorId = operation.actorId;
++      const endpoint = { ...operation.visitorTravel!.offscreenEndpoint };
++      expect(endpoint.x === -2 || endpoint.x === PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridWidth + 1).toBe(true);
++      const midArrival = advance(state, 2);
++      const pathIndex = midArrival.serviceOperations[0]!.pathIndex;
++      let current = deserializeGameState(serializeGameState(midArrival));
++      expect(current.serviceOperations[0]).toMatchObject({ status: "arriving", pathIndex, actorId });
++      let previousLocation = { ...current.serviceOperations[0]!.location! };
++      let lastVisibleLocation = previousLocation;
++      let reloadedDeparture = false;
++      let phaseDuration: number | null = null;
++      for (let minute = 0; minute < 240 && current.serviceOperations[0]!.status !== "completed"; minute += 1) {
++        current = advance(current, 1);
++        const nextOperation = current.serviceOperations[0]!;
++        expect(nextOperation.actorId).toBe(actorId);
++        if (nextOperation.phaseStartedAtFacilityTick !== null && nextOperation.phaseEndsAtFacilityTick !== null) {
++          phaseDuration = nextOperation.phaseEndsAtFacilityTick - nextOperation.phaseStartedAtFacilityTick;
++        }
++        if (nextOperation.location) {
++          const distance = Math.abs(nextOperation.location.x - previousLocation.x) + Math.abs(nextOperation.location.y - previousLocation.y);
++          expect(distance).toBeLessThanOrEqual(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.characterTravelTilesPerTick);
++          previousLocation = { ...nextOperation.location };
++          lastVisibleLocation = previousLocation;
++        } else {
++          expect(nextOperation.status).toBe("completed");
++        }
++        if (!reloadedDeparture && nextOperation.status === "leaving" && nextOperation.pathIndex > 0) {
++          current = deserializeGameState(serializeGameState(current));
++          reloadedDeparture = true;
++        }
++      }
++      expect(current.serviceOperations[0]).toMatchObject({ status: "completed", location: null });
++      expect(reloadedDeparture).toBe(true);
++      expect(current.serviceOperations[0]!.path.at(-1)).toEqual(endpoint);
++      expect(current.serviceOperations[0]!.pathIndex).toBe(current.serviceOperations[0]!.path.length - 1);
++      expect(Math.abs(lastVisibleLocation.x - endpoint.x) + Math.abs(lastVisibleLocation.y - endpoint.y))
++        .toBeLessThanOrEqual(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.characterTravelTilesPerTick);
++      expect(phaseDuration).toBe(45);
++      expect(current.serviceIncomeReceipts).toHaveLength(1);
++      current = advance(deserializeGameState(serializeGameState(current)), 10);
++      expect(current.serviceIncomeReceipts).toHaveLength(1);
++    }
++  });
++
++  it("starts the resource timeout only after arrival and visibly leaves after a reloaded wait", () => {
++    let state = startUltrasound(serviceState("visitor-timeout"));
++    state.employees = [];
++    const createdDeadline = state.serviceOperations[0]!.waitDeadlineFacilityTick;
++    state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.status === "waiting_for_resources");
++    const operation = state.serviceOperations[0]!;
++    expect(operation.visitorTravel!.arrivedAtFacilityTick).toBe(state.facilityTick);
++    expect(operation.waitDeadlineFacilityTick).toBe(state.facilityTick + 60);
++    expect(operation.waitDeadlineFacilityTick).toBeGreaterThan(createdDeadline);
++    const waitingLocation = { ...operation.location! };
++    state = deserializeGameState(serializeGameState(state));
++    state = advance(state, 59);
++    expect(state.serviceOperations[0]).toMatchObject({ status: "waiting_for_resources", location: waitingLocation });
++    state = advance(state, 1);
++    expect(state.serviceOperations[0]).toMatchObject({ status: "leaving", cancelledAtFacilityTick: state.facilityTick });
++    expect(state.serviceOperations[0]!.path.at(-1)).toEqual(state.serviceOperations[0]!.visitorTravel!.offscreenEndpoint);
++    state = advance(state, 120);
++    expect(state.serviceOperations[0]).toMatchObject({ status: "cancelled", location: null });
++    expect(state.serviceIncomeReceipts).toEqual([]);
++  });
++
++  it("extends a legacy visitor departure from its saved location to a deterministic offscreen endpoint", () => {
++    let state = startUltrasound(serviceState("legacy-visitor"));
++    const operation = state.serviceOperations[0]!;
++    const oldEntrancePath = operation.path;
++    operation.status = "leaving";
++    operation.location = { ...oldEntrancePath.at(-1)! };
++    operation.path = [{ ...operation.location }, { ...oldEntrancePath.at(-2)! }];
++    operation.pathIndex = 0;
++    delete operation.visitorTravel;
++    state = advance(deserializeGameState(serializeGameState(state)), 1);
++    const migrated = state.serviceOperations[0]!;
++    expect(migrated.visitorTravel).toMatchObject({ version: "service-visitor-travel.v1" });
++    expect(migrated.path.at(-1)).toEqual(migrated.visitorTravel!.offscreenEndpoint);
++    state = advance(state, 120);
++    expect(state.serviceOperations[0]).toMatchObject({ status: "completed", location: null });
++  });
++
+   it("keeps one active and one waiting operation per line even when both were explicitly queued", () => {
+-    let state = advance(startUltrasound(serviceState()), 2);
++    let state = advanceUntil(
++      startUltrasound(serviceState()),
++      (candidate) => candidate.serviceOperations[0]?.status === "walking_to_service" || candidate.serviceOperations[0]?.status === "in_service",
++    );
+     state = startUltrasound(state);
+     const operationCount = state.serviceOperations.length;
+     state = startUltrasound(state);
+     expect(state.serviceOperations).toHaveLength(operationCount);
+     expect(Object.values(state.operationReceipts).at(-1)?.status).toBe("rejected");
+-    expect(state.serviceOperations.map((operation) => operation.status).filter((status) => status === "waiting_for_resources")).toHaveLength(1);
++    expect(state.serviceOperations.map((operation) => operation.status).filter((status) => status === "arriving")).toHaveLength(1);
+     expect(state.serviceOperations.map((operation) => operation.status).filter((status) => status === "walking_to_service" || status === "in_service")).toHaveLength(1);
+-    state = advance(state, 180);
++    state = advance(state, 240);
+     expect(state.serviceIncomeReceipts).toHaveLength(2);
+   });
+ 
+@@ -116,7 +224,7 @@ describe("service-only operations", () => {
+     let state = startUltrasound(serviceState());
+     state.employees[0]!.location = { x: 0, y: 0 };
+     state.employees[0]!.path = [{ x: 0, y: 0 }];
+-    state = advance(state, 1);
++    state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.status === "waiting_for_resources");
+     expect(state.serviceOperations[0]).toMatchObject({
+       status: "waiting_for_resources",
+       reservedRoomInstanceIds: [],
+@@ -166,7 +274,7 @@ describe("service-only operations", () => {
+     encounter.steps[0]!.status = "feedback_pending";
+     encounter.steps[0]!.result = pending;
+     encounter.lifecycle = "active_pending_result";
+-    state = advance(startUltrasound(state), 1);
++    state = advanceUntil(startUltrasound(state), (candidate) => candidate.serviceOperations[0]?.status === "walking_to_service");
+     expect(state.serviceOperations[0]).toMatchObject({
+       reservedRoomInstanceIds: ["room.test.ultrasound.second"],
+       reservedEmployeeIds: ["employee.test.imaging.second"],
+@@ -230,14 +338,25 @@ describe("service-only operations", () => {
+     expect(state.employees.find((candidate) => candidate.id === "employee.endoscopy")!.facilityTask).toBeNull();
+     expect(state.employees.find((candidate) => candidate.id === "employee.recovery")!.facilityTask?.targetId).toBe("service-operation.endoscopy");
+     expect(state.environment.founderActivity?.kind).toBe("return_to_front_desk");
++    state = advance(deserializeGameState(serializeGameState(state)), 180);
++    expect(state.serviceOperations[0]).toMatchObject({
++      status: "completed",
++      phaseIndex: 2,
++      location: null,
++    });
++    expect(state.serviceIncomeReceipts).toEqual([
++      expect.objectContaining({ incomeLineId: "income.endoscopy", grossAmount: 400 }),
++    ]);
+   });
+ 
+   it("cancels invalidated work without payment and lets the visitor leave", () => {
+-    let state = advance(startUltrasound(serviceState()), 5);
+-    expect(state.serviceOperations[0]!.status).not.toBe("waiting_for_resources");
++    let state = advanceUntil(
++      startUltrasound(serviceState()),
++      (candidate) => candidate.serviceOperations[0]?.status === "walking_to_service" || candidate.serviceOperations[0]?.status === "in_service",
++    );
+     state.rooms = state.rooms.filter((room) => room.id !== "room.test.ultrasound");
+     const cashBefore = state.cash;
+-    state = advance(state, 20);
++    state = advance(state, 120);
+     expect(state.serviceOperations[0]).toMatchObject({ status: "cancelled", location: null });
+     expect(state.cash).toBe(cashBefore);
+     expect(state.serviceIncomeReceipts).toEqual([]);
+@@ -340,7 +459,7 @@ describe("service-only operations", () => {
+     state.rooms.find((room) => room.id === "room.test.ultrasound")!.roomDefinitionId = "room.mri";
+     let next = gameReducer(state, { type: "START_SERVICE_OPERATION", operationId: "future-mri", incomeLineId: "income.mri", actorKind: "visitor" }, context);
+     expect(next.operationReceipts["future-mri"]?.status).toBe("applied");
+-    next = advance(next, 100, context);
++    next = advance(next, 180, context);
+     expect(next.serviceOperations[0]).toMatchObject({ status: "completed", location: null });
+     expect(next.serviceIncomeReceipts[0]).toMatchObject({ actorKind: "visitor", incomeLineId: "income.mri", grossAmount: 240 });
+   });
+diff --git "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\tests\\retail-operations.test.ts" b/packages/game-domain/tests/retail-operations.test.ts
+index ad813ea..7b3883a 100644
+--- "a/.local-dev\\service-visitor-continuity-baseline\\packages\\game-domain\\tests\\retail-operations.test.ts"
++++ b/packages/game-domain/tests/retail-operations.test.ts
+@@ -138,10 +138,10 @@ describe("retail operations", () => {
+   });
+ 
+   it("preempts an employee trip for real clinical work before fulfillment and never charges the cancelled sale", () => {
+-    let state = start(retailState(), "income.coffee", "employee", "employee.shopper");
++    let state = gameReducer(retailState(), { type: "START_SERVICE_OPERATION", operationId: "start-ultrasound", incomeLineId: "income.ultrasound", actorKind: "visitor" });
++    while (state.serviceOperations[0]?.status === "arriving") state = advance(state, 1);
++    state = start(state, "income.coffee", "employee", "employee.shopper");
+     state = advance(state, 1);
+-    state = gameReducer(state, { type: "START_SERVICE_OPERATION", operationId: "start-ultrasound", incomeLineId: "income.ultrasound", actorKind: "visitor" });
+-    state = advance(state, 2);
+     expect(state.retailOperations[0]).toMatchObject({ status: "cancelled" });
+     expect(state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.coffee")).toEqual([]);
+     expect(state.employees[0]!.facilityTask).toMatchObject({ kind: "perform_service" });
+@@ -150,8 +150,11 @@ describe("retail operations", () => {
+   it("lets a nonprocedural service visitor shop under the same visitor identity before care claims it", () => {
+     let state = gameReducer(retailState(), { type: "START_SERVICE_OPERATION", operationId: "service-visitor", incomeLineId: "income.ultrasound", actorKind: "visitor" });
+     const serviceId = state.serviceOperations[0]!.id;
++    while (state.serviceOperations[0]?.status === "arriving") state = advance(state, 1);
++    const shoppingStart = { ...state.serviceOperations[0]!.location! };
+     state = gameReducer(state, { type: "START_RETAIL_PURCHASE", operationId: "service-visitor-coffee", incomeLineId: "income.coffee", actorKind: "service_visitor", actorId: serviceId });
+     expect(state.operationReceipts["service-visitor-coffee"]?.status).toBe("applied");
++    expect(state.retailOperations[0]!.path[0]).toEqual(shoppingStart);
+     state = advance(state, 30);
+     expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.coffee", actorKind: "visitor", actorId: serviceId })]));
+     expect(state.serviceOperations.filter((operation) => operation.id === serviceId)).toHaveLength(1);
+@@ -270,7 +273,7 @@ describe("retail operations", () => {
+ 
+   it("creates at most one companion for an actual procedural operation and sends it out without delaying the primary", () => {
+     let state = retailState();
+-    state.serviceOperations.push({ id: "procedure.visit", incomeLineId: "income.endoscopy", catalogVersion: 1, actorKind: "visitor", actorId: "procedure.patient", displayName: "Procedure Patient", appearance: state.founder.appearance, status: "waiting_for_resources", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 60, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: { x: 34, y: 24 }, path: [], pathIndex: 0, lastMovedAtFacilityTick: 0, cancellationReason: null });
++    state.serviceOperations.push({ id: "procedure.visit", incomeLineId: "income.endoscopy", catalogVersion: 1, actorKind: "visitor", actorId: "procedure.patient", displayName: "Procedure Patient", appearance: state.founder.appearance, status: "waiting_for_resources", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 60, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: { x: 34, y: 24 }, path: [{ x: 34, y: 24 }], pathIndex: 0, lastMovedAtFacilityTick: 0, cancellationReason: null, visitorTravel: { version: "service-visitor-travel.v1", offscreenEndpoint: { x: PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridWidth + 1, y: 32 }, arrivedAtFacilityTick: 0 } });
+     state = advance(state, 1);
+     expect(state.retailExternalActors.filter((actor) => actor.kind === "companion")).toHaveLength(1);
+     const companion = state.retailExternalActors[0]!;

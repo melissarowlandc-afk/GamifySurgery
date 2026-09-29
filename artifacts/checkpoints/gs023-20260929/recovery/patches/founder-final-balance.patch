@@ -1,0 +1,46 @@
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/balance-config-src/service-income-catalog.test.ts b/packages/balance-config/src/service-income-catalog.test.ts
+index 1645e1f..43a9171 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/balance-config-src/service-income-catalog.test.ts
++++ b/packages/balance-config/src/service-income-catalog.test.ts
+@@ -29,13 +29,15 @@ describe("service income retail contracts", () => {
+     expect(getServiceIncomeLine("income.xray")!.operation!.phases[0]!.durationMinutes).toBe(60);
+   });
+ 
+-  it("sets routine and advanced endoscopy to the approved hourly nominal income without changing their cadence", () => {
++  it("keeps question fees separate from approved scheduled Endoscopy income and cadence", () => {
+     expect(getServiceIncomeLine("income.endoscopy")).toMatchObject({
+       fee: 450,
+-      operation: { arrivalCadenceMinutes: 300 },
++      scheduledVisitorFee: 600,
++      operation: { arrivalCadenceMinutes: 120 },
+     });
+     expect(getServiceIncomeLine("income.advanced_endoscopy")).toMatchObject({
+       fee: 600,
++      scheduledVisitorFee: 600,
+       operation: { arrivalCadenceMinutes: 600 },
+     });
+   });
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/balance-config-src/service-income-catalog.ts b/packages/balance-config/src/service-income-catalog.ts
+index 3f8198f..6a585c6 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/balance-config-src/service-income-catalog.ts
++++ b/packages/balance-config/src/service-income-catalog.ts
+@@ -2,7 +2,7 @@ export interface ServiceOperationPhase { id: string; roomDefinitionId: string |
+ export interface ServiceOperationContract { visitorMode: "scheduled" | "work_queue" | "explicit_only"; arrivalCadenceMinutes: number | null; encounterOnly?: boolean; phases: readonly ServiceOperationPhase[] }
+ export interface RetailOutletContract { roomDefinitionId: string; requiredCapabilityIds: readonly string[]; staffRoleDefinitionId?: string; durationMinutes: 1 | 2 }
+ export interface RetailOperationContract { stockCost: number; category: "food_drink" | "gift_supply" | "authorized_order"; outlets: readonly RetailOutletContract[] }
+-export interface ServiceIncomeLine { id: string; displayName: string; kind: "clinical" | "retail" | "remote"; minimumFacilityLevel: 1 | 2 | 3 | 4 | 5; fee: number; requiredCapabilityIds: readonly string[]; eligibleRouteIds: readonly string[]; paymentStage: "resource_completion" | "episode_completion" | "dispense"; showInCatalog?: boolean; operation?: ServiceOperationContract; retail?: RetailOperationContract }
++export interface ServiceIncomeLine { id: string; displayName: string; kind: "clinical" | "retail" | "remote"; minimumFacilityLevel: 1 | 2 | 3 | 4 | 5; fee: number; scheduledVisitorFee?: number; requiredCapabilityIds: readonly string[]; eligibleRouteIds: readonly string[]; paymentStage: "resource_completion" | "episode_completion" | "dispense"; showInCatalog?: boolean; operation?: ServiceOperationContract; retail?: RetailOperationContract }
+ 
+ export interface ApprovedClinicProcedureWorkContract {
+   id: string;
+@@ -43,8 +43,8 @@ export const SERVICE_INCOME_CATALOG: readonly ServiceIncomeLine[] = [
+   { id: "income.ct", displayName: "CT", kind: "clinical", minimumFacilityLevel: 2, fee: 180, requiredCapabilityIds: ["capability.ct_scanner", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.ct.in_house", "route.carotid_cta.in_house", "route.mesenteric_cta.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 240, phases: [phase("acquisition", "room.ct", 60, ["staff.imaging_technician"])] } },
+   { id: "income.collection", displayName: "Blood/specimen collection", kind: "clinical", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.phlebotomy_collection", "capability.staff.phlebotomist"], eligibleRouteIds: ["route.basic_labs.phlebotomy_sendout", "route.genetic_testing.phlebotomy_sendout", "route.hiv_hcv_serology.phlebotomy_sendout", "route.primary_aldosteronism_screen.phlebotomy_sendout", "route.h_pylori_urea_breath.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 60, phases: [phase("collection", "room.phlebotomy", 15, ["staff.phlebotomist"])] } },
+   { id: "income.bladder_scan", displayName: "Bladder scan", kind: "clinical", minimumFacilityLevel: 1, fee: 20, requiredCapabilityIds: ["capability.ultrasound_machine", "capability.staff.imaging_technician"], eligibleRouteIds: ["route.bladder_scan.ultrasound_room"], paymentStage: "resource_completion", operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, phases: [phase("scan", "room.ultrasound", 5, ["staff.imaging_technician"])] } },
+-  { id: "income.endoscopy", displayName: "Routine endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 450, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.in_house", "route.colonoscopy.in_house", "route.upper_endoscopy_duodenal_biopsy.in_house", "route.esophageal_multilevel_biopsy.in_house", "route.bidirectional_endoscopy.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 300, phases: [phase("preparation_and_procedure", "room.endoscopy", 75, ["staff.endoscopy_nurse"], ["staff.endoscopist"], true), phase("recovery", "room.periop_recovery", 45, ["staff.periop_nurse"])] } },
+-  { id: "income.advanced_endoscopy", displayName: "Advanced endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 600, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.eus-ercp-sampling.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 600, phases: [phase("preparation_and_procedure", "room.endoscopy", 75, ["staff.endoscopy_nurse"], ["staff.endoscopist"], true), phase("recovery", "room.periop_recovery", 45, ["staff.periop_nurse"])] } },
++  { id: "income.endoscopy", displayName: "Routine endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 450, scheduledVisitorFee: 600, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.in_house", "route.colonoscopy.in_house", "route.upper_endoscopy_duodenal_biopsy.in_house", "route.esophageal_multilevel_biopsy.in_house", "route.bidirectional_endoscopy.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 120, phases: [phase("preparation_and_procedure", "room.endoscopy", 75, ["staff.endoscopy_nurse"], ["staff.endoscopist"], true), phase("recovery", "room.periop_recovery", 45, ["staff.periop_nurse"])] } },
++  { id: "income.advanced_endoscopy", displayName: "Advanced endoscopy", kind: "clinical", minimumFacilityLevel: 2, fee: 600, scheduledVisitorFee: 600, requiredCapabilityIds: ["capability.endoscopy", "capability.periop_recovery"], eligibleRouteIds: ["route.endoscopy.eus-ercp-sampling.in_house"], paymentStage: "resource_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 600, phases: [phase("preparation_and_procedure", "room.endoscopy", 75, ["staff.endoscopy_nurse"], ["staff.endoscopist"], true), phase("recovery", "room.periop_recovery", 45, ["staff.periop_nurse"])] } },
+   { id: "income.glp1_telehealth", displayName: "GLP-1 telehealth consultation", kind: "remote", minimumFacilityLevel: 2, fee: 50, requiredCapabilityIds: ["capability.glp1_telehealth", "capability.staff.glp1_np"], eligibleRouteIds: [], paymentStage: "episode_completion" },
+   { id: "income.laboratory_processing", displayName: "Onsite laboratory processing", kind: "clinical", minimumFacilityLevel: 3, fee: 80, requiredCapabilityIds: ["capability.in_house_laboratory", "capability.staff.laboratory_technician"], eligibleRouteIds: [], paymentStage: "resource_completion", operation: { visitorMode: "work_queue", arrivalCadenceMinutes: null, phases: [phase("processing", "room.laboratory", 60, ["staff.laboratory_technician"])] } },
+   { id: "income.ambulatory_operation", displayName: "Ambulatory operation", kind: "clinical", minimumFacilityLevel: 3, fee: 900, requiredCapabilityIds: ["capability.ambulatory_or", "capability.staff.or_nurse"], eligibleRouteIds: [], paymentStage: "episode_completion", operation: { visitorMode: "scheduled", arrivalCadenceMinutes: 600, phases: [phase("operation", "room.ambulatory_or", 120, ["staff.or_nurse"], ["staff.surgeon"], true), phase("recovery", "room.periop_recovery", 60, ["staff.periop_nurse"])] } },

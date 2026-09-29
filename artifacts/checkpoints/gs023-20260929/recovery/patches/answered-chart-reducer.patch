@@ -1,0 +1,18 @@
+diff --git a/.local-dev/answered-chart-recovery/before/reducer.ts b/packages/game-domain/src/reducer.ts
+index 7afc864..8eb9e43 100644
+--- a/.local-dev/answered-chart-recovery/before/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -5942,6 +5942,13 @@ function completePatientMovement(
+         beginPendingResultTravel(state, encounter, context);
+         return;
+       }
++      if (encounter.lifecycle === "resolved_summary_available") {
++        // A question may be answered while the patient is still approaching
++        // the Examination Room. Finishing that already-started walk must not
++        // reopen a terminal decision after its feedback and settlement exist.
++        encounter.idleWaitingSinceTick = null;
++        return;
++      }
+       // Opening the chart already made the decision available. Reaching the
+       // examination destination only completes the physical movement.
+       encounter.lifecycle = "active_action_required";

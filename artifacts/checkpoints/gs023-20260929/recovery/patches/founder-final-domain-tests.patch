@@ -1,0 +1,368 @@
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/level-two-endoscopy.test.ts b/packages/game-domain/tests/level-two-endoscopy.test.ts
+index d4a6893..562d971 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/level-two-endoscopy.test.ts
++++ b/packages/game-domain/tests/level-two-endoscopy.test.ts
+@@ -371,7 +371,7 @@ describe("Level 2 endoscopy operational capacity", () => {
+     ]);
+     state = gameReducer(state, { type: "ADVANCE_TICK", operationId: "colonoscopy.external-countdown" });
+     pending = state.encounters[encounter.id]!.pendingResult!;
+-    expect(getPendingResultEta(state, encounter.id)).toBe(etaBeforeCountdown - 1);
++    expect(getPendingResultEta(state, encounter.id)).toBe(etaBeforeCountdown! - 1);
+     for (let minute = 0; minute < 120 && pending.onsiteReturn?.frontDeskArrivalTick === null; minute += 1) {
+       state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `colonoscopy.front-desk.${minute}` });
+       pending = state.encounters[encounter.id]!.pendingResult!;
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/patient-amenities.test.ts b/packages/game-domain/tests/patient-amenities.test.ts
+index 901eea4..7d1c817 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/patient-amenities.test.ts
++++ b/packages/game-domain/tests/patient-amenities.test.ts
+@@ -5,6 +5,7 @@ import {
+   createInitialGameState,
+   deserializeGameState,
+   gameReducer,
++  getRoomCareAnchor,
+   getRoomDefinition,
+   getRoomNavigationAnchor,
+   isRoomOperationalForFacilityWork,
+@@ -35,8 +36,21 @@ function amenityState(): { state: GameState; encounterId: string } {
+     upgradeLevel: 1 as const,
+     cleanliness: 100,
+   };
+-  state.rooms.push(bathroom);
+-  state.doors.push({ id: "door.test.bathroom", roomId: bathroom.id, side: "west", offset: 1, exterior: false });
++  const examination = {
++    id: "room.test.examination",
++    roomDefinitionId: "room.examination",
++    x: 34,
++    y: 26,
++    orientation: 0 as const,
++    doorSide: null,
++    upgradeLevel: 1 as const,
++    cleanliness: 100,
++  };
++  state.rooms.push(bathroom, examination);
++  state.doors.push(
++    { id: "door.test.bathroom", roomId: bathroom.id, side: "west", offset: 1, exterior: false },
++    { id: "door.test.examination", roomId: examination.id, side: "south", offset: 1, exterior: false },
++  );
+   const encounter = Object.values(state.encounters)[0]!;
+   encounter.checkInStatus = "checked_in";
+   encounter.lifecycle = "active_action_required";
+@@ -166,16 +180,78 @@ describe("patient bathroom amenities", () => {
+     expect(restored.encounters[encounterId]!.patientLocation).toEqual(origin);
+   });
+ 
+-  it("turns an open-chart request into a real bathroom return instead of teleporting", () => {
+-    const { state, encounterId } = amenityState();
++  it("opens once during a bathroom trip and redirects from the exact visible tile to examination", () => {
++    let { state, encounterId } = amenityState();
+     expect(tryStartPatientBathroomTrip(state, "encounter", encounterId, PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);
+     tickAmenities(state, 1);
+     const current = { ...state.encounters[encounterId]!.patientLocation! };
+-    const next = gameReducer(state, { type: "OPEN_CHART", operationId: "amenity.open", encounterId });
+-    expect(next.operationReceipts["amenity.open"]).toMatchObject({ status: "rejected" });
+-    expect(next.openChartEncounterId).toBeNull();
+-    expect(next.encounters[encounterId]!.patientLocation).toEqual(current);
+-    expect(next.patientAmenityTrips?.[0]).toMatchObject({ status: "returning", returnRequested: true });
++    state = gameReducer(state, { type: "OPEN_CHART", operationId: "amenity.open", encounterId });
++    const exam = state.rooms.find((room) => room.id === "room.test.examination")!;
++    const examDefinition = getRoomDefinition(exam.roomDefinitionId)!;
++    const examAnchor = getRoomCareAnchor(exam, examDefinition, "patient");
++    expect(state.operationReceipts["amenity.open"]).toMatchObject({ status: "applied" });
++    expect(state.openChartEncounterId).toBe(encounterId);
++    expect(state.encounters[encounterId]).toMatchObject({
++      lifecycle: "active_action_required",
++      patientLocation: current,
++      patientMovement: null,
++      queuedCareRoomInstanceId: exam.id,
++      waitingDestination: null,
++    });
++    expect(state.patientAmenityTrips?.[0]).toMatchObject({
++      status: "returning",
++      returnRequested: true,
++      returnTarget: examAnchor,
++    });
++    expect(state.patientAmenityTrips?.[0]?.path[0]).toEqual(current);
++
++    for (let minute = 0; minute < 40 && state.patientAmenityTrips?.length; minute += 1) {
++      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `amenity.open.return.${minute}` });
++    }
++    expect(state.patientAmenityTrips).toEqual([]);
++    expect(state.openChartEncounterId).toBe(encounterId);
++    expect(state.encounters[encounterId]).toMatchObject({
++      assignedRoomInstanceId: exam.id,
++      queuedCareRoomInstanceId: null,
++      waitingDestination: null,
++      patientLocation: examAnchor,
++      patientMovement: null,
++    });
++  });
++
++  it("replans an already-returning bathroom walk to the examination without restoring its old wait target", () => {
++    let { state, encounterId } = amenityState();
++    expect(tryStartPatientBathroomTrip(state, "encounter", encounterId, PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);
++    for (let minute = 0; minute < 20 && state.patientAmenityTrips?.[0]?.status !== "using_amenity"; minute += 1) {
++      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `amenity.returning.outbound.${minute}` });
++    }
++    expect(requestPatientAmenityReturn(state, "encounter", encounterId, PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);
++    expect(state.patientAmenityTrips?.[0]?.status).toBe("returning");
++    const current = { ...state.encounters[encounterId]!.patientLocation! };
++    const staleEndpoint = { ...state.patientAmenityTrips![0]!.path.at(-1)! };
++
++    state = gameReducer(state, { type: "OPEN_CHART", operationId: "amenity.returning.open", encounterId });
++    const exam = state.rooms.find((room) => room.id === "room.test.examination")!;
++    const examAnchor = getRoomCareAnchor(exam, getRoomDefinition(exam.roomDefinitionId)!, "patient");
++    expect(state.operationReceipts["amenity.returning.open"]?.status).toBe("applied");
++    expect(state.encounters[encounterId]!.patientLocation).toEqual(current);
++    expect(state.patientAmenityTrips![0]!.returnTarget).toEqual(examAnchor);
++    expect(staleEndpoint).not.toEqual(examAnchor);
++
++    state = gameReducer(state, { type: "ADVANCE_TICK", operationId: "amenity.returning.replan" });
++    expect(state.patientAmenityTrips?.[0]?.path.at(-1)).toEqual(examAnchor);
++    expect(state.patientAmenityTrips?.[0]?.path[0]).toEqual(current);
++    for (let minute = 0; minute < 40 && state.patientAmenityTrips?.length; minute += 1) {
++      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `amenity.returning.finish.${minute}` });
++    }
++    expect(state.openChartEncounterId).toBe(encounterId);
++    expect(state.encounters[encounterId]).toMatchObject({
++      assignedRoomInstanceId: exam.id,
++      queuedCareRoomInstanceId: null,
++      waitingDestination: null,
++      patientLocation: examAnchor,
++      patientMovement: null,
++    });
+   });
+ 
+   it("delays an actionable result until the bathroom trip physically returns", () => {
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/retail-operations.test.ts b/packages/game-domain/tests/retail-operations.test.ts
+index ce81537..29b15d5 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/retail-operations.test.ts
++++ b/packages/game-domain/tests/retail-operations.test.ts
+@@ -88,6 +88,46 @@ function futureOutletContext(roomId: string, capability: string, role?: string):
+ }
+ 
+ describe("retail operations", () => {
++  it("opens a waiting chart once and redirects an optional shopper from the live retail tile", () => {
++    let state = retailState();
++    const exam = state.rooms.find((room) => room.id === "room.retail.ultrasound")!;
++    exam.roomDefinitionId = "room.examination";
++    addWaitingPatient(state, "encounter.chart-shopper");
++    const encounter = state.encounters["encounter.chart-shopper"]!;
++    encounter.checkInStatus = "checked_in";
++    encounter.pendingResult!.timingPhases![0]!.resourceBound = false;
++    encounter.retailFoodDrinkAllowed = true;
++    state = start(state, "income.coffee", "encounter", encounter.id);
++    expect(state.retailOperations).toHaveLength(1);
++    const retail = state.retailOperations[0]!;
++    const liveRetailLocation = { ...retail.path.at(-1)! };
++    retail.location = { ...liveRetailLocation };
++    retail.pathIndex = retail.path.length - 1;
++    const readyEncounter = state.encounters[encounter.id]!;
++    readyEncounter.lifecycle = "active_action_required";
++    readyEncounter.pendingResult = null;
++    readyEncounter.steps[0]!.status = "action_required";
++    readyEncounter.steps[0]!.result = null;
++    // Prove OPEN_CHART takes movement ownership from the retail operation,
++    // rather than routing from a stale encounter snapshot.
++    state.encounters[encounter.id]!.patientLocation = { x: 31, y: 31 };
++
++    state = gameReducer(state, {
++      type: "OPEN_CHART",
++      operationId: "retail.chart-shopper.open",
++      encounterId: encounter.id,
++    });
++    expect(state.operationReceipts["retail.chart-shopper.open"]?.status).toBe("applied");
++    expect(state.openChartEncounterId).toBe(encounter.id);
++    expect(state.retailOperations[0]).toMatchObject({ status: "cancelled" });
++    expect(state.encounters[encounter.id]!.patientMovement).toMatchObject({
++      kind: "walking_to_care",
++      destinationRoomInstanceId: exam.id,
++    });
++    expect(state.encounters[encounter.id]!.patientMovement?.path[0]).toEqual(liveRetailLocation);
++    expect(state.encounters[encounter.id]!.waitingDestination).toBeNull();
++  });
++
+   it("keeps a resolved encounter and its service operation synchronized through a departure purchase and cancellation", () => {
+     const makeState = () => {
+       const state = retailState();
+diff --git a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/service-operations.test.ts b/packages/game-domain/tests/service-operations.test.ts
+index 3d26f36..3f795ee 100644
+--- a/.local-dev/founder-activity-chart-endoscopy/before/game-domain-tests/service-operations.test.ts
++++ b/packages/game-domain/tests/service-operations.test.ts
+@@ -11,6 +11,8 @@ import {
+   isRoomOperationalForFacilityWork,
+   PROTOTYPE_DOMAIN_CONTEXT,
+   advanceServiceOperations,
++  getCapacityScaledArrivalCadenceMinutes,
++  getFunctionalScheduledEndoscopyCapacity,
+   getNewPeriopServiceOperationPhases,
+   getRoomDefinition,
+   getRoomCareStations,
+@@ -135,6 +137,59 @@ function periopServiceState(): GameState {
+   return state;
+ }
+ 
++function addSecondFunctionalEndoscopySuite(state: GameState): void {
++  const room = {
++    id: "room.test.endoscopy.second",
++    roomDefinitionId: "room.endoscopy",
++    x: 33,
++    y: 29,
++    orientation: 0 as const,
++    doorSide: null,
++    upgradeLevel: 1 as const,
++    cleanliness: 100,
++  };
++  state.rooms.push(
++    room,
++    ...([29, 30, 31, 32] as const).map((y) => ({
++      id: `room.test.endoscopy-second-hall.${y}`,
++      roomDefinitionId: "room.hallway",
++      x: 32,
++      y,
++      orientation: 0 as const,
++      doorSide: null,
++      upgradeLevel: 1 as const,
++      cleanliness: 100,
++    })),
++  );
++  state.doors.push({
++    id: "door.test.endoscopy.second.west",
++    roomId: room.id,
++    side: "west",
++    offset: 1,
++    exterior: false,
++  });
++  const anchor = getRoomNavigationAnchor(
++    room,
++    getRoomDefinition(room.roomDefinitionId)!,
++    "staff",
++  );
++  const makeEmployee = (id: string, roleId: string) => ({
++    ...cloneValue(state.employees[0]!),
++    id,
++    staffRoleDefinitionId: roleId,
++    displayName: id,
++    homeRoomInstanceId: room.id,
++    location: { ...anchor },
++    path: [{ ...anchor }],
++    pathIndex: 0,
++    facilityTask: null,
++  });
++  state.employees.push(
++    makeEmployee("employee.test.endoscopy-nurse.second", "staff.endoscopy_nurse"),
++    makeEmployee("employee.test.endoscopist.second", "staff.endoscopist"),
++  );
++}
++
+ function addPeriopBathroom(state: GameState): void {
+   state.rooms.push(
+     { id: "room.test.bathroom", roomDefinitionId: "room.bathroom", x: 33, y: 29, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+@@ -191,6 +246,82 @@ function startEndoscopyEncounter(state: GameState, encounterId: string): GameSta
+ }
+ 
+ describe("service-only operations", () => {
++  it("scales scheduled Endoscopy cadence only with staffed functional suites", () => {
++    expect(getCapacityScaledArrivalCadenceMinutes(120, 5)).toBe(24);
++    let state = periopServiceState();
++    state.serviceAppointmentsEnabled = true;
++    expect(getFunctionalScheduledEndoscopyCapacity(state, PROTOTYPE_DOMAIN_CONTEXT)).toBe(1);
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(state.nextServiceAppointmentTicks["income.endoscopy"]).toBe(state.facilityTick + 120);
++
++    addSecondFunctionalEndoscopySuite(state);
++    expect(getFunctionalScheduledEndoscopyCapacity(state, PROTOTYPE_DOMAIN_CONTEXT)).toBe(2);
++    state.nextServiceAppointmentTicks["income.endoscopy"] = state.facilityTick + 300;
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(state.nextServiceAppointmentTicks["income.endoscopy"]).toBe(state.facilityTick + 60);
++
++    for (const employee of state.employees) {
++      if (
++        employee.staffRoleDefinitionId === "staff.endoscopy_nurse" ||
++        employee.staffRoleDefinitionId === "staff.periop_nurse"
++      ) {
++        employee.facilityTask = {
++          kind: "perform_service",
++          targetId: `busy.${employee.id}`,
++          startedAtFacilityTick: state.facilityTick,
++          workMinutesRemaining: 30,
++        };
++        employee.location = { ...state.environment.founderLocation };
++      }
++    }
++    expect(getFunctionalScheduledEndoscopyCapacity(state, PROTOTYPE_DOMAIN_CONTEXT)).toBe(2);
++
++    state.nextServiceAppointmentTicks["income.endoscopy"] = state.facilityTick;
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(state.nextServiceAppointmentTicks["income.endoscopy"]).toBe(state.facilityTick + 60);
++    expect(state.serviceOperations).toEqual([
++      expect.objectContaining({
++        actorKind: "visitor",
++        incomeLineId: "income.endoscopy",
++        quoteFee: 600,
++      }),
++    ]);
++
++    state.employees = state.employees.filter(
++      (employee) => employee.staffRoleDefinitionId !== "staff.periop_nurse",
++    );
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(getFunctionalScheduledEndoscopyCapacity(state, PROTOTYPE_DOMAIN_CONTEXT)).toBe(0);
++    expect(state.nextServiceAppointmentTicks["income.endoscopy"]).toBeUndefined();
++  });
++
++  it("admits capacity-scaled Endoscopy inside the generic spacing window and freezes street-only $600 quotes", () => {
++    let state = periopServiceState();
++    addSecondFunctionalEndoscopySuite(state);
++    state.serviceAppointmentsEnabled = true;
++    state.facilityTick = 100;
++    state.lastServiceAppointmentArrivalTick = 99;
++    state.nextServiceAppointmentTicks = {
++      "income.endoscopy": 100,
++      "income.advanced_endoscopy": 100,
++    };
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(state.serviceOperations).toHaveLength(1);
++    expect(state.serviceOperations[0]).toMatchObject({
++      actorKind: "visitor",
++      incomeLineId: "income.endoscopy",
++      quoteFee: 600,
++    });
++    expect(state.lastServiceAppointmentArrivalTick).toBe(99);
++    expect(state.nextServiceAppointmentTicks["income.endoscopy"]).toBe(160);
++
++    const encounterId = "encounter.question-fee";
++    state = startEndoscopyEncounter(state, encounterId);
++    expect(state.serviceOperations.find((operation) => operation.actorId === encounterId)?.quoteFee).toBe(450);
++    const restored = deserializeGameState(serializeGameState(state));
++    expect(restored.serviceOperations.map((operation) => operation.quoteFee).sort()).toEqual([450, 600]);
++  });
++
+   it("moves a visitor through real work and departure, then credits the frozen quote exactly once without FSRS work", () => {
+     let state = serviceState();
+     const initialCash = state.cash;
+@@ -577,6 +708,7 @@ describe("service-only operations", () => {
+   it("releases the bed, persists one departure bathroom stop, and then completes the full visitor exit", () => {
+     let state = periopServiceState();
+     addPeriopBathroom(state);
++    const initialCash = state.cash;
+     state = startEndoscopyVisitor(state);
+     const operationId = state.serviceOperations[0]!.id;
+     state.campaignSeed = departureSeed(operationId, true);
+@@ -591,7 +723,17 @@ describe("service-only operations", () => {
+     expect(state.patientAmenityTrips).toHaveLength(1);
+     state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.status === "completed", 300);
+     expect(state.serviceOperations[0]).toMatchObject({ departureItinerary: { status: "completed" }, location: null });
++    expect(state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.endoscopy")).toEqual([
++      expect.objectContaining({
++        actorKind: "visitor",
++        grossAmount: 600,
++        netCashDelta: 600,
++      }),
++    ]);
++    expect(state.cash).toBe(initialCash + 600);
++    state = advance(deserializeGameState(serializeGameState(state)), 30);
+     expect(state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.endoscopy")).toHaveLength(1);
++    expect(state.cash).toBe(initialCash + 600);
+   });
+ 
+   it("lets recovery progress beside a prepared patient and then releases Endoscopy without deadlock", () => {

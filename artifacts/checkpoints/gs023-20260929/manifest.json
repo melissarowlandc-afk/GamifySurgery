@@ -1,0 +1,575 @@
+{
+  "checkpoint": "GS-023",
+  "assembledAt": "2026-09-29T16:29:53.2064435-04:00",
+  "sourceBranch": "beta",
+  "sourceHead": "66c63b7324623104c6fa9e650bf1b3baeb929a24",
+  "dependencyBranch": "origin/codex/gs025-complete-2026-09-29",
+  "dependencyCommit": "0e86c82e0b32ae1f6e51dfb20a4124eaafa5e305",
+  "format": "scoped-recovery-archive-v1",
+  "runnable": false,
+  "deployable": false,
+  "fileCount": 80,
+  "totalBytes": 2380824,
+  "files": [
+    {
+      "archivePath": "audit/AUDIT.md",
+      "originalPath": null,
+      "category": "audit",
+      "bytes": 1748,
+      "sha256": "6f30862f212b634e9615822b27acfebdc52a55fb84c932b7e2d5f023291096db"
+    },
+    {
+      "archivePath": "audit/source-worktree-fingerprint.json",
+      "originalPath": null,
+      "category": "audit",
+      "bytes": 403,
+      "sha256": "d9a98398c1bcf32b433709cc5229de1eeca482dbc3fd262d644b1bd7f030dc3f"
+    },
+    {
+      "archivePath": "audit/source-worktree-status.txt",
+      "originalPath": null,
+      "category": "audit",
+      "bytes": 28089,
+      "sha256": "d43f9e0580ab9ce4ee0eba9c47e32f969995c9e7595c638939c037f4a7b90f80"
+    },
+    {
+      "archivePath": "audit/verification.json",
+      "originalPath": null,
+      "category": "audit",
+      "bytes": 220,
+      "sha256": "097defeb1434529c43ed13a04126bfbe9640a5bbfbed0a7556500a8f28e97ce0"
+    },
+    {
+      "archivePath": "evidence/founder-performing-endoscopy-compact.png",
+      "originalPath": ".local-dev/founder-activity-chart-endoscopy/browser/compact-desktop-chrome-live-zoom-performing-endoscopy-label.png",
+      "category": "evidence",
+      "bytes": 155531,
+      "sha256": "a73afbf9ab51f076ad3251329cfd5fede520e5cebdf2869f90ea76337181ce27"
+    },
+    {
+      "archivePath": "evidence/founder-talking-to-patient-desktop.png",
+      "originalPath": ".local-dev/founder-activity-chart-endoscopy/browser/desktop-chrome-live-zoom-chart-arrival-talking-label.png",
+      "category": "evidence",
+      "bytes": 338073,
+      "sha256": "ce5e55a0a720e0d3e5c44c28872a8211b829dd7f9aa0a1e6bf872e5288294575"
+    },
+    {
+      "archivePath": "evidence/room-sale-named-dismissal-dialog.png",
+      "originalPath": ".local-dev/room-capacity-sales/browser/desktop-chrome-named-dismissal-sale-dialog.png",
+      "category": "evidence",
+      "bytes": 210798,
+      "sha256": "1b436f9c2d3c9b467d73a9f227c6e185684ba0377fe94a5ace2c8c70e2b8afd6"
+    },
+    {
+      "archivePath": "evidence/tutorial-founder-seated.png",
+      "originalPath": "artifacts/screenshots/gs-023-founder-seated-at-front-desk.png",
+      "category": "evidence",
+      "bytes": 215582,
+      "sha256": "87b8d5aba636079c58e6deb35d10ea9e41348f34b5683320bb1f769a4c2125f6"
+    },
+    {
+      "archivePath": "evidence/tutorial-receptionist-refilled.png",
+      "originalPath": "artifacts/screenshots/gs-023-receptionist-refilled-and-returned.png",
+      "category": "evidence",
+      "bytes": 230555,
+      "sha256": "7aa309c2b252e9c2fab3a2f3adc66d3e80f2a9914e2b099070c880d9668cd7da"
+    },
+    {
+      "archivePath": "files/apps/player/src/facility/characterPauseArrival.test.ts",
+      "originalPath": "apps/player/src/facility/characterPauseArrival.test.ts",
+      "category": "files",
+      "bytes": 23378,
+      "sha256": "1d70f997e07e203bb9c12f697b6e39c4820b55ec3efe2f1f9f3becdf21615230"
+    },
+    {
+      "archivePath": "files/apps/player/src/facility/earningsPopupPresentation.test.ts",
+      "originalPath": "apps/player/src/facility/earningsPopupPresentation.test.ts",
+      "category": "files",
+      "bytes": 5821,
+      "sha256": "7c6b5899aeb9fe4f2d235fd803927ce08c372ad392c469a7f67bcb2ba0323f21"
+    },
+    {
+      "archivePath": "files/apps/player/src/facility/earningsPopupPresentation.ts",
+      "originalPath": "apps/player/src/facility/earningsPopupPresentation.ts",
+      "category": "files",
+      "bytes": 4330,
+      "sha256": "9d05e505cf08f83df6ab39957f099af28fee8a0b14cea32351f68a124d5123a8"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/chartCloseBehavior.ts",
+      "originalPath": "apps/player/src/session/chartCloseBehavior.ts",
+      "category": "files",
+      "bytes": 1202,
+      "sha256": "6b5de6fdbb583ba141666be9bce218a7af47f33b42f2e4dc2a9d8b9077a2ed76"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/dailyRoutineTutorialPause.test.ts",
+      "originalPath": "apps/player/src/session/dailyRoutineTutorialPause.test.ts",
+      "category": "files",
+      "bytes": 1700,
+      "sha256": "d2d4acf25c1a3d3187ade7c0a90016b8dfa18626f960c7a75792ac3333ded54d"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/dailyRoutineTutorialPause.ts",
+      "originalPath": "apps/player/src/session/dailyRoutineTutorialPause.ts",
+      "category": "files",
+      "bytes": 1002,
+      "sha256": "2957b6cb893441ff76cc5c10c58efef7d808e1d54b972c8e64790873d3e50b55"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/founderActivityPresentation.test.ts",
+      "originalPath": "apps/player/src/session/founderActivityPresentation.test.ts",
+      "category": "files",
+      "bytes": 3729,
+      "sha256": "94ac0981a0496232cb1ce4456c4230cdd66c97157a1746a36971be1e74f52574"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/founderActivityPresentation.ts",
+      "originalPath": "apps/player/src/session/founderActivityPresentation.ts",
+      "category": "files",
+      "bytes": 3670,
+      "sha256": "3db5ef3b83ea61040760ed9a16494cd12bb966f0724abbd5b9fe8d165d40d375"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/glp1NursePractitionerPresentation.test.ts",
+      "originalPath": "apps/player/src/session/glp1NursePractitionerPresentation.test.ts",
+      "category": "files",
+      "bytes": 2517,
+      "sha256": "9141a8e5189bb2fae7d9cd5b88e89514dcde32197b58a1977f2ffd1a1b692d94"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/roomCapacityViewModels.test.ts",
+      "originalPath": "apps/player/src/session/roomCapacityViewModels.test.ts",
+      "category": "files",
+      "bytes": 2411,
+      "sha256": "c1e591b7b126d1a3dae6ac1c8f850a0f8176efc092f794e7c1b21727eec16bad"
+    },
+    {
+      "archivePath": "files/apps/player/src/ui/ServiceIncomePanel.tsx",
+      "originalPath": "apps/player/src/ui/ServiceIncomePanel.tsx",
+      "category": "files",
+      "bytes": 3422,
+      "sha256": "7a99d090bab0e7c9acbd300bd80d9b0cec30577c0d67390192d3a07ffb516c6f"
+    },
+    {
+      "archivePath": "files/docs/execplans/answered-chart-action-recovery.md",
+      "originalPath": "docs/execplans/answered-chart-action-recovery.md",
+      "category": "files",
+      "bytes": 7609,
+      "sha256": "cf8af79989d9b7879a14738ce67bc15968c8e73112c558d612bce06628ca3ba4"
+    },
+    {
+      "archivePath": "files/docs/execplans/clinic-economy-names-test-expansion.md",
+      "originalPath": "docs/execplans/clinic-economy-names-test-expansion.md",
+      "category": "files",
+      "bytes": 9823,
+      "sha256": "0eaa9fd0372a8761930dc4972d253aac3a52a4c7fc14b66c4ecf537fb1b42379"
+    },
+    {
+      "archivePath": "files/docs/execplans/clinic-income-service-catalog.md",
+      "originalPath": "docs/execplans/clinic-income-service-catalog.md",
+      "category": "files",
+      "bytes": 26263,
+      "sha256": "cae9c1855c8bbe44f53bb24587c29a4f295e2b0335f13682ba4653f0c7f46b1a"
+    },
+    {
+      "archivePath": "files/docs/execplans/clinic-income-service-visitors.md",
+      "originalPath": "docs/execplans/clinic-income-service-visitors.md",
+      "category": "files",
+      "bytes": 39842,
+      "sha256": "8e7f526320e026fe9163ce90b39fd911edf245d6b52f7c25bfb71c1fc4bd308b"
+    },
+    {
+      "archivePath": "files/docs/execplans/clinic-playtest-routing-visitors-walls.md",
+      "originalPath": "docs/execplans/clinic-playtest-routing-visitors-walls.md",
+      "category": "files",
+      "bytes": 9169,
+      "sha256": "48c1c996d5943a6c02e8c6292c3009493322e3597511a1817be71c188065e0ca"
+    },
+    {
+      "archivePath": "files/docs/execplans/ct-routing-and-imaging-staffing.md",
+      "originalPath": "docs/execplans/ct-routing-and-imaging-staffing.md",
+      "category": "files",
+      "bytes": 6154,
+      "sha256": "7ea4ee650a41a014a1f9454e052ce35a9239fb4e1fdedae2889e7d0878a335cb"
+    },
+    {
+      "archivePath": "files/docs/execplans/endoscopy-completion-goal.md",
+      "originalPath": "docs/execplans/endoscopy-completion-goal.md",
+      "category": "files",
+      "bytes": 8338,
+      "sha256": "d8bebdec2af24cddf9dac9cf1ef020239026433ab8b8fa6a0f8981d86c8ec207"
+    },
+    {
+      "archivePath": "files/docs/execplans/founder-activity-chart-routing-endoscopy.md",
+      "originalPath": "docs/execplans/founder-activity-chart-routing-endoscopy.md",
+      "category": "files",
+      "bytes": 7666,
+      "sha256": "6f86cd92e5c088b100d4c0acaa22fc1e597115c09764d29aa44ff49f82740e0b"
+    },
+    {
+      "archivePath": "files/docs/execplans/level-two-economy-review.md",
+      "originalPath": "docs/execplans/level-two-economy-review.md",
+      "category": "files",
+      "bytes": 2518,
+      "sha256": "1d36581e9f25b7b8a31ff4dcc079d489fdbdcf2b5488ee1b0be4e5465e984308"
+    },
+    {
+      "archivePath": "files/docs/execplans/procedure-room-routing-review.md",
+      "originalPath": "docs/execplans/procedure-room-routing-review.md",
+      "category": "files",
+      "bytes": 13666,
+      "sha256": "41dbff980506ef699ebdfe811b2b49f087aa660bbc08e5393002ee45208138c8"
+    },
+    {
+      "archivePath": "files/docs/execplans/room-capacity-and-occupied-sales.md",
+      "originalPath": "docs/execplans/room-capacity-and-occupied-sales.md",
+      "category": "files",
+      "bytes": 13624,
+      "sha256": "990725577324ca58c4b16759ddfa7e2699beab61e2ee81e74f5509b347841675"
+    },
+    {
+      "archivePath": "files/docs/execplans/street-visitor-arrival-cadence.md",
+      "originalPath": "docs/execplans/street-visitor-arrival-cadence.md",
+      "category": "files",
+      "bytes": 6494,
+      "sha256": "fa0fffd784ce91ba1ed68cc45e29756a2f8eb484fb5c65e867fe18674276c477"
+    },
+    {
+      "archivePath": "files/docs/execplans/test-choice-orders-and-procedure-fees.md",
+      "originalPath": "docs/execplans/test-choice-orders-and-procedure-fees.md",
+      "category": "files",
+      "bytes": 11317,
+      "sha256": "42376902ff62925f1f3ca91e7147eb6d1c44429af2291ea372c4de8235e940c0"
+    },
+    {
+      "archivePath": "files/docs/execplans/tutorial-daily-clinic-routines.md",
+      "originalPath": "docs/execplans/tutorial-daily-clinic-routines.md",
+      "category": "files",
+      "bytes": 20642,
+      "sha256": "8550d4e329f6911aee50b9b5df0dbc8f7f8f66a0d61c2055d84d4c89c3781ed4"
+    },
+    {
+      "archivePath": "files/docs/handoffs/GS-023_TUTORIAL_DAILY_ROUTINES.md",
+      "originalPath": "docs/handoffs/GS-023_TUTORIAL_DAILY_ROUTINES.md",
+      "category": "files",
+      "bytes": 14443,
+      "sha256": "dafa92a071c2ffa68f16874b64438d90fa959fd34b289703ce84af32896fa481"
+    },
+    {
+      "archivePath": "files/docs/reviews/procedure-room-routing/current-routing-inventory.json",
+      "originalPath": "docs/reviews/procedure-room-routing/current-routing-inventory.json",
+      "category": "files",
+      "bytes": 82145,
+      "sha256": "87f23c0192986dcef4112d3b56cad7c15583418290bf8a870fc74b78b21dd145"
+    },
+    {
+      "archivePath": "files/docs/reviews/procedure-room-routing/pre-change-routing-inventory.json",
+      "originalPath": "docs/reviews/procedure-room-routing/pre-change-routing-inventory.json",
+      "category": "files",
+      "bytes": 30327,
+      "sha256": "b5b4fe8d4d38bcc238c15d2d36ed6ec4e27866cd73159295e26f9ca2225f340c"
+    },
+    {
+      "archivePath": "files/docs/reviews/procedure-room-routing/README.md",
+      "originalPath": "docs/reviews/procedure-room-routing/README.md",
+      "category": "files",
+      "bytes": 13210,
+      "sha256": "62eae3f21b9e1e4663634f644b35eea73a5fbf289e6b11fd534ec4eacdfdc236"
+    },
+    {
+      "archivePath": "files/packages/balance-config/src/room-instance-caps.test.ts",
+      "originalPath": "packages/balance-config/src/room-instance-caps.test.ts",
+      "category": "files",
+      "bytes": 912,
+      "sha256": "c5a3a46eabfceaae52aa9b544c729dba46ff54dc2d412e808f8a98116a6575c4"
+    },
+    {
+      "archivePath": "files/packages/balance-config/src/service-income-catalog.test.ts",
+      "originalPath": "packages/balance-config/src/service-income-catalog.test.ts",
+      "category": "files",
+      "bytes": 5561,
+      "sha256": "d386b7613ec99c3073ffa0efc66a1d7afb14d6d7fe28a8b4cebfaa17a10121c0"
+    },
+    {
+      "archivePath": "files/packages/balance-config/src/service-income-catalog.ts",
+      "originalPath": "packages/balance-config/src/service-income-catalog.ts",
+      "category": "files",
+      "bytes": 23838,
+      "sha256": "6bbacc4f4e9019ba136914f7379a1159a986a122a65dc5be2ccb3d279382a923"
+    },
+    {
+      "archivePath": "files/packages/game-domain/src/displaced-routing.ts",
+      "originalPath": "packages/game-domain/src/displaced-routing.ts",
+      "category": "files",
+      "bytes": 5648,
+      "sha256": "eb8f6f80d1b560dc804c451763d224c3d8d0c49998cc1bdc89be5a71564790fc"
+    },
+    {
+      "archivePath": "files/packages/game-domain/src/room-capacity.ts",
+      "originalPath": "packages/game-domain/src/room-capacity.ts",
+      "category": "files",
+      "bytes": 8877,
+      "sha256": "968e73c580fed9e82b7e18c33b87a99c14d85ee9900d7d26d5a2ccefdd38dd54"
+    },
+    {
+      "archivePath": "files/packages/game-domain/src/service-operations.ts",
+      "originalPath": "packages/game-domain/src/service-operations.ts",
+      "category": "files",
+      "bytes": 84966,
+      "sha256": "48b3972ee6118cc40e2403384d156fef2897e77b71a51f597ade35f58a2b06d9"
+    },
+    {
+      "archivePath": "files/packages/game-domain/src/test-choice-orders.ts",
+      "originalPath": "packages/game-domain/src/test-choice-orders.ts",
+      "category": "files",
+      "bytes": 29619,
+      "sha256": "9e10e85d5a17fb1bd46811e1af6115f32680e1b061349d181c5f181e8f23722c"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/answered-chart-action-recovery.test.ts",
+      "originalPath": "packages/game-domain/tests/answered-chart-action-recovery.test.ts",
+      "category": "files",
+      "bytes": 8820,
+      "sha256": "43822d83dfbce9018022ae381e5590ec09d338c4be1045af7e16603818b45b04"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/patient-name-variety.test.ts",
+      "originalPath": "packages/game-domain/tests/patient-name-variety.test.ts",
+      "category": "files",
+      "bytes": 4553,
+      "sha256": "54cee4326c964397637fa7e520c8969a758856c2075ac9a7c21556ff8855ddb9"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/retail-scheduling-performance.test.ts",
+      "originalPath": "packages/game-domain/tests/retail-scheduling-performance.test.ts",
+      "category": "files",
+      "bytes": 9403,
+      "sha256": "a1060d2b631a0fc3ce025c66e168eda3b5b3dd541936547d2722b4b2e2d8d454"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/room-capacity-sales.test.ts",
+      "originalPath": "packages/game-domain/tests/room-capacity-sales.test.ts",
+      "category": "files",
+      "bytes": 21087,
+      "sha256": "aa313d5b980a71d724ebbaa56e0643b229838e536b8c161d0dedba0db6ce7e02"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/room-sale-departure.test.ts",
+      "originalPath": "packages/game-domain/tests/room-sale-departure.test.ts",
+      "category": "files",
+      "bytes": 4535,
+      "sha256": "46b8bf8aa8bb08baf7dc8e3731427a2580b45cd496b02b626f6c8b48743ca061"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/service-income.test.ts",
+      "originalPath": "packages/game-domain/tests/service-income.test.ts",
+      "category": "files",
+      "bytes": 7098,
+      "sha256": "72a6e7f22b5c4f8aaa944cf9682d28bc3c503b473e58c08b39482a4cd417ed68"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/service-operations.test.ts",
+      "originalPath": "packages/game-domain/tests/service-operations.test.ts",
+      "category": "files",
+      "bytes": 65272,
+      "sha256": "ce9fe6b0a09cffdcef52d72a8dd157abac01b7be04df91109607742bdc774d49"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/service-procedure-operations.test.ts",
+      "originalPath": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "category": "files",
+      "bytes": 87564,
+      "sha256": "038d023ee4eea54607c77a010abd1713b7349e8a5e4ade5e0220a9f0b19fa26f"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "originalPath": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "category": "files",
+      "bytes": 12936,
+      "sha256": "f07dac7cc965db47c2a1d9b9ba857f5ca363c1692dacc817b1aa72e1162366c6"
+    },
+    {
+      "archivePath": "files/tests/e2e/answered-chart-action-recovery.spec.ts",
+      "originalPath": "tests/e2e/answered-chart-action-recovery.spec.ts",
+      "category": "files",
+      "bytes": 11632,
+      "sha256": "faf2185f98b27d5e36872e24d46cca0381bac114b3b9b6ce3bd9bce2d964b43c"
+    },
+    {
+      "archivePath": "files/tests/e2e/approved-procedure-routing.spec.ts",
+      "originalPath": "tests/e2e/approved-procedure-routing.spec.ts",
+      "category": "files",
+      "bytes": 26103,
+      "sha256": "27066f0ac0c8febcee46e0e3244775b85df22299d41d23fb79015cd60975a6f7"
+    },
+    {
+      "archivePath": "files/tests/e2e/clinic-biopsy-visitors-correction.spec.ts",
+      "originalPath": "tests/e2e/clinic-biopsy-visitors-correction.spec.ts",
+      "category": "files",
+      "bytes": 20878,
+      "sha256": "05405f32bd1881db6d873460acfbd735e9dc09a9d3bc03852d0d9f5f233405e7"
+    },
+    {
+      "archivePath": "files/tests/e2e/clinic-economy-names-expansion.spec.ts",
+      "originalPath": "tests/e2e/clinic-economy-names-expansion.spec.ts",
+      "category": "files",
+      "bytes": 23290,
+      "sha256": "9d516b171033a8381fa173fd5543c2579e22a383eadacfd9efb9f81d7392890a"
+    },
+    {
+      "archivePath": "files/tests/e2e/clinic-income-popups.spec.ts",
+      "originalPath": "tests/e2e/clinic-income-popups.spec.ts",
+      "category": "files",
+      "bytes": 8717,
+      "sha256": "08063327124da9af0c3ad9aa3e2257748833a573681abab3b4edec9230a819c2"
+    },
+    {
+      "archivePath": "files/tests/e2e/clinic-shared-wall-correction.spec.ts",
+      "originalPath": "tests/e2e/clinic-shared-wall-correction.spec.ts",
+      "category": "files",
+      "bytes": 4560,
+      "sha256": "0d28d43be5669e3df1edce2277bffdb51d24bdbb529dc1876ed90f8316310dbb"
+    },
+    {
+      "archivePath": "files/tests/e2e/daily-clinic-routines.spec.ts",
+      "originalPath": "tests/e2e/daily-clinic-routines.spec.ts",
+      "category": "files",
+      "bytes": 7864,
+      "sha256": "23c88fe86a1e9f29683bf42cf6be224d6739d834bec523a8e756cbfbee0f86e8"
+    },
+    {
+      "archivePath": "files/tests/e2e/endoscopy-goal-setup.spec.ts",
+      "originalPath": "tests/e2e/endoscopy-goal-setup.spec.ts",
+      "category": "files",
+      "bytes": 12926,
+      "sha256": "e98d601e3f9ca07c008e11036726b721713ca43c83470f84c8c133c0ddea5ee7"
+    },
+    {
+      "archivePath": "files/tests/e2e/founder-activity-chart-endoscopy.spec.ts",
+      "originalPath": "tests/e2e/founder-activity-chart-endoscopy.spec.ts",
+      "category": "files",
+      "bytes": 22802,
+      "sha256": "b00201b8dd4e4016306be734188bd68bf0dc5ae70d32e804f7cb8e74fa96f20a"
+    },
+    {
+      "archivePath": "files/tests/e2e/retail-income.spec.ts",
+      "originalPath": "tests/e2e/retail-income.spec.ts",
+      "category": "files",
+      "bytes": 13664,
+      "sha256": "c46b01b4e1d2b7db495280a71b7e78b3b4e9f048ef32f33cc5dd2fc542d0556d"
+    },
+    {
+      "archivePath": "files/tests/e2e/room-capacity-sales.spec.ts",
+      "originalPath": "tests/e2e/room-capacity-sales.spec.ts",
+      "category": "files",
+      "bytes": 19866,
+      "sha256": "2ae30c13ef6bf1458a9df4fca3d016312d0e64d66e1632e088c0afa9a96eedc3"
+    },
+    {
+      "archivePath": "files/tests/e2e/service-income.spec.ts",
+      "originalPath": "tests/e2e/service-income.spec.ts",
+      "category": "files",
+      "bytes": 7513,
+      "sha256": "a3991705c3f5062f1440adc0a04d33139e6437cf070aab48bf011542308af6f6"
+    },
+    {
+      "archivePath": "files/tests/e2e/test-choice-orders.spec.ts",
+      "originalPath": "tests/e2e/test-choice-orders.spec.ts",
+      "category": "files",
+      "bytes": 18081,
+      "sha256": "9f2e4e288a81570b3bd740306c381213805c622648e248e0025c2531a82374a7"
+    },
+    {
+      "archivePath": "files/tests/e2e/tutorial-daily-routines.spec.ts",
+      "originalPath": "tests/e2e/tutorial-daily-routines.spec.ts",
+      "category": "files",
+      "bytes": 6121,
+      "sha256": "dade1f4f394fa75ffbf6c5b12d7b62936e01a420f79d4cdf66e8e9c34891e2c5"
+    },
+    {
+      "archivePath": "files/tests/e2e/tutorial-graduation.spec.ts",
+      "originalPath": "tests/e2e/tutorial-graduation.spec.ts",
+      "category": "files",
+      "bytes": 8214,
+      "sha256": "e2a831b734499cce27d6d4d40ecc1cf28385e92564e866e826e14048b153a4b7"
+    },
+    {
+      "archivePath": "README.md",
+      "originalPath": null,
+      "category": "README.md",
+      "bytes": 4842,
+      "sha256": "921e1dd4457cc5623b316a2725500eb20c14a76e00b1bcb24c4666b4e4f470ab"
+    },
+    {
+      "archivePath": "recovery/patches/answered-chart-persistence.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 3325,
+      "sha256": "f04105f02481ccf4e680abf85a831b5750b9bd81c805f36828bde6ef9df766f5"
+    },
+    {
+      "archivePath": "recovery/patches/answered-chart-reducer.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 963,
+      "sha256": "c8704ce4f7d0ed42de6162f02749199d45abb8fb39ae9667e5efca8d6bb5b370"
+    },
+    {
+      "archivePath": "recovery/patches/endoscopy-goal-implementation.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 35674,
+      "sha256": "10cb3b0b463a48ad740988ce655ca46e4d2ad117a53544b9f4f3b3e3e4f89193"
+    },
+    {
+      "archivePath": "recovery/patches/founder-final-balance.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 8671,
+      "sha256": "80381e879cd3cc41c6ddcb1942f1770d714e23ed336faf08fff76eeecf31f9c8"
+    },
+    {
+      "archivePath": "recovery/patches/founder-final-domain-tests.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 18134,
+      "sha256": "f430b1dfdc1a2f3f620c333a75867a5c8985d3c723729d3de19e5296b4fab270"
+    },
+    {
+      "archivePath": "recovery/patches/founder-final-domain.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 23174,
+      "sha256": "43d40893534a678ee5f02b88830e535908856ab0b91ea7d77dfdc3c50c5bc673"
+    },
+    {
+      "archivePath": "recovery/patches/founder-final-player.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 19208,
+      "sha256": "67a980841b61c9b920c482308143c2be7135d7fc6c4b0e72e0583fff40c27130"
+    },
+    {
+      "archivePath": "recovery/patches/room-capacity-shared-hunks.md",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 61230,
+      "sha256": "337bdd3cbfced7b1552f44cfff6ffc5e111a78eb26941e14ef2e10c8059aa223"
+    },
+    {
+      "archivePath": "recovery/patches/service-visitor-continuity.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 43723,
+      "sha256": "a0fa9e5890e72840bdcd064cd230dbb8ceaf1376431cea947072338975b82c49"
+    },
+    {
+      "archivePath": "recovery/patches/street-visitor-arrival-cadence.patch",
+      "originalPath": null,
+      "category": "recovery",
+      "bytes": 11529,
+      "sha256": "8dc9cef6d366d709ccd458bf5e52fb0ad3ce9b6bc286c8f60867c4d349c9f42e"
+    }
+  ]
+}
