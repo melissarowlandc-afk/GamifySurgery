@@ -7,9 +7,11 @@ import {
   gameReducer,
   PROTOTYPE_DOMAIN_CONTEXT,
   serializeGameState,
+  startRetailPurchase,
   type DomainContext,
   type GameState,
   type PendingResult,
+  type ServiceOperationState,
 } from "../src";
 
 let sequence = 0;
@@ -86,6 +88,84 @@ function futureOutletContext(roomId: string, capability: string, role?: string):
 }
 
 describe("retail operations", () => {
+  it("keeps a resolved encounter and its service operation synchronized through a departure purchase and cancellation", () => {
+    const makeState = () => {
+      const state = retailState();
+      addWaitingPatient(state, "encounter.departure-retail");
+      const encounter = state.encounters["encounter.departure-retail"]!;
+      encounter.lifecycle = "resolved";
+      encounter.resolutionReason = "completed";
+      encounter.pendingResult = null;
+      encounter.patientLocation = { x: 35, y: 25 };
+      const operation: ServiceOperationState = {
+        id: "service-operation.departure-retail", incomeLineId: "income.endoscopy", catalogVersion: 1,
+        actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName, appearance: encounter.patientAppearance,
+        status: "discharging", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 60,
+        startedAtFacilityTick: 0, completedAtFacilityTick: 0, cancelledAtFacilityTick: null, quoteFee: 0,
+        phaseIndex: 3, phaseStartedAtFacilityTick: 0, phaseEndsAtFacilityTick: 0,
+        reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null,
+        location: { ...encounter.patientLocation }, path: [{ ...encounter.patientLocation }], pathIndex: 0,
+        lastMovedAtFacilityTick: 0, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+        frozenOperationPhases: [
+          { id: "prep", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: [], roomStationId: "periop_preparation" },
+          { id: "procedure", roomDefinitionId: "room.endoscopy", durationMinutes: 45, staffRoleDefinitionIds: [] },
+          { id: "recovery", roomDefinitionId: "room.periop_recovery", durationMinutes: 60, staffRoleDefinitionIds: [], roomStationId: "periop_recovery" },
+        ],
+        departureItinerary: { version: "service-departure-itinerary.v1", status: "pending", choiceKind: null, selectedAtFacilityTick: null, completedAtFacilityTick: null, linkedTripId: null, retailIncomeLineId: null },
+      };
+      state.serviceOperations.push(operation);
+      return { state, encounter, operation };
+    };
+    for (const cancel of [false, true]) {
+      const fixture = makeState();
+      fixture.state.paused = false;
+      const id = startRetailPurchase(fixture.state, "income.coffee", "encounter", fixture.encounter.id, PROTOTYPE_DOMAIN_CONTEXT, undefined, fixture.operation.id);
+      expect(id).toBeTruthy();
+      fixture.operation.departureItinerary!.status = "retail";
+      fixture.operation.departureItinerary!.choiceKind = "retail";
+      fixture.operation.departureItinerary!.linkedTripId = id;
+      fixture.operation.departureItinerary!.retailIncomeLineId = "income.coffee";
+      advanceRetailOperations(fixture.state, PROTOTYPE_DOMAIN_CONTEXT);
+      expect(fixture.state.retailOperations[0]!.pathIndex).toBe(0);
+      fixture.state.facilityTick += 1;
+      advanceRetailOperations(fixture.state, PROTOTYPE_DOMAIN_CONTEXT);
+      if (cancel) {
+        fixture.state.cashCents = 0;
+        fixture.state.cash = 0;
+      }
+      for (let minute = 0; minute < 40 && fixture.state.retailOperations[0]?.status !== "completed" && fixture.state.retailOperations[0]?.status !== "cancelled"; minute += 1) {
+        fixture.state.facilityTick += 1;
+        advanceRetailOperations(fixture.state, PROTOTYPE_DOMAIN_CONTEXT);
+      }
+      const retail = fixture.state.retailOperations[0]!;
+      expect(retail.status).toBe(cancel ? "cancelled" : "completed");
+      expect(fixture.state.encounters[fixture.encounter.id]!.patientLocation).toEqual(retail.location);
+      expect(fixture.operation.location).toEqual(retail.location);
+      expect(fixture.state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.coffee")).toHaveLength(cancel ? 0 : 1);
+      for (let minute = 0; minute < 10 && fixture.state.serviceOperations.find((operation) => operation.id === fixture.operation.id)?.status !== "completed"; minute += 1) {
+        fixture.state = gameReducer(fixture.state, { type: "ADVANCE_TICK", operationId: `departure.retail.exit.${cancel}.${minute}` });
+      }
+      expect(
+        fixture.state.serviceOperations.find((operation) => operation.id === fixture.operation.id)?.status,
+        `departure handoff should complete the service operation (cancel=${cancel})`,
+      ).toBe("completed");
+      const departure = fixture.state.encounters[fixture.encounter.id]!.patientMovement;
+      expect(departure?.path.length).toBeGreaterThan(1);
+      expect(departure?.path.every((point, index, path) => index === 0 || Math.abs(point.x - path[index - 1]!.x) + Math.abs(point.y - path[index - 1]!.y) === 1)).toBe(true);
+      let reachedExterior = false;
+      for (let minute = 0; minute < 120 && fixture.state.encounters[fixture.encounter.id]?.patientMovement !== null; minute += 1) {
+        fixture.state = gameReducer(fixture.state, { type: "ADVANCE_TICK", operationId: `departure.retail.path.${cancel}.${minute}` });
+        const location = fixture.state.encounters[fixture.encounter.id]?.patientLocation;
+        reachedExterior ||= location != null && (
+          location.x < 0 || location.y < 0 ||
+          location.x >= PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridWidth ||
+          location.y >= PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.gridHeight
+        );
+      }
+      expect(reachedExterior).toBe(true);
+      expect(fixture.state.encounters[fixture.encounter.id]!.patientLocation).toBeNull();
+    }
+  });
   it("autonomously starts optional trips for a free employee and eligible waiting patient without duplicating either identity", () => {
     let state = retailState();
     addWaitingPatient(state);
@@ -287,6 +367,72 @@ describe("retail operations", () => {
     state = advance(state, 30);
     expect(state.retailExternalActors[0]).toMatchObject({ lifecycle: "departed", location: null });
     expect(state.serviceOperations[0]!.status).toBe("completed");
+  });
+
+  it("keeps new periop-flow companions on a stable public route instead of the patient endpoint", () => {
+    const state = retailState();
+    // This public Waiting Room sorts before the reachable Front Desk, but has
+    // no door. The companion must scan on to a route it can actually take.
+    state.rooms.push({ id: "room.retail.unreachable-waiting", roomDefinitionId: "room.waiting", x: 1, y: 1, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.rooms.push({ id: "room.retail.periop", roomDefinitionId: "room.periop_recovery", x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.serviceOperations.push({
+      id: "procedure.periop", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "visitor", actorId: "procedure.periop.patient", displayName: "Peri-op Patient",
+      appearance: state.founder.appearance, status: "in_service", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 60, startedAtFacilityTick: 0, completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 0,
+      phaseEndsAtFacilityTick: 30, reservedRoomInstanceIds: ["room.retail.periop"], reservedEmployeeIds: [],
+      providerReservation: null, location: { x: 30, y: 25 }, path: [{ x: 30, y: 25 }], pathIndex: 0,
+      lastMovedAtFacilityTick: 0, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.retail.periop", bedId: "N3", endpoint: { x: 30, y: 25 } },
+      nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [{ id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" }],
+    });
+
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    const companion = state.retailExternalActors.find((actor) => actor.kind === "companion")!;
+    const publicEndpoint = companion.path.at(-1)!;
+    expect(companion.location).not.toEqual({ x: 30, y: 25 });
+    expect(publicEndpoint).not.toEqual({ x: 30, y: 25 });
+    expect(publicEndpoint.x < 1 || publicEndpoint.x > 6 || publicEndpoint.y < 1 || publicEndpoint.y > 5).toBe(true);
+    expect(publicEndpoint.x < 28 || publicEndpoint.x > 31 || publicEndpoint.y < 23 || publicEndpoint.y > 27).toBe(true);
+    expect(companion.lifecycle).toBe("arriving");
+
+    state.facilityTick += 1;
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(companion.path.at(-1)).toEqual(publicEndpoint);
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.retailExternalActors.find((actor) => actor.id === companion.id)?.path.at(-1)).toEqual(publicEndpoint);
+
+    state.serviceOperations[0]!.status = "completed";
+    state.facilityTick += 1;
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(["departing", "departed"]).toContain(
+      state.retailExternalActors.find((actor) => actor.id === companion.id)?.lifecycle,
+    );
+  });
+
+  it("does not fall back to a legacy patient-bed companion when a new periop companion has no public route", () => {
+    const state = retailState();
+    addWaitingPatient(state, "encounter.periop-no-companion");
+    const encounter = state.encounters["encounter.periop-no-companion"]!;
+    encounter.pendingResult!.routeId = "route.endoscopy.in_house";
+    state.doors = state.doors.filter((door) => !door.exterior);
+    state.serviceOperations.push({
+      id: "procedure.periop.no-companion", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "waiting_for_resources", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 60, startedAtFacilityTick: null, completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: null,
+      phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null,
+      location: { ...encounter.patientLocation! }, path: [{ ...encounter.patientLocation! }], pathIndex: 0,
+      lastMovedAtFacilityTick: 0, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+      nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [{ id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" }],
+    });
+
+    advanceRetailOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(state.retailExternalActors.filter((actor) => actor.kind === "companion")).toEqual([]);
   });
 
   it("cancels a walking patient trip when a result becomes due, preserves patient location, and takes no sale", () => {

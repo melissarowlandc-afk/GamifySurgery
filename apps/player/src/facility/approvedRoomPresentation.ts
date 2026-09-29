@@ -751,6 +751,34 @@ export function resolveApprovedRoomActorSupports(
       )];
     });
   }
+  if (capture && definitionId === "room.periop_recovery") {
+    const draws = resolveApprovedRoomDrawRecords(definitionId, orientation);
+    const fixtureGround = (bedId: string, ground: Readonly<{ x: number; y: number }>) => {
+      const draw = draws.find((candidate) => candidate.id === `${bedId}.bed`);
+      return draw?.worldLocalGround
+        ? { x: draw.worldLocalGround[0], y: draw.worldLocalGround[1] }
+        : draw ? { x: ground.x, y: draw.depthKey } : ground;
+    };
+    const beds = [
+      ["N3", "south", { x: 2.25, y: 1.20443 }, { x: 2.25, y: 1.55 }],
+      ["N4", "south", { x: 3.75, y: 1.20443 }, { x: 3.75, y: 1.55 }],
+      ["S3", "north", { x: 2.25, y: 4.104393 }, { x: 2.25, y: 4.45 }],
+      ["S4", "north", { x: 3.75, y: 4.104393 }, { x: 3.75, y: 4.45 }],
+      ["WC", "east", { x: 1.428906, y: 2.25125 }, { x: 1.55, y: 2.6 }],
+      ["WD", "east", { x: 1.428906, y: 3.75125 }, { x: 1.55, y: 4.1 }],
+      ["EC", "west", { x: 4.570905, y: 2.254212 }, { x: 4.45, y: 2.6 }],
+      ["ED", "west", { x: 4.570905, y: 3.754212 }, { x: 4.45, y: 4.1 }],
+    ] as const;
+    return beds.map(([bedId, facing, seat, ground]) => support(
+      `periop-bed:${bedId}`,
+      "periop-bed-patient",
+      "seated",
+      facing,
+      seat,
+      ground,
+      fixtureGround(bedId, ground),
+    ));
+  }
   if (capture && definitionId === "room.glp1_telehealth_suite") {
     const model = isObject(capture.dataset.model) ? capture.dataset.model : undefined;
     const fixtures = isObject(model?.fixtures) ? model.fixtures : undefined;

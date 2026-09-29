@@ -729,6 +729,11 @@ describe("mapped in-clinic procedure operations", () => {
     state = advance(state, pending.dueTick - state.facilityTick);
     expect(state.encounters[encounter.id]!.pendingResult?.deliveredAtTick).toBe(state.facilityTick);
     expect(state.encounters[encounter.id]!.feedAttentionKind).toBe("result_ready");
+    const markerlessDeliveredState = deserializeGameState(serializeGameState(state));
+    markerlessDeliveredState.encounters[encounter.id]!.pendingResult!.onsiteReturn = undefined;
+    markerlessDeliveredState.encounters[encounter.id]!.pendingResult!.deliveredAtTick = 0;
+    expect(getPendingPatientLocation(markerlessDeliveredState, encounter.id)).toBeNull();
+    expect(getPendingPatientRoutePresentation(markerlessDeliveredState, encounter.id)).toBeNull();
     state.openChartEncounterId = null;
     state.attendedEncounterId = null;
     state = gameReducer(state, {
@@ -1446,8 +1451,9 @@ describe("mapped in-clinic procedure operations", () => {
     expect(state.serviceOperations[0]).toMatchObject({
       quoteFee: 600,
       frozenOperationPhases: [
-        { id: "preparation_and_procedure", durationMinutes: 75 },
-        { id: "recovery", durationMinutes: 45 },
+        { id: "periop_preparation", durationMinutes: 30 },
+        { id: "preparation_and_procedure.procedure", durationMinutes: 45 },
+        { id: "recovery", durationMinutes: 60 },
       ],
       testChoiceOrder: {
         purpose: "staged_result_component",
@@ -1459,6 +1465,7 @@ describe("mapped in-clinic procedure operations", () => {
       state = advance(state, 1);
     }
     const encounter = state.encounters["procedure-patient"]!;
+    expect(state.serviceOperations[0]).toMatchObject({ status: "completed", cancellationReason: null });
     expect(encounter.stagedResultOrder).toMatchObject({
       remainderMode: "external_processing",
       status: "remainder_pending",

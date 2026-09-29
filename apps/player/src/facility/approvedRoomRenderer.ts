@@ -199,8 +199,10 @@ export function getNearestApprovedActorSupport(
   supports: readonly ApprovedActorSupport[],
   localCell: Readonly<{ x: number; y: number }>,
   role?: ApprovedActorSupport["role"],
+  exactSupportId?: string,
 ): ApprovedActorSupport | undefined {
   const candidates = role ? supports.filter((support) => support.role === role) : supports;
+  if (exactSupportId !== undefined) return candidates.find((support) => support.id === exactSupportId);
   const target = { x: localCell.x + .5, y: localCell.y + .5 };
   return [...candidates].sort((left, right) => {
     const leftDistance = (left.ground.x - target.x) ** 2 + (left.ground.y - target.y) ** 2;

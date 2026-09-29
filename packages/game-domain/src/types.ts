@@ -296,6 +296,18 @@ export interface PendingResult {
   dueTick: number;
   deliveredAtTick: number | null;
   /**
+   * New perioperative result orders run their local work through the service
+   * operation engine before the frozen external-result interval begins.
+   * Undefined preserves the timing and travel of existing pending results.
+   */
+  localServiceOperation?: {
+    version: "pending-result-service-operation.v1";
+    status: "feedback_pending" | "waiting_for_service" | "external_processing";
+    incomeLineId: string;
+    serviceOperationId: string | null;
+    externalDurationTicks: number;
+  };
+  /**
    * Set when an off-site patient begins the persisted offscreen-to-Front-Desk
    * return route. Null before that transition.
    */
@@ -486,6 +498,8 @@ export type ServiceOperationStatus =
   | "walking_to_service"
   | "in_service"
   | "walking_between_phases"
+  | "waiting_for_next_phase"
+  | "discharging"
   | "leaving"
   | "completed"
   | "cancelled";
@@ -527,6 +541,30 @@ export interface ServiceOperationState {
   };
   /** New encounter operations wait indefinitely for installed onsite resources. */
   resourceQueueVersion?: 1;
+  /** New periop-first operations reserve and release one phase at a time. */
+  phaseFlowVersion?: 1;
+  /** New operations bind one real Periop bed from preparation through physical discharge. */
+  periopBedFlowVersion?: 1;
+  periopBedReservation?: {
+    version: "periop-bed-reservation.v1";
+    roomInstanceId: string;
+    bedId: string;
+    endpoint: GridPoint;
+  };
+  /** Stable FIFO timestamp for a physically present patient waiting on the next phase. */
+  nextPhaseReadyAtFacilityTick?: number | null;
+  /** Rooms retained until the actor physically clears the outgoing suite. */
+  transitionHeldRoomInstanceIds?: string[];
+  /** One persisted, single-choice stop after a completed new Periop flow. */
+  departureItinerary?: {
+    version: "service-departure-itinerary.v1";
+    status: "pending" | "bathroom" | "retail" | "completed" | "skipped";
+    choiceKind: "bathroom" | "retail" | "none" | null;
+    selectedAtFacilityTick: number | null;
+    completedAtFacilityTick: number | null;
+    linkedTripId: string | null;
+    retailIncomeLineId: string | null;
+  };
   /** Frozen staged-order work template; ordinary and older operations continue using their catalog template. */
   frozenOperationPhases?: Array<{
     id: string;
@@ -535,11 +573,12 @@ export interface ServiceOperationState {
     staffRoleDefinitionIds: string[];
     providerRoleDefinitionIds?: string[];
     founderEligible?: true;
+    roomStationId?: "periop_preparation" | "periop_recovery";
   }>;
   /** Frozen exact authored test order for encounter work scheduled by a choice. */
   testChoiceOrder?: {
     version: "test-choice-order.v1";
-    purpose: "terminal" | "continuation" | "staged_result_component";
+    purpose: "terminal" | "continuation" | "staged_result_component" | "result_gate";
     caseId: string;
     nodeId: string;
     questionVariantId: string;
@@ -551,6 +590,25 @@ export interface ServiceOperationState {
     externalRemainder: string | null;
     componentId?: string;
   };
+}
+
+export interface PatientAmenityTripState {
+  version: "patient-amenity-trip.v1";
+  id: string;
+  actorKind: "encounter" | "service_visitor";
+  actorId: string;
+  amenityKind: "bathroom";
+  bathroomRoomInstanceId: string;
+  status: "walking_to_amenity" | "using_amenity" | "returning";
+  startedAtFacilityTick: number;
+  dwellEndsAtFacilityTick: number | null;
+  returnRequested: boolean;
+  returnTarget: GridPoint;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  purpose?: "departure";
+  linkedServiceOperationId?: string;
 }
 
 export type RetailActorKind = "employee" | "founder" | "encounter" | "service_visitor" | "retail_visitor" | "companion";
@@ -584,6 +642,7 @@ export interface RetailOperationState {
   lastMovedAtFacilityTick: number;
   purchaseEndsAtFacilityTick: number | null;
   cancellationReason: string | null;
+  departureServiceOperationId?: string;
 }
 
 export interface RetailExternalActorState {
@@ -786,7 +845,7 @@ export interface DoorState {
 }
 
 export interface EmployeeFacilityTaskState {
-  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service";
+  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop";
   startedAtFacilityTick: number;
   workMinutesRemaining: number;
   targetId?: string;
@@ -1043,6 +1102,10 @@ export interface GameState {
   lastServiceAppointmentArrivalTick: number | null;
   serviceOperationSequence: number;
   serviceOperations: ServiceOperationState[];
+  /** Optional for save compatibility; initialized lazily by patient amenity scheduling. */
+  patientAmenityTrips?: PatientAmenityTripState[];
+  patientAmenityNextOpportunityTicks?: Record<string, number>;
+  patientAmenityTripSequence?: number;
   retailOperationSequence: number;
   retailOperations: RetailOperationState[];
   retailExternalActors: RetailExternalActorState[];

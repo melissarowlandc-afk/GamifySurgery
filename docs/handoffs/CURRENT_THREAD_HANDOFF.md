@@ -1,3 +1,12 @@
+> GS-025 GITHUB CHECKPOINT — 2026-09-29.
+> Owner authorized push and completion. Scoped runnable branch:
+> codex/gs025-complete-2026-09-29, based on published02ab585.
+> Earlier seating/layering work is inherited; this checkpoint adds service-route
+> correction, Periop preparation, individual beds, recovery and patient amenities.
+> Concurrent character, clinical, alert and room-sales work is excluded.
+> Final validation and verified remote commit are recorded below after push.
+> No merge or deployment. Owner playtest stays START_GAME.cmd ->
+> http://127.0.0.1:4173 in the usual persistent profile; no save migration.
 # Current Thread Handoff
 
 > GS-006 clinical backup verified (September 13): checkpoint
@@ -1578,3 +1587,15 @@ This earlier report preceded standalone technical review and owner acceptance.
 Current GS-001 status and backup evidence are in the GS-001 section at the top
 of this handoff and `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md`. The task
 remains repository-only, not live-game integration.
+
+## Final checkpoint acceptance
+
+September 29, 2026: GS-025 implementation complete. Independent isolated validation:
+domain99/99, player65/65, balance8/8, browser10/10 PASS; domain/player/balance
+types, production build, dependency boundaries and launcher contract PASS.
+Parent reviewed final diffs and credential/privacy/source scope (39 explicit
+files; no new assets or clinical content). Standard build chunk-size warning only.
+Sol reconstructed source and restored omitted accepted reload/projection hunks;
+Terra ran independent checks. Root made one tiny E2E origin configuration fix.
+Browser used private4198/fresh test storage; owner4173 and saves untouched.
+No merge or website deployment. The remote commit is recorded after push.

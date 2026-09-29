@@ -18,6 +18,7 @@ import {
   isRoomOperationalForFacilityWork,
   getPatientLists,
   getPendingPatientRoutePresentation,
+  getPatientAmenityTrip,
   getPendingResultEta,
   getRotatedFootprint,
   getRoomDefinition,
@@ -37,6 +38,7 @@ import {
   type GridPoint,
   type PatientListItem,
   type RoomOrientation,
+  type ServiceOperationState,
 } from "@gamify-surgery/game-domain";
 import { SERVICE_INCOME_CATALOG } from "@gamify-surgery/balance-config";
 import type { FacilityActorSupportRole } from "../facility/types";
@@ -153,6 +155,69 @@ function humanizeIdentifier(value: string): string {
 
 function serviceOperationStatusLabel(status: string): string {
   return status.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function operationPhase(operation: ServiceOperationState) {
+  const phases = operation.frozenOperationPhases ??
+    SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.operation?.phases;
+  return phases?.[operation.phaseIndex];
+}
+
+function periopPreparationStatusLabel(
+  operation: ServiceOperationState,
+): string | null {
+  const phase = operationPhase(operation);
+  if (
+    operation.phaseFlowVersion !== 1 ||
+    !phase ||
+    !("roomStationId" in phase) ||
+    phase.roomStationId !== "periop_preparation"
+  ) {
+    return null;
+  }
+  if (operation.status === "in_service") return "Preparing in Peri-op";
+  if (operation.status === "waiting_for_next_phase") {
+    return "Ready in Peri-op — waiting for procedure";
+  }
+  return null;
+}
+
+function encounterPeriopPreparationStatusLabel(
+  state: GameState,
+  encounterId: string,
+): string | null {
+  const operation = state.serviceOperations.find(
+    (candidate) =>
+      candidate.actorKind === "encounter" &&
+      candidate.actorId === encounterId &&
+      candidate.status !== "completed" &&
+      candidate.status !== "cancelled",
+  );
+  return operation ? periopPreparationStatusLabel(operation) : null;
+}
+
+function pendingLocalServiceIsInProgress(
+  pending: EncounterState["pendingResult"] | null | undefined,
+): boolean {
+  return pending?.localServiceOperation?.status === "waiting_for_service";
+}
+
+function activeEncounterOperationMovement(
+  state: GameState,
+  encounterId: string,
+): Pick<ServiceOperationState, "path" | "pathIndex"> | null {
+  const operation = state.serviceOperations.find(
+    (candidate) =>
+      candidate.actorKind === "encounter" &&
+      candidate.actorId === encounterId &&
+      [
+        "walking_to_service",
+        "walking_between_phases",
+        "in_service",
+        "waiting_for_next_phase",
+      ].includes(candidate.status),
+  );
+  return operation ? { path: operation.path, pathIndex: operation.pathIndex } : null;
 }
 
 function signedCurrency(value: number): string {
@@ -296,6 +361,29 @@ function patientSupportRoleForRoom(definitionId: string): FacilityActorSupportRo
   if (definitionId === "room.ct") return "ct-patient";
   if (definitionId === "room.phlebotomy") return "phlebotomy-patient";
   return undefined;
+}
+
+function getPeriopBedPatientSupport(
+  state: GameState,
+  operation: ServiceOperationState | undefined,
+  location: GridPoint | null | undefined,
+): Readonly<{ supportRole: "periop-bed-patient"; supportId: string }> | undefined {
+  const reservation = operation?.periopBedFlowVersion === 1
+    ? operation.periopBedReservation
+    : undefined;
+  const phase = operation ? operationPhase(operation) : undefined;
+  if (
+    !operation ||
+    !reservation ||
+    !location ||
+    operation.pathIndex < operation.path.length - 1 ||
+    !samePoint(location, reservation.endpoint) ||
+    (operation?.status !== "in_service" && operation?.status !== "waiting_for_next_phase") ||
+    phase?.roomDefinitionId !== "room.periop_recovery"
+  ) return undefined;
+  const room = state.rooms.find((candidate) => candidate.id === reservation.roomInstanceId);
+  if (room?.roomDefinitionId !== "room.periop_recovery") return undefined;
+  return { supportRole: "periop-bed-patient", supportId: `periop-bed:${reservation.bedId}` };
 }
 
 function clinicianSupportRoleForRoom(definitionId: string): FacilityActorSupportRole | undefined {
@@ -499,13 +587,16 @@ function toPatientTab(
       : `${
           encounter?.pendingResult?.pendingLabel ?? "Result pending"
         } · returns in ${formatFacilityDuration(pendingMinutes)}`;
+  const periopStatus = encounter
+    ? encounterPeriopPreparationStatusLabel(state, encounter.id)
+    : null;
 
   return {
     id: item.encounterId,
     folder,
     name: item.patientDisplayName,
     subtitle: arrivalLabel,
-    statusLabel: pendingStatus ?? item.statusLabel,
+    statusLabel: periopStatus ?? pendingStatus ?? item.statusLabel,
     actionRequired: item.actionRequired,
     selected: selectedEncounterId === item.encounterId,
     satisfactionPercent: item.patientSatisfaction,
@@ -579,6 +670,7 @@ function createChartView(
   if (!encounter) {
     return null;
   }
+  const periopStatus = encounterPeriopPreparationStatusLabel(state, encounter.id);
 
   // A patient who was never opened must not reveal the unseen question,
   // answers, explanation, outcome, or learning summary.
@@ -927,7 +1019,7 @@ function createChartView(
           },
         ]
       : undefined,
-    statusLabel: encounterStatus(encounter),
+    statusLabel: periopStatus ?? encounterStatus(encounter),
     presentation: normalizeFrozenClinicalText({
       clinicalCaseId: encounter.frozenCase.id,
       patientDisplayName: encounter.patientDisplayName,
@@ -1203,7 +1295,7 @@ export function createPrototypePlayerView(
         id: operation.id,
         displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
         actorLabel: operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
-        statusLabel: serviceOperationStatusLabel(operation.status),
+        statusLabel: periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
         quoteFeeLabel: currency(operation.quoteFee),
       })),
       ...state.retailOperations
@@ -1377,8 +1469,11 @@ export function createPrototypePlayerView(
         const patients = new Set<string>();
         const visitors = new Set<string>();
         for (const operation of state.serviceOperations) {
-          const phase = SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.operation?.phases[operation.phaseIndex];
-          if (operation.status !== "in_service" || phase?.roomDefinitionId !== "room.endoscopy") continue;
+          const phase = operationPhase(operation);
+          if (
+            (operation.status !== "in_service" && operation.status !== "waiting_for_next_phase") ||
+            phase?.roomDefinitionId !== "room.endoscopy"
+          ) continue;
           const roomId = operation.reservedRoomInstanceIds.find((candidate) => state.rooms.find((room) => room.id === candidate)?.roomDefinitionId === "room.endoscopy");
           if (!roomId) continue;
           roomIds.add(roomId);
@@ -1515,6 +1610,14 @@ export function createPrototypePlayerView(
             state,
             encounter.id,
           );
+          // Amenity trips own the actor's physical movement until the domain
+          // removes the trip after its real return. They must therefore win
+          // over a retained chair/bed, retail overlay, or service route.
+          const amenityTrip = getPatientAmenityTrip(
+            state,
+            "encounter",
+            encounter.id,
+          );
           const assignedRoom = encounter.assignedRoomInstanceId
             ? state.rooms.find(
                 (room) =>
@@ -1536,14 +1639,24 @@ export function createPrototypePlayerView(
               (anchor) => anchor.x === location.x && anchor.y === location.y,
             );
           const seated =
+            amenityTrip === null &&
             encounter.patientMovement === null &&
             location !== null &&
             ((encounter.waitingDestination?.kind === "chair" &&
               encounter.waitingDestination.location.x === location.x &&
               encounter.waitingDestination.location.y === location.y) ||
               waitingAnchorSeated);
-          const careSupportRole = getPatientCareSupportRole(state, encounter, location);
-          const supportRole = careSupportRole ?? (seated
+          const careSupportRole = amenityTrip === null
+            ? getPatientCareSupportRole(state, encounter, location)
+            : undefined;
+          const periopOperation = state.serviceOperations.find((operation) =>
+            operation.actorKind === "encounter" && operation.actorId === encounter.id &&
+            operation.status !== "completed" && operation.status !== "cancelled",
+          );
+          const periopBedSupport = amenityTrip === null
+            ? getPeriopBedPatientSupport(state, periopOperation, location)
+            : undefined;
+          const supportRole = periopBedSupport?.supportRole ?? careSupportRole ?? (seated
             ? assignedRoom?.roomDefinitionId === "room.front_desk"
               ? "front-desk-public"
               : "waiting-seat"
@@ -1551,8 +1664,20 @@ export function createPrototypePlayerView(
           const pendingFacilityRoute =
             getPendingPatientRoutePresentation(state, encounter.id);
           const retailTrip = retailTripPresentation("encounter", encounter.id);
-          const presentationPath = retailTrip?.path ?? encounter.patientMovement?.path ?? pendingFacilityRoute?.path;
-          const presentationPathIndex = retailTrip?.pathIndex ?? encounter.patientMovement?.pathIndex ?? pendingFacilityRoute?.pathIndex;
+          const serviceOperationMovement = activeEncounterOperationMovement(
+            state,
+            encounter.id,
+          );
+          const presentationPath = amenityTrip?.path ??
+            retailTrip?.path ??
+            encounter.patientMovement?.path ??
+            serviceOperationMovement?.path ??
+            pendingFacilityRoute?.path;
+          const presentationPathIndex = amenityTrip?.pathIndex ??
+            retailTrip?.pathIndex ??
+            encounter.patientMovement?.pathIndex ??
+            serviceOperationMovement?.pathIndex ??
+            pendingFacilityRoute?.pathIndex;
           return {
             instanceId: encounter.id,
             displayName: encounter.patientDisplayName,
@@ -1571,15 +1696,24 @@ export function createPrototypePlayerView(
                     : ("active" as const),
             appearance: encounter.patientAppearance,
             seated,
-            pose: careSupportRole
+            pose: periopBedSupport
+              ? "seated"
+              : careSupportRole
               ? careSupportRole === "phlebotomy-patient" ? "seated" : "exam-table"
               : seated ? "seated" : undefined,
             ...(supportRole ? { supportRole } : {}),
+            ...(periopBedSupport ? { supportId: periopBedSupport.supportId } : {}),
             ...movementPresentation(
               presentationPath,
               presentationPathIndex,
             ),
-            ...(retailTrip?.location ? { location: retailTrip.location } : location ? { location } : {}),
+            ...(amenityTrip?.path[amenityTrip.pathIndex]
+              ? { location: amenityTrip.path[amenityTrip.pathIndex] }
+              : retailTrip?.location
+                ? { location: retailTrip.location }
+                : location
+                  ? { location }
+                  : {}),
           };
         }),
       serviceVisitors: state.serviceOperations
@@ -1590,18 +1724,37 @@ export function createPrototypePlayerView(
             operation.status !== "cancelled",
         )
         .map((operation) => {
-          const retailTrip = retailTripPresentation("service_visitor", operation.actorId);
+          const amenityTrip = getPatientAmenityTrip(
+            state,
+            "service_visitor",
+            operation.id,
+          );
+          // Retail service-visitor operations are keyed by their service
+          // operation ID, while actorId is the visitor's display identity.
+          const retailTrip = retailTripPresentation("service_visitor", operation.id);
           const room = operation.reservedRoomInstanceIds
             .map((id) => state.rooms.find((candidate) => candidate.id === id))
             .find((candidate) => candidate && patientSupportRoleForRoom(candidate.roomDefinitionId));
           const atServiceEndpoint = (operation.status === "walking_to_service" || operation.status === "in_service") &&
             operation.pathIndex >= operation.path.length - 1 && samePoint(operation.location, operation.path.at(-1));
-          const supportRole = room && atServiceEndpoint ? patientSupportRoleForRoom(room.roomDefinitionId) : undefined;
+          const periopBedSupport = amenityTrip === null
+            ? getPeriopBedPatientSupport(state, operation, operation.location)
+            : undefined;
+          const supportRole = periopBedSupport?.supportRole ?? (amenityTrip === null && room && atServiceEndpoint ? patientSupportRoleForRoom(room.roomDefinitionId) : undefined);
           return {
             instanceId: operation.id, actorId: operation.actorId, displayName: operation.displayName, appearance: operation.appearance,
             ...(supportRole ? { supportRole } : {}),
-            ...(retailTrip ?? movementPresentation(operation.path, operation.pathIndex)),
-            ...(retailTrip?.location ? { location: retailTrip.location } : operation.location ? { location: operation.location } : {}),
+            ...(periopBedSupport ? { supportId: periopBedSupport.supportId } : {}),
+            ...(amenityTrip
+              ? movementPresentation(amenityTrip.path, amenityTrip.pathIndex)
+              : retailTrip ?? movementPresentation(operation.path, operation.pathIndex)),
+            ...(amenityTrip?.path[amenityTrip.pathIndex]
+              ? { location: amenityTrip.path[amenityTrip.pathIndex] }
+              : retailTrip?.location
+                ? { location: retailTrip.location }
+                : operation.location
+                  ? { location: operation.location }
+                  : {}),
           };
         }),
       retailExternalActors: state.retailExternalActors
@@ -1911,10 +2064,9 @@ export function createPrototypePlayerView(
               employee.salaryPerExpenseInterval <
               role.maximumSalaryPerExpenseInterval,
           })),
-          staffingGuidance:
-            role.id === "staff.glp1_np"
-              ? "Up to two NPs can staff each GLP-1 Telehealth Suite. Each staffed NP earns $50 per facility hour."
-              : undefined,
+          staffingGuidance: role.id === "staff.glp1_np"
+            ? "Up to two NPs can staff each GLP-1 Telehealth Suite. Each staffed NP earns $50 per facility hour."
+            : undefined,
           canHire:
             !atMaximum &&
             requirementsMet &&

@@ -237,6 +237,16 @@ export const roomDefinitionSchema = z
           .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
           .nullable()
           .optional(),
+        careStations: z.array(z.object({
+          id: z.string().min(1),
+          kind: z.literal("periop_bed"),
+          patientAnchor: z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }),
+          facing: z.enum(["north", "east", "south", "west"]),
+        })).optional(),
+        sharedStaffAnchor: z
+          .object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })
+          .nullable()
+          .optional(),
         publicWaitingArea: z.boolean().optional(),
       })
       .strict()
@@ -379,6 +389,23 @@ export const roomDefinitionSchema = z
         "navigation",
         "clinicianCareAnchor",
       ]);
+      validateAnchor(navigation.sharedStaffAnchor ?? null, [
+        "navigation",
+        "sharedStaffAnchor",
+      ]);
+      const careStationIds = new Set<string>();
+      const careStationAnchors = new Set<string>();
+      navigation.careStations?.forEach((station, index) => {
+        validateAnchor(station.patientAnchor, ["navigation", "careStations", index, "patientAnchor"]);
+        if (careStationIds.has(station.id)) {
+          context.addIssue({ code: "custom", message: "Care-station ids must be unique.", path: ["navigation", "careStations", index, "id"] });
+        }
+        if (careStationAnchors.has(key(station.patientAnchor))) {
+          context.addIssue({ code: "custom", message: "Care-station anchors must be unique.", path: ["navigation", "careStations", index, "patientAnchor"] });
+        }
+        careStationIds.add(station.id);
+        careStationAnchors.add(key(station.patientAnchor));
+      });
       const waitingKeys = new Set<string>();
       navigation.waitingAnchors.forEach((point, index) => {
         validateAnchor(point, [

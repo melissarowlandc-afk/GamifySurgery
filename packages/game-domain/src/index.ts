@@ -9,6 +9,7 @@ export * from "./facility-experience";
 export * from "./fsrs-adapter";
 export * from "./persistence";
 export * from "./patient-travel";
+export * from "./patient-amenities";
 export * from "./patientText";
 export * from "./patientAppearanceCatalog";
 export * from "./patientDemographics";

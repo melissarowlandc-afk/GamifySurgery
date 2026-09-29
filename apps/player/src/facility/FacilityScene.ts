@@ -5348,6 +5348,7 @@ export class FacilityScene extends Phaser.Scene {
     location: GridPoint | undefined,
     moving: boolean,
     supportRole: FacilityActorSupportRole | undefined,
+    supportId?: string,
   ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
     if (!location || moving || !supportRole) return undefined;
     const room = this.bridge.viewModel.rooms.find((candidate) => {
@@ -5362,6 +5363,7 @@ export class FacilityScene extends Phaser.Scene {
       resolveApprovedRoomActorSupports(room.definitionId, orientation),
       { x: location.x - room.tileX, y: location.y - room.tileY },
       supportRole,
+      supportId,
     );
     if (!support) return undefined;
     const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
@@ -5978,7 +5980,7 @@ export class FacilityScene extends Phaser.Scene {
       ? this.getFrontDeskV5ActorDisplayPosition(location, Boolean(patient.moving), "public")
       : undefined;
     const approvedSupportDisplay = frontDeskDisplay ??
-      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole);
+      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole, patient.supportId);
     pose = approvedSupportDisplay?.pose ?? pose;
     const renderedDirection = approvedSupportDisplay?.direction ??
       stationaryFloorDirection(moving, direction, destinationPose !== undefined);
@@ -6029,7 +6031,7 @@ export class FacilityScene extends Phaser.Scene {
     const graphics = this.getCharacterGraphics(key);
     const moving = Boolean(visitor.moving);
     const direction = visitor.direction ?? "front";
-    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole);
+    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole, visitor.supportId);
     const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
     const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);

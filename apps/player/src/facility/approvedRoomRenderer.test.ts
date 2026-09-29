@@ -90,6 +90,15 @@ describe("approved room renderer helpers", () => {
     expect(getApprovedSupportFacing("west")).toEqual({ direction: "side", rightFacing: false });
   });
 
+  it("uses an exact requested support instead of falling through to another Peri-op bed", () => {
+    const beds = resolveApprovedRoomActorSupports("room.periop_recovery", 0);
+    // N3's logical cell is closer to WC's fixture baseline, so nearest-only
+    // selection would visibly put the patient in the wrong bay.
+    expect(getNearestApprovedActorSupport(beds, { x: 2, y: 2 }, "periop-bed-patient")?.id).toBe("periop-bed:WC");
+    expect(getNearestApprovedActorSupport(beds, { x: 2, y: 2 }, "periop-bed-patient", "periop-bed:N3")?.id).toBe("periop-bed:N3");
+    expect(getNearestApprovedActorSupport(beds, { x: 2, y: 2 }, "periop-bed-patient", "periop-bed:unknown")).toBeUndefined();
+  });
+
   it("floors only seated actor depth at the owning fixture baseline", () => {
     const waiting = resolveApprovedRoomActorSupports("room.waiting", 270);
     const upperBench = waiting.find((support) => support.id === "bench:seat-2")!;
@@ -114,6 +123,10 @@ describe("approved room renderer helpers", () => {
 
     const ctOperator = resolveApprovedRoomActorSupports("room.ct", 0).find((support) => support.role === "ct-operator")!;
     expect(getApprovedSupportPainterGround({ ...ctOperator, fixtureGround: { x: 3.35, y: 3.5 } })).toEqual(ctOperator.ground);
+
+    for (const bed of resolveApprovedRoomActorSupports("room.periop_recovery", 0)) {
+      expect(getApprovedSupportPainterGround(bed)).toEqual(bed.fixtureGround);
+    }
   });
 
 });

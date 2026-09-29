@@ -10,8 +10,16 @@ import {
   pathServiceVisitorToOffscreenEndpoint,
 } from "./service-operations";
 import { deterministicInteger } from "./randomness";
+import { hasActivePatientAmenityTrip } from "./patient-amenities";
 import { getCurrentCapabilities, getRoomDefinition, isEmployeeOperational, isRoomOperationalForFacilityWork } from "./selectors";
-import { findDeterministicFacilityPath, getOccupiedTiles, getRoomNavigationAnchor } from "./spatial";
+import {
+  findDeterministicFacilityPath,
+  getOccupiedTiles,
+  getRoomNavigableTiles,
+  getRoomNavigationAnchor,
+  getRoomStandingWaitingAnchors,
+  getRoomWaitingAnchors,
+} from "./spatial";
 import type { DomainContext, GameState, GridPoint, RetailActorKind, RetailExternalActorState, RetailOperationState } from "./types";
 
 const DAY_MINUTES = 600;
@@ -25,6 +33,14 @@ const terminal = (operation: RetailOperationState): boolean =>
   operation.status === "completed" || operation.status === "abandoned" || operation.status === "cancelled";
 
 const actorKey = (kind: RetailActorKind, id: string): string => `${kind}:${id}`;
+
+function samePoint(left: GridPoint | null | undefined, right: GridPoint | null | undefined): boolean {
+  return Boolean(left && right && left.x === right.x && left.y === right.y);
+}
+
+function pointKey(point: GridPoint): string {
+  return `${point.x},${point.y}`;
+}
 
 function entrance(state: GameState, context: DomainContext): { inside: GridPoint; outside: GridPoint } | null {
   for (const door of [...state.doors].filter((candidate) => candidate.exterior).sort((a, b) => a.id.localeCompare(b.id))) {
@@ -48,6 +64,21 @@ function pathToExit(state: GameState, context: DomainContext, start: GridPoint):
   if (!entry) return [];
   const internal = findDeterministicFacilityPath(start, entry.inside, state.rooms, state.doors, (id) => getRoomDefinition(id, context));
   return internal.length ? [...internal, entry.outside] : [];
+}
+
+function facilityRoute(
+  state: GameState,
+  context: DomainContext,
+  start: GridPoint,
+  goal: GridPoint,
+): GridPoint[] {
+  return findDeterministicFacilityPath(
+    start,
+    goal,
+    state.rooms,
+    state.doors,
+    (id) => getRoomDefinition(id, context),
+  );
 }
 
 function outletForLine(state: GameState, line: ServiceIncomeLine, context: DomainContext): { roomId: string; contract: RetailOutletContract; target: GridPoint; servingEmployeeId: string | null } | null {
@@ -109,6 +140,10 @@ function setActorMovement(state: GameState, operation: RetailOperationState): vo
   else if (operation.actorKind === "encounter") {
     const actor = state.encounters[operation.actorId];
     if (actor) actor.patientLocation = { ...location };
+    const service = operation.departureServiceOperationId
+      ? state.serviceOperations.find((candidate) => candidate.id === operation.departureServiceOperationId)
+      : null;
+    if (service) service.location = { ...location };
   } else if (operation.actorKind === "service_visitor") {
     const actor = state.serviceOperations.find((candidate) => candidate.id === operation.actorId);
     if (actor) actor.location = { ...location };
@@ -130,6 +165,8 @@ function isWaitingEncounterEligible(state: GameState, encounterId: string, foodD
 
 function actorCanStart(state: GameState, kind: RetailActorKind, id: string, line: ServiceIncomeLine, context: DomainContext): boolean {
   if (state.retailOperations.some((operation) => !terminal(operation) && operation.actorKind === kind && operation.actorId === id)) return false;
+  if ((kind === "encounter" || kind === "service_visitor") &&
+    hasActivePatientAmenityTrip(state, kind, id)) return false;
   const clinical = getClinicalResourceReservations(state, context);
   if (kind === "employee") return Boolean(state.employees.some((employee) => employee.id === id && !employee.facilityTask && isEmployeeOperational(state, id, context) && !clinical.employeeIds.has(id) && !getActiveServiceOperationEmployeeIds(state).has(id) &&
     !state.retailOperations.some((operation) => ["walking_to_outlet", "queued", "purchasing"].includes(operation.status) && operation.servingEmployeeId === id) &&
@@ -171,6 +208,40 @@ function matchingOrder(state: GameState, orderId: string | undefined, kind: Reta
   return state.retailOrders.find((order) => order.id === orderId && order.actorKind === kind && order.actorId === actorId && order.incomeLineId === lineId && order.fulfilledQuantity < order.allowance) ?? null;
 }
 
+function validDepartureLink(state: GameState, kind: RetailActorKind, actorId: string, serviceOperationId?: string): boolean {
+  if (!serviceOperationId || (kind !== "encounter" && kind !== "service_visitor")) return false;
+  const operation = state.serviceOperations.find((candidate) => candidate.id === serviceOperationId);
+  return Boolean(operation && operation.periopBedFlowVersion === 1 && !operation.periopBedReservation &&
+    operation.status === "discharging" && operation.departureItinerary?.status === "pending" &&
+    (kind === "encounter"
+      ? operation.actorKind === "encounter" && operation.actorId === actorId && state.encounters[actorId]?.lifecycle === "resolved"
+      : operation.actorKind === "visitor" && operation.id === actorId));
+}
+
+export function getViableDepartureRetailLineIds(
+  state: GameState,
+  kind: "encounter" | "service_visitor",
+  actorId: string,
+  context: DomainContext,
+): string[] {
+  const location = actorLocation(state, kind, actorId);
+  if (!location) return [];
+  return SERVICE_INCOME_CATALOG.filter((line) => line.kind === "retail" &&
+    (line.retail?.category === "food_drink" || line.retail?.category === "gift_supply") &&
+    state.facilityLevel >= line.minimumFacilityLevel &&
+    !(kind === "encounter" && line.retail.category === "food_drink" && state.encounters[actorId]?.retailFoodDrinkAllowed === false) &&
+    ledgerAllows(state, kind, actorId, line, false))
+    .flatMap((line) => {
+      const outlet = outletForLine(state, line, context);
+      if (!outlet) return [];
+      const path = kind === "service_visitor"
+        ? pathServiceVisitorFromCurrentLocation(state, context, location, outlet.target)
+        : facilityRoute(state, context, location, outlet.target);
+      return path.length > 0 ? [line.id] : [];
+    })
+    .sort();
+}
+
 export function startRetailPurchase(
   state: GameState,
   lineId: string,
@@ -178,12 +249,17 @@ export function startRetailPurchase(
   actorId: string,
   context: DomainContext,
   authorizedOrderId?: string,
+  departureServiceOperationId?: string,
 ): string | null {
   const line = getServiceIncomeLine(lineId);
   if (!line?.retail || line.kind !== "retail" || state.facilityLevel < line.minimumFacilityLevel) return null;
   const order = line.retail.category === "authorized_order" ? matchingOrder(state, authorizedOrderId, kind, actorId, lineId) : null;
   if (line.retail.category === "authorized_order" && !order) return null;
-  if (!actorCanStart(state, kind, actorId, line, context) || !ledgerAllows(state, kind, actorId, line, Boolean(order))) return null;
+  const departureLinked = validDepartureLink(state, kind, actorId, departureServiceOperationId);
+  if (departureLinked && ((kind === "encounter" || kind === "service_visitor") && hasActivePatientAmenityTrip(state, kind, actorId) ||
+    state.retailOperations.some((candidate) => !terminal(candidate) && candidate.actorKind === kind && candidate.actorId === actorId))) return null;
+  if (departureLinked && kind === "encounter" && line.retail.category === "food_drink" && state.encounters[actorId]?.retailFoodDrinkAllowed === false) return null;
+  if ((!departureLinked && !actorCanStart(state, kind, actorId, line, context)) || !ledgerAllows(state, kind, actorId, line, Boolean(order))) return null;
   const outlet = outletForLine(state, line, context);
   const location = actorLocation(state, kind, actorId);
   const identity = actorIdentity(state, kind, actorId);
@@ -206,6 +282,7 @@ export function startRetailPurchase(
     outletDurationMinutes: outlet.contract.durationMinutes, staffRoleDefinitionId: outlet.contract.staffRoleDefinitionId ?? null, servingEmployeeId: outlet.servingEmployeeId,
     location: { ...location }, returnLocation: kind === "retail_visitor" ? null : { ...location }, path, pathIndex: 0,
     lastMovedAtFacilityTick: state.facilityTick, purchaseEndsAtFacilityTick: null, cancellationReason: null,
+    ...(departureLinked ? { departureServiceOperationId } : {}),
   };
   state.retailOperations.push(operation);
   if (kind === "encounter") {
@@ -251,6 +328,10 @@ function cancelTrip(state: GameState, operation: RetailOperationState, reason: s
 }
 
 function preempted(state: GameState, operation: RetailOperationState): boolean {
+  if (operation.departureServiceOperationId) {
+    const service = state.serviceOperations.find((candidate) => candidate.id === operation.departureServiceOperationId);
+    return !(service?.status === "discharging" && service.departureItinerary?.status === "retail");
+  }
   if (operation.actorKind === "employee") return Boolean(state.employees.find((employee) => employee.id === operation.actorId)?.facilityTask);
   if (operation.actorKind === "founder") return state.environment.founderActivity !== null;
   if (operation.actorKind === "encounter") return !isWaitingEncounterEligible(state, operation.actorId, getServiceIncomeLine(operation.incomeLineId)?.retail?.category === "food_drink");
@@ -312,13 +393,19 @@ function fulfill(state: GameState, operation: RetailOperationState, line: Servic
 }
 
 function beginReturn(state: GameState, operation: RetailOperationState, context: DomainContext): void {
+  if (operation.departureServiceOperationId) {
+    operation.path = [{ ...operation.location }];
+    operation.pathIndex = 0;
+    operation.status = "completed";
+    return;
+  }
   const external = state.retailExternalActors.find((actor) => actor.id === operation.actorId);
   if (operation.actorKind === "retail_visitor") {
     operation.path = pathToExit(state, context, operation.location);
     operation.status = "leaving";
     if (external) { external.lifecycle = "departing"; external.path = operation.path; external.pathIndex = 0; }
   } else if (operation.returnLocation) {
-    operation.path = findDeterministicFacilityPath(operation.location, operation.returnLocation, state.rooms, state.doors, (id) => getRoomDefinition(id, context));
+    operation.path = facilityRoute(state, context, operation.location, operation.returnLocation);
     operation.status = "returning";
   } else operation.status = "completed";
   operation.pathIndex = 0;
@@ -326,6 +413,7 @@ function beginReturn(state: GameState, operation: RetailOperationState, context:
 }
 
 function advanceMovement(state: GameState, operation: RetailOperationState, context: DomainContext): void {
+  if (operation.departureServiceOperationId && operation.createdAtFacilityTick === state.facilityTick) return;
   if (operation.pathIndex < operation.path.length - 1) {
     const elapsed = Math.max(1, state.facilityTick - operation.lastMovedAtFacilityTick);
     operation.pathIndex = Math.min(operation.path.length - 1, operation.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
@@ -370,10 +458,14 @@ function scheduleOptionalShopping(state: GameState, context: DomainContext): voi
     ...state.retailExternalActors.filter((actor) => actor.kind === "companion").map((actor) => ({ kind: "companion" as const, id: actor.id })),
     { kind: "founder", id: "founder" },
   ];
-  for (const actor of actors.sort((left, right) =>
-    deterministicInteger(state.campaignSeed, "environment", `optional-priority.${left.kind}.${left.id}.${Math.floor(state.facilityTick / 30)}`, 1_000) -
-    deterministicInteger(state.campaignSeed, "environment", `optional-priority.${right.kind}.${right.id}.${Math.floor(state.facilityTick / 30)}`, 1_000),
-  )) {
+  const priorityWindow = Math.floor(state.facilityTick / 30);
+  const dueActors: Array<{
+    actor: { kind: RetailActorKind; id: string };
+    key: string;
+    priority: number;
+    ordinal: number;
+  }> = [];
+  for (const [ordinal, actor] of actors.entries()) {
     const key = actorKey(actor.kind, actor.id);
     const due = state.retailNextOpportunityTicks[key];
     if (due === undefined) {
@@ -381,6 +473,24 @@ function scheduleOptionalShopping(state: GameState, context: DomainContext): voi
       continue;
     }
     if (due > state.facilityTick) continue;
+    dueActors.push({
+      actor,
+      key,
+      priority: deterministicInteger(
+        state.campaignSeed,
+        "environment",
+        `optional-priority.${actor.kind}.${actor.id}.${priorityWindow}`,
+        1_000,
+      ),
+      // The previous stable sort retained actor construction order when
+      // deterministic priorities tied. Keep that exact tie behavior explicit.
+      ordinal,
+    });
+  }
+  dueActors.sort((left, right) =>
+    left.priority - right.priority || left.ordinal - right.ordinal,
+  );
+  for (const { actor, key } of dueActors) {
     const candidates = SERVICE_INCOME_CATALOG.filter((line) => line.kind === "retail" && line.retail?.category !== "authorized_order" && state.facilityLevel >= line.minimumFacilityLevel &&
       actorCanStart(state, actor.kind, actor.id, line, context) && ledgerAllows(state, actor.kind, actor.id, line, false) && outletForLine(state, line, context));
     if (!candidates.length) { state.retailNextOpportunityTicks[key] = state.facilityTick + 15; continue; }
@@ -392,17 +502,150 @@ function scheduleOptionalShopping(state: GameState, context: DomainContext): voi
 const companionLines = new Set(["income.endoscopy", "income.advanced_endoscopy", "income.ambulatory_operation", "income.ambulatory_operation_extended", "income.pediatric_consult", "income.minor_procedure_simple", "income.minor_procedure_complex", "income.cutaneous_lesion_biopsy", "income.skin_excisional_biopsy"]);
 const legacyCompanionRoutes = new Set(["route.endoscopy.in_house", "route.endoscopy.eus-ercp-sampling.in_house"]);
 
-function ensureCompanions(state: GameState): void {
+function isPeriopBedFlowOperation(operation: GameState["serviceOperations"][number] | null | undefined): boolean {
+  return operation?.periopBedFlowVersion === 1;
+}
+
+function publicCompanionOccupiedTargets(state: GameState, excludeCompanionId?: string): Set<string> {
+  const occupied = new Set<string>();
+  const add = (point: GridPoint | null | undefined) => {
+    if (point) occupied.add(pointKey(point));
+  };
+  for (const encounter of Object.values(state.encounters)) {
+    add(encounter.patientLocation);
+    add(encounter.patientMovement?.path.at(-1));
+    add(encounter.waitingDestination?.location);
+  }
+  for (const employee of state.employees) {
+    add(employee.location);
+    add(employee.path.at(-1));
+  }
+  add(state.environment.founderLocation);
+  add(state.environment.founderActivity?.path.at(-1));
+  for (const retail of state.retailOperations) {
+    if (!terminal(retail)) {
+      add(retail.location);
+      add(retail.path.at(-1));
+    }
+  }
+  for (const companion of state.retailExternalActors) {
+    if (companion.id === excludeCompanionId || companion.lifecycle === "departed") continue;
+    add(companion.location);
+    add(companion.path.at(-1));
+  }
+  return occupied;
+}
+
+function isPublicCompanionTarget(
+  state: GameState,
+  context: DomainContext,
+  point: GridPoint,
+): boolean {
+  return state.rooms.some((room) => {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition?.navigation?.publicWaitingArea || !isRoomOperationalForFacilityWork(state, room.id, context)) return false;
+    const blocked = new Set([
+      ...getRoomWaitingAnchors(room, definition).map(pointKey),
+      ...state.doors
+        .filter((door) => door.roomId === room.id)
+        .flatMap((door) => {
+          const cells = getDoorCells(door, room, definition);
+          return cells ? [pointKey(cells.inside)] : [];
+        }),
+    ]);
+    return !blocked.has(pointKey(point)) && getRoomNavigableTiles(room, definition, state.doors).some((candidate) => samePoint(candidate, point));
+  });
+}
+
+function publicCompanionRoute(
+  state: GameState,
+  context: DomainContext,
+  origin: GridPoint,
+  target: GridPoint,
+): GridPoint[] {
+  const entry = entrance(state, context);
+  return entry && samePoint(origin, entry.outside)
+    ? pathFromEntrance(state, context, target)
+    : findDeterministicFacilityPath(origin, target, state.rooms, state.doors, (id) => getRoomDefinition(id, context));
+}
+
+function choosePeriopCompanionPublicTarget(
+  state: GameState,
+  context: DomainContext,
+  origin: GridPoint,
+  excludeCompanionId?: string,
+): { target: GridPoint; path: GridPoint[] } | null {
+  const occupied = publicCompanionOccupiedTargets(state, excludeCompanionId);
+  const rooms = state.rooms
+    .filter((room) => {
+      const definition = getRoomDefinition(room.roomDefinitionId, context);
+      return Boolean(definition?.navigation?.publicWaitingArea && isRoomOperationalForFacilityWork(state, room.id, context));
+    })
+    .sort((left, right) =>
+      Number(right.roomDefinitionId === "room.waiting") - Number(left.roomDefinitionId === "room.waiting") ||
+      left.id.localeCompare(right.id),
+    );
+  for (const room of rooms) {
+    const definition = getRoomDefinition(room.roomDefinitionId, context)!;
+    const chairs = new Set(getRoomWaitingAnchors(room, definition).map(pointKey));
+    const doors = new Set(
+      state.doors
+        .filter((door) => door.roomId === room.id)
+        .flatMap((door) => {
+          const cells = getDoorCells(door, room, definition);
+          return cells ? [pointKey(cells.inside)] : [];
+        }),
+    );
+    const standingAnchors = getRoomStandingWaitingAnchors(room, definition);
+    const candidates = [...standingAnchors, ...getRoomNavigableTiles(room, definition, state.doors)]
+      .filter((point, index, all) => all.findIndex((candidate) => samePoint(candidate, point)) === index)
+      .filter((point) => !chairs.has(pointKey(point)) && !doors.has(pointKey(point)) && !occupied.has(pointKey(point)))
+      .sort((left, right) => left.y - right.y || left.x - right.x);
+    for (const target of candidates) {
+      const path = publicCompanionRoute(state, context, origin, target);
+      if (path.length > 0) return { target: { ...target }, path };
+    }
+  }
+  return null;
+}
+
+function setPeriopCompanionPublicRoute(
+  state: GameState,
+  actor: RetailExternalActorState,
+  path: GridPoint[],
+): void {
+  actor.path = path.map((point) => ({ ...point }));
+  actor.pathIndex = 0;
+  actor.lastMovedAtFacilityTick = state.facilityTick;
+}
+
+function ensureCompanions(state: GameState, context: DomainContext): void {
   for (const operation of state.serviceOperations) {
     if (operation.actorKind === "remote" || !companionLines.has(operation.incomeLineId) || operation.status === "completed" || operation.status === "cancelled") continue;
     if (state.retailExternalActors.some((actor) => actor.kind === "companion" && actor.linkedServiceOperationId === operation.id)) continue;
     const id = `companion.${state.companionSequence++}`;
+    if (isPeriopBedFlowOperation(operation)) {
+      const entry = entrance(state, context);
+      const plan = entry
+        ? choosePeriopCompanionPublicTarget(state, context, entry.outside, id)
+        : null;
+      if (!entry || !plan) continue;
+      state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...entry.outside }, path: plan.path, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+      continue;
+    }
     const location = operation.location;
     if (!location) continue;
     state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
   }
   for (const encounter of Object.values(state.encounters)) {
     if (!encounter.pendingResult || !legacyCompanionRoutes.has(encounter.pendingResult.routeId) || !encounter.patientLocation || encounter.lifecycle !== "active_pending_result") continue;
+    if (state.serviceOperations.some((operation) =>
+      operation.actorKind === "encounter" &&
+      operation.actorId === encounter.id &&
+      operation.status !== "completed" &&
+      operation.status !== "cancelled" &&
+      isPeriopBedFlowOperation(operation),
+    )) continue;
     if (state.retailExternalActors.some((actor) => actor.kind === "companion" && actor.linkedEncounterId === encounter.id)) continue;
     const id = `companion.${state.companionSequence++}`;
     state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "onsite", location: { ...encounter.patientLocation }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
@@ -415,6 +658,30 @@ function advanceCompanions(state: GameState, context: DomainContext): void {
     const service = actor.linkedServiceOperationId ? state.serviceOperations.find((operation) => operation.id === actor.linkedServiceOperationId) : null;
     const encounter = actor.linkedEncounterId ? state.encounters[actor.linkedEncounterId] : null;
     const primaryDone = service ? service.status === "completed" || service.status === "cancelled" : encounter ? encounter.lifecycle !== "active_pending_result" : true;
+    if (isPeriopBedFlowOperation(service) && !primaryDone) {
+      const endpoint = actor.path.at(-1);
+      const retainedPath = endpoint && actor.location && isPublicCompanionTarget(state, context, endpoint)
+        ? publicCompanionRoute(state, context, actor.location, endpoint)
+        : [];
+      const plan = retainedPath.length > 0 && endpoint
+        ? { target: endpoint, path: retainedPath }
+        : actor.location
+          ? choosePeriopCompanionPublicTarget(state, context, actor.location, actor.id)
+          : null;
+      if (!plan) continue;
+      setPeriopCompanionPublicRoute(state, actor, plan.path);
+      if (actor.pathIndex < actor.path.length - 1) {
+        const elapsed = Math.max(1, state.facilityTick - actor.lastMovedAtFacilityTick);
+        actor.pathIndex = Math.min(
+          actor.path.length - 1,
+          actor.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick,
+        );
+        actor.location = actor.path[actor.pathIndex] ? { ...actor.path[actor.pathIndex]! } : actor.location;
+        actor.lastMovedAtFacilityTick = state.facilityTick;
+      }
+      if (actor.pathIndex >= actor.path.length - 1 && actor.location) actor.lifecycle = "onsite";
+      continue;
+    }
     if (service?.actorKind === "visitor") {
       if (!primaryDone && service.location) {
         const route = actor.location
@@ -469,7 +736,7 @@ export function advanceRetailOperations(state: GameState, context: DomainContext
     state.nextExternalRetailOpportunityTick = state.facilityTick + EXTERNAL_OPPORTUNITY_MINUTES;
     createExternalRetailVisitor(state, context);
   }
-  ensureCompanions(state);
+  ensureCompanions(state, context);
   for (const operation of state.retailOperations) {
     if (terminal(operation)) continue;
     const line = getServiceIncomeLine(operation.incomeLineId);

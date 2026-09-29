@@ -28,6 +28,7 @@ export type FacilityActorSupportRole =
   | "ct-operator"
   | "phlebotomy-patient"
   | "phlebotomy-clinician"
+  | "periop-bed-patient"
   | "glp1-np-station-1"
   | "glp1-np-station-2";
 
@@ -45,6 +46,8 @@ export interface FacilityPatientView {
   seated?: boolean;
   pose?: "seated" | "exam-table";
   supportRole?: FacilityActorSupportRole;
+  /** Exact presentation support when one semantic role has several furniture surfaces. */
+  supportId?: string;
 }
 
 /** Noninteractive exterior pedestrian; never appears in patient UI. */
@@ -162,6 +165,8 @@ export interface FacilityServiceVisitorView {
   direction?: "front" | "side" | "back";
   rightFacing?: boolean;
   supportRole?: FacilityActorSupportRole;
+  /** Exact presentation support when a service room offers several equivalent seats. */
+  supportId?: string;
 }
 
 export interface FacilityRetailExternalActorView {

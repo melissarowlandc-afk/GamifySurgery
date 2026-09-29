@@ -1,9 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
   createInitialGameState,
+  deserializeGameState,
   gameReducer,
   getCurrentQuestion,
+  PROTOTYPE_DOMAIN_CONTEXT,
+  serializeGameState,
+  tryStartPatientBathroomTrip,
   type GameState,
+  type ServiceOperationState,
 } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView, pendingPatientAwaitingCopy } from "./viewModels";
 
@@ -229,5 +234,302 @@ describe("surgery-center test timing previews", () => {
     expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy).toMatchObject({ roomInstanceIds: ["room.instance.endoscopy"], serviceVisitorInstanceIds: ["operation.endoscopy"] });
     state.serviceOperations[0]!.status = "walking_between_phases";
     expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+  });
+
+  it("uses frozen periop phases for the preparation labels and Endoscopy coverage", () => {
+    const state = actionableThyroid();
+    state.rooms.push(
+      { id: "room.instance.periop", roomDefinitionId: "room.periop_recovery", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 },
+      { id: "room.instance.endoscopy", roomDefinitionId: "room.endoscopy", x: 50, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 },
+    );
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    state.serviceOperations.push({
+      id: "operation.periop", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "in_service", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 99, startedAtFacilityTick: 1, completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 1,
+      phaseEndsAtFacilityTick: 31, reservedRoomInstanceIds: ["room.instance.periop"],
+      reservedEmployeeIds: [], providerReservation: null, location: { x: 42, y: 28 }, path: [], pathIndex: 0,
+      lastMovedAtFacilityTick: 1, cancellationReason: null, phaseFlowVersion: 1,
+      periopBedFlowVersion: 1,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.instance.periop", bedId: "N3", endpoint: { x: 42, y: 28 } },
+      nextPhaseReadyAtFacilityTick: null,
+      transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [
+        { id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" },
+        { id: "endoscopy_procedure", roomDefinitionId: "room.endoscopy", durationMinutes: 45, staffRoleDefinitionIds: ["staff.endoscopy_nurse"] },
+        { id: "periop_recovery", roomDefinitionId: "room.periop_recovery", durationMinutes: 45, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_recovery" },
+      ],
+    });
+    state.serviceOperations.unshift({
+      ...state.serviceOperations[0]!,
+      id: "operation.periop.completed",
+      status: "completed",
+      completedAtFacilityTick: 1,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.instance.periop", bedId: "S4", endpoint: { x: 43, y: 30 } },
+      location: { x: 43, y: 30 },
+    });
+    // Encounter operations keep their visual location in sync with the
+    // encounter on each domain movement tick. This hand-authored fixture
+    // advances the operation directly, so mirror that persisted position.
+    encounter.patientLocation = { x: 42, y: 28 };
+
+    let view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.patients.find((patient) => patient.id === encounter.id)?.statusLabel).toBe("Preparing in Peri-op");
+    expect(view.chart?.statusLabel).toBe("Preparing in Peri-op");
+    expect(view.serviceIncome.activeOperations.find((operation) => operation.id === "operation.periop")?.statusLabel).toBe("Preparing in Peri-op");
+    expect(view.facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)).toMatchObject({
+      supportRole: "periop-bed-patient", supportId: "periop-bed:N3", pose: "seated",
+    });
+
+    const operation = state.serviceOperations.find((candidate) => candidate.id === "operation.periop")!;
+    operation.status = "waiting_for_next_phase";
+    view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.patients.find((patient) => patient.id === encounter.id)?.statusLabel).toBe("Ready in Peri-op — waiting for procedure");
+    expect(view.chart?.statusLabel).toBe("Ready in Peri-op — waiting for procedure");
+    expect(view.serviceIncome.activeOperations.find((candidate) => candidate.id === operation.id)?.statusLabel).toBe("Ready in Peri-op — waiting for procedure");
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportId).toBe("periop-bed:N3");
+
+    operation.phaseIndex = 1;
+    operation.status = "in_service";
+    operation.reservedRoomInstanceIds = ["room.instance.endoscopy"];
+    operation.location = { x: 51, y: 27 };
+    encounter.patientLocation = { x: 51, y: 27 };
+    view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.facility.endoscopyOccupancy).toMatchObject({
+      roomInstanceIds: ["room.instance.endoscopy"],
+      patientInstanceIds: [encounter.id],
+    });
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).not.toBe("periop-bed-patient");
+
+    operation.status = "waiting_for_next_phase";
+    view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.facility.endoscopyOccupancy?.roomInstanceIds).toEqual(["room.instance.endoscopy"]);
+
+    operation.phaseIndex = 2;
+    operation.status = "in_service";
+    operation.reservedRoomInstanceIds = ["room.instance.periop"];
+    operation.location = { x: 42, y: 28 };
+    encounter.patientLocation = { x: 42, y: 28 };
+    view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportId).toBe("periop-bed:N3");
+  });
+
+  it("projects eight reserved Peri-op visitor beds exactly and removes the support outside a stationary Peri-op phase", () => {
+    const state = createInitialGameState();
+    state.rooms.push({ id: "room.instance.periop", roomDefinitionId: "room.periop_recovery", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+    const beds = [
+      ["N3", { x: 2, y: 2 }], ["N4", { x: 3, y: 2 }], ["S3", { x: 2, y: 4 }], ["S4", { x: 3, y: 4 }],
+      ["WC", { x: 1, y: 2 }], ["WD", { x: 1, y: 3 }], ["EC", { x: 4, y: 2 }], ["ED", { x: 4, y: 3 }],
+    ] as const;
+    const visitor = (bedId: string, endpoint: { x: number; y: number }): ServiceOperationState => ({
+      id: `operation.periop.${bedId}`, incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "visitor", actorId: `visitor.${bedId}`, displayName: `Visitor ${bedId}`, appearance: null,
+      status: "in_service", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 99,
+      startedAtFacilityTick: 1, completedAtFacilityTick: null, cancelledAtFacilityTick: null,
+      quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 1, phaseEndsAtFacilityTick: 31,
+      reservedRoomInstanceIds: ["room.instance.periop"], reservedEmployeeIds: [], providerReservation: null,
+      location: { x: 40 + endpoint.x, y: 26 + endpoint.y }, path: [], pathIndex: 0,
+      lastMovedAtFacilityTick: 1, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.instance.periop", bedId, endpoint: { x: 40 + endpoint.x, y: 26 + endpoint.y } },
+      nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [{ id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" }],
+    });
+    state.serviceOperations.push(...beds.map(([bedId, endpoint]) => visitor(bedId, endpoint)));
+
+    let view = createPrototypePlayerView(state, null, false, null);
+    expect(view.facility.serviceVisitors?.map((actor) => [actor.actorId, actor.supportRole, actor.supportId])).toEqual(
+      beds.map(([bedId]) => [`visitor.${bedId}`, "periop-bed-patient", `periop-bed:${bedId}`]),
+    );
+
+    const first = state.serviceOperations[0]!;
+    first.status = "walking_between_phases";
+    view = createPrototypePlayerView(state, null, false, null);
+    expect(view.facility.serviceVisitors?.find((actor) => actor.actorId === "visitor.N3")?.supportRole).toBeUndefined();
+    first.status = "in_service";
+    first.path = [first.location!, { x: first.location!.x + 1, y: first.location!.y }];
+    first.pathIndex = 0;
+    view = createPrototypePlayerView(state, null, false, null);
+    expect(view.facility.serviceVisitors?.find((actor) => actor.actorId === "visitor.N3")?.supportRole).toBeUndefined();
+    first.path = [];
+    first.pathIndex = 0;
+    first.phaseIndex = 1;
+    first.frozenOperationPhases!.push({ id: "endoscopy", roomDefinitionId: "room.endoscopy", durationMinutes: 45, staffRoleDefinitionIds: ["staff.endoscopy_nurse"] });
+    view = createPrototypePlayerView(state, null, false, null);
+    expect(view.facility.serviceVisitors?.find((actor) => actor.actorId === "visitor.N3")?.supportRole).toBeUndefined();
+    first.phaseIndex = 0;
+    first.periopBedFlowVersion = undefined;
+    view = createPrototypePlayerView(state, null, false, null);
+    expect(view.facility.serviceVisitors?.find((actor) => actor.actorId === "visitor.N3")?.supportRole).toBeUndefined();
+  });
+
+  it("projects persisted bathroom travel ahead of care supports and restores the exact reserved bed after return", () => {
+    const state = actionableThyroid();
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    state.rooms.push(
+      { id: "room.amenity.periop", roomDefinitionId: "room.periop_recovery", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 },
+      { id: "room.amenity.bathroom", roomDefinitionId: "room.bathroom", x: 48, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 },
+    );
+    const periopOperation: ServiceOperationState = {
+      id: "operation.amenity.encounter", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "waiting_for_next_phase", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 99, startedAtFacilityTick: 1, completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 1,
+      phaseEndsAtFacilityTick: 31, reservedRoomInstanceIds: ["room.amenity.periop"], reservedEmployeeIds: [],
+      providerReservation: null, location: { x: 42, y: 28 }, path: [], pathIndex: 0,
+      lastMovedAtFacilityTick: 1, cancellationReason: null, phaseFlowVersion: 1, periopBedFlowVersion: 1,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.amenity.periop", bedId: "N3", endpoint: { x: 42, y: 28 } },
+      nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      frozenOperationPhases: [{ id: "periop_preparation", roomDefinitionId: "room.periop_recovery", durationMinutes: 30, staffRoleDefinitionIds: ["staff.periop_nurse"], roomStationId: "periop_preparation" }],
+    };
+    const visitorOperation: ServiceOperationState = {
+      ...periopOperation,
+      id: "operation.amenity.visitor", actorKind: "visitor", actorId: "visitor.amenity",
+      displayName: "Amenity visitor", appearance: null,
+      periopBedReservation: { version: "periop-bed-reservation.v1", roomInstanceId: "room.amenity.periop", bedId: "N4", endpoint: { x: 43, y: 28 } },
+      location: { x: 43, y: 28 },
+    };
+    state.serviceOperations.push(periopOperation, visitorOperation);
+    encounter.patientLocation = { x: 42, y: 28 };
+    state.patientAmenityTrips = [
+      {
+        version: "patient-amenity-trip.v1", id: "trip.encounter", actorKind: "encounter", actorId: encounter.id,
+        amenityKind: "bathroom", bathroomRoomInstanceId: "room.amenity.bathroom", status: "walking_to_amenity",
+        startedAtFacilityTick: 2, dwellEndsAtFacilityTick: null, returnRequested: false, returnTarget: { x: 42, y: 28 },
+        path: [{ x: 42, y: 28 }, { x: 45, y: 28 }, { x: 49, y: 28 }], pathIndex: 1, lastMovedAtFacilityTick: 2,
+      },
+      {
+        version: "patient-amenity-trip.v1", id: "trip.visitor", actorKind: "service_visitor", actorId: visitorOperation.id,
+        amenityKind: "bathroom", bathroomRoomInstanceId: "room.amenity.bathroom", status: "using_amenity",
+        startedAtFacilityTick: 2, dwellEndsAtFacilityTick: 9, returnRequested: false, returnTarget: { x: 43, y: 28 },
+        path: [{ x: 49, y: 28 }], pathIndex: 0, lastMovedAtFacilityTick: 2,
+      },
+    ];
+
+    let view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.facility.patients?.filter((patient) => patient.instanceId === encounter.id)).toHaveLength(1);
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)).toMatchObject({
+      location: { x: 45, y: 28 }, path: [{ x: 42, y: 28 }, { x: 45, y: 28 }, { x: 49, y: 28 }], pathIndex: 1, moving: true,
+    });
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBeUndefined();
+    expect(view.facility.serviceVisitors?.find((visitor) => visitor.instanceId === visitorOperation.id)).toMatchObject({
+      location: { x: 49, y: 28 }, path: [{ x: 49, y: 28 }], pathIndex: 0, moving: false,
+    });
+    expect(view.facility.serviceVisitors?.find((visitor) => visitor.instanceId === visitorOperation.id)?.supportRole).toBeUndefined();
+
+    state.patientAmenityTrips![0] = {
+      ...state.patientAmenityTrips![0]!, status: "returning", path: [{ x: 49, y: 28 }, { x: 45, y: 28 }, { x: 42, y: 28 }], pathIndex: 1,
+    };
+    view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)).toMatchObject({
+      location: { x: 45, y: 28 }, pathIndex: 1, moving: true,
+    });
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBeUndefined();
+
+    state.patientAmenityTrips = [];
+    view = createPrototypePlayerView(state, encounter.id, false, null);
+    expect(view.facility.patients?.find((patient) => patient.instanceId === encounter.id)).toMatchObject({
+      supportRole: "periop-bed-patient", supportId: "periop-bed:N3", pose: "seated",
+    });
+    expect(view.facility.serviceVisitors?.find((visitor) => visitor.instanceId === visitorOperation.id)).toMatchObject({
+      supportRole: "periop-bed-patient", supportId: "periop-bed:N4",
+    });
+  });
+
+  it("projects a domain-created bathroom route after save and reload", () => {
+    const state = createInitialGameState(undefined, {
+      campaignId: "campaign.player-amenity-reload",
+      campaignSeed: "player-amenity-reload",
+      createdAtRealMs: 0,
+    });
+    state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+    const front = state.rooms.find((room) => room.roomDefinitionId === "room.front_desk")!;
+    state.rooms.push({ id: "room.amenity.reload.bathroom", roomDefinitionId: "room.bathroom", x: front.x + 5, y: front.y + 1, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+    state.doors.push({ id: "door.amenity.reload.bathroom", roomId: "room.amenity.reload.bathroom", side: "west", offset: 1, exterior: false });
+    const encounter = Object.values(state.encounters)[0]!;
+    encounter.checkInStatus = "checked_in";
+    encounter.lifecycle = "active_action_required";
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: front.x + 3, y: front.y + 3 };
+    encounter.assignedRoomInstanceId = front.id;
+    encounter.waitingDestination = { roomInstanceId: front.id, location: { ...encounter.patientLocation }, kind: "standing" };
+    state.openChartEncounterId = null;
+    expect(tryStartPatientBathroomTrip(state, "encounter", encounter.id, PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);
+    const reloaded = deserializeGameState(serializeGameState(state));
+    const trip = reloaded.patientAmenityTrips?.find((candidate) => candidate.actorId === encounter.id);
+    expect(trip).toBeDefined();
+    expect(createPrototypePlayerView(reloaded, encounter.id, false, null).facility.patients?.find(
+      (patient) => patient.instanceId === encounter.id,
+    )).toMatchObject({ location: trip?.path[trip.pathIndex], path: trip?.path, pathIndex: trip?.pathIndex });
+  });
+
+  it("keeps discharging departure actors visible on their active amenity or retail route", () => {
+    const state = actionableThyroid();
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    encounter.lifecycle = "resolved";
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 37, y: 30 };
+    const departure = {
+      version: "service-departure-itinerary.v1" as const, status: "retail" as const,
+      choiceKind: "retail" as const, selectedAtFacilityTick: 1, completedAtFacilityTick: null,
+      linkedTripId: "retail.departure.encounter", retailIncomeLineId: "income.coffee",
+    };
+    const operation: ServiceOperationState = {
+      id: "operation.departure.encounter", incomeLineId: "income.endoscopy", catalogVersion: 1,
+      actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "discharging", createdAtFacilityTick: 0,
+      waitDeadlineFacilityTick: 99, startedAtFacilityTick: 1, completedAtFacilityTick: 1,
+      cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 3, phaseStartedAtFacilityTick: null,
+      phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [],
+      providerReservation: null, location: { x: 37, y: 30 }, path: [{ x: 37, y: 30 }, { x: 36, y: 30 }], pathIndex: 0,
+      lastMovedAtFacilityTick: 1, cancellationReason: null, periopBedFlowVersion: 1,
+      periopBedReservation: undefined, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [],
+      departureItinerary: departure,
+    };
+    const visitor: ServiceOperationState = {
+      ...operation, id: "operation.departure.visitor", actorKind: "visitor", actorId: "visitor.display-id",
+      displayName: "Departure visitor", appearance: null, location: { x: 38, y: 30 },
+      path: [{ x: 38, y: 30 }, { x: 37, y: 30 }],
+      departureItinerary: { ...departure, linkedTripId: "retail.departure.visitor" },
+    };
+    state.serviceOperations.push(operation, visitor);
+    state.retailOperations.push(
+      {
+        id: "retail.departure.encounter", incomeLineId: "income.coffee", catalogVersion: 1,
+        actorKind: "encounter", actorId: encounter.id, displayName: encounter.patientDisplayName,
+        appearance: encounter.patientAppearance, linkedServiceOperationId: null, authorizedOrderId: null,
+        status: "walking_to_outlet", createdAtFacilityTick: 1, waitDeadlineFacilityTick: 20,
+        startedAtFacilityTick: null, completedAtFacilityTick: null, quoteGross: 4, quoteStockCost: 1,
+        outletRoomInstanceId: "room.outlet", outletDurationMinutes: 1, staffRoleDefinitionId: null,
+        servingEmployeeId: null, location: { x: 37, y: 30 }, returnLocation: null,
+        path: [{ x: 37, y: 30 }, { x: 36, y: 30 }], pathIndex: 0, lastMovedAtFacilityTick: 1,
+        purchaseEndsAtFacilityTick: null, cancellationReason: null, departureServiceOperationId: operation.id,
+      },
+      {
+        id: "retail.departure.visitor", incomeLineId: "income.coffee", catalogVersion: 1,
+        actorKind: "service_visitor", actorId: visitor.id, displayName: visitor.displayName,
+        appearance: encounter.patientAppearance, linkedServiceOperationId: visitor.id, authorizedOrderId: null,
+        status: "walking_to_outlet", createdAtFacilityTick: 1, waitDeadlineFacilityTick: 20,
+        startedAtFacilityTick: null, completedAtFacilityTick: null, quoteGross: 4, quoteStockCost: 1,
+        outletRoomInstanceId: "room.outlet", outletDurationMinutes: 1, staffRoleDefinitionId: null,
+        servingEmployeeId: null, location: { x: 36, y: 31 }, returnLocation: null,
+        path: [{ x: 38, y: 30 }, { x: 37, y: 30 }, { x: 37, y: 31 }, { x: 36, y: 31 }], pathIndex: 3, lastMovedAtFacilityTick: 1,
+        purchaseEndsAtFacilityTick: null, cancellationReason: null, departureServiceOperationId: visitor.id,
+      },
+    );
+
+    const facility = createPrototypePlayerView(state, encounter.id, false, null).facility;
+    expect(facility.patients?.filter((patient) => patient.instanceId === encounter.id)).toHaveLength(1);
+    expect(facility.patients?.find((patient) => patient.instanceId === encounter.id)).toMatchObject({
+      location: { x: 37, y: 30 }, pathIndex: 0, moving: true,
+    });
+    expect(facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBeUndefined();
+    expect(facility.serviceVisitors?.find((actor) => actor.instanceId === visitor.id)).toMatchObject({
+      location: { x: 36, y: 31 }, pathIndex: 3, moving: false,
+    });
   });
 });

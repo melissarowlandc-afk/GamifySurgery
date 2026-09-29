@@ -84,6 +84,25 @@ describe("approved proof navigation contract", () => {
     ).toEqual([0]);
   });
 
+  it("publishes eight unique Periop bed endpoints and a separate central nurse post", () => {
+    const recovery = APPROVED_ROOM_NAVIGATION_CONTRACTS["room.periop_recovery"]!;
+    expect(recovery.careStations).toEqual([
+      { id: "N3", kind: "periop_bed", patientAnchor: { x: 2, y: 2 }, facing: "south" },
+      { id: "N4", kind: "periop_bed", patientAnchor: { x: 3, y: 2 }, facing: "south" },
+      { id: "S3", kind: "periop_bed", patientAnchor: { x: 2, y: 4 }, facing: "north" },
+      { id: "S4", kind: "periop_bed", patientAnchor: { x: 3, y: 4 }, facing: "north" },
+      { id: "WC", kind: "periop_bed", patientAnchor: { x: 1, y: 2 }, facing: "east" },
+      { id: "WD", kind: "periop_bed", patientAnchor: { x: 1, y: 3 }, facing: "east" },
+      { id: "EC", kind: "periop_bed", patientAnchor: { x: 4, y: 2 }, facing: "west" },
+      { id: "ED", kind: "periop_bed", patientAnchor: { x: 4, y: 3 }, facing: "west" },
+    ]);
+    expect(new Set(recovery.careStations!.map((station) => `${station.patientAnchor.x},${station.patientAnchor.y}`)).size).toBe(8);
+    expect(recovery.sharedStaffAnchor).toEqual({ x: 3, y: 3 });
+    expect(recovery.careStations!.some((station) =>
+      station.patientAnchor.x === recovery.sharedStaffAnchor!.x && station.patientAnchor.y === recovery.sharedStaffAnchor!.y,
+    )).toBe(false);
+  });
+
   it("keeps dynamic solid ownership disjoint and records no solid backing-owned fixtures", () => {
     for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
       const ownerByTile = new Map<string, string>();

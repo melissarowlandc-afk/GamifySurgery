@@ -126,6 +126,81 @@ export function getRoomCareAnchor(
     : getRoomNavigationAnchor(room, definition, kind === "clinician" ? "staff" : "primary");
 }
 
+export interface RoomCareStation {
+  id: string;
+  kind: "periop_bed";
+  patientAnchor: GridPoint;
+  facing: CardinalDirection;
+}
+
+function roomFixtureHiddenByDoor(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  fixtureId: string,
+  doors: readonly DoorState[],
+  rooms: readonly PlacedRoom[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+): boolean {
+  const owner = definition.navigation?.dynamicBlockers?.find(
+    (candidate) => candidate.fixtureId === fixtureId,
+  );
+  if (!owner) return false;
+  return owner.doorSlots.some((slot) => {
+    const localInside = slot.side === "north"
+      ? { x: slot.offset, y: 0 }
+      : slot.side === "south"
+        ? { x: slot.offset, y: definition.height - 1 }
+        : slot.side === "west"
+          ? { x: 0, y: slot.offset }
+          : { x: definition.width - 1, y: slot.offset };
+    const inside = roomLocalToGlobal(room, definition, localInside);
+    const side = rotateDirection(slot.side, room.orientation);
+    const step = side === "north" ? { x: 0, y: -1 }
+      : side === "east" ? { x: 1, y: 0 }
+        : side === "south" ? { x: 0, y: 1 }
+          : { x: -1, y: 0 };
+    const expected = physicalDoorKey(inside, { x: inside.x + step.x, y: inside.y + step.y });
+    return doors.some((door) => {
+      const placed = rooms.find((candidate) => candidate.id === door.roomId);
+      const placedDefinition = placed ? getDefinition(placed.roomDefinitionId) : null;
+      const cells = placed && placedDefinition
+        ? getDoorCellsForSpatial(door, placed, placedDefinition)
+        : null;
+      return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
+    });
+  });
+}
+
+export function getRoomCareStations(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+  doors: readonly DoorState[] = [],
+  rooms: readonly PlacedRoom[] = [room],
+  getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
+    definitionId === definition.id ? definition : null,
+): RoomCareStation[] {
+  return (definition.navigation?.careStations ?? []).flatMap((station) =>
+    roomFixtureHiddenByDoor(room, definition, station.id, doors, rooms, getDefinition)
+      ? []
+      : [{
+          id: station.id,
+          kind: station.kind,
+          patientAnchor: roomLocalToGlobal(room, definition, station.patientAnchor),
+          facing: rotateDirection(station.facing, room.orientation),
+        }],
+  );
+}
+
+export function getRoomSharedStaffAnchor(
+  room: PlacedRoom,
+  definition: RoomDefinition,
+): GridPoint {
+  const configured = definition.navigation?.sharedStaffAnchor;
+  return configured
+    ? roomLocalToGlobal(room, definition, configured)
+    : getRoomNavigationAnchor(room, definition, "staff");
+}
+
 export function getRoomWaitingAnchors(
   room: PlacedRoom,
   definition: RoomDefinition,
@@ -159,40 +234,10 @@ function getRoomBlockedTileKeys(
   );
   const dynamic = definition.navigation?.dynamicBlockers ?? [];
   const hiddenByFixture = new Map<string, boolean>();
-  for (const owner of dynamic) {
-    const hidden = owner.doorSlots.some((slot) => {
-      const localInside =
-        slot.side === "north"
-          ? { x: slot.offset, y: 0 }
-          : slot.side === "south"
-            ? { x: slot.offset, y: definition.height - 1 }
-            : slot.side === "west"
-              ? { x: 0, y: slot.offset }
-              : { x: definition.width - 1, y: slot.offset };
-      const inside = roomLocalToGlobal(room, definition, localInside);
-      const side = rotateDirection(slot.side, room.orientation);
-      const step =
-        side === "north" ? { x: 0, y: -1 }
-          : side === "east" ? { x: 1, y: 0 }
-            : side === "south" ? { x: 0, y: 1 }
-              : { x: -1, y: 0 };
-      const expected = physicalDoorKey(inside, {
-        x: inside.x + step.x,
-        y: inside.y + step.y,
-      });
-      return doors.some((door) => {
-        const placed = rooms.find((candidate) => candidate.id === door.roomId);
-        const placedDefinition = placed
-          ? getDefinition(placed.roomDefinitionId)
-          : null;
-        const cells = placed && placedDefinition
-          ? getDoorCellsForSpatial(door, placed, placedDefinition)
-          : null;
-        return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
-      });
-    });
-    hiddenByFixture.set(owner.fixtureId, hidden);
-  }
+  for (const owner of dynamic) hiddenByFixture.set(
+    owner.fixtureId,
+    roomFixtureHiddenByDoor(room, definition, owner.fixtureId, doors, rooms, getDefinition),
+  );
   const ownersByTile = new Map<string, string[]>();
   for (const owner of dynamic) {
     for (const point of owner.tiles) {

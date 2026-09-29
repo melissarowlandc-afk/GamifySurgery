@@ -13,8 +13,9 @@ import {
   isEmployeeOperational,
   isRoomOperationalForFacilityWork,
 } from "./selectors";
-import { findDeterministicFacilityPath, getRoomCareAnchor, getRoomNavigationAnchor } from "./spatial";
+import { findDeterministicFacilityPath, getRoomCareAnchor, getRoomCareStations, getRoomNavigationAnchor, getRoomSharedStaffAnchor, getRoomWaitingAnchors, getRotatedFootprint } from "./spatial";
 import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
+import { hasActivePatientAmenityTrip } from "./patient-amenities";
 import type {
   DomainContext,
   EncounterState,
@@ -27,6 +28,69 @@ const WAIT_TIMEOUT_MINUTES = 60;
 const GLOBAL_ARRIVAL_SPACING_MINUTES = 30;
 const MAX_EXTERNAL_WAITING = 2;
 
+const PERIOP_PHASE_FLOW_LINE_IDS = new Set([
+  "income.endoscopy",
+  "income.advanced_endoscopy",
+  "income.ambulatory_operation",
+  "income.ambulatory_operation_extended",
+]);
+
+type FrozenOperationPhase = NonNullable<ServiceOperationState["frozenOperationPhases"]>[number];
+
+function cloneOperationPhase(phase: ServiceOperationPhase): FrozenOperationPhase {
+  return {
+    id: phase.id,
+    roomDefinitionId: phase.roomDefinitionId,
+    durationMinutes: phase.durationMinutes,
+    staffRoleDefinitionIds: [...phase.staffRoleDefinitionIds],
+    ...(phase.providerRoleDefinitionIds
+      ? { providerRoleDefinitionIds: [...phase.providerRoleDefinitionIds] }
+      : {}),
+    ...(phase.founderEligible ? { founderEligible: true as const } : {}),
+  };
+}
+
+/** Frozen phase contract for newly-created periop-first operations only. */
+export function getNewPeriopServiceOperationPhases(
+  lineId: string,
+  sourcePhases?: readonly ServiceOperationPhase[],
+): FrozenOperationPhase[] | null {
+  if (!PERIOP_PHASE_FLOW_LINE_IDS.has(lineId)) return null;
+  const line = getServiceIncomeLine(lineId);
+  const phases = sourcePhases ?? line?.operation?.phases;
+  if (!phases || phases.length < 2) return null;
+  const recoveryIndex = phases.findIndex(
+    (phase) => phase.roomDefinitionId === "room.periop_recovery",
+  );
+  if (recoveryIndex < 0) return null;
+  const recovery = {
+    ...cloneOperationPhase(phases[recoveryIndex]!),
+    durationMinutes: 60,
+    roomStationId: "periop_recovery" as const,
+  };
+  const prep: FrozenOperationPhase = {
+    id: "periop_preparation",
+    roomDefinitionId: "room.periop_recovery",
+    durationMinutes: 30,
+    staffRoleDefinitionIds: ["staff.periop_nurse"],
+    roomStationId: "periop_preparation",
+  };
+  const beforeRecovery = phases.slice(0, recoveryIndex).map(cloneOperationPhase);
+  if (lineId === "income.endoscopy" || lineId === "income.advanced_endoscopy") {
+    const combined = beforeRecovery[0];
+    if (!combined || combined.roomDefinitionId !== "room.endoscopy" || combined.durationMinutes <= 30) {
+      return null;
+    }
+    const procedure: FrozenOperationPhase = {
+      ...combined,
+      id: `${combined.id}.procedure`,
+      durationMinutes: combined.durationMinutes - 30,
+    };
+    return [prep, procedure, recovery, ...phases.slice(recoveryIndex + 1).map(cloneOperationPhase)];
+  }
+  return [prep, ...beforeRecovery, recovery, ...phases.slice(recoveryIndex + 1).map(cloneOperationPhase)];
+}
+
 function samePoint(left: GridPoint | null, right: GridPoint | null): boolean {
   return Boolean(left && right && left.x === right.x && left.y === right.y);
 }
@@ -36,7 +100,11 @@ function active(operation: ServiceOperationState): boolean {
 }
 
 export function getActiveServiceOperationRoomIds(state: GameState): Set<string> {
-  return new Set(state.serviceOperations.filter(active).flatMap((operation) => operation.reservedRoomInstanceIds));
+  return new Set(state.serviceOperations.filter(active).flatMap((operation) => [
+    ...operation.reservedRoomInstanceIds,
+    ...(operation.transitionHeldRoomInstanceIds ?? []),
+    ...(operation.periopBedReservation ? [operation.periopBedReservation.roomInstanceId] : []),
+  ]));
 }
 
 export function getActiveServiceOperationEmployeeIds(state: GameState): Set<string> {
@@ -296,18 +364,222 @@ function phaseForEmployee(phases: readonly ServiceOperationPhase[], roleId: stri
   return phases.find((phase) => phase.staffRoleDefinitionIds.includes(roleId)) ?? null;
 }
 
-function operationPhases(operation: ServiceOperationState, line: ServiceIncomeLine): readonly ServiceOperationPhase[] {
-  return operation.frozenOperationPhases ?? line.operation?.phases ?? [];
+function operationPhases(operation: ServiceOperationState, line: ServiceIncomeLine): readonly FrozenOperationPhase[] {
+  return (operation.frozenOperationPhases ?? line.operation?.phases ?? []) as readonly FrozenOperationPhase[];
 }
 
-function tryReserve(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
+function operationRoomStation(
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+): FrozenOperationPhase["roomStationId"] | null {
+  if (operation.phaseFlowVersion !== 1) return null;
+  return operationPhases(operation, line)[operation.phaseIndex]?.roomStationId ?? null;
+}
+
+function isPeriopBedPhase(
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+): boolean {
+  return operation.periopBedFlowVersion === 1 &&
+    operationPhases(operation, line)[operation.phaseIndex]?.roomDefinitionId === "room.periop_recovery";
+}
+
+function operationRoomIds(operation: ServiceOperationState): string[] {
+  return [
+    ...operation.reservedRoomInstanceIds,
+    ...(operation.transitionHeldRoomInstanceIds ?? []),
+    ...(operation.periopBedReservation ? [operation.periopBedReservation.roomInstanceId] : []),
+  ];
+}
+
+function roomConflictsWithActiveOperation(
+  state: GameState,
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+  roomId: string,
+  stationId: FrozenOperationPhase["roomStationId"] | null,
+): boolean {
+  return state.serviceOperations.some((candidate) => {
+    if (candidate.id === operation.id || !active(candidate) || !operationRoomIds(candidate).includes(roomId)) {
+      return false;
+    }
+    if (
+      operation.periopBedFlowVersion === 1 &&
+      candidate.periopBedFlowVersion === 1 &&
+      state.rooms.find((room) => room.id === roomId)?.roomDefinitionId === "room.periop_recovery"
+    ) return false;
+    const candidateLine = getServiceIncomeLine(candidate.incomeLineId);
+    const candidateStation = candidateLine
+      ? operationRoomStation(candidate, candidateLine)
+      : null;
+    return !stationId || !candidateStation || candidateStation === stationId;
+  });
+}
+
+function availablePeriopBedReservation(
+  state: GameState,
+  operation: ServiceOperationState,
+  context: DomainContext,
+  blockedRoomIds: ReadonlySet<string>,
+): NonNullable<ServiceOperationState["periopBedReservation"]> | null {
+  if (operation.periopBedReservation) {
+    const room = state.rooms.find((candidate) => candidate.id === operation.periopBedReservation!.roomInstanceId);
+    const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+    const station = room && definition
+      ? getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context))
+        .find((candidate) => candidate.id === operation.periopBedReservation!.bedId)
+      : null;
+    return station && samePoint(station.patientAnchor, operation.periopBedReservation.endpoint) &&
+      isRoomOperationalForFacilityWork(state, room!.id, context)
+      ? operation.periopBedReservation
+      : null;
+  }
+  const occupied = new Set(state.serviceOperations.flatMap((candidate) =>
+    candidate.id !== operation.id && active(candidate) && candidate.periopBedReservation
+      ? [`${candidate.periopBedReservation.roomInstanceId}:${candidate.periopBedReservation.bedId}`]
+      : [],
+  ));
+  for (const room of state.rooms
+    .filter((candidate) =>
+      candidate.roomDefinitionId === "room.periop_recovery" &&
+      !blockedRoomIds.has(candidate.id) &&
+      isRoomOperationalForFacilityWork(state, candidate.id, context) &&
+      !state.serviceOperations.some((other) =>
+        other.id !== operation.id && active(other) && other.periopBedFlowVersion !== 1 && operationRoomIds(other).includes(candidate.id),
+      ),
+    )
+    .sort((left, right) => left.id.localeCompare(right.id))) {
+    const definition = getRoomDefinition(room.roomDefinitionId, context);
+    if (!definition) continue;
+    const stations = getRoomCareStations(
+      room,
+      definition,
+      state.doors,
+      state.rooms,
+      (id) => getRoomDefinition(id, context),
+    );
+    for (const station of stations) {
+      if (station.kind !== "periop_bed" || occupied.has(`${room.id}:${station.id}`)) continue;
+      const actorLocation = operationLocation(state, operation);
+      if (!actorLocation || findDeterministicFacilityPath(
+        actorLocation,
+        station.patientAnchor,
+        state.rooms,
+        state.doors,
+        (id) => getRoomDefinition(id, context),
+      ).length === 0 || !planPeriopCoverage(state, room.id, context)) continue;
+      return {
+        version: "periop-bed-reservation.v1",
+        roomInstanceId: room.id,
+        bedId: station.id,
+        endpoint: { ...station.patientAnchor },
+      };
+    }
+  }
+  return null;
+}
+
+function getPeriopCoverageEmployee(
+  state: GameState,
+  roomId: string,
+): GameState["employees"][number] | null {
+  return state.employees.find((employee) =>
+    employee.staffRoleDefinitionId === "staff.periop_nurse" &&
+    employee.facilityTask?.kind === "cover_periop" &&
+    employee.facilityTask.targetId === roomId,
+  ) ?? null;
+}
+
+function planPeriopCoverage(
+  state: GameState,
+  roomId: string,
+  context: DomainContext,
+): { employee: GameState["employees"][number]; path: GridPoint[]; existing: boolean } | null {
+  const existing = getPeriopCoverageEmployee(state, roomId);
+  if (existing) return isEmployeeAssignedToOperationalRoom(state, existing.id, context)
+    ? { employee: existing, path: existing.path, existing: true }
+    : null;
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+  if (!room || !definition) return null;
+  const target = getRoomSharedStaffAnchor(room, definition);
+  const usedEmployees = getActiveServiceOperationEmployeeIds(state);
+  for (const employee of state.employees
+    .filter((candidate) =>
+      candidate.staffRoleDefinitionId === "staff.periop_nurse" &&
+      !candidate.facilityTask &&
+      !usedEmployees.has(candidate.id) &&
+      isEmployeeAssignedToOperationalRoom(state, candidate.id, context),
+    )
+    .sort((left, right) => left.id.localeCompare(right.id))) {
+    const path = findDeterministicFacilityPath(
+      employee.location,
+      target,
+      state.rooms,
+      state.doors,
+      (id) => getRoomDefinition(id, context),
+    );
+    if (path.length > 0) return { employee, path, existing: false };
+  }
+  return null;
+}
+
+function periopCoverageReady(state: GameState, roomId: string, context: DomainContext): boolean {
+  const employee = getPeriopCoverageEmployee(state, roomId);
+  return Boolean(
+    employee &&
+    isEmployeeAssignedToOperationalRoom(state, employee.id, context) &&
+    employee.pathIndex >= employee.path.length - 1,
+  );
+}
+
+function commitPeriopCoveragePlan(
+  state: GameState,
+  roomId: string,
+  plan: ReturnType<typeof planPeriopCoverage>,
+): void {
+  if (!plan || plan.existing) return;
+  preemptEmployeeShopping(state, plan.employee.id);
+  plan.employee.path = plan.path;
+  plan.employee.pathIndex = 0;
+  plan.employee.lastMovedAtFacilityTick = state.facilityTick;
+  plan.employee.facilityTask = {
+    kind: "cover_periop",
+    targetId: roomId,
+    startedAtFacilityTick: state.facilityTick,
+    workMinutesRemaining: Number.MAX_SAFE_INTEGER,
+  };
+}
+
+function tryReserve(
+  state: GameState,
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+  context: DomainContext,
+  movementStatus: "walking_to_service" | "walking_between_phases" = "walking_to_service",
+): boolean {
+  const amenityKind = operation.actorKind === "encounter" ? "encounter" : "service_visitor";
+  const amenityId = operation.actorKind === "encounter" ? operation.actorId : operation.id;
+  if (hasActivePatientAmenityTrip(state, amenityKind, amenityId)) return false;
   const phases = operationPhases(operation, line);
+  const reservationPhases = operation.phaseFlowVersion === 1
+    ? phases.slice(operation.phaseIndex, operation.phaseIndex + 1)
+    : phases;
+  if (reservationPhases.length === 0) return false;
   const clinical = getClinicalResourceReservations(state, context);
-  const usedRooms = getActiveServiceOperationRoomIds(state);
-  const rooms = requiredRoomDefinitions(phases).map((definitionId) => {
+  const desiredStation = reservationPhases[0]?.roomStationId ?? null;
+  const periopBedPhase = isPeriopBedPhase(operation, line);
+  const bedReservation = periopBedPhase
+    ? availablePeriopBedReservation(state, operation, context, clinical.roomIds)
+    : null;
+  if (periopBedPhase && !bedReservation) return false;
+  const rooms = requiredRoomDefinitions(reservationPhases).map((definitionId) => {
+    if (definitionId === "room.periop_recovery" && bedReservation) {
+      return state.rooms.find((room) => room.id === bedReservation.roomInstanceId) ?? null;
+    }
     const available = state.rooms
       .filter((room) => room.roomDefinitionId === definitionId &&
-        !usedRooms.has(room.id) &&
+        !roomConflictsWithActiveOperation(state, operation, line, room.id, desiredStation) &&
         !clinical.roomIds.has(room.id) &&
         isRoomOperationalForFacilityWork(state, room.id, context))
       .sort((a, b) => a.id.localeCompare(b.id));
@@ -317,7 +589,9 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
 
   const usedEmployees = getActiveServiceOperationEmployeeIds(state);
   const selectedEmployees: string[] = [];
-  for (const roleId of requiredStaffRoles(phases)) {
+  for (const roleId of requiredStaffRoles(reservationPhases).filter((roleId) =>
+    !(periopBedPhase && roleId === "staff.periop_nurse"),
+  )) {
     const available = state.employees
       .filter((candidate) => candidate.staffRoleDefinitionId === roleId && !candidate.facilityTask && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) && isServiceEmployeeOperational(state, candidate.id, roleId, context))
       .sort((a, b) => a.id.localeCompare(b.id));
@@ -326,7 +600,7 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
     selectedEmployees.push(employee.id);
   }
 
-  const providerPhase = phases.find((phase) => phase.providerRoleDefinitionIds?.length || phase.founderEligible);
+  const providerPhase = reservationPhases.find((phase) => phase.providerRoleDefinitionIds?.length || phase.founderEligible);
   let provider: ServiceOperationState["providerReservation"] = null;
   if (providerPhase) {
     const providerEmployee = state.employees
@@ -348,9 +622,14 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
   const firstRoom = rooms[0];
   if (!firstRoom) return false;
   const firstDefinition = getRoomDefinition(firstRoom.roomDefinitionId, context)!;
-  const patientTarget = firstRoom.roomDefinitionId === "room.phlebotomy"
-    ? getRoomCareAnchor(firstRoom, firstDefinition, "patient")
-    : getRoomNavigationAnchor(firstRoom, firstDefinition, "primary");
+  const patientTarget = bedReservation
+    ? bedReservation.endpoint
+    : desiredStation === "periop_preparation"
+    ? (getRoomWaitingAnchors(firstRoom, firstDefinition)[0] ??
+      getRoomNavigationAnchor(firstRoom, firstDefinition, "primary"))
+    : firstRoom.roomDefinitionId === "room.phlebotomy"
+      ? getRoomCareAnchor(firstRoom, firstDefinition, "patient")
+      : getRoomNavigationAnchor(firstRoom, firstDefinition, "primary");
   let actorPath: GridPoint[] = [];
   if (operation.actorKind !== "remote") {
     actorPath = operation.location
@@ -363,7 +642,7 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
 
   const employeePlans = selectedEmployees.map((employeeId) => {
     const employee = state.employees.find((candidate) => candidate.id === employeeId)!;
-    const employeePhase = phaseForEmployee(phases, employee.staffRoleDefinitionId)!;
+    const employeePhase = phaseForEmployee(reservationPhases, employee.staffRoleDefinitionId)!;
     const targetRoom = rooms.find((room) => room?.roomDefinitionId === employeePhase.roomDefinitionId)!;
     const targetDefinition = getRoomDefinition(targetRoom.roomDefinitionId, context)!;
     const staffTarget = employee.staffRoleDefinitionId === "staff.phlebotomist" &&
@@ -374,6 +653,10 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
     return { employee, path };
   });
   if (employeePlans.some((plan) => plan.path.length === 0)) return false;
+  const coveragePlan = bedReservation
+    ? planPeriopCoverage(state, bedReservation.roomInstanceId, context)
+    : null;
+  if (bedReservation && !coveragePlan) return false;
   let providerEmployeePlan: { employee: GameState["employees"][number]; path: GridPoint[] } | null = null;
   let founderPath: GridPoint[] | null = null;
   const providerRoom = providerPhase?.roomDefinitionId
@@ -397,7 +680,11 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
   operation.path = actorPath;
   operation.pathIndex = 0;
   operation.lastMovedAtFacilityTick = state.facilityTick;
-  operation.status = "walking_to_service";
+  operation.status = movementStatus;
+  if (bedReservation) operation.periopBedReservation = {
+    ...bedReservation,
+    endpoint: { ...bedReservation.endpoint },
+  };
   if (operation.actorKind === "encounter") {
     const encounter = state.encounters[operation.actorId];
     if (encounter) encounter.waitingDestination = null;
@@ -408,6 +695,9 @@ function tryReserve(state: GameState, operation: ServiceOperationState, line: Se
     employee.pathIndex = 0;
     employee.lastMovedAtFacilityTick = state.facilityTick;
     employee.facilityTask = { kind: "perform_service", targetId: operation.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: Number.MAX_SAFE_INTEGER };
+  }
+  if (coveragePlan && !coveragePlan.existing) {
+    commitPeriopCoveragePlan(state, bedReservation!.roomInstanceId, coveragePlan);
   }
   if (providerEmployeePlan) {
     const { employee, path } = providerEmployeePlan;
@@ -427,6 +717,31 @@ function operationLocation(state: GameState, operation: ServiceOperationState): 
     : operation.location;
 }
 
+function operationInsideRoom(
+  state: GameState,
+  operation: ServiceOperationState,
+  roomId: string,
+  context: DomainContext,
+): boolean {
+  const location = operationLocation(state, operation);
+  const room = state.rooms.find((candidate) => candidate.id === roomId);
+  const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+  if (!location || !room || !definition) return false;
+  const footprint = getRotatedFootprint(definition, room.orientation);
+  return location.x >= room.x && location.x < room.x + footprint.width &&
+    location.y >= room.y && location.y < room.y + footprint.height;
+}
+
+function releaseClearedTransitionRooms(
+  state: GameState,
+  operation: ServiceOperationState,
+  context: DomainContext,
+): void {
+  operation.transitionHeldRoomInstanceIds = (operation.transitionHeldRoomInstanceIds ?? []).filter(
+    (roomId) => operationInsideRoom(state, operation, roomId, context),
+  );
+}
+
 function holdResolvedEncounterForActiveOperation(
   state: GameState,
   operation: ServiceOperationState,
@@ -434,6 +749,10 @@ function holdResolvedEncounterForActiveOperation(
   if (operation.actorKind !== "encounter") return;
   const encounter = state.encounters[operation.actorId];
   if (!encounter) return;
+  if (operation.status === "discharging" && encounter.patientMovement && encounter.patientLocation) {
+    operation.location = { ...encounter.patientLocation };
+    return;
+  }
   const cancelledDeparture = encounter.patientMovement?.kind === "leaving_after_resolution";
   if (cancelledDeparture) {
     encounter.patientMovement = null;
@@ -583,12 +902,15 @@ function ensureCompleteVisitorDeparture(
   if (continuation.length > 0) setOperationPath(state, operation, continuation, "leaving");
 }
 
-function resourcesArrived(state: GameState, operation: ServiceOperationState): boolean {
+function resourcesArrived(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
   const employees = [...operation.reservedEmployeeIds, ...(operation.providerReservation?.kind === "employee" ? [operation.providerReservation.employeeId] : [])];
-  return employees.every((id) => {
+  const assignedArrived = employees.every((id) => {
     const employee = state.employees.find((candidate) => candidate.id === id);
     return employee?.facilityTask?.targetId === operation.id && employee.pathIndex >= employee.path.length - 1;
   }) && (operation.providerReservation?.kind !== "founder" || (state.environment.founderActivity?.targetId === operation.id && state.environment.founderActivity.pathIndex >= state.environment.founderActivity.path.length - 1));
+  return assignedArrived && (!isPeriopBedPhase(operation, line) || Boolean(
+    operation.periopBedReservation && periopCoverageReady(state, operation.periopBedReservation.roomInstanceId, context),
+  ));
 }
 
 function preemptEmployeeShopping(state: GameState, employeeId: string): void {
@@ -610,6 +932,12 @@ function releaseResources(state: GameState, operation: ServiceOperationState): v
   operation.providerReservation = null;
 }
 
+function releasePeriopBed(operation: ServiceOperationState): void {
+  operation.periopBedReservation = undefined;
+  operation.transitionHeldRoomInstanceIds = [];
+  operation.nextPhaseReadyAtFacilityTick = null;
+}
+
 function cancel(
   state: GameState,
   operation: ServiceOperationState,
@@ -618,6 +946,7 @@ function cancel(
   departurePlanner?: EncounterDeparturePlanner,
 ): void {
   releaseResources(state, operation);
+  releasePeriopBed(operation);
   operation.cancelledAtFacilityTick = state.facilityTick;
   operation.cancellationReason = reason;
   if (operation.actorKind === "visitor") {
@@ -628,7 +957,8 @@ function cancel(
   } else if (
     operation.actorKind === "encounter" &&
     (operation.testChoiceOrder?.purpose === "continuation" ||
-      operation.testChoiceOrder?.purpose === "staged_result_component")
+      operation.testChoiceOrder?.purpose === "staged_result_component" ||
+      operation.testChoiceOrder?.purpose === "result_gate")
   ) {
     operation.status = "cancelled";
   } else if (operation.actorKind === "encounter") {
@@ -642,7 +972,8 @@ function cancel(
 }
 
 function validateReservedResources(state: GameState, operation: ServiceOperationState, context: DomainContext): boolean {
-  return operation.reservedRoomInstanceIds.every((id) => isRoomOperationalForFacilityWork(state, id, context)) &&
+  return operationRoomIds(operation).every((id) => isRoomOperationalForFacilityWork(state, id, context)) &&
+    (!operation.periopBedReservation || Boolean(availablePeriopBedReservation(state, operation, context, new Set()))) &&
     [...operation.reservedEmployeeIds, ...(operation.providerReservation?.kind === "employee" ? [operation.providerReservation.employeeId] : [])].every((id) => state.employees.some((employee) => employee.id === id && employee.facilityTask?.targetId === operation.id)) &&
     (operation.providerReservation?.kind !== "founder" || state.environment.founderActivity?.targetId === operation.id);
 }
@@ -676,11 +1007,15 @@ function releaseCompletedPhase(
   state: GameState,
   operation: ServiceOperationState,
   line: ServiceIncomeLine,
+  retainCompletedRoom = false,
 ): void {
   const phases = operationPhases(operation, line);
   const completedPhase = phases[operation.phaseIndex]!;
   const futurePhases = phases.slice(operation.phaseIndex + 1);
-  if (!futurePhases.some((phase) => phase.roomDefinitionId === completedPhase.roomDefinitionId)) {
+  if (
+    !retainCompletedRoom &&
+    !futurePhases.some((phase) => phase.roomDefinitionId === completedPhase.roomDefinitionId)
+  ) {
     operation.reservedRoomInstanceIds = operation.reservedRoomInstanceIds.filter((roomId) =>
       state.rooms.find((room) => room.id === roomId)?.roomDefinitionId !== completedPhase.roomDefinitionId,
     );
@@ -689,7 +1024,10 @@ function releaseCompletedPhase(
   for (const employeeId of [...operation.reservedEmployeeIds]) {
     const employee = state.employees.find((candidate) => candidate.id === employeeId);
     if (!employee || !completedRoles.has(employee.staffRoleDefinitionId)) continue;
-    if (futurePhases.some((phase) => phase.staffRoleDefinitionIds.includes(employee.staffRoleDefinitionId))) continue;
+    if (
+      operation.phaseFlowVersion !== 1 &&
+      futurePhases.some((phase) => phase.staffRoleDefinitionIds.includes(employee.staffRoleDefinitionId))
+    ) continue;
     if (employee.facilityTask?.kind === "perform_service" && employee.facilityTask.targetId === operation.id) {
       employee.facilityTask = null;
     }
@@ -707,6 +1045,108 @@ function releaseCompletedPhase(
   }
 }
 
+function tryReserveNextPhase(
+  state: GameState,
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+  context: DomainContext,
+): boolean {
+  const nextPhaseIndex = operation.phaseIndex + 1;
+  if (!operationPhases(operation, line)[nextPhaseIndex]) return false;
+  const candidate: ServiceOperationState = {
+    ...operation,
+    phaseIndex: nextPhaseIndex,
+    phaseStartedAtFacilityTick: null,
+    phaseEndsAtFacilityTick: null,
+    reservedRoomInstanceIds: [],
+    reservedEmployeeIds: [],
+    providerReservation: null,
+    path: operation.location ? [{ ...operation.location }] : [],
+    pathIndex: 0,
+  };
+  if (!tryReserve(
+    state,
+    candidate,
+    line,
+    context,
+    "walking_between_phases",
+  )) {
+    return false;
+  }
+  operation.phaseIndex = candidate.phaseIndex;
+  operation.phaseStartedAtFacilityTick = null;
+  operation.phaseEndsAtFacilityTick = null;
+  operation.reservedRoomInstanceIds = candidate.reservedRoomInstanceIds;
+  operation.reservedEmployeeIds = candidate.reservedEmployeeIds;
+  operation.providerReservation = candidate.providerReservation;
+  operation.path = candidate.path;
+  operation.pathIndex = candidate.pathIndex;
+  operation.lastMovedAtFacilityTick = candidate.lastMovedAtFacilityTick;
+  operation.status = candidate.status;
+  operation.nextPhaseReadyAtFacilityTick = null;
+  return true;
+}
+
+function beginPeriopBedDischarge(
+  state: GameState,
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+  context: DomainContext,
+  departurePlanner?: EncounterDeparturePlanner,
+): void {
+  credit(state, operation);
+  releaseCompletedPhase(state, operation, line);
+  releaseResources(state, operation);
+  operation.phaseIndex += 1;
+  operation.completedAtFacilityTick = state.facilityTick;
+  operation.nextPhaseReadyAtFacilityTick = null;
+  operation.status = "discharging";
+  if (operation.actorKind === "visitor") {
+    const location = operationLocation(state, operation);
+    const travel = ensureVisitorTravel(state, operation, context);
+    const path = travel ? pathServiceVisitorToOffscreenEndpoint(state, context, location, travel.offscreenEndpoint) : [];
+    if (path.length > 0) setOperationPath(state, operation, path, "discharging");
+  } else if (
+    operation.actorKind === "encounter" &&
+    operation.testChoiceOrder?.purpose !== "continuation" &&
+    operation.testChoiceOrder?.purpose !== "staged_result_component" &&
+    operation.testChoiceOrder?.purpose !== "result_gate"
+  ) {
+    startResolvedEncounterDeparture(state, operation, context, departurePlanner);
+  }
+}
+
+function movePeriopBedFlowToNextPhase(
+  state: GameState,
+  operation: ServiceOperationState,
+  line: ServiceIncomeLine,
+  context: DomainContext,
+  departurePlanner?: EncounterDeparturePlanner,
+): void {
+  const phases = operationPhases(operation, line);
+  const completed = phases[operation.phaseIndex];
+  const nextPhase = phases[operation.phaseIndex + 1];
+  if (!completed) return;
+  if (!nextPhase) {
+    beginPeriopBedDischarge(state, operation, line, context, departurePlanner);
+    return;
+  }
+  if (completed.roomDefinitionId && completed.roomDefinitionId !== "room.periop_recovery") {
+    operation.transitionHeldRoomInstanceIds = [...new Set([
+      ...(operation.transitionHeldRoomInstanceIds ?? []),
+      ...operation.reservedRoomInstanceIds.filter((roomId) =>
+        state.rooms.find((room) => room.id === roomId)?.roomDefinitionId === completed.roomDefinitionId,
+      ),
+    ])];
+  }
+  releaseCompletedPhase(state, operation, line);
+  operation.reservedRoomInstanceIds = [];
+  operation.status = "waiting_for_next_phase";
+  operation.phaseStartedAtFacilityTick = null;
+  operation.phaseEndsAtFacilityTick = null;
+  operation.nextPhaseReadyAtFacilityTick = state.facilityTick;
+}
+
 function moveToNextPhase(
   state: GameState,
   operation: ServiceOperationState,
@@ -714,6 +1154,10 @@ function moveToNextPhase(
   context: DomainContext,
   departurePlanner?: EncounterDeparturePlanner,
 ): void {
+  if (operation.periopBedFlowVersion === 1) {
+    movePeriopBedFlowToNextPhase(state, operation, line, context, departurePlanner);
+    return;
+  }
   const nextPhase = operationPhases(operation, line)[operation.phaseIndex + 1];
   if (!nextPhase) {
     credit(state, operation);
@@ -729,7 +1173,8 @@ function moveToNextPhase(
     } else if (
       operation.actorKind === "encounter" &&
       (operation.testChoiceOrder?.purpose === "continuation" ||
-        operation.testChoiceOrder?.purpose === "staged_result_component")
+        operation.testChoiceOrder?.purpose === "staged_result_component" ||
+        operation.testChoiceOrder?.purpose === "result_gate")
     ) {
       operation.status = "completed";
     } else if (operation.actorKind === "encounter") {
@@ -740,6 +1185,14 @@ function moveToNextPhase(
     } else {
       operation.status = "completed";
     }
+    return;
+  }
+  if (operation.phaseFlowVersion === 1) {
+    releaseCompletedPhase(state, operation, line, true);
+    operation.status = "waiting_for_next_phase";
+    operation.phaseStartedAtFacilityTick = null;
+    operation.phaseEndsAtFacilityTick = null;
+    tryReserveNextPhase(state, operation, line, context);
     return;
   }
   releaseCompletedPhase(state, operation, line);
@@ -768,7 +1221,8 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
   const arrivalPath = actorKind === "visitor" && endpoint && entrance
     ? joinPaths(straightServiceVisitorSidewalkPath(endpoint, entrance.outside), [entrance.inside])
     : [];
-  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}) };
+  const periopPhases = getNewPeriopServiceOperationPhases(line.id);
+  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [], frozenOperationPhases: periopPhases } : {}) };
 }
 
 export function startServiceOperation(state: GameState, lineId: string, actorKind: "visitor" | "remote", context: DomainContext): string | null {
@@ -865,11 +1319,57 @@ export function advanceServiceOperations(
   departurePlanner?: EncounterDeparturePlanner,
 ): void {
   scheduleArrivals(state, context);
+  for (const employee of state.employees) {
+    if (
+      employee.facilityTask?.kind === "cover_periop" &&
+      !isEmployeeAssignedToOperationalRoom(state, employee.id, context)
+    ) employee.facilityTask = null;
+  }
+  for (const roomId of new Set(state.serviceOperations.flatMap((operation) =>
+    active(operation) && operation.periopBedReservation
+      ? [operation.periopBedReservation.roomInstanceId]
+      : [],
+  ))) {
+    if (!getPeriopCoverageEmployee(state, roomId)) {
+      commitPeriopCoveragePlan(state, roomId, planPeriopCoverage(state, roomId, context));
+    }
+  }
   for (const operation of state.serviceOperations) {
     const line = getServiceIncomeLine(operation.incomeLineId);
     if (!line?.operation) continue;
     if (operation.status === "completed" || operation.status === "cancelled") continue;
+    const amenityKind = operation.actorKind === "encounter" ? "encounter" : "service_visitor";
+    const amenityId = operation.actorKind === "encounter" ? operation.actorId : operation.id;
+    const departureRetail = state.retailOperations.find((trip) =>
+      trip.departureServiceOperationId === operation.id &&
+      trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned",
+    );
+    if (departureRetail) {
+      operation.location = { ...departureRetail.location };
+      if (operation.actorKind === "encounter") {
+        const encounter = state.encounters[operation.actorId];
+        if (encounter) encounter.patientLocation = { ...departureRetail.location };
+      }
+      continue;
+    }
+    if (hasActivePatientAmenityTrip(state, amenityKind, amenityId)) {
+      if (operation.periopBedFlowVersion === 1 && !validateReservedResources(state, operation, context)) {
+        state.patientAmenityTrips = state.patientAmenityTrips?.filter((trip) =>
+          !(trip.actorKind === amenityKind && trip.actorId === amenityId),
+        );
+        cancel(state, operation, "Required service capacity became unavailable.", context, departurePlanner);
+        continue;
+      }
+      if (
+        operation.status === "in_service" &&
+        operation.phaseEndsAtFacilityTick !== null &&
+        operation.periopBedFlowVersion === 1 &&
+        operation.phaseIndex === 0
+      ) operation.phaseEndsAtFacilityTick += 1;
+      continue;
+    }
     holdResolvedEncounterForActiveOperation(state, operation);
+    releaseClearedTransitionRooms(state, operation, context);
     if (operation.status === "arriving") {
       const travel = ensureVisitorTravel(state, operation, context);
       advanceActorMovement(state, operation, context);
@@ -885,6 +1385,16 @@ export function advanceServiceOperations(
     }
     if (operation.status === "leaving") {
       if (operation.actorKind === "encounter") {
+        const encounter = state.encounters[operation.actorId];
+        const location = encounter?.patientLocation;
+        if (encounter?.patientMovement === null && location &&
+          (location.x < 0 || location.y < 0 ||
+            location.x >= context.balanceRelease.facility.gridWidth ||
+            location.y >= context.balanceRelease.facility.gridHeight)) {
+          operation.location = { ...location };
+          operation.status = operation.cancelledAtFacilityTick === null ? "completed" : "cancelled";
+          continue;
+        }
         if (startResolvedEncounterDeparture(state, operation, context, departurePlanner)) {
           operation.status = operation.cancelledAtFacilityTick === null
             ? "completed"
@@ -900,13 +1410,58 @@ export function advanceServiceOperations(
       }
       continue;
     }
+    if (operation.status === "discharging") {
+      if (!operation.periopBedReservation && operation.departureItinerary) {
+        if (operation.departureItinerary.status === "pending" || operation.departureItinerary.status === "bathroom" || operation.departureItinerary.status === "retail") continue;
+        if (operation.actorKind === "visitor") {
+          ensureCompleteVisitorDeparture(state, operation, context);
+          operation.status = "leaving";
+        } else {
+          const departureStarted = startResolvedEncounterDeparture(state, operation, context, departurePlanner);
+          operation.status = departureStarted
+            ? operation.cancelledAtFacilityTick === null ? "completed" : "cancelled"
+            : "leaving";
+        }
+        continue;
+      }
+      if (operation.actorKind === "visitor") {
+        ensureCompleteVisitorDeparture(state, operation, context);
+        advanceActorMovement(state, operation, context);
+      } else if (
+        operation.actorKind === "encounter" &&
+        operation.testChoiceOrder?.purpose !== "continuation" &&
+        operation.testChoiceOrder?.purpose !== "staged_result_component" &&
+        operation.testChoiceOrder?.purpose !== "result_gate"
+      ) {
+        startResolvedEncounterDeparture(state, operation, context, departurePlanner);
+      }
+      const bedRoomId = operation.periopBedReservation?.roomInstanceId;
+      if (bedRoomId && !operationInsideRoom(state, operation, bedRoomId, context)) {
+        releasePeriopBed(operation);
+        const encounter = operation.actorKind === "encounter" ? state.encounters[operation.actorId] : null;
+        const terminalDeparture = operation.periopBedFlowVersion === 1 &&
+          (operation.actorKind === "visitor" || encounter?.lifecycle === "resolved");
+        if (terminalDeparture) {
+          operation.departureItinerary = {
+            version: "service-departure-itinerary.v1", status: "pending", choiceKind: null,
+            selectedAtFacilityTick: null, completedAtFacilityTick: null, linkedTripId: null, retailIncomeLineId: null,
+          };
+          operation.path = operation.location ? [{ ...operation.location }] : [];
+          operation.pathIndex = 0;
+          if (encounter) encounter.patientMovement = null;
+        } else {
+          operation.status = operation.actorKind === "visitor" ? "leaving" : "completed";
+        }
+      }
+      continue;
+    }
     if (operation.status === "waiting_for_resources") {
       if ((operation.actorKind !== "encounter" || operation.resourceQueueVersion !== 1) && state.facilityTick >= operation.waitDeadlineFacilityTick) { cancel(state, operation, "The visitor could not start within 60 minutes.", context, departurePlanner); continue; }
       if (operation.actorKind === "visitor" && state.retailOperations.some((trip) =>
         trip.actorKind === "service_visitor" && trip.actorId === operation.id &&
         trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned",
       )) continue;
-      if (operation.actorKind === "visitor" && state.serviceOperations.some((candidate) =>
+      if (operation.actorKind === "visitor" && operation.phaseFlowVersion !== 1 && state.serviceOperations.some((candidate) =>
         candidate.id !== operation.id &&
         candidate.actorKind === "visitor" &&
         candidate.incomeLineId === operation.incomeLineId &&
@@ -924,15 +1479,78 @@ export function advanceServiceOperations(
       }
       continue;
     }
+    if (operation.status === "waiting_for_next_phase") {
+      if (
+        (operation.periopBedFlowVersion === 1 && !validateReservedResources(state, operation, context)) ||
+        (operation.periopBedFlowVersion !== 1 && !operation.reservedRoomInstanceIds.every((id) =>
+          isRoomOperationalForFacilityWork(state, id, context)
+        ))
+      ) {
+        cancel(
+          state,
+          operation,
+          "The room holding the patient between service phases became unavailable.",
+          context,
+          departurePlanner,
+        );
+        continue;
+      }
+      if (operation.periopBedFlowVersion !== 1) tryReserveNextPhase(state, operation, line, context);
+      continue;
+    }
     if (!validateReservedResources(state, operation, context)) { cancel(state, operation, "Required service capacity became unavailable.", context, departurePlanner); continue; }
     if (operation.status === "walking_to_service" || operation.status === "walking_between_phases") {
       advanceActorMovement(state, operation, context);
-      if (operation.pathIndex >= operation.path.length - 1 && resourcesArrived(state, operation)) beginPhase(state, operation, line);
+      releaseClearedTransitionRooms(state, operation, context);
+      if (operation.pathIndex >= operation.path.length - 1 && resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
+      continue;
+    }
+    if (
+      operation.status === "in_service" &&
+      isPeriopBedPhase(operation, line) &&
+      operation.phaseEndsAtFacilityTick !== null &&
+      (!operation.periopBedReservation ||
+        !samePoint(operationLocation(state, operation), operation.periopBedReservation.endpoint) ||
+        !periopCoverageReady(state, operation.periopBedReservation.roomInstanceId, context))
+    ) {
+      operation.phaseEndsAtFacilityTick += 1;
       continue;
     }
     if (operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null && state.facilityTick >= operation.phaseEndsAtFacilityTick) {
       moveToNextPhase(state, operation, line, context, departurePlanner);
       continue;
     }
+  }
+  for (const operation of state.serviceOperations
+    .filter((candidate) => candidate.periopBedFlowVersion === 1 && candidate.status === "waiting_for_next_phase" &&
+      !hasActivePatientAmenityTrip(
+        state,
+        candidate.actorKind === "encounter" ? "encounter" : "service_visitor",
+        candidate.actorKind === "encounter" ? candidate.actorId : candidate.id,
+      ))
+    .sort((left, right) =>
+      (left.nextPhaseReadyAtFacilityTick ?? Number.MAX_SAFE_INTEGER) - (right.nextPhaseReadyAtFacilityTick ?? Number.MAX_SAFE_INTEGER) ||
+      left.createdAtFacilityTick - right.createdAtFacilityTick ||
+      left.id.localeCompare(right.id),
+    )) {
+    const line = getServiceIncomeLine(operation.incomeLineId);
+    if (!line?.operation || !operation.periopBedReservation) continue;
+    const completedPhase = operationPhases(operation, line)[operation.phaseIndex];
+    if (
+      completedPhase?.roomDefinitionId === "room.periop_recovery" &&
+      !samePoint(operationLocation(state, operation), operation.periopBedReservation.endpoint)
+    ) continue;
+    tryReserveNextPhase(state, operation, line, context);
+  }
+  const coveredRoomIds = new Set(state.serviceOperations.flatMap((operation) =>
+    active(operation) && operation.periopBedReservation
+      ? [operation.periopBedReservation.roomInstanceId]
+      : [],
+  ));
+  for (const employee of state.employees) {
+    if (
+      employee.facilityTask?.kind === "cover_periop" &&
+      (!employee.facilityTask.targetId || !coveredRoomIds.has(employee.facilityTask.targetId))
+    ) employee.facilityTask = null;
   }
 }

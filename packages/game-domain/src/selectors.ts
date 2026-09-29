@@ -1661,6 +1661,12 @@ export function getPendingResultEta(
   if (pendingResult.resourceQueue?.status === "waiting_for_resources") {
     return null;
   }
+  if (
+    pendingResult.localServiceOperation &&
+    pendingResult.localServiceOperation.status !== "external_processing"
+  ) {
+    return null;
+  }
   return Math.max(0, pendingResult.dueTick - state.facilityTick);
 }
 
@@ -1669,6 +1675,9 @@ export function getPendingPatientLocation(
   encounterId: string,
 ) {
   const pending = state.encounters[encounterId]?.pendingResult;
+  if (!pending || pending.deliveredAtTick !== null) {
+    return null;
+  }
   const travel = pending?.patientTravel;
   if (
     pending?.onsiteReturn?.serviceCompletedAtTick !== null &&
@@ -1716,13 +1725,15 @@ export function getPendingPatientRoutePresentation(
   state: GameState,
   encounterId: string,
 ): { path: GridPoint[]; pathIndex: number } | null {
-  const travel =
-    state.encounters[encounterId]?.pendingResult?.patientTravel;
+  const pending = state.encounters[encounterId]?.pendingResult;
+  if (!pending || pending.deliveredAtTick !== null) {
+    return null;
+  }
+  const travel = pending.patientTravel;
   if (!travel) {
     return null;
   }
-  const onsiteReturn =
-    state.encounters[encounterId]?.pendingResult?.onsiteReturn;
+  const onsiteReturn = pending.onsiteReturn;
   if (
     onsiteReturn?.serviceCompletedAtTick !== null &&
     onsiteReturn?.serviceCompletedAtTick !== undefined &&

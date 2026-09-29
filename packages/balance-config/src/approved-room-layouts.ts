@@ -41,6 +41,15 @@ export interface ApprovedRoomNavigationContract {
   staffAnchor: ApprovedFloorPoint | null;
   patientCareAnchor?: ApprovedFloorPoint | null;
   clinicianCareAnchor?: ApprovedFloorPoint | null;
+  /** Stable furniture stations used by persisted care reservations. */
+  careStations?: Array<{
+    id: string;
+    kind: "periop_bed";
+    patientAnchor: ApprovedFloorPoint;
+    facing: "north" | "east" | "south" | "west";
+  }>;
+  /** Shared clinical coverage post, distinct from patient care stations. */
+  sharedStaffAnchor?: ApprovedFloorPoint | null;
   publicWaitingArea?: boolean;
 }
 
@@ -154,11 +163,22 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
       { id: "WD", footprint: { left: 0, top: 3.4, width: 1.55, height: 0.7 }, blockedTiles: [{ x: 0, y: 3 }], hiddenByDoorSlots: [{ side: "west", offset: 3 }] },
       { id: "EC", footprint: { left: 4.45, top: 1.9, width: 1.55, height: 0.7 }, blockedTiles: [{ x: 5, y: 2 }], hiddenByDoorSlots: [{ side: "east", offset: 2 }] },
       { id: "ED", footprint: { left: 4.45, top: 3.4, width: 1.55, height: 0.7 }, blockedTiles: [{ x: 5, y: 3 }], hiddenByDoorSlots: [{ side: "east", offset: 3 }] },
-      { id: "S3", footprint: { left: 1.9, top: 4.45, width: 0.7, height: 1.55 }, blockedTiles: [{ x: 2, y: 4 }, { x: 2, y: 5 }], hiddenByDoorSlots: [{ side: "south", offset: 2 }] },
-      { id: "S4", footprint: { left: 3.4, top: 4.45, width: 0.7, height: 1.55 }, blockedTiles: [{ x: 3, y: 4 }, { x: 3, y: 5 }], hiddenByDoorSlots: [{ side: "south", offset: 3 }] },
-      { id: "station", footprint: { left: 2, top: 3, width: 2, height: 0.65 }, blockedTiles: [{ x: 2, y: 3 }, { x: 3, y: 3 }] },
+      { id: "S3", footprint: { left: 1.9, top: 4.45, width: 0.7, height: 1.55 }, blockedTiles: [{ x: 2, y: 4 }, { x: 2, y: 5 }], endpointOnlyContacts: [{ x: 2, y: 4 }], hiddenByDoorSlots: [{ side: "south", offset: 2 }] },
+      { id: "S4", footprint: { left: 3.4, top: 4.45, width: 0.7, height: 1.55 }, blockedTiles: [{ x: 3, y: 4 }, { x: 3, y: 5 }], endpointOnlyContacts: [{ x: 3, y: 4 }], hiddenByDoorSlots: [{ side: "south", offset: 3 }] },
+      { id: "station", footprint: { left: 2, top: 3, width: 2, height: 0.65 }, blockedTiles: [{ x: 2, y: 3 }, { x: 3, y: 3 }], endpointOnlyContacts: [{ x: 3, y: 3 }] },
     ],
     primaryAnchor: { x: 3, y: 2 }, waitingAnchors: [{ x: 1, y: 2 }], staffAnchor: { x: 3, y: 2 },
+    careStations: [
+      { id: "N3", kind: "periop_bed", patientAnchor: { x: 2, y: 2 }, facing: "south" },
+      { id: "N4", kind: "periop_bed", patientAnchor: { x: 3, y: 2 }, facing: "south" },
+      { id: "S3", kind: "periop_bed", patientAnchor: { x: 2, y: 4 }, facing: "north" },
+      { id: "S4", kind: "periop_bed", patientAnchor: { x: 3, y: 4 }, facing: "north" },
+      { id: "WC", kind: "periop_bed", patientAnchor: { x: 1, y: 2 }, facing: "east" },
+      { id: "WD", kind: "periop_bed", patientAnchor: { x: 1, y: 3 }, facing: "east" },
+      { id: "EC", kind: "periop_bed", patientAnchor: { x: 4, y: 2 }, facing: "west" },
+      { id: "ED", kind: "periop_bed", patientAnchor: { x: 4, y: 3 }, facing: "west" },
+    ],
+    sharedStaffAnchor: { x: 3, y: 3 },
   },
   "room.training": {
     roomDefinitionId: "room.training", width: 3, height: 3, allowedOrientations: [0],
@@ -203,6 +223,8 @@ export function getApprovedRoomNavigation(roomDefinitionId: string) {
     staffAnchor: contract.staffAnchor,
     patientCareAnchor: contract.patientCareAnchor,
     clinicianCareAnchor: contract.clinicianCareAnchor,
+    ...(contract.careStations ? { careStations: contract.careStations } : {}),
+    ...(contract.sharedStaffAnchor === undefined ? {} : { sharedStaffAnchor: contract.sharedStaffAnchor }),
     ...(contract.publicWaitingArea === undefined ? {} : { publicWaitingArea: contract.publicWaitingArea }),
   };
 }

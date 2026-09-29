@@ -145,6 +145,30 @@ describe("approved GS-015 room presentation contract", () => {
     expect(isApprovedDrawVisible(n4Bed, new Set(["N3"]), new Set())).toBe(true);
   });
 
+  it("attaches every Peri-op patient support to its exact inward-facing bed foot", () => {
+    const supports = resolveApprovedRoomActorSupports("room.periop_recovery", 0);
+    expect(supports.map((support) => [support.id, support.role, support.pose, support.facing])).toEqual([
+      ["periop-bed:N3", "periop-bed-patient", "seated", "south"],
+      ["periop-bed:N4", "periop-bed-patient", "seated", "south"],
+      ["periop-bed:S3", "periop-bed-patient", "seated", "north"],
+      ["periop-bed:S4", "periop-bed-patient", "seated", "north"],
+      ["periop-bed:WC", "periop-bed-patient", "seated", "east"],
+      ["periop-bed:WD", "periop-bed-patient", "seated", "east"],
+      ["periop-bed:EC", "periop-bed-patient", "seated", "west"],
+      ["periop-bed:ED", "periop-bed-patient", "seated", "west"],
+    ]);
+    expect(supports.map(({ id, seat, ground, fixtureGround }) => [id, seat, ground, fixtureGround])).toEqual([
+      ["periop-bed:N3", { x: 2.25, y: 1.20443 }, { x: 2.25, y: 1.55 }, { x: 2.25, y: 1.55 }],
+      ["periop-bed:N4", { x: 3.75, y: 1.20443 }, { x: 3.75, y: 1.55 }, { x: 3.75, y: 1.55 }],
+      ["periop-bed:S3", { x: 2.25, y: 4.104393 }, { x: 2.25, y: 4.45 }, { x: 2.25, y: 4.45 }],
+      ["periop-bed:S4", { x: 3.75, y: 4.104393 }, { x: 3.75, y: 4.45 }, { x: 3.75, y: 4.45 }],
+      ["periop-bed:WC", { x: 1.428906, y: 2.25125 }, { x: 1.55, y: 2.6 }, { x: 1.55, y: 2.6 }],
+      ["periop-bed:WD", { x: 1.428906, y: 3.75125 }, { x: 1.55, y: 4.1 }, { x: 1.55, y: 4.1 }],
+      ["periop-bed:EC", { x: 4.570905, y: 2.254212 }, { x: 4.45, y: 2.6 }, { x: 4.45, y: 2.6 }],
+      ["periop-bed:ED", { x: 4.570905, y: 3.754212 }, { x: 4.45, y: 4.1 }, { x: 4.45, y: 4.1 }],
+    ]);
+  });
+
   it("applies door and backing ownership to one resolved instance at a time", () => {
     const evs = resolveApprovedRoomDrawRecords("room.evs_closet", 0);
     const shelf1 = evs.find((draw) => draw.id === "shelf1")!;

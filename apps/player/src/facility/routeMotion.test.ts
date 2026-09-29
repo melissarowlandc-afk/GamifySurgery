@@ -76,6 +76,157 @@ describe("route motion interpolation", () => {
     expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 1 });
   });
 
+  it("joins a replacement route at its authoritative current index without replaying its historical prefix", () => {
+    const previousPath = [
+      { x: 2, y: 2 },
+      { x: 3, y: 2 },
+      { x: 4, y: 2 },
+    ];
+    const replacementPath = [
+      { x: 8, y: 6 },
+      { x: 7, y: 6 },
+      { x: 6, y: 6 },
+      { x: 5, y: 6 },
+      { x: 4, y: 6 },
+      { x: 4, y: 5 },
+      { x: 4, y: 4 },
+      { x: 4, y: 3 },
+      { x: 4, y: 2 },
+      { x: 4, y: 1 },
+    ];
+    let track = syncRouteMotion(undefined, {
+      location: previousPath[0],
+      path: previousPath,
+      pathIndex: 0,
+      lookaheadPathNodes: 2,
+    })!;
+    track = advanceRouteMotion(track, 1_000, 2);
+    const retainedPreviousPath = track.path.map((point) => ({ ...point }));
+
+    track = syncRouteMotion(track, {
+      location: replacementPath[8],
+      path: replacementPath,
+      pathIndex: 8,
+      lookaheadPathNodes: 1,
+    })!;
+
+    expect(track.path).toEqual([
+      ...retainedPreviousPath,
+      replacementPath[9],
+    ]);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 2 });
+    track = advanceRouteMotion(track, 500, 2);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 4, y: 1 });
+  });
+
+  it("finishes and reverses only the current known edge when its shared waypoint is behind fractional render progress", () => {
+    const previousPath = [
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 2, y: 0 },
+    ];
+    const replacementPath = [
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 1, y: 2 },
+    ];
+    let track = syncRouteMotion(undefined, {
+      location: previousPath[0],
+      path: previousPath,
+      pathIndex: 0,
+      lookaheadPathNodes: 2,
+    })!;
+    track = advanceRouteMotion(track, 750, 2);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 1.5, y: 0 });
+
+    track = syncRouteMotion(track, {
+      location: replacementPath[0],
+      path: replacementPath,
+      pathIndex: 0,
+      lookaheadPathNodes: 1,
+    })!;
+
+    expect(track.path).toEqual([
+      ...previousPath,
+      replacementPath[0],
+      replacementPath[1],
+      replacementPath[2],
+    ]);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 1.5, y: 0 });
+    track = advanceRouteMotion(track, 250, 2);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 2, y: 0 });
+    track = advanceRouteMotion(track, 500, 2);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 1, y: 0 });
+  });
+
+  it("resets to the authoritative point when routes are disconnected instead of inventing a bridge", () => {
+    const previousPath = [
+      { x: 1, y: 1 },
+      { x: 2, y: 1 },
+    ];
+    const replacementPath = [
+      { x: 9, y: 9 },
+      { x: 9, y: 8 },
+      { x: 9, y: 7 },
+      { x: 8, y: 7 },
+    ];
+    let track = syncRouteMotion(undefined, {
+      location: previousPath[0],
+      path: previousPath,
+      pathIndex: 0,
+      lookaheadPathNodes: 1,
+    })!;
+    track = advanceRouteMotion(track, 1_000, 1);
+
+    track = syncRouteMotion(track, {
+      location: replacementPath[2],
+      path: replacementPath,
+      pathIndex: 2,
+      lookaheadPathNodes: 1,
+    })!;
+
+    expect(track.path).toEqual(replacementPath);
+    expect(track.progress).toBe(2);
+    expect(sampleRouteMotion(track).location).toEqual(replacementPath[2]);
+  });
+
+  it("retains a valid old tail into the successor prefix when rendering is behind the logical route", () => {
+    const previousPath = [
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 2, y: 0 },
+    ];
+    const replacementPath = [
+      { x: 2, y: 0 },
+      { x: 2, y: 1 },
+      { x: 2, y: 2 },
+    ];
+    let track = syncRouteMotion(undefined, {
+      location: previousPath[0],
+      path: previousPath,
+      pathIndex: 0,
+      lookaheadPathNodes: 1,
+    })!;
+    track = advanceRouteMotion(track, 500, 2);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 1, y: 0 });
+
+    track = syncRouteMotion(track, {
+      location: replacementPath[2],
+      path: replacementPath,
+      pathIndex: 2,
+      lookaheadPathNodes: 1,
+    })!;
+
+    expect(track.path).toEqual([
+      ...previousPath,
+      replacementPath[1],
+      replacementPath[2],
+    ]);
+    expect(sampleRouteMotion(track).location).toEqual({ x: 1, y: 0 });
+    track = advanceRouteMotion(track, 1_500, 2);
+    expect(sampleRouteMotion(track).location).toEqual(replacementPath[2]);
+  });
+
   it("finishes a saved route smoothly after logical movement clears", () => {
     const path = [
       { x: 2, y: 2 },

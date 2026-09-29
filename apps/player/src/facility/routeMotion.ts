@@ -73,33 +73,6 @@ function rightFacingAt(
   return start && end && end.x !== start.x ? end.x > start.x : fallback;
 }
 
-/**
- * This is only a defensive bridge for malformed or legacy route handoffs.
- * Normal gameplay routes share an exact cardinal waypoint at their boundary.
- */
-function appendCardinalBridge(path: GridPoint[], goal: GridPoint): void {
-  const last = path.at(-1);
-  if (!last) {
-    appendPoint(path, goal);
-    return;
-  }
-  let cursor = { ...last };
-  while (cursor.x !== goal.x) {
-    cursor = {
-      x: cursor.x + Math.sign(goal.x - cursor.x),
-      y: cursor.y,
-    };
-    appendPoint(path, cursor);
-  }
-  while (cursor.y !== goal.y) {
-    cursor = {
-      x: cursor.x,
-      y: cursor.y + Math.sign(goal.y - cursor.y),
-    };
-    appendPoint(path, cursor);
-  }
-}
-
 function handoffRouteMotion(
   previous: RouteMotionTrack,
   path: readonly GridPoint[],
@@ -107,41 +80,84 @@ function handoffRouteMotion(
   logicalIndex: number,
   predictiveIndex: number,
 ): RouteMotionTrack {
-  const first = path[0]!;
   const searchStart = clampPathIndex(
     previous.path,
     Math.floor(previous.progress),
   );
-  let handoffIndex = -1;
-  for (
-    let index = searchStart;
-    index < previous.path.length;
-    index += 1
-  ) {
-    if (samePoint(previous.path[index], first)) {
-      handoffIndex = index;
-      break;
+  let previousHandoffIndex = -1;
+  let nextHandoffIndex = -1;
+  const findHandoff = (nextStart: number, nextEnd: number) => {
+    for (
+      let previousIndex = searchStart;
+      previousIndex < previous.path.length;
+      previousIndex += 1
+    ) {
+      for (
+        let nextIndex = nextStart;
+        nextIndex <= nextEnd;
+        nextIndex += 1
+      ) {
+        if (samePoint(previous.path[previousIndex], path[nextIndex])) {
+          return { previousIndex, nextIndex };
+        }
+      }
     }
+    return null;
+  };
+  // Prefer the successor's authoritative current/predictive window so a late
+  // projection can never replay a historical prefix. If the renderer is
+  // genuinely behind, a shared prefix waypoint remains a valid catch-up path.
+  const handoff =
+    findHandoff(logicalIndex, predictiveIndex) ??
+    findHandoff(0, logicalIndex - 1);
+  if (handoff) {
+    previousHandoffIndex = handoff.previousIndex;
+    nextHandoffIndex = handoff.nextIndex;
   }
 
-  const combined =
-    handoffIndex >= 0
-      ? previous.path
-          .slice(0, handoffIndex + 1)
-          .map((point) => ({ ...point }))
-      : previous.path.map((point) => ({ ...point }));
-  if (handoffIndex < 0) {
-    appendCardinalBridge(combined, first);
+  if (previousHandoffIndex < 0) {
+    return {
+      path: path.map((point) => ({ ...point })),
+      signature: routeSignature,
+      progress: logicalIndex,
+      targetIndex: predictiveIndex,
+      sourceOffset: 0,
+      lastObservedPathIndex: logicalIndex,
+      routeActive: true,
+      rightFacing: rightFacingAt(path, logicalIndex, previous.rightFacing),
+    };
   }
-  const sourceOffset = Math.max(0, combined.length - 1);
-  for (const point of path.slice(1)) {
+
+  const renderedCurrentEdgeEnd = clampPathIndex(
+    previous.path,
+    Math.ceil(previous.progress),
+  );
+  const retainedEnd = Math.max(previousHandoffIndex, renderedCurrentEdgeEnd);
+  const combined = previous.path
+    .slice(0, retainedEnd + 1)
+    .map((point) => ({ ...point }));
+  // If interpolation already passed the shared point, complete only the
+  // current known edge and walk that same validated edge back. This avoids a
+  // visible snap without finishing an unrelated stale route tail.
+  if (previousHandoffIndex < previous.progress) {
+    for (
+      let index = renderedCurrentEdgeEnd - 1;
+      index >= previousHandoffIndex;
+      index -= 1
+    ) {
+      appendPoint(combined, previous.path[index]!);
+    }
+  }
+  const renderedHandoffIndex = combined.length - 1;
+  const sourceOffset = renderedHandoffIndex - nextHandoffIndex;
+  for (const point of path.slice(nextHandoffIndex + 1)) {
     appendPoint(combined, point);
   }
 
   return {
     path: combined,
     signature: routeSignature,
-    progress: Math.min(previous.progress, sourceOffset),
+    progress: Math.min(previous.progress, combined.length - 1),
     targetIndex: Math.max(
       previous.progress,
       sourceOffset + predictiveIndex,

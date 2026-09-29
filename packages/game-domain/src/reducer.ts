@@ -91,17 +91,27 @@ import {
 import {
   advanceServiceOperations,
   encounterHasActiveServiceOperation,
+  getNewPeriopServiceOperationPhases,
   startEncounterProcedureOperation,
   startEncounterTestOperation,
   startServiceOperation,
 } from "./service-operations";
 import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
 import {
+  advancePatientAmenityTrips,
+  getPatientAmenityTrip,
+  getReachablePatientBathroomRoomIds,
+  hasActivePatientAmenityTrip,
+  requestPatientAmenityReturn,
+  tryStartPatientBathroomTrip,
+} from "./patient-amenities";
+import {
   activeRetailOperationForActor,
   advanceRetailOperations,
   authorizeRetailOrder,
   cancelRetailTripsForActor,
   startRetailPurchase,
+  getViableDepartureRetailLineIds,
 } from "./retail-operations";
 import type {
   AnswerRecord,
@@ -337,10 +347,12 @@ function chooseAutomaticFounderActivity(
       addCandidate("sit_in_chair", chair);
     }
     if (room.roomDefinitionId === "room.bathroom") {
-      addCandidate(
-        "visit_bathroom",
-        getRoomNavigationAnchor(room, definition),
-      );
+      if (!state.patientAmenityTrips?.some((trip) => trip.bathroomRoomInstanceId === room.id)) {
+        addCandidate(
+          "visit_bathroom",
+          getRoomNavigationAnchor(room, definition),
+        );
+      }
     }
     if (definition.navigation?.publicWaitingArea === true) {
       const excluded = new Set([
@@ -1161,6 +1173,8 @@ function roomHasActiveCharacterOrRoute(
       operation.status !== "completed" &&
       operation.status !== "cancelled" &&
       (operation.reservedRoomInstanceIds.includes(room.id) ||
+        operation.transitionHeldRoomInstanceIds?.includes(room.id) ||
+        operation.periopBedReservation?.roomInstanceId === room.id ||
         (operation.location && pointInsideRoom(operation.location, room, context)) ||
         routeTouchesRoom(operation.path.slice(operation.pathIndex))),
   )) return true;
@@ -1853,7 +1867,7 @@ function scheduleResult(
     "route.h_pylori_urea_breath.in_house",
     "route.nipple_areolar_biopsy.in_house",
   ]);
-  return {
+  const pending: PendingResult = {
     operationId: `result.${encounter.id}.${node.id}.${gate.id}`,
     gateId: gate.id,
     originatingNodeIndex: encounter.currentNodeIndex,
@@ -1919,6 +1933,46 @@ function scheduleResult(
       ? { phlebotomyArrivalGatedVersion: 1 as const }
       : {}),
   };
+  const incomeLine = getServiceIncomeForRoute(selected.route.id);
+  if (incomeLine && getNewPeriopServiceOperationPhases(incomeLine.id)) {
+    const externalPhases = selected.route.timingPhases
+      .filter((phase) => !phase.resourceBound)
+      .map((phase) => ({
+        ...phase,
+        startsAtTick: state.facilityTick,
+        endsAtTick: state.facilityTick + phase.durationTicks,
+      }));
+    const externalDurationTicks = externalPhases.reduce(
+      (total, phase) => total + phase.durationTicks,
+      0,
+    );
+    pending.serviceDurationTicks = externalDurationTicks;
+    pending.durationTicks = 0;
+    pending.dueTick = state.facilityTick;
+    pending.patientTravel = null;
+    pending.offsiteTravel = null;
+    pending.timingPhases = externalPhases;
+    pending.resourceReservations = [];
+    pending.imagingTechnicianId = null;
+    pending.phlebotomistId = null;
+    pending.providerReservation = null;
+    delete pending.resourceQueue;
+    delete pending.phlebotomyArrivalGatedVersion;
+    pending.onsiteReturn = {
+      version: "onsite-front-desk-return.v1",
+      status: "awaiting_service_completion",
+      serviceCompletedAtTick: null,
+      frontDeskArrivalTick: null,
+    };
+    pending.localServiceOperation = {
+      version: "pending-result-service-operation.v1",
+      status: "feedback_pending",
+      incomeLineId: incomeLine.id,
+      serviceOperationId: null,
+      externalDurationTicks,
+    };
+  }
+  return pending;
 }
 
 function routeImagingTechnicianToScheduledService(
@@ -2169,6 +2223,7 @@ function creditEligibleServiceIncome(
   if (
     encounter.lifecycle !== "active_pending_result" ||
     pending?.deliveredAtTick !== null ||
+    pending?.localServiceOperation !== undefined ||
     pending?.resourceQueue !== undefined ||
     !pending?.serviceIncomeEligible ||
     typeof pending.serviceIncomeFee !== "number"
@@ -2546,6 +2601,16 @@ function reduceOpenChart(
       state,
       command,
       "Close the currently open chart before opening another patient.",
+    );
+  }
+  if (hasActivePatientAmenityTrip(state, "encounter", command.encounterId)) {
+    const next = clonePlain(state);
+    requestPatientAmenityReturn(next, "encounter", command.encounterId, context);
+    return recordReceipt(
+      next,
+      command,
+      "rejected",
+      "The patient is returning from the bathroom. Open the chart after they return.",
     );
   }
   if (
@@ -3285,7 +3350,7 @@ function reduceSubmitAnswer(
     nextEncounter.idleWaitingSinceTick = null;
     nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
   } else if (scheduledResult) {
-    if (!scheduledResult.resourceQueue && scheduledResult.phlebotomyArrivalGatedVersion === 1) {
+    if (!scheduledResult.localServiceOperation && !scheduledResult.resourceQueue && scheduledResult.phlebotomyArrivalGatedVersion === 1) {
       cancelRetailTripsForActor(
         next,
         "encounter",
@@ -3302,6 +3367,7 @@ function reduceSubmitAnswer(
       }
     }
     if (
+      !scheduledResult.localServiceOperation &&
       !scheduledResult.resourceQueue &&
       (!routeImagingTechnicianToScheduledService(next, context, scheduledResult) ||
         !routePhlebotomistToScheduledService(next, context, scheduledResult) ||
@@ -3873,7 +3939,7 @@ function maybeBeginTestOnlyContinuationReturn(
   );
   if (
     !operation ||
-    (operation.status !== "completed" && operation.status !== "cancelled")
+    (operation.status !== "completed" && operation.status !== "cancelled" && operation.status !== "discharging")
   ) {
     return;
   }
@@ -3929,11 +3995,101 @@ function startCurrentStagedResultComponent(
   const operation = state.serviceOperations.find((candidate) => candidate.id === operationId);
   if (!operation) return false;
   operation.quoteFee = component.quoteFee;
-  operation.frozenOperationPhases = clonePlain(component.operationPhases);
+  operation.frozenOperationPhases =
+    getNewPeriopServiceOperationPhases(
+      component.incomeLineId,
+      component.operationPhases,
+    ) ?? clonePlain(component.operationPhases);
   component.serviceOperationId = operationId;
   component.status = "waiting_for_service";
   order.status = "waiting_for_component";
   return true;
+}
+
+function startPendingResultServiceOperation(
+  state: GameState,
+  encounter: EncounterState,
+  context: DomainContext,
+): boolean {
+  const pending = encounter.pendingResult;
+  const link = pending?.localServiceOperation;
+  const step = pending
+    ? encounter.steps[pending.originatingNodeIndex]
+    : undefined;
+  if (!pending || !link || !step?.answer) return false;
+  const choiceId = step.answer.answerChoiceId;
+  const choiceLabel =
+    encounter.frozenCase.decisionNodes[pending.originatingNodeIndex]
+      ?.answerChoices.find((choice) => choice.id === choiceId)?.label ?? choiceId;
+  const operationId = startEncounterTestOperation(
+    state,
+    encounter,
+    link.incomeLineId,
+    context,
+    {
+      version: "test-choice-order.v1",
+      purpose: "result_gate",
+      caseId: encounter.frozenCase.id,
+      nodeId: step.decisionNodeId,
+      questionVariantId: step.questionVariantId,
+      choiceId,
+      choiceLabel,
+      serviceId: pending.resultTypeId,
+      routeId: pending.routeId,
+      routeDisplayName: pending.routeDisplayName,
+      externalRemainder: pending.resultNarrative,
+    },
+  );
+  if (!operationId) return false;
+  const operation = state.serviceOperations.find(
+    (candidate) => candidate.id === operationId,
+  );
+  if (!operation) return false;
+  if (typeof pending.serviceIncomeFee === "number") {
+    operation.quoteFee = pending.serviceIncomeFee;
+  }
+  link.serviceOperationId = operationId;
+  link.status = "waiting_for_service";
+  return true;
+}
+
+function synchronizePendingResultServiceOperation(
+  state: GameState,
+  encounter: EncounterState,
+  context: DomainContext,
+): void {
+  const pending = encounter.pendingResult;
+  const link = pending?.localServiceOperation;
+  if (!pending || !link || link.status !== "waiting_for_service") return;
+  const operation = link.serviceOperationId
+    ? state.serviceOperations.find((candidate) => candidate.id === link.serviceOperationId)
+    : null;
+  if (!operation || operation.status === "cancelled") {
+    link.serviceOperationId = null;
+    if (encounter.patientMovement === null) {
+      startPendingResultServiceOperation(state, encounter, context);
+    }
+    return;
+  }
+  if ((operation.status !== "completed" && operation.status !== "discharging") || operation.completedAtFacilityTick === null) return;
+  const completedAt = operation.completedAtFacilityTick;
+  link.status = "external_processing";
+  pending.scheduledAtTick = completedAt;
+  pending.serviceDurationTicks = link.externalDurationTicks;
+  pending.durationTicks = link.externalDurationTicks;
+  pending.dueTick = completedAt + link.externalDurationTicks;
+  let phaseStart = completedAt;
+  pending.timingPhases = (pending.timingPhases ?? []).map((phase) => {
+    const startsAtTick = phaseStart;
+    const endsAtTick = startsAtTick + phase.durationTicks;
+    phaseStart = endsAtTick;
+    return { ...phase, startsAtTick, endsAtTick };
+  });
+  if (pending.onsiteReturn) {
+    pending.onsiteReturn.status = "awaiting_service_completion";
+    pending.onsiteReturn.serviceCompletedAtTick = completedAt;
+  }
+  maybeBeginOnsiteFrontDeskReturn(state, encounter, context);
 }
 
 function maybeBeginStagedResultReturn(
@@ -3950,12 +4106,12 @@ function maybeBeginStagedResultReturn(
     encounter.patientMovement !== null
   ) return;
   const operation = state.serviceOperations.find((candidate) => candidate.id === component.serviceOperationId);
-  if (!operation || (operation.status !== "completed" && operation.status !== "cancelled")) return;
+    if (!operation || (operation.status !== "completed" && operation.status !== "cancelled" && operation.status !== "discharging")) return;
   const entrance = getPublicEntrance(state, context);
   if (!encounter.patientLocation || !entrance) return;
   const path = pathFromLocationToRoom(state, context, encounter.patientLocation, entrance.room.id);
   if (path.length === 0) return;
-  component.status = operation.status === "completed" ? "returning_to_front_desk" : "cancelled";
+  component.status = operation.status === "cancelled" ? "cancelled" : "returning_to_front_desk";
   order.status = "returning_to_front_desk";
   startPatientMovement(state, context, encounter, "returning_from_onsite_service", path, entrance.room.id);
 }
@@ -4260,6 +4416,30 @@ function reduceAcknowledgeDecisionFeedback(
     nextEncounter.pendingResult.originatingNodeIndex ===
       nextEncounter.currentNodeIndex
   ) {
+    if (nextEncounter.pendingResult.localServiceOperation) {
+      if (!startPendingResultServiceOperation(next, nextEncounter, context)) {
+        return rejectCommand(
+          state,
+          command,
+          "The selected perioperative service can no longer be scheduled.",
+        );
+      }
+      releasePendingTestingCareReservation(nextEncounter);
+      releaseFounderAttendanceForEncounter(next, context, nextEncounter);
+      nextStep.result = clonePlain(nextEncounter.pendingResult);
+      nextStep.status = "result_pending";
+      nextEncounter.lifecycle = "active_pending_result";
+      nextEncounter.idleWaitingSinceTick = null;
+      nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
+      if (next.openChartEncounterId === nextEncounter.id) next.openChartEncounterId = null;
+      if (next.attendedEncounterId === nextEncounter.id) next.attendedEncounterId = null;
+      return recordReceipt(
+        next,
+        command,
+        "applied",
+        "Feedback reviewed; perioperative preparation is now underway.",
+      );
+    }
     if (nextEncounter.pendingResult.resourceQueue) {
       const destination = chooseWaitingDestination(next, context, nextEncounter);
       nextEncounter.waitingDestination = destination.reservation;
@@ -5994,6 +6174,7 @@ function maybeStartPatientIdleMovements(
   for (const encounter of Object.values(state.encounters)) {
     if (
       activeRetailOperationForActor(state, "encounter", encounter.id) !== null ||
+      hasActivePatientAmenityTrip(state, "encounter", encounter.id) ||
       encounter.patientMovement !== null ||
       encounter.patientLocation === null ||
       encounter.patientLocation.y >=
@@ -6119,6 +6300,7 @@ function dispatchQueuedPendingResults(
     .filter(
       (encounter) =>
         encounter.lifecycle === "active_pending_result" &&
+        !hasActivePatientAmenityTrip(state, "encounter", encounter.id) &&
         encounter.patientMovement === null &&
         encounter.pendingResult?.deliveredAtTick === null &&
         encounter.pendingResult.resourceQueue?.status === "waiting_for_resources",
@@ -6220,6 +6402,82 @@ function dispatchQueuedPendingResults(
   }
 }
 
+function advanceServiceDepartureItineraries(state: GameState, context: DomainContext): void {
+  const chance = context.balanceRelease.environment.idleActionChancePercent;
+  for (const operation of state.serviceOperations) {
+    const itinerary = operation.departureItinerary;
+    if (!itinerary || operation.status !== "discharging") continue;
+    const actorKind = operation.actorKind === "encounter" ? "encounter" as const : "service_visitor" as const;
+    const actorId = operation.actorKind === "encounter" ? operation.actorId : operation.id;
+    if (itinerary.status === "bathroom") {
+      if (!getPatientAmenityTrip(state, actorKind, actorId)) {
+        itinerary.status = "completed";
+        itinerary.completedAtFacilityTick = state.facilityTick;
+      }
+      continue;
+    }
+    if (itinerary.status === "retail") {
+      const retail = state.retailOperations.find((candidate) => candidate.departureServiceOperationId === operation.id);
+      if (!retail || retail.status === "completed" || retail.status === "cancelled" || retail.status === "abandoned") {
+        itinerary.status = "completed";
+        itinerary.completedAtFacilityTick = state.facilityTick;
+      }
+      continue;
+    }
+    if (itinerary.status !== "pending") continue;
+    itinerary.selectedAtFacilityTick = state.facilityTick;
+    const roll = deterministicInteger(state.campaignSeed, RANDOM_STREAMS.environment, `service-departure:${operation.id}:roll`, 100);
+    if (roll >= chance) {
+      itinerary.status = "skipped";
+      itinerary.choiceKind = "none";
+      itinerary.completedAtFacilityTick = state.facilityTick;
+      continue;
+    }
+    const bathrooms = getReachablePatientBathroomRoomIds(state, actorKind, actorId, context, operation.id)
+      .map((id) => `bathroom:${id}`);
+    const retailLines = getViableDepartureRetailLineIds(state, actorKind, actorId, context)
+      .map((id) => `retail:${id}`);
+    const choices = [...bathrooms, ...retailLines].sort();
+    if (choices.length === 0) {
+      itinerary.status = "skipped";
+      itinerary.choiceKind = "none";
+      itinerary.completedAtFacilityTick = state.facilityTick;
+      continue;
+    }
+    const choice = choices[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.environment, `service-departure:${operation.id}:choice`, choices.length)]!;
+    const current = operation.actorKind === "encounter" ? state.encounters[actorId]?.patientLocation : operation.location;
+    if (!current) {
+      itinerary.status = "skipped";
+      itinerary.choiceKind = "none";
+      itinerary.completedAtFacilityTick = state.facilityTick;
+      continue;
+    }
+    if (choice.startsWith("bathroom:")) {
+      if (tryStartPatientBathroomTrip(state, actorKind, actorId, context, {
+        purpose: "departure", linkedServiceOperationId: operation.id, returnTarget: current,
+      })) {
+        itinerary.status = "bathroom";
+        itinerary.choiceKind = "bathroom";
+        itinerary.linkedTripId = getPatientAmenityTrip(state, actorKind, actorId)?.id ?? null;
+        continue;
+      }
+    } else {
+      const lineId = choice.slice("retail:".length);
+      const retailId = startRetailPurchase(state, lineId, actorKind, actorId, context, undefined, operation.id);
+      if (retailId) {
+        itinerary.status = "retail";
+        itinerary.choiceKind = "retail";
+        itinerary.linkedTripId = retailId;
+        itinerary.retailIncomeLineId = lineId;
+        continue;
+      }
+    }
+    itinerary.status = "skipped";
+    itinerary.choiceKind = "none";
+    itinerary.completedAtFacilityTick = state.facilityTick;
+  }
+}
+
 function reduceAdvanceTick(
   state: GameState,
   command: Extract<GameCommand, { type: "ADVANCE_TICK" }>,
@@ -6260,6 +6518,7 @@ function reduceAdvanceTick(
   }
 
   advancePatientMovements(next, context);
+  advancePatientAmenityTrips(next, context);
   maybeStartPatientIdleMovements(next, context);
   advanceAmbientPedestrians(next, context);
   dispatchQueuedPendingResults(next, context);
@@ -6271,6 +6530,14 @@ function reduceAdvanceTick(
       !encounter.pendingResult ||
       encounter.pendingResult.deliveredAtTick !== null
     ) {
+      continue;
+    }
+    if (encounter.pendingResult.localServiceOperation) {
+      if (
+        encounter.pendingResult.localServiceOperation.status === "external_processing"
+      ) {
+        maybeBeginOnsiteFrontDeskReturn(next, encounter, context);
+      }
       continue;
     }
     ensureLegacyOffsiteTravel(next, encounter, context);
@@ -6303,9 +6570,15 @@ function reduceAdvanceTick(
       encounter.lifecycle === "active_pending_result" &&
       encounter.pendingResult &&
       encounter.pendingResult.deliveredAtTick === null &&
+      (!encounter.pendingResult.localServiceOperation ||
+        encounter.pendingResult.localServiceOperation.status === "external_processing") &&
       encounter.pendingResult.resourceQueue === undefined &&
       encounter.pendingResult.dueTick <= next.facilityTick
     ) {
+      if (hasActivePatientAmenityTrip(next, "encounter", encounter.id)) {
+        requestPatientAmenityReturn(next, "encounter", encounter.id, context);
+        continue;
+      }
       if (
         encounter.pendingResult.onsiteReturn &&
         encounter.pendingResult.onsiteReturn.frontDeskArrivalTick === null
@@ -6556,9 +6829,11 @@ function reduceAdvanceTick(
         : [];
     },
   );
+  advanceServiceDepartureItineraries(next, context);
   for (const encounter of Object.values(next.encounters)) {
     maybeBeginStagedResultReturn(next, encounter, context);
     maybeBeginTestOnlyContinuationReturn(next, encounter, context);
+    synchronizePendingResultServiceOperation(next, encounter, context);
   }
   if (
     founderServiceTarget &&

@@ -40,6 +40,11 @@ import {
 } from "./selectors";
 import { getEmployeeHomeLocation } from "./staff";
 import { getDefaultDoorOffset } from "./doors";
+import {
+  findDeterministicFacilityPath,
+  getRoomCareStations,
+  getRoomNavigationAnchor,
+} from "./spatial";
 import type {
   AnswerRecord,
   AlertHumorState,
@@ -59,6 +64,7 @@ import type {
   FrozenPatientTravel,
   PendingResult,
   PatientMovementState,
+  PatientAmenityTripState,
   PatientDissatisfactionCause,
   PlacedRoom,
   ReviewRatingIntent,
@@ -572,6 +578,65 @@ function isGridPoint(value: unknown): value is { x: number; y: number } {
   );
 }
 
+function normalizePatientAmenityTrips(
+  value: unknown,
+  rooms: readonly PlacedRoom[],
+  serviceOperations: readonly ServiceOperationState[],
+  encounters: unknown,
+): PatientAmenityTripState[] {
+  if (!Array.isArray(value)) return [];
+  const bathroomIds = new Set(rooms.filter((room) => room.roomDefinitionId === "room.bathroom").map((room) => room.id));
+  const encounterIds = new Set(isRecord(encounters) ? Object.keys(encounters) : []);
+  const visitorIds = new Set(serviceOperations.filter((operation) => operation.actorKind === "visitor").map((operation) => operation.id));
+  const actorClaims = new Set<string>();
+  const bathroomClaims = new Set<string>();
+  return value.flatMap((candidate): PatientAmenityTripState[] => {
+    const startedAtFacilityTick = candidate && isRecord(candidate) && typeof candidate.startedAtFacilityTick === "number" ? candidate.startedAtFacilityTick : -1;
+    const dwellEndsAtFacilityTick = candidate && isRecord(candidate) && (candidate.dwellEndsAtFacilityTick === null || typeof candidate.dwellEndsAtFacilityTick === "number") ? candidate.dwellEndsAtFacilityTick : undefined;
+    const pathIndex = candidate && isRecord(candidate) && typeof candidate.pathIndex === "number" ? candidate.pathIndex : -1;
+    const lastMovedAtFacilityTick = candidate && isRecord(candidate) && typeof candidate.lastMovedAtFacilityTick === "number" ? candidate.lastMovedAtFacilityTick : -1;
+    if (!isRecord(candidate) || candidate.version !== "patient-amenity-trip.v1" ||
+      typeof candidate.id !== "string" ||
+      (candidate.actorKind !== "encounter" && candidate.actorKind !== "service_visitor") ||
+      typeof candidate.actorId !== "string" || candidate.amenityKind !== "bathroom" ||
+      typeof candidate.bathroomRoomInstanceId !== "string" ||
+      (!bathroomIds.has(candidate.bathroomRoomInstanceId) && candidate.status !== "returning") ||
+      (candidate.status !== "walking_to_amenity" && candidate.status !== "using_amenity" && candidate.status !== "returning") ||
+      !Number.isSafeInteger(startedAtFacilityTick) || startedAtFacilityTick < 0 ||
+      !(dwellEndsAtFacilityTick === null || (typeof dwellEndsAtFacilityTick === "number" && Number.isSafeInteger(dwellEndsAtFacilityTick) && dwellEndsAtFacilityTick >= 0)) ||
+      typeof candidate.returnRequested !== "boolean" || !isGridPoint(candidate.returnTarget) ||
+      !Array.isArray(candidate.path) || candidate.path.length === 0 || !candidate.path.every(isGridPoint) ||
+      !Number.isSafeInteger(pathIndex) || pathIndex < 0 ||
+      !Number.isSafeInteger(lastMovedAtFacilityTick) || lastMovedAtFacilityTick < 0 ||
+      (candidate.status === "using_amenity" && dwellEndsAtFacilityTick === null)) return [];
+    const actorExists = candidate.actorKind === "encounter" ? encounterIds.has(candidate.actorId) : visitorIds.has(candidate.actorId);
+    const actorClaim = `${candidate.actorKind}:${candidate.actorId}`;
+    if (!actorExists || actorClaims.has(actorClaim) || bathroomClaims.has(candidate.bathroomRoomInstanceId)) return [];
+    actorClaims.add(actorClaim);
+    bathroomClaims.add(candidate.bathroomRoomInstanceId);
+    const path = candidate.path.map((point) => ({ x: point.x, y: point.y }));
+    return [{
+      version: "patient-amenity-trip.v1",
+      id: candidate.id,
+      actorKind: candidate.actorKind,
+      actorId: candidate.actorId,
+      amenityKind: "bathroom",
+      bathroomRoomInstanceId: candidate.bathroomRoomInstanceId,
+      status: candidate.status,
+      startedAtFacilityTick,
+      dwellEndsAtFacilityTick,
+      returnRequested: candidate.returnRequested,
+      returnTarget: { x: candidate.returnTarget.x, y: candidate.returnTarget.y },
+      path,
+      pathIndex: Math.min(pathIndex, Math.max(0, path.length - 1)),
+      lastMovedAtFacilityTick,
+      ...(candidate.purpose === "departure" && typeof candidate.linkedServiceOperationId === "string"
+        ? { purpose: "departure" as const, linkedServiceOperationId: candidate.linkedServiceOperationId }
+        : {}),
+    }];
+  });
+}
+
 function isPixelAppearance(
   value: unknown,
 ): value is FounderIdentity["appearance"] {
@@ -642,6 +707,8 @@ const SERVICE_OPERATION_STATUSES = new Set<ServiceOperationState["status"]>([
   "walking_to_service",
   "in_service",
   "walking_between_phases",
+  "waiting_for_next_phase",
+  "discharging",
   "leaving",
   "completed",
   "cancelled",
@@ -651,6 +718,7 @@ function normalizeServiceOperations(
   candidate: unknown,
 ): ServiceOperationState[] {
   if (!Array.isArray(candidate)) return [];
+  const activePeriopBeds = new Set<string>();
   return candidate.flatMap((raw) => {
     if (
       !isRecord(raw) ||
@@ -684,7 +752,7 @@ function normalizeServiceOperations(
     const testChoiceOrder =
       isRecord(raw.testChoiceOrder) &&
       raw.testChoiceOrder.version === "test-choice-order.v1" &&
-      (raw.testChoiceOrder.purpose === "terminal" || raw.testChoiceOrder.purpose === "continuation" || raw.testChoiceOrder.purpose === "staged_result_component") &&
+      (raw.testChoiceOrder.purpose === "terminal" || raw.testChoiceOrder.purpose === "continuation" || raw.testChoiceOrder.purpose === "staged_result_component" || raw.testChoiceOrder.purpose === "result_gate") &&
       typeof raw.testChoiceOrder.caseId === "string" &&
       typeof raw.testChoiceOrder.nodeId === "string" &&
       typeof raw.testChoiceOrder.questionVariantId === "string" &&
@@ -696,7 +764,7 @@ function normalizeServiceOperations(
       (raw.testChoiceOrder.externalRemainder === null || typeof raw.testChoiceOrder.externalRemainder === "string")
         ? {
             version: "test-choice-order.v1" as const,
-            purpose: raw.testChoiceOrder.purpose as "terminal" | "continuation" | "staged_result_component",
+            purpose: raw.testChoiceOrder.purpose as "terminal" | "continuation" | "staged_result_component" | "result_gate",
             caseId: raw.testChoiceOrder.caseId,
             nodeId: raw.testChoiceOrder.nodeId,
             questionVariantId: raw.testChoiceOrder.questionVariantId,
@@ -717,6 +785,7 @@ function normalizeServiceOperations(
       Array.isArray(phase.staffRoleDefinitionIds) && phase.staffRoleDefinitionIds.every((id) => typeof id === "string") &&
       (phase.providerRoleDefinitionIds === undefined || (Array.isArray(phase.providerRoleDefinitionIds) && phase.providerRoleDefinitionIds.every((id) => typeof id === "string"))) &&
       (phase.founderEligible === undefined || phase.founderEligible === true)
+      && (phase.roomStationId === undefined || phase.roomStationId === "periop_preparation" || phase.roomStationId === "periop_recovery")
         ? [{
             id: phase.id,
             roomDefinitionId: phase.roomDefinitionId as string | null,
@@ -724,6 +793,9 @@ function normalizeServiceOperations(
             staffRoleDefinitionIds: phase.staffRoleDefinitionIds as string[],
             ...(Array.isArray(phase.providerRoleDefinitionIds) ? { providerRoleDefinitionIds: phase.providerRoleDefinitionIds as string[] } : {}),
             ...(phase.founderEligible === true ? { founderEligible: true as const } : {}),
+            ...(phase.roomStationId === "periop_preparation" || phase.roomStationId === "periop_recovery"
+              ? { roomStationId: phase.roomStationId as "periop_preparation" | "periop_recovery" }
+              : {}),
           }]
         : [],
     );
@@ -732,11 +804,59 @@ function normalizeServiceOperations(
         ? frozenOperationPhases.length
         : -1
       : line.operation!.phases.length;
+    const phaseFlowVersion = raw.phaseFlowVersion === 1 &&
+      frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
+      frozenOperationPhases[0]?.durationMinutes === 30 &&
+      frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery")
+        ? 1 as const
+        : undefined;
+    const periopBedFlowVersion = raw.periopBedFlowVersion === 1 &&
+      phaseFlowVersion === 1 &&
+      frozenOperationPhases.some((phase) =>
+        phase.roomStationId === "periop_recovery" && phase.durationMinutes === 60,
+      )
+        ? 1 as const
+        : undefined;
+    const validPeriopBedIds = new Set(["N3", "N4", "S3", "S4", "WC", "WD", "EC", "ED"]);
+    const periopBedReservation = isRecord(raw.periopBedReservation) &&
+      raw.periopBedReservation.version === "periop-bed-reservation.v1" &&
+      typeof raw.periopBedReservation.roomInstanceId === "string" &&
+      typeof raw.periopBedReservation.bedId === "string" &&
+      validPeriopBedIds.has(raw.periopBedReservation.bedId) &&
+      isGridPoint(raw.periopBedReservation.endpoint)
+        ? {
+            version: "periop-bed-reservation.v1" as const,
+            roomInstanceId: raw.periopBedReservation.roomInstanceId,
+            bedId: raw.periopBedReservation.bedId,
+            endpoint: { ...raw.periopBedReservation.endpoint },
+          }
+        : undefined;
+    const bedKey = periopBedReservation
+      ? `${periopBedReservation.roomInstanceId}:${periopBedReservation.bedId}`
+      : null;
+    const terminalStatus = raw.status === "completed" || raw.status === "cancelled";
+    const rawDepartureItinerary = isRecord(raw.departureItinerary) && raw.departureItinerary.version === "service-departure-itinerary.v1"
+      ? raw.departureItinerary
+      : null;
+    const validRawDepartureItinerary = Boolean(rawDepartureItinerary &&
+      ["pending", "bathroom", "retail", "completed", "skipped"].includes(String(rawDepartureItinerary.status)) &&
+      (rawDepartureItinerary.choiceKind === null || rawDepartureItinerary.choiceKind === "bathroom" || rawDepartureItinerary.choiceKind === "retail" || rawDepartureItinerary.choiceKind === "none") &&
+      (rawDepartureItinerary.selectedAtFacilityTick === null || (typeof rawDepartureItinerary.selectedAtFacilityTick === "number" && Number.isSafeInteger(rawDepartureItinerary.selectedAtFacilityTick))) &&
+      (rawDepartureItinerary.completedAtFacilityTick === null || (typeof rawDepartureItinerary.completedAtFacilityTick === "number" && Number.isSafeInteger(rawDepartureItinerary.completedAtFacilityTick))) &&
+      (rawDepartureItinerary.linkedTripId === null || typeof rawDepartureItinerary.linkedTripId === "string") &&
+      (rawDepartureItinerary.retailIncomeLineId === null || typeof rawDepartureItinerary.retailIncomeLineId === "string"));
     if (
       phaseCount < 0 ||
+      (raw.phaseFlowVersion === 1 && phaseFlowVersion !== 1) ||
+      (raw.periopBedFlowVersion === 1 && periopBedFlowVersion !== 1) ||
+      (raw.periopBedReservation !== undefined && (!periopBedFlowVersion || !periopBedReservation)) ||
+      (raw.status === "discharging" && (!periopBedFlowVersion || (!periopBedReservation && !rawDepartureItinerary))) ||
+      (!terminalStatus && bedKey !== null && activePeriopBeds.has(bedKey)) ||
+      (raw.status === "waiting_for_next_phase" && phaseFlowVersion !== 1) ||
       raw.phaseIndex > phaseCount ||
-      (raw.phaseIndex === phaseCount && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
+      (raw.phaseIndex === phaseCount && raw.status !== "discharging" && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
     ) return [];
+    if (!terminalStatus && bedKey !== null) activePeriopBeds.add(bedKey);
     const visitorTravel = isRecord(raw.visitorTravel) &&
       raw.visitorTravel.version === "service-visitor-travel.v1" &&
       isGridPoint(raw.visitorTravel.offscreenEndpoint) &&
@@ -776,6 +896,29 @@ function normalizeServiceOperations(
       cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
       ...(visitorTravel ? { visitorTravel } : {}),
       resourceQueueVersion: raw.resourceQueueVersion === 1 ? 1 : undefined,
+      phaseFlowVersion,
+      periopBedFlowVersion,
+      ...(periopBedReservation ? { periopBedReservation } : {}),
+      ...(periopBedFlowVersion ? {
+        nextPhaseReadyAtFacilityTick:
+          typeof raw.nextPhaseReadyAtFacilityTick === "number" && Number.isSafeInteger(raw.nextPhaseReadyAtFacilityTick)
+            ? raw.nextPhaseReadyAtFacilityTick
+            : null,
+        transitionHeldRoomInstanceIds: Array.isArray(raw.transitionHeldRoomInstanceIds)
+          ? raw.transitionHeldRoomInstanceIds.filter((id): id is string => typeof id === "string")
+          : [],
+        ...(rawDepartureItinerary
+          ? { departureItinerary: {
+              version: "service-departure-itinerary.v1" as const,
+              status: validRawDepartureItinerary ? rawDepartureItinerary.status as NonNullable<ServiceOperationState["departureItinerary"]>["status"] : "skipped",
+              choiceKind: validRawDepartureItinerary ? rawDepartureItinerary.choiceKind as NonNullable<ServiceOperationState["departureItinerary"]>["choiceKind"] : "none",
+              selectedAtFacilityTick: validRawDepartureItinerary ? nullableTick(rawDepartureItinerary.selectedAtFacilityTick) : null,
+              completedAtFacilityTick: validRawDepartureItinerary ? nullableTick(rawDepartureItinerary.completedAtFacilityTick) : 0,
+              linkedTripId: validRawDepartureItinerary && typeof rawDepartureItinerary.linkedTripId === "string" ? rawDepartureItinerary.linkedTripId : null,
+              retailIncomeLineId: validRawDepartureItinerary && typeof rawDepartureItinerary.retailIncomeLineId === "string" ? rawDepartureItinerary.retailIncomeLineId : null,
+            } }
+          : {}),
+      } : {}),
       ...(rawFrozenPhases.length > 0 && frozenOperationPhases.length === rawFrozenPhases.length ? { frozenOperationPhases } : {}),
       testChoiceOrder,
     } satisfies ServiceOperationState];
@@ -803,7 +946,8 @@ function normalizeRetailOperations(candidate: unknown): RetailOperationState[] {
       startedAtFacilityTick: tick(raw.startedAtFacilityTick), completedAtFacilityTick: tick(raw.completedAtFacilityTick), quoteGross: raw.quoteGross, quoteStockCost: raw.quoteStockCost,
       outletRoomInstanceId: raw.outletRoomInstanceId, outletDurationMinutes: raw.outletDurationMinutes, staffRoleDefinitionId: typeof raw.staffRoleDefinitionId === "string" ? raw.staffRoleDefinitionId : null, servingEmployeeId: typeof raw.servingEmployeeId === "string" ? raw.servingEmployeeId : null,
       location: { ...raw.location }, returnLocation: isGridPoint(raw.returnLocation) ? { ...raw.returnLocation } : null, path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0,
-      lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick, purchaseEndsAtFacilityTick: tick(raw.purchaseEndsAtFacilityTick), cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null } satisfies RetailOperationState];
+      lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick, purchaseEndsAtFacilityTick: tick(raw.purchaseEndsAtFacilityTick), cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
+      ...(typeof raw.departureServiceOperationId === "string" ? { departureServiceOperationId: raw.departureServiceOperationId } : {}) } satisfies RetailOperationState];
   });
 }
 
@@ -1243,6 +1387,40 @@ function normalizePendingResult(
   if (!isRecord(candidate)) {
     return null;
   }
+  const localServiceOperation =
+    isRecord(candidate.localServiceOperation) &&
+    candidate.localServiceOperation.version === "pending-result-service-operation.v1" &&
+    (candidate.localServiceOperation.status === "feedback_pending" ||
+      candidate.localServiceOperation.status === "waiting_for_service" ||
+      candidate.localServiceOperation.status === "external_processing") &&
+    typeof candidate.localServiceOperation.incomeLineId === "string" &&
+    (candidate.localServiceOperation.serviceOperationId === null ||
+      typeof candidate.localServiceOperation.serviceOperationId === "string") &&
+    typeof candidate.localServiceOperation.externalDurationTicks === "number" &&
+    Number.isSafeInteger(candidate.localServiceOperation.externalDurationTicks) &&
+    candidate.localServiceOperation.externalDurationTicks >= 0
+      ? {
+          version: "pending-result-service-operation.v1" as const,
+          status: candidate.localServiceOperation.status as
+            | "feedback_pending"
+            | "waiting_for_service"
+            | "external_processing",
+          incomeLineId: candidate.localServiceOperation.incomeLineId,
+          serviceOperationId: candidate.localServiceOperation.serviceOperationId as string | null,
+          externalDurationTicks: candidate.localServiceOperation.externalDurationTicks,
+        }
+      : undefined;
+  if (
+    candidate.localServiceOperation !== undefined &&
+    (localServiceOperation === undefined ||
+      (localServiceOperation.status === "feedback_pending" &&
+        localServiceOperation.serviceOperationId !== null) ||
+      ((localServiceOperation.status === "waiting_for_service" ||
+        localServiceOperation.status === "external_processing") &&
+        localServiceOperation.serviceOperationId === null))
+  ) {
+    return null;
+  }
   const resourceQueue =
     isRecord(candidate.resourceQueue) &&
     candidate.resourceQueue.version === "onsite-resource-queue.v1" &&
@@ -1270,7 +1448,8 @@ function normalizePendingResult(
     typeof candidate.durationTicks === "number" &&
     Number.isSafeInteger(candidate.durationTicks) &&
     (candidate.durationTicks > 0 ||
-      (candidate.durationTicks === 0 && resourceQueue !== undefined))
+      (candidate.durationTicks === 0 &&
+        (resourceQueue !== undefined || localServiceOperation !== undefined)))
       ? candidate.durationTicks
       : 1;
   const serviceDurationTicks =
@@ -1287,6 +1466,7 @@ function normalizePendingResult(
     ...(candidate.phlebotomyArrivalGatedVersion === 1
       ? { phlebotomyArrivalGatedVersion: 1 as const }
       : { phlebotomyArrivalGatedVersion: undefined }),
+    localServiceOperation,
     resourceQueue,
     onsiteReturn:
       isRecord(candidate.onsiteReturn) &&
@@ -2227,6 +2407,7 @@ function migrateVersionTwo(
       )
     : [];
   const serviceOperations = normalizeServiceOperations(parsed.serviceOperations);
+  const patientAmenityTrips: PatientAmenityTripState[] = [];
   const retailOperations = normalizeRetailOperations(parsed.retailOperations);
   const retailExternalActors = normalizeRetailExternalActors(parsed.retailExternalActors);
   const retailOrders = normalizeRetailOrders(parsed.retailOrders);
@@ -2279,6 +2460,18 @@ function migrateVersionTwo(
         : 0,
     ),
     serviceOperations,
+    patientAmenityTrips,
+    patientAmenityNextOpportunityTicks: isRecord(parsed.patientAmenityNextOpportunityTicks)
+      ? Object.fromEntries(Object.entries(parsed.patientAmenityNextOpportunityTicks).filter(([, tick]) =>
+          typeof tick === "number" && Number.isSafeInteger(tick) && tick >= 0,
+        )) as Record<string, number>
+      : {},
+    patientAmenityTripSequence: Math.max(
+      patientAmenityTrips.length,
+      typeof parsed.patientAmenityTripSequence === "number" && Number.isSafeInteger(parsed.patientAmenityTripSequence) && parsed.patientAmenityTripSequence >= 0
+        ? parsed.patientAmenityTripSequence
+        : 0,
+    ),
     retailOperationSequence: Math.max(retailOperations.length, typeof parsed.retailOperationSequence === "number" && Number.isSafeInteger(parsed.retailOperationSequence) && parsed.retailOperationSequence >= 0 ? parsed.retailOperationSequence : 0),
     retailOperations,
     retailExternalActors,
@@ -2329,7 +2522,32 @@ function migrateVersionTwo(
   delete (next as unknown as Record<string, unknown>)
     .dailyConfidenceSatisfactionModifier;
   next.rooms = normalizeRooms(parsed, baseline, context);
+  next.patientAmenityTrips = normalizePatientAmenityTrips(
+    parsed.patientAmenityTrips,
+    next.rooms,
+    next.serviceOperations,
+    next.encounters,
+  );
+  next.patientAmenityTripSequence = Math.max(
+    next.patientAmenityTrips.length,
+    next.patientAmenityTripSequence ?? 0,
+  );
   next.doors = normalizeDoors(parsed, next.rooms, context);
+  next.serviceOperations = next.serviceOperations.filter((operation) => {
+    const reservation = operation.periopBedReservation;
+    if (!reservation) return true;
+    const room = next.rooms.find((candidate) => candidate.id === reservation.roomInstanceId);
+    const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+    if (!room || !definition) return false;
+    const station = getRoomCareStations(
+      room,
+      definition,
+      next.doors,
+      next.rooms,
+      (id) => getRoomDefinition(id, context),
+    ).find((candidate) => candidate.id === reservation.bedId);
+    return Boolean(station && station.patientAnchor.x === reservation.endpoint.x && station.patientAnchor.y === reservation.endpoint.y);
+  });
 
   const rawEncounters = parsed.encounters as Record<string, unknown>;
   next.encounters = Object.fromEntries(
@@ -2346,7 +2564,53 @@ function migrateVersionTwo(
       return normalized ? [[encounterId, normalized]] : [];
     }),
   );
-
+  next.patientAmenityTrips = next.patientAmenityTrips.filter((trip) => {
+    const operation = next.serviceOperations.find((candidate) =>
+      trip.actorKind === "encounter"
+        ? candidate.actorKind === "encounter" && candidate.actorId === trip.actorId && candidate.status !== "completed" && candidate.status !== "cancelled"
+        : candidate.actorKind === "visitor" && candidate.id === trip.actorId && candidate.status !== "completed" && candidate.status !== "cancelled",
+    );
+    const actorLocation = trip.actorKind === "encounter"
+      ? next.encounters[trip.actorId]?.patientLocation ?? null
+      : operation?.location ?? null;
+    const actorValid = trip.actorKind === "encounter"
+      ? Boolean(next.encounters[trip.actorId] && (operation || ["waiting_unopened", "active_action_required", "active_pending_result"].includes(next.encounters[trip.actorId]!.lifecycle)))
+      : Boolean(operation);
+    if (!actorLocation || !actorValid) return false;
+    if (operation) {
+      const phase = operation.frozenOperationPhases?.[operation.phaseIndex];
+      if (!(trip.purpose === "departure" && trip.linkedServiceOperationId === operation.id && operation.periopBedFlowVersion === 1 &&
+        !operation.periopBedReservation && operation.status === "discharging" && operation.departureItinerary?.status === "bathroom") &&
+        !(operation.status === "waiting_for_resources" ||
+        (operation.periopBedFlowVersion === 1 && operation.phaseIndex === 0 &&
+          ((operation.status === "in_service" && phase?.roomStationId === "periop_preparation") || operation.status === "waiting_for_next_phase")))) return false;
+    }
+    const cardinal = trip.path.every((point, index) => index === 0 ||
+      Math.abs(point.x - trip.path[index - 1]!.x) + Math.abs(point.y - trip.path[index - 1]!.y) === 1);
+    if (!cardinal) return false;
+    const cursorPoint = trip.path[Math.floor(trip.pathIndex)];
+    if (!cursorPoint || cursorPoint.x !== actorLocation.x || cursorPoint.y !== actorLocation.y) return false;
+    const bathroom = next.rooms.find((room) => room.id === trip.bathroomRoomInstanceId);
+    const bathroomDefinition = bathroom ? getRoomDefinition(bathroom.roomDefinitionId, context) : null;
+    if ((!bathroom || !bathroomDefinition) && trip.status !== "returning") return false;
+    const bathroomTarget = bathroom && bathroomDefinition ? getRoomNavigationAnchor(bathroom, bathroomDefinition) : null;
+    const expectedTarget = trip.status === "returning" ? trip.returnTarget : bathroomTarget;
+    if (!expectedTarget) return false;
+    const savedTarget = trip.path.at(-1);
+    if (!savedTarget || savedTarget.x !== expectedTarget.x || savedTarget.y !== expectedTarget.y) return false;
+    const remainingPath = findDeterministicFacilityPath(actorLocation, expectedTarget, next.rooms, next.doors, (id) => getRoomDefinition(id, context));
+    if (remainingPath.length === 0 && (actorLocation.x !== expectedTarget.x || actorLocation.y !== expectedTarget.y)) return false;
+    const savedRemaining = trip.path.slice(Math.floor(trip.pathIndex));
+    const routeMatches = remainingPath.length === savedRemaining.length && remainingPath.every((point, index) =>
+      point.x === savedRemaining[index]?.x && point.y === savedRemaining[index]?.y,
+    );
+    if (trip.status !== "using_amenity" && remainingPath.length > 0 && !routeMatches) {
+      trip.path = remainingPath.map((point) => ({ ...point }));
+      trip.pathIndex = 0;
+    }
+    const returnPath = findDeterministicFacilityPath(actorLocation, trip.returnTarget, next.rooms, next.doors, (id) => getRoomDefinition(id, context));
+    return returnPath.length > 0 || (actorLocation.x === trip.returnTarget.x && actorLocation.y === trip.returnTarget.y);
+  });
   const rawHistories = parsed.learningHistories as Record<string, unknown>;
   next.learningHistories = {
     ...Object.fromEntries(
@@ -2401,7 +2665,8 @@ function migrateVersionTwo(
         rawFacilityTask?.kind === "collect_litter" ||
         rawFacilityTask?.kind === "clean_room" ||
         rawFacilityTask?.kind === "perform_imaging" ||
-        rawFacilityTask?.kind === "perform_service") &&
+        rawFacilityTask?.kind === "perform_service" ||
+        rawFacilityTask?.kind === "cover_periop") &&
       typeof rawFacilityTask.startedAtFacilityTick === "number" &&
       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
       rawFacilityTask.startedAtFacilityTick >= 0 &&
@@ -2409,7 +2674,7 @@ function migrateVersionTwo(
       Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) &&
       rawFacilityTask.workMinutesRemaining > 0
         ? {
-            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service",
+            kind: rawFacilityTask.kind as "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop",
             startedAtFacilityTick:
               rawFacilityTask.startedAtFacilityTick,
             workMinutesRemaining:
@@ -2589,6 +2854,26 @@ function migrateVersionTwo(
     } else if (employee.facilityTask.kind !== "perform_service" || employee.facilityTask.targetId !== pending.operationId) {
       pending.phlebotomistId = null;
     }
+  }
+  const activePeriopCoverageRooms = new Set(next.serviceOperations.flatMap((operation) =>
+    operation.status !== "completed" && operation.status !== "cancelled" && operation.periopBedReservation
+      ? [operation.periopBedReservation.roomInstanceId]
+      : [],
+  ));
+  const retainedPeriopCoverageRooms = new Set<string>();
+  for (const employee of next.employees) {
+    if (employee.facilityTask?.kind !== "cover_periop") continue;
+    const roomId = employee.facilityTask.targetId;
+    if (
+      employee.staffRoleDefinitionId !== "staff.periop_nurse" ||
+      !roomId ||
+      !activePeriopCoverageRooms.has(roomId) ||
+      retainedPeriopCoverageRooms.has(roomId)
+    ) {
+      employee.facilityTask = null;
+      continue;
+    }
+    retainedPeriopCoverageRooms.add(roomId);
   }
   next.emergencyGlp1 = normalizeEmergencyGlp1State(
     parsed.emergencyGlp1,
@@ -2945,6 +3230,47 @@ function migrateVersionTwo(
     facilityConditionOccurrences,
   };
   normalizeGlp1AutomationState(next, rawEnvironment, context);
+  if (next.environment.founderActivity?.kind === "visit_bathroom") {
+    const endpoint = next.environment.founderActivity.path.at(-1);
+    const occupiedRoomId = endpoint ? next.rooms.find((room) => {
+      if (room.roomDefinitionId !== "room.bathroom") return false;
+      const definition = getRoomDefinition(room.roomDefinitionId, context);
+      const target = definition ? getRoomNavigationAnchor(room, definition) : null;
+      return target?.x === endpoint.x && target.y === endpoint.y;
+    })?.id : undefined;
+    if (occupiedRoomId) {
+      next.patientAmenityTrips = next.patientAmenityTrips?.filter((trip) => trip.bathroomRoomInstanceId !== occupiedRoomId);
+    }
+  }
+  for (const operation of next.serviceOperations) {
+    const itinerary = operation.departureItinerary;
+    if (!itinerary) continue;
+    const actorMatches = operation.actorKind === "visitor" ||
+      (operation.actorKind === "encounter" && next.encounters[operation.actorId]?.lifecycle === "resolved");
+    const terminalItinerary = itinerary.status === "completed" || itinerary.status === "skipped";
+    const baseValid = operation.periopBedFlowVersion === 1 &&
+      (operation.status === "discharging" || (terminalItinerary && (operation.status === "leaving" || operation.status === "completed"))) &&
+      !operation.periopBedReservation && actorMatches;
+    const linkedValid = itinerary.status === "bathroom"
+      ? next.patientAmenityTrips?.some((trip) => trip.id === itinerary.linkedTripId && trip.purpose === "departure" &&
+          trip.linkedServiceOperationId === operation.id &&
+          (operation.actorKind === "encounter" ? trip.actorKind === "encounter" && trip.actorId === operation.actorId : trip.actorKind === "service_visitor" && trip.actorId === operation.id)) === true
+      : itinerary.status === "retail"
+        ? next.retailOperations.some((trip) => trip.id === itinerary.linkedTripId && trip.departureServiceOperationId === operation.id &&
+            (operation.actorKind === "encounter" ? trip.actorKind === "encounter" && trip.actorId === operation.actorId : trip.actorKind === "service_visitor" && trip.actorId === operation.id))
+        : true;
+    if (!baseValid || !linkedValid) {
+      operation.departureItinerary = {
+        version: "service-departure-itinerary.v1", status: "skipped", choiceKind: "none",
+        selectedAtFacilityTick: itinerary.selectedAtFacilityTick ?? next.facilityTick,
+        completedAtFacilityTick: next.facilityTick, linkedTripId: null, retailIncomeLineId: null,
+      };
+    }
+  }
+  next.patientAmenityTrips = next.patientAmenityTrips?.filter((trip) => !trip.linkedServiceOperationId ||
+    next.serviceOperations.some((operation) => operation.id === trip.linkedServiceOperationId && operation.departureItinerary?.status === "bathroom" && operation.departureItinerary.linkedTripId === trip.id));
+  next.retailOperations = next.retailOperations.filter((trip) => !trip.departureServiceOperationId ||
+    next.serviceOperations.some((operation) => operation.id === trip.departureServiceOperationId && operation.departureItinerary?.status === "retail" && operation.departureItinerary.linkedTripId === trip.id));
   if (
     next.openChartEncounterId &&
     next.encounters[next.openChartEncounterId]
