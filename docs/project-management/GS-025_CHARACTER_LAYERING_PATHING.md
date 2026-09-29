@@ -1,3 +1,14 @@
+> GS-025 COMPLETE / VERIFIED GITHUB BACKUP — September 29, 2026.
+> Branch: codex/gs025-complete-2026-09-29.
+> Runtime checkpoint: c7ec8052d8962069609bd02283f2b0fc49b0889c.
+> Pushed to origin and exact SHA independently verified with git ls-remote.
+> Validation: domain99, player65, balance8, browser10; all package types,
+> build, boundary and launcher checks PASS. Sol assembled; Terra validated;
+> parent reviewed actual diffs and safety scope. Private4198 server cleaned.
+> This is a runnable scoped checkpoint inheriting published02ab585, excluding
+> unrelated concurrent work. No merge or deployment. START_GAME.cmd ->
+> http://127.0.0.1:4173 remains the owner playtest origin with existing saves.
+> Task records complete. Desktop sidebar archival tool unavailable in session.
 ## GitHub closeout — September 29, 2026
 
 The owner authorized a scoped GitHub backup and task completion. Runnable branch
