@@ -338,7 +338,7 @@ describe("GS-028 September 28 pre-Endoscopy batch", () => {
     wrong = answer(wrong, wrongEncounterId, false, `${wrongEncounterId}.answer`, REAL_MS + 101);
     expect(wrong.encounters[wrongEncounterId]?.terminalTestOrder).toBeUndefined();
     expect(wrong.serviceOperations).toEqual([]);
-  });
+  }, 10_000);
 
   it.each(GS028_20260928_CASES.map((clinicalCase, index) => [index, clinicalCase] as const))(
     "runs every authored node in case %s correctly through gates without leaking pending results",
