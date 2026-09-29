@@ -11,6 +11,30 @@ export interface CharacterPresentationMetrics {
   height: number;
 }
 
+/** One scale for every GS-026 standing and seated 160x320 frame. The factor
+ * preserves the previous 128px source's 181px floor span at tile*1.35. */
+export const CHARACTER_STILL_WIDTH_IN_TILES = 1.35 * (181 / 128) * (160 / 287);
+
+export function getCharacterStillPresentationMetrics(
+  tileSize: number,
+  displayScale = 1,
+): CharacterPresentationMetrics {
+  const safeTileSize = Number.isFinite(tileSize) && tileSize > 0 ? tileSize : 1;
+  const safeDisplayScale = Number.isFinite(displayScale) && displayScale > 0 ? displayScale : 1;
+  const width = Math.max(1, Math.round(safeTileSize * CHARACTER_STILL_WIDTH_IN_TILES * safeDisplayScale));
+  return { width, height: width * 2 };
+}
+
+export function alignCharacterStillSeatToWorld(
+  worldSeatY: number,
+  floorY: number,
+  seatContactY: number,
+  renderedHeight: number,
+  nativeHeight = 320,
+): number {
+  return worldSeatY + (floorY - seatContactY) * (renderedHeight / nativeHeight);
+}
+
 export function getCharacterPresentationMetrics(
   frame: CharacterFrameSize,
   tileSize: number,

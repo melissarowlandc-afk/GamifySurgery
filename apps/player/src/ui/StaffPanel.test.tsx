@@ -59,4 +59,24 @@ describe("StaffPanel", () => {
       'data-employee-id="employee.receptionist"',
     );
   });
+
+  it("renders role-specific staffing guidance", () => {
+    const markup = renderToStaticMarkup(
+      <StaffPanel
+        roles={[{
+          id: "staff.glp1_np", displayName: "GLP-1 NP", currentCount: 2,
+          maximumCount: 10, hiringCostLabel: "$600", canHire: true,
+          staffingGuidance: "Up to two NPs can staff each GLP-1 Telehealth Suite. Each staffed NP earns $50 per facility hour.",
+          employees: [],
+        }]}
+        onHire={vi.fn()}
+        onDecreaseSalary={vi.fn()}
+        onIncreaseSalary={vi.fn()}
+        onFire={vi.fn()}
+      />,
+    );
+
+    expect(markup).toContain("Up to two NPs can staff each GLP-1 Telehealth Suite.");
+    expect(markup).toContain("Each staffed NP earns $50 per facility hour.");
+  });
 });

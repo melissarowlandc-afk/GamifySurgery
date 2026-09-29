@@ -72,7 +72,7 @@ describe("campaign founder persistence", () => {
       founder: FOUNDER,
     });
 
-    expect(state.schemaVersion).toBe(7);
+    expect(state.schemaVersion).toBe(8);
     expect(state.founder).toEqual(expectedFounder);
 
     const restored = deserializeGameState(serializeGameState(state));
@@ -96,7 +96,7 @@ describe("campaign founder persistence", () => {
     const firstRestore = deserializeGameState(JSON.stringify(legacy));
     const replayedRestore = deserializeGameState(JSON.stringify(legacy));
 
-    expect(firstRestore.schemaVersion).toBe(7);
+    expect(firstRestore.schemaVersion).toBe(8);
     expect(firstRestore.founder.displayName).toBe("Founder");
     expect(firstRestore.founder).toEqual(replayedRestore.founder);
   });
@@ -120,11 +120,15 @@ describe("campaign founder persistence", () => {
     });
 
     const restored = deserializeGameState(serializeGameState(state));
-    expect(restored.founder).toEqual(state.founder);
+    expect(restored.founder).toEqual({
+      ...state.founder,
+      appearance: { ...state.founder.appearance, stillId: "founder.30" },
+    });
     expect(restored.founder.headId).toBe("head.30");
     expect(restored.founder.bodyId).toBe("body.30");
     expect(restored.founder.appearance.headVariant).toBe(29);
     expect(restored.founder.appearance.bodyVariant).toBe(29);
+    expect(restored.founder.appearance.stillId).toBe("founder.30");
 
     const legacyAppearance = normalizePixelAppearance(
       FOUNDER.appearance,

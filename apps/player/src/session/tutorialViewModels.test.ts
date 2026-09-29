@@ -84,6 +84,7 @@ function view(
     selectedRoomDefinitionId?: string | null;
     selectedRoomInstanceId?: string | null;
     acknowledged?: string[];
+    dailyRoutineTipsStarted?: boolean;
     summaryVisible?: boolean;
   } = {},
 ) {
@@ -96,6 +97,7 @@ function view(
         (id) => `${state.campaignId}:${id}`,
       ),
     ),
+    dailyRoutineTipsStarted: options.dailyRoutineTipsStarted ?? false,
     buildMode: options.buildMode ?? false,
     selectedRoomDefinitionId:
       options.selectedRoomDefinitionId ?? null,
@@ -317,6 +319,28 @@ describe("state-driven tutorial coach", () => {
 
     state = advanceUntil(
       state,
+      (candidate) => {
+        const second = candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!;
+        return second.lifecycle === "active_pending_result" && second.patientLocation === null && second.patientMovement === null;
+      },
+    );
+    expect(view(state, { acknowledged: [...acknowledged, "second-first-decision", "second-plan-feedback", "second-sendout-wait"] })?.id).toBe("sendout-management");
+    expect(view(state, { acknowledged: [...acknowledged, "second-first-decision", "second-plan-feedback", "second-sendout-wait", "sendout-management"] })?.id).toBe("sendout-trash");
+    expect(view(state, { acknowledged: [...acknowledged, "second-first-decision", "second-plan-feedback", "second-sendout-wait", "sendout-management", "sendout-trash"] })?.id).toBe("sendout-water");
+
+    expect(
+      view(state, {
+        acknowledged: [
+          ...acknowledged,
+          "second-first-decision",
+          "second-plan-feedback",
+        ],
+        dailyRoutineTipsStarted: true,
+      })?.id,
+    ).toBe("sendout-management");
+
+    state = advanceUntil(
+      state,
       (candidate) =>
         candidate.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!
           .lifecycle === "active_action_required",
@@ -326,6 +350,9 @@ describe("state-driven tutorial coach", () => {
       "second-first-decision",
       "second-plan-feedback",
       "second-sendout-wait",
+      "sendout-management",
+      "sendout-trash",
+      "sendout-water",
     ];
     expect(view(state, { acknowledged: throughWait })?.id).toBe(
       "second-result-ready",
@@ -371,7 +398,7 @@ describe("state-driven tutorial coach", () => {
     ).toBe("resolve-second-chart");
   });
 
-  it("teaches adding a second Examination Room and its explicit $0 door before allowing build exit", () => {
+  it("teaches the first Examination Room and its explicit $0 door before allowing build exit", () => {
     let state = createTutorialState();
     state = advanceUntil(
       state,
@@ -430,13 +457,6 @@ describe("state-driven tutorial coach", () => {
       type: "CLOSE_CHART",
       encounterId: SECOND_TUTORIAL_ENCOUNTER_ID,
     });
-    state.rooms = state.rooms.filter(
-      (room) => room.id !== "room.test.tutorial-examination",
-    );
-    state.doors = state.doors.filter(
-      (door) => door.roomId !== "room.test.tutorial-examination",
-    );
-
     const beforeBuild = [
       "first-patient-arriving",
       "open-first-chart",
@@ -494,7 +514,7 @@ describe("state-driven tutorial coach", () => {
     state.rooms.push({
       id: "room.exam.tutorial",
       roomDefinitionId: "room.examination",
-      x: 37,
+      x: 34,
       y: 26,
       orientation: 0,
       doorSide: null,
@@ -541,7 +561,7 @@ describe("state-driven tutorial coach", () => {
     state.doors.push({
       id: "door.exam.tutorial",
       roomId: "room.exam.tutorial",
-      side: "west",
+      side: "south",
       offset: 1,
       exterior: false,
     });
@@ -563,14 +583,8 @@ describe("state-driven tutorial coach", () => {
     );
   });
 
-  it("keeps the original one-room construction lesson for campaigns without the stable starter", () => {
+  it("keeps the first-room construction lesson for a fresh campaign", () => {
     const state = createInitialGameState();
-    state.rooms = state.rooms.filter(
-      (room) => room.id !== "room.instance.starter_examination",
-    );
-    state.doors = state.doors.filter(
-      (door) => door.roomId !== "room.instance.starter_examination",
-    );
     const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     first.lifecycle = "resolved";
     first.firstOpenedAtTick = 0;
@@ -647,6 +661,23 @@ describe("state-driven tutorial coach", () => {
     };
 
     state.paused = false;
+    state.rooms.push({
+      id: "room.level-one.examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.level-one.examination",
+      roomId: "room.level-one.examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
     expectCompletionPrompt(state);
 
     state = reduce(state, {
@@ -715,5 +746,17 @@ describe("state-driven tutorial coach", () => {
         selectedRoomDefinitionId: null,
       }),
     ).toBeNull();
+  });
+
+  it("never introduces operations tips outside the true off-site wait", () => {
+    const state = createInitialGameState();
+    state.facilityLevel = 1;
+    expect(view(state, { acknowledged: ["sendout-management"] })?.id).not.toMatch(/^sendout-/);
+    state.facilityLevel = 0;
+    const second = state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID];
+    expect(second).toBeUndefined();
+    // Before the second patient exists, durable future-tip markers must not
+    // rewind the between-patients tutorial.
+    expect(view(state, { acknowledged: ["sendout-management"] })?.id).toBe("first-patient-arriving");
   });
 });

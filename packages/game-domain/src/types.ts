@@ -154,6 +154,10 @@ export type PixelAppearanceVariant =
  * It is intentionally separate from founder-compatible numeric variants. */
 export type PatientIdentityId = `patient.adult.${string}`;
 
+/** Persisted cosmetic still identity. Unknown bounded values are retained so
+ * newer asset catalogs can round-trip through older domain builds. */
+export type CharacterStillId = string;
+
 export type PatientSexLabel = "Female" | "Male" | "Not specified";
 
 export interface PixelAppearanceDescriptor {
@@ -181,6 +185,8 @@ export interface PixelAppearanceDescriptor {
    * cosmetic matching data only; it never selects clinical content.
    */
   patientIdentityId?: PatientIdentityId;
+  /** Cosmetic artwork identity, separate from clinical and patient identity. */
+  stillId?: CharacterStillId;
   roleStyle?:
     | "founder"
     | "patient"
@@ -305,9 +311,24 @@ export interface PendingResult {
    * travel.
    */
   patientTravel: FrozenPatientTravel | null;
+  /** The service occurs at the patient's current care location without a journey. */
+  patientRemainsOnsite?: true;
+  /** The patient may leave clinic while an already-collected specimen is processed; no outside acquisition visit is implied. */
+  externalProcessingOnly?: true;
   /** Frozen editorial service phases; they never read later balance values. */
   timingPhases?: Array<{ id: string; durationTicks: number; resourceBound: boolean; startsAtTick: number; endsAtTick: number }>;
+  /** Undefined in legacy saves: no new fee is backpaid. */
+  serviceIncomeEligible?: true;
+  /** Frozen only for work scheduled after the income feature was introduced. */
+  serviceIncomeLineId?: string;
+  serviceIncomeFee?: number;
   resourceReservations?: Array<{ roomDefinitionId: string; staffRoleDefinitionId: string | null }>;
+  /** Concrete mobile imaging worker selected for this frozen onsite service. */
+  imagingTechnicianId?: string | null;
+  /** Concrete worker assigned to a newly scheduled onsite blood draw. */
+  phlebotomistId?: string | null;
+  /** Opts new phlebotomy orders into patient-and-worker arrival-gated timing. */
+  phlebotomyArrivalGatedVersion?: 1;
   /** Frozen selected clinician capacity for a resource-bound service. */
   providerReservation?:
     | {
@@ -317,6 +338,31 @@ export interface PendingResult {
       }
     | { kind: "founder" }
     | null;
+  /** Opt-in timing semantics for owner-approved onsite procedure work. */
+  approvedProcedureTimingVersion?: 1;
+  /**
+   * New onsite orders may wait for installed resources without freezing a
+   * concrete room, worker, path, or result clock. Undefined preserves legacy
+   * and already-dispatched pending results exactly.
+   */
+  resourceQueue?: {
+    version: "onsite-resource-queue.v1";
+    status: "waiting_for_resources";
+    serviceId: string;
+    routeId: string;
+    allowedRouteIds: string[] | null;
+    queuedAtTick: number;
+  };
+  /** Opt-in physical report-in lifecycle for newly scheduled onsite work. */
+  onsiteReturn?: {
+    version: "onsite-front-desk-return.v1";
+    status:
+      | "awaiting_service_completion"
+      | "walking_to_front_desk"
+      | "front_desk_arrived";
+    serviceCompletedAtTick: number | null;
+    frontDeskArrivalTick: number | null;
+  };
 }
 
 export interface FrozenPatientTravel {
@@ -350,6 +396,7 @@ export type PatientMovementKind =
   | "walking_to_care"
   | "departing_for_offsite_testing"
   | "returning_from_offsite_testing"
+  | "returning_from_onsite_service"
   | "idle_within_room"
   | "leaving_after_resolution"
   | "leaving_after_walkout";
@@ -414,6 +461,163 @@ export interface EncounterSettlement {
   incorrectAnswers: number;
   terminalOutcomeSeverity: "minor" | "major" | null;
   settledAtFacilityTick: number;
+}
+
+export interface ServiceIncomeReceipt {
+  id: string;
+  transactionKey: string;
+  incomeLineId: string;
+  catalogVersion: 1;
+  routeId: string | null;
+  actorKind: "patient" | "visitor" | "employee" | "founder" | "remote" | "retail_visitor" | "companion";
+  actorId: string;
+  displayAnchor?:
+    | { actorKind: "employee"; actorId: string }
+    | { actorKind: "founder"; actorId: "founder" };
+  grossAmount: number;
+  stockCost: number;
+  netCashDelta: number;
+  completedAtFacilityTick: number;
+}
+
+export type ServiceOperationStatus =
+  | "arriving"
+  | "waiting_for_resources"
+  | "walking_to_service"
+  | "in_service"
+  | "walking_between_phases"
+  | "leaving"
+  | "completed"
+  | "cancelled";
+
+export interface ServiceOperationState {
+  id: string;
+  incomeLineId: string;
+  catalogVersion: 1;
+  actorKind: "visitor" | "encounter" | "remote";
+  actorId: string;
+  displayName: string;
+  appearance: PixelAppearanceDescriptor | null;
+  status: ServiceOperationStatus;
+  createdAtFacilityTick: number;
+  waitDeadlineFacilityTick: number;
+  startedAtFacilityTick: number | null;
+  completedAtFacilityTick: number | null;
+  cancelledAtFacilityTick: number | null;
+  quoteFee: number;
+  phaseIndex: number;
+  phaseStartedAtFacilityTick: number | null;
+  phaseEndsAtFacilityTick: number | null;
+  reservedRoomInstanceIds: string[];
+  reservedEmployeeIds: string[];
+  providerReservation:
+    | { kind: "employee"; employeeId: string }
+    | { kind: "founder" }
+    | null;
+  location: GridPoint | null;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  cancellationReason: string | null;
+  /** Frozen sidewalk continuity for scheduled diagnostic visitors. */
+  visitorTravel?: {
+    version: "service-visitor-travel.v1";
+    offscreenEndpoint: GridPoint;
+    arrivedAtFacilityTick: number | null;
+  };
+  /** New encounter operations wait indefinitely for installed onsite resources. */
+  resourceQueueVersion?: 1;
+  /** Frozen staged-order work template; ordinary and older operations continue using their catalog template. */
+  frozenOperationPhases?: Array<{
+    id: string;
+    roomDefinitionId: string | null;
+    durationMinutes: number;
+    staffRoleDefinitionIds: string[];
+    providerRoleDefinitionIds?: string[];
+    founderEligible?: true;
+  }>;
+  /** Frozen exact authored test order for encounter work scheduled by a choice. */
+  testChoiceOrder?: {
+    version: "test-choice-order.v1";
+    purpose: "terminal" | "continuation" | "staged_result_component";
+    caseId: string;
+    nodeId: string;
+    questionVariantId: string;
+    choiceId: string;
+    choiceLabel: string;
+    serviceId: string;
+    routeId: string;
+    routeDisplayName: string;
+    externalRemainder: string | null;
+    componentId?: string;
+  };
+}
+
+export type RetailActorKind = "employee" | "founder" | "encounter" | "service_visitor" | "retail_visitor" | "companion";
+export type RetailOperationStatus = "walking_to_outlet" | "queued" | "purchasing" | "returning" | "leaving" | "completed" | "abandoned" | "cancelled";
+
+export interface RetailOperationState {
+  id: string;
+  incomeLineId: string;
+  catalogVersion: 1;
+  actorKind: RetailActorKind;
+  actorId: string;
+  displayName: string;
+  appearance: PixelAppearanceDescriptor;
+  linkedServiceOperationId: string | null;
+  authorizedOrderId: string | null;
+  status: RetailOperationStatus;
+  createdAtFacilityTick: number;
+  waitDeadlineFacilityTick: number;
+  startedAtFacilityTick: number | null;
+  completedAtFacilityTick: number | null;
+  quoteGross: number;
+  quoteStockCost: number;
+  outletRoomInstanceId: string;
+  outletDurationMinutes: number;
+  staffRoleDefinitionId: string | null;
+  servingEmployeeId: string | null;
+  location: GridPoint;
+  returnLocation: GridPoint | null;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  purchaseEndsAtFacilityTick: number | null;
+  cancellationReason: string | null;
+}
+
+export interface RetailExternalActorState {
+  id: string;
+  kind: "retail_visitor" | "companion";
+  displayName: string;
+  appearance: PixelAppearanceDescriptor;
+  linkedServiceOperationId: string | null;
+  linkedEncounterId: string | null;
+  lifecycle: "arriving" | "onsite" | "departing" | "departed";
+  location: GridPoint | null;
+  path: GridPoint[];
+  pathIndex: number;
+  lastMovedAtFacilityTick: number;
+  activeRetailOperationId: string | null;
+}
+
+export interface RetailOrderState {
+  id: string;
+  actorKind: RetailActorKind;
+  actorId: string;
+  incomeLineId: string;
+  allowance: number;
+  fulfilledQuantity: number;
+  createdAtFacilityTick: number;
+}
+
+export interface RetailActorLedgerState {
+  dayNumber: number;
+  foodDayNumber: number;
+  discretionarySpent: number;
+  foodDrinkPurchases: number;
+  giftSupplyPurchases: number;
+  lastTripAtFacilityTick: number | null;
 }
 
 export interface EncounterState {
@@ -489,9 +693,75 @@ export interface EncounterState {
   answers: AnswerRecord[];
   steps: EncounterStepState[];
   pendingResult: PendingResult | null;
+  /** Frozen local component of a non-result test order before an authored later follow-up. */
+  testOnlyContinuation?: {
+    version: "test-only-continuation.v1";
+    originatingNodeIndex: number;
+    serviceId: string;
+    routeId: string;
+    routeDisplayName: string;
+    incomeLineId: string | null;
+    externalRemainder: string;
+    status: "feedback_pending" | "waiting_for_service" | "returning_to_front_desk" | "completed" | "external_arranged";
+    serviceOperationId: string | null;
+    scheduledAtFacilityTick: number;
+    completedAtFacilityTick: number | null;
+  };
+  /** Frozen supported local pieces that must finish before an authored external result gate begins. */
+  stagedResultOrder?: {
+    version: "staged-result-order.v1";
+    originatingNodeIndex: number;
+    caseId: string;
+    nodeId: string;
+    questionVariantId: string;
+    choiceId: string;
+    choiceLabel: string;
+    status: "feedback_pending" | "waiting_for_component" | "returning_to_front_desk" | "remainder_pending" | "completed";
+    remainderMode: "external_patient_visit" | "external_processing";
+    currentComponentIndex: number;
+    components: Array<{
+      componentId: string;
+      serviceId: string;
+      routeId: string;
+      routeDisplayName: string;
+      incomeLineId: string;
+      quoteFee: number;
+      operationPhases: Array<{
+        id: string;
+        roomDefinitionId: string | null;
+        durationMinutes: number;
+        staffRoleDefinitionIds: string[];
+        providerRoleDefinitionIds?: string[];
+        founderEligible?: true;
+      }>;
+      externalRemainder: string;
+      status: "pending" | "waiting_for_service" | "returning_to_front_desk" | "completed" | "cancelled";
+      serviceOperationId: string | null;
+    }>;
+    /** Authored external route/result frozen at answer time; its clock starts after local return. */
+    remainder: PendingResult;
+  };
+  /** Durable terminal test order, including offsite routes that create no local operation. */
+  terminalTestOrder?: {
+    version: "terminal-test-order.v1";
+    caseId: string;
+    nodeId: string;
+    questionVariantId: string;
+    choiceId: string;
+    choiceLabel: string;
+    serviceId: string;
+    routeId: string;
+    routeDisplayName: string;
+    externalRemainder: string | null;
+    status: "onsite_service" | "external_arranged";
+    serviceOperationId: string | null;
+    scheduledAtFacilityTick: number;
+  };
   deliveredResultNarratives: string[];
   terminalFeedback: TerminalFeedback | null;
   settlementId: string | null;
+  /** Explicit authored restriction. Undefined uses the safe operational default. */
+  retailFoodDrinkAllowed?: boolean;
 }
 
 export interface PlacedRoom {
@@ -516,7 +786,7 @@ export interface DoorState {
 }
 
 export interface EmployeeFacilityTaskState {
-  kind: "refill_water" | "collect_litter" | "clean_room";
+  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service";
   startedAtFacilityTick: number;
   workMinutesRemaining: number;
   targetId?: string;
@@ -568,7 +838,8 @@ export interface FounderActivityState {
     | "return_to_front_desk"
     | "wander_facility"
     | "sit_in_chair"
-    | "visit_bathroom";
+    | "visit_bathroom"
+    | "perform_service";
   targetId: string;
   path: GridPoint[];
   pathIndex: number;
@@ -592,6 +863,12 @@ export interface FacilityEnvironmentState {
   lastLitterCleanupAtTick: number | null;
   nextLitterSpawnTick: number;
   glp1AutomationConsultationsCompleted: number;
+  /** Durable timer and concrete worker identity for each staffed GLP-1 suite. */
+  glp1AutomationSlots: Array<{
+    suiteRoomInstanceId: string;
+    employeeId: string;
+    nextPayoutTick: number;
+  }>;
   /** One due tick per currently operational staffed GLP-1 suite. */
   glp1AutomationNextPayoutTicks: number[];
   /** Legacy summary of the earliest due payout, retained for v6 compatibility. */
@@ -632,6 +909,16 @@ export interface AlertHumorState {
   alertsTutorialAcknowledgedAtTick: number | null;
   /** Facility-time deadline; null keeps ambient messages locked. */
   nextAmbientAlertTick: number | null;
+  /** One-time migration marker for the 120-minute ambient cadence. */
+  ambientCadenceVersion: 1;
+  /** Latest arrival used to pace daily quiet-clinic notices across reloads. */
+  lastPatientArrivalTick: number | null;
+  /** Continuous condition ages used by alert-only debounce policy. */
+  conditionActiveSinceTicks: Record<string, number>;
+  /** Last feed emission by global cadence group. */
+  conditionLastEmittedTicks: Record<string, number>;
+  /** Global separation marker shared by patient amenity/staff complaints. */
+  lastComplaintAlertTick: number | null;
   /** Stable selection counter used by the deterministic flavor stream. */
   ambientSequence: number;
   /** Increments whenever the currently eligible definition pool is exhausted. */
@@ -707,7 +994,16 @@ export interface DomainEvent {
 }
 
 export interface GameState {
-  schemaVersion: 7;
+  schemaVersion: 8;
+  /** Present only when an older campaign required the approved-room geometry migration. */
+  approvedRoomGeometryMigration?: {
+    version: "approved-room-geometry.v1";
+    relocatedRecoveryRoomIds: string[];
+    addedHallwayRoomIds: string[];
+  };
+  approvedRoomNavigationMigration?: {
+    version: "approved-room-navigation.v1";
+  };
   campaignId: string;
   campaignSeed: string;
   randomGeneratorVersion: "randomness.xoshiro128ss.v1";
@@ -740,6 +1036,24 @@ export interface GameState {
   learningHistories: Record<string, ConceptLearningHistory>;
   reviewIntents: SchedulerReviewIntent[];
   settlements: EncounterSettlement[];
+  serviceIncomeReceipts: ServiceIncomeReceipt[];
+  nextServiceIncomeReceiptSequence: number;
+  serviceAppointmentsEnabled: boolean;
+  nextServiceAppointmentTicks: Record<string, number>;
+  lastServiceAppointmentArrivalTick: number | null;
+  serviceOperationSequence: number;
+  serviceOperations: ServiceOperationState[];
+  retailOperationSequence: number;
+  retailOperations: RetailOperationState[];
+  retailExternalActors: RetailExternalActorState[];
+  retailOrders: RetailOrderState[];
+  retailActorLedgers: Record<string, RetailActorLedgerState>;
+  retailNextOpportunityTicks: Record<string, number>;
+  nextExternalRetailOpportunityTick: number;
+  externalRetailSequence: number;
+  companionSequence: number;
+  lastServiceAppointmentLineId: string | null;
+  lastServiceAppointmentTicks: Record<string, number>;
   operationReceipts: Record<string, OperationReceipt>;
   events: DomainEvent[];
   criticalGuarantees: Record<string, "pending" | "in_progress" | "satisfied">;
@@ -868,6 +1182,7 @@ export type GameCommand =
       type: "MOVE_FOUNDER";
       destination: GridPoint;
     })
+  | (CommandBase & { type: "SEAT_FOUNDER_AT_FRONT_DESK" })
   | (CommandBase & {
       type: "LEVEL_UP";
     })
@@ -880,6 +1195,30 @@ export type GameCommand =
     })
   | (CommandBase & {
       type: "RUN_EMERGENCY_GLP1_CONSULTATION";
+    })
+  | (CommandBase & {
+      type: "SET_SERVICE_APPOINTMENTS_ENABLED";
+      enabled: boolean;
+    })
+  | (CommandBase & {
+      type: "START_SERVICE_OPERATION";
+      incomeLineId: string;
+      actorKind?: "visitor" | "remote";
+    })
+  | (CommandBase & {
+      type: "START_RETAIL_PURCHASE";
+      incomeLineId: string;
+      actorKind: RetailActorKind;
+      actorId: string;
+      authorizedOrderId?: string;
+    })
+  | (CommandBase & {
+      type: "AUTHORIZE_RETAIL_ORDER";
+      orderId: string;
+      incomeLineId: string;
+      actorKind: RetailActorKind;
+      actorId: string;
+      allowance?: number;
     })
   | (CommandBase & {
       type: "ADMIT_PATIENT";

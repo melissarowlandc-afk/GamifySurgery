@@ -183,7 +183,9 @@ const FIXED_ROOM_LAYOUT: RoomVisualLayout = {
 };
 
 const TWO_ORIENTATION_LAYOUT: RoomVisualLayout = {
-  approvedOrientations: [0, 90],
+  // GS-015's second approved proof is counter-clockwise in screen space.
+  // Runtime preserves the domain's cardinal convention as 270, never 90.
+  approvedOrientations: [0, 270],
   doorClearZones: EVERY_WALL_DOOR_ZONES,
 };
 
@@ -238,7 +240,7 @@ const ROOM_VISUAL_LAYOUTS: Readonly<Record<string, RoomVisualLayout>> = {
     doorClearZones: ENDOSCOPY_DOOR_ZONES,
   },
   "room.periop_recovery": {
-    ...TWO_ORIENTATION_LAYOUT,
+    ...FIXED_ROOM_LAYOUT,
     doorClearZones: PERIOP_DOOR_ZONES,
   },
   "room.training": {
@@ -254,6 +256,18 @@ const ROOM_VISUAL_LAYOUTS: Readonly<Record<string, RoomVisualLayout>> = {
     doorClearZones: GLP1_DOOR_ZONES,
   },
 };
+
+/** GS-015 proofs model every wall segment and hide only the fixture owned by
+ * an opened segment. The domain has already removed illegal/unreachable slots
+ * before this presentation check runs, so legacy ratio zones must not remove
+ * a domain-enabled approved segment. */
+const APPROVED_DYNAMIC_DOOR_ROOM_IDS = new Set([
+  "room.front_desk", "room.hallway", "room.waiting", "room.examination",
+  "room.bathroom", "room.minor_procedure", "room.ultrasound", "room.xray",
+  "room.ct", "room.phlebotomy", "room.evs_closet", "room.endoscopy",
+  "room.periop_recovery", "room.training", "room.coffee_kiosk",
+  "room.glp1_telehealth_suite",
+]);
 
 export const PRIMARY_ROOM_VISUAL_IDS = [
   "room.front_desk",
@@ -372,6 +386,11 @@ export function isRoomVisualDoorSlotClear(
       : slot.height;
   if (!Number.isInteger(slot.offset) || sideLength <= 0 || slot.offset < 0 || slot.offset >= sideLength) {
     return false;
+  }
+  if (APPROVED_DYNAMIC_DOOR_ROOM_IDS.has(slot.definitionId)) {
+    // The Front Desk's south-center segment is the permanent public entrance;
+    // no other south segment belongs to its approved shell contract.
+    return slot.definitionId !== "room.front_desk" || slot.side !== "south" || slot.offset === 2;
   }
   const midpoint = (slot.offset + 0.5) / sideLength;
   return getOrientedDoorClearZones(slot.definitionId, slot.orientation).some(

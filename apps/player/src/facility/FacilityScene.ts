@@ -9,10 +9,13 @@ import type {
 import type {
   FacilityCameraChangeRequest,
   FacilityCameraView,
+  FacilityActorSupportRole,
   CollectLitterRequest,
   FacilityDoorView,
   FacilityDoorSlotView,
   FacilityPatientView,
+  FacilityServiceVisitorView,
+  FacilityRetailExternalActorView,
   FacilityRoomView,
   FacilityViewModel,
   MoveFounderRequest,
@@ -20,13 +23,20 @@ import type {
   PlaceRoomRequest,
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
+  SeatFounderAtFrontDeskRequest,
   RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
 } from "./types";
 import {
-  getCharacterPresentationMetrics,
-  getAuthoredCharacterPresentationMetrics,
+  formatEarningsPopupAmount,
+  getEarningsPopupLabelY,
+  reconcileEarningsPopups,
+  type EarningsPopupState,
+} from "./earningsPopupPresentation";
+import {
+  alignCharacterStillSeatToWorld,
+  getCharacterStillPresentationMetrics,
 } from "./characterPresentation";
 import {
   getBackedHorizontalBoundaryRuns,
@@ -44,20 +54,16 @@ import {
   type BoundaryRun,
   type PixelRectangle,
 } from "./roomCutaway";
+import { type CharacterDirection, type CharacterPose } from "../art/characterArt";
 import {
-  characterAppearanceSignature,
-  getCharacterPixelFrame,
-  type CharacterDirection,
-  type CharacterPose,
-} from "../art/characterArt";
-import {
-  allCanonicalCharacterAtlases,
-  canonicalAppearanceVariant,
   characterBitmapLayers,
   characterBitmapRegistration,
+  characterStandingBitmapDescriptors,
+  characterWalkingBitmapDescriptors,
+  characterStillScaleForAppearance,
   characterAtlasFrameKey,
 } from "../art/characterBitmapArt";
-import { selectCharacterWalkingPose } from "../art/lateralGaitCycle";
+import { characterWalkFrameAt } from "../art/characterWalkRegistry";
 import {
   captureCharacterMotionPresentation,
   replayCharacterMotionPresentation,
@@ -86,7 +92,7 @@ import {
   LANDSCAPING_ATLAS_V1_FRAMES,
   LEVEL_ONE_BITMAP_FIXTURE_FRAMES,
   LEVEL_TWO_ROOM_BITMAP_FIXTURE_OVERRIDES,
-  PATIENT_CHARACTER_CORE_MAP_ATLASES_V1,
+  APPROVED_GS015_ROOM_ATLASES,
   ROOM_FIXTURE_ATLASES,
   getRoomBitmapFixtureFrame,
   getEnvironmentAtlasFrameKey,
@@ -96,6 +102,32 @@ import {
   type FrontDeskV4ArchitectureId,
   type LandscapingAtlasFrameId,
 } from "../art/bitmapAssetManifest";
+import {
+  getApprovedRoomPresentation,
+  getApprovedRoomProofCapture,
+  isApprovedProceduralDrawVisible,
+  resolveApprovedRoomActorSupports,
+  resolveApprovedRoomDrawRecords,
+  resolveApprovedRoomProceduralDrawRecords,
+  type ApprovedRoomDrawRecord,
+  type ApprovedRoomShellPresentation,
+  type ApprovedWallSegment,
+} from "./approvedRoomPresentation";
+import {
+  getApprovedFloorPrimitives,
+  getApprovedProceduralScreenRect,
+  getApprovedSupportFacing,
+  getApprovedSupportPainterGround,
+  getNearestApprovedActorSupport,
+  parseApprovedCssColor,
+  type ApprovedPaintPrimitive,
+} from "./approvedRoomRenderer";
+import {
+  getApprovedSideChairForegroundDepth,
+  getApprovedSideChairMaskForDraw,
+  partitionApprovedSideChairPixels,
+  type ApprovedSideChairMaskDefinition,
+} from "./approvedSideChairLayers";
 import {
   getPhaserTextureKey,
   preloadBitmapAssets,
@@ -214,6 +246,7 @@ export interface FacilitySceneBridge {
   onRequestRoomUpgrade?: RequestRoomUpgrade;
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
+  onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
   onPraiseEmployee?: PraiseEmployeeRequest;
   onMoveFounder?: MoveFounderRequest;
   onCameraChange?: FacilityCameraChangeRequest;
@@ -327,6 +360,21 @@ function orientedSize(
   return { width: item.width, height: item.height };
 }
 
+interface ApprovedSideChairRuntime {
+  readonly baseKey: string;
+  readonly roomInstanceId: string;
+  readonly drawId: string;
+  readonly supportIds: readonly string[];
+  readonly mask: ApprovedSideChairMaskDefinition;
+  readonly baseImage: Phaser.GameObjects.Image;
+  readonly foregroundImage: Phaser.GameObjects.Image;
+  readonly fullTextureKey: string;
+  readonly fullFrame: string;
+  readonly rearTextureKey: string;
+  readonly foregroundTextureKey: string;
+  fixtureDepth: number;
+}
+
 function inferredPlacementDoorSide(
   placement: NonNullable<FacilityViewModel["placement"]>,
 ): CardinalDirection | null {
@@ -372,6 +420,8 @@ export class FacilityScene extends Phaser.Scene {
     string,
     Phaser.GameObjects.Image
   >();
+  /** Complementary south-arm layers exist only for six approved E/W chair crops. */
+  private readonly approvedSideChairRuntimes = new Map<string, ApprovedSideChairRuntime>();
   /** Exterior props stay separate from both terrain and semantic fixtures. */
   private readonly landscapingBitmapImages = new Map<
     string,
@@ -405,6 +455,12 @@ export class FacilityScene extends Phaser.Scene {
   private waterCoolerLabelText?: Phaser.GameObjects.Text;
   private litterHighlightText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
+  /** Local-only receipt cursor; it never participates in simulation state. */
+  private earningsPopupState: EarningsPopupState | undefined;
+  private readonly earningsPopupTexts = new Map<
+    string,
+    Phaser.GameObjects.Text
+  >();
 
   private layout: GridLayout = {
     originX: 0,
@@ -421,6 +477,7 @@ export class FacilityScene extends Phaser.Scene {
 
   private placementGhost: PlacementGhost | null = null;
   private characterPhase = 0;
+  private characterWalkMilliseconds = 0;
   private frameDeltaMilliseconds = 0;
   private characterPresentationWasFrozen = false;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
@@ -464,11 +521,9 @@ export class FacilityScene extends Phaser.Scene {
   private landscapingAtlasReady = false;
   private landscapingTreeCleanupReady = false;
   private roomFixtureAtlasesReady = false;
-  private characterAtlasesLoadRequested = false;
-  private characterAtlasesReady = false;
-  /** Seating sheets are requested only when a real patient needs one. */
-  private patientPoseAtlasLoadRequested = false;
-  private readonly pendingPatientPoseAtlases = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
+  private characterStillLoadRequested = false;
+  private readonly pendingCharacterStills = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
+  private readonly failedCharacterStills = new Set<string>();
 
   public constructor(bridge: FacilitySceneBridge) {
     super({ key: "facility-scene" });
@@ -490,6 +545,9 @@ export class FacilityScene extends Phaser.Scene {
     displayWidth: number | undefined;
     displayHeight: number | undefined;
     originY: number | undefined;
+    supportRole: FacilityActorSupportRole | undefined;
+    supportId: string | undefined;
+    supportRoomInstanceId: string | undefined;
     textureScaleMode: number | undefined;
     textureUsesLinearFiltering: boolean;
   }>>> {
@@ -506,6 +564,9 @@ export class FacilityScene extends Phaser.Scene {
         displayWidth: actor?.displayWidth,
         displayHeight: actor?.displayHeight,
         originY: actor?.originY,
+        supportRole: (container.getData("actor-support-role") as FacilityActorSupportRole | null | undefined) ?? undefined,
+        supportId: (container.getData("actor-support-id") as string | null | undefined) ?? undefined,
+        supportRoomInstanceId: (container.getData("actor-support-room-instance-id") as string | null | undefined) ?? undefined,
         textureScaleMode,
         textureUsesLinearFiltering:
           textureScaleMode === Phaser.Textures.FilterMode.LINEAR,
@@ -691,6 +752,7 @@ export class FacilityScene extends Phaser.Scene {
       ENVIRONMENT_ATLAS_V1,
       LANDSCAPING_ATLAS_V1,
       ...ROOM_FIXTURE_ATLASES,
+      ...APPROVED_GS015_ROOM_ATLASES,
     ]);
     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
       this.environmentAtlasLoadRequested = false;
@@ -713,98 +775,52 @@ export class FacilityScene extends Phaser.Scene {
     this.load.start();
   }
 
-  /**
-   * Character textures load independently from simulation state. A failed
-   * decode leaves the existing procedural renderer intact.
-   */
+  /** Character art is selected per live actor and loaded lazily. */
   private ensureCharacterAtlases(): void {
-    // The map needs movement art, not chart portrait/thumbnail atlases. Keep
-    // those UI images browser-loaded on demand instead of occupying Phaser's
-    // decoded texture cache.
-    const required = [
-      ...allCanonicalCharacterAtlases(),
-      ...PATIENT_CHARACTER_CORE_MAP_ATLASES_V1,
-    ];
-    if (required.every((asset) => this.textures.exists(getPhaserTextureKey(asset)))) {
-      this.registerCharacterAtlasFrames(required);
-      this.characterAtlasesReady = true;
-      return;
-    }
-    if (this.characterAtlasesLoadRequested) return;
-    this.characterAtlasesLoadRequested = true;
-    preloadBitmapAssets(this.load, required);
-    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
-      this.characterAtlasesLoadRequested = false;
-      if (!required.every((asset) => this.textures.exists(getPhaserTextureKey(asset)))) {
-        return;
-      }
-      this.registerCharacterAtlasFrames(required);
-      this.characterAtlasesReady = true;
-      this.drawCharacters();
-    });
-    this.load.start();
+    // Deliberately empty: 1,054 stills must never enter the startup preload.
   }
 
-  private registerCharacterAtlasFrames(
-    selected: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[] = allCanonicalCharacterAtlases(),
-  ): void {
-    for (const asset of selected) {
-      const texture = this.textures.get(getPhaserTextureKey(asset));
-      texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-      const patientV1 = asset.id.includes("character:patients-");
-      const columns = 5;
-      const rows = patientV1 ? 10 : 6;
-      const variants = patientV1 ? 50 : 30;
-      const frames = Array.from({ length: variants }, (_, variant) => {
-        const column = variant % columns;
-        const row = Math.floor(variant / columns);
-        const left = Math.floor((column * asset.nativeWidth) / columns);
-        const top = Math.floor((row * asset.nativeHeight) / rows);
-        const right = Math.floor(((column + 1) * asset.nativeWidth) / columns);
-        const bottom = Math.floor(((row + 1) * asset.nativeHeight) / rows);
-        return {
-          id: `character:${asset.id}:${variant}`,
-          atlasId: asset.id,
-          sourceRect: { x: left, y: top, width: right - left, height: bottom - top },
-          nativeWidth: right - left,
-          nativeHeight: bottom - top,
-          anchor: { x: (right - left) / 2, y: bottom - top },
-          orientation: "all" as const,
-          kind: "character" as const,
-        };
-      });
-      registerPhaserAtlasFrames(texture, frames);
-    }
-  }
-
-  /**
-   * Seated map sheets are uncommon and never need to block simulation. Until
-   * their one-time decode completes, the existing v3 procedural fallback is
-   * shown for that frame only. This does not alter a route or presentation ID.
-   */
-  private ensurePatientPoseAtlas(
+  private ensureCharacterStill(
     asset: import("../art/bitmapAssetManifest").BitmapAssetDescriptor,
   ): boolean {
     const textureKey = getPhaserTextureKey(asset);
     if (this.textures.exists(textureKey)) {
-      this.registerCharacterAtlasFrames([asset]);
+      this.textures.get(textureKey).setFilter(Phaser.Textures.FilterMode.LINEAR);
       return true;
     }
-    this.pendingPatientPoseAtlases.set(asset.id, asset);
-    if (this.patientPoseAtlasLoadRequested) return false;
-    this.patientPoseAtlasLoadRequested = true;
-    preloadBitmapAssets(this.load, [...this.pendingPatientPoseAtlases.values()]);
+    if (this.failedCharacterStills.has(asset.id)) return false;
+    this.ensureCharacterStills([asset]);
+    return false;
+  }
+
+  private ensureCharacterStills(
+    assets: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[],
+  ): void {
+    for (const asset of assets) {
+      const textureKey = getPhaserTextureKey(asset);
+      if (this.textures.exists(textureKey)) {
+        this.textures.get(textureKey).setFilter(Phaser.Textures.FilterMode.LINEAR);
+      } else if (!this.failedCharacterStills.has(asset.id)) {
+        this.pendingCharacterStills.set(asset.id, asset);
+      }
+    }
+    if (this.characterStillLoadRequested || this.pendingCharacterStills.size === 0) return;
+    this.characterStillLoadRequested = true;
+    const requested = [...this.pendingCharacterStills.values()];
+    preloadBitmapAssets(this.load, requested);
     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
-      this.patientPoseAtlasLoadRequested = false;
-      for (const [id, pending] of this.pendingPatientPoseAtlases) {
-        if (!this.textures.exists(getPhaserTextureKey(pending))) continue;
-        this.registerCharacterAtlasFrames([pending]);
-        this.pendingPatientPoseAtlases.delete(id);
+      this.characterStillLoadRequested = false;
+      for (const pending of requested) {
+        const pendingKey = getPhaserTextureKey(pending);
+        if (this.textures.exists(pendingKey)) this.textures.get(pendingKey).setFilter(Phaser.Textures.FilterMode.LINEAR);
+        else this.failedCharacterStills.add(pending.id);
+        this.pendingCharacterStills.delete(pending.id);
       }
       this.drawCharacters();
+      const next = this.pendingCharacterStills.values().next().value;
+      if (next) this.ensureCharacterStill(next);
     });
     this.load.start();
-    return false;
   }
 
   private registerEnvironmentAtlasFrames(): void {
@@ -881,7 +897,142 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
-  public update(_time: number, delta: number): void {
+  /**
+   * GS-015 proof records own non-grid source rectangles, so register each
+   * requested crop on its actual atlas instead of forcing it through the
+   * legacy FixtureId mapping. Registration is idempotent and intentionally
+   * per-record: another room pack failing to decode cannot hide this room.
+   */
+  private registerApprovedRoomFrame(record: ApprovedRoomDrawRecord): string | undefined {
+    const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
+    if (!atlas) return undefined;
+    const textureKey = getPhaserTextureKey(atlas);
+    if (!this.textures.exists(textureKey)) return undefined;
+    const frameId = `gs015:${record.assetId}:${record.sourceRect.join(":")}`;
+    const texture = this.textures.get(textureKey);
+    if (!texture.has(frameId)) {
+      texture.add(frameId, 0, record.sourceRect[0], record.sourceRect[1], record.sourceRect[2], record.sourceRect[3]);
+    }
+    return frameId;
+  }
+
+  private ensureApprovedSideChairTextures(
+    mask: ApprovedSideChairMaskDefinition,
+  ): Readonly<{ rear: string; foreground: string }> | undefined {
+    const rear = `approved-chair:${mask.id}:rear`;
+    const foreground = `approved-chair:${mask.id}:south-arm`;
+    if (this.textures.exists(rear) && this.textures.exists(foreground)) return { rear, foreground };
+    const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === mask.assetId);
+    if (!atlas) return undefined;
+    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
+    if (!source) return undefined;
+    const [sourceX, sourceY, width, height] = mask.sourceRect;
+    const rearTexture = this.textures.exists(rear)
+      ? this.textures.get(rear) as Phaser.Textures.CanvasTexture
+      : this.textures.createCanvas(rear, width, height);
+    const foregroundTexture = this.textures.exists(foreground)
+      ? this.textures.get(foreground) as Phaser.Textures.CanvasTexture
+      : this.textures.createCanvas(foreground, width, height);
+    if (!rearTexture || !foregroundTexture) return undefined;
+    for (const texture of [rearTexture, foregroundTexture]) {
+      texture.context.clearRect(0, 0, width, height);
+      texture.context.drawImage(
+        source as CanvasImageSource,
+        sourceX,
+        sourceY,
+        width,
+        height,
+        0,
+        0,
+        width,
+        height,
+      );
+    }
+    const rearPixels = rearTexture.getData(0, 0, width, height);
+    const foregroundPixels = foregroundTexture.getData(0, 0, width, height);
+    partitionApprovedSideChairPixels(
+      rearPixels.data,
+      foregroundPixels.data,
+      width,
+      height,
+      mask.southArmPolygon,
+    );
+    rearTexture.putData(rearPixels, 0, 0);
+    foregroundTexture.putData(foregroundPixels, 0, 0);
+    rearTexture.refresh();
+    foregroundTexture.refresh();
+    return { rear, foreground };
+  }
+
+  private reconcileApprovedSideChairLayers(): void {
+    const actorDepths = new Map<string, number[]>();
+    const characterKeys = new Set([
+      ...this.characterGraphics.keys(),
+      ...this.characterBitmapContainers.keys(),
+    ]);
+    for (const key of characterKeys) {
+      const container = this.characterBitmapContainers.get(key);
+      const actor = container?.getByName("actor") as Phaser.GameObjects.Image | null | undefined;
+      const graphics = this.characterGraphics.get(key);
+      const rendered = container?.visible && actor?.visible
+        ? container
+        : graphics?.visible ? graphics : undefined;
+      if (!rendered) continue;
+      const roomInstanceId = rendered.getData("actor-support-room-instance-id") as string | null | undefined;
+      const supportId = rendered.getData("actor-support-id") as string | null | undefined;
+      if (!roomInstanceId || !supportId) continue;
+      const bindingKey = `${roomInstanceId}:${supportId}`;
+      const depths = actorDepths.get(bindingKey) ?? [];
+      depths.push(rendered.depth);
+      actorDepths.set(bindingKey, depths);
+    }
+
+    for (const runtime of this.approvedSideChairRuntimes.values()) {
+      const depths = runtime.supportIds.flatMap((supportId) =>
+        actorDepths.get(`${runtime.roomInstanceId}:${supportId}`) ?? [],
+      );
+      const foregroundDepth = getApprovedSideChairForegroundDepth(depths);
+      const occupied = foregroundDepth !== undefined;
+      runtime.baseImage
+        .setTexture(occupied ? runtime.rearTextureKey : runtime.fullTextureKey, occupied ? undefined : runtime.fullFrame)
+        .setData("approved-draw-id", runtime.drawId)
+        .setData("approved-chair-room-instance-id", runtime.roomInstanceId)
+        .setData("approved-chair-support-ids", runtime.supportIds)
+        .setData("approved-chair-layer", occupied ? "rear" : "full");
+      runtime.foregroundImage
+        .setPosition(runtime.baseImage.x, runtime.baseImage.y)
+        .setDisplaySize(runtime.baseImage.displayWidth, runtime.baseImage.displayHeight)
+        .setDepth(foregroundDepth ?? runtime.fixtureDepth)
+        .setVisible(occupied)
+        .setData("approved-chair-layer", "south-arm")
+        .setData("approved-chair-room-instance-id", runtime.roomInstanceId)
+        .setData("approved-chair-support-ids", runtime.supportIds)
+        .setData("approved-chair-draw-id", runtime.drawId)
+        .setData("approved-chair-occupied", occupied);
+    }
+  }
+
+  public debugApprovedSideChairLayerSnapshot(): readonly Readonly<{
+    roomInstanceId: string;
+    drawId: string;
+    supportIds: readonly string[];
+    baseLayer: string | undefined;
+    baseDepth: number;
+    foregroundVisible: boolean;
+    foregroundDepth: number;
+  }>[] {
+    return [...this.approvedSideChairRuntimes.values()].map((runtime) => ({
+      roomInstanceId: runtime.roomInstanceId,
+      drawId: runtime.drawId,
+      supportIds: runtime.supportIds,
+      baseLayer: runtime.baseImage.getData("approved-chair-layer") as string | undefined,
+      baseDepth: runtime.baseImage.depth,
+      foregroundVisible: runtime.foregroundImage.visible,
+      foregroundDepth: runtime.foregroundImage.depth,
+    }));
+  }
+
+  public update(time: number, delta: number): void {
     const motionFrozen =
       this.bridge.viewModel.paused ||
       Boolean(this.bridge.viewModel.buildMode);
@@ -894,11 +1045,14 @@ export class FacilityScene extends Phaser.Scene {
       // Preserve the existing beat duration. Side travel uses those beats for
       // a stride/neutral/stride/neutral cycle; front/back remain two-frame.
       this.characterPhase += this.frameDeltaMilliseconds * 0.0025;
+      this.characterWalkMilliseconds +=
+        this.frameDeltaMilliseconds * this.bridge.viewModel.simulationSpeed;
     }
     this.characterPresentationWasFrozen = motionFrozen;
 
     this.refreshLayout();
     this.drawCharacters();
+    this.drawEarningsPopups(time);
     // Atlas completion callbacks can redraw outside update(). Delta belongs to
     // this update only, never to a later event-driven redraw.
     this.frameDeltaMilliseconds = 0;
@@ -1234,6 +1388,12 @@ export class FacilityScene extends Phaser.Scene {
         this.fixtureBitmapImages.delete(key);
       }
     }
+    for (const [key, runtime] of this.approvedSideChairRuntimes) {
+      if (!this.fixtureBitmapImages.has(runtime.baseKey)) {
+        runtime.foregroundImage.destroy();
+        this.approvedSideChairRuntimes.delete(key);
+      }
+    }
   }
 
   private removeInactiveLandscapingBitmapImages(): void {
@@ -1529,42 +1689,86 @@ export class FacilityScene extends Phaser.Scene {
     return { west: convert("west"), east: convert("east") };
   }
 
-  /** Draws only actual hallway perimeter strips; it never closes circulation. */
-  private drawCanonicalHallwayExposedEdges(
+  /** Draws only actual hallway perimeter strips with the approved proof palette. */
+  private drawApprovedHallwayExposedEdges(
+    graphics: Phaser.GameObjects.Graphics,
     room: FacilityRoomView,
     rectangle: { x: number; y: number; width: number; height: number },
+    shell: ApprovedRoomShellPresentation,
   ): void {
-    if (!this.canRenderFrontDeskV5Architecture()) return;
-    const horizontal = (side: "north" | "south") => this.getGroupedHallwayHorizontalRuns(room, side);
-    const vertical = (side: "east" | "west") => this.getGroupedHallwayVerticalRuns(room, side);
-    const components = getCanonicalHallwayEdgeComponents(
-      rectangle,
-      orientedSize(room),
-      {
-        north: horizontal("north"),
-        east: vertical("east"),
-        south: horizontal("south"),
-        west: vertical("west"),
-      },
-      { id: "hallway-paper" },
-      getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms, this.getRoomDoorOpenings(room))
-        .map((run) => ({ start: run.offset * this.layout.tileSize, length: run.length * this.layout.tileSize })),
-      this.getCanonicalSideRuns(room, rectangle),
+    const scale = this.layout.tileSize / shell.tilePixels;
+    const px = (value: number) => value * scale;
+    const cap = px(shell.sideCapWidthPixels);
+    const rear = px(shell.rearWallHeightPixels);
+    const low = px(shell.southHeightPixels);
+    const inset = px(shell.doorInsetPixels);
+    const wall = parseApprovedCssColor(shell.rearWall).color;
+    const sage = parseApprovedCssColor(shell.baseTrim).color;
+    const dark = parseApprovedCssColor(shell.edgeTrim).color;
+    const wood = parseApprovedCssColor(shell.doorJamb).color;
+    const light = 0x789173;
+    const cream = 0xefe1bd;
+    const openings = this.getRoomDoorOpenings(room);
+    const expanded = (runs: readonly { offset: number; length: number }[]) => new Set(
+      runs.flatMap((run) => Array.from({ length: run.length }, (_, index) => run.offset + index)),
     );
-    for (const component of components) {
-      const { bounds } = component;
-      this.drawFrontDeskV3ArchitectureArt(
-        `canonical-hallway:${room.instanceId}:${component.key}`,
-        component.frameId,
-        bounds.x + bounds.width / 2,
-        bounds.y + bounds.height / 2,
-        bounds.width,
-        bounds.height,
-        component.layer !== "base"
-          ? getFacilitySceneDepth(rectangle.y + rectangle.height, "fixture", 63)
-          : FACILITY_DEPTH_WORLD + 4,
-        PIXEL_PALETTE_NUMBER.paper,
-      );
+    const north = expanded(this.exposedBoundaryRuns(room, "north"));
+    const south = expanded(this.exposedBoundaryRuns(room, "south"));
+    const west = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "west"));
+    const east = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "east"));
+    const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms, openings));
+    const openingAt = (side: "north" | "south" | "west" | "east", offset: number) =>
+      openings.some((opening) => opening.side === side && opening.offset === offset);
+    const paintNorth = (offset: number) => {
+      const left = rectangle.x + offset * this.layout.tileSize;
+      const isLow = backed.has(offset);
+      const height = isLow ? low : rear;
+      const top = rectangle.y - height;
+      const paint = (x: number, width: number) => {
+        graphics.fillStyle(wall, 1); graphics.fillRect(x, top, width, height);
+        graphics.fillStyle(sage, 1); graphics.fillRect(x, rectangle.y - px(24), width, px(24));
+        graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(9));
+        graphics.fillStyle(light, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(3));
+      };
+      if (!openingAt("north", offset)) { paint(left, this.layout.tileSize); return; }
+      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+      graphics.fillStyle(wood, 1);
+      graphics.fillRect(left + inset - px(5), top, px(5), height);
+      graphics.fillRect(left + this.layout.tileSize - inset, top, px(5), height);
+      if (!isLow) graphics.fillRect(left + inset - px(5), top - px(5), this.layout.tileSize - inset * 2 + px(10), px(6));
+    };
+    north.forEach(paintNorth);
+    for (const side of ["west", "east"] as const) {
+      const offsets = side === "west" ? west : east;
+      for (const offset of offsets) {
+        const left = side === "west" ? rectangle.x - cap : rectangle.x + rectangle.width;
+        const top = rectangle.y + offset * this.layout.tileSize;
+        const opening = openingAt(side, offset);
+        const paint = (y: number, height: number) => {
+          graphics.fillStyle(dark, 1); graphics.fillRect(left, y, cap, height);
+          graphics.fillStyle(light, 1); graphics.fillRect(left + (side === "east" ? 0 : cap - px(3)), y, px(3), height);
+        };
+        if (!opening) { paint(top, this.layout.tileSize); continue; }
+        paint(top, inset); paint(top + this.layout.tileSize - inset, inset);
+        graphics.fillStyle(wood, 1);
+        graphics.fillRect(left - px(2), top + inset - px(3), cap + px(4), px(5));
+        graphics.fillRect(left - px(2), top + this.layout.tileSize - inset - px(2), cap + px(4), px(5));
+      }
+    }
+    for (const offset of south) {
+      const left = rectangle.x + offset * this.layout.tileSize;
+      const top = rectangle.y + rectangle.height;
+      const paint = (x: number, width: number) => {
+        graphics.fillStyle(cream, 1); graphics.fillRect(x, top, width, low);
+        graphics.fillStyle(sage, 1); graphics.fillRect(x, top + px(21), width, px(8));
+        graphics.fillStyle(dark, 1); graphics.fillRect(x, top - px(6), width, px(8));
+        graphics.fillStyle(light, 1); graphics.fillRect(x, top - px(6), width, px(3));
+      };
+      if (!openingAt("south", offset)) { paint(left, this.layout.tileSize); continue; }
+      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+      graphics.fillStyle(wood, 1);
+      graphics.fillRect(left + inset - px(5), top - px(6), px(5), low + px(6));
+      graphics.fillRect(left + this.layout.tileSize - inset, top - px(6), px(5), low + px(6));
     }
   }
 
@@ -2230,7 +2434,9 @@ export class FacilityScene extends Phaser.Scene {
     const fallbackY =
       this.layout.originY +
       (cooler.location.y + 0.72) * this.layout.tileSize;
-    const founderRoom = this.getFounderRoom();
+    const founderRoom = this.bridge.viewModel.rooms.find(
+      (room) => room.definitionId === "room.front_desk",
+    ) ?? this.getFounderRoom();
     const coolerIsAtFrontDesk = Boolean(
       founderRoom &&
         cooler.location.x ===
@@ -2238,6 +2444,59 @@ export class FacilityScene extends Phaser.Scene {
         cooler.location.y ===
           founderRoom.tileY + FRONT_DESK_PRESENTATION.grid.cooler.y,
     );
+    const approvedCooler = coolerIsAtFrontDesk && founderRoom
+      ? resolveApprovedRoomDrawRecords(
+          "room.front_desk",
+          0,
+          cooler.fillPercent <= 0 ? "emptyWater" : undefined,
+        ).find((record) => record.assetId === "gs015:front-desk:upkeep")
+      : undefined;
+    if (approvedCooler && founderRoom) {
+      const rectangle = this.toPixels({
+        tileX: founderRoom.tileX,
+        tileY: founderRoom.tileY,
+        ...orientedSize(founderRoom),
+      });
+      const left = rectangle.x + approvedCooler.destinationTopLeftTiles[0] * this.layout.tileSize;
+      const top = rectangle.y + approvedCooler.destinationTopLeftTiles[1] * this.layout.tileSize;
+      const width = approvedCooler.renderSizeTiles[0] * this.layout.tileSize;
+      const height = approvedCooler.renderSizeTiles[1] * this.layout.tileSize;
+      x = left + width / 2;
+      const coolerGraphics = this.getSortableGraphics(
+        this.fixtureGraphics,
+        this.activeFixtureGraphics,
+        "environment:water-cooler-interaction",
+      );
+      coolerGraphics.setDepth(getFacilitySceneDepth(top + height, "fixture", 63));
+      if (cooler.highlighted || cooler.needsRefill) {
+        const outlineWidth = Math.max(2, pixel);
+        coolerGraphics.lineStyle(
+          outlineWidth,
+          cooler.highlighted ? PIXEL_PALETTE_NUMBER.highlight : PIXEL_PALETTE_NUMBER.charcoal,
+          1,
+        );
+        coolerGraphics.strokeRect(
+          left - outlineWidth * 2,
+          top - outlineWidth * 2,
+          width + outlineWidth * 4,
+          height + outlineWidth * 4,
+        );
+        if (cooler.highlighted) {
+          coolerGraphics.lineStyle(Math.max(1, outlineWidth - 1), PIXEL_PALETTE_NUMBER.charcoal, 1);
+          coolerGraphics.strokeRect(
+            left - outlineWidth * 4,
+            top - outlineWidth * 4,
+            width + outlineWidth * 8,
+            height + outlineWidth * 8,
+          );
+        }
+      }
+      this.waterCoolerLabelText
+        ?.setText(cooler.needsRefill ? "REFILL" : "WATER COOLER")
+        .setPosition(x, top - Math.max(3, pixel))
+        .setVisible(Boolean(cooler.highlighted || cooler.needsRefill));
+      return;
+    }
     // The authored cooler is tall and narrow. Its Front Desk envelope is
     // intentionally larger than generic environment props so it reads as the
     // rear-right fixture in the reference composition rather than a tiny icon.
@@ -2396,6 +2655,12 @@ export class FacilityScene extends Phaser.Scene {
       ...oriented,
     });
     if (room.kind === "hallway" || room.definitionId === "room.hallway") {
+      const approvedHallway = getApprovedRoomPresentation(room.definitionId);
+      if (approvedHallway) {
+        this.drawApprovedHallwaySurface(graphics, room, rectangle, approvedHallway.shell);
+        this.drawApprovedHallwayExposedEdges(graphics, room, rectangle, approvedHallway.shell);
+        return;
+      }
       // Corridors remain open circulation floors. Only real exterior edges
       // receive the same component grammar as the enclosed room shells.
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.shadow, 0.34);
@@ -2438,7 +2703,35 @@ export class FacilityScene extends Phaser.Scene {
           y - 1,
         );
       }
-      this.drawCanonicalHallwayExposedEdges(room, rectangle);
+      return;
+    }
+    if (room.definitionId === "room.imaging_control") {
+      // This legacy ID remains loadable but deliberately has no approved proof
+      // package and must never revive the retired control-room furniture.
+      const neutralShell: ApprovedRoomShellPresentation = {
+        tilePixels: 120, rearWallHeightPixels: 90, lowNorthHeightPixels: 29, sideCapWidthPixels: 14, southHeightPixels: 29,
+        floorPattern: "neutral clinical vinyl", floorPatternKind: "vinyl", floorPatternSizePixels: 24, floorPatternSeed: 0, floorAlgorithm: "xray-vinyl", floorPalette: ["#d9e1dc"],
+        floorGrout: "#7a6c5e", floorAccent: "#000000", floorBase: "#d9e1dc", background: "#f3ead3", rearWall: "#d6d8cf", baseTrim: "#58735a", edgeTrim: "#294632", doorJamb: "#744a29", doorInsetPixels: 12,
+      };
+      this.drawApprovedRoomSurface(graphics, room, rectangle, neutralShell);
+      return;
+    }
+    const approved = getApprovedRoomPresentation(room.definitionId);
+    if (approved) {
+      this.drawApprovedRoomSurface(graphics, room, rectangle, approved.shell);
+      const roomFixtures = this.getSortableGraphics(
+        this.roomFixtureGraphics,
+        this.activeRoomFixtureGraphics,
+        `room-fixtures:${room.instanceId}`,
+      );
+      roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
+      this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.layout.tileSize * 0.14)));
+      this.drawApprovedSouthForeground(roomFixtures, room, rectangle, approved.shell);
+      if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
+        const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
+        graphics.lineStyle(2, 0xffffff, 1);
+        graphics.strokeRect(rectangle.x + inset, rectangle.y + inset, rectangle.width - inset * 2, rectangle.height - inset * 2);
+      }
       return;
     }
     const shade = this.roomFloorColor(room, index);
@@ -2521,6 +2814,242 @@ export class FacilityScene extends Phaser.Scene {
         rectangle.height - inset * 2 - 4,
       );
     }
+  }
+
+  /** Draws approved shell colors and material while retaining live boundary topology. */
+  private drawApprovedRoomSurface(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    shell: ApprovedRoomShellPresentation,
+  ): void {
+    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+    const capture = getApprovedRoomProofCapture(room.definitionId, orientation);
+    const dimensions = orientedSize(room);
+    this.drawApprovedPaintPrimitives(
+      graphics,
+      getApprovedFloorPrimitives(shell, dimensions.width, dimensions.height, capture?.coordinateSpace.floorOriginPixels),
+      rectangle.x,
+      rectangle.y,
+      this.layout.tileSize / shell.tilePixels,
+    );
+    this.drawCleanlinessWear(graphics, room, rectangle);
+    this.drawApprovedRoomCaps(graphics, room, rectangle, shell);
+  }
+
+  private drawApprovedPaintPrimitives(
+    graphics: Phaser.GameObjects.Graphics,
+    primitives: readonly ApprovedPaintPrimitive[],
+    originX: number,
+    originY: number,
+    scale: number,
+  ): void {
+    for (const primitive of primitives) {
+      const parsed = parseApprovedCssColor(primitive.color);
+      const alpha = parsed.alpha * (primitive.alpha ?? 1);
+      if (primitive.shape === "line") {
+        graphics.lineStyle(Math.max(.35, scale), parsed.color, alpha);
+        graphics.lineBetween(
+          originX + primitive.x * scale,
+          originY + primitive.y * scale,
+          originX + (primitive.x + primitive.width) * scale,
+          originY + (primitive.y + primitive.height) * scale,
+        );
+      } else if (primitive.shape === "ellipse") {
+        graphics.fillStyle(parsed.color, alpha);
+        graphics.fillEllipse(
+          originX + primitive.x * scale,
+          originY + primitive.y * scale,
+          primitive.width * scale,
+          primitive.height * scale,
+        );
+      } else {
+        graphics.fillStyle(parsed.color, alpha);
+        graphics.fillRect(
+          originX + primitive.x * scale,
+          originY + primitive.y * scale,
+          primitive.width * scale,
+          primitive.height * scale,
+        );
+      }
+    }
+  }
+
+  /** Exact proof wall bands and doorway seams, scaled from authored pixels. */
+  private drawApprovedRoomCaps(graphics: Phaser.GameObjects.Graphics, room: FacilityRoomView, rectangle: { x: number; y: number; width: number; height: number }, shell: ApprovedRoomShellPresentation): void {
+    const scale = this.layout.tileSize / shell.tilePixels;
+    const px = (value: number) => value * scale;
+    const cap = px(shell.sideCapWidthPixels);
+    const low = px(shell.southHeightPixels);
+    const rear = px(shell.rearWallHeightPixels);
+    const wall = parseApprovedCssColor(shell.rearWall).color;
+    const trim = parseApprovedCssColor(shell.baseTrim).color;
+    const dark = parseApprovedCssColor(shell.edgeTrim).color;
+    const light = 0x789173;
+    const cream = 0xefe1bd;
+    const wood = parseApprovedCssColor(shell.doorJamb).color;
+    const openings = this.getRoomDoorOpenings(room);
+    const backed = this.getBackedHorizontalOffsets(room, "north");
+    const backedSouth = this.getBackedHorizontalOffsets(room, "south");
+    const dimensions = orientedSize(room);
+    const inset = px(shell.doorInsetPixels);
+    const northBaseHeight = px(room.definitionId === "room.front_desk" ? 23 : 23);
+    for (let offset = 0; offset < dimensions.width; offset += 1) {
+      const left = rectangle.x + offset * this.layout.tileSize;
+      const isBacked = backed.has(offset);
+      const height = isBacked ? low : rear;
+      const top = rectangle.y - height;
+      const opening = openings.some((door) => door.side === "north" && door.offset === offset);
+      const paintRun = (x: number, width: number) => {
+        if (width <= 0) return;
+        graphics.fillStyle(isBacked && room.definitionId !== "room.front_desk" ? trim : wall, 1);
+        graphics.fillRect(x, top, width, height);
+        if (!isBacked) {
+          graphics.fillStyle(trim, 1); graphics.fillRect(x, rectangle.y - northBaseHeight, width, northBaseHeight);
+          graphics.fillStyle(light, 1); graphics.fillRect(x, rectangle.y - northBaseHeight, width, px(4));
+        } else if (room.definitionId === "room.front_desk") {
+          graphics.fillStyle(trim, 1); graphics.fillRect(x, top, width, px(8));
+        } else {
+          graphics.fillStyle(light, 1); graphics.fillRect(x, top, width, px(4));
+        }
+        graphics.fillStyle(dark, 1); graphics.fillRect(x, rectangle.y - px(7), width, px(7));
+      };
+      if (opening) {
+        paintRun(left, inset);
+        paintRun(left + this.layout.tileSize - inset, inset);
+        graphics.fillStyle(wood, 1);
+        graphics.fillRect(left + inset - px(5), top, px(5), height);
+        graphics.fillRect(left + this.layout.tileSize - inset, top, px(5), height);
+        if (!isBacked) graphics.fillRect(left + inset - px(5), top - px(5), this.layout.tileSize - inset * 2 + px(10), px(6));
+      } else paintRun(left, this.layout.tileSize);
+      if (!isBacked) {
+        graphics.fillStyle(dark, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.layout.tileSize + px(2), px(9));
+        graphics.fillStyle(light, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.layout.tileSize + px(2), px(3));
+      }
+    }
+    for (const side of ["west", "east"] as const) {
+      const x = side === "west" ? rectangle.x - cap + px(2) : rectangle.x + rectangle.width - px(2);
+      const top = backed.has(side === "west" ? 0 : dimensions.width - 1) ? rectangle.y - low : rectangle.y - rear - px(9);
+      const sideOpenings = openings.filter((door) => door.side === side).sort((left, right) => left.offset - right.offset);
+      const paintCap = (segmentTop: number, segmentHeight: number) => {
+        if (segmentHeight <= 0) return;
+        graphics.fillStyle(dark, 1); graphics.fillRect(x, segmentTop, cap, segmentHeight);
+        graphics.fillStyle(light, 1); graphics.fillRect(x + (side === "west" ? cap - px(3) : 0), segmentTop, px(3), segmentHeight);
+      };
+      let cursor = top;
+      for (const opening of sideOpenings) {
+        const doorTop = rectangle.y + opening.offset * this.layout.tileSize + inset;
+        const doorHeight = this.layout.tileSize - inset * 2;
+        paintCap(cursor, doorTop - cursor);
+        graphics.fillStyle(wood, 1);
+        graphics.fillRect(x - px(2), doorTop - px(3), cap + px(4), px(5));
+        graphics.fillRect(x - px(2), doorTop + doorHeight - px(2), cap + px(4), px(5));
+        cursor = doorTop + doorHeight;
+      }
+      paintCap(cursor, rectangle.y + rectangle.height + low - cursor);
+    }
+    const southY = rectangle.y + rectangle.height;
+    for (let offset = 0; offset < dimensions.width; offset += 1) {
+      // The room on the south side owns a shared horizontal boundary through
+      // its short north wall. Do not repeat this room's foreground lip.
+      if (backedSouth.has(offset)) continue;
+      if (room.definitionId === "room.front_desk" && offset === 2) continue;
+      const left = rectangle.x + offset * this.layout.tileSize;
+      const opening = openings.some((door) => door.side === "south" && door.offset === offset);
+      const paintSouth = (x: number, width: number) => {
+        graphics.fillStyle(cream, 1); graphics.fillRect(x, southY, width, low);
+        graphics.fillStyle(trim, 1); graphics.fillRect(x, southY + low - px(8), width, px(8));
+        graphics.fillStyle(dark, 1); graphics.fillRect(x, southY - px(6), width, px(8));
+        graphics.fillStyle(light, 1); graphics.fillRect(x, southY - px(6), width, px(3));
+      };
+      if (opening) {
+        paintSouth(left, inset);
+        paintSouth(left + this.layout.tileSize - inset, inset);
+        graphics.fillStyle(wood, 1);
+        graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
+        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+      } else paintSouth(left, this.layout.tileSize);
+    }
+    if (room.definitionId === "room.front_desk") {
+      const entryLeft = rectangle.x + this.layout.tileSize * 2;
+      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
+      for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
+        graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
+        graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
+        graphics.fillStyle(dark, 1); graphics.fillRect(jambX - px(2), southY - px(16), px(16), px(7));
+      }
+    }
+  }
+
+  private drawApprovedHallwaySurface(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    shell: ApprovedRoomShellPresentation,
+  ): void {
+    this.drawApprovedPaintPrimitives(
+      graphics,
+      getApprovedFloorPrimitives(
+        shell,
+        rectangle.width / this.layout.tileSize,
+        rectangle.height / this.layout.tileSize,
+        [room.tileX * shell.tilePixels, room.tileY * shell.tilePixels],
+      ),
+      rectangle.x,
+      rectangle.y,
+      this.layout.tileSize / shell.tilePixels,
+    );
+  }
+
+  /** Repaints the proof's low south wall above actors whose feet pass behind it. */
+  private drawApprovedSouthForeground(
+    graphics: Phaser.GameObjects.Graphics,
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+    shell: ApprovedRoomShellPresentation,
+  ): void {
+    const scale = this.layout.tileSize / shell.tilePixels;
+    const px = (value: number) => value * scale;
+    const low = px(shell.southHeightPixels);
+    const inset = px(shell.doorInsetPixels);
+    const cream = 0xefe1bd;
+    const trim = parseApprovedCssColor(shell.baseTrim).color;
+    const dark = parseApprovedCssColor(shell.edgeTrim).color;
+    const light = 0x789173;
+    const wood = parseApprovedCssColor(shell.doorJamb).color;
+    const southY = rectangle.y + rectangle.height;
+    const openings = this.getRoomDoorOpenings(room);
+    const dimensions = orientedSize(room);
+    const backedSouth = this.getBackedHorizontalOffsets(room, "south");
+    const paint = (x: number, width: number) => {
+      graphics.fillStyle(cream, 1); graphics.fillRect(x, southY, width, low);
+      graphics.fillStyle(trim, 1); graphics.fillRect(x, southY + low - px(8), width, px(8));
+      graphics.fillStyle(dark, 1); graphics.fillRect(x, southY - px(6), width, px(8));
+      graphics.fillStyle(light, 1); graphics.fillRect(x, southY - px(6), width, px(3));
+    };
+    for (let offset = 0; offset < dimensions.width; offset += 1) {
+      // Match the base-cap ownership rule so the foreground repaint cannot
+      // restore a south lip over the southern room's short north wall.
+      if (backedSouth.has(offset)) continue;
+      if (room.definitionId === "room.front_desk" && offset === 2) continue;
+      const left = rectangle.x + offset * this.layout.tileSize;
+      const opening = openings.some((door) => door.side === "south" && door.offset === offset);
+      if (!opening) { paint(left, this.layout.tileSize); continue; }
+      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+      graphics.fillStyle(wood, 1);
+      graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
+      graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+    }
+    if (room.definitionId === "room.front_desk") {
+      const entryLeft = rectangle.x + this.layout.tileSize * 2;
+      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
+      for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
+        graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
+        graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
+        graphics.fillStyle(dark, 1); graphics.fillRect(jambX - px(2), southY - px(16), px(16), px(7));
+      }
+    }
+    graphics.setDepth(getFacilitySceneDepth(southY + low, "fixture", 63));
   }
 
   private roomFloorColor(
@@ -2674,6 +3203,24 @@ export class FacilityScene extends Phaser.Scene {
       this.bridge.viewModel.rooms,
       side,
     );
+  }
+
+  /** Converts adjacent horizontal room runs into local tile offsets. */
+  private getBackedHorizontalOffsets(
+    room: FacilityRoomView,
+    side: "north" | "south",
+  ): ReadonlySet<number> {
+    const backed = new Set<number>();
+    for (const run of getBackedHorizontalBoundaryRuns(
+      room,
+      this.bridge.viewModel.rooms,
+      side,
+    )) {
+      for (let offset = run.offset; offset < run.offset + run.length; offset += 1) {
+        backed.add(offset);
+      }
+    }
+    return backed;
   }
 
   /** Presentation-only direct plus reciprocal wall apertures for this room. */
@@ -3026,6 +3573,10 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private roomWallFaceColor(room: FacilityRoomView): number {
+    const approved = getApprovedRoomPresentation(room.definitionId);
+    if (approved) {
+      return Phaser.Display.Color.HexStringToColor(approved.shell.rearWall).color;
+    }
     if (
       room.definitionId === "room.xray" ||
       room.definitionId === "room.imaging_control"
@@ -3592,6 +4143,7 @@ export class FacilityScene extends Phaser.Scene {
     rectangle: { x: number; y: number; width: number; height: number },
     inset: number,
   ): void {
+    if (this.drawApprovedRoomFixtures(room, rectangle)) return;
     const visualLayout = getRoomVisualLayout(room.definitionId);
     const furnitureOrientation = getRoomVisualOrientation(
       visualLayout,
@@ -4297,6 +4849,170 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * Static proof records are drawn one image per authored crop. Their
+   * destination coordinates are already normalized to the proof floor origin;
+   * deliberately do not replay the proof canvas transform or global SCALE.
+   */
+  private drawApprovedRoomFixtures(
+    room: FacilityRoomView,
+    rectangle: { x: number; y: number; width: number; height: number },
+  ): boolean {
+    const presentation = getApprovedRoomPresentation(room.definitionId);
+    if (!presentation) return false;
+    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+    const occupied = room.definitionId === "room.endoscopy" &&
+      this.bridge.viewModel.endoscopyOccupancy?.roomInstanceIds.includes(room.instanceId);
+    const variant = occupied
+      ? "occupiedCovered" as const
+      : room.definitionId === "room.front_desk" && (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0
+        ? "emptyWater" as const
+        : undefined;
+    const records = resolveApprovedRoomDrawRecords(
+      room.definitionId,
+      orientation,
+      variant,
+    );
+    const openDoorSegments = new Set<ApprovedWallSegment>();
+    for (const opening of this.getRoomDoorOpenings(room)) {
+      const index = opening.offset + 1;
+      if (opening.side === "north") openDoorSegments.add(`N${index}`);
+      else if (opening.side === "south") openDoorSegments.add(`S${index}`);
+      else {
+        const letter = String.fromCharCode(64 + index);
+        openDoorSegments.add(`${opening.side === "west" ? "W" : "E"}${letter}`);
+      }
+    }
+    const backedNorthSegments = new Set<ApprovedWallSegment>();
+    for (const run of getBackedHorizontalBoundaryRuns(room, this.bridge.viewModel.rooms, "north")) {
+      for (let index = run.offset + 1; index <= run.offset + run.length; index += 1) backedNorthSegments.add(`N${index}`);
+    }
+    let order = 0;
+    for (const record of records) {
+      if (record.doorOwners.some((owner) => openDoorSegments.has(owner)) || record.backedOwners.some((owner) => backedNorthSegments.has(owner))) continue;
+      const frame = this.registerApprovedRoomFrame(record);
+      const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
+      if (!frame || !atlas) continue; // This room alone waits for its pack; never choose legacy art.
+      const [leftTiles, topTiles] = record.destinationTopLeftTiles;
+      const [widthTiles, heightTiles] = record.renderSizeTiles;
+      const left = rectangle.x + leftTiles * this.layout.tileSize;
+      const top = rectangle.y + topTiles * this.layout.tileSize;
+      const width = Math.max(1, widthTiles * this.layout.tileSize);
+      const height = Math.max(1, heightTiles * this.layout.tileSize);
+      const contactY = record.worldLocalGround
+        ? rectangle.y + record.worldLocalGround[1] * this.layout.tileSize
+        : top + height;
+      const key = `approved:${room.instanceId}:${orientation}:${record.id}:${order}`;
+      let image = this.fixtureBitmapImages.get(key);
+      if (!image) {
+        image = this.add.image(left, top, getPhaserTextureKey(atlas), frame);
+        this.fixtureBitmapImages.set(key, image);
+      }
+      const recordDepth = record.depthPolicy === "wall"
+          ? FACILITY_DEPTH_WORLD + 19
+          : getFacilitySceneDepth(contactY, "fixture", order % 64);
+      image.setTexture(getPhaserTextureKey(atlas), frame)
+        .setOrigin(0, 0)
+        .setPosition(Math.round(left), Math.round(top))
+        .setDisplaySize(Math.round(width), Math.round(height))
+        .setDepth(recordDepth)
+        .setVisible(true)
+        .setData("approved-draw-id", record.id);
+      this.activeFixtureBitmapImages.add(key);
+      const chairMask = getApprovedSideChairMaskForDraw(room.definitionId, orientation, record);
+      if (chairMask) {
+        const textures = this.ensureApprovedSideChairTextures(chairMask);
+        if (textures) {
+          const existing = this.approvedSideChairRuntimes.get(key);
+          if (existing && existing.mask.id !== chairMask.id) {
+            existing.foregroundImage.destroy();
+            this.approvedSideChairRuntimes.delete(key);
+          }
+          let runtime = this.approvedSideChairRuntimes.get(key);
+          if (!runtime) {
+            const foregroundImage = this.add.image(left, top, textures.foreground)
+              .setOrigin(0, 0)
+              .setVisible(false);
+            runtime = {
+              baseKey: key,
+              roomInstanceId: room.instanceId,
+              drawId: record.id,
+              supportIds: chairMask.supportIds,
+              mask: chairMask,
+              baseImage: image,
+              foregroundImage,
+              fullTextureKey: getPhaserTextureKey(atlas),
+              fullFrame: frame,
+              rearTextureKey: textures.rear,
+              foregroundTextureKey: textures.foreground,
+              fixtureDepth: recordDepth,
+            };
+            this.approvedSideChairRuntimes.set(key, runtime);
+          }
+          runtime.fixtureDepth = recordDepth;
+          runtime.foregroundImage
+            .setTexture(runtime.foregroundTextureKey)
+            .setPosition(Math.round(left), Math.round(top))
+            .setDisplaySize(Math.round(width), Math.round(height))
+            .setDepth(recordDepth)
+            .setVisible(false);
+          image
+            .setData("approved-chair-room-instance-id", room.instanceId)
+            .setData("approved-chair-support-ids", chairMask.supportIds)
+            .setData("approved-chair-layer", "full");
+        }
+      }
+      order += 1;
+    }
+    for (const procedural of resolveApprovedRoomProceduralDrawRecords(room.definitionId, orientation)) {
+      if (!isApprovedProceduralDrawVisible(procedural, openDoorSegments, backedNorthSegments)) continue;
+      const graphics = this.getSortableGraphics(
+        this.fixtureGraphics,
+        this.activeFixtureGraphics,
+        `approved-procedural:${room.instanceId}:${procedural.id}`,
+      );
+      const proofRect = getApprovedProceduralScreenRect(procedural, presentation.shell.tilePixels);
+      const scale = this.layout.tileSize / presentation.shell.tilePixels;
+      const left = rectangle.x + proofRect.left * scale;
+      const top = rectangle.y + proofRect.top * scale;
+      const width = proofRect.width * scale;
+      const height = proofRect.height * scale;
+      if (procedural.style.kind === "ct-observation-partition") {
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.body).color, 1);
+        graphics.fillRect(left, top, width, height);
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.topHighlight).color, 1);
+        graphics.fillRect(left, top, width, procedural.style.highlightHeightPixels * scale);
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.topDark).color, 1);
+        graphics.fillRect(left, top, width, procedural.style.darkHeightPixels * scale);
+        const windowTop = top + height * procedural.style.windowTopFraction;
+        const windowHeight = height * procedural.style.windowHeightFraction;
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.windowOuter).color, 1);
+        graphics.fillRect(left - procedural.style.windowOuterHorizontalBleedPixels * scale, windowTop, width + procedural.style.windowOuterHorizontalBleedPixels * 2 * scale, windowHeight);
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.windowInner).color, 1);
+        graphics.fillRect(left - procedural.style.windowInnerHorizontalBleedPixels * scale, windowTop + procedural.style.windowInnerVerticalInsetPixels * scale, width + procedural.style.windowInnerHorizontalBleedPixels * 2 * scale, windowHeight - procedural.style.windowInnerVerticalInsetPixels * 2 * scale);
+      } else if (procedural.style.kind === "recovery-top-cap") {
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.dark).color, 1);
+        graphics.fillRect(left, top, width, height);
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.light).color, 1);
+        graphics.fillRect(left, top, procedural.style.lightHeightPixels * scale, height);
+      } else {
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.face).color, 1);
+        graphics.fillRect(left, top, width, height);
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.dark).color, 1);
+        graphics.fillRect(left, top + height - procedural.style.darkHeightPixels * scale, width, procedural.style.darkHeightPixels * scale);
+        graphics.fillStyle(parseApprovedCssColor(procedural.style.light).color, 1);
+        graphics.fillRect(left, top + height - procedural.style.darkHeightPixels * scale, width, procedural.style.lightHeightPixels * scale);
+      }
+      const depth = procedural.drawPhase === "before-bitmaps"
+        ? FACILITY_DEPTH_WORLD + 18
+        : procedural.drawPhase === "after-scanner-before-console"
+          ? getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 41)
+          : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 32);
+      graphics.setDepth(depth);
+    }
+    return true;
+  }
+
   private drawFixture(
     graphics: Phaser.GameObjects.Graphics,
     id: FixtureId,
@@ -4357,14 +5073,16 @@ export class FacilityScene extends Phaser.Scene {
 
   private characterPose(
     moving: boolean,
-    direction: CharacterDirection,
-    offsetIndex: number,
+    _direction: CharacterDirection,
+    _offsetIndex: number,
   ): CharacterPose {
-    return selectCharacterWalkingPose(
-      moving,
-      direction,
-      Math.floor(this.characterPhase * 2 + offsetIndex),
-    );
+    return moving ? "walk-neutral" : "idle";
+  }
+
+  private characterWalkFrame(pose: CharacterPose): number | undefined {
+    return pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b"
+      ? characterWalkFrameAt(this.characterWalkMilliseconds)
+      : undefined;
   }
 
   private characterPresentationFrozen(): boolean {
@@ -4387,9 +5105,10 @@ export class FacilityScene extends Phaser.Scene {
     const frozen = this.characterPresentationFrozen()
       ? this.characterMotionSnapshots.get(key)
       : undefined;
+    const identityScale = characterStillScaleForAppearance(candidate.appearance);
     const resolved = resolveCharacterMotionPresentation(
       frozen,
-      candidate,
+      { ...candidate, displayScale: candidate.displayScale * identityScale },
       this.layout,
     );
     const drawn = this.drawPixelPerson(
@@ -4404,10 +5123,12 @@ export class FacilityScene extends Phaser.Scene {
       resolved.rightFacing,
       resolved.displayScale,
       resolved.representation,
+      Boolean(frozen),
+      resolved.alignSeatContact ?? false,
     );
     if (!frozen) {
       this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
-        resolved,
+        { ...resolved, baseY: drawn.baseY },
         this.layout,
         drawn.representation,
       ));
@@ -4571,14 +5292,40 @@ export class FacilityScene extends Phaser.Scene {
     location: GridPoint | undefined,
     moving: boolean,
     anchor: "staff" | "public",
-  ): Readonly<{ centerX: number; baseY: number; scale: number }> | undefined {
-    if (!this.canRenderFrontDeskV5Architecture()) return undefined;
+  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole?: FacilityActorSupportRole; supportId?: string; pose?: CharacterPose; direction?: CharacterDirection; rightFacing?: boolean }> | undefined {
+    const approvedRoom = this.bridge.viewModel.rooms.find((candidate) => candidate.definitionId === "room.front_desk");
+    const approvedBounds = approvedRoom ? orientedSize(approvedRoom) : undefined;
+    const insideApprovedRoom = Boolean(location && approvedRoom && approvedBounds && !moving &&
+      location.x >= approvedRoom.tileX && location.x < approvedRoom.tileX + approvedBounds.width &&
+      location.y >= approvedRoom.tileY && location.y < approvedRoom.tileY + approvedBounds.height);
+    if (approvedRoom && insideApprovedRoom && getApprovedRoomPresentation("room.front_desk")) {
+      const support = resolveApprovedRoomActorSupports("room.front_desk", 0).find((candidate) =>
+        candidate.role === (anchor === "staff" ? "front-desk-staff" : "front-desk-public"),
+      );
+      if (support && !moving) {
+        const bounds = this.toPixels({ tileX: approvedRoom.tileX, tileY: approvedRoom.tileY, ...orientedSize(approvedRoom) });
+        const facing = getApprovedSupportFacing(support.facing);
+        const painterGround = getApprovedSupportPainterGround(support);
+        return {
+          centerX: bounds.x + support.seat.x * this.layout.tileSize,
+          baseY: bounds.y + support.seat.y * this.layout.tileSize,
+          depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
+          scale: 1,
+          seatTarget: true,
+          supportRole: support.role,
+          supportId: support.id,
+          pose: support.pose === "standing" ? "idle" : support.pose,
+          ...facing,
+        };
+      }
+    }
     const display = getFrontDeskV5StationaryActorDisplay(
       location,
       moving,
       anchor,
       this.bridge.viewModel.rooms,
     );
+    if (!this.canRenderFrontDeskV5Architecture()) return undefined;
     const room = this.bridge.viewModel.rooms.find(
       (candidate) => candidate.definitionId === "room.front_desk",
     );
@@ -4591,8 +5338,66 @@ export class FacilityScene extends Phaser.Scene {
     return {
       centerX: projection.floorBounds.x + projection.floorBounds.width * display.x,
       baseY: projection.floorBounds.y + projection.floorBounds.height * display.y,
-      scale: display.scale,
+      depthBaseY: projection.floorBounds.y + projection.floorBounds.height * display.y,
+      scale: 1,
+      seatTarget: false,
     };
+  }
+
+  private getApprovedActorSupportDisplayPosition(
+    location: GridPoint | undefined,
+    moving: boolean,
+    supportRole: FacilityActorSupportRole | undefined,
+  ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
+    if (!location || moving || !supportRole) return undefined;
+    const room = this.bridge.viewModel.rooms.find((candidate) => {
+      if (!getApprovedRoomPresentation(candidate.definitionId) || candidate.definitionId === "room.front_desk") return false;
+      const size = orientedSize(candidate);
+      return location.x >= candidate.tileX && location.x < candidate.tileX + size.width &&
+        location.y >= candidate.tileY && location.y < candidate.tileY + size.height;
+    });
+    if (!room) return undefined;
+    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+    const support = getNearestApprovedActorSupport(
+      resolveApprovedRoomActorSupports(room.definitionId, orientation),
+      { x: location.x - room.tileX, y: location.y - room.tileY },
+      supportRole,
+    );
+    if (!support) return undefined;
+    const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+    const facing = getApprovedSupportFacing(support.facing);
+    const painterGround = getApprovedSupportPainterGround(support);
+    return {
+      centerX: bounds.x + support.seat.x * this.layout.tileSize,
+      baseY: bounds.y + support.seat.y * this.layout.tileSize,
+      depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
+      scale: 1,
+      seatTarget: support.pose !== "standing",
+      supportRole: support.role,
+      supportId: support.id,
+      supportRoomInstanceId: room.instanceId,
+      pose: support.pose === "standing" ? "idle" : support.pose,
+      ...facing,
+    };
+  }
+
+  private setCharacterSupportPresentation(
+    key: string,
+    graphics: Phaser.GameObjects.Graphics,
+    support: Readonly<{ depthBaseY: number; supportRole?: FacilityActorSupportRole; supportId?: string; supportRoomInstanceId?: string }> | undefined,
+    order: number,
+  ): void {
+    const depthY = support?.depthBaseY;
+    if (depthY !== undefined) {
+      const depth = getFacilitySceneDepth(depthY, "character", order % 64);
+      graphics.setDepth(depth);
+      this.characterBitmapContainers.get(key)?.setDepth(depth);
+    }
+    for (const target of [graphics, this.characterBitmapContainers.get(key)]) {
+      target?.setData("actor-support-role", support?.supportRole ?? null);
+      target?.setData("actor-support-id", support?.supportId ?? null);
+      target?.setData("actor-support-room-instance-id", support?.supportRoomInstanceId ?? null);
+    }
   }
 
   private getCharacterGraphics(
@@ -4619,7 +5424,54 @@ export class FacilityScene extends Phaser.Scene {
     this.activeCharacterBitmapContainers = new Set<string>();
     this.locatorGraphics?.clear();
     const representedKeys = new Set<string>();
+    const liveAppearance = (
+      key: string,
+      appearance: PixelAppearanceDescriptor,
+      hasLiveInput: boolean,
+    ): PixelAppearanceDescriptor[] => {
+      const frozen = this.characterPresentationFrozen()
+        ? this.characterMotionSnapshots.get(key)?.appearance
+        : undefined;
+      return hasLiveInput || frozen ? [frozen ?? appearance] : [];
+    };
     const founderKey = "character:founder";
+    const prefetchAppearances = [
+      ...liveAppearance(
+        founderKey,
+        this.bridge.viewModel.founder.appearance,
+        Boolean(this.bridge.viewModel.founder.location || this.bridge.viewModel.founder.path?.length),
+      ),
+      ...this.bridge.viewModel.staff.flatMap((actor) => liveAppearance(
+        `character:staff:${actor.instanceId}`,
+        actor.appearance ?? FALLBACK_APPEARANCE,
+        Boolean(actor.location || actor.path?.length),
+      )),
+      ...(this.bridge.viewModel.ambientPedestrians ?? []).flatMap((actor) => liveAppearance(
+        `character:ambient:${actor.instanceId}`,
+        actor.appearance,
+        Boolean(actor.location || actor.path?.length),
+      )),
+      ...(this.bridge.viewModel.patients ?? []).flatMap((actor) =>
+        this.bridge.viewModel.endoscopyOccupancy?.patientInstanceIds.includes(actor.instanceId)
+          ? []
+          : liveAppearance(
+              `character:patient:${actor.instanceId}`,
+              actor.appearance,
+              Boolean(actor.location || actor.path?.length),
+            ),
+      ),
+      ...(this.bridge.viewModel.serviceVisitors ?? []).flatMap((actor) => liveAppearance(
+        `character:service-visitor:${actor.actorId}`,
+        actor.appearance ?? FALLBACK_APPEARANCE,
+        Boolean(actor.location || actor.path?.length),
+      )),
+      ...(this.bridge.viewModel.retailExternalActors ?? []).flatMap((actor) => liveAppearance(
+        `character:retail-${actor.actorKind}:${actor.instanceId}`,
+        actor.appearance,
+        Boolean(actor.location || actor.path?.length),
+      )),
+    ];
+    this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
     representedKeys.add(founderKey);
     const founderPresentation = this.getCharacterRoutePresentation(
       founderKey,
@@ -4638,17 +5490,22 @@ export class FacilityScene extends Phaser.Scene {
         this.bridge.viewModel.founder.activityLabel,
         candidateFounderLocation,
       );
-      const resolvedFounderPose = this.bridge.viewModel.founder.seated && !founderPresentation.moving
+      let resolvedFounderPose = this.bridge.viewModel.founder.seated && !founderPresentation.moving
         ? "seated"
         : founderPose;
-      const founderDisplay = resolvedFounderPose === "seated"
+      const founderDisplay = this.bridge.viewModel.founder.supportRole === "front-desk-staff"
         ? this.getFrontDeskV5ActorDisplayPosition(
             candidateFounderLocation,
             founderPresentation.moving,
             "staff",
           )
-        : undefined;
-      const founderAtFrontDesk = founderDisplay !== undefined;
+        : this.getApprovedActorSupportDisplayPosition(
+            candidateFounderLocation,
+            founderPresentation.moving,
+            this.bridge.viewModel.founder.supportRole,
+          );
+      resolvedFounderPose = founderDisplay?.pose ?? resolvedFounderPose;
+      const founderAtFrontDesk = founderDisplay?.supportRole === "front-desk-staff";
       const founderCenterX = founderDisplay?.centerX ??
         this.layout.originX + (candidateFounderLocation.x + 0.5) * this.layout.tileSize;
       const founderBaseY = this.drawCharacterPresentation(graphics, founderKey, {
@@ -4661,18 +5518,20 @@ export class FacilityScene extends Phaser.Scene {
               : 0),
         ),
         appearance: this.bridge.viewModel.founder.appearance,
-        direction: stationaryFloorDirection(
+        direction: founderDisplay?.direction ?? stationaryFloorDirection(
           founderPresentation.moving,
           founderPresentation.direction,
           resolvedFounderPose === "seated",
         ),
         pose: resolvedFounderPose,
-        rightFacing: founderPresentation.rightFacing,
+        rightFacing: founderDisplay?.rightFacing ?? founderPresentation.rightFacing,
         displayScale: founderDisplay?.scale ?? 1,
+        alignSeatContact: founderDisplay?.seatTarget ?? false,
       }, this.characterGaitOffset(founderKey, 0));
       graphics.setDepth(
         getFacilitySceneDepth(founderBaseY, "character", 0),
       );
+      this.setCharacterSupportPresentation(founderKey, graphics, founderDisplay, 0);
       const activityLabel = this.bridge.viewModel.founder.activityLabel;
       const founderLabelPosition = frozenFounder
         ? replayCharacterMotionPresentation(frozenFounder, this.layout)
@@ -4710,7 +5569,7 @@ export class FacilityScene extends Phaser.Scene {
       }
       const employeeLocation = employeePresentation.location ?? { x: 0, y: 0 };
       const graphics = this.getCharacterGraphics(key);
-      const employeePose = this.staffPose(
+      let employeePose = this.staffPose(
         employeePresentation.moving,
         employeePresentation.direction,
         this.characterGaitOffset(key, index + 1),
@@ -4718,13 +5577,18 @@ export class FacilityScene extends Phaser.Scene {
         employeeLocation,
         employee.staffRoleDefinitionId,
       );
-      const employeeDisplay = employeePose === "seated"
+      const employeeDisplay = employee.supportRole === "front-desk-staff"
         ? this.getFrontDeskV5ActorDisplayPosition(
             employeeLocation,
             employeePresentation.moving,
             "staff",
           )
-        : undefined;
+        : this.getApprovedActorSupportDisplayPosition(
+            employeeLocation,
+            employeePresentation.moving,
+            employee.supportRole,
+          );
+      employeePose = employeeDisplay?.pose ?? employeePose;
       const founderSeatedAdjacentReceptionist =
         getFrontDeskFounderSeatedAdjacentReceptionistSeparation(
           {
@@ -4752,14 +5616,15 @@ export class FacilityScene extends Phaser.Scene {
         centerX: employeeCenterX,
         baseY: employeeDisplayBaseY,
         appearance: employee.appearance ?? FALLBACK_APPEARANCE,
-        direction: stationaryFloorDirection(
+        direction: employeeDisplay?.direction ?? stationaryFloorDirection(
           employeePresentation.moving,
           employeePresentation.direction,
           employeePose === "seated",
         ),
         pose: employeePose,
-        rightFacing: employeePresentation.rightFacing,
+        rightFacing: employeeDisplay?.rightFacing ?? employeePresentation.rightFacing,
         displayScale: employeeDisplay?.scale ?? 1,
+        alignSeatContact: employeeDisplay?.seatTarget ?? false,
       }, this.characterGaitOffset(key, index + 1));
       graphics.setDepth(
         getFacilitySceneDepth(
@@ -4768,6 +5633,7 @@ export class FacilityScene extends Phaser.Scene {
           (index + 1) % 64,
         ),
       );
+      this.setCharacterSupportPresentation(key, graphics, employeeDisplay, index + 1);
     });
     this.bridge.viewModel.ambientPedestrians?.forEach(
       (pedestrian, index) => {
@@ -4810,6 +5676,7 @@ export class FacilityScene extends Phaser.Scene {
       },
     );
     this.bridge.viewModel.patients?.forEach((patient, index) => {
+      if (this.bridge.viewModel.endoscopyOccupancy?.patientInstanceIds.includes(patient.instanceId)) return;
       const key = `character:patient:${patient.instanceId}`;
       representedKeys.add(key);
       const presentation = this.getCharacterRoutePresentation(
@@ -4828,6 +5695,28 @@ export class FacilityScene extends Phaser.Scene {
         },
         index,
       );
+    });
+    this.bridge.viewModel.serviceVisitors?.forEach((visitor, index) => {
+      if (this.bridge.viewModel.endoscopyOccupancy?.serviceVisitorInstanceIds.includes(visitor.instanceId)) return;
+      const key = `character:service-visitor:${visitor.actorId}`;
+      representedKeys.add(key);
+      const presentation = this.getCharacterRoutePresentation(key, visitor);
+      this.drawServiceVisitor(
+        {
+          ...visitor,
+          ...(presentation.location ? { location: presentation.location } : { location: undefined }),
+          direction: presentation.direction,
+          moving: presentation.moving,
+          rightFacing: presentation.rightFacing,
+        },
+        index,
+      );
+    });
+    this.bridge.viewModel.retailExternalActors?.forEach((actor, index) => {
+      const key = `character:retail-${actor.actorKind}:${actor.instanceId}`;
+      representedKeys.add(key);
+      const presentation = this.getCharacterRoutePresentation(key, actor);
+      this.drawRetailExternalActor({ ...actor, ...(presentation.location ? { location: presentation.location } : { location: undefined }), direction: presentation.direction, moving: presentation.moving, rightFacing: presentation.rightFacing }, index);
     });
     for (const key of this.routeMotionTracks.keys()) {
       if (!representedKeys.has(key)) {
@@ -4854,6 +5743,167 @@ export class FacilityScene extends Phaser.Scene {
       this.activeCharacterGraphics,
     );
     this.removeInactiveCharacterBitmapContainers();
+    this.reconcileApprovedSideChairLayers();
+  }
+
+  /**
+   * Receipts arrive from the domain only after it has credited cash. This
+   * layer turns newly observed receipts into short-lived world labels and
+   * deliberately never dispatches a command or changes the view model.
+   */
+  private drawEarningsPopups(nowMilliseconds: number): void {
+    const model = this.bridge.viewModel;
+    const actorAnchors = {
+      patient: Object.fromEntries(
+        (model.patients ?? [])
+          .filter((patient) => this.getEarningsPopupPosition("patient", patient.instanceId))
+          .map((patient) => [patient.instanceId, true] as const),
+      ),
+      employee: Object.fromEntries(
+        model.staff
+          .filter((employee) => this.getEarningsPopupPosition("employee", employee.instanceId))
+          .map((employee) => [employee.instanceId, true] as const),
+      ),
+      founder: this.getEarningsPopupPosition("founder", "founder")
+        ? { founder: true }
+        : undefined,
+      remote: Object.fromEntries(
+        (model.earningsReceipts ?? [])
+          .filter((receipt) => receipt.actorKind === "remote" && this.getEarningsPopupPosition("remote", receipt.actorId))
+          .map((receipt) => [receipt.actorId, true] as const),
+      ),
+      visitor: Object.fromEntries(
+        (model.serviceVisitors ?? [])
+          .filter((visitor) => this.getEarningsPopupPosition("visitor", visitor.actorId))
+          .map((visitor) => [visitor.actorId, true] as const),
+      ),
+      retail_visitor: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "retail_visitor" && this.getEarningsPopupPosition("retail_visitor", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
+      companion: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "companion" && this.getEarningsPopupPosition("companion", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
+    };
+    this.earningsPopupState = reconcileEarningsPopups(
+      this.earningsPopupState,
+      {
+        campaignId: model.campaignId ?? "campaign.legacy.local",
+        receipts: model.earningsReceipts ?? [],
+        actorAnchors,
+        nowMilliseconds,
+      },
+    );
+
+    const activeKeys = new Set<string>();
+    for (const [popupIndex, popup] of this.earningsPopupState.activePopups.entries()) {
+      activeKeys.add(popup.transactionKey);
+      const position = this.getEarningsPopupPosition(
+        popup.actorKind,
+        popup.actorId,
+      );
+      let text = this.earningsPopupTexts.get(popup.transactionKey);
+      if (!position) {
+        text?.setVisible(false);
+        continue;
+      }
+      if (!text) {
+        text = this.add
+          .text(0, 0, "", {
+            color: "#2a9d4b",
+            fontFamily: '"Courier New", Courier, monospace',
+            fontSize: "14px",
+            fontStyle: "bold",
+            stroke: "#f7f3df",
+            strokeThickness: 2,
+            resolution: 2,
+          })
+          .setOrigin(0.5, 1);
+        this.earningsPopupTexts.set(popup.transactionKey, text);
+      }
+      text
+        .setText(formatEarningsPopupAmount(popup.grossAmount))
+        .setPosition(
+          position.x,
+          getEarningsPopupLabelY(
+            position.y,
+            this.layout.tileSize,
+            this.earningsPopupState.activePopups
+              .slice(0, popupIndex)
+              .filter(
+                (candidate) =>
+                  candidate.actorKind === popup.actorKind &&
+                  candidate.actorId === popup.actorId,
+              ).length,
+          ),
+        )
+        .setDepth(FACILITY_DEPTH_LOCATOR + 1)
+        .setVisible(true);
+    }
+    for (const [transactionKey, text] of this.earningsPopupTexts) {
+      if (!activeKeys.has(transactionKey)) {
+        text.destroy();
+        this.earningsPopupTexts.delete(transactionKey);
+      }
+    }
+  }
+
+  /** Resolves to the same interpolated world position currently used by the sprite. */
+  private getEarningsPopupPosition(
+    actorKind: "patient" | "employee" | "founder" | "remote" | "visitor" | "retail_visitor" | "companion",
+    actorId: string,
+  ): Readonly<{ x: number; y: number }> | undefined {
+    if (actorKind === "remote") {
+      // Visitors deliberately need their own projected anchor. They are not
+      // educational encounters and must never borrow a patient sprite.
+      const receipt = this.bridge.viewModel.earningsReceipts?.find(
+        (candidate) => candidate.actorKind === "remote" && candidate.actorId === actorId,
+      );
+      if (receipt?.displayAnchor) {
+        return this.getEarningsPopupPosition(
+          receipt.displayAnchor.actorKind,
+          receipt.displayAnchor.actorId,
+        );
+      }
+      const location = this.bridge.viewModel.remoteReceiptAnchors?.[actorId];
+      return location
+        ? {
+            x: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
+            y: this.actorBaseY(location.y) - Math.max(18, this.layout.tileSize * 0.8),
+          }
+        : undefined;
+    }
+    const key = actorKind === "founder"
+      ? "character:founder"
+      : actorKind === "visitor"
+        ? `character:service-visitor:${actorId}`
+        : actorKind === "retail_visitor" || actorKind === "companion"
+          ? `character:retail-${actorKind}:${actorId}`
+        : `character:${actorKind === "employee" ? "staff" : "patient"}:${actorId}`;
+    const snapshot = this.characterMotionSnapshots.get(key);
+    if (!snapshot) return undefined;
+    const position = replayCharacterMotionPresentation(snapshot, this.layout);
+    return {
+      x: position.centerX,
+      y: this.getEarningsPopupHeadY(snapshot, position.baseY),
+    };
+  }
+
+  /** Matches the rendered bitmap/procedural actor's top edge, not its feet. */
+  private getEarningsPopupHeadY(
+    snapshot: CharacterMotionPresentation<PixelAppearanceDescriptor>,
+    baseY: number,
+  ): number {
+    const layers = characterBitmapLayers(
+      snapshot.appearance,
+      snapshot.direction,
+      snapshot.pose,
+      snapshot.rightFacing,
+      undefined,
+      this.characterWalkFrame(snapshot.pose),
+    );
+    if (layers) {
+      const registration = characterBitmapRegistration(layers);
+      const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale);
+      const pixelScale = metrics.height / registration.cell.height;
+      return baseY - (registration.floorY - registration.visibleBounds.y) * pixelScale;
+    }
+    return baseY - getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale).height * 0.72;
   }
 
   private getCharacterBitmapContainer(
@@ -4898,7 +5948,7 @@ export class FacilityScene extends Phaser.Scene {
     }
     const location = patient.location ?? { x: 0, y: 0 };
     const graphics = this.getCharacterGraphics(key);
-    const finishCharacter = (baseY: number, centerX: number) => {
+    const finishCharacter = (baseY: number, centerX: number, renderedPose: CharacterPose, renderedDirection: CharacterDirection, renderedRightFacing: boolean, supportDisplay?: Readonly<{ depthBaseY: number; supportRole?: FacilityActorSupportRole; supportId?: string }>) => {
       graphics.setDepth(
         getFacilitySceneDepth(
           baseY,
@@ -4906,7 +5956,10 @@ export class FacilityScene extends Phaser.Scene {
           (index + 16) % 64,
         ),
       );
-      this.drawPatientLocator(centerX, baseY, patient);
+      this.setCharacterSupportPresentation(key, graphics, supportDisplay, index + 16);
+      const renderedScale = this.characterMotionSnapshots.get(key)?.displayScale ??
+        characterStillScaleForAppearance(patient.appearance);
+      this.drawPatientLocator(centerX, baseY, patient, renderedPose, renderedDirection, renderedRightFacing, renderedScale);
     };
     const moving = Boolean(patient.moving);
     const direction = patient.direction ?? "front";
@@ -4915,30 +5968,35 @@ export class FacilityScene extends Phaser.Scene {
     const destinationPose = !moving
       ? patient.pose ?? (patient.seated ? "seated" : undefined)
       : undefined;
-    const pose = destinationPose ?? this.characterPose(
+    let pose = destinationPose ?? this.characterPose(
       moving,
       direction,
       this.characterGaitOffset(`character:patient:${patient.instanceId}`, 100 + index),
     );
 
-    const frontDeskDisplay = this.getFrontDeskV5ActorDisplayPosition(
-      location,
-      Boolean(patient.moving),
-      "public",
-    );
-    const centerX = frontDeskDisplay?.centerX ??
+    const frontDeskDisplay = patient.supportRole === "front-desk-public"
+      ? this.getFrontDeskV5ActorDisplayPosition(location, Boolean(patient.moving), "public")
+      : undefined;
+    const approvedSupportDisplay = frontDeskDisplay ??
+      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole);
+    pose = approvedSupportDisplay?.pose ?? pose;
+    const renderedDirection = approvedSupportDisplay?.direction ??
+      stationaryFloorDirection(moving, direction, destinationPose !== undefined);
+    const renderedRightFacing = approvedSupportDisplay?.rightFacing ?? patient.rightFacing ?? false;
+    const centerX = approvedSupportDisplay?.centerX ??
       this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
     const baseY = this.drawCharacterPresentation(
       graphics,
       `character:patient:${patient.instanceId}`,
       {
         centerX,
-        baseY: frontDeskDisplay?.baseY ?? this.actorBaseY(location.y),
+        baseY: approvedSupportDisplay?.baseY ?? this.actorBaseY(location.y),
         appearance: patient.appearance,
-        direction: stationaryFloorDirection(moving, direction, destinationPose !== undefined),
+        direction: renderedDirection,
         pose,
-        rightFacing: patient.rightFacing ?? false,
-        displayScale: frontDeskDisplay?.scale ?? 1,
+        rightFacing: renderedRightFacing,
+        displayScale: approvedSupportDisplay?.scale ?? 1,
+        alignSeatContact: approvedSupportDisplay?.seatTarget ?? false,
       },
       this.characterGaitOffset(`character:patient:${patient.instanceId}`, 100 + index),
     );
@@ -4947,13 +6005,74 @@ export class FacilityScene extends Phaser.Scene {
       frozenPatient
         ? replayCharacterMotionPresentation(frozenPatient, this.layout).centerX
         : centerX,
+      pose,
+      renderedDirection,
+      renderedRightFacing,
+      approvedSupportDisplay,
     );
+  }
+
+  /** Visitors are service actors only: separate render identity and no chart locator. */
+  private drawServiceVisitor(
+    visitor: FacilityServiceVisitorView,
+    index: number,
+  ): void {
+    const key = `character:service-visitor:${visitor.actorId}`;
+    const frozenVisitor = this.characterPresentationFrozen()
+      ? this.characterMotionSnapshots.get(key)
+      : undefined;
+    if (!visitor.location && !frozenVisitor) {
+      this.characterMotionSnapshots.delete(key);
+      return;
+    }
+    const location = visitor.location ?? { x: 0, y: 0 };
+    const graphics = this.getCharacterGraphics(key);
+    const moving = Boolean(visitor.moving);
+    const direction = visitor.direction ?? "front";
+    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole);
+    const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
+    const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
+    const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);
+    const baseY = this.drawCharacterPresentation(graphics, key, {
+      centerX,
+      baseY: supportDisplay?.baseY ?? this.actorBaseY(location.y),
+      appearance: visitor.appearance ?? FALLBACK_APPEARANCE,
+      direction: renderedDirection,
+      pose,
+      rightFacing: supportDisplay?.rightFacing ?? visitor.rightFacing ?? false,
+      displayScale: supportDisplay?.scale ?? 1,
+      alignSeatContact: supportDisplay?.seatTarget ?? false,
+    }, this.characterGaitOffset(key, 300 + index));
+    graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 32) % 64));
+    this.setCharacterSupportPresentation(key, graphics, supportDisplay, index + 32);
+  }
+
+  private drawRetailExternalActor(actor: FacilityRetailExternalActorView, index: number): void {
+    const key = `character:retail-${actor.actorKind}:${actor.instanceId}`;
+    const frozen = this.characterPresentationFrozen() ? this.characterMotionSnapshots.get(key) : undefined;
+    if (!actor.location && !frozen) { this.characterMotionSnapshots.delete(key); return; }
+    const location = actor.location ?? { x: 0, y: 0 };
+    const moving = Boolean(actor.moving);
+    const direction = actor.direction ?? "front";
+    const graphics = this.getCharacterGraphics(key);
+    const baseY = this.drawCharacterPresentation(graphics, key, {
+      centerX: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
+      baseY: this.actorBaseY(location.y), appearance: actor.appearance,
+      direction: stationaryFloorDirection(moving, direction, false),
+      pose: this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
+      rightFacing: actor.rightFacing ?? false, displayScale: 1,
+    }, this.characterGaitOffset(key, 400 + index));
+    graphics.setDepth(getFacilitySceneDepth(baseY, "character", (index + 40) % 64));
   }
 
   private drawPatientLocator(
     centerX: number,
     baseY: number,
     patient: FacilityPatientView,
+    pose: CharacterPose,
+    direction: CharacterDirection,
+    rightFacing: boolean,
+    displayScale: number,
   ): void {
     const graphics = this.locatorGraphics;
     if (!graphics) {
@@ -4970,15 +6089,20 @@ export class FacilityScene extends Phaser.Scene {
       this.bridge.viewModel.paused
         ? 0
         : Math.round((Math.sin(this.characterPhase * 2) + 1) * pixel);
-    const frame = getCharacterPixelFrame(patient.appearance, {
-      direction: patient.direction ?? "front",
-      pose: "idle",
-    });
-    const characterHeight = getCharacterPresentationMetrics(
-      frame,
-      this.layout.tileSize,
+    const layers = characterBitmapLayers(
+      patient.appearance,
+      direction,
+      pose,
+      rightFacing,
+      undefined,
+      this.characterWalkFrame(pose),
     );
-    const arrowY = baseY - characterHeight.height - pixel * 4 - pulse;
+    const registration = characterBitmapRegistration(layers);
+    const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
+    const visibleTop = layers
+      ? baseY - (registration.floorY - registration.visibleBounds.y) * (metrics.height / registration.cell.height)
+      : baseY - metrics.height * 0.72;
+    const arrowY = visibleTop - pixel * 4 - pulse;
     graphics.fillStyle(0x111111, 1);
     graphics.fillTriangle(
       centerX,
@@ -5010,112 +6134,77 @@ export class FacilityScene extends Phaser.Scene {
     pose: CharacterPose = "idle",
     movingRight = false,
     displayScale = 1,
-    frozenRepresentation?: CharacterRenderRepresentation,
+    _frozenRepresentation?: CharacterRenderRepresentation,
+    baseIsAdjusted = false,
+    alignSeatContact = false,
   ): Readonly<{ baseY: number; representation: CharacterRenderRepresentation }> {
-    // Map characters use the canonical detailed frame at a crisp 3:2
-    // nearest-neighbor presentation scale. This makes people readable among
-    // dense room furnishings without changing their route or foot anchor.
     const resolvedAppearance = appearance ?? FALLBACK_APPEARANCE;
     const key = graphics.getData("character-key") as string | undefined;
-    if (this.characterAtlasesReady && key && frozenRepresentation !== "procedural") {
-      const authoredLayers = characterBitmapLayers(
-        resolvedAppearance,
-        direction,
-        pose,
-        movingRight,
-      );
-      const textureKey = getPhaserTextureKey(authoredLayers.actor.atlas);
-      const textureReady = this.textures.exists(textureKey) ||
-        // Patient chair variants are intentionally lazy. All other actor
-        // packages are part of the eager base set above.
-        (!authoredLayers.actor.atlas.id.includes("character:patients-")
-          ? false
-          : this.ensurePatientPoseAtlas(authoredLayers.actor.atlas));
-      if (!textureReady) {
-        // Continue through the established procedural fallback until the
-        // one-time authored texture registration callback redraws this actor.
-        this.characterBitmapContainers.get(key)?.setVisible(false);
-      } else {
-      const registration = characterBitmapRegistration(authoredLayers);
-      const container = this.getCharacterBitmapContainer(key);
-      const actor = container.getByName("actor") as Phaser.GameObjects.Image;
-      const metrics = getAuthoredCharacterPresentationMetrics(registration.cell, this.layout.tileSize, displayScale);
-      actor
-        .setTexture(
-          textureKey,
-          characterAtlasFrameKey(authoredLayers.actor),
-        )
-        // Every authored source frame owns one entire clean actor. There are no
-        // independently cropped planes that can expose a source neighbour.
-        .setDisplaySize(metrics.width, metrics.height)
-        .setPosition(0, 0)
-        .setOrigin(0.5, registration.floorAnchorY)
-        .setFlipX(authoredLayers.actor.flipX);
-      // A development-only browser proof reads these properties from the
-      // actual Phaser actor after FacilityScene has selected and rendered its
-      // live route frame. They are presentation metadata only; no simulation
-      // state depends on them.
-      actor.setData({
-        "gait-atlas-id": authoredLayers.actor.atlas.id,
-        "gait-frame": characterAtlasFrameKey(authoredLayers.actor),
-        "gait-flip-x": authoredLayers.actor.flipX,
-        "gait-direction": direction,
-        "gait-pose": pose,
-      });
-      container
-        .setPosition(Math.round(centerX), Math.round(baseY))
-        .setDepth(getFacilitySceneDepth(baseY, "character", offsetIndex % 64));
-      graphics.setVisible(false);
-      return { baseY, representation: "bitmap" };
-      }
+    const walkFrame = this.characterWalkFrame(pose);
+    if (walkFrame !== undefined) {
+      this.ensureCharacterStills(characterWalkingBitmapDescriptors(resolvedAppearance));
     }
-    const renderSignature = [
-      characterAppearanceSignature(resolvedAppearance),
+    const authoredLayers = characterBitmapLayers(
+      resolvedAppearance,
       direction,
       pose,
-      this.layout.tileSize,
-      displayScale,
-    ].join("|");
-    const cached = this.characterRenderCache.get(graphics);
-    if (!cached || cached.signature !== renderSignature) {
-      const frame = getCharacterPixelFrame(resolvedAppearance, {
-        direction,
-        pose,
-      });
-      const metrics = getCharacterPresentationMetrics(
-        frame,
-        this.layout.tileSize * displayScale,
-      );
-      const localX = Math.round(-metrics.width / 2);
-      const localY = Math.round(-metrics.height);
-      graphics.clear();
-      this.drawPixelFrameSizedOutline(
-        graphics,
-        frame,
-        localX,
-        localY,
-        metrics.width,
-        metrics.height,
-      );
-      this.drawPixelFrameSized(
-        graphics,
-        frame,
-        localX,
-        localY,
-        metrics.width,
-        metrics.height,
-      );
-      this.characterRenderCache.set(graphics, {
-        signature: renderSignature,
-        width: metrics.width,
-        height: metrics.height,
-      });
+      movingRight,
+      undefined,
+      walkFrame,
+    );
+    const registration = characterBitmapRegistration(authoredLayers);
+    const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
+    const adjustedBaseY = authoredLayers && alignSeatContact && !baseIsAdjusted && registration.seatContactY !== undefined
+      ? alignCharacterStillSeatToWorld(baseY, registration.floorY, registration.seatContactY, metrics.height, registration.cell.height)
+      : baseY;
+    if (key && authoredLayers) {
+      const textureKey = getPhaserTextureKey(authoredLayers.actor.atlas);
+      const textureReady = this.textures.exists(textureKey) || this.ensureCharacterStill(authoredLayers.actor.atlas);
+      if (!textureReady) {
+        const existing = this.characterBitmapContainers.get(key);
+        const actor = existing?.getByName("actor") as Phaser.GameObjects.Image | null;
+        const retainsSameIdentity =
+          actor?.getData("gait-still-id") === authoredLayers.actor.stillId;
+        if (existing && actor && retainsSameIdentity) {
+          this.activeCharacterBitmapContainers.add(key);
+          existing.setVisible(true)
+            .setPosition(Math.round(centerX), Math.round(adjustedBaseY))
+            .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
+          actor.setDisplaySize(metrics.width, metrics.height);
+          graphics.clear();
+          graphics.setVisible(false);
+          return { baseY: adjustedBaseY, representation: "bitmap" };
+        }
+        existing?.setVisible(false);
+      } else {
+        const container = this.getCharacterBitmapContainer(key);
+        const actor = container.getByName("actor") as Phaser.GameObjects.Image;
+        actor.setTexture(textureKey).setDisplaySize(metrics.width, metrics.height).setPosition(0, 0)
+          .setOrigin(0.5, registration.floorAnchorY)
+          .setFlipX(false);
+        actor.setData({
+          "gait-atlas-id": authoredLayers.actor.atlas.id,
+          "gait-frame": characterAtlasFrameKey(authoredLayers.actor),
+          "gait-flip-x": false,
+          "gait-direction": direction,
+          "gait-pose": pose,
+          "gait-still-id": authoredLayers.actor.stillId,
+        });
+        container.setPosition(Math.round(centerX), Math.round(adjustedBaseY))
+          .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
+        graphics.clear();
+        graphics.setVisible(false);
+        return { baseY: adjustedBaseY, representation: "bitmap" };
+      }
     }
-    // The expensive detailed sprite is now local to its Graphics object. A
-    // normal animation frame only moves that object; it no longer reconstructs
-    // every hair, face, clothing, outline, and shadow pixel for every actor.
-    graphics.setPosition(Math.round(centerX), Math.round(baseY));
-    return { baseY, representation: "procedural" };
+    this.characterBitmapContainers.get(key ?? "")?.setVisible(false);
+    graphics.clear();
+    graphics.fillStyle(0x8b9088, 0.9);
+    graphics.fillCircle(0, -metrics.height * 0.64, Math.max(2, metrics.width * 0.16));
+    graphics.fillRoundedRect(-metrics.width * 0.18, -metrics.height * 0.48, metrics.width * 0.36, metrics.height * 0.42, Math.max(2, metrics.width * 0.08));
+    graphics.setPosition(Math.round(centerX), Math.round(adjustedBaseY));
+    graphics.setVisible(true);
+    return { baseY: adjustedBaseY, representation: "neutral" };
   }
 
   private drawPixelFrameSizedOutline(
@@ -5671,6 +6760,19 @@ export class FacilityScene extends Phaser.Scene {
           return;
         }
       }
+      if (
+        this.frontDeskSeatInteractionAtPointer(pointer) &&
+        this.bridge.onSeatFounderAtFrontDesk
+      ) {
+        const accepted = this.bridge.onSeatFounderAtFrontDesk();
+        this.setInteractionHint(
+          accepted
+            ? "FOUNDER RETURNING TO FRONT DESK"
+            : "FRONT DESK UNAVAILABLE",
+          pointer,
+        );
+        return;
+      }
     }
 
     this.dragStart = {
@@ -6133,6 +7235,41 @@ export class FacilityScene extends Phaser.Scene {
 
   private getFounderRoom(): FacilityRoomView | undefined {
     return this.bridge.viewModel.rooms.find((room) => room.isFounderRoom);
+  }
+
+  /** Uses the displayed fixture envelopes rather than their blocked grid tiles. */
+  private frontDeskSeatInteractionAtPointer(
+    pointer: Phaser.Input.Pointer,
+  ): boolean {
+    const room = this.bridge.viewModel.rooms.find(
+      (candidate) => candidate.definitionId === "room.front_desk",
+    );
+    if (!room) return false;
+    const rectangle = this.toPixels({
+      tileX: room.tileX,
+      tileY: room.tileY,
+      ...orientedSize(room),
+    });
+    const bounds = this.canRenderFrontDeskV5Architecture()
+      ? getFrontDeskV5Projection(rectangle).floorBounds
+      : rectangle;
+    return FRONT_DESK_PRESENTATION.fixtures
+      .filter(
+        (fixture) =>
+          fixture.id === "frontDesk" || fixture.id === "secretaryChair",
+      )
+      .some((fixture) => {
+        const centerX = bounds.x + bounds.width * fixture.x;
+        const contactY = bounds.y + bounds.height * fixture.contact.y;
+        const width = bounds.width * fixture.width;
+        const height = bounds.height * fixture.height;
+        return (
+          pointer.x >= centerX - width / 2 &&
+          pointer.x <= centerX + width / 2 &&
+          pointer.y >= contactY - height &&
+          pointer.y <= contactY
+        );
+      });
   }
 
   private toPixels(rectangle: TileRectangle): {

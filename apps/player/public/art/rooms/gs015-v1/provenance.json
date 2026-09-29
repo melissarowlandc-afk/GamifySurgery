@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "approvalStatus": "owner-approved-for-runtime",
+  "approvalDate": "2026-09-24",
+  "furnitureApprovalDate": "2026-09-24",
+  "proofInventory": "tools/room-design/consistency-audit/inventory.json",
+  "furnitureRevision": "tools/room-design/furniture-revision-2026-09-22/candidate-metadata.json",
+  "encoding": "Existing approved WebP bytes are copied or decoded from approved candidate data URLs without re-encoding.",
+  "records": [
+    {
+      "output": "bathroom/furniture.webp",
+      "source": "tools/room-design/bathroom-layout/bathroom-assets.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 76246,
+      "sha256": "D4652714842A9B6EE7DDCB11174B0CB5033150F2F9D4F54B2EB05B34CCD7629F"
+    },
+    {
+      "output": "coffee/furniture.webp",
+      "source": "tools/room-design/coffee-kiosk-layout/coffee.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 183962,
+      "sha256": "47C373D166BABC10D8E4ACA935161B1526992CA1C65B7AC3E45E8C43BFEA0709"
+    },
+    {
+      "output": "ct/furniture.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/ct-candidate.html",
+      "extraction": "embedded-data-url:atlas",
+      "bytes": 153278,
+      "sha256": "8E9293A5835079DD72850882586A9D5B7A2D93B24A39F1E0D64C06DD735A01B7"
+    },
+    {
+      "output": "ct/wall-art.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/ct-candidate.html",
+      "extraction": "embedded-data-url:wallAtlas",
+      "bytes": 21988,
+      "sha256": "F3D2FCF5288964A1969D2A98899D88569C8CF8EE518D5A027AF0AC3DBE507574"
+    },
+    {
+      "output": "endoscopy/east.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/endoscopy-candidate.html",
+      "extraction": "embedded-data-url:atlases.east",
+      "bytes": 280870,
+      "sha256": "684B3A8B1E8875C2DDD83C769AC0594DB26A54E27E22CCE97F52BCAE74D24818"
+    },
+    {
+      "output": "endoscopy/south.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/endoscopy-candidate.html",
+      "extraction": "embedded-data-url:atlases.south",
+      "bytes": 294348,
+      "sha256": "6E92D5FF0E3202CE62E0299267C0A3ECE28A445C7A49C715CE7FFE09306E215A"
+    },
+    {
+      "output": "evs/furniture.webp",
+      "source": "tools/room-design/evs-layout/evs.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 357456,
+      "sha256": "4C4B80809190062577019EE54983F59E3911B2A8A6D70F3F7952638478628439"
+    },
+    {
+      "output": "examination/bed-south.webp",
+      "source": "tools/room-design/examination-layout/examination-bed-east-03-display.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 52642,
+      "sha256": "3941AB461C814757FA9DC546BC1DDFE11BBDAB0E54B9C7C6382E404A37DC1543"
+    },
+    {
+      "output": "examination/bed-west.webp",
+      "source": "tools/room-design/examination-layout/examination-bed-north-03-display.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 45178,
+      "sha256": "70434725AC966B8B10963C19690DFB646ABB6C7F51589F57F2768E92DA25DB53"
+    },
+    {
+      "output": "examination/furniture.webp",
+      "source": "tools/room-design/examination-layout/examination-furniture-atlas-01.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 432802,
+      "sha256": "7170A690A61C26059B74BD8CC64E6D58B2F6E98CAE364DBABE01D5D547E2D2B8"
+    },
+    {
+      "output": "examination/props.webp",
+      "source": "tools/room-design/examination-layout/examination-props-01-display.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 71988,
+      "sha256": "F5513A7D7A8E005503E10B4923D46A4F0FCC307641B766860FBF537C4DB5E473"
+    },
+    {
+      "output": "examination/sink-west.webp",
+      "source": "tools/room-design/examination-layout/examination-sink-west-01-display.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 30078,
+      "sha256": "255AF5DB6BA641435EF505B08829B16F328954C4F4D1995523380437DF4E168A"
+    },
+    {
+      "output": "front-desk/counter.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/front-desk-candidate.html",
+      "extraction": "embedded-data-url:deskArt",
+      "bytes": 62992,
+      "sha256": "707E129A55D5FBF15E4AE2DC2C1D7CC8501B876E69FA6C5D5A87CC6A89BBADA9"
+    },
+    {
+      "output": "front-desk/furniture.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/front-desk-candidate.html",
+      "extraction": "embedded-data-url:atlas",
+      "bytes": 452516,
+      "sha256": "21A4ADB141F1CAF3B67494977E56FF00F00863D28D79D01BC7A9B4E9AF0376F4"
+    },
+    {
+      "output": "front-desk/props.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/front-desk-candidate.html",
+      "extraction": "embedded-data-url:propsArt",
+      "bytes": 99330,
+      "sha256": "DD5AE75BECFD76972832682CF75D7A4C22D363096AF004C1936FF42788E8426F"
+    },
+    {
+      "output": "front-desk/upkeep.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/front-desk-candidate.html",
+      "extraction": "embedded-data-url:upkeepArt",
+      "bytes": 93884,
+      "sha256": "C7E61D0690E9E9C29996F8E0B6F5482434EB71103BBEB0C668F2B68A0A2476AB"
+    },
+    {
+      "output": "minor-procedure/furniture.webp",
+      "source": "tools/room-design/minor-procedure-layout/minor-procedure-assets.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 226122,
+      "sha256": "0532E455112D364B21B1AE6D1FD482593C76357D1A3E73D966C9BD18291C9722"
+    },
+    {
+      "output": "phlebotomy/east.webp",
+      "source": "tools/room-design/phlebotomy-layout/east.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 183460,
+      "sha256": "86FC5CECF9C0B7262652E3266D56D96C3D30DDB76713C86AABC1F6DC71D32234"
+    },
+    {
+      "output": "phlebotomy/south.webp",
+      "source": "tools/room-design/phlebotomy-layout/south.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 141066,
+      "sha256": "468145CAAAAB27CC906CF10B4550EFA6B81C4DDBB3C672A9AAAA98D56E66A8FD"
+    },
+    {
+      "output": "phlebotomy/window.webp",
+      "source": "tools/room-design/phlebotomy-layout/window.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 170174,
+      "sha256": "9F73BEEEE36FD3F5CAC8FF203CB8A094A99E71B19030BB801402EAAA91223D85"
+    },
+    {
+      "output": "recovery/furniture.webp",
+      "source": "tools/room-design/recovery-layout/recovery.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 435846,
+      "sha256": "D305C10ACB60F794E93C68D30B1DBED667297FC279C334186B48DA04FB815C06"
+    },
+    {
+      "output": "telehealth/furniture.webp",
+      "source": "tools/room-design/telehealth-layout/telehealth.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 106718,
+      "sha256": "CBC59D10DB2A30C2C8B783A396E30E5BC4AFFC77A15DF99970DE0B8BA093E44F"
+    },
+    {
+      "output": "telehealth/props.webp",
+      "source": "tools/room-design/telehealth-layout/props.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 192612,
+      "sha256": "F7D94712B8EA32ED860FFE25E7347835155056DB96E52B3F8453F1EBABCE7015"
+    },
+    {
+      "output": "telehealth/window.webp",
+      "source": "tools/room-design/telehealth-layout/window.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 162070,
+      "sha256": "05B3CA4A8BCCB658345166F84303BFF8AE04D0190F1BF610852E60A9744C81C4"
+    },
+    {
+      "output": "training/furniture.webp",
+      "source": "tools/room-design/training-layout/training.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 230874,
+      "sha256": "D941BA135BD3F61FC6EECB99D57BE214E61A255430ED3B805DB9C365573AE8BF"
+    },
+    {
+      "output": "ultrasound/furniture.webp",
+      "source": "tools/room-design/ultrasound-layout/ultrasound-assets.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 261054,
+      "sha256": "4598071860B8332BF24FE3AB1D0BDE95A60DE24CB82D6096576093A19AD07C78"
+    },
+    {
+      "output": "waiting/south.webp",
+      "source": "tools/room-design/waiting-layout/waiting-assets.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 202886,
+      "sha256": "5BFA9F8B69241FC69C7F3B30B87F6DF9C2F00D980D0E215E7E320CE48357F0D8"
+    },
+    {
+      "output": "waiting/west.webp",
+      "source": "tools/room-design/waiting-layout/waiting-west-assets.webp",
+      "extraction": "byte-for-byte-copy",
+      "bytes": 225672,
+      "sha256": "8C28A8526A83F5330319F3FEC253E3352229D97D227938ADD75A2F9C338D03F4"
+    },
+    {
+      "output": "xray/furniture.webp",
+      "source": "tools/room-design/furniture-revision-2026-09-22/xray-candidate.html",
+      "extraction": "embedded-data-url:atlas",
+      "bytes": 159410,
+      "sha256": "37AF191D729C33940D8206A78BDC8D350474BA10715C5A607A2F4FC7F6AAE481"
+    }
+  ]
+}

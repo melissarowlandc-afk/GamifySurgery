@@ -3,6 +3,12 @@ import {
   PROTOTYPE_DOMAIN_CONTEXT,
   SECOND_TUTORIAL_ENCOUNTER_ID,
 } from "./context";
+import {
+  alertCadencePolicy,
+  clearConditionAlertAge,
+  conditionAlertIsDue,
+  recordConditionAlertEmission,
+} from "./alert-cadence";
 import { validateFacilityAccess } from "./doors";
 import { getOccupiedTiles } from "./spatial";
 import type {
@@ -111,11 +117,12 @@ function isEmployeeOperational(
       homeRoom &&
       definition &&
       !unreachableRoomIds.has(homeRoom.id) &&
-      getOccupiedTiles(homeRoom, definition).some(
-        (point) =>
-          point.x === employee.location.x &&
-          point.y === employee.location.y,
-      ),
+      (employee.staffRoleDefinitionId === "staff.imaging_technician" ||
+        getOccupiedTiles(homeRoom, definition).some(
+          (point) =>
+            point.x === employee.location.x &&
+            point.y === employee.location.y,
+        )),
   );
 }
 
@@ -345,20 +352,13 @@ export function evaluateFacilityExperienceConditions(
       "room.xray",
       unreachableRoomIds,
     );
-    const controlAvailable = isRoomAvailable(
-      state,
-      "room.imaging_control",
-      unreachableRoomIds,
-    );
     const xrayConnectionInvalid = validation.issues.some(
       (issue) =>
         issue.startsWith(`${xrayDefinition.displayName} `) &&
-        (issue.includes("Imaging Control Room") ||
-          issue.includes("patient-facing door")),
+        issue.includes("requires a reachable door"),
     );
     const onsiteXrayAvailable =
       xrayRoomsAvailable &&
-      controlAvailable &&
       !xrayConnectionInvalid &&
       hasOperationalImagingTechnician(
         state,
@@ -634,10 +634,7 @@ export function synchronizeFacilityConditionOccurrences(
           "leaving_after_walkout",
     );
     if (conditionKey === "visible_litter") {
-      return (
-        state.environment.trashTeachingAcknowledgedAtTick === null ||
-        state.environment.litterItems.length >= 2
-      );
+      return state.environment.litterItems.length >= 1;
     }
     if (conditionKey === "missing_examination_room") {
       if (state.facilityLevel === 0) {
@@ -683,6 +680,11 @@ export function synchronizeFacilityConditionOccurrences(
       )
       .map((condition) => condition.conditionKey),
   );
+  for (const conditionKey of FACILITY_EXPERIENCE_CONDITION_KEYS) {
+    if (!activeKeys.has(conditionKey)) {
+      clearConditionAlertAge(state, conditionKey);
+    }
+  }
   for (const occurrence of state.environment
     .facilityConditionOccurrences) {
     if (
@@ -717,6 +719,35 @@ export function synchronizeFacilityConditionOccurrences(
       activeOccurrence?.target?.kind ===
         presentation.target?.kind &&
       activeOccurrence?.target?.id === presentation.target?.id;
+    const policy =
+      condition.conditionKey === "missing_examination_room" &&
+      state.facilityLevel === 0
+        ? null
+        : alertCadencePolicy(condition.conditionKey, context);
+    if (policy) {
+      if (activeOccurrence && !targetMatches) {
+        activeOccurrence.resolvedAtFacilityTick = state.facilityTick;
+      }
+      if (!conditionAlertIsDue(state, condition.conditionKey, policy)) {
+        continue;
+      }
+      if (activeOccurrence && targetMatches) {
+        activeOccurrence.resolvedAtFacilityTick = state.facilityTick;
+      }
+      appendFacilityConditionOccurrence(state, {
+        conditionKey: condition.conditionKey,
+        kind: activeOccurrence && targetMatches ? "reminder" : "onset",
+        occurredAtFacilityTick: state.facilityTick,
+        resolvedAtFacilityTick: null,
+        ...presentation,
+      });
+      recordConditionAlertEmission(state, policy);
+      if (condition.conditionKey === "empty_water_cooler") {
+        state.environment.nextWaterCoolerReminderTick =
+          state.facilityTick + policy.cooldownMinutes;
+      }
+      continue;
+    }
     if (
       activeOccurrence &&
       activeOccurrence.definitionId ===
@@ -752,43 +783,5 @@ export function synchronizeFacilityConditionOccurrences(
       state.facilityTick +
       context.balanceRelease.environment
         .waterCoolerEmptyReminderMinutes;
-  }
-  const reminderInterval =
-    context.balanceRelease.environment
-      .waterCoolerEmptyReminderMinutes;
-  while (
-    state.environment.nextWaterCoolerReminderTick !== null &&
-    state.environment.nextWaterCoolerReminderTick <=
-      state.facilityTick
-  ) {
-    const reminderTick =
-      state.environment.nextWaterCoolerReminderTick;
-    // A reminder is the newest actionable occurrence. Older rows remain in
-    // chronological history but no longer retain competing attention marks.
-    for (const occurrence of state.environment
-      .facilityConditionOccurrences) {
-      if (
-        occurrence.conditionKey === "empty_water_cooler" &&
-        occurrence.resolvedAtFacilityTick === null
-      ) {
-        occurrence.resolvedAtFacilityTick = reminderTick;
-      }
-    }
-    appendFacilityConditionOccurrence(state, {
-      conditionKey: "empty_water_cooler",
-      kind: "reminder",
-      occurredAtFacilityTick: reminderTick,
-      resolvedAtFacilityTick: null,
-      definitionId: "alert.environment.water-empty",
-      message:
-        "The water cooler has remained empty for a full clinic day. Refill it.",
-      priority: "action_required",
-      target: {
-        kind: "water_cooler",
-        id: "water-cooler.front-desk",
-      },
-    });
-    state.environment.nextWaterCoolerReminderTick =
-      reminderTick + reminderInterval;
   }
 }

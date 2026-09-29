@@ -249,10 +249,99 @@ describe("new-campaign opening storage", () => {
     expect(created.campaign.state.facilityTick).toBe(0);
     expect(created.campaign.state.clinicalXp).toBe(0);
     expect(
+      created.campaign.state.rooms.some(
+        (room) => room.roomDefinitionId === "room.examination",
+      ),
+    ).toBe(false);
+    expect(
       Object.values(created.campaign.state.learningHistories).every(
         (history) => history.reviews.length === 0,
       ),
     ).toBe(true);
+  });
+
+  it("preserves a historical starter-ID Examination Room without reseeding it", () => {
+    const state = appendLocalCampaign(
+      createFreshProfile(),
+      FOUNDER,
+      "Built Room Surgical",
+      123,
+      "built-room-seed",
+    ).campaign.state;
+    state.rooms.push({
+      id: "room.instance.starter_examination",
+      roomDefinitionId: "room.examination",
+      x: 34,
+      y: 26,
+      orientation: 0,
+      doorSide: "south",
+      upgradeLevel: 1,
+      cleanliness: 100,
+    });
+    state.doors.push({
+      id: "door.instance.starter_examination",
+      roomId: "room.instance.starter_examination",
+      side: "south",
+      offset: 1,
+      exterior: false,
+    });
+    state.cash = 37;
+    state.cashCents = 3_700;
+    state.clinicalXp = 20;
+    const profile = {
+      ...createFreshProfile(),
+      activeCampaignId: state.campaignId,
+      campaigns: [{
+        campaignId: state.campaignId,
+        name: "Built Room Surgical",
+        createdAtRealMs: 123,
+        updatedAtRealMs: 123,
+        status: "resumable" as const,
+        state,
+      }],
+    };
+    useMemoryStorage();
+    expect(savePrototypeProfile(profile)).toBe(true);
+
+    const restored = getActiveCampaign(loadPrototypeProfile().profile)!;
+    expect(
+      restored.state.rooms.filter(
+        (room) => room.roomDefinitionId === "room.examination",
+      ),
+    ).toEqual([
+      expect.objectContaining({ id: "room.instance.starter_examination" }),
+    ]);
+    expect(restored.state.doors.filter(
+      (door) => door.roomId === "room.instance.starter_examination",
+    )).toEqual([
+      expect.objectContaining({ id: "door.instance.starter_examination" }),
+    ]);
+    expect(restored.state.cash).toBe(37);
+    expect(restored.state.clinicalXp).toBe(20);
+  });
+
+  it("reloads a new campaign without silently adding an Examination Room", () => {
+    const created = appendLocalCampaign(
+      createFreshProfile(),
+      FOUNDER,
+      "No Reseed Surgical",
+      456,
+      "no-reseed-seed",
+    );
+    useMemoryStorage();
+    expect(savePrototypeProfile(created.profile)).toBe(true);
+
+    const restored = getActiveCampaign(loadPrototypeProfile().profile)!;
+    expect(restored.state.rooms).toHaveLength(1);
+    expect(restored.state.rooms[0]).toMatchObject({
+      id: "room.instance.founder_desk",
+      roomDefinitionId: "room.front_desk",
+    });
+    expect(restored.state.doors).toHaveLength(1);
+    expect(restored.state.doors[0]).toMatchObject({
+      id: "door.instance.front_entrance",
+      roomId: "room.instance.founder_desk",
+    });
   });
 
   it("enables tutorial guidance for every newly created campaign", () => {
@@ -274,6 +363,22 @@ describe("new-campaign opening storage", () => {
     expect(
       created.profile.tutorialIntroDismissedCampaignIds,
     ).not.toContain(created.campaign.campaignId);
+  });
+
+  it("round-trips per-campaign operations-tip acknowledgments and pause ownership", () => {
+    useMemoryStorage();
+    const created = appendLocalCampaign(createFreshProfile(), FOUNDER, "Tip Clinic", 789, "tip-save-seed");
+    const campaignId = created.campaign.campaignId;
+    const profile = {
+      ...created.profile,
+      tutorialDailyRoutineTipAcknowledgments: { [campaignId]: ["sendout-management", "sendout-trash"] },
+      tutorialDailyRoutinePauseByCampaign: { [campaignId]: false },
+    };
+    expect(savePrototypeProfile(profile)).toBe(true);
+    expect(loadPrototypeProfile().profile).toMatchObject({
+      tutorialDailyRoutineTipAcknowledgments: { [campaignId]: ["sendout-management", "sendout-trash"] },
+      tutorialDailyRoutinePauseByCampaign: { [campaignId]: false },
+    });
   });
 
   it("round-trips an intentional no-active-campaign state with archived campaigns", () => {

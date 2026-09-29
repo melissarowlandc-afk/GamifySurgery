@@ -1,6 +1,5 @@
 import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 import { characterBitmapLayers } from "../art/characterBitmapArt";
-import { selectCharacterWalkingPose } from "../art/lateralGaitCycle";
 import type { CharacterPose } from "../art/characterArt";
 import {
   advanceRouteMotion,
@@ -14,6 +13,7 @@ export interface LateralGaitProofFrame {
   movingRight: boolean;
   atlasId: string;
   flipX: boolean;
+  walkFrame: number;
 }
 
 /**
@@ -41,10 +41,10 @@ export function traceLateralGaitRoute(
     for (let phase = 0; phase < 3; phase += 1) {
       movingTrack = advanceRouteMotion(movingTrack, 80, 1);
       const sample = sampleRouteMotion(movingTrack);
-      const pose = selectCharacterWalkingPose(sample.moving, sample.direction, phase);
+      const pose = sample.moving ? "walk-neutral" : "idle";
       if (
         sample.direction !== "side" ||
-        (pose !== "walk-a" && pose !== "walk-neutral" && pose !== "walk-b")
+        pose !== "walk-neutral"
       ) {
         throw new Error("QA lateral route unexpectedly stopped before all gait phases.");
       }
@@ -53,13 +53,17 @@ export function traceLateralGaitRoute(
         sample.direction,
         pose,
         sample.rightFacing,
-      ).actor;
+        undefined,
+        phase,
+      )?.actor;
+      if (!actor) throw new Error("QA lateral route requires a registered still identity.");
       frames.push({
         travel,
         pose,
         movingRight: sample.rightFacing,
         atlasId: actor.atlas.id,
         flipX: actor.flipX,
+        walkFrame: phase,
       });
     }
   }

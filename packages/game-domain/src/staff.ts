@@ -33,6 +33,17 @@ export function advanceEmployeeMovement(
   }
 
   for (const employee of state.employees) {
+    const hasActiveRetailTrip = state.retailOperations.some(
+      (operation) =>
+        operation.actorKind === "employee" &&
+        operation.actorId === employee.id &&
+        operation.status !== "completed" &&
+        operation.status !== "abandoned" &&
+        operation.status !== "cancelled",
+    );
+    if (hasActiveRetailTrip && !employee.facilityTask) {
+      continue;
+    }
     if (
       employee.path.length > 0 &&
       employee.pathIndex < employee.path.length - 1
@@ -55,10 +66,19 @@ export function advanceEmployeeMovement(
     if (employee.facilityTask) {
       continue;
     }
-    // Reception is a post, not an idle-wander role. The water-cooler task is
-    // the intentional exception above; once it is complete, route back to the
-    // staff-side Front Desk anchor and remain there for arriving patients.
-    if (employee.staffRoleDefinitionId === "staff.receptionist") {
+    // Reception and GLP-1 NPs are posts, not idle-wander roles. The water-
+    // cooler task is the intentional exception above; once it is complete,
+    // route back to the assigned station and remain there for arriving work.
+    const fixedStation = employee.staffRoleDefinitionId === "staff.receptionist"
+      ? (() => {
+          const room = employee.homeRoomInstanceId
+            ? state.rooms.find((candidate) => candidate.id === employee.homeRoomInstanceId)
+            : null;
+          const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+          return room && definition ? getRoomNavigationAnchor(room, definition, "staff") : null;
+        })()
+      : getGlp1NursePractitionerStation(state, employee, context);
+    if (fixedStation) {
       const homeRoom = employee.homeRoomInstanceId
         ? state.rooms.find((room) => room.id === employee.homeRoomInstanceId)
         : null;
@@ -66,19 +86,14 @@ export function advanceEmployeeMovement(
         ? getRoomDefinition(homeRoom.roomDefinitionId, context)
         : null;
       if (homeRoom && definition) {
-        const staffAnchor = getRoomNavigationAnchor(
-          homeRoom,
-          definition,
-          "staff",
-        );
-        if (samePoint(employee.location, staffAnchor)) {
+        if (samePoint(employee.location, fixedStation)) {
           employee.path = [];
           employee.pathIndex = 0;
           continue;
         }
         const path = findDeterministicFacilityPath(
           employee.location,
-          staffAnchor,
+          fixedStation,
           state.rooms,
           state.doors,
           (definitionId) => getRoomDefinition(definitionId, context),
@@ -176,14 +191,84 @@ export function advanceEmployeeMovement(
   }
 }
 
+function getGlp1NursePractitionerHomes(
+  state: GameState,
+  context: DomainContext,
+): Array<{ homeRoomInstanceId: string; location: GridPoint }> {
+  return state.rooms
+    .filter((room) => room.roomDefinitionId === "room.glp1_telehealth_suite")
+    .sort((left, right) => left.id.localeCompare(right.id))
+    .flatMap((room) => {
+      const definition = getRoomDefinition(room.roomDefinitionId, context);
+      if (!definition) return [];
+      const assignedCount = state.employees.filter(
+        (employee) =>
+          employee.staffRoleDefinitionId === "staff.glp1_np" &&
+          employee.homeRoomInstanceId === room.id,
+      ).length;
+      if (assignedCount >= 2) return [];
+      return [{
+        homeRoomInstanceId: room.id,
+        location: getRoomNavigationAnchor(
+          room,
+          definition,
+          assignedCount === 0 ? "staff" : "primary",
+        ),
+      }];
+    });
+}
+
+/**
+ * Returns the fixed workstation assigned to a GLP-1 NP. The sorted employee
+ * assignment is shared with presentation so both NPs retain their own chair.
+ */
+export function getGlp1NursePractitionerStation(
+  state: GameState,
+  employee: EmployeeState,
+  context: DomainContext,
+): GridPoint | null {
+  if (employee.staffRoleDefinitionId !== "staff.glp1_np" || !employee.homeRoomInstanceId) {
+    return null;
+  }
+  const room = state.rooms.find((candidate) => candidate.id === employee.homeRoomInstanceId);
+  const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+  if (!room || room.roomDefinitionId !== "room.glp1_telehealth_suite" || !definition) {
+    return null;
+  }
+  const assignedEmployees = state.employees
+    .filter(
+      (candidate) =>
+        candidate.staffRoleDefinitionId === "staff.glp1_np" &&
+        candidate.homeRoomInstanceId === room.id,
+    )
+    .sort((left, right) => left.id.localeCompare(right.id));
+  return getRoomNavigationAnchor(
+    room,
+    definition,
+    assignedEmployees.findIndex((candidate) => candidate.id === employee.id) <= 0
+      ? "staff"
+      : "primary",
+  );
+}
+
 export function getEmployeeHomeLocation(
   state: GameState,
   employeeRoleId: string,
   context: DomainContext,
 ): { homeRoomInstanceId: string | null; location: GridPoint } {
+  if (employeeRoleId === "staff.glp1_np") {
+    return getGlp1NursePractitionerHomes(state, context)[0] ?? {
+      homeRoomInstanceId: null,
+      location: { x: 0, y: 0 },
+    };
+  }
   const role = getStaffRoleDefinition(employeeRoleId, context);
+  const requiredRoomDefinitionIds = [
+    ...(role?.requiredRoomDefinitionIds ?? []),
+    ...(role?.requiredAnyRoomDefinitionIds ?? []),
+  ];
   const homeRoom =
-    role?.requiredRoomDefinitionIds
+    requiredRoomDefinitionIds
       .map((definitionId) =>
         state.rooms
           .filter((room) => room.roomDefinitionId === definitionId)
@@ -237,10 +322,6 @@ export function getEmployeeArrival(
   location: GridPoint;
   path: GridPoint[];
 } | null {
-  const home = getEmployeeHomeLocation(state, employeeRoleId, context);
-  const homeRoom = state.rooms.find(
-    (room) => room.id === home.homeRoomInstanceId,
-  );
   const entryRoom = state.rooms
     .filter((room) =>
       context.balanceRelease.facility.protectedRoomDefinitionIds.includes(
@@ -251,10 +332,7 @@ export function getEmployeeArrival(
   const entryDefinition = entryRoom
     ? getRoomDefinition(entryRoom.roomDefinitionId, context)
     : null;
-  const homeDefinition = homeRoom
-    ? getRoomDefinition(homeRoom.roomDefinitionId, context)
-    : null;
-  if (!entryRoom || !entryDefinition || !homeRoom || !homeDefinition) {
+  if (!entryRoom || !entryDefinition) {
     return null;
   }
   const entrySize = getRotatedFootprint(
@@ -292,31 +370,31 @@ export function getEmployeeArrival(
     ...openGridPath(offscreenStart, entryApproach),
     entryDoor,
   ];
-  const internalPath = findDeterministicFacilityPath(
-    entryDoor,
-    homeRoom.id === entryRoom.id
-      ? entryCenter
-      : getRoomNavigationAnchor(
-          homeRoom,
-          homeDefinition,
-          "staff",
-        ),
-    state.rooms,
-    state.doors,
-    (definitionId) => getRoomDefinition(definitionId, context),
-  );
-  const path =
-    internalPath.length === 0
-      ? []
-      : [...exteriorPath, ...internalPath.slice(1)];
-  if (path.length === 0) {
-    return null;
+  const homes = employeeRoleId === "staff.glp1_np"
+    ? getGlp1NursePractitionerHomes(state, context)
+    : [getEmployeeHomeLocation(state, employeeRoleId, context)];
+  for (const home of homes) {
+    const homeRoom = state.rooms.find((room) => room.id === home.homeRoomInstanceId);
+    const homeDefinition = homeRoom
+      ? getRoomDefinition(homeRoom.roomDefinitionId, context)
+      : null;
+    if (!homeRoom || !homeDefinition) continue;
+    const internalPath = findDeterministicFacilityPath(
+      entryDoor,
+      homeRoom.id === entryRoom.id ? entryCenter : home.location,
+      state.rooms,
+      state.doors,
+      (definitionId) => getRoomDefinition(definitionId, context),
+    );
+    if (internalPath.length === 0) continue;
+    const path = [...exteriorPath, ...internalPath.slice(1)];
+    return {
+      homeRoomInstanceId: homeRoom.id,
+      location: { ...path[0]! },
+      path: path.map((point) => ({ ...point })),
+    };
   }
-  return {
-    homeRoomInstanceId: homeRoom.id,
-    location: { ...path[0]! },
-    path: path.map((point) => ({ ...point })),
-  };
+  return null;
 }
 
 export function getEffectiveEmployeeMorale(

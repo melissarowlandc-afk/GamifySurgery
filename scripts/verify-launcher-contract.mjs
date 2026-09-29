@@ -29,6 +29,9 @@ const requiredLauncherMarkers = [
   "Test-PrototypePortInUse",
   "--strictPort",
   "The existing game server remains running; this extra launcher can close now.",
+  "codex-primary-runtime",
+  "using existing project dependencies",
+  "npm is unavailable and existing Vite dependencies are missing",
 ];
 for (const marker of requiredLauncherMarkers) {
   if (!launcher.includes(marker)) {

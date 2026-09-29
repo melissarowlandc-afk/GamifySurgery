@@ -1,235 +1,184 @@
-import {
-  isAuthoredAdultPatientIdentity,
-  type PixelAppearanceDescriptor,
-} from "@gamify-surgery/game-domain";
-import {
-  CHARACTER_ATLASES_V1,
-  FOUNDER_CHARACTER_ATLASES_V4,
-  PATIENT_CHARACTER_ATLASES_V1,
-  resolvePublicArtAssetUrl,
-  type BitmapAssetDescriptor,
-} from "./bitmapAssetManifest";
+import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 import type { CharacterDirection, CharacterPose } from "./characterArt";
+import type { BitmapAssetDescriptor } from "./bitmapAssetManifest";
+import {
+  getCharacterStill,
+  getCharacterStillEntry,
+  getClipboardStill,
+  resolveCharacterStillAssetUrl,
+  type CharacterStillAsset,
+  type CharacterStillDirection,
+} from "./characterStillRegistry";
+import {
+  getCharacterWalkEntry,
+  getCharacterWalkFrame,
+  type CharacterWalkAsset,
+} from "./characterWalkRegistry";
 
 export type CharacterAtlasView = "front" | "left" | "right" | "back";
 
-/** A full, clean actor frame. v3 replaces independently cropped head/body
- * planes: one frame owns the whole person and cannot expose a neighbouring
- * contact-sheet fragment between the neck and shoulders. */
 export interface CharacterBitmapLayer {
   readonly atlas: BitmapAssetDescriptor;
-  readonly variant: number;
-  readonly flipX: boolean;
+  readonly variant: 0;
+  readonly flipX: false;
+  readonly stillId: string;
+  readonly asset: CharacterStillAsset | CharacterWalkAsset;
 }
 
 export interface CharacterBitmapLayers {
   readonly actor: CharacterBitmapLayer;
-  /** Compatibility aliases point at the same unified actor frame. */
   readonly head: CharacterBitmapLayer;
   readonly body: CharacterBitmapLayer;
   readonly direction: CharacterAtlasView;
   readonly pose: CharacterPose;
 }
 
+export const CHARACTER_STILL_VISIBLE_HEIGHT_CAP = 246;
+
 export interface CharacterBitmapRegistration {
-  readonly cell: Readonly<{ width: number; height: number }>;
-  readonly neckY: number;
+  readonly cell: Readonly<{ width: 160; height: 320 }>;
+  readonly neckY: 0;
   readonly floorY: number;
   readonly floorAnchorY: number;
-  readonly displayAspectRatio: number;
+  readonly displayAspectRatio: 0.5;
+  readonly seatContactY?: number;
+  readonly visibleBounds: CharacterStillAsset["visibleBounds"];
 }
 
-export const CHARACTER_BITMAP_REGISTRATION_V3: CharacterBitmapRegistration = {
-  cell: { width: 160, height: 240 },
-  neckY: 102,
-  floorY: 220,
-  floorAnchorY: 220 / 240,
-  displayAspectRatio: 160 / 240,
+export const CHARACTER_STILL_BITMAP_REGISTRATION: CharacterBitmapRegistration = {
+  cell: { width: 160, height: 320 }, neckY: 0, floorY: 287,
+  floorAnchorY: 287 / 320, displayAspectRatio: 0.5,
+  visibleBounds: { x: 0, y: 0, width: 160, height: 320 },
 };
-export const FOUNDER_BITMAP_REGISTRATION_V4: CharacterBitmapRegistration = {
-  // All approved high-resolution pose-sheet extractions retain visible feet
-  // through y=180 and a transparent bottom safety margin. Anchor at y=181: the true
-  // floor-contact baseline, not the PNG's lower canvas edge.  This preserves
-  // full feet and keeps idle/walk poses on one stable world floor.
-  cell: { width: 128, height: 192 }, neckY: 0, floorY: 181, floorAnchorY: 181 / 192, displayAspectRatio: 128 / 192,
-};
-export const PATIENT_BITMAP_REGISTRATION_V1: CharacterBitmapRegistration = {
-  cell: { width: 128, height: 192 },
-  neckY: 0,
-  floorY: 181,
-  floorAnchorY: 181 / 192,
-  displayAspectRatio: 128 / 192,
-};
-/** @deprecated retained for consumers while v3 is adopted. */
-export const CHARACTER_BITMAP_REGISTRATION_V2 = CHARACTER_BITMAP_REGISTRATION_V3;
+export const CHARACTER_BITMAP_REGISTRATION_V3 = CHARACTER_STILL_BITMAP_REGISTRATION;
+export const CHARACTER_BITMAP_REGISTRATION_V2 = CHARACTER_STILL_BITMAP_REGISTRATION;
+export const FOUNDER_BITMAP_REGISTRATION_V4 = CHARACTER_STILL_BITMAP_REGISTRATION;
+export const PATIENT_BITMAP_REGISTRATION_V1 = CHARACTER_STILL_BITMAP_REGISTRATION;
 
-const atlasById = new Map([
-  ...CHARACTER_ATLASES_V1,
-  ...FOUNDER_CHARACTER_ATLASES_V4,
-  ...PATIENT_CHARACTER_ATLASES_V1,
-].map((item) => [item.id, item]));
-function atlas(id: string): BitmapAssetDescriptor {
-  const selected = atlasById.get(id);
-  if (!selected) throw new Error(`Missing canonical character atlas ${id}.`);
-  return selected;
-}
-
-export function canonicalAppearanceVariant(
-  appearance: PixelAppearanceDescriptor,
-  key: "headVariant" | "bodyVariant",
-): number {
+export function canonicalAppearanceVariant(appearance: PixelAppearanceDescriptor, key: "headVariant" | "bodyVariant"): number {
   const value = appearance[key];
-  return typeof value === "number" && value >= 0 && value < 30
-    ? Math.floor(value)
-    : 0;
+  return typeof value === "number" && value >= 0 && value < 30 ? Math.floor(value) : 0;
 }
-
-/**
- * Presentation-only identity projection. Previous saves could contain any of
- * 900 head/body pairs, including incompatible neck/skin source layers. v3
- * projects those descriptors onto the stable head identity without mutating a
- * save. New creator choices already persist the corresponding identity pair.
- */
 export function coherentCharacterVariant(appearance: PixelAppearanceDescriptor): number {
   return canonicalAppearanceVariant(appearance, "headVariant");
 }
-
-/** Legacy public helper: a role must never substitute a differently skinned body. */
 export function displayedBodyVariant(appearance: PixelAppearanceDescriptor): number {
   return coherentCharacterVariant(appearance);
 }
 
-function resolveActorAtlas(
-  direction: CharacterDirection,
-  pose: CharacterPose,
-): { id: string; view: CharacterAtlasView } {
-  if (pose === "walk-a") return { id: "character:actors-left-walk-a-v3", view: "left" };
-  if (pose === "walk-b") return { id: "character:actors-left-walk-b-v3", view: "left" };
-  if (pose === "seated" || pose === "exam-table") return { id: "character:actors-front-seated-v3", view: "front" };
-  if (pose === "working") return { id: "character:actors-front-working-v3", view: "front" };
-  if (pose === "interaction") return { id: "character:actors-left-interaction-v3", view: "left" };
-  if (pose === "jump-recovery") return { id: "character:actors-front-idle-v3", view: "front" };
-  if (pose === "star-jump") return { id: "character:actors-front-star-jump-v3", view: "front" };
-  if (direction === "back") return { id: "character:actors-back-idle-v3", view: "back" };
-  if (direction === "side") return { id: "character:actors-left-idle-v3", view: "left" };
-  return { id: "character:actors-front-idle-v3", view: "front" };
+export function characterStillIdForAppearance(appearance: PixelAppearanceDescriptor): string | undefined {
+  if (appearance.stillId) return getCharacterStillEntry(appearance.stillId) ? appearance.stillId : undefined;
+  if (appearance.patientIdentityId && getCharacterStillEntry(appearance.patientIdentityId)) return appearance.patientIdentityId;
+  return undefined;
 }
 
-function resolveFounderV4Atlas(direction: CharacterDirection, pose: CharacterPose, movingRight: boolean): { id: string; view: CharacterAtlasView } {
-  if (pose === "walk-a" || pose === "walk-b") {
-    const phase = pose === "walk-a" ? "a" : "b";
-    const view = direction === "front" ? "front" : direction === "back" ? "back" : movingRight ? "right" : "left";
-    return { id: `character:founders-${view}-walk-${phase}-v4-r10-feet`, view };
-  }
-  if (pose === "seated") return { id: "character:founders-front-seated-v4-r10-feet", view: "front" };
-  if (pose === "working") return { id: "character:founders-front-working-v4-r10-feet", view: "front" };
-  if (pose === "interaction") return { id: "character:founders-clipboard-v4-r10-feet", view: "front" };
-  if (pose === "jump-recovery") return { id: "character:founders-jump-recovery-v4-r10-feet", view: "front" };
-  if (pose === "star-jump") return { id: "character:founders-star-jump-v4-r10-feet", view: "front" };
-  const view = direction === "front" ? "front" : direction === "back" ? "back" : movingRight ? "right" : "left";
-  return { id: `character:founders-${view}-idle-v4-r10-feet`, view };
+export function characterStillDirection(direction: CharacterDirection, movingRight = false): CharacterStillDirection {
+  if (direction === "front") return "south";
+  if (direction === "back") return "north";
+  return movingRight ? "east" : "west";
 }
 
-function resolvePatientV1Atlas(
-  direction: CharacterDirection,
-  pose: CharacterPose,
-  movingRight: boolean,
-  representation: "thumbnail" | "portrait" | undefined,
-): { id: string; view: CharacterAtlasView } {
-  if (representation === "portrait") {
-    return { id: "character:patients-portrait-v1-r7-hires", view: "front" };
-  }
-  if (representation === "thumbnail") {
-    return { id: "character:patients-thumbnail-v1-r7-hires", view: "front" };
-  }
-  const view = direction === "front"
-    ? "front"
-    : direction === "back"
-      ? "back"
-      : movingRight ? "right" : "left";
-  if (pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b") {
-    const phase = pose === "walk-a" ? "a" : pose === "walk-b" ? "b" : "neutral";
-    return {
-      id: `character:patients-${view}-walk-${phase}-v1-r7-hires`,
-      view,
-    };
-  }
-  if (pose === "seated") {
-    const seatedView = direction === "side" ? view : "front";
-    return { id: `character:patients-seated-${seatedView}-v1-r7-hires`, view: seatedView };
-  }
-  if (pose === "exam-table") {
-    return { id: "character:patients-exam-table-v1-r7-hires", view: "front" };
-  }
-  return { id: `character:patients-${view}-idle-v1-r7-hires`, view };
+function viewFor(direction: CharacterStillDirection): CharacterAtlasView {
+  return direction === "south" ? "front" : direction === "north" ? "back" : direction === "east" ? "right" : "left";
 }
 
-export function patientV1AtlasCell(
+function descriptor(stillId: string, asset: CharacterStillAsset): BitmapAssetDescriptor {
+  return {
+    id: `character-still:${stillId}:${asset.sha256.slice(0, 12)}`,
+    relativePath: asset.url, nativeWidth: asset.width, nativeHeight: asset.height,
+    anchor: { x: asset.anchors.bodyAxisX, y: asset.anchors.floorY }, orientation: "all", kind: "character",
+  };
+}
+
+export function characterWalkingBitmapDescriptors(
   appearance: PixelAppearanceDescriptor,
-): number | null {
-  const identityId = appearance.patientIdentityId;
-  if (!isAuthoredAdultPatientIdentity(identityId)) return null;
-  const suffix = Number(identityId.slice("patient.adult.".length));
-  return Number.isInteger(suffix) && suffix >= 1 && suffix <= 50
-    ? suffix - 1
-    : null;
+): readonly BitmapAssetDescriptor[] {
+  const stillId = characterStillIdForAppearance(appearance);
+  if (!stillId) return [];
+  const entry = getCharacterWalkEntry(stillId);
+  if (!entry) return [];
+  return (["south", "east", "west", "north"] as const).flatMap((direction) =>
+    entry.directions[direction].frames.map((asset) => descriptor(stillId, asset)),
+  );
 }
 
-export function isPatientV1Appearance(
+/** One downward-only factor per identity, derived from its canonical standing
+ * South silhouette and reused for every direction, posture, and clipboard. */
+export function characterStillScaleForAppearance(
   appearance: PixelAppearanceDescriptor,
-): boolean {
-  return appearance.roleStyle === "patient" && patientV1AtlasCell(appearance) !== null;
+): number {
+  const stillId = characterStillIdForAppearance(appearance);
+  const south = stillId ? getCharacterStill(stillId, "stand", "south") : undefined;
+  if (!south) return 1;
+  const visibleHeight = south.anchors.floorY - south.visibleBounds.y;
+  return Number.isFinite(visibleHeight) && visibleHeight > 0
+    ? Math.min(1, CHARACTER_STILL_VISIBLE_HEIGHT_CAP / visibleHeight)
+    : 1;
 }
 
+/** Bounded live prefetch: four standing cardinals for one selected identity. */
+export function characterStandingBitmapDescriptors(
+  appearance: PixelAppearanceDescriptor,
+): readonly BitmapAssetDescriptor[] {
+  const stillId = characterStillIdForAppearance(appearance);
+  if (!stillId) return [];
+  const entry = getCharacterStillEntry(stillId);
+  if (!entry) return [];
+  return (["south", "east", "west", "north"] as const).map((direction) =>
+    descriptor(stillId, entry.poses.stand[direction]),
+  );
+}
+
+/** An explicit walk frame opts a registered pilot into authored movement;
+ * omitted frames and unregistered identities retain the directional still. */
 export function characterBitmapLayers(
   appearance: PixelAppearanceDescriptor,
   direction: CharacterDirection,
   pose: CharacterPose,
   movingRight = false,
-  representation?: "thumbnail" | "portrait",
-): CharacterBitmapLayers {
-  const founder = appearance.roleStyle === "founder";
-  const patientV1 = isPatientV1Appearance(appearance);
-  const selected = patientV1
-    ? resolvePatientV1Atlas(direction, pose, movingRight, representation)
-    : founder && representation === "portrait"
-    ? { id: "character:founders-portrait-v4-r10-feet", view: "front" as const }
-    : founder ? resolveFounderV4Atlas(direction, pose, movingRight) : resolveActorAtlas(direction, pose);
-  const actor: CharacterBitmapLayer = {
-    atlas: atlas(selected.id),
-    variant: patientV1 ? patientV1AtlasCell(appearance)! : coherentCharacterVariant(appearance),
-    // Patient-v1 r7-hires and founder r9-hires both contain explicit east-facing frames.
-    // v3 is the only fallback package that still mirrors left-facing art.
-    flipX: !patientV1 && !founder && selected.view === "left" && movingRight,
-  };
-  return { actor, head: actor, body: actor, direction: selected.view, pose };
+  _representation?: "thumbnail" | "portrait",
+  walkFrame?: number,
+): CharacterBitmapLayers | undefined {
+  const stillId = characterStillIdForAppearance(appearance);
+  if (!stillId) return undefined;
+  const cardinal = characterStillDirection(direction, movingRight);
+  const seated = pose === "seated" || pose === "exam-table";
+  const clipboard = pose === "interaction" && appearance.roleStyle === "founder" ? getClipboardStill(stillId) : undefined;
+  const walking = pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b";
+  const walkAsset = walking && walkFrame !== undefined
+    ? getCharacterWalkFrame(stillId, cardinal, walkFrame)
+    : undefined;
+  const asset = clipboard ?? walkAsset ?? getCharacterStill(stillId, seated ? "sit" : "stand", cardinal);
+  if (!asset) return undefined;
+  const actor: CharacterBitmapLayer = { atlas: descriptor(stillId, asset), variant: 0, flipX: false, stillId, asset };
+  return { actor, head: actor, body: actor, direction: viewFor(clipboard ? "south" : cardinal), pose };
 }
 
-export function characterBitmapRegistration(
-  layers?: CharacterBitmapLayers,
-): CharacterBitmapRegistration {
-  if (layers?.actor.atlas.id.includes("patients-")) return PATIENT_BITMAP_REGISTRATION_V1;
-  return layers?.actor.atlas.id.includes("founders-") ? FOUNDER_BITMAP_REGISTRATION_V4 : CHARACTER_BITMAP_REGISTRATION_V3;
+export function characterBitmapRegistration(layers?: CharacterBitmapLayers): CharacterBitmapRegistration {
+  const asset = layers?.actor.asset;
+  return asset ? {
+    ...CHARACTER_STILL_BITMAP_REGISTRATION,
+    floorY: asset.anchors.floorY,
+    floorAnchorY: asset.anchors.floorY / asset.height,
+    seatContactY: asset.anchors.seatContactY,
+    visibleBounds: asset.visibleBounds,
+  } : CHARACTER_STILL_BITMAP_REGISTRATION;
 }
 
 export function characterAtlasCellStyle(layer: CharacterBitmapLayer): Record<string, string> {
-  const column = layer.variant % 5;
-  const row = Math.floor(layer.variant / 5);
-  const patientV1 = layer.atlas.id.includes("patients-");
-  return {
-    backgroundImage: `url("${resolvePublicArtAssetUrl(layer.atlas.relativePath!)}")`,
-    backgroundSize: patientV1 ? "500% 1000%" : "500% 600%",
-    backgroundPosition: patientV1
-      ? `${column * 25}% ${row * (100 / 9)}%`
-      : `${column * 25}% ${row * 20}%`,
-    transform: layer.flipX ? "scaleX(-1)" : "none",
-  };
+  return { backgroundImage: `url("${resolveCharacterStillAssetUrl(layer.asset)}")`, backgroundSize: "100% 100%", backgroundPosition: "0 0", transform: "none" };
 }
-
 export function characterAtlasFrameKey(layer: CharacterBitmapLayer): string {
-  return `frame:character:${layer.atlas.id}:${layer.variant}`;
+  return `frame:${layer.atlas.id}:0`;
 }
+/** Legacy preload hook. GS-026 stills load only when selected. */
+export function allCanonicalCharacterAtlases(): readonly BitmapAssetDescriptor[] { return []; }
 
-export function allCanonicalCharacterAtlases(): readonly BitmapAssetDescriptor[] {
-  return [...CHARACTER_ATLASES_V1, ...FOUNDER_CHARACTER_ATLASES_V4];
+export function patientV1AtlasCell(appearance: PixelAppearanceDescriptor): number | null {
+  const stillId = characterStillIdForAppearance(appearance);
+  const match = stillId ? /^patient\.adult\.(\d{3})$/.exec(stillId) : null;
+  return match ? Number(match[1]) - 1 : null;
+}
+export function isPatientV1Appearance(appearance: PixelAppearanceDescriptor): boolean {
+  return appearance.roleStyle === "patient" && patientV1AtlasCell(appearance) !== null;
 }

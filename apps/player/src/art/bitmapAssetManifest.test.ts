@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { FIXTURE_SPRITES } from "./fixtureArt";
 import {
   AUTHORED_BITMAP_ASSET_MANIFEST,
+  APPROVED_GS015_ROOM_ATLASES,
   ENVIRONMENT_ATLAS_V1,
   ENVIRONMENT_ATLAS_V1_FRAMES,
   FRONT_DESK_V2_FIXTURE_OVERRIDES,
@@ -40,6 +41,16 @@ import {
 } from "./bitmapAssetAdapters";
 
 describe("bitmap art asset seam", () => {
+  it("declares every approved GS-015 atlas without activating the runtime preload set", () => {
+    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(29);
+    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(29);
+    for (const asset of APPROVED_GS015_ROOM_ATLASES) {
+      expect(asset.relativePath).toMatch(/^art\/rooms\/gs015-v1\/.+\.webp$/);
+      expect(asset.nativeWidth).toBeGreaterThan(0);
+      expect(asset.nativeHeight).toBeGreaterThan(0);
+      expect(ROOM_FIXTURE_ATLASES).not.toContain(asset);
+    }
+  });
   it("keeps the revisioned 50-person patient pack separate from scene core textures", () => {
     expect(PATIENT_CHARACTER_ATLASES_V1).toHaveLength(20);
     expect(PATIENT_CHARACTER_MAP_ATLASES_V1).toHaveLength(18);

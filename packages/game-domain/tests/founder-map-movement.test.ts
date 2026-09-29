@@ -57,6 +57,142 @@ function legalFounderRoomDestinations(state: GameState) {
 }
 
 describe("founder map movement", () => {
+  it("seats the founder at the exact Front Desk staff anchor on command", () => {
+    let state = createInitialGameState();
+    state.encounters = {};
+    state.nextRoutineArrivalTick = 100_000;
+    const { room, definition } = founderRoomNavigation(state);
+    const desk = getRoomNavigationAnchor(room, definition, "staff");
+    state.environment.founderLocation = legalFounderRoomDestinations(state)[0]!;
+    state = gameReducer(state, {
+      type: "SEAT_FOUNDER_AT_FRONT_DESK",
+      operationId: "founder.seat-front-desk",
+    });
+    expect(state.environment.founderActivity).toMatchObject({
+      kind: "return_to_front_desk",
+      targetId: room.id,
+    });
+    expect(state.environment.founderActivity?.path.at(-1)).toEqual(desk);
+    for (let index = 0; index < 10 && state.environment.founderActivity; index += 1) {
+      state = tick(state);
+    }
+    expect(state.environment.founderLocation).toEqual(desk);
+    expect(state.environment.founderActivity).toBeNull();
+  });
+
+  it("returns after successful chores, but a newer move keeps its destination", () => {
+    let state = createInitialGameState();
+    state.encounters = {};
+    state.nextRoutineArrivalTick = 100_000;
+    const destinations = legalFounderRoomDestinations(state);
+    const location = destinations[0]!;
+    const destination = destinations.at(-1)!;
+    state.environment.founderLocation = { ...location };
+    state.environment.litterItems.push({
+      id: "litter.return",
+      roomId: "room.instance.founder_desk",
+      location,
+      spawnedAtFacilityTick: 0,
+    });
+    state = gameReducer(state, {
+      type: "COLLECT_LITTER",
+      operationId: "founder.chore-return.collect",
+      litterId: "litter.return",
+    });
+    state = tick(state);
+    state = tick(state);
+    expect(state.environment.founderActivity?.kind).toBe("return_to_front_desk");
+    state = move(state, destination);
+    expect(state.environment.founderActivity?.kind).toBe("walk_to_point");
+    for (let index = 0; index < 10 && state.environment.founderActivity; index += 1) {
+      state = tick(state);
+    }
+    expect(state.environment.founderLocation).toEqual(destination);
+    expect(state.environment.founderActivity).toBeNull();
+  });
+
+  it("clears a pending return when any receptionist is hired", () => {
+    let state = createInitialGameState();
+    state.facilityLevel = 1;
+    state.cash = 1_000;
+    state.cashCents = 100_000;
+    const { room, definition } = founderRoomNavigation(state);
+    const desk = getRoomNavigationAnchor(room, definition, "staff");
+    state.environment.founderLocation = legalFounderRoomDestinations(state)[0]!;
+    state.environment.founderActivity = {
+      kind: "return_to_front_desk",
+      targetId: room.id,
+      path: [{ ...state.environment.founderLocation }, desk],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      workMinutesRemaining: 0,
+    };
+    state = gameReducer(state, {
+      type: "HIRE_STAFF",
+      operationId: "founder.return.hire-receptionist",
+      employeeId: "employee.return-receptionist",
+      staffRoleDefinitionId: "staff.receptionist",
+    });
+    expect(state.operationReceipts["founder.return.hire-receptionist"]?.status).toBe("applied");
+    expect(state.environment.founderActivity).toBeNull();
+  });
+
+  it("does not teleport to an unreachable or occupied desk", () => {
+    let unreachable = createInitialGameState();
+    const { room, definition } = founderRoomNavigation(unreachable);
+    const desk = getRoomNavigationAnchor(room, definition, "staff");
+    unreachable.environment.founderLocation = legalFounderRoomDestinations(unreachable)[0]!;
+    unreachable.doors = [];
+    unreachable = gameReducer(unreachable, {
+      type: "SEAT_FOUNDER_AT_FRONT_DESK",
+      operationId: "founder.seat.unreachable",
+    });
+    expect(unreachable.operationReceipts["founder.seat.unreachable"]?.status).toBe("rejected");
+    expect(unreachable.environment.founderLocation).not.toEqual(desk);
+
+    const occupied = createInitialGameState();
+    occupied.employees.push({
+      id: "employee.desk-occupant",
+      staffRoleDefinitionId: "staff.imaging_technician",
+      displayName: "Occupant",
+      appearance: occupied.founder.appearance,
+      hiredAtFacilityTick: 0,
+      salaryPerExpenseInterval: 0,
+      morale: 100,
+      trainingLevel: 1,
+      homeRoomInstanceId: room.id,
+      location: desk,
+      path: [desk],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 0,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: 100_000,
+      facilityTask: null,
+    });
+    const rejected = gameReducer(occupied, {
+      type: "SEAT_FOUNDER_AT_FRONT_DESK",
+      operationId: "founder.seat.occupied",
+    });
+    expect(rejected.operationReceipts["founder.seat.occupied"]?.status).toBe("rejected");
+
+    const choreLocation = legalFounderRoomDestinations(occupied)[0]!;
+    occupied.environment.founderLocation = choreLocation;
+    occupied.environment.litterItems.push({
+      id: "litter.occupied-return",
+      roomId: room.id,
+      location: choreLocation,
+      spawnedAtFacilityTick: 0,
+    });
+    let afterChore = gameReducer(occupied, {
+      type: "COLLECT_LITTER",
+      operationId: "founder.occupied-return.collect",
+      litterId: "litter.occupied-return",
+    });
+    afterChore = tick(tick(afterChore));
+    expect(afterChore.environment.founderActivity).toBeNull();
+    expect(afterChore.environment.founderLocation).toEqual(choreLocation);
+  });
+
   it("releases matching attendance to the Front Desk and immediately enables an awaiting check-in", () => {
     let state = createInitialGameState(undefined, {
       campaignId: "campaign.founder-return-check-in",

@@ -1,269 +1,131 @@
 import { describe, expect, it } from "vitest";
-import { createFounderAppearance, createUnifiedFounderAppearance } from "../content/founderAppearancePresets";
+import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 import {
-  allCanonicalCharacterAtlases,
-  characterAtlasCellStyle,
+  CHARACTER_STILL_VISIBLE_HEIGHT_CAP,
   characterBitmapLayers,
   characterBitmapRegistration,
-  coherentCharacterVariant,
-  isPatientV1Appearance,
-  patientV1AtlasCell,
+  characterStandingBitmapDescriptors,
+  characterWalkingBitmapDescriptors,
+  characterStillDirection,
+  characterStillScaleForAppearance,
 } from "./characterBitmapArt";
-import { normalizePatientAppearanceForSex } from "@gamify-surgery/game-domain";
-import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
+import { getAllCharacterStillEntries } from "./characterStillRegistry";
 
-describe("clean unified character actor atlases", () => {
-  it("uses the authored patient exam-table atlas when the semantic pose requests it", () => {
-    const patient = {
-      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
-      patientIdentityId: "patient.adult.001" as const,
-    };
-    expect(
-      characterBitmapLayers(patient, "front", "exam-table").actor.atlas.id,
-    ).toBe("character:patients-exam-table-v1-r7-hires");
-  });
+const appearance = (stillId: string, roleStyle: PixelAppearanceDescriptor["roleStyle"] = "patient") => ({
+  version: "pixel-avatar.v1", bodyShape: "average", hairStyle: "short", hairShade: 0,
+  faceStyle: "round", outfitStyle: "plain", outfitShade: 0, accessory: "none", roleStyle, stillId,
+}) as PixelAppearanceDescriptor;
 
-  it("uses the generic seated atlas for a legacy patient on an exam table", () => {
-    const legacyPatient = {
-      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
-      roleStyle: "patient" as const,
-      patientIdentityId: "patient.adult.999" as never,
-    };
-    expect(characterBitmapLayers(legacyPatient, "front", "exam-table").actor.atlas.id)
-      .toBe("character:actors-front-seated-v3");
-  });
-
-  it("retains v3 for ordinary actors and supplies the founder-only v4 package", () => {
-    expect(allCanonicalCharacterAtlases()).toHaveLength(29);
-    expect(allCanonicalCharacterAtlases().filter((atlas) => atlas.relativePath?.includes("/v3/actors-"))).toHaveLength(9);
-    expect(allCanonicalCharacterAtlases().filter((atlas) => atlas.relativePath?.includes("/founders-v4/"))).toHaveLength(20);
-  });
-
-  it("projects all legacy 900 founder pairs onto one coherent actor without mutating their saved choice", () => {
-    for (let head = 0; head < 30; head += 1) {
-      for (let body = 0; body < 30; body += 1) {
-        const saved = createFounderAppearance(head, body);
-        const actor = characterBitmapLayers(saved, "front", "idle");
-        expect(actor.actor.variant).toBe(head);
-        expect(actor.head).toBe(actor.actor);
-        expect(actor.body).toBe(actor.actor);
-        expect(saved.bodyVariant).toBe(body);
-      }
-    }
-  });
-
-  it("uses four explicit founder directional gait pairs without flipping eastward art", () => {
-    const appearance = createUnifiedFounderAppearance(21);
-    for (const [direction, pose] of [
-      ["front", "idle"], ["side", "idle"], ["back", "idle"],
-      ["side", "walk-a"], ["side", "walk-b"], ["front", "seated"],
-      ["front", "working"], ["side", "interaction"], ["front", "star-jump"],
+describe("GS-026 individual character still resolver", () => {
+  it("maps all four directions without mirroring", () => {
+    expect(characterStillDirection("front")).toBe("south");
+    expect(characterStillDirection("back")).toBe("north");
+    expect(characterStillDirection("side", true)).toBe("east");
+    expect(characterStillDirection("side", false)).toBe("west");
+    const entry = getAllCharacterStillEntries()[0]!;
+    for (const [direction, movingRight, cardinal] of [
+      ["front", false, "south"], ["back", false, "north"], ["side", true, "east"], ["side", false, "west"],
     ] as const) {
-      const actor = characterBitmapLayers(appearance, direction, pose, true);
-      expect(actor.actor.atlas.id).toContain("founders-");
-      expect(characterBitmapRegistration(actor).cell).toEqual({ width: 128, height: 192 });
+      const layer = characterBitmapLayers(appearance(entry.id), direction, "idle", movingRight)!.actor;
+      expect(layer.asset).toBe(entry.poses.stand[cardinal]);
+      expect(layer.flipX).toBe(false);
     }
-    expect(characterBitmapLayers(appearance, "side", "walk-a", true).actor.atlas.id).toContain("right-walk-a");
-    expect(characterBitmapLayers(appearance, "side", "walk-b", true).actor.atlas.id).toContain("right-walk-b");
-    expect(characterBitmapLayers(appearance, "front", "walk-a").actor.atlas.id).toContain("front-walk-a");
-    expect(characterBitmapLayers(appearance, "back", "walk-b").actor.atlas.id).toContain("back-walk-b");
-    expect(characterBitmapLayers(appearance, "side", "walk-a", true).actor.flipX).toBe(false);
-    expect(characterBitmapLayers(appearance, "side", "walk-a", false).actor.flipX).toBe(false);
   });
 
-  it("keeps every founder identity fixed through every directional gait frame", () => {
-    const expectedAtlasSuffixes = [
-      ["front", false, "character:founders-front-walk-a-v4-r10-feet"],
-      ["front", false, "character:founders-front-walk-b-v4-r10-feet"],
-      ["back", false, "character:founders-back-walk-a-v4-r10-feet"],
-      ["back", false, "character:founders-back-walk-b-v4-r10-feet"],
-      ["side", false, "character:founders-left-walk-a-v4-r10-feet"],
-      ["side", false, "character:founders-left-walk-b-v4-r10-feet"],
-      ["side", true, "character:founders-right-walk-a-v4-r10-feet"],
-      ["side", true, "character:founders-right-walk-b-v4-r10-feet"],
-    ] as const;
-    for (let founder = 0; founder < 30; founder += 1) {
-      const appearance = createUnifiedFounderAppearance(founder);
-      for (const [direction, movingRight, expectedAtlas] of expectedAtlasSuffixes) {
-        const pose = expectedAtlas.includes("walk-a") ? "walk-a" : "walk-b";
-        const actor = characterBitmapLayers(appearance, direction, pose, movingRight).actor;
-        expect(actor.variant).toBe(founder);
-        expect(actor.atlas.id).toBe(expectedAtlas);
-        expect(actor.flipX).toBe(false);
+  it("keeps every walking phase on the same directional standing still", () => {
+    const subject = appearance("patient.adult.017");
+    const ids = (["walk-a", "walk-neutral", "walk-b"] as const).map((pose) => characterBitmapLayers(subject, "side", pose, true)!.actor.atlas.id);
+    expect(new Set(ids).size).toBe(1);
+    expect(characterBitmapLayers(subject, "side", "seated", true)!.actor.atlas.id).not.toBe(ids[0]);
+  });
+
+  it("opts only Blue Glasses into authored cardinal walking when a frame is requested", () => {
+    const blue = appearance("patient.adult.039");
+    const standing = characterBitmapLayers(blue, "front", "idle")!.actor;
+    const stoppedContract = characterBitmapLayers(blue, "front", "walk-neutral")!.actor;
+    expect(stoppedContract.asset).toBe(standing.asset);
+    for (const [direction, movingRight] of [
+      ["front", false], ["back", false], ["side", true], ["side", false],
+    ] as const) {
+      const frames = Array.from({ length: 8 }, (_, frame) =>
+        characterBitmapLayers(blue, direction, "walk-neutral", movingRight, undefined, frame)!.actor,
+      );
+      expect(new Set(frames.map((layer) => layer.asset.sha256)).size).toBe(8);
+      expect(frames.every((layer) => layer.flipX === false)).toBe(true);
+    }
+    expect(characterWalkingBitmapDescriptors(blue)).toHaveLength(32);
+    expect(characterWalkingBitmapDescriptors(appearance("patient.adult.038"))).toEqual([]);
+    expect(characterBitmapLayers(appearance("patient.adult.038"), "front", "walk-neutral", false, undefined, 3)!.actor.asset)
+      .toBe(characterBitmapLayers(appearance("patient.adult.038"), "front", "idle")!.actor.asset);
+  });
+
+  it("uses approved directional stills while moving for the two excluded gait pilots", () => {
+    for (const id of ["patient.adult.032", "retained.gray-braid"] as const) {
+      const subject = appearance(id);
+      expect(characterWalkingBitmapDescriptors(subject)).toEqual([]);
+      for (const [direction, movingRight] of [
+        ["front", false], ["back", false], ["side", true], ["side", false],
+      ] as const) {
+        expect(characterBitmapLayers(subject, direction, "walk-neutral", movingRight, undefined, 3)!.actor.asset)
+          .toBe(characterBitmapLayers(subject, direction, "idle", movingRight)!.actor.asset);
       }
     }
   });
 
-  it("resolves every clipboard interaction to its complete matching high-resolution founder frame", () => {
-    for (let founder = 0; founder < 30; founder += 1) {
-      const layers = characterBitmapLayers(
-        createUnifiedFounderAppearance(founder),
-        "front",
-        "interaction",
-      );
-      const actor = layers.actor;
-      expect(actor.variant).toBe(founder);
-      expect(actor.atlas.id).toBe("character:founders-clipboard-v4-r10-feet");
-      expect(characterBitmapRegistration(layers).floorY).toBe(181);
+  it("uses seated cardinals, founder clipboard South, and uniform 160x320 registration", () => {
+    const entry = getAllCharacterStillEntries().find((candidate) => candidate.id === "founder.01")!;
+    const founder = appearance(entry.id, "founder");
+    const seated = characterBitmapLayers(founder, "back", "exam-table")!;
+    expect(seated.actor.asset).toBe(entry.poses.sit.north);
+    expect(Number.isFinite(characterBitmapRegistration(seated).seatContactY)).toBe(true);
+    expect(characterBitmapLayers(founder, "side", "interaction", true)!.actor.asset).toBe(entry.clipboard);
+    expect(characterBitmapRegistration(seated).cell).toEqual({ width: 160, height: 320 });
+  });
+
+  it("uses a known legacy patient identity but leaves unknown art unresolved", () => {
+    expect(characterBitmapLayers({ ...appearance("future.unknown"), patientIdentityId: "patient.adult.001" }, "front", "idle")).toBeUndefined();
+    expect(characterBitmapLayers({ ...appearance("patient.adult.001"), stillId: undefined, patientIdentityId: "patient.adult.001" }, "front", "idle")!.actor.stillId).toBe("patient.adult.001");
+    expect(characterBitmapLayers(appearance("future.unknown"), "front", "idle")).toBeUndefined();
+  });
+
+  it("resolves every registry identity to all eight cardinal poses", () => {
+    for (const entry of getAllCharacterStillEntries()) {
+      const subject = appearance(entry.id);
+      for (const pose of ["idle", "seated"] as const) {
+        expect(characterBitmapLayers(subject, "front", pose)).toBeDefined();
+        expect(characterBitmapLayers(subject, "back", pose)).toBeDefined();
+        expect(characterBitmapLayers(subject, "side", pose, true)).toBeDefined();
+        expect(characterBitmapLayers(subject, "side", pose, false)).toBeDefined();
+      }
     }
   });
 
-  it("uses the approved-pose foot baseline, leaving a transparent safety margin below each full actor", () => {
-    const actor = characterBitmapLayers(createUnifiedFounderAppearance(0), "front", "idle");
-    const registration = characterBitmapRegistration(actor);
-    expect(registration.floorY).toBe(181);
-    expect(registration.floorAnchorY).toBeCloseTo(181 / 192);
-    expect(registration.floorY).toBeLessThan(registration.cell.height);
+  it("prefetches exactly four standing cardinals for a selected live identity", () => {
+    const selected = appearance("founder.11", "founder");
+    const descriptors = characterStandingBitmapDescriptors(selected);
+    expect(descriptors).toHaveLength(4);
+    expect(new Set(descriptors.map((asset) => asset.id)).size).toBe(4);
+    expect(descriptors.every((asset) => asset.relativePath?.includes("/stand-") === true)).toBe(true);
+    expect(characterStandingBitmapDescriptors(appearance("future.unknown"))).toEqual([]);
   });
 
-  it("uses CSS cropping for the selected complete actor, not a random portrait", () => {
-    const actor = characterBitmapLayers(createUnifiedFounderAppearance(3), "front", "idle").actor;
-    const style = characterAtlasCellStyle(actor);
-    expect(style.backgroundImage).toContain("founders-front-idle-v4.png");
-    expect(style.backgroundPosition).toBe("75% 0%");
-  });
-
-  it("has a deterministic coherent visual projection for generated and legacy descriptors", () => {
-    expect(coherentCharacterVariant(createFounderAppearance(12, 3))).toBe(12);
-    expect(coherentCharacterVariant(createFounderAppearance(29, 0))).toBe(29);
-  });
-
-  it("resolves every persisted authored patient ID to its exact five-by-ten cell", () => {
-    for (let index = 0; index < 50; index += 1) {
-      const id = `patient.adult.${String(index + 1).padStart(3, "0")}`;
-      const appearance = {
-        ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
-        roleStyle: "patient" as const,
-        patientIdentityId: id as PixelAppearanceDescriptor["patientIdentityId"],
-      } as PixelAppearanceDescriptor;
-      const layers = characterBitmapLayers(appearance, "front", "idle");
-      expect(isPatientV1Appearance(appearance)).toBe(true);
-      expect(patientV1AtlasCell(appearance)).toBe(index);
-      expect(layers.actor.atlas.id).toBe("character:patients-front-idle-v1-r7-hires");
-      expect(layers.actor.variant).toBe(index);
-      expect(layers.actor.flipX).toBe(false);
+  it("caps only oversized identities from standing South and keeps one factor across every pose", () => {
+    for (const id of ["founder.01", "founder.11", "founder.18", "patient.adult.040", "gs022-new-employee-001"] as const) {
+      const subject = appearance(id, id.startsWith("founder.") ? "founder" : "patient");
+      const entry = getAllCharacterStillEntries().find((candidate) => candidate.id === id)!;
+      const south = entry.poses.stand.south;
+      const nativeVisibleHeight = south.anchors.floorY - south.visibleBounds.y;
+      const factor = characterStillScaleForAppearance(subject);
+      expect(factor).toBeCloseTo(Math.min(1, CHARACTER_STILL_VISIBLE_HEIGHT_CAP / nativeVisibleHeight), 10);
+      expect(nativeVisibleHeight * factor).toBeLessThanOrEqual(CHARACTER_STILL_VISIBLE_HEIGHT_CAP + 0.000001);
+      for (const [direction, movingRight, pose] of [
+        ["front", false, "idle"], ["back", false, "idle"],
+        ["side", true, "walk-neutral"], ["side", false, "walk-neutral"],
+        ["front", false, "seated"], ["back", false, "exam-table"],
+      ] as const) {
+        expect(characterBitmapLayers(subject, direction, pose, movingRight)).toBeDefined();
+        expect(characterStillScaleForAppearance(subject)).toBe(factor);
+      }
     }
-  });
-
-  it("uses authored right-facing patient gaits and distinct A/B atlas families", () => {
-    const patient = {
-      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
-      roleStyle: "patient" as const,
-      patientIdentityId: "patient.adult.017" as const,
-    };
-    const eastA = characterBitmapLayers(patient, "side", "walk-a", true);
-    const eastB = characterBitmapLayers(patient, "side", "walk-b", true);
-    expect(eastA.actor.atlas.id).toBe("character:patients-right-walk-a-v1-r7-hires");
-    expect(eastB.actor.atlas.id).toBe("character:patients-right-walk-b-v1-r7-hires");
-    expect(eastA.actor.atlas.id).not.toBe(eastB.actor.atlas.id);
-    expect(eastA.actor.flipX).toBe(false);
-    expect(characterBitmapLayers(patient, "side", "walk-a", false).actor.atlas.id)
-      .toBe("character:patients-left-walk-a-v1-r7-hires");
-  });
-
-  it("keeps all authored patients in one stable profile across each sampled lateral gait phase", () => {
-    for (let index = 1; index <= 50; index += 1) {
-      const patient = {
-        ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
-        roleStyle: "patient" as const,
-        patientIdentityId: `patient.adult.${String(index).padStart(3, "0")}` as PixelAppearanceDescriptor["patientIdentityId"],
-      } as PixelAppearanceDescriptor;
-      const west = ["walk-a", "walk-neutral", "walk-b"] as const;
-      const east = ["walk-a", "walk-neutral", "walk-b"] as const;
-      expect(west.map((pose) => characterBitmapLayers(patient, "side", pose, false).actor.atlas.id)).toEqual([
-        "character:patients-left-walk-a-v1-r7-hires",
-        "character:patients-left-walk-neutral-v1-r7-hires",
-        "character:patients-left-walk-b-v1-r7-hires",
-      ]);
-      expect(east.map((pose) => characterBitmapLayers(patient, "side", pose, true).actor.atlas.id)).toEqual([
-        "character:patients-right-walk-a-v1-r7-hires",
-        "character:patients-right-walk-neutral-v1-r7-hires",
-        "character:patients-right-walk-b-v1-r7-hires",
-      ]);
-      expect([...west, ...east].map((pose, frame) =>
-        characterBitmapLayers(patient, "side", pose, frame >= west.length).actor.flipX,
-      )).toEqual([false, false, false, false, false, false]);
-    }
-  });
-
-  it("uses a direction-locked gait-neutral atlas for every patient moving beat", () => {
-    const founder = createUnifiedFounderAppearance(8);
-    const patient = {
-      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Male"),
-      roleStyle: "patient" as const,
-      patientIdentityId: "patient.adult.018" as const,
-    };
-    const staff = { ...founder, roleStyle: "receptionist" as const };
-    expect(characterBitmapLayers(founder, "side", "walk-neutral", false).actor.atlas.id)
-      .toBe("character:founders-left-idle-v4-r10-feet");
-    expect(characterBitmapLayers(founder, "side", "walk-neutral", true).actor.atlas.id)
-      .toBe("character:founders-right-idle-v4-r10-feet");
-    expect(characterBitmapLayers(patient, "side", "walk-neutral", false).actor.atlas.id)
-      .toBe("character:patients-left-walk-neutral-v1-r7-hires");
-    expect(characterBitmapLayers(patient, "side", "walk-neutral", true).actor.atlas.id)
-      .toBe("character:patients-right-walk-neutral-v1-r7-hires");
-    expect(characterBitmapLayers(staff, "side", "walk-neutral", false).actor.flipX).toBe(false);
-    expect(characterBitmapLayers(staff, "side", "walk-neutral", true).actor.flipX).toBe(true);
-  });
-
-  it("keeps legacy staff on their approved left art and mirrors only eastbound travel", () => {
-    const staff = {
-      ...createUnifiedFounderAppearance(4),
-      roleStyle: "receptionist" as const,
-    };
-    const westA = characterBitmapLayers(staff, "side", "walk-a", false).actor;
-    const westB = characterBitmapLayers(staff, "side", "walk-b", false).actor;
-    const eastA = characterBitmapLayers(staff, "side", "walk-a", true).actor;
-    const eastB = characterBitmapLayers(staff, "side", "walk-b", true).actor;
-    expect([westA.atlas.id, westB.atlas.id]).toEqual([
-      "character:actors-left-walk-a-v3",
-      "character:actors-left-walk-b-v3",
-    ]);
-    expect([eastA.atlas.id, eastB.atlas.id]).toEqual([
-      "character:actors-left-walk-a-v3",
-      "character:actors-left-walk-b-v3",
-    ]);
-    expect([westA.flipX, westB.flipX, eastA.flipX, eastB.flipX])
-      .toEqual([false, false, true, true]);
-    expect(characterBitmapLayers(staff, "side", "walk-neutral", false).actor.atlas.id)
-      .toBe("character:actors-left-idle-v3");
-    expect(characterBitmapLayers(staff, "side", "walk-neutral", true).actor.flipX)
-      .toBe(true);
-  });
-
-  it("keeps patient thumbnails, portraits, and seated frames on the same identity cell", () => {
-    const patient = {
-      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Male"),
-      roleStyle: "patient" as const,
-      patientIdentityId: "patient.adult.042" as const,
-    };
-    const thumbnail = characterBitmapLayers(patient, "front", "idle", false, "thumbnail");
-    const portrait = characterBitmapLayers(patient, "front", "idle", false, "portrait");
-    const seatedLeft = characterBitmapLayers(patient, "side", "seated", false);
-    const seatedRight = characterBitmapLayers(patient, "side", "seated", true);
-    expect([thumbnail, portrait, seatedLeft, seatedRight].map((layers) => layers.actor.variant))
-      .toEqual([41, 41, 41, 41]);
-    expect(thumbnail.actor.atlas.id).toBe("character:patients-thumbnail-v1-r7-hires");
-    expect(portrait.actor.atlas.id).toBe("character:patients-portrait-v1-r7-hires");
-    expect(seatedLeft.actor.atlas.id).toBe("character:patients-seated-left-v1-r7-hires");
-    expect(seatedRight.actor.atlas.id).toBe("character:patients-seated-right-v1-r7-hires");
-    expect(characterAtlasCellStyle(portrait.actor)).toMatchObject({
-      backgroundSize: "500% 1000%",
-      backgroundPosition: "25% 88.88888888888889%",
-    });
-  });
-
-  it("leaves malformed legacy patients on their existing safe renderer", () => {
-    const founder = createUnifiedFounderAppearance(7);
-    const legacyPatient = {
-      ...normalizePatientAppearanceForSex(createFounderAppearance(0, 0), "Female"),
-      roleStyle: "patient" as const,
-      patientIdentityId: "patient.adult.999" as never,
-    };
-    expect(characterBitmapLayers(founder, "front", "idle").actor.atlas.id)
-      .toBe("character:founders-front-idle-v4-r10-feet");
-    expect(isPatientV1Appearance(legacyPatient)).toBe(false);
-    expect(characterBitmapLayers(legacyPatient, "front", "idle").actor.atlas.id)
-      .toBe("character:actors-front-idle-v3");
   });
 });

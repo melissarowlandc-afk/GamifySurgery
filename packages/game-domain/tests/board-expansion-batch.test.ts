@@ -7,6 +7,8 @@ function prepared(seed: string): GameState {
   state.facilityLevel = 1;
   state.encounters = {};
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+  state.rooms.push({ id: "room.board.examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+  state.doors.push({ id: "door.board.examination", roomId: "room.board.examination", side: "south", offset: 1, exterior: false });
   return state;
 }
 function ready(state: GameState, encounterId: string, prefix: string): GameState {

@@ -62,6 +62,8 @@ import {
   type QuestionReviewFlag,
   type QuestionReviewFlagStatus,
 } from "./questionReviewFlags";
+import { getChartFeedbackAcknowledgmentCommand } from "./chartCloseBehavior";
+import { getDailyRoutinePauseTransition, isDailyRoutineTipId } from "./dailyRoutineTutorialPause";
 
 type GameCommandInput = {
   [CommandType in GameCommand["type"]]: Omit<
@@ -139,6 +141,7 @@ export interface PrototypeSession {
   fireEmployee: (employeeId: string) => void;
   collectLitter: (litterId: string) => void;
   refillWaterCooler: () => void;
+  seatFounderAtFrontDesk: () => boolean;
   praiseEmployee: (employeeId: string) => void;
   moveFounder: (destination: GridPoint) => boolean;
   levelUp: () => void;
@@ -147,6 +150,7 @@ export interface PrototypeSession {
   addMoney: () => void;
   runEmergencyGlp1Consultation: () => void;
   setAdvertisingLevel: (level: number) => void;
+  setServiceAppointmentsEnabled: (enabled: boolean) => void;
   switchCampaign: (campaignId: string) => void;
   openTutorialPatient: () => void;
   dismissTutorialIntro: () => void;
@@ -262,7 +266,15 @@ export function usePrototypeSession(
   const preManagementPausedRef = useRef(true);
   const [summaryVisible, setSummaryVisible] = useState(false);
   const [acknowledgedTutorialStepIds, setAcknowledgedTutorialStepIds] =
-    useState<ReadonlySet<string>>(() => new Set());
+    useState<ReadonlySet<string>>(() =>
+      new Set(
+        (loadedRef.current!.profile.tutorialDailyRoutineTipAcknowledgments[
+          requireActiveCampaign(loadedRef.current!.profile).campaignId
+        ] ?? []).map(
+          (tipId) => `${requireActiveCampaign(loadedRef.current!.profile).campaignId}:${tipId}`,
+        ),
+      ),
+    );
   const [announcement, setAnnouncement] = useState(loadedRef.current.notice);
   const [systemNotices, setSystemNotices] = useState<
     PrototypeSystemNotice[]
@@ -747,6 +759,19 @@ export function usePrototypeSession(
     if (encounterId === null) {
       return;
     }
+    const acknowledgment = getChartFeedbackAcknowledgmentCommand(
+      stateRef.current,
+      encounterId,
+    );
+    if (acknowledgment && execute(acknowledgment) !== "applied") {
+      return;
+    }
+    // A pending service route closes its chart while feedback is acknowledged.
+    // Re-read state so this close path never issues a second close command.
+    if (stateRef.current.openChartEncounterId !== encounterId) {
+      setSummaryVisible(false);
+      return;
+    }
     const status = execute({
       type: "CLOSE_CHART",
       encounterId,
@@ -885,21 +910,13 @@ export function usePrototypeSession(
     if (encounterId === null) {
       return;
     }
-    const encounter = stateRef.current.encounters[encounterId];
-    const step =
-      encounter?.steps[encounter.currentNodeIndex];
-    if (step?.status === "feedback_pending") {
-      execute({
-        type: "ACKNOWLEDGE_DECISION_FEEDBACK",
-        encounterId,
-        decisionNodeId: step.decisionNodeId,
-      });
-      return;
-    }
-    execute({
-      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+    const acknowledgment = getChartFeedbackAcknowledgmentCommand(
+      stateRef.current,
       encounterId,
-    });
+    );
+    if (acknowledgment) {
+      execute(acknowledgment);
+    }
   }, [execute]);
 
   const toggleSummary = useCallback(() => {
@@ -1260,6 +1277,11 @@ export function usePrototypeSession(
     execute({ type: "REFILL_WATER_COOLER" });
   }, [execute]);
 
+  const seatFounderAtFrontDesk = useCallback(
+    () => execute({ type: "SEAT_FOUNDER_AT_FRONT_DESK" }) === "applied",
+    [execute],
+  );
+
   const praiseEmployee = useCallback(
     (employeeId: string) => {
       execute({ type: "PRAISE_EMPLOYEE", employeeId });
@@ -1384,6 +1406,13 @@ export function usePrototypeSession(
     [buildMode, execute],
   );
 
+  const setServiceAppointmentsEnabled = useCallback(
+    (enabled: boolean) => {
+      execute({ type: "SET_SERVICE_APPOINTMENTS_ENABLED", enabled });
+    },
+    [execute],
+  );
+
   const togglePause = useCallback(() => {
     if (buildMode || managementMode) {
       setAnnouncement(
@@ -1494,6 +1523,13 @@ export function usePrototypeSession(
     setProfile(nextProfile);
     stateRef.current = selectedCampaign.state;
     setState(selectedCampaign.state);
+    setAcknowledgedTutorialStepIds(
+      new Set(
+        (nextProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? []).map(
+          (tipId) => `${campaignId}:${tipId}`,
+        ),
+      ),
+    );
     setSelectedRoomDefinitionId(null);
     setSelectedRoomInstanceId(null);
     setMovingRoomInstanceId(null);
@@ -1525,6 +1561,9 @@ export function usePrototypeSession(
     tutorialsEnabled: profile.tutorialsEnabled,
     introDismissed: tutorialIntroDismissed,
     acknowledgedStepIds: acknowledgedTutorialStepIds,
+    dailyRoutineTipsStarted:
+      profile.tutorialDailyRoutinePauseByCampaign[state.campaignId] !==
+      undefined,
     buildMode,
     selectedRoomDefinitionId,
     selectedRoomInstanceId,
@@ -1576,6 +1615,75 @@ export function usePrototypeSession(
     },
     [attemptSaveProfile, cancelScheduledAutosave],
   );
+
+  useEffect(() => {
+    const campaignId = state.campaignId;
+    const previousPaused = profile.tutorialDailyRoutinePauseByCampaign[campaignId];
+    const transition = getDailyRoutinePauseTransition({
+      activeTipId: tutorialStep?.id,
+      previousPaused,
+      currentlyPaused: state.paused,
+      modeLocksPause: managementMode || buildMode,
+    });
+    if (transition === "capture-and-pause") {
+        persistTutorialProfile(
+          {
+            ...profile,
+            tutorialDailyRoutinePauseByCampaign: {
+              ...profile.tutorialDailyRoutinePauseByCampaign,
+              [campaignId]: state.paused,
+            },
+          },
+          "Tutorial guidance paused facility time.",
+        );
+      if (!state.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+      return;
+    }
+    if (transition === "keep-paused" || transition === "reassert-pause") {
+      if (!state.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+      return;
+    }
+    if (transition === "none" || transition === "defer-release") return;
+    if (transition === "release-resume" && state.paused) {
+      // Persist resumed time while the owner still exists. If the page exits
+      // between these writes, the next session can safely finish the release.
+      execute(
+        { type: "SET_PAUSED", paused: false },
+        { announceReceipt: false },
+      );
+    }
+    const currentProfile = profileRef.current;
+    const { [campaignId]: _, ...remainingPauses } =
+      currentProfile.tutorialDailyRoutinePauseByCampaign;
+    persistTutorialProfile(
+      {
+        ...currentProfile,
+        tutorialDailyRoutinePauseByCampaign: remainingPauses,
+      },
+      transition === "release-keep-paused"
+        ? "Tutorial guidance closed. The clinic remains paused."
+        : "Tutorial guidance closed. Facility operations resumed.",
+    );
+  }, [buildMode, execute, managementMode, persistTutorialProfile, profile, state.campaignId, state.paused, tutorialStep]);
+
+  const acknowledgeDailyRoutineTip = useCallback((stepId: string) => {
+    const campaignId = stateRef.current.campaignId;
+    const currentProfile = profileRef.current;
+    const existing = currentProfile.tutorialDailyRoutineTipAcknowledgments[campaignId] ?? [];
+    if (!existing.includes(stepId)) {
+      persistTutorialProfile(
+        {
+          ...currentProfile,
+          tutorialDailyRoutineTipAcknowledgments: {
+            ...currentProfile.tutorialDailyRoutineTipAcknowledgments,
+            [campaignId]: [...existing, stepId],
+          },
+        },
+        "Tutorial tip acknowledged.",
+      );
+    }
+    setAcknowledgedTutorialStepIds((current) => new Set([...current, `${campaignId}:${stepId}`]));
+  }, [persistTutorialProfile]);
 
   const dismissTutorialIntro = useCallback(() => {
     const currentProfile = profileRef.current;
@@ -1642,6 +1750,10 @@ export function usePrototypeSession(
           if (tutorialStep.id === "alerts-tour") {
             execute({ type: "ACKNOWLEDGE_ALERTS_TUTORIAL" });
           }
+          if (isDailyRoutineTipId(tutorialStep.id)) {
+            acknowledgeDailyRoutineTip(tutorialStep.id);
+            return;
+          }
           setAcknowledgedTutorialStepIds((current) => {
             const key = `${stateRef.current.campaignId}:${tutorialStep.id}`;
             if (current.has(key)) {
@@ -1649,6 +1761,9 @@ export function usePrototypeSession(
             }
             return new Set([...current, key]);
           });
+          return;
+        case "open-management":
+          enterManagementMode();
           return;
         case "advance-first-result":
           advanceTutorialResult();
@@ -1689,6 +1804,7 @@ export function usePrototypeSession(
     },
     [
       acknowledgeTerminalFeedback,
+      acknowledgeDailyRoutineTip,
       advanceTutorialResult,
       beginPlacement,
       closeChart,
@@ -1774,6 +1890,7 @@ export function usePrototypeSession(
     fireEmployee,
     collectLitter,
     refillWaterCooler,
+    seatFounderAtFrontDesk,
     praiseEmployee,
     moveFounder,
     levelUp,
@@ -1782,6 +1899,7 @@ export function usePrototypeSession(
     addMoney,
     runEmergencyGlp1Consultation,
     setAdvertisingLevel,
+    setServiceAppointmentsEnabled,
     switchCampaign,
     openTutorialPatient,
     dismissTutorialIntro,

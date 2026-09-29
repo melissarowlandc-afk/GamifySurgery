@@ -2,7 +2,7 @@ import { createPixelAppearance } from "@gamify-surgery/game-domain";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ManagementPanel } from "./ManagementPanel";
-import type { StaffRoleGroupView } from "./types";
+import type { ServiceIncomeView, StaffRoleGroupView } from "./types";
 
 const noop = () => undefined;
 
@@ -34,6 +34,16 @@ const roles: StaffRoleGroupView[] = [
   },
 ];
 
+const serviceIncome: ServiceIncomeView = {
+  appointmentsEnabled: true,
+  grossTotalLabel: "$120.00",
+  stockCostTotalLabel: "$0.00",
+  netTotalLabel: "$120.00",
+  catalogLines: [{ id: "service.ultrasound", displayName: "Ultrasound", kind: "clinical", feeLabel: "$120.00", minimumFacilityLevel: 1, requirementLabel: "Ultrasound Room + Imaging Technician", available: true }],
+  activeOperations: [{ id: "operation.1", displayName: "Ultrasound", actorLabel: "Taylor", statusLabel: "In Service", quoteFeeLabel: "$120.00" }],
+  recentReceipts: [{ id: "receipt.1", displayName: "Ultrasound", actorLabel: "patient", grossLabel: "$120.00", stockCostLabel: "$0.00", netLabel: "$120.00" }],
+};
+
 function renderPanel(managementMode: boolean, showInactiveTrigger = true) {
   return renderToStaticMarkup(
     <ManagementPanel
@@ -42,12 +52,14 @@ function renderPanel(managementMode: boolean, showInactiveTrigger = true) {
       roles={roles}
       highlightedRoleId="staff.receptionist"
       highlightedEmployeeId="employee.receptionist"
+      serviceIncome={serviceIncome}
       onEnterManagementMode={noop}
       onExitManagementMode={noop}
       onHire={noop}
       onDecreaseSalary={noop}
       onIncreaseSalary={noop}
       onFire={noop}
+      onAppointmentsEnabledChange={noop}
     />,
   );
 }
@@ -71,5 +83,9 @@ describe("ManagementPanel", () => {
     expect(markup).toContain('data-employee-id="employee.receptionist"');
     expect(markup).toContain("Hire $60");
     expect(markup).toContain("Fire");
+    expect(markup).toContain('role="tablist"');
+    expect(markup).toContain("Services &amp; income");
+    expect(markup).toContain('aria-selected="true"');
+    expect(markup).not.toContain("Scheduled appointments");
   });
 });

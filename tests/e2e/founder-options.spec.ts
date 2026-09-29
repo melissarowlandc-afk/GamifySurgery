@@ -5,7 +5,7 @@ import {
   openCampaignScreen,
 } from "./helpers";
 
-const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
+const SCREENSHOT_DIRECTORY = "artifacts/screenshots/gs026-runtime/compatibility";
 
 test.beforeAll(() => {
   mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true });
@@ -30,15 +30,13 @@ test("creator exposes female and non-human founder options from one canonical ap
 
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
-  await expect(page.getByText("Founder 1 of 30")).toBeVisible();
+  await expect(page.getByText("Founder 1 of 36")).toBeVisible();
   const nextFounder = page.getByRole("button", { name: "Next founder" });
   const preview = page.locator(".founder-preview-avatar");
   await expect(page.getByText("The Attending", { exact: true })).toBeVisible();
-  // The complete selected actor is one clean v4 frame, never separate head
-  // and body crops that could retain a neighbouring contact-sheet fragment.
-  const defaultActor = preview.locator(".pixel-avatar-authored-actor");
+  const defaultActor = preview.locator("img.pixel-avatar-still");
   await expect(defaultActor).toBeVisible();
-  await expect(defaultActor).toHaveCSS("left", "0px");
+  await expect(defaultActor).toHaveAttribute("src", /gs026-stills-v1\/founder\.01\/stand-south\.png$/);
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/founder-head-body-registration.png`,
     animations: "disabled",
@@ -47,8 +45,8 @@ test("creator exposes female and non-human founder options from one canonical ap
 
   await clickTimes(nextFounder, 10);
   await expect(page.getByText("The Lead Clinician")).toBeVisible();
-  await expect(page.getByText("Founder 11 of 30")).toBeVisible();
-  await expect(preview).toHaveAttribute("data-appearance", "0-10-10");
+  await expect(page.getByText("Founder 11 of 36")).toBeVisible();
+  await expect(preview).toHaveAttribute("data-still-id", "founder.11");
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/founder-options-female.png`,
     animations: "disabled",
@@ -57,8 +55,8 @@ test("creator exposes female and non-human founder options from one canonical ap
 
   await clickTimes(nextFounder, 10);
   await expect(page.getByText("Cat Clinician", { exact: true })).toHaveCount(1);
-  await expect(page.getByText("Founder 21 of 30")).toBeVisible();
-  await expect(preview).toHaveAttribute("data-appearance", "1-20-20");
+  await expect(page.getByText("Founder 21 of 36")).toBeVisible();
+  await expect(preview).toHaveAttribute("data-still-id", "founder.21");
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/founder-options-cat.png`,
     animations: "disabled",
@@ -67,16 +65,14 @@ test("creator exposes female and non-human founder options from one canonical ap
 
   await nextFounder.click();
   await expect(page.getByText("Penguin Resident", { exact: true })).toHaveCount(1);
-  await expect(preview).toHaveAttribute("data-appearance", "0-21-21");
-  const creatorAppearance = await preview.getAttribute(
-    "data-appearance",
-  );
+  await expect(preview).toHaveAttribute("data-still-id", "founder.22");
+  const creatorStillId = await preview.getAttribute("data-still-id");
   await page.getByLabel("Founder name").fill("Penguin Founder");
   await page.getByRole("button", { name: "Continue" }).click();
   await page.getByRole("button", { name: "Be Rich and Happy" }).click();
   await expect(
     page.getByLabel("Penguin Founder, rich and happy"),
-  ).toHaveAttribute("data-appearance", creatorAppearance!);
+  ).toHaveAttribute("data-still-id", creatorStillId!);
   await page.screenshot({
     path: `${SCREENSHOT_DIRECTORY}/founder-options-penguin-happy.png`,
     animations: "disabled",
@@ -84,7 +80,7 @@ test("creator exposes female and non-human founder options from one canonical ap
   });
 });
 
-test("option 30 wraps from the first choice and survives clinic save and reload", async ({
+test("original option 30 survives the expanded picker, clinic save, and reload", async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -94,9 +90,10 @@ test("option 30 wraps from the first choice and survives clinic save and reload"
 
   await openCampaignScreen(page);
   await page.getByRole("button", { name: "New Campaign" }).click();
-  await page.getByRole("button", { name: "Previous founder" }).click();
+  await clickTimes(page.getByRole("button", { name: "Next founder" }), 29);
   await expect(page.getByText("Axolotl Clinician", { exact: true })).toHaveCount(1);
-  await expect(page.getByText("Founder 30 of 30")).toBeVisible();
+  await expect(page.getByText("Founder 30 of 36")).toBeVisible();
+  await expect(page.locator(".founder-preview-avatar")).toHaveAttribute("data-still-id", "founder.30");
 
   await page.getByLabel("Founder name").fill("Axolotl Founder");
   await page.getByRole("button", { name: "Continue" }).click();
@@ -114,6 +111,7 @@ test("option 30 wraps from the first choice and survives clinic save and reload"
     headVariant: 29,
     bodyVariant: 29,
     roleStyle: "founder",
+    stillId: "founder.30",
   });
 
   await page.reload();

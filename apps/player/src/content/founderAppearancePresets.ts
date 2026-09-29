@@ -1,4 +1,5 @@
 import {
+  EXPLICIT_ADDITIONAL_AVATAR_STILL_IDS,
   normalizePixelAppearance,
   type PixelAppearanceDescriptor,
 } from "@gamify-surgery/game-domain";
@@ -120,6 +121,20 @@ export const FOUNDER_IDENTITY_PRESETS = FOUNDER_HEAD_PRESETS.map((head, index) =
   readonly body: (typeof FOUNDER_BODY_PRESETS)[number];
 }[];
 
+const EXTRA_AVATAR_LABELS = [
+  "Additional Founder 1", "Gray Braid Founder", "Additional Founder 3", "Additional Founder 4",
+  "Additional Founder 5", "Additional Founder 6",
+] as const;
+
+export const FOUNDER_AVATAR_CHOICES = [
+  ...FOUNDER_IDENTITY_PRESETS.map((preset, index) => ({ ...preset, identityIndex: index, stillId: preset.id })),
+  ...EXPLICIT_ADDITIONAL_AVATAR_STILL_IDS.map((stillId, index) => ({
+    id: `founder.extra.${String(index + 1).padStart(2, "0")}`,
+    label: EXTRA_AVATAR_LABELS[index]!, identityIndex: 0, stillId,
+    head: FOUNDER_HEAD_PRESETS[0], body: FOUNDER_BODY_PRESETS[0],
+  })),
+] as const;
+
 export function createFounderAppearance(
   headIndex: number,
   bodyIndex: number,
@@ -147,5 +162,11 @@ export function createFounderAppearance(
 
 export function createUnifiedFounderAppearance(identityIndex: number) {
   const normalized = ((identityIndex % FOUNDER_IDENTITY_PRESETS.length) + FOUNDER_IDENTITY_PRESETS.length) % FOUNDER_IDENTITY_PRESETS.length;
-  return createFounderAppearance(normalized, normalized);
+  return { ...createFounderAppearance(normalized, normalized), stillId: FOUNDER_IDENTITY_PRESETS[normalized]!.id };
+}
+
+export function createFounderAvatarAppearance(choiceIndex: number): PixelAppearanceDescriptor {
+  const normalized = ((choiceIndex % FOUNDER_AVATAR_CHOICES.length) + FOUNDER_AVATAR_CHOICES.length) % FOUNDER_AVATAR_CHOICES.length;
+  const choice = FOUNDER_AVATAR_CHOICES[normalized]!;
+  return { ...createUnifiedFounderAppearance(choice.identityIndex), stillId: choice.stillId };
 }

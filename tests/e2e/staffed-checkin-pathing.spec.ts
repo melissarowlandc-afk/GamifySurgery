@@ -1,5 +1,5 @@
 import { mkdirSync } from "node:fs";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type TestInfo } from "@playwright/test";
 
 import {
   PROFILE_KEY,
@@ -49,6 +49,23 @@ interface StateSnapshot {
       path?: Point[];
     } | null;
   };
+  rooms: Array<{
+    id: string;
+    roomDefinitionId: string;
+    x: number;
+    y: number;
+    orientation: number;
+    doorSide: string | null;
+    upgradeLevel: number;
+    cleanliness: number;
+  }>;
+  doors: Array<{
+    id: string;
+    roomId: string;
+    side: string;
+    offset: number;
+    exterior: boolean;
+  }>;
 }
 
 test.beforeAll(() => mkdirSync(SCREENSHOTS, { recursive: true }));
@@ -94,6 +111,54 @@ async function reopenPausedCampaignWithLiveBridge(page: Page, clinicName: string
   });
 }
 
+function configuredOrigin(testInfo: TestInfo): string {
+  const baseURL = testInfo.project.use.baseURL;
+  if (typeof baseURL !== "string") throw new Error("Playwright baseURL is required.");
+  return new URL(baseURL).origin;
+}
+
+async function installExistingBuiltExaminationFixture(page: Page): Promise<void> {
+  const profile = await getProfile(page);
+  const activeIndex = profile.campaigns.findIndex(
+    (campaign) => campaign.campaignId === profile.activeCampaignId,
+  );
+  if (activeIndex < 0) throw new Error("Missing active campaign.");
+  const active = profile.campaigns[activeIndex]!;
+  const state = JSON.parse(active.serializedState) as StateSnapshot;
+  addExistingBuiltExamination(state);
+  profile.campaigns[activeIndex] = {
+    ...active,
+    serializedState: JSON.stringify(state),
+  };
+  await page.addInitScript(
+    ({ profileKey, nextProfile }) => {
+      window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
+    },
+    { profileKey: PROFILE_KEY, nextProfile: profile },
+  );
+}
+
+function addExistingBuiltExamination(state: StateSnapshot): void {
+  if (state.rooms.some((room) => room.id === STARTER_EXAMINATION_ID)) return;
+  state.rooms.push({
+    id: STARTER_EXAMINATION_ID,
+    roomDefinitionId: "room.examination",
+    x: 34,
+    y: 26,
+    orientation: 0,
+    doorSide: "south",
+    upgradeLevel: 1,
+    cleanliness: 100,
+  });
+  state.doors.push({
+    id: "door.fixture.existing-examination",
+    roomId: STARTER_EXAMINATION_ID,
+    side: "south",
+    offset: 1,
+    exterior: false,
+  });
+}
+
 async function installUnstaffedMinuteSixtyFixture(page: Page): Promise<{ encounterId: string; satisfaction: number }> {
   const profile = await getProfile(page);
   const activeIndex = profile.campaigns.findIndex(
@@ -102,6 +167,7 @@ async function installUnstaffedMinuteSixtyFixture(page: Page): Promise<{ encount
   if (activeIndex < 0) throw new Error("Missing active campaign.");
   const active = profile.campaigns[activeIndex]!;
   const state = JSON.parse(active.serializedState) as StateSnapshot;
+  addExistingBuiltExamination(state);
   const encounter = activeEncounter(state);
   state.facilityTick = 60;
   state.paused = true;
@@ -138,12 +204,13 @@ test("staffed check-in makes the chart immediate and coordinates the shared exam
   test.skip(testInfo.project.name !== "desktop-chrome", "Canonical desktop Chromium proof only.");
   testInfo.setTimeout(90_000);
   await startClinic(page, "Check-In Proof Founder", "Check-In Proof Clinic");
-  expect(new URL(page.url()).origin).toBe("http://127.0.0.1:4173");
+  expect(new URL(page.url()).origin).toBe(configuredOrigin(testInfo));
 
-  // Freeze the genuinely fresh arrival before it can reach the desk. Reloading
-  // under the opt-in bridge keeps the campaign/reducer journey intact while
-  // allowing a read-only check of the live Phaser projection after chart open.
+  // Freeze the newly created campaign's arrival before it reaches the desk,
+  // then reload it with an explicitly saved, previously built Examination
+  // Room. This proof owns existing-save staffing and routing behavior.
   await page.getByRole("button", { name: "Pause facility time" }).click();
+  await installExistingBuiltExaminationFixture(page);
   await reopenPausedCampaignWithLiveBridge(page, "Check-In Proof Clinic");
   const approaching = await activeSnapshot(page);
   expect(activeEncounter(approaching).checkInStatus).toBe("approaching");
@@ -222,7 +289,7 @@ test("unattended check-in waits through minute sixty then emits one Front Desk a
   test.skip(testInfo.project.name !== "desktop-chrome", "Canonical desktop Chromium proof only.");
   testInfo.setTimeout(90_000);
   await startClinic(page, "Unstaffed Proof Founder", "Unstaffed Proof Clinic");
-  expect(new URL(page.url()).origin).toBe("http://127.0.0.1:4173");
+  expect(new URL(page.url()).origin).toBe(configuredOrigin(testInfo));
   await page.getByRole("button", { name: "Pause facility time" }).click();
   const fixture = await installUnstaffedMinuteSixtyFixture(page);
   await page.goto("/?prototype-tools=0");

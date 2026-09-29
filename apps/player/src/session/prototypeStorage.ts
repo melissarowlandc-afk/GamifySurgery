@@ -29,6 +29,10 @@ export interface LocalPrototypeProfile {
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
   tutorialIntroDismissedCampaignIds: string[];
+  /** Completed optional operations tips, kept per campaign so a reload cannot replay them. */
+  tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
+  /** Previous paused value while an operations tip owns the temporary pause. */
+  tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
   campaigns: LocalCampaignRecord[];
 }
 
@@ -83,6 +87,8 @@ interface PersistedPrototypeProfile {
   nextCampaignNumber: number;
   tutorialsEnabled: boolean;
   tutorialIntroDismissedCampaignIds: string[];
+  tutorialDailyRoutineTipAcknowledgments: Record<string, string[]>;
+  tutorialDailyRoutinePauseByCampaign: Record<string, boolean>;
   campaigns: PersistedCampaignRecord[];
 }
 
@@ -216,6 +222,8 @@ export function createFreshProfile(): LocalPrototypeProfile {
     nextCampaignNumber: 1,
     tutorialsEnabled: true,
     tutorialIntroDismissedCampaignIds: [],
+    tutorialDailyRoutineTipAcknowledgments: {},
+    tutorialDailyRoutinePauseByCampaign: {},
     campaigns: [],
   };
 }
@@ -445,6 +453,27 @@ function parsePersistedProfile(serialized: string): {
             ),
           )
         : [],
+      tutorialDailyRoutineTipAcknowledgments: isRecord(
+        candidate.tutorialDailyRoutineTipAcknowledgments,
+      )
+        ? Object.fromEntries(
+            Object.entries(candidate.tutorialDailyRoutineTipAcknowledgments)
+              .filter(([, value]) => Array.isArray(value))
+              .map(([campaignId, value]) => [
+                campaignId,
+                Array.from(new Set((value as unknown[]).filter((tip): tip is string => typeof tip === "string"))),
+              ]),
+          )
+        : {},
+      tutorialDailyRoutinePauseByCampaign: isRecord(
+        candidate.tutorialDailyRoutinePauseByCampaign,
+      )
+        ? Object.fromEntries(
+            Object.entries(candidate.tutorialDailyRoutinePauseByCampaign).filter(
+              ([, wasPaused]) => typeof wasPaused === "boolean",
+            ),
+          ) as Record<string, boolean>
+        : {},
       campaigns,
     },
     skippedCampaignCount,
@@ -470,6 +499,8 @@ function migrateLegacySave(serializedState: string): LocalPrototypeProfile {
     nextCampaignNumber: 2,
     tutorialsEnabled: true,
     tutorialIntroDismissedCampaignIds: [],
+    tutorialDailyRoutineTipAcknowledgments: {},
+    tutorialDailyRoutinePauseByCampaign: {},
     campaigns: [campaign],
   };
 }
@@ -575,6 +606,10 @@ export function savePrototypeProfileResult(
       tutorialsEnabled: profile.tutorialsEnabled,
       tutorialIntroDismissedCampaignIds:
         profile.tutorialIntroDismissedCampaignIds,
+      tutorialDailyRoutineTipAcknowledgments:
+        profile.tutorialDailyRoutineTipAcknowledgments,
+      tutorialDailyRoutinePauseByCampaign:
+        profile.tutorialDailyRoutinePauseByCampaign,
       campaigns: profile.campaigns.map((campaign) => ({
         campaignId: campaign.campaignId,
         name: campaign.name,

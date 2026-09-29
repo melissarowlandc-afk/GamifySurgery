@@ -33,6 +33,8 @@ export function createFrozenServiceRouteTiming(
   state: GameState,
   context: DomainContext,
   route: ServiceRouteDefinition,
+  allowedDestinationRoomIds: ReadonlySet<string> | null = null,
+  travelOutsideServiceDuration = false,
 ): FrozenServiceRouteTiming | null {
   if (route.patientTravel === null) {
     return {
@@ -54,6 +56,11 @@ export function createFrozenServiceRouteTiming(
       (room) =>
         room.roomDefinitionId ===
         route.patientTravel?.destinationRoomDefinitionId,
+    )
+    .filter(
+      (destination) =>
+        allowedDestinationRoomIds === null ||
+        allowedDestinationRoomIds.has(destination.id),
     )
     .filter(
       (destination) =>
@@ -108,15 +115,31 @@ export function createFrozenServiceRouteTiming(
   const returnTicks = travelTicks(returnPath, tilesPerTick);
   const outboundStartTick = state.facilityTick;
   const outboundArrivalTick = outboundStartTick + outboundTicks;
-  const returnArrivalTick = outboundStartTick + route.durationTicks;
-  const serviceCompletionTick = returnArrivalTick - returnTicks;
+  const resourceDurationTicks = route.timingPhases.length > 0
+    ? route.timingPhases
+        .filter((phase) => phase.resourceBound)
+        .reduce((total, phase) => total + phase.durationTicks, 0)
+    : route.durationTicks;
+  const nonResourceDurationTicks = route.timingPhases
+    .filter((phase) => !phase.resourceBound)
+    .reduce((total, phase) => total + phase.durationTicks, 0);
+  const serviceCompletionTick = travelOutsideServiceDuration
+    ? outboundArrivalTick + resourceDurationTicks
+    : outboundStartTick + route.durationTicks - returnTicks;
+  const returnArrivalTick = serviceCompletionTick + returnTicks;
   if (serviceCompletionTick < outboundArrivalTick) {
     return null;
   }
+  const durationTicks = travelOutsideServiceDuration
+    ? Math.max(
+        returnArrivalTick,
+        serviceCompletionTick + nonResourceDurationTicks,
+      ) - outboundStartTick
+    : route.durationTicks;
 
   return {
     serviceDurationTicks: route.durationTicks,
-    durationTicks: route.durationTicks,
+    durationTicks,
     patientTravel: {
       version: "patient-travel.v1",
       originRoomInstanceId: selected.origin.id,

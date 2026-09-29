@@ -122,7 +122,13 @@ pending; editorial acceptance does not replace it.
 | `b3115c605fdb472e454dcbc76f65e2728d3bb123f791a7f2265939e27f64bee8` | `packages/clinical-content/src/development-batch/2026-09-13/post-bariatric-hypoglycemia.ts` |
 | `10a4184a5097da5aa4a7cabb350b724f451a5352c4ab82fec01bf76ba3849747` | `packages/clinical-content/src/development-batch/2026-09-13/lynch-tumor.ts` |
 | `b6b306715df0b3808d77ee6bc300aeda8e878417d831e654f5f5d66f554e986e` | `packages/clinical-content/src/development-batch/2026-09-13/chronic-anal-fissure.ts` |
-| `e1f31f6e13d6ea3f45045ff7c350975bcbd8b84f84712709c3b7b8acbc3b3493` | `packages/clinical-content/src/development-batch/2026-09-13/cutaneous-scc.ts` |
+| `9593272361d9f50cffbb2fda9c45349326fac7428f12053de24ab41b4c9bd5c1` | `packages/clinical-content/src/development-batch/2026-09-13/cutaneous-scc.ts` |
 | `93d73f559e02bc0781ded8790e78a29bc436f8a9669b7274d343130f3e864fd6` | `packages/clinical-content/src/development-batch/2026-09-13/venous-leg-ulcer.ts` |
 | `96368b847bba7753a538fbb9f9f3e4db7f3708620b6f67c01e2fde5381a672a4` | `packages/clinical-content/src/development-batch/2026-09-13/splenectomy-infection-prevention.ts` |
 | `99dbc44d73b6b030a4f6d50bcddf2236cdf797bac3fc1bde754a3bae2925e4d5` | `packages/clinical-content/src/development-batch/2026-09-13/early-levels-batch.ts` |
+
+### GS-021 operational amendment — September 17, 2026
+
+The owner-approved GS-021 service catalog authorized onsite minor-procedure-room acquisition for the already-authored cutaneous-lesion biopsy, while retaining external pathology. The operational amendment adds the facility capability gate and route contract only. It does not change the teaching text, answer key, evidence claims, review status, or represent new clinician approval.
+
+The previously recorded LF-normalized SHA-256 for cutaneous-scc.ts was e1f31f6e13d6ea3f45045ff7c350975bcbd8b84f84712709c3b7b8acbc3b3493. The canonical table now records the replacement operationally amended source hash.

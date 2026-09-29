@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
   deserializeGameState,
   gameReducer,
   getEmergencyGlp1Status,
   getFacilityAccessValidation,
   getCurrentCapabilities,
+  getEmployeeHomeLocation,
+  getOperationalGlp1AutomationCapacity,
   isEmployeeAssignedToOperationalRoom,
   getWorkloadSnapshot,
   serializeGameState,
@@ -66,32 +69,206 @@ function supportState(): GameState {
 }
 
 describe("Level 2 nonclinical support operations", () => {
-  it("automates only staffed GLP-1 suites on independent full-hour schedules", () => {
+  it("assigns hired GLP-1 NPs to two stations per reachable suite before using the next suite", () => {
+    let state = supportState();
+    state.employees = state.employees.filter((employee) => employee.id === "employee.evs");
+    for (const employeeId of ["employee.glp.hire.one", "employee.glp.hire.two", "employee.glp.hire.three"]) {
+      state = gameReducer(state, {
+        type: "HIRE_STAFF",
+        operationId: `hire.${employeeId}`,
+        employeeId,
+        staffRoleDefinitionId: "staff.glp1_np",
+      });
+      expect(state.operationReceipts[`hire.${employeeId}`]?.status).toBe("applied");
+    }
+    const hires = state.employees.filter((employee) => employee.staffRoleDefinitionId === "staff.glp1_np");
+    expect(hires.map((employee) => employee.homeRoomInstanceId)).toEqual([
+      "room.glp.one",
+      "room.glp.one",
+      "room.glp.two",
+    ]);
+    expect(hires[0]!.path.at(-1)).not.toEqual(hires[1]!.path.at(-1));
+  });
+
+  it("keeps the two GLP-1 NP stations distinct in both approved suite orientations", () => {
+    for (const orientation of [0, 270] as const) {
+      const state = supportState();
+      const suite = state.rooms.find((room) => room.id === "room.glp.one")!;
+      suite.orientation = orientation;
+      state.employees = state.employees.filter((employee) => employee.staffRoleDefinitionId !== "staff.glp1_np");
+      const firstStation = getEmployeeHomeLocation(state, "staff.glp1_np", PROTOTYPE_DOMAIN_CONTEXT);
+      state.employees.push({
+        ...supportState().employees.find((employee) => employee.id === "employee.glp.one")!,
+        homeRoomInstanceId: "room.glp.one",
+        location: firstStation.location,
+        path: [firstStation.location],
+        pathIndex: 0,
+      });
+      const secondStation = getEmployeeHomeLocation(state, "staff.glp1_np", PROTOTYPE_DOMAIN_CONTEXT);
+      expect(secondStation.homeRoomInstanceId).toBe("room.glp.one");
+      expect(secondStation.location).not.toEqual(firstStation.location);
+    }
+  });
+
+  it("redistributes only legacy GLP-1 assignments above two per suite on reload", () => {
+    const state = supportState();
+    state.employees.push({
+      ...state.employees.find((employee) => employee.id === "employee.glp.one")!,
+      id: "employee.glp.zthree",
+    });
+    state.employees
+      .filter((employee) => employee.staffRoleDefinitionId === "staff.glp1_np")
+      .forEach((employee) => {
+        employee.homeRoomInstanceId = "room.glp.one";
+      });
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.employees
+      .filter((employee) => employee.staffRoleDefinitionId === "staff.glp1_np")
+      .map((employee) => employee.homeRoomInstanceId)).toEqual([
+      "room.glp.one",
+      "room.glp.one",
+      "room.glp.two",
+    ]);
+  });
+
+  it("preserves later valid two-NP suite assignments before placing earlier legacy overflow", () => {
+    const state = supportState();
+    const source = state.employees.find((employee) => employee.id === "employee.glp.one")!;
+    state.employees = state.employees.filter((employee) => employee.staffRoleDefinitionId !== "staff.glp1_np");
+    for (const [id, homeRoomInstanceId] of [
+      ["employee.glp.a1", "room.glp.one"],
+      ["employee.glp.a2", "room.glp.one"],
+      ["employee.glp.a3", "room.glp.one"],
+      ["employee.glp.b1", "room.glp.two"],
+      ["employee.glp.b2", "room.glp.two"],
+    ] as const) {
+      state.employees.push({ ...source, id, homeRoomInstanceId });
+    }
+    const restored = deserializeGameState(serializeGameState(state));
+    expect(restored.employees
+      .filter((employee) => employee.staffRoleDefinitionId === "staff.glp1_np")
+      .map((employee) => [employee.id, employee.homeRoomInstanceId])).toEqual([
+      ["employee.glp.a1", "room.glp.one"],
+      ["employee.glp.a2", "room.glp.one"],
+      ["employee.glp.a3", "room.glp.one"],
+      ["employee.glp.b1", "room.glp.two"],
+      ["employee.glp.b2", "room.glp.two"],
+    ]);
+  });
+
+  it("binds staggered GLP-1 timers and receipts to the concrete operational NP", () => {
     let state = supportState();
     expect(getFacilityAccessValidation(state).unreachableRoomIds).toEqual([]);
     state.employees = [];
     expect(getEmergencyGlp1Status(state).eligible).toBe(true);
-    state = advance(state, 60);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
+    state = advance(state, 10);
     state.employees.push({ ...supportState().employees[1]!, id: "employee.glp.one" });
-    state = advance(state, 60);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
-    const cashAfterOne = state.cash;
+    expect(getOperationalGlp1AutomationCapacity(state)).toBe(1);
+    state.employees.at(-1)!.facilityTask = {
+      kind: "perform_imaging",
+      targetId: "room.missing",
+      startedAtFacilityTick: state.facilityTick,
+      workMinutesRemaining: 5,
+    };
+    expect(getOperationalGlp1AutomationCapacity(state)).toBe(0);
+    state.employees.at(-1)!.facilityTask = null;
+    state = advance(state, 30);
     state.employees.push({ ...supportState().employees[2]!, id: "employee.glp.two" });
-    state = advance(state, 59);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
+    state.employees.push({
+      ...supportState().employees[2]!,
+      id: "employee.aaa.nonoperational",
+      homeRoomInstanceId: "room.missing",
+    });
+    state = advance(state, 29);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
     state = advance(state, 1);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(3);
-    expect(state.cash).toBe(cashAfterOne + 50);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
+    expect(state.serviceIncomeReceipts.at(-1)).toMatchObject({
+      incomeLineId: "income.glp1_telehealth",
+      actorId: "employee.glp.one",
+      grossAmount: 50,
+      netCashDelta: 50,
+    });
+    const afterFirstPayout = deserializeGameState(serializeGameState(state));
+    state = advance(afterFirstPayout, 30);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
+    expect(state.serviceIncomeReceipts.at(-1)).toMatchObject({
+      actorId: "employee.glp.two",
+      grossAmount: 50,
+    });
+    expect(state.serviceIncomeReceipts.some(
+      (receipt) => receipt.actorId === "employee.aaa.nonoperational",
+    )).toBe(false);
+    const receiptKeys = state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey);
+    const cashAfterTwo = state.cash;
+    state = advance(deserializeGameState(serializeGameState(state)), 1);
+    expect(state.cash).toBe(cashAfterTwo);
+    expect(state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey)).toEqual(receiptKeys);
     expect(getEmergencyGlp1Status(state).eligible).toBe(false);
     const learning = JSON.stringify(state.learningHistories);
     state.paused = true;
     state = advance(state, 120);
-    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(3);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
     state.paused = false;
     const restored = deserializeGameState(serializeGameState(state));
-    expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(3);
+    expect(restored.environment.glp1AutomationConsultationsCompleted).toBe(2);
     expect(JSON.stringify(restored.learningHistories)).toBe(learning);
+  });
+
+  it("supports two independent NP payout slots in one suite across staffing changes and reload", () => {
+    let state = supportState();
+    state.employees = state.employees.filter((employee) => employee.id === "employee.glp.one");
+    state = advance(state, 30);
+    expect(state.environment.glp1AutomationSlots).toEqual([
+      expect.objectContaining({
+        suiteRoomInstanceId: "room.glp.one",
+        employeeId: "employee.glp.one",
+        nextPayoutTick: 60,
+      }),
+    ]);
+
+    state.employees.push({
+      ...supportState().employees.find((employee) => employee.id === "employee.glp.two")!,
+      homeRoomInstanceId: "room.glp.one",
+      location: { x: 31, y: 23 },
+      path: [{ x: 31, y: 23 }],
+      pathIndex: 0,
+    });
+    expect(getOperationalGlp1AutomationCapacity(state)).toBe(2);
+    state = advance(state, 29);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(0);
+
+    state = advance(deserializeGameState(serializeGameState(state)), 1);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(1);
+    expect(state.serviceIncomeReceipts.filter(
+      (receipt) => receipt.incomeLineId === "income.glp1_telehealth",
+    )).toEqual([
+      expect.objectContaining({ actorId: "employee.glp.one", grossAmount: 50 }),
+    ]);
+    expect(state.environment.glp1AutomationSlots).toEqual(expect.arrayContaining([
+      expect.objectContaining({ suiteRoomInstanceId: "room.glp.one", employeeId: "employee.glp.one", nextPayoutTick: 120 }),
+      expect.objectContaining({ suiteRoomInstanceId: "room.glp.one", employeeId: "employee.glp.two", nextPayoutTick: 90 }),
+    ]));
+
+    const cashAfterFirstPayout = state.cash;
+    state = advance(deserializeGameState(serializeGameState(state)), 30);
+    expect(state.environment.glp1AutomationConsultationsCompleted).toBe(2);
+    expect(state.cash).toBe(cashAfterFirstPayout + 50);
+    expect(state.serviceIncomeReceipts.filter(
+      (receipt) => receipt.incomeLineId === "income.glp1_telehealth",
+    ).map((receipt) => receipt.transactionKey)).toEqual([
+      "income.glp1.automation.room.glp.one.employee.glp.one.60",
+      "income.glp1.automation.room.glp.one.employee.glp.two.90",
+    ]);
+    const receipts = state.serviceIncomeReceipts.filter(
+      (receipt) => receipt.incomeLineId === "income.glp1_telehealth",
+    ).map((receipt) => receipt.transactionKey);
+    const cashAfterSecondPayout = state.cash;
+    state = advance(deserializeGameState(serializeGameState(state)), 1);
+    expect(state.cash).toBe(cashAfterSecondPayout);
+    expect(state.serviceIncomeReceipts.filter(
+      (receipt) => receipt.incomeLineId === "income.glp1_telehealth",
+    ).map((receipt) => receipt.transactionKey)).toEqual(receipts);
   });
 
   it("routes EVS to oldest litter, reserves targets, completes physically, and recovers missing targets", () => {

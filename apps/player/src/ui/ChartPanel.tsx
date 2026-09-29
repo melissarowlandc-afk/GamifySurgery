@@ -465,7 +465,11 @@ export function ChartPanel({
                 </section>
                 {chart.pendingLabel ? (
                   <div className="chart-pending-card">
-                    <strong>Patient is away</strong>
+                    <strong>
+                      {chart.pendingPatientIsAway === false
+                        ? "Patient is in clinic"
+                        : "Patient is away"}
+                    </strong>
                     <span>{chart.pendingLabel}</span>
                     {chart.etaLabel ? <small>{chart.etaLabel}</small> : null}
                   </div>
@@ -581,7 +585,11 @@ export function ChartPanel({
                 className="button button-primary chart-resolve-button"
                 data-tutorial-anchor="decision-feedback-action"
                 type="button"
-                onClick={onAcknowledgeTerminalFeedback}
+                onClick={
+                  chart.primaryActionClosesChart
+                    ? onClose
+                    : onAcknowledgeTerminalFeedback
+                }
               >
                 {chart.primaryActionLabel ?? "Continue"}
               </button>

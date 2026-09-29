@@ -21,6 +21,11 @@ function tick(state: GameState, sequence: number): GameState {
   });
 }
 
+function addOperationalExaminationRoom(state: GameState): void {
+  state.rooms.push({ id: "room.facility-experience.examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+  state.doors.push({ id: "door.facility-experience.examination", roomId: "room.facility-experience.examination", side: "south", offset: 1, exterior: false });
+}
+
 function advanceUntilCheckedIn(
   state: GameState,
   encounterId: string,
@@ -61,13 +66,13 @@ function endedEncounter(
 }
 
 describe("facility experience conditions", () => {
-  it("keeps locked future amenities out of Level 0 and adds applicable Level 1 gaps", () => {
+  it("keeps locked future amenities out of Levels 0 and 1", () => {
     const state = createInitialGameState();
     expect(
       evaluateFacilityExperienceConditions(state).conditions.map(
         (condition) => condition.conditionKey,
       ),
-    ).toEqual([]);
+    ).toEqual(["missing_examination_room"]);
 
     state.facilityLevel = 1;
     expect(
@@ -76,13 +81,14 @@ describe("facility experience conditions", () => {
       ),
     ).toEqual([
       "missing_waiting_room",
-        "missing_bathroom",
-      "unavailable_onsite_xray",
+      "missing_examination_room",
+      "missing_bathroom",
     ]);
   });
 
   it("centralizes litter, dirty-room, and actually-empty water pressure under the cap", () => {
     const state = createInitialGameState();
+    addOperationalExaminationRoom(state);
     state.rooms.forEach((room) => {
       room.cleanliness = 40;
     });
@@ -122,6 +128,7 @@ describe("facility experience conditions", () => {
 
   it("applies conditions exactly once at Front Desk check-in and preserves them through reload", () => {
     let state = createInitialGameState();
+    addOperationalExaminationRoom(state);
     state.facilityLevel = 1;
     state.encounters = {};
     const clinicalCase =
@@ -154,9 +161,9 @@ describe("facility experience conditions", () => {
     const checkedIn =
       state.encounters["encounter.facility-experience"]!;
     expect(checkedIn.facilityExperienceAtCheckIn).toMatchObject({
-      totalPenalty: 9,
+      totalPenalty: 7,
     });
-    expect(checkedIn.patientSatisfaction).toBe(91);
+    expect(checkedIn.patientSatisfaction).toBe(93);
     expect(
       checkedIn.dissatisfactionByCause.missing_amenities
         ?.pointsLost,
@@ -165,10 +172,7 @@ describe("facility experience conditions", () => {
       checkedIn.dissatisfactionByCause.no_receptionist
         ?.pointsLost,
     ).toBe(2);
-    expect(
-      checkedIn.dissatisfactionByCause.imaging_unavailable
-        ?.pointsLost,
-    ).toBe(2);
+    expect(checkedIn.dissatisfactionByCause.imaging_unavailable).toBeUndefined();
 
     const restored = deserializeGameState(serializeGameState(state));
     expect(
@@ -178,7 +182,7 @@ describe("facility experience conditions", () => {
     expect(
       restored.encounters["encounter.facility-experience"]!
         .patientSatisfaction,
-    ).toBe(91);
+    ).toBe(93);
   });
 
   it("protects tutorial patients from the check-in environment penalty", () => {
@@ -202,6 +206,7 @@ describe("facility experience conditions", () => {
 
   it("keeps raw history separate while progression uses measured live-adjusted satisfaction", () => {
     const state = createInitialGameState();
+    addOperationalExaminationRoom(state);
     expect(getClinicSatisfaction(state)).toBeNull();
     expect(getDisplayedClinicSatisfaction(state)).toBe(100);
     expect(
@@ -240,7 +245,7 @@ describe("facility experience conditions", () => {
 });
 
 describe("durable facility-condition occurrences", () => {
-  it("retains resolved rows and creates a new occurrence after recurrence", () => {
+  it("requires 60 continuous minutes and keeps recurrence on one global litter day", () => {
     const state = createInitialGameState();
     state.environment.litterItems.push({
       id: "litter.first",
@@ -250,36 +255,50 @@ describe("durable facility-condition occurrences", () => {
     });
     state.facilityTick = 3;
     synchronizeFacilityConditionOccurrences(state);
+    expect(state.environment.facilityConditionOccurrences).toHaveLength(0);
+    state.facilityTick = 63;
+    synchronizeFacilityConditionOccurrences(state);
+    expect(state.environment.facilityConditionOccurrences).toHaveLength(0);
+    state.facilityTick = 64;
+    synchronizeFacilityConditionOccurrences(state);
     const first = state.environment.facilityConditionOccurrences.find(
       (occurrence) =>
         occurrence.conditionKey === "visible_litter",
     )!;
     expect(first.resolvedAtFacilityTick).toBeNull();
 
-    state.facilityTick = 4;
+    state.facilityTick = 65;
     state.environment.litterItems = [];
     synchronizeFacilityConditionOccurrences(state);
-    expect(first.resolvedAtFacilityTick).toBe(4);
+    expect(first.resolvedAtFacilityTick).toBe(65);
 
-    state.facilityTick = 5;
+    state.facilityTick = 66;
     state.environment.litterItems.push({
       id: "litter.second",
       roomId: state.rooms[0]!.id,
       location: { x: 34, y: 29 },
-      spawnedAtFacilityTick: 5,
+      spawnedAtFacilityTick: 66,
     });
     synchronizeFacilityConditionOccurrences(state);
-    const litterOccurrences =
+    state.facilityTick = 127;
+    synchronizeFacilityConditionOccurrences(state);
+    let litterOccurrences =
       state.environment.facilityConditionOccurrences.filter(
         (occurrence) =>
           occurrence.conditionKey === "visible_litter",
       );
+    expect(litterOccurrences).toHaveLength(1);
+    state.facilityTick = 664;
+    synchronizeFacilityConditionOccurrences(state);
+    litterOccurrences = state.environment.facilityConditionOccurrences.filter(
+      (occurrence) => occurrence.conditionKey === "visible_litter",
+    );
     expect(litterOccurrences).toHaveLength(2);
     expect(litterOccurrences[1]!.id).not.toBe(first.id);
     expect(litterOccurrences[1]!.resolvedAtFacilityTick).toBeNull();
   });
 
-  it("suppresses later single-litter teaching rows but alerts on accumulation", () => {
+  it("alerts for one post-teaching litter item and does not spam on accumulation", () => {
     const state = createInitialGameState();
     state.environment.trashTeachingAcknowledgedAtTick = 1;
     state.environment.litterItems = [
@@ -298,6 +317,20 @@ describe("durable facility-condition occurrences", () => {
       ),
     ).toBe(false);
 
+    state.facilityTick = 60;
+    synchronizeFacilityConditionOccurrences(state);
+    expect(state.environment.facilityConditionOccurrences).toHaveLength(0);
+    state.facilityTick = 61;
+    synchronizeFacilityConditionOccurrences(state);
+    expect(
+      state.environment.facilityConditionOccurrences.find(
+        (occurrence) => occurrence.conditionKey === "visible_litter",
+      ),
+    ).toMatchObject({
+      definitionId: "alert.patient.cleanliness-complaint",
+      occurredAtFacilityTick: 61,
+    });
+
     state.environment.litterItems.push({
       id: "litter.later-two",
       roomId: state.rooms[0]!.id,
@@ -306,12 +339,30 @@ describe("durable facility-condition occurrences", () => {
     });
     synchronizeFacilityConditionOccurrences(state);
     expect(
-      state.environment.facilityConditionOccurrences.find(
+      state.environment.facilityConditionOccurrences.filter(
         (occurrence) =>
           occurrence.conditionKey === "visible_litter",
       ),
-    ).toMatchObject({
-      definitionId: "alert.patient.cleanliness-complaint",
+    ).toHaveLength(1);
+    state.facilityTick = 62;
+    state.environment.litterItems = state.environment.litterItems.filter(
+      (item) => item.id === "litter.later-two",
+    );
+    synchronizeFacilityConditionOccurrences(state);
+    const litterHistory = state.environment.facilityConditionOccurrences.filter(
+      (occurrence) => occurrence.conditionKey === "visible_litter",
+    );
+    expect(litterHistory).toHaveLength(1);
+    expect(litterHistory[0]!.resolvedAtFacilityTick).toBe(62);
+
+    state.facilityTick = 661;
+    synchronizeFacilityConditionOccurrences(state);
+    const retargeted = state.environment.facilityConditionOccurrences.filter(
+      (occurrence) => occurrence.conditionKey === "visible_litter",
+    );
+    expect(retargeted).toHaveLength(2);
+    expect(retargeted[1]).toMatchObject({
+      target: { kind: "litter", id: "litter.later-two" },
     });
   });
 
@@ -325,15 +376,36 @@ describe("durable facility-condition occurrences", () => {
         (occurrence) =>
           occurrence.conditionKey === "empty_water_cooler",
       );
-    expect(waterOccurrences).toHaveLength(1);
+    expect(waterOccurrences).toHaveLength(0);
+    state.facilityTick = 70;
+    synchronizeFacilityConditionOccurrences(state);
+    expect(state.environment.facilityConditionOccurrences).toHaveLength(0);
+    state.facilityTick = 71;
+    synchronizeFacilityConditionOccurrences(state);
+    waterOccurrences = state.environment.facilityConditionOccurrences.filter(
+      (occurrence) => occurrence.conditionKey === "empty_water_cooler",
+    );
     expect(waterOccurrences[0]).toMatchObject({
       kind: "onset",
-      occurredAtFacilityTick: 10,
+      occurredAtFacilityTick: 71,
       resolvedAtFacilityTick: null,
       definitionId: "alert.environment.water-empty",
     });
+    const restoredAtOnset = deserializeGameState(serializeGameState(state));
+    restoredAtOnset.facilityTick = 72;
+    synchronizeFacilityConditionOccurrences(restoredAtOnset);
+    expect(
+      restoredAtOnset.environment.facilityConditionOccurrences.filter(
+        (occurrence) => occurrence.conditionKey === "empty_water_cooler",
+      ),
+    ).toHaveLength(1);
+    expect(
+      restoredAtOnset.alertHumor.conditionLastEmittedTicks[
+        "environment.water"
+      ],
+    ).toBe(71);
 
-    state.facilityTick = 609;
+    state.facilityTick = 670;
     synchronizeFacilityConditionOccurrences(state);
     expect(
       state.environment.facilityConditionOccurrences.filter(
@@ -342,7 +414,7 @@ describe("durable facility-condition occurrences", () => {
       ),
     ).toHaveLength(1);
 
-    state.facilityTick = 610;
+    state.facilityTick = 671;
     synchronizeFacilityConditionOccurrences(state);
     waterOccurrences =
       state.environment.facilityConditionOccurrences.filter(
@@ -350,14 +422,14 @@ describe("durable facility-condition occurrences", () => {
           occurrence.conditionKey === "empty_water_cooler",
       );
     expect(waterOccurrences).toHaveLength(2);
-    expect(waterOccurrences[0]!.resolvedAtFacilityTick).toBe(610);
+    expect(waterOccurrences[0]!.resolvedAtFacilityTick).toBe(671);
     expect(waterOccurrences[1]).toMatchObject({
       kind: "reminder",
-      occurredAtFacilityTick: 610,
+      occurredAtFacilityTick: 671,
       resolvedAtFacilityTick: null,
     });
 
-    state.facilityTick = 1_210;
+    state.facilityTick = 2_000;
     synchronizeFacilityConditionOccurrences(state);
     waterOccurrences =
       state.environment.facilityConditionOccurrences.filter(
@@ -373,15 +445,15 @@ describe("durable facility-condition occurrences", () => {
     ).toHaveLength(1);
     expect(waterOccurrences[2]).toMatchObject({
       kind: "reminder",
-      occurredAtFacilityTick: 1_210,
+      occurredAtFacilityTick: 2_000,
     });
 
-    state.facilityTick = 1_211;
+    state.facilityTick = 2_001;
     state.environment.waterCoolerFillPercent = 100;
     synchronizeFacilityConditionOccurrences(state);
     expect(
       waterOccurrences[2]!.resolvedAtFacilityTick,
-    ).toBe(1_211);
+    ).toBe(2_001);
     expect(state.environment.waterCoolerEmptySinceTick).toBeNull();
     expect(state.environment.nextWaterCoolerReminderTick).toBeNull();
   });

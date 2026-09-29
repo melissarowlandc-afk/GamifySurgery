@@ -37,6 +37,7 @@ import {
   type ResourceBarView,
   type RoomBuildOptionView,
   type SelectedRoomBuildView,
+  type ServiceIncomeView,
   type StaffRoleGroupView,
 } from "./ui";
 import {
@@ -72,6 +73,7 @@ interface AppShellProps {
   roomOptions: RoomBuildOptionView[];
   selectedRoomBuild: SelectedRoomBuildView | null;
   staffRoles: StaffRoleGroupView[];
+  serviceIncome: ServiceIncomeView;
   messages: MessageBoardItemView[];
   systemNotices: MessageBoardItemView[];
   questionReviewFlags: QuestionReviewFlag[];
@@ -115,6 +117,7 @@ interface AppShellProps {
   onExitBuildMode: () => void;
   onEnterManagementMode: () => void;
   onExitManagementMode: () => void;
+  onServiceAppointmentsEnabledChange: (enabled: boolean) => void;
   onSelectRoom: (roomInstanceId: string) => void;
   onSellSelectedRoom: () => void;
   onUpgradeSelectedRoom: () => void;
@@ -132,6 +135,7 @@ interface AppShellProps {
   onFireEmployee: (employeeId: string) => void;
   onCollectLitter: (litterId: string) => void;
   onRefillWaterCooler: () => void;
+  onSeatFounderAtFrontDesk: () => boolean;
   onPraiseEmployee: (employeeId: string) => void;
   onMoveFounder: (destination: GridPoint) => boolean;
   onLevelUp: () => void;
@@ -167,6 +171,7 @@ export function AppShell({
   roomOptions,
   selectedRoomBuild,
   staffRoles,
+  serviceIncome,
   messages,
   systemNotices,
   questionReviewFlags,
@@ -203,6 +208,7 @@ export function AppShell({
   onExitBuildMode,
   onEnterManagementMode,
   onExitManagementMode,
+  onServiceAppointmentsEnabledChange,
   onSelectRoom,
   onSellSelectedRoom,
   onUpgradeSelectedRoom,
@@ -216,6 +222,7 @@ export function AppShell({
   onFireEmployee,
   onCollectLitter,
   onRefillWaterCooler,
+  onSeatFounderAtFrontDesk,
   onPraiseEmployee,
   onMoveFounder,
   onLevelUp,
@@ -260,6 +267,7 @@ export function AppShell({
   const [highlightedLitterId, setHighlightedLitterId] =
     useState<string | null>(null);
   const messageActionFrameRef = useRef<number | null>(null);
+  const dailyRoutineHighlightTipRef = useRef<string | null>(null);
   const activeCampaignId =
     campaigns.find((campaign) => campaign.active)?.campaignId ?? null;
   const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
@@ -356,6 +364,17 @@ export function AppShell({
     }, 4_000);
     return () => window.clearTimeout(timer);
   }, [highlightedLitterId]);
+
+  useEffect(() => {
+    if (dailyRoutineHighlightTipRef.current === tutorialStep?.id) return;
+    dailyRoutineHighlightTipRef.current = tutorialStep?.id ?? null;
+    if (tutorialStep?.id === "sendout-water") {
+      setWaterCoolerHighlightKey((current) => current + 1);
+    }
+    if (tutorialStep?.id === "sendout-trash" && facility.litterItems?.[0]) {
+      setHighlightedLitterId(facility.litterItems[0].instanceId);
+    }
+  }, [tutorialStep?.id]);
 
   const openAndLocatePatient = (patientId: string) => {
     setLocatedPatientId(patientId);
@@ -656,6 +675,7 @@ export function AppShell({
                 }}
                 onCollectLitter={onCollectLitter}
                 onRefillWaterCooler={onRefillWaterCooler}
+                onSeatFounderAtFrontDesk={onSeatFounderAtFrontDesk}
                 onPraiseEmployee={setPraiseCandidateId}
                 onMoveFounder={onMoveFounder}
                 onCameraChange={onFacilityCameraChange}
@@ -752,6 +772,7 @@ export function AppShell({
               managementMode={managementMode}
               showInactiveTrigger={!chart && !buildMode}
               roles={staffRoles}
+              serviceIncome={serviceIncome}
               highlightedRoleId={highlightedStaffRoleId}
               highlightedEmployeeId={highlightedEmployeeId}
               onEnterManagementMode={onEnterManagementMode}
@@ -760,6 +781,7 @@ export function AppShell({
               onDecreaseSalary={onDecreaseEmployeeSalary}
               onIncreaseSalary={onIncreaseEmployeeSalary}
               onFire={onFireEmployee}
+              onAppointmentsEnabledChange={onServiceAppointmentsEnabledChange}
             />
             {chart ? (
               <ChartPanel

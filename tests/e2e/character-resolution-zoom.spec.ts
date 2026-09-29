@@ -6,7 +6,8 @@ import {
   startClinic,
 } from "./helpers";
 
-const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
+const SCREENSHOT_DIRECTORY = process.env.GAMIFY_CHARACTER_ZOOM_SCREENSHOT_ROOT ??
+  "artifacts/screenshots/gs026-runtime/compatibility";
 
 interface LiveActorSnapshot {
   atlasId?: string;
@@ -108,7 +109,7 @@ async function liveActorSnapshots(page: Page): Promise<Record<string, LiveActorS
   });
 }
 
-test("live character atlases stay smooth, exact-aspect, and floor-anchored across facility zoom", async ({ page }, testInfo) => {
+test("live GS-026 stills stay smooth, identity-scaled, and floor-anchored across facility zoom", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chrome", "The three comparable character captures use one controlled desktop viewport.");
   await page.setViewportSize({ width: 1374, height: 1000 });
   await openCharacterZoomFixture(page);
@@ -122,9 +123,9 @@ test("live character atlases stay smooth, exact-aspect, and floor-anchored acros
 
   const facility = page.getByTestId("facility-canvas");
   const expectedActors = [
-    ["character:founder", /^character:founders-.*-v4-r10-feet$/, 181 / 192],
-    ["character:patient:encounter.visual.patient.2", /^character:patients-.*-v1-r7-hires$/, 181 / 192],
-    ["character:staff:employee.visual.receptionist", /^character:actors-.*-v3$/, 220 / 240],
+    "character:founder",
+    "character:patient:encounter.visual.patient.2",
+    "character:staff:employee.visual.receptionist",
   ] as const;
   const screenshots = [
     [70, "character-resolution-zoom-70.png"],
@@ -132,29 +133,39 @@ test("live character atlases stay smooth, exact-aspect, and floor-anchored acros
     [160, "character-resolution-zoom-160.png"],
   ] as const;
   const anchorsByActor = new Map<string, number>();
+  const widthRatiosByActor = new Map<string, number>();
+  const priorWidthByActor = new Map<string, number>();
   const scaleModes = new Set<number>();
 
   for (const [percent, filename] of screenshots) {
     await setZoomPercent(page, percent);
     await page.waitForTimeout(150);
     const snapshots = await liveActorSnapshots(page);
-    for (const [key, atlasPattern, expectedAnchor] of expectedActors) {
+    const referenceWidth = snapshots[expectedActors[0]]!.displayWidth!;
+    for (const key of expectedActors) {
       const actor = snapshots[key];
       expect(actor, `missing ${key} at ${percent}%`).toBeDefined();
       expect(actor!.visible).toBe(true);
-      expect(actor!.atlasId).toMatch(atlasPattern);
+      expect(actor!.atlasId).toMatch(/^character-still:[^:]+:[0-9a-f]{12}$/);
       expect(actor!.displayWidth).toBeGreaterThan(0);
       expect(actor!.displayHeight).toBeGreaterThan(0);
       expect(Number.isInteger(actor!.displayWidth)).toBe(true);
       expect(Number.isInteger(actor!.displayHeight)).toBe(true);
-      expect(actor!.displayWidth! * 3).toBe(actor!.displayHeight! * 2);
-      expect(actor!.originY).toBeCloseTo(expectedAnchor, 8);
+      expect(actor!.displayWidth! * 2).toBe(actor!.displayHeight);
+      expect(actor!.originY).toBeCloseTo(287 / 320, 8);
       expect(actor!.textureUsesLinearFiltering).toBe(true);
       expect(typeof actor!.textureScaleMode).toBe("number");
       scaleModes.add(actor!.textureScaleMode!);
       const initialAnchor = anchorsByActor.get(key);
       if (initialAnchor === undefined) anchorsByActor.set(key, actor!.originY!);
       else expect(actor!.originY).toBeCloseTo(initialAnchor, 8);
+      const widthRatio = actor!.displayWidth! / referenceWidth;
+      const initialRatio = widthRatiosByActor.get(key);
+      if (initialRatio === undefined) widthRatiosByActor.set(key, widthRatio);
+      else expect(widthRatio).toBeCloseTo(initialRatio, 1);
+      const priorWidth = priorWidthByActor.get(key);
+      if (priorWidth !== undefined) expect(actor!.displayWidth!).toBeGreaterThan(priorWidth);
+      priorWidthByActor.set(key, actor!.displayWidth!);
     }
     await facility.screenshot({
       path: `${SCREENSHOT_DIRECTORY}/${filename}`,

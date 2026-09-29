@@ -1,9 +1,11 @@
 import type { PixelAppearanceDescriptor } from "@gamify-surgery/game-domain";
 import { describe, expect, it, vi } from "vitest";
+import { characterBitmapLayers } from "../art/characterBitmapArt";
 
 vi.mock("phaser", () => ({ default: { Scene: class { constructor(_config?: unknown) {} } } }));
 
 import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
+import { getFrontDeskV5StationaryActorDisplay } from "./frontDeskPresentation";
 
 type Draw = { key: string; centerX: number; baseY: number; offsetIndex: number; direction: string; pose: string; rightFacing: boolean; representation?: string };
 const APPEARANCE: PixelAppearanceDescriptor = {
@@ -43,7 +45,8 @@ function harness(source = bridge()) {
   const draws: Draw[] = [];
   scene.layout = { originX: 0, originY: 0, tileSize: 32, width: 640, height: 480, sidewalkTop: 400, sidewalkHeight: 40, setbackTop: 360 };
   scene.refreshLayout = vi.fn();
-  scene.getCharacterGraphics = vi.fn((key: string) => ({ getData: () => key, setDepth: vi.fn(), setVisible: vi.fn(), setPosition: vi.fn() }));
+  scene.ensureCharacterStills = vi.fn();
+  scene.getCharacterGraphics = vi.fn((key: string) => ({ getData: () => key, setData: vi.fn(), setDepth: vi.fn(), setVisible: vi.fn(), setPosition: vi.fn() }));
   scene.drawPixelPerson = vi.fn((graphics: { getData(): string }, centerX: number, baseY: number, offsetIndex: number, _appearance: unknown, _color: number, direction: string, pose: string, rightFacing: boolean, _scale: number, representation?: string) => {
     draws.push({ key: graphics.getData(), centerX, baseY, offsetIndex, direction, pose, rightFacing, representation });
     return { baseY, representation: representation ?? "procedural" };
@@ -57,6 +60,27 @@ const latest = (draws: Draw[], key: string) => draws.filter((draw) => draw.key =
 const state = (draw: Draw) => ({ centerX: draw.centerX, baseY: draw.baseY, offsetIndex: draw.offsetIndex, direction: draw.direction, pose: draw.pose, rightFacing: draw.rightFacing });
 
 describe("FacilityScene character pause and arrival presentation", () => {
+  it("uses the semantic approved Front Desk support at the domain staff anchor", () => {
+    const source = bridge();
+    source.viewModel.rooms = [{
+      instanceId: "room.front", definitionId: "room.front_desk", displayName: "Front Desk",
+      tileX: 0, tileY: 0, width: 5, height: 4, isFounderRoom: true, orientation: 0,
+    }];
+    const domainStaffAnchor = { x: 1, y: 1 };
+    expect(getFrontDeskV5StationaryActorDisplay(domainStaffAnchor, false, "staff", source.viewModel.rooms)).toBeUndefined();
+    const { scene } = harness(source);
+    scene.canRenderFrontDeskV5Architecture = vi.fn(() => false);
+    const display = (FacilityScene.prototype as any).getFrontDeskV5ActorDisplayPosition.bind(scene);
+    expect(display(domainStaffAnchor, false, "staff")).toMatchObject({
+      supportRole: "front-desk-staff",
+      supportId: "receptionist-chair:seat-1",
+      pose: "seated",
+      direction: "front",
+    });
+    expect(display(domainStaffAnchor, true, "staff")).toBeUndefined();
+    expect(display({ x: 8, y: 8 }, false, "staff")).toBeUndefined();
+  });
+
   it("keeps keyed snapshots and gait offsets through real reorder and insertion while paused", () => {
     const { scene, draws, bridge: source } = harness();
     scene.update(0, 100);
@@ -151,6 +175,18 @@ describe("FacilityScene character pause and arrival presentation", () => {
     for (const key of ["character:founder", "character:staff:staff-a", "character:staff:staff-b", "character:patient:patient-a", "character:patient:patient-b", "character:ambient:ambient-a", "character:ambient:ambient-b"]) expect(latest(draws, key)).toMatchObject({ direction: "front", pose: "idle" });
   });
 
+  it("requests only the four standing cardinals for each live known identity", () => {
+    const source = bridge();
+    source.viewModel.founder.appearance = { ...source.viewModel.founder.appearance, stillId: "founder.01" };
+    const { scene } = harness(source);
+    scene.drawCharacters();
+    const requested = scene.ensureCharacterStills.mock.calls[0]![0] as Array<{ id: string; relativePath?: string }>;
+    const founderAssets = requested.filter((asset) => asset.relativePath?.includes("/founder.01/") === true);
+    expect(founderAssets).toHaveLength(4);
+    expect(new Set(founderAssets.map((asset) => asset.id)).size).toBe(4);
+    expect(founderAssets.every((asset) => asset.relativePath?.includes("/stand-") === true)).toBe(true);
+  });
+
   it("draws a first paused snapshot, removes a genuinely absent key, and never resurrects a completed off-site actor", () => {
     const source = bridge(); source.viewModel.paused = true;
     const { scene, draws } = harness(source); scene.drawCharacters();
@@ -168,18 +204,15 @@ describe("FacilityScene character pause and arrival presentation", () => {
     expect(draws.filter((draw) => draw.key === "character:patient:patient-a")).toHaveLength(count);
   });
 
-  it("freezes the actual procedural/bitmap representation and bitmap frame selection", () => {
+  it("upgrades a paused neutral placeholder when its still loads and then freezes the selected frame", () => {
     const source = bridge(); const scene = new FacilityScene(source) as any;
     scene.layout = { originX: 0, originY: 0, tileSize: 32 };
     scene.drawPixelFrameSizedOutline = vi.fn(); scene.drawPixelFrameSized = vi.fn();
-    const graphics = { getData: () => "actor", clear: vi.fn(), setPosition: vi.fn(), setVisible: vi.fn() };
-    const candidate = { centerX: 48, baseY: 64, direction: "side", pose: "walk-a", rightFacing: true, displayScale: 1, appearance: APPEARANCE };
-    scene.characterAtlasesReady = false; scene.drawCharacterPresentation(graphics, "actor", candidate, 0);
-    expect(scene.characterMotionSnapshots.get("actor").representation).toBe("procedural");
-    scene.characterAtlasesReady = true; source.viewModel.paused = true; scene.textures = { exists: vi.fn(() => true) };
-    scene.getCharacterBitmapContainer = vi.fn(() => { throw new Error("procedural snapshot replaced during pause"); });
-    scene.drawCharacterPresentation(graphics, "actor", { ...candidate, direction: "front", pose: "idle", rightFacing: false }, 0);
-    expect(scene.getCharacterBitmapContainer).not.toHaveBeenCalled();
+    const graphics = { getData: () => "actor", clear: vi.fn(), setPosition: vi.fn(), setVisible: vi.fn(), fillStyle: vi.fn(), fillCircle: vi.fn(), fillRoundedRect: vi.fn() };
+    const candidate = { centerX: 48, baseY: 64, direction: "side", pose: "walk-a", rightFacing: true, displayScale: 1, appearance: { ...APPEARANCE, stillId: "founder.01", roleStyle: "founder" } };
+    scene.textures = { exists: vi.fn(() => false) }; scene.ensureCharacterStill = vi.fn(() => false);
+    scene.drawCharacterPresentation(graphics, "actor", candidate, 0);
+    expect(scene.characterMotionSnapshots.get("actor").representation).toBe("neutral");
 
     const data = new Map<string, unknown>();
     const actor = {
@@ -192,13 +225,54 @@ describe("FacilityScene character pause and arrival presentation", () => {
       getData: (key: string) => data.get(key),
     };
     const container = { visible: true, getByName: () => actor, setVisible: vi.fn(function (this: { visible: boolean }, value: boolean) { this.visible = value; return this; }), setPosition: vi.fn(function (this: object) { return this; }), setDepth: vi.fn(function (this: object) { return this; }) };
-    const bitmapGraphics = { getData: () => "bitmap-actor", clear: vi.fn(), setPosition: vi.fn(), setVisible: vi.fn() };
-    scene.getCharacterBitmapContainer = vi.fn(() => container); source.viewModel.paused = false;
-    scene.drawCharacterPresentation(bitmapGraphics, "bitmap-actor", candidate, 0);
-    const first = { frame: data.get("gait-frame"), flip: data.get("gait-flip-x"), direction: data.get("gait-direction"), pose: data.get("gait-pose"), representation: scene.characterMotionSnapshots.get("bitmap-actor").representation };
+    scene.getCharacterBitmapContainer = vi.fn(() => container); scene.textures = { exists: vi.fn(() => true) };
     source.viewModel.paused = true;
-    scene.drawCharacterPresentation(bitmapGraphics, "bitmap-actor", { ...candidate, direction: "front", pose: "idle", rightFacing: false }, 0);
-    expect({ frame: data.get("gait-frame"), flip: data.get("gait-flip-x"), direction: data.get("gait-direction"), pose: data.get("gait-pose"), representation: scene.characterMotionSnapshots.get("bitmap-actor").representation }).toEqual(first);
-    expect(first).toMatchObject({ direction: "side", pose: "walk-a", flip: true, representation: "bitmap" });
+    scene.drawCharacterPresentation(graphics, "actor", { ...candidate, direction: "front", pose: "idle", rightFacing: false }, 0);
+    expect({ frame: data.get("gait-frame"), flip: data.get("gait-flip-x"), direction: data.get("gait-direction"), pose: data.get("gait-pose"), representation: scene.characterMotionSnapshots.get("actor").representation })
+      .toMatchObject({ direction: "side", pose: "walk-a", flip: false, representation: "neutral" });
+    expect(scene.getCharacterBitmapContainer).toHaveBeenCalled();
+  });
+
+  it("retains the loaded same-identity bitmap through a cold or failed turn but not an identity swap", () => {
+    const scene = new FacilityScene(bridge()) as any;
+    scene.layout = { originX: 0, originY: 0, tileSize: 32 };
+    scene.textures = { exists: vi.fn(() => false) };
+    scene.ensureCharacterStill = vi.fn(() => false);
+    const actor = {
+      getData: (key: string) => key === "gait-still-id" ? "founder.01" : key === "gait-direction" ? "front" : undefined,
+      setDisplaySize: vi.fn(function (this: object) { return this; }),
+    };
+    const container = {
+      visible: true,
+      getByName: () => actor,
+      setVisible: vi.fn(function (this: object) { return this; }),
+      setPosition: vi.fn(function (this: object) { return this; }),
+      setDepth: vi.fn(function (this: object) { return this; }),
+    };
+    scene.characterBitmapContainers.set("actor", container);
+    const graphics = {
+      getData: () => "actor", clear: vi.fn(), setVisible: vi.fn(), setPosition: vi.fn(),
+      fillStyle: vi.fn(), fillCircle: vi.fn(), fillRoundedRect: vi.fn(),
+    };
+    const founder01: PixelAppearanceDescriptor = { ...APPEARANCE, stillId: "founder.01", roleStyle: "founder" };
+    const retained = scene.drawPixelPerson(graphics, 96, 128, 0, founder01, 0, "side", "walk-neutral", true, 1);
+    expect(retained.representation).toBe("bitmap");
+    expect(container.setPosition).toHaveBeenCalledWith(96, 128);
+    expect(scene.activeCharacterBitmapContainers.has("actor")).toBe(true);
+    expect(actor.getData("gait-direction")).toBe("front");
+    expect(graphics.fillCircle).not.toHaveBeenCalled();
+
+    scene.failedCharacterStills.add(
+      characterBitmapLayers(founder01, "back", "walk-neutral", false)!.actor.atlas.id,
+    );
+    const stillRetained = scene.drawPixelPerson(graphics, 100, 132, 0, founder01, 0, "back", "walk-neutral", false, 1);
+    expect(stillRetained.representation).toBe("bitmap");
+
+    const swapped = scene.drawPixelPerson(
+      graphics, 100, 132, 0,
+      { ...founder01, stillId: "founder.02" }, 0, "side", "walk-neutral", false, 1,
+    );
+    expect(swapped.representation).toBe("neutral");
+    expect(graphics.fillCircle).toHaveBeenCalled();
   });
 });

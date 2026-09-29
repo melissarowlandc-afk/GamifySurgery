@@ -2,6 +2,9 @@ import { answerChoiceTimingRegistryEntrySchema, type AnswerChoiceTimingRegistryE
 import { BOARD_EXPANSION_TIMING_ENTRIES } from "./development-batch/2026-09-11/board-expansion-batch";
 import { BOARD_EXPANSION_20260912_TIMING_ENTRIES } from "./development-batch/2026-09-12/board-expansion-batch";
 import { EARLY_LEVELS_20260913_TIMING_ENTRIES } from "./development-batch/2026-09-13/early-levels-batch";
+import { BRIEF_EARLY_LEVELS_20260917_TIMING_ENTRIES } from "./development-batch/2026-09-17/brief-early-levels-batch";
+import { BREAD_BUTTER_20260917_TIMING_ENTRIES } from "./development-batch/2026-09-17-bread-and-butter/bread-butter-batch";
+import { GS028_20260928_TIMING_ENTRIES } from "./development-batch/2026-09-28-pre-endoscopy/pre-endoscopy-batch";
 
 /**
  * Explicit presentation-only timing classifications for every node in the admitted bank.
@@ -5935,6 +5938,9 @@ const entries: AnswerChoiceTimingRegistryEntry[] = [
   ...BOARD_EXPANSION_TIMING_ENTRIES,
   ...BOARD_EXPANSION_20260912_TIMING_ENTRIES,
   ...EARLY_LEVELS_20260913_TIMING_ENTRIES,
+  ...BRIEF_EARLY_LEVELS_20260917_TIMING_ENTRIES,
+  ...BREAD_BUTTER_20260917_TIMING_ENTRIES,
+  ...GS028_20260928_TIMING_ENTRIES,
 ];
 
 export const ANSWER_CHOICE_TIMING_REGISTRY = entries.map((entry) =>

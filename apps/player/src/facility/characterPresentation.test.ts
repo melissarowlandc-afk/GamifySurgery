@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import {
+  alignCharacterStillSeatToWorld,
+  CHARACTER_STILL_WIDTH_IN_TILES,
+  getCharacterStillPresentationMetrics,
   getCharacterPresentationMetrics,
   getAuthoredCharacterPresentationMetrics,
   MAP_CHARACTER_REFERENCE_HEIGHT,
@@ -75,7 +78,21 @@ describe("facility character presentation", () => {
 
   it("limits linear sampling to the character-atlas registration loop", () => {
     const source = readFileSync(new URL("./FacilityScene.ts", import.meta.url), "utf8");
-    expect(source).toContain("private registerCharacterAtlasFrames(");
-    expect(source).toContain("texture.setFilter(Phaser.Textures.FilterMode.LINEAR);");
+    expect(source).toContain("private ensureCharacterStill(");
+    expect(source).toContain("setFilter(Phaser.Textures.FilterMode.LINEAR)");
+  });
+
+  it("uses one 160x320 scale whose floor span matches the previous canonical frame", () => {
+    const metrics = getCharacterStillPresentationMetrics(52);
+    expect(metrics.height).toBe(metrics.width * 2);
+    expect(CHARACTER_STILL_WIDTH_IN_TILES).toBeCloseTo(1.06424, 4);
+    expect(Math.abs(metrics.height * (287 / 320) - 52 * 1.35 * (181 / 128))).toBeLessThan(1);
+  });
+
+  it("places the authored seat contact on the furniture plane without changing scale", () => {
+    const metrics = getCharacterStillPresentationMetrics(52);
+    const floorBase = alignCharacterStillSeatToWorld(200, 287, 221.153, metrics.height);
+    expect(floorBase).toBeCloseTo(200 + (287 - 221.153) * (metrics.height / 320), 8);
+    expect(getCharacterStillPresentationMetrics(52)).toEqual(metrics);
   });
 });

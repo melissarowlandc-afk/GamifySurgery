@@ -76,6 +76,9 @@ export function StaffPanel({
                   {role.blockedReason}
                 </p>
               ) : null}
+              {role.staffingGuidance ? (
+                <p className="staff-blocked-reason">{role.staffingGuidance}</p>
+              ) : null}
 
               {role.employees.map((employee) => (
                 <article

@@ -302,6 +302,39 @@ export const LEVEL_TWO_ROOM_FIXTURE_ATLASES = [
   levelOneRoomAtlas("room-fixtures:level-two-operations-telehealth-v1", "art/rooms/level-2-v1/operations-telehealth-fixtures-v1.png", 1254, 1254),
 ] as const satisfies readonly BitmapAssetDescriptor[];
 
+/** Owner-approved GS-015 atlases used by the active modular room renderer. */
+export const APPROVED_GS015_ROOM_ATLASES = [
+  levelOneRoomAtlas("gs015:bathroom:furniture", "art/rooms/gs015-v1/bathroom/furniture.webp", 381, 1667),
+  levelOneRoomAtlas("gs015:coffee:furniture", "art/rooms/gs015-v1/coffee/furniture.webp", 2353, 1125),
+  levelOneRoomAtlas("gs015:ct:furniture", "art/rooms/gs015-v1/ct/furniture.webp", 1354, 963),
+  levelOneRoomAtlas("gs015:ct:wall-art", "art/rooms/gs015-v1/ct/wall-art.webp", 508, 120),
+  levelOneRoomAtlas("gs015:endoscopy:east", "art/rooms/gs015-v1/endoscopy/east.webp", 3385, 1432),
+  levelOneRoomAtlas("gs015:endoscopy:south", "art/rooms/gs015-v1/endoscopy/south.webp", 3484, 1019),
+  levelOneRoomAtlas("gs015:evs:furniture", "art/rooms/gs015-v1/evs/furniture.webp", 2857, 913),
+  levelOneRoomAtlas("gs015:examination:bed-south", "art/rooms/gs015-v1/examination/bed-south.webp", 1077, 586),
+  levelOneRoomAtlas("gs015:examination:bed-west", "art/rooms/gs015-v1/examination/bed-west.webp", 487, 1219),
+  levelOneRoomAtlas("gs015:examination:furniture", "art/rooms/gs015-v1/examination/furniture.webp", 1254, 1254),
+  levelOneRoomAtlas("gs015:examination:props", "art/rooms/gs015-v1/examination/props.webp", 882, 426),
+  levelOneRoomAtlas("gs015:examination:sink-west", "art/rooms/gs015-v1/examination/sink-west.webp", 397, 827),
+  levelOneRoomAtlas("gs015:front-desk:counter", "art/rooms/gs015-v1/front-desk/counter.webp", 969, 799),
+  levelOneRoomAtlas("gs015:front-desk:furniture", "art/rooms/gs015-v1/front-desk/furniture.webp", 1254, 1254),
+  levelOneRoomAtlas("gs015:front-desk:props", "art/rooms/gs015-v1/front-desk/props.webp", 1254, 1254),
+  levelOneRoomAtlas("gs015:front-desk:upkeep", "art/rooms/gs015-v1/front-desk/upkeep.webp", 370, 1844),
+  levelOneRoomAtlas("gs015:minor-procedure:furniture", "art/rooms/gs015-v1/minor-procedure/furniture.webp", 571, 3785),
+  levelOneRoomAtlas("gs015:phlebotomy:east", "art/rooms/gs015-v1/phlebotomy/east.webp", 1459, 829),
+  levelOneRoomAtlas("gs015:phlebotomy:south", "art/rooms/gs015-v1/phlebotomy/south.webp", 1620, 748),
+  levelOneRoomAtlas("gs015:phlebotomy:window", "art/rooms/gs015-v1/phlebotomy/window.webp", 1213, 1060),
+  levelOneRoomAtlas("gs015:recovery:furniture", "art/rooms/gs015-v1/recovery/furniture.webp", 7611, 749),
+  levelOneRoomAtlas("gs015:telehealth:furniture", "art/rooms/gs015-v1/telehealth/furniture.webp", 987, 717),
+  levelOneRoomAtlas("gs015:telehealth:props", "art/rooms/gs015-v1/telehealth/props.webp", 1784, 495),
+  levelOneRoomAtlas("gs015:telehealth:window", "art/rooms/gs015-v1/telehealth/window.webp", 1213, 1060),
+  levelOneRoomAtlas("gs015:training:furniture", "art/rooms/gs015-v1/training/furniture.webp", 2761, 995),
+  levelOneRoomAtlas("gs015:ultrasound:furniture", "art/rooms/gs015-v1/ultrasound/furniture.webp", 817, 3092),
+  levelOneRoomAtlas("gs015:waiting:south", "art/rooms/gs015-v1/waiting/south.webp", 567, 1984),
+  levelOneRoomAtlas("gs015:waiting:west", "art/rooms/gs015-v1/waiting/west.webp", 433, 2438),
+  levelOneRoomAtlas("gs015:xray:furniture", "art/rooms/gs015-v1/xray/furniture.webp", 1004, 2930),
+] as const satisfies readonly BitmapAssetDescriptor[];
+
 /** All independently preloaded room-art sources, including Level 1 fallback. */
 export const ROOM_FIXTURE_ATLASES = [
   ...LEVEL_ONE_ROOM_FIXTURE_ATLASES,

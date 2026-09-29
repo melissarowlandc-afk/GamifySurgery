@@ -61,9 +61,12 @@ describe("September 10 surgery-center batch admission", () => {
     expect(SURGERY_CENTER_SERVICE_CONTRACTS.filter((item) => item.delivery === "new_external_contract_required").map((item) => item.serviceId).sort()).toEqual([
       "service.anoscopy",
       "service.esophageal_manometry",
-      "service.skin_excisional_biopsy",
       "service.thyroid_fna",
     ]);
+    expect(SURGERY_CENTER_SERVICE_CONTRACTS.find((item) => item.serviceId === "service.skin_excisional_biopsy")).toMatchObject({
+      delivery: "existing_balance_contract",
+      allowedRouteIds: ["route.skin_excisional_biopsy.in_house", "route.skin_excisional_biopsy.outsourced"],
+    });
   });
 
   it("binds exactly the finalized twelve production content files to the owner-delegated receipt", () => {

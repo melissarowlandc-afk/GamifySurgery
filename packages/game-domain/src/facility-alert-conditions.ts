@@ -2,7 +2,17 @@ import {
   getPrototypeAlertDefinition,
   renderPrototypeAlert,
 } from "@gamify-surgery/balance-config";
-import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+import {
+  PROTOTYPE_DOMAIN_CONTEXT,
+  SECOND_TUTORIAL_ENCOUNTER_ID,
+  TUTORIAL_ENCOUNTER_ID,
+} from "./context";
+import {
+  alertCadencePolicy,
+  clearConditionAlertAge,
+  conditionAlertIsDue,
+  recordConditionAlertEmission,
+} from "./alert-cadence";
 import { appendFacilityConditionOccurrence } from "./facility-experience";
 import {
   getFacilityProgressionStatus,
@@ -66,7 +76,7 @@ function roomUpgradeCondition(
   state: GameState,
   context: DomainContext,
 ): OperationalAlertCondition | null {
-  if (state.facilityLevel !== 1) {
+  if (state.facilityLevel < 3) {
     return null;
   }
   const definition = getPrototypeAlertDefinition(
@@ -182,11 +192,17 @@ export function evaluateFacilityOperationalAlertConditions(
   }
 
   const waitingPatients = checkedInWaitingPatients(state);
+  const normalAdmissionsUnlocked = [
+    TUTORIAL_ENCOUNTER_ID,
+    SECOND_TUTORIAL_ENCOUNTER_ID,
+  ].every((encounterId) =>
+    state.encounters[encounterId]?.resolutionReason !== null &&
+    state.encounters[encounterId] !== undefined,
+  );
   if (
-    state.facilityLevel === 1 &&
-    state.advertisingLevel === 0 &&
-    waitingPatients.length === 0 &&
-    state.nextRoutineArrivalTick - state.facilityTick >= 45
+    normalAdmissionsUnlocked &&
+    state.alertHumor.lastPatientArrivalTick !== null &&
+    state.facilityTick - state.alertHumor.lastPatientArrivalTick > 60
   ) {
     conditions.push(
       renderedCondition(
@@ -261,6 +277,11 @@ export function synchronizeFacilityOperationalAlertOccurrences(
   const activeByKey = new Map(
     active.map((condition) => [condition.conditionKey, condition]),
   );
+  for (const conditionKey of OPERATIONAL_ALERT_CONDITION_KEYS) {
+    if (!activeByKey.has(conditionKey)) {
+      clearConditionAlertAge(state, conditionKey);
+    }
+  }
 
   for (const occurrence of state.environment
     .facilityConditionOccurrences) {
@@ -293,14 +314,30 @@ export function synchronizeFacilityOperationalAlertOccurrences(
         occurrence.conditionKey === condition.conditionKey &&
         occurrence.resolvedAtFacilityTick === null,
     );
-    if (existing) {
+    const policy = alertCadencePolicy(condition.conditionKey, context);
+    if (policy) {
+      if (!conditionAlertIsDue(state, condition.conditionKey, policy)) {
+        continue;
+      }
+      if (existing) {
+        existing.resolvedAtFacilityTick = state.facilityTick;
+      }
+      appendFacilityConditionOccurrence(state, {
+        ...condition,
+        kind: existing ? "reminder" : "onset",
+        occurredAtFacilityTick: state.facilityTick,
+        resolvedAtFacilityTick: null,
+      });
+      recordConditionAlertEmission(state, policy);
       continue;
     }
-    appendFacilityConditionOccurrence(state, {
-      ...condition,
-      kind: "onset",
-      occurredAtFacilityTick: state.facilityTick,
-      resolvedAtFacilityTick: null,
-    });
+    if (!existing) {
+      appendFacilityConditionOccurrence(state, {
+        ...condition,
+        kind: "onset",
+        occurredAtFacilityTick: state.facilityTick,
+        resolvedAtFacilityTick: null,
+      });
+    }
   }
 }

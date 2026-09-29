@@ -5,7 +5,7 @@ import {
   getCurrentQuestion,
   type GameState,
 } from "@gamify-surgery/game-domain";
-import { createPrototypePlayerView } from "./viewModels";
+import { createPrototypePlayerView, pendingPatientAwaitingCopy } from "./viewModels";
 
 function ready(state: GameState, encounterId: string, prefix: string): GameState {
   let next = state;
@@ -28,6 +28,8 @@ function actionableThyroid(): GameState {
   state.facilityLevel = 1;
   state.encounters = {};
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+  state.rooms.push({ id: "room.preview.examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+  state.doors.push({ id: "door.preview.examination", roomId: "room.preview.examination", side: "south", offset: 1, exterior: false });
   state = gameReducer(state, {
     type: "ADMIT_PATIENT", operationId: "sc.thyroid.admit", encounterId: "encounter.sc.thyroid",
     caseId: "case.thyroid-nodule.palpable-referral", patientDisplayName: "Preview Patient", arrivalClass: "routine",
@@ -98,5 +100,134 @@ describe("surgery-center test timing previews", () => {
       resourceReservations: [], providerReservation: { kind: "founder" }, timingPhases: [],
     };
     expect(chart(state, "encounter.sc.thyroid").decisionSteps![0]!.statusLabel).toBe("Onsite care in progress");
+  });
+
+  it("distinguishes onsite and offsite pending-patient copy", () => {
+    const state = actionableThyroid();
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    const step = encounter.steps[encounter.currentNodeIndex]!;
+    const pending = {
+      operationId: "result.pending-location", originatingNodeIndex: encounter.currentNodeIndex,
+      gateId: "gate.pending-location", resultTypeId: "service.endoscopy",
+      pendingLabel: "Endoscopy pending", resultNarrative: "fixture",
+      routeId: "route.endoscopy.in_house", routeDisplayName: "Onsite endoscopy workflow",
+      scheduledAtTick: state.facilityTick, dueTick: state.facilityTick + 120,
+      deliveredAtTick: null, serviceDurationTicks: 120, durationTicks: 120,
+      offsiteReturnStartedAtTick: null, offsiteTravel: null,
+      patientTravel: {
+        version: "patient-travel.v1" as const, originRoomInstanceId: "room.preview.examination",
+        destinationRoomInstanceId: "room.instance.endoscopy", outboundPath: [], returnPath: [],
+        tilesPerTick: 1, outboundStartTick: 0, outboundArrivalTick: 1,
+        serviceCompletionTick: 120, returnArrivalTick: 121,
+      },
+      resourceReservations: [], providerReservation: { kind: "founder" as const }, timingPhases: [],
+    };
+    step.status = "result_pending";
+    step.result = pending;
+    encounter.pendingResult = pending;
+    encounter.lifecycle = "active_pending_result";
+    const onsite = chart(state, encounter.id);
+    expect(onsite.pendingPatientIsAway).toBe(false);
+    expect(pendingPatientAwaitingCopy(true))
+      .toBe("The patient remains in clinic while awaiting the result.");
+
+    const queued = {
+      ...pending,
+      dueTick: state.facilityTick,
+      patientTravel: null,
+      providerReservation: null,
+      resourceQueue: {
+        version: "onsite-resource-queue.v1" as const,
+        status: "waiting_for_resources" as const,
+        serviceId: "service.endoscopy",
+        routeId: "route.endoscopy.in_house",
+        allowedRouteIds: ["route.endoscopy.in_house"],
+        queuedAtTick: state.facilityTick,
+      },
+    };
+    step.result = queued;
+    encounter.pendingResult = queued;
+    const queuedView = chart(state, encounter.id);
+    expect(queuedView.pendingPatientIsAway).toBe(false);
+    expect(queuedView.etaLabel).toBeUndefined();
+    expect(queuedView.decisionSteps?.find((candidate) => candidate.current)?.etaLabel)
+      .toBeUndefined();
+
+    const offsite = { ...pending, routeId: "route.endoscopy.outsourced", routeDisplayName: "Off-site endoscopy", patientTravel: null };
+    step.result = offsite;
+    encounter.pendingResult = offsite;
+    const offsiteView = chart(state, encounter.id);
+    expect(offsiteView.pendingPatientIsAway).toBe(true);
+    expect(pendingPatientAwaitingCopy(false))
+      .toBe("The patient will return when the result is ready.");
+
+    const externalProcessing = {
+      ...offsite,
+      pendingLabel: "Pathology and molecular testing external processing pending",
+      externalProcessingOnly: true as const,
+      patientRemainsOnsite: true as const,
+    };
+    step.result = externalProcessing;
+    encounter.pendingResult = externalProcessing;
+    const processingView = chart(state, encounter.id);
+    expect(processingView.pendingPatientIsAway).toBe(false);
+    expect(processingView.pendingLabel).toContain("external processing pending");
+  });
+
+  it("presents a local test-only collection as onsite work and a Front Desk return", () => {
+    const state = actionableThyroid();
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    encounter.lifecycle = "active_pending_result";
+    encounter.pendingResult = null;
+    encounter.testOnlyContinuation = {
+      version: "test-only-continuation.v1",
+      originatingNodeIndex: encounter.currentNodeIndex,
+      serviceId: "service.basic_labs",
+      routeId: "route.basic_labs.phlebotomy_sendout",
+      routeDisplayName: "Onsite blood collection with send-out testing",
+      incomeLineId: "income.collection",
+      externalRemainder: "The 24-hour urine component remains take-home.",
+      status: "waiting_for_service",
+      serviceOperationId: "service-operation.collection",
+      scheduledAtFacilityTick: state.facilityTick,
+      completedAtFacilityTick: null,
+    };
+    let view = chart(state, encounter.id);
+    expect(view.pendingPatientIsAway).toBe(false);
+    expect(view.pendingLabel).toContain("Onsite blood collection with send-out testing in progress");
+    expect(view.pendingLabel).toContain("24-hour urine component remains take-home");
+    expect(view.statusLabel).not.toBe("Result pending");
+
+    encounter.testOnlyContinuation.status = "returning_to_front_desk";
+    view = chart(state, encounter.id);
+    expect(view.pendingPatientIsAway).toBe(false);
+    expect(view.pendingLabel).toContain("Returning to Front Desk after Onsite blood collection");
+  });
+
+  it("projects only the frozen endoscopy care interval as a covered-table occupancy", () => {
+    const state = actionableThyroid();
+    state.rooms.push({ id: "room.instance.endoscopy", roomDefinitionId: "room.endoscopy", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+    const encounter = state.encounters["encounter.sc.thyroid"]!;
+    encounter.pendingResult = {
+      operationId: "result.egds.covered", originatingNodeIndex: 0, gateId: "gate.egds.covered", resultTypeId: "service.endoscopy", pendingLabel: "EGD pending", resultNarrative: "fixture", routeId: "route.endoscopy.in_house", routeDisplayName: "Onsite endoscopy workflow",
+      scheduledAtTick: 0, dueTick: 21, deliveredAtTick: null, serviceDurationTicks: 20, durationTicks: 20, offsiteReturnStartedAtTick: null, offsiteTravel: null,
+      patientTravel: { version: "patient-travel.v1", originRoomInstanceId: "room.preview.examination", destinationRoomInstanceId: "room.instance.endoscopy", outboundPath: [], returnPath: [], tilesPerTick: 1, outboundStartTick: 0, outboundArrivalTick: 5, serviceCompletionTick: 15, returnArrivalTick: 21 },
+      resourceReservations: [], providerReservation: { kind: "founder" }, timingPhases: [],
+    };
+    state.facilityTick = 4;
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+    state.facilityTick = 5;
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy).toMatchObject({ roomInstanceIds: ["room.instance.endoscopy"], patientInstanceIds: ["encounter.sc.thyroid"] });
+    state.facilityTick = 15;
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
+  });
+
+  it("projects an active reserved endoscopy operation and only its visitor actor", () => {
+    const state = actionableThyroid();
+    state.rooms.push({ id: "room.instance.endoscopy", roomDefinitionId: "room.endoscopy", x: 40, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+    state.serviceOperations.push({ id: "operation.endoscopy", incomeLineId: "income.endoscopy", catalogVersion: 1, actorKind: "visitor", actorId: "visitor.endoscopy", displayName: "Procedure visitor", appearance: null, status: "in_service", createdAtFacilityTick: 0, waitDeadlineFacilityTick: 99, startedAtFacilityTick: 1, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 400, phaseIndex: 0, phaseStartedAtFacilityTick: 1, phaseEndsAtFacilityTick: 10, reservedRoomInstanceIds: ["room.instance.endoscopy"], reservedEmployeeIds: [], providerReservation: null, location: null, path: [], pathIndex: 0, lastMovedAtFacilityTick: 1, cancellationReason: null });
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy).toMatchObject({ roomInstanceIds: ["room.instance.endoscopy"], serviceVisitorInstanceIds: ["operation.endoscopy"] });
+    state.serviceOperations[0]!.status = "walking_between_phases";
+    expect(createPrototypePlayerView(state, "encounter.sc.thyroid", false, null).facility.endoscopyOccupancy?.roomInstanceIds).toEqual([]);
   });
 });

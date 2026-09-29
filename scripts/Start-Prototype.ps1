@@ -196,9 +196,16 @@ try {
     $nodeCommand = Get-Command "node.exe" -ErrorAction SilentlyContinue
     $npmCommand = Get-Command "npm.cmd" -ErrorAction SilentlyContinue
 
-    if ($null -eq $nodeCommand -or $null -eq $npmCommand) {
+    if ($null -eq $nodeCommand) {
+        $codexNode = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe"
+        if (Test-Path -LiteralPath $codexNode -PathType Leaf) {
+            $nodeCommand = Get-Command $codexNode -ErrorAction SilentlyContinue
+        }
+    }
+
+    if ($null -eq $nodeCommand) {
         throw (
-            "Node.js or npm is missing. Install the current Node.js LTS release, " +
+            "Node.js is missing. Install the current Node.js LTS release, " +
             "then double-click START_GAME.cmd again."
         )
     }
@@ -218,23 +225,22 @@ try {
             ) -f $nodeVersion, $minimumNodeVersion)
     }
 
-    $npmVersion = (& $npmCommand.Source --version).Trim()
-    Write-Host ("Node.js {0} and npm {1} are ready." -f $nodeVersion, $npmVersion) -ForegroundColor Green
-
-    Write-Step "Installing or refreshing the project's required files..."
-    Write-Host "This is automatic. The first run may take a few minutes."
-    Write-Host ("Installation details are saved in: {0}" -f $installLog)
-
-    & $npmCommand.Source install --no-audit --no-fund 2>&1 |
-        Tee-Object -FilePath $installLog
-    $installExitCode = $LASTEXITCODE
-
-    if ($installExitCode -ne 0) {
-        Show-LogTail -Path $installLog
-        throw ("npm install failed with exit code {0}." -f $installExitCode)
-    }
-
     $viteEntry = Join-Path $projectRoot "node_modules\vite\bin\vite.js"
+    if ($null -ne $npmCommand) {
+        $npmVersion = (& $npmCommand.Source --version).Trim()
+        Write-Host ("Node.js {0} and npm {1} are ready." -f $nodeVersion, $npmVersion) -ForegroundColor Green
+        Write-Step "Installing or refreshing the project's required files..."
+        Write-Host "This is automatic. The first run may take a few minutes."
+        Write-Host ("Installation details are saved in: {0}" -f $installLog)
+        & $npmCommand.Source install --no-audit --no-fund 2>&1 | Tee-Object -FilePath $installLog
+        if ($LASTEXITCODE -ne 0) { Show-LogTail -Path $installLog; throw ("npm install failed with exit code {0}." -f $LASTEXITCODE) }
+    }
+    elseif (Test-Path -LiteralPath $viteEntry -PathType Leaf) {
+        Write-Host ("Node.js {0} is ready; npm is unavailable, using existing project dependencies." -f $nodeVersion) -ForegroundColor Yellow
+    }
+    else {
+        throw "npm is unavailable and existing Vite dependencies are missing. Install Node.js with npm, then double-click START_GAME.cmd again."
+    }
     if (-not (Test-Path -LiteralPath $viteEntry -PathType Leaf)) {
         throw "Vite was not installed where the launcher expected it. See the installation log above."
     }

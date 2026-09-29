@@ -1,4 +1,5 @@
 export * from "./appearance";
+export * from "./characterStillCatalog";
 export * from "./ambient-pedestrians";
 export * from "./clinical-selection";
 export * from "./context";
@@ -13,7 +14,10 @@ export * from "./patientAppearanceCatalog";
 export * from "./patientDemographics";
 export * from "./randomness";
 export * from "./reducer";
+export * from "./retail-operations";
 export * from "./selectors";
+export * from "./service-operations";
 export * from "./spatial";
 export * from "./staff";
+export * from "./test-choice-orders";
 export * from "./types";

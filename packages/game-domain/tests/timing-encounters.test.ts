@@ -204,7 +204,7 @@ function addOperationalXrayService(state: GameState): void {
     exterior: false,
   });
   state.doors.push(
-    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 1, exterior: false },
+    { id: "door.test.xray-control", roomId: "room.test.xray", side: "west", offset: 2, exterior: false },
     { id: "door.front.internal", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
   );
   state.employees.push({
@@ -232,8 +232,8 @@ function addOperationalImagingService(
 ): void {
   const roomDefinitionId = service === "ultrasound" ? "room.ultrasound" : "room.ct";
   const room = service === "ultrasound"
-    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 1 }
-    : { x: 33, y: 22, patientOffset: 1, controlOffset: 2 };
+    ? { x: 33, y: 23, patientOffset: 2, controlOffset: 2 }
+    : { x: 33, y: 22, patientOffset: 1, controlOffset: 3 };
   state.rooms.push(
     {
       id: "room.test.examination",
@@ -381,7 +381,7 @@ function addTwoExamOperationalXrayService(state: GameState): void {
       roomDefinitionId: "room.examination",
       x: 31,
       y: 28,
-      orientation: 90,
+      orientation: 270,
       doorSide: null,
       upgradeLevel: 1,
       cleanliness: 100,
@@ -419,7 +419,7 @@ function addTwoExamOperationalXrayService(state: GameState): void {
       id: "door.test.exam-xray-front",
       roomId: "room.test.exam-xray",
       side: "east",
-      offset: 1,
+      offset: 2,
       exterior: false,
     },
     {
@@ -560,7 +560,9 @@ describe("minute simulation and economy", () => {
 
     state = tick(state, "expense.quarter");
     expect(state.facilityTick).toBe(15);
-    expect(state.cash).toBe(startingCash - 3);
+    // A fresh campaign now owns only the Front Desk, whose $6 hourly upkeep
+    // posts as $1.50 at the first quarter-hour boundary.
+    expect(state.cash).toBe(startingCash - 1.5);
     const restored = deserializeGameState(serializeGameState(state));
     expect(restored.nextFinancialPostingTick).toBe(30);
     expect(restored.operatingAccrualSixtiethCents).toBe(
@@ -868,14 +870,31 @@ describe("physical patient routing", () => {
       const pending = state.encounters[encounterId]!.pendingResult!;
       expect(pending).toMatchObject({
         routeId: service.onsiteRouteId,
-        dueTick: pending.scheduledAtTick + service.eta,
         resourceReservations: [{ roomDefinitionId: expect.any(String), staffRoleDefinitionId: expect.any(String) }],
       });
-      expect(pending.timingPhases?.[0]).toMatchObject({
-        resourceBound: true,
-        startsAtTick: pending.scheduledAtTick,
-        endsAtTick: pending.scheduledAtTick + service.resourceEndsAt,
-      });
+      if (service.serviceId === "service.basic_labs") {
+        expect(pending).toMatchObject({
+          phlebotomyArrivalGatedVersion: 1,
+          phlebotomistId: "employee.test.phlebotomist",
+        });
+        expect(pending.timingPhases).toMatchObject([
+          { resourceBound: true, durationTicks: 15 },
+          { resourceBound: false, durationTicks: 60 },
+        ]);
+        expect(pending.timingPhases![0]!.startsAtTick).toBeGreaterThanOrEqual(
+          pending.patientTravel!.outboundArrivalTick,
+        );
+        expect(pending.timingPhases![0]!.endsAtTick - pending.timingPhases![0]!.startsAtTick).toBe(15);
+        expect(pending.timingPhases![1]!.endsAtTick - pending.timingPhases![1]!.startsAtTick).toBe(60);
+        expect(pending.dueTick).toBe(pending.timingPhases![1]!.endsAtTick);
+      } else {
+        expect(pending.dueTick).toBe(pending.scheduledAtTick + service.eta);
+        expect(pending.timingPhases?.[0]).toMatchObject({
+          resourceBound: true,
+          startsAtTick: pending.scheduledAtTick,
+          endsAtTick: pending.scheduledAtTick + service.resourceEndsAt,
+        });
+      }
       expect(pending.patientTravel?.outboundArrivalTick).toBeLessThanOrEqual(
         pending.scheduledAtTick + service.resourceEndsAt,
       );

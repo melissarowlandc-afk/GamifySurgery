@@ -73,9 +73,18 @@ export const serviceRouteDefinitionSchema = z
       .strict()
       .nullable()
       .default(null),
+    patientRemainsOnsite: z.literal(true).optional(),
   })
   .strict()
   .superRefine((route, context) => {
+    if (route.patientRemainsOnsite && route.patientTravel) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "A stationary onsite route cannot also define patient travel.",
+        path: ["patientRemainsOnsite"],
+      });
+    }
     if (route.timingPhases.length === 0) {
       return;
     }
@@ -135,6 +144,8 @@ export const roomDefinitionSchema = z
     height: z.number().int().positive(),
     defaultDoorSide: cardinalDirectionSchema.nullable(),
     constructionCost: z.number().int().nonnegative(),
+    /** Legacy rooms may remain loadable without being offered for new construction. */
+    buildable: z.boolean().default(true),
     upkeepPerExpenseInterval: z.number().int().nonnegative(),
     satisfactionOnBuild: z.number().int().min(0).max(20),
     workloadLimitContribution: z.number().int().nonnegative(),
@@ -165,6 +176,38 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           }),
         ),
+        endpointOnlyTiles: z
+          .array(
+            z.object({
+              x: z.number().int().nonnegative(),
+              y: z.number().int().nonnegative(),
+            }),
+          )
+          .optional(),
+        dynamicBlockers: z
+          .array(
+            z.object({
+              fixtureId: z.string().min(1),
+              tiles: z.array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() })),
+              doorSlots: z.array(z.object({
+                side: z.enum(["north", "east", "south", "west"]),
+                offset: z.number().int().nonnegative(),
+              })),
+            }),
+          )
+          .optional(),
+        allowedDoorSlots: z
+          .array(z.object({
+            side: z.enum(["north", "east", "south", "west"]),
+            offset: z.number().int().nonnegative(),
+          }))
+          .optional(),
+        doorThresholdExceptions: z
+          .array(z.object({
+            side: z.enum(["north", "east", "south", "west"]),
+            offset: z.number().int().nonnegative(),
+          }))
+          .optional(),
         primaryAnchor: z
           .object({
             x: z.number().int().nonnegative(),
@@ -177,6 +220,9 @@ export const roomDefinitionSchema = z
             y: z.number().int().nonnegative(),
           }),
         ),
+        standingWaitingAnchors: z
+          .array(z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative() }))
+          .optional(),
         staffAnchor: z
           .object({
             x: z.number().int().nonnegative(),
@@ -222,6 +268,9 @@ export const roomDefinitionSchema = z
       const blocked = new Set(
         navigation.blockedTiles.map((point) => key(point)),
       );
+      const endpoints = new Set(
+        (navigation.endpointOnlyTiles ?? []).map((point) => key(point)),
+      );
       const seenBlocked = new Set<string>();
       navigation.blockedTiles.forEach((point, index) => {
         if (!inBounds(point)) {
@@ -241,6 +290,57 @@ export const roomDefinitionSchema = z
         }
         seenBlocked.add(pointKey);
       });
+      const seenEndpoints = new Set<string>();
+      (navigation.endpointOnlyTiles ?? []).forEach((point, index) => {
+        const pointKey = key(point);
+        if (!inBounds(point) || !blocked.has(pointKey)) {
+          context.addIssue({
+            code: "custom",
+            message: "An endpoint-only tile must be an in-bounds blocked tile.",
+            path: ["navigation", "endpointOnlyTiles", index],
+          });
+        }
+        if (seenEndpoints.has(pointKey)) {
+          context.addIssue({
+            code: "custom",
+            message: "Endpoint-only navigation tiles must be unique.",
+            path: ["navigation", "endpointOnlyTiles", index],
+          });
+        }
+        seenEndpoints.add(pointKey);
+      });
+      (navigation.dynamicBlockers ?? []).forEach((dynamic, dynamicIndex) => {
+        dynamic.tiles.forEach((point, tileIndex) => {
+          if (!blocked.has(key(point))) {
+            context.addIssue({
+              code: "custom",
+              message: "A dynamic blocker tile must also be a blocked tile.",
+              path: ["navigation", "dynamicBlockers", dynamicIndex, "tiles", tileIndex],
+            });
+          }
+        });
+      });
+      const validateDoorSlot = (
+        slot: { side: "north" | "east" | "south" | "west"; offset: number },
+        path: Array<string | number>,
+      ) => {
+        const limit = slot.side === "north" || slot.side === "south"
+          ? room.width
+          : room.height;
+        if (slot.offset >= limit) {
+          context.addIssue({
+            code: "custom",
+            message: "A navigation door slot is outside the room wall.",
+            path,
+          });
+        }
+      };
+      navigation.allowedDoorSlots?.forEach((slot, index) =>
+        validateDoorSlot(slot, ["navigation", "allowedDoorSlots", index]),
+      );
+      navigation.doorThresholdExceptions?.forEach((slot, index) =>
+        validateDoorSlot(slot, ["navigation", "doorThresholdExceptions", index]),
+      );
       const validateAnchor = (
         point: { x: number; y: number } | null,
         path: Array<string | number>,
@@ -255,7 +355,7 @@ export const roomDefinitionSchema = z
             path,
           });
         }
-        if (blocked.has(key(point))) {
+        if (blocked.has(key(point)) && !endpoints.has(key(point))) {
           context.addIssue({
             code: "custom",
             message: "A navigation anchor cannot occupy a blocked tile.",
@@ -296,6 +396,16 @@ export const roomDefinitionSchema = z
         }
         waitingKeys.add(pointKey);
       });
+      navigation.standingWaitingAnchors?.forEach((point, index) => {
+        validateAnchor(point, ["navigation", "standingWaitingAnchors", index]);
+        if (!waitingKeys.has(key(point))) {
+          context.addIssue({
+            code: "custom",
+            message: "Standing waiting anchors must also be listed as waiting anchors.",
+            path: ["navigation", "standingWaitingAnchors", index],
+          });
+        }
+      });
     }
   });
 
@@ -315,6 +425,8 @@ export const staffRoleDefinitionSchema = z
     maximumTrainingLevel: z.number().int().min(1).max(5),
     workloadLimitContribution: z.number().int().nonnegative(),
     requiredRoomDefinitionIds: z.array(stableIdSchema),
+    /** At least one of these room types is required when nonempty. */
+    requiredAnyRoomDefinitionIds: z.array(stableIdSchema).default([]),
     capabilityIds: z.array(stableIdSchema),
   })
   .strict()
@@ -843,6 +955,15 @@ export const prototypeBalanceReleaseSchema = z
               roleIndex,
               "requiredRoomDefinitionIds",
             ],
+          });
+        }
+      });
+      role.requiredAnyRoomDefinitionIds.forEach((requiredId) => {
+        if (!roomDefinitions.has(requiredId)) {
+          context.addIssue({
+            code: "custom",
+            message: `Staff role ${role.id} requires one missing room definition ${requiredId}.`,
+            path: ["facility", "staffRoleDefinitions", roleIndex, "requiredAnyRoomDefinitionIds"],
           });
         }
       });

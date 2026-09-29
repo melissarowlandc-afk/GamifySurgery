@@ -7,6 +7,9 @@ import {
   gameReducer,
   getCurrentCapabilities,
   getEligibleServiceRoute,
+  getCurrentQuestion,
+  getRoomDefinition,
+  getRoomNavigationAnchor,
   serializeGameState,
   validateDomainContext,
   type DomainContext,
@@ -51,7 +54,7 @@ function stateWithEndoscopy(staff: {
   state.rooms.push(
     { id: "room.test.exam", roomDefinitionId: "room.examination", x: 33, y: 25, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     { id: "room.test.endoscopy", roomDefinitionId: "room.endoscopy", x: 28, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
-    { id: "room.test.periop", roomDefinitionId: "room.periop_recovery", x: 28, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
+    { id: "room.test.periop", roomDefinitionId: "room.periop_recovery", x: 26, y: 26, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
     ...[24, 25, 26, 27, 28].map((y) => ({ id: `room.test.hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
   );
   state.doors.push(
@@ -80,7 +83,7 @@ function stateWithEndoscopy(staff: {
     });
   };
   if (staff.endoscopyNurse !== false) addEmployee("employee.test.endoscopy-nurse", "staff.endoscopy_nurse", "room.test.endoscopy", { x: 29, y: 24 });
-  if (staff.periopNurse !== false) addEmployee("employee.test.periop-nurse", "staff.periop_nurse", "room.test.periop", { x: 29, y: 27 });
+  if (staff.periopNurse !== false) addEmployee("employee.test.periop-nurse", "staff.periop_nurse", "room.test.periop", { x: 29, y: 28 });
   if (staff.endoscopist === true) addEmployee("employee.test.endoscopist", "staff.endoscopist", "room.test.endoscopy", { x: 30, y: 24 });
   return state;
 }
@@ -132,6 +135,177 @@ describe("Level 2 endoscopy operational capacity", () => {
     });
     const founderFallback = stateWithEndoscopy();
     expect(getEligibleServiceRoute(founderFallback, "service.endoscopy")?.providerReservation).toEqual({ kind: "founder" });
+  });
+
+  it("runs the exact bidirectional terminal order through the staffed Endoscopy and Recovery episode", () => {
+    let state = stateWithEndoscopy({ endoscopist: true });
+    state.serviceAppointmentsEnabled = false;
+    state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER;
+    state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
+    state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT",
+      operationId: "bidirectional.admit",
+      encounterId: "encounter.bidirectional",
+      caseId: "case.iron-deficiency.adult-man-fatigue",
+      patientDisplayName: "Scope Patient",
+      arrivalClass: "routine",
+    });
+    const encounter = state.encounters["encounter.bidirectional"]!;
+    const nodeIndex = encounter.frozenCase.decisionNodes.findIndex(
+      (node) => node.id === "node.iron-deficiency.adult-man-fatigue.2",
+    );
+    expect(nodeIndex).toBeGreaterThanOrEqual(0);
+    encounter.currentNodeIndex = nodeIndex;
+    encounter.steps.forEach((step, index) => {
+      step.status = index < nodeIndex ? "completed" : index === nodeIndex ? "action_required" : "locked";
+    });
+    encounter.lifecycle = "active_action_required";
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 34, y: 26 };
+    encounter.assignedRoomInstanceId = "room.test.exam";
+    state.openChartEncounterId = encounter.id;
+    state.attendedEncounterId = encounter.id;
+    const question = getCurrentQuestion(state, encounter.id)!;
+    state = gameReducer(state, {
+      type: "SUBMIT_ANSWER",
+      operationId: "bidirectional.answer",
+      encounterId: encounter.id,
+      decisionNodeId: question.node.id,
+      answerChoiceId: "bidirectional_1",
+      reviewedAtMs: 10_000,
+    });
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
+      operationId: "bidirectional.feedback",
+      encounterId: encounter.id,
+    });
+    state = gameReducer(state, {
+      type: "CLOSE_CHART",
+      operationId: "bidirectional.close",
+      encounterId: encounter.id,
+    });
+    expect(state.serviceOperations[0]).toMatchObject({
+      incomeLineId: "income.endoscopy",
+      quoteFee: 450,
+      status: "waiting_for_resources",
+      testChoiceOrder: {
+        purpose: "terminal",
+        serviceId: "service.bidirectional_endoscopy",
+        routeId: "route.bidirectional_endoscopy.in_house",
+      },
+    });
+    for (let minute = 0; minute < 100 && state.serviceOperations[0]?.status !== "in_service"; minute += 1) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `bidirectional.tick.${minute}` });
+    }
+    expect(state.serviceOperations[0]).toMatchObject({
+      status: "in_service",
+      reservedRoomInstanceIds: expect.arrayContaining(["room.test.endoscopy", "room.test.periop"]),
+      reservedEmployeeIds: expect.arrayContaining(["employee.test.endoscopy-nurse", "employee.test.periop-nurse"]),
+      providerReservation: { kind: "employee", employeeId: "employee.test.endoscopist" },
+    });
+    expect(state.serviceOperations[0]!.phaseEndsAtFacilityTick! - state.serviceOperations[0]!.phaseStartedAtFacilityTick!).toBe(75);
+    expect(state.encounters[encounter.id]!.patientMovement?.kind).not.toBe("leaving_after_resolution");
+    for (let minute = 0; minute < 120 && !(state.serviceOperations[0]?.phaseIndex === 1 && state.serviceOperations[0]?.status === "in_service"); minute += 1) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `bidirectional.recovery.tick.${minute}` });
+    }
+    expect(state.serviceOperations[0]).toMatchObject({
+      phaseIndex: 1,
+      status: "in_service",
+      reservedRoomInstanceIds: ["room.test.periop"],
+      reservedEmployeeIds: ["employee.test.periop-nurse"],
+      providerReservation: null,
+    });
+    expect(state.serviceOperations[0]!.phaseEndsAtFacilityTick! - state.serviceOperations[0]!.phaseStartedAtFacilityTick!).toBe(45);
+    expect(state.encounters[encounter.id]!.patientLocation).toEqual(
+      state.serviceOperations[0]!.location,
+    );
+    for (let minute = 0; minute < 120 && !state.serviceIncomeReceipts.some((receipt) => receipt.actorId === encounter.id); minute += 1) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `bidirectional.complete.tick.${minute}` });
+    }
+    expect(state.serviceIncomeReceipts.filter((receipt) => receipt.actorId === encounter.id)).toEqual([
+      expect.objectContaining({ incomeLineId: "income.endoscopy", grossAmount: 450 }),
+    ]);
+    expect(state.serviceOperations[0]).toMatchObject({ status: "completed" });
+    expect(state.encounters[encounter.id]!.patientMovement?.kind).toBe("leaving_after_resolution");
+    for (let minute = 0; minute < 120 && state.encounters[encounter.id]!.patientLocation !== null; minute += 1) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `bidirectional.depart.tick.${minute}` });
+    }
+    expect(state.encounters[encounter.id]!.patientLocation).toBeNull();
+    expect(state.serviceOperations[0]).toMatchObject({ status: "completed" });
+    expect(state.serviceIncomeReceipts.filter((receipt) => receipt.actorId === encounter.id)).toHaveLength(1);
+  });
+
+  it("starts a gated routine scope after patient and provider arrival, then preserves external pathology follow-up", () => {
+    let state = stateWithEndoscopy({ endoscopist: true });
+    state.serviceAppointmentsEnabled = false;
+    state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER;
+    state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
+    state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
+    state = gameReducer(state, {
+      type: "ADMIT_PATIENT", operationId: "celiac-scope.admit",
+      encounterId: "encounter.celiac-scope", caseId: "case.celiac.chronic-diarrhea",
+      patientDisplayName: "Celiac Scope Patient", arrivalClass: "routine",
+    });
+    const encounter = state.encounters["encounter.celiac-scope"]!;
+    const nodeIndex = encounter.frozenCase.decisionNodes.findIndex(
+      (node) => node.id === "node.celiac.chronic-diarrhea.2",
+    );
+    expect(nodeIndex).toBeGreaterThanOrEqual(0);
+    encounter.currentNodeIndex = nodeIndex;
+    encounter.steps.forEach((step, index) => {
+      step.status = index < nodeIndex ? "completed" : index === nodeIndex ? "action_required" : "locked";
+    });
+    encounter.lifecycle = "active_action_required";
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 34, y: 26 };
+    encounter.assignedRoomInstanceId = "room.test.exam";
+    state.openChartEncounterId = encounter.id;
+    state.attendedEncounterId = encounter.id;
+    const question = getCurrentQuestion(state, encounter.id)!;
+    state = gameReducer(state, {
+      type: "SUBMIT_ANSWER", operationId: "celiac-scope.answer",
+      encounterId: encounter.id, decisionNodeId: question.node.id,
+      answerChoiceId: "endoscopy_biopsy_1", reviewedAtMs: 11_000,
+    });
+    expect(state.encounters[encounter.id]!.pendingResult).toMatchObject({
+      routeId: "route.upper_endoscopy_duodenal_biopsy.in_house",
+      approvedProcedureTimingVersion: 1,
+      providerReservation: { kind: "employee", employeeId: "employee.test.endoscopist" },
+      serviceIncomeLineId: "income.endoscopy",
+      serviceIncomeFee: 450,
+    });
+    state = gameReducer(state, {
+      type: "ACKNOWLEDGE_DECISION_FEEDBACK", operationId: "celiac-scope.feedback",
+      encounterId: encounter.id, decisionNodeId: question.node.id,
+    });
+    const pending = state.encounters[encounter.id]!.pendingResult!;
+    expect(pending.timingPhases?.map((phase) => [phase.durationTicks, phase.resourceBound])).toEqual([
+      [30, true], [45, true], [45, true], [180, false],
+    ]);
+    expect(pending.timingPhases![0]!.startsAtTick).toBeGreaterThanOrEqual(
+      pending.patientTravel!.outboundArrivalTick,
+    );
+    expect(state.employees.find((employee) => employee.id === "employee.test.endoscopist")?.facilityTask).toMatchObject({
+      kind: "perform_service", targetId: pending.operationId,
+    });
+    while (state.facilityTick < pending.timingPhases![0]!.startsAtTick + 2) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `celiac-scope.arrival.${state.facilityTick}` });
+    }
+    const endoscopyRoom = state.rooms.find((room) => room.id === "room.test.endoscopy")!;
+    expect(state.employees.find((employee) => employee.id === "employee.test.endoscopist")?.location).toEqual(
+      getRoomNavigationAnchor(endoscopyRoom, getRoomDefinition(endoscopyRoom.roomDefinitionId)!, "staff"),
+    );
+    expect(state.encounters[encounter.id]!.deliveredResultNarratives).toEqual([]);
+    for (let minute = 0; minute < 180 && !state.serviceIncomeReceipts.some((receipt) => receipt.actorId === encounter.id); minute += 1) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `celiac-scope.work.${minute}` });
+    }
+    expect(state.serviceIncomeReceipts.filter((receipt) => receipt.actorId === encounter.id)).toEqual([
+      expect.objectContaining({ incomeLineId: "income.endoscopy", grossAmount: 450 }),
+    ]);
+    expect(state.encounters[encounter.id]!.currentNodeIndex).toBe(nodeIndex);
+    expect(state.encounters[encounter.id]!.pendingResult?.deliveredAtTick).toBeNull();
+    expect(state.employees.find((employee) => employee.id === "employee.test.endoscopist")?.facilityTask).toBeNull();
   });
 
   it("holds both rooms, nurses, and Founder only through the last resource-bound phase", () => {
@@ -212,7 +386,7 @@ describe("Level 2 endoscopy operational capacity", () => {
       providerReservation: { kind: "employee", employeeId: "employee.test.endoscopist", staffRoleDefinitionId: "staff.endoscopist" },
     };
     const restored = deserializeGameState(JSON.stringify(raw));
-    expect(restored.schemaVersion).toBe(7);
+    expect(restored.schemaVersion).toBe(8);
     expect(restored.encounters[encounterId]?.pendingResult?.providerReservation).toEqual({ kind: "employee", employeeId: "employee.test.endoscopist", staffRoleDefinitionId: "staff.endoscopist" });
   });
 });

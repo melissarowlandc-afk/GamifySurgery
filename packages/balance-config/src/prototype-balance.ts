@@ -1,9 +1,5 @@
 import { validatePrototypeBalanceRelease } from "./schema";
-
-export const STARTER_EXAMINATION_ROOM_INSTANCE_ID =
-  "room.instance.starter_examination";
-export const STARTER_EXAMINATION_DOOR_INSTANCE_ID =
-  "door.instance.starter_examination";
+import { getApprovedRoomNavigation } from "./approved-room-layouts";
 
 export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   id: "balance.synthetic.prototype.v1",
@@ -42,18 +38,6 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         doorSide: null,
         upgradeLevel: 1,
       },
-      {
-        // A campaign starts with one usable care room so the first checked-in
-        // chart can be opened immediately. The later tutorial still teaches a
-        // second room for capacity.
-        id: STARTER_EXAMINATION_ROOM_INSTANCE_ID,
-        roomDefinitionId: "room.examination",
-        x: 34,
-        y: 26,
-        orientation: 0,
-        doorSide: "south",
-        upgradeLevel: 1,
-      },
     ],
     roomDefinitions: [
       {
@@ -76,20 +60,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: [],
         capabilityIds: [],
-        navigation: {
-          blockedTiles: [
-            // A1 cabinet, A5 cooler/bin, and C3 counter. The counter artwork
-            // may extend across C2/C4, but navigation keeps both open.
-            { x: 0, y: 0 },
-            { x: 4, y: 0 },
-            { x: 2, y: 2 },
-          ],
-          primaryAnchor: { x: 2, y: 3 },
-          // The visible visitor chair is the southeast seat only.
-          waitingAnchors: [{ x: 4, y: 3 }],
-          staffAnchor: { x: 2, y: 1 },
-          publicWaitingArea: true,
-        },
+        navigation: getApprovedRoomNavigation("room.front_desk"),
       },
       {
         id: "room.hallway",
@@ -111,13 +82,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.walkable_hallway"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 0, y: 0 },
-          waitingAnchors: [],
-          staffAnchor: null,
-          publicWaitingArea: true,
-        },
+        navigation: getApprovedRoomNavigation("room.hallway"),
       },
       {
         id: "room.examination",
@@ -142,17 +107,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           "capability.examination",
           "capability.synthetic.in_house_analysis",
         ],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 1 },
-            { x: 2, y: 0 },
-          ],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 1 },
-          patientCareAnchor: { x: 2, y: 1 },
-          clinicianCareAnchor: { x: 1, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.examination"),
       },
       {
         id: "room.bathroom",
@@ -174,15 +129,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.patient_bathroom"],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 0 },
-            { x: 1, y: 0 },
-          ],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: null,
-        },
+        navigation: getApprovedRoomNavigation("room.bathroom"),
       },
       {
         id: "room.waiting",
@@ -204,27 +151,13 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.waiting_seats"],
-        navigation: {
-          blockedTiles: [
-            { x: 1, y: 1 },
-            { x: 2, y: 1 },
-          ],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [
-            { x: 1, y: 0 },
-            { x: 2, y: 0 },
-            { x: 0, y: 1 },
-            { x: 3, y: 1 },
-          ],
-          staffAnchor: null,
-          publicWaitingArea: true,
-        },
+        navigation: getApprovedRoomNavigation("room.waiting"),
       },
       {
         id: "room.xray",
         displayName: "X-ray Room",
         kind: "room",
-        unlockFacilityLevel: 1,
+        unlockFacilityLevel: 2,
         width: 3,
         height: 3,
         defaultDoorSide: "south",
@@ -238,20 +171,9 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         upkeepPerUpgradeLevel: 2,
         workloadLimitContributionPerUpgradeLevel: 0,
         serviceDurationReductionPercentPerUpgradeLevel: 8,
-        requiredRoomDefinitionIds: ["room.imaging_control"],
-        capabilityIds: ["capability.xray_machine"],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 0 },
-            { x: 2, y: 0 },
-            { x: 0, y: 1 },
-            { x: 2, y: 1 },
-            { x: 2, y: 2 },
-          ],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 1, y: 2 },
-        },
+        requiredRoomDefinitionIds: [],
+        capabilityIds: ["capability.xray_machine", "capability.fluoroscopy"],
+        navigation: getApprovedRoomNavigation("room.xray"),
       },
       {
         id: "room.imaging_control",
@@ -262,17 +184,20 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         height: 2,
         defaultDoorSide: "south",
         constructionCost: 440,
-        upkeepPerExpenseInterval: 9,
+        // Existing campaigns retain this room as inert legacy space. New
+        // campaigns must not be offered or allowed to construct one.
+        buildable: false,
+        upkeepPerExpenseInterval: 0,
         satisfactionOnBuild: 0,
         workloadLimitContribution: 0,
         maximumInstances: null,
         maximumUpgradeLevel: 5,
         upgradeCosts: [90, 140, 210, 300],
-        upkeepPerUpgradeLevel: 1,
+        upkeepPerUpgradeLevel: 0,
         workloadLimitContributionPerUpgradeLevel: 0,
         serviceDurationReductionPercentPerUpgradeLevel: 5,
-        requiredRoomDefinitionIds: ["room.examination"],
-        capabilityIds: ["capability.imaging_control"],
+        requiredRoomDefinitionIds: [],
+        capabilityIds: [],
         navigation: {
           blockedTiles: [
             { x: 0, y: 0 },
@@ -303,23 +228,13 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: ["capability.minor_procedure"],
-        navigation: {
-          blockedTiles: [
-            { x: 0, y: 1 },
-            { x: 1, y: 1 },
-            { x: 2, y: 1 },
-            { x: 2, y: 0 },
-          ],
-          primaryAnchor: { x: 1, y: 2 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.minor_procedure"),
       },
       {
         id: "room.ultrasound",
         displayName: "Ultrasound Room",
         kind: "room",
-        unlockFacilityLevel: 2,
+        unlockFacilityLevel: 1,
         width: 3,
         height: 3,
         defaultDoorSide: "south",
@@ -333,14 +248,9 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         upkeepPerUpgradeLevel: 2,
         workloadLimitContributionPerUpgradeLevel: 0,
         serviceDurationReductionPercentPerUpgradeLevel: 8,
-        requiredRoomDefinitionIds: ["room.imaging_control"],
-        capabilityIds: ["capability.ultrasound_machine"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 2, y: 0 }, { x: 2, y: 1 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 1, y: 2 },
-        },
+        requiredRoomDefinitionIds: [],
+        capabilityIds: ["capability.ultrasound_machine", "capability.endoanal_probe", "capability.abi_doppler"],
+        navigation: getApprovedRoomNavigation("room.ultrasound"),
       },
       {
         id: "room.ct",
@@ -360,14 +270,9 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         upkeepPerUpgradeLevel: 3,
         workloadLimitContributionPerUpgradeLevel: 0,
         serviceDurationReductionPercentPerUpgradeLevel: 8,
-        requiredRoomDefinitionIds: ["room.imaging_control"],
+        requiredRoomDefinitionIds: [],
         capabilityIds: ["capability.ct_scanner"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 3, y: 0 }, { x: 3, y: 1 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 3 },
-        },
+        navigation: getApprovedRoomNavigation("room.ct"),
       },
       {
         id: "room.phlebotomy",
@@ -388,13 +293,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         workloadLimitContributionPerUpgradeLevel: 1,
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.front_desk"],
-        capabilityIds: ["capability.phlebotomy_collection"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 1 },
-        },
+        capabilityIds: ["capability.phlebotomy_collection", "capability.breath_collection_kit"],
+        navigation: getApprovedRoomNavigation("room.phlebotomy"),
       },
       {
         id: "room.evs_closet",
@@ -416,12 +316,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.evs_supply"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 1, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.evs_closet"),
       },
       {
         id: "room.endoscopy",
@@ -443,20 +338,15 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: [],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 3, y: 0 }, { x: 3, y: 1 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.endoscopy"),
       },
       {
         id: "room.periop_recovery",
         displayName: "Peri-op/Recovery Room",
         kind: "room",
         unlockFacilityLevel: 2,
-        width: 4,
-        height: 3,
+        width: 6,
+        height: 6,
         defaultDoorSide: "south",
         constructionCost: 900,
         upkeepPerExpenseInterval: 16,
@@ -470,12 +360,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 5,
         requiredRoomDefinitionIds: ["room.examination"],
         capabilityIds: ["capability.periop_recovery"],
-        navigation: {
-          blockedTiles: [{ x: 0, y: 0 }, { x: 3, y: 0 }],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [{ x: 2, y: 1 }],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.periop_recovery"),
       },
       {
         id: "room.training",
@@ -497,12 +382,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.staff_training"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 2 },
-        },
+        navigation: getApprovedRoomNavigation("room.training"),
       },
       {
         id: "room.coffee_kiosk",
@@ -524,12 +404,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.coffee_kiosk"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 0, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: null,
-        },
+        navigation: getApprovedRoomNavigation("room.coffee_kiosk"),
       },
       {
         id: "room.glp1_telehealth_suite",
@@ -551,12 +426,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         serviceDurationReductionPercentPerUpgradeLevel: 0,
         requiredRoomDefinitionIds: ["room.front_desk"],
         capabilityIds: ["capability.glp1_telehealth"],
-        navigation: {
-          blockedTiles: [],
-          primaryAnchor: { x: 1, y: 1 },
-          waitingAnchors: [],
-          staffAnchor: { x: 2, y: 1 },
-        },
+        navigation: getApprovedRoomNavigation("room.glp1_telehealth_suite"),
       },
     ],
     staffRoleDefinitions: [
@@ -588,10 +458,13 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         salaryAdjustmentStep: 2,
         moralePerSalaryStep: 5,
         baseMorale: 75,
-        maximumEmployees: 1,
+        maximumEmployees: 3,
         maximumTrainingLevel: 5,
         workloadLimitContribution: 0,
-        requiredRoomDefinitionIds: ["room.xray", "room.imaging_control"],
+        requiredRoomDefinitionIds: [],
+        // Ultrasound is the current Level-1 imaging workstation; existing
+        // X-ray and later CT installations remain valid technician homes.
+        requiredAnyRoomDefinitionIds: ["room.ultrasound", "room.xray", "room.ct"],
         capabilityIds: ["capability.staff.imaging_technician"],
       },
       {
@@ -690,7 +563,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         salaryAdjustmentStep: 2,
         moralePerSalaryStep: 5,
         baseMorale: 75,
-        maximumEmployees: 5,
+        maximumEmployees: 10,
         maximumTrainingLevel: 5,
         workloadLimitContribution: 0,
         requiredRoomDefinitionIds: ["room.glp1_telehealth_suite"],
@@ -715,7 +588,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         minimumCompletedEncounters: 0,
         satisfactionMustBeGreaterThan: 90,
         requiredRoomDefinitionIds: [
-          "room.xray",
+          "room.ultrasound",
           "room.minor_procedure",
         ],
         requiredStaffRoleIds: ["staff.imaging_technician"],
@@ -832,8 +705,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     sidewalkPedestrianMaximumMinutes: 90,
     maximumSidewalkPedestrians: 2,
     glp1AutomationIntervalMinutes: 60,
-    glp1AutomationPayment: 25,
-    glp1AutomationMaximumCapacity: 5,
+    glp1AutomationPayment: 50,
+    glp1AutomationMaximumCapacity: 10,
     evsRoomCleanlinessThreshold: 85,
     evsRoomCleanupMinutes: 5,
     evsRoomCleanlinessRestore: 10,
@@ -890,7 +763,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     dedicatedRoomDefinitionId: "room.glp1_telehealth_suite",
     cooldownTicks: 1,
     cooldownMinutes: 60,
-    payment: 25,
+    payment: 50,
     sarcasmStartsAtUse: 5,
     sarcasmLines: [
       "Your commitment to comprehensive metabolic care has been noted.",
@@ -1012,6 +885,22 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     { id: "timing.test.therapeutic_ercp", displayName: "Therapeutic ERCP referral", durationTicks: 180 },
     { id: "timing.test.bile_leak_ercp", displayName: "Bile-leak ERCP referral", durationTicks: 180 },
     { id: "timing.test.pseudocyst_drainage", displayName: "Pseudocyst drainage referral", durationTicks: 180 },
+    // September 17 diagnostic estimates are tunable gameplay placeholders,
+    // not clinical turnaround-time or procedure-duration claims.
+    { id: "timing.test.adrenal_biopsy", displayName: "Adrenal biopsy", durationTicks: 180 },
+    { id: "timing.test.anorectal_manometry", displayName: "Anorectal manometry", durationTicks: 180 },
+    { id: "timing.test.breast_imaging_bundle", displayName: "Diagnostic breast imaging", durationTicks: 120, serviceId: "service.diagnostic_breast_imaging" },
+    { id: "timing.test.dexamethasone_suppression", displayName: "Overnight testing protocol", durationTicks: 720 },
+    { id: "timing.test.dynamic_defecography", displayName: "Dynamic defecography", durationTicks: 180, serviceId: "service.dynamic_defecography" },
+    { id: "timing.test.echocardiography", displayName: "Echocardiography", durationTicks: 180 },
+    { id: "timing.test.endoanal_ultrasound", displayName: "Endoanal ultrasound", durationTicks: 150 },
+    { id: "timing.test.esophageal_multilevel_biopsy", displayName: "Endoscopy with biopsies", durationTicks: 300, serviceId: "service.esophageal_multilevel_biopsy" },
+    { id: "timing.test.h_pylori_breath", displayName: "Urea breath test", durationTicks: 120, serviceId: "service.h_pylori_urea_breath" },
+    { id: "timing.test.ibc_biopsy_and_staging", displayName: "Breast biopsy with staging", durationTicks: 360, serviceId: "service.ibc_biopsy_and_staging" },
+    { id: "timing.test.nipple_areolar_biopsy", displayName: "Nipple-areolar biopsy", durationTicks: 180, serviceId: "service.nipple_areolar_biopsy" },
+    { id: "timing.test.ultrasound_guided_aspiration", displayName: "Ultrasound-guided aspiration", durationTicks: 180 },
+    // Bedside bladder-scan time is a tunable gameplay placeholder, not a clinical turnaround claim.
+    { id: "timing.test.bladder_scan", displayName: "Bedside bladder scan", durationTicks: 5, serviceId: "service.bladder_scan" },
   ],
   services: [
     {
@@ -1049,7 +938,6 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           satisfactionOnResult: 1,
           requiredCapabilityId: "capability.xray_machine",
           requiredCapabilityIds: [
-            "capability.imaging_control",
             "capability.staff.imaging_technician",
           ],
           resourceRequirements: [{ roomDefinitionId: "room.xray", staffRoleDefinitionId: "staff.imaging_technician" }],
@@ -1078,8 +966,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           id: "route.ultrasound.outsourced",
           displayName: "Off-site ultrasound",
           // Editorial simulation timing for the current prototype, not a
-          // clinical turnaround-time claim. A later onsite Level 2 route can
-          // be added without changing the clinical concept IDs.
+          // clinical turnaround-time claim.
           durationTicks: 150,
           requiredCapabilityId: null,
           requiredCapabilityIds: [],
@@ -1090,7 +977,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
           displayName: "Onsite ultrasound with external interpretation",
           durationTicks: 75,
           requiredCapabilityId: "capability.ultrasound_machine",
-          requiredCapabilityIds: ["capability.imaging_control", "capability.staff.imaging_technician"],
+          requiredCapabilityIds: ["capability.staff.imaging_technician"],
           resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }],
           timingPhases: [
             { id: "phase.ultrasound.acquisition", durationTicks: 45, resourceBound: true },
@@ -1105,7 +992,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       id: "service.ct",
       displayName: "CT",
       routes: [
-        { id: "route.ct.in_house", displayName: "Onsite CT with external interpretation", durationTicks: 105, requiredCapabilityId: "capability.ct_scanner", requiredCapabilityIds: ["capability.imaging_control", "capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ct", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.ct.acquisition", durationTicks: 60, resourceBound: true }, { id: "phase.ct.external_interpretation", durationTicks: 45, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ct", roundTrip: true } },
+        { id: "route.ct.in_house", displayName: "Onsite CT with external interpretation", durationTicks: 105, requiredCapabilityId: "capability.ct_scanner", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ct", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.ct.acquisition", durationTicks: 60, resourceBound: true }, { id: "phase.ct.external_interpretation", durationTicks: 45, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ct", roundTrip: true } },
         { id: "route.ct.outsourced", displayName: "Off-site CT", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
       ],
     },
@@ -1163,6 +1050,21 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       displayName: "Core-needle biopsy",
       routes: [
         {
+          id: "route.breast_core_needle_biopsy.in_house",
+          displayName: "Onsite image-guided core biopsy with external pathology",
+          durationTicks: 180,
+          requiredCapabilityId: "capability.ultrasound_machine",
+          requiredCapabilityIds: ["capability.staff.imaging_technician"],
+          resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }],
+          providerRequirement: null,
+          timingPhases: [
+            { id: "phase.breast_core_needle_biopsy.procedure", durationTicks: 60, resourceBound: true },
+            { id: "phase.breast_core_needle_biopsy.external_pathology", durationTicks: 120, resourceBound: false },
+          ],
+          preference: 0,
+          patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true },
+        },
+        {
           id: "route.breast_core_needle_biopsy.outsourced",
           displayName: "Off-site core-needle biopsy",
           // Tunable editorial simulation time, not clinical guidance.
@@ -1207,26 +1109,51 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       id: "service.thyroid_fna",
       displayName: "Thyroid fine-needle aspiration",
       routes: [{
+        id: "route.thyroid_fna.in_house",
+        displayName: "Onsite ultrasound-guided thyroid FNA with external cytology",
+        durationTicks: 180,
+        requiredCapabilityId: "capability.ultrasound_machine",
+        requiredCapabilityIds: ["capability.staff.imaging_technician"],
+        resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }],
+        providerRequirement: null,
+        timingPhases: [
+          { id: "phase.thyroid_fna.procedure", durationTicks: 60, resourceBound: true },
+          { id: "phase.thyroid_fna.external_cytology", durationTicks: 120, resourceBound: false },
+        ],
+        preference: 0,
+        patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true },
+      }, {
         id: "route.thyroid_fna.outsourced",
         displayName: "Off-site thyroid fine-needle aspiration",
         // Editorial prototype timing only; not a clinical turnaround claim.
         durationTicks: 180,
         requiredCapabilityId: null,
         requiredCapabilityIds: [],
-        preference: 0,
+        preference: 1,
       }],
     },
     {
       id: "service.anoscopy",
       displayName: "Anoscopy",
       routes: [{
+        id: "route.anoscopy.in_house",
+        displayName: "Onsite anoscopy",
+        durationTicks: 15,
+        requiredCapabilityId: "capability.minor_procedure",
+        requiredCapabilityIds: [],
+        resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
+        providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.app", founderEligible: true },
+        timingPhases: [{ id: "phase.anoscopy.procedure", durationTicks: 15, resourceBound: true }],
+        preference: 0,
+        patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.minor_procedure", roundTrip: true },
+      }, {
         id: "route.anoscopy.outsourced",
         displayName: "Off-site anoscopy",
         // Editorial prototype timing only; not a clinical turnaround claim.
         durationTicks: 90,
         requiredCapabilityId: null,
         requiredCapabilityIds: [],
-        preference: 0,
+        preference: 1,
       }],
     },
     {
@@ -1246,13 +1173,27 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
       id: "service.skin_excisional_biopsy",
       displayName: "Excisional skin biopsy",
       routes: [{
+        id: "route.skin_excisional_biopsy.in_house",
+        displayName: "Onsite excisional skin biopsy with external pathology",
+        durationTicks: 165,
+        requiredCapabilityId: "capability.minor_procedure",
+        requiredCapabilityIds: [],
+        resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
+        providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.app", founderEligible: true },
+        timingPhases: [
+          { id: "phase.skin_excisional_biopsy.sampling", durationTicks: 45, resourceBound: true },
+          { id: "phase.skin_excisional_biopsy.external_pathology", durationTicks: 120, resourceBound: false },
+        ],
+        preference: 0,
+        patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.minor_procedure", roundTrip: true },
+      }, {
         id: "route.skin_excisional_biopsy.outsourced",
         displayName: "Off-site excisional skin biopsy",
         // Editorial prototype timing only; not a clinical turnaround claim.
         durationTicks: 180,
         requiredCapabilityId: null,
         requiredCapabilityIds: [],
-        preference: 0,
+        preference: 1,
       }],
     },
     {
@@ -1283,7 +1224,24 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     {
       id: "service.cutaneous_lesion_biopsy",
       displayName: "Cutaneous lesion biopsy",
-      routes: [{ id: "route.cutaneous_lesion_biopsy.outsourced", displayName: "Off-site cutaneous lesion biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        {
+          id: "route.cutaneous_lesion_biopsy.in_house",
+          displayName: "Onsite cutaneous lesion biopsy with external pathology",
+          durationTicks: 135,
+          requiredCapabilityId: "capability.minor_procedure",
+          requiredCapabilityIds: [],
+          resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }],
+          providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.app", founderEligible: true },
+          timingPhases: [
+            { id: "phase.cutaneous_lesion_biopsy.sampling", durationTicks: 15, resourceBound: true },
+            { id: "phase.cutaneous_lesion_biopsy.external_pathology", durationTicks: 120, resourceBound: false },
+          ],
+          preference: 0,
+          patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.minor_procedure", roundTrip: true },
+        },
+        { id: "route.cutaneous_lesion_biopsy.outsourced", displayName: "Off-site cutaneous lesion biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.laryngeal_examination",
@@ -1293,12 +1251,18 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     {
       id: "service.contrast_swallow",
       displayName: "Contrast swallow",
-      routes: [{ id: "route.contrast_swallow.outsourced", displayName: "Off-site contrast swallow", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.contrast_swallow.in_house", displayName: "Onsite fluoroscopic contrast swallow", durationTicks: 60, requiredCapabilityId: "capability.fluoroscopy", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.xray", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.contrast_swallow.acquisition", durationTicks: 60, resourceBound: true }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.xray", roundTrip: true } },
+        { id: "route.contrast_swallow.outsourced", displayName: "Off-site contrast swallow", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.resting_abi",
       displayName: "Resting ankle-brachial index",
-      routes: [{ id: "route.resting_abi.outsourced", displayName: "Off-site resting ankle-brachial index", durationTicks: 90, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.resting_abi.in_house", displayName: "Onsite resting ABI with cuff and Doppler", durationTicks: 45, requiredCapabilityId: "capability.abi_doppler", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.resting_abi.acquisition", durationTicks: 45, resourceBound: true }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true } },
+        { id: "route.resting_abi.outsourced", displayName: "Off-site resting ankle-brachial index", durationTicks: 90, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.rectal_response_assessment",
@@ -1308,12 +1272,26 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     {
       id: "service.carotid_cta",
       displayName: "Carotid CT angiography",
-      routes: [{ id: "route.carotid_cta.outsourced", displayName: "Off-site carotid CT angiography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.carotid_cta.in_house", displayName: "Onsite carotid CT angiography with external interpretation", durationTicks: 105, requiredCapabilityId: "capability.ct_scanner", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ct", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.carotid_cta.acquisition", durationTicks: 60, resourceBound: true }, { id: "phase.carotid_cta.external_interpretation", durationTicks: 45, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ct", roundTrip: true } },
+        { id: "route.carotid_cta.outsourced", displayName: "Off-site carotid CT angiography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.genetic_testing",
-      displayName: "Hereditary-polyposis genetic testing",
-      routes: [{ id: "route.genetic_testing.outsourced", displayName: "Off-site hereditary-polyposis genetic testing", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      displayName: "Genetic testing",
+      routes: [
+        { id: "route.genetic_testing.phlebotomy_sendout", displayName: "Onsite genetic-test blood collection with send-out testing", durationTicks: 180, requiredCapabilityId: "capability.phlebotomy_collection", requiredCapabilityIds: ["capability.staff.phlebotomist"], resourceRequirements: [{ roomDefinitionId: "room.phlebotomy", staffRoleDefinitionId: "staff.phlebotomist" }], timingPhases: [{ id: "phase.genetic_testing.collection", durationTicks: 15, resourceBound: true }, { id: "phase.genetic_testing.sendout", durationTicks: 165, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.phlebotomy", roundTrip: true } },
+        { id: "route.genetic_testing.outsourced", displayName: "Off-site genetic testing", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
+    },
+    {
+      id: "service.bidirectional_endoscopy",
+      displayName: "Bidirectional upper and lower endoscopy",
+      routes: [
+        { id: "route.bidirectional_endoscopy.in_house", displayName: "Onsite combined upper and lower endoscopy episode", durationTicks: 300, requiredCapabilityId: "capability.endoscopy", requiredCapabilityIds: ["capability.periop_recovery"], resourceRequirements: [{ roomDefinitionId: "room.endoscopy", staffRoleDefinitionId: "staff.endoscopy_nurse" }, { roomDefinitionId: "room.periop_recovery", staffRoleDefinitionId: "staff.periop_nurse" }], providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.endoscopist", founderEligible: true }, timingPhases: [{ id: "phase.bidirectional_endoscopy.preparation_and_procedure", durationTicks: 75, resourceBound: true }, { id: "phase.bidirectional_endoscopy.recovery", durationTicks: 45, resourceBound: true }, { id: "phase.bidirectional_endoscopy.external_pathology", durationTicks: 180, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.endoscopy", roundTrip: true } },
+        { id: "route.bidirectional_endoscopy.outsourced", displayName: "Off-site bidirectional upper and lower endoscopy", durationTicks: 300, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.pelvic_mri",
@@ -1328,12 +1306,18 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     {
       id: "service.venous_duplex",
       displayName: "Venous duplex ultrasound",
-      routes: [{ id: "route.venous_duplex.outsourced", displayName: "Off-site venous duplex ultrasound", durationTicks: 150, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.venous_duplex.in_house", displayName: "Onsite venous duplex ultrasound with external interpretation", durationTicks: 75, requiredCapabilityId: "capability.ultrasound_machine", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.venous_duplex.acquisition", durationTicks: 45, resourceBound: true }, { id: "phase.venous_duplex.external_interpretation", durationTicks: 30, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true } },
+        { id: "route.venous_duplex.outsourced", displayName: "Off-site venous duplex ultrasound", durationTicks: 150, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.hiv_hcv_serology",
       displayName: "HIV and hepatitis-C serology",
-      routes: [{ id: "route.hiv_hcv_serology.outsourced", displayName: "Off-site HIV and hepatitis-C serology", durationTicks: 60, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.hiv_hcv_serology.phlebotomy_sendout", displayName: "Onsite serology blood collection with send-out testing", durationTicks: 60, requiredCapabilityId: "capability.phlebotomy_collection", requiredCapabilityIds: ["capability.staff.phlebotomist"], resourceRequirements: [{ roomDefinitionId: "room.phlebotomy", staffRoleDefinitionId: "staff.phlebotomist" }], timingPhases: [{ id: "phase.hiv_hcv_serology.collection", durationTicks: 15, resourceBound: true }, { id: "phase.hiv_hcv_serology.sendout", durationTicks: 45, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.phlebotomy", roundTrip: true } },
+        { id: "route.hiv_hcv_serology.outsourced", displayName: "Off-site HIV and hepatitis-C serology", durationTicks: 60, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.gist_eus_core_molecular",
@@ -1348,38 +1332,34 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     {
       id: "service.mesenteric_cta",
       displayName: "Mesenteric CT angiography",
-      routes: [{ id: "route.mesenteric_cta.outsourced", displayName: "Off-site mesenteric CT angiography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.mesenteric_cta.in_house", displayName: "Onsite mesenteric CT angiography with external interpretation", durationTicks: 105, requiredCapabilityId: "capability.ct_scanner", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ct", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.mesenteric_cta.acquisition", durationTicks: 60, resourceBound: true }, { id: "phase.mesenteric_cta.external_interpretation", durationTicks: 45, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ct", roundTrip: true } },
+        { id: "route.mesenteric_cta.outsourced", displayName: "Off-site mesenteric CT angiography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.primary_aldosteronism_screen",
       displayName: "Aldosterone-renin testing",
-      routes: [{ id: "route.primary_aldosteronism_screen.outsourced", displayName: "Off-site aldosterone-renin testing", durationTicks: 60, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }],
+      routes: [
+        { id: "route.primary_aldosteronism_screen.phlebotomy_sendout", displayName: "Onsite aldosterone-renin blood collection with send-out testing", durationTicks: 60, requiredCapabilityId: "capability.phlebotomy_collection", requiredCapabilityIds: ["capability.staff.phlebotomist"], resourceRequirements: [{ roomDefinitionId: "room.phlebotomy", staffRoleDefinitionId: "staff.phlebotomist" }], timingPhases: [{ id: "phase.primary_aldosteronism_screen.collection", durationTicks: 15, resourceBound: true }, { id: "phase.primary_aldosteronism_screen.sendout", durationTicks: 45, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.phlebotomy", roundTrip: true } },
+        { id: "route.primary_aldosteronism_screen.outsourced", displayName: "Off-site aldosterone-renin testing", durationTicks: 60, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.colonoscopy",
       displayName: "Diagnostic colonoscopy with lesion sampling",
-      routes: [{
-        id: "route.colonoscopy.outsourced",
-        displayName: "Off-site diagnostic colonoscopy with lesion sampling",
-        // Centralized editorial simulation timing, not a medical turnaround claim.
-        durationTicks: 300,
-        requiredCapabilityId: null,
-        requiredCapabilityIds: [],
-        preference: 1,
-      }],
+      routes: [
+        { id: "route.colonoscopy.in_house", displayName: "Onsite colonoscopy with external pathology", durationTicks: 300, requiredCapabilityId: "capability.endoscopy", requiredCapabilityIds: ["capability.periop_recovery"], resourceRequirements: [{ roomDefinitionId: "room.endoscopy", staffRoleDefinitionId: "staff.endoscopy_nurse" }, { roomDefinitionId: "room.periop_recovery", staffRoleDefinitionId: "staff.periop_nurse" }], providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.endoscopist", founderEligible: true }, timingPhases: [{ id: "phase.colonoscopy.preparation", durationTicks: 30, resourceBound: true }, { id: "phase.colonoscopy.procedure", durationTicks: 45, resourceBound: true }, { id: "phase.colonoscopy.recovery", durationTicks: 45, resourceBound: true }, { id: "phase.colonoscopy.external_pathology", durationTicks: 180, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.endoscopy", roundTrip: true } },
+        { id: "route.colonoscopy.outsourced", displayName: "Off-site diagnostic colonoscopy with lesion sampling", durationTicks: 300, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.upper_endoscopy_duodenal_biopsy",
       displayName: "Upper endoscopy with duodenal biopsy",
-      routes: [{
-        id: "route.upper_endoscopy_duodenal_biopsy.outsourced",
-        displayName: "Off-site upper endoscopy with duodenal biopsy",
-        // Centralized editorial simulation timing, not a medical turnaround claim.
-        durationTicks: 300,
-        requiredCapabilityId: null,
-        requiredCapabilityIds: [],
-        preference: 1,
-      }],
+      routes: [
+        { id: "route.upper_endoscopy_duodenal_biopsy.in_house", displayName: "Onsite upper endoscopy with external duodenal pathology", durationTicks: 300, requiredCapabilityId: "capability.endoscopy", requiredCapabilityIds: ["capability.periop_recovery"], resourceRequirements: [{ roomDefinitionId: "room.endoscopy", staffRoleDefinitionId: "staff.endoscopy_nurse" }, { roomDefinitionId: "room.periop_recovery", staffRoleDefinitionId: "staff.periop_nurse" }], providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.endoscopist", founderEligible: true }, timingPhases: [{ id: "phase.upper_endoscopy_duodenal_biopsy.preparation", durationTicks: 30, resourceBound: true }, { id: "phase.upper_endoscopy_duodenal_biopsy.procedure", durationTicks: 45, resourceBound: true }, { id: "phase.upper_endoscopy_duodenal_biopsy.recovery", durationTicks: 45, resourceBound: true }, { id: "phase.upper_endoscopy_duodenal_biopsy.external_pathology", durationTicks: 180, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.endoscopy", roundTrip: true } },
+        { id: "route.upper_endoscopy_duodenal_biopsy.outsourced", displayName: "Off-site upper endoscopy with duodenal biopsy", durationTicks: 300, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+      ],
     },
     {
       id: "service.extremity_mri",
@@ -1532,6 +1512,25 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
         },
       ],
     },
+    { id: "service.dynamic_defecography", displayName: "Dynamic defecography", routes: [{ id: "route.dynamic_defecography.outsourced", displayName: "Off-site dynamic defecography", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }] },
+    { id: "service.esophageal_multilevel_biopsy", displayName: "Endoscopy with biopsies", routes: [
+      { id: "route.esophageal_multilevel_biopsy.in_house", displayName: "Onsite endoscopy with external esophageal pathology", durationTicks: 300, requiredCapabilityId: "capability.endoscopy", requiredCapabilityIds: ["capability.periop_recovery"], resourceRequirements: [{ roomDefinitionId: "room.endoscopy", staffRoleDefinitionId: "staff.endoscopy_nurse" }, { roomDefinitionId: "room.periop_recovery", staffRoleDefinitionId: "staff.periop_nurse" }], providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.endoscopist", founderEligible: true }, timingPhases: [{ id: "phase.esophageal_multilevel_biopsy.preparation", durationTicks: 30, resourceBound: true }, { id: "phase.esophageal_multilevel_biopsy.procedure", durationTicks: 45, resourceBound: true }, { id: "phase.esophageal_multilevel_biopsy.recovery", durationTicks: 45, resourceBound: true }, { id: "phase.esophageal_multilevel_biopsy.external_pathology", durationTicks: 180, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.endoscopy", roundTrip: true } },
+      { id: "route.esophageal_multilevel_biopsy.outsourced", displayName: "Off-site endoscopy with biopsies", durationTicks: 300, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+    ] },
+    { id: "service.h_pylori_urea_breath", displayName: "Urea breath testing", routes: [
+      { id: "route.h_pylori_urea_breath.in_house", displayName: "Onsite breath-kit collection with external assay", durationTicks: 120, requiredCapabilityId: "capability.breath_collection_kit", requiredCapabilityIds: ["capability.staff.phlebotomist"], resourceRequirements: [{ roomDefinitionId: "room.phlebotomy", staffRoleDefinitionId: "staff.phlebotomist" }], timingPhases: [{ id: "phase.h_pylori_urea_breath.collection", durationTicks: 15, resourceBound: true }, { id: "phase.h_pylori_urea_breath.external_assay", durationTicks: 105, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.phlebotomy", roundTrip: true } },
+      { id: "route.h_pylori_urea_breath.outsourced", displayName: "Off-site urea breath testing", durationTicks: 120, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+    ] },
+    { id: "service.ibc_biopsy_and_staging", displayName: "Breast biopsy with staging", routes: [{ id: "route.ibc_biopsy_and_staging.outsourced", displayName: "Off-site breast biopsy with staging", durationTicks: 360, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 0 }] },
+    { id: "service.nipple_areolar_biopsy", displayName: "Nipple-areolar biopsy", routes: [
+      { id: "route.nipple_areolar_biopsy.in_house", displayName: "Onsite nipple-areolar skin sampling with external pathology", durationTicks: 180, requiredCapabilityId: "capability.minor_procedure", requiredCapabilityIds: [], resourceRequirements: [{ roomDefinitionId: "room.minor_procedure", staffRoleDefinitionId: null }], providerRequirement: { preferredEmployeeStaffRoleDefinitionId: "staff.app", founderEligible: true }, timingPhases: [{ id: "phase.nipple_areolar_biopsy.sampling", durationTicks: 15, resourceBound: true }, { id: "phase.nipple_areolar_biopsy.external_pathology", durationTicks: 165, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.minor_procedure", roundTrip: true } },
+      { id: "route.nipple_areolar_biopsy.outsourced", displayName: "Off-site nipple-areolar biopsy", durationTicks: 180, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+    ] },
+    { id: "service.endoanal_ultrasound", displayName: "Endoanal ultrasound", routes: [
+      { id: "route.endoanal_ultrasound.in_house", displayName: "Onsite endoanal ultrasound with external interpretation", durationTicks: 75, requiredCapabilityId: "capability.endoanal_probe", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }], timingPhases: [{ id: "phase.endoanal_ultrasound.acquisition", durationTicks: 45, resourceBound: true }, { id: "phase.endoanal_ultrasound.external_interpretation", durationTicks: 30, resourceBound: false }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true } },
+      { id: "route.endoanal_ultrasound.outsourced", displayName: "Off-site endoanal ultrasound", durationTicks: 150, requiredCapabilityId: null, requiredCapabilityIds: [], preference: 1 },
+    ] },
+    { id: "service.bladder_scan", displayName: "Bladder scan", routes: [{ id: "route.bladder_scan.ultrasound_room", displayName: "Ultrasound-room bladder scan", durationTicks: 5, requiredCapabilityId: "capability.ultrasound_machine", requiredCapabilityIds: ["capability.staff.imaging_technician"], resourceRequirements: [{ roomDefinitionId: "room.ultrasound", staffRoleDefinitionId: "staff.imaging_technician" }], preference: 0, patientTravel: { originRoomDefinitionId: "room.examination", destinationRoomDefinitionId: "room.ultrasound", roundTrip: true } }, { id: "route.bladder_scan.in_house", displayName: "Bedside bladder scan", durationTicks: 5, requiredCapabilityId: "capability.examination", requiredCapabilityIds: [], preference: 1, patientRemainsOnsite: true }] },
   ],
 });
 
@@ -1539,12 +1538,11 @@ export const EXAMINATION_ROOM_DEFINITION_ID = "room.examination";
 export const LEVEL_ONE_ROOM_DEFINITION_IDS = [
   "room.bathroom",
   "room.waiting",
-  "room.xray",
-  "room.imaging_control",
+  "room.ultrasound",
   "room.minor_procedure",
 ] as const;
 export const LEVEL_TWO_ROOM_DEFINITION_IDS = [
-  "room.ultrasound",
+  "room.xray",
   "room.ct",
   "room.phlebotomy",
   "room.evs_closet",

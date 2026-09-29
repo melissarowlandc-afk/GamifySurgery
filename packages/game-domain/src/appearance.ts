@@ -6,9 +6,19 @@ import {
 import type {
   PixelAppearanceDescriptor,
   PixelAppearanceVariant,
+  CharacterStillId,
+  GameState,
   PatientIdentityId,
   PatientSexLabel,
 } from "./types";
+import {
+  characterStillCatalogEntryById,
+  founderStillIdForAppearance,
+  isCharacterStillId,
+  legacyPatientStillId,
+  patientStillEligibleEntries,
+  staffStillEligibleEntries,
+} from "./characterStillCatalog";
 import {
   patientRosterEligibleEntries,
   patientRosterEntryById,
@@ -47,70 +57,230 @@ const STAFF_NAMES = [
 
 const PATIENT_NEUTRAL_FIRST_NAMES = [
   "Avery",
+  "Blair",
   "Casey",
+  "Cameron",
   "Devon",
   "Emery",
+  "Frankie",
+  "Hayden",
   "Jamie",
   "Jordan",
+  "Kendall",
+  "Lane",
+  "Lennon",
+  "Marley",
   "Morgan",
+  "Nico",
+  "Peyton",
   "Quinn",
   "Reese",
   "Riley",
   "Robin",
+  "Sage",
+  "Shiloh",
   "Taylor",
 ] as const;
 
 const PATIENT_FEMININE_FIRST_NAMES = [
   "Amelia",
   "Ava",
+  "Bianca",
+  "Camille",
   "Chloe",
+  "Clara",
+  "Daphne",
+  "Elise",
   "Elena",
+  "Eva",
+  "Fiona",
+  "Georgia",
   "Grace",
-  "Hannah",
   "Isabella",
+  "Hannah",
+  "Iris",
+  "Jade",
   "Julia",
+  "June",
+  "Kara",
+  "Kiara",
   "Leah",
+  "Lena",
   "Lily",
+  "Lucia",
+  "Maeve",
   "Maya",
+  "Mila",
+  "Naomi",
   "Natalie",
   "Nora",
   "Olivia",
+  "Paige",
+  "Priya",
+  "Renee",
+  "Ruby",
   "Sophia",
+  "Sadie",
+  "Sienna",
+  "Sabrina",
+  "Tessa",
+  "Valerie",
+  "Vivian",
+  "Yasmin",
+  "Willa",
+  "Ximena",
   "Zoe",
+  "Zara",
 ] as const;
 
 const PATIENT_MASCULINE_FIRST_NAMES = [
   "Adam",
   "Benjamin",
+  "Cameron",
   "Caleb",
+  "Colin",
   "Daniel",
+  "Darius",
+  "Elliot",
+  "Emmett",
   "Elijah",
   "Ethan",
+  "Felix",
+  "Gabriel",
+  "Gavin",
   "Henry",
+  "Holden",
+  "Hugo",
   "Isaac",
   "James",
+  "Julian",
+  "Jonah",
+  "Kai",
   "Liam",
   "Lucas",
+  "Malcolm",
   "Mateo",
+  "Maxwell",
+  "Micah",
+  "Miles",
   "Noah",
   "Oliver",
+  "Owen",
+  "Paul",
+  "Parker",
+  "Quentin",
+  "Rafael",
   "Samuel",
+  "Roman",
+  "Rowan",
+  "Reid",
+  "Silas",
   "Theo",
+  "Tristan",
+  "Victor",
+  "Wesley",
+  "Wyatt",
+  "Xavier",
+  "Zane",
 ] as const;
 
 const PATIENT_LAST_NAMES = [
   "Ash",
+  "Baker",
   "Bell",
+  "Bennett",
   "Brook",
+  "Caldwell",
+  "Calloway",
+  "Campbell",
+  "Carter",
   "Clay",
+  "Collins",
+  "Dawson",
   "Day",
+  "Delaney",
+  "Ellis",
+  "Everett",
   "Field",
+  "Fletcher",
+  "Foster",
+  "Garner",
   "Gray",
+  "Griffin",
   "Hart",
+  "Holland",
+  "Hudson",
+  "Ingram",
+  "Jordan",
+  "Kendall",
+  "Keene",
+  "Kingston",
   "Lane",
+  "Lawson",
+  "Lennox",
+  "Madden",
+  "Marshall",
+  "Mercer",
+  "Monroe",
+  "Nolan",
+  "Oakley",
+  "Parker",
+  "Perry",
+  "Quincy",
   "Reed",
+  "Rhodes",
+  "Rivers",
+  "Rowe",
+  "Sawyer",
+  "Shepherd",
+  "Sloan",
   "Stone",
+  "Sutton",
+  "Tanner",
+  "Thorne",
+  "Townsend",
+  "Turner",
   "Vale",
+  "Vaughn",
+  "Walton",
+  "West",
+  "Whitaker",
+  "Winter",
+  "Wolfe",
+  "Wright",
+  "York",
+  "Young",
+  "Zimmerman",
+  "Abbott",
+  "Barlow",
+  "Bishop",
+  "Cohen",
+  "Conrad",
+  "Denton",
+  "Donovan",
+  "Easton",
+  "Finch",
+  "Gibson",
+  "Hale",
+  "Irwin",
+  "Jarvis",
+  "Keller",
+  "Lowell",
+  "Morris",
+  "Nash",
+  "Ortega",
+  "Prescott",
+  "Russo",
+  "Salem",
+  "Sellers",
+  "Serrano",
+  "Sinclair",
+  "Sterling",
+  "Talbot",
+  "Temple",
+  "Tobin",
+  "Underwood",
+  "Vance",
 ] as const;
 
 export type PixelRoleStyle = NonNullable<
@@ -122,6 +292,23 @@ export type { PatientSexLabel } from "./types";
 export interface PatientAppearanceProfile {
   readonly sexLabel?: PatientSexLabel;
   readonly ageYears?: number;
+}
+
+/** Names of patient-like actors currently visible in the facility. */
+export function getPresentPatientDisplayNames(
+  state: Pick<GameState, "encounters" | "serviceOperations" | "retailExternalActors">,
+): string[] {
+  return [
+    ...Object.values(state.encounters)
+      .filter((encounter) => encounter.patientLocation !== null)
+      .map((encounter) => encounter.patientDisplayName),
+    ...state.serviceOperations
+      .filter((operation) => operation.actorKind === "visitor" && operation.location !== null)
+      .map((operation) => operation.displayName),
+    ...state.retailExternalActors
+      .filter((actor) => actor.lifecycle !== "departed" && actor.location !== null)
+      .map((actor) => actor.displayName),
+  ];
 }
 
 const ROLE_STYLES: readonly PixelRoleStyle[] = [
@@ -160,13 +347,14 @@ export function normalizePixelAppearance(
   appearance: PixelAppearanceDescriptor,
   roleStyle: PixelRoleStyle = appearance.roleStyle ?? "patient",
 ): PixelAppearanceDescriptor {
+  const { stillId: persistedStillId, ...appearanceWithoutStillId } = appearance;
   const bodyShapeIndex = BODY_SHAPES.indexOf(appearance.bodyShape);
   const hairStyleIndex = HAIR_STYLES.indexOf(appearance.hairStyle);
   const faceStyleIndex = FACE_STYLES.indexOf(appearance.faceStyle);
   const outfitStyleIndex = OUTFIT_STYLES.indexOf(appearance.outfitStyle);
   const accessoryIndex = ACCESSORIES.indexOf(appearance.accessory);
-  return {
-    ...appearance,
+  const normalized: PixelAppearanceDescriptor = {
+    ...appearanceWithoutStillId,
     skinTone:
       appearance.skinTone ??
       (((appearance.hairShade +
@@ -190,6 +378,52 @@ export function normalizePixelAppearance(
       ),
     roleStyle: ROLE_STYLES.includes(roleStyle) ? roleStyle : "patient",
   };
+  const stillId = isCharacterStillId(persistedStillId)
+    ? persistedStillId
+    : roleStyle === "founder"
+      ? founderStillIdForAppearance(normalized)
+      : undefined;
+  return { ...normalized, ...(stillId ? { stillId } : {}) };
+}
+
+export function selectPatientStillId(
+  campaignSeed: string,
+  selectionKey: string,
+  profile: PatientAppearanceProfile,
+  currentStillId?: string,
+  legacyIdentityId?: PatientIdentityId,
+): CharacterStillId | undefined {
+  const eligible = patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
+  if (isCharacterStillId(currentStillId)) {
+    const catalogEntry = characterStillCatalogEntryById(currentStillId);
+    if (!catalogEntry || (catalogEntry.category === "patient" && eligible.some((entry) => entry.stillId === currentStillId))) return currentStillId;
+  }
+  const legacyStill = legacyPatientStillId(legacyIdentityId);
+  if (legacyStill && eligible.some((entry) => entry.stillId === legacyStill)) return legacyStill;
+  return eligible.length > 0
+    ? eligible[deterministicInteger(campaignSeed, RANDOM_STREAMS.patientAppearance, `${selectionKey}:patient-still.v1`, eligible.length)]?.stillId
+    : undefined;
+}
+
+export function selectStaffStillId(
+  campaignSeed: string,
+  employeeId: string,
+  staffRoleDefinitionId: string,
+  currentStillId?: string,
+): CharacterStillId | undefined {
+  if (isCharacterStillId(currentStillId)) {
+    const known = characterStillCatalogEntryById(currentStillId);
+    if (!known) return currentStillId;
+    if (known.category === "staff" && known.eligibleStaffRoleDefinitionIds.includes(staffRoleDefinitionId)) return currentStillId;
+  }
+  const eligible = staffStillEligibleEntries(staffRoleDefinitionId);
+  return eligible.length > 0
+    ? eligible[deterministicInteger(campaignSeed, RANDOM_STREAMS.staffAppearance, `${employeeId}:${staffRoleDefinitionId}:staff-still.v1`, eligible.length)]?.stillId
+    : undefined;
+}
+
+function staffRoleDefinitionForRoleStyle(roleStyle: PixelRoleStyle): string | undefined {
+  return roleStyle === "founder" || roleStyle === "patient" ? undefined : `staff.${roleStyle}`;
 }
 
 export function roleStyleForStaffDefinition(
@@ -236,7 +470,7 @@ export function createPixelAppearance(
   );
 
   const coherentVariant = boundedVariant(random.integer(10));
-  return normalizePixelAppearance({
+  const appearance = normalizePixelAppearance({
     version: "pixel-avatar.v1",
     bodyShape: BODY_SHAPES[random.integer(BODY_SHAPES.length)]!,
     hairStyle: HAIR_STYLES[random.integer(HAIR_STYLES.length)]!,
@@ -252,6 +486,11 @@ export function createPixelAppearance(
     bodyVariant: coherentVariant,
     roleStyle,
   }, roleStyle);
+  const staffRoleDefinitionId = staffRoleDefinitionForRoleStyle(roleStyle);
+  const founderStillId = roleStyle === "founder" ? founderStillIdForAppearance(appearance) : undefined;
+  return staffRoleDefinitionId
+    ? { ...appearance, stillId: selectStaffStillId(campaignSeed, subjectId, staffRoleDefinitionId, appearance.stillId) }
+    : founderStillId ? { ...appearance, stillId: founderStillId } : appearance;
 }
 
 function variantWithinFamily(
@@ -297,11 +536,20 @@ export function normalizePatientAppearanceForSex(
       : undefined;
   const {
     patientIdentityId: _discardedPatientIdentityId,
+    stillId: _discardedStillId,
     ...appearanceWithoutIdentity
   } = normalized;
+  const stillId = selectPatientStillId(
+    identitySelectionKey,
+    identitySelectionKey,
+    { sexLabel, ageYears },
+    normalized.stillId,
+    selectedIdentity,
+  );
   const withIdentity = {
     ...appearanceWithoutIdentity,
     ...(selectedIdentity ? { patientIdentityId: selectedIdentity } : {}),
+    ...(stillId ? { stillId } : {}),
   };
   if (sexLabel === "Female") {
     return {
@@ -336,7 +584,9 @@ export function createPatientPixelAppearance(
     "patient",
   );
   if (sexLabel === "Female" || sexLabel === "Male") {
-    return normalizePatientAppearanceForSex(base, sexLabel, ageYears, `${campaignSeed}:${selectionScope}:${encounterId}:patient-roster.v1`);
+    const normalized = normalizePatientAppearanceForSex(base, sexLabel, ageYears, `${campaignSeed}:${selectionScope}:${encounterId}:patient-roster.v1`);
+    const stillId = selectPatientStillId(campaignSeed, `${selectionScope}:${encounterId}`, { sexLabel, ageYears });
+    return { ...normalized, ...(stillId ? { stillId } : {}) };
   }
 
   // When the chart intentionally does not specify sex, keep one coherent
@@ -358,13 +608,19 @@ export function createPatientPixelAppearance(
         RANDOM_STREAMS.patientAppearance,
         `${selectionScope}:${encounterId}:patient-roster.unspecified.v1`,
         eligible.length,
-      )]?.id as PatientIdentityId | undefined
+    )]?.id as PatientIdentityId | undefined
     : undefined;
+  const stillId = selectPatientStillId(
+    campaignSeed,
+    `${selectionScope}:${encounterId}`,
+    { sexLabel, ageYears },
+  );
   return {
     ...normalized,
     headVariant: variantWithinFamily(normalized.headVariant, familyOffset),
     bodyVariant: variantWithinFamily(normalized.headVariant, familyOffset),
     ...(patientIdentityId ? { patientIdentityId } : {}),
+    ...(stillId ? { stillId } : {}),
   };
 }
 
@@ -384,6 +640,7 @@ export function createPatientDisplayName(
   campaignSeed: string,
   encounterId: string,
   sexLabel?: PatientSexLabel,
+  excludedDisplayNames: readonly string[] = [],
 ): string {
   const random = createDeterministicRandom(
     campaignSeed,
@@ -396,8 +653,29 @@ export function createPatientDisplayName(
       : sexLabel === "Male"
         ? PATIENT_MASCULINE_FIRST_NAMES
         : PATIENT_NEUTRAL_FIRST_NAMES;
-  const firstName = firstNames[random.integer(firstNames.length)]!;
-  const lastName =
-    PATIENT_LAST_NAMES[random.integer(PATIENT_LAST_NAMES.length)]!;
-  return `${firstName} ${lastName}`;
+  const firstStart = random.integer(firstNames.length);
+  const lastStart = random.integer(PATIENT_LAST_NAMES.length);
+  if (excludedDisplayNames.length === 0) {
+    return `${firstNames[firstStart]!} ${PATIENT_LAST_NAMES[lastStart]!}`;
+  }
+
+  const usedFullNames = new Set(excludedDisplayNames);
+  const usedLastNames = new Set(
+    excludedDisplayNames
+      .map((displayName) => displayName.trim().split(/\s+/).at(-1))
+      .filter((lastName): lastName is string => Boolean(lastName)),
+  );
+  const candidates = Array.from(
+    { length: firstNames.length * PATIENT_LAST_NAMES.length },
+    (_, index) => {
+      const firstName = firstNames[(firstStart + index) % firstNames.length]!;
+      const lastName = PATIENT_LAST_NAMES[
+        (lastStart + Math.floor(index / firstNames.length)) % PATIENT_LAST_NAMES.length
+      ]!;
+      return `${firstName} ${lastName}`;
+    },
+  );
+  return candidates.find((name) => !usedFullNames.has(name) && !usedLastNames.has(name.split(" ")[1]!))
+    ?? candidates.find((name) => !usedFullNames.has(name))
+    ?? candidates[0]!;
 }

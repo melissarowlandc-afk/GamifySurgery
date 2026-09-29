@@ -58,7 +58,13 @@ Hashes use UTF-8 without BOM after normalizing CRLF to LF. The expected set is e
 | `667a1bb2fae09ae5751e3aefe2c5e4ec30d2c9dc5b28387f2dad28764948e4a2` | `packages/clinical-content/src/development-batch/2026-09-10/internal-hemorrhoids.ts` |
 | `714e68d26fa76447c2c3593ce9a1a6dba63a6b6ec3345565278732b51a053fab` | `packages/clinical-content/src/development-batch/2026-09-10/esophageal-dysphagia.ts` |
 | `69ede140743fcaa8768ce80d17ff89bac8fe4c5a545d2ef808575dc9adb868b8` | `packages/clinical-content/src/development-batch/2026-09-10/achalasia.ts` |
-| `856efd75322d671c2fce01c8c5cef0e86f3ced45adf0b44e48f991b8ca5115a5` | `packages/clinical-content/src/development-batch/2026-09-10/pigmented-skin-lesion.ts` |
+| `60f451d69414de09209b3c395c371af671e2877dd4ae49606c9b88028661f483` | `packages/clinical-content/src/development-batch/2026-09-10/pigmented-skin-lesion.ts` |
 | `be194edda71c7f999e0e1f09cc0c1848c5c9fab2630eb77eebdda987e5702e90` | `packages/clinical-content/src/development-batch/2026-09-10/postoperative-seroma.ts` |
 | `2997ffa9adf31d7ac56abfb9eabe127532613c2090218388c56364cb8e885118` | `packages/clinical-content/src/development-batch/2026-09-10/pilonidal-disease.ts` |
 | `5de413be03fb4c14e03877e4d42a4e0df5369d5f3bc3cbe547822638e1cfe49f` | `packages/clinical-content/src/development-batch/2026-09-10/surgery-center-batch.ts` |
+
+## GS-021 operational amendment — September 17, 2026
+
+The owner-approved GS-021 service catalog authorized an onsite minor-procedure-room acquisition route for the already-authored pigmented-lesion biopsy, while retaining external pathology. The operational amendment adds the facility capability gate and route contract only. It does not change the teaching text, answer key, evidence claims, review status, or represent new clinician approval.
+
+The previously recorded LF-normalized SHA-256 for pigmented-skin-lesion.ts was 856efd75322d671c2fce01c8c5cef0e86f3ced45adf0b44e48f991b8ca5115a5. The canonical table now records the replacement operationally amended source hash.

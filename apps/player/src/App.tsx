@@ -69,6 +69,7 @@ function ActivePrototypeGame({
       roomOptions={view.roomOptions}
       selectedRoomBuild={view.selectedRoomBuild}
       staffRoles={view.staffRoles}
+      serviceIncome={view.serviceIncome}
       messages={view.messages}
       systemNotices={session.systemNotices}
       questionReviewFlags={session.questionReviewFlags}
@@ -107,6 +108,7 @@ function ActivePrototypeGame({
       onExitBuildMode={session.exitBuildMode}
       onEnterManagementMode={session.enterManagementMode}
       onExitManagementMode={session.exitManagementMode}
+      onServiceAppointmentsEnabledChange={session.setServiceAppointmentsEnabled}
       onSelectRoom={session.selectRoom}
       onSellSelectedRoom={session.sellSelectedRoom}
       onUpgradeSelectedRoom={session.upgradeSelectedRoom}
@@ -120,6 +122,7 @@ function ActivePrototypeGame({
       onFireEmployee={session.fireEmployee}
       onCollectLitter={session.collectLitter}
       onRefillWaterCooler={session.refillWaterCooler}
+      onSeatFounderAtFrontDesk={session.seatFounderAtFrontDesk}
       onPraiseEmployee={session.praiseEmployee}
       onMoveFounder={session.moveFounder}
       onLevelUp={session.levelUp}

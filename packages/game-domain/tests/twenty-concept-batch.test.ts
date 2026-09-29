@@ -23,6 +23,25 @@ function emptyState(seed: string, level: 0 | 1 | 2): GameState {
     createdAtRealMs: 0,
   });
   state.facilityLevel = level;
+  // Ordinary-care batch fixtures require a reachable clinical room. Fresh
+  // campaigns intentionally no longer receive this room automatically.
+  state.rooms.push({
+    id: "room.batch.examination",
+    roomDefinitionId: "room.examination",
+    x: 34,
+    y: 26,
+    orientation: 0,
+    doorSide: "south",
+    upgradeLevel: 1,
+    cleanliness: 100,
+  });
+  state.doors.push({
+    id: "door.batch.examination",
+    roomId: "room.batch.examination",
+    side: "south",
+    offset: 1,
+    exterior: false,
+  });
   state.encounters = {};
   state.openChartEncounterId = null;
   state.attendedEncounterId = null;

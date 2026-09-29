@@ -89,7 +89,7 @@ test("a persisted Level 1 campaign advances once, then exposes the Level 2 build
   await page.reload();
   if (await resume.isVisible()) await resume.click();
   for (const role of levelTwoRoles) await expect(page.getByRole("heading", { name: role })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "GLP-1 Consult Automation" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "GLP-1 Consult Automation" })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Cash-Only GLP-1 Consult" })).toHaveCount(0);
   await expect(page.locator(".goal-list li").filter({ hasText: "Build Endoscopy Room" })).toContainText("1/1");
   await expect(page.locator(".goal-list li").filter({ hasText: "Build Peri-op/Recovery Room" })).toContainText("1/1");

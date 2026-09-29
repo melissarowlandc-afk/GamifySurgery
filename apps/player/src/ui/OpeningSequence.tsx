@@ -8,8 +8,8 @@ import {
   type LocalPrototypeProfile,
 } from "../session/prototypeStorage";
 import {
-  FOUNDER_IDENTITY_PRESETS,
-  createUnifiedFounderAppearance,
+  FOUNDER_AVATAR_CHOICES,
+  createFounderAvatarAppearance,
 } from "../content/founderAppearancePresets";
 import {
   readLastIntroTagline,
@@ -64,7 +64,8 @@ export function OpeningSequence({
   const [founderIdentityIndex, setFounderIdentityIndex] = useState(0);
   const initializingRef = useRef(false);
   const [initializing, setInitializing] = useState(false);
-  const appearance = createUnifiedFounderAppearance(founderIdentityIndex);
+  const appearance = createFounderAvatarAppearance(founderIdentityIndex);
+  const founderChoice = FOUNDER_AVATAR_CHOICES[founderIdentityIndex]!;
   const trimmedFounderName = founderName.trim();
   const normalizedClinicName = normalizeClinicName(clinicName);
   const duplicateClinicName =
@@ -72,8 +73,8 @@ export function OpeningSequence({
     clinicNameExists(profile, normalizedClinicName);
   const founder: FounderIdentity = {
     displayName: trimmedFounderName,
-    headId: FOUNDER_IDENTITY_PRESETS[founderIdentityIndex]!.head.id,
-    bodyId: FOUNDER_IDENTITY_PRESETS[founderIdentityIndex]!.body.id,
+    headId: founderChoice.head.id,
+    bodyId: founderChoice.body.id,
     appearance,
   };
   const resumableCampaigns = useMemo(
@@ -277,7 +278,6 @@ export function OpeningSequence({
           label={`${trimmedFounderName}, rich and happy`}
           size="large"
           representation="full"
-          animation="star-jump"
           roleStyle="founder"
           className="happy-founder-avatar"
         />
@@ -333,16 +333,16 @@ export function OpeningSequence({
             aria-label="Previous founder"
             onClick={() =>
               setFounderIdentityIndex((current) =>
-                wrapIndex(current - 1, FOUNDER_IDENTITY_PRESETS.length),
+                wrapIndex(current - 1, FOUNDER_AVATAR_CHOICES.length),
               )
             }
           >
             &larr;
           </button>
           <span className="founder-preset-label">
-            <b>{FOUNDER_IDENTITY_PRESETS[founderIdentityIndex]!.label}</b>
+            <b>{founderChoice.label}</b>
             <small>
-              Founder {founderIdentityIndex + 1} of {FOUNDER_IDENTITY_PRESETS.length}
+              Founder {founderIdentityIndex + 1} of {FOUNDER_AVATAR_CHOICES.length}
             </small>
           </span>
           <button
@@ -351,7 +351,7 @@ export function OpeningSequence({
             aria-label="Next founder"
             onClick={() =>
               setFounderIdentityIndex((current) =>
-                wrapIndex(current + 1, FOUNDER_IDENTITY_PRESETS.length),
+                wrapIndex(current + 1, FOUNDER_AVATAR_CHOICES.length),
               )
             }
           >

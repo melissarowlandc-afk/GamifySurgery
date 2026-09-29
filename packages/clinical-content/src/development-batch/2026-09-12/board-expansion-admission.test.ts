@@ -60,9 +60,9 @@ describe("September 12 board-expansion batch admission", () => {
       admissionScope: "active_synthetic_unapproved_prototype",
       publicReleaseAuthorized: false,
     });
-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(143);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(350);
-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(543);
+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(203);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(518);
+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(783);
     for (const clinicalCase of BOARD_EXPANSION_20260912_CASES) {
       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
       expect(clinicalCase.approvedInstantiationProfiles).toHaveLength(4);

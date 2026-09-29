@@ -36,6 +36,8 @@ function quietTutorialState(): GameState {
   });
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   state.alertHumor.nextAmbientAlertTick = null;
+  state.rooms.push({ id: "room.instance.starter_examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
+  state.doors.push({ id: "door.instance.starter_examination", roomId: "room.instance.starter_examination", side: "south", offset: 1, exterior: false });
   const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
   encounter.patientMovement = null;
   encounter.patientLocation = { x: 36, y: 27 };
@@ -165,7 +167,7 @@ describe("delayed patient attention events", () => {
     delete arriving.encounters[TUTORIAL_ENCOUNTER_ID]!
       .unstaffedCheckInOverdueApplied;
     const restoredArrival = deserializeGameState(JSON.stringify(arriving));
-    expect(restoredArrival.schemaVersion).toBe(7);
+    expect(restoredArrival.schemaVersion).toBe(8);
     expect(
       restoredArrival.encounters[TUTORIAL_ENCOUNTER_ID]!.checkInStatus,
     ).toBe("approaching");
@@ -188,18 +190,19 @@ describe("delayed patient attention events", () => {
     ).toBe("checked_in");
   });
 
-  it("records checked-in waiting only after more than five unresolved facility minutes", () => {
+  it("records actual idle waiting once only after more than 60 facility minutes", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "waiting_unopened";
     encounter.firstOpenedAtTick = null;
     encounter.feedAttentionKind = "checked_in";
     encounter.feedAttentionStartedAtTick = state.facilityTick;
+    encounter.idleWaitingSinceTick = state.facilityTick;
 
-    state = advance(state, 5, "checked-in.before-threshold");
+    state = advance(state, 60, "checked-in.before-threshold");
     expect(
       state.events.some(
-        (event) => event.definitionId === "alert.patient.arrived",
+        (event) => event.definitionId === "alert.patient.waiting",
       ),
     ).toBe(false);
 
@@ -214,21 +217,46 @@ describe("delayed patient attention events", () => {
     state = tick(restored, "checked-in.after-threshold");
     expect(
       state.events.filter(
-        (event) => event.definitionId === "alert.patient.arrived",
+        (event) => event.definitionId === "alert.patient.waiting",
       ),
     ).toHaveLength(1);
     expect(
       state.events.find(
-        (event) => event.definitionId === "alert.patient.arrived",
+        (event) => event.definitionId === "alert.patient.waiting",
       ),
     ).toMatchObject({
-      facilityTick: 6,
+      facilityTick: 61,
       priority: "action_required",
       target: {
         kind: "encounter",
         id: TUTORIAL_ENCOUNTER_ID,
       },
     });
+    expect(
+      state.alertHumor.conditionLastEmittedTicks[
+        `patient.waiting:${TUTORIAL_ENCOUNTER_ID}`
+      ],
+    ).toBe(61);
+    state.events = [];
+    state = tick(state, "checked-in.same-episode-after-history-trim");
+    expect(
+      state.events.filter(
+        (event) => event.definitionId === "alert.patient.waiting",
+      ),
+    ).toHaveLength(0);
+    state.encounters[TUTORIAL_ENCOUNTER_ID]!.idleWaitingSinceTick = 61;
+    state = advance(state, 59, "checked-in.new-episode.same-tick");
+    expect(
+      state.events.some(
+        (event) => event.definitionId === "alert.patient.waiting",
+      ),
+    ).toBe(false);
+    state = tick(state, "checked-in.new-episode.after-threshold");
+    expect(
+      state.events.find(
+        (event) => event.definitionId === "alert.patient.waiting",
+      ),
+    ).toMatchObject({ facilityTick: 122 });
   });
 
   it("never records a brief checked-in wait that the player addresses", () => {
@@ -266,7 +294,7 @@ describe("delayed patient attention events", () => {
 
     expect(
       state.events.some(
-        (event) => event.definitionId === "alert.patient.arrived",
+        (event) => event.definitionId === "alert.patient.waiting",
       ),
     ).toBe(false);
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
@@ -275,7 +303,7 @@ describe("delayed patient attention events", () => {
     });
   });
 
-  it("records a plain clinical-decision wait only after more than five minutes", () => {
+  it("records a generic clinical wait only after more than 60 idle minutes", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "active_action_required";
@@ -283,12 +311,13 @@ describe("delayed patient attention events", () => {
       "action_required";
     encounter.feedAttentionKind = "clinical_decision";
     encounter.feedAttentionStartedAtTick = 0;
+    encounter.idleWaitingSinceTick = 0;
 
-    state = advance(state, 5, "decision.before-threshold");
+    state = advance(state, 60, "decision.before-threshold");
     expect(
       state.events.some(
         (event) =>
-          event.definitionId === "alert.patient.decision-required",
+          event.definitionId === "alert.patient.waiting",
       ),
     ).toBe(false);
 
@@ -296,19 +325,19 @@ describe("delayed patient attention events", () => {
     expect(
       state.events.find(
         (event) =>
-          event.definitionId === "alert.patient.decision-required",
+          event.definitionId === "alert.patient.waiting",
       ),
     ).toMatchObject({
-      type: "patient_arrived",
-      facilityTick: 6,
+      type: "patience_warning",
+      facilityTick: 61,
       message: expect.stringContaining(
-        "is ready for a clinical decision",
+        "has been waiting for clinical attention",
       ),
       priority: "action_required",
     });
   });
 
-  it("delays result-ready rows and restarts actionable attention after the chart closes", () => {
+  it("suppresses result-ready feed events but alerts after a returned patient idles", () => {
     let state = quietTutorialState();
     const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
     encounter.lifecycle = "active_action_required";
@@ -316,6 +345,7 @@ describe("delayed patient attention events", () => {
       "action_required";
     encounter.feedAttentionKind = "result_ready";
     encounter.feedAttentionStartedAtTick = 0;
+    encounter.idleWaitingSinceTick = 0;
     encounter.pendingResult = {
       operationId: "result.delay.test",
       gateId: "gate.delay.test",
@@ -335,21 +365,21 @@ describe("delayed patient attention events", () => {
       patientTravel: null,
     };
 
-    state = advance(state, 5, "result.before-threshold");
+    state = advance(state, 60, "result.before-threshold");
     expect(
       state.events.some((event) => event.type === "result_ready"),
     ).toBe(false);
 
     state = tick(state, "result.after-threshold");
-    const delayed = state.events.find(
-      (event) => event.type === "result_ready",
-    );
-    expect(delayed).toMatchObject({
-      facilityTick: 6,
-      message:
-        expect.stringContaining(
-          "Second training result pending is ready",
-        ),
+    expect(state.events.some((event) => event.type === "result_ready")).toBe(false);
+    expect(
+      state.events.find(
+        (event) => event.definitionId === "alert.patient.waiting",
+      ),
+    ).toMatchObject({
+      type: "patience_warning",
+      facilityTick: 61,
+      encounterId: TUTORIAL_ENCOUNTER_ID,
     });
 
     state = gameReducer(state, {
@@ -357,9 +387,6 @@ describe("delayed patient attention events", () => {
       operationId: "result.open",
       encounterId: TUTORIAL_ENCOUNTER_ID,
     });
-    expect(state.events.some((event) => event.id === delayed?.id)).toBe(
-      true,
-    );
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
       feedAttentionKind: null,
       feedAttentionStartedAtTick: null,
@@ -371,7 +398,7 @@ describe("delayed patient attention events", () => {
     });
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
       feedAttentionKind: "result_ready",
-      feedAttentionStartedAtTick: 6,
+      feedAttentionStartedAtTick: 61,
       patientMovement: expect.objectContaining({
         kind: "walking_to_waiting",
       }),
@@ -379,7 +406,28 @@ describe("delayed patient attention events", () => {
     state = advance(state, 1, "result.after-close.no-duplicate");
     expect(
       state.events.filter((event) => event.type === "result_ready"),
-    ).toHaveLength(1);
+    ).toHaveLength(0);
+  });
+
+  it("resets the no-arrival clock when an offsite patient reaches the clinic", () => {
+    let state = quietTutorialState();
+    state.facilityTick = 10;
+    state.alertHumor.lastPatientArrivalTick = 2;
+    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
+    encounter.lifecycle = "active_action_required";
+    encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
+    encounter.patientLocation = { x: 34, y: 29 };
+    encounter.patientMovement = {
+      kind: "returning_from_offsite_testing",
+      path: [{ x: 34, y: 29 }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 10,
+      destinationRoomInstanceId: "room.instance.founder_desk",
+    };
+
+    state = tick(state, "offsite.return.arrival");
+    expect(state.alertHumor.lastPatientArrivalTick).toBe(11);
+    expect(state.events.some((event) => event.type === "result_ready")).toBe(false);
   });
 
   it("normalizes legacy unresolved attention timing without rerolling it", () => {

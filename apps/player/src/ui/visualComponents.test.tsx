@@ -422,7 +422,7 @@ describe("segmented resource HUD", () => {
 });
 
 describe("character visual QA gallery", () => {
-  it("uses smooth sampling for authored atlas crops while retaining the crisp SVG fallback", () => {
+  it("renders the selected whole still and uses a neutral placeholder for unknown art", () => {
     const markup = renderToStaticMarkup(
       <PixelAvatar
         label="Avery"
@@ -440,15 +440,20 @@ describe("character visual QA gallery", () => {
           headVariant: 0,
           bodyVariant: 0,
           roleStyle: "founder",
+          stillId: "founder.01",
         }}
       />,
     );
-    expect(markup).toContain("pixel-avatar-authored");
-    expect(markup).toContain("pixel-avatar-authored-actor");
-    expect((markup.match(/image-rendering:auto/g) ?? [])).toHaveLength(2);
+    expect(markup).toContain("pixel-avatar-still");
+    expect(markup).toContain("stand-south.png");
+    expect(markup).toContain('data-art-source="gs026-character-still-v1"');
 
     const source = readFileSync(new URL("./PixelAvatar.tsx", import.meta.url), "utf8");
-    expect(source).toContain('shapeRendering="crispEdges"');
+    expect(source).not.toContain("PixelFrameSvg");
+    expect(renderToStaticMarkup(<PixelAvatar label="Unknown" avatar={{
+      version: "pixel-avatar.v1", bodyShape: "average", hairStyle: "short", hairShade: 0,
+      faceStyle: "round", outfitStyle: "plain", outfitShade: 0, accessory: "none", stillId: "future.unknown",
+    }} />)).toContain("pixel-avatar-neutral");
   });
 
   it("keeps the shared descriptor visible through idle, movement, work, interaction, seating, and portrait representations", () => {
@@ -478,21 +483,14 @@ describe("character visual QA gallery", () => {
       />,
     );
 
-    expect(markup).toContain("Map front / idle");
-    expect(markup).toContain("Live route west A");
-    expect(markup).toContain("Live route east B");
-    expect(markup).toContain("Seated");
-    expect(markup).toContain("Working");
-    expect(markup).toContain("Interaction");
-    expect(markup).toContain("Portrait");
-    expect(markup).toContain("Star jump");
-    expect(markup).toContain("Avery working map sprite");
-    expect(markup).toContain("Avery interaction map sprite");
-    expect(
-      (markup.match(/data-character-id="patient-roster:patient\.adult\./g) ?? []),
-    ).toHaveLength(50);
-    expect(markup).toContain("canonical-patient-atlas-v1");
-    expect(markup).toContain("patients-thumbnail-v1.png");
-    expect(markup).toContain("patients-portrait-v1.png");
+    expect(markup).toContain("Stand South");
+    expect(markup).toContain("Stand East");
+    expect(markup).toContain("Stand West");
+    expect(markup).toContain("Stand North");
+    expect(markup).toContain("Sit South");
+    expect(markup).toContain("Sit North");
+    expect((markup.match(/data-character-id=/g) ?? [])).toHaveLength(128);
+    expect((markup.match(/data-static-pose=/g) ?? []).length).toBe(1054);
+    expect(markup).not.toContain("Live route");
   });
 });

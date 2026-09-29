@@ -13,6 +13,24 @@ export interface FacilityPatientCounts {
   resolved: number;
 }
 
+/** Presentation-only furniture assignment. Gameplay/navigation coordinates remain authoritative. */
+export type FacilityActorSupportRole =
+  | "waiting-seat"
+  | "front-desk-staff"
+  | "front-desk-public"
+  | "examination-patient"
+  | "examination-clinician"
+  | "ultrasound-patient"
+  | "ultrasound-clinician"
+  | "minor-procedure-patient"
+  | "minor-procedure-clinician"
+  | "ct-patient"
+  | "ct-operator"
+  | "phlebotomy-patient"
+  | "phlebotomy-clinician"
+  | "glp1-np-station-1"
+  | "glp1-np-station-2";
+
 export interface FacilityPatientView {
   instanceId: string;
   displayName: string;
@@ -26,6 +44,7 @@ export interface FacilityPatientView {
   /** Derived presentation state for a stationary patient occupying a waiting anchor. */
   seated?: boolean;
   pose?: "seated" | "exam-table";
+  supportRole?: FacilityActorSupportRole;
 }
 
 /** Noninteractive exterior pedestrian; never appears in patient UI. */
@@ -102,6 +121,7 @@ export interface FacilityStaffView {
   pathIndex?: number;
   moving?: boolean;
   direction?: "front" | "side" | "back";
+  supportRole?: FacilityActorSupportRole;
 }
 
 export interface FacilityFounderView {
@@ -114,6 +134,47 @@ export interface FacilityFounderView {
   moving?: boolean;
   direction?: "front" | "side" | "back";
   seated?: boolean;
+  supportRole?: FacilityActorSupportRole;
+}
+
+/** Durable income receipts projected only for transient facility feedback. */
+export interface FacilityEarningsReceiptView {
+  transactionKey: string;
+  actorKind: "patient" | "employee" | "founder" | "remote" | "visitor" | "retail_visitor" | "companion";
+  actorId: string;
+  grossAmount: number;
+  /** A domain-captured visual representative for a remote financial actor. */
+  displayAnchor?:
+    | { actorKind: "employee"; actorId: string }
+    | { actorKind: "founder"; actorId: "founder" };
+}
+
+/** A non-encounter visitor owned by a service operation. */
+export interface FacilityServiceVisitorView {
+  instanceId: string;
+  actorId: string;
+  displayName: string;
+  appearance: PixelAppearanceDescriptor | null;
+  location?: GridPoint;
+  path?: GridPoint[];
+  pathIndex?: number;
+  moving?: boolean;
+  direction?: "front" | "side" | "back";
+  rightFacing?: boolean;
+  supportRole?: FacilityActorSupportRole;
+}
+
+export interface FacilityRetailExternalActorView {
+  instanceId: string;
+  actorKind: "retail_visitor" | "companion";
+  displayName: string;
+  appearance: PixelAppearanceDescriptor;
+  location?: GridPoint;
+  path?: GridPoint[];
+  pathIndex?: number;
+  moving?: boolean;
+  direction?: "front" | "side" | "back";
+  rightFacing?: boolean;
 }
 
 export interface FacilityLitterView {
@@ -164,6 +225,8 @@ export interface FacilityCameraView {
  */
 export interface FacilityViewModel {
   facilityTitle: string;
+  /** A scene-local receipt cursor resets when this persisted campaign changes. */
+  campaignId?: string;
   facilityTick: number;
   paused: boolean;
   simulationSpeed: 1 | 2 | 4;
@@ -178,6 +241,19 @@ export interface FacilityViewModel {
   litterItems?: FacilityLitterView[];
   waterCooler?: FacilityWaterCoolerView;
   patients?: FacilityPatientView[];
+  earningsReceipts?: FacilityEarningsReceiptView[];
+  serviceVisitors?: FacilityServiceVisitorView[];
+  /** Presentation-only covered-patient state for the approved Endoscopy table. */
+  endoscopyOccupancy?: Readonly<{
+    roomInstanceIds: readonly string[];
+    patientInstanceIds: readonly string[];
+    serviceVisitorInstanceIds: readonly string[];
+  }>;
+  retailExternalActors?: FacilityRetailExternalActorView[];
+  /** Optional honest workstation/panel anchors for future remote receipts. */
+  remoteReceiptAnchors?: Readonly<Record<string, GridPoint>>;
+  /** Reserved for separately rendered service visitors; no encounter aliasing. */
+  visitorReceiptAnchors?: Readonly<Record<string, GridPoint>>;
   rooms: FacilityRoomView[];
   doors?: FacilityDoorView[];
   staff: FacilityStaffView[];
@@ -208,6 +284,7 @@ export type RemoveDoorRequest = (doorInstanceId: string) => void;
 export type RequestRoomUpgrade = (roomInstanceId: string) => void;
 export type CollectLitterRequest = (litterId: string) => void;
 export type RefillWaterCoolerRequest = () => void;
+export type SeatFounderAtFrontDeskRequest = () => boolean;
 export type PraiseEmployeeRequest = (employeeId: string) => void;
 export type MoveFounderRequest = (destination: GridPoint) => boolean;
 export type FacilityCameraChangeRequest = (camera: FacilityCameraView) => void;

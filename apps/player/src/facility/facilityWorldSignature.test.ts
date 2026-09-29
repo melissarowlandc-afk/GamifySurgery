@@ -99,4 +99,15 @@ describe("facility static-world signature", () => {
       getFacilityWorldSignature(before),
     );
   });
+
+  it("invalidates when an Endoscopy room changes its approved covered-table state", () => {
+    const before = model();
+    const after = structuredClone(before);
+    after.endoscopyOccupancy = {
+      roomInstanceIds: [after.rooms[0]!.instanceId],
+      patientInstanceIds: [],
+      serviceVisitorInstanceIds: [],
+    };
+    expect(getFacilityWorldSignature(after)).not.toBe(getFacilityWorldSignature(before));
+  });
 });

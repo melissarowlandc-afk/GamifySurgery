@@ -1,6 +1,6 @@
 import type { CharacterDirection, CharacterPose } from "../art/characterArt";
 
-export type CharacterRenderRepresentation = "bitmap" | "procedural";
+export type CharacterRenderRepresentation = "bitmap" | "neutral" | "procedural";
 
 export interface CharacterPresentationViewport {
   readonly originX: number;
@@ -17,6 +17,7 @@ export interface CharacterMotionPresentation<TAppearance> {
   readonly displayScale: number;
   readonly appearance: TAppearance;
   readonly representation: CharacterRenderRepresentation;
+  readonly alignSeatContact?: boolean;
 }
 
 export interface CharacterMotionCandidate<TAppearance> {
@@ -27,6 +28,7 @@ export interface CharacterMotionCandidate<TAppearance> {
   readonly rightFacing: boolean;
   readonly displayScale: number;
   readonly appearance: TAppearance;
+  readonly alignSeatContact?: boolean;
 }
 
 export function captureCharacterMotionPresentation<TAppearance>(
@@ -43,6 +45,7 @@ export function captureCharacterMotionPresentation<TAppearance>(
     rightFacing: candidate.rightFacing,
     displayScale: candidate.displayScale,
     appearance: candidate.appearance,
+    alignSeatContact: candidate.alignSeatContact,
     representation,
   };
 }
@@ -60,6 +63,7 @@ export function replayCharacterMotionPresentation<TAppearance>(
     displayScale: snapshot.displayScale,
     appearance: snapshot.appearance,
     representation: snapshot.representation,
+    alignSeatContact: snapshot.alignSeatContact,
   };
 }
 

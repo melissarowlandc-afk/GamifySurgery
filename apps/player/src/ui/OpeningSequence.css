@@ -28,32 +28,7 @@
 
 .founder-preview-avatar,
 .happy-founder-avatar {
-  animation: founder-idle-bounce 1.4s steps(2, jump-none) infinite;
   image-rendering: pixelated;
-}
-
-.happy-founder-avatar {
-  animation: founder-star-jump 0.9s steps(4, jump-none) infinite;
-}
-
-.happy-founder-avatar .pixel-avatar-arm.is-left {
-  transform-origin: 100% 15%;
-  animation: founder-star-jump-left-arm 0.9s steps(4, jump-none) infinite;
-}
-
-.happy-founder-avatar .pixel-avatar-arm.is-right {
-  transform-origin: 0 15%;
-  animation: founder-star-jump-right-arm 0.9s steps(4, jump-none) infinite;
-}
-
-.happy-founder-avatar .pixel-avatar-leg.is-left {
-  transform-origin: 50% 0;
-  animation: founder-star-jump-left-leg 0.9s steps(4, jump-none) infinite;
-}
-
-.happy-founder-avatar .pixel-avatar-leg.is-right {
-  transform-origin: 50% 0;
-  animation: founder-star-jump-right-leg 0.9s steps(4, jump-none) infinite;
 }
 
 .founder-name-field {
@@ -359,62 +334,6 @@
   }
   50% {
     transform: translateY(-5px);
-  }
-}
-
-@keyframes founder-star-jump {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-8px) rotate(-4deg) scaleX(1.08);
-  }
-  50% {
-    transform: translateY(-14px) rotate(0deg) scaleX(1.18);
-  }
-  75% {
-    transform: translateY(-8px) rotate(4deg) scaleX(1.08);
-  }
-}
-
-@keyframes founder-star-jump-left-arm {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  50% {
-    transform: rotate(118deg) translate(-1px, 1px);
-  }
-}
-
-@keyframes founder-star-jump-right-arm {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  50% {
-    transform: rotate(-118deg) translate(1px, 1px);
-  }
-}
-
-@keyframes founder-star-jump-left-leg {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  50% {
-    transform: rotate(34deg) translate(-1px, 0);
-  }
-}
-
-@keyframes founder-star-jump-right-leg {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  50% {
-    transform: rotate(-34deg) translate(1px, 0);
   }
 }
 

@@ -19,6 +19,7 @@ import type {
   PlaceRoomRequest,
   PraiseEmployeeRequest,
   RefillWaterCoolerRequest,
+  SeatFounderAtFrontDeskRequest,
   RemoveDoorRequest,
   RequestRoomUpgrade,
   SelectRoomRequest,
@@ -33,6 +34,7 @@ export interface FacilityCanvasProps {
   onRequestRoomUpgrade?: RequestRoomUpgrade;
   onCollectLitter?: CollectLitterRequest;
   onRefillWaterCooler?: RefillWaterCoolerRequest;
+  onSeatFounderAtFrontDesk?: SeatFounderAtFrontDeskRequest;
   onPraiseEmployee?: PraiseEmployeeRequest;
   onMoveFounder?: MoveFounderRequest;
   onCameraChange?: FacilityCameraChangeRequest;
@@ -66,6 +68,7 @@ export function FacilityCanvas({
   onRequestRoomUpgrade,
   onCollectLitter,
   onRefillWaterCooler,
+  onSeatFounderAtFrontDesk,
   onPraiseEmployee,
   onMoveFounder,
   onCameraChange,
@@ -90,6 +93,7 @@ export function FacilityCanvas({
   bridgeRef.current.onRequestRoomUpgrade = onRequestRoomUpgrade;
   bridgeRef.current.onCollectLitter = onCollectLitter;
   bridgeRef.current.onRefillWaterCooler = onRefillWaterCooler;
+  bridgeRef.current.onSeatFounderAtFrontDesk = onSeatFounderAtFrontDesk;
   bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
   bridgeRef.current.onMoveFounder = onMoveFounder;
   bridgeRef.current.onCameraChange = onCameraChange;

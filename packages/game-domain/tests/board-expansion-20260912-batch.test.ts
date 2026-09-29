@@ -17,6 +17,25 @@ function prepared(seed: string): GameState {
     createdAtRealMs: 0,
   });
   state.facilityLevel = 1;
+  // This ordinary-care batch authors the connected clinical room that a fresh
+  // campaign now requires the player to construct.
+  state.rooms.push({
+    id: "room.board.20260912.examination",
+    roomDefinitionId: "room.examination",
+    x: 34,
+    y: 26,
+    orientation: 0,
+    doorSide: "south",
+    upgradeLevel: 1,
+    cleanliness: 100,
+  });
+  state.doors.push({
+    id: "door.board.20260912.examination",
+    roomId: "room.board.20260912.examination",
+    side: "south",
+    offset: 1,
+    exterior: false,
+  });
   state.encounters = {};
   state.openChartEncounterId = null;
   state.attendedEncounterId = null;

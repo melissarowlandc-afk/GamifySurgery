@@ -1,10 +1,118 @@
 import { describe, expect, it } from "vitest";
-import { createInitialGameState } from "@gamify-surgery/game-domain";
+import { createInitialGameState, type ServiceOperationState } from "@gamify-surgery/game-domain";
 import { getRoomCareAnchor } from "@gamify-surgery/game-domain";
+import { getRoomNavigationAnchor } from "@gamify-surgery/game-domain";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("patient movement presentation", () => {
+  it("seats an available founder at an unstaffed Front Desk without seating reserved work", () => {
+    const state = createInitialGameState();
+    const frontDesk = state.rooms.find(
+      (room) => room.roomDefinitionId === "room.front_desk",
+    )!;
+    const definition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find(
+      (room) => room.id === "room.front_desk",
+    )!;
+    state.environment.founderLocation = getRoomNavigationAnchor(
+      frontDesk,
+      definition,
+      "staff",
+    );
+    state.environment.founderActivity = null;
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(true);
+
+    state.serviceOperations.push({
+      id: "service.test.founder-reserved",
+      incomeLineId: "income.test",
+      catalogVersion: 1,
+      actorKind: "visitor",
+      actorId: "visitor.test",
+      displayName: "Reserved Visitor",
+      appearance: state.founder.appearance,
+      status: "waiting_for_resources",
+      createdAtFacilityTick: state.facilityTick,
+      waitDeadlineFacilityTick: state.facilityTick + 60,
+      startedAtFacilityTick: null,
+      completedAtFacilityTick: null,
+      cancelledAtFacilityTick: null,
+      quoteFee: 0,
+      phaseIndex: 0,
+      phaseStartedAtFacilityTick: null,
+      phaseEndsAtFacilityTick: null,
+      reservedRoomInstanceIds: [],
+      reservedEmployeeIds: [],
+      providerReservation: { kind: "founder" },
+      location: null,
+      path: [],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      cancellationReason: null,
+    });
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(false);
+
+    state.serviceOperations = [];
+    const encounter = Object.values(state.encounters)[0]!;
+    encounter.steps[0]!.status = "feedback_pending";
+    encounter.pendingResult = {
+      operationId: "result.test.founder-reserved",
+      gateId: "gate.test.founder-reserved",
+      originatingNodeIndex: 0,
+      resultTypeId: "service.test",
+      pendingLabel: "Reserved work pending",
+      resultNarrative: "fixture",
+      routeId: "route.test",
+      routeDisplayName: "Reserved work",
+      scheduledAtTick: state.facilityTick - 2,
+      dueTick: state.facilityTick + 10,
+      deliveredAtTick: null,
+      serviceDurationTicks: 1,
+      durationTicks: 1,
+      offsiteReturnStartedAtTick: null,
+      offsiteTravel: null,
+      patientTravel: null,
+      resourceReservations: [],
+      providerReservation: { kind: "founder" },
+      timingPhases: [{
+        id: "phase.test.expired",
+        durationTicks: 1,
+        resourceBound: true,
+        startsAtTick: state.facilityTick - 2,
+        endsAtTick: state.facilityTick - 1,
+      }],
+    };
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(false);
+
+    encounter.pendingResult = null;
+    state.employees.push({
+      id: "employee.test.receptionist",
+      staffRoleDefinitionId: "staff.receptionist",
+      displayName: "Receptionist",
+      appearance: state.founder.appearance,
+      hiredAtFacilityTick: state.facilityTick,
+      salaryPerExpenseInterval: 18,
+      morale: 80,
+      trainingLevel: 1,
+      homeRoomInstanceId: frontDesk.id,
+      location: { ...state.environment.founderLocation },
+      path: [{ ...state.environment.founderLocation }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: state.facilityTick + 60,
+      facilityTask: null,
+    });
+    expect(
+      createPrototypePlayerView(state, null, false, null).facility.founder.seated,
+    ).toBe(false);
+  });
+
   it("projects every waiting reservation kind and semantic examination attendance", () => {
     const state = createInitialGameState();
     const encounter = Object.values(state.encounters)[0]!;
@@ -37,11 +145,13 @@ describe("patient movement presentation", () => {
     encounter.patientLocation = getRoomCareAnchor(exam, examDefinition, "patient");
     encounter.waitingDestination = null;
     expect(patient().pose).toBe("exam-table");
+    expect(patient().supportRole).toBe("examination-patient");
     state.environment.founderActivity = { kind: "attend_encounter", targetId: encounter.id, path: [{ ...state.environment.founderLocation }, getRoomCareAnchor(exam, examDefinition, "clinician")], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, workMinutesRemaining: 1 };
     expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(false);
     state.environment.founderLocation = getRoomCareAnchor(exam, examDefinition, "clinician");
     state.environment.founderActivity.pathIndex = 1;
     expect(createPrototypePlayerView(state, null, false, null).facility.founder.seated).toBe(true);
+    expect(createPrototypePlayerView(state, null, false, null).facility.founder.supportRole).toBe("examination-clinician");
   });
 
   it("only seats the founder after a chair auto-plan arrives", () => {
@@ -178,5 +288,210 @@ describe("patient movement presentation", () => {
     );
 
     expect(patient?.seated).toBe(true);
+    expect(patient?.supportRole).toBe("waiting-seat");
+  });
+
+  it("projects care supports only for assigned actors at their service endpoint", () => {
+    const state = createInitialGameState();
+    const encounter = Object.values(state.encounters)[0]!;
+    const ct = { id: "room.test.ct", roomDefinitionId: "room.ct", x: 12, y: 8, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
+    const ultrasound = { id: "room.test.us", roomDefinitionId: "room.ultrasound", x: 5, y: 8, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
+    state.rooms.push(ct, ultrasound);
+    encounter.patientMovement = null;
+    encounter.patientLocation = { x: 13, y: 10 };
+    const operation: ServiceOperationState = {
+      id: "service.test.ct", incomeLineId: "income.test.ct", catalogVersion: 1 as const,
+      actorKind: "encounter" as const, actorId: encounter.id, displayName: encounter.patientDisplayName,
+      appearance: encounter.patientAppearance, status: "in_service" as const, createdAtFacilityTick: state.facilityTick,
+      waitDeadlineFacilityTick: state.facilityTick + 60, startedAtFacilityTick: state.facilityTick,
+      completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 0, phaseIndex: 0,
+      phaseStartedAtFacilityTick: state.facilityTick, phaseEndsAtFacilityTick: state.facilityTick + 10,
+      reservedRoomInstanceIds: [ct.id], reservedEmployeeIds: ["employee.test.mobile-tech"], providerReservation: null,
+      location: { ...encounter.patientLocation }, path: [{ ...encounter.patientLocation }], pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null,
+    };
+    state.serviceOperations.push(operation);
+    state.employees.push({
+      id: "employee.test.mobile-tech", staffRoleDefinitionId: "staff.imaging_technician", displayName: "Mobile Tech",
+      appearance: state.founder.appearance, hiredAtFacilityTick: state.facilityTick, salaryPerExpenseInterval: 20,
+      morale: 80, trainingLevel: 1, homeRoomInstanceId: ultrasound.id, location: { x: 15, y: 10 },
+      path: [{ x: 15, y: 10 }], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick,
+      lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: state.facilityTick + 60,
+      facilityTask: { kind: "perform_service", targetId: operation.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: 10 },
+    });
+    let facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBe("ct-patient");
+    expect(facility.staff.find((staff) => staff.instanceId === "employee.test.mobile-tech")?.supportRole).toBe("ct-operator");
+
+    state.employees[0]!.path = [{ x: 14, y: 10 }, { x: 15, y: 10 }];
+    state.employees[0]!.pathIndex = 0;
+    facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.staff.find((staff) => staff.instanceId === "employee.test.mobile-tech")?.supportRole).toBeUndefined();
+
+    operation.status = "leaving";
+    facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBeUndefined();
+
+    state.serviceOperations = [];
+    state.facilityTick = 20;
+    encounter.lifecycle = "active_pending_result";
+    encounter.patientMovement = null;
+    encounter.pendingResult = {
+      operationId: "result.test.ct", gateId: "gate.test.ct", originatingNodeIndex: 0,
+      resultTypeId: "service.test.ct", pendingLabel: "CT pending", resultNarrative: "fixture",
+      routeId: "route.test.ct", routeDisplayName: "CT", scheduledAtTick: 10,
+      serviceDurationTicks: 20, durationTicks: 40, dueTick: 50, deliveredAtTick: null,
+      offsiteReturnStartedAtTick: null, offsiteTravel: null,
+      patientTravel: {
+        version: "patient-travel.v1", originRoomInstanceId: ultrasound.id, destinationRoomInstanceId: ct.id,
+        outboundPath: [{ ...encounter.patientLocation! }], returnPath: [{ ...encounter.patientLocation! }],
+        tilesPerTick: 1, outboundStartTick: 10, outboundArrivalTick: 10, serviceCompletionTick: 40, returnArrivalTick: 40,
+      },
+      imagingTechnicianId: "employee.test.mobile-tech",
+      onsiteReturn: { version: "onsite-front-desk-return.v1", status: "awaiting_service_completion", serviceCompletedAtTick: 40, frontDeskArrivalTick: null },
+    };
+    state.employees[0]!.location = { x: 15, y: 10 };
+    state.employees[0]!.path = [{ x: 15, y: 10 }];
+    state.employees[0]!.pathIndex = 0;
+    state.employees[0]!.facilityTask = { kind: "perform_imaging", targetId: encounter.pendingResult.operationId, startedAtFacilityTick: 10, workMinutesRemaining: 20 };
+    facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBe("ct-patient");
+    expect(facility.staff.find((staff) => staff.instanceId === "employee.test.mobile-tech")?.supportRole).toBe("ct-operator");
+
+    state.facilityTick = 40;
+    encounter.pendingResult.onsiteReturn!.status = "walking_to_front_desk";
+    encounter.patientMovement = {
+      kind: "returning_from_onsite_service", path: [{ ...encounter.patientLocation! }, { x: 1, y: 1 }], pathIndex: 0,
+      lastMovedAtFacilityTick: 40, destinationRoomInstanceId: state.rooms[0]!.id,
+    };
+    state.employees[0]!.facilityTask = null;
+    facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.patients?.find((patient) => patient.instanceId === encounter.id)?.supportRole).toBeUndefined();
+    expect(facility.staff.find((staff) => staff.instanceId === "employee.test.mobile-tech")?.supportRole).toBeUndefined();
+
+    const visitorOperation: ServiceOperationState = {
+      ...operation,
+      id: "service.test.ct-visitor",
+      actorKind: "visitor",
+      actorId: "visitor.test.ct",
+      displayName: "CT Visitor",
+      status: "in_service",
+      reservedEmployeeIds: [],
+      location: { x: 13, y: 10 },
+      path: [{ x: 13, y: 10 }],
+      pathIndex: 0,
+    };
+    state.serviceOperations = [visitorOperation];
+    facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.serviceVisitors?.[0]?.supportRole).toBe("ct-patient");
+    visitorOperation.status = "walking_to_service";
+    visitorOperation.path = [{ x: 12, y: 10 }, { x: 13, y: 10 }];
+    visitorOperation.pathIndex = 0;
+    visitorOperation.location = { x: 12, y: 10 };
+    expect(createPrototypePlayerView(state, null, false, null).facility.serviceVisitors?.[0]?.supportRole).toBeUndefined();
+    visitorOperation.status = "leaving";
+    visitorOperation.pathIndex = 1;
+    visitorOperation.location = { x: 13, y: 10 };
+    expect(createPrototypePlayerView(state, null, false, null).facility.serviceVisitors?.[0]?.supportRole).toBeUndefined();
+  });
+
+  it("seats an arrived phlebotomy patient and assigned phlebotomist only during collection", () => {
+    const state = createInitialGameState();
+    state.facilityTick = 20;
+    const encounter = Object.values(state.encounters)[0]!;
+    const room = {
+      id: "room.test.phlebotomy-presentation",
+      roomDefinitionId: "room.phlebotomy",
+      x: 12,
+      y: 8,
+      orientation: 270 as const,
+      doorSide: null,
+      upgradeLevel: 1 as const,
+      cleanliness: 100,
+    };
+    state.rooms.push(room);
+    const definition = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find(
+      (candidate) => candidate.id === "room.phlebotomy",
+    )!;
+    const patientAnchor = getRoomCareAnchor(room, definition, "patient");
+    const clinicianAnchor = getRoomCareAnchor(room, definition, "clinician");
+    encounter.lifecycle = "active_pending_result";
+    encounter.patientMovement = null;
+    encounter.patientLocation = patientAnchor;
+    encounter.pendingResult = {
+      operationId: "result.test.phlebotomy",
+      gateId: "gate.test.phlebotomy",
+      originatingNodeIndex: 0,
+      resultTypeId: "service.basic_labs",
+      pendingLabel: "Labs pending",
+      resultNarrative: "fixture",
+      routeId: "route.basic_labs.phlebotomy_sendout",
+      routeDisplayName: "Onsite collection",
+      scheduledAtTick: 10,
+      serviceDurationTicks: 75,
+      durationTicks: 75,
+      dueTick: 85,
+      deliveredAtTick: null,
+      offsiteReturnStartedAtTick: null,
+      offsiteTravel: null,
+      patientTravel: {
+        version: "patient-travel.v1",
+        originRoomInstanceId: state.rooms[0]!.id,
+        destinationRoomInstanceId: room.id,
+        outboundPath: [patientAnchor],
+        returnPath: [patientAnchor],
+        tilesPerTick: 1,
+        outboundStartTick: 10,
+        outboundArrivalTick: 10,
+        serviceCompletionTick: 40,
+        returnArrivalTick: 40,
+      },
+      timingPhases: [
+        { id: "phase.phlebotomy.collection", durationTicks: 15, resourceBound: true, startsAtTick: 15, endsAtTick: 30 },
+        { id: "phase.phlebotomy.sendout", durationTicks: 60, resourceBound: false, startsAtTick: 30, endsAtTick: 90 },
+      ],
+      phlebotomyArrivalGatedVersion: 1,
+      phlebotomistId: "employee.test.phlebotomist-presentation",
+      onsiteReturn: { version: "onsite-front-desk-return.v1", status: "awaiting_service_completion", serviceCompletedAtTick: 30, frontDeskArrivalTick: null },
+    };
+    encounter.steps[0]!.status = "result_pending";
+    state.employees.push({
+      id: "employee.test.phlebotomist-presentation",
+      staffRoleDefinitionId: "staff.phlebotomist",
+      displayName: "Phlebotomist",
+      appearance: state.founder.appearance,
+      hiredAtFacilityTick: 0,
+      salaryPerExpenseInterval: 20,
+      morale: 80,
+      trainingLevel: 1,
+      homeRoomInstanceId: room.id,
+      location: clinicianAnchor,
+      path: [clinicianAnchor],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 10,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: 100,
+      facilityTask: { kind: "perform_service", targetId: encounter.pendingResult.operationId, startedAtFacilityTick: 10, workMinutesRemaining: 100 },
+    });
+
+    let facility = createPrototypePlayerView(state, null, false, null).facility;
+    const patient = facility.patients?.find((candidate) => candidate.instanceId === encounter.id);
+    const phlebotomist = facility.staff.find((candidate) => candidate.instanceId === "employee.test.phlebotomist-presentation");
+    expect(patient).toMatchObject({ supportRole: "phlebotomy-patient", pose: "seated" });
+    expect(phlebotomist).toMatchObject({ supportRole: "phlebotomy-clinician" });
+
+    state.facilityTick = 30;
+    encounter.pendingResult.onsiteReturn!.status = "walking_to_front_desk";
+    encounter.patientMovement = {
+      kind: "returning_from_onsite_service",
+      path: [patientAnchor, { x: patientAnchor.x, y: patientAnchor.y + 1 }],
+      pathIndex: 0,
+      lastMovedAtFacilityTick: 30,
+      destinationRoomInstanceId: state.rooms[0]!.id,
+    };
+    state.employees.at(-1)!.facilityTask = null;
+    facility = createPrototypePlayerView(state, null, false, null).facility;
+    expect(facility.patients?.find((candidate) => candidate.instanceId === encounter.id)?.supportRole).toBeUndefined();
+    expect(facility.staff.find((candidate) => candidate.instanceId === "employee.test.phlebotomist-presentation")?.supportRole).toBeUndefined();
   });
 });

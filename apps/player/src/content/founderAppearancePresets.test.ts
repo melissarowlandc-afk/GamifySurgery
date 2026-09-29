@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   createFounderAppearance,
+  createFounderAvatarAppearance,
   createUnifiedFounderAppearance,
   FOUNDER_BODY_PRESETS,
   FOUNDER_HEAD_PRESETS,
   FOUNDER_IDENTITY_PRESETS,
+  FOUNDER_AVATAR_CHOICES,
 } from "./founderAppearancePresets";
 
 describe("founder appearance presets", () => {
@@ -130,6 +132,15 @@ describe("founder appearance presets", () => {
       expect(appearance.headVariant).toBe(appearance.bodyVariant);
       expect(identity.head.id).toBe(`head.${String(index + 1).padStart(2, "0")}`);
       expect(identity.body.id).toBe(`body.${String(index + 1).padStart(2, "0")}`);
+    }
+  });
+
+  it("keeps the original thirty mappings and appends six distinct persisted still choices", () => {
+    expect(FOUNDER_AVATAR_CHOICES).toHaveLength(36);
+    expect(FOUNDER_AVATAR_CHOICES.slice(0, 30).map((choice) => choice.id)).toEqual(FOUNDER_IDENTITY_PRESETS.map((preset) => preset.id));
+    expect(FOUNDER_AVATAR_CHOICES.map((choice) => choice.stillId)).toHaveLength(new Set(FOUNDER_AVATAR_CHOICES.map((choice) => choice.stillId)).size);
+    for (let index = 0; index < 36; index += 1) {
+      expect(createFounderAvatarAppearance(index).stillId).toBe(FOUNDER_AVATAR_CHOICES[index]!.stillId);
     }
   });
 });
