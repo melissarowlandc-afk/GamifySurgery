@@ -38,7 +38,9 @@ jobs:
         run: npm ci
 
       - name: Run deterministic tests
-        run: npm test
+        run: |
+          npm run test:boundaries
+          npm run test --workspaces --if-present -- --maxWorkers=1
 
       - name: Build and verify Pages artifact
         run: npm run build:pages
