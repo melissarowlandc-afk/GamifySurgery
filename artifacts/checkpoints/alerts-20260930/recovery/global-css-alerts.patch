@@ -1,0 +1,172 @@
+﻿diff --git a/apps/player/src/styles/global.css b/apps/player/src/styles/global.css
+index 53e6f46..978bf66 100644
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -3361,7 +3361,25 @@ textarea {
+   flex: 1 1 auto;
+ }
+ 
++.message-board-feed {
++  overflow-anchor: none;
++}
++
++.message-board-new-indicator {
++  min-height: 24px;
++  padding: 0.12rem 0.28rem;
++  border: 1px solid var(--ink);
++  background: var(--shade-1);
++  color: var(--ink);
++  font: inherit;
++  font-size: 0.58rem;
++  font-weight: 900;
++  line-height: 1.1;
++  white-space: nowrap;
++}
++
+ .message-board-item {
++  position: relative;
+   display: grid;
+   padding: 0.55rem;
+   border-bottom: 2px dashed var(--shade-3);
+@@ -3369,6 +3387,36 @@ textarea {
+   gap: 0.45rem;
+ }
+ 
++.message-board-item.is-new-message {
++  animation: message-board-new-arrival 1.8s ease-out 1;
++}
++
++.message-board-new-token {
++  position: absolute;
++  top: 0.18rem;
++  right: 0.3rem;
++  padding: 0.05rem 0.18rem;
++  border: 1px solid var(--ink);
++  background: var(--panel);
++  font-size: 0.5rem;
++  font-style: normal;
++  font-weight: 900;
++  letter-spacing: 0.04em;
++  line-height: 1.1;
++  text-transform: uppercase;
++}
++
++@keyframes message-board-new-arrival {
++  0% {
++    background-color: var(--shade-3);
++    box-shadow: inset 7px 0 0 var(--ink);
++  }
++  100% {
++    background-color: transparent;
++    box-shadow: inset 0 0 0 transparent;
++  }
++}
++
+ .message-board-item.has-attention-marker {
+   grid-template-columns: 32px minmax(0, 1fr);
+ }
+@@ -3476,7 +3524,7 @@ textarea {
+ 
+ .event-message-board.is-ticker .message-board-item {
+   min-height: 34px;
+-  padding: 0.25rem 0.4rem;
++  padding: 0.25rem 2.35rem 0.25rem 0.4rem;
+   grid-template-columns: minmax(0, 1fr);
+   align-items: center;
+   gap: 0.35rem;
+@@ -3503,26 +3551,50 @@ textarea {
+   min-height: 0;
+   color: inherit;
+   font: inherit;
+-  font-size: 0.72rem;
+-  line-height: 1.25;
++  font-size: 0.75rem;
++  line-height: 1.35;
+   overflow-wrap: anywhere;
+   white-space: normal;
+   text-align: left;
+ }
+ 
+ .message-board-compact-action {
++  display: grid;
+   min-height: 28px;
+   padding: 0;
+   border: 0;
+   background: transparent;
+   cursor: pointer;
+-  text-decoration: underline;
++  text-decoration: none;
++  grid-template-columns: minmax(0, 1fr);
++  gap: 0.12rem;
++  align-items: center;
++}
++
++.message-board-compact-action-copy {
++  min-width: 0;
++}
++
++.message-board-compact-action-label {
++  color: var(--ink-soft);
++  font-size: 0.65rem;
++  font-weight: 900;
++  line-height: 1.1;
++  text-decoration-line: underline;
+   text-decoration-style: dotted;
++  overflow-wrap: anywhere;
++  white-space: normal;
+ }
+ 
+ @media (max-width: 760px) {
+   .message-board-compact-action {
+     min-height: 44px;
++    grid-template-columns: minmax(0, 1fr);
++    gap: 0.12rem;
++  }
++
++  .message-board-compact-action-label {
++    white-space: normal;
+   }
+ }
+ 
+@@ -6141,11 +6213,16 @@ body {
+   .chart-drawer,
+   .patient-tab-slide,
+   .facility-pause-indicator,
++  .message-board-item.is-new-message,
+   .staff-role-group.is-alert-highlighted,
+   .advertising-panel.is-alert-highlighted {
+     animation: none;
+     transition: none;
+   }
++
++  .message-board-feed {
++    scroll-behavior: auto;
++  }
+ }
+ 
+ /* Current display title and restrained outline-only resource symbols. */
+@@ -7445,7 +7522,8 @@ body {
+   .message-board-item-heading,
+   .message-board-compact-action,
+   .message-board-compact-copy {
+-    font-size: 0.66rem;
++    font-size: 0.75rem;
++    line-height: 1.35;
+   }
+ 
+   .message-board-item p {
+@@ -7639,3 +7717,14 @@ input[type="range"] {
+ .workspace-splitter {
+   cursor: row-resize;
+ }
++
++/* Keep message arrival affordances dimensionally stable across late compact overrides. */
++.event-message-board .panel-heading {
++  min-height: 36px;
++}
++
++.event-message-board .message-board-item,
++.event-message-board.is-ticker .message-board-item {
++  padding-right: 2.35rem;
++}
++
