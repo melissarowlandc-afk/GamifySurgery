@@ -1,3 +1,18 @@
+> ALERTS & EVENTS COMPLETE / VERIFIED GITHUB BACKUP — September 30, 2026.
+> Branch: beta. Checkpoint: cedda66253bcd9349f06a3bf80af1f2141ba11aa.
+> Pushed to origin; exact SHA independently verified with git ls-remote.
+> Recovery archive: artifacts/checkpoints/alerts-20260930/README.md.
+> Sol alerts_checkpoint assembled the archive; Astra reviewed code slices,
+> CSS recovery, exact source copies, all26 hashes and the scoped staged diff.
+> Fresh player58 + domain44 tests, player/domain/balance types, boundaries and
+> isolated production build PASS. Historical browser4 PASS; no full-suite claim.
+> Recovery-only: 20 exact task files plus shared-code slices and CSS patch;
+> manual integration required for six mixed files. GS025 base compatibility
+> unproven. Unrelated work, clinical batches, assets and owner saves excluded.
+> Canonical local pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173.
+> No merge/release/deployment/Pages publication. Next: owner playtest.
+> Plan: docs/execplans/alerts-usefulness-and-humor.md.
+
 # Current Thread Handoff
 
 > GS-023 COMPLETE / VERIFIED GITHUB BACKUP — September 29, 2026.
