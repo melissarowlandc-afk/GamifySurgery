@@ -1,3 +1,17 @@
+> GS-028 VERIFIED GITHUB AUTHORING BACKUP — October 3, 2026.
+> Branch: beta. Checkpoint: `c5cd6251caf2910bd183b39c571792a00abb50fe`.
+> Pushed to `origin/beta`; the exact remote SHA was independently verified.
+> The checkpoint contains five GS-028 authored packages and their provenance,
+> 95 files total. It is an authored-data/provenance backup only; runtime
+> integration remains local and interleaved with active GS-015/GS-031 work.
+> All clinical content remains `needs_clinician_review`; no clinical or public
+> release approval was granted. The exact staged snapshot passed the full
+> clinical-content suite (67 files / 427 tests) and clinical-content typecheck.
+> Sol audited the scope and prepared the index; Astra reviewed, committed,
+> pushed, and verified the backup. No merge, deployment, Pages publication,
+> save-path change, or campaign transfer occurred. GS-028 remains ongoing for
+> future owner-requested batches.
+
 > ALERTS & EVENTS COMPLETE / VERIFIED GITHUB BACKUP — September 30, 2026.
 > Branch: beta. Checkpoint: cedda66253bcd9349f06a3bf80af1f2141ba11aa.
 > Pushed to origin; exact SHA independently verified with git ls-remote.

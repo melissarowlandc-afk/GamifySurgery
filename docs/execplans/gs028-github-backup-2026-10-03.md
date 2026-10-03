@@ -74,3 +74,13 @@ The earlier working-tree 12/93 includes two September17 suites outside this
 checkpoint. No unexpected paths, secrets, disallowed extensions or approval
 markers found. Existing authored EOF blanks are retained; runtime stays local.
 Parent final staged review, commit, push and remote verification are next.
+
+## Checkpoint verified
+
+M3 complete: Astra verified the final index had exactly95 accepted paths and
+only the two parent receipt/plan edits differed from Sol's reviewed blob manifest.
+Committed as c5cd6251caf2910bd183b39c571792a00abb50fe, pushed origin/beta and
+independently confirmed the exact remoteSHA with git ls-remote. No merge or
+deployment. M4 records this verified checkpoint in a selective HEAD-based
+current-handoff addition and this receipt/plan; unrelated local history remains
+preserved. GS028 stays open for future owner-requested batches.

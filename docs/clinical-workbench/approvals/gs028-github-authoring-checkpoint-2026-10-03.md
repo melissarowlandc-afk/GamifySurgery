@@ -71,5 +71,14 @@ were found. The 45 whitespace diagnostics are existing authored blank lines at
 EOF, preserved to avoid changing validated content and fingerprints. The two
 September 17 export lines remain unstaged. Runtime integration remains local.
 
-Only the authoring data and accompanying provenance are checkpointed. Commit and
-remote verification will be recorded after the authorized push succeeds.
+Only the authoring data and accompanying provenance are checkpointed.
+
+## Verified GitHub backup
+
+Checkpoint `c5cd6251caf2910bd183b39c571792a00abb50fe` was pushed to `origin/beta`
+on October 3, 2026. Independent `git ls-remote --heads origin beta` returned that
+exact SHA. This is the 95-file authoring/provenance checkpoint described above.
+Runtime integration and unrelated facility/pathing changes remain local. No
+merge, deployment or Pages publication occurred. Sol performed scope audit and
+index preparation; Astra reviewed the actual staged content and validation,
+committed the accepted scope and independently verified the push.
