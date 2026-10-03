@@ -281,6 +281,20 @@ export const syntheticClinicalCaseSchema = z
      */
     releasePointId: stableIdSchema.optional(),
     patientDisplayName: z.string().min(1).max(80),
+    /**
+     * Optional non-patient learning participant. Omission preserves the
+     * existing patient-encounter contract for every frozen legacy case.
+     */
+    participant: z
+      .object({
+        kind: z.literal("employee_discussion"),
+        requiredStaffRoleDefinitionIds: z
+          .array(stableIdSchema)
+          .min(1)
+          .max(8),
+      })
+      .strict()
+      .optional(),
     prototypeDemographics: z
       .object({
         ageYears: z.number().int().min(0).max(120),
