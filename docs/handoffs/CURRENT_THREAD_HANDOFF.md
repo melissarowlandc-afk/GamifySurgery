@@ -1,3 +1,14 @@
+> PREFERRED MOVEMENT GITHUB BACKUP VERIFIED (2026-10-04).
+> Owner requested push; archival checkpoint d304797dbd566db03d5dffa6cdfc852ac126d2f0
+> was pushed to origin/beta and verified by git ls-remote. Package:
+> artifacts/checkpoints/preferred-bounce-20261004/ (10 files; manifest covers9 payloads).
+> Preserves7px2Hz bounce, north/south sway,120ms settle, tests, accepted preview,
+> and exact baseline-relative renderer recovery patch. Terra packaged/audited;
+> root verified hashes, source copies, secret scan and scoped staged contents.
+> Recovery archive only, not a clean runnable beta snapshot. Unrelated dirty work
+> stays local. No merge, release, deployment, Pages publication or save changes.
+> Canonical owner playtest remains START_GAME.cmd -> http://127.0.0.1:4173.
+
 > GS-028 VERIFIED GITHUB AUTHORING BACKUP — October 3, 2026.
 > Branch: beta. Checkpoint: `c5cd6251caf2910bd183b39c571792a00abb50fe`.
 > Pushed to `origin/beta`; the exact remote SHA was independently verified.
