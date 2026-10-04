@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "preferred-bounce-20261004",
+  "sourceBranch": "beta",
+  "sourceHead": "b5c23325d3ae79dedaebf115249169477eb43d33",
+  "recoveryOnly": true,
+  "payloadCount": 9,
+  "payloadBytes": 257349,
+  "payloads": [
+    {
+      "archivePath": "README.md",
+      "originalPath": null,
+      "category": "checkpoint-metadata",
+      "bytes": 1571,
+      "sha256": "5609f4d7b5e7975e8f778a2afedc78d2f21ebafdc1f4a5e87e3bb0bdab0dfd44"
+    },
+    {
+      "archivePath": "files/apps/player/src/facility/characterPresentation.ts",
+      "originalPath": "apps/player/src/facility/characterPresentation.ts",
+      "category": "task-context-source",
+      "bytes": 4385,
+      "sha256": "8c2bd907ccc353fec84f2233a074745cea6f2d78e479563775986da06eeb8e4c"
+    },
+    {
+      "archivePath": "files/apps/player/src/facility/characterPresentation.test.ts",
+      "originalPath": "apps/player/src/facility/characterPresentation.test.ts",
+      "category": "task-context-test",
+      "bytes": 5221,
+      "sha256": "dd06fb59b0b96e5ea9eb2d1739b7f7d21bc3b8fad588f759a47cc83fac320bb3"
+    },
+    {
+      "archivePath": "files/tests/e2e/character-step-bounce.spec.ts",
+      "originalPath": "tests/e2e/character-step-bounce.spec.ts",
+      "category": "task-browser-test",
+      "bytes": 12639,
+      "sha256": "e41ab70ed10a2c693215c293196f6361dffbfb3b2169594d8a0ef995cbe12bd6"
+    },
+    {
+      "archivePath": "files/docs/execplans/preferred-character-bounce.md",
+      "originalPath": "docs/execplans/preferred-character-bounce.md",
+      "category": "task-contract",
+      "bytes": 5022,
+      "sha256": "2941470da3fe90c50747df2495b37284a9eccca19c38106a6e4fe4b8f8b35ccd"
+    },
+    {
+      "archivePath": "files/artifacts/character-movement/still-comparison-v3/game-speed-movement-comparison.html",
+      "originalPath": "artifacts/character-movement/still-comparison-v3/game-speed-movement-comparison.html",
+      "category": "accepted-preview",
+      "bytes": 219988,
+      "sha256": "32cae22aae7313fae9e5d8546536a8658008bcc8e8cabf817545b9e04396ff43"
+    },
+    {
+      "archivePath": "recovery/FacilityScene.preferred-bounce.patch",
+      "originalPath": "apps/player/src/facility/FacilityScene.ts",
+      "category": "baseline-relative-recovery-patch",
+      "bytes": 7937,
+      "sha256": "387081ecdda9ac1f5f57219235c7bab727f7e45fd68fe2686f2a41d1333902c6"
+    },
+    {
+      "archivePath": "recovery/SOURCE_HASHES.json",
+      "originalPath": null,
+      "category": "recovery-precondition",
+      "bytes": 541,
+      "sha256": "8badaa20596ecf2c7112267fb60589b4be5dc05ef65e3ad4eacf7452a5ed9ab6"
+    },
+    {
+      "archivePath": "validation/parent-browser-last-run.json",
+      "originalPath": null,
+      "category": "sanitized-validation-receipt",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    }
+  ]
+}
