@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-07",
+  "typecheck": { "player": "pass", "gameDomain": "pass" },
+  "playerFacilityTests": "263/263 pass",
+  "playerFullSuite": "619/620; 1 failure outside motion: level3ControlsViewModels (8 vs 7 controls)",
+  "domainRelatedFiles": "84/84 pass (street-arrivals, retail-operations, retired-*, room-sale/capacity, patient appearance/supply, staff stills, routine availability)",
+  "domainFullSuite": {
+    "result": "2115/2132",
+    "knownSlowUnderLoad": 8,
+    "timeoutsPassingAlone": "4 (retail-operations, service-operations, level-two-endoscopy; 449 tests pass alone apart from the known slow set)",
+    "outsideThisWork": "5 assertions: diagnostic-timing (active Codex task), characterStillCatalog (women-20 integration), content/balance contracts"
+  },
+  "replayHarness30GameMinutes": {
+    "level2RetailClinic": { "jumpsBefore": 41, "jumpsAfter": 0 },
+    "level2WithStalls": { "maxLagTilesBefore": 5.8, "maxLagTilesAfter": 2.1, "jumpsAfter": 0 },
+    "level1Clinic": { "jumpsBefore": 37, "jumpsAfter": 0 },
+    "note": "Only flagged event after the change is the founder appearing at game start."
+  },
+  "browserQa": "port 5175, QA-only profile: loads and runs at 4x with no console errors; server stopped. Owner origin 127.0.0.1:4173 untouched."
+}

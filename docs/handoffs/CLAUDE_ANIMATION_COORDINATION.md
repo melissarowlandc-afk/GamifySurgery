@@ -306,6 +306,463 @@ Status is one of `claimed`, `in progress`, `ready for review`, `done`,
   Codex's uncommitted edits. The live motion code stays uncommitted in the
   shared worktree; the archive is the recovery copy. There was no merge,
   release, deployment or Pages publication.
+- 2026-10-07 — Claude — **ready for review** — Fix the stutter at every
+  minute boundary, which grows with campaign length. This is outside the
+  animation scope; the owner approved all four fixes in chat on 2026-10-07.
+  - **Diagnosis:** route interpolation and world redraws are fine. Every tick
+    blocks the main thread, and the block grows with retained history. With
+    500 resolved encounters the state is 4.4 MB; the reducer takes 12.6 ms,
+    of which the JSON clone is 10.4 ms.
+  - **Fix 1, retired encounters:** owner decision: "we probably don't need
+    to save the finished patients at all".
+    - At the end of ADVANCE_TICK, `retireDepartedEncounters`
+      (new `packages/game-domain/src/retired-encounters.ts`) deletes resolved,
+      off-map, non-tutorial encounters that no live record references. The
+      newest 10 are kept, so the Resolved folder and recent "Open chart"
+      links still work.
+    - Removed encounters are folded into the optional
+      `GameState.retiredEncounterSummary`, which needs no schema bump and is
+      normalized on load:
+      - completed count;
+      - first ordinary completion;
+      - in-house endoscopy milestone;
+      - up to 32 satisfaction samples;
+      - the latest arrival per patient still.
+    - `getCompletedEncounterCount`, both rolling-satisfaction functions, the
+      first-ordinary success alert, the Level 2 endoscopy gate and patient
+      still rotation all read the summary.
+    - The 8-day GS-017 supply diagnostic matches its original snapshot
+      exactly: 79 arrivals, 78 completed.
+  - **Fix 2:** optional shopping skips resolved, finished and departed
+    actors. Amenity scheduling skips resolved off-map patients and finished
+    visitors. Outcomes are unchanged.
+  - **Fix 3:** patient-list resolution ticks are indexed once instead of
+    being searched inside the sort comparator. The map patient filter uses a
+    single Set of active-operation encounters. Recent receipts use a linear
+    stable top-8.
+  - **Fix 4:**
+    - `gameReducer` skips its second whole-facility synchronize after an
+      unpaused tick, which already synchronized. A 900-tick idempotence test
+      covers this.
+    - Earnings popups only expire while the per-tick receipt list is
+      unchanged. Actor anchors are collected lazily. This removes an
+      all-receipts pass on every frame.
+  - **Measured:** the 500-encounter save drops from 4.4 MB to 686 KB after
+    its first tick. Reducer median goes from 12.6–16 ms to 2.5 ms; clone
+    from 10–15 ms to 2.1 ms.
+  - **Browser check:** isolated port 5191, test storage only. A campaign
+    injected with 300 finished patients saved at 232 KB with 11 encounters,
+    and reported 240 completed and historical satisfaction 76, both
+    identical to before. No console errors. The server is stopped.
+  - **Validation:**
+    - Domain typecheck pass; 1710 pass and 8 fail of 1718.
+    - The 8 failures exactly match the pre-change baseline. They are
+      full-suite slow GS-028, surgery-center, supply and service tests, and
+      they pass when run alone.
+    - Player typecheck pass; 95 files, 594/594.
+  - **Files:**
+    - Modified: `packages/game-domain/src/{reducer,retail-operations,
+      patient-amenities,selectors,appearance,persistence,types,index}.ts`,
+      `apps/player/src/session/viewModels.ts`,
+      `apps/player/src/facility/{earningsPopupPresentation,FacilityScene}.ts`
+      (earnings popup call only), and
+      `packages/game-domain/tests/diagnostics/patient-supply.test.ts`
+      (counts retired history).
+    - New: `packages/game-domain/src/retired-encounters.ts`,
+      `packages/game-domain/tests/{retired-encounters,
+      tick-history-performance}.test.ts`,
+      `apps/player/src/facility/earningsPopupFrameCost.test.ts` and
+      `apps/player/src/session/newestServiceIncomeReceipts.test.ts`.
+  - **Known limits:**
+    - Retired patients' receipts show "Patient" instead of a name in recent
+      receipts.
+    - A retired id could be re-admitted by debug-only ADMIT_PATIENT.
+    - Receipts, settlements and completed operations still grow; they are
+      small per record.
+  - **Saves:** the owner's existing campaign at `127.0.0.1:4173` will drop
+    old finished patients on its first tick under this code. That is
+    intended and cannot be undone.
+- 2026-10-07 — Claude — **ready for review** — Cap income receipts and
+  finished service operations. The owner asked for this "if that doesn't
+  affect gameplay".
+  - **New module:** `packages/game-domain/src/retired-service-history.ts`.
+    `retireFinishedServiceHistory` runs right after `retireDepartedEncounters`
+    at the end of an unpaused tick.
+  - **Receipts kept:**
+    - the newest 50;
+    - any receipt whose source can still credit it: an undelivered pending
+      result, an active service operation, or an active retail operation;
+    - ambulatory receipts without a QI review;
+    - anything settled within the last operating day.
+  - **Finished operations kept:**
+    - the newest 10;
+    - any operation referenced by encounters (pending-result, continuation,
+      staged and terminal links), active retail operations, amenity trips,
+      non-departed companions, or founder and employee targets;
+    - visitors named on retained receipts;
+    - every finished operation whose `location` is not null.
+  - **Summary:** retired totals (in cents) and four milestone flags go to the
+    optional `GameState.retiredServiceHistory`, normalized on load. The
+    economy totals and the Level 2 and 3 endoscopy and ambulatory gates read
+    it. Per-actor retail and amenity map entries are deleted for retired
+    visitors and patients.
+  - **Behaviour unchanged:** A/B run of the 8-day GS-017 autoplay with
+    retirement on and off (`.local-dev/claude-stutter/ab-retirement.test.ts`).
+    Live state, cash, events, learning, progression, satisfaction, completed
+    count and totals are identical. Size drops from 1.45 MB to 1.07 MB.
+  - **Synthetic save:** 3000 receipts and 500 finished operations go from
+    1.33 MB to 0.12 MB; clone from 3.4 ms to 0.37 ms.
+  - **Validation:**
+    - Domain typecheck pass; 1715 pass and 7 fail of 1722. The failures are
+      a subset of the same load-slow baseline.
+    - Player typecheck pass; 594/594.
+  - **Open question for the owner:** this is a latent bug, left unchanged on
+    purpose. At `reducer.ts` ~3435, the procedure-consult room check counts
+    `operation.location` with no status filter. Finished encounter test-order
+    operations keep their in-room location (`service-operations.ts` ~1774),
+    so they keep marking Endoscopy and OR rooms as occupied. Fixing the
+    check would change consult routing, so it needs owner approval.
+  - **Growth that remains:** terminal `retailOperations`, departed
+    `retailExternalActors`, `retailOrders`, `levelThreeQiReviews` and
+    `settlements`.
+- 2026-10-07 — Claude — **ready for review** — Fixed the stale-location
+  procedure-consult room bug. The owner approved the fix in chat: "Patients
+  should wait in the waiting rooms or around the clinic if they have no
+  where else to be. They do not occupy the in-clinic room while waiting for
+  the results."
+  - **Fix:** in `reducer.ts`, the procedure-consult occupancy check now
+    counts `operation.location` only for non-finished operations. This
+    matches the other room-occupancy checks (~1310 and ~10109).
+  - **Patient routing:** confirmed unchanged and already correct. Finished
+    in-suite tests send the patient back to the Front Desk and then to the
+    waiting hierarchy (`maybeBeginOnsiteFrontDeskReturn`, then
+    `returning_from_onsite_service`, then `walking_to_waiting`). Only an
+    unreachable entrance path leaves them in place.
+  - **Cleanup rule:** finished operations no longer need a null `location`
+    to retire.
+  - **Regression test:** added to the colonoscopy flow in
+    `tests/level-two-endoscopy.test.ts`. Another patient's finished
+    in-suite test with a stale in-room location must not move the returned
+    procedure consult out of the Endoscopy suite. It fails on the old check
+    and passes on the new one.
+  - **A/B rerun:** the 8-day retirement A/B is still identical.
+  - **Concurrent changes, not caused by this fix:** Codex is adding the
+    `2026-10-07-variety` clinical batch (291 to 311 cases) and a Level 3
+    room. That breaks clinical-admission and withdrawal tests, the GS-017
+    diagnostic snapshot (unseen-concept list), patient-supply,
+    `game-domain` content validation and the player
+    `level3ControlsViewModels` room count (7 to 8). The diagnostic runs at
+    Level 1 with no endoscopy suite, so the consult fix cannot affect it.
+    Retail and service tests that fail in the full suite pass when run
+    alone.
+- 2026-10-07 — Claude — **ready for review** — The owner's campaign still
+  stuttered after the history caps. The owner approved read-only
+  measurement of the real save through Claude in Chrome. A copy was taken
+  to Claude's scratchpad only; the save itself was not edited, and the
+  owner's tab ran the game throughout.
+  - **Real save:** Level 3, 63 rooms, 17 staff. Ticks cost 100–275 ms in
+    the reducer plus 50–120 ms in the view.
+  - **Root cause:** a CPU profile showed whole-facility
+    `validateFacilityAccess` at about 81% of tick time. It is recomputed
+    dozens of times per tick by:
+    - `getFacilityAccessValidation`, via operational, staffing and
+      scheduling checks, companions and views;
+    - `facility-experience.ts` `accessValidation`.
+  - **Fix:** new `packages/game-domain/src/facility-access-cache.ts`
+    memoizes the result per DomainContext, keyed on room id, definition,
+    x, y, orientation and doorSide plus `JSON(doors)`. Those are the only
+    room fields `doors.ts` and `spatial.ts` read. Callers get fresh copies
+    of the arrays. `selectors.getFacilityAccessValidation` and
+    `facility-experience` both use it. Hypothetical build validation and
+    migrations still call `validateFacilityAccess` directly.
+  - **Measured on the owner's save:** reducer 10–15 ms and view 4–5 ms per
+    tick. An idle 900-tick run, with unattended patients piling up, has a
+    reducer median of 38 ms (it was 356 ms).
+  - **Also in this pass:**
+    - `retireDepartedEncounters` now retires resolved encounters whose
+      `pendingResult` is delivered. 90 such records remained in the owner's
+      save, 1.7 MB.
+    - New `retireFinishedRetailHistory` retires terminal retail trips,
+      departed shoppers and companions, and used-up orders. It keeps the
+      newest 10, itinerary-linked trips, receipt-named actors and departed
+      companions of non-resolved encounters (the duplicate-companion guard).
+  - **Equivalence:** the A/B with retirement on and off is identical on the
+    8-day GS-017 run and on a 900-tick run of the owner's save.
+  - **Validation:** focused tests pass. Player typecheck passes.
+  - **Concurrent failures, from Codex's work in progress:**
+    - character-still catalog and roster;
+    - content validation, GS-028 and patient-supply (the variety batch);
+    - player `level3ControlsViewModels` room count;
+    - `diagnostic-timing` intermittently; it passes alone.
+  - **Note for Codex:** in the new `diagnostic-timing.ts`,
+    `getDiagnosticOrderPlans` collects plans from all encounters, and the
+    reading-station stability logic (~line 150) reads historical plan
+    resources. Retired encounters' plans are no longer present. Please
+    confirm that is acceptable, or keep reading assignments elsewhere.
+
+- 2026-10-07 — Codex — in progress — Execute the owner-requested patient women-20 v3 art specification. Root owns pilot001, source/contact acceptance and integration decisions; Sol patient_women_artist_a owns sources002–010, Sol patient_women_artist_b owns sources011–020, and Sol patient_women_packaging owns only new staging/build/validation/gallery outputs. Exact native image_gen sheets, prompts, arguments and provenance are retained. Existing Claude motion, runtime catalogs, saves and clinical data are untouched. Active plan: docs/execplans/patient-women20-stills-20261007.md. Owner visual review precedes runtime registration per the batch contract.
+
+- 2026-10-07 — Claude — in progress — Owner-directed room touch-ups (scope
+  expanded by the owner on 2026-10-07 to GS-015-style room work). Owner asked
+  for: soft wall-base shadows, filling empty lower halves, a shared house-green
+  trim with per-room accent colours, occasional corridor benches/plants/art,
+  dim imaging rooms plus warm Break Room and cool OR tints, every room-by-room
+  item from Claude's review, and the north-backing furniture-hiding fix.
+  Every wall segment must stay a legal door; new decor is nonblocking and
+  hides when its door is placed. Owner also directed removing the Call Room
+  from the Level 4 plan; MRI is the next new room.
+  - **Step 1 (now):** isolated preview lab only, under
+    `tools/room-design/touchup-2026-10/`. It reads game modules read-only.
+    No game code, art, saves, launcher or tests touched.
+  - **Step 2 (after owner approval):** integrate into the renderer. Expected
+    files: `apps/player/src/facility/FacilityScene.ts` (shell paint and
+    fixture visibility), `approvedRoomPresentation.ts`,
+    `approvedLevel3RoomProofData.ts`, and new decor data/art. Claude will log
+    the exact files here before editing them.
+  - **Status 2026-10-07: preview ready for owner review.** Lab at
+    `tools/room-design/touchup-2026-10/` (see its README). 22 rooms,
+    `node validate.cjs` passes 4,128 door→anchor routes across single,
+    all-open and north-backed door states. Review server `room-lab-4191`
+    added to `.claude/launch.json` (127.0.0.1:4191; separate from the owner
+    origin 4173, no saves touched). Also found: several approved edge
+    fixtures have no door owners in runtime data (exam sink/otoscope panel,
+    waiting magazine rack and corner plant), and some legal door segments
+    open into permanent furniture (vending, bathroom, waiting bench, CT
+    scanner and others; list in the README). The latter awaits an owner
+    decision. Docs: Call Room removed from the Level 4 list in
+    `docs/features/facility-levels-and-clinical-release-points.md`,
+    `docs/execplans/level-four-room-design.md` and one flavour line in
+    `docs/features/alert-notification-flavor-system.md`.
+  - **Owner decisions 2026-10-07 (same day):** tall north-wall furniture
+    stays full height on a low wall and depth-sorts by its own floor line
+    (things north of it draw behind); imaging-room dimming stops at the north
+    wall's real height; doors that open into permanent furniture are allowed
+    and that furniture is passable (23 slots to add to
+    `doorThresholdExceptions`; list in the lab README). Preview updated; still
+    awaiting final approval before any runtime edit.
+  - **Owner approved runtime integration 2026-10-07** ("Once that is fixed
+    then all of these can be implemented into the game", after the Break
+    Room south-sitter layering fix). Claude is now editing, with small
+    targeted hooks only because Codex diagnostic-timing work and another
+    Claude session are active in the same files:
+    `apps/player/src/facility/roomTouchups.ts` (new, all data and pure
+    drawing math, shared with the lab), `apps/player/src/facility/FacilityScene.ts`
+    (preload decor, wall bands, floor shadows/decals, record visibility and
+    depth, decor images, lighting, CT glass, corridor), new art
+    `apps/player/public/art/rooms/touchup-v1/*.png` (25 project-made PNGs),
+    `packages/balance-config/src/approved-room-layouts.ts` (23 passable door
+    slots via `doorThresholdExceptions`), plus focused tests.
+  - **Integration progress 2026-10-07 (Claude):** renderer hooks, decor art,
+    23 passable door slots and an exam-table east passage tile (EA door) are
+    in. Legacy-save migration deliberately keeps the pre-rule door slots via a
+    frozen list in `packages/game-domain/src/approved-room-geometry-migration.ts`
+    (`OWNER_PASSABLE_DOOR_SLOTS_2026_10_07`), so old saves migrate exactly as
+    before; its 16 tests pass unchanged. New test:
+    `packages/game-domain/tests/owner-passable-door-slots.test.ts`.
+    Player typecheck PASS; facility tests 243/243 PASS where they load.
+    **Codex heads-up:** `packages/clinical-content/src/development-batch/
+    2026-10-07-variety/radiology.ts` currently has garbled identifiers
+    (`HIeES`, `evidencehlaimIds`, earlier `DEedCE`) that crash the player
+    app and block test imports. Claude did not touch it.
+    (Resolved by Codex at 16:39; app loads again.)
+  - **Status 2026-10-07: done — integrated and verified locally (Claude).**
+    Exact files: new `apps/player/src/facility/roomTouchups.ts`; edited
+    `apps/player/src/facility/FacilityScene.ts` (imports, decor preload,
+    floor touch-ups in `drawApprovedRoomSurface`, wall bands in
+    `drawApprovedRoomCaps` and `drawApprovedHallwayExposedEdges`, record
+    visibility/depth plus decor, lighting and CT glass in
+    `drawApprovedRoomFixtures`, corridor hooks in `drawRoom`; new private
+    helpers `getApprovedSegmentState`, `getApprovedRoomVariant`,
+    `getApprovedBaseWidth`, `getTouchupDrawRecords`, `drawTouchupPrimitives`,
+    `drawTouchupSprite`, `drawTouchupLighting`, `drawTouchupCorridor`);
+    new art `apps/player/public/art/rooms/touchup-v1/` (25 PNGs);
+    `packages/balance-config/src/approved-room-layouts.ts` (23 passable slots
+    plus `examination-table-east-passage`, coexisting with Codex's new
+    `room.reading` entry); `packages/game-domain/src/approved-room-geometry-migration.ts`
+    (frozen legacy rule list); new tests
+    `packages/game-domain/tests/owner-passable-door-slots.test.ts` and
+    `tests/e2e/room-touchups.spec.ts` (run only with
+    `GAMIFY_E2E_EXTERNAL_SERVER=1 GAMIFY_E2E_BASE_URL=http://127.0.0.1:5175`).
+    Results: player typecheck PASS; player vitest 610/611 (the 1 failure is
+    `level3ControlsViewModels` expecting 7 Level 3 rooms, now 8 after Codex's
+    Reading Room); domain migration 16/16, passable doors 22/22, service and
+    surgery-center suites PASS in isolation; remaining domain failures are
+    Codex clinical/diagnostic-timing work in progress; balance-config 51/51;
+    production build PASS (output to scratch, `dist/` untouched); e2e
+    capture PASS on isolated port 5175 (fresh Playwright storage), evidence
+    in `artifacts/screenshots/room-touchups/`. Lab validator 22/22 rooms.
+    No saves, launcher, owner origin 4173, commits or pushes touched.
+    Reading Room has no touch-up entry yet (add one in `roomTouchups.ts` if
+    the owner wants it trimmed/dimmed like the other imaging rooms).
+  - 2026-10-07 — Claude — in progress — Owner revision round 2: imaging dim
+    only while a scan is running (CT not dimmed); dim stops at the top of the
+    south wall; back-wall furniture in a tinted room tinted in full; hallway
+    gets a south wall where it backs rooms; front decor larger and clear of
+    walls. Additional files: `apps/player/src/facility/types.ts` (new optional
+    `imagingActiveRoomInstanceIds`), `apps/player/src/session/viewModels.ts`
+    (derive it beside `endoscopyOccupancy`), `facilityWorldSignature.ts`
+    (redraw when it changes), plus `roomTouchups.ts` and `FacilityScene.ts`.
+    **Done 2026-10-07.** Imaging dim is gated on
+    `imagingActiveRoomInstanceIds` (in-service imaging operations plus
+    encounter patient travel inside its service window); CT has no dim;
+    tint region ends 6 shell px above the floor line (top of the south wall);
+    furniture rising above the tinted region gets a cropped multiply-tinted
+    copy (`drawTouchupTintedTop`, canvas textures `room-touchup-tint:*`);
+    low north walls backed by a hallway paint as a short cream wall
+    (`isHallwayTileAt`); decor ~1.4x larger with wall clearance. New unit
+    test `apps/player/src/facility/roomTouchups.test.ts` (4/4). Player
+    619/620 (same Codex Level 3 room-count test), typecheck and build PASS,
+    lab validator 22/22 incl. new wall-clearance rule, e2e PASS on 5175 with
+    imaging on/off captures in `artifacts/screenshots/room-touchups/`.
+
+- 2026-10-07 — Claude — **investigation done; awaiting owner approval** —
+  Owner report: stutter/lag, coffee customers shown ~10 tiles from the kiosk
+  then jumping to it, characters appearing at the front door instead of
+  walking the sidewalk, characters popping in or jumping across the map.
+  No game code changed. Evidence harness (scratch, not a game test):
+  `.local-dev/claude-motion-jumps/` runs the real domain + real facility view
+  model and replays `routeMotion.ts` at 60 fps, flagging any frame jump >0.6
+  tile. Proposed render-only module: `routeMotionProposed.ts` there.
+  - **Cause 1 (render):** every route that starts from a standstill is
+    already advanced 2 nodes when first seen (created and advanced in the
+    same tick). With no track, the renderer starts at `pathIndex`, so the
+    character pops 2 tiles. ~1 pop per patient departure.
+  - **Cause 2 (render):** the renderer walks at exactly canonical speed with
+    no catch-up. Phaser replaces any frame delta >200 ms with an old ~16 ms
+    delta, so each main-thread stall loses render time permanently while
+    ticks continue. With a 250 ms stall every 3 ticks, on-screen lag reaches
+    5.8 tiles (p95 4.6). Later route changes then shortcut or snap; a dropped
+    track (`syncRouteMotion` returns undefined) teleports to the logical spot.
+    Likely source of the kiosk report in a heavy campaign (not reproduced at
+    10 tiles in the harness).
+  - **Cause 3 (render):** route handoff only searches shared waypoints at or
+    after the render's own progress. The render runs up to 2 tiles ahead
+    (lookahead), so a reversed/replaced route finds no shared point and
+    snaps back 1.4–3 tiles.
+  - **Cause 4 (domain, outside scope):** walk-in retail shoppers
+    (`retail-operations.ts` `createExternalRetailVisitor`,
+    `authorizeRetailOrder`) and peri-op companions (`ensureCompanions`) spawn
+    on `entry.outside`, the tile at the front door. Non-peri-op companions
+    spawn on the patient's tile. Service visitors and patients correctly
+    start offscreen and walk the sidewalk.
+  - **Possible cause 5 (domain, unconfirmed):** a waiting patient sent
+    off-site was placed in the exam room (4.5-tile jump). Seen only with the
+    harness autoplay answering instantly; not confirmed in real play.
+  - **Proposed render-only fix (A+B+C), in `routeMotion.ts` plus the scene's
+    track delete:** (A) park finished/stationary actors as a one-point track
+    so the next route starts where they stand; (B) catch-up up to 2.5x
+    canonical speed while trailing the logical position by >0.5 tile;
+    (C) let handoff match shared waypoints back to the previous logical
+    position and walk back along the known edge.
+  - **Harness results (Level 2 retail clinic, 30 game-minutes):** jumps 41 →
+    1 (the 1 is the very first frame after load); with stalls, max lag
+    5.8 → 2.1 tiles. Level 1 clinic: 37 → 11, all 11 being cause 5.
+    Existing `routeMotion.test.ts` against the proposal: 15/17; the 2
+    failures pin exact canonical speed while trailing, which (B)
+    intentionally changes.
+  - **Next:** owner approval for A+B+C (render) and, separately, for the
+    cause 4 domain spawn change. Note another Claude session is currently
+    integrating room touch-ups in `FacilityScene.ts`; any motion edit there
+    must be a small labelled hunk.
+- 2026-10-07 — Owner — **approved in chat**: "Yes, implement fixes for 1-3.
+  Get rid of front door appearances, everyone should start off-screen and
+  walk along the sidewalk on their way into the building and also walk along
+  the sidewalk all the way off screen when leaving".
+- 2026-10-07 — Claude — **claim, in progress** — Implement the approval.
+  - Render (A+B+C): `apps/player/src/facility/routeMotion.ts`,
+    `routeMotion.test.ts`, and the route-track delete in
+    `FacilityScene.ts` `getCharacterRoutePresentation` (motion hunk only).
+  - Domain (owner-approved, outside the usual scope): spawn and exit paths
+    for walk-in shoppers and companions in
+    `packages/game-domain/src/retail-operations.ts`, plus any other actor
+    found entering or leaving at the door, with focused domain tests.
+- 2026-10-07 — Claude — **ready for owner playtest** — Approval implemented.
+  - **Render, `routeMotion.ts`:**
+    - (A) `parkRouteMotion` keeps a finished route as a one-point "parked"
+      track. A first-seen stationary actor is parked too. The next route
+      hands off at its first waypoint instead of popping 2 nodes ahead.
+      A parked track is dropped when the actor is absent or moved, so
+      off-site and teleported actors behave exactly as before.
+    - (B) `routeMotionStepTiles` adds catch-up while the render trails the
+      logical position by >0.5 tile: +0.5x per tile, capped at 2.5x, never
+      past the predictive target.
+    - (C) handoff also matches shared waypoints back to the previous logical
+      position, then walks back along the known edge.
+  - **Render, `FacilityScene.ts`:** motion hunk only in
+    `getCharacterRoutePresentation`. It parks instead of deleting finished
+    tracks, keeps the last facing for a first-seen parked actor, and uses
+    `routeMotionStepTiles` for hop distance, so steps match catch-up speed.
+  - **Domain, `retail-operations.ts`:**
+    - New `streetArrivalPoint`, `isStreetOrigin` and `pathFromStreet`.
+    - Walk-in shoppers (`createExternalRetailVisitor`,
+      `authorizeRetailOrder`) and peri-op companions start off-map at x=-2
+      or gridWidth+1 on the street row, then walk the sidewalk and front
+      door.
+    - Patient companions (non-peri-op and legacy endoscopy) also start
+      off-map. They walk in at travel speed with lifecycle `arriving`, then
+      `onsite`. If the patient is in a care room the public cannot reach,
+      they wait at a public waiting spot instead of standing on the
+      patient's tile.
+    - Newly created shoppers and companions hold their off-map start for
+      their first tick, as patients do, so they never pop in on an edge tile.
+  - **Domain, `displaced-routing.ts`:** `findRouteFromDisplacedLocationOffscreen`
+    walks an actor already on the street row (or off-map) straight to the
+    nearer edge. Before, an off-map start found no route and left a
+    departing shopper stuck.
+  - **Already correct, unchanged:** patients, service visitors and their
+    companions, off-site returns, hired staff, departing staff and ambient
+    pedestrians. All exits already walk the sidewalk off-map.
+  - **Tests:**
+    - New `packages/game-domain/tests/street-arrivals.test.ts`, 3 tests.
+    - `routeMotion.test.ts`: 5 new tests. Two expectations updated for
+      catch-up speed during handoff.
+  - **Validation on 2026-10-07:**
+    - Player and domain typechecks pass.
+    - Player facility tests 263/263. Full player suite 619/620; the one
+      failure, `level3ControlsViewModels` (8 vs 7 controls), is outside
+      motion.
+    - Related domain files 84/84.
+    - Full domain suite 2115/2132:
+      - 8 failures are the known slow-under-load set.
+      - 4 are timeouts in retail, service-operations and endoscopy files.
+        Those files pass alone (449 tests; only the known slow tests fail).
+      - 5 are assertions outside this work: diagnostic timing (active Codex
+        task), character still catalog (women-20 integration) and
+        content/balance contracts.
+    - Replay harness against the live code, 30 game-minutes each: Level 2
+      retail clinic 0 jumps; with stalls 0 jumps, max lag 2.1 tiles (was
+      5.8); Level 1 clinic 0 jumps. The only flagged event is the founder
+      appearing at game start. The earlier "possible cause 5" (exam-room
+      placement) did not occur in this run; not separately fixed.
+    - QA browser, port 5175, QA-only profile: game loads and runs at 4x
+      with no console errors. Server stopped.
+  - **Owner pathway:** unchanged. `START_GAME.cmd` →
+    `http://127.0.0.1:4173`; reload to pick up the change. Saves are
+    compatible: no schema change. Companions or shoppers already inside an
+    existing save continue from where they are.
+  - **Not checkpointed.** Files ready for the next audited backup:
+    - `routeMotion.ts` and `routeMotion.test.ts`;
+    - the motion hunk in `FacilityScene.ts`;
+    - the street helpers and companion edits in `retail-operations.ts`
+      (an untracked file shared with other work);
+    - the street short-circuit in `displaced-routing.ts` (also untracked);
+    - `street-arrivals.test.ts`.
+- 2026-10-07 — Owner — said "push to GitHub" and asked to archive the task.
+- 2026-10-07 — Claude — checkpoint — Recovery archive
+  `artifacts/checkpoints/movement-street-20261007/`, following the hop-motion
+  pattern:
+  - full copies of `routeMotion.ts`, `routeMotion.test.ts` and
+    `street-arrivals.test.ts`;
+  - Claude-only patches for the shared `FacilityScene.ts`,
+    `retail-operations.ts` and `displaced-routing.ts`, each verified to
+    rebuild the live file byte for byte;
+  - the replay harness, validation results, and a manifest with SHA-256 for
+    12 payloads.
+
+  Shared and untracked source files are not staged whole. The commit stages
+  only this archive and this coordination file. Checks before staging found
+  no secrets, credentials, personal paths or clinical content, and no
+  ignored files.
 
 ## 5. Movement baseline (as of October 5, 2026; verify before relying on it)
 
@@ -478,6 +935,31 @@ Result: 12 women aged 30–44 plus 8 women aged 45–64. Runtime encounters are
 about 87.5% female, concentrated in those two bands. No runtime art, catalog,
 game code or saves were touched. A Codex worker with `image_gen` must generate
 and package the art, and the owner must approve it before registration.
+Follow-up (same day): Claude prototyped recolor variants of existing stills,
+kept only in Claude's scratchpad. Only saturated garments recolored cleanly;
+earthy tones bled into skin and hair. The owner declined recolor variants for
+the roster. The women-20 spec remains available for a Codex image_gen task,
+not started. Thread closed.
+
+## 2026-10-07 — Codex patient-women20 art handoff complete
+
+The owner requested Codex to read this coordination file and proceed. Codex generated the women-20 spec with the built-in image tool: 20 new female patient identities, 12 ages 30-44 and eight ages 45-64, each with standing and seated S/E/W/N views (160 poses). This is art staging only; owner visual approval and runtime registration remain pending, per the explicit batch README checklist. The old sentence saying production was not started is historical and superseded by this entry.
+
+Production ownership: root 001/008-010/018-020; Sol patient_women_artist_a 002-007; Sol patient_women_artist_b 011-017; Sol patient_women_packaging new batch packaging/validation/gallery tools only. All claims are complete and workers have stopped writes. Root reviewed actual tooling and all 20 selected native eight-pose sources, 80 directional seated contacts, and 20 actual south-facing Front Desk chair proofs. Targeted image-tool corrections for 002 spacing and 014/016 rear sleeves preserve original source history and full provenance chains.
+
+Review gallery: artifacts/character-statics/patient-women-20-v3/review/index.html. Paired standing/seated overview and five complete native-source boards are linked there. All selected native PNGs are byte-exact copies with exact prompts, arguments, reference hashes and provenance. Manual contact coordinates are source-hash-bound; root acceptance ledger is tools/character-mapping/patient-women-20-v3/review-acceptance.json. Four directional contacts are reviewed, while actual chair composites use only the authored south-facing Front Desk chair.
+
+Root independently reran strict roster/source/correction-chain/contact/alpha validation: PASS, 20 identities/160 poses/zero issues. Root independently reran complete chair validation: PASS, 20 diagnostics. Chrome gallery QA in temporary contexts passed at 1440px and 375px with 20 cards, 40 pose proofs, five native boards, no overflow. Root reviewed screenshots and source/placement evidence. Faint derived alpha-fringe measurements (maximum 1/255) are explicitly accepted against the exact report hash; no alpha>=13 clipping, native PNGs unchanged.
+
+Existing 185 runtime identities and 1,510 asset hashes remain unchanged. No game catalog, clinical content, demographic weights, saves or Claude movement/stutter files were edited by this art task. No owner game origin/profile was used for gallery QA. This batch is local-only, not registered and not pushed. Owner must approve gallery before append-only runtime integration, then say push to GitHub for a new backup. Active plan: docs/execplans/patient-women20-stills-20261007.md.
+
+### Codex claim — approved patient-women20 integration
+Owner approved the gallery and runtime integration on2026-10-07. Codex claims only characterStillCatalog.ts/catalog tests, player characterStillRegistry.ts/test/generated registry, gs026-runtime-stills provenance, patient-women20 batch tools/approval metadata and new public assets. No movement, stutter, clinical or save edits. One bounded Sol worker will implement; root will validate and update handoffs.
+
+### Codex approved patient-women20 integration complete — claim released
+Owner replied Approved! to the20-patient/160-pose gallery and runtime integration request. Sol patient_women_integration implemented the append-only integration; root reviewed actual scoped diffs/contracts/tests and independently reran strict source/contact/alpha, runtime and chair validators, all PASS. Current game registry205 identities/1670 assets; adult-patient catalog96 designs. All prior185 registry/catalog entries and1510 asset bytes/anchors remain unchanged. All20 new designs are reached through compatible female age-band pools, with existing occupancy/LRU behavior. Focused domain25tests/player22tests and both typechecks PASS; all96 compatible saved patient IDs retained in tests. Root canonical-server delivery check matched SHA256 for all160 new poses without browser storage. Promotion rerun preserved1670 assets,registry,catalog,provenance and receipt.
+
+The old global provenance covered153/1254; existing256 Level3 asset records were consolidated from verified pre-existing package evidence, then160 owner-approved records appended. Older source/approval claims remain intact. Batch gallery/statuses now show owner-approved and locally integrated. Immutable pre-edit snapshots and exact validation receipts are under artifacts/character-statics/patient-women-20-v3/. No clinical, save, selection-weight, movement, stutter or launcher edits. Claim released; worker mutations stopped. Owner pathway unchanged:START_GAME.cmd -> http://127.0.0.1:4173,same profile. Local-only checkpoint; say push to GitHub for backup. No commit/push/publication made by this approved integration.
 
 ## 2026-10-07 — Claude claim — zoomed-out map rendering quality (owner-approved)
 

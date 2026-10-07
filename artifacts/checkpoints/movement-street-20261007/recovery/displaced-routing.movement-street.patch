@@ -1,0 +1,24 @@
+diff --git a/packages/game-domain/src/displaced-routing.ts b/packages/game-domain/src/displaced-routing.ts
+index aede485..60eb1fe 100644
+--- a/packages/game-domain/src/displaced-routing.ts
++++ b/packages/game-domain/src/displaced-routing.ts
+@@ -109,6 +109,19 @@ export function findRouteFromDisplacedLocationOffscreen(
+ ): GridPoint[] {
+   const publicEntrance = entrance(state, context);
+   if (!publicEntrance) return [];
++  // An actor already on the street row, or beyond either map edge, is still
++  // arriving or leaving. It walks along the sidewalk to the nearer edge
++  // instead of first returning to the front door.
++  const { gridWidth, gridHeight } = context.balanceRelease.facility;
++  if (start.y >= gridHeight || start.x < 0 || start.x >= gridWidth) {
++    const streetEndX = start.x < gridWidth / 2 ? -2 : gridWidth + 1;
++    const toStreet = [{ ...start }];
++    while (toStreet.at(-1)!.y !== publicEntrance.outside.y) {
++      const last = toStreet.at(-1)!;
++      toStreet.push({ x: last.x, y: last.y + Math.sign(publicEntrance.outside.y - last.y) });
++    }
++    return [...toStreet, ...sidewalkPath(toStreet.at(-1)!, streetEndX).slice(1)];
++  }
+   const toSidewalk = findRouteFromDisplacedLocationToPublicEntrance(state, context, start);
+   if (toSidewalk.length === 0) return [];
+   const endX = start.x < context.balanceRelease.facility.gridWidth / 2

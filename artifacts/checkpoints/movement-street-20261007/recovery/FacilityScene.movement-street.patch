@@ -1,0 +1,58 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index 4812d3a..399943d 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -195,7 +195,9 @@ import {
+ import {
+   advanceRouteMotion,
+   getRouteTilesPerSecond,
++  parkRouteMotion,
+   routeMotionComplete,
++  routeMotionStepTiles,
+   sampleRouteMotion,
+   syncRouteMotion,
+   type RouteMotionSample,
+@@ -5763,14 +5765,18 @@ export class FacilityScene extends Phaser.Scene {
+       millisecondsPerMinute,
+       this.bridge.viewModel.simulationSpeed,
+     );
++    // A first-seen stationary actor is parked by syncRouteMotion; keep the
++    // facing it was last drawn with.
++    if (!previous && !track.routeActive) {
++      track = { ...track, rightFacing: this.characterFacingRight.get(key) ?? track.rightFacing };
++    }
+     // Route distance this frame, measured before advancing because the
+-    // advance may compact the path and renumber its indices.
+-    const travelledTiles = Math.max(
+-      0,
+-      Math.min(
+-        track.targetIndex,
+-        track.progress + (Math.max(0, this.frameDeltaMilliseconds) * tilesPerSecond) / 1_000,
+-      ) - track.progress,
++    // advance may compact the path and renumber its indices. It includes any
++    // catch-up, so hop steps keep pace with the drawn movement.
++    const travelledTiles = routeMotionStepTiles(
++      track,
++      this.frameDeltaMilliseconds,
++      tilesPerSecond,
+     );
+     track = advanceRouteMotion(
+       track,
+@@ -5779,11 +5785,12 @@ export class FacilityScene extends Phaser.Scene {
+     );
+     const sample = sampleRouteMotion(track);
+     this.characterFacingRight.set(key, sample.rightFacing);
+-    if (routeMotionComplete(track)) {
+-      this.routeMotionTracks.delete(key);
+-    } else {
+-      this.routeMotionTracks.set(key, track);
+-    }
++    // A finished route stays parked at its last node, so the next route
++    // starts from where the character stands instead of popping forward.
++    this.routeMotionTracks.set(
++      key,
++      routeMotionComplete(track) ? parkRouteMotion(track) : track,
++    );
+     const moving = sample.moving || (input.moving ?? false);
+     const hop = this.advanceCharacterHopState(key, moving, travelledTiles, tilesPerSecond, sample);
+     // Hop steps: draw the character slightly behind or ahead of its logical

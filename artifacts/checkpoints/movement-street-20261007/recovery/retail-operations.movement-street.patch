@@ -1,0 +1,216 @@
+diff --git a/packages/game-domain/src/retail-operations.ts b/packages/game-domain/src/retail-operations.ts
+index d014aec..feeaf01 100644
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -8,6 +8,7 @@ import {
+   getClinicalResourceReservations,
+   pathServiceVisitorFromCurrentLocation,
+   pathServiceVisitorToOffscreenEndpoint,
++  straightServiceVisitorSidewalkPath,
+ } from "./service-operations";
+ import { deterministicInteger } from "./randomness";
+ import { hasActivePatientAmenityTrip } from "./patient-amenities";
+@@ -71,6 +72,39 @@ function pathToExit(state: GameState, context: DomainContext, start: GridPoint):
+   return findRouteFromDisplacedLocationOffscreen(state, context, start);
+ }
+ 
++/**
++ * Off-map start for anyone who arrives on foot. Like patients, visitors and
++ * staff, they walk in along the sidewalk instead of appearing at the door.
++ */
++function streetArrivalPoint(state: GameState, context: DomainContext, actorId: string): GridPoint | null {
++  const entry = entrance(state, context);
++  if (!entry) return null;
++  const fromLeft = deterministicInteger(state.campaignSeed, "environment", `${actorId}:street-arrival-side.v1`, 2) === 0;
++  return { x: fromLeft ? -2 : context.balanceRelease.facility.gridWidth + 1, y: entry.outside.y };
++}
++
++/** The street row, beyond either map edge, or the tile outside the front door. */
++function isStreetOrigin(state: GameState, context: DomainContext, point: GridPoint): boolean {
++  const { gridWidth, gridHeight } = context.balanceRelease.facility;
++  return point.y >= gridHeight || point.x < 0 || point.x >= gridWidth ||
++    samePoint(point, entrance(state, context)?.outside);
++}
++
++/** Sidewalk to the front door, then the route inside. */
++function pathFromStreet(
++  state: GameState,
++  context: DomainContext,
++  origin: GridPoint,
++  target: GridPoint,
++  insideRoute: (entry: { inside: GridPoint; outside: GridPoint }) => GridPoint[] = () => pathFromEntrance(state, context, target),
++): GridPoint[] {
++  const entry = entrance(state, context);
++  if (!entry) return [];
++  const inside = insideRoute(entry);
++  if (!inside.length) return [];
++  return [...straightServiceVisitorSidewalkPath(origin, entry.outside), ...inside.slice(1)];
++}
++
+ function outletForLine(state: GameState, line: ServiceIncomeLine, context: DomainContext): { roomId: string; contract: RetailOutletContract; target: GridPoint; servingEmployeeId: string | null } | null {
+   const capabilities = getCurrentCapabilities(state, context);
+   const clinical = getClinicalResourceReservations(state, context);
+@@ -257,7 +291,9 @@ export function startRetailPurchase(
+   const activeAtOutlet = state.retailOperations.filter((operation) => !terminal(operation) && operation.outletRoomInstanceId === outlet.roomId);
+   if (activeAtOutlet.filter((operation) => operation.status === "queued" || operation.status === "walking_to_outlet").length >= MAX_OUTLET_QUEUE) return null;
+   const path = kind === "retail_visitor"
+-    ? pathFromEntrance(state, context, outlet.target)
++    ? isStreetOrigin(state, context, location)
++      ? pathFromStreet(state, context, location, outlet.target)
++      : facilityRoute(state, context, location, outlet.target)
+     : kind === "service_visitor"
+       ? pathServiceVisitorFromCurrentLocation(state, context, location, outlet.target)
+       : facilityRoute(state, context, location, outlet.target);
+@@ -295,7 +331,7 @@ export function authorizeRetailOrder(state: GameState, orderId: string, lineId:
+     if (!context || state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return false;
+     const entry = entrance(state, context);
+     if (!entry) return false;
+-    state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, actorId, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, actorId, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, actorId) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+   }
+   state.retailOrders.push({ id: orderId, actorKind: kind, actorId, incomeLineId: lineId, allowance: Math.max(1, Math.floor(allowance)), fulfilledQuantity: 0, createdAtFacilityTick: state.facilityTick });
+   return true;
+@@ -404,7 +440,7 @@ function beginReturn(state: GameState, operation: RetailOperationState, context:
+ }
+ 
+ function advanceMovement(state: GameState, operation: RetailOperationState, context: DomainContext): void {
+-  if (operation.departureServiceOperationId && operation.createdAtFacilityTick === state.facilityTick) return;
++  if ((operation.departureServiceOperationId || operation.actorKind === "retail_visitor") && operation.createdAtFacilityTick === state.facilityTick) return;
+   if (operation.pathIndex < operation.path.length - 1) {
+     const elapsed = Math.max(1, state.facilityTick - operation.lastMovedAtFacilityTick);
+     operation.pathIndex = Math.min(operation.path.length - 1, operation.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
+@@ -435,7 +471,7 @@ function createExternalRetailVisitor(state: GameState, context: DomainContext):
+   const id = `retail-visitor.${opportunity}`;
+   const entry = entrance(state, context);
+   if (!entry) return;
+-  const actor: RetailExternalActorState = { id, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };
++  const actor: RetailExternalActorState = { id, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, id) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };
+   state.retailExternalActors.push(actor);
+   const product = candidates[deterministicInteger(state.campaignSeed, "environment", `retail-product.${opportunity}`, candidates.length)]!;
+   if (!startRetailPurchase(state, product.id, "retail_visitor", id, context)) actor.lifecycle = "departed";
+@@ -557,9 +593,8 @@ function publicCompanionRoute(
+   origin: GridPoint,
+   target: GridPoint,
+ ): GridPoint[] {
+-  const entry = entrance(state, context);
+-  return entry && samePoint(origin, entry.outside)
+-    ? pathFromEntrance(state, context, target)
++  return isStreetOrigin(state, context, origin)
++    ? pathFromStreet(state, context, origin, target)
+     : facilityRoute(state, context, origin, target);
+ }
+ 
+@@ -613,23 +648,30 @@ function setPeriopCompanionPublicRoute(
+   actor.lastMovedAtFacilityTick = state.facilityTick;
+ }
+ 
+-function ensureCompanions(state: GameState, context: DomainContext): void {
++/** Returns the companions created this tick; they first appear off-map. */
++function ensureCompanions(state: GameState, context: DomainContext): Set<string> {
++  const created = new Set<string>();
+   for (const operation of state.serviceOperations) {
+     if (operation.actorKind === "remote" || !companionLines.has(operation.incomeLineId) || operation.status === "completed" || operation.status === "cancelled") continue;
+     if (state.retailExternalActors.some((actor) => actor.kind === "companion" && actor.linkedServiceOperationId === operation.id)) continue;
+     const id = `companion.${state.companionSequence++}`;
+     if (isPeriopBedFlowOperation(operation)) {
+-      const entry = entrance(state, context);
+-      const plan = entry
+-        ? choosePeriopCompanionPublicTarget(state, context, entry.outside, id)
++      const start = streetArrivalPoint(state, context, id);
++      const plan = start
++        ? choosePeriopCompanionPublicTarget(state, context, start, id)
+         : null;
+-      if (!entry || !plan) continue;
+-      state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...entry.outside }, path: plan.path, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++      if (!start || !plan) continue;
++      state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...start }, path: plan.path, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++      created.add(id);
+       continue;
+     }
+-    const location = operation.location;
++    // A patient's companion walks in from the street; a visitor's companion
++    // starts beside the visitor, who is still off-map when it is created.
++    const fromStreet = operation.actorKind === "encounter";
++    const location = fromStreet ? streetArrivalPoint(state, context, id) : operation.location;
+     if (!location) continue;
+-    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: fromStreet ? "arriving" : "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    created.add(id);
+   }
+   for (const encounter of Object.values(state.encounters)) {
+     if (!encounter.pendingResult || !legacyCompanionRoutes.has(encounter.pendingResult.routeId) || !encounter.patientLocation || encounter.lifecycle !== "active_pending_result") continue;
+@@ -642,11 +684,15 @@ function ensureCompanions(state: GameState, context: DomainContext): void {
+     )) continue;
+     if (state.retailExternalActors.some((actor) => actor.kind === "companion" && actor.linkedEncounterId === encounter.id)) continue;
+     const id = `companion.${state.companionSequence++}`;
+-    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "onsite", location: { ...encounter.patientLocation }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    const start = streetArrivalPoint(state, context, id);
++    if (!start) continue;
++    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "arriving", location: start, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    created.add(id);
+   }
++  return created;
+ }
+ 
+-function advanceCompanions(state: GameState, context: DomainContext): void {
++function advanceCompanions(state: GameState, context: DomainContext, createdThisTick: ReadonlySet<string> = new Set()): void {
+   for (const actor of state.retailExternalActors.filter((candidate) => candidate.kind === "companion" && candidate.lifecycle !== "departed")) {
+     if (actor.activeRetailOperationId) continue;
+     const service = actor.linkedServiceOperationId ? state.serviceOperations.find((operation) => operation.id === actor.linkedServiceOperationId) : null;
+@@ -664,7 +710,7 @@ function advanceCompanions(state: GameState, context: DomainContext): void {
+           : null;
+       if (!plan) continue;
+       setPeriopCompanionPublicRoute(state, actor, plan.path);
+-      if (actor.pathIndex < actor.path.length - 1) {
++      if (actor.pathIndex < actor.path.length - 1 && !createdThisTick.has(actor.id)) {
+         const elapsed = Math.max(1, state.facilityTick - actor.lastMovedAtFacilityTick);
+         actor.pathIndex = Math.min(
+           actor.path.length - 1,
+@@ -709,11 +755,27 @@ function advanceCompanions(state: GameState, context: DomainContext): void {
+     } else if (!primaryDone) {
+       const primaryLocation = service?.location ?? encounter?.patientLocation ?? null;
+       if (primaryLocation && actor.location) {
+-        const route = facilityRoute(state, context, actor.location, primaryLocation);
++        const arriving = actor.lifecycle === "arriving";
++        let route = isStreetOrigin(state, context, actor.location)
++          ? pathFromStreet(state, context, actor.location, primaryLocation, (entry) => facilityRoute(state, context, entry.inside, primaryLocation))
++          : facilityRoute(state, context, actor.location, primaryLocation);
++        // A patient inside a care room is not publicly reachable. An arriving
++        // companion then waits in a public waiting area instead.
++        if (!route.length && arriving) {
++          route = choosePeriopCompanionPublicTarget(state, context, actor.location, actor.id)?.path ?? [];
++        }
++        // Walking in from the street uses the shared travel speed; once
++        // beside the patient, the companion keeps its one-tile follow step.
++        // A companion created this tick first appears at its off-map start,
++        // like an arriving patient.
++        const step = createdThisTick.has(actor.id)
++          ? 0
++          : arriving ? context.balanceRelease.facility.characterTravelTilesPerTick : 1;
+         actor.path = route;
+-        actor.pathIndex = Math.min(Math.max(0, route.length - 2), 1);
++        actor.pathIndex = Math.min(Math.max(0, route.length - 2), step);
+         actor.location = route[actor.pathIndex] ?? actor.location;
+         actor.lastMovedAtFacilityTick = state.facilityTick;
++        if (arriving && actor.pathIndex >= route.length - 2) actor.lifecycle = "onsite";
+       }
+     }
+     if (actor.lifecycle === "departing") {
+@@ -730,7 +792,7 @@ export function advanceRetailOperations(state: GameState, context: DomainContext
+     state.nextExternalRetailOpportunityTick = state.facilityTick + EXTERNAL_OPPORTUNITY_MINUTES;
+     createExternalRetailVisitor(state, context);
+   }
+-  ensureCompanions(state, context);
++  const companionsCreatedThisTick = ensureCompanions(state, context);
+   for (const operation of state.retailOperations) {
+     if (terminal(operation)) continue;
+     const line = getServiceIncomeLine(operation.incomeLineId);
+@@ -790,7 +852,7 @@ export function advanceRetailOperations(state: GameState, context: DomainContext
+       beginReturn(state, operation, context);
+     }
+   }
+-  advanceCompanions(state, context);
++  advanceCompanions(state, context, companionsCreatedThisTick);
+ }
+ 
+ export function activeRetailOperationForActor(state: GameState, kind: RetailActorKind, actorId: string): RetailOperationState | null {
