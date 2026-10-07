@@ -1292,3 +1292,19 @@ Implemented the owner-approved Build Mode revamp; ready for owner playtest.
 - No domain, balance, save or clinical edits. Saves unaffected (letters are
   derived from build order; nothing new is stored). Owner pathway unchanged:
   START_GAME.cmd -> http://127.0.0.1:4173; reload to see it.
+
+### Claude Build Mode revamp — GitHub backup verified (2026-10-07)
+
+Owner said "push to GitHub". Checkpoint
+`34bb4c8899801df5cadd986ebe412cbf8ead6f59` (`backup: preserve owner-approved
+Build Mode revamp`) is on `origin/beta`, confirmed with `git ls-remote`.
+- Archive: `artifacts/checkpoints/build-mode-revamp-20261007/`: full copies
+  of buildModePresentation.ts (+test), RoomActionMenu.tsx and the rewritten
+  BuildPanel.tsx (+test); 23 Claude-only patches for shared files, each
+  verified to rebuild the live file byte for byte; four synthetic-clinic
+  screenshots; manifest; validation record.
+- Before the backup, Claude restored LF line endings in every file its
+  Python edits had converted to CRLF (content unchanged).
+- Not staged: shared dirty source files whole, other sessions' work and
+  the owner's save. No merge, release, deployment or Pages publication.
+  Owner pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173.

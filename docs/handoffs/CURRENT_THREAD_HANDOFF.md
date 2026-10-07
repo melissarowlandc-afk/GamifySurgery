@@ -13,7 +13,9 @@
 > validation: CLAUDE_ANIMATION_COORDINATION.md (Build Mode revamp). No
 > domain/save/balance/clinical edits; saves compatible. Owner pathway
 > unchanged: START_GAME.cmd -> http://127.0.0.1:4173, same profile; reload.
-> LOCAL ONLY — say "push to GitHub" for a backup checkpoint.
+> GitHub backup verified: checkpoint 34bb4c88 on origin/beta (archive
+> artifacts/checkpoints/build-mode-revamp-20261007/, Claude-only patches for
+> shared files). No merge, release or Pages publication.
 
 > MANAGEMENT REVAMP + PLAIN STAFF NAMES GITHUB BACKUP VERIFIED (2026-10-07,
 > Claude Code). Owner-approved Management mode redesign (Employees, Services
