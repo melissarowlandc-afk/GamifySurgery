@@ -299,6 +299,13 @@ Status is one of `claimed`, `in progress`, `ready for review`, `done`,
   Checks before staging found no secrets, credentials or personal paths, no
   clinical content, and no ignored files. Validation on 2026-10-07: player
   typecheck pass; 93 files, 591/591 tests; focused motion tests 56/56.
+- 2026-10-07 — Claude — **backup verified** — Checkpoint
+  `091d7fa5efb7f2ba8cc3449e3111b2bccd88a787` was pushed to `origin/beta` and
+  confirmed with `git ls-remote`. A note was added to the top of
+  `CURRENT_THREAD_HANDOFF.md` but left uncommitted, because that file holds
+  Codex's uncommitted edits. The live motion code stays uncommitted in the
+  shared worktree; the archive is the recovery copy. There was no merge,
+  release, deployment or Pages publication.
 
 ## 5. Movement baseline (as of October 5, 2026; verify before relying on it)
 
