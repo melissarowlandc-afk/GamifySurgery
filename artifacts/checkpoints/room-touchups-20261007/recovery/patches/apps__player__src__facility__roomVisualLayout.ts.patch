@@ -1,0 +1,17 @@
+diff --git a/apps/player/src/facility/roomVisualLayout.ts b/apps/player/src/facility/roomVisualLayout.ts
+index 18b997f9076de6837a43805d871dd9cf795cecdd..dedd9bafdab488c345d6e4ea885ebb78f81604b7 100644
+--- a/apps/player/src/facility/roomVisualLayout.ts
++++ b/apps/player/src/facility/roomVisualLayout.ts
+@@ -267,6 +267,12 @@ const APPROVED_DYNAMIC_DOOR_ROOM_IDS = new Set([
+   "room.ct", "room.phlebotomy", "room.evs_closet", "room.endoscopy",
+   "room.periop_recovery", "room.training", "room.coffee_kiosk",
+   "room.glp1_telehealth_suite",
++  // Owner rule (2026-10-07): every wall is a legal door. The approved Level 3
++  // and Reading Room shells hide door-owned fixtures like the rooms above, so
++  // the legacy clear-zone filter must not hide their door slots.
++  "room.ambulatory_or", "room.laboratory", "room.pharmacy",
++  "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
++  "room.vending", "room.reading",
+ ]);
+ 
+ export const PRIMARY_ROOM_VISUAL_IDS = [

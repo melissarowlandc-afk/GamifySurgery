@@ -1,0 +1,110 @@
+diff --git a/apps/player/src/ui/BuildPanel.tsx b/apps/player/src/ui/BuildPanel.tsx
+index 63a2323d6cc277af1f9e487eb4611dc9836b08c5..347bf299fd730e457dae9477eca834f6e12bb16b 100644
+--- a/apps/player/src/ui/BuildPanel.tsx
++++ b/apps/player/src/ui/BuildPanel.tsx
+@@ -224,6 +224,47 @@ export function BuildPanel({
+     onSelectRoom(roomDefinitionId);
+   };
+ 
++  const listedRooms = roomOptions.filter((room) => room.id !== "room.hallway");
++  const buildableRooms = listedRooms.filter((room) => !room.atMaximum || room.selected);
++  const maximumRooms = listedRooms.filter((room) => room.atMaximum && !room.selected);
++  const renderRoomCard = (room: RoomBuildOptionView) => (
++    <button
++      className={`build-card${
++        room.selected ? " is-selected" : ""
++      }`}
++      type="button"
++      key={room.id}
++      data-room-definition-id={room.id}
++      disabled={!room.enabled && !room.selected}
++      onClick={() =>
++        room.selected
++          ? onCancelPlacement()
++          : selectPlacement(room.id)
++      }
++      title={room.blockedReason}
++      aria-pressed={room.selected}
++    >
++      <PixelIcon
++        name={roomIconName(room.id)}
++        className="pixel-room-icon"
++      />
++      <span>
++        <strong>{room.displayName}</strong>
++        <small>
++          {room.footprintLabel} - {room.costLabel}
++        </small>
++        <small>{room.upkeepLabel}</small>
++        <small>{room.builtCountLabel}</small>
++        {room.blockedReason ? (
++          <small className="blocked-reason">
++            {room.blockedReason}
++          </small>
++        ) : null}
++        {room.id === "room.endoscopy" ? <small>Full setup guidance appears when selected.</small> : null}
++      </span>
++    </button>
++  );
++
+   return (
+     <>
+       <section className="panel build-panel build-mode-panel">
+@@ -431,46 +472,18 @@ export function BuildPanel({
+           <div className="build-section build-room-catalog">
+             <h2>Rooms</h2>
+             <div className="build-option-list">
+-              {roomOptions
+-                .filter((room) => room.id !== "room.hallway")
+-                .map((room) => (
+-                  <button
+-                    className={`build-card${
+-                      room.selected ? " is-selected" : ""
+-                    }`}
+-                    type="button"
+-                    key={room.id}
+-                    data-room-definition-id={room.id}
+-                    disabled={!room.enabled && !room.selected}
+-                    onClick={() =>
+-                      room.selected
+-                        ? onCancelPlacement()
+-                        : selectPlacement(room.id)
+-                    }
+-                    title={room.blockedReason}
+-                    aria-pressed={room.selected}
+-                  >
+-                    <PixelIcon
+-                      name={roomIconName(room.id)}
+-                      className="pixel-room-icon"
+-                    />
+-                    <span>
+-                      <strong>{room.displayName}</strong>
+-                      <small>
+-                        {room.footprintLabel} - {room.costLabel}
+-                      </small>
+-                      <small>{room.upkeepLabel}</small>
+-                      <small>{room.builtCountLabel}</small>
+-                      {room.blockedReason ? (
+-                        <small className="blocked-reason">
+-                          {room.blockedReason}
+-                        </small>
+-                      ) : null}
+-                      {room.id === "room.endoscopy" ? <small>Full setup guidance appears when selected.</small> : null}
+-                    </span>
+-                  </button>
+-                ))}
++              {buildableRooms.map(renderRoomCard)}
+             </div>
++            {maximumRooms.length > 0 ? (
++              // Owner request: rooms already built to their limit move into a
++              // section that starts collapsed so they don't crowd the list.
++              <details className="build-maximum-rooms">
++                <summary>Rooms Built at Maximum ({maximumRooms.length})</summary>
++                <div className="build-option-list">
++                  {maximumRooms.map(renderRoomCard)}
++                </div>
++              </details>
++            ) : null}
+           </div>
+         </div>
+       </section>

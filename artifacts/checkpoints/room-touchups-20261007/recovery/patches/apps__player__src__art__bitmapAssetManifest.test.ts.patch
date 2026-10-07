@@ -1,0 +1,16 @@
+diff --git a/apps/player/src/art/bitmapAssetManifest.test.ts b/apps/player/src/art/bitmapAssetManifest.test.ts
+index f0775011c12091eeed490fd06b561196954ab1f4..5457eda03ff43ad211c3b01a7fca809021ee109e 100644
+--- a/apps/player/src/art/bitmapAssetManifest.test.ts
++++ b/apps/player/src/art/bitmapAssetManifest.test.ts
+@@ -42,8 +42,9 @@ import {
+ 
+ describe("bitmap art asset seam", () => {
+   it("declares every approved GS-015 atlas without activating the runtime preload set", () => {
+-    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(111);
+-    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(111);
++    // 111 plus the five owner-approved Radiology Reading Room pieces (2026-10-07).
++    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(116);
++    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(116);
+     for (const asset of APPROVED_GS015_ROOM_ATLASES) {
+       expect(asset.relativePath).toMatch(/^art\/rooms\/(?:gs015-v1|level3-v1)\/.+\.webp$/);
+       expect(asset.nativeWidth).toBeGreaterThan(0);

@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+index d3438f44610b45d6d4cf7a68975dd157e65f79b0..0e0b8b17533e8300ce260ec1d1296bef915232d2 100644
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -401,6 +401,8 @@ export interface RoomBuildOptionView {
+   upkeepLabel: string;
+   /** Kept separate from upkeep so construction capacity stays readable. */
+   builtCountLabel: string;
++  /** Built up to its instance limit; listed under the collapsed maximum section. */
++  atMaximum?: boolean;
+   owned: boolean;
+   selected: boolean;
+   enabled: boolean;

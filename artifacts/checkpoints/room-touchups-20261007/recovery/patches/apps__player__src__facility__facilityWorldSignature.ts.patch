@@ -1,0 +1,20 @@
+diff --git a/apps/player/src/facility/facilityWorldSignature.ts b/apps/player/src/facility/facilityWorldSignature.ts
+index 67db61a36355d8dc8ba7a147eb4c74edcb1e322a..48bbc6031ee9aa68dfae60a74fd811f8996cc9c1 100644
+--- a/apps/player/src/facility/facilityWorldSignature.ts
++++ b/apps/player/src/facility/facilityWorldSignature.ts
+@@ -55,6 +55,7 @@ export function getFacilityWorldSignature(
+   const occupiedEndoscopyRooms = [...(model.endoscopyOccupancy?.roomInstanceIds ?? [])]
+     .sort()
+     .join(",");
++  const activeImagingRooms = [...(model.imagingActiveRoomInstanceIds ?? [])].sort().join(",");
+ 
+   return [
+     model.buildMode ? 1 : 0,
+@@ -69,6 +70,7 @@ export function getFacilityWorldSignature(
+     doors,
+     environment,
+     `endoscopy:${occupiedEndoscopyRooms}`,
++    `imaging:${activeImagingRooms}`,
+     model.selectedRoomInstanceId ?? "-",
+     model.camera
+       ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`

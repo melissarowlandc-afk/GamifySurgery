@@ -1,0 +1,41 @@
+diff --git a/apps/player/src/facility/approvedRoomPresentation.ts b/apps/player/src/facility/approvedRoomPresentation.ts
+index c0b7451a8a50ea70cdcd0da1d54cacdd2136e7c6..5924a8d96b844f2d58780dd5de96618aa728ee05 100644
+--- a/apps/player/src/facility/approvedRoomPresentation.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.ts
+@@ -49,7 +49,7 @@ export interface ApprovedRoomShellPresentation {
+   floorPatternKind: "square-tile" | "terrazzo" | "vinyl" | "carpet" | "hallway-phase";
+   floorPatternSizePixels: number;
+   floorPatternSeed: number;
+-  floorAlgorithm: "front-desk-square" | "examination-tile" | "hallway-phase" | "waiting-carpet" | "bathroom-tile" | "minor-vinyl" | "ultrasound-vinyl" | "xray-vinyl" | "ct-vinyl" | "phlebotomy-terrazzo" | "evs-utility-tile" | "endoscopy-slate" | "recovery-terrazzo" | "training-terrazzo" | "coffee-terrazzo" | "telehealth-terrazzo" | "level3-or-slate" | "level3-laboratory-tile" | "level3-pharmacy-tile" | "level3-concrete" | "level3-break-wood" | "level3-office-texture" | "level3-vending-terrazzo";
++  floorAlgorithm: "front-desk-square" | "examination-tile" | "hallway-phase" | "waiting-carpet" | "bathroom-tile" | "minor-vinyl" | "ultrasound-vinyl" | "xray-vinyl" | "ct-vinyl" | "phlebotomy-terrazzo" | "evs-utility-tile" | "endoscopy-slate" | "recovery-terrazzo" | "training-terrazzo" | "coffee-terrazzo" | "telehealth-terrazzo" | "level3-or-slate" | "level3-laboratory-tile" | "level3-pharmacy-tile" | "level3-concrete" | "level3-break-wood" | "level3-office-texture" | "level3-vending-terrazzo" | "reading-carpet";
+   floorPalette: readonly string[];
+   floorGrout: string;
+   floorAccent: string;
+@@ -60,6 +60,9 @@ export interface ApprovedRoomShellPresentation {
+   edgeTrim: string;
+   doorJamb: string;
+   doorInsetPixels: number;
++  /** Optional approved-shell overrides (default: house sage highlight, cream south face). */
++  capLight?: string;
++  southFace?: string;
+ }
+ 
+ export type ApprovedProceduralStyle =
+@@ -486,6 +489,17 @@ export const APPROVED_ROOM_PRESENTATIONS = [
+       { id: "prints", assetId: "level3:vending:print1.webp", collision: "none", depth: "wall", contacts: [[.28, -.03], [1.72, -.03]], doorOwners: ["N1", "N2"], backedOwners: ["N1", "N2"] },
+     ],
+   },
++  {
++    // Owner-approved 2026-10-07 (approval-2026-10-07.md). Gray walls, dark
++    // green carpet; always dim, people included (roomTouchups "ambient").
++    proofId: "radiology-reading", roomDefinitionId: "room.reading", proofPath: "tools/room-design/level-4/radiology-reading/proof/radiology-reading-proof.html",
++    assets: level3Assets("radiology-reading", ["island.webp", "chair-northwest.webp", "chair-northeast.webp", "chair-southeast.webp", "chair-southwest.webp"]), orientations: fixed("north-up", 4, 4),
++    shell: { ...clinicalShell("muted green carpet", "#2f453c", "#aaa996", 8), floorAlgorithm: "reading-carpet", floorPalette: ["#2f453c"], floorGrout: "rgba(0,0,0,0)", floorAccent: "rgba(145,165,111,.18)", baseTrim: "#a3a28f", edgeTrim: "#7d8275", doorJamb: "#6b6f63", background: "#101917", capLight: "#959a8d", southFace: "#858a7d" },
++    fixtures: [
++      { id: "fourStationPinwheel", assetId: "level3:radiology-reading:island.webp", collision: "solid", depth: "front", contacts: [[2, 3.32]] },
++      { id: "chairs", assetId: "level3:radiology-reading:chair-northwest.webp", quantity: 4, collision: "solid", depth: "actor-seat", contacts: [[1.30, 1.95], [3.18, 1.89], [2.64, 2.91], [0.90, 3.06]] },
++    ],
++  },
+ ] as const satisfies readonly ApprovedRoomPresentation[];
+ 
+ const BY_DEFINITION = new Map<string, ApprovedRoomPresentation>(APPROVED_ROOM_PRESENTATIONS.map((room) => [room.roomDefinitionId, room]));

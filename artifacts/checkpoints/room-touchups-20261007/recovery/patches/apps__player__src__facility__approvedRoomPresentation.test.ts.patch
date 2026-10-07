@@ -1,0 +1,21 @@
+diff --git a/apps/player/src/facility/approvedRoomPresentation.test.ts b/apps/player/src/facility/approvedRoomPresentation.test.ts
+index ada74d1707d155e1a18c5874800b21a61fc16f97..8b64c46e59c18dc1d84417056e480580ef624130 100644
+--- a/apps/player/src/facility/approvedRoomPresentation.test.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.test.ts
+@@ -18,10 +18,12 @@ import {
+ import { APPROVED_GS015_ROOM_ATLASES } from "../art/bitmapAssetManifest";
+ 
+ describe("approved GS-015 room presentation contract", () => {
+-  it("covers each of the twenty-three approved proofs exactly once", () => {
+-    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(23);
+-    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(23);
+-    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(23);
++  // Twenty-four since the owner-approved Radiology Reading Room (2026-10-07).
++  it("covers each of the twenty-four approved proofs exactly once", () => {
++    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(24);
++    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(24);
++    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(24);
++    expect(getApprovedRoomPresentation("room.reading")?.proofId).toBe("radiology-reading");
+     expect(getApprovedRoomPresentation("room.imaging_control")).toBeUndefined();
+   });
+ 

@@ -1,0 +1,24 @@
+diff --git a/apps/player/src/facility/types.ts b/apps/player/src/facility/types.ts
+index f22e2e805b5dd4108e41ba65c256187299be634e..b362245e53b4ae42bac1afb1197442209658fe95 100644
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -38,7 +38,9 @@ export type FacilityActorSupportRole =
+   | "repair-person"
+   | "staff-break-seat"
+   | "training-employee"
+-  | "surgeon-office";
++  | "surgeon-office"
++  /** A hired radiologist seated at their Reading Room workstation. */
++  | "reading-radiologist";
+ 
+ export interface FacilityPatientView {
+   instanceId: string;
+@@ -282,6 +284,8 @@ export interface FacilityViewModel {
+     patientInstanceIds: readonly string[];
+     serviceVisitorInstanceIds: readonly string[];
+   }>;
++  /** Presentation-only: imaging rooms with a scan in progress (room dims while true). */
++  imagingActiveRoomInstanceIds?: readonly string[];
+   retailExternalActors?: FacilityRetailExternalActorView[];
+   /** Optional honest workstation/panel anchors for future remote receipts. */
+   remoteReceiptAnchors?: Readonly<Record<string, GridPoint>>;

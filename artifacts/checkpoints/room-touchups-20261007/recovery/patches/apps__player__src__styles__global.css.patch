@@ -1,0 +1,32 @@
+diff --git a/apps/player/src/styles/global.css b/apps/player/src/styles/global.css
+index e341ce337214568a15b4ec47e3408afa578296a0..490c11cd12d9db29ddb6cd4686411d5dd2d98a50 100644
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -5852,6 +5852,27 @@ body {
+   padding: 0.15rem 0 0.35rem;
+ }
+ 
++/* Rooms built to their limit: a collapsed section under the catalog. */
++.build-mode-panel .build-maximum-rooms {
++  margin-top: 0.5rem;
++  border-top: 2px solid var(--shade-3);
++  padding-top: 0.35rem;
++}
++
++.build-mode-panel .build-maximum-rooms > summary {
++  cursor: pointer;
++  font-size: 0.68rem;
++  font-weight: 700;
++  padding: 0.2rem 0 0.35rem;
++  color: var(--ink);
++}
++
++.build-mode-panel .build-maximum-rooms .build-option-list {
++  padding: 0;
++  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
++  gap: 0.35rem;
++}
++
+ .build-mode-panel .build-room-catalog .build-option-list {
+   padding: 0;
+   grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));

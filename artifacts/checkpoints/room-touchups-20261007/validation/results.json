@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-07",
+  "scope": "Claude's owner-approved room touch-ups, door rules, Reading Room art and dimming, seated radiologists, and the collapsed 'Rooms Built at Maximum' build-list section",
+  "provenanceMethod": "Every edit Claude made to shared files was recovered from the touch-up session log (6c0e2445): direct edits, logged python patch scripts (re-run symbolically to record each replacement) and line-number sed edits (encoded by hand). Undoing them newest-first on the live files produced the baselines; approved-room-layouts steps 58-60 were undone with the session's saved before/after copies; the BuildPanel restructure was undone by moving the card markup back inline. New files were checked by replaying their logged creation and edits (3 of 5 match exactly; the 2 e2e specs also had Claude-only sed/splice edits).",
+  "patches": "17 Claude-only patches, each verified to rebuild its target byte for byte (recovery/patch-verification.json).",
+  "currentTreeCheck": "16 of 17 reverse-apply to the current shared tree (FacilityScene after reversing the hallway-decor patch); BuildPanel.tsx does not, because another session redesigned the Build panel at 18:58 and kept the collapsed section inside its new layout (recovery/current-tree-check.json).",
+  "tests_on_current_tree": {
+    "apps/player roomTouchups, approvedRoomPresentation, bitmapAssetManifest, readingRoomRadiologists, roomVisualLayout": "pass",
+    "apps/player src/ui/BuildPanel.test.tsx": "4 failures in the concurrent Build panel redesign (header order, Rotate, door tool, upgrade info); Claude's 'Rooms Built at Maximum' test passes",
+    "packages/game-domain owner-passable-door-slots + approved-room-geometry-migration": "38/38 pass",
+    "packages/balance-config approved-room-layouts": "8/8 pass"
+  }
+}

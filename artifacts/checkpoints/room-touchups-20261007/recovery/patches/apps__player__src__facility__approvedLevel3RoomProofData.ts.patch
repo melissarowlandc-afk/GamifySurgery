@@ -1,0 +1,61 @@
+diff --git a/apps/player/src/facility/approvedLevel3RoomProofData.ts b/apps/player/src/facility/approvedLevel3RoomProofData.ts
+index e31caeb3faa072b5726e138274274c69773c7374..7ed97afea4c547137f4ea44bbeca7534ae540eb9 100644
+--- a/apps/player/src/facility/approvedLevel3RoomProofData.ts
++++ b/apps/player/src/facility/approvedLevel3RoomProofData.ts
+@@ -1,4 +1,11 @@
+ import type { ApprovedActorSupport, ApprovedRoomDrawRecord, ApprovedWallSegment } from "./approvedRoomPresentation";
++import {
++  APPROVED_READING_ROOM_DRAW_RECORDS,
++  APPROVED_READING_ROOM_FLOOR_ORIGIN,
++  APPROVED_READING_ROOM_PROOF_SHA256,
++  APPROVED_READING_ROOM_READER_PAINTER_GROUNDS,
++} from "./approvedReadingRoomData";
++import { DIAGNOSTIC_READING_WORKSTATIONS } from "@gamify-surgery/balance-config";
+ 
+ type DrawInput = Readonly<{
+   id: string;
+@@ -25,6 +32,7 @@ export const APPROVED_LEVEL3_FLOOR_ORIGINS: Readonly<Record<string, readonly [nu
+   "room.staff_break": DEFAULT_ORIGIN,
+   "room.surgeon_office": [60, 120],
+   "room.vending": [150, 150],
++  "room.reading": APPROVED_READING_ROOM_FLOOR_ORIGIN,
+ };
+ 
+ const records = (
+@@ -127,6 +135,8 @@ export const APPROVED_LEVEL3_ROOM_DRAW_RECORDS: Readonly<Record<string, readonly
+     wall("print2", "print2.webp", [430, 400], [322.3543973941368, 86.26970684039088, 72.83387622149837, 67.75244299674267], ["N2"], ["N2"]),
+     { id: "machine", file: "machine.webp", native: [660, 980], destination: [205.8957654723127, 112.9368078175896, 128.9902280130293, 191.53094462540716], ground: [270, 298.8], footprint: { left: .51, top: .6, width: .98, height: .64 }, approach: { x: 1, y: 1.56 } },
+   ], APPROVED_LEVEL3_FLOOR_ORIGINS["room.vending"]),
++  // Owner-approved Radiology Reading Room (2026-10-07); layered clips, see approvedReadingRoomData.ts.
++  "room.reading": APPROVED_READING_ROOM_DRAW_RECORDS,
+ };
+ 
+ export const APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS: Readonly<Record<string, Readonly<Record<string, readonly ApprovedRoomDrawRecord[]>>>> = {
+@@ -163,6 +173,21 @@ export const APPROVED_LEVEL3_ACTOR_SUPPORTS: Readonly<Record<string, readonly Ap
+   "room.laboratory": [standingSupport("technician", "laboratory-technician", "north", [1.5, 2.35])],
+   "room.pharmacy": [standingSupport("pharmacist", "pharmacist", "west", [2.35, 1.65])],
+   "room.maintenance_workshop": [standingSupport("repairPerson", "repair-person", "north", [1.5, 2.35])],
++  // One seat per workstation (support id = station id). Seat contacts and
++  // facings come from the domain's workstation table; painter grounds slot each
++  // reader into the approved proof's desk-edge layering.
++  "room.reading": DIAGNOSTIC_READING_WORKSTATIONS.map((station) => {
++    const painter = APPROVED_READING_ROOM_READER_PAINTER_GROUNDS[station.id];
++    return {
++      id: station.id,
++      role: "reading-radiologist" as const,
++      pose: "seated" as const,
++      facing: station.facing,
++      seat: { x: station.seatContact.x, y: station.seatContact.y },
++      ground: { x: station.seatContact.x, y: painter },
++      fixtureGround: { x: station.chairGround.x, y: painter },
++    };
++  }),
+ };
+ 
+ export const APPROVED_LEVEL3_PROOF_SHA256: Readonly<Record<string, string>> = {
+@@ -173,4 +198,5 @@ export const APPROVED_LEVEL3_PROOF_SHA256: Readonly<Record<string, string>> = {
+   "room.staff_break": "FD4DE2CA6EAF353AA52D5BAFB2D8C1E9C42C5E3F15498F35DA1433905A71ACFC",
+   "room.surgeon_office": "AE268AD14EC7F6A9365031C4C7FA45AFFC9F4E1C5AA69CDF077EA9C5E0E375C5",
+   "room.vending": "939A3CFA901891DBFED1578B7CA68819844BB821A7E3E01174347DB6B959573B",
++  "room.reading": APPROVED_READING_ROOM_PROOF_SHA256,
+ };

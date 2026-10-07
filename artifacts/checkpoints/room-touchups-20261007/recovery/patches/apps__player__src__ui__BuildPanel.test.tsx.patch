@@ -1,0 +1,39 @@
+diff --git a/apps/player/src/ui/BuildPanel.test.tsx b/apps/player/src/ui/BuildPanel.test.tsx
+index 7e0666b005ec2511dd8a2b8a01b4e08fa4630d80..624d7c98746d1537559ff045288093a178a831e4 100644
+--- a/apps/player/src/ui/BuildPanel.test.tsx
++++ b/apps/player/src/ui/BuildPanel.test.tsx
+@@ -95,6 +95,34 @@ function renderBuildPanel({
+ }
+ 
+ describe("Build Mode toolbar", () => {
++  it("moves rooms built to their maximum into a collapsed section", () => {
++    const options: RoomBuildOptionView[] = [
++      ...roomOptions,
++      {
++        id: "room.coffee_kiosk",
++        displayName: "Coffee Kiosk",
++        footprintLabel: "2 × 2 tiles",
++        costLabel: "$400",
++        upkeepLabel: "$5 upkeep / hr",
++        builtCountLabel: "1 / 1 built",
++        atMaximum: true,
++        owned: true,
++        selected: false,
++        enabled: false,
++        blockedReason: "Maximum 1 built.",
++      },
++    ];
++    const markup = renderBuildPanel({ options, room: null });
++    const maximum = markup.slice(markup.indexOf('<details class="build-maximum-rooms">'));
++    expect(maximum).toContain("Rooms Built at Maximum (1)");
++    expect(maximum).toContain("Coffee Kiosk");
++    expect(markup).not.toContain('<details class="build-maximum-rooms" open');
++    const available = markup.slice(0, markup.indexOf('<details class="build-maximum-rooms">'));
++    expect(available).toContain("Examination Room");
++    expect(available).not.toContain("Coffee Kiosk");
++    expect(renderBuildPanel({ room: null })).not.toContain("Rooms Built at Maximum");
++  });
++
+   it("can omit its inactive trigger when another desk owner is active", () => {
+     const visibleMarkup = renderBuildPanel({ buildMode: false });
+     const hiddenMarkup = renderBuildPanel({

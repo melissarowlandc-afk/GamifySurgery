@@ -1,0 +1,552 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index 36cf435b8eeb0630ac59eb537956770bff65b9e5..59683cfa62ebd3526b7de4aea17f7c491a13c7ee 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -29,6 +29,30 @@ import type {
+   RequestRoomUpgrade,
+   SelectRoomRequest,
+ } from "./types";
++import {
++  ROOM_TOUCHUP_DECOR_ASSETS,
++  TOUCHUP_CORRIDOR,
++  TOUCHUP_SPRITES,
++  TOUCHUP_TILE_PIXELS,
++  applyRoomTouchupsToRecords,
++  getRoomTouchup,
++  getTouchupCorridorDecor,
++  getTouchupCorridorFloorPrimitives,
++  getTouchupFloorPrimitives,
++  getTouchupGlassPartitionPrimitives,
++  getTouchupLighting,
++  getTouchupNorthWallBands,
++  getTouchupTintTopAt,
++  getTouchupRecordFloorLine,
++  getVisibleTouchupDecor,
++  isTouchupFileSprite,
++  isTouchupRecordFloorSortedOnLowWall,
++  isTouchupRecordVisible,
++  type TouchupDrawRecord,
++  type TouchupLighting,
++  type TouchupPrimitive,
++  type TouchupSprite,
++} from "./roomTouchups";
+ import {
+   formatEarningsPopupAmount,
+   getEarningsPopupLabelY,
+@@ -112,6 +136,7 @@ import {
+   type LandscapingAtlasFrameId,
+ } from "../art/bitmapAssetManifest";
+ import {
++  getApprovedRoomOrientation,
+   getApprovedRoomPresentation,
+   getApprovedRoomProofCapture,
+   isApprovedProceduralDrawVisible,
+@@ -120,6 +145,7 @@ import {
+   resolveApprovedRoomProceduralDrawRecords,
+   type ApprovedRoomDrawRecord,
+   type ApprovedRoomShellPresentation,
++  type ApprovedRoomStateVariant,
+   type ApprovedWallSegment,
+ } from "./approvedRoomPresentation";
+ import {
+@@ -785,6 +811,7 @@ export class FacilityScene extends Phaser.Scene {
+       LANDSCAPING_ATLAS_V1,
+       ...ROOM_FIXTURE_ATLASES,
+       ...APPROVED_GS015_ROOM_ATLASES,
++      ...ROOM_TOUCHUP_DECOR_ASSETS,
+     ]);
+     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+       this.environmentAtlasLoadRequested = false;
+@@ -1788,6 +1815,16 @@ export class FacilityScene extends Phaser.Scene {
+       const height = isLow ? low : rear;
+       const top = rectangle.y - height;
+       const paint = (x: number, width: number) => {
++        if (!isLow) {
++          // Owner-approved house wall for the corridor's tall north wall.
++          for (const [above, bandHeight, color] of getTouchupNorthWallBands(TOUCHUP_CORRIDOR.accent, shell.rearWallHeightPixels)) {
++            graphics.fillStyle(parseApprovedCssColor(color).color, 1);
++            graphics.fillRect(x, rectangle.y - px(above), width, px(bandHeight));
++          }
++          graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), top - px(9), width + px(2), px(9));
++          graphics.fillStyle(light, 1); graphics.fillRect(x - px(1), top - px(9), width + px(2), px(3));
++          return;
++        }
+         graphics.fillStyle(wall, 1); graphics.fillRect(x, top, width, height);
+         graphics.fillStyle(sage, 1); graphics.fillRect(x, rectangle.y - px(24), width, px(24));
+         graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(9));
+@@ -2718,7 +2755,9 @@ export class FacilityScene extends Phaser.Scene {
+       const approvedHallway = getApprovedRoomPresentation(room.definitionId);
+       if (approvedHallway) {
+         this.drawApprovedHallwaySurface(graphics, room, rectangle, approvedHallway.shell);
++        this.drawTouchupCorridor(graphics, room, rectangle, "floor");
+         this.drawApprovedHallwayExposedEdges(graphics, room, rectangle, approvedHallway.shell);
++        this.drawTouchupCorridor(graphics, room, rectangle, "decor");
+         return;
+       }
+       // Corridors remain open circulation floors. Only real exterior edges
+@@ -2894,9 +2933,103 @@ export class FacilityScene extends Phaser.Scene {
+       this.layout.tileSize / shell.tilePixels,
+     );
+     this.drawCleanlinessWear(graphics, room, rectangle);
++    if (getRoomTouchup(room.definitionId)) {
++      // Owner-approved touch-ups: wall-base shadow, rugs/mats and furniture
++      // contact shadows sit on the floor, below the walls and furniture.
++      const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
++      const visible = this.getTouchupDrawRecords(room).filter((record) =>
++        isTouchupRecordVisible(record, openDoorSegments, backedNorthSegments));
++      this.drawTouchupPrimitives(
++        graphics,
++        getTouchupFloorPrimitives(room.definitionId, orientation, [dimensions.width, dimensions.height], this.getApprovedBaseWidth(room), openDoorSegments, visible),
++        rectangle.x,
++        rectangle.y,
++        this.layout.tileSize / TOUCHUP_TILE_PIXELS,
++      );
++    }
+     this.drawApprovedRoomCaps(graphics, room, rectangle, shell);
+   }
+ 
++  private isHallwayTileAt(x: number, y: number): boolean {
++    return this.bridge.viewModel.rooms.some((candidate) => {
++      if (candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway") return false;
++      const size = orientedSize(candidate);
++      return x >= candidate.tileX && x < candidate.tileX + size.width && y >= candidate.tileY && y < candidate.tileY + size.height;
++    });
++  }
++
++  /** Door openings and low (backed) north segments in the active view's frame. */
++  private getApprovedSegmentState(room: FacilityRoomView): Readonly<{
++    openDoorSegments: Set<ApprovedWallSegment>;
++    backedNorthSegments: Set<ApprovedWallSegment>;
++  }> {
++    const openDoorSegments = new Set<ApprovedWallSegment>();
++    for (const opening of this.getRoomDoorOpenings(room)) {
++      const index = opening.offset + 1;
++      if (opening.side === "north") openDoorSegments.add(`N${index}`);
++      else if (opening.side === "south") openDoorSegments.add(`S${index}`);
++      else {
++        const letter = String.fromCharCode(64 + index);
++        openDoorSegments.add(`${opening.side === "west" ? "W" : "E"}${letter}`);
++      }
++    }
++    const backedNorthSegments = new Set<ApprovedWallSegment>();
++    for (const run of getBackedHorizontalBoundaryRuns(room, this.bridge.viewModel.rooms, "north")) {
++      for (let index = run.offset + 1; index <= run.offset + run.length; index += 1) backedNorthSegments.add(`N${index}`);
++    }
++    return { openDoorSegments, backedNorthSegments };
++  }
++
++  private getApprovedRoomVariant(room: FacilityRoomView): ApprovedRoomStateVariant | undefined {
++    const occupied = (room.definitionId === "room.endoscopy" || room.definitionId === "room.ambulatory_or") &&
++      this.bridge.viewModel.endoscopyOccupancy?.roomInstanceIds.includes(room.instanceId);
++    return getApprovedRoomStateVariant(
++      room.definitionId,
++      occupied === true,
++      (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0,
++    );
++  }
++
++  private getApprovedBaseWidth(room: FacilityRoomView): number {
++    return getApprovedRoomOrientation(room.definitionId, 0)?.footprint[0] ?? orientedSize(room).width;
++  }
++
++  /** Approved draw records with the owner-approved touch-up rules applied. */
++  private getTouchupDrawRecords(room: FacilityRoomView): readonly TouchupDrawRecord[] {
++    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
++    return applyRoomTouchupsToRecords(
++      room.definitionId,
++      orientation,
++      this.getApprovedBaseWidth(room),
++      resolveApprovedRoomDrawRecords(room.definitionId, orientation, this.getApprovedRoomVariant(room)),
++    );
++  }
++
++  /** Paints touch-up primitives authored at 120 px per tile. */
++  private drawTouchupPrimitives(
++    graphics: Phaser.GameObjects.Graphics,
++    primitives: readonly TouchupPrimitive[],
++    originX: number,
++    originY: number,
++    scale: number,
++  ): void {
++    for (const primitive of primitives) {
++      const { color, alpha } = parseApprovedCssColor(primitive.color);
++      const x = originX + primitive.x * scale, y = originY + primitive.y * scale;
++      const width = primitive.width * scale, height = primitive.height * scale;
++      if (width <= 0 || height <= 0) continue;
++      if (primitive.stroke) {
++        graphics.lineStyle(Math.max(.5, primitive.stroke * scale), color, alpha * primitive.alpha);
++        graphics.strokeRoundedRect(x, y, width, height, Math.min((primitive.radius ?? 0) * scale, width / 2, height / 2));
++        continue;
++      }
++      graphics.fillStyle(color, alpha * primitive.alpha);
++      if (primitive.shape === "ellipse") graphics.fillEllipse(x + width / 2, y + height / 2, width, height);
++      else if (primitive.shape === "roundRect") graphics.fillRoundedRect(x, y, width, height, Math.min((primitive.radius ?? 0) * scale, width / 2, height / 2));
++      else graphics.fillRect(x, y, width, height);
++    }
++  }
++
+   private drawApprovedPaintPrimitives(
+     graphics: Phaser.GameObjects.Graphics,
+     primitives: readonly ApprovedPaintPrimitive[],
+@@ -2945,8 +3078,8 @@ export class FacilityScene extends Phaser.Scene {
+     const wall = parseApprovedCssColor(shell.rearWall).color;
+     const trim = parseApprovedCssColor(shell.baseTrim).color;
+     const dark = parseApprovedCssColor(shell.edgeTrim).color;
+-    const light = 0x789173;
+-    const cream = 0xefe1bd;
++    const light = shell.capLight ? parseApprovedCssColor(shell.capLight).color : 0x789173;
++    const cream = shell.southFace ? parseApprovedCssColor(shell.southFace).color : 0xefe1bd;
+     const wood = parseApprovedCssColor(shell.doorJamb).color;
+     const openings = this.getRoomDoorOpenings(room);
+     const backed = this.getBackedHorizontalOffsets(room, "north");
+@@ -2954,6 +3087,7 @@ export class FacilityScene extends Phaser.Scene {
+     const dimensions = orientedSize(room);
+     const inset = px(shell.doorInsetPixels);
+     const northBaseHeight = px(room.definitionId === "room.front_desk" ? 23 : 23);
++    const touchupAccent = getRoomTouchup(room.definitionId)?.accent;
+     for (let offset = 0; offset < dimensions.width; offset += 1) {
+       const left = rectangle.x + offset * this.layout.tileSize;
+       const isBacked = backed.has(offset);
+@@ -2962,6 +3096,24 @@ export class FacilityScene extends Phaser.Scene {
+       const opening = openings.some((door) => door.side === "north" && door.offset === offset);
+       const paintRun = (x: number, width: number) => {
+         if (width <= 0) return;
++        if (isBacked && touchupAccent && this.isHallwayTileAt(room.tileX + offset, room.tileY - 1)) {
++          // Owner revision: the hallway's own south wall. Same short-wall look
++          // as every room's south lip: dark cap, cream face, green base.
++          graphics.fillStyle(cream, 1); graphics.fillRect(x, top, width, height);
++          graphics.fillStyle(trim, 1); graphics.fillRect(x, rectangle.y - px(8), width, px(8));
++          graphics.fillStyle(dark, 1); graphics.fillRect(x, top, width, px(8));
++          graphics.fillStyle(light, 1); graphics.fillRect(x, top, width, px(3));
++          return;
++        }
++        if (!isBacked && touchupAccent) {
++          // House wall: cream upper, deep-green rail, room accent below, green base.
++          for (const [above, bandHeight, color] of getTouchupNorthWallBands(touchupAccent, shell.rearWallHeightPixels)) {
++            graphics.fillStyle(parseApprovedCssColor(color).color, 1);
++            graphics.fillRect(x, rectangle.y - px(above), width, px(bandHeight));
++          }
++          graphics.fillStyle(dark, 1); graphics.fillRect(x, rectangle.y - px(7), width, px(7));
++          return;
++        }
+         graphics.fillStyle(isBacked && room.definitionId !== "room.front_desk" ? trim : wall, 1);
+         graphics.fillRect(x, top, width, height);
+         if (!isBacked) {
+@@ -3072,10 +3224,10 @@ export class FacilityScene extends Phaser.Scene {
+     const px = (value: number) => value * scale;
+     const low = px(shell.southHeightPixels);
+     const inset = px(shell.doorInsetPixels);
+-    const cream = 0xefe1bd;
++    const cream = shell.southFace ? parseApprovedCssColor(shell.southFace).color : 0xefe1bd;
+     const trim = parseApprovedCssColor(shell.baseTrim).color;
+     const dark = parseApprovedCssColor(shell.edgeTrim).color;
+-    const light = 0x789173;
++    const light = shell.capLight ? parseApprovedCssColor(shell.capLight).color : 0x789173;
+     const wood = parseApprovedCssColor(shell.doorJamb).color;
+     const southY = rectangle.y + rectangle.height;
+     const openings = this.getRoomDoorOpenings(room);
+@@ -4921,35 +5073,15 @@ export class FacilityScene extends Phaser.Scene {
+     const presentation = getApprovedRoomPresentation(room.definitionId);
+     if (!presentation) return false;
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+-    const occupied = (room.definitionId === "room.endoscopy" || room.definitionId === "room.ambulatory_or") &&
+-      this.bridge.viewModel.endoscopyOccupancy?.roomInstanceIds.includes(room.instanceId);
+-    const variant = getApprovedRoomStateVariant(
+-      room.definitionId,
+-      occupied === true,
+-      (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0,
+-    );
+-    const records = resolveApprovedRoomDrawRecords(
+-      room.definitionId,
+-      orientation,
+-      variant,
+-    );
+-    const openDoorSegments = new Set<ApprovedWallSegment>();
+-    for (const opening of this.getRoomDoorOpenings(room)) {
+-      const index = opening.offset + 1;
+-      if (opening.side === "north") openDoorSegments.add(`N${index}`);
+-      else if (opening.side === "south") openDoorSegments.add(`S${index}`);
+-      else {
+-        const letter = String.fromCharCode(64 + index);
+-        openDoorSegments.add(`${opening.side === "west" ? "W" : "E"}${letter}`);
+-      }
+-    }
+-    const backedNorthSegments = new Set<ApprovedWallSegment>();
+-    for (const run of getBackedHorizontalBoundaryRuns(room, this.bridge.viewModel.rooms, "north")) {
+-      for (let index = run.offset + 1; index <= run.offset + run.length; index += 1) backedNorthSegments.add(`N${index}`);
+-    }
++    const records = this.getTouchupDrawRecords(room);
++    const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
++    const lighting = this.getTouchupRoomLighting(room, presentation.shell, openDoorSegments, backedNorthSegments);
++    const tintTopY = (centerXTiles: number) => lighting
++      ? rectangle.y + getTouchupTintTopAt(lighting, centerXTiles) * this.layout.tileSize / TOUCHUP_TILE_PIXELS
++      : undefined;
+     let order = 0;
+     for (const record of records) {
+-      if (record.doorOwners.some((owner) => openDoorSegments.has(owner)) || record.backedOwners.some((owner) => backedNorthSegments.has(owner))) continue;
++      if (!isTouchupRecordVisible(record, openDoorSegments, backedNorthSegments)) continue;
+       const frame = this.registerApprovedRoomFrame(record);
+       const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId);
+       if (!frame || !atlas) continue; // This room alone waits for its pack; never choose legacy art.
+@@ -4966,7 +5098,11 @@ export class FacilityScene extends Phaser.Scene {
+         image = this.add.image(left, top, getPhaserTextureKey(atlas), frame);
+         this.fixtureBitmapImages.set(key, image);
+       }
+-      const recordDepth = record.depthPolicy === "wall"
++      // North-wall floor furniture kept on a low wall sorts by its own floor
++      // line, so corridor walkers and anything else north of it draw behind.
++      const recordDepth = isTouchupRecordFloorSortedOnLowWall(record, backedNorthSegments)
++        ? getFacilitySceneDepth(rectangle.y + getTouchupRecordFloorLine(record) * this.layout.tileSize, "fixture", order % 64)
++        : record.depthPolicy === "wall"
+           ? FACILITY_DEPTH_WORLD + 19
+           : getFacilitySceneDepth(contactY, "fixture", order % 64);
+       image.setTexture(getPhaserTextureKey(atlas), frame)
+@@ -4977,6 +5113,10 @@ export class FacilityScene extends Phaser.Scene {
+         .setVisible(true)
+         .setData("approved-draw-id", record.id);
+       this.activeFixtureBitmapImages.add(key);
++      if (lighting) {
++        this.drawTouchupTintedTop(`${key}:tint`, getPhaserTextureKey(atlas), frame, left, top, width, height,
++          tintTopY(leftTiles + widthTiles / 2)!, lighting.color, recordDepth);
++      }
+       const chairMask = getApprovedSideChairMaskForDraw(room.definitionId, orientation, record);
+       if (chairMask) {
+         const textures = this.ensureApprovedSideChairTextures(chairMask);
+@@ -5035,7 +5175,17 @@ export class FacilityScene extends Phaser.Scene {
+       const top = rectangle.y + proofRect.top * scale;
+       const width = proofRect.width * scale;
+       const height = proofRect.height * scale;
+-      if (procedural.style.kind === "ct-observation-partition") {
++      if (procedural.style.kind === "ct-observation-partition" && getRoomTouchup(room.definitionId)?.glassPartition) {
++        // Owner-approved framed glass observation window.
++        const k = TOUCHUP_TILE_PIXELS / presentation.shell.tilePixels;
++        this.drawTouchupPrimitives(
++          graphics,
++          getTouchupGlassPartitionPrimitives({ left: proofRect.left * k, top: proofRect.top * k, width: proofRect.width * k, height: proofRect.height * k }),
++          rectangle.x,
++          rectangle.y,
++          this.layout.tileSize / TOUCHUP_TILE_PIXELS,
++        );
++      } else if (procedural.style.kind === "ct-observation-partition") {
+         graphics.fillStyle(parseApprovedCssColor(procedural.style.body).color, 1);
+         graphics.fillRect(left, top, width, height);
+         graphics.fillStyle(parseApprovedCssColor(procedural.style.topHighlight).color, 1);
+@@ -5068,9 +5218,218 @@ export class FacilityScene extends Phaser.Scene {
+           : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 32);
+       graphics.setDepth(depth);
+     }
++    for (const item of getVisibleTouchupDecor(room.definitionId, orientation, this.getApprovedBaseWidth(room), openDoorSegments, backedNorthSegments)) {
++      const key = `touchup:${room.instanceId}:${orientation}:${item.id}`;
++      const placed = this.drawTouchupSprite(
++        key,
++        TOUCHUP_SPRITES[item.sprite],
++        rectangle.x + item.x * this.layout.tileSize,
++        item.kind === "wall" ? rectangle.y + (item.top ?? 0) * this.layout.tileSize : rectangle.y + (item.y ?? 0) * this.layout.tileSize,
++        item.widthTiles,
++        item.kind,
++      );
++      if (placed && lighting) {
++        this.drawTouchupTintedTop(`${key}:tint`, placed.textureKey, placed.frame, placed.left, placed.top, placed.width, placed.height,
++          tintTopY(item.x)!, lighting.color, placed.depth);
++      }
++    }
++    if (lighting) this.drawTouchupLighting(room, rectangle, presentation.shell, lighting);
+     return true;
+   }
+ 
++  /** The room's current lighting; imaging rooms only while a scan is running. */
++  private getTouchupRoomLighting(
++    room: FacilityRoomView,
++    shell: ApprovedRoomShellPresentation,
++    openDoorSegments: ReadonlySet<string>,
++    backedNorthSegments: ReadonlySet<string>,
++  ): TouchupLighting | undefined {
++    const dimensions = orientedSize(room);
++    return getTouchupLighting(
++      room.definitionId,
++      [dimensions.width, dimensions.height],
++      shell,
++      openDoorSegments,
++      backedNorthSegments,
++      this.bridge.viewModel.imagingActiveRoomInstanceIds?.includes(room.instanceId) ?? false,
++    );
++  }
++
++  /**
++   * Back-wall furniture in a tinted room is tinted in full: a tinted copy of
++   * the part of the sprite above the tinted region (e.g. above a low wall),
++   * cropped and stacked just above the original.
++   */
++  private drawTouchupTintedTop(
++    key: string,
++    textureKey: string,
++    frame: string | undefined,
++    left: number,
++    top: number,
++    width: number,
++    height: number,
++    cutY: number,
++    color: string,
++    depth: number,
++  ): void {
++    if (cutY <= top + .5) return;
++    const tintedKey = this.getTouchupTintedTexture(textureKey, frame, color);
++    if (!tintedKey) return;
++    const source = this.textures.get(tintedKey).getSourceImage() as { width: number; height: number };
++    const rows = Math.min(source.height, Math.ceil(((cutY - top) / height) * source.height));
++    let image = this.fixtureBitmapImages.get(key);
++    if (!image) {
++      image = this.add.image(left, top, tintedKey);
++      this.fixtureBitmapImages.set(key, image);
++    }
++    image.setTexture(tintedKey)
++      .setOrigin(0, 0)
++      .setPosition(Math.round(left), Math.round(top))
++      .setDisplaySize(Math.round(width), Math.round(height))
++      .setCrop(0, 0, source.width, rows)
++      .setDepth(depth + .5)
++      .setVisible(true);
++    this.activeFixtureBitmapImages.add(key);
++  }
++
++  /** A multiplied copy of one frame, alpha-masked to the original silhouette. */
++  private getTouchupTintedTexture(textureKey: string, frame: string | undefined, color: string): string | undefined {
++    const key = `room-touchup-tint:${textureKey}:${frame ?? "__BASE"}:${color}`;
++    if (this.textures.exists(key)) return key;
++    if (!this.textures.exists(textureKey)) return undefined;
++    const texture = this.textures.get(textureKey);
++    const sourceFrame = texture.get(frame);
++    const image = texture.getSourceImage() as CanvasImageSource;
++    const canvas = this.textures.createCanvas(key, sourceFrame.cutWidth, sourceFrame.cutHeight);
++    if (!canvas) return undefined;
++    const context = canvas.getContext();
++    const draw = () => context.drawImage(image, sourceFrame.cutX, sourceFrame.cutY, sourceFrame.cutWidth, sourceFrame.cutHeight, 0, 0, sourceFrame.cutWidth, sourceFrame.cutHeight);
++    draw();
++    context.globalCompositeOperation = "multiply";
++    context.fillStyle = color;
++    context.fillRect(0, 0, sourceFrame.cutWidth, sourceFrame.cutHeight);
++    context.globalCompositeOperation = "destination-in";
++    draw();
++    context.globalCompositeOperation = "source-over";
++    canvas.refresh();
++    return key;
++  }
++
++  /**
++   * One touch-up decor image. Floor items stand on `y` and depth-sort with
++   * furniture and people; wall items hang from `y` on the wall layer.
++   */
++  private drawTouchupSprite(
++    key: string,
++    sprite: TouchupSprite,
++    centerX: number,
++    y: number,
++    widthTiles: number,
++    kind: "floor" | "wall",
++  ): Readonly<{ textureKey: string; frame: string | undefined; left: number; top: number; width: number; height: number; depth: number }> | undefined {
++    let textureKey: string | undefined, frame: string | undefined, sourceWidth: number, sourceHeight: number;
++    if (isTouchupFileSprite(sprite)) {
++      const asset = ROOM_TOUCHUP_DECOR_ASSETS.find((candidate) => candidate.id === `room-touchup:${sprite.file}`);
++      if (!asset) return undefined;
++      textureKey = getPhaserTextureKey(asset);
++      if (!this.textures.exists(textureKey)) return undefined;
++      sourceWidth = sprite.nativeWidth;
++      sourceHeight = sprite.nativeHeight;
++    } else {
++      const record = resolveApprovedRoomDrawRecords(sprite.definitionId, 0).find((candidate) => candidate.id === sprite.recordId);
++      const atlas = record ? APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === record.assetId) : undefined;
++      frame = record ? this.registerApprovedRoomFrame(record) : undefined;
++      if (!record || !atlas || !frame) return undefined;
++      textureKey = getPhaserTextureKey(atlas);
++      sourceWidth = record.sourceRect[2];
++      sourceHeight = record.sourceRect[3];
++    }
++    const width = widthTiles * this.layout.tileSize;
++    const height = width * sourceHeight / sourceWidth;
++    const top = kind === "wall" ? y : y - height;
++    let image = this.fixtureBitmapImages.get(key);
++    if (!image) {
++      image = this.add.image(centerX, top, textureKey, frame);
++      this.fixtureBitmapImages.set(key, image);
++    }
++    const depth = kind === "wall" ? FACILITY_DEPTH_WORLD + 19 : getFacilitySceneDepth(y, "fixture", 40);
++    image.setTexture(textureKey, frame)
++      .setOrigin(0, 0)
++      .setPosition(Math.round(centerX - width / 2), Math.round(top))
++      .setDisplaySize(Math.max(1, Math.round(width)), Math.max(1, Math.round(height)))
++      .setDepth(depth)
++      .setVisible(true)
++      .setData("touchup-decor", key);
++    this.activeFixtureBitmapImages.add(key);
++    return { textureKey, frame, left: centerX - width / 2, top, width, height, depth };
++  }
++
++  /**
++   * Imaging-room dimming (only while a scan runs) and warm/cool tints.
++   * MULTIPLY from the north wall's real height down to the top of the south
++   * wall, then SCREEN glows. The layer
++   * sits just above this room's south lip, so people in the room are tinted
++   * while people and furniture in the room to the south are not.
++   */
++  private drawTouchupLighting(
++    room: FacilityRoomView,
++    rectangle: { x: number; y: number; width: number; height: number },
++    shell: ApprovedRoomShellPresentation,
++    lighting: TouchupLighting,
++  ): void {
++    const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
++    const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.layout.tileSize / shell.tilePixels;
++    const tint = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-light:${room.instanceId}`);
++    tint.setBlendMode(Phaser.BlendModes.MULTIPLY);
++    this.drawTouchupPrimitives(tint, lighting.regions, rectangle.x, rectangle.y, scale);
++    tint.setDepth(getFacilitySceneDepth(southEdge, "character", 63));
++    const glow = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-glow:${room.instanceId}`);
++    glow.setBlendMode(Phaser.BlendModes.SCREEN);
++    this.drawTouchupPrimitives(glow, lighting.glows, rectangle.x, rectangle.y, scale);
++    glow.setDepth(getFacilitySceneDepth(southEdge, "character", 63) + .5);
++  }
++
++  /** Corridor touch-ups: stripe and wall shadow on the floor, then decor. */
++  private drawTouchupCorridor(
++    graphics: Phaser.GameObjects.Graphics,
++    room: FacilityRoomView,
++    rectangle: { x: number; y: number; width: number; height: number },
++    phase: "floor" | "decor",
++  ): void {
++    const rooms = this.bridge.viewModel.rooms;
++    const isCorridor = (x: number, y: number) => rooms.some((candidate) =>
++      (candidate.kind === "hallway" || candidate.definitionId === "room.hallway") &&
++      x >= candidate.tileX && x < candidate.tileX + orientedSize(candidate).width &&
++      y >= candidate.tileY && y < candidate.tileY + orientedSize(candidate).height);
++    const openings = this.getRoomDoorOpenings(room);
++    const exposedNorth = this.exposedBoundaryRuns(room, "north").some((run) => run.offset === 0);
++    const lowNorth = getOwnedBackedNorthBoundaryRuns(room, rooms, openings).some((run) => run.offset === 0);
++    const hasNorthWall = exposedNorth && !lowNorth;
++    if (phase === "floor") {
++      this.drawTouchupPrimitives(graphics, getTouchupCorridorFloorPrimitives(hasNorthWall), rectangle.x, rectangle.y, this.layout.tileSize / TOUCHUP_TILE_PIXELS);
++      return;
++    }
++    const hasWestWall = getExposedVerticalBoundaryRuns(room, rooms, "west").some((run) => run.offset === 0);
++    const items = getTouchupCorridorDecor(
++      { x: room.tileX, y: room.tileY },
++      isCorridor,
++      hasNorthWall,
++      hasWestWall,
++      {
++        north: openings.some((opening) => opening.side === "north"),
++        west: openings.some((opening) => opening.side === "west"),
++      },
++    );
++    items.forEach((item, index) => this.drawTouchupSprite(
++      `touchup-corridor:${room.instanceId}:${index}`,
++      TOUCHUP_SPRITES[item.sprite],
++      rectangle.x + (item.x - room.tileX) * this.layout.tileSize,
++      item.kind === "wall" ? rectangle.y + ((item.top ?? 0) - room.tileY) * this.layout.tileSize : rectangle.y + ((item.y ?? 0) - room.tileY) * this.layout.tileSize,
++      item.widthTiles,
++      item.kind,
++    ));
++  }
++
+   private drawFixture(
+     graphics: Phaser.GameObjects.Graphics,
+     id: FixtureId,

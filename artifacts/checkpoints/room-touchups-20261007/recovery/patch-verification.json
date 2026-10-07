@@ -1,0 +1,177 @@
+[
+  {
+    "path": "apps/player/src/facility/FacilityScene.ts",
+    "patch": "recovery/patches/apps__player__src__facility__FacilityScene.ts.patch",
+    "hunks": 16,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "6f4afa741dfbff2ad12686f70261ebcaa24abfcd66a8278b3fbd75f38c402aa8",
+    "targetIs": "hallway-decor-20261007 baseline (live minus hallway hunks)",
+    "baselineSha256": "174776b1cb64bcb036a485324bc9d567fc386305ff502dfdbe9d3c6c22092a12",
+    "error": null
+  },
+  {
+    "path": "packages/balance-config/src/approved-room-layouts.ts",
+    "patch": "recovery/patches/packages__balance-config__src__approved-room-layouts.ts.patch",
+    "hunks": 8,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "4e295fa500c3a5e67a8ac35e1bbcd3faa576126ebfb3a1bdb336fcc539fc3d51",
+    "targetIs": "live working tree",
+    "baselineSha256": "37be214f046d210bd5f0204891bb545c7b7c77e7418cdcc7e8ed4919ce9374a7",
+    "error": null
+  },
+  {
+    "path": "packages/game-domain/src/approved-room-geometry-migration.ts",
+    "patch": "recovery/patches/packages__game-domain__src__approved-room-geometry-migration.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "ec12afe41af9032f6bb9c161f18f177dc11576b47399fa9c4e95b1789d92b992",
+    "targetIs": "live working tree",
+    "baselineSha256": "b7bbf54bcd14c984df5100d5d266bd53544c4730584df6f02c51725d4b7976b7",
+    "error": null
+  },
+  {
+    "path": "packages/game-domain/tests/approved-room-geometry-migration.test.ts",
+    "patch": null,
+    "note": "no net change by Claude (edits were reverted in-session)"
+  },
+  {
+    "path": "apps/player/src/facility/types.ts",
+    "patch": "recovery/patches/apps__player__src__facility__types.ts.patch",
+    "hunks": 2,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "f823b96c97bbab058413eca4c9f467be0737f52e9ae9cd1c295a601c6e132d83",
+    "targetIs": "live working tree",
+    "baselineSha256": "0db7e4f55ed96c59b75a9b2c97afa0918f12174264ba558a528271b70a0bc39c",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/session/viewModels.ts",
+    "patch": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+    "hunks": 5,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "afd2cd22e0095c64b315b426e95634802e2ce0d095923b7b63635336becc5dc7",
+    "targetIs": "live working tree",
+    "baselineSha256": "b75db7c19ededbdc7db63f9d57541f6b6c028f12a1e78d83f7a3e81f44bd558a",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/facility/facilityWorldSignature.ts",
+    "patch": "recovery/patches/apps__player__src__facility__facilityWorldSignature.ts.patch",
+    "hunks": 2,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "0226822e2c18646aa76a1b161507b663436433a293703a8310e48394a9190840",
+    "targetIs": "live working tree",
+    "baselineSha256": "e80346ed8492005c5cb24d30013cd5dd626bc1235195194150cd669cef007519",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/facility/roomVisualLayout.ts",
+    "patch": "recovery/patches/apps__player__src__facility__roomVisualLayout.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "31b15a383f7702535259808370b7e31bee2ccb9d72d876e22ed54f1968c31f43",
+    "targetIs": "live working tree",
+    "baselineSha256": "1bd9e58e19e41bd15666df0861cb916dc4fd0587d1af03c3a03d376a52454dc5",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/ui/types.ts",
+    "patch": "recovery/patches/apps__player__src__ui__types.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "c21ee0d94a9ec2efbcafe85a9b6ac9652d371add3815efd5d21d5f304e9896b7",
+    "targetIs": "live working tree",
+    "baselineSha256": "06d7b5a66442e99462e92a6c00ece7680c31a451e5813012a7cd44d721b91089",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/styles/global.css",
+    "patch": "recovery/patches/apps__player__src__styles__global.css.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "d41be5549b7fb7a00fab8e986101772471f9eeaef78c8317d9f6812e8bfcfd33",
+    "targetIs": "live working tree",
+    "baselineSha256": "598bf699995f55108993898b41431afdee8e7ef8609eb1fbc8497c23c2fb65db",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/ui/BuildPanel.tsx",
+    "patch": "recovery/patches/apps__player__src__ui__BuildPanel.tsx.patch",
+    "hunks": 2,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "f72a95f2a74fe49d2d621ac6e4d5680e2bc63e62faa760cd7ecc092c17633347",
+    "targetIs": "live working tree",
+    "baselineSha256": "086b9fd562ba898cc00e51118ac85249d4f1b3025857c381b8fd239639f370ea",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/ui/BuildPanel.test.tsx",
+    "patch": "recovery/patches/apps__player__src__ui__BuildPanel.test.tsx.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "c39e2dca2243e2978c165b40795b20e5f13a0d2a5c33862056fd83409f0a1826",
+    "targetIs": "live working tree",
+    "baselineSha256": "e08a61e82d0397f406ecb7e408617847c1d391d7c47adaaee3d610ffac070383",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/facility/approvedLevel3RoomProofData.ts",
+    "patch": "recovery/patches/apps__player__src__facility__approvedLevel3RoomProofData.ts.patch",
+    "hunks": 5,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "03a0be52197997d7d88cefa5d311be44c735480a2448e1325515765f79c79845",
+    "targetIs": "live working tree",
+    "baselineSha256": "3961df7c6c4103621ea351351d3f44f6f04ef7f1c2d78c6adac2c4ab2934f0b6",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+    "patch": "recovery/patches/apps__player__src__facility__approvedRoomPresentation.ts.patch",
+    "hunks": 3,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "2fe028e35f2a74b7188be014c697b3cbb0b59801b0344d23f3a3626cefeacb4a",
+    "targetIs": "live working tree",
+    "baselineSha256": "4b40ca3388b738986962ce73466c8c4c8fa8f4677054ebb181a80ca944856613",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+    "patch": "recovery/patches/apps__player__src__facility__approvedRoomPresentation.test.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "89140b6defc56a165a0006b1cf2494f525478045c0cce7b8b291c316db7bf62a",
+    "targetIs": "live working tree",
+    "baselineSha256": "f0773101798a2e75837e8bfcb47beaa02221da31e0447c13bbbf5a1e28e945f0",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/facility/approvedRoomRenderer.ts",
+    "patch": "recovery/patches/apps__player__src__facility__approvedRoomRenderer.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "806a8490f1c1711bb26985d1ed5060f3772f089fed5480624c7ad3fa4fb1ff1d",
+    "targetIs": "live working tree",
+    "baselineSha256": "67bad0e51f05acce993100ee0cccf012545dbcdfe398f82e8d0af21e099d510a",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/art/bitmapAssetManifest.ts",
+    "patch": "recovery/patches/apps__player__src__art__bitmapAssetManifest.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "6618d32ebae21033c8906f997f4ba1857b2a65b411f07be57486b80729a3bac9",
+    "targetIs": "live working tree",
+    "baselineSha256": "20a9091c3347ad34a0c86c2a350c662356fddfeee6f7e4e7feab1852fe6fc347",
+    "error": null
+  },
+  {
+    "path": "apps/player/src/art/bitmapAssetManifest.test.ts",
+    "patch": "recovery/patches/apps__player__src__art__bitmapAssetManifest.test.ts.patch",
+    "hunks": 1,
+    "reconstructsTargetExactly": true,
+    "targetSha256": "ca8d2a8eaa1557cefa2d3b0512e801f74d9c7e218850270e3de1710c99a30e71",
+    "targetIs": "live working tree",
+    "baselineSha256": "f0c4753956e4139ef0a2505e05bf55f49f0776bad680d048d850ea23d7bfd9bc",
+    "error": null
+  }
+]

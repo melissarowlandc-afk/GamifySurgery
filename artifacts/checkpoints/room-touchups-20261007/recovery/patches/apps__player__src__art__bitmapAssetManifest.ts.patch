@@ -1,0 +1,17 @@
+diff --git a/apps/player/src/art/bitmapAssetManifest.ts b/apps/player/src/art/bitmapAssetManifest.ts
+index eae2178442c7a40f3bbfaa0950dc768950645a49..426f4317c0043093f43b2071f0a3ff3c3071cf29 100644
+--- a/apps/player/src/art/bitmapAssetManifest.ts
++++ b/apps/player/src/art/bitmapAssetManifest.ts
+@@ -333,6 +333,12 @@ export const APPROVED_GS015_ROOM_ATLASES = [
+   levelOneRoomAtlas("gs015:waiting:south", "art/rooms/gs015-v1/waiting/south.webp", 567, 1984),
+   levelOneRoomAtlas("gs015:waiting:west", "art/rooms/gs015-v1/waiting/west.webp", 433, 2438),
+   levelOneRoomAtlas("gs015:xray:furniture", "art/rooms/gs015-v1/xray/furniture.webp", 1004, 2930),
++  // Owner-approved Radiology Reading Room (2026-10-07), darkening baked in.
++  levelOneRoomAtlas("level3:radiology-reading:island.webp", "art/rooms/level3-v1/radiology-reading/island.webp", 1054, 996),
++  levelOneRoomAtlas("level3:radiology-reading:chair-northwest.webp", "art/rooms/level3-v1/radiology-reading/chair-northwest.webp", 412, 465),
++  levelOneRoomAtlas("level3:radiology-reading:chair-northeast.webp", "art/rooms/level3-v1/radiology-reading/chair-northeast.webp", 355, 453),
++  levelOneRoomAtlas("level3:radiology-reading:chair-southeast.webp", "art/rooms/level3-v1/radiology-reading/chair-southeast.webp", 402, 442),
++  levelOneRoomAtlas("level3:radiology-reading:chair-southwest.webp", "art/rooms/level3-v1/radiology-reading/chair-southwest.webp", 355, 453),
+   levelOneRoomAtlas("level3:ambulatory-or:anesthesia.webp", "art/rooms/level3-v1/ambulatory-or/anesthesia.webp", 234, 300),
+   levelOneRoomAtlas("level3:ambulatory-or:cabinet.webp", "art/rooms/level3-v1/ambulatory-or/cabinet.webp", 261, 190),
+   levelOneRoomAtlas("level3:ambulatory-or:endoscopyBed.webp", "art/rooms/level3-v1/ambulatory-or/endoscopyBed.webp", 218, 420),

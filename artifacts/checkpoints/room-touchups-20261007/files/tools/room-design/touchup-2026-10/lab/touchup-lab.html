@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room Touch-up Lab</title>
+<style>
+  :root { --ink:#1f2a24; --muted:#5b6a60; --paper:#f4f1e8; --panel:#fffdf6; --line:#d8d2c0; --green:#294632; --sage:#58735a; --accent:#3f6b4d; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:14px/1.4 system-ui, "Segoe UI", sans-serif; }
+  header { padding:14px 16px 8px; }
+  h1 { margin:0 0 2px; font-size:20px; }
+  .sub { color:var(--muted); font-size:13px; }
+  main { display:grid; grid-template-columns: minmax(0,1fr) 340px; gap:14px; padding:0 16px 24px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .stage { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px; min-width:0; }
+  .views { display:grid; gap:10px; }
+  .views.split { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 700px) { .views.split { grid-template-columns: 1fr; } }
+  figure { margin:0; min-width:0; }
+  figcaption { font-size:12px; font-weight:600; color:var(--muted); margin:0 0 4px; text-transform:uppercase; letter-spacing:.04em; }
+  canvas { display:block; max-width:100%; height:auto; background:#efe7d4; border-radius:6px; image-rendering:auto; }
+  aside { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; align-self:start; }
+  aside h2 { font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:14px 0 6px; }
+  aside h2:first-child { margin-top:0; }
+  select, button { font:inherit; }
+  select { width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:6px; background:white; }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:7px; overflow:hidden; }
+  .seg button { border:0; background:white; padding:6px 10px; cursor:pointer; }
+  .seg button[aria-pressed="true"] { background:var(--green); color:white; }
+  .doors { display:grid; grid-template-columns: 52px 1fr; gap:4px 8px; align-items:center; }
+  .doors .lbl { font-size:12px; color:var(--muted); }
+  .chips { display:flex; flex-wrap:wrap; gap:4px; }
+  .chip { border:1px solid var(--line); background:white; border-radius:6px; padding:3px 7px; min-width:36px; cursor:pointer; font-size:12px; }
+  .chip[aria-pressed="true"] { background:var(--sage); color:white; border-color:var(--sage); }
+  label.tg { display:flex; gap:8px; align-items:center; margin:3px 0; cursor:pointer; }
+  .status { margin-top:10px; padding:8px 10px; border-left:3px solid var(--green); background:#f3f6f1; font-size:12px; white-space:pre-line; }
+  .status.bad { border-color:#b03a2e; background:#fbefed; }
+  .notes { font-size:12.5px; color:var(--ink); margin:6px 0 0; padding-left:18px; }
+  .notes li { margin:2px 0; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Room Touch-up Lab</h1>
+  <div class="sub">Preview only, nothing here is in the game yet. It renders the game's own room data and art, at the game's 120&nbsp;px tile scale, with proposed touch-ups layered on top.</div>
+</header>
+<main>
+  <section class="stage">
+    <div id="views" class="views split">
+      <figure><figcaption id="capA">Current game</figcaption><canvas id="canvasA"></canvas></figure>
+      <figure><figcaption id="capB">Proposed</figcaption><canvas id="canvasB"></canvas></figure>
+    </div>
+  </section>
+  <aside>
+    <h2>Scene</h2>
+    <div class="row" style="margin-bottom:6px">
+      <div class="seg" id="sceneSeg">
+        <button data-scene="room" aria-pressed="true">Single room</button>
+        <button data-scene="building" aria-pressed="false">Corridor &amp; rooms</button>
+      </div>
+    </div>
+    <select id="roomSelect" aria-label="Room"></select>
+    <h2>Compare</h2>
+    <div class="seg" id="viewSeg">
+      <button data-view="split" aria-pressed="true">Side by side</button>
+      <button data-view="current" aria-pressed="false">Current</button>
+      <button data-view="proposed" aria-pressed="false">Proposed</button>
+    </div>
+    <div id="roomControls">
+      <h2>Room immediately north of</h2>
+      <div class="chips" id="backedChips"></div>
+      <h2>Open doorway</h2>
+      <div class="doors" id="doorGrid"></div>
+    </div>
+    <h2>Show</h2>
+    <label class="tg"><input type="checkbox" id="tgActors" checked> Characters</label>
+    <label class="tg"><input type="checkbox" id="tgRoutes"> Routes and clearances</label>
+    <label class="tg"><input type="checkbox" id="tgGrid"> Tile grid</label>
+    <label class="tg"><input type="checkbox" id="tgImaging" checked> Imaging in progress (X-ray, Ultrasound dim)</label>
+    <label class="tg" id="occupiedRow"><input type="checkbox" id="tgOccupied"> Patient on table (scan in progress)</label>
+    <div id="status" class="status"></div>
+    <h2>What changed in this room</h2>
+    <ul class="notes" id="notes"></ul>
+  </aside>
+</main>
+<script type="module" src="./lab.js"></script>
+</body>
+</html>

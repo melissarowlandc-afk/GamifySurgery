@@ -1,0 +1,23 @@
+diff --git a/apps/player/src/facility/approvedRoomRenderer.ts b/apps/player/src/facility/approvedRoomRenderer.ts
+index 7674f39f6efa3f8ec5363773be457f36c102c663..63e3e5c945d15c30b2681d5ab2da24032da949b6 100644
+--- a/apps/player/src/facility/approvedRoomRenderer.ts
++++ b/apps/player/src/facility/approvedRoomRenderer.ts
+@@ -237,6 +237,18 @@ export function getApprovedFloorPrimitives(
+       }
+       break;
+     }
++    case "reading-carpet": {
++      // Approved Reading Room carpet: dotted dark green and the proof's monitor
++      // glow. The room's dimness is one runtime multiply over the whole floor
++      // area (roomTouchups "ambient"), so the base is lifted to land on the
++      // proof's final floor colour and the glow keeps its final strength.
++      for (let y = 3; y < height; y += 8) for (let x = ((y / 8) % 2 ? 3 : 7); x < width; x += 11) {
++        output.push(rect(x, y, 1, 1, "#91a56f", .18));
++      }
++      // Ellipse primitives are centre-anchored (Phaser fillEllipse).
++      output.push({ shape: "ellipse", x: 240, y: 210, width: 300, height: 156, color: "#8ee6df", alpha: .19 });
++      break;
++    }
+     case "level3-vending-terrazzo": {
+       output[0] = rect(0, 0, width, height, "#d9c1a5");
+       for (let gy = -5; gy <= 5; gy += 1) for (let gx = -5; gx <= 5; gx += 1) {

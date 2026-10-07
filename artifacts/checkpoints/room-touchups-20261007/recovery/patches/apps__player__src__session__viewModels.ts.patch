@@ -1,0 +1,77 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 62d21ce8a5d5932fc33be7c0f756c9071868d07c..2658d1ba7e2030449f46e3ec2228b6119860e54e 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -52,8 +52,9 @@ import {
+   type RoomOrientation,
+   type ServiceOperationState,
+ } from "@gamify-surgery/game-domain";
+-import { SERVICE_INCOME_CATALOG } from "@gamify-surgery/balance-config";
++import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG } from "@gamify-surgery/balance-config";
+ import type { FacilityActorSupportRole } from "../facility/types";
++import { isTouchupImagingDimRoom } from "../facility/roomTouchups";
+ import type { FacilityBuildDoorSlotView, FacilityViewModel } from "../facility";
+ import { createMessageBoardView } from "./alertViewModels";
+ import {
+@@ -1859,6 +1860,27 @@ export function createPrototypePlayerView(
+         }
+         return { roomInstanceIds: [...roomIds], patientInstanceIds: [...patients], serviceVisitorInstanceIds: [...visitors] };
+       })(),
++      // Owner revision 2026-10-07: imaging rooms dim only while a scan runs.
++      imagingActiveRoomInstanceIds: (() => {
++        const ids = new Set<string>();
++        const definitionOf = (roomId: string) => state.rooms.find((room) => room.id === roomId)?.roomDefinitionId;
++        for (const operation of state.serviceOperations) {
++          if (operation.status !== "in_service") continue;
++          const phaseRoomDefinitionId = operationPhase(operation)?.roomDefinitionId ?? null;
++          if (phaseRoomDefinitionId !== null && !isTouchupImagingDimRoom(phaseRoomDefinitionId)) continue;
++          for (const roomId of operation.reservedRoomInstanceIds) {
++            const definitionId = definitionOf(roomId);
++            if (definitionId && isTouchupImagingDimRoom(definitionId) && (phaseRoomDefinitionId === null || phaseRoomDefinitionId === definitionId)) ids.add(roomId);
++          }
++        }
++        for (const encounter of Object.values(state.encounters)) {
++          const travel = encounter.pendingResult?.patientTravel;
++          if (!travel || state.facilityTick < travel.outboundArrivalTick || state.facilityTick >= travel.serviceCompletionTick) continue;
++          const definitionId = definitionOf(travel.destinationRoomInstanceId);
++          if (definitionId && isTouchupImagingDimRoom(definitionId)) ids.add(travel.destinationRoomInstanceId);
++        }
++        return [...ids].sort();
++      })(),
+       paused: state.paused,
+       simulationSpeed: state.simulationSpeed,
+       realMillisecondsPerFacilityMinuteAt1x:
+@@ -2238,6 +2260,16 @@ export function createPrototypePlayerView(
+                 ? { supportRole: "repair-person" as const, supportRoomInstanceId: homeRoom.id }
+                 : undefined
+           : undefined;
++        // A radiologist standing on their own workstation's anchor sits in that
++        // workstation's chair (idle at home or reading a study).
++        const readingStation = !departing && employee.staffRoleDefinitionId === "staff.radiologist" &&
++          homeRoom?.roomDefinitionId === "room.reading" && employee.pathIndex >= employee.path.length - 1
++          ? DIAGNOSTIC_READING_WORKSTATIONS.find((station) => station.id === employee.readingStationId)
++          : undefined;
++        const readingSupport = readingStation && homeRoom &&
++          samePoint(employee.location, { x: homeRoom.x + readingStation.staffAnchor.x, y: homeRoom.y + readingStation.staffAnchor.y })
++          ? { supportRole: "reading-radiologist" as const, supportId: readingStation.id, supportRoomInstanceId: homeRoom.id }
++          : undefined;
+         const serviceSupport = serviceSupportRole === "ct-operator" && employee.staffRoleDefinitionId !== "staff.imaging_technician"
+           ? undefined
+           : serviceSupportRole && serviceRoom
+@@ -2252,7 +2284,7 @@ export function createPrototypePlayerView(
+               supportRoomInstanceId: employee.training.roomInstanceId,
+             }
+           : undefined;
+-        const projectedSupport = trainingSupport ?? taskSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
++        const projectedSupport = trainingSupport ?? taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
+         return {
+           instanceId: employee.id,
+           discussionActionRequired: Object.values(state.employeeDiscussions ?? {}).some((discussion) =>
+@@ -2384,6 +2416,7 @@ export function createPrototypePlayerView(
+           builtCountLabel: definition.maximumInstances === null
+             ? `${ownedCount} built · no limit`
+             : `${ownedCount} / ${definition.maximumInstances} built`,
++          atMaximum,
+           owned,
+           selected: selectedRoomDefinitionId === definition.id,
+           enabled:

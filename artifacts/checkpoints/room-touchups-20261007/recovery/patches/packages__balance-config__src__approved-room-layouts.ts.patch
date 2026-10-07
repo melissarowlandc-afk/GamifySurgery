@@ -1,0 +1,102 @@
+diff --git a/packages/balance-config/src/approved-room-layouts.ts b/packages/balance-config/src/approved-room-layouts.ts
+index 1e31d43455a950bd72aeb50e1f6aad7657e1b304..30c1f955a4f359354d13b098fcddef79be7230d3 100644
+--- a/packages/balance-config/src/approved-room-layouts.ts
++++ b/packages/balance-config/src/approved-room-layouts.ts
+@@ -88,10 +88,18 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+   },
+   "room.examination": {
+     roomDefinitionId: "room.examination", width: 3, height: 2, allowedOrientations: [0, 270],
+-    solidFixtures: [{ id: "examination-table", footprint: { left: 1.3, top: 0.65, width: 1.55, height: 0.7 }, navigationFootprint: { left: 1.09, top: 0.44, width: 1.97, height: 1.12 }, blockedTiles: [{ x: 1, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 1 }], endpointOnlyContacts: [{ x: 1, y: 1 }] }],
++    solidFixtures: [
++      { id: "examination-table", footprint: { left: 1.3, top: 0.65, width: 1.55, height: 0.7 }, navigationFootprint: { left: 1.09, top: 0.44, width: 1.97, height: 1.12 }, blockedTiles: [{ x: 1, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 1 }], endpointOnlyContacts: [{ x: 1, y: 1 }] },
++      // Owner rule (2026-10-07): the table's south-east tile is owned here so an
++      // EA door can walk through the table's east end to the bedside contact.
++      // It stays blocked unless EA is open.
++      { id: "examination-table-east-passage", footprint: { left: 2, top: 0.65, width: 0.85, height: 0.7 }, blockedTiles: [{ x: 2, y: 1 }], hiddenByDoorSlots: [{ side: "east", offset: 0 }] },
++    ],
+     doorThresholdExceptions: [
+       { side: "north", offset: 1 }, { side: "north", offset: 2 },
+       { side: "south", offset: 1 }, { side: "south", offset: 2 },
++      // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++      { side: "east", offset: 0 }, { side: "east", offset: 1 },
+     ],
+     // The proof's clinician contact sits in the sub-tile south aisle beside
+     // the bed. The integer domain shares the terminal bed contact with the
+@@ -110,6 +118,8 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+       // authoritative blockers and leave the center aisle functional.
+       { id: "table", footprint: { left: 1.35, top: 1.48, width: 1.3, height: 0.6 }, blockedTiles: [] },
+     ],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "north", offset: 1 }, { side: "north", offset: 2 }, { side: "west", offset: 1 }, { side: "east", offset: 1 }],
+     primaryAnchor: { x: 0, y: 2 }, waitingAnchors: [{ x: 1, y: 0 }, { x: 2, y: 0 }, { x: 0, y: 1 }, { x: 3, y: 1 }], staffAnchor: null, publicWaitingArea: true,
+   },
+   "room.bathroom": {
+@@ -118,6 +128,8 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+       { id: "sink", footprint: { left: 0.36, top: 0.46, width: 0.38, height: 0.38 }, blockedTiles: [{ x: 0, y: 0 }] },
+       { id: "toilet", footprint: { left: 1.22, top: 0.46, width: 0.42, height: 0.62 }, blockedTiles: [{ x: 1, y: 0 }], endpointOnlyContacts: [{ x: 1, y: 0 }] },
+     ],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "north", offset: 0 }, { side: "north", offset: 1 }, { side: "west", offset: 0 }, { side: "east", offset: 0 }],
+     primaryAnchor: { x: 0, y: 1 }, waitingAnchors: [], staffAnchor: null,
+   },
+   "room.xray": {
+@@ -141,17 +153,23 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+       { id: "scanner", footprint: { left: 0.5, top: 1, width: 1.8, height: 1.65 }, blockedTiles: [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 2 }, { x: 1, y: 2 }] },
+       { id: "partition", footprint: { left: 2.69, top: 0.75, width: 0.12, height: 2.4 }, blockedTiles: [{ x: 2, y: 1 }, { x: 2, y: 2 }] },
+     ],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "west", offset: 1 }, { side: "west", offset: 2 }],
+     primaryAnchor: { x: 1, y: 3 }, waitingAnchors: [], staffAnchor: { x: 3, y: 2 }, patientCareAnchor: { x: 1, y: 3 }, clinicianCareAnchor: { x: 3, y: 2 },
+   },
+   "room.phlebotomy": {
+     roomDefinitionId: "room.phlebotomy", width: 3, height: 2, allowedOrientations: [0, 270],
+     solidFixtures: [{ id: "patient-chair", footprint: { left: 1.05, top: 0.5, width: 0.9, height: 0.48 }, blockedTiles: [{ x: 1, y: 0 }], endpointOnlyContacts: [{ x: 1, y: 0 }] }],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "north", offset: 1 }],
+     primaryAnchor: { x: 1, y: 1 }, waitingAnchors: [], staffAnchor: { x: 1, y: 1 }, patientCareAnchor: { x: 1, y: 0 }, clinicianCareAnchor: { x: 1, y: 1 },
+   },
+   "room.evs_closet": { roomDefinitionId: "room.evs_closet", width: 2, height: 2, allowedOrientations: [0], solidFixtures: [], primaryAnchor: { x: 0, y: 1 }, waitingAnchors: [], staffAnchor: { x: 1, y: 1 } },
+   "room.endoscopy": {
+     roomDefinitionId: "room.endoscopy", width: 4, height: 3, allowedOrientations: [0, 270],
+     solidFixtures: [{ id: "procedure-table", footprint: { left: 0.95, top: 0.35, width: 1, height: 1.6 }, blockedTiles: [{ x: 1, y: 0 }, { x: 1, y: 1 }] }],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "north", offset: 1 }],
+     primaryAnchor: { x: 1, y: 2 }, waitingAnchors: [], staffAnchor: { x: 2, y: 1 }, patientCareAnchor: { x: 1, y: 2 }, clinicianCareAnchor: { x: 2, y: 1 },
+   },
+   "room.periop_recovery": {
+@@ -200,6 +218,8 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+     roomDefinitionId: "room.glp1_telehealth_suite", width: 3, height: 2, allowedOrientations: [0, 270],
+     // Preserve the proof's half-tile aisle around the divider in both views.
+     solidFixtures: [{ id: "station", footprint: { left: 1, top: 0.5, width: 1, height: 1 }, blockedTiles: [{ x: 1, y: 0 }] }],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "north", offset: 1 }],
+     primaryAnchor: { x: 0, y: 1 }, waitingAnchors: [], staffAnchor: { x: 2, y: 1 }, patientCareAnchor: { x: 0, y: 1 }, clinicianCareAnchor: { x: 2, y: 1 },
+   },
+   "room.ambulatory_or": {
+@@ -228,6 +248,8 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+       footprint: { left: 0.4, top: 1.15, width: 1.75, height: 0.65 },
+       blockedTiles: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
+     }],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "west", offset: 1 }],
+     primaryAnchor: { x: 1, y: 2 }, waitingAnchors: [], staffAnchor: { x: 2, y: 1 },
+   },
+   "room.maintenance_workshop": {
+@@ -248,6 +270,8 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+       // The approved bookshelf and plants intentionally remain pass-through
+       // decor at the domain's coarse navigation resolution.
+     ],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "south", offset: 2 }],
+     primaryAnchor: { x: 1, y: 3 }, waitingAnchors: [], staffAnchor: { x: 1, y: 3 },
+   },
+   "room.surgeon_office": {
+@@ -261,6 +285,8 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+   "room.vending": {
+     roomDefinitionId: "room.vending", width: 2, height: 2, allowedOrientations: [0],
+     solidFixtures: [{ id: "vending-machine", footprint: { left: 0.5, top: 0.05, width: 1, height: 1.05 }, blockedTiles: [{ x: 0, y: 0 }, { x: 1, y: 0 }] }],
++    // Owner rule (2026-10-07): every wall is a legal door; doorway furniture is passable.
++    doorThresholdExceptions: [{ side: "north", offset: 0 }, { side: "north", offset: 1 }, { side: "west", offset: 0 }, { side: "east", offset: 0 }],
+     primaryAnchor: { x: 1, y: 1 }, waitingAnchors: [], staffAnchor: null, publicWaitingArea: true,
+   },
+   "room.reading": {
