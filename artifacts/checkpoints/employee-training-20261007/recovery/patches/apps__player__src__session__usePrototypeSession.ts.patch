@@ -1,0 +1,33 @@
+diff --git a/apps/player/src/session/usePrototypeSession.ts b/apps/player/src/session/usePrototypeSession.ts
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -148,6 +148,7 @@ export interface PrototypeSession {
+   undoBuildAction: () => void;
+   setFacilityCamera: (camera: FacilityCameraView) => void;
+   hireStaff: (staffRoleDefinitionId: string) => void;
++  trainEmployee: (employeeId: string) => void;
+   decreaseEmployeeSalary: (employeeId: string) => void;
+   increaseEmployeeSalary: (employeeId: string) => void;
+   fireEmployee: (employeeId: string) => void;
+@@ -1333,6 +1334,13 @@ export function usePrototypeSession(
+     [execute],
+   );
+ 
++  const trainEmployee = useCallback(
++    (employeeId: string) => {
++      execute({ type: "TRAIN_EMPLOYEE", employeeId });
++    },
++    [execute],
++  );
++
+   const changeEmployeeSalary = useCallback(
+     (employeeId: string, direction: -1 | 1) => {
+       const employee = stateRef.current.employees.find(
+@@ -2022,6 +2030,7 @@ export function usePrototypeSession(
+     undoBuildAction,
+     setFacilityCamera,
+     hireStaff,
++    trainEmployee,
+     decreaseEmployeeSalary,
+     increaseEmployeeSalary,
+     fireEmployee,

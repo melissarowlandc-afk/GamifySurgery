@@ -1,0 +1,42 @@
+diff --git a/apps/player/src/session/diagnosticTimingPresentation.test.ts b/apps/player/src/session/diagnosticTimingPresentation.test.ts
+--- a/apps/player/src/session/diagnosticTimingPresentation.test.ts
++++ b/apps/player/src/session/diagnosticTimingPresentation.test.ts
+@@ -57,6 +57,23 @@ describe("shared diagnostic timing presentation", () => {
+     expect(view.detailLabel).toContain("Result estimated at 45 min");
+   });
+ 
++  it("shows frozen work durations without nominal queues or walking when capacity has no return estimate", () => {
++    const frozen = plan();
++    frozen.phases[0]!.forecast.queueMinutes = 73;
++    frozen.phases[0]!.forecast.walkingMinutes = 7;
++    frozen.phases.push(phase("return", "patient_return", 0, 240, { forecast: {
++      readyAtTick: 235, startsAtTick: 240, endsAtTick: 240, queueMinutes: 0, walkingMinutes: 5,
++      patientPath: [], employeePaths: [], founderPath: [], tilesPerTick: 1,
++    } }));
++    const view = diagnosticChoiceTimingPresentation({ kind: "test", answerChoiceId: "test", serviceId: null,
++      serviceDisplayName: "Test", routeId: null, routeDisplayName: null, timingProfileId: null,
++      diagnosticTiming: frozen, durationTicks: null }, 100, duration);
++    expect(view.etaLabel).toBeUndefined();
++    expect(view.detailLabel).toContain("time estimate is unavailable");
++    expect(view.detailLabel).toContain("Procedure 45 min onsite");
++    expect(view.detailLabel).not.toMatch(/Estimated total|\d+ min (queue|walking)|Return to Front Desk|estimated at/);
++  });
++
+   it("preserves legacy quotes, no-test labels and unavailable estimates", () => {
+     const legacy = { kind: "test" as const, answerChoiceId: "test", serviceId: null, serviceDisplayName: "Test",
+       routeId: null, routeDisplayName: null, timingProfileId: "timing.test.upper_endoscopy", durationTicks: 120 };
+@@ -93,11 +110,14 @@ describe("shared diagnostic timing presentation", () => {
+     const blocked = timing({ blocked: true, totalRemainingTicks: null, resultReady: true, resultRemainingTicks: 0 });
+     blocked.phases[1]!.remainingTicks = null;
+     blocked.phases[1]!.status = "queued";
++    blocked.phases[1]!.queueMinutes = 73;
++    blocked.phases[1]!.walkingMinutes = 7;
+     const view = diagnosticPendingPresentation(blocked, "Existing returned finding.", duration);
+     expect(view.etaLabel).toBeUndefined();
+     expect(view.body).toContain("Existing returned finding.");
+     expect(view.body).toContain("full time estimate is unavailable");
+     expect(view.body).toContain("Pathology (offsite): waiting for capacity");
++    expect(view.body).not.toMatch(/73 min queue|7 min walking/);
+   });
+ 
+   it("keeps collected background pathology visible after patient care and clinical delivery", () => {

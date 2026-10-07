@@ -1,0 +1,37 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -451,6 +451,24 @@ export interface StaffHireOptionView {
+   blockedReason?: string;
+ }
+ 
++/** Training data for Management's employee card; the domain owns eligibility. */
++export interface EmployeeTrainingView {
++  level: number;
++  nextLevel: number | null;
++  cost: number | null;
++  costLabel: string | null;
++  canTrain: boolean;
++  blockedReason: string | null;
++  status: "idle" | "queued" | "walking" | "training" | "returning" | "max_level";
++  statusLabel: string;
++  minutesRemaining: number | null;
++  sessionDurationMinutes: number;
++  currentBenefitLabel: string;
++  nextBenefitLabel: string | null;
++  /** Additional benefit earned by this purchase, separate from target total. */
++  incrementBenefitLabel: string | null;
++}
++
+ export interface StaffMemberView {
+   id: string;
+   displayName: string;
+@@ -461,6 +479,8 @@ export interface StaffMemberView {
+   avatar?: PixelAvatarView;
+   canDecreaseSalary: boolean;
+   canIncreaseSalary: boolean;
++  /** Optional only for older UI fixtures; live employee cards supply this. */
++  training?: EmployeeTrainingView;
+   /** Numeric hourly salary for Management payroll totals. */
+   salaryPerHour?: number;
+   /** Role-average benefit if this employee completes their next level. */

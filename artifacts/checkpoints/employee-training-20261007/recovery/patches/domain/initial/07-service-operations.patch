@@ -1,0 +1,118 @@
+diff --git a/packages/game-domain/src/service-operations.ts b/packages/game-domain/src/service-operations.ts
+--- a/packages/game-domain/src/service-operations.ts
++++ b/packages/game-domain/src/service-operations.ts
+@@ -32,6 +32,8 @@ import type {
+   ServiceOperationState,
+ } from "./types";
+ import { recordLevelThreeRoomUse } from "./level-three-support";
++import { isDiagnosticResourceWaitingForTraining, isEmployeeAwayForTraining } from "./employee-training";
++import { bindServiceOperationTraining, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
+ 
+ const WAIT_TIMEOUT_MINUTES = 60;
+ const GLOBAL_ARRIVAL_SPACING_MINUTES = 30;
+@@ -352,7 +354,8 @@ function installedAndOperational(state: GameState, line: ServiceIncomeLine, cont
+   ))) return false;
+   if (!requiredStaffRoles(phases).every((roleId) => state.employees.some(
+     (employee) => employee.staffRoleDefinitionId === roleId &&
+-      isServiceEmployeeOperational(state, employee.id, roleId, context),
++      (isServiceEmployeeOperational(state, employee.id, roleId, context) ||
++        isEmployeeAwayForTraining(employee) && isEmployeeAssignedToOperationalRoom(state, employee.id, context)),
+   ))) return false;
+   const providerPhase = phases.find(
+     (phase) => phase.providerRoleDefinitionIds?.length || phase.founderEligible,
+@@ -361,7 +364,8 @@ function installedAndOperational(state: GameState, line: ServiceIncomeLine, cont
+     providerPhase.founderEligible || state.employees.some(
+       (employee) =>
+         providerPhase.providerRoleDefinitionIds?.includes(employee.staffRoleDefinitionId) &&
+-        isEmployeeOperational(state, employee.id, context),
++        (isEmployeeOperational(state, employee.id, context) ||
++          isEmployeeAwayForTraining(employee) && isEmployeeAssignedToOperationalRoom(state, employee.id, context)),
+     ),
+   );
+ }
+@@ -754,6 +758,7 @@ function planPeriopCoverage(
+     .filter((candidate) =>
+       candidate.staffRoleDefinitionId === "staff.periop_nurse" &&
+       !candidate.facilityTask &&
++      !isEmployeeAwayForTraining(candidate) &&
+       !usedEmployees.has(candidate.id) &&
+       isEmployeeAssignedToOperationalRoom(state, candidate.id, context),
+     )
+@@ -819,6 +824,7 @@ function sameDiagnosticChoice(a: DiagnosticResourceChoice, b: DiagnosticResource
+ function diagnosticPhysicalChoiceCompatible(state: GameState, operation: ServiceOperationState, context: DomainContext): boolean {
+   const resource = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
+   if (!resource) return true;
++  if (isDiagnosticResourceWaitingForTraining(state, resource)) return false;
+   const room = state.rooms.find((candidate) => candidate.id === resource.roomInstanceId);
+   if (!room || room.roomDefinitionId !== resource.roomDefinitionId || !isRoomOperationalForFacilityWork(state, room.id, context)) return false;
+   if (!resource.employeeIds.every((id) => isEmployeeAssignedToOperationalRoom(state, id, context))) return false;
+@@ -847,11 +853,11 @@ function queueDiagnosticProcessing(state: GameState, operation: ServiceOperation
+ function tryReserveDiagnosticProcessing(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
+   const work = operation.diagnosticPhaseWork!;
+   const choices = diagnosticProcessingChoices(state, operation, context);
+-  if (work.resource && !choices.some((choice) => sameDiagnosticChoice(choice, work.resource!))) work.resource = null;
++  if (work.resource && (isDiagnosticResourceWaitingForTraining(state, work.resource) || !choices.some((choice) => sameDiagnosticChoice(choice, work.resource!)))) work.resource = null;
+   const clinical = getClinicalResourceReservations(state, context);
+   for (const resource of choices.filter((choice) => !work.resource || sameDiagnosticChoice(choice, work.resource))) {
+     const employee = state.employees.find((candidate) => candidate.id === resource.employeeIds[0])!;
+-    if (employee.facilityTask || clinical.employeeIds.has(employee.id) || getActiveServiceOperationEmployeeIds(state).has(employee.id) || clinical.roomIds.has(resource.roomInstanceId) ||
++    if (isEmployeeAwayForTraining(employee) || employee.facilityTask || clinical.employeeIds.has(employee.id) || getActiveServiceOperationEmployeeIds(state).has(employee.id) || clinical.roomIds.has(resource.roomInstanceId) ||
+       (clinical.roomDefinitionCounts.get(resource.roomDefinitionId) ?? 0) > 0) continue;
+     const roomBusy = state.serviceOperations.some((other) => other.id !== operation.id && active(other) && operationRoomIds(other).includes(resource.roomInstanceId) &&
+       !(work.kind === "interpretation" && other.diagnosticPhaseWork?.kind === "interpretation" && other.diagnosticPhaseWork.resource?.stationId !== resource.stationId));
+@@ -923,7 +929,7 @@ function tryReserve(
+     !(periopBedPhase && roleId === "staff.periop_nurse"),
+   )) {
+     const available = state.employees
+-      .filter((candidate) => candidate.staffRoleDefinitionId === roleId && (!preferred || preferred.employeeIds.includes(candidate.id)) && !candidate.facilityTask && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
++      .filter((candidate) => candidate.staffRoleDefinitionId === roleId && (!preferred || preferred.employeeIds.includes(candidate.id)) && !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
+         (operation.diagnosticPhysicalWork ? isEmployeeAssignedToOperationalRoom(state, candidate.id, context) : isServiceEmployeeOperational(state, candidate.id, roleId, context)))
+       .sort((a, b) => a.id.localeCompare(b.id));
+     const employee = available[clinical.staffRoleCounts.get(roleId) ?? 0];
+@@ -935,7 +941,7 @@ function tryReserve(
+   let provider: ServiceOperationState["providerReservation"] = null;
+   if (providerPhase) {
+     const providerEmployee = state.employees
+-      .filter((candidate) => providerPhase.providerRoleDefinitionIds?.includes(candidate.staffRoleDefinitionId) && (!preferred || preferred.provider?.kind === "employee" && preferred.provider.employeeId === candidate.id) && !candidate.facilityTask && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
++      .filter((candidate) => providerPhase.providerRoleDefinitionIds?.includes(candidate.staffRoleDefinitionId) && (!preferred || preferred.provider?.kind === "employee" && preferred.provider.employeeId === candidate.id) && !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
+         (operation.diagnosticPhysicalWork ? isEmployeeAssignedToOperationalRoom(state, candidate.id, context) : isEmployeeOperational(state, candidate.id, context)))
+       .sort((a, b) => a.id.localeCompare(b.id))[0];
+     if (providerEmployee) provider = { kind: "employee", employeeId: providerEmployee.id };
+@@ -1028,6 +1034,7 @@ function tryReserve(
+   operation.reservedRoomInstanceIds = rooms.map((room) => room!.id);
+   operation.reservedEmployeeIds = selectedEmployees;
+   operation.providerReservation = provider;
++  bindServiceOperationTraining(state, operation, reservationPhases.map((_, index) => operation.phaseFlowVersion === 1 ? operation.phaseIndex : index));
+   operation.path = actorPath;
+   operation.pathIndex = 0;
+   operation.lastMovedAtFacilityTick = state.facilityTick;
+@@ -1972,7 +1979,12 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
+     ? joinPaths(straightServiceVisitorSidewalkPath(endpoint, entrance.outside), [entrance.inside])
+     : [];
+   const periopPhases = getNewPeriopServiceOperationPhases(line.id);
+-  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, {}, "patient", getPatientAppearanceSelectionContext(state)) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [], frozenOperationPhases: periopPhases } : {}) };
++  const frozenPhases = periopPhases ?? line.operation?.phases.map(cloneOperationPhase) ?? [];
++  const trainingTiming: NonNullable<ServiceOperationState["trainingTiming"]> = {
++    version: "employee-training-timing.v1", categoryPercents: snapshotEmployeeTrainingCategories(state),
++    phases: frozenPhases.map((phase) => ({ phaseId: phase.id, baselineMinutes: phase.durationMinutes, boundPercent: null })),
++  };
++  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, {}, "patient", getPatientAppearanceSelectionContext(state)) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, frozenOperationPhases: frozenPhases, trainingTiming, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [] } : {}) };
+ }
+ 
+ export function startServiceOperation(state: GameState, lineId: string, actorKind: "visitor" | "remote", context: DomainContext): string | null {
+@@ -2073,6 +2085,7 @@ export function startDiagnosticAcquisitionOperation(
+     ...(phase.kind === "preparation" ? { roomStationId: "periop_preparation" as const } :
+       phase.kind === "recovery" && phase.requirement!.stationKind === "periop_bed" ? { roomStationId: "periop_recovery" as const } : {}),
+   }));
++  operation.trainingTiming = undefined;
+   operation.phaseFlowVersion = 1;
+   operation.periopBedFlowVersion = operation.frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery") ? 1 : undefined;
+   operation.phaseIndex = currentIndex;
+@@ -2119,6 +2132,7 @@ export function startDiagnosticProcessingOperation(
+   operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
+   operation.frozenOperationPhases = [{ id: phase.id, roomDefinitionId: phase.requirement.roomDefinitionId,
+     durationMinutes: phase.durationMinutes, staffRoleDefinitionIds: [...phase.requirement.staffRoleDefinitionIds] }];
++  operation.trainingTiming = undefined;
+   operation.diagnosticPhaseWork = { version: "diagnostic-phase-work.v1", orderId: plan.orderId, encounterId: plan.encounterId,
+     phaseId: phase.id, kind: phase.kind, billing: "none", durationMinutes: phase.durationMinutes, remainingMinutes: phase.remainingMinutes,
+     resource: phase.resource ? JSON.parse(JSON.stringify(phase.resource)) as DiagnosticResourceChoice : null };

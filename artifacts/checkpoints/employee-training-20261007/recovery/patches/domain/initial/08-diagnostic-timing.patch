@@ -1,0 +1,185 @@
+diff --git a/packages/game-domain/src/diagnostic-timing.ts b/packages/game-domain/src/diagnostic-timing.ts
+--- a/packages/game-domain/src/diagnostic-timing.ts
++++ b/packages/game-domain/src/diagnostic-timing.ts
+@@ -15,6 +15,8 @@ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { getNewPeriopServiceOperationPhases, straightServiceVisitorSidewalkPath } from "./service-operations";
+ import { getDoorCells } from "./doors";
++import { getEmployeeTrainingAvailability, getEmployeeTrainingHomeLocation, isDiagnosticResourceWaitingForTraining } from "./employee-training";
++import { getEmployeeTrainingWorkMinutes, getEmployeeTrainingWorkPercent, getServiceOperationTrainingMinutes, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
+ import {
+   getRoomDefinition,
+   getStaffRoleDefinition,
+@@ -97,7 +99,9 @@ function holdResource(calendar: Calendar, key: string, ownerId: string): void {
+ }
+ 
+ function heldByAnother(calendar: Calendar, resource: DiagnosticResourceChoice, ownerId?: string): boolean {
+-  return ["room:" + resource.roomInstanceId, ...(resource.stationId ? [`station:${resource.roomInstanceId}:${resource.stationId}`] :
++  return ["room:" + resource.roomInstanceId, ...resource.employeeIds.map((id) => `employee:${id}`),
++    ...(resource.provider?.kind === "employee" ? [`employee:${resource.provider.employeeId}`] : []),
++    ...(resource.stationId ? [`station:${resource.roomInstanceId}:${resource.stationId}`] :
+     [...calendar.heldResources.keys()].filter((key) => key.startsWith(`station:${resource.roomInstanceId}:`)))].some((key) => {
+     const owners = calendar.heldResources.get(key);
+     return owners && (!ownerId || !owners.has(ownerId));
+@@ -272,13 +276,16 @@ function containingRoomId(state: GameState, context: DomainContext, point: GridP
+ }
+ 
+ function schedulePhase(state: GameState, context: DomainContext, calendar: Calendar, draft: DraftPhase, ready: number,
+-  patientOrigin: GridPoint, preferred?: DiagnosticResourceChoice | null, remaining = draft.durationMinutes, ownerId?: string, workHasArrived = false): DiagnosticOrderPhase | null {
++  patientOrigin: GridPoint, preferred?: DiagnosticResourceChoice | null, remaining = draft.durationMinutes, ownerId?: string, workHasArrived = false,
++  initialTiming?: (resource: DiagnosticResourceChoice | null) => number, preferredStationOnly = false): DiagnosticOrderPhase | null {
+   const tilesPerTick = context.balanceRelease.facility.characterTravelTilesPerTick;
++  // A replacement nurse can cover the accepted bed without changing its station.
+   const choices = draft.requirement ? resourceCandidates(state, context, draft.requirement).filter((resource) =>
+     !heldByAnother(calendar, resource, ownerId) && (!preferred || (resource.roomInstanceId === preferred.roomInstanceId && resource.stationId === preferred.stationId &&
+-      resource.employeeIds.join(":") === preferred.employeeIds.join(":") && JSON.stringify(resource.provider) === JSON.stringify(preferred.provider))))
+-    .map((resource) => preferred ? copy(preferred) : resource) : [null];
++      (preferredStationOnly || resource.employeeIds.join(":") === preferred.employeeIds.join(":") && JSON.stringify(resource.provider) === JSON.stringify(preferred.provider)))))
++    .map((resource) => preferred && !preferredStationOnly ? copy(preferred) : resource) : [null];
+   const options = choices.flatMap((resource) => {
++    const workMinutes = initialTiming ? initialTiming(resource) : remaining;
+     const patientPath = !workHasArrived && draft.patientPresent && resource ? path(state, context, patientOrigin, resource.patientAnchor, resource.roomInstanceId) : [];
+     if (!workHasArrived && draft.patientPresent && resource && patientPath.length === 0) return [];
+     const employeeIds = resource ? [...resource.employeeIds, ...(resource.provider?.kind === "employee" ? [resource.provider.employeeId] : [])] : [];
+@@ -293,9 +300,9 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+       const founderPath = resource?.provider?.kind === "founder" ? workHasArrived ? [resource.staffAnchor] : path(state, context, actorOrigin(calendar, "founder", starts, state.environment.founderLocation), resource.staffAnchor, resource.roomInstanceId) : [];
+       if (resource?.provider?.kind === "founder" && founderPath.length === 0) return [];
+       const walkingMinutes = Math.max(0, ...[patientPath, founderPath, ...employeePaths.map((entry) => entry.path)].map((entry) => Math.ceil(Math.max(0, entry.length - 1) / tilesPerTick)));
+-      const slot = resource ? firstSlot(calendar, resource, starts, walkingMinutes + remaining) : starts;
++      const slot = resource ? firstSlot(calendar, resource, starts, walkingMinutes + workMinutes) : starts;
+       if (slot !== starts) { starts = slot; continue; }
+-      const ends = starts + walkingMinutes + remaining;
++      const ends = starts + walkingMinutes + workMinutes;
+       let afterNext = starts;
+       for (const actorId of [...employeeIds, ...(resource?.provider?.kind === "founder" ? ["founder"] : [])]) {
+         const next = (calendar.actors.get(actorId) ?? []).filter((interval) => interval.starts >= ends).sort((a, b) => a.starts - b.starts)[0];
+@@ -304,22 +311,41 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+         if (!onward.length || ends + Math.ceil(Math.max(0, onward.length - 1) / tilesPerTick) > next.starts) afterNext = Math.max(afterNext, next.ends);
+       }
+       if (afterNext !== starts) { starts = afterNext; continue; }
+-      return [{ resource, starts, patientPath, employeePaths, founderPath, walkingMinutes }];
++      return [{ resource, starts, patientPath, employeePaths, founderPath, walkingMinutes, workMinutes }];
+     }
+     return [];
+-  }).sort((a, b) => (a.starts + a.walkingMinutes) - (b.starts + b.walkingMinutes) ||
++  }).sort((a, b) => (a.starts + a.walkingMinutes + (initialTiming ? a.workMinutes : 0)) - (b.starts + b.walkingMinutes + (initialTiming ? b.workMinutes : 0)) ||
+     (a.resource?.roomInstanceId ?? "").localeCompare(b.resource?.roomInstanceId ?? "") ||
+     (a.resource?.stationId ?? "").localeCompare(b.resource?.stationId ?? "") ||
+     (a.resource?.employeeIds.join(":") ?? "").localeCompare(b.resource?.employeeIds.join(":") ?? ""));
+   const option = options[0];
+   if (!option) return null;
+   const startsAtTick = option.starts + option.walkingMinutes;
+-  const endsAtTick = startsAtTick + remaining;
++  const endsAtTick = startsAtTick + option.workMinutes;
+   if (option.resource) reserve(calendar, option.resource, option.starts, endsAtTick);
+   return { ...copy(draft), resource: option.resource ? copy(option.resource) : null,
++    ...(initialTiming ? { durationMinutes: option.workMinutes } : {}),
+     forecast: { readyAtTick: ready, startsAtTick, endsAtTick, queueMinutes: option.starts - ready, walkingMinutes: option.walkingMinutes,
+       patientPath: option.patientPath, employeePaths: option.employeePaths, founderPath: option.founderPath, tilesPerTick },
+-    status: "pending", remainingMinutes: remaining, startedAtTick: null, completedAtTick: null, serviceOperationId: null, operationPhaseId: null };
++    status: "pending", remainingMinutes: option.workMinutes, startedAtTick: null, completedAtTick: null, serviceOperationId: null, operationPhaseId: null };
++}
++
++/** Prefer any schedulable spare before constructing a paused local contract. */
++function scheduleNewPhase(state: GameState, context: DomainContext, calendar: Calendar, draft: DraftPhase, ready: number,
++  origin: GridPoint, preferred?: DiagnosticResourceChoice | null, initialTiming?: (resource: DiagnosticResourceChoice | null) => number): DiagnosticOrderPhase | null {
++  const actual = schedulePhase(state, context, calendar, draft, ready, origin, preferred, draft.durationMinutes, undefined, false, initialTiming);
++  if (actual) return actual;
++  const structural = cloneCalendar(calendar);
++  let relaxed = false;
++  for (const [key, owners] of structural.heldResources) {
++    for (const owner of owners) if (owner.startsWith("training:")) { owners.delete(owner); relaxed = true; }
++    if (!owners.size) structural.heldResources.delete(key);
++  }
++  if (!relaxed) return null;
++  // Nominal clocks allow acceptance, never a player ETA or completion witness.
++  const nominal = schedulePhase(state, context, structural, draft, ready, origin, preferred, draft.durationMinutes, undefined, false, initialTiming);
++  if (nominal) { calendar.intervals = structural.intervals; calendar.actors = structural.actors; }
++  return nominal;
+ }
+ 
+ function routeIsLocal(route: ServiceRouteDefinition): boolean {
+@@ -419,6 +445,21 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+     if (endpoint) calendar.actors.set(key === "founder" ? key : key.slice("employee:".length), [{ starts: now, ends, destination: endpoint }]);
+   };
+   for (const employee of state.employees) {
++    const training = getEmployeeTrainingAvailability(state, employee, context);
++    if (training.kind === "blocked") {
++      holdResource(calendar, `employee:${employee.id}`, `training:${employee.id}`);
++      const home = getEmployeeTrainingHomeLocation(state, employee, context);
++      if (home) calendar.actors.set(employee.id, [{ starts: now, ends: now, destination: home }]);
++      continue;
++    }
++    if (training.kind === "returning_at") {
++      // Service reservations run before training clears the returning stage on
++      // tick T. New queued work can first claim that employee on tick T + 1.
++      const reservableAtTick = training.availableAtTick + 1;
++      calendar.intervals.set(`employee:${employee.id}`, [{ starts: now, ends: reservableAtTick }]);
++      calendar.actors.set(employee.id, [{ starts: now, ends: reservableAtTick, destination: training.homeLocation }]);
++      continue;
++    }
+     const task = employee.facilityTask;
+     if (!task || task.kind === "cover_periop" || task.targetId && trackedIds.has(task.targetId)) continue;
+     const trackedAcquisition = Object.values(state.encounters).some((entry) => entry.pendingResult?.deliveredAtTick === null &&
+@@ -495,9 +536,13 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+         const heldBed = requirement.stationKind === "periop_bed" && operation.periopBedReservation ? resourceCandidates(state, context, requirement).find((resource) =>
+           resource.roomInstanceId === operation.periopBedReservation!.roomInstanceId && resource.stationId === operation.periopBedReservation!.bedId) : null;
+         if (requirement.stationKind === "periop_bed" && operation.periopBedReservation && !heldBed) { blocked = true; break; }
++        const acceptedResource = operation.diagnosticPhysicalWork?.phaseBindings[index]?.resource ?? (isCurrent ? operation.diagnosticPhaseWork?.resource ?? heldBed : heldBed);
++        const replaceStaff = isDiagnosticResourceWaitingForTraining(state, acceptedResource);
++        const retainBed = replaceStaff && requirement.stationKind === "periop_bed" && Boolean(heldBed ?? acceptedResource);
+         const scheduled = schedulePhase(state, context, calendar, { id: operation.id + ":" + phase.id, componentId: null, kind: "retained", mode: "local",
+           patientPresent: operation.actorKind !== "remote", durationMinutes: phase.durationMinutes, dependsOn: [], requirement }, ready, actorOrigin,
+-          operation.diagnosticPhysicalWork?.phaseBindings[index]?.resource ?? (isCurrent ? operation.diagnosticPhaseWork?.resource ?? heldBed : heldBed), remaining, operation.id);
++          replaceStaff ? retainBed ? heldBed ?? acceptedResource : null : acceptedResource, remaining, operation.id, false,
++          operation.trainingTiming?.phases[index]?.boundPercent === null ? (resource) => getServiceOperationTrainingMinutes(state, operation, index, resource?.provider ?? null) : undefined, retainBed);
+         if (!scheduled) { blocked = true; break; }
+         const movementStarts = scheduled.forecast.readyAtTick + scheduled.forecast.queueMinutes;
+         if (index === startIndex) for (const roomId of [...(operation.transitionHeldRoomInstanceIds ?? []), ...(waitingForNext ? operation.reservedRoomInstanceIds : [])]) {
+@@ -622,7 +667,10 @@ function forecastFrozenPlan(state: GameState, frozenPlan: DiagnosticOrderPlan, c
+       continue;
+     }
+     const remaining = Math.max(0, phase.remainingMinutes - elapsed);
+-    const scheduled = schedulePhase(state, context, calendar, phase, ready, origin, phase.resource, remaining, plan.orderId, phase.status === "active");
++    const replaceStaff = phase.status !== "active" && isDiagnosticResourceWaitingForTraining(state, phase.resource);
++    const retainBed = replaceStaff && phase.requirement?.stationKind === "periop_bed";
++    const preferred = replaceStaff && !retainBed ? null : phase.resource;
++    const scheduled = schedulePhase(state, context, calendar, phase, ready, origin, preferred, remaining, plan.orderId, phase.status === "active", undefined, retainBed);
+     if (!scheduled) { blocked.add(phase.id); continue; }
+     phase.forecast = scheduled.forecast;
+     // A cleared choice may be forecast against compatible capacity without
+@@ -665,6 +713,7 @@ function appendFrozenWalking(plan: DiagnosticOrderPlan, id: string, patientPath:
+ /** One calculation for a quote and the frozen accepted order; never writes state. */
+ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingRequest, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): DiagnosticTimingQuote {
+   const calendar = calendarFor(state, context, request.orderId, request.encounterId);
++  const trainingCategories = snapshotEmployeeTrainingCategories(state);
+   const plan: DiagnosticOrderPlan = { version: "diagnostic-order.v1", timingVersion: DIAGNOSTIC_TIMING_VERSION, orderId: request.orderId, encounterId: request.encounterId,
+     createdAtTick: state.facilityTick, execution: "supported", sources: [], phases: [], resultReady: milestone([], [], state.facilityTick), visualResultReady: null, careComplete: milestone([], [], state.facilityTick) };
+   const origin = request.patientOrigin ?? originFor(state, context, request.encounterId);
+@@ -715,7 +764,7 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+       let ready = Math.max(state.facilityTick, ...careIds.map((id) => plan.phases.find((phase) => phase.id === id)!.forecast.endsAtTick));
+       let location = patientLocation;
+       for (const [index, input] of physicalPhases(route, component, actualRule as DiagnosticTimingRule).entries()) {
+-        const phase = schedulePhase(state, context, probe, { id: `probe.${index}`, componentId: null, kind: "acquisition", mode: "local", patientPresent: true,
++        const phase = scheduleNewPhase(state, context, probe, { id: `probe.${index}`, componentId: null, kind: "acquisition", mode: "local", patientPresent: true,
+           durationMinutes: input.durationMinutes, dependsOn: [], requirement: requirementForOperation(input) }, ready, location);
+         if (!phase) return false;
+         ready = phase.forecast.endsAtTick;
+@@ -750,8 +799,15 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+     const append = (kind: DraftPhase["kind"], mode: DraftPhase["mode"], durationMinutes: number, patientPresent: boolean,
+       requirement: DiagnosticResourceRequirement | null, dependsOn: string[], suffix: string, preferred?: DiagnosticResourceChoice | null): DiagnosticOrderPhase | null => {
+       const ready = Math.max(state.facilityTick, ...dependsOn.map((id) => plan.phases.find((phase) => phase.id === id)!.forecast.endsAtTick));
+-      const phase = schedulePhase(state, context, calendar, { id: `${prefix}.${suffix}`, componentId, kind, mode, durationMinutes, patientPresent, requirement, dependsOn },
+-        ready, patientLocation, requirement?.stationKind === "periop_bed" ? selectedBed : preferred);
++      const effectiveMinutes = (resource: DiagnosticResourceChoice | null) => {
++        const provider = resource?.provider;
++        const providerRole = provider?.kind === "employee" ? state.employees.find((employee) => employee.id === provider.employeeId)?.staffRoleDefinitionId ?? null : null;
++        return getEmployeeTrainingWorkMinutes(durationMinutes, getEmployeeTrainingWorkPercent(trainingCategories,
++          { kind, roomDefinitionId: requirement?.roomDefinitionId ?? null, staffRoleDefinitionIds: requirement?.staffRoleDefinitionIds ?? [] }, providerRole));
++      };
++      const phase = scheduleNewPhase(state, context, calendar, { id: `${prefix}.${suffix}`, componentId, kind, mode, durationMinutes, patientPresent, requirement, dependsOn },
++        ready, patientLocation, requirement?.stationKind === "periop_bed" ? selectedBed : preferred,
++        mode === "local" && requirement ? effectiveMinutes : undefined);
+       if (phase) {
+         plan.phases.push(phase);
+         if (phase.patientPresent && phase.resource) patientLocation = phase.resource.patientAnchor;

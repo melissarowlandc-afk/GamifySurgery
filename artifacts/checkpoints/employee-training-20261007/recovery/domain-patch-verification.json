@@ -1,0 +1,1107 @@
+{
+  "kind": "GS037 training-only recovery audit",
+  "generatedAt": "2026-10-07T23:40:13.929Z",
+  "sourceObservation": {
+    "observedAt": "2026-10-07T23:24:45.265Z",
+    "newModulesObservedAt": "2026-10-07T23:31:23.933Z",
+    "lineEndings": "LF",
+    "files": [
+      {
+        "relative": "packages/game-domain/src/diagnostic-timing.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/diagnostic-timing.ts",
+        "baseSha256": "7ae8daeb1ac43ab5f137c76e6b115b95e7d4711dbf6e34802cb8a8175287bd6f",
+        "observedSha256": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba"
+      },
+      {
+        "relative": "packages/game-domain/src/service-operations.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/service-operations.ts",
+        "baseSha256": "45d3f5b961201966b10cc54f290ca8dc78efb4c50626a1eb1f50435bd6807742",
+        "observedSha256": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781"
+      },
+      {
+        "relative": "packages/game-domain/src/level-three-support.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/level-three-support.ts",
+        "baseSha256": "fd5c106b61f0bc0dcdcfe883070c18bb0b78c159070122780f58197ad822f913",
+        "observedSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503"
+      },
+      {
+        "relative": "packages/game-domain/src/retail-operations.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/retail-operations.ts",
+        "baseSha256": "ea55c702a75b1109c80237b587dfe65cadf8ebec63a4971866696d35f28183a4",
+        "observedSha256": "edde7e66dd20d9ba11dcc16f9dc7948af2515d7de3b23011129d55af371ed461"
+      },
+      {
+        "relative": "packages/game-domain/src/reducer.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/reducer.ts",
+        "baseSha256": "b6398eeab8cfcdbb8d27b649b329d2401a0328915203e573c10ff69a25564d35",
+        "observedSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138"
+      },
+      {
+        "relative": "packages/game-domain/src/selectors.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/selectors.ts",
+        "baseSha256": "45cf575a73bfd827633b49d15cee1fcaefc323bcfc29bdb30596682458484a6a",
+        "observedSha256": "1c13efe9e07dcc6d90c997d5789c7230c41697e24958eb4f573f370953cd31db"
+      },
+      {
+        "relative": "packages/game-domain/src/persistence.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/persistence.ts",
+        "baseSha256": "f50062c3bf63b564f82ce865e8d8407062b72bb63fd5168616590f1c5a277a7a",
+        "observedSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb"
+      },
+      {
+        "relative": "packages/game-domain/src/types.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/types.ts",
+        "baseSha256": "b7e67de33933865d19c51e0adc9aeb4074c94a9bea5ff341a87a70ea3f56a0b6",
+        "observedSha256": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7"
+      },
+      {
+        "relative": "packages/game-domain/src/staff.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/staff.ts",
+        "baseSha256": "b64e7f17639561e872045979cbf7e0cb94769b4f8f25ecfcf6ee95b5d9557ddc",
+        "observedSha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731"
+      },
+      {
+        "relative": "packages/game-domain/src/index.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/index.ts",
+        "baseSha256": "5e2fc3eb4d36c2ebe0f612ef81a403d71bf8a9f33f8f546e9e4e8343ac2ae8ef",
+        "observedSha256": "8c12c6ae86e953ff60843881400229b4b10f4a72013f764fd7438a01d6c1b4d5"
+      },
+      {
+        "relative": "packages/game-domain/src/facility-experience.ts",
+        "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/facility-experience.ts",
+        "baseSha256": "c332e594c17a337333774dcf5d2c9a0f9bf49deb824a643b90de41b80c36e8ee",
+        "observedSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee"
+      },
+      {
+        "relative": "packages/game-domain/src/room-capacity.ts",
+        "baseSource": "reconstructed: reverse only the training import and imaging-seat availability guard",
+        "baseSha256": "b6d5310371c268f2bf90130b4214463ec68cddf571308c7acf368be76c8d2bdf",
+        "observedSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d"
+      },
+      {
+        "relative": "packages/game-domain/src/diagnostic-orders.ts",
+        "auditOnly": true,
+        "observedSha256": "04109572d469801a2eaae243aec0f6c8f48df282c7502c9e7fbd889fc1e246a5",
+        "trainingImports": []
+      },
+      {
+        "relative": "packages/game-domain/src/employee-training.ts",
+        "auditOnly": true,
+        "observedSha256": "257d06af1610a5ef4dac4a78ceffe6dc26e72bc1b12b2869772f1af6153775f2",
+        "trainingImports": [
+          "import { bindRoomUpgradeSupportWork, createRoomUpgradeSupportWork, isRoomUpgradeSupportRemaining, normalizeRoomUpgradeSupportWork } from \"./room-upgrade-support\";"
+        ]
+      }
+    ]
+  },
+  "scope": "Review artifacts only; no live source/test/doc edits, no Git index/commit/push, no deployment.",
+  "archiveAllowlist": [
+    "recovery/patches/domain/initial/01-types.patch",
+    "recovery/patches/domain/initial/02-index.patch",
+    "recovery/patches/domain/initial/03-selectors.patch",
+    "recovery/patches/domain/initial/04-staff.patch",
+    "recovery/patches/domain/initial/05-facility-experience.patch",
+    "recovery/patches/domain/initial/06-room-capacity.patch",
+    "recovery/patches/domain/initial/07-service-operations.patch",
+    "recovery/patches/domain/initial/08-diagnostic-timing.patch",
+    "recovery/patches/domain/initial/09-retail-operations.patch",
+    "recovery/patches/domain/initial/10-level-three-support.patch",
+    "recovery/patches/domain/initial/11-persistence.patch",
+    "recovery/patches/domain/initial/12-reducer.patch",
+    "recovery/patches/domain/dependency/01-support-training-integration.patch",
+    "recovery/patches/domain/dependency/02-qi-training-persistence-integration.patch",
+    "recovery/patches/domain/dependency/03-np-training-quote-integration.patch",
+    "recovery/fragments/domain/np-prospective-interval.json",
+    "files/packages/game-domain/src/employee-training.ts",
+    "files/packages/game-domain/src/employee-training-effects.ts",
+    "recovery/domain-patch-verification.json",
+    "recovery/domain-recovery-notes.md"
+  ],
+  "archiveExclusions": [
+    "observed/**",
+    "fixtures/**",
+    "audit/**",
+    "curate-domain.mjs",
+    "observation.json",
+    "new-module-observation.json"
+  ],
+  "recoveryPolicy": "This is a scoped recovery archive, not a standalone compiled feature branch. Apply initial/reconstructed patches to their listed bases; dependent patches need compatible concurrent contracts and preceding training hooks. Integrate the exact NP lifecycle fragment only if not already provided by GS038. Never apply patches twice or replace current shared files wholesale.",
+  "patches": [
+    {
+      "order": 1,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/01-types.patch",
+      "relative": "packages/game-domain/src/types.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/types.ts",
+      "baseSha256": "b7e67de33933865d19c51e0adc9aeb4074c94a9bea5ff341a87a70ea3f56a0b6",
+      "observedSha256": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7",
+      "curatedSha256": "9064bc32ccbbd7802258421cc80ee10bb12ba212a130fc9c68a03c54aa47b64a",
+      "patchSha256": "26841c83081c296e3389f80bf3b9f9a2b6b8e102c430223c1c6a859cab0e66a6",
+      "includedZeroContextHunkIds": [
+        5,
+        10,
+        11,
+        12,
+        14,
+        15
+      ],
+      "partialHunkIds": [
+        10,
+        12
+      ],
+      "excluded": "GS038 room revenue/support/break contracts and all room-upgrade fields; Claude explicit founder seat ID. NP quote metadata saved as an integration fragment.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "9064bc32ccbbd7802258421cc80ee10bb12ba212a130fc9c68a03c54aa47b64a",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/types",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\01-types.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/types",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\01-types.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 2,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/02-index.patch",
+      "relative": "packages/game-domain/src/index.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/index.ts",
+      "baseSha256": "5e2fc3eb4d36c2ebe0f612ef81a403d71bf8a9f33f8f546e9e4e8343ac2ae8ef",
+      "observedSha256": "8c12c6ae86e953ff60843881400229b4b10f4a72013f764fd7438a01d6c1b4d5",
+      "curatedSha256": "0b9ac53c3ebbb43229587c9de3eadbb952fff384599205a252448ed9cbfd27eb",
+      "patchSha256": "64eef39196f998615fc09c6087435db07dea331d0d5d51cce3d53aea4cf39e21",
+      "includedZeroContextHunkIds": [
+        1
+      ],
+      "partialHunkIds": [
+        1
+      ],
+      "excluded": "Claude idle-spots/founder-seats exports; GS038 room-upgrade-support export.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "0b9ac53c3ebbb43229587c9de3eadbb952fff384599205a252448ed9cbfd27eb",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/index",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\02-index.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/index",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\02-index.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 3,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/03-selectors.patch",
+      "relative": "packages/game-domain/src/selectors.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/selectors.ts",
+      "baseSha256": "45cf575a73bfd827633b49d15cee1fcaefc323bcfc29bdb30596682458484a6a",
+      "observedSha256": "1c13efe9e07dcc6d90c997d5789c7230c41697e24958eb4f573f370953cd31db",
+      "curatedSha256": "9d7f07be1accb5c7ed6e31cb70c7ef73489ffb0b298cb05999a5b3414a95f379",
+      "patchSha256": "a5bc3cdb23c699d300187e1e4982bc34be36cb628a89e4e664d05325151db889",
+      "includedZeroContextHunkIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "partialHunkIds": [],
+      "excluded": "GS034 diagnostic current-order/terminal-plan selection block.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "9d7f07be1accb5c7ed6e31cb70c7ef73489ffb0b298cb05999a5b3414a95f379",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/selectors",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\03-selectors.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/selectors",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\03-selectors.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 4,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/04-staff.patch",
+      "relative": "packages/game-domain/src/staff.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/staff.ts",
+      "baseSha256": "b64e7f17639561e872045979cbf7e0cb94769b4f8f25ecfcf6ee95b5d9557ddc",
+      "observedSha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731",
+      "curatedSha256": "a1fe723ad4a6b417f09bead103fc46c01c6ab0d1fe21c330e54d7dc2e8bc9b6a",
+      "patchSha256": "52c6b38a61dadc284cd9824e259e69db84fee16a137fe137bf880843cba97ecf",
+      "includedZeroContextHunkIds": [
+        2,
+        4
+      ],
+      "partialHunkIds": [],
+      "excluded": "Claude idle-spots import, chooseIdleTarget and idle walking changes.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "a1fe723ad4a6b417f09bead103fc46c01c6ab0d1fe21c330e54d7dc2e8bc9b6a",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/staff",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\04-staff.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/staff",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\04-staff.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 5,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/05-facility-experience.patch",
+      "relative": "packages/game-domain/src/facility-experience.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/facility-experience.ts",
+      "baseSha256": "c332e594c17a337333774dcf5d2c9a0f9bf49deb824a643b90de41b80c36e8ee",
+      "observedSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+      "curatedSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+      "patchSha256": "a0f88c0c1f308361b3f3093b075d0f73bd6cb59d184b595835e8244e0d890806",
+      "includedZeroContextHunkIds": [
+        1,
+        2
+      ],
+      "partialHunkIds": [],
+      "excluded": "No non-training changes between initial baseline and frozen observation.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/facility-experience",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\05-facility-experience.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/facility-experience",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\05-facility-experience.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 6,
+      "stage": "reconstructed-availability-hook",
+      "patch": "recovery/patches/domain/initial/06-room-capacity.patch",
+      "relative": "packages/game-domain/src/room-capacity.ts",
+      "baseSource": "reconstructed: reverse only the training import and imaging-seat availability guard",
+      "baseSha256": "b6d5310371c268f2bf90130b4214463ec68cddf571308c7acf368be76c8d2bdf",
+      "observedSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+      "curatedSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+      "patchSha256": "0fadb124387fb9e18ec87babf373a43b9d68e84a3de841ab6a65926905e03087",
+      "includedZeroContextHunkIds": [
+        1,
+        2
+      ],
+      "partialHunkIds": [],
+      "excluded": "No original baseline exists; current geometry/capacity/other-owner changes are unchanged context in a reconstructed baseline.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/room-capacity",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\06-room-capacity.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/room-capacity",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\06-room-capacity.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 7,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/07-service-operations.patch",
+      "relative": "packages/game-domain/src/service-operations.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/service-operations.ts",
+      "baseSha256": "45d3f5b961201966b10cc54f290ca8dc78efb4c50626a1eb1f50435bd6807742",
+      "observedSha256": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781",
+      "curatedSha256": "298aca473cc625311dfdda30004b762b27a35943af0746b776a5f51160b4275b",
+      "patchSha256": "09fc00bae2a44532be206ecbcea9a42a99561069e33a330a60c4dc5fc6143193",
+      "includedZeroContextHunkIds": [
+        2,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        17,
+        19,
+        23
+      ],
+      "partialHunkIds": [
+        2,
+        17,
+        19
+      ],
+      "excluded": "GS034 diagnostic income-line compatibility/factory restructuring/billing aliases; GS038 revenue quotes/binding. Mixed createOperation return reverses only roomUpgradeRevenue; diagnostic factory reset keeps only trainingTiming=undefined.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "298aca473cc625311dfdda30004b762b27a35943af0746b776a5f51160b4275b",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/service-operations",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\07-service-operations.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/service-operations",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\07-service-operations.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 8,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/08-diagnostic-timing.patch",
+      "relative": "packages/game-domain/src/diagnostic-timing.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/diagnostic-timing.ts",
+      "baseSha256": "7ae8daeb1ac43ab5f137c76e6b115b95e7d4711dbf6e34802cb8a8175287bd6f",
+      "observedSha256": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba",
+      "curatedSha256": "a6cd57061482d7796274ff37b4a08f683c0fefbe8814aae886e6cb8054638c78",
+      "patchSha256": "5e36e7b361efa08a60db0bfd5f53f96a6663d98d1a1077a2bba9d818628c020b",
+      "includedZeroContextHunkIds": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23
+      ],
+      "partialHunkIds": [
+        1
+      ],
+      "excluded": "GS034 founder candidate correction, active physical remaining clock, profile fallback change; GS038 income/source fee quotes and validators; room-upgrades import.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "a6cd57061482d7796274ff37b4a08f683c0fefbe8814aae886e6cb8054638c78",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/diagnostic-timing",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\08-diagnostic-timing.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/diagnostic-timing",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\08-diagnostic-timing.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 9,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/09-retail-operations.patch",
+      "relative": "packages/game-domain/src/retail-operations.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/retail-operations.ts",
+      "baseSha256": "ea55c702a75b1109c80237b587dfe65cadf8ebec63a4971866696d35f28183a4",
+      "observedSha256": "edde7e66dd20d9ba11dcc16f9dc7948af2515d7de3b23011129d55af371ed461",
+      "curatedSha256": "4c3001764cc5064ad07282614467a85fcbcf8426c5d670d2e8576804265687ad",
+      "patchSha256": "7119717e9e7bb8f93cfbdedd94be22210856e6b44ec7531ce7bec3fcc510c333",
+      "includedZeroContextHunkIds": [
+        1,
+        3
+      ],
+      "partialHunkIds": [
+        1,
+        3
+      ],
+      "excluded": "GS038 gross revenue quote creation/binding/quoteGross; Claude retail return chair redirection. Pharmacy STOCK discount only is included.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "4c3001764cc5064ad07282614467a85fcbcf8426c5d670d2e8576804265687ad",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/retail-operations",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\09-retail-operations.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/retail-operations",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\09-retail-operations.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 10,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/10-level-three-support.patch",
+      "relative": "packages/game-domain/src/level-three-support.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/level-three-support.ts",
+      "baseSha256": "fd5c106b61f0bc0dcdcfe883070c18bb0b78c159070122780f58197ad822f913",
+      "observedSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503",
+      "curatedSha256": "eeb44afb3948b5a8890eac686eebeef081e1c6eac0757366c8eb6fbb187ae41f",
+      "patchSha256": "10ba89267ce2d6f01265e481e0e3d345ae05d0c85984f856e837c729140bba62",
+      "includedZeroContextHunkIds": [
+        1,
+        4,
+        8,
+        9,
+        11,
+        19
+      ],
+      "partialHunkIds": [
+        9
+      ],
+      "excluded": "GS038 task endpoint/clock/break/office changes and support imports; Claude founder break-seat helpers. Coupled QI/repair training timers are saved separately as exact dependency-stage changes.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "eeb44afb3948b5a8890eac686eebeef081e1c6eac0757366c8eb6fbb187ae41f",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/level-three-support",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\10-level-three-support.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/level-three-support",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\10-level-three-support.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 11,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/11-persistence.patch",
+      "relative": "packages/game-domain/src/persistence.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/persistence.ts",
+      "baseSha256": "f50062c3bf63b564f82ce865e8d8407062b72bb63fd5168616590f1c5a277a7a",
+      "observedSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+      "curatedSha256": "13bf2a9877c1318834d63c05bb2dc2787853e111ae8876e934fe7a623b469646",
+      "patchSha256": "20fa66b987d330b056ca542054fc51c98bf0c0f5783acf564b098db40d45f4c4",
+      "includedZeroContextHunkIds": [
+        2,
+        6,
+        7,
+        9,
+        18,
+        19,
+        20,
+        27
+      ],
+      "partialHunkIds": [
+        2,
+        6,
+        18,
+        27
+      ],
+      "excluded": "GS034 non-operation diagnostic fee compatibility; GS038 revenue and support room contracts/strict checks; Claude name deduplication. QI training validation and NP interval metadata saved in dependency stage/fragment.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "13bf2a9877c1318834d63c05bb2dc2787853e111ae8876e934fe7a623b469646",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/persistence",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\11-persistence.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/persistence",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\11-persistence.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 12,
+      "stage": "initial-baseline",
+      "patch": "recovery/patches/domain/initial/12-reducer.patch",
+      "relative": "packages/game-domain/src/reducer.ts",
+      "baseSource": ".local-dev/gs037-employee-training/baseline/packages/game-domain/src/reducer.ts",
+      "baseSha256": "b6398eeab8cfcdbb8d27b649b329d2401a0328915203e573c10ff69a25564d35",
+      "observedSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+      "curatedSha256": "6652c10136b789a3fdcd415864d638e4fc37de61f9d5aab7de2d0c0ab9ef0a35",
+      "patchSha256": "cfc57dbe2b5039a8a74a751866472649c50fb5c202ccb8dd0b231c9c18431dd2",
+      "includedZeroContextHunkIds": [
+        1,
+        2,
+        3,
+        18,
+        19,
+        26,
+        27,
+        30,
+        31,
+        33,
+        50,
+        52,
+        53,
+        58,
+        59,
+        64
+      ],
+      "partialHunkIds": [
+        1,
+        33
+      ],
+      "excluded": "GS038 room revenue/support durations/coffee effects; Claude founder chairs, name deduplication, waiting chairs and wandering. NP interval lifecycle saved as an owned integration fragment; training expression in quote helper saved in a separate dependency-stage patch.",
+      "prerequisites": [
+        "LF-normalized listed baseline",
+        "Other GS037 new modules/types/hooks as appropriate; full set required for feature recovery"
+      ],
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "6652c10136b789a3fdcd415864d638e4fc37de61f9d5aab7de2d0c0ab9ef0a35",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/reducer",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\12-reducer.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/initial/reducer",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\initial\\12-reducer.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 13,
+      "stage": "GS038-compatible-dependency",
+      "patch": "recovery/patches/domain/dependency/01-support-training-integration.patch",
+      "relative": "packages/game-domain/src/level-three-support.ts",
+      "baseSource": "Reconstructed frozen observed source by reversing only the training additions represented in this patch; all concurrent context retained unchanged.",
+      "baseSha256": "6645e8a41b8f8a3eda3aa23d2b20d95121f746890e4686f8f6748616fdcc3b12",
+      "observedSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503",
+      "curatedSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503",
+      "patchSha256": "7598877b6de6d98fcf26d12a4f245b6b7b6b13be856a21027460e4a9e7b92d4e",
+      "prerequisites": [
+        "Initial training hooks/types/effects",
+        "GS038-compatible room-upgrade-support.ts and RoomUpgradeSupportWork/roomUpgradeWork contracts"
+      ],
+      "description": "Exact live repair category/fallback and QI category/accepted/resumed/preempted work integration. Room clocks, endpoints, office binding, breaks and founder seat changes remain unchanged context.",
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/dependency/support-training-integration",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\dependency\\01-support-training-integration.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/dependency/support-training-integration",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\dependency\\01-support-training-integration.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 14,
+      "stage": "GS038-compatible-dependency",
+      "patch": "recovery/patches/domain/dependency/02-qi-training-persistence-integration.patch",
+      "relative": "packages/game-domain/src/persistence.ts",
+      "baseSource": "Reconstructed frozen observed source by reversing only the training additions represented in this patch; all concurrent context retained unchanged.",
+      "baseSha256": "c6edce89130c072c63fcc0907d6c72f47fe923237312b118ee980f5e8f3548b4",
+      "observedSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+      "curatedSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+      "patchSha256": "3d01b78c4ed53bb2af145e0eb840d29849c603ba3f1231ea35d1dd6e8188ac6b",
+      "prerequisites": [
+        "Initial training save hooks",
+        "Support training integration",
+        "GS038-compatible support normalizers/strict room validation"
+      ],
+      "description": "Exact live QI training marker strict validation and serialization. Conditional integer/fractional validation retains the GS038 support marker context.",
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/dependency/qi-training-persistence-integration",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\dependency\\02-qi-training-persistence-integration.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/dependency/qi-training-persistence-integration",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\dependency\\02-qi-training-persistence-integration.patch"
+          ]
+        ]
+      }
+    },
+    {
+      "order": 15,
+      "stage": "GS038-compatible-dependency",
+      "patch": "recovery/patches/domain/dependency/03-np-training-quote-integration.patch",
+      "relative": "packages/game-domain/src/reducer.ts",
+      "baseSource": "Reconstructed frozen observed source by reversing only the training additions represented in this patch; all concurrent context retained unchanged.",
+      "baseSha256": "ddcaef71159a3c493db81982476be29fcce6c896cf04096e6c0290b149e45850",
+      "observedSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+      "curatedSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+      "patchSha256": "c0c1a05c7db30ef1764058c5dd544dc9518b329519cb1c5cda28f86fc0f40d45",
+      "prerequisites": [
+        "Initial training percentage/money helper import",
+        "Existing GS038 quoteNextInterval/room-upgrades helper and GLP1 quotePayment slot lifecycle"
+      ],
+      "description": "Exact live category/money expression inserted into the existing suite quote helper; suite room quote creation, binding and payout lifecycle remain unchanged context.",
+      "verification": {
+        "check": "PASS",
+        "apply": "PASS",
+        "appliedSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+        "commands": [
+          [
+            "git",
+            "apply",
+            "--check",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/dependency/np-training-quote-integration",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\dependency\\03-np-training-quote-integration.patch"
+          ],
+          [
+            "git",
+            "apply",
+            "--directory=.local-dev/gs037-employee-training/backup-domain-review/fixtures/verify/dependency/np-training-quote-integration",
+            "--",
+            "C:\\Users\\rowla\\Projects\\GamifySurgery\\.local-dev\\gs037-employee-training\\backup-domain-review\\patches\\dependency\\03-np-training-quote-integration.patch"
+          ]
+        ]
+      }
+    }
+  ],
+  "newModules": [
+    {
+      "relative": "packages/game-domain/src/employee-training.ts",
+      "path": "files/packages/game-domain/src/employee-training.ts",
+      "observedAt": "2026-10-07T23:31:23.933Z",
+      "rawSourceSha256": "257d06af1610a5ef4dac4a78ceffe6dc26e72bc1b12b2869772f1af6153775f2",
+      "curatedSha256": "0d5a1cd0d5f68aa4812ec1bf70658b3db602765a6e523cfbafaaab4db0e4f497",
+      "excluded": "Only independent GS038 room-upgrade-support import, request field, seat-binding block and corresponding strict room/fractional-duration normalizer additions were reversed. Exact prior accepted 60-minute normalizer restored; M4B availability/spare-resource helpers and parent NP queue boundary preserved.",
+      "exclusionAuditDiff": "audit/training-module-excluded-GS038.diff (local review only; excluded from archive)",
+      "priorNormalizerSource": ".local-dev/gs037-employee-training/before-benefits/packages/game-domain/src/employee-training.ts",
+      "priorNormalizerSha256": "847c867f4c2cd874a2f840084cbfe2356f82cc46e51546f6c54ea3bdadaf8ccb",
+      "exclusionAuditDiffLocalOnly": true
+    },
+    {
+      "relative": "packages/game-domain/src/employee-training-effects.ts",
+      "path": "files/packages/game-domain/src/employee-training-effects.ts",
+      "observedAt": "2026-10-07T23:31:23.933Z",
+      "rawSourceSha256": "c880ca8f4fa8be23ad8e7cfbb9de20cc5a2515135f2ff249d0896e0d9b7b4298",
+      "curatedSha256": "c880ca8f4fa8be23ad8e7cfbb9de20cc5a2515135f2ff249d0896e0d9b7b4298",
+      "excluded": "None; exact live module is wholly GS037 employee training."
+    }
+  ],
+  "integrationFragments": [
+    {
+      "path": "recovery/fragments/domain/np-prospective-interval.json",
+      "sha256": "0ae9786f58da8440157c9916d6dc05d0b9f5cf1062500bc6dd2ddef973b42277",
+      "stage": "manual-co-owned-GS038-NP-integration",
+      "validation": "Each clause copied literally from the frozen observed source hunks; no alternate behavior synthesized.",
+      "prerequisites": [
+        "Existing GS038 quoteNextInterval suite quote helper and slot roomUpgradeRevenue contract",
+        "NP training quote expression dependency patch"
+      ]
+    }
+  ],
+  "untouched": [
+    {
+      "relative": "packages/game-domain/src/diagnostic-orders.ts",
+      "reason": "Worker did not modify this file; no training imports/owned delta.",
+      "observedSha256": "04109572d469801a2eaae243aec0f6c8f48df282c7502c9e7fbd889fc1e246a5"
+    }
+  ],
+  "dependencies": [
+    "New GS037 balance catalog, employee-training.ts and employee-training-effects.ts plus focused tests are archived separately as full files by root.",
+    "Existing GS034 diagnostic factory/witness/frozen plan contracts are required; unrelated GS034 changes after initial snapshot are intentionally excluded.",
+    "GS038-compatible room-upgrade-support.ts/types/normalizer and room revenue quote helper/GLP1 slot contract are prerequisites for dependency-stage patches. They are not backed up by this scoped training archive.",
+    "Management unrounded category display helper is already in b3df6d18; root will reference/hash that dependency instead of duplicating Claude module."
+  ],
+  "validationScope": "Patch recovery only: 15 checks/applications plus exact normalized fixture hashes. No runtime tests or isolated compilation were requested for this read-heavy backup assignment. An optional syntax parser import was unavailable in the installed TypeScript 7 runtime and was removed; no dependencies were installed.",
+  "contentInspection": {
+    "result": "PASS",
+    "inspectedAt": "2026-10-07T23:40:16.015Z",
+    "details": "Worker read actual curated patch contents, the exact NP clauses, and the curated-vs-observed training module diff. Initial patch additions exclude room revenue/support imports and fields, Claude name/idle/seat additions and unrelated GS034 changes. Dependency patches change only category/fallback/training marker clauses; existing room code is unchanged context. Local excluded-GS038 diff is review evidence only and must not be archived."
+  },
+  "liveComparisonAtCompletion": {
+    "observedAt": "2026-10-07T23:40:16.015Z",
+    "files": [
+      {
+        "relative": "packages/game-domain/src/diagnostic-timing.ts",
+        "frozenSha256": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba",
+        "currentSha256": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba",
+        "currentRawBytesSha256": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/service-operations.ts",
+        "frozenSha256": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781",
+        "currentSha256": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781",
+        "currentRawBytesSha256": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/level-three-support.ts",
+        "frozenSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503",
+        "currentSha256": "cd5e5f7c7d27630d0e5052ea1a656ae65b02c30b3ee3aeeff81b59dba401a89d",
+        "currentRawBytesSha256": "cd5e5f7c7d27630d0e5052ea1a656ae65b02c30b3ee3aeeff81b59dba401a89d",
+        "changedSinceCapture": true
+      },
+      {
+        "relative": "packages/game-domain/src/retail-operations.ts",
+        "frozenSha256": "edde7e66dd20d9ba11dcc16f9dc7948af2515d7de3b23011129d55af371ed461",
+        "currentSha256": "edde7e66dd20d9ba11dcc16f9dc7948af2515d7de3b23011129d55af371ed461",
+        "currentRawBytesSha256": "edde7e66dd20d9ba11dcc16f9dc7948af2515d7de3b23011129d55af371ed461",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/reducer.ts",
+        "frozenSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+        "currentSha256": "29019c20e66934e85992b197e882495d934c39e044b8fee0aac70be1c206f72d",
+        "currentRawBytesSha256": "29019c20e66934e85992b197e882495d934c39e044b8fee0aac70be1c206f72d",
+        "changedSinceCapture": true
+      },
+      {
+        "relative": "packages/game-domain/src/selectors.ts",
+        "frozenSha256": "1c13efe9e07dcc6d90c997d5789c7230c41697e24958eb4f573f370953cd31db",
+        "currentSha256": "1c13efe9e07dcc6d90c997d5789c7230c41697e24958eb4f573f370953cd31db",
+        "currentRawBytesSha256": "1c13efe9e07dcc6d90c997d5789c7230c41697e24958eb4f573f370953cd31db",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/persistence.ts",
+        "frozenSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+        "currentSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+        "currentRawBytesSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/types.ts",
+        "frozenSha256": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7",
+        "currentSha256": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7",
+        "currentRawBytesSha256": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/staff.ts",
+        "frozenSha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731",
+        "currentSha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731",
+        "currentRawBytesSha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/index.ts",
+        "frozenSha256": "8c12c6ae86e953ff60843881400229b4b10f4a72013f764fd7438a01d6c1b4d5",
+        "currentSha256": "8c12c6ae86e953ff60843881400229b4b10f4a72013f764fd7438a01d6c1b4d5",
+        "currentRawBytesSha256": "8c12c6ae86e953ff60843881400229b4b10f4a72013f764fd7438a01d6c1b4d5",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/facility-experience.ts",
+        "frozenSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+        "currentSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+        "currentRawBytesSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/room-capacity.ts",
+        "frozenSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+        "currentSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+        "currentRawBytesSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+        "changedSinceCapture": false
+      },
+      {
+        "relative": "packages/game-domain/src/employee-training.ts",
+        "frozenSha256": "257d06af1610a5ef4dac4a78ceffe6dc26e72bc1b12b2869772f1af6153775f2",
+        "currentSha256": "2767f41bf1746dea51c4bdc6124661f3cce69ff8a00e8fa162da2261bf690f79",
+        "currentRawBytesSha256": "2767f41bf1746dea51c4bdc6124661f3cce69ff8a00e8fa162da2261bf690f79",
+        "changedSinceCapture": true
+      },
+      {
+        "relative": "packages/game-domain/src/employee-training-effects.ts",
+        "frozenSha256": "c880ca8f4fa8be23ad8e7cfbb9de20cc5a2515135f2ff249d0896e0d9b7b4298",
+        "currentSha256": "c880ca8f4fa8be23ad8e7cfbb9de20cc5a2515135f2ff249d0896e0d9b7b4298",
+        "currentRawBytesSha256": "c880ca8f4fa8be23ad8e7cfbb9de20cc5a2515135f2ff249d0896e0d9b7b4298",
+        "changedSinceCapture": false
+      }
+    ]
+  },
+  "packaging": {
+    "parentReviewedActualDiffs": true,
+    "parentIndependentPatchRecovery": [
+      {
+        "patch": "recovery/patches/domain/initial/01-types.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "9064bc32ccbbd7802258421cc80ee10bb12ba212a130fc9c68a03c54aa47b64a"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/02-index.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "0b9ac53c3ebbb43229587c9de3eadbb952fff384599205a252448ed9cbfd27eb"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/03-selectors.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "9d7f07be1accb5c7ed6e31cb70c7ef73489ffb0b298cb05999a5b3414a95f379"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/04-staff.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "a1fe723ad4a6b417f09bead103fc46c01c6ab0d1fe21c330e54d7dc2e8bc9b6a"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/05-facility-experience.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "32974e18beb55adb5aa0929e0a463a7f59bb2c67ef59e0071872978807f9e6ee"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/06-room-capacity.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/07-service-operations.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "298aca473cc625311dfdda30004b762b27a35943af0746b776a5f51160b4275b"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/08-diagnostic-timing.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "a6cd57061482d7796274ff37b4a08f683c0fefbe8814aae886e6cb8054638c78"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/09-retail-operations.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "4c3001764cc5064ad07282614467a85fcbcf8426c5d670d2e8576804265687ad"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/10-level-three-support.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "eeb44afb3948b5a8890eac686eebeef081e1c6eac0757366c8eb6fbb187ae41f"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/11-persistence.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "13bf2a9877c1318834d63c05bb2dc2787853e111ae8876e934fe7a623b469646"
+      },
+      {
+        "patch": "recovery/patches/domain/initial/12-reducer.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "6652c10136b789a3fdcd415864d638e4fc37de61f9d5aab7de2d0c0ab9ef0a35"
+      },
+      {
+        "patch": "recovery/patches/domain/dependency/01-support-training-integration.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "b9ce1471ba76aaefd6429dfa2872588d3709aea9a5b08d04b254a5d39bdbf503"
+      },
+      {
+        "patch": "recovery/patches/domain/dependency/02-qi-training-persistence-integration.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb"
+      },
+      {
+        "patch": "recovery/patches/domain/dependency/03-np-training-quote-integration.patch",
+        "check": "PASS",
+        "apply": "PASS",
+        "restoredNormalizedSha256": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138"
+      }
+    ],
+    "excludedAuditDiff": {
+      "localOnly": true,
+      "sha256": "a19750222f9eafc43bdc5c834178bcdeb6deb3a97934cdc1e4b85bd1e533fe24",
+      "reason": "Contains excluded independent room-support code; inspected locally, not uploaded."
+    },
+    "observedAndFixturesUploaded": false
+  }
+}

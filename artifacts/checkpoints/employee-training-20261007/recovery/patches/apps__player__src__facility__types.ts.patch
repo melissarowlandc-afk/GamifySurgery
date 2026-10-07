@@ -1,0 +1,11 @@
+diff --git a/apps/player/src/facility/types.ts b/apps/player/src/facility/types.ts
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -37,6 +37,7 @@ export type FacilityActorSupportRole =
+   | "pharmacist"
+   | "repair-person"
+   | "staff-break-seat"
++  | "training-employee"
+   | "surgeon-office"
+   /** A hired radiologist seated at their Reading Room workstation. */
+   | "reading-radiologist"

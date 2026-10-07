@@ -1,0 +1,18 @@
+diff --git a/packages/game-domain/src/room-capacity.ts b/packages/game-domain/src/room-capacity.ts
+--- a/packages/game-domain/src/room-capacity.ts
++++ b/packages/game-domain/src/room-capacity.ts
+@@ -1,4 +1,5 @@
+ import { deterministicShuffle, RANDOM_STREAMS } from "./randomness";
++import { isEmployeeAwayForTraining } from "./employee-training";
+ import type { DomainContext, EmployeeState, GameState, PlacedRoom } from "./types";
+ import { reconcileReadingStations } from "./reading-stations";
+ 
+@@ -137,7 +138,7 @@ export function reconcileImagingIdleSeats(state: GameState): void {
+   const used = new Set<string>();
+   for (const employee of state.employees
+     .filter((candidate) => candidate.staffRoleDefinitionId === "staff.imaging_technician" &&
+-      !candidate.facilityTask && !activeEmployeeIds.has(candidate.id))
++      !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !activeEmployeeIds.has(candidate.id))
+     .sort((left, right) => left.id.localeCompare(right.id))) {
+     const currentAvailable = available.some((room) => room.id === employee.homeRoomInstanceId) &&
+       !used.has(employee.homeRoomInstanceId!);

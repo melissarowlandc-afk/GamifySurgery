@@ -1,0 +1,48 @@
+diff --git a/apps/player/src/session/diagnosticTimingPresentation.ts b/apps/player/src/session/diagnosticTimingPresentation.ts
+--- a/apps/player/src/session/diagnosticTimingPresentation.ts
++++ b/apps/player/src/session/diagnosticTimingPresentation.ts
+@@ -33,14 +33,16 @@ export function diagnosticChoiceTimingPresentation(
+   const etaLabel = preview.durationTicks == null ? undefined : formatDuration(preview.durationTicks);
+   const plan = "diagnosticTiming" in preview ? preview.diagnosticTiming : undefined;
+   if (!plan) return { etaLabel, detailLabel: "Estimated test wait (game time)" };
+-  const details = plan.phases.filter((phase) => phase.status !== "cancelled").map((phase) => {
++  const estimateAvailable = preview.durationTicks != null;
++  const details = plan.phases.filter((phase) => phase.status !== "cancelled" &&
++    (estimateAvailable || (phase.kind !== "patient_departure" && phase.kind !== "patient_return"))).map((phase) => {
+     if (phase.kind === "patient_departure" || phase.kind === "patient_return") {
+       return `${phaseLabels[phase.kind]} ${formatDuration(phase.forecast.walkingMinutes)}`;
+     }
+-    const delays = [
++    const delays = estimateAvailable ? [
+       ...(phase.forecast.queueMinutes > 0 ? [`${formatDuration(phase.forecast.queueMinutes)} queue`] : []),
+       ...(phase.forecast.walkingMinutes > 0 ? [`${formatDuration(phase.forecast.walkingMinutes)} walking`] : []),
+-    ];
++    ] : [];
+     return `${phaseLabels[phase.kind]} ${formatDuration(phase.durationMinutes)} ${phase.mode === "local" ? "onsite" : "offsite"}${delays.length ? ` (${delays.join(", ")})` : ""}`;
+   });
+   const result = Math.max(0, plan.resultReady.forecastAtTick - now);
+@@ -51,7 +53,10 @@ export function diagnosticChoiceTimingPresentation(
+   if (preview.durationTicks !== null && result < preview.durationTicks && result !== visual) {
+     details.push(`Result estimated at ${formatDuration(result)}`);
+   }
+-  return { etaLabel, detailLabel: `Estimated total (game time; includes queues and walking). ${details.join("; ")}.` };
++  const introduction = estimateAvailable
++    ? "Estimated total (game time; includes queues and walking)."
++    : "Waiting for compatible room or staff capacity; the time estimate is unavailable. Work durations (game time):";
++  return { etaLabel, detailLabel: `${introduction} ${details.join("; ")}.` };
+ }
+ 
+ /** Reached result clocks control prose visibility; forecasts only describe waits. */
+@@ -85,10 +90,10 @@ export function diagnosticPendingPresentation(
+     if (phase.status === "completed") return `${phase.label} (${location}): complete`;
+     const progress = phase.remainingTicks === null ? "waiting for capacity"
+       : `${formatDuration(phase.remainingTicks)} remaining`;
+-    const delays = [
++    const delays = phase.remainingTicks !== null ? [
+       ...(phase.queueMinutes > 0 ? [`${formatDuration(phase.queueMinutes)} queue`] : []),
+       ...(phase.walkingMinutes > 0 ? [`${formatDuration(phase.walkingMinutes)} walking`] : []),
+-    ];
++    ] : [];
+     return `${phase.label} (${location}): ${progress}${delays.length ? ` (${delays.join(", ")})` : ""}`;
+   });
+   if (phaseDetails.length) clauses.push(`Game time: ${phaseDetails.join("; ")}.`);

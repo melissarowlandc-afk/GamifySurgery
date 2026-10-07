@@ -1,0 +1,80 @@
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -705,6 +705,12 @@ export interface ServiceOperationState {
+     linkedTripId: string | null;
+     retailIncomeLineId: string | null;
+   };
++  /** New work snapshots category skill; each phase binds its alternative once. */
++  trainingTiming?: {
++    version: "employee-training-timing.v1";
++    categoryPercents: Record<string, number>;
++    phases: Array<{ phaseId: string; baselineMinutes: number; boundPercent: number | null }>;
++  };
+   /** Frozen staged-order work template; ordinary and older operations continue using their catalog template. */
+   frozenOperationPhases?: Array<{
+     id: string;
+@@ -1012,6 +1018,25 @@ export interface EmployeeFacilityTaskState {
+   workMinutesRemaining: number;
+   targetId?: string;
+   seatId?: LevelThreeBreakSeatId;
++  /** Frozen on new EVS room jobs; legacy jobs restore their baseline quantity. */
++  cleanlinessRestore?: number;
++}
++
++export interface EmployeeTrainingState {
++  version: 1;
++  requestSequence: number;
++  requestedAtFacilityTick: number;
++  /** Finish an already-running automated consultation before departing. */
++  earliestDepartureAtFacilityTick: number;
++  paidAmount: number;
++  targetLevel: 2 | 3 | 4 | 5;
++  stage: "queued" | "walking_to_training" | "training" | "returning";
++  roomInstanceId: string | null;
++  placeId: "stool1" | "stool2" | null;
++  remainingMinutes: number;
++  startedAtFacilityTick: number | null;
++  completedAtFacilityTick: number | null;
++  lastProgressAtFacilityTick: number;
+ }
+ 
+ export interface EmployeeState {
+@@ -1023,6 +1048,8 @@ export interface EmployeeState {
+   salaryPerExpenseInterval: number;
+   morale: number;
+   trainingLevel: RoomUpgradeLevel;
++  /** Paid training request/session; omitted in legacy campaigns and fixtures. */
++  training?: EmployeeTrainingState | null;
+   homeRoomInstanceId: string | null;
+   /** Stable approved reading cubicle; absent for other/legacy employees. */
+   readingStationId?: string;
+@@ -1047,6 +1074,8 @@ export interface LevelThreeQiReviewState {
+   enqueuedAtFacilityTick: number;
+   startedAtFacilityTick: number | null;
+   completedAtFacilityTick: number | null;
++  /** Accepted work survives clinical preemption and changes in category skill. */
++  trainingWork?: { version: "employee-training-work.v1"; durationMinutes: number; remainingMinutes: number };
+ }
+ 
+ /** A dismissed employee retained only while their visible exit walk completes. */
+@@ -1356,6 +1385,8 @@ export interface GameState {
+   rooms: PlacedRoom[];
+   doors: DoorState[];
+   employees: EmployeeState[];
++  /** Monotonic paid FIFO order, initialized lazily for legacy campaigns. */
++  employeeTrainingSequence?: number;
+   departingEmployees?: DepartingEmployeeState[];
+   encounters: Record<string, EncounterState>;
+   learningHistories: Record<string, ConceptLearningHistory>;
+@@ -1577,6 +1608,10 @@ export type GameCommand =
+       employeeId: string;
+       salaryPerExpenseInterval: number;
+     })
++  | (CommandBase & {
++      type: "TRAIN_EMPLOYEE";
++      employeeId: string;
++    })
+   | (CommandBase & {
+       type: "FIRE_EMPLOYEE";
+       employeeId: string;

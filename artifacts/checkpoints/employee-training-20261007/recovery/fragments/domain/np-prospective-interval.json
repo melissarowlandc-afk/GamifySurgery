@@ -1,0 +1,153 @@
+{
+  "kind": "Exact co-owned NP prospective interval integration fragment; manual merge only",
+  "observedAt": "2026-10-07T23:24:45.265Z",
+  "prerequisites": [
+    "Existing GS038 quoteNextInterval suite quote helper and slot roomUpgradeRevenue contract",
+    "NP training quote expression dependency patch"
+  ],
+  "instructions": "Keep these exact training-relevant lifecycle/metadata clauses in the shared GS038 implementation. Do not duplicate clauses if already present. This fragment intentionally omits independent room quote helpers, room metadata and validators. It is not a whole-file restore or automatically applicable patch.",
+  "sourceHashes": {
+    "reducer": "5baec7eb84e27f5ddea8137bb1bf445232d15f7c6fdb902110d4fa09b811e138",
+    "types": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7",
+    "persistence": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb"
+  },
+  "clauses": [
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 35,
+      "id": 35,
+      "oldLine": 6790,
+      "oldCount": 0,
+      "newLine": 6920,
+      "newCount": 1,
+      "deleted": [],
+      "added": [
+        "      ...prior,"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 36,
+      "id": 36,
+      "oldLine": 6791,
+      "oldCount": 0,
+      "newLine": 6922,
+      "newCount": 3,
+      "deleted": [],
+      "added": [
+        "      // Existing slots preserve their legacy interval; new ones freeze both",
+        "      // employee and actual-suite effects before any work is performed.",
+        "      ...(prior ? {} : quoteNextInterval(assignment.suiteRoomInstanceId)),"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 37,
+      "id": 37,
+      "oldLine": 6816,
+      "oldCount": 0,
+      "newLine": 6950,
+      "newCount": 1,
+      "deleted": [],
+      "added": [
+        "      const payment = slot.quotePayment ?? config.glp1AutomationPayment;"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 38,
+      "id": 38,
+      "oldLine": 6825,
+      "oldCount": 1,
+      "newLine": 6959,
+      "newCount": 1,
+      "deleted": [
+        "        grossAmount: config.glp1AutomationPayment,"
+      ],
+      "added": [
+        "        grossAmount: payment,"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 39,
+      "id": 39,
+      "oldLine": 6827,
+      "oldCount": 1,
+      "newLine": 6961,
+      "newCount": 1,
+      "deleted": [
+        "        netCashDelta: config.glp1AutomationPayment,"
+      ],
+      "added": [
+        "        netCashDelta: payment,"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 40,
+      "id": 40,
+      "oldLine": 6831,
+      "oldCount": 1,
+      "newLine": 6965,
+      "newCount": 1,
+      "deleted": [
+        "        adjustCash(state, config.glp1AutomationPayment);"
+      ],
+      "added": [
+        "        adjustCash(state, payment);"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/reducer.ts",
+      "enclosingFunction": "advanceGlp1Automation",
+      "sourceHunkId": 41,
+      "id": 41,
+      "oldLine": 6833,
+      "oldCount": 0,
+      "newLine": 6968,
+      "newCount": 1,
+      "deleted": [],
+      "added": [
+        "      Object.assign(slot, quoteNextInterval(slot.suiteRoomInstanceId));"
+      ]
+    },
+    {
+      "relative": "packages/game-domain/src/types.ts",
+      "sourceHunkId": 13,
+      "oldLine": 1123,
+      "added": [
+        "    /** Optional frozen staff-only legacy payment, or the full new room-and-staff quote. */",
+        "    quotePayment?: number;"
+      ],
+      "deleted": []
+    },
+    {
+      "relative": "packages/game-domain/src/persistence.ts",
+      "sourceHunkId": 25,
+      "oldLine": 4115,
+      "added": [
+        "    if (slot.quotePayment !== undefined && (typeof slot.quotePayment !== \"number\" || !Number.isFinite(slot.quotePayment) || slot.quotePayment < 0)) {",
+        "      throw new Error(\"The saved GLP-1 interval payment is invalid.\");",
+        "    }"
+      ],
+      "deleted": []
+    },
+    {
+      "relative": "packages/game-domain/src/persistence.ts",
+      "sourceHunkId": 26,
+      "oldLine": 4119,
+      "added": [
+        "      ...(typeof slot.quotePayment === \"number\" ? { quotePayment: slot.quotePayment } : {}),"
+      ],
+      "deleted": []
+    }
+  ],
+  "rationale": "Root accepted each new hourly interval freezing the achieved staff category percentage and actual suite revenue quote; legacy unquoted interval uses baseline, level changes affect only the next interval, and transaction-key idempotence is preserved."
+}

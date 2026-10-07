@@ -1,0 +1,73 @@
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -47,6 +47,8 @@ import {
+ } from "./selectors";
+ import { getEmployeeHomeLocation } from "./staff";
+ import { reconcileEmployeeRoomSeats } from "./room-capacity";
++import { isEmployeeAwayForTraining, normalizeEmployeeTraining, reconcileEmployeeTrainingReservations } from "./employee-training";
++import { normalizeServiceOperationTraining } from "./employee-training-effects";
+ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
+ import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+@@ -940,9 +942,11 @@ function normalizeServiceOperations(
+       raw.status === "waiting_for_next_phase" && diagnosticPhysicalWork.phaseWitnesses[raw.phaseIndex]?.completedAtFacilityTick === null)) {
+       throw new Error("The saved diagnostic physical phase witness is invalid.");
+     }
++    const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
++    if (trainingTiming && (diagnosticPhaseWork || diagnosticPhysicalWork)) throw new Error("Diagnostic work must use its accepted effective timing.");
+     const phaseFlowVersion = raw.phaseFlowVersion === 1 &&
+       (diagnosticPhysicalWork || frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
+-      frozenOperationPhases[0]?.durationMinutes === 30 &&
++      (frozenOperationPhases[0]?.durationMinutes === 30 || trainingTiming?.phases[0]?.baselineMinutes === 30) &&
+       frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery"))
+         ? 1 as const
+         : undefined;
+@@ -1037,6 +1041,7 @@ function normalizeServiceOperations(
+       ...(visitorTravel ? { visitorTravel } : {}),
+       resourceQueueVersion: raw.resourceQueueVersion === 1 ? 1 : undefined,
+       phaseFlowVersion,
++      ...(trainingTiming ? { trainingTiming } : {}),
+       periopBedFlowVersion,
+       ...(isRecord(raw.saleTransfer) &&
+         raw.saleTransfer.version === "room-sale-transfer.v1" &&
+@@ -3123,6 +3128,9 @@ function migrateVersionTwo(
+               rawFacilityTask.startedAtFacilityTick,
+             workMinutesRemaining:
+               rawFacilityTask.workMinutesRemaining,
++            ...(rawFacilityTask.kind === "clean_room" && typeof rawFacilityTask.cleanlinessRestore === "number" &&
++              Number.isFinite(rawFacilityTask.cleanlinessRestore) && rawFacilityTask.cleanlinessRestore >= 0
++              ? { cleanlinessRestore: rawFacilityTask.cleanlinessRestore } : {}),
+             ...(typeof rawFacilityTask.targetId === "string" ? { targetId: rawFacilityTask.targetId } : {}),
+             ...((rawFacilityTask.seatId === "massage" || rawFacilityTask.seatId === "largeNorth" || rawFacilityTask.seatId === "largeSouth" || rawFacilityTask.seatId === "largeWest" || rawFacilityTask.seatId === "largeEast" || rawFacilityTask.seatId === "smallNorth" || rawFacilityTask.seatId === "smallSouth") ? { seatId: rawFacilityTask.seatId as NonNullable<EmployeeState["facilityTask"]>["seatId"] } : {}),
+           }
+@@ -3191,8 +3199,18 @@ function migrateVersionTwo(
+             context.balanceRelease.environment.idleActionMinimumMinutes,
+       facilityTask,
+     };
++    if (candidate.training !== undefined) employee.training = normalizeEmployeeTraining(candidate.training, employee, next.facilityTick);
+     return [employee];
+   });
++  if (parsed.employeeTrainingSequence !== undefined || next.employees.some((employee) => employee.training)) {
++    next.employeeTrainingSequence = Math.max(
++      typeof parsed.employeeTrainingSequence === "number" && Number.isSafeInteger(parsed.employeeTrainingSequence) && parsed.employeeTrainingSequence >= 0
++        ? parsed.employeeTrainingSequence : 0,
++      ...next.employees.map((employee) => (employee.training?.requestSequence ?? -1) + 1),
++    );
++  } else {
++    delete next.employeeTrainingSequence;
++  }
+   next.levelThreeQiReviews = Array.isArray(parsed.levelThreeQiReviews)
+     ? parsed.levelThreeQiReviews.flatMap((candidate) => {
+         if (!isRecord(candidate) || typeof candidate.id !== "string" || typeof candidate.receiptId !== "string" ||
+@@ -4252,6 +4270,10 @@ function finishApprovedRoomMigration(
+   context: DomainContext,
+ ): GameState {
+   const migrated = normalizeApprovedRoomOrientations(state, context);
++  if (migrated.employees.some((employee) => isEmployeeAwayForTraining(employee) && employee.facilityTask)) {
++    throw new Error("The saved employee has conflicting training and work assignments.");
++  }
++  reconcileEmployeeTrainingReservations(migrated);
+   normalizeGlp1AutomationState(
+     migrated,
+     isRecord(parsed.environment) ? parsed.environment : {},

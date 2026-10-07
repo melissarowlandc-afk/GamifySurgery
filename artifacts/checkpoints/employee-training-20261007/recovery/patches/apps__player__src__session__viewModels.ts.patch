@@ -1,0 +1,113 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -14,6 +14,8 @@ import {
+   getCurrentQuestion,
+   getCurrentCapabilities,
+   getEmergencyGlp1Status,
++  getEmployeeRoleTrainingPercent,
++  getEmployeeTrainingMoney,
+   getOperationalGlp1AutomationCapacity,
+   getEncounterSettlement,
+   getEncounterPatientLocation,
+@@ -72,6 +74,7 @@ import {
+   roomBuildSortKey,
+ } from "./buildModePresentation";
+ import { createPatientAvailabilityGuidance } from "./patientAvailabilityViewModel";
++import { createEmployeeTrainingView } from "./employeeTrainingViewModels";
+ import {
+   diagnosticChoiceTimingPresentation,
+   diagnosticPendingPresentation,
+@@ -1098,7 +1101,7 @@ function createChartView(
+         etaLabel:
+           diagnosticForStep
+             ? diagnosticForStep.etaLabel
+-          : visibleResult && !resultDelivered && !visibleResult.resourceQueue
++          : visibleResult && !resultDelivered && !visibleResult.resourceQueue && !visibleResult.diagnosticTiming
+             ? `${formatFacilityDuration(
+                 Math.max(
+                   0,
+@@ -1462,6 +1465,11 @@ export function createPrototypePlayerView(
+   const clock = getFacilityClock(state);
+   const emergencyGlp1Status = getEmergencyGlp1Status(state);
+   const glp1AutomationCapacity = getOperationalGlp1AutomationCapacity(state);
++  const glp1ConsultPayment = getEmployeeTrainingMoney(
++    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.glp1AutomationPayment,
++    getEmployeeRoleTrainingPercent(state, "staff.glp1_np"),
++    "increase",
++  );
+   const nextGlp1PayoutTick = state.environment.glp1AutomationNextPayoutTick;
+   const advertisingLevels =
+     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.advertising.levels;
+@@ -1553,6 +1561,9 @@ export function createPrototypePlayerView(
+         (capabilityId) => !currentCapabilities.has(capabilityId),
+       );
+       const levelLocked = state.facilityLevel < line.minimumFacilityLevel;
++      const stockCost = line.retail?.outlets.every((outlet) => outlet.staffRoleDefinitionId === "staff.pharmacist")
++        ? getEmployeeTrainingMoney(line.retail.stockCost, getEmployeeRoleTrainingPercent(state, "staff.pharmacist"), "decrease")
++        : line.retail?.stockCost;
+       const retailOutletAvailable = line.retail?.outlets.some((outlet) =>
+         outlet.requiredCapabilityIds.every((capabilityId) => currentCapabilities.has(capabilityId)) &&
+         state.rooms.some((room) => room.roomDefinitionId === outlet.roomDefinitionId && isRoomOperationalForFacilityWork(state, room.id)) &&
+@@ -1611,7 +1622,9 @@ export function createPrototypePlayerView(
+         id: line.id,
+         displayName: line.displayName,
+         kind: line.kind,
+-        feeLabel: line.scheduledVisitorFee === undefined
++        feeLabel: line.id === "income.glp1_telehealth"
++          ? currency(glp1ConsultPayment)
++          : line.scheduledVisitorFee === undefined
+           ? currency(line.fee)
+           : `${currency(line.scheduledVisitorFee)} per scheduled visitor · ${currency(line.fee)} question-ordered`,
+         minimumFacilityLevel: line.minimumFacilityLevel,
+@@ -1624,7 +1637,7 @@ export function createPrototypePlayerView(
+             : line.retail && !retailOutletAvailable
+               ? `Requires ${retailOutletLabel}`
+             : undefined,
+-        ...(line.retail ? { stockCostLabel: currency(line.retail.stockCost), contributionLabel: currency(line.fee - line.retail.stockCost) } : {}),
++        ...(stockCost !== undefined ? { stockCostLabel: currency(stockCost), contributionLabel: currency(line.fee - stockCost) } : {}),
+       };
+     }),
+     activeOperations: [...state.serviceOperations
+@@ -2270,6 +2283,15 @@ export function createPrototypePlayerView(
+           : serviceSupportRole && serviceRoom
+             ? { supportRole: serviceSupportRole, supportRoomInstanceId: serviceRoom.id }
+             : undefined;
++        const trainingSupport = !departing && employee.training?.stage === "training" &&
++          employee.training.roomInstanceId && employee.training.placeId &&
++          employee.pathIndex >= employee.path.length - 1
++          ? {
++              supportRole: "training-employee" as const,
++              supportId: employee.training.placeId,
++              supportRoomInstanceId: employee.training.roomInstanceId,
++            }
++          : undefined;
+         // An idle employee resting on a chair or workstation tile of their own
+         // room sits there or faces it. If two share the tile, the first
+         // (by id) takes the spot and the other just stands.
+@@ -2282,7 +2304,7 @@ export function createPrototypePlayerView(
+           samePoint(other.location, employee.location))
+           ? { supportRole: "staff-idle" as const, supportId: idleSpot.id, supportRoomInstanceId: homeRoom.id }
+           : undefined;
+-        const projectedSupport = taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? idleSpotSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
++        const projectedSupport = trainingSupport ?? taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? idleSpotSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
+         return {
+           instanceId: employee.id,
+           discussionActionRequired: Object.values(state.employeeDiscussions ?? {}).some((discussion) =>
+@@ -2596,6 +2618,7 @@ export function createPrototypePlayerView(
+             moraleLabel: `${employee.morale}%`,
+             moralePercent: employee.morale,
+             avatar: employee.appearance,
++            training: createEmployeeTrainingView(state, employee.id),
+             salaryPerHour: employee.salaryPerExpenseInterval,
+             trainingTeamAverageAfterLabel: createRoleAverageAfterTrainingLabel(state, role.id, employees, employee.id),
+             canDecreaseSalary:
+@@ -2610,7 +2633,7 @@ export function createPrototypePlayerView(
+             : role.id === "staff.radiologist"
+               ? "Each Reading Room has four radiologist positions. Each operational radiologist has a separate queue and reads one study at a time."
+             : role.id === "staff.glp1_np"
+-              ? "Each GLP-1 Telehealth Suite has two NP positions. Each staffed NP earns $50 per facility hour."
++              ? `Each GLP-1 Telehealth Suite has two NP positions. Each staffed NP earns $${glp1ConsultPayment.toLocaleString("en-US", { maximumFractionDigits: 2 })} per facility hour.`
+               : role.id === "staff.imaging_technician"
+                 ? "Each Ultrasound, X-ray, or CT Room adds one shared imaging technician position."
+                 : roomCapacity.builtRoomCount > 0

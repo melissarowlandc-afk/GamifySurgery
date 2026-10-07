@@ -1,0 +1,20 @@
+diff --git a/packages/game-domain/src/staff.ts b/packages/game-domain/src/staff.ts
+--- a/packages/game-domain/src/staff.ts
++++ b/packages/game-domain/src/staff.ts
+@@ -19,6 +19,7 @@ import {
+ import type { DomainContext, EmployeeState, GameState, GridPoint } from "./types";
+ import { getAvailableEmployeeHomeRoom, reconcileImagingIdleSeats } from "./room-capacity";
+ import { findRouteFromDisplacedLocationToRoom } from "./displaced-routing";
++import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getNextReadingStationLocation, getRadiologistReadingStation, reconcileReadingStations } from "./reading-stations";
+ 
+ function samePoint(left: GridPoint, right: GridPoint): boolean {
+@@ -249,6 +250,8 @@ export function advanceEmployeeMovement(
+   }
+ 
+   for (const employee of state.employees) {
++    // Training owns its protected travel, seated work and return lifecycle.
++    if (isEmployeeAwayForTraining(employee)) continue;
+     if (reconcileEmployeeCareRoomRoute(state, employee, context)) {
+       continue;
+     }

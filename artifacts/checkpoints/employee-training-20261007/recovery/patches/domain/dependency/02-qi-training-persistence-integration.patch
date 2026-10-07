@@ -1,0 +1,22 @@
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -3280,6 +3280,10 @@ function migrateVersionTwo(
+           (roomUpgradeWork.durationMinutes === null && (candidate.status !== "queued" || work.remainingMinutes !== work.durationMinutes)))) {
+           throw new Error("The saved room upgrade QI work is invalid.");
+         }
++        if (candidate.trainingWork !== undefined && (!work || work.version !== "employee-training-work.v1" ||
++          typeof work.durationMinutes !== "number" || !(roomUpgradeWork ? Number.isFinite(work.durationMinutes) : Number.isSafeInteger(work.durationMinutes)) || work.durationMinutes < 1 ||
++          typeof work.remainingMinutes !== "number" || !(roomUpgradeWork ? Number.isFinite(work.remainingMinutes) : Number.isSafeInteger(work.remainingMinutes)) || work.remainingMinutes < 0 || work.remainingMinutes > work.durationMinutes ||
++          (candidate.status === "completed" ? work.remainingMinutes !== 0 : work.remainingMinutes === 0))) throw new Error("The saved QI training work is invalid.");
+         return [{
+           id: candidate.id,
+           receiptId: candidate.receiptId,
+@@ -3288,6 +3292,7 @@ function migrateVersionTwo(
+           enqueuedAtFacilityTick: typeof candidate.enqueuedAtFacilityTick === "number" && Number.isSafeInteger(candidate.enqueuedAtFacilityTick) ? candidate.enqueuedAtFacilityTick : next.facilityTick,
+           startedAtFacilityTick: status !== "queued" && typeof candidate.startedAtFacilityTick === "number" && Number.isSafeInteger(candidate.startedAtFacilityTick) ? candidate.startedAtFacilityTick : null,
+           completedAtFacilityTick: status === "completed" && typeof candidate.completedAtFacilityTick === "number" && Number.isSafeInteger(candidate.completedAtFacilityTick) ? candidate.completedAtFacilityTick : null,
++          ...(work ? { trainingWork: { version: "employee-training-work.v1" as const, durationMinutes: work.durationMinutes as number, remainingMinutes: work.remainingMinutes as number } } : {}),
+           ...(roomUpgradeWork ? { roomUpgradeWork } : {}),
+         }];
+       })

@@ -1,0 +1,148 @@
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -30,6 +30,7 @@ import {
+   isEmployeeDiscussionCase,
+ } from "./employee-discussions";
+ import { materializePatientName } from "./patientText";
++import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
+ import {
+   findCareAwareFacilityPath,
+   isProtectedCareRoom,
+@@ -46,6 +47,7 @@ import {
+   getEmergencyGlp1Status,
+   getOperationalGlp1AutomationAssignments,
+   isEmployeeAssignedToOperationalRoom,
++  isEmployeeOperational,
+   isRoomOperationalForFacilityWork,
+   getFacilityProgressionStatus,
+   getCurrentCapabilities,
+@@ -108,6 +110,7 @@ import {
+ import { synchronizeFacilityOperationalAlertOccurrences } from "./facility-alert-conditions";
+ import { operatingDayMinutes } from "./alert-cadence";
+ import { advanceLevelThreeSupport } from "./level-three-support";
++import { advanceEmployeeTraining, cancelEmployeeTrainingForDismissal, isEmployeeAwayForTraining, requestEmployeeTraining } from "./employee-training";
+ import {
+   employeeDepartureRiskCadenceGroup,
+   employeeDepartureRiskWarningIsDue,
+@@ -2823,6 +2826,7 @@ function employeeIsEligibleForDiscussion(
+       employee.staffRoleDefinitionId,
+     ) ||
+     employee.facilityTask ||
++    isEmployeeAwayForTraining(employee) ||
+     !isEmployeeAssignedToOperationalRoom(state, employee.id, context)
+   ) {
+     return false;
+@@ -3045,7 +3049,7 @@ function tryStartEmployeeDiscussionAttendance(
+   if (state.environment.founderActivity?.kind === "attend_employee_discussion" &&
+       state.environment.founderActivity.targetId === discussion.id) return true;
+   const employee = state.employees.find((candidate) => candidate.id === discussion.employeeId);
+-  if (!employee || employee.facilityTask ||
++  if (!employee || employee.facilityTask || isEmployeeAwayForTraining(employee) ||
+       !isEmployeeAssignedToOperationalRoom(state, employee.id, context) ||
+       state.retailOperations.some((operation) =>
+         operation.actorKind === "employee" && operation.actorId === employee.id &&
+@@ -6102,6 +6106,7 @@ function applyOperatingExpenses(
+       const quittingIds = new Set(
+         quittingEmployees.map((employee) => employee.id),
+       );
++      for (const employee of quittingEmployees) cancelEmployeeTrainingForDismissal(state, employee.id);
+       state.employees = state.employees.filter(
+         (employee) => !quittingIds.has(employee.id),
+       );
+@@ -6443,6 +6448,7 @@ function maybeAssignReceptionistWaterRefill(
+       (employee) =>
+         employee.staffRoleDefinitionId === "staff.receptionist" &&
+         !employee.facilityTask &&
++        !isEmployeeAwayForTraining(employee) &&
+         !(
+           environment.founderActivity?.kind === "praise_employee" &&
+           environment.founderActivity.targetId === employee.id
+@@ -6642,7 +6648,7 @@ function advanceEmployeeFacilityTasks(
+       if (room) {
+         room.cleanliness = clamp(
+           (room.cleanliness ?? 100) +
+-            context.balanceRelease.environment.evsRoomCleanlinessRestore,
++            (task.cleanlinessRestore ?? context.balanceRelease.environment.evsRoomCleanlinessRestore),
+           0,
+           100,
+         );
+@@ -6668,6 +6674,7 @@ function maybeAssignEvsTasks(state: GameState, context: DomainContext): void {
+         employee.staffRoleDefinitionId === "staff.evs_worker" &&
+         isEmployeeAssignedToOperationalRoom(state, employee.id, context) &&
+         !employee.facilityTask &&
++        !isEmployeeAwayForTraining(employee) &&
+         employee.pathIndex >= employee.path.length - 1,
+     )
+     .sort((left, right) => left.id.localeCompare(right.id));
+@@ -6745,6 +6752,9 @@ function maybeAssignEvsTasks(state: GameState, context: DomainContext): void {
+         "spawnedAtFacilityTick" in selected.target
+           ? context.balanceRelease.environment.founderInteractionMinutes
+           : config.evsRoomCleanupMinutes,
++      ...("spawnedAtFacilityTick" in selected.target ? {} : {
++        cleanlinessRestore: config.evsRoomCleanlinessRestore * (1 + getEmployeeRoleTrainingPercent(state, "staff.evs_worker") / 100),
++      }),
+     };
+     if ("spawnedAtFacilityTick" in selected.target) {
+       targeted.add(selected.target.id);
+@@ -8522,7 +8532,9 @@ function reduceAdvanceTick(
+         : baseDecay;
+     applyPatientSatisfactionDelta(
+       encounter,
+-      -baseDecay,
++      -baseDecay * (next.employees.some((employee) => employee.staffRoleDefinitionId === "staff.receptionist" &&
++        !employee.facilityTask && isEmployeeOperational(next, employee.id, context))
++        ? 1 - getEmployeeRoleTrainingPercent(next, "staff.receptionist") / 100 : 1),
+       "excessive_waiting",
+       next.facilityTick,
+     );
+@@ -8687,6 +8699,7 @@ function reduceAdvanceTick(
+   );
+   prioritizeReceptionistPatients(next, context);
+   advanceEmployeeFacilityTasks(next, context, "refill_only");
++  advanceEmployeeTraining(next, context);
+   retireDepartedEncounters(next, context);
+   retireFinishedServiceHistory(next, context);
+   retireFinishedRetailHistory(next);
+@@ -8931,6 +8944,7 @@ function reduceSellRoom(
+   const dismissed = next.employees.filter((employee) => dismissedIds.has(employee.id));
+   next.departingEmployees ??= [];
+   for (const employee of dismissed) {
++    cancelEmployeeTrainingForDismissal(next, employee.id);
+     const retailLocation = next.retailOperations.find(
+       (operation) =>
+         operation.actorKind === "employee" &&
+@@ -9788,6 +9802,16 @@ function reduceSetEmployeeSalary(
+   );
+ }
+ 
++function reduceTrainEmployee(
++  state: GameState,
++  command: Extract<GameCommand, { type: "TRAIN_EMPLOYEE" }>,
++  context: DomainContext,
++): GameState {
++  const next = clonePlain(state);
++  const result = requestEmployeeTraining(next, command.employeeId, context);
++  return result.applied ? recordReceipt(next, command, "applied", result.message) : rejectCommand(state, command, result.message);
++}
++
+ function reduceFireEmployee(
+   state: GameState,
+   command: Extract<GameCommand, { type: "FIRE_EMPLOYEE" }>,
+@@ -9845,6 +9869,7 @@ function reduceFireEmployee(
+   }
+ 
+   const next = clonePlain(state);
++  cancelEmployeeTrainingForDismissal(next, command.employeeId);
+   next.employees = next.employees.filter(
+     (candidate) => candidate.id !== command.employeeId,
+   );
+@@ -10764,6 +10789,8 @@ function reduceGameCommand(
+       return reduceSetEmployeeSalary(state, command, context);
+     case "FIRE_EMPLOYEE":
+       return reduceFireEmployee(state, command);
++    case "TRAIN_EMPLOYEE":
++      return reduceTrainEmployee(state, command, context);
+     case "COLLECT_LITTER":
+       return reduceCollectLitter(state, command, context);
+     case "REFILL_WATER_COOLER":

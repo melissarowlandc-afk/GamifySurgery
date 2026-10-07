@@ -1,0 +1,56 @@
+diff --git a/packages/game-domain/src/level-three-support.ts b/packages/game-domain/src/level-three-support.ts
+--- a/packages/game-domain/src/level-three-support.ts
++++ b/packages/game-domain/src/level-three-support.ts
+@@ -1,4 +1,6 @@
+ import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { isEmployeeAwayForTraining } from "./employee-training";
++import { getEmployeeRoleTrainingPercent, getEmployeeTrainingWorkMinutes } from "./employee-training-effects";
+ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+ import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
+@@ -131,7 +133,7 @@ function employeeHasCareDemand(state: GameState, employee: EmployeeState): boole
+ }
+ 
+ function idle(state: GameState, employee: EmployeeState): boolean {
+-  return !employee.facilityTask && employee.pathIndex >= Math.max(0, employee.path.length - 1) &&
++  return !isEmployeeAwayForTraining(employee) && !employee.facilityTask && employee.pathIndex >= Math.max(0, employee.path.length - 1) &&
+     !state.serviceOperations.some((operation) => operation.status !== "completed" && operation.status !== "cancelled" &&
+       (operation.reservedEmployeeIds.includes(employee.id) || operation.providerReservation?.kind === "employee" && operation.providerReservation.employeeId === employee.id)) &&
+     !state.retailOperations.some((operation) => operation.servingEmployeeId === employee.id &&
+@@ -213,6 +215,7 @@ function reconcileSupportAssignments(state: GameState, context: DomainContext):
+     const matchingTask = surgeon?.facilityTask?.kind === "review_ambulatory_qi" && surgeon.facilityTask.targetId === review.id;
+     if (surgeon && office && matchingTask && isRoomOperationalForFacilityWork(state, office.id, context)) continue;
+     if (surgeon?.facilityTask?.kind === "review_ambulatory_qi" && surgeon.facilityTask.targetId === review.id) {
++      if (review.trainingWork) review.trainingWork.remainingMinutes = surgeon.facilityTask.workMinutesRemaining;
+       surgeon.facilityTask = null;
+       routeEmployeeHome(state, surgeon, context);
+     }
+@@ -233,6 +236,10 @@ function progressTasks(state: GameState, context: DomainContext): void {
+     }
+     if (employee.pathIndex < Math.max(0, employee.path.length - 1)) continue;
+     task.workMinutesRemaining -= 1;
++    if (task.kind === "review_ambulatory_qi") {
++      const review = state.levelThreeQiReviews.find((candidate) => candidate.id === task.targetId);
++      if (review?.trainingWork) review.trainingWork.remainingMinutes = Math.max(0, task.workMinutesRemaining);
++    }
+     if (task.workMinutesRemaining > 0) continue;
+     if (task.kind === "take_break") {
+       employee.morale = Math.min(100, employee.morale + tuning.breakMoraleGain);
+@@ -274,7 +281,7 @@ function reconcileMaintenance(state: GameState): void {
+   }
+ }
+ 
+-function enqueueQi(state: GameState): void {
++function enqueueQi(state: GameState, context: DomainContext): void {
+   const reviewedReceiptIds = new Set(state.levelThreeQiReviews.map((review) => review.receiptId));
+   for (const receipt of state.serviceIncomeReceipts) {
+     if (receipt.incomeLineId !== "income.ambulatory_operation" && receipt.incomeLineId !== "income.ambulatory_operation_extended") continue;
+@@ -366,7 +373,7 @@ export function advanceLevelThreeSupport(state: GameState, context: DomainContex
+   reconcileSupportAssignments(state, context);
+   progressTasks(state, context);
+   reconcileMaintenance(state);
+-  enqueueQi(state);
++  enqueueQi(state, context);
+   assignRepairs(state, context);
+   assignQi(state, context);
+   assignBreaks(state, context);

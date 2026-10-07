@@ -1,0 +1,95 @@
+{
+  "records": [
+    {
+      "path": "packages/balance-config/src/index.ts",
+      "patch": "recovery/patches/packages__balance-config__src__index.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Training configuration export; room-upgrade export unchanged.",
+      "baselineNormalizedSha256": "f53dfc820d39bd67aa55ddfbfb9899ddc41cf235560b4cbd77d5af9384266f5b",
+      "restoredNormalizedSha256": "0bb2bab14828870894a296bf25555c3a883eb8d2f3c48b48c9d3334b641359db",
+      "liveSha256": "0bb2bab14828870894a296bf25555c3a883eb8d2f3c48b48c9d3334b641359db",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/session/index.ts",
+      "patch": "recovery/patches/apps__player__src__session__index.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Training view helper export.",
+      "baselineNormalizedSha256": "8ed2a4cf797c67560df85c8e4d29f3499c2145f31ddd2af6b9bdfcd48fc0a70f",
+      "restoredNormalizedSha256": "58e5316200b8ae4f715df626a1115c2f100dc52a2aa0ff0f515f7e6e98c8c789",
+      "liveSha256": "58e5316200b8ae4f715df626a1115c2f100dc52a2aa0ff0f515f7e6e98c8c789",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/apps__player__src__facility__types.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Seated training actor support role; Build fields unchanged.",
+      "baselineNormalizedSha256": "3953d35942d552a49cf8cc23b79c04d702ee8070c0963c87906b39fdfb8fbe71",
+      "restoredNormalizedSha256": "e4f89eafab31eb3297a6c331b44349c9db9de8ba703b2799c087bfbab03bda0f",
+      "liveSha256": "e4f89eafab31eb3297a6c331b44349c9db9de8ba703b2799c087bfbab03bda0f",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "EmployeeTrainingView and employee row data; Claude Management/Build fields unchanged.",
+      "baselineNormalizedSha256": "10ffe70c0c9276433d0c6e5a8583914148a0f3dca484b26416099c9cc25b61d4",
+      "restoredNormalizedSha256": "68d441a31d1fe2bd01db9c964f967fb97ccd3f2fdbd9e59bacb0d89486720faa",
+      "liveSha256": "68d441a31d1fe2bd01db9c964f967fb97ccd3f2fdbd9e59bacb0d89486720faa",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/apps__player__src__session__usePrototypeSession.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Individual training command callback; Claude Build callbacks unchanged.",
+      "baselineNormalizedSha256": "644a5cfdc8d2965f65e84ae8579f75a91a79db62ef3690c2dec5b87674a02df4",
+      "restoredNormalizedSha256": "9e0144a76ea552472749afccb483fba08572d63870f943bd6133f053da6584a5",
+      "liveSha256": "9e0144a76ea552472749afccb483fba08572d63870f943bd6133f053da6584a5",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "patch": "recovery/patches/apps__player__src__facility__approvedRoomPresentation.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Existing approved stool contacts attached to north-facing seated actors; no artwork changes.",
+      "baselineNormalizedSha256": "f7333cec34d100328cd9039f4cbdb626c48f4a89ded47f45bc9d6a349525991b",
+      "restoredNormalizedSha256": "743b5353bb2b0ed62429183d420493642e0b76f4a18089a0fe85e3f1c0004091",
+      "liveSha256": "743b5353bb2b0ed62429183d420493642e0b76f4a18089a0fe85e3f1c0004091",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Personal training card, seated support, prospective staff-only catalog amounts, unknown diagnostic ETA guard; GS034/Claude integrations remain unchanged context.",
+      "baselineNormalizedSha256": "aff57a6c52f9f9a58b58dec8aa860ec59adc38a0ff13e8546f3da85b40a589ca",
+      "restoredNormalizedSha256": "fe7d45b37545f2ed89e74deca33ca45addb62edb963c054ab2b346beb767f76c",
+      "liveSha256": "fe7d45b37545f2ed89e74deca33ca45addb62edb963c054ab2b346beb767f76c",
+      "exactNormalizedLiveMatch": true,
+      "excludedConcurrentChange": "Claude idle employee chair/workstation spots retained in baseline and unchanged by the patch"
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingPresentation.ts",
+      "patch": "recovery/patches/apps__player__src__session__diagnosticTimingPresentation.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Suppress nominal queues/walking/ETAs for paused unknown staff availability; GS034 phase presentation unchanged.",
+      "baselineNormalizedSha256": "91ad1d6017ea049d97c83b34f50876626b69ea16ce135cc7faaff9a0724a5eb7",
+      "restoredNormalizedSha256": "900ff03b504bcfb8f5022f83bc963965a301557691e141130c12ebcd1779a48a",
+      "liveSha256": "900ff03b504bcfb8f5022f83bc963965a301557691e141130c12ebcd1779a48a",
+      "exactNormalizedLiveMatch": true
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingPresentation.test.ts",
+      "patch": "recovery/patches/apps__player__src__session__diagnosticTimingPresentation.test.ts.patch",
+      "baselineKind": "compatible-current-source with only owned training edits reversed",
+      "ownership": "Paused-training choice regression and pending-phase delay suppression assertions.",
+      "baselineNormalizedSha256": "33731131be4df0984d978cee84dde07ca98ebe07774bb787e89f8f461b596212",
+      "restoredNormalizedSha256": "b012f4421f361d238a170ec6802d0163ebf7fd5b0e3c9f0da7bd71952725fe35",
+      "liveSha256": "b012f4421f361d238a170ec6802d0163ebf7fd5b0e3c9f0da7bd71952725fe35",
+      "exactNormalizedLiveMatch": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+diff --git a/packages/game-domain/src/retail-operations.ts b/packages/game-domain/src/retail-operations.ts
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -1,4 +1,5 @@
+ import { SERVICE_INCOME_CATALOG, getServiceIncomeLine, type RetailOutletContract, type ServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
+ import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
+ import { getDoorCells } from "./doors";
+ import {
+@@ -304,7 +305,10 @@ export function startRetailPurchase(
+     linkedServiceOperationId: kind === "service_visitor" ? actorId : kind === "companion" ? state.retailExternalActors.find((actor) => actor.id === actorId)?.linkedServiceOperationId ?? null : null,
+     authorizedOrderId: order?.id ?? null, status: "walking_to_outlet", createdAtFacilityTick: state.facilityTick,
+     waitDeadlineFacilityTick: state.facilityTick + QUEUE_ABANDON_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null,
+-    quoteGross: line.fee, quoteStockCost: line.retail.stockCost, outletRoomInstanceId: outlet.roomId,
++    quoteGross: line.fee,
++    quoteStockCost: outlet.contract.staffRoleDefinitionId === "staff.pharmacist"
++      ? getEmployeeTrainingMoney(line.retail.stockCost, getEmployeeRoleTrainingPercent(state, "staff.pharmacist"), "decrease")
++      : line.retail.stockCost, outletRoomInstanceId: outlet.roomId,
+     outletDurationMinutes: outlet.contract.durationMinutes, staffRoleDefinitionId: outlet.contract.staffRoleDefinitionId ?? null, servingEmployeeId: outlet.servingEmployeeId,
+     location: { ...location }, returnLocation: kind === "retail_visitor" ? null : { ...location }, path, pathIndex: 0,
+     lastMovedAtFacilityTick: state.facilityTick, purchaseEndsAtFacilityTick: null, cancellationReason: null,

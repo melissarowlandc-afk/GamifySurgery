@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-07",
+  "task": "GS-037 employee training",
+  "scope": "Validated training milestone before later independent shared-tree room-support edits; backup adds no live gameplay changes.",
+  "domainCatalog": {
+    "testFiles": 19,
+    "passed": 295,
+    "failed": 0,
+    "independentParentRerun": true,
+    "command": "node node_modules/vitest/vitest.mjs run packages/game-domain/tests/employee-training-benefits.test.ts packages/game-domain/tests/employee-training.test.ts packages/game-domain/tests/employee-training-persistence.test.ts packages/game-domain/tests/employee-training-np-queue.test.ts packages/balance-config/src/employee-training.test.ts packages/game-domain/tests/diagnostic-timing.test.ts packages/game-domain/tests/diagnostic-timing-persistence.test.ts packages/game-domain/tests/diagnostic-service-operations.test.ts packages/game-domain/tests/diagnostic-orders.test.ts packages/game-domain/tests/diagnostic-result-dispositions.test.ts packages/game-domain/tests/service-operations.test.ts packages/game-domain/tests/service-procedure-operations.test.ts packages/game-domain/tests/service-income.test.ts packages/game-domain/tests/level-three-support.test.ts packages/game-domain/tests/level-two-support-operations.test.ts packages/game-domain/tests/level-two-persistence.test.ts packages/game-domain/tests/retail-operations.test.ts packages/game-domain/tests/timing-encounters.test.ts packages/game-domain/tests/level-two-endoscopy.test.ts --exclude '.local-dev/**' --exclude 'artifacts/**' --maxWorkers=1 --no-file-parallelism"
+  },
+  "player": {
+    "testFiles": 8,
+    "passed": 57,
+    "failed": 0,
+    "command": "node node_modules/vitest/vitest.mjs run apps/player/src/session/employeeTrainingViewModels.test.ts apps/player/src/session/managementViewModels.test.ts apps/player/src/facility/employeeTrainingPresentation.test.ts apps/player/src/ui/StaffPanel.test.tsx apps/player/src/session/diagnosticTimingPresentation.test.ts apps/player/src/session/diagnosticTimingViewModels.test.ts apps/player/src/session/answerChoiceTimingPresentation.test.ts apps/player/src/session/economyViewModels.test.ts --maxWorkers=4 --exclude '.local-dev/**' --exclude 'artifacts/**'"
+  },
+  "typechecks": [
+    {
+      "config": "packages/game-domain/tsconfig.json",
+      "result": "pass",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p packages/game-domain/tsconfig.json"
+    },
+    {
+      "config": "packages/balance-config/tsconfig.json",
+      "result": "pass",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p packages/balance-config/tsconfig.json"
+    },
+    {
+      "config": "apps/player/tsconfig.json",
+      "result": "pass",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p apps/player/tsconfig.json"
+    }
+  ],
+  "boundaries": {
+    "package": "pass",
+    "launcher": "pass",
+    "commands": [
+      "node scripts/verify-app-boundaries.mjs",
+      "node scripts/verify-launcher-contract.mjs"
+    ]
+  },
+  "build": {
+    "result": "pass",
+    "isolatedOutput": ".local-dev/gs037-employee-training/production-build-20261007-final",
+    "existingWarning": "large application bundle"
+  },
+  "browser": {
+    "project": "desktop-chrome",
+    "passed": 2,
+    "failed": 0,
+    "command": "node scripts/run-e2e.mjs tests/e2e/employee-training.spec.ts --project=desktop-chrome",
+    "origin": "http://127.0.0.1:4173",
+    "isolatedProfile": true,
+    "ownerStorageTouched": false,
+    "scenarios": [
+      "two seated stools, paid working queue, reload/payment/progression idempotence and return",
+      "actual Claude Management training action, concise gains/costs and individual payment"
+    ],
+    "syntheticSummary": {
+      "origin": "http://127.0.0.1:4173",
+      "beforePayment": 9190,
+      "totalCost": 250,
+      "paidCash": 8940,
+      "facilityTick": 146,
+      "employees": [
+        {
+          "id": "employee.e2e.training.reception",
+          "trainingLevel": 2,
+          "training": null
+        },
+        {
+          "id": "employee.e2e.training.evs",
+          "trainingLevel": 2,
+          "training": null
+        },
+        {
+          "id": "employee.e2e.training.draw",
+          "trainingLevel": 2,
+          "training": null
+        }
+      ],
+      "failures": []
+    }
+  },
+  "contributors": {
+    "sol": "employee_training_core: lifecycle, save, benefits, calendar and backup domain extraction",
+    "astra": "training_effects_review: bounded freezing/forecast review",
+    "parent": "player integration, NP queue continuity, actual diff review, independent validation and scoped backup"
+  }
+}

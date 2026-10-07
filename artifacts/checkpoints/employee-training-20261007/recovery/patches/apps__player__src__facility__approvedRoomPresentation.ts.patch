@@ -1,0 +1,25 @@
+diff --git a/apps/player/src/facility/approvedRoomPresentation.ts b/apps/player/src/facility/approvedRoomPresentation.ts
+--- a/apps/player/src/facility/approvedRoomPresentation.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.ts
+@@ -796,6 +796,21 @@ export function resolveApprovedRoomActorSupports(
+   const level3Supports = orientation === 0 ? APPROVED_LEVEL3_ACTOR_SUPPORTS[definitionId] : undefined;
+   if (level3Supports) return level3Supports;
+   const capture = getApprovedRoomProofCapture(definitionId, orientation);
++  if (capture && definitionId === "room.training") {
++    const model = isObject(capture.dataset.model) ? capture.dataset.model : undefined;
++    const stools = Array.isArray(model?.stools) ? model.stools : [];
++    const draws = isObject(model?.draws) ? model.draws : undefined;
++    return stools.flatMap((stool) => {
++      if (!isObject(stool) || typeof stool.id !== "string") return [];
++      const candidateDraw = draws?.[stool.id];
++      const draw = isObject(candidateDraw) ? candidateDraw : undefined;
++      const seat = screenPointToLocal(draw?.seatContact, capture);
++      const ground = point(stool.ground);
++      return seat && ground
++        ? [support(stool.id, "training-employee", "seated", "north", seat, ground)]
++        : [];
++    });
++  }
+   if (capture && definitionId === "room.examination") {
+     const table = isObject(capture.dataset.table) ? capture.dataset.table : undefined;
+     const patientSeat = point(table?.patientSeat);

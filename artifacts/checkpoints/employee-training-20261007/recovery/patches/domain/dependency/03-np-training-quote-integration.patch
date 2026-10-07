@@ -1,0 +1,13 @@
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -6904,7 +6904,8 @@ function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+   }
+   const config = context.balanceRelease.environment;
+   const quoteNextInterval = (suiteRoomInstanceId: string) => {
+-    const employeePayment = config.glp1AutomationPayment;
++    const employeePayment = getEmployeeTrainingMoney(config.glp1AutomationPayment,
++      getEmployeeRoleTrainingPercent(state, "staff.glp1_np"), "increase");
+     const roomUpgradeRevenue = createRoomUpgradeRevenueQuote(state, employeePayment, ["room.glp1_telehealth_suite"]);
+     bindRoomUpgradeRevenueQuote(roomUpgradeRevenue, suiteRoomInstanceId);
+     return { roomUpgradeRevenue, quotePayment: roomUpgradeRevenue ? getRoomUpgradeQuotedFee(roomUpgradeRevenue) : employeePayment };

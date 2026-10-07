@@ -1,0 +1,83 @@
+diff --git a/packages/game-domain/src/selectors.ts b/packages/game-domain/src/selectors.ts
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -45,6 +45,7 @@ import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content"
+ import { getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+ import { getDiagnosticChoicePlanning } from "./diagnostic-order-requests";
++import { isEmployeeAwayForTraining } from "./employee-training";
+ import { forecastDiagnosticOrderPlan, getDiagnosticOrderPlans } from "./diagnostic-timing";
+ import {
+   getEmployeeDiscussionBasicBlockedReason,
+@@ -70,6 +71,7 @@ export function getEmployeeDiscussionBlockedReason(
+     (candidate) => candidate.id === discussion.employeeId,
+   );
+   if (!employee) return `${discussion.employeeDisplayName} is no longer available.`;
++  if (isEmployeeAwayForTraining(employee)) return `${employee.displayName} is away for training.`;
+   if (!isEmployeeAssignedToOperationalRoom(state, employee.id, context)) {
+     return `${employee.displayName}'s department is unavailable.`;
+   }
+@@ -235,6 +237,7 @@ export function isEmployeeOperational(
+     : false;
+   return Boolean(
+     employee &&
++      !isEmployeeAwayForTraining(employee) &&
+       homeRoom &&
+       definition &&
+       (preemptibleRetailTrip || getOccupiedTiles(homeRoom, definition).some(
+@@ -293,7 +296,7 @@ function isEmployeeOperationalInAccessibleRoom(
+       isRoomOperational(state, homeRoom.id, context, access) &&
+       // Imaging staff may be walking between ordinary imaging rooms while
+       // remaining available to the installed service-capability model.
+-      (employee.staffRoleDefinitionId === "staff.imaging_technician" ||
++      (isEmployeeAwayForTraining(employee) || employee.staffRoleDefinitionId === "staff.imaging_technician" ||
+         isEmployeeOperational(state, employeeId, context)),
+   );
+ }
+@@ -479,6 +482,7 @@ function selectProviderReservation(
+         candidate.staffRoleDefinitionId ===
+           requirement.preferredEmployeeStaffRoleDefinitionId &&
+         candidate.facilityTask == null &&
++        !isEmployeeAwayForTraining(candidate) &&
+         isEmployeeOperationalInAccessibleRoom(
+           state,
+           candidate.id,
+@@ -551,6 +555,7 @@ function selectReachableIdleImagingTechnician(
+         (employee) =>
+       employee.staffRoleDefinitionId === "staff.imaging_technician" &&
+       !employee.facilityTask &&
++      !isEmployeeAwayForTraining(employee) &&
+           !reservedEmployeeIds.has(employee.id) &&
+           isEmployeeOperationalInAccessibleRoom(
+             state,
+@@ -604,6 +609,7 @@ function selectReachableIdlePhlebotomist(
+     .filter((employee) =>
+       employee.staffRoleDefinitionId === "staff.phlebotomist" &&
+       !employee.facilityTask &&
++      !isEmployeeAwayForTraining(employee) &&
+       !reservedEmployeeIds.has(employee.id) &&
+       isEmployeeOperationalInAccessibleRoom(state, employee.id, context, access),
+     )
+@@ -949,6 +955,7 @@ export function getAnswerChoiceServicePreview(
+   const diagnostic = getDiagnosticChoicePlanning(state, encounter, question.node, choice.id, context);
+   if (diagnostic) {
+     const plan = diagnostic.quote.kind === "planned" ? diagnostic.quote.plan : null;
++    const forecast = plan ? forecastDiagnosticOrderPlan(state, plan, context) : null;
+     const source = plan?.sources[0];
+     return {
+       kind: "test" as const,
+@@ -957,11 +964,11 @@ export function getAnswerChoiceServicePreview(
+       serviceDisplayName: diagnostic.serviceDisplayName,
+       routeId: source?.routeId ?? null,
+       routeDisplayName: source?.routeDisplayName ?? null,
+-      durationTicks: plan
+-        ? Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick
++      durationTicks: forecast
++        ? forecast.blockedPhaseIds.length ? null : Math.max(...forecast.plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick
+         : diagnostic.quote.kind === "unavailable" ? diagnostic.quote.estimateMinutes : null,
+       timingProfileId: diagnostic.timingProfileId,
+-      diagnosticTiming: plan,
++      diagnosticTiming: forecast?.plan ?? plan,
+     };
+   }
+   const operationalOrder = getExactTestChoiceOrderRecord(

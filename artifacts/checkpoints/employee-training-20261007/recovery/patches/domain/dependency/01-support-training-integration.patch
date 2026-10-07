@@ -1,0 +1,53 @@
+diff --git a/packages/game-domain/src/level-three-support.ts b/packages/game-domain/src/level-three-support.ts
+--- a/packages/game-domain/src/level-three-support.ts
++++ b/packages/game-domain/src/level-three-support.ts
+@@ -202,6 +202,8 @@ function clearSupportTask(state: GameState, employee: EmployeeState, context: Do
+   if (employee.facilityTask?.kind === "review_ambulatory_qi" && employee.facilityTask.targetId) {
+     const review = state.levelThreeQiReviews.find((candidate) => candidate.id === employee.facilityTask!.targetId);
+     if (review?.status === "in_progress") {
++      review.trainingWork ??= { version: "employee-training-work.v1", durationMinutes: review.roomUpgradeWork?.durationMinutes ?? context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes, remainingMinutes: employee.facilityTask.workMinutesRemaining };
++      review.trainingWork.remainingMinutes = employee.facilityTask.workMinutesRemaining;
+       review.status = "queued";
+       review.surgeonEmployeeId = null;
+       review.startedAtFacilityTick = null;
+@@ -315,8 +317,8 @@ function enqueueQi(state: GameState, context: DomainContext): void {
+     if (receipt.incomeLineId !== "income.ambulatory_operation" && receipt.incomeLineId !== "income.ambulatory_operation_extended") continue;
+     if (reviewedReceiptIds.has(receipt.id)) continue;
+     const baselineMinutes = context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes;
+-    const employeeReductionPercent = 0;
+-    const durationMinutes = baselineMinutes;
++    const employeeReductionPercent = getEmployeeRoleTrainingPercent(state, "staff.surgeon");
++    const durationMinutes = getEmployeeTrainingWorkMinutes(baselineMinutes, employeeReductionPercent);
+     state.levelThreeQiReviews.push({
+       id: `level-three-qi.${state.levelThreeQiReviewSequence++}`,
+       receiptId: receipt.id,
+@@ -325,6 +327,7 @@ function enqueueQi(state: GameState, context: DomainContext): void {
+       enqueuedAtFacilityTick: state.facilityTick,
+       startedAtFacilityTick: null,
+       completedAtFacilityTick: null,
++      trainingWork: { version: "employee-training-work.v1", durationMinutes, remainingMinutes: durationMinutes },
+       roomUpgradeWork: createRoomUpgradeSupportWork(state, "quality_review_duration_reduction_percent", baselineMinutes, employeeReductionPercent),
+     });
+     reviewedReceiptIds.add(receipt.id);
+@@ -358,10 +361,10 @@ function assignRepairs(state: GameState, context: DomainContext): void {
+     const definition = getRoomDefinition(room.roomDefinitionId, context);
+     if (!repairer || !definition || !routeTask(state, repairer, getRoomNavigationAnchor(room, definition, "staff"), room.id, context)) continue;
+     room.maintenance!.status = "out_of_service";
+-    const employeeReductionPercent = 0;
++    const employeeReductionPercent = getEmployeeRoleTrainingPercent(state, "staff.repair_person");
+     const roomUpgradeWork = createEmployeeRoomUpgradeSupportWork(state, repairer, "repair_duration_reduction_percent", tuning.repairDurationMinutes, employeeReductionPercent, context);
+     repairer.facilityTask = { kind: "repair_room", targetId: room.id, startedAtFacilityTick: state.facilityTick,
+-      workMinutesRemaining: roomUpgradeWork?.durationMinutes ?? tuning.repairDurationMinutes,
++      workMinutesRemaining: roomUpgradeWork?.durationMinutes ?? getEmployeeTrainingWorkMinutes(tuning.repairDurationMinutes, employeeReductionPercent),
+       ...(roomUpgradeWork ? { roomUpgradeWork } : {}) };
+   }
+ }
+@@ -383,7 +386,7 @@ function assignQi(state: GameState, context: DomainContext): void {
+   review.surgeonEmployeeId = surgeon.id;
+   review.startedAtFacilityTick = state.facilityTick;
+   surgeon.facilityTask = { kind: "review_ambulatory_qi", targetId: review.id, startedAtFacilityTick: state.facilityTick,
+-    workMinutesRemaining: context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes,
++    workMinutesRemaining: review.trainingWork?.remainingMinutes ?? context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes,
+     ...(review.roomUpgradeWork ? { roomUpgradeWork: review.roomUpgradeWork } : {}) };
+ }
+ 
