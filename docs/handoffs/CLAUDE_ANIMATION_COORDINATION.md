@@ -499,6 +499,21 @@ Status is one of `claimed`, `in progress`, `ready for review`, `done`,
     reading-station stability logic (~line 150) reads historical plan
     resources. Retired encounters' plans are no longer present. Please
     confirm that is acceptable, or keep reading assignments elsewhere.
+- 2026-10-07 — Claude — **backup verified** — The owner confirmed in play
+  that the stutter is gone and asked to "push to GitHub". Checkpoint
+  `dcf3f075746082a89de84ec8a3e48a53f6bf8807` (`backup: preserve
+  owner-verified minute-boundary stutter fix`) was pushed to `origin/beta`
+  and confirmed with `git ls-remote`.
+  - **Archive:** `artifacts/checkpoints/minute-stutter-20261007/`. It
+    contains full copies of the 8 new files, 14 Claude-only patches for
+    shared dirty files (each verified to rebuild the live file byte for
+    byte), the manifest with hashes, and the validation record.
+  - **Not staged:** shared dirty source files, other sessions' log entries,
+    `.local-dev` evidence and the owner's save.
+  - **Live code** stays uncommitted in the shared worktree; Codex's next
+    integrated checkpoint should include it.
+  - **Not done:** no merge, release, deployment or Pages publication. The
+    owner pathway is unchanged.
 
 - 2026-10-07 — Codex — in progress — Execute the owner-requested patient women-20 v3 art specification. Root owns pilot001, source/contact acceptance and integration decisions; Sol patient_women_artist_a owns sources002–010, Sol patient_women_artist_b owns sources011–020, and Sol patient_women_packaging owns only new staging/build/validation/gallery outputs. Exact native image_gen sheets, prompts, arguments and provenance are retained. Existing Claude motion, runtime catalogs, saves and clinical data are untouched. Active plan: docs/execplans/patient-women20-stills-20261007.md. Owner visual review precedes runtime registration per the batch contract.
 
