@@ -1,0 +1,402 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -37,12 +37,19 @@
+ } from "./earningsPopupPresentation";
+ import {
+   alignCharacterStillSeatToWorld,
+-  CHARACTER_STOP_SETTLE_MILLISECONDS,
+-  getCharacterStepMotion,
+   getCharacterStillPresentationMetrics,
+-  isCharacterMovingPose,
+ } from "./characterPresentation";
+ import {
++  advanceCharacterHop,
++  CHARACTER_HOP,
++  characterDrawMotion,
++  characterHopOffsetTiles,
++  characterMotionSeed,
++  RESTING_CHARACTER_MOTION,
++  type CharacterDrawMotion,
++  type CharacterHopState,
++} from "./characterHopMotion";
++import {
+   getBackedHorizontalBoundaryRuns,
+   getExposedHorizontalBoundaryRuns,
+   getExposedNorthCornerReturns,
+@@ -165,6 +172,7 @@
+   routeMotionComplete,
+   sampleRouteMotion,
+   syncRouteMotion,
++  type RouteMotionSample,
+   type RouteMotionTrack,
+ } from "./routeMotion";
+ import {
+@@ -483,7 +491,8 @@
+ 
+   private placementGhost: PlacementGhost | null = null;
+   private characterPhase = 0;
+-  private characterStepBounceMilliseconds = 0;
++  /** Real milliseconds of unpaused play; drives breathing, not game speed. */
++  private characterRestClockMilliseconds = 0;
+   private frameDeltaMilliseconds = 0;
+   private characterPresentationWasFrozen = false;
+   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
+@@ -496,18 +505,10 @@
+     CharacterMotionPresentation<PixelAppearanceDescriptor>
+   >();
+   private readonly characterGaitOffsets = new Map<string, number>();
+-  private readonly characterStepBounceStates = new Map<
+-    string,
+-    {
+-      startedAtMilliseconds: number;
+-      lift: number;
+-      angle: number;
+-      moving: boolean;
+-      settleStartedAtMilliseconds?: number;
+-      settleFromLift?: number;
+-      settleFromAngle?: number;
+-    }
+-  >();
++  /** Hop phase per character, advanced by the distance its route moved. */
++  private readonly characterHopStates = new Map<string, CharacterHopState>();
++  /** Last drawn motion per character; a frozen redraw reuses it exactly. */
++  private readonly characterStepBounceStates = new Map<string, CharacterDrawMotion>();
+   private readonly characterRenderCache = new WeakMap<
+     Phaser.GameObjects.Graphics,
+     { signature: string; width: number; height: number }
+@@ -1070,11 +1071,10 @@
+     const resumedFromFrozen = !motionFrozen && this.characterPresentationWasFrozen;
+     this.frameDeltaMilliseconds = motionFrozen || resumedFromFrozen ? 0 : delta;
+     if (!motionFrozen) {
+-      // Keep the older phase for unrelated UI pulses. Character movement uses
+-      // the shared step-bounce clock below and directional standing stills.
++      // Keep the older phase for unrelated UI pulses. Hops follow each
++      // character's route distance; breathing follows this real-time clock.
+       this.characterPhase += this.frameDeltaMilliseconds * 0.0025;
+-      this.characterStepBounceMilliseconds +=
+-        this.frameDeltaMilliseconds * this.bridge.viewModel.simulationSpeed;
++      this.characterRestClockMilliseconds += this.frameDeltaMilliseconds;
+     }
+     this.characterPresentationWasFrozen = motionFrozen;
+ 
+@@ -5119,66 +5119,59 @@
+   private characterStepMotion(
+     key: string,
+     pose: CharacterPose,
+-    direction: CharacterDirection,
+     frozen: boolean,
+-  ): Readonly<{ lift: number; angle: number }> {
++  ): CharacterDrawMotion {
+     const previous = this.characterStepBounceStates.get(key);
+-    if (frozen) return previous ?? { lift: 0, angle: 0 };
+-    if (isCharacterMovingPose(pose)) {
+-      const startedAtMilliseconds = previous?.moving
+-        ? previous.startedAtMilliseconds
+-        : this.characterStepBounceMilliseconds;
+-      const motion = getCharacterStepMotion(
+-        this.characterStepBounceMilliseconds - startedAtMilliseconds,
+-        pose,
+-        direction,
+-      );
+-      this.characterStepBounceStates.set(key, {
+-        startedAtMilliseconds,
+-        ...motion,
+-        moving: true,
+-      });
+-      return motion;
+-    }
++    if (frozen) return previous ?? RESTING_CHARACTER_MOTION;
++    const motion = characterDrawMotion(this.characterHopStates.get(key), pose, {
++      seed: characterMotionSeed(`${key}:breath`),
++      clockMilliseconds: this.characterRestClockMilliseconds,
++    });
++    this.characterStepBounceStates.set(key, motion);
++    return motion;
++  }
+ 
+-    // An idle pose after a route is a floor stop. Furniture and other
+-    // non-floor poses land immediately instead of retaining a gait.
+-    if (pose !== "idle" || !previous || (!previous.moving && previous.settleStartedAtMilliseconds === undefined)) {
+-      const grounded = {
+-        startedAtMilliseconds: this.characterStepBounceMilliseconds,
+-        lift: 0,
+-        angle: 0,
+-        moving: false,
+-      };
+-      this.characterStepBounceStates.set(key, grounded);
+-      return grounded;
+-    }
++  private advanceCharacterHopState(
++    key: string,
++    moving: boolean,
++    travelledTiles: number,
++    tilesPerSecond: number,
++    sample?: RouteMotionSample,
++  ): CharacterHopState | undefined {
++    const previous = this.characterHopStates.get(key);
++    const travel = sample?.moving
++      ? {
++          x: sample.direction === "side" ? (sample.rightFacing ? 1 : -1) : 0,
++          y: sample.direction === "side" ? 0 : sample.direction === "back" ? -1 : 1,
++        }
++      : { x: previous?.travelX ?? 0, y: previous?.travelY ?? 0 };
++    const next = advanceCharacterHop(previous, {
++      moving,
++      travelledTiles,
++      tilesPerSecond,
++      realMilliseconds: this.frameDeltaMilliseconds,
++      gameMilliseconds: this.frameDeltaMilliseconds * this.bridge.viewModel.simulationSpeed,
++      seed: characterMotionSeed(key),
++      travelX: travel.x,
++      travelY: travel.y,
++    });
++    if (next) this.characterHopStates.set(key, next);
++    else this.characterHopStates.delete(key);
++    return next;
++  }
+ 
+-    const settleStartedAtMilliseconds = previous.settleStartedAtMilliseconds ??
+-      this.characterStepBounceMilliseconds;
+-    const settleFromLift = previous.settleFromLift ?? previous.lift;
+-    const settleFromAngle = previous.settleFromAngle ?? previous.angle;
+-    const elapsed = this.characterStepBounceMilliseconds - settleStartedAtMilliseconds;
+-    const progress = Math.min(1, Math.max(0, elapsed / CHARACTER_STOP_SETTLE_MILLISECONDS));
+-    const remaining = 1 - (3 * progress ** 2 - 2 * progress ** 3);
+-    const settled = progress === 1 ? {
+-      startedAtMilliseconds: previous.startedAtMilliseconds,
+-      lift: 0,
+-      angle: 0,
+-      moving: false,
+-    } : {
+-      startedAtMilliseconds: previous.startedAtMilliseconds,
+-      lift: settleFromLift * remaining,
+-      angle: settleFromAngle * remaining,
+-      moving: false,
+-      settleStartedAtMilliseconds,
+-      settleFromLift,
+-      settleFromAngle,
++  /** After a stop, the remaining hop offset eases out along the last travel
++   * direction, so the character lands exactly where the game placed it. */
++  private characterHopSettleLocation(
++    location: GridPoint | undefined,
++    hop: CharacterHopState | undefined,
++  ): GridPoint | undefined {
++    const offset = characterHopOffsetTiles(hop);
++    if (!location || !hop || hop.moving || offset === 0) return location;
++    return {
++      x: location.x - hop.travelX * offset,
++      y: location.y - hop.travelY * offset,
+     };
+-    this.characterStepBounceStates.set(key, {
+-      ...settled,
+-    });
+-    return settled;
+   }
+ 
+   private characterStepBounceDisplayLift(key: string): number {
+@@ -5200,13 +5193,7 @@
+       { ...candidate, displayScale: candidate.displayScale * identityScale },
+       this.layout,
+     );
+-    const motion = this.characterStepMotion(
+-      key,
+-      resolved.pose,
+-      resolved.direction,
+-      Boolean(frozen),
+-    );
+-    const visualLift = motion.lift * this.cameraView.zoom;
++    const motion = this.characterStepMotion(key, resolved.pose, Boolean(frozen));
+     const drawn = this.drawPixelPerson(
+       graphics,
+       resolved.centerX,
+@@ -5221,8 +5208,7 @@
+       resolved.representation,
+       Boolean(frozen),
+       resolved.alignSeatContact ?? false,
+-      visualLift,
+-      motion.angle,
++      { ...motion, lift: motion.lift * this.cameraView.zoom },
+     );
+     if (!frozen) {
+       this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
+@@ -5370,8 +5356,9 @@
+     });
+     if (!track) {
+       this.routeMotionTracks.delete(key);
++      const hop = this.advanceCharacterHopState(key, input.moving ?? false, 0, 0);
+       return {
+-        location: input.location,
++        location: this.characterHopSettleLocation(input.location, hop),
+         direction: input.direction ?? "front",
+         moving: input.moving ?? false,
+         rightFacing: this.characterFacingRight.get(key) ?? false,
+@@ -5387,6 +5374,15 @@
+       millisecondsPerMinute,
+       this.bridge.viewModel.simulationSpeed,
+     );
++    // Route distance this frame, measured before advancing because the
++    // advance may compact the path and renumber its indices.
++    const travelledTiles = Math.max(
++      0,
++      Math.min(
++        track.targetIndex,
++        track.progress + (Math.max(0, this.frameDeltaMilliseconds) * tilesPerSecond) / 1_000,
++      ) - track.progress,
++    );
+     track = advanceRouteMotion(
+       track,
+       this.frameDeltaMilliseconds,
+@@ -5399,13 +5395,25 @@
+     } else {
+       this.routeMotionTracks.set(key, track);
+     }
++    const moving = sample.moving || (input.moving ?? false);
++    const hop = this.advanceCharacterHopState(key, moving, travelledTiles, tilesPerSecond, sample);
++    // Hop steps: draw the character slightly behind or ahead of its logical
++    // route position (zero at every landing), sampled along the real path.
++    const shown = hop?.moving
++      ? sampleRouteMotion({
++          ...track,
++          progress: Math.max(0, Math.min(track.targetIndex, track.progress - characterHopOffsetTiles(hop))),
++        })
++      : sample;
+     return {
+-      location: sample.location,
++      location: hop?.moving
++        ? shown.location
++        : this.characterHopSettleLocation(sample.location, hop),
+       direction: sample.moving
+-        ? sample.direction
++        ? shown.direction
+         : (input.direction ?? sample.direction),
+-      moving: sample.moving || (input.moving ?? false),
+-      rightFacing: sample.rightFacing,
++      moving,
++      rightFacing: shown.rightFacing,
+     };
+   }
+ 
+@@ -5892,6 +5900,11 @@
+         this.characterStepBounceStates.delete(key);
+       }
+     }
++    for (const key of this.characterHopStates.keys()) {
++      if (!representedKeys.has(key)) {
++        this.characterHopStates.delete(key);
++      }
++    }
+     this.removeInactiveGraphics(
+       this.characterGraphics,
+       this.activeCharacterGraphics,
+@@ -6068,9 +6081,11 @@
+     if (!container) {
+       container = this.add.container(0, 0);
+       container.setData("character-key", key);
++      const shadow = this.add.image(0, 1, this.ensureCharacterContactShadowTexture());
++      shadow.setName("shadow");
+       const actor = this.add.image(0, 0, "__DEFAULT");
+       actor.setName("actor");
+-      container.add(actor);
++      container.add([shadow, actor]);
+       this.characterBitmapContainers.set(key, container);
+     }
+     container.setVisible(true);
+@@ -6078,6 +6093,40 @@
+     return container;
+   }
+ 
++  /** One soft oval shared by every character's contact shadow. */
++  private ensureCharacterContactShadowTexture(): string {
++    const key = "character-contact-shadow";
++    if (this.textures.exists(key)) return key;
++    const size = 64;
++    const texture = this.textures.createCanvas(key, size, size);
++    const context = texture?.getContext();
++    if (texture && context) {
++      const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
++      gradient.addColorStop(0, "rgba(28, 44, 38, 1)");
++      gradient.addColorStop(0.65, "rgba(28, 44, 38, 0.75)");
++      gradient.addColorStop(1, "rgba(28, 44, 38, 0)");
++      context.fillStyle = gradient;
++      context.fillRect(0, 0, size, size);
++      texture.refresh();
++    }
++    return key;
++  }
++
++  /** The shadow stays on the floor; only the actor image lifts. */
++  private updateCharacterContactShadow(
++    container: Phaser.GameObjects.Container,
++    stillWidth: number,
++    motion: CharacterDrawMotion,
++  ): void {
++    const shadow = container.getByName("shadow") as Phaser.GameObjects.Image | null;
++    if (!shadow) return;
++    const width = Math.max(1, stillWidth * CHARACTER_HOP.shadowWidthRatio * motion.shadowScale);
++    shadow.setPosition(0, 1)
++      .setDisplaySize(width, Math.max(1, width * CHARACTER_HOP.shadowHeightRatio))
++      .setAlpha(motion.shadowAlpha)
++      .setVisible(motion.shadowAlpha > 0);
++  }
++
+   private removeInactiveCharacterBitmapContainers(): void {
+     for (const [key, container] of this.characterBitmapContainers) {
+       if (!this.activeCharacterBitmapContainers.has(key)) {
+@@ -6293,9 +6342,10 @@
+     _frozenRepresentation?: CharacterRenderRepresentation,
+     baseIsAdjusted = false,
+     alignSeatContact = false,
+-    visualLift = 0,
+-    motionAngle = 0,
++    /** Hop, squash, breathing and shadow; `lift` is in display pixels. */
++    motion: CharacterDrawMotion = RESTING_CHARACTER_MOTION,
+   ): Readonly<{ baseY: number; representation: CharacterRenderRepresentation }> {
++    const visualLift = motion.lift;
+     const resolvedAppearance = appearance ?? FALLBACK_APPEARANCE;
+     const key = graphics.getData("character-key") as string | undefined;
+     const authoredLayers = characterBitmapLayers(
+@@ -6322,9 +6372,9 @@
+           existing.setVisible(true)
+             .setPosition(Math.round(centerX), Math.round(adjustedBaseY))
+             .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
+-          actor.setDisplaySize(metrics.width, metrics.height);
++          actor.setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY);
+           actor.y = -visualLift;
+-          actor.setAngle(motionAngle);
++          this.updateCharacterContactShadow(existing, metrics.width, motion);
+           graphics.clear();
+           graphics.setVisible(false);
+           return { baseY: adjustedBaseY, representation: "bitmap" };
+@@ -6333,10 +6383,13 @@
+       } else {
+         const container = this.getCharacterBitmapContainer(key);
+         const actor = container.getByName("actor") as Phaser.GameObjects.Image;
+-        actor.setTexture(textureKey).setDisplaySize(metrics.width, metrics.height).setPosition(0, -visualLift)
++        // Origin at the feet, so squash, stretch and breathing keep them planted.
++        actor.setTexture(textureKey)
++          .setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY)
++          .setPosition(0, -visualLift)
+           .setOrigin(0.5, registration.floorAnchorY)
+-          .setFlipX(false)
+-          .setAngle(motionAngle);
++          .setFlipX(false);
++        this.updateCharacterContactShadow(container, metrics.width, motion);
+         actor.setData({
+           "gait-atlas-id": authoredLayers.actor.atlas.id,
+           "gait-frame": characterAtlasFrameKey(authoredLayers.actor),
+@@ -6354,11 +6407,12 @@
+     }
+     this.characterBitmapContainers.get(key ?? "")?.setVisible(false);
+     graphics.clear();
++    const width = metrics.width * motion.scaleX;
++    const height = metrics.height * motion.scaleY;
+     graphics.fillStyle(0x8b9088, 0.9);
+-    graphics.fillCircle(0, -metrics.height * 0.64, Math.max(2, metrics.width * 0.16));
+-    graphics.fillRoundedRect(-metrics.width * 0.18, -metrics.height * 0.48, metrics.width * 0.36, metrics.height * 0.42, Math.max(2, metrics.width * 0.08));
++    graphics.fillCircle(0, -height * 0.64, Math.max(2, width * 0.16));
++    graphics.fillRoundedRect(-width * 0.18, -height * 0.48, width * 0.36, height * 0.42, Math.max(2, width * 0.08));
+     graphics.setPosition(Math.round(centerX), Math.round(adjustedBaseY - visualLift));
+-    graphics.setAngle(motionAngle);
+     graphics.setVisible(true);
+     return { baseY: adjustedBaseY, representation: "neutral" };
+   }

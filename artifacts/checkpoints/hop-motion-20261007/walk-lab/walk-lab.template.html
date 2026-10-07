@@ -1,0 +1,656 @@
+<title>GamifySurgery Walk Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@600;700&display=swap">
+<style>
+/* Layout: compact header, sticky playback strip, lane grid (3-up wide, stacks on phones), notes below. */
+:root {
+  --bg: #edf1ef;
+  --surface: #ffffff;
+  --ink: #16201d;
+  --muted: #55655f;
+  --line: #d2dbd7;
+  --accent: #0b6b63;
+  --accent-weak: #d6ebe7;
+  --on-accent: #ffffff;
+  --chip: #e4eae7;
+  --floor: #dce3d9;
+  --font-display: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1513; --surface: #18201e; --ink: #e3ebe7; --muted: #9aaaa4; --line: #2a3632;
+    --accent: #5cc5b7; --accent-weak: #173430; --on-accent: #062019; --chip: #22302c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1513; --surface: #18201e; --ink: #e3ebe7; --muted: #9aaaa4; --line: #2a3632;
+  --accent: #5cc5b7; --accent-weak: #173430; --on-accent: #062019; --chip: #22302c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.page { max-width: 1440px; margin: 0 auto; padding-inline: clamp(16px, 3vw, 32px); padding-block: 24px 48px; display: grid; gap: 18px; }
+.intro { display: grid; gap: 8px; }
+.eyebrow, .label, .chip, output { font-family: var(--font-mono); }
+.eyebrow { margin: 0; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+.lede { margin: 0; max-width: 72ch; }
+.lede + .lede { color: var(--muted); }
+.controls {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: end; gap: 10px 18px;
+  padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.field { display: grid; gap: 4px; }
+.label { font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+select, button, input, textarea { font: inherit; }
+select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
+.btn { padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); cursor: pointer; line-height: 1.3; }
+.btn:hover { border-color: var(--accent); }
+.btn[aria-pressed="true"], .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg { display: flex; }
+.seg .btn { border-radius: 0; }
+.seg .btn + .btn { border-left-width: 0; }
+.seg .btn:first-child { border-radius: 8px 0 0 8px; }
+.seg .btn:last-child { border-radius: 0 8px 8px 0; }
+.motion-note { margin: 0; padding: 8px 12px; border-radius: 8px; background: var(--accent-weak); }
+.lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); align-items: start; gap: 14px; }
+.card { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.lane-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; padding: 10px 12px 9px; }
+.lane-head > div { min-width: 0; }
+.lane h2, .tuning h2, .notes h2 { margin: 0; font-family: var(--font-display); font-weight: 700; line-height: 1.25; text-wrap: balance; }
+.lane h2 { font-size: 17px; }
+.lane-head p { margin: 2px 0 0; font-size: 13.5px; color: var(--muted); }
+.chip { flex: none; padding: 3px 8px; border-radius: 999px; background: var(--chip); color: var(--muted); font-size: 11.5px; letter-spacing: 0.03em; white-space: nowrap; }
+.pick { flex: none; font-size: 13.5px; }
+.stage { min-width: 0; overflow: hidden; background: var(--floor); line-height: 0; }
+.stage canvas { display: block; image-rendering: pixelated; }
+.tuning { padding: 12px; display: grid; gap: 12px; align-content: start; }
+.tuning h2 { font-size: 17px; }
+.tuning .hint { margin: 2px 0 0; font-size: 13.5px; color: var(--muted); }
+.slider { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; }
+.slider label { font-size: 14px; }
+.slider input { grid-column: 1 / -1; width: 100%; accent-color: var(--accent); }
+output { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--muted); }
+.status { margin: 0; min-height: 1.5em; font-size: 13.5px; color: var(--muted); }
+textarea { width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 12.5px; resize: vertical; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px; padding-top: 18px; border-top: 1px solid var(--line); }
+.notes section { min-width: 0; }
+.notes h2 { font-size: 18px; margin-bottom: 8px; }
+.notes dl { margin: 0; display: grid; gap: 10px; }
+.notes dt { font-weight: 700; }
+.notes dd { margin: 0; color: var(--muted); }
+.notes ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; color: var(--muted); }
+.notes p { margin: 0 0 8px; color: var(--muted); max-width: 65ch; }
+</style>
+
+<div class="page">
+  <header class="intro">
+    <p class="eyebrow">GamifySurgery · Character movement · Round 3 · For owner approval</p>
+    <h1>Walk Lab</h1>
+    <p class="lede">Round 3. The middle lane is the set you approved: ideas 1, 2, 3 and 6. The last lane adds idea 5: corners become a short curve, and the character turns to face the new direction just before the corner. Nothing in the game changes until you approve it.</p>
+    <p class="lede">Watch the two corners: east to south at the top right and west to north at the bottom left. Slow motion helps. Use Pick if you want idea 5, then Copy my picks and paste the text into the chat.</p>
+  </header>
+
+  <div class="controls" role="toolbar" aria-label="Playback">
+    <label class="field"><span class="label">Character</span><select id="character"></select></label>
+    <div class="field">
+      <span class="label" id="speed-label">Game speed</span>
+      <div class="seg" role="group" aria-labelledby="speed-label">
+        <button type="button" class="btn" data-speed="1" aria-pressed="true">1×</button>
+        <button type="button" class="btn" data-speed="2" aria-pressed="false">2×</button>
+        <button type="button" class="btn" data-speed="4" aria-pressed="false">4×</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" id="slow" aria-pressed="false">Slow motion ¼×</button>
+      <button type="button" class="btn" id="play">Pause</button>
+      <button type="button" class="btn" id="restart">Restart</button>
+    </div>
+  </div>
+  <p class="motion-note" id="motion-note" hidden>Your device asks for reduced motion, so the animation starts paused. Press Play to start it.</p>
+
+  <main class="lanes" id="lanes">
+    <section class="card tuning" id="tuning" aria-labelledby="tuning-title">
+      <div>
+        <h2 id="tuning-title">Tune the ideas</h2>
+        <p class="hint">Applies to every lane except Current, which always uses the game's own numbers. Starts at your approved settings; the last two sliders only affect idea 5.</p>
+      </div>
+      <div class="slider"><label for="t-bounce">Bounce height</label><output id="o-bounce" for="t-bounce"></output><input type="range" id="t-bounce" min="2" max="10" step="0.5"></div>
+      <div class="slider"><label for="t-plant">Plant on landing</label><output id="o-plant" for="t-plant"></output><input type="range" id="t-plant" min="0" max="100" step="5"></div>
+      <div class="slider"><label for="t-squash">Squash on landing</label><output id="o-squash" for="t-squash"></output><input type="range" id="t-squash" min="0" max="12" step="0.5"></div>
+      <div class="slider"><label for="t-stretch">Stretch in the air</label><output id="o-stretch" for="t-stretch"></output><input type="range" id="t-stretch" min="0" max="6" step="0.5"></div>
+      <div class="slider"><label for="t-shadow">Shadow darkness</label><output id="o-shadow" for="t-shadow"></output><input type="range" id="t-shadow" min="0" max="200" step="10"></div>
+      <div class="slider"><label for="t-sway">Sway walking north or south</label><output id="o-sway" for="t-sway"></output><input type="range" id="t-sway" min="0" max="3" step="0.25"></div>
+      <div class="slider"><label for="t-breath">Breathing depth</label><output id="o-breath" for="t-breath"></output><input type="range" id="t-breath" min="0" max="3" step="0.25"></div>
+      <div class="slider"><label for="t-corner">Corner curve size (idea 5)</label><output id="o-corner" for="t-corner"></output><input type="range" id="t-corner" min="0" max="0.5" step="0.05"></div>
+      <div class="slider"><label for="t-look">Turn early by (idea 5)</label><output id="o-look" for="t-look"></output><input type="range" id="t-look" min="0" max="0.6" step="0.05"></div>
+      <div class="actions">
+        <button type="button" class="btn" id="reset">Reset tuning</button>
+        <button type="button" class="btn primary" id="copy">Copy my picks</button>
+      </div>
+      <p class="status" id="copy-status" aria-live="polite"></p>
+      <textarea id="copy-fallback" rows="6" readonly hidden aria-label="Your picks as text"></textarea>
+    </section>
+  </main>
+
+  <div class="notes">
+    <section aria-labelledby="n-lanes">
+      <h2 id="n-lanes">What each lane changes</h2>
+      <dl>
+        <dt>Current</dt>
+        <dd>The game today, copied from its code. The body glides at 2 tiles per second and bounces 7 px twice per second at 1×. Walking north or south tilts ±1.5°. A stop eases the bounce out over 120 ms. Turning, stopping and sitting swap the picture instantly.</dd>
+        <dt>Approved · 1 + 2 + 3 + 6</dt>
+        <dd>Your approved set. A ground shadow at 150%, hop steps with the feet fully planted on each tile, a 3% squash on landing and a 2.5% stretch in the air, at the same 7 px bounce, with no sway. While stopped, the body breathes about 2% every 3.2 seconds. Sitting drops in from 6 px above the seat with a small squash. Each hop covers exactly one tile, so arrival place and time are unchanged.</dd>
+        <dt>+ 5 · Rounded corners</dt>
+        <dd>Each corner becomes a quarter-circle curve 0.35 tile across, and the character turns to face the new direction 0.3 tile before the corner. The curve takes the same time as the square corner, so arrival is unchanged. It stays inside the corner tile, so it can never cut through a wall.</dd>
+      </dl>
+    </section>
+    <section aria-labelledby="n-approve">
+      <h2 id="n-approve">If you approve something</h2>
+      <ul>
+        <li>Tell Claude in the chat which lanes you approve, or paste the text from Copy my picks. Claude records the approval in the coordination file before touching game code.</li>
+        <li>The approved version goes in behind a switch, with today's movement kept as the fallback. You try it in the real game before it becomes the default.</li>
+        <li>Routes, walking speed, arrival times, seats, exam tables and saves stay exactly as they are. These are drawing-only changes.</li>
+      </ul>
+    </section>
+    <section aria-labelledby="n-about">
+      <h2 id="n-about">About this page</h2>
+      <p>It uses your real character stills and the game's own numbers for size, speed and bounce, and it draws the way the game does: whole-pixel positions and sharp pixel scaling.</p>
+      <p>The chair is a simple stand-in drawn by this page, set to each character's seated pose. The game's chairs are different art. Rooms, crowds and tick timing are missing, so the feel can differ slightly.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+  const CHARACTERS = /*__STILLS__*/null;
+
+  // From apps/player/src/facility/characterPresentation.ts and the prototype
+  // balance (2 tiles per tick; one tick is one second at 1×).
+  const GAME = {
+    bouncePx: 7, bounceHz: 2, swayDeg: 1.5, settleMs: 120,
+    tilesPerSecond: 2, widthInTiles: 1.35 * (181 / 128) * (160 / 287),
+  };
+  const TILE_PX = 64;
+  const VIEW = { x0: 0.5, x1: 6.5, y0: 0.6, y1: 5.0 };
+  const LEGS = [
+    [[1.5, 2.5], [5.5, 2.5], [5.5, 4.5]],
+    [[5.5, 4.5], [1.5, 4.5], [1.5, 2.5]],
+  ].map(buildLeg);
+  const STOP_FRAME = ["stand", "sit"]; // after leg 1: stand; after leg 2: sit in the chair
+  const CHAIR_AT = [1.5, 2.5];
+  const FIRST_PAUSE_MS = 1200;
+  const PAUSE_MS = 2200;
+  const LANDING_SQUASH_MS = 160;
+  const PLOP = { dropMs: 110, squashMs: 130, heightPx: 6, squash: 0.04 };
+  const BREATH_PERIOD_MS = 3200;
+  const FLOOR = { a: "#dce3d9", b: "#d4dcd1", line: "rgba(60, 82, 72, 0.16)" };
+  const CHAIR = { back: "#7a958c", rim: "#4d625b", seat: "#5b776f", leg: "#3b4844" };
+  const DEFAULTS = { bounce: 7, plant: 1, squash: 0.03, stretch: 0.025, shadow: 1.5, sway: 0, flipMs: 140, breath: 0.02, corner: 0.35, look: 0.3 };
+  const APPROVED = { shadow: true, hop: true, squash: true, idle: true };
+  const LANES = [
+    { id: "current", title: "Current", hint: "The game today: glide, bob and sway; turns and sitting swap instantly." },
+    { id: "approved", title: "Approved · 1 + 2 + 3 + 6", hint: "Your approved jump, breathing and sit-down. Square corners.", ...APPROVED },
+    { id: "corners", title: "+ 5 · Rounded corners", hint: "Curves through each corner and turns to face the new way just before it.", ...APPROVED, corners: true },
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const STORE_KEY = "gamify-surgery-walk-lab-v3";
+  const stored = (() => { try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch { return {}; } })();
+  const tuning = { ...DEFAULTS, ...(stored.tuning || {}) };
+  const picks = new Set(Array.isArray(stored.picks) ? stored.picks : []);
+  let characterIndex = Number.isInteger(stored.character) && CHARACTERS[stored.character] ? stored.character : 0;
+  let speed = 1;
+  let slow = false;
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let playing = !reduceMotion;
+  let dirty = true;
+
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({ tuning, picks: [...picks], character: characterIndex })); } catch { /* storage unavailable */ }
+  }
+
+  function buildLeg(points) {
+    const segs = [];
+    let total = 0;
+    for (let i = 1; i < points.length; i += 1) {
+      const [ax, ay] = points[i - 1];
+      const [bx, by] = points[i];
+      const len = Math.hypot(bx - ax, by - ay);
+      const dir = Math.abs(bx - ax) >= Math.abs(by - ay) ? (bx > ax ? "east" : "west") : (by > ay ? "south" : "north");
+      segs.push({ ax, ay, bx, by, len, start: total, dir });
+      total += len;
+    }
+    return { segs, total, start: points[0] };
+  }
+
+  function sampleLeg(leg, s) {
+    const d = Math.max(0, Math.min(leg.total, s));
+    for (const g of leg.segs) {
+      if (d <= g.start + g.len) {
+        const u = g.len ? (d - g.start) / g.len : 0;
+        return { x: g.ax + (g.bx - g.ax) * u, y: g.ay + (g.by - g.ay) * u, dir: g.dir };
+      }
+    }
+    const g = leg.segs[leg.segs.length - 1];
+    return { x: g.bx, y: g.by, dir: g.dir };
+  }
+
+  // Idea 5: replace each square corner with a quarter circle inside the
+  // corner tile. The window of 2r route distance maps onto the arc, so
+  // timing and arrival are unchanged. Facing looks `look` tiles ahead.
+  function sampleRounded(leg, s, r, look) {
+    const d = Math.max(0, Math.min(leg.total, s));
+    const base = sampleLeg(leg, d);
+    const out = { x: base.x, y: base.y, dir: sampleLeg(leg, Math.min(leg.total, d + look)).dir };
+    for (let i = 1; i < leg.segs.length && r > 0; i += 1) {
+      const a = leg.segs[i - 1];
+      const b = leg.segs[i];
+      const rr = Math.min(r, a.len / 2, b.len / 2);
+      if (Math.abs(d - b.start) >= rr) continue;
+      const d1 = { x: Math.sign(a.bx - a.ax), y: Math.sign(a.by - a.ay) };
+      const d2 = { x: Math.sign(b.bx - b.ax), y: Math.sign(b.by - b.ay) };
+      const cx = b.ax + (d2.x - d1.x) * rr;
+      const cy = b.ay + (d2.y - d1.y) * rr;
+      const th = ((d - (b.start - rr)) / (2 * rr)) * (Math.PI / 2);
+      out.x = cx - d2.x * rr * Math.cos(th) + d1.x * rr * Math.sin(th);
+      out.y = cy - d2.y * rr * Math.cos(th) + d1.y * rr * Math.sin(th);
+      break;
+    }
+    return out;
+  }
+
+  const smoothstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  // One shared walk keeps every lane in step. `clock` is the game's
+  // step-bounce clock (runs at game speed); `real` ignores game speed.
+  const sim = {};
+  function resetSim() {
+    Object.assign(sim, {
+      mode: "pause", leg: 0, s: 0, pauseLeft: FIRST_PAUSE_MS, clock: 0, real: 0,
+      walkStart: 0, stopAt: -1e9, stopAtReal: -1e9, stopFrame: "sit",
+    });
+    for (const lane of lanes) {
+      lane.settleFrom = { lift: 0, angle: 0 };
+      lane.last = { lift: 0, angle: 0 };
+      lane.turn = { active: false, from: "south", fromFrame: "sit", to: "south", start: 0 };
+    }
+    dirty = true;
+  }
+
+  function advance(realMs) {
+    const ms = realMs * (slow ? 0.25 : 1);
+    sim.real += ms;
+    sim.clock += ms * speed;
+    if (sim.mode === "walk") {
+      sim.s += (GAME.tilesPerSecond * speed * ms) / 1000;
+      if (sim.s >= LEGS[sim.leg].total) {
+        for (const lane of lanes) lane.settleFrom = lane.last;
+        Object.assign(sim, {
+          mode: "pause", pauseLeft: PAUSE_MS, stopAt: sim.clock, stopAtReal: sim.real,
+          stopFrame: STOP_FRAME[sim.leg], leg: (sim.leg + 1) % LEGS.length, s: 0,
+        });
+      }
+    } else {
+      sim.pauseLeft -= ms;
+      if (sim.pauseLeft <= 0) Object.assign(sim, { mode: "walk", s: 0, walkStart: sim.clock });
+    }
+  }
+
+  function pose(lane, T) {
+    const scale = T / TILE_PX;
+    const isCurrent = lane.id === "current";
+    const bouncePx = (isCurrent ? GAME.bouncePx : tuning.bounce) * scale;
+    const swayDeg = isCurrent ? GAME.swayDeg : tuning.sway;
+    const leg = LEGS[sim.leg];
+    const out = { x: leg.start[0], y: leg.start[1], dir: "south", frame: "stand", lift: 0, angle: 0, sx: 1, sy: 1, bouncePx };
+    if (sim.mode === "walk") {
+      const elapsed = sim.clock - sim.walkStart;
+      // Current: time-driven, as in FacilityScene. Ideas: one step per tile
+      // walked. Both give the same phase at a steady speed.
+      const phase = isCurrent ? (2 * Math.PI * GAME.bounceHz * elapsed) / 1000 : 2 * Math.PI * sim.s;
+      const s = lane.hop ? sim.s - (tuning.plant * Math.sin(2 * Math.PI * sim.s)) / (2 * Math.PI) : sim.s;
+      const p = lane.corners ? sampleRounded(leg, s, tuning.corner, tuning.look) : sampleLeg(leg, s);
+      out.x = p.x; out.y = p.y; out.dir = p.dir;
+      out.lift = (0.5 - 0.5 * Math.cos(phase)) * bouncePx;
+      out.angle = p.dir === "east" || p.dir === "west" ? 0 : Math.sin(phase / 2) * swayDeg;
+      if (lane.squash) {
+        const squash = tuning.squash * Math.pow(Math.max(0, Math.cos(phase)), 6) * Math.min(1, elapsed / 25);
+        const stretch = tuning.stretch * Math.pow(Math.sin(phase), 2);
+        out.sy = 1 - squash + stretch;
+        out.sx = 1 + 0.75 * squash - 0.5 * stretch;
+      }
+      lane.last = { lift: out.lift, angle: out.angle };
+      return out;
+    }
+    out.frame = sim.stopFrame;
+    const since = sim.clock - sim.stopAt;
+    if (out.frame === "stand") {
+      const t = Math.min(1, Math.max(0, since / GAME.settleMs));
+      const remaining = 1 - (3 * t * t - 2 * t * t * t);
+      out.lift = lane.settleFrom.lift * remaining;
+      out.angle = lane.settleFrom.angle * remaining;
+      if (lane.squash && since < LANDING_SQUASH_MS) {
+        const squash = tuning.squash * Math.sin((Math.PI * since) / LANDING_SQUASH_MS);
+        out.sy = 1 - squash;
+        out.sx = 1 + 0.75 * squash;
+      }
+    } else if (lane.idle) {
+      // Drop into the seat, then a small squash. Without idea 6 the seated
+      // picture lands at once, as seated poses do in the game today.
+      if (since < PLOP.dropMs) {
+        const u = since / PLOP.dropMs;
+        out.lift = PLOP.heightPx * scale * (1 - u * u);
+      } else if (since < PLOP.dropMs + PLOP.squashMs) {
+        const squash = PLOP.squash * Math.sin((Math.PI * (since - PLOP.dropMs)) / PLOP.squashMs);
+        out.sy = 1 - squash;
+        out.sx = 1 + 0.75 * squash;
+      }
+    }
+    if (lane.idle) {
+      const quiet = sim.real - sim.stopAtReal;
+      const depth = tuning.breath * smoothstep(250, 700, quiet) * (0.5 - 0.5 * Math.cos((2 * Math.PI * quiet) / BREATH_PERIOD_MS));
+      out.sy *= 1 + depth;
+      out.sx *= 1 - 0.3 * depth;
+    }
+    return out;
+  }
+
+  // Idea 4: squeeze the old facing to a sliver, then open the new one.
+  function turnFrame(lane, p) {
+    if (!lane.flip) return { dir: p.dir, frame: p.frame, k: 1 };
+    const t = lane.turn;
+    if (p.dir !== t.to) {
+      if (t.active) t.to = p.dir;
+      else Object.assign(t, { active: true, from: t.to, fromFrame: t.toFrame || "stand", to: p.dir, start: sim.real });
+    }
+    t.toFrame = p.frame;
+    if (t.active) {
+      const u = (sim.real - t.start) / tuning.flipMs;
+      if (u < 0.5) return { dir: t.from, frame: t.fromFrame, k: Math.max(0.06, Math.cos(Math.PI * u)) };
+      if (u < 1) return { dir: p.dir, frame: p.frame, k: Math.max(0.06, -Math.cos(Math.PI * u)) };
+      t.active = false;
+    }
+    return { dir: p.dir, frame: p.frame, k: 1 };
+  }
+
+  function drawShadow(ctx, x, y, width, rise) {
+    const r = Math.max(0, Math.min(1, rise));
+    const rx = width * 0.3 * (1 - 0.2 * r);
+    const alpha = 0.3 * tuning.shadow * (1 - 0.4 * r);
+    if (alpha <= 0 || rx <= 0) return;
+    ctx.save();
+    ctx.translate(x, y + 1);
+    ctx.scale(1, 0.32);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+    g.addColorStop(0, `rgba(28, 44, 38, ${alpha})`);
+    g.addColorStop(0.65, `rgba(28, 44, 38, ${alpha * 0.75})`);
+    g.addColorStop(1, "rgba(28, 44, 38, 0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(0, 0, rx, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Stand-in chair whose seat matches the character's seated still.
+  function drawChair(ctx, v, ch, W, H) {
+    const cx = Math.round(v.ox + CHAIR_AT[0] * v.T);
+    const fy = Math.round(v.oy + CHAIR_AT[1] * v.T);
+    const seatY = Math.round(fy - ch.seatRise * H);
+    const seatW = Math.round(W * 0.66);
+    const backW = Math.round(W * 0.6);
+    const backH = Math.round(H * 0.3);
+    const legW = Math.max(2, Math.round(W * 0.05));
+    const seatT = Math.max(3, Math.round(H * 0.035));
+    ctx.fillStyle = CHAIR.leg;
+    ctx.fillRect(cx - Math.round(seatW * 0.42), seatY, legW, fy - seatY);
+    ctx.fillRect(cx + Math.round(seatW * 0.42) - legW, seatY, legW, fy - seatY);
+    ctx.fillStyle = CHAIR.back;
+    ctx.fillRect(cx - Math.round(backW / 2), seatY - backH, backW, backH);
+    ctx.fillStyle = CHAIR.rim;
+    ctx.fillRect(cx - Math.round(backW / 2), seatY - backH, backW, Math.max(2, Math.round(seatT * 0.7)));
+    ctx.fillStyle = CHAIR.seat;
+    ctx.fillRect(cx - Math.round(seatW / 2), seatY - Math.round(seatT / 2), seatW, seatT);
+  }
+
+  function paintFloor(v) {
+    const c = document.createElement("canvas");
+    c.width = v.w; c.height = v.h;
+    const g = c.getContext("2d");
+    g.fillStyle = FLOOR.a;
+    g.fillRect(0, 0, v.w, v.h);
+    const x0 = Math.floor(-v.ox / v.T) - 1, x1 = Math.ceil((v.w - v.ox) / v.T) + 1;
+    const y0 = Math.floor(-v.oy / v.T) - 1, y1 = Math.ceil((v.h - v.oy) / v.T) + 1;
+    g.fillStyle = FLOOR.b;
+    for (let ty = y0; ty <= y1; ty += 1) {
+      for (let tx = x0; tx <= x1; tx += 1) {
+        if (((tx + ty) % 2 + 2) % 2 === 1) g.fillRect(Math.round(v.ox + tx * v.T), Math.round(v.oy + ty * v.T), v.T, v.T);
+      }
+    }
+    g.fillStyle = FLOOR.line;
+    for (let tx = x0; tx <= x1; tx += 1) g.fillRect(Math.round(v.ox + tx * v.T), 0, 1, v.h);
+    for (let ty = y0; ty <= y1; ty += 1) g.fillRect(0, Math.round(v.oy + ty * v.T), v.w, 1);
+    return c;
+  }
+
+  function layout(lane) {
+    const w = Math.floor(lane.stage.clientWidth);
+    if (!w || (lane.view && lane.view.w === w)) return;
+    const span = VIEW.x1 - VIEW.x0;
+    const T = Math.max(24, Math.min(TILE_PX, Math.floor(w / span)));
+    const h = Math.round((VIEW.y1 - VIEW.y0) * T);
+    const c = lane.canvas;
+    c.width = w; c.height = h;
+    c.style.width = `${w}px`; c.style.height = `${h}px`;
+    const ctx = c.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+    const v = { ctx, T, w, h, ox: Math.round((w - span * T) / 2 - VIEW.x0 * T), oy: Math.round(-VIEW.y0 * T) };
+    v.floor = paintFloor(v);
+    lane.view = v;
+    dirty = true;
+  }
+
+  function draw(lane) {
+    const v = lane.view;
+    if (!v) return;
+    const { ctx, T } = v;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(v.floor, 0, 0);
+    const ch = CHARACTERS[characterIndex];
+    const imgs = images[characterIndex];
+    if (!imgs.ready) return;
+    const p = pose(lane, T);
+    const f = turnFrame(lane, p);
+    const W = Math.max(1, Math.round(T * GAME.widthInTiles * ch.scale));
+    const H = W * 2;
+    drawChair(ctx, v, ch, W, H);
+    const fx = Math.round(v.ox + p.x * T);
+    const fy = Math.round(v.oy + p.y * T);
+    if (lane.shadow) drawShadow(ctx, fx, fy, W, p.bouncePx > 0 ? p.lift / p.bouncePx : 0);
+    // Like the game: feet at the origin, whole-pixel position, sharp scaling.
+    ctx.setTransform(1, 0, 0, 1, fx, Math.round(fy - p.lift));
+    if (p.angle) ctx.rotate((p.angle * Math.PI) / 180);
+    const sx = p.sx * f.k;
+    if (sx !== 1 || p.sy !== 1) ctx.scale(sx, p.sy);
+    const img = f.frame === "sit" ? imgs.sit : imgs[f.dir];
+    ctx.drawImage(img, Math.round(-W / 2), Math.round(-H * ch.anchor), W, H);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+
+  const images = CHARACTERS.map((ch) => {
+    const set = { ready: false };
+    const keys = Object.keys(ch.frames);
+    let pending = keys.length;
+    for (const key of keys) {
+      const img = new Image();
+      img.onload = () => { pending -= 1; if (pending === 0) { set.ready = true; dirty = true; } };
+      img.src = ch.frames[key];
+      set[key] = img;
+    }
+    return set;
+  });
+
+  const grid = $("lanes");
+  const tuningCard = $("tuning");
+  const lanes = LANES.map((def) => {
+    const section = document.createElement("section");
+    section.className = "card lane";
+    section.setAttribute("aria-labelledby", `lane-${def.id}`);
+    const head = document.createElement("div");
+    head.className = "lane-head";
+    const text = document.createElement("div");
+    const h2 = document.createElement("h2");
+    h2.id = `lane-${def.id}`;
+    h2.textContent = def.title;
+    const hint = document.createElement("p");
+    hint.textContent = def.hint;
+    text.append(h2, hint);
+    head.append(text);
+    if (def.id === "current") {
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = "In the game today";
+      head.append(chip);
+    } else {
+      const pick = document.createElement("button");
+      pick.type = "button";
+      pick.className = "btn pick";
+      pick.id = `pick-${def.id}`;
+      pick.addEventListener("click", () => {
+        if (picks.has(def.id)) picks.delete(def.id); else picks.add(def.id);
+        syncPick(pick, def.id);
+        save();
+      });
+      syncPick(pick, def.id);
+      head.append(pick);
+    }
+    const stage = document.createElement("div");
+    stage.className = "stage";
+    const canvas = document.createElement("canvas");
+    canvas.setAttribute("role", "img");
+    canvas.setAttribute("aria-label", `${def.title}: ${def.hint}`);
+    stage.append(canvas);
+    section.append(head, stage);
+    grid.insertBefore(section, tuningCard);
+    return { ...def, stage, canvas, view: null };
+  });
+
+  function syncPick(button, id) {
+    const on = picks.has(id);
+    button.setAttribute("aria-pressed", String(on));
+    button.textContent = on ? "Picked" : "Pick";
+  }
+
+  const select = $("character");
+  CHARACTERS.forEach((ch, i) => select.add(new Option(ch.label, String(i))));
+  select.value = String(characterIndex);
+  select.addEventListener("change", () => { characterIndex = Number(select.value); save(); dirty = true; });
+
+  const speedButtons = [...document.querySelectorAll("[data-speed]")];
+  speedButtons.forEach((b) => b.addEventListener("click", () => {
+    speed = Number(b.dataset.speed);
+    speedButtons.forEach((other) => other.setAttribute("aria-pressed", String(other === b)));
+  }));
+  $("slow").addEventListener("click", (e) => { slow = !slow; e.currentTarget.setAttribute("aria-pressed", String(slow)); });
+  const playButton = $("play");
+  const syncPlay = () => { playButton.textContent = playing ? "Pause" : "Play"; };
+  playButton.addEventListener("click", () => { playing = !playing; syncPlay(); });
+  $("restart").addEventListener("click", resetSim);
+  $("motion-note").hidden = !reduceMotion;
+  syncPlay();
+
+  const percent = { toUi: (v) => +(v * 100).toFixed(2), fromUi: (v) => v / 100, show: (v) => `${+(v * 100).toFixed(2)}%` };
+  const SLIDERS = [
+    { id: "bounce", name: "bounce", toUi: (v) => v, fromUi: (v) => v, show: (v) => `${v} px` },
+    { id: "plant", name: "plant", ...percent },
+    { id: "squash", name: "squash", ...percent },
+    { id: "stretch", name: "stretch", ...percent },
+    { id: "shadow", name: "shadow", ...percent },
+    { id: "sway", name: "sway", toUi: (v) => v, fromUi: (v) => v, show: (v) => `${v}°` },
+    { id: "breath", name: "breathing", ...percent },
+    { id: "corner", name: "corner curve", toUi: (v) => v, fromUi: (v) => v, show: (v) => `${v} tile` },
+    { id: "look", name: "turn early", toUi: (v) => v, fromUi: (v) => v, show: (v) => `${v} tile` },
+  ];
+  function syncSliders() {
+    for (const s of SLIDERS) {
+      $(`t-${s.id}`).value = String(s.toUi(tuning[s.id]));
+      $(`o-${s.id}`).textContent = s.show(tuning[s.id]);
+    }
+  }
+  for (const s of SLIDERS) {
+    $(`t-${s.id}`).addEventListener("input", (e) => {
+      tuning[s.id] = s.fromUi(Number(e.currentTarget.value));
+      $(`o-${s.id}`).textContent = s.show(tuning[s.id]);
+      save();
+      dirty = true;
+    });
+  }
+  $("reset").addEventListener("click", () => { Object.assign(tuning, DEFAULTS); syncSliders(); save(); dirty = true; });
+  syncSliders();
+
+  function summary() {
+    const ideas = lanes.filter((l) => l.id !== "current");
+    const picked = ideas.filter((l) => picks.has(l.id)).map((l) => l.title);
+    const skipped = ideas.filter((l) => !picks.has(l.id)).map((l) => l.title);
+    const date = new Date().toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+    return [
+      `GamifySurgery Walk Lab round 3 picks (${date})`,
+      `Picked: ${picked.length ? picked.join(", ") : "none (keep the current movement)"}`,
+      `Not picked: ${skipped.length ? skipped.join(", ") : "none"}`,
+      `Settings: ${SLIDERS.map((s) => `${s.name} ${s.show(tuning[s.id])}`).join(", ")}`,
+    ].join("\n");
+  }
+  $("copy").addEventListener("click", () => {
+    const text = summary();
+    const status = $("copy-status");
+    const fallback = $("copy-fallback");
+    const showFallback = () => {
+      fallback.value = text;
+      fallback.hidden = false;
+      fallback.focus();
+      fallback.select();
+      status.textContent = "Copying is blocked here. The text below is selected; press Ctrl+C to copy it.";
+    };
+    try {
+      navigator.clipboard.writeText(text).then(() => {
+        fallback.hidden = true;
+        status.textContent = "Copied. Paste it into the chat.";
+      }, showFallback);
+    } catch { showFallback(); }
+  });
+
+  resetSim();
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const lane = lanes.find((l) => l.stage === entry.target);
+        if (lane) layout(lane);
+      }
+    });
+    lanes.forEach((lane) => ro.observe(lane.stage));
+  } else {
+    window.addEventListener("resize", () => lanes.forEach(layout));
+  }
+  lanes.forEach(layout);
+
+  let last = null;
+  function frame(now) {
+    const dt = last === null ? 0 : Math.min(50, now - last);
+    last = now;
+    if (playing) { advance(dt); dirty = true; }
+    if (dirty) { dirty = false; lanes.forEach(draw); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
