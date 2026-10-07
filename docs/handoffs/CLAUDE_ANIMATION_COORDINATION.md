@@ -478,3 +478,42 @@ Result: 12 women aged 30–44 plus 8 women aged 45–64. Runtime encounters are
 about 87.5% female, concentrated in those two bands. No runtime art, catalog,
 game code or saves were touched. A Codex worker with `image_gen` must generate
 and package the art, and the owner must approve it before registration.
+
+## 2026-10-07 — Claude claim — zoomed-out map rendering quality (owner-approved)
+
+Owner reported distortions on the zoomed-out map, which players mostly use.
+Diagnosis (QA origin 127.0.0.1:5175 only, no owner save touched): room,
+environment, landscaping and decor atlases (~1,250-1,450 px sources) are drawn
+at 7-21% of native size with NEAREST filtering (`pixelArt: true` default), so
+the canvas drops 5-14 of every source pixel: speckled trees, broken furniture
+edges. Litter also used fixed minimum sizes (12x8 px), so it looked oversized
+when zoomed out. Owner display scaling is 100%, so no DPR change.
+
+Owner approved in chat: "Do 1 and 2. For small trash, those should scale with
+zoom."
+1. LINEAR filtering for the bitmap environment/room/landscaping/decor
+   textures (characters already LINEAR).
+2. `imageSmoothingQuality = "high"` on the facility canvas each render.
+3. Litter drawing and highlight box scale with tile size (hit test is
+   tile-based and unchanged).
+
+Claude claims only the texture-filter, render-smoothing and litter-size hunks
+of `apps/player/src/facility/FacilityScene.ts` (+ a focused test if a pure
+helper is added). No geometry, art, layout, save or gameplay changes.
+
+### Claude zoomed-out rendering — complete, claim released (2026-10-07)
+
+Edited only `FacilityScene.ts`: new `useSmoothDownscaledTextures()` called from
+`create()` (LINEAR on all existing and later-added textures; renderer
+PRE_RENDER sets `imageSmoothingQuality = "high"`; listeners removed on
+SHUTDOWN), and `drawEnvironment()` litter + highlight box now scale with tile
+size (the outline keeps its 2 px minimum; hit test unchanged). Player typecheck
+PASS. Player tests 615/616; the one failure is
+`session/level3ControlsViewModels.test.ts` (expects 7 Level 3 controls, gets
+8), outside this change. Browser QA on a fresh 127.0.0.1:5176 origin: 174/174
+textures LINEAR, "high" active during render, no console errors, and at 250%
+zoom no image or tile sprite is drawn above native size (max 0.95), so nothing
+blurs on zoom-in. Litter verified at 110/50/10% zoom with a render-only injected
+item. Added a `player-qa-5176` entry to `.claude/launch.json` because 5175 was
+in use by another session. Owner pathway is unchanged: START_GAME.cmd ->
+http://127.0.0.1:4173. Nothing committed or pushed.

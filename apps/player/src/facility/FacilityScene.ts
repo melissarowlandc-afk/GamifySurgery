@@ -490,6 +490,7 @@ export class FacilityScene extends Phaser.Scene {
   public create(): void {
     this.cameras.main.setBackgroundColor("#7e8476");
     this.cameras.main.setRoundPixels(true);
+    this.useSmoothDownscaledTextures();
 
     this.terrainGraphics = this.add
       .graphics()
@@ -637,6 +638,38 @@ export class FacilityScene extends Phaser.Scene {
     this.ensureEnvironmentAtlas();
     this.ensureCharacterAtlases();
     this.refreshLayout(true);
+  }
+
+  /**
+   * Room, landscaping and decor sheets are ~1,250-1,450 px bitmaps drawn at a
+   * small fraction of native size, most of all when zoomed out. `pixelArt`
+   * defaults textures to NEAREST, which keeps one source pixel in 5-14 and
+   * speckles trees and furniture. Every texture here is smoothed (characters
+   * already were), and the canvas uses its high-quality mipmapped downscale.
+   * Canvas resizes reset context state, so the quality is reapplied per frame.
+   */
+  private useSmoothDownscaledTextures(): void {
+    const smooth = (texture: Phaser.Textures.Texture): void => {
+      texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+    };
+    for (const key of this.textures.getTextureKeys()) {
+      smooth(this.textures.get(key));
+    }
+    const onTextureAdded = (_key: string, texture: Phaser.Textures.Texture): void => {
+      smooth(texture);
+    };
+    this.textures.on(Phaser.Textures.Events.ADD, onTextureAdded);
+    const renderer = this.game.renderer;
+    const useHighQualitySmoothing = (): void => {
+      if ("gameContext" in renderer) {
+        renderer.gameContext.imageSmoothingQuality = "high";
+      }
+    };
+    renderer.on(Phaser.Renderer.Events.PRE_RENDER, useHighQualitySmoothing);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.textures.off(Phaser.Textures.Events.ADD, onTextureAdded);
+      renderer.off(Phaser.Renderer.Events.PRE_RENDER, useHighQualitySmoothing);
+    });
   }
 
   /**
@@ -2125,24 +2158,21 @@ export class FacilityScene extends Phaser.Scene {
       // across this tile from concealing it. The logical grid location and
       // pointer hit test remain unchanged.
       litterGraphics.setDepth(FACILITY_DEPTH_FLOOR_INTERACTION);
+      // Litter scales with the tile like the furniture around it; a fixed
+      // pixel minimum made it oversized when zoomed out. Clicking stays
+      // tile-based, so a small drawing does not shrink the target.
       this.drawFixture(
         litterGraphics,
         "litter",
         x,
         y,
-        Math.max(12, this.layout.tileSize * 0.36),
-        Math.max(8, this.layout.tileSize * 0.24),
+        this.layout.tileSize * 0.36,
+        this.layout.tileSize * 0.24,
       );
       if (litter.highlighted) {
         const outlineWidth = Math.max(2, pixel);
-        const highlightWidth = Math.max(
-          18,
-          this.layout.tileSize * 0.54,
-        );
-        const highlightHeight = Math.max(
-          14,
-          this.layout.tileSize * 0.42,
-        );
+        const highlightWidth = this.layout.tileSize * 0.54;
+        const highlightHeight = this.layout.tileSize * 0.42;
         litterGraphics.lineStyle(
           outlineWidth,
           PIXEL_PALETTE_NUMBER.highlight,
