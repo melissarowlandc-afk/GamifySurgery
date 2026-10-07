@@ -1184,3 +1184,19 @@ whole copies of StaffPanel, ManagementPanel, ServiceIncomePanel, MoneyPanel
 role-average fix), plus 14 Claude-only patches for shared files, each verified
 to rebuild the live file byte for byte. Live sources stay uncommitted for
 Codex's next integrated checkpoint. No merge, release or Pages publication.
+- 2026-10-07 — Claude — **backup verified** — Owner asked to back up the
+  earlier room touch-ups too. Checkpoint
+  `95c3ac026f09ff9c96c1682a9a81716ffa33fc8d` (`backup: preserve
+  owner-approved room touch-ups, Reading Room and build-list folding`) was
+  pushed to `origin/beta` and confirmed with `git ls-remote`.
+  - **Archive:** `artifacts/checkpoints/room-touchups-20261007/`. Full copies
+    of Claude-created files (roomTouchups, Reading Room data, tests, specs,
+    decor and Reading Room atlases, touch-up lab, runtime-promotion tool), 17
+    Claude-only patches recovered from the session log (each rebuilds its
+    target byte for byte), the replay report, a current-tree check, manifest
+    and validation.
+  - **Caveat:** the `BuildPanel.tsx` patch predates another session's 18:58
+    Build panel redesign and no longer reverse-applies; the other 16 do.
+  - **Not staged:** shared dirty source files, other sessions' work, Level 4
+    design previews and the owner's save. No merge, release, deployment or
+    Pages publication. Owner pathway unchanged.
