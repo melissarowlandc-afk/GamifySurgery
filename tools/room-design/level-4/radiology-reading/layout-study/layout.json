@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "radiology-reading-layout-study/v1",
+  "status": "geometry-and-seat-calibration-study-only",
+  "runtimeIntegrationAuthorized": false,
+  "ownerDirection": "Four desk cubicles arranged as one central Severance-inspired pinwheel, using a muted green/teal/ivory office palette in a dark reading room.",
+  "referenceAdaptation": {
+    "referenceLayout": "Four-part central pinwheel workstation cluster with matching seats and a green-carpeted office field.",
+    "gameAdaptation": "An orthographic 4x4 room uses the clockwise four-arm pinwheel: NW arm west, NE arm north, SE arm east, SW arm south. Cubicle geometry is compact enough to preserve every wall segment for a possible door.",
+    "notAReplica": "This study records an original game layout inspired by the reference arrangement; it does not copy a production set plan or graphics."
+  },
+  "dimensions": { "cols": 4, "rows": 4, "tilePixels": 120, "orientation": 0, "proposal": "4x4 viable" },
+  "navigation": {
+    "actorRadius": 0.18,
+    "latticeStep": 0.04,
+    "interpolationStep": 0.005,
+    "boundary": 0.2,
+    "circulationHub": { "x": 0.36, "y": 3.64 }
+  },
+  "furnitureScale": {
+    "deskWorktopRisePixels": 80,
+    "chairSeatRisePixels": 45,
+    "tilePixels": 120,
+    "physicalFootprintPolicy": "The collision footprints cover the selected artwork's measured opaque feet, pedestals and chair caster bases. Desktop, divider, monitor and chair-back projections remain visual depth bounds rather than movement blockers.",
+    "seatedAnchorPolicy": "For every cardinal pose, groundY minus seatContactY is the 45 px image-vertical rise (0.375 tile); facings never rotate that vertical relation."
+  },
+  "permanentCentralAssembly": {
+    "id": "fourStationPinwheel",
+    "collision": "solid bases below; one permanent interconnected cubicle cluster",
+    "centralCore": { "left": 1.78, "top": 1.78, "width": 0.44, "height": 0.44 },
+    "clockwiseArms": ["NW extends west", "NE extends north", "SE extends east", "SW extends south"],
+    "palette": { "carpet": "muted green", "dividersAndEquipment": "muted teal", "deskSurfaces": "warm ivory", "lighting": "dark ambient with restrained cool screen light" }
+  },
+  "solidFurniture": [
+    { "id": "centralCoreBase", "station": "core", "footprint": { "left": 1.78, "top": 1.78, "width": 0.44, "height": 0.44 }, "physicalDescription": "small shared pinwheel core" },
+    { "id": "northwestDeskBase", "station": "northwest", "footprint": { "left": 0.70, "top": 1.66, "width": 1.08, "height": 0.76 }, "physicalDescription": "NW arm base extended through the measured opaque feet band at y 2.31-2.395" },
+    { "id": "northeastDeskBase", "station": "northeast", "footprint": { "left": 1.78, "top": 0.70, "width": 0.56, "height": 1.08 }, "physicalDescription": "NE vertical arm extending north from, and attached along the top edge of, the core" },
+    { "id": "southeastDeskCoreBase", "station": "southeast", "footprint": { "left": 2.22, "top": 1.78, "width": 0.72, "height": 0.56 }, "physicalDescription": "SE arm connection and inner base, stopping before the chair well" },
+    { "id": "southeastDeskFloorBase", "station": "southeast", "footprint": { "left": 3.00, "top": 2.70, "width": 0.39, "height": 0.25 }, "physicalDescription": "measured continuous opaque SE lower base band, including the native x1221-1224 bridge pixels" },
+    { "id": "southwestDeskBase", "station": "southwest", "footprint": { "left": 1.66, "top": 2.22, "width": 0.56, "height": 1.10 }, "physicalDescription": "SW vertical arm and south foot" },
+    { "id": "southwestDeskWestPedestal", "station": "southwest", "footprint": { "left": 1.28, "top": 2.95, "width": 0.25, "height": 0.37 }, "physicalDescription": "measured west pedestal omitted by the initial study" },
+    { "id": "northwestChair", "station": "northwest", "footprint": { "left": 0.94, "top": 1.55, "width": 0.72, "height": 0.42 }, "physicalDescription": "south-facing chair footprint widened to its measured opaque caster base" },
+    { "id": "northeastChair", "station": "northeast", "footprint": { "left": 2.87, "top": 1.47, "width": 0.62, "height": 0.44 }, "physicalDescription": "west-facing chair footprint widened to its measured opaque caster base and placed east of the selected art's NE desktop edge" },
+    { "id": "southeastChair", "station": "southeast", "footprint": { "left": 2.28, "top": 2.51, "width": 0.72, "height": 0.42 }, "physicalDescription": "north-facing chair caster base placed immediately west of the measured SE desk floor base" },
+    { "id": "southwestChair", "station": "southwest", "footprint": { "left": 0.59, "top": 2.64, "width": 0.62, "height": 0.44 }, "physicalDescription": "east-facing chair footprint widened to its measured opaque caster base" }
+  ],
+  "dividerProjections": [
+    { "station": "northwest", "edge": "south", "from": { "x": 0.64, "y": 2.22 }, "to": { "x": 1.78, "y": 2.22 } },
+    { "station": "northeast", "edge": "west", "from": { "x": 1.78, "y": 0.64 }, "to": { "x": 1.78, "y": 1.78 } },
+    { "station": "southeast", "edge": "north", "from": { "x": 2.22, "y": 1.78 }, "to": { "x": 3.36, "y": 1.78 } },
+    { "station": "southwest", "edge": "east", "from": { "x": 2.22, "y": 2.22 }, "to": { "x": 2.22, "y": 3.36 } }
+  ],
+  "seats": [
+    { "id": "northwest", "fixture": "northwestChair", "facing": "S", "seatContact": { "x": 1.30, "y": 1.575 }, "transition": { "x": 1.30, "y": 1.22 }, "chairGround": { "x": 1.30, "y": 1.95 }, "assetSourceKey": "northwest" },
+    { "id": "northeast", "fixture": "northeastChair", "facing": "W", "seatContact": { "x": 3.18, "y": 1.515 }, "transition": { "x": 3.76, "y": 1.70 }, "chairGround": { "x": 3.18, "y": 1.89 }, "assetSourceKey": "northeast" },
+    { "id": "southeast", "fixture": "southeastChair", "facing": "N", "seatContact": { "x": 2.64, "y": 2.535 }, "transition": { "x": 2.64, "y": 3.20 }, "chairGround": { "x": 2.64, "y": 2.91 }, "assetSourceKey": "southeast" },
+    { "id": "southwest", "fixture": "southwestChair", "facing": "E", "seatContact": { "x": 0.90, "y": 2.685 }, "transition": { "x": 0.36, "y": 2.82 }, "chairGround": { "x": 0.90, "y": 3.06 }, "assetSourceKey": "southwest" }
+  ],
+  "optionalWallFixtures": [],
+  "doorModel": {
+    "segments": ["N1", "N2", "N3", "N4", "S1", "S2", "S3", "S4", "WA", "WB", "WC", "WD", "EA", "EB", "EC", "ED"],
+    "allSegmentsPossible": true,
+    "northBackings": ["N1", "N2", "N3", "N4"],
+    "note": "There are no wall fixtures in this quiet minimal room; backing states remain part of the shell-control matrix."
+  },
+  "occupancyModel": {
+    "empty": "four permanent chairs, no seated actors",
+    "one": "exactly one selected cardinal seat uses its matching source",
+    "all": "all four seats use matching cardinal sources",
+    "occupiedCollision": "A seated pelvis attaches inside its owning chair footprint; it is not a normal path waypoint and transparent bitmap bounds are not collision geometry."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "radiology-reading-seat-sources/v1",
+  "status": "proposed current-registry source mapping; staffing labels are placeholders only",
+  "canonical": {
+    "frame": { "width": 160, "height": 320 },
+    "floorY": 287,
+    "widthTiles": 1.0648954703832752,
+    "seatAlignment": "Align each authored seatContactY to the declared world seat contact while retaining its identity-wide scale."
+  },
+  "seats": {
+    "northwest": {
+      "identity": "gs022-new-employee-001", "category": "employee", "role": "radiology-reading placeholder only; no clinical staffing assertion", "facing": "S",
+      "asset": "art/characters/gs026-stills-v1/gs022-new-employee-001/sit-south.png", "sha256": "ab13161208fabab290a6212123a34ce7f1820584281a3c7278d3eb8686b5dd2c",
+      "anchors": { "bodyAxisX": 80, "floorY": 287, "seatContactY": 220.06603773584905 }, "identityScale": 0.9498069498069498
+    },
+    "northeast": {
+      "identity": "gs022-new-employee-010", "category": "employee", "role": "radiology-reading placeholder only; no clinical staffing assertion", "facing": "W",
+      "asset": "art/characters/gs026-stills-v1/gs022-new-employee-010/sit-west.png", "sha256": "8870df9affab6e90b2e5014560abb651585cf16b3a293c890152834578d59b9f",
+      "anchors": { "bodyAxisX": 80, "floorY": 287, "seatContactY": 238.0849420849421 }, "identityScale": 0.8817204301075269
+    },
+    "southeast": {
+      "identity": "gs022-new-employee-004", "category": "employee", "role": "radiology-reading placeholder only; no clinical staffing assertion", "facing": "N",
+      "asset": "art/characters/gs026-stills-v1/gs022-new-employee-004/sit-north.png", "sha256": "d6d08815a5376fde0d53e8db13e588366e2fd2aaa7e7106fd189a04ed72644a6",
+      "anchors": { "bodyAxisX": 80, "floorY": 287, "seatContactY": 228.73076923076925 }, "identityScale": 0.9077490774907749
+    },
+    "southwest": {
+      "identity": "gs022-new-employee-007", "category": "employee", "role": "radiology-reading placeholder only; no clinical staffing assertion", "facing": "E",
+      "asset": "art/characters/gs026-stills-v1/gs022-new-employee-007/sit-east.png", "sha256": "f6f8fb14991d7ade0128339a4179e7b948628a6a6a4276bf77a8e8cf82477ab2",
+      "anchors": { "bodyAxisX": 80, "floorY": 287, "seatContactY": 237.0253164556962 }, "identityScale": 0.9044117647058824
+    }
+  }
+}

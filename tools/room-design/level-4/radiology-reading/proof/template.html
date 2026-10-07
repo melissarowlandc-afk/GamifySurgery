@@ -1,0 +1,53 @@
+<div id="radiology-reading-proof">
+  <div class="text-small text-muted">Proposed 4×4 layout</div>
+  <div class="viz-controls" aria-label="Radiology Reading Room proof controls">
+    <label class="form-label">Occupancy
+      <select id="reading-occupancy" class="form-select">
+        <option value="all">All four readers</option>
+        <option value="empty">Empty</option>
+        <option value="northwest">Northwest reader</option>
+        <option value="northeast">Northeast reader</option>
+        <option value="southeast">Southeast reader</option>
+        <option value="southwest">Southwest reader</option>
+      </select>
+    </label>
+    <label class="form-check form-switch"><input id="reading-routes" class="form-check-input" type="checkbox"><span class="form-check-label">Paths</span></label>
+    <label class="form-check form-switch"><input id="reading-scale" class="form-check-input" type="checkbox"><span class="form-check-label">Scale comparison</span></label>
+  </div>
+  <div class="reading-stage">
+    <canvas id="reading-art" class="reading-canvas" width="720" height="720" role="img" aria-label="Proposed dark four-station Radiology Reading Room"></canvas>
+  </div>
+  <fieldset class="reading-door-fieldset">
+    <legend>Open doorway</legend>
+    <div id="reading-door-grid" class="reading-door-groups" aria-label="Possible door segments grouped by wall">
+      <div><span class="text-small text-muted">North</span><div id="reading-door-north" class="reading-door-buttons" role="group" aria-label="North door segments"></div></div>
+      <div><span class="text-small text-muted">South</span><div id="reading-door-south" class="reading-door-buttons" role="group" aria-label="South door segments"></div></div>
+      <div><span class="text-small text-muted">West</span><div id="reading-door-west" class="reading-door-buttons" role="group" aria-label="West door segments"></div></div>
+      <div><span class="text-small text-muted">East</span><div id="reading-door-east" class="reading-door-buttons" role="group" aria-label="East door segments"></div></div>
+    </div>
+  </fieldset>
+  <div class="viz-controls" aria-label="North wall backing states">
+    <span class="text-small text-muted">North wall continues behind:</span>
+    <label class="form-check"><input class="form-check-input" type="checkbox" data-backing="N1"><span class="form-check-label">N1</span></label>
+    <label class="form-check"><input class="form-check-input" type="checkbox" data-backing="N2"><span class="form-check-label">N2</span></label>
+    <label class="form-check"><input class="form-check-input" type="checkbox" data-backing="N3"><span class="form-check-label">N3</span></label>
+    <label class="form-check"><input class="form-check-input" type="checkbox" data-backing="N4"><span class="form-check-label">N4</span></label>
+  </div>
+  <div id="reading-scale-wrap" hidden>
+    <div class="viz-row text-small" aria-hidden="true"><span>Full reading island · 80 px worktops</span><span>Office desk · 80 px</span><span>Front desk · 100.5 px</span></div>
+    <canvas id="reading-scale-art" class="reading-canvas" width="960" height="420" role="img" aria-label="Full Radiology Reading Room island compared with the approved office desk and front desk references"></canvas>
+  </div>
+</div>
+<style>
+#radiology-reading-proof{width:100%;color:var(--foreground)}
+#radiology-reading-proof .reading-stage{width:100%;max-width:720px;margin:0 auto}
+#radiology-reading-proof .reading-canvas{display:block;width:100%;height:auto}
+#radiology-reading-proof .reading-door-fieldset{border:0;margin:10px 0 0;padding:0}
+#radiology-reading-proof .reading-door-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}
+#radiology-reading-proof .reading-door-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+#radiology-reading-proof #reading-scale-wrap{width:100%;max-width:720px;margin:12px auto 0}
+@media(max-width:560px){#radiology-reading-proof .reading-door-groups{grid-template-columns:1fr}}
+</style>
+<script>
+__RADIOLOGY_READING_SCRIPT__
+</script>

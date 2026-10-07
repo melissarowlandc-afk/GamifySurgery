@@ -1,0 +1,9 @@
+Use case: stylized-concept. Asset type: transparent four-direction swivel desk chair sprite atlas for an orthographic game.
+Reference image: the blue chair in supplied atlas is rendering/camera/desk-seat proportion reference ONLY. Ignore brown chair. Make FOUR matching low-back retro office swivel chairs similar to the gray upholstered metal-arm chairs in Severance, with charcoal gray upholstery, thin brushed dark steel arm rails, compact5-caster base. Not bulky gamer chairs. Clean detailed hand-painted shading and soft ink outlines matching reference; not pixelart, not photograph, notisometric.
+Layout:1536x1024 transparent atlas in separated2x2 quadrants with wide transparent gutters. Exactly one chair perquadrant, full object includingfeet no cropping:
+TOP LEFT: faces SOUTH toward camera, seat/front of upholstery visible.
+TOP RIGHT: faces NORTH away from camera, back of backrest visible, seatextendsawaynorth.
+BOTTOM LEFT: faces EAST toward screen-right, exact right-facing side view with clear horizontal seat cushion and thin armrails.
+BOTTOM RIGHT: faces WEST toward screen-left, exact mirrored left-facing side view samechair.
+Fixed gamecamera fromsouth35degreesdown for all4; chairs rotate onfloor, do not rotate the rendered bitmap orcamera. Same dimensions, identicalmaterials andheight. Uprightseatwithfloor-to-seatheight45cm and backrestapprox80cm, slimarms. Cast no exterior shadow. Dimcoolambient but chair silhouette clear. No people, no desks, no labels, no logos, no room orfloor.
+Constraints: actual transparent alpha around hardclean object boundaries, zero glow/haze/fog/background. Each spritecanbe separated without contactinganyother; edgesandfeet not clipped.

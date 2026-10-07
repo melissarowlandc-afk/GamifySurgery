@@ -1,0 +1,351 @@
+{
+  "status": "PASS",
+  "dimensions": {
+    "cols": 4,
+    "rows": 4,
+    "tilePixels": 120,
+    "orientation": 0,
+    "proposal": "4x4 viable"
+  },
+  "navigation": {
+    "actorRadius": 0.18,
+    "latticeStep": 0.04,
+    "interpolationStep": 0.005,
+    "boundary": 0.2,
+    "circulationHub": {
+      "x": 0.36,
+      "y": 3.64
+    }
+  },
+  "permanentAssembly": {
+    "id": "fourStationPinwheel",
+    "collision": "solid bases below; one permanent interconnected cubicle cluster",
+    "centralCore": {
+      "left": 1.78,
+      "top": 1.78,
+      "width": 0.44,
+      "height": 0.44
+    },
+    "clockwiseArms": [
+      "NW extends west",
+      "NE extends north",
+      "SE extends east",
+      "SW extends south"
+    ],
+    "palette": {
+      "carpet": "muted green",
+      "dividersAndEquipment": "muted teal",
+      "deskSurfaces": "warm ivory",
+      "lighting": "dark ambient with restrained cool screen light"
+    }
+  },
+  "physicalSolidBases": [
+    {
+      "id": "centralCoreBase",
+      "left": 1.78,
+      "top": 1.78,
+      "width": 0.44,
+      "height": 0.44
+    },
+    {
+      "id": "northwestDeskBase",
+      "left": 0.7,
+      "top": 1.66,
+      "width": 1.08,
+      "height": 0.76
+    },
+    {
+      "id": "northeastDeskBase",
+      "left": 1.78,
+      "top": 0.7,
+      "width": 0.56,
+      "height": 1.08
+    },
+    {
+      "id": "southeastDeskCoreBase",
+      "left": 2.22,
+      "top": 1.78,
+      "width": 0.72,
+      "height": 0.56
+    },
+    {
+      "id": "southeastDeskFloorBase",
+      "left": 3,
+      "top": 2.7,
+      "width": 0.39,
+      "height": 0.25
+    },
+    {
+      "id": "southwestDeskBase",
+      "left": 1.66,
+      "top": 2.22,
+      "width": 0.56,
+      "height": 1.1
+    },
+    {
+      "id": "southwestDeskWestPedestal",
+      "left": 1.28,
+      "top": 2.95,
+      "width": 0.25,
+      "height": 0.37
+    },
+    {
+      "id": "northwestChair",
+      "left": 0.94,
+      "top": 1.55,
+      "width": 0.72,
+      "height": 0.42
+    },
+    {
+      "id": "northeastChair",
+      "left": 2.87,
+      "top": 1.47,
+      "width": 0.62,
+      "height": 0.44
+    },
+    {
+      "id": "southeastChair",
+      "left": 2.28,
+      "top": 2.51,
+      "width": 0.72,
+      "height": 0.42
+    },
+    {
+      "id": "southwestChair",
+      "left": 0.59,
+      "top": 2.64,
+      "width": 0.62,
+      "height": 0.44
+    }
+  ],
+  "inflatedSolidBases": [
+    {
+      "id": "centralCoreBase",
+      "left": 1.6,
+      "top": 1.6,
+      "right": 2.4000000000000004,
+      "bottom": 2.4000000000000004
+    },
+    {
+      "id": "northwestDeskBase",
+      "left": 0.52,
+      "top": 1.48,
+      "right": 1.96,
+      "bottom": 2.6
+    },
+    {
+      "id": "northeastDeskBase",
+      "left": 1.6,
+      "top": 0.52,
+      "right": 2.52,
+      "bottom": 1.96
+    },
+    {
+      "id": "southeastDeskCoreBase",
+      "left": 2.04,
+      "top": 1.6,
+      "right": 3.1200000000000006,
+      "bottom": 2.52
+    },
+    {
+      "id": "southeastDeskFloorBase",
+      "left": 2.82,
+      "top": 2.52,
+      "right": 3.5700000000000003,
+      "bottom": 3.1300000000000003
+    },
+    {
+      "id": "southwestDeskBase",
+      "left": 1.48,
+      "top": 2.04,
+      "right": 2.4,
+      "bottom": 3.5000000000000004
+    },
+    {
+      "id": "southwestDeskWestPedestal",
+      "left": 1.1,
+      "top": 2.77,
+      "right": 1.71,
+      "bottom": 3.5000000000000004
+    },
+    {
+      "id": "northwestChair",
+      "left": 0.76,
+      "top": 1.37,
+      "right": 1.8399999999999999,
+      "bottom": 2.15
+    },
+    {
+      "id": "northeastChair",
+      "left": 2.69,
+      "top": 1.29,
+      "right": 3.6700000000000004,
+      "bottom": 2.09
+    },
+    {
+      "id": "southeastChair",
+      "left": 2.0999999999999996,
+      "top": 2.3299999999999996,
+      "right": 3.18,
+      "bottom": 3.11
+    },
+    {
+      "id": "southwestChair",
+      "left": 0.41,
+      "top": 2.46,
+      "right": 1.39,
+      "bottom": 3.2600000000000002
+    }
+  ],
+  "projectionPolicy": "The collision footprints cover the selected artwork's measured opaque feet, pedestals and chair caster bases. Desktop, divider, monitor and chair-back projections remain visual depth bounds rather than movement blockers.",
+  "doorRoutes": {
+    "N1": {
+      "endpoint": {
+        "x": 0.32,
+        "y": 0.2
+      },
+      "latticePoints": 88
+    },
+    "N2": {
+      "endpoint": {
+        "x": 1.24,
+        "y": 0.2
+      },
+      "latticePoints": 109
+    },
+    "N3": {
+      "endpoint": {
+        "x": 2.24,
+        "y": 0.2
+      },
+      "latticePoints": 134
+    },
+    "N4": {
+      "endpoint": {
+        "x": 3.24,
+        "y": 0.2
+      },
+      "latticePoints": 159
+    },
+    "S1": {
+      "endpoint": {
+        "x": 0.32,
+        "y": 3.8000000000000003
+      },
+      "latticePoints": 6
+    },
+    "S2": {
+      "endpoint": {
+        "x": 1.24,
+        "y": 3.8000000000000003
+      },
+      "latticePoints": 27
+    },
+    "S3": {
+      "endpoint": {
+        "x": 2.24,
+        "y": 3.8000000000000003
+      },
+      "latticePoints": 52
+    },
+    "S4": {
+      "endpoint": {
+        "x": 3.24,
+        "y": 3.8000000000000003
+      },
+      "latticePoints": 77
+    },
+    "WA": {
+      "endpoint": {
+        "x": 0.2,
+        "y": 0.76
+      },
+      "latticePoints": 77
+    },
+    "WB": {
+      "endpoint": {
+        "x": 0.2,
+        "y": 1.76
+      },
+      "latticePoints": 52
+    },
+    "WC": {
+      "endpoint": {
+        "x": 0.2,
+        "y": 2.7600000000000002
+      },
+      "latticePoints": 27
+    },
+    "WD": {
+      "endpoint": {
+        "x": 0.2,
+        "y": 3.6
+      },
+      "latticePoints": 6
+    },
+    "EA": {
+      "endpoint": {
+        "x": 3.8000000000000003,
+        "y": 0.76
+      },
+      "latticePoints": 159
+    },
+    "EB": {
+      "endpoint": {
+        "x": 3.8000000000000003,
+        "y": 1.76
+      },
+      "latticePoints": 134
+    },
+    "EC": {
+      "endpoint": {
+        "x": 3.8000000000000003,
+        "y": 2.7600000000000002
+      },
+      "latticePoints": 109
+    },
+    "ED": {
+      "endpoint": {
+        "x": 3.8000000000000003,
+        "y": 3.6
+      },
+      "latticePoints": 88
+    }
+  },
+  "seatTransitions": {
+    "northwest": {
+      "transition": {
+        "x": 1.3,
+        "y": 1.22
+      },
+      "latticePoints": 85,
+      "sourceSha256": "ab13161208fabab290a6212123a34ce7f1820584281a3c7278d3eb8686b5dd2c"
+    },
+    "northeast": {
+      "transition": {
+        "x": 3.76,
+        "y": 1.7
+      },
+      "latticePoints": 134,
+      "sourceSha256": "8870df9affab6e90b2e5014560abb651585cf16b3a293c890152834578d59b9f"
+    },
+    "southeast": {
+      "transition": {
+        "x": 2.64,
+        "y": 3.2
+      },
+      "latticePoints": 69,
+      "sourceSha256": "d6d08815a5376fde0d53e8db13e588366e2fd2aaa7e7106fd189a04ed72644a6"
+    },
+    "southwest": {
+      "transition": {
+        "x": 0.36,
+        "y": 2.82
+      },
+      "latticePoints": 21,
+      "sourceSha256": "f6f8fb14991d7ade0128339a4179e7b948628a6a6a4276bf77a8e8cf82477ab2"
+    }
+  },
+  "seatCollisionPolicy": "A seated pelvis attaches inside its owning chair footprint; it is not a normal path waypoint and transparent bitmap bounds are not collision geometry.",
+  "optionalOwnership": {}
+}

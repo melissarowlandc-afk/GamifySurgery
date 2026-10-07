@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "radiology-reading-proof-handoff/v1",
+  "room": "radiology-reading",
+  "level": 4,
+  "status": "provisional-owner-review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "proposedDimensions": { "cols": 4, "rows": 4, "tilePixels": 120 },
+  "permanentFixtures": ["fourStationPinwheel", "northwestChair", "northeastChair", "southeastChair", "southwestChair"],
+  "optionalWallFixtures": [],
+  "doorSegments": ["N1", "N2", "N3", "N4", "S1", "S2", "S3", "S4", "WA", "WB", "WC", "WD", "EA", "EB", "EC", "ED"],
+  "northBackingSegments": ["N1", "N2", "N3", "N4"],
+  "occupancyStates": ["empty", "northwest", "northeast", "southeast", "southwest", "all"],
+  "defaultOccupancy": "empty",
+  "furnitureScale": { "deskWorktopRisePixels": 80, "chairSeatRisePixels": 45 },
+  "actorRenderedWidthsPixels": { "northwest": 121, "northeast": 113, "southeast": 116, "southwest": 116 },
+  "navigation": { "actorRadiusTiles": 0.18, "interpolationStepTiles": 0.005, "boundaryTiles": 0.2 },
+  "floor": { "material": "muted green carpet", "phase": "fixed to room and continuous through open doorway strips" },
+  "limitations": [
+    "The four role labels are visual placeholders only and make no clinical staffing claim.",
+    "This proof does not authorize Level 4 runtime, progression, save, price, or staffing integration.",
+    "The source arrangement is an original game-view adaptation of a four-part pinwheel office, not an exact production-set replica."
+  ]
+}

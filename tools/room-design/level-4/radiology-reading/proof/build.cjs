@@ -1,0 +1,27 @@
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const here = __dirname;
+const metadata = JSON.parse(fs.readFileSync(path.join(here, 'processed-assets/metadata.json'), 'utf8'));
+const layout = JSON.parse(fs.readFileSync(path.join(here, '../layout-study/layout.json'), 'utf8'));
+const assetContract = JSON.parse(fs.readFileSync(path.join(here, 'asset-contract.json'), 'utf8'));
+const handoff = JSON.parse(fs.readFileSync(path.join(here, 'handoff-contract.json'), 'utf8'));
+const officeRoot = path.resolve(here, '../../../level-3/surgeons-office/proof');
+const officeMeta = JSON.parse(fs.readFileSync(path.join(officeRoot, 'processed-assets/metadata.json'), 'utf8'));
+const dataUrl = file => `data:image/${path.extname(file).slice(1)};base64,${fs.readFileSync(file).toString('base64')}`;
+const images = Object.fromEntries(Object.entries(metadata.specs).map(([id, spec]) => [id, { dataUrl: dataUrl(path.join(here, 'processed-assets', spec.file)) }]));
+const comparisonIds = { officeDesk: 'desk', frontDesk: 'frontDesk' }, comparison = { specs: {}, images: {} };
+for (const [id, sourceId] of Object.entries(comparisonIds)) { const spec = officeMeta.specs[sourceId]; comparison.specs[id] = spec; comparison.images[id] = { dataUrl: dataUrl(path.join(officeRoot, 'processed-assets', spec.file)) }; }
+const payload = { specs: metadata.specs, images, comparison };
+const script = fs.readFileSync(path.join(here, 'preview.js'), 'utf8').replace('__ASSET_DATA__', JSON.stringify(payload)).replace('__LAYOUT__', JSON.stringify(layout)).replace('__ASSET_CONTRACT__', JSON.stringify(assetContract));
+const fragment = fs.readFileSync(path.join(here, 'template.html'), 'utf8').replace('__RADIOLOGY_READING_SCRIPT__', script);
+if (/<!doctype|<html|<head|<body/i.test(fragment)) throw new Error('Fragment contains document wrapper');
+if (/fetch\s*\(|XMLHttpRequest|WebSocket/.test(fragment)) throw new Error('Fragment contains network API');
+if (Buffer.byteLength(fragment) >= 1_000_000) throw new Error(`Fragment too large: ${Buffer.byteLength(fragment)}`);
+const source = path.join(here, 'radiology-reading-proof.html');
+const delivery = 'C:/Users/rowla/.codex/visualizations/2026/09/22/01a0ca1d-9c4b-7921-847b-5a7b20244b12/radiology-reading-room-proof.html';
+fs.writeFileSync(source, fragment); fs.writeFileSync(delivery, fragment);
+const sha = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').toUpperCase();
+const registry = path.resolve(here, '../../../../../apps/player/src/art/characterStillRegistry.generated.json');
+fs.writeFileSync(path.join(here, 'proof-manifest.json'), JSON.stringify({ status: handoff.status, approval: handoff.approval, runtimeIntegrationAuthorized: handoff.runtimeIntegrationAuthorized, fragmentBytes: Buffer.byteLength(fragment), fragmentSha256: sha(source), deliverySha256: sha(delivery), sourceAssetHashes: Object.fromEntries(Object.entries(assetContract.sources).map(([id, s]) => [id, s.sha256])), characterRegistry: { path: 'apps/player/src/art/characterStillRegistry.generated.json', sha256: sha(registry) }, actorRenderedWidthsPixels: handoff.actorRenderedWidthsPixels, preparedAssetIds: Object.keys(metadata.specs), evidenceCaptures: ['radiology-reading-all-four.png','radiology-reading-empty.png','radiology-reading-northwest.png','radiology-reading-northeast.png','radiology-reading-southeast.png','radiology-reading-southwest.png','radiology-reading-all-open.png','radiology-reading-all-backed.png','radiology-reading-closed-backed.png','radiology-reading-scale.png','radiology-reading-320.png'] }, null, 2) + '\n');
+console.log(`PASS ${Buffer.byteLength(fragment)} bytes ${sha(source)}`);

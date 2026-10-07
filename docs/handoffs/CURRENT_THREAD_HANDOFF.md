@@ -1631,3 +1631,8 @@ This earlier report preceded standalone technical review and owner acceptance.
 Current GS-001 status and backup evidence are in the GS-001 section at the top
 of this handoff and `docs/handoffs/GS-001_SAVE_REPOSITORY_RESULT.md`. The task
 remains repository-only, not live-game integration.
+
+
+## Radiology Reading Room — design approved, backup authorized (2026-10-07)
+
+Owner: "Okay, that is approved. Push to GitHub". Approves corrected4×4 candidate D574AA0FC11292D8A2F8A92A3BA082C8755B00067A99066FDAD3BA30C72EB1BB,723115bytes. Receipt: tools/room-design/level-4/radiology-reading/approval-2026-10-07.md. Frozen review-time metadata remains unchanged and is superseded for design approval by this receipt. Runtime integration remains separate. Current source/delivery hash and focused layout/browser checks independently PASS on October7. Scoped reading-room backup on beta in progress; unrelated shared work excluded. Next: verify remote checkpoint and record branch/commit.

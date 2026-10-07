@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "radiology-reading-proof-assets/v1",
+  "revision": "radiology-reading-proof-candidate-01",
+  "status": "provisional-owner-review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "targets": { "tilePixels": 120, "deskWorktopRisePixels": 80, "chairSeatRisePixels": 45 },
+  "sources": {
+    "island": { "file": "../assets/reading-island-02.png", "sha256": "D54860AA5579D078DCA018726E07D9E4803795E99F9318405A0E002B2ACFA230" },
+    "chairs": { "file": "../assets/reading-chairs-01.png", "sha256": "327FAA6145AA27B1C9BC0821D256600BA0F8273D9AF6E1747866BEFD7151B015" }
+  },
+  "packing": {
+    "method": "native-canvas four-neighbor component at alpha >=160, plus one-pixel connected edge ring preserving original alpha",
+    "island": { "seed": [760, 500], "crop": [253, 10, 1054, 996], "sourceAnchor": [760, 1004], "worldGround": [2.0, 3.32], "nativeWorktopRise": 260, "renderScale": 0.3076923076923077 },
+    "chairs": {
+      "northwest": { "facing": "S", "seed": [390, 260], "crop": [190, 24, 412, 465], "sourceAnchor": [390, 487], "sourceSeatY": 320, "renderScale": 0.2694610778443114 },
+      "northeast": { "facing": "W", "seed": [1130, 750], "crop": [909, 523, 355, 453], "sourceAnchor": [1130, 974], "sourceSeatY": 784, "renderScale": 0.23684210526315788 },
+      "southeast": { "facing": "N", "seed": [1130, 260], "crop": [937, 46, 402, 442], "sourceAnchor": [1130, 486], "sourceSeatY": 300, "renderScale": 0.24193548387096775 },
+      "southwest": { "facing": "E", "seed": [390, 750], "crop": [273, 523, 355, 453], "sourceAnchor": [390, 974], "sourceSeatY": 784, "renderScale": 0.23684210526315788 }
+    }
+  },
+  "sourceLandmarks": {
+    "islandVisibleComponent": [254, 11, 1305, 1004],
+    "southwestFootContact": { "native": [760, 1004], "world": [2.0, 3.32] },
+    "northwestFeetBand": { "nativeBounds": [255, 610, 408, 643], "worldApproxBounds": [0.705, 2.31, 1.097, 2.395] },
+    "southeastFeetBand": { "nativeBounds": [1150, 790, 1300, 850], "worldApproxBounds": [3.000, 2.771, 3.385, 2.925], "continuousOpaqueBridgeExample": [1221, 840, 1224, 840] },
+    "note": "Landmarks connect visible floor contacts to world placement. The active layout study was reconciled so authoritative movement footprints cover these opaque base bands."
+  },
+  "chairFrontMasks": {
+    "northwest": { "minLocalY": 296 },
+    "southeast": { "maxLocalY": 278 },
+    "northeast": { "minLocalX": 178, "maxLocalY": 280 },
+    "southwest": { "maxLocalX": 177, "maxLocalY": 280 }
+  }
+}
