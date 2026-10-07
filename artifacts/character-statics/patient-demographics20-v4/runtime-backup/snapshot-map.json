@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "patient-demographics20-v4-runtime-backup/v1",
+  "snapshots": [
+    {
+      "livePath": "packages/game-domain/src/characterStillCatalog.ts",
+      "snapshot": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/post-integration/packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "9af981fb9dec9e861f3eeab8245cc52b193dad486458f654c26b7f96bcdc195d",
+      "before": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.ts",
+      "beforeSha256": "f867315674492cc59caf37483dc4b12e66b5e17f35a15fe02f1c3e155037f4de",
+      "patch": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/integration-deltas/packages/game-domain/src/characterStillCatalog.ts.patch",
+      "patchSha256": "2decd5077faac125cd548bc06449a826a626991974f7f2584be68f2bf7b66692"
+    },
+    {
+      "livePath": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "snapshot": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/post-integration/packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "24be461ee07e6c7831a0618164e020449777dcd179b81b592e6d4bcc97f9b583",
+      "before": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.test.ts",
+      "beforeSha256": "5baa9faa6d1f6eaf2afc07e1fb089799e4c3610517cf9a8b08f29ceb47418245",
+      "patch": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/integration-deltas/packages/game-domain/src/characterStillCatalog.test.ts.patch",
+      "patchSha256": "4fe42add985cfcda32699daec1af8702628ba062a6f09695e40576e16326ad04"
+    },
+    {
+      "livePath": "apps/player/src/art/characterStillRegistry.ts",
+      "snapshot": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/post-integration/apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "d272179b736928d8533a395bbd2d67efaa0cf6eb73a1212b2a0d5c609d7a06d6",
+      "before": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.ts",
+      "beforeSha256": "fe5f51182acc121b0936da00df20621d17a6f6bcabfd38f13fcb81ae38f7b6c0",
+      "patch": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/integration-deltas/apps/player/src/art/characterStillRegistry.ts.patch",
+      "patchSha256": "5a60ac527e230577085937fbd14c81d491f09dde2c9f0a02b82357f323c7dec9"
+    },
+    {
+      "livePath": "apps/player/src/art/characterStillRegistry.test.ts",
+      "snapshot": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/post-integration/apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "9f09f142dde5d5d01bad48c0f23e6c5b95abf127dcccebacfd76f412728f021e",
+      "before": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.test.ts",
+      "beforeSha256": "8746bbb6cc55afe6fc553a16c544f312b0f6efb23cfb0f3460f412a1fa48f434",
+      "patch": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/integration-deltas/apps/player/src/art/characterStillRegistry.test.ts.patch",
+      "patchSha256": "a4b7e4d62654897d8c2b3aa1893d15a850d7aaa1e7bb2dbac320d0045c257608"
+    },
+    {
+      "livePath": "apps/player/src/art/characterStillRegistry.generated.json",
+      "snapshot": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/post-integration/apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "9ddaa8381d092c5c49536465bea036edd3c9ab8e8659731a85e7f3d4def94374",
+      "before": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.generated.json",
+      "beforeSha256": "db6899430e00df87e5300a85add26000aef7cbb0e20f8e73f50997ec32120f83",
+      "patch": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/integration-deltas/apps/player/src/art/characterStillRegistry.generated.json.patch",
+      "patchSha256": "60180580aeced692cd262baee93bb235b723a5581c19c7cb563290e178379807"
+    },
+    {
+      "livePath": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "snapshot": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/post-integration/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "sha256": "9304d56a9bb0ae75b7e11f8dcd58490b47189f07df71a253cd14759ad2f061e6",
+      "before": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "beforeSha256": "8a80004cc648a19747742ea1d813125c2425de407fc62f9800747c6ae08bf9ee",
+      "patch": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/integration-deltas/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json.patch",
+      "patchSha256": "c23bdd5c9aa43153c1f6995b0ef18aad6c3bed348da1ab099db8873adce78d2e"
+    }
+  ],
+  "archiveBoundary": "Exact six runtime files and character-only205-to225 delta; unrelated current game plumbing excluded."
+}

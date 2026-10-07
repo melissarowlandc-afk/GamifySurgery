@@ -1,0 +1,3492 @@
+{
+  "schemaVersion": "character-atlas/v1",
+  "characterId": "patient.adult.039.blue-glasses-v1",
+  "capabilities": {
+    "sitting": false,
+    "clipboard": false
+  },
+  "pages": {
+    "upper": {
+      "file": "assets/upper-v1.png",
+      "sha256": "1b69cbb8df8dc79a0bace8fb7951673d2897989aec90f7f121cd4b52a6ad2893"
+    },
+    "identity": {
+      "file": "assets/identity-v1.png",
+      "sha256": "da994da1973abb83d16650603cec746c94e7386455f0d5d42739747ec74d32f4"
+    },
+    "lower": {
+      "file": "assets/lower-v1.png",
+      "sha256": "db1d70cc4da961b25e600b683b4ad52a509be2932b663d818fbce3f7179da425"
+    },
+    "actions": {
+      "file": "assets/actions-v1.png",
+      "sha256": "9bb75e3b873c3e5cf214a32d7cea97a9863bb880af52135313cba68cc176555e"
+    },
+    "clipboard": {
+      "file": "assets/clipboard-v1.png",
+      "sha256": "df2ac9fff6c98c2ad4b270366027930dd233fe9b37bd2c6c4e3ccdaf723fa211"
+    }
+  },
+  "parts": {
+    "upper.south.torso": {
+      "slotId": "upper.south.torso",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\torso-generated-v1.png",
+        "sha256": "024b3e531f112aee0aef6634536fb857e55a2d3a27eefb45c1635f858045f672",
+        "crop": {
+          "x": 180,
+          "y": 180,
+          "width": 375,
+          "height": 390
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced arm-free south blue-gray shirt and belt from original 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420; no sleeve or hand pixels"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 115.5,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 140.5,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 129.08695652173913,
+            "y": 107.78260869565219
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 155.8985507246377,
+              "y": 53.434782608695656
+            },
+            "right": {
+              "x": 102.09420289855072,
+              "y": 53.434782608695656
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 154.9927536231884,
+              "y": 107.78260869565219
+            },
+            "right": {
+              "x": 103.36231884057972,
+              "y": 107.78260869565219
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 25,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.18115942028985507,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 62.60144927536232,
+          "y": 10.86231884057971
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 46,
+        "width": 61,
+        "height": 65
+      }
+    },
+    "upper.south.upperArm.left": {
+      "slotId": "upper.south.upperArm.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 108,
+          "y": 628,
+          "width": 98,
+          "height": 179
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual south anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164.00000000000006
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 154.4635761589404,
+            "y": 119.6556291390728
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 15.708609271523187,
+          "y": -402.4635761589404
+        }
+      },
+      "contentBounds": {
+        "x": 98,
+        "y": 52,
+        "width": 60,
+        "height": 118
+      }
+    },
+    "upper.south.forearmHand.left": {
+      "slotId": "upper.south.forearmHand.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\fore-south-left-reflected-v1.png",
+        "sha256": "02cf690f3b075694811f7b3c7f91806cf93e009c86b21822f0f7de0aea931247",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 86,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand reflected with all landmarks for verified south thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 135.59763313609466
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 111.94082840236686,
+            "y": 153.75147928994085
+          },
+          "anterior": {
+            "x": 109.84615384615384,
+            "y": 100.68639053254438
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6982248520710059,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 98.67455621301775,
+          "y": 42.03550295857988
+        }
+      },
+      "contentBounds": {
+        "x": 103,
+        "y": 47,
+        "width": 51,
+        "height": 129
+      }
+    },
+    "upper.south.upperArm.right": {
+      "slotId": "upper.south.upperArm.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 108,
+          "y": 385,
+          "width": 95,
+          "height": 178
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual south anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 102.25165562913907,
+            "y": 119.65562913907286
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 17.139072847682115,
+          "y": -227.94701986754967
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 53,
+        "width": 58,
+        "height": 117
+      }
+    },
+    "upper.south.forearmHand.right": {
+      "slotId": "upper.south.forearmHand.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 112,
+          "y": 876,
+          "width": 86,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand; south anatomical-right assigned from actual thumb pixels"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 135.5976331360946
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 144.05917159763314,
+            "y": 153.7514792899408
+          },
+          "anterior": {
+            "x": 146.15384615384616,
+            "y": 100.68639053254435
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6982248520710059,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 19.775147928994087,
+          "y": -569.6094674556214
+        }
+      },
+      "contentBounds": {
+        "x": 103,
+        "y": 47,
+        "width": 50,
+        "height": 129
+      }
+    },
+    "upper.east.torso": {
+      "slotId": "upper.east.torso",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\torso-generated-v1.png",
+        "sha256": "024b3e531f112aee0aef6634536fb857e55a2d3a27eefb45c1635f858045f672",
+        "crop": {
+          "x": 730,
+          "y": 165,
+          "width": 260,
+          "height": 405
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced arm-free east blue-gray shirt and belt from original 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420; no sleeve or hand pixels"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 118.5,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 137.5,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 132.8857142857143,
+            "y": 138.92857142857142
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 109,
+              "y": 57.49999999999999
+            },
+            "right": {
+              "x": 113.07142857142858,
+              "y": 57.49999999999999
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 111.71428571428572,
+              "y": 138.92857142857142
+            },
+            "right": {
+              "x": 157.85714285714286,
+              "y": 138.92857142857142
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 19,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.2714285714285714,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -99.99999999999997,
+          "y": -6.285714285714285
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 42,
+        "width": 58,
+        "height": 101
+      }
+    },
+    "upper.east.upperArm.left": {
+      "slotId": "upper.east.upperArm.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 371,
+          "y": 385,
+          "width": 97,
+          "height": 178
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual east anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 102.25165562913907,
+            "y": 119.65562913907286
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -171.68211920529802,
+          "y": -227.94701986754967
+        }
+      },
+      "contentBounds": {
+        "x": 100,
+        "y": 53,
+        "width": 58,
+        "height": 117
+      }
+    },
+    "upper.east.forearmHand.left": {
+      "slotId": "upper.east.forearmHand.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\fore-east-left-reflected-v1.png",
+        "sha256": "293464995fd8d26e5a072c3b7eb1130661771a60871c13c9a3b84f944f74a4ce",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 109,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand reflected with all landmarks for verified east thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 118.82522768106065,
+            "y": 138.90923734588938
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 138.43584660182142,
+            "y": 150.6829192738988
+          },
+          "anterior": {
+            "x": 134.85731986865744,
+            "y": 98.21126324267394
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6567525847862675,
+        "rotationRadians": -0.34639345219125584,
+        "translation": {
+          "x": 65.47264729570658,
+          "y": 64.60454742581005
+        }
+      },
+      "contentBounds": {
+        "x": 90,
+        "y": 47,
+        "width": 51,
+        "height": 130
+      }
+    },
+    "upper.east.upperArm.right": {
+      "slotId": "upper.east.upperArm.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 371,
+          "y": 385,
+          "width": 97,
+          "height": 178
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual east anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 102.25165562913907,
+            "y": 119.65562913907286
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -171.68211920529802,
+          "y": -227.94701986754967
+        }
+      },
+      "contentBounds": {
+        "x": 100,
+        "y": 53,
+        "width": 58,
+        "height": 117
+      }
+    },
+    "upper.east.forearmHand.right": {
+      "slotId": "upper.east.forearmHand.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\fore-east-right-reflected-v1.png",
+        "sha256": "293464995fd8d26e5a072c3b7eb1130661771a60871c13c9a3b84f944f74a4ce",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 109,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand reflected with all landmarks for verified east thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 118.82522768106065,
+            "y": 138.90923734588938
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 138.43584660182142,
+            "y": 150.6829192738988
+          },
+          "anterior": {
+            "x": 134.85731986865744,
+            "y": 98.21126324267394
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6567525847862675,
+        "rotationRadians": -0.34639345219125584,
+        "translation": {
+          "x": 65.47264729570658,
+          "y": 64.60454742581005
+        }
+      },
+      "contentBounds": {
+        "x": 90,
+        "y": 47,
+        "width": 51,
+        "height": 130
+      }
+    },
+    "upper.west.torso": {
+      "slotId": "upper.west.torso",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\torso-generated-v1.png",
+        "sha256": "024b3e531f112aee0aef6634536fb857e55a2d3a27eefb45c1635f858045f672",
+        "crop": {
+          "x": 1150,
+          "y": 165,
+          "width": 260,
+          "height": 405
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced arm-free west blue-gray shirt and belt from original 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420; no sleeve or hand pixels"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 118.5,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 137.5,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 127.45714285714286,
+            "y": 138.92857142857142
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 152.42857142857144,
+              "y": 57.49999999999999
+            },
+            "right": {
+              "x": 148.3571428571429,
+              "y": 57.49999999999999
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 153.78571428571428,
+              "y": 138.92857142857142
+            },
+            "right": {
+              "x": 103.57142857142861,
+              "y": 138.92857142857142
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 19,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.2714285714285714,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -219.4285714285714,
+          "y": -6.285714285714285
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 42,
+        "width": 57,
+        "height": 101
+      }
+    },
+    "upper.west.upperArm.left": {
+      "slotId": "upper.west.upperArm.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 654,
+          "y": 385,
+          "width": 96,
+          "height": 178
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual west anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 153.03311258278148,
+            "y": 119.65562913907286
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -374.0927152317881,
+          "y": -227.94701986754967
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 53,
+        "width": 58,
+        "height": 117
+      }
+    },
+    "upper.west.forearmHand.left": {
+      "slotId": "upper.west.forearmHand.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\fore-west-left-reflected-v1.png",
+        "sha256": "0606ade6df31b073ccf853a1d33817424d08efbf61541f4974557b0f2de53be3",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 109,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand reflected with all landmarks for verified west thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 137.17477231893935,
+            "y": 138.90923734588935
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 117.56415339817855,
+            "y": 150.6829192738988
+          },
+          "anterior": {
+            "x": 121.14268013134254,
+            "y": 98.21126324267394
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6567525847862675,
+        "rotationRadians": 0.34639345219125584,
+        "translation": {
+          "x": 124.42878384238895,
+          "y": 40.74648410879127
+        }
+      },
+      "contentBounds": {
+        "x": 117,
+        "y": 48,
+        "width": 50,
+        "height": 129
+      }
+    },
+    "upper.west.upperArm.right": {
+      "slotId": "upper.west.upperArm.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 654,
+          "y": 385,
+          "width": 96,
+          "height": 178
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual west anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 153.03311258278148,
+            "y": 119.65562913907286
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -374.0927152317881,
+          "y": -227.94701986754967
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 53,
+        "width": 58,
+        "height": 117
+      }
+    },
+    "upper.west.forearmHand.right": {
+      "slotId": "upper.west.forearmHand.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\fore-west-right-reflected-v1.png",
+        "sha256": "0606ade6df31b073ccf853a1d33817424d08efbf61541f4974557b0f2de53be3",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 109,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand reflected with all landmarks for verified west thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 137.17477231893935,
+            "y": 138.90923734588935
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 117.56415339817855,
+            "y": 150.6829192738988
+          },
+          "anterior": {
+            "x": 121.14268013134254,
+            "y": 98.21126324267394
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6567525847862675,
+        "rotationRadians": 0.34639345219125584,
+        "translation": {
+          "x": 124.42878384238895,
+          "y": 40.74648410879127
+        }
+      },
+      "contentBounds": {
+        "x": 117,
+        "y": 48,
+        "width": 50,
+        "height": 129
+      }
+    },
+    "upper.north.torso": {
+      "slotId": "upper.north.torso",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\torso-generated-v1.png",
+        "sha256": "024b3e531f112aee0aef6634536fb857e55a2d3a27eefb45c1635f858045f672",
+        "crop": {
+          "x": 1560,
+          "y": 180,
+          "width": 390,
+          "height": 390
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced arm-free north blue-gray shirt and belt from original 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420; no sleeve or hand pixels"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 115.5,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 140.5,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 127.53703703703707,
+            "y": 109.1111111111111
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 100.68518518518522,
+              "y": 53.55555555555556
+            },
+            "right": {
+              "x": 155.31481481481484,
+              "y": 53.55555555555556
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 101.61111111111114,
+              "y": 109.1111111111111
+            },
+            "right": {
+              "x": 154.3888888888889,
+              "y": 109.1111111111111
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 25,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.18518518518518517,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -197.46296296296293,
+          "y": 10.037037037037038
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 46,
+        "width": 63,
+        "height": 66
+      }
+    },
+    "upper.north.upperArm.left": {
+      "slotId": "upper.north.upperArm.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 918,
+          "y": 385,
+          "width": 97,
+          "height": 178
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual north anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 102.96688741721846,
+            "y": 119.65562913907286
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -562.9139072847682,
+          "y": -227.94701986754967
+        }
+      },
+      "contentBounds": {
+        "x": 100,
+        "y": 53,
+        "width": 58,
+        "height": 117
+      }
+    },
+    "upper.north.forearmHand.left": {
+      "slotId": "upper.north.forearmHand.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\fore-north-left-reflected-v1.png",
+        "sha256": "e736f070ef129c9d4faaf953352de157b46a84362fe20286a7901ff3a5b0cbe2",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 86,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand reflected with all landmarks for verified north thumb direction"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 135.59763313609466
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 144.05917159763314,
+            "y": 153.75147928994085
+          },
+          "anterior": {
+            "x": 146.15384615384616,
+            "y": 100.68639053254438
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6982248520710059,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 97.97633136094674,
+          "y": 42.03550295857988
+        }
+      },
+      "contentBounds": {
+        "x": 103,
+        "y": 47,
+        "width": 50,
+        "height": 128
+      }
+    },
+    "upper.north.upperArm.right": {
+      "slotId": "upper.north.upperArm.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 915,
+          "y": 628,
+          "width": 101,
+          "height": 179
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated plain blue cloth upper arm; actual north anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164.00000000000006
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 153.748344370861,
+            "y": 119.6556291390728
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7152317880794702,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -562.1986754966887,
+          "y": -402.4635761589404
+        }
+      },
+      "contentBounds": {
+        "x": 98,
+        "y": 52,
+        "width": 61,
+        "height": 118
+      }
+    },
+    "upper.north.forearmHand.right": {
+      "slotId": "upper.north.forearmHand.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\upper-generated-v2.png",
+        "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+        "crop": {
+          "x": 924,
+          "y": 876,
+          "width": 86,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated long-sleeve forearm, rolled cuff, bare wrist, and hand; north anatomical-right assigned from actual thumb pixels"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 135.5976331360946
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 111.94082840236683,
+            "y": 153.7514792899408
+          },
+          "anterior": {
+            "x": 109.84615384615381,
+            "y": 100.68639053254435
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6982248520710059,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -546.4852071005918,
+          "y": -569.6094674556214
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 47,
+        "width": 50,
+        "height": 128
+      }
+    },
+    "identity.south.head": {
+      "slotId": "identity.south.head",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\head-south-original-v1.png",
+        "sha256": "86b35033e43cf571fdcc64cce8eeeb879f676acbce3c7783afc10a1746f2bf8e",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 129,
+            "y": 112
+          },
+          "chin": {
+            "x": 129,
+            "y": 193
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 17,
+          "y": 58
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 112,
+        "width": 70,
+        "height": 87
+      }
+    },
+    "identity.east.head": {
+      "slotId": "identity.east.head",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\head-east-original-v1.png",
+        "sha256": "d290e948135e780167b53ccc43430ee8b9f078c3c92378224b0fd6ec6d83f8b6",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 129,
+            "y": 110
+          },
+          "chin": {
+            "x": 152,
+            "y": 193
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 17,
+          "y": 59
+        }
+      },
+      "contentBounds": {
+        "x": 87,
+        "y": 110,
+        "width": 77,
+        "height": 88
+      }
+    },
+    "identity.west.head": {
+      "slotId": "identity.west.head",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\head-west-original-v1.png",
+        "sha256": "30850783a1cd1b9efa7974892d707669b97136a13168520125e585377371e6c8",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 111
+          },
+          "chin": {
+            "x": 103,
+            "y": 191
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 24,
+          "y": 59
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 111,
+        "width": 77,
+        "height": 87
+      }
+    },
+    "identity.north.head": {
+      "slotId": "identity.north.head",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\head-north-original-v1.png",
+        "sha256": "52119e50a6066f22e355552f5432fcbaff077562b2c73c8a3c9bdb87e155f274",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 119,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 137,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 113
+          },
+          "chin": {
+            "x": 128,
+            "y": 192
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 18,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 46,
+          "y": 62
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 113,
+        "width": 69,
+        "height": 86
+      }
+    },
+    "lower.south.thigh.left": {
+      "slotId": "lower.south.thigh.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-south-left-original-v1.png",
+        "sha256": "78cd82f545605d02f17324ac8f7fbbcc672daafdd803ff783fd47d34e9b3618f",
+        "derivation": "exact original RGB south anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 104,
+          "y": 202,
+          "width": 50,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 104,
+          "y": 222,
+          "width": 50,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122.02702209328697
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 158.31325503236056,
+            "y": 110.8419172952502
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74.027022093287,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0.027020449187264785,
+        "translation": {
+          "x": -110.34539741130575,
+          "y": -386.59805744256
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 39,
+        "width": 73,
+        "height": 110
+      }
+    },
+    "lower.south.shin.left": {
+      "slotId": "lower.south.shin.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-south-left-original-v1.png",
+        "sha256": "78cd82f545605d02f17324ac8f7fbbcc672daafdd803ff783fd47d34e9b3618f",
+        "derivation": "exact original RGB south anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 104,
+          "y": 239,
+          "width": 50,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 104,
+          "y": 250,
+          "width": 50,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 124.10519036176186
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.2254755575916,
+            "y": 101.50489211897343
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 76.10519036176179,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0.052583061610941714,
+        "translation": {
+          "x": -97.26715876416512,
+          "y": -466.55097627185637
+        }
+      },
+      "contentBounds": {
+        "x": 88,
+        "y": 22,
+        "width": 82,
+        "height": 131
+      }
+    },
+    "lower.south.shoe.left": {
+      "slotId": "lower.south.shoe.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-south-left-original-v1.png",
+        "sha256": "78cd82f545605d02f17324ac8f7fbbcc672daafdd803ff783fd47d34e9b3618f",
+        "derivation": "exact original RGB south anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 107,
+          "y": 283,
+          "width": 44,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 91.75,
+            "y": 144.5
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 65.5,
+            "y": 169
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 126.75,
+            "y": 167.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 97,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 91.75,
+            "y": 144.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 42,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -132.25,
+          "y": -361.25
+        }
+      },
+      "contentBounds": {
+        "x": 57,
+        "y": 134,
+        "width": 72,
+        "height": 51
+      }
+    },
+    "lower.south.thigh.right": {
+      "slotId": "lower.south.thigh.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-south-right-original-v1.png",
+        "sha256": "e9a48636f0f4646a5ee6321c5f4dddac74ec2aa1abd54c4fc01d6dc4bd4b553f",
+        "derivation": "exact original RGB south anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 68,
+          "y": 202,
+          "width": 48,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 68,
+          "y": 222,
+          "width": 48,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128.00000000000003,
+            "y": 122.02702209328697
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 95.68747502789373,
+            "y": 110.89595161794603
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74.027022093287,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": -0.027020449187264785,
+        "translation": {
+          "x": -75.49325927249544,
+          "y": -374.6564721267816
+        }
+      },
+      "contentBounds": {
+        "x": 87,
+        "y": 38,
+        "width": 74,
+        "height": 111
+      }
+    },
+    "lower.south.shin.right": {
+      "slotId": "lower.south.shin.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-south-right-original-v1.png",
+        "sha256": "e9a48636f0f4646a5ee6321c5f4dddac74ec2aa1abd54c4fc01d6dc4bd4b553f",
+        "derivation": "exact original RGB south anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 68,
+          "y": 239,
+          "width": 48,
+          "height": 63
+        },
+        "nominalRenderRect": {
+          "x": 68,
+          "y": 250,
+          "width": 48,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 124.10519036176186
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 98.77728878374339,
+            "y": 101.61000978521895
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 76.10519036176179,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": -0.052583061610941714,
+        "translation": {
+          "x": -88.12192180080424,
+          "y": -443.31997203159483
+        }
+      },
+      "contentBounds": {
+        "x": 86,
+        "y": 22,
+        "width": 75,
+        "height": 131
+      }
+    },
+    "lower.south.shoe.right": {
+      "slotId": "lower.south.shoe.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-south-right-original-v1.png",
+        "sha256": "e9a48636f0f4646a5ee6321c5f4dddac74ec2aa1abd54c4fc01d6dc4bd4b553f",
+        "derivation": "exact original RGB south anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 71,
+          "y": 283,
+          "width": 39,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 107.5,
+            "y": 139.25
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 128.5,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 72.5,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 133.75,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 102.25,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 128.5,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 107.5,
+            "y": 139.25
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 52.5,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -55.25,
+          "y": -366.5
+        }
+      },
+      "contentBounds": {
+        "x": 70,
+        "y": 128,
+        "width": 66,
+        "height": 52
+      }
+    },
+    "lower.north.thigh.left": {
+      "slotId": "lower.north.thigh.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-north-left-original-v1.png",
+        "sha256": "09c58d4e23397a713d037ceef8c75e90ac6bd0ecfac53e2a56167dec55e7ebbe",
+        "derivation": "exact original RGB north anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 41,
+          "y": 202,
+          "width": 45,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 41,
+          "y": 222,
+          "width": 45,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 100,
+            "y": 110
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 0,
+          "y": -380
+        }
+      },
+      "contentBounds": {
+        "x": 95,
+        "y": 39,
+        "width": 68,
+        "height": 109
+      }
+    },
+    "lower.north.shin.left": {
+      "slotId": "lower.north.shin.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-north-left-original-v1.png",
+        "sha256": "09c58d4e23397a713d037ceef8c75e90ac6bd0ecfac53e2a56167dec55e7ebbe",
+        "derivation": "exact original RGB north anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 41,
+          "y": 239,
+          "width": 45,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 41,
+          "y": 250,
+          "width": 45,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 127.99999999999999,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128.00000000000003,
+            "y": 122.02702209328697
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 101.41511323365168,
+            "y": 100.73749895112996
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 74.027022093287,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": -0.027020449187264785,
+        "translation": {
+          "x": -13.51589114037854,
+          "y": -450.3585582236393
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 23,
+        "width": 71,
+        "height": 126
+      }
+    },
+    "lower.north.shoe.left": {
+      "slotId": "lower.north.shoe.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-north-left-original-v1.png",
+        "sha256": "09c58d4e23397a713d037ceef8c75e90ac6bd0ecfac53e2a56167dec55e7ebbe",
+        "derivation": "exact original RGB north anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 44,
+          "y": 282,
+          "width": 37,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 102.25,
+            "y": 139.25
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 125,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 72.5,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 132,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 100.5,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 125,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 102.25,
+            "y": 139.25
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 49,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -8,
+          "y": -364.75
+        }
+      },
+      "contentBounds": {
+        "x": 70,
+        "y": 128,
+        "width": 61,
+        "height": 52
+      }
+    },
+    "lower.north.thigh.right": {
+      "slotId": "lower.north.thigh.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-north-right-original-v1.png",
+        "sha256": "cb9a5bbfc1fe72f955e3ab3dc5fd9b3a6a2294f9a5d607a8004c6cf976d0b329",
+        "derivation": "exact original RGB north anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 77,
+          "y": 202,
+          "width": 47,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 77,
+          "y": 222,
+          "width": 47,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 156,
+            "y": 110
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -70,
+          "y": -380
+        }
+      },
+      "contentBounds": {
+        "x": 91,
+        "y": 39,
+        "width": 70,
+        "height": 109
+      }
+    },
+    "lower.north.shin.right": {
+      "slotId": "lower.north.shin.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-north-right-original-v1.png",
+        "sha256": "cb9a5bbfc1fe72f955e3ab3dc5fd9b3a6a2294f9a5d607a8004c6cf976d0b329",
+        "derivation": "exact original RGB north anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 77,
+          "y": 239,
+          "width": 47,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 77,
+          "y": 250,
+          "width": 47,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 122.02702209328692
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 154.58488676634832,
+            "y": 100.73749895112991
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 74.027022093287,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0.027020449187264785,
+        "translation": {
+          "x": -56.36510903817165,
+          "y": -459.1661528230596
+        }
+      },
+      "contentBounds": {
+        "x": 92,
+        "y": 23,
+        "width": 72,
+        "height": 126
+      }
+    },
+    "lower.north.shoe.right": {
+      "slotId": "lower.north.shoe.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-north-right-original-v1.png",
+        "sha256": "cb9a5bbfc1fe72f955e3ab3dc5fd9b3a6a2294f9a5d607a8004c6cf976d0b329",
+        "derivation": "exact original RGB north anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 81,
+          "y": 282,
+          "width": 39,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 102.25,
+            "y": 139.25
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 125,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 72.5,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 133.75,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 100.5,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 125,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 102.25,
+            "y": 139.25
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 49,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -72.75,
+          "y": -364.75
+        }
+      },
+      "contentBounds": {
+        "x": 74,
+        "y": 128,
+        "width": 60,
+        "height": 52
+      }
+    },
+    "lower.east.thigh.left": {
+      "slotId": "lower.east.thigh.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-east-left-original-v1.png",
+        "sha256": "4a04d806488cfae4b5bd7b0d8fe4cfb9da58216c887fce2035ada687131e0dcb",
+        "derivation": "exact original RGB east anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 81,
+          "y": 202,
+          "width": 61,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 81,
+          "y": 222,
+          "width": 61,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122.24284477308237
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 154.93862292201828,
+            "y": 108.01925187025671
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74.24284477308234,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": -0.0809040991552306,
+        "translation": {
+          "x": -151.78453766808173,
+          "y": -358.7193288766318
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 35,
+        "width": 61,
+        "height": 116
+      }
+    },
+    "lower.east.shin.left": {
+      "slotId": "lower.east.shin.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-east-left-original-v1.png",
+        "sha256": "4a04d806488cfae4b5bd7b0d8fe4cfb9da58216c887fce2035ada687131e0dcb",
+        "derivation": "exact original RGB east anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 81,
+          "y": 239,
+          "width": 61,
+          "height": 60
+        },
+        "nominalRenderRect": {
+          "x": 81,
+          "y": 250,
+          "width": 61,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 118
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 156,
+            "y": 100
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 70,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -112,
+          "y": -454
+        }
+      },
+      "contentBounds": {
+        "x": 58,
+        "y": 24,
+        "width": 103,
+        "height": 120
+      }
+    },
+    "lower.east.shoe.left": {
+      "slotId": "lower.east.shoe.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\shoe-east-left-original-v1.png",
+        "sha256": "71741a6f4031cb0174f3466225629944f96d0b4b5dced13918e7a1b658223312",
+        "derivation": "exact original east brown shoe isolated from trouser and adjacent hand pixels",
+        "crop": {
+          "x": 84,
+          "y": 284,
+          "width": 51,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 116.25,
+            "y": 135.75
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 154.75,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 160.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 154.75,
+            "y": 160.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 115.375,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 154.75,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 116.25,
+            "y": 135.75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 78.75,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -76.25,
+          "y": -368.25
+        }
+      },
+      "contentBounds": {
+        "x": 73,
+        "y": 129,
+        "width": 84,
+        "height": 53
+      }
+    },
+    "lower.east.thigh.right": {
+      "slotId": "lower.east.thigh.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-east-right-original-v1.png",
+        "sha256": "4a04d806488cfae4b5bd7b0d8fe4cfb9da58216c887fce2035ada687131e0dcb",
+        "derivation": "exact original RGB east anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 81,
+          "y": 202,
+          "width": 61,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 81,
+          "y": 222,
+          "width": 61,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122.24284477308237
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 154.93862292201828,
+            "y": 108.01925187025671
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74.24284477308234,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": -0.0809040991552306,
+        "translation": {
+          "x": -151.78453766808173,
+          "y": -358.7193288766318
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 35,
+        "width": 61,
+        "height": 116
+      }
+    },
+    "lower.east.shin.right": {
+      "slotId": "lower.east.shin.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-east-right-original-v1.png",
+        "sha256": "4a04d806488cfae4b5bd7b0d8fe4cfb9da58216c887fce2035ada687131e0dcb",
+        "derivation": "exact original RGB east anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 81,
+          "y": 239,
+          "width": 61,
+          "height": 60
+        },
+        "nominalRenderRect": {
+          "x": 81,
+          "y": 250,
+          "width": 61,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 118
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 156,
+            "y": 100
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 70,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -112,
+          "y": -454
+        }
+      },
+      "contentBounds": {
+        "x": 58,
+        "y": 24,
+        "width": 103,
+        "height": 120
+      }
+    },
+    "lower.east.shoe.right": {
+      "slotId": "lower.east.shoe.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\shoe-east-right-original-v1.png",
+        "sha256": "71741a6f4031cb0174f3466225629944f96d0b4b5dced13918e7a1b658223312",
+        "derivation": "exact original east brown shoe isolated from trouser and adjacent hand pixels",
+        "crop": {
+          "x": 84,
+          "y": 284,
+          "width": 51,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 116.25,
+            "y": 135.75
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 154.75,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 160.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 154.75,
+            "y": 160.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 115.375,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 154.75,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 116.25,
+            "y": 135.75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 78.75,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -76.25,
+          "y": -368.25
+        }
+      },
+      "contentBounds": {
+        "x": 73,
+        "y": 129,
+        "width": 84,
+        "height": 53
+      }
+    },
+    "lower.west.thigh.left": {
+      "slotId": "lower.west.thigh.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-west-left-original-v1.png",
+        "sha256": "5d6f2308eff5d80da4d2252c35482de83134e64c9cd5c780ca7385802594e650",
+        "derivation": "exact original RGB west anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 73,
+          "y": 202,
+          "width": 64,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 73,
+          "y": 222,
+          "width": 64,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 127.99999999999999,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122.4311762637135
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 99.46357068878564,
+            "y": 107.27623640352061
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74.43117626371358,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0.1076898708328207,
+        "translation": {
+          "x": -8.931867956636964,
+          "y": -397.29727546652043
+        }
+      },
+      "contentBounds": {
+        "x": 103,
+        "y": 35,
+        "width": 47,
+        "height": 116
+      }
+    },
+    "lower.west.shin.left": {
+      "slotId": "lower.west.shin.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-west-left-original-v1.png",
+        "sha256": "5d6f2308eff5d80da4d2252c35482de83134e64c9cd5c780ca7385802594e650",
+        "derivation": "exact original RGB west anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 73,
+          "y": 239,
+          "width": 64,
+          "height": 60
+        },
+        "nominalRenderRect": {
+          "x": 73,
+          "y": 250,
+          "width": 64,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 118
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 112,
+            "y": 98
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 70,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -64,
+          "y": -454
+        }
+      },
+      "contentBounds": {
+        "x": 101,
+        "y": 24,
+        "width": 98,
+        "height": 120
+      }
+    },
+    "lower.west.shoe.left": {
+      "slotId": "lower.west.shoe.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\shoe-west-left-original-v1.png",
+        "sha256": "53d46987f0dc1d4b34334708fdcfaad681a7f9172e9f94ef0e716efcf0682f17",
+        "derivation": "exact original west brown shoe isolated from trouser and adjacent hand pixels",
+        "crop": {
+          "x": 86,
+          "y": 284,
+          "width": 48,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 114.5,
+            "y": 135.75
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 151.25,
+            "y": 176
+          },
+          "front": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 160.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 153,
+            "y": 160.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 113.625,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 151.25,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 114.5,
+            "y": 135.75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 75.25,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -78,
+          "y": -368.25
+        }
+      },
+      "contentBounds": {
+        "x": 74,
+        "y": 129,
+        "width": 78,
+        "height": 53
+      }
+    },
+    "lower.west.thigh.right": {
+      "slotId": "lower.west.thigh.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-west-right-original-v1.png",
+        "sha256": "5d6f2308eff5d80da4d2252c35482de83134e64c9cd5c780ca7385802594e650",
+        "derivation": "exact original RGB west anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 73,
+          "y": 202,
+          "width": 64,
+          "height": 62
+        },
+        "nominalRenderRect": {
+          "x": 73,
+          "y": 222,
+          "width": 64,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 127.99999999999999,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 122.4311762637135
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 99.46357068878564,
+            "y": 107.27623640352061
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 74.43117626371358,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0.1076898708328207,
+        "translation": {
+          "x": -8.931867956636964,
+          "y": -397.29727546652043
+        }
+      },
+      "contentBounds": {
+        "x": 103,
+        "y": 35,
+        "width": 47,
+        "height": 116
+      }
+    },
+    "lower.west.shin.right": {
+      "slotId": "lower.west.shin.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\lower-west-right-original-v1.png",
+        "sha256": "5d6f2308eff5d80da4d2252c35482de83134e64c9cd5c780ca7385802594e650",
+        "derivation": "exact original RGB west anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 73,
+          "y": 239,
+          "width": 64,
+          "height": 60
+        },
+        "nominalRenderRect": {
+          "x": 73,
+          "y": 250,
+          "width": 64,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 118
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 112,
+            "y": 98
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 70,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -64,
+          "y": -454
+        }
+      },
+      "contentBounds": {
+        "x": 101,
+        "y": 24,
+        "width": 98,
+        "height": 120
+      }
+    },
+    "lower.west.shoe.right": {
+      "slotId": "lower.west.shoe.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\blue-glasses-v1\\assets\\shoe-west-right-original-v1.png",
+        "sha256": "53d46987f0dc1d4b34334708fdcfaad681a7f9172e9f94ef0e716efcf0682f17",
+        "derivation": "exact original west brown shoe isolated from trouser and adjacent hand pixels",
+        "crop": {
+          "x": 86,
+          "y": 284,
+          "width": 48,
+          "height": 31
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 114.5,
+            "y": 135.75
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 151.25,
+            "y": 176
+          },
+          "front": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 76,
+            "y": 160.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 153,
+            "y": 160.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 113.625,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 151.25,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 114.5,
+            "y": 135.75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 75.25,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -78,
+          "y": -368.25
+        }
+      },
+      "contentBounds": {
+        "x": 74,
+        "y": 129,
+        "width": 78,
+        "height": 53
+      }
+    }
+  },
+  "fallbacks": {},
+  "accessoryPolicy": {},
+  "layerOrder": {
+    "south": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "upperArmsBack",
+      "torso",
+      "forearmsFront",
+      "cuffsFront",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "north": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "arms",
+      "torso",
+      "shoulderCaps",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "east": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "west": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedSouth": [
+      "seatedLower",
+      "backHair",
+      "upperArmsBack",
+      "torso",
+      "forearmsFront",
+      "cuffsFront",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedNorth": [
+      "seatedLower",
+      "backHair",
+      "arms",
+      "torso",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedEast": [
+      "seatedLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedWest": [
+      "seatedLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "clipboardSouth": [
+      "lower",
+      "backHair",
+      "torso",
+      "head",
+      "prop",
+      "arms",
+      "frontHair"
+    ]
+  },
+  "sourceLineage": {
+    "original": {
+      "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-492d528d-52f8-422a-a1dc-fe63b3cd04cb.png",
+      "sha256": "248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420"
+    },
+    "upperGeneration": {
+      "path": "tools/character-mapping/layered-pilot/blue-glasses-v1/assets/upper-generated-v2.png",
+      "sha256": "83612220dbbb9a1be742e944ce6876a4e46f001fec2dde72d1291d15bf4a91eb",
+      "prompt": "assets/upper-generated-v2-prompt.txt",
+      "derivation": "rows 2-4 only; plain cloth upper arms plus forearm-owned long sleeve, low rolled cuff, short bare wrist, and hand; complete part pixels and landmarks reflected together from actual thumb anatomy"
+    },
+    "torsoGeneration": {
+      "path": "tools/character-mapping/layered-pilot/blue-glasses-v1/assets/torso-generated-v1.png",
+      "sha256": "024b3e531f112aee0aef6634536fb857e55a2d3a27eefb45c1635f858045f672",
+      "prompt": "assets/torso-generated-v1-prompt.txt",
+      "derivation": "four complete arm-free shirt-and-belt trunks normalized against own static cloth widths"
+    },
+    "lower": {
+      "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-492d528d-52f8-422a-a1dc-fe63b3cd04cb.png",
+      "sha256": "248c1222bef1cd5333b870c9179c6182966b6d47fd266da69a88bec70cedb420",
+      "derivation": "exact original trouser and shoe pixels; profile donor reuses one verified source leg per view"
+    }
+  },
+  "profile": {
+    "canvas": {
+      "width": 160,
+      "height": 320,
+      "axisX": 80,
+      "floorY": 287
+    }
+  },
+  "garment": {
+    "sleeveLength": "long-rolled-near-wrist",
+    "wristCuffOwner": "forearmHand",
+    "elbowUnderlapOwner": "upperArm-and-forearm",
+    "sourceRuntimeY": {
+      "shoulder": [
+        116,
+        118
+      ],
+      "elbow": [
+        150,
+        152
+      ],
+      "cuffBottom": [
+        181,
+        183
+      ],
+      "palmRoot": [
+        189,
+        191
+      ],
+      "handEnd": [
+        213,
+        215
+      ]
+    }
+  }
+}

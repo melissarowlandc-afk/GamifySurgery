@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "patient-demographics20-v4-scoped-backup-safety/v1",
+  "auditedAt": "2026-10-07T22:33:28.428Z",
+  "baseBranch": "beta",
+  "baseCommit": "05f91c99d8207fcc7237832433f56b167d4e45d0",
+  "scope": "Owner-approved patient-demographics20-v4 character integration recovery checkpoint; no full current gameplay checkout or publication.",
+  "readOnlyAudit": true,
+  "stableRuntimeDuringAudit": true,
+  "runtime": {
+    "identities": 225,
+    "assets": 1830,
+    "publicPoseFiles": {
+      "fileCount": 1830,
+      "totalBytes": 68914357,
+      "orderedRelativePathByteHashInventorySha256": "e0c52ce68db9160395eda02134d60f067a9172d554e605b97c522ea308773112"
+    },
+    "cohorts": [
+      {
+        "root": "apps/player/public/art/characters/gs026-stills-v1",
+        "count": 1054
+      },
+      {
+        "root": "apps/player/public/art/characters/gs026-employee-expansion-v1",
+        "count": 200
+      },
+      {
+        "root": "apps/player/public/art/characters/level3-roster-v2",
+        "count": 256
+      },
+      {
+        "root": "apps/player/public/art/characters/patient-women20-v3",
+        "count": 160
+      },
+      {
+        "root": "apps/player/public/art/characters/patient-demographics20-v4",
+        "count": 160
+      }
+    ]
+  },
+  "observedNewBatch": {
+    "fileCount": 612,
+    "totalBytes": 126678702,
+    "orderedRelativePathByteHashInventorySha256": "7f0238edffa565d412c579a6be6abdbd53e8cf499cb8b3109d50ac2342e4c8ad"
+  },
+  "proposedScopedBackupFiles": {
+    "fileCount": 4361,
+    "totalBytes": 270587282,
+    "orderedRelativePathByteHashInventorySha256": "5f8a2efbaa0c2e39f7eb1ab6a3a027a443e6e6a72e667a7bef84e0bcb534be74"
+  },
+  "liveRuntimePathsExcluded": [
+    "apps/player/src/art/characterStillRegistry.generated.json",
+    "apps/player/src/art/characterStillRegistry.ts",
+    "apps/player/src/art/characterStillRegistry.test.ts",
+    "packages/game-domain/src/characterStillCatalog.ts",
+    "packages/game-domain/src/characterStillCatalog.test.ts",
+    "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json"
+  ],
+  "postIntegrationRuntimeSnapshotSources": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "bytes": 1051308,
+      "sha256": "9ddaa8381d092c5c49536465bea036edd3c9ab8e8659731a85e7f3d4def94374"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "bytes": 3366,
+      "sha256": "d272179b736928d8533a395bbd2d67efaa0cf6eb73a1212b2a0d5c609d7a06d6"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "bytes": 7774,
+      "sha256": "9f09f142dde5d5d01bad48c0f23e6c5b95abf127dcccebacfd76f412728f021e"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "bytes": 14675,
+      "sha256": "9af981fb9dec9e861f3eeab8245cc52b193dad486458f654c26b7f96bcdc195d"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "bytes": 12223,
+      "sha256": "24be461ee07e6c7831a0618164e020449777dcd179b81b592e6d4bcc97f9b583"
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "bytes": 1309029,
+      "sha256": "9304d56a9bb0ae75b7e11f8dcd58490b47189f07df71a253cd14759ad2f061e6"
+    }
+  ],
+  "approvedArt": {
+    "selectedEightViewSources": 20,
+    "standingCardinalSources": 20,
+    "preservedCorrectionHistories": 7,
+    "distinctNewNormalizedPoses": 160,
+    "acceptedSourceSha256": {
+      "001": "4e4e718428d021d7a9d5d1c29471cdac1a85c978d2c4850abe3fd51f7e7e039a",
+      "002": "ff90fc8a4fb388113d0f2fbe25ecce9c50db6a0198f3246851ef059d822995ee",
+      "003": "89f82c99668890a59f116a3f1b658f235a618089857db19e1bee13310e409fec",
+      "004": "1ba82686ab4a8d47eb213f7761413a71a211512e2db0b9c60beb38e60d2f0b63",
+      "005": "1a06107ea5eeff2e3d692a6b03210bdf7cd79afb6fff31e7b521fb9f7734de6b",
+      "006": "db67d1f67eba852b137c77d1059dffcee2032262f74914a2fa0dbc69f121c967",
+      "007": "5337de0f45ae2b27e02274d347a0c07ff344d9aa2f379b6a48392005b592d13c",
+      "008": "0cc82060f59176cd2c48258598c3e51b3129c14232c48ddc3db629aa76ab710f",
+      "009": "b0bfcf298231563c1e078aaf7f798f3b4540502f40d256e7ef85a729159859dd",
+      "010": "e4f69e1bdf47a4669ba6dbfb3f27165c20eb4cf10a6e9af57d10fb98e453a981",
+      "011": "897d44b94a3cbb6d87c023970b91805a4edc332f9ba057122622d27a3346def3",
+      "012": "80a555d302750c7b907a1b5572fd620527bf7a636e2275979e380a044badf9ef",
+      "013": "5b620a5d4147778dab90be3f18f48647a9e81998513ece5289b869b28f956861",
+      "014": "8a8119382f86ee58239bf57dfd32bbb1d57e6379aa6a7d1222ea583266f4122d",
+      "015": "a4bf273292482532697fb6914b1b5a489526a8ae95b9b00b8c76c271513d9727",
+      "016": "d93c0dd0fce9f169831ac6ec81aa3c73cf07d2dc92c685fd71c43e2b3af1c52f",
+      "017": "3021719c1c543e90afafc4524ae2b767f6c8a6ce5ae1c670fde07322c3d0e67a",
+      "018": "fa25785bc0484a15ea96c53be6f209849f91d7769b588817f65d074476345666",
+      "019": "5bfa9c2ea7df6e7c9c93a04e4709ad79ab503eafd2eb641868694f81ed769c33",
+      "020": "afdb9d65c3778d55e084b0dfa1d4f6e4b56e62d408129831fbe59465816b4285"
+    },
+    "seatContactContractSha256": "556799b76f48c7d4c325d824cb2639f14a474e4f201ea9675d8bd1495376634f",
+    "derivedAlphaReportSha256": "3edc8848b08663c7d42f2f359abffc89da0559962ba154879c21cedee2de481f",
+    "generationMode": "built-in-image_gen",
+    "externalNativeFilesRead": false
+  },
+  "checks": {
+    "registeredPublicPngHashDimensionsRgbaIssues": [],
+    "acceptedSourceIssues": [],
+    "selectedNativeCopyAndExactPromptIssues": [],
+    "directProvenanceSourceHashIssues": [],
+    "directGlobalInputHashIssues": [],
+    "strongCredentialPatternFindings": [],
+    "emailFieldFindings": [],
+    "unexpectedNewBatchExtensions": [],
+    "filesLargerThan50MiB": [],
+    "pngTextExifOrMalformedChunks": [],
+    "newBatchSymlinks": []
+  },
+  "contentSafety": {
+    "newClinicalTeachingClaims": false,
+    "clinicalQuestionPresentationOrExplanationProseInDemographicReports": false,
+    "realPatientNamesOrRecordsFound": false,
+    "proprietarySourceFilesIncluded": false,
+    "clinicalReleaseStatusUnchanged": "synthetic_unapproved_prototype",
+    "hostPathMetadata": "Existing exact tool receipts preserve host filesystem paths and generated-image identifiers; this safety summary contains no absolute host paths or credential values."
+  },
+  "historicalCoverage": {
+    "directProvenanceDerivedSourceCopies": {
+      "fileCount": 1830,
+      "totalBytes": 68914357,
+      "orderedRelativePathByteHashInventorySha256": "bba4a4de5e3d8fc71c389a204a0aad232f84ff05338e2cb5e2d2e78703a9fd28"
+    },
+    "directGlobalInputReceipts": {
+      "fileCount": 9,
+      "totalBytes": 4039892,
+      "orderedRelativePathByteHashInventorySha256": "9f7ed82cfff98934adeb9ad3f5f0d9eeed9867348b240439f2e0981d4bf51f6f"
+    },
+    "oneLevelReferencedMetadataReceipts": {
+      "fileCount": 241,
+      "totalBytes": 8698714,
+      "orderedRelativePathByteHashInventorySha256": "4013ee7599b28c83474f331210b21eabf438076f110ceb014377c738a9966828"
+    },
+    "cutoff": "Direct sourceFile pose PNGs and direct inputs, optionally one level of referenced JSON/TXT/MD receipts. Recursive historical native sheets, proof images, contact sheets, overlays, walk frames and regeneration dependencies are excluded unless already in the complete new batch.",
+    "olderNativeRegenerationIsSelfContained": false,
+    "fullCurrentGameRuntimeIsSelfContained": false,
+    "historicalMutableReferenceClaims": "Old source/approval/ledger claims remain unchanged. Approval-time gallery resolves via immutable copiedTo baseline; older mutable ledger paths may differ from historical recorded hashes. No recursive historical-chain validation is claimed."
+  },
+  "publication": {
+    "deployment": false,
+    "release": false,
+    "pagesPublication": false,
+    "gitMutationByAuditWorker": false
+  },
+  "inventoryBoundary": "Point-in-time relative-path inventories cover the inspected source scope. This generated safety record and later root Git/backup records are outside those counts; root must audit the final staged manifest before commit."
+}

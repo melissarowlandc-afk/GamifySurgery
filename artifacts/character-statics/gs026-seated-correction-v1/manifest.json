@@ -1,0 +1,261 @@
+{
+  "schemaVersion": "gs026-seated-correction-overlay/v1",
+  "scope": "P01 four-direction pilot only; baseline remains immutable",
+  "canvas": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "floorY": 287
+  },
+  "baseline": {
+    "manifest": "artifacts/character-statics/gs-018-v1/coverage-manifest.json",
+    "sha256": "302e344f060a191f728b95bfc0a8b3565f5bccf1eabc9b5356d00ad30bd524d6",
+    "identityId": "patient.adult.001"
+  },
+  "generation": {
+    "mode": "built-in image_gen",
+    "useCase": "identity-preserve",
+    "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-001-seated-cardinals-v1.png",
+    "sourceSha256": "664d130ad84b2b3ef51c1f9374539fa94ada4ebce9b5c348971666b6a9999b35",
+    "promptFile": "tools/character-mapping/gs026-seated-correction/patient-adult-001-seated-cardinals-v1-prompt.txt",
+    "promptSha256": "cc4a0c3ef67fe3dd5bde527414252bec7031bbb394f5fc2fedfda145e9dcc30f",
+    "references": [
+      "artifacts/character-statics/gs-018-v1/proofs/patients-001-010/patient.adult.001-native-light.png",
+      "tools/character-mapping/gs-018-statics-v1/assets/patient-001-seated-v1.png"
+    ]
+  },
+  "replacement": {
+    "identityId": "patient.adult.001",
+    "stablePosePrefix": "sit",
+    "authorization": "owner-authorized-correction",
+    "approval": "pending-parent-and-owner-visual-approval",
+    "poses": {
+      "south": {
+        "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.001/sit-south.png",
+        "sha256": "dd5b793f968ebaaa77a2866451d362b416277b5c921d4c8197f66a4f917a8d53",
+        "width": 160,
+        "height": 320,
+        "source": {
+          "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-001-seated-cardinals-v1.png",
+          "sha256": "664d130ad84b2b3ef51c1f9374539fa94ada4ebce9b5c348971666b6a9999b35",
+          "cell": {
+            "x": 0,
+            "y": 0,
+            "width": 543,
+            "height": 724
+          },
+          "visibleBounds": {
+            "x": 176,
+            "y": 112,
+            "width": 214,
+            "height": 562,
+            "right": 389,
+            "bottom": 673
+          }
+        },
+        "transform": {
+          "scale": 0.467,
+          "translateX": -52.161,
+          "translateY": -27.290999999999997,
+          "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 283,
+            "x": 80
+          },
+          "floor": {
+            "sourceY": 673,
+            "y": 287
+          },
+          "seatContact": {
+            "sourceY": 480,
+            "y": 196.86900000000003,
+            "status": "authored-candidate-pending-parent-visual-review"
+          }
+        },
+        "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+      },
+      "east": {
+        "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.001/sit-east.png",
+        "sha256": "448463c5ff3a10b8605f9abf69284c6e958966ce4dfc20ed118d38e4fd11c059",
+        "width": 160,
+        "height": 320,
+        "source": {
+          "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-001-seated-cardinals-v1.png",
+          "sha256": "664d130ad84b2b3ef51c1f9374539fa94ada4ebce9b5c348971666b6a9999b35",
+          "cell": {
+            "x": 543,
+            "y": 0,
+            "width": 543,
+            "height": 724
+          },
+          "visibleBounds": {
+            "x": 152,
+            "y": 112,
+            "width": 278,
+            "height": 561,
+            "right": 429,
+            "bottom": 672
+          }
+        },
+        "transform": {
+          "scale": 0.467,
+          "translateX": -55.89700000000002,
+          "translateY": -26.824000000000012,
+          "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 291,
+            "x": 80
+          },
+          "floor": {
+            "sourceY": 672,
+            "y": 287
+          },
+          "seatContact": {
+            "sourceY": 495,
+            "y": 204.341,
+            "status": "authored-candidate-pending-parent-visual-review"
+          }
+        },
+        "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+      },
+      "west": {
+        "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.001/sit-west.png",
+        "sha256": "98b690e285106ef403774a0fdeaa7b369b6e3737e462f305bd3ddd1ada7d11f0",
+        "width": 160,
+        "height": 320,
+        "source": {
+          "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-001-seated-cardinals-v1.png",
+          "sha256": "664d130ad84b2b3ef51c1f9374539fa94ada4ebce9b5c348971666b6a9999b35",
+          "cell": {
+            "x": 1086,
+            "y": 0,
+            "width": 543,
+            "height": 724
+          },
+          "visibleBounds": {
+            "x": 113,
+            "y": 112,
+            "width": 277,
+            "height": 561,
+            "right": 389,
+            "bottom": 672
+          }
+        },
+        "transform": {
+          "scale": 0.467,
+          "translateX": -37.21700000000001,
+          "translateY": -26.824000000000012,
+          "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 251,
+            "x": 80
+          },
+          "floor": {
+            "sourceY": 672,
+            "y": 287
+          },
+          "seatContact": {
+            "sourceY": 495,
+            "y": 204.341,
+            "status": "authored-candidate-pending-parent-visual-review"
+          }
+        },
+        "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+      },
+      "north": {
+        "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.001/sit-north.png",
+        "sha256": "26d43fb98dbd1894e16f56c21d9de35d1a3aab424e82787d97a4efff04fcd119",
+        "width": 160,
+        "height": 320,
+        "source": {
+          "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-001-seated-cardinals-v1.png",
+          "sha256": "664d130ad84b2b3ef51c1f9374539fa94ada4ebce9b5c348971666b6a9999b35",
+          "cell": {
+            "x": 1629,
+            "y": 0,
+            "width": 543,
+            "height": 724
+          },
+          "visibleBounds": {
+            "x": 153,
+            "y": 112,
+            "width": 214,
+            "height": 561,
+            "right": 366,
+            "bottom": 672
+          }
+        },
+        "transform": {
+          "scale": 0.467,
+          "translateX": -41.42,
+          "translateY": -26.824000000000012,
+          "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+        },
+        "anchors": {
+          "bodyAxis": {
+            "sourceX": 260,
+            "x": 80
+          },
+          "floor": {
+            "sourceY": 672,
+            "y": 287
+          },
+          "seatContact": {
+            "sourceY": 493,
+            "y": 203.407,
+            "status": "authored-candidate-pending-parent-visual-review"
+          }
+        },
+        "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+      }
+    }
+  },
+  "proofs": [
+    {
+      "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/patient.adult.001-native-light.png",
+      "sha256": "f2ca48dafc79a58b301a7873f68189257d15a592f58bca7f56c3da9b80e64c4f",
+      "theme": "light",
+      "spriteSize": {
+        "width": 160,
+        "height": 320
+      },
+      "scaleFactor": 1
+    },
+    {
+      "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/patient.adult.001-game-32x64-light.png",
+      "sha256": "3cbc1af9edb820a2037e2102792445dee39140765e8d7acdf58e32fb6584a412",
+      "theme": "light",
+      "spriteSize": {
+        "width": 32,
+        "height": 64
+      },
+      "scaleFactor": 0.2
+    },
+    {
+      "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/patient.adult.001-native-dark.png",
+      "sha256": "d7f29bc1b23351a938365c010cff16cc98744b7157e74386a9b6bba2fb19bf0c",
+      "theme": "dark",
+      "spriteSize": {
+        "width": 160,
+        "height": 320
+      },
+      "scaleFactor": 1
+    },
+    {
+      "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/patient.adult.001-game-32x64-dark.png",
+      "sha256": "2d1ac9f2b0677b051f13bafd536349252547cb85c869a140a01fd6bf5046bb0c",
+      "theme": "dark",
+      "spriteSize": {
+        "width": 32,
+        "height": 64
+      },
+      "scaleFactor": 0.2
+    }
+  ]
+}

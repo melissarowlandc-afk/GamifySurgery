@@ -1,0 +1,112 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { loadImage } from '@napi-rs/canvas';
+import { verifyRuntimeBaseline } from './runtime-baseline.mjs';
+import { runtimeIntegrationState } from './runtime-contract.mjs';
+
+const tool = resolve(fileURLToPath(new URL('.', import.meta.url)));
+const repo = resolve(tool, '../../..');
+const root = resolve(repo, 'artifacts/character-statics/patient-demographics20-v4');
+const placement = JSON.parse(readFileSync(resolve(root, 'placement-qa/placement-manifest.json'), 'utf8'));
+const staging = JSON.parse(readFileSync(resolve(root, 'staging-registry.json'), 'utf8'));
+verifyRuntimeBaseline();
+const hash = file => createHash('sha256').update(readFileSync(file)).digest('hex');
+const close = (actual, expected, label) => assert(Math.abs(actual - expected) < 1e-9, `${label}: ${actual} != ${expected}`);
+
+assert.equal(placement.schemaVersion, 'patient-demographics20-v4-placement-qa/v2');
+const integration = runtimeIntegrationState();
+assert.equal(placement.status, integration.ready ? 'owner-approved-locally-integrated' : integration.authorized ? 'owner-approved-placement-review' : 'candidate-review-only-not-runtime-ready');
+assert.deepEqual(placement.runtimeIntegration, integration);
+assert.equal(placement.runtimeMath.tileSize, 52);
+assert.equal(placement.runtimeMath.nativeWidth, 160);
+assert.equal(placement.runtimeMath.nativeHeight, 320);
+assert.equal(placement.runtimeMath.floorY, 287);
+assert.equal(placement.runtimeMath.visibleHeightCap, 246);
+assert.equal(placement.diagnosticScale, 4);
+for (const evidence of Object.values(placement.evidence)) {
+  assert.equal(hash(resolve(repo, evidence.path)), evidence.sha256, `runtime evidence hash mismatch ${evidence.path}`);
+}
+assert.equal(hash(resolve(repo, placement.chairAsset.path)), placement.chairAsset.sha256, 'chair asset hash mismatch');
+assert.deepEqual(placement.chairAsset.crop, { x: 167, y: 692, width: 331, height: 478 });
+assert.deepEqual(placement.chairAsset.approvedProofCoordinateSpace, { floorOriginPixels: [70, 110], tilePixels: 88 });
+assert.deepEqual(placement.chairAsset.approvedProofDestination, { x: 164, y: 176, width: 76, height: 110 });
+assert.deepEqual(placement.chairAsset.runtimeRoundedDestination, { left: 56, top: 39, width: 45, height: 65 });
+assert.deepEqual(placement.approvedSupport.fixtureSeatTiles, { x: 1.5, y: 1.82 });
+assert.equal(placement.approvedSupport.southCushionInsetTiles, .25);
+assert.deepEqual(placement.approvedSupport.visibleSeatTiles, { x: 1.5, y: 1.57 });
+assert.deepEqual(placement.approvedSupport.worldSeatAtReferenceTileSize, { x: 78, y: 81.64 });
+assert.equal(placement.approvedSupport.facing, 'south');
+assert.equal(placement.diagnostics.length, staging.entries.length, 'placement count differs from complete staged roster');
+
+for (const diagnostic of placement.diagnostics) {
+  const staged = staging.entries.find(entry => entry.number === diagnostic.number);
+  assert(staged, `unstaged diagnostic ${diagnostic.number}`);
+  assert.equal(staged.sourceSha256, diagnostic.sourceSha256, `source hash drift ${diagnostic.number}`);
+  const packageManifestFile = resolve(repo, diagnostic.packageManifest.path);
+  assert.equal(diagnostic.packageManifest.path, staged.manifest, `package pointer drift ${diagnostic.number}`);
+  assert.equal(hash(packageManifestFile), diagnostic.packageManifest.sha256, `package hash drift ${diagnostic.number}`);
+  const packageManifest = JSON.parse(readFileSync(packageManifestFile, 'utf8'));
+  const standSouth = packageManifest.poses.stand.south;
+  const sitSouth = packageManifest.poses.sit.south;
+  const standingVisibleHeight = standSouth.anchors.floorY - standSouth.visibleBounds.y;
+  const identityScale = Math.min(1, placement.runtimeMath.visibleHeightCap / standingVisibleHeight);
+  const renderedWidth = Math.max(1, Math.round(
+    placement.runtimeMath.tileSize * placement.runtimeMath.characterStillWidthInTiles * identityScale,
+  ));
+  const renderedHeight = renderedWidth * 2;
+  const seatContactY = sitSouth.anchors.seatContactY;
+  const worldSeat = placement.approvedSupport.worldSeatAtReferenceTileSize;
+  const adjustedBaseY = worldSeat.y +
+    (placement.runtimeMath.floorY - seatContactY) *
+    (renderedHeight / placement.runtimeMath.nativeHeight);
+  const roundedBaseY = Math.round(adjustedBaseY);
+  const frameLeft = Math.round(worldSeat.x) - renderedWidth / 2;
+  const frameTop = roundedBaseY -
+    placement.runtimeMath.floorY * (renderedHeight / placement.runtimeMath.nativeHeight);
+  const expected = {
+    identityScale,
+    standingVisibleHeight,
+    renderedWidth,
+    renderedHeight,
+    seatContactY,
+    adjustedBaseY,
+    roundedBaseY,
+    frameLeft,
+    frameTop,
+    mappedSeatContactY: frameTop + seatContactY * (renderedHeight / placement.runtimeMath.nativeHeight),
+    visibleLeft: frameLeft + sitSouth.visibleBounds.x * (renderedWidth / placement.runtimeMath.nativeWidth),
+    visibleTop: frameTop + sitSouth.visibleBounds.y * (renderedHeight / placement.runtimeMath.nativeHeight),
+    visibleWidth: sitSouth.visibleBounds.width * (renderedWidth / placement.runtimeMath.nativeWidth),
+    visibleHeight: sitSouth.visibleBounds.height * (renderedHeight / placement.runtimeMath.nativeHeight),
+  };
+  for (const [key, value] of Object.entries(expected)) close(diagnostic.runtimeGeometry[key], value, `${diagnostic.number} ${key}`);
+  assert.equal(diagnostic.candidateContacts.south, seatContactY, `${diagnostic.number} south contact drift`);
+  assert.equal(diagnostic.candidateContacts.east, packageManifest.poses.sit.east.anchors.seatContactY, `${diagnostic.number} east contact drift`);
+  assert.equal(diagnostic.candidateContacts.west, packageManifest.poses.sit.west.anchors.seatContactY, `${diagnostic.number} west contact drift`);
+  assert.equal(diagnostic.candidateContacts.north, packageManifest.poses.sit.north.anchors.seatContactY, `${diagnostic.number} north contact drift`);
+  const south = diagnostic.directions.south;
+  assert.equal(south.status, integration.authorized ? 'owner-approved-placement-rendered-with-approved-runtime-geometry' : 'candidate-placement-rendered-with-approved-runtime-geometry-pending-root-review');
+  const proof = resolve(repo, south.proof.path);
+  assert(existsSync(proof), `missing south proof ${diagnostic.number}`);
+  assert.equal(hash(proof), south.proof.sha256, `south proof hash mismatch ${diagnostic.number}`);
+  const image = await loadImage(proof);
+  assert.equal(image.width, south.proof.width, `${diagnostic.number} proof width`);
+  assert.equal(image.height, south.proof.height, `${diagnostic.number} proof height`);
+  assert.equal(image.width, 1040, `${diagnostic.number} proof canvas width`);
+  assert.equal(image.height, 650, `${diagnostic.number} proof canvas height`);
+  for (const direction of ['east', 'west', 'north']) {
+    assert.equal(diagnostic.directions[direction].status, 'not-rendered-front-desk-support-is-authored-south-facing');
+  }
+}
+assert.deepEqual(placement.pages.flatMap(page => page.identities), staging.entries.map(entry => entry.number));
+for (const page of placement.pages) {
+  const file = resolve(repo, page.proof.path); assert.equal(hash(file), page.proof.sha256);
+  const image = await loadImage(file); assert.equal(image.width, 1040); assert.equal(image.height, 706);
+}
+if (process.argv.includes('--require-complete')) assert.equal(placement.diagnostics.length, 20, 'incomplete chair placement proofs');
+const ledger = JSON.parse(readFileSync(resolve(tool, 'review-acceptance.json'), 'utf8'));
+if (integration.authorized) for (const proof of ledger.chairPlacementReview.pages) assert.equal(hash(resolve(repo, proof.path)), proof.sha256, 'approved chair board changed');
+console.log(JSON.stringify({ status: 'PASS', diagnostics: placement.diagnostics.length, runtimeReady: integration.ready, schemaVersion: placement.schemaVersion }));

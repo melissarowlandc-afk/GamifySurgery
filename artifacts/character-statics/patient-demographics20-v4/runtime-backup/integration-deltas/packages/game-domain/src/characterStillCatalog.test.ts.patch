@@ -1,0 +1,83 @@
+diff --git a/packages/game-domain/src/characterStillCatalog.test.ts b/packages/game-domain/src/characterStillCatalog.test.ts
+index e64a8407..b171ab30 100644
+--- a/packages/game-domain/src/characterStillCatalog.test.ts
++++ b/packages/game-domain/src/characterStillCatalog.test.ts
+@@ -22,14 +22,51 @@ import {
+ } from "./characterStillCatalog";
+ 
+ describe("character still selection catalog", () => {
+-  it("covers all 205 packaged identities through explicit selection categories", () => {
+-    expect(CHARACTER_STILL_CATALOG).toHaveLength(205);
+-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(205);
+-    expect(PATIENT_CHARACTER_STILLS).toHaveLength(96);
+-    expect(STAFF_CHARACTER_STILLS).toHaveLength(57);
++  it("covers all 225 packaged identities through explicit selection categories", () => {
++    expect(CHARACTER_STILL_CATALOG).toHaveLength(225);
++    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(225);
++    expect(PATIENT_CHARACTER_STILLS).toHaveLength(116);
++    expect(STAFF_CHARACTER_STILLS).toHaveLength(61);
+     expect(FOUNDER_STILL_IDS).toHaveLength(30);
+     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
+-    expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(16);
++    expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(12);
++  });
++
++  it("reaches all twenty approved demographic-gap designs before repeating each compatible pool", () => {
++    const additions = PATIENT_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "patient-demographics20-v4");
++    expect(additions).toHaveLength(20);
++    expect(additions.filter(entry => entry.compatibleSexLabel === "Male")).toHaveLength(15);
++    expect(additions.filter(entry => entry.compatibleSexLabel === "Female")).toHaveLength(5);
++    const profiles = [
++      { sexLabel: "Male", ageYears: 38, additions: 5 },
++      { sexLabel: "Male", ageYears: 54, additions: 7 },
++      { sexLabel: "Male", ageYears: 70, additions: 3 },
++      { sexLabel: "Female", ageYears: 70, additions: 3 },
++      { sexLabel: "Female", ageYears: 54, additions: 2 },
++    ] as const;
++    for (const profile of profiles) {
++      const pool = patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
++      const newPool = additions.filter(entry => pool.includes(entry));
++      expect(newPool).toHaveLength(profile.additions);
++      const occupiedStillIds = new Set<string>(), recentlyUsedStillIds: string[] = [];
++      for (let index = 0; index < pool.length; index += 1) {
++        const selected = selectNewPatientStillId("approved-demographic-cohort", `${profile.sexLabel}.${profile.ageYears}.${index}`, profile, { occupiedStillIds, recentlyUsedStillIds });
++        expect(selected).toBeDefined();
++        expect(occupiedStillIds.has(selected!)).toBe(false);
++        occupiedStillIds.add(selected!); recentlyUsedStillIds.push(selected!);
++      }
++      expect([...occupiedStillIds].sort()).toEqual(pool.map(entry => entry.stillId).sort());
++      for (const entry of newPool) expect(occupiedStillIds.has(entry.stillId)).toBe(true);
++      expect(selectNewPatientStillId("approved-demographic-cohort", "exhausted", profile, { occupiedStillIds, recentlyUsedStillIds })).toBe(recentlyUsedStillIds[0]);
++    }
++    for (const entry of additions) {
++      expect(patientStillEligibleEntries(entry.compatibleSexLabel, entry.intendedAge)).toContainEqual(entry);
++      expect(patientStillEligibleEntries(entry.compatibleSexLabel === "Male" ? "Female" : "Male", entry.intendedAge)).not.toContainEqual(entry);
++      expect(patientStillEligibleEntries(entry.compatibleSexLabel, 12)).not.toContainEqual(entry);
++      for (const ageYears of [24, 38, 54, 70]) {
++        if (entry.ageBand !== patientStillEligibleEntries(entry.compatibleSexLabel, ageYears)[0]?.ageBand) expect(patientStillEligibleEntries(entry.compatibleSexLabel, ageYears)).not.toContainEqual(entry);
++      }
++    }
+   });
+ 
+   it("reaches all twenty approved women designs before repeating a compatible pool", () => {
+@@ -131,15 +168,16 @@ describe("character still selection catalog", () => {
+     }
+   });
+ 
+-  it("registers future pediatric and radiologist art without making it selectable", () => {
++  it("keeps future pediatric art excluded and retains the enabled radiologist staff pool", () => {
+     const pediatric = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "pediatric");
+     const radiologists = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "radiologist");
+     expect(pediatric).toHaveLength(12);
+     expect(pediatric.every((entry) => entry.availability === "excluded-until-future-approved-pediatric-release")).toBe(true);
+-    expect(radiologists).toHaveLength(4);
+-    expect(radiologists.every((entry) => entry.futureStaffRoleDefinitionId === "staff.radiologist" && entry.availability === "level4-locked")).toBe(true);
++    expect(radiologists).toHaveLength(0);
+     expect(patientStillEligibleEntries(undefined, undefined).map((entry) => entry.stillId)).not.toContain("level3-roster-v2.021");
+-    expect(staffStillEligibleEntries("staff.radiologist")).toEqual([]);
++    expect(staffStillEligibleEntries("staff.radiologist").map(entry => entry.stillId)).toEqual([
++      "level3-roster-v2.001", "level3-roster-v2.002", "level3-roster-v2.003", "level3-roster-v2.004",
++    ]);
+   });
+ 
+   it("maps all thirty founder presets exactly and keeps six extras explicit-only", () => {

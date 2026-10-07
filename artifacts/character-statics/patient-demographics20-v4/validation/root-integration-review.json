@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "reviewer": "/root",
+  "actualCodeAndTestDiffsReviewed": 4,
+  "integrationDesignAndApprovalGuardsReviewed": true,
+  "independentChecks": [
+    "validate-runtime-integration.mjs",
+    "validate-roster.mjs --require-root-review",
+    "validate-placement-qa.mjs --require-complete",
+    "validate-promotion-rerun.mjs",
+    "160 exact-hash canonical HTTP asset fetches"
+  ],
+  "runtime": {
+    "identities": 225,
+    "assets": 1830,
+    "adultPatientDesigns": 116
+  },
+  "preserved": {
+    "identities": 205,
+    "assets": 1670
+  },
+  "workerTests": {
+    "domain": 26,
+    "player": 30,
+    "domainTypecheck": "PASS",
+    "playerTypecheck": "PASS"
+  },
+  "browserStorageTouched": false,
+  "publication": false,
+  "backupStrategy": "faithful scoped art and integration recovery archive; mixed ongoing game plumbing excluded"
+}

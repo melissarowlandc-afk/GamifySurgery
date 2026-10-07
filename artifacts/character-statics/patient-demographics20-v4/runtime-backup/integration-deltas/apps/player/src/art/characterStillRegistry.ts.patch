@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/art/characterStillRegistry.ts b/apps/player/src/art/characterStillRegistry.ts
+index 536c50b7..c909f71c 100644
+--- a/apps/player/src/art/characterStillRegistry.ts
++++ b/apps/player/src/art/characterStillRegistry.ts
+@@ -6,7 +6,7 @@ export const CHARACTER_STILL_POSTURES = ["stand", "sit"] as const;
+ 
+ export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
+ export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
+-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3";
++export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4";
+ 
+ export interface CharacterStillAsset {
+   readonly url: string;

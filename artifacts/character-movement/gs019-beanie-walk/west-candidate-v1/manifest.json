@@ -1,0 +1,866 @@
+{
+  "schemaVersion": "gs019-beanie-walk/west-candidate-v1",
+  "status": "prototype-needs-parent-review",
+  "characterId": "patient.adult.043",
+  "direction": "west",
+  "canvas": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "nominalFloorY": 287,
+    "visualSoleY": 286
+  },
+  "gamePresentation": {
+    "width": 32,
+    "height": 64,
+    "tileSize": 24
+  },
+  "phaseContract": {
+    "ids": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08"
+    ],
+    "cadenceMs": 180,
+    "anatomy": {
+      "01": "NEAR contact foreground; FAR leg back",
+      "02": "NEAR straight support foreground; FAR heel-off behind",
+      "03": "NEAR straight support foreground; FAR bent passing behind",
+      "04": "FAR swing left behind; NEAR support foreground",
+      "05": "FAR contact; NEAR leg back foreground",
+      "06": "NEAR bent foreground with heel lifting right; FAR planted",
+      "07": "NEAR low bend foreground; FAR straight planted",
+      "08": "NEAR uncurl left foreground; FAR support behind"
+    },
+    "auditStatus": "source silhouettes require visual near/far review; pixel validation cannot certify anatomy"
+  },
+  "pins": {
+    "approvedStanding": {
+      "file": "artifacts/character-movement/brown-beanie-v1/frames/stand/west.png",
+      "sha256": "f6bfa7cccb1c53a8c7b442f0daf5a6bf99deb03427d62f16cc6780721f7fe87b"
+    },
+    "originalHead": {
+      "file": "tools/character-mapping/layered-pilot/brown-beanie-v1/assets/head-west-original-v1.png",
+      "sha256": "dd7a005a2eb10a3fd440b50d5c5bed7b96bb52c03e09c121861673119aa36e3f",
+      "directStandingTranslation": {
+        "e": -4,
+        "f": -22
+      },
+      "policy": "head-only exact original source; no clothing mask"
+    },
+    "sources": {
+      "first": {
+        "file": "tools/character-mapping/gs019-beanie-walk/west-first-half-v1-source.png",
+        "prompt": "tools/character-mapping/gs019-beanie-walk/west-first-half-v1-prompt.txt",
+        "cuts": [
+          228,
+          228,
+          199,
+          199
+        ],
+        "sha256": "2310da23a950c5c5f273fbb3b4c5c855c6a7afa9d50dc36d3b79835a1c8bf698",
+        "promptSha256": "edd79ae4a2fd90a3a7da6b67dd9a8cc0aecc2df6ec6d6d9838d2be3a9f308130"
+      },
+      "second": {
+        "file": "tools/character-mapping/gs019-beanie-walk/west-second-half-v1-source.png",
+        "prompt": "tools/character-mapping/gs019-beanie-walk/west-second-half-v1-prompt.txt",
+        "cuts": [
+          207,
+          207,
+          185,
+          190
+        ],
+        "sha256": "a16130c6aafc8197c5b41eaf0973b633053c2f15e537d81588ff0b9954f0a18d",
+        "promptSha256": "8f1c2309620fcead92a6a12e95ff82b6110cdf10ad3dda973683e07b1c43b9e1"
+      }
+    }
+  },
+  "registration": {
+    "collarTarget": {
+      "x": 80,
+      "y": 119
+    },
+    "visualSoleY": 286,
+    "nominalFloorY": 287,
+    "policy": "one nearest-neighbor uniform scale per half; each whole body is translated only; exact original head follows integer collar delta"
+  },
+  "scaleEvidence": {
+    "first": 0.42985842985842987,
+    "second": 0.4103194103194103
+  },
+  "authored": {
+    "01": {
+      "file": "authored/01.png",
+      "sha256": "82e68c0c3efaeba53a48baf2b5e0e6ac55bc8eafeaec4a9b60b6f5411eac8296",
+      "width": 133,
+      "height": 167
+    },
+    "02": {
+      "file": "authored/02.png",
+      "sha256": "2519d0e695e6be1c61f31a725779093797683a3b37e7e9d46fc18dc8e3600194",
+      "width": 109,
+      "height": 168
+    },
+    "03": {
+      "file": "authored/03.png",
+      "sha256": "79cfee5f08d4a018acde8a17047343d1cfac875841b9ca16eb0ad101a43db035",
+      "width": 83,
+      "height": 167
+    },
+    "04": {
+      "file": "authored/04.png",
+      "sha256": "d1d52bf8cd497579ebe92336555872b003bc4ea85e00c232a352e2bac8e92c0d",
+      "width": 106,
+      "height": 168
+    },
+    "05": {
+      "file": "authored/05.png",
+      "sha256": "700d5783d6ae7acc0ce3ea51a74b724f08705d30c2c58ad0b929de3a28e152b5",
+      "width": 146,
+      "height": 168
+    },
+    "06": {
+      "file": "authored/06.png",
+      "sha256": "4a3b9b4375ed65e4de2d6138d4cb4becfe33de79111ef40514b04d70119e7398",
+      "width": 80,
+      "height": 168
+    },
+    "07": {
+      "file": "authored/07.png",
+      "sha256": "ce106432823b51f9e9cc4539eed42a047b15e7ac13733bc5f6eeae7dc0f29bc4",
+      "width": 82,
+      "height": 167
+    },
+    "08": {
+      "file": "authored/08.png",
+      "sha256": "e1623ac6765c38f95c31c960e2494b8af0fdfc6701518c4544c95e4b571b6253",
+      "width": 137,
+      "height": 165
+    }
+  },
+  "frames": {
+    "01": {
+      "file": "frames/west-01.png",
+      "sha256": "bf9e09d92550efe3e659244e553cfe700034185a8c246924e7058804e9df8262",
+      "width": 160,
+      "height": 320
+    },
+    "02": {
+      "file": "frames/west-02.png",
+      "sha256": "426c4cac34d3316f2e96d65290591069dbd8e33465a3c3cfa0861c14afca0137",
+      "width": 160,
+      "height": 320
+    },
+    "03": {
+      "file": "frames/west-03.png",
+      "sha256": "bc0dcd6bfd582d05eb2cd5a7ef2ed997d0edb8c9c587135a957f57c4088c6e11",
+      "width": 160,
+      "height": 320
+    },
+    "04": {
+      "file": "frames/west-04.png",
+      "sha256": "3c362e440b48b428a07895d3c86e4d2795bb9961de1db7c2261203bb76dfc38c",
+      "width": 160,
+      "height": 320
+    },
+    "05": {
+      "file": "frames/west-05.png",
+      "sha256": "07728afaa9e488b58f2c7179d8634f6087d250cd9852c775e8e2a433843f76e8",
+      "width": 160,
+      "height": 320
+    },
+    "06": {
+      "file": "frames/west-06.png",
+      "sha256": "6ef217310cd5a88168df2b831d2e4c22c368b08d30dbd9364b53243eeb9459a7",
+      "width": 160,
+      "height": 320
+    },
+    "07": {
+      "file": "frames/west-07.png",
+      "sha256": "abbe6bd332db3ef90a379a422cb6944b022877d203bcb8fd38ac0690e2a4e1f7",
+      "width": 160,
+      "height": 320
+    },
+    "08": {
+      "file": "frames/west-08.png",
+      "sha256": "4575caa74863645963d434e77f43c90e6b5a90e7ebdd41818088e73540a5398d",
+      "width": 160,
+      "height": 320
+    }
+  },
+  "eastFrames": {
+    "01": {
+      "file": "frames/east-01.png",
+      "sha256": "df769ae267bc000ab3080d297669206d919e44e6960394c65cf3fe35951a41f3",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-01.png"
+    },
+    "02": {
+      "file": "frames/east-02.png",
+      "sha256": "b8a5d030724e67d12860f4c0d92cedc0cb9d4fd7c51fa469c037ad0619ff616e",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-02.png"
+    },
+    "03": {
+      "file": "frames/east-03.png",
+      "sha256": "bdd16c10882837c280a5956715f9425df345b726d85083b549c17d5bd63171ba",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-03.png"
+    },
+    "04": {
+      "file": "frames/east-04.png",
+      "sha256": "a50e0ed3c1b80e19e8f1b190bf0e712c1a9c3e2a409a9a920af558078747b652",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-04.png"
+    },
+    "05": {
+      "file": "frames/east-05.png",
+      "sha256": "f9e014529c56f770aa4e95bc56fec228791ab36046974412d4caaef1bfa4fca2",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-05.png"
+    },
+    "06": {
+      "file": "frames/east-06.png",
+      "sha256": "7712b6b819ebbf895d0536b9338f322dd924d77fc9269f5b34de5128079fb6fc",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-06.png"
+    },
+    "07": {
+      "file": "frames/east-07.png",
+      "sha256": "c0ec7ea8c1584354b922a61434e07f782e382846db9c3a58c5af63cc79227cf7",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-07.png"
+    },
+    "08": {
+      "file": "frames/east-08.png",
+      "sha256": "d17599dd5348b381b35ccc094f58a5fff8db26b407478a32fdbe5e382a4a20f6",
+      "width": 160,
+      "height": 320,
+      "exactHorizontalMirrorOf": "frames/west-08.png"
+    }
+  },
+  "measurements": {
+    "01": {
+      "sourceSheet": "first",
+      "sourceCell": 1,
+      "sourceCellRect": {
+        "x": 0,
+        "y": 0,
+        "width": 623,
+        "height": 631
+      },
+      "componentPixels": 83291,
+      "componentBounds": {
+        "left": 188,
+        "top": 53,
+        "right": 497,
+        "bottom": 616,
+        "width": 310,
+        "height": 564
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 228,
+        "removedRows": {
+          "top": 53,
+          "bottom": 227
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.42985842985842987,
+      "bodyPlacement": {
+        "x": 13,
+        "y": 120,
+        "width": 133,
+        "height": 167
+      },
+      "collar": {
+        "sourceAxis": 156.5,
+        "scaledAxis": 67.27284427284428,
+        "screen": {
+          "x": 80.27284427284428,
+          "y": 120
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 13,
+        "appliedX": 13,
+        "collarResidualX": 0.2728442728442815,
+        "collarDelta": {
+          "x": 0,
+          "y": 1
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -21
+      },
+      "geometry": {
+        "bounds": {
+          "left": 13,
+          "top": 34,
+          "right": 145,
+          "bottom": 286,
+          "width": 133,
+          "height": 253
+        },
+        "floorAlpha": 34,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "NEAR contact foreground; FAR leg back"
+    },
+    "02": {
+      "sourceSheet": "first",
+      "sourceCell": 2,
+      "sourceCellRect": {
+        "x": 623,
+        "y": 0,
+        "width": 623,
+        "height": 631
+      },
+      "componentPixels": 74190,
+      "componentBounds": {
+        "left": 166,
+        "top": 53,
+        "right": 418,
+        "bottom": 617,
+        "width": 253,
+        "height": 565
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 228,
+        "removedRows": {
+          "top": 53,
+          "bottom": 227
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.42985842985842987,
+      "bodyPlacement": {
+        "x": 34,
+        "y": 119,
+        "width": 109,
+        "height": 168
+      },
+      "collar": {
+        "sourceAxis": 107,
+        "scaledAxis": 45.994851994852,
+        "screen": {
+          "x": 79.994851994852,
+          "y": 119
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 34,
+        "appliedX": 34,
+        "collarResidualX": -0.005148005148001289,
+        "collarDelta": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -22
+      },
+      "geometry": {
+        "bounds": {
+          "left": 34,
+          "top": 33,
+          "right": 142,
+          "bottom": 286,
+          "width": 109,
+          "height": 254
+        },
+        "floorAlpha": 41,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "NEAR straight support foreground; FAR heel-off behind"
+    },
+    "03": {
+      "sourceSheet": "first",
+      "sourceCell": 3,
+      "sourceCellRect": {
+        "x": 0,
+        "y": 631,
+        "width": 623,
+        "height": 632
+      },
+      "componentPixels": 68229,
+      "componentBounds": {
+        "left": 250,
+        "top": 24,
+        "right": 445,
+        "bottom": 587,
+        "width": 196,
+        "height": 564
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 199,
+        "removedRows": {
+          "top": 24,
+          "bottom": 198
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.42985842985842987,
+      "bodyPlacement": {
+        "x": 41,
+        "y": 120,
+        "width": 83,
+        "height": 167
+      },
+      "collar": {
+        "sourceAxis": 91.5,
+        "scaledAxis": 39.33204633204633,
+        "screen": {
+          "x": 80.33204633204633,
+          "y": 120
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 41,
+        "appliedX": 41,
+        "collarResidualX": 0.3320463320463318,
+        "collarDelta": {
+          "x": 0,
+          "y": 1
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -21
+      },
+      "geometry": {
+        "bounds": {
+          "left": 41,
+          "top": 34,
+          "right": 123,
+          "bottom": 286,
+          "width": 83,
+          "height": 253
+        },
+        "floorAlpha": 43,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "NEAR straight support foreground; FAR bent passing behind"
+    },
+    "04": {
+      "sourceSheet": "first",
+      "sourceCell": 4,
+      "sourceCellRect": {
+        "x": 623,
+        "y": 631,
+        "width": 623,
+        "height": 632
+      },
+      "componentPixels": 76352,
+      "componentBounds": {
+        "left": 136,
+        "top": 20,
+        "right": 381,
+        "bottom": 588,
+        "width": 246,
+        "height": 569
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 199,
+        "removedRows": {
+          "top": 20,
+          "bottom": 198
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.42985842985842987,
+      "bodyPlacement": {
+        "x": 21,
+        "y": 119,
+        "width": 106,
+        "height": 168
+      },
+      "collar": {
+        "sourceAxis": 137.5,
+        "scaledAxis": 59.105534105534105,
+        "screen": {
+          "x": 80.1055341055341,
+          "y": 119
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 21,
+        "appliedX": 21,
+        "collarResidualX": 0.10553410553410458,
+        "collarDelta": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -22
+      },
+      "geometry": {
+        "bounds": {
+          "left": 21,
+          "top": 33,
+          "right": 126,
+          "bottom": 286,
+          "width": 106,
+          "height": 254
+        },
+        "floorAlpha": 42,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "FAR swing left behind; NEAR support foreground"
+    },
+    "05": {
+      "sourceSheet": "second",
+      "sourceCell": 1,
+      "sourceCellRect": {
+        "x": 0,
+        "y": 0,
+        "width": 620,
+        "height": 634
+      },
+      "componentPixels": 92370,
+      "componentBounds": {
+        "left": 162,
+        "top": 28,
+        "right": 517,
+        "bottom": 616,
+        "width": 356,
+        "height": 589
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 207,
+        "removedRows": {
+          "top": 28,
+          "bottom": 206
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.4103194103194103,
+      "bodyPlacement": {
+        "x": 5,
+        "y": 119,
+        "width": 146,
+        "height": 168
+      },
+      "collar": {
+        "sourceAxis": 182.5,
+        "scaledAxis": 74.88329238329239,
+        "screen": {
+          "x": 79.88329238329239,
+          "y": 119
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 5,
+        "appliedX": 5,
+        "collarResidualX": -0.11670761670761465,
+        "collarDelta": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -22
+      },
+      "geometry": {
+        "bounds": {
+          "left": 5,
+          "top": 33,
+          "right": 150,
+          "bottom": 286,
+          "width": 146,
+          "height": 254
+        },
+        "floorAlpha": 34,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "FAR contact; NEAR leg back foreground"
+    },
+    "06": {
+      "sourceSheet": "second",
+      "sourceCell": 2,
+      "sourceCellRect": {
+        "x": 620,
+        "y": 0,
+        "width": 620,
+        "height": 634
+      },
+      "componentPixels": 76499,
+      "componentBounds": {
+        "left": 159,
+        "top": 28,
+        "right": 375,
+        "bottom": 616,
+        "width": 217,
+        "height": 589
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 207,
+        "removedRows": {
+          "top": 28,
+          "bottom": 206
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.4103194103194103,
+      "bodyPlacement": {
+        "x": 51,
+        "y": 119,
+        "width": 80,
+        "height": 168
+      },
+      "collar": {
+        "sourceAxis": 71,
+        "scaledAxis": 29.132678132678134,
+        "screen": {
+          "x": 80.13267813267814,
+          "y": 119
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 51,
+        "appliedX": 51,
+        "collarResidualX": 0.13267813267813722,
+        "collarDelta": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -22
+      },
+      "geometry": {
+        "bounds": {
+          "left": 43,
+          "top": 33,
+          "right": 130,
+          "bottom": 286,
+          "width": 88,
+          "height": 254
+        },
+        "floorAlpha": 36,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "NEAR bent foreground with heel lifting right; FAR planted"
+    },
+    "07": {
+      "sourceSheet": "second",
+      "sourceCell": 3,
+      "sourceCellRect": {
+        "x": 0,
+        "y": 634,
+        "width": 620,
+        "height": 635
+      },
+      "componentPixels": 75079,
+      "componentBounds": {
+        "left": 248,
+        "top": 8,
+        "right": 470,
+        "bottom": 590,
+        "width": 223,
+        "height": 583
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 185,
+        "removedRows": {
+          "top": 8,
+          "bottom": 184
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.4103194103194103,
+      "bodyPlacement": {
+        "x": 50,
+        "y": 120,
+        "width": 82,
+        "height": 167
+      },
+      "collar": {
+        "sourceAxis": 73,
+        "scaledAxis": 29.953316953316953,
+        "screen": {
+          "x": 79.95331695331696,
+          "y": 120
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 50,
+        "appliedX": 50,
+        "collarResidualX": -0.04668304668304302,
+        "collarDelta": {
+          "x": 0,
+          "y": 1
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -21
+      },
+      "geometry": {
+        "bounds": {
+          "left": 43,
+          "top": 34,
+          "right": 131,
+          "bottom": 286,
+          "width": 89,
+          "height": 253
+        },
+        "floorAlpha": 38,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "NEAR low bend foreground; FAR straight planted"
+    },
+    "08": {
+      "sourceSheet": "second",
+      "sourceCell": 4,
+      "sourceCellRect": {
+        "x": 620,
+        "y": 634,
+        "width": 620,
+        "height": 635
+      },
+      "componentPixels": 84957,
+      "componentBounds": {
+        "left": 68,
+        "top": 15,
+        "right": 402,
+        "bottom": 590,
+        "width": 335,
+        "height": 576
+      },
+      "donorHeadRemoval": {
+        "policy": "clear every source-component pixel above the authored collar contraction before any scaling or composition",
+        "cutY": 190,
+        "removedRows": {
+          "top": 15,
+          "bottom": 189
+        },
+        "collarRowsMeasured": 12
+      },
+      "uniformScale": 0.4103194103194103,
+      "bodyPlacement": {
+        "x": 5,
+        "y": 122,
+        "width": 137,
+        "height": 165
+      },
+      "collar": {
+        "sourceAxis": 184,
+        "scaledAxis": 75.4987714987715,
+        "screen": {
+          "x": 80.4987714987715,
+          "y": 122
+        },
+        "target": {
+          "x": 80,
+          "y": 119
+        }
+      },
+      "alignment": {
+        "requestedX": 5,
+        "appliedX": 5,
+        "collarResidualX": 0.49877149877150373,
+        "collarDelta": {
+          "x": 0,
+          "y": 3
+        }
+      },
+      "headTranslation": {
+        "e": -4,
+        "f": -19
+      },
+      "geometry": {
+        "bounds": {
+          "left": 5,
+          "top": 36,
+          "right": 141,
+          "bottom": 286,
+          "width": 137,
+          "height": 251
+        },
+        "floorAlpha": 21,
+        "belowFloorAlpha": 0
+      },
+      "gaitAudit": "NEAR uncurl left foreground; FAR support behind"
+    }
+  },
+  "proofs": {
+    "early01And05Native": {
+      "file": "proofs/standing-01-05-native.png",
+      "sha256": "2e0c78ae88cb2b5915c21ced7c10a82a945e5addc4b3c9a2ebb7947f9fc99400",
+      "width": 480,
+      "height": 344
+    },
+    "early01And05Neck4x": {
+      "file": "proofs/01-05-neckline-4x.png",
+      "sha256": "84c0493892b8e0deeee1298de8b0d927800762295d7e5080690ce4f811898e98",
+      "width": 640,
+      "height": 248
+    },
+    "westAll8Native": {
+      "file": "proofs/west-all8-native.png",
+      "sha256": "f160d7b67edc9b13cbd45f4bd2b03ba7ce4064305da1dec251aa9752fdc480bc",
+      "width": 1280,
+      "height": 344
+    },
+    "eastAll8Native": {
+      "file": "proofs/east-all8-native.png",
+      "sha256": "ff6f26e5c5328cc77b712324bd69676bd40b3e90c4ca61bbed325b0dc4efb7fc",
+      "width": 1280,
+      "height": 344
+    }
+  }
+}

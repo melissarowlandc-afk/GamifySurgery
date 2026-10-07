@@ -1,0 +1,91 @@
+{
+  "status": "PASS drift comparison",
+  "changedSources": [
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "before": "5e3ef2cf88d68d1ff41ae0caa747df0eb79bd09c34ffc90659da24c9a11ebe7a",
+      "after": "f867315674492cc59caf37483dc4b12e66b5e17f35a15fe02f1c3e155037f4de"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "before": "a3de13ad44f41b2654d1a852cce1c57fd04fa50faa6b9e3606a8b706558f6b58",
+      "after": "a97ab94207400fca7d08fec96adbd1b93605348c601df2daf5e634f093017cf5"
+    },
+    {
+      "path": "packages/game-domain/src/selectors.ts",
+      "before": "fe8f748ce958093ccd2c7437ac2ad03b26bb78b099cdaa8acf0db9d53455ed40",
+      "after": "0c60c9d02d7fb19118ad45107fe4e9b0381bfad4882521de7e9ad1fc0c457ce5"
+    }
+  ],
+  "semanticChanges": [],
+  "originalReceiptSha256": "82defbb8dc431a12ebab3d001f3e4dad625931409d8d28b803026aab4649193d",
+  "originalReceiptUnchanged": true,
+  "validation": {
+    "runtimeCompletionChecks": 25184,
+    "actualFirstUnseenSelectorChecks": 256,
+    "sourceFilesUnchangedDuringAudit": true,
+    "noRuntimeOrClinicalWrites": true
+  },
+  "recommendation": [
+    {
+      "sex": "Male",
+      "ageBand": "30-44",
+      "additions": 5,
+      "beforeStills": 9,
+      "afterStills": 14,
+      "beforeSharePerStill": 0.015929457775,
+      "afterSharePerStill": 0.010240365713
+    },
+    {
+      "sex": "Female",
+      "ageBand": "45-64",
+      "additions": 2,
+      "beforeStills": 19,
+      "afterStills": 21,
+      "beforeSharePerStill": 0.011354724484,
+      "afterSharePerStill": 0.010273322152
+    },
+    {
+      "sex": "Male",
+      "ageBand": "45-64",
+      "additions": 7,
+      "beforeStills": 11,
+      "afterStills": 18,
+      "beforeSharePerStill": 0.016540653807,
+      "afterSharePerStill": 0.010108177327
+    },
+    {
+      "sex": "Female",
+      "ageBand": "65+",
+      "additions": 3,
+      "beforeStills": 9,
+      "afterStills": 12,
+      "beforeSharePerStill": 0.013392757598,
+      "afterSharePerStill": 0.010044568198
+    },
+    {
+      "sex": "Male",
+      "ageBand": "65+",
+      "additions": 3,
+      "beforeStills": 9,
+      "afterStills": 12,
+      "beforeSharePerStill": 0.013162809107,
+      "afterSharePerStill": 0.00987210683
+    }
+  ],
+  "reviewer": "root",
+  "decision": "Preserved initial receipts; current audit refresh allowed because all non-sourceHashes fields are exactly unchanged. Only runtime-baseline catalog SHA advances for proven four-radiologist staff promotion; all registry/assets/patient metadata guards unchanged.",
+  "catalogDiagnostic": {
+    "status": "READ_ONLY_DIAGNOSTIC",
+    "expectedInitial": "5e3ef2cf88d68d1ff41ae0caa747df0eb79bd09c34ffc90659da24c9a11ebe7a",
+    "current": "f867315674492cc59caf37483dc4b12e66b5e17f35a15fe02f1c3e155037f4de",
+    "reconstructedByReplacingOnlyTwoRadiologistBlocks": "5e3ef2cf88d68d1ff41ae0caa747df0eb79bd09c34ffc90659da24c9a11ebe7a",
+    "matchesInitial": true,
+    "concurrentRegions": [
+      "LEVEL3_ROSTER_V2_STAFF_ROWS",
+      "LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS"
+    ]
+  },
+  "initialRuntimeBaselineSha256": "a75aedeb2478b5738bcc3a9b8df5bd4ffefb5889d86c2ba017bae017ad3e8001",
+  "updatedRuntimeBaselineSha256": "750f08f906906cd101682b7a5d74822db9581e89b51a025d65e27b67ff2b8420"
+}

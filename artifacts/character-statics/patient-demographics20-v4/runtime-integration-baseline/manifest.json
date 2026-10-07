@@ -1,0 +1,1010 @@
+{
+  "schemaVersion": "patient-demographics20-v4-integration-baseline/v1",
+  "identityCount": 205,
+  "assetCount": 1670,
+  "patientCount": 96,
+  "pinnedAssetBaseline": {
+    "path": "tools/character-mapping/patient-demographics20-v4/runtime-baseline.json",
+    "sha256": "750f08f906906cd101682b7a5d74822db9581e89b51a025d65e27b67ff2b8420"
+  },
+  "files": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "db6899430e00df87e5300a85add26000aef7cbb0e20f8e73f50997ec32120f83"
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "sha256": "8a80004cc648a19747742ea1d813125c2425de407fc62f9800747c6ae08bf9ee"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "f867315674492cc59caf37483dc4b12e66b5e17f35a15fe02f1c3e155037f4de"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "5baa9faa6d1f6eaf2afc07e1fb089799e4c3610517cf9a8b08f29ceb47418245"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "fe5f51182acc121b0936da00df20621d17a6f6bcabfd38f13fcb81ae38f7b6c0"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "8746bbb6cc55afe6fc553a16c544f312b0f6efb23cfb0f3460f412a1fa48f434"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/owner-approval.json",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/tools/character-mapping/patient-demographics20-v4/owner-approval.json",
+      "sha256": "fa3bc8e565ab33d8b24319e1a0d985d9a2ac9af4ead5163e8abef77dea79834f"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/review-acceptance.json",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/tools/character-mapping/patient-demographics20-v4/review-acceptance.json",
+      "sha256": "66d932d6fccfe5da72efbbfdfc64c4a94061962c845c8de564b0f5a2230c9366"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/roster.json",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/tools/character-mapping/patient-demographics20-v4/roster.json",
+      "sha256": "1371c5299eb03db27c1594c9dfb70c71062d23c20443b21ada0e9d6ef8d784d4"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/review/index.html",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/artifacts/character-statics/patient-demographics20-v4/review/index.html",
+      "sha256": "c98e7558b625e738de4e6ec3842db4645ebb73e66446c0c013957ecbf80e196f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/review/owner-overview-stand-south-sit-east.png",
+      "copiedTo": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/artifacts/character-statics/patient-demographics20-v4/review/owner-overview-stand-south-sit-east.png",
+      "sha256": "27666dfeff91c81864a1675d5b3bbc1547b6be01aebc1102d13deebe05c2e30b"
+    }
+  ],
+  "catalog": {
+    "path": "artifacts/character-statics/patient-demographics20-v4/runtime-integration-baseline/catalog-entries.json",
+    "sha256": "c3ac9d70db62d50c56bc3844ad364e28943a405b044d5c5540dbd833e41958fd"
+  },
+  "approvedInputs": [
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/alpha-normalization-report.json",
+      "sha256": "3edc8848b08663c7d42f2f359abffc89da0559962ba154879c21cedee2de481f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/exact-prompt.txt",
+      "sha256": "732f589526e8e872329c26f585a3ffeb46c76b75ecd065b96a40893674d84586"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/provenance.json",
+      "sha256": "07ea7e4ec496d0b04410df3274c8980c8ea2d0d35c97c5ea91772144e38ff72b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/source.png",
+      "sha256": "4e4e718428d021d7a9d5d1c29471cdac1a85c978d2c4850abe3fd51f7e7e039a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/stage1-exact-prompt.txt",
+      "sha256": "ae4fe377c25802ae2b30ff1c17c5e967886de1e696a477602cd8b73ee94b3971"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/stage1-provenance.json",
+      "sha256": "72a8b13ae0e95f18edb4f2fa2991660ecb16a4127eb04803687f21bbc4661044"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/stage1-standing-cardinals.png",
+      "sha256": "75b9ceab2a57f726026d265ba6b7208c481b73c621715a3e3e957f36e88ed0bd"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/stage1-tool-args.json",
+      "sha256": "2e812cf4afdaaacab368e22beb3d063609371046ae4a262f358419a3e37408b3"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/001/tool-args.json",
+      "sha256": "f7abbf91dcb277f3dcb9f80a9f274879fd920146256a8d17b4b6e03bc76900cf"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/exact-prompt.txt",
+      "sha256": "9a02dfe39c02df0db02ed695fb35376e3791b9beade9fa265fb74a50c9bcc360"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/history/v1/exact-prompt.txt",
+      "sha256": "c308f4a139b4201ad1faa0fe8acceec521deb7397e87b1588866a320685aa005"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/history/v1/provenance.json",
+      "sha256": "db47fe4b89b62f65f8ac871605e363c21d70e3e90f0737a745bc71d3bd3b2141"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/history/v1/source.png",
+      "sha256": "fccfeff6447cd4f8a8acc19c89f6bd40a5937a8df2caa3ac60e635d7502e6caf"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/history/v1/tool-args.json",
+      "sha256": "647dad535b4a8796d9e10158d4a38c9a98faf077b6a2671faf3b114e39860bd9"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/provenance.json",
+      "sha256": "b5720218eee0e6015948a479a0c3332bd82500bdb72dee7ec2c3537b7025d3c7"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/source.png",
+      "sha256": "ff90fc8a4fb388113d0f2fbe25ecce9c50db6a0198f3246851ef059d822995ee"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/stage1-exact-prompt.txt",
+      "sha256": "ac7c98d3375b209990c390bbb5a3524a8aa2cee19502e98d47b22551521e5064"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/stage1-provenance.json",
+      "sha256": "828ca0062a8d27eedbab5cb1dfd6b2d9ab9d2bee0923dc84085601a1b8d7ef90"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/stage1-standing-cardinals.png",
+      "sha256": "17fcf93119904d00f835ca2144d05613bdd4b75f9375c417d0a8f463334bfec7"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/stage1-tool-args.json",
+      "sha256": "af66001a93ef498e0a327c951257e0c24950befda09c7b6b7d5812915543213d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/002/tool-args.json",
+      "sha256": "2d0d1198e4c076ac3b340158d5d48cf64a00f6bfaa96b84bf2ed31aac4654223"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/exact-prompt.txt",
+      "sha256": "f43bf7e34f2d6c43962e95200a789643490e901eac1b33aaed0f23e589961e47"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/history/v1/exact-prompt.txt",
+      "sha256": "924f45e388a13571770e69ab56d5293d95e72a3df8d5e2b3509f7e05dc3aa9ab"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/history/v1/provenance.json",
+      "sha256": "3bb90b630ed3cdf8e7f196c9536c8371dff26e0a0a0176f31b14c9fc34ed12fb"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/history/v1/source.png",
+      "sha256": "049f1337969fe89bc427849cc68e37a101d4357d198f20802efd1c4ff564a377"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/history/v1/tool-args.json",
+      "sha256": "c4fb099c42364bdfcf6a4a5d75d111e909f09535385441771b9c977532ad71ea"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/provenance.json",
+      "sha256": "694a87d1dc3b6a09352bf2300a5e2463ad1b50766ea6603867fdceaed13b0f7f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/source.png",
+      "sha256": "89f82c99668890a59f116a3f1b658f235a618089857db19e1bee13310e409fec"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/stage1-exact-prompt.txt",
+      "sha256": "f73374e61ef930649508dcfd18df6b464209fa43e884f0f2d003cd565ee47a4a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/stage1-provenance.json",
+      "sha256": "815661bac4f79b1425bc122496cfded6cca8a853e2102a8dfb0ac10c70b900fa"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/stage1-standing-cardinals.png",
+      "sha256": "cd2b46ea421547c02bb5541e4eaa359643455f637d04dbb586762daf98b3d2c8"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/stage1-tool-args.json",
+      "sha256": "b805c92c15f7e49599448d62dd2b882fa823e4729a433a81f9055ffbbd81e059"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/003/tool-args.json",
+      "sha256": "b39dbfea49760dcc5b636b83f3028926a9276255eaede13d28e73f31f6a32ae8"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/exact-prompt.txt",
+      "sha256": "1c9e416a1be81baf7e4aa2b997fbbf40153e09626e9c1906c65be954d4ba4cd5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/history/v1/exact-prompt.txt",
+      "sha256": "dfad830c6b779329cf2508b4e33beb8c2115aa4cf597b8d27cbf5391f33aef17"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/history/v1/provenance.json",
+      "sha256": "19ee502edf2d9dd94577b59f0bc82d7d9484c8967f1cbb3365f7dc02fb0d1908"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/history/v1/source.png",
+      "sha256": "43983590931457f68fe4b5e023e183bdb3209292362f8b7573b3f5fd8001084c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/history/v1/tool-args.json",
+      "sha256": "030520258f18a456cc3f0a19759a1998fb0029edd305aaa2c156011fae717bbf"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/provenance.json",
+      "sha256": "a0ac9704b945e67f81d9d0a83976f328b3a53c83c588725cb6e7b38c3dff81d0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/source.png",
+      "sha256": "1ba82686ab4a8d47eb213f7761413a71a211512e2db0b9c60beb38e60d2f0b63"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/stage1-exact-prompt.txt",
+      "sha256": "df6966dc3ddfeff9a91c7995288648054db048a9ebd949bea2fd08debb30e2f5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/stage1-provenance.json",
+      "sha256": "9724ad4717ec347662c85cb7abc4ec9eae632111599a777a0744a3688cb9ed77"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/stage1-standing-cardinals.png",
+      "sha256": "6797a367b97847153414ae0f3dd08f321246c184fdbab95664f717245d361f8a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/stage1-tool-args.json",
+      "sha256": "1352c8e901753d2813e0b823a3ce1170882c0308267c877158a4ec01db771968"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/004/tool-args.json",
+      "sha256": "cf86a54d125f05260f9510f51e7fecfbce210ca546d4c6b91272cb1287b69444"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/exact-prompt.txt",
+      "sha256": "847ed312e96db870e353f5740ddedfc821ee2c79b32244be3fcfe4b3010cfec1"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/provenance.json",
+      "sha256": "60a479f2da2d361ae83b4e787be51042e8a44d30771070ed3bb906ac1cc627eb"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/source.png",
+      "sha256": "1a06107ea5eeff2e3d692a6b03210bdf7cd79afb6fff31e7b521fb9f7734de6b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/stage1-exact-prompt.txt",
+      "sha256": "acc141df1cede09b4a845aae68af76761ebbae16289b26b98da3ead4f97928b7"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/stage1-provenance.json",
+      "sha256": "bb94c20cd7158d050ac4be347407beb6b92d71da180f8866841709030e184947"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/stage1-standing-cardinals.png",
+      "sha256": "6540e5093cfc59acd79ffafe03b6b9543b31c3d754318ce1e08182018306df3b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/stage1-tool-args.json",
+      "sha256": "5cd6f09c7f5b05b2ac1b1baae5a5edff69b6689630f5ed7086c9a45fc8480c3a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/005/tool-args.json",
+      "sha256": "905edaa04ba53acae3bcada93b3f2da7f8d08e1cc1e9cf70b1fc43cafa7a88b4"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/exact-prompt.txt",
+      "sha256": "a3f97daaa672560618bccbf42fa094753f21aa84f92590fe2a11df417edf5e2e"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/provenance.json",
+      "sha256": "38c544f02dff2c93eb3de08af2da4ee42f427a79d906d1f09d85d58f6e8cf43c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/source.png",
+      "sha256": "db67d1f67eba852b137c77d1059dffcee2032262f74914a2fa0dbc69f121c967"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/stage1-exact-prompt.txt",
+      "sha256": "0416086bef67e485c76f5254f967b9c0757c715bd44677b76e43bc236ed036f1"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/stage1-provenance.json",
+      "sha256": "63137c873e1ca703f3d03ae5a45306b9e1cd8c3f151f89e3e50f60ca669fd8b0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/stage1-standing-cardinals.png",
+      "sha256": "31820a2d9637402dced96c5ebe8556eb3fa97e9bb64501628a725af0670a65ac"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/stage1-tool-args.json",
+      "sha256": "d7bd97fc61c8fa5d13641a78825bcddc4619d412cc6c13bdd9b941eb6aee4a5a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/006/tool-args.json",
+      "sha256": "54c9bec6514347063d0a116f4ffdd5f3f385937ad4b95fc0c67407e42126bc22"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/exact-prompt.txt",
+      "sha256": "7b4c5635067ab105ace9149915d19ab4e983e167dd15460cbd1c0fa9448ad6f2"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/provenance.json",
+      "sha256": "2038143dbbba833d9a297cfc4636b75fa551d01f253e23cef628712622d3363d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/source.png",
+      "sha256": "5337de0f45ae2b27e02274d347a0c07ff344d9aa2f379b6a48392005b592d13c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/stage1-exact-prompt.txt",
+      "sha256": "0c8bcee0cd4226a03f581f84c6ee78a8bb1bc9d804910de874b71afe0d83b82b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/stage1-provenance.json",
+      "sha256": "832e277beb9b3ca45cae180f4c840052546227dfd9561049db25b7acbc5a2b4e"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/stage1-standing-cardinals.png",
+      "sha256": "c09b644c1327ad85009684fbe3a146e46385d035161c06f4ca7f0ad8ff07586d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/stage1-tool-args.json",
+      "sha256": "3001d5d433c075d1c1df1705bbd10db8458d20fabcd39ed122a4a22611ebf92d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/007/tool-args.json",
+      "sha256": "dfb81483490b5aa68881e677454ac09ba8daf27b097d8fcb37f8fa3baa25f3c4"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/exact-prompt.txt",
+      "sha256": "6be7295dfa090153eaef042bcafd690e51670f6ffff8ee29aa156c8d109ea81c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/provenance.json",
+      "sha256": "8e6ac7fe5eb7f9e61322763c77bf2d7c534222ad12f8d43994104ecc44a6e7c1"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/source.png",
+      "sha256": "0cc82060f59176cd2c48258598c3e51b3129c14232c48ddc3db629aa76ab710f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/stage1-exact-prompt.txt",
+      "sha256": "ae8b21a41a46ee1078a5b7dd2cafe9d62042538c8b092405627d96a610d7e024"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/stage1-provenance.json",
+      "sha256": "e653c32f2b00d560b6463e97f36bd3799cc12616514b0d9673aa0a5e28906082"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/stage1-standing-cardinals.png",
+      "sha256": "93a77efc88016f2d132df2b8d4e97a600feddfb11eb2cbe42956d93db30025aa"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/stage1-tool-args.json",
+      "sha256": "3f6027e6e2cc274387a1ac016590f9452b736cf7efa43a1b4ed0ccd7d8f8e8c8"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/008/tool-args.json",
+      "sha256": "efcdb0ea9e2dc96fe2724b80a0a6dcebc0effcc8d74bdbcc8bfc1ceb5e7b79c2"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/exact-prompt.txt",
+      "sha256": "6812402c11d54a06d47d47f9d5891ce32d0ca8e9d8e077f51bca67bebcc50fe6"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/provenance.json",
+      "sha256": "f6038e6954ea5c9507ae8cf6a7d5d44db2080646fe2b1331d86e6398afde67b0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/source.png",
+      "sha256": "b0bfcf298231563c1e078aaf7f798f3b4540502f40d256e7ef85a729159859dd"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/stage1-exact-prompt.txt",
+      "sha256": "739aa0c69ce589efedaf619ced9592b35e48c2475d442804e183665a5ec46209"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/stage1-provenance.json",
+      "sha256": "d2145086aa8ab2b44258ca645fd300e205f4f4564b74e1707c9cc8871da75d09"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/stage1-standing-cardinals.png",
+      "sha256": "36580bba72a73942659c34434ca127a4ce8ba96bc67e06290f03fa57117442d5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/stage1-tool-args.json",
+      "sha256": "e576c98f0655a1b32892552270717cd8c35694530cd16e3f5957983710901915"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/009/tool-args.json",
+      "sha256": "8083ad6c750d2dc3285236f9cfbcfcd6dac75b120daa36763038058ce2764c95"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/exact-prompt.txt",
+      "sha256": "a6e71c473f34778d864781c5619f23b46734fa3a2463ef68847ac1cb251c4738"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/provenance.json",
+      "sha256": "877b1cdc6f2401c0202a4c38c4f5c36a7136dd938ab71d96b78d9e6d101c6d62"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/source.png",
+      "sha256": "e4f69e1bdf47a4669ba6dbfb3f27165c20eb4cf10a6e9af57d10fb98e453a981"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/stage1-exact-prompt.txt",
+      "sha256": "0b9b4048718d1b59b96f9c29e1114163eb3bd6cd89b925fcc3601575b95c25b8"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/stage1-provenance.json",
+      "sha256": "4f446b9184ae3a2365f283563a2761639aad79370d944733be3d334f4b11946c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/stage1-standing-cardinals.png",
+      "sha256": "e4e5ed271b64421e2d22cf5ac3445a63d682b654e4686c0b538feb4dbcdf1317"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/stage1-tool-args.json",
+      "sha256": "66f80c1dbbb3be5ad92e12451955c60b360ea1bc81cbe18203161a17a86b95b5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/010/tool-args.json",
+      "sha256": "133a589dd5e13b0f811bf273b6f83ac5c03b1cb87a0aa34a1ad8ca372cc61d2b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/exact-prompt.txt",
+      "sha256": "511580e1bd3b583333dbf4bf706123d989164b5e2f958d0455b85a1f29f16ee8"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/provenance.json",
+      "sha256": "b83e8a4ad54ff7f143fc82d51a71c77312e16e4aa2070f448a9f0d109ba322e4"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/source.png",
+      "sha256": "897d44b94a3cbb6d87c023970b91805a4edc332f9ba057122622d27a3346def3"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/stage1-exact-prompt.txt",
+      "sha256": "4444afb79cd9092928714d4463c23b7d4f5e7322de155d3f903d1bd5e2647045"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/stage1-provenance.json",
+      "sha256": "f6bf31206a0d76fb4c1aef9f7dcb776fa0b4f645e5f1624307d35d995d2282eb"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/stage1-standing-cardinals.png",
+      "sha256": "1f2d2f0e6002be7c8cf17b6fc148131c5b19affbd535a502a4999f64604b4a97"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/stage1-tool-args.json",
+      "sha256": "a6dfba9ab6442bef4fbcf3ce0de7a35b3eeeb2343ccf68e4ad34896d760255ad"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/011/tool-args.json",
+      "sha256": "61a1e7066c9aaab3ae75c9a6a136c462c4f297114c617b4b7f710818701b7ed9"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/exact-prompt.txt",
+      "sha256": "6a644d54a6317ddc9e5deda933e0a8bc6cf9ed774c3a49232ae59d6afbdf6cfe"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/provenance.json",
+      "sha256": "c6cd17ef2fd3b6536dae669d8a9b29f193ebaf663201ff94410b1c41e98cef24"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/source.png",
+      "sha256": "80a555d302750c7b907a1b5572fd620527bf7a636e2275979e380a044badf9ef"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/stage1-exact-prompt.txt",
+      "sha256": "6f0947d32bfa417341db81edefffd75b4f39ca8b58225f5cc3fb008102bc7d60"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/stage1-provenance.json",
+      "sha256": "c912e8cf9457990d17787bf0e19857ee96f5b91cd281e74c5cbae63d4c8e02cc"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/stage1-standing-cardinals.png",
+      "sha256": "cd1f184ee5787ad47eeb51e756761747efb808eb8f47a6385d5118be9f94b4d0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/stage1-tool-args.json",
+      "sha256": "1d700e5a335c575c3524e7e4267b64a74456d10b0c6fca0e90466cc446e20cfd"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/012/tool-args.json",
+      "sha256": "789a6390e595f3eab36c82b7d0f0f664dd2dee6a1131c0b7ace03acbf896437a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/exact-prompt.txt",
+      "sha256": "1161d568c2b85914209da5ebc808af579aac8a6de87e7100673263be65b1ad94"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/provenance.json",
+      "sha256": "4a2906484d4c061a10061e02cd3b5dd8a925e638ce097883e32376ce7b953251"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/source.png",
+      "sha256": "5b620a5d4147778dab90be3f18f48647a9e81998513ece5289b869b28f956861"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/stage1-exact-prompt.txt",
+      "sha256": "151c5791fb926ca56ba314dadf538b82636f214a1e0f4e5e9f99911a554b6198"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/stage1-provenance.json",
+      "sha256": "d02d504222d6aefa64d375f2ee8b73cfe25cda8c626ecbe58a63a3212976d0d0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/stage1-standing-cardinals.png",
+      "sha256": "94b089d79725933a2a79c1d9b9739145914c8b9401f8587dc008177fa07f27c5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/stage1-tool-args.json",
+      "sha256": "df3738eea2e59214732dfd2b83f644141a86979a060ff88302bcbbd0da43ef9a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/013/tool-args.json",
+      "sha256": "cee5a97ed06b266c6987d1cd65e9d14c6bc0e36731159f89523b91693e06c5c0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/exact-prompt.txt",
+      "sha256": "e64e43b19301eed6491e80b47a98276e162ee684ba2e5f1ee98ee1db54da321e"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/provenance.json",
+      "sha256": "b24fcdfd64d1b8c747900a741739a0ea1690d67200d7172304e5db560414bd3d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/source.png",
+      "sha256": "8a8119382f86ee58239bf57dfd32bbb1d57e6379aa6a7d1222ea583266f4122d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/stage1-exact-prompt.txt",
+      "sha256": "9d84260443b05056aa7bf4025daa78ec958be614530f7cf04e786420e2daef86"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/stage1-provenance.json",
+      "sha256": "7438ae7b1d6b5f4363dcafd0dbae3134d77ca0152e500d28abdfdb5c435b8551"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/stage1-standing-cardinals.png",
+      "sha256": "2ea9b879780b96bc212c1a2c5333371ce70c54e81898edf035a4f5da44721b45"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/stage1-tool-args.json",
+      "sha256": "0dc1275d94aac53d5ac1e289702cdd873c4f60a767a6ff317172cafebd569d67"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/014/tool-args.json",
+      "sha256": "aea46be2e8a3d5c468e587b4d78cf108aea4e4360a9ed06520dcaa52b667bb3c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/exact-prompt.txt",
+      "sha256": "d51e60f0fa67acde64d48f1c21b61506e6a581811419269ec16598e7edf02a10"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/history/v1/exact-prompt.txt",
+      "sha256": "6ba79e6c64db8c948728312107646d6732f7f015700e1b4e70bbd79351205da9"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/history/v1/provenance.json",
+      "sha256": "39462f470a271324fba22f6661af0e338eb6f7b70d567f690bc8d6ae30fa3907"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/history/v1/source.png",
+      "sha256": "4f7e1e6ec0fe4840872f8e026c5e6ac0b6d5e6ba9a2d4ef1de0ff1052fa989ce"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/history/v1/tool-args.json",
+      "sha256": "442819347d17354049ba99c4ebaf44609d7cd2d6b184677b18efa495903aadce"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/provenance.json",
+      "sha256": "3e61d77cadbc46ded56364c92b878e46c99424a9afb540369d91f5a225fa479a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/source.png",
+      "sha256": "a4bf273292482532697fb6914b1b5a489526a8ae95b9b00b8c76c271513d9727"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/stage1-exact-prompt.txt",
+      "sha256": "9b75ca7b2542f1f3fed8cf6ab57cd984b99060e58a53cb7a63a2ee0c1f3b5da2"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/stage1-provenance.json",
+      "sha256": "6ca634b3ca76d4fb3865f8cda17f94e134c065d318fbfd51947e485bfab83f3d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/stage1-standing-cardinals.png",
+      "sha256": "396dccecd1faf6785b336c22c9f0221887fd215485535b2a9427c1cc61d08b1f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/stage1-tool-args.json",
+      "sha256": "b1013a3ad65288535cc47aaa75a6d59c7d3b5887dbcd18b0c7fbc38353c17d93"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/015/tool-args.json",
+      "sha256": "b8068aa1f47b54ad9b02b787d1e1793b38503add24eaa111dca7a1b4491f6833"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/exact-prompt.txt",
+      "sha256": "6a0910971e1699de98c21fcff56d8af7bdff7e9d073139f6b60abbe5841d9ea6"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/provenance.json",
+      "sha256": "d154127520834875b5cdeba3f3e7f7de291ccd27bbbbf1301b9334050b32db25"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/source.png",
+      "sha256": "d93c0dd0fce9f169831ac6ec81aa3c73cf07d2dc92c685fd71c43e2b3af1c52f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/stage1-exact-prompt.txt",
+      "sha256": "e02db823926ee20dbdc76d03a859def61a909724e705fcd9ec00c39347c339c9"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/stage1-provenance.json",
+      "sha256": "f6755ec3782b6e6a5f5b70a1adcffaa5a3b083db3616786a911dc9b613e5e92e"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/stage1-standing-cardinals.png",
+      "sha256": "0082c78703f9bc9eb03b551d2ace1a2ed8ff8090ce6e3dad73b96f08106b6cc1"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/stage1-tool-args.json",
+      "sha256": "dc46cd9d9c1f8edf1ba6aacc9e5473be589835074503b35af947afdc0cb9ad58"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/016/tool-args.json",
+      "sha256": "4a1871d6c7fe10f2f38915aefa05e04c9255954cd434f18c998657034cb80684"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/exact-prompt.txt",
+      "sha256": "405f2399a815cdb4b760bd114249c4b2324a02e70c312a66574be3cae9478cce"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/history/v1/exact-prompt.txt",
+      "sha256": "6d6fca1791617e268c4bab029d8d1d8f41ddd0136bd4c5b90a22fea981a775a4"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/history/v1/provenance.json",
+      "sha256": "300455d4b0efef36afaf83d9dcbe6e51c1f0d1cca13ac47c2c33a7a00110148b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/history/v1/source.png",
+      "sha256": "65a2caabb332aa423b6a46653c626fbd2cf167faf89b66b1a2e052077bed0fa2"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/history/v1/tool-args.json",
+      "sha256": "9a1fb88e436787f19050071201a1c347594899776b5b7df4eae9aa8faf8a4636"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/provenance.json",
+      "sha256": "4340604c1cbf62dbe4b165a9e12de1e6091bbd76127c4c7f9c613e82eafa5f3e"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/source.png",
+      "sha256": "3021719c1c543e90afafc4524ae2b767f6c8a6ce5ae1c670fde07322c3d0e67a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/stage1-exact-prompt.txt",
+      "sha256": "f06de5adc63c1dcc3c474765e9021b1c27cd1b1b69e862400c205ee5b3b7f0c2"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/stage1-provenance.json",
+      "sha256": "c4b6a39f72af465686eaf37f71ff60f43bf5123aa39e25ed414d2a70e63ce196"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/stage1-standing-cardinals.png",
+      "sha256": "9fe7f4cab8449ba930ae155c0d4611ed165600791145a3e5f264695e98af8de9"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/stage1-tool-args.json",
+      "sha256": "4ff2e60b355f0dbc96c238915aecd00510028f5e2fc713ec4d1db906fe709d12"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/017/tool-args.json",
+      "sha256": "e5a722fb6b3bf9e0c66f3f229290ac6f01719ce596f0a35a82502a1b4bd5387b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/exact-prompt.txt",
+      "sha256": "14f630723045125b72c39e0ed3c1fff3c9f912f710ee6776d5ba5c6080476a79"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/provenance.json",
+      "sha256": "74d2d3ca5d1f836f7fe8b4ad982f16321da032ad9a341bdb0c85260b8303816f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/source.png",
+      "sha256": "fa25785bc0484a15ea96c53be6f209849f91d7769b588817f65d074476345666"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/stage1-exact-prompt.txt",
+      "sha256": "b0280f0a3de992a4e6cd5ea0c6a2f2c6380703374e1c1fa43a53abeee8f1902c"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/stage1-provenance.json",
+      "sha256": "5860fe13ffc9b6ead41f27cd3cf946e9e7bd6ef9d2293ddb725b77c2174ba50e"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/stage1-standing-cardinals.png",
+      "sha256": "8ccda99ba69b903d2d67d194e2ac5381550759b465c4809666a02a327179b93f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/stage1-tool-args.json",
+      "sha256": "ffb06f99a002464c0f1dbef6d22d0d20a62a736e44f02eed6318319704f18519"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/018/tool-args.json",
+      "sha256": "4d28d327868a1f61bb59b30208f65fee86fc01e22465dc40bc9cca2f501d74b6"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/exact-prompt.txt",
+      "sha256": "85d1ddf78080f6dd7dc96c8cb128173d60d4cb6d6871e3377fc1544398a116b5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/history/v1/exact-prompt.txt",
+      "sha256": "8fc7387c8ca2b03942df9a977aa169dbb9c9e23cd5f6374037de5f84e7519238"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/history/v1/provenance.json",
+      "sha256": "6b2a4512500f121b73ef9d1b38c03b385066f5844bcf057a6c9dc880160c64c7"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/history/v1/source.png",
+      "sha256": "45ecc3950c271676d1ad114b042eafde76ad9fc1b9a1d84c072b50038911bb4f"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/history/v1/tool-args.json",
+      "sha256": "fef146e47607f5f9aa42f25d3e40dcdeb148a6d0d4a2128f47c5fb0d7f2f2aa0"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/provenance.json",
+      "sha256": "56ed196b03652d5c747f9b7777eb670a808d59185db0a3fb5d617635c418abd5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/source.png",
+      "sha256": "5bfa9c2ea7df6e7c9c93a04e4709ad79ab503eafd2eb641868694f81ed769c33"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/stage1-exact-prompt.txt",
+      "sha256": "c9ae79c76be85fa05e529d8fb0fafc7d28cfa9d67baad8abb79d6a806c5f3d6b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/stage1-provenance.json",
+      "sha256": "1f5138645c18e66166d861dce4ff5d0b327ce9c94e278b0b9ca025cad985aeb5"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/stage1-standing-cardinals.png",
+      "sha256": "6233ffcee860100ee73f07b9a5980649f6c27c871d8aa151ed187fb968c56b87"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/stage1-tool-args.json",
+      "sha256": "abedc61ec8015366ffb2e95f78a3e0ed9bb0bff30137fdcbe298dd8a28192d11"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/019/tool-args.json",
+      "sha256": "20add51f4f7dd73af0600527ce397415993ed124777a9ce69ca2fd31cbbf10f6"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/exact-prompt.txt",
+      "sha256": "12b44298b63d71e1bad2814aac23b43043862144a25b941dda1d47cd146335e3"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/history/v1/exact-prompt.txt",
+      "sha256": "f963c23ba7c8a9137e3dc4fe521d0a22d03d817f1a72c5af8a18a9fc03e046bf"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/history/v1/provenance.json",
+      "sha256": "3d8fd89665ad2b0da07040858cc33d01e2d73fc44838861137d4732283a2c37a"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/history/v1/source.png",
+      "sha256": "9c20f44f2265b425c70dda2987cb2c63191a8d782dc0e2292ec0c29d3f783e5b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/history/v1/tool-args.json",
+      "sha256": "826cb40f626e4f36b617b197994e5785b2aad028a269c0fe8fc9c91300107333"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/provenance.json",
+      "sha256": "fbe8b5de88de315c8bcc0ae9644eadda4b61d9585413f8f1a60de3e0f3f3367d"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/source.png",
+      "sha256": "afdb9d65c3778d55e084b0dfa1d4f6e4b56e62d408129831fbe59465816b4285"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/stage1-exact-prompt.txt",
+      "sha256": "eccf6587eb7257aaa95d63916bf3f0081e5ff3acc44dfff2e299bc6b084e923b"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/stage1-provenance.json",
+      "sha256": "ee233c4621eae8b59d3703d466a753b25576882a168efe68d4090eed43026fd1"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/stage1-standing-cardinals.png",
+      "sha256": "9862b94034e25867005b2dc638a9ac42e2562dfc0970eeb6661fed38d8506d56"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/stage1-tool-args.json",
+      "sha256": "6178c0fc13d16567564e4c2dcc170cb121161817566d0cc417b057336cc49341"
+    },
+    {
+      "path": "artifacts/character-statics/patient-demographics20-v4/sources/020/tool-args.json",
+      "sha256": "1e3b8d3b1d56f1acc86743b0322ae1b25beb95db53676d1de557813dfdaa086f"
+    },
+    {
+      "path": "packages/game-domain/src/patientAppearanceCatalog.ts",
+      "sha256": "95d43741dbdc023add3cd0f42683ba56de4de62751840a25cc5bfebd5181e0f4"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/design-rows.json",
+      "sha256": "81444468639ce4b580e6fab18c11ac1f3d73b7d5c6fc794b2bc9afc149e1163f"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/owner-approval.json",
+      "sha256": "fa3bc8e565ab33d8b24319e1a0d985d9a2ac9af4ead5163e8abef77dea79834f"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/001/stage1-standing-cardinals.prompt.txt",
+      "sha256": "ae4fe377c25802ae2b30ff1c17c5e967886de1e696a477602cd8b73ee94b3971"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/001/stage2-eight-pose.prompt.txt",
+      "sha256": "732f589526e8e872329c26f585a3ffeb46c76b75ecd065b96a40893674d84586"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/002/stage1-standing-cardinals.prompt.txt",
+      "sha256": "ac7c98d3375b209990c390bbb5a3524a8aa2cee19502e98d47b22551521e5064"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/002/stage2-eight-pose.prompt.txt",
+      "sha256": "c308f4a139b4201ad1faa0fe8acceec521deb7397e87b1588866a320685aa005"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/003/stage1-standing-cardinals.prompt.txt",
+      "sha256": "f73374e61ef930649508dcfd18df6b464209fa43e884f0f2d003cd565ee47a4a"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/003/stage2-eight-pose.prompt.txt",
+      "sha256": "924f45e388a13571770e69ab56d5293d95e72a3df8d5e2b3509f7e05dc3aa9ab"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/004/stage1-standing-cardinals.prompt.txt",
+      "sha256": "df6966dc3ddfeff9a91c7995288648054db048a9ebd949bea2fd08debb30e2f5"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/004/stage2-eight-pose.prompt.txt",
+      "sha256": "dfad830c6b779329cf2508b4e33beb8c2115aa4cf597b8d27cbf5391f33aef17"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/005/stage1-standing-cardinals.prompt.txt",
+      "sha256": "acc141df1cede09b4a845aae68af76761ebbae16289b26b98da3ead4f97928b7"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/005/stage2-eight-pose.prompt.txt",
+      "sha256": "847ed312e96db870e353f5740ddedfc821ee2c79b32244be3fcfe4b3010cfec1"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/006/stage1-standing-cardinals.prompt.txt",
+      "sha256": "0416086bef67e485c76f5254f967b9c0757c715bd44677b76e43bc236ed036f1"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/006/stage2-eight-pose.prompt.txt",
+      "sha256": "a3f97daaa672560618bccbf42fa094753f21aa84f92590fe2a11df417edf5e2e"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/007/stage1-standing-cardinals.prompt.txt",
+      "sha256": "0c8bcee0cd4226a03f581f84c6ee78a8bb1bc9d804910de874b71afe0d83b82b"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/007/stage2-eight-pose.prompt.txt",
+      "sha256": "7b4c5635067ab105ace9149915d19ab4e983e167dd15460cbd1c0fa9448ad6f2"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/008/stage1-standing-cardinals.prompt.txt",
+      "sha256": "ae8b21a41a46ee1078a5b7dd2cafe9d62042538c8b092405627d96a610d7e024"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/008/stage2-eight-pose.prompt.txt",
+      "sha256": "6be7295dfa090153eaef042bcafd690e51670f6ffff8ee29aa156c8d109ea81c"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/009/stage1-standing-cardinals.prompt.txt",
+      "sha256": "739aa0c69ce589efedaf619ced9592b35e48c2475d442804e183665a5ec46209"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/009/stage2-eight-pose.prompt.txt",
+      "sha256": "6812402c11d54a06d47d47f9d5891ce32d0ca8e9d8e077f51bca67bebcc50fe6"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/010/stage1-standing-cardinals.prompt.txt",
+      "sha256": "0b9b4048718d1b59b96f9c29e1114163eb3bd6cd89b925fcc3601575b95c25b8"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/010/stage2-eight-pose.prompt.txt",
+      "sha256": "a6e71c473f34778d864781c5619f23b46734fa3a2463ef68847ac1cb251c4738"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/011/stage1-standing-cardinals.prompt.txt",
+      "sha256": "4444afb79cd9092928714d4463c23b7d4f5e7322de155d3f903d1bd5e2647045"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/011/stage2-eight-pose.prompt.txt",
+      "sha256": "511580e1bd3b583333dbf4bf706123d989164b5e2f958d0455b85a1f29f16ee8"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/012/stage1-standing-cardinals.prompt.txt",
+      "sha256": "6f0947d32bfa417341db81edefffd75b4f39ca8b58225f5cc3fb008102bc7d60"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/012/stage2-eight-pose.prompt.txt",
+      "sha256": "6a644d54a6317ddc9e5deda933e0a8bc6cf9ed774c3a49232ae59d6afbdf6cfe"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/013/stage1-standing-cardinals.prompt.txt",
+      "sha256": "151c5791fb926ca56ba314dadf538b82636f214a1e0f4e5e9f99911a554b6198"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/013/stage2-eight-pose.prompt.txt",
+      "sha256": "1161d568c2b85914209da5ebc808af579aac8a6de87e7100673263be65b1ad94"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/014/stage1-standing-cardinals.prompt.txt",
+      "sha256": "9d84260443b05056aa7bf4025daa78ec958be614530f7cf04e786420e2daef86"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/014/stage2-eight-pose.prompt.txt",
+      "sha256": "e64e43b19301eed6491e80b47a98276e162ee684ba2e5f1ee98ee1db54da321e"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/015/stage1-standing-cardinals.prompt.txt",
+      "sha256": "9b75ca7b2542f1f3fed8cf6ab57cd984b99060e58a53cb7a63a2ee0c1f3b5da2"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/015/stage2-eight-pose.prompt.txt",
+      "sha256": "6ba79e6c64db8c948728312107646d6732f7f015700e1b4e70bbd79351205da9"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/016/stage1-standing-cardinals.prompt.txt",
+      "sha256": "e02db823926ee20dbdc76d03a859def61a909724e705fcd9ec00c39347c339c9"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/016/stage2-eight-pose.prompt.txt",
+      "sha256": "6a0910971e1699de98c21fcff56d8af7bdff7e9d073139f6b60abbe5841d9ea6"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/017/stage1-standing-cardinals.prompt.txt",
+      "sha256": "f06de5adc63c1dcc3c474765e9021b1c27cd1b1b69e862400c205ee5b3b7f0c2"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/017/stage2-eight-pose.prompt.txt",
+      "sha256": "6d6fca1791617e268c4bab029d8d1d8f41ddd0136bd4c5b90a22fea981a775a4"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/018/stage1-standing-cardinals.prompt.txt",
+      "sha256": "b0280f0a3de992a4e6cd5ea0c6a2f2c6380703374e1c1fa43a53abeee8f1902c"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/018/stage2-eight-pose.prompt.txt",
+      "sha256": "14f630723045125b72c39e0ed3c1fff3c9f912f710ee6776d5ba5c6080476a79"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/019/stage1-standing-cardinals.prompt.txt",
+      "sha256": "c9ae79c76be85fa05e529d8fb0fafc7d28cfa9d67baad8abb79d6a806c5f3d6b"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/019/stage2-eight-pose.prompt.txt",
+      "sha256": "8fc7387c8ca2b03942df9a977aa169dbb9c9e23cd5f6374037de5f84e7519238"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/020/stage1-standing-cardinals.prompt.txt",
+      "sha256": "eccf6587eb7257aaa95d63916bf3f0081e5ff3acc44dfff2e299bc6b084e923b"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/prompts/020/stage2-eight-pose.prompt.txt",
+      "sha256": "f963c23ba7c8a9137e3dc4fe521d0a22d03d817f1a72c5af8a18a9fc03e046bf"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/review-acceptance.json",
+      "sha256": "66d932d6fccfe5da72efbbfdfc64c4a94061962c845c8de564b0f5a2230c9366"
+    },
+    {
+      "path": "tools/character-mapping/patient-demographics20-v4/roster.json",
+      "sha256": "1371c5299eb03db27c1594c9dfb70c71062d23c20443b21ada0e9d6ef8d784d4"
+    }
+  ],
+  "provenancePreservation": "All1670 prior global asset records and every prior input claim are preserved verbatim as JSON values. Only160 new records and one new cohort input are appended."
+}

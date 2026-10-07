@@ -1,0 +1,790 @@
+{
+  "schemaVersion": "patient-demographics20-v4-staging/v1",
+  "runtimeIntegration": {
+    "authorized": true,
+    "ready": true,
+    "ownerApproval": "approved"
+  },
+  "baseline": "tools/character-mapping/patient-demographics20-v4/runtime-baseline.json",
+  "target": {
+    "width": 160,
+    "height": 320,
+    "bodyAxisX": 80,
+    "floorY": 287,
+    "standingSouthVisibleHeight": 246
+  },
+  "rosterContract": {
+    "identities": 20,
+    "posesPerIdentity": 8,
+    "totalPoses": 160,
+    "demographicCounts": {
+      "Female": {
+        "young_adult": 0,
+        "adult": 0,
+        "middle_aged": 2,
+        "older_adult": 3
+      },
+      "Male": {
+        "young_adult": 0,
+        "adult": 5,
+        "middle_aged": 7,
+        "older_adult": 3
+      }
+    }
+  },
+  "seatContactContractSha256": "556799b76f48c7d4c325d824cb2639f14a474e4f201ea9675d8bd1495376634f",
+  "derivedAlphaReport": {
+    "path": "artifacts/character-statics/patient-demographics20-v4/alpha-normalization-report.json",
+    "sha256": "3edc8848b08663c7d42f2f359abffc89da0559962ba154879c21cedee2de481f",
+    "rootWarningAccepted": true
+  },
+  "entries": [
+    {
+      "number": "001",
+      "stableId": "patient-demographics20-v4.001",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/001/manifest.json",
+      "sourceSha256": "4e4e718428d021d7a9d5d1c29471cdac1a85c978d2c4850abe3fd51f7e7e039a",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 241,
+        "east": 242,
+        "west": 242,
+        "north": 244
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/001/full-poses-transparent.png",
+          "sha256": "a546940bb80429aafabef88f452aedfcaeb179d693b90dffbee03b7bc236f69a"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/001/full-poses-light.png",
+          "sha256": "4cc6663d87474f770ee9e0de31f93a37be6df73e5b6ad174f4302e1a276f6106"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/001/full-poses-dark.png",
+          "sha256": "75e571558a7410f3ed3009c639d0bec315e53d1e0716924774b2f0a1545f601b"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/001/seated-contact-grid-2x.png",
+          "sha256": "2e7e5827fde6443f9361924f5fe60cb4eb88c9155169cddcbda0f14d134e7cf8"
+        }
+      }
+    },
+    {
+      "number": "002",
+      "stableId": "patient-demographics20-v4.002",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/002/manifest.json",
+      "sourceSha256": "ff90fc8a4fb388113d0f2fbe25ecce9c50db6a0198f3246851ef059d822995ee",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 238,
+        "east": 239,
+        "west": 239,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/002/full-poses-transparent.png",
+          "sha256": "3dd46ab761ded695b6f379054ef9674eb836a86853065119fcc462a65f3ba369"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/002/full-poses-light.png",
+          "sha256": "80c0248cdd9ba6b7e0822622d7937f93155e68cb56fd2986af5683b65a7d13f0"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/002/full-poses-dark.png",
+          "sha256": "8cf941781f05355bec2edefd7a5e481df38029cc5c4ca3a54245672c83672266"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/002/seated-contact-grid-2x.png",
+          "sha256": "f54022e8acef0e8611eee8206e8e91dab73990f24c03d477e53f54787d373ba3"
+        }
+      }
+    },
+    {
+      "number": "003",
+      "stableId": "patient-demographics20-v4.003",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/003/manifest.json",
+      "sourceSha256": "89f82c99668890a59f116a3f1b658f235a618089857db19e1bee13310e409fec",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 240,
+        "east": 246,
+        "west": 245,
+        "north": 245
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/003/full-poses-transparent.png",
+          "sha256": "252421dea0b3a816b2f24f6fa86939d8baadc33c09fb2c35f40bb44f266aa888"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/003/full-poses-light.png",
+          "sha256": "72346217d5dcb85e659f18c3caf85742ea90a28d60cf3997f6e3dee9ac2b4405"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/003/full-poses-dark.png",
+          "sha256": "e34f9ddb2b754fc83d3d4b3a0017280e3da276bd4dc497e84f62f7210b122255"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/003/seated-contact-grid-2x.png",
+          "sha256": "8f99db9b80c7b44d2341e40d5b17d26e45c3d823a94bd128a5a4e5ce0f66901f"
+        }
+      }
+    },
+    {
+      "number": "004",
+      "stableId": "patient-demographics20-v4.004",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/004/manifest.json",
+      "sourceSha256": "1ba82686ab4a8d47eb213f7761413a71a211512e2db0b9c60beb38e60d2f0b63",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 240,
+        "east": 244,
+        "west": 244,
+        "north": 244
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/004/full-poses-transparent.png",
+          "sha256": "8a315d7035404d2cf19e2d2bcf4b8b38bb2c1bc785babdc690c5b5bb9bb941e3"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/004/full-poses-light.png",
+          "sha256": "24db767161752f9d451cd23ef082c1dd3f9b0edd38fabd2327ec9e5b0bee46bf"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/004/full-poses-dark.png",
+          "sha256": "0ef9ee75ce8247d871c458aad56748d516afaefbb9b0a877d1c544ed1d459239"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/004/seated-contact-grid-2x.png",
+          "sha256": "86e89c52548a21b1c0d4fa4b88766342ba8fed453ae9c215c15c09aaf007d210"
+        }
+      }
+    },
+    {
+      "number": "005",
+      "stableId": "patient-demographics20-v4.005",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/005/manifest.json",
+      "sourceSha256": "1a06107ea5eeff2e3d692a6b03210bdf7cd79afb6fff31e7b521fb9f7734de6b",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 245,
+        "east": 250,
+        "west": 250,
+        "north": 250
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/005/full-poses-transparent.png",
+          "sha256": "d6bc5da4de8ef17b54331107f5f3e97986ae46f890aca9b7bba942332909b4db"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/005/full-poses-light.png",
+          "sha256": "4f8ff88eda5d19f31c1e2b27d9ca01d65b06f6b54c8be852a08cf60b07023937"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/005/full-poses-dark.png",
+          "sha256": "329ae8e624daa0aee6d37d446806c2f071f28ef1282eff1ef12a32f47594092d"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/005/seated-contact-grid-2x.png",
+          "sha256": "45bebe8866b00c5a0b5e902a1fcf05fd6f17ef01fa6c0618fe0f0a64f65c6de7"
+        }
+      }
+    },
+    {
+      "number": "006",
+      "stableId": "patient-demographics20-v4.006",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/006/manifest.json",
+      "sourceSha256": "db67d1f67eba852b137c77d1059dffcee2032262f74914a2fa0dbc69f121c967",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 235,
+        "east": 238,
+        "west": 238,
+        "north": 239
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/006/full-poses-transparent.png",
+          "sha256": "1d5d30c44a0a669692637842bc24f0e3d58b6da0f3aa13142618d02b71412a4a"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/006/full-poses-light.png",
+          "sha256": "73538d5e6e3f5250ecaebd4540616ae56b8adf279d124d4975d2345ccd3d866e"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/006/full-poses-dark.png",
+          "sha256": "de3380137c74b9458e4594be9fef1c8589ea22c7c56bc6e72daeb78c8853c5ff"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/006/seated-contact-grid-2x.png",
+          "sha256": "8daec8f94773f0af1faf93beb4236991a2d1808c0a5badbdd443af360b4e5b6a"
+        }
+      }
+    },
+    {
+      "number": "007",
+      "stableId": "patient-demographics20-v4.007",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/007/manifest.json",
+      "sourceSha256": "5337de0f45ae2b27e02274d347a0c07ff344d9aa2f379b6a48392005b592d13c",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 239,
+        "east": 243,
+        "west": 243,
+        "north": 244
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/007/full-poses-transparent.png",
+          "sha256": "0f42258f468acbf9b8b35a3b0b08dbd34448fca0f9ffc11ad9170375090218ad"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/007/full-poses-light.png",
+          "sha256": "1ee1e0fbaadde962d3c6a4d09580daa551c770a288d2afd9894c984ea571a4b4"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/007/full-poses-dark.png",
+          "sha256": "b53e74e344a23107bc12204bd743c86113f56030f911ed80cd4361fbc63f1e87"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/007/seated-contact-grid-2x.png",
+          "sha256": "fa070b73952557a44f9c895d24fe5291162978aaa18cb8d3f11585c87ac93c68"
+        }
+      }
+    },
+    {
+      "number": "008",
+      "stableId": "patient-demographics20-v4.008",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/008/manifest.json",
+      "sourceSha256": "0cc82060f59176cd2c48258598c3e51b3129c14232c48ddc3db629aa76ab710f",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 239,
+        "east": 240,
+        "west": 240,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/008/full-poses-transparent.png",
+          "sha256": "e99e7c01a848217473fb53b9394610d8895465d902bcff2f48b1859ed15d0c62"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/008/full-poses-light.png",
+          "sha256": "7ac0aa144cbdd80f50a9c494374f330ad12cc0c319f7ee0391826d5b4c61e287"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/008/full-poses-dark.png",
+          "sha256": "a1acbae632b93bb3f86c2228fb3b5f70515384c67d64417ff850d3e912896063"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/008/seated-contact-grid-2x.png",
+          "sha256": "a2180f52115b349e8d79b8c443b08bbc5ba87ada2f723feba18bb57ffd865314"
+        }
+      }
+    },
+    {
+      "number": "009",
+      "stableId": "patient-demographics20-v4.009",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/009/manifest.json",
+      "sourceSha256": "b0bfcf298231563c1e078aaf7f798f3b4540502f40d256e7ef85a729159859dd",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 240,
+        "east": 245,
+        "west": 245,
+        "north": 246
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/009/full-poses-transparent.png",
+          "sha256": "d9baf62a714396734302dd33f3cc1d3cc3e84fa372ff09c6486e63ef00ac685f"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/009/full-poses-light.png",
+          "sha256": "f66c36814acd3a43b55d9cd5a36cb5693fef78013dd64fb160911469cf0a9f88"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/009/full-poses-dark.png",
+          "sha256": "149ffad3f42abd9d215f63fe73b2472e5bb359dd50daccfbf156839bf4bac0c3"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/009/seated-contact-grid-2x.png",
+          "sha256": "6d92e6736135c5e085f6a422e8dba46444e2b1b086bb2c5b7a049e1e5bf60d0c"
+        }
+      }
+    },
+    {
+      "number": "010",
+      "stableId": "patient-demographics20-v4.010",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/010/manifest.json",
+      "sourceSha256": "e4f69e1bdf47a4669ba6dbfb3f27165c20eb4cf10a6e9af57d10fb98e453a981",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 234,
+        "east": 237,
+        "west": 237,
+        "north": 237
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/010/full-poses-transparent.png",
+          "sha256": "1047b9e2646486bada2e812fa377b4394c77a878a958c84915a1e3a05325b149"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/010/full-poses-light.png",
+          "sha256": "2c0e3f165b1f1c531198b5c42b5c53d85cc8549825a23494e422b285a34a8461"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/010/full-poses-dark.png",
+          "sha256": "bb0ad3a91b634bcd9d993fe22a08049d57945a5305a64f95202a9a98b081c2b3"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/010/seated-contact-grid-2x.png",
+          "sha256": "283b4b46145975fd406c48bc42cf56122f247671d66c81d29b3867a59f93fa2d"
+        }
+      }
+    },
+    {
+      "number": "011",
+      "stableId": "patient-demographics20-v4.011",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/011/manifest.json",
+      "sourceSha256": "897d44b94a3cbb6d87c023970b91805a4edc332f9ba057122622d27a3346def3",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 238,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/011/full-poses-transparent.png",
+          "sha256": "a5841c7b84789aae17d19001de50ad711194ab7b4187b29dedf55a2ef19049b1"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/011/full-poses-light.png",
+          "sha256": "436ec063ceac131795f3e662dfe99ea134ce54524c5ba7eebe7a4cc64f2f3e63"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/011/full-poses-dark.png",
+          "sha256": "68fdc6d4050bb3f3372cec62ceb24b1e89b8287c1f661e50baafb30efdeb70b7"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/011/seated-contact-grid-2x.png",
+          "sha256": "a424bd95f1571c01d4907feeb302ce989c2a2354750b09c434f9fa12cef143ea"
+        }
+      }
+    },
+    {
+      "number": "012",
+      "stableId": "patient-demographics20-v4.012",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/012/manifest.json",
+      "sourceSha256": "80a555d302750c7b907a1b5572fd620527bf7a636e2275979e380a044badf9ef",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 237,
+        "east": 241,
+        "west": 241,
+        "north": 239
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/012/full-poses-transparent.png",
+          "sha256": "616144aa7ee08bcdd781986b22301269800367052080c945fb0eda9b88497af4"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/012/full-poses-light.png",
+          "sha256": "dd1a39cb52793defba65d809501e65212089489135c18c50cddb96347dc5df2a"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/012/full-poses-dark.png",
+          "sha256": "5c2709e93301eafe3cc050353c35bccdd9a53f2d88b4afa6cedda1f14761a185"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/012/seated-contact-grid-2x.png",
+          "sha256": "e871be13915013255bcf6a8d08aeab4679a1e9d5c686682bfefe8a6a96ec95a9"
+        }
+      }
+    },
+    {
+      "number": "013",
+      "stableId": "patient-demographics20-v4.013",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/013/manifest.json",
+      "sourceSha256": "5b620a5d4147778dab90be3f18f48647a9e81998513ece5289b869b28f956861",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 241,
+        "east": 246,
+        "west": 246,
+        "north": 247
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/013/full-poses-transparent.png",
+          "sha256": "1bec6ab4f1963c0cd85da781a46ac848b37176d3d68843b6f6e968b7b8a2eb30"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/013/full-poses-light.png",
+          "sha256": "ff54a92288157383d792bf06c24d86321920c1ecce078b88ae85f985c12654fd"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/013/full-poses-dark.png",
+          "sha256": "e799946b7fcbd8ea1d099dc00dedb63f39ae660442ba8ae30b3ac045baae9e90"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/013/seated-contact-grid-2x.png",
+          "sha256": "94ae5bdbabe8a0a3ed175c76036b09fe4d537f0b30b35743655afb35cc84caea"
+        }
+      }
+    },
+    {
+      "number": "014",
+      "stableId": "patient-demographics20-v4.014",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/014/manifest.json",
+      "sourceSha256": "8a8119382f86ee58239bf57dfd32bbb1d57e6379aa6a7d1222ea583266f4122d",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 240,
+        "east": 243,
+        "west": 243,
+        "north": 242
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/014/full-poses-transparent.png",
+          "sha256": "1b380a43310e822f028182539fd19186a7faa52c38e4e23880d5c08bc8e6eed6"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/014/full-poses-light.png",
+          "sha256": "c6cb53d55cd1581a65c5ad450a1d3a948dce53d93acf5608bcb2556e4c4f24f5"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/014/full-poses-dark.png",
+          "sha256": "b9dd8f8df369bf6c767e3c9667c813469635c33c3162091509c3e6c16b10d25d"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/014/seated-contact-grid-2x.png",
+          "sha256": "f494adb231bfe093863ab8e2ea2e691e8333a702483a9bb7c8ec67f45e648ee5"
+        }
+      }
+    },
+    {
+      "number": "015",
+      "stableId": "patient-demographics20-v4.015",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/015/manifest.json",
+      "sourceSha256": "a4bf273292482532697fb6914b1b5a489526a8ae95b9b00b8c76c271513d9727",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 241,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/015/full-poses-transparent.png",
+          "sha256": "f8c8aaf5aa24d825473de9b25851dc5e3a998fd6bb11ce1fd12d757b0f6bc904"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/015/full-poses-light.png",
+          "sha256": "a2de261541f39db4d13ad858def7e4cf7593893f5bd850c9ad678d30aaa93fd5"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/015/full-poses-dark.png",
+          "sha256": "48fa44bd472e5850faed3ea62844c1e501d032d9ba83e14e8c38f5403b6f86db"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/015/seated-contact-grid-2x.png",
+          "sha256": "5cbd9cee34b490451113adad17c880c56d0ef402633303c4a417ef0cec0159de"
+        }
+      }
+    },
+    {
+      "number": "016",
+      "stableId": "patient-demographics20-v4.016",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/016/manifest.json",
+      "sourceSha256": "d93c0dd0fce9f169831ac6ec81aa3c73cf07d2dc92c685fd71c43e2b3af1c52f",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 251,
+        "east": 250,
+        "west": 250,
+        "north": 252
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/016/full-poses-transparent.png",
+          "sha256": "48787edd0e18511e73db860e3ecce393021c9d80843a442381371844b0c8f6ea"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/016/full-poses-light.png",
+          "sha256": "614041fa6d136a3a4aff2b83966631285f78016064463825fc7113ccea25537c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/016/full-poses-dark.png",
+          "sha256": "62c776e383355fb4e5c1c28d0886f2d192db89c8d5d38ad3c53e0b9d6a32380f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/016/seated-contact-grid-2x.png",
+          "sha256": "8e9fe49476f2f8daac7033f9ec90018ffd8a5e6ed5b6f89a3c54907c77b83530"
+        }
+      }
+    },
+    {
+      "number": "017",
+      "stableId": "patient-demographics20-v4.017",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/017/manifest.json",
+      "sourceSha256": "3021719c1c543e90afafc4524ae2b767f6c8a6ce5ae1c670fde07322c3d0e67a",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 236,
+        "east": 239,
+        "west": 239,
+        "north": 241
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/017/full-poses-transparent.png",
+          "sha256": "193da32d05563ac6aa456196c44fd5c3bed6fc4d62b01b2734ee481c3c4f0707"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/017/full-poses-light.png",
+          "sha256": "5a0b1f0b097006e0df8ccc2ee1cee44b9c2be8425186f3cf3e0e35e4e7f5ac08"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/017/full-poses-dark.png",
+          "sha256": "a13ce45d093170fc97346b31f0dcaa4e53f010cbfce1207f8c06e573afc3aa3f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/017/seated-contact-grid-2x.png",
+          "sha256": "6310dde4ec38e181c08c67a512c981dc8f0fabb4bf1c9479d714a21f37403d4e"
+        }
+      }
+    },
+    {
+      "number": "018",
+      "stableId": "patient-demographics20-v4.018",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/018/manifest.json",
+      "sourceSha256": "fa25785bc0484a15ea96c53be6f209849f91d7769b588817f65d074476345666",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 236,
+        "east": 237,
+        "west": 238,
+        "north": 240
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/018/full-poses-transparent.png",
+          "sha256": "803bcec8ab5cb789b19749f3a3dd31ba398ff8fb96b1e590637eefe5da1d6635"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/018/full-poses-light.png",
+          "sha256": "f9928635f75f6697ee2a9346124b4a6514fb163260c05248403e021e199dd36c"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/018/full-poses-dark.png",
+          "sha256": "6e9af989c04063a0bcaab9e3040ab2fe635709203c3847dd1273fc819b7e9886"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/018/seated-contact-grid-2x.png",
+          "sha256": "2f7809374da276936606db041566ca59d23d5d7997bb2661ebe21525930da3f3"
+        }
+      }
+    },
+    {
+      "number": "019",
+      "stableId": "patient-demographics20-v4.019",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/019/manifest.json",
+      "sourceSha256": "5bfa9c2ea7df6e7c9c93a04e4709ad79ab503eafd2eb641868694f81ed769c33",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 244,
+        "east": 247,
+        "west": 247,
+        "north": 251
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/019/full-poses-transparent.png",
+          "sha256": "7c333e3c991c9f977859d06958d008457358db6bccc736cc9bd12cb944f3f899"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/019/full-poses-light.png",
+          "sha256": "c6503004a59c92dee8dc0b279aebdebc5d32dbc09cd54aaade8d6cc44b3cecf7"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/019/full-poses-dark.png",
+          "sha256": "85a54ba86524b9abc158b5f3ad43f53f98f55b8ec56a51f671375792d2d5a50e"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/019/seated-contact-grid-2x.png",
+          "sha256": "f9ede0cabb43532e2b2c44ffbb07941636ba181a50f3c4763d84f8b83839d896"
+        }
+      }
+    },
+    {
+      "number": "020",
+      "stableId": "patient-demographics20-v4.020",
+      "manifest": "artifacts/character-statics/patient-demographics20-v4/packages/020/manifest.json",
+      "sourceSha256": "afdb9d65c3778d55e084b0dfa1d4f6e4b56e62d408129831fbe59465816b4285",
+      "rootVisualAccepted": true,
+      "contactCoordinates": {
+        "south": 237,
+        "east": 245,
+        "west": 245,
+        "north": 247
+      },
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/020/full-poses-transparent.png",
+          "sha256": "fc0c3da5bf6d0050f81890811f6df723f0c230cb2e3321f6ab7851c8ee5268b6"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/020/full-poses-light.png",
+          "sha256": "5d1f3c584709632606e4b73a7d26c6e39945031f3be2903480ecbb865d5c606b"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/020/full-poses-dark.png",
+          "sha256": "5e9f0c8011197ce85bb3f3683fa3ca85de74b87f9ecbd4315305d8ec83542f5a"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/patient-demographics20-v4/packages/020/seated-contact-grid-2x.png",
+          "sha256": "7476b892be9cfeef55d89210e0de62d8f7dd34e24c907aa249aa82c44a58fc05"
+        }
+      }
+    }
+  ],
+  "issues": [],
+  "totals": {
+    "expected": 20,
+    "packaged": 20,
+    "poses": 160,
+    "issues": 0
+  }
+}

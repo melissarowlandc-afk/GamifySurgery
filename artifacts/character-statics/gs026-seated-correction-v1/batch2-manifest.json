@@ -1,0 +1,1864 @@
+{
+  "schemaVersion": "gs026-seated-correction-batch/v1",
+  "batchId": "gs026-seated-correction-batch2",
+  "canvas": {
+    "width": 160,
+    "height": 320,
+    "axisX": 80,
+    "floorY": 287
+  },
+  "baseline": {
+    "manifest": "artifacts/character-statics/gs-018-v1/coverage-manifest.json",
+    "sha256": "302e344f060a191f728b95bfc0a8b3565f5bccf1eabc9b5356d00ad30bd524d6"
+  },
+  "characters": [
+    {
+      "identityId": "patient.adult.030",
+      "authorization": "owner-authorized-correction",
+      "approval": "pending-parent-and-owner-visual-approval",
+      "calibration": {
+        "scale": 0.357,
+        "sourceSouthHeadWidth": 196,
+        "sourceSouthHeadBounds": {
+          "x": 139,
+          "y": 124,
+          "width": 196,
+          "height": 176,
+          "includes": "beanie and ears through the lower face; alpha envelope measured above y=300 before shoulders enter"
+        },
+        "standingSouthHeadWidth": 70,
+        "renderedSouthHeadWidth": 69.972,
+        "basis": "authored source-head envelope registered to accepted standing head width, followed by torso visual review; total seated height is not anatomy evidence"
+      },
+      "generation": {
+        "mode": "built-in image_gen",
+        "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-030-seated-cardinals-v1.png",
+        "sourceSha256": "fa1e2ea52db615a371d640bb09152e1f4c0e2e54da7b3a691d27902ca5413b93",
+        "promptFile": "tools/character-mapping/gs026-seated-correction/prompts/patient-adult-030-v1.txt",
+        "promptSha256": "66c172b148bc50a316b1d03a6232b0367f64f87b3813eae513b8b29e46d3cd96",
+        "standingProof": "artifacts/character-statics/gs-018-v1/proofs/patients-021-050/patient.adult.030-native-light.png",
+        "standingProofSha256": "1d83c46a3499d41e394ba1b230a43119ed5403e26927ac3eed20a2e5a68faaab",
+        "oldSeatedReference": "tools/character-mapping/gs-018-statics-v1/assets/patient-030-seated-v1.png",
+        "oldSeatedReferenceSha256": "dcedbac842a41e9599ec972514e5d3f8ff9441b05401e5d630515628634cfe05"
+      },
+      "poses": {
+        "south": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.030/sit-south.png",
+          "sha256": "f1c399b3ae6d6d32ac3826c3352d562824322866e7a4baa9ed071c746fd92040",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-030-seated-cardinals-v1.png",
+            "sha256": "fa1e2ea52db615a371d640bb09152e1f4c0e2e54da7b3a691d27902ca5413b93",
+            "strip": {
+              "x": 0,
+              "y": 0,
+              "width": 459
+            },
+            "componentBounds": {
+              "count": 134278,
+              "left": 97,
+              "top": 124,
+              "right": 376,
+              "bottom": 797,
+              "width": 280,
+              "height": 674
+            }
+          },
+          "transform": {
+            "scale": 0.357,
+            "translateX": -4.608999999999995,
+            "translateY": 3.1140000000000327,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 237,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 797,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 626.5,
+              "y": 226.77450000000002,
+              "transferredSourceY": 626.249846513948,
+              "baselineRelativeSupport": 0.7482876712328766,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.020000000000003,
+            "top": 47.38200000000003,
+            "right": 129.623,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "east": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.030/sit-east.png",
+          "sha256": "698063a0a828f2d874366fb210cebe1d1de2eeb2545cd613b7a8f7ccbd1c8849",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-030-seated-cardinals-v1.png",
+            "sha256": "fa1e2ea52db615a371d640bb09152e1f4c0e2e54da7b3a691d27902ca5413b93",
+            "strip": {
+              "x": 459,
+              "y": 0,
+              "width": 428
+            },
+            "componentBounds": {
+              "count": 111741,
+              "left": 540,
+              "top": 124,
+              "right": 842,
+              "bottom": 797,
+              "width": 303,
+              "height": 674
+            }
+          },
+          "transform": {
+            "scale": 0.357,
+            "translateX": -2.823999999999998,
+            "translateY": 3.1140000000000327,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 691,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 797,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 626.5,
+              "y": 226.77450000000002,
+              "transferredSourceY": 626.249846513948,
+              "baselineRelativeSupport": 0.7482876712328766,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 26.093000000000018,
+            "top": 47.38200000000003,
+            "right": 133.907,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "west": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.030/sit-west.png",
+          "sha256": "bffca8fb5e952bc1a6c8fe9fbbe77e36ef83a885b5d603f269bdf96b4eb89c2a",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-030-seated-cardinals-v1.png",
+            "sha256": "fa1e2ea52db615a371d640bb09152e1f4c0e2e54da7b3a691d27902ca5413b93",
+            "strip": {
+              "x": 887,
+              "y": 0,
+              "width": 424
+            },
+            "componentBounds": {
+              "count": 112450,
+              "left": 931,
+              "top": 124,
+              "right": 1226,
+              "bottom": 797,
+              "width": 296,
+              "height": 674
+            }
+          },
+          "transform": {
+            "scale": 0.357,
+            "translateX": 11.456000000000003,
+            "translateY": 3.1140000000000327,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1079,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 797,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 626.5,
+              "y": 226.77450000000002,
+              "transferredSourceY": 626.249846513948,
+              "baselineRelativeSupport": 0.7482876712328766,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 27.163999999999987,
+            "top": 47.38200000000003,
+            "right": 132.47899999999998,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "north": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.030/sit-north.png",
+          "sha256": "2eadce939907aaa88429532fa54af70b090d8182812248d3ed2761fc6977fc59",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-030-seated-cardinals-v1.png",
+            "sha256": "fa1e2ea52db615a371d640bb09152e1f4c0e2e54da7b3a691d27902ca5413b93",
+            "strip": {
+              "x": 1311,
+              "y": 0,
+              "width": 463
+            },
+            "componentBounds": {
+              "count": 131691,
+              "left": 1394,
+              "top": 123,
+              "right": 1673,
+              "bottom": 797,
+              "width": 280,
+              "height": 675
+            }
+          },
+          "transform": {
+            "scale": 0.357,
+            "translateX": 0.38900000000001,
+            "translateY": 3.1140000000000327,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1534,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 797,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 626.2,
+              "y": 226.66740000000004,
+              "transferredSourceY": 625.9981341851809,
+              "baselineRelativeSupport": 0.7482876712328766,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.02000000000004,
+            "top": 47.025000000000034,
+            "right": 129.62300000000005,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        }
+      },
+      "proofs": [
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.030-native-light.png",
+          "sha256": "8940dc7429b79a6c820350da1dc5aa8f5b9895bdce478d8cb9505c43f47a7c46",
+          "theme": "light",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.030-game-32x64-light.png",
+          "sha256": "87d14c0afca718e1228339aa1a7938ef2c92fb2dc9d3654909a30d6672e92c6d",
+          "theme": "light",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.030-native-dark.png",
+          "sha256": "c1c90d9f28a051d11b40bd659a8366b4f22910d715270b1c864812c3b797167d",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.030-game-32x64-dark.png",
+          "sha256": "6892f4236201091a06ed0db5f35f13276cae5c753e146e460014039bd5822ac5",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.030-seat-contact-overlay-2x-dark.png",
+          "sha256": "e80566c5181659c8a07d0fb7a70771a1d622c8c7a974196220f21fad979c3d6c",
+          "layout": "four corrected cardinal poses with authored chair-support plane overlay",
+          "scale": 2
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.030-south-head-measurement.png",
+          "sha256": "add56fc0af078c62e85528e863246958cca3daab69c2f64712c0eee77b4cfbfc",
+          "layout": "source SOUTH pose with explicit authored crown-to-neck head-envelope bounds",
+          "sourceBounds": {
+            "x": 139,
+            "y": 124,
+            "width": 196,
+            "height": 176,
+            "includes": "beanie and ears through the lower face; alpha envelope measured above y=300 before shoulders enter"
+          }
+        }
+      ]
+    },
+    {
+      "identityId": "patient.adult.037",
+      "authorization": "owner-authorized-correction",
+      "approval": "pending-parent-and-owner-visual-approval",
+      "calibration": {
+        "scale": 0.359,
+        "sourceSouthHeadWidth": 189,
+        "sourceSouthHeadBounds": null,
+        "standingSouthHeadWidth": 68,
+        "renderedSouthHeadWidth": 67.851,
+        "basis": "authored source-head envelope registered to accepted standing head width, followed by torso visual review; total seated height is not anatomy evidence"
+      },
+      "generation": {
+        "mode": "built-in image_gen",
+        "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-037-seated-cardinals-v1.png",
+        "sourceSha256": "fbd00c85512d0c35541835479454b17bc59b77b204d3053d54227c3816eb08aa",
+        "promptFile": "tools/character-mapping/gs026-seated-correction/prompts/patient-adult-037-v1.txt",
+        "promptSha256": "5b0ca8107c318b45dfdd1530ca2348ce575ce15904e6f748f6f965c0c25bffbc",
+        "standingProof": "artifacts/character-statics/gs-018-v1/proofs/patients-021-050/patient.adult.037-native-light.png",
+        "standingProofSha256": "3061e1fa9d05eb34f1189fa1a29bb7e951a81b28bfbec6726a720a2678a711e0",
+        "oldSeatedReference": "tools/character-mapping/gs-018-statics-v1/assets/patient-037-seated-v1.png",
+        "oldSeatedReferenceSha256": "a02ea629cb670c5e38c7e79767939864cf523826158b2baf4c481197a486bd48"
+      },
+      "poses": {
+        "south": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.037/sit-south.png",
+          "sha256": "c417bbc8b31a323997daaf02c8b2ebab814965b255d71d0a2f981c9887b6a318",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-037-seated-cardinals-v1.png",
+            "sha256": "fbd00c85512d0c35541835479454b17bc59b77b204d3053d54227c3816eb08aa",
+            "strip": {
+              "x": 0,
+              "y": 0,
+              "width": 569
+            },
+            "componentBounds": {
+              "count": 124021,
+              "left": 147,
+              "top": 88,
+              "right": 444,
+              "bottom": 673,
+              "width": 298,
+              "height": 586
+            }
+          },
+          "transform": {
+            "scale": 0.359,
+            "translateX": -26.263999999999996,
+            "translateY": 46.03400000000002,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 296,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 673,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 537.2,
+              "y": 238.88880000000003,
+              "transferredSourceY": 537.1651863141851,
+              "baselineRelativeSupport": 0.7701543739279589,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 26.509,
+            "top": 77.62600000000002,
+            "right": 133.132,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "east": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.037/sit-east.png",
+          "sha256": "594ad8e6679df20ce98ed0e1925149122e8456ba368d168816bcd74ab1d64f06",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-037-seated-cardinals-v1.png",
+            "sha256": "fbd00c85512d0c35541835479454b17bc59b77b204d3053d54227c3816eb08aa",
+            "strip": {
+              "x": 569,
+              "y": 0,
+              "width": 513
+            },
+            "componentBounds": {
+              "count": 100180,
+              "left": 692,
+              "top": 90,
+              "right": 980,
+              "bottom": 669,
+              "width": 289,
+              "height": 580
+            }
+          },
+          "transform": {
+            "scale": 0.359,
+            "translateX": -15.852999999999994,
+            "translateY": 46.47,
+            "floorCorrectionY": -1,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 836,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 669,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 538.5,
+              "y": 239.79149999999998,
+              "transferredSourceY": 538.5358820136772,
+              "baselineRelativeSupport": 0.7733377276097883,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 28.30400000000003,
+            "top": 78.78,
+            "right": 131.69600000000003,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "west": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.037/sit-west.png",
+          "sha256": "bd8b9d06771b65679912177a477e63107c5e6e5bb64abbbb589a044598519337",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-037-seated-cardinals-v1.png",
+            "sha256": "fbd00c85512d0c35541835479454b17bc59b77b204d3053d54227c3816eb08aa",
+            "strip": {
+              "x": 1082,
+              "y": 0,
+              "width": 510
+            },
+            "componentBounds": {
+              "count": 100385,
+              "left": 1182,
+              "top": 91,
+              "right": 1469,
+              "bottom": 670,
+              "width": 288,
+              "height": 580
+            }
+          },
+          "transform": {
+            "scale": 0.359,
+            "translateX": -7.596000000000004,
+            "translateY": 46.11100000000002,
+            "floorCorrectionY": -1,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1326,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 670,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 539.5,
+              "y": 239.7915,
+              "transferredSourceY": 539.5358820136772,
+              "baselineRelativeSupport": 0.7733377276097883,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 28.303999999999974,
+            "top": 78.78000000000002,
+            "right": 131.337,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "north": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.037/sit-north.png",
+          "sha256": "2439a9ccaedfec62d71f37f7d7b9a2da26eb9e254efb377776436567ff35fb35",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-037-seated-cardinals-v1.png",
+            "sha256": "fbd00c85512d0c35541835479454b17bc59b77b204d3053d54227c3816eb08aa",
+            "strip": {
+              "x": 1592,
+              "y": 0,
+              "width": 580
+            },
+            "componentBounds": {
+              "count": 123935,
+              "left": 1714,
+              "top": 87,
+              "right": 2015,
+              "bottom": 668,
+              "width": 302,
+              "height": 582
+            }
+          },
+          "transform": {
+            "scale": 0.359,
+            "translateX": -18.00699999999999,
+            "translateY": 46.82900000000001,
+            "floorCorrectionY": -1,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1865,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 668,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 538.2,
+              "y": 240.04280000000003,
+              "transferredSourceY": 538.2246998284734,
+              "baselineRelativeSupport": 0.7753001715265866,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 25.791000000000054,
+            "top": 78.06200000000001,
+            "right": 133.85000000000002,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        }
+      },
+      "proofs": [
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.037-native-light.png",
+          "sha256": "f8742fdeee36517659153a9cf2352520314078ed11c651f0312f9173a592104a",
+          "theme": "light",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.037-game-32x64-light.png",
+          "sha256": "a7dd75073091077c64b00fd133e9545e4645e7958c62004318988f2e445edd5a",
+          "theme": "light",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.037-native-dark.png",
+          "sha256": "e180466363d0c771eace1849ac3e289125295440cfa01387d89fbde71670085a",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.037-game-32x64-dark.png",
+          "sha256": "3a7a8c1b29eb02a5adba1703a28d0e5efccd03ba1821766a1dc274e12a740192",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.037-seat-contact-overlay-2x-dark.png",
+          "sha256": "77e7709f2db79bc7e2e52096390a39a94475e5b8d4681744155fae1465cb7f10",
+          "layout": "four corrected cardinal poses with authored chair-support plane overlay",
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "identityId": "patient.adult.040",
+      "authorization": "owner-authorized-correction",
+      "approval": "pending-parent-and-owner-visual-approval",
+      "calibration": {
+        "scale": 0.351,
+        "sourceSouthHeadWidth": 194,
+        "sourceSouthHeadBounds": null,
+        "standingSouthHeadWidth": 68,
+        "renderedSouthHeadWidth": 68.094,
+        "basis": "authored source-head envelope registered to accepted standing head width, followed by torso visual review; total seated height is not anatomy evidence"
+      },
+      "generation": {
+        "mode": "built-in image_gen",
+        "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-040-seated-cardinals-v1.png",
+        "sourceSha256": "9c1a250f61eb3dbd03f9ab02c69b2187f2c2898ad5b16ee5f72ea95dfa665e3a",
+        "promptFile": "tools/character-mapping/gs026-seated-correction/prompts/patient-adult-040-v1.txt",
+        "promptSha256": "3bf2c6af10ed4904b509d0db9b8914a6b9d59ebbb21f03ae0fb8c527c1b9c4a5",
+        "standingProof": "artifacts/character-statics/gs-018-v1/proofs/patients-021-050/patient.adult.040-native-light.png",
+        "standingProofSha256": "8c89ebc20aa112924e4fdaba9bf7aeb0e0b42560b246cbaf7a652c633d9aac88",
+        "oldSeatedReference": "tools/character-mapping/gs-018-statics-v1/assets/patient-040-seated-v1.png",
+        "oldSeatedReferenceSha256": "49bafddd60a19fdf42ee03e4c04da868e9e1b652dc26f6082ea795ce499bf7f7"
+      },
+      "poses": {
+        "south": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.040/sit-south.png",
+          "sha256": "a4b7952ca1fd1215d4e04525ad434702c8649be531f319381e6e511b38904fc3",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-040-seated-cardinals-v1.png",
+            "sha256": "9c1a250f61eb3dbd03f9ab02c69b2187f2c2898ad5b16ee5f72ea95dfa665e3a",
+            "strip": {
+              "x": 0,
+              "y": 0,
+              "width": 590
+            },
+            "componentBounds": {
+              "count": 115464,
+              "left": 181,
+              "top": 100,
+              "right": 463,
+              "bottom": 684,
+              "width": 283,
+              "height": 585
+            }
+          },
+          "transform": {
+            "scale": 0.351,
+            "translateX": -33.02199999999999,
+            "translateY": 47.565000000000026,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 322,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 684,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 544.6,
+              "y": 238.7196,
+              "transferredSourceY": 544.5879190570971,
+              "baselineRelativeSupport": 0.7636986301369862,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.509000000000007,
+            "top": 82.66500000000002,
+            "right": 129.49099999999999,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "east": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.040/sit-east.png",
+          "sha256": "2cc1e6abca1da352957242621951a33f2624ddb5a032ada53331ae5514599a78",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-040-seated-cardinals-v1.png",
+            "sha256": "9c1a250f61eb3dbd03f9ab02c69b2187f2c2898ad5b16ee5f72ea95dfa665e3a",
+            "strip": {
+              "x": 590,
+              "y": 0,
+              "width": 491
+            },
+            "componentBounds": {
+              "count": 93693,
+              "left": 715,
+              "top": 99,
+              "right": 998,
+              "bottom": 684,
+              "width": 284,
+              "height": 586
+            }
+          },
+          "transform": {
+            "scale": 0.351,
+            "translateX": -13.366,
+            "translateY": 47.565000000000026,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 856,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 684,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 548.3,
+              "y": 240.0183,
+              "transferredSourceY": 548.2733274697757,
+              "baselineRelativeSupport": 0.7704236632788334,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.509000000000015,
+            "top": 82.31400000000002,
+            "right": 129.84200000000004,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "west": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.040/sit-west.png",
+          "sha256": "14b071d64daa2af4d398e5e1bfed98f40d431f7f2b7cb57f9a60e2e99f5a156f",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-040-seated-cardinals-v1.png",
+            "sha256": "9c1a250f61eb3dbd03f9ab02c69b2187f2c2898ad5b16ee5f72ea95dfa665e3a",
+            "strip": {
+              "x": 1081,
+              "y": 0,
+              "width": 495
+            },
+            "componentBounds": {
+              "count": 94129,
+              "left": 1163,
+              "top": 101,
+              "right": 1448,
+              "bottom": 684,
+              "width": 286,
+              "height": 584
+            }
+          },
+          "transform": {
+            "scale": 0.351,
+            "translateX": 1.0250000000000057,
+            "translateY": 47.565000000000026,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1306,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 684,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 548.7,
+              "y": 240.15870000000004,
+              "transferredSourceY": 548.7324801432181,
+              "baselineRelativeSupport": 0.7704236632788334,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 29.807000000000016,
+            "top": 83.01600000000002,
+            "right": 129.84200000000004,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "north": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.040/sit-north.png",
+          "sha256": "a2b448ebbef8c64a30dbef1ea5f56a7d589eebed3947016733e6ac758e61cd9d",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-040-seated-cardinals-v1.png",
+            "sha256": "9c1a250f61eb3dbd03f9ab02c69b2187f2c2898ad5b16ee5f72ea95dfa665e3a",
+            "strip": {
+              "x": 1576,
+              "y": 0,
+              "width": 596
+            },
+            "componentBounds": {
+              "count": 115907,
+              "left": 1703,
+              "top": 101,
+              "right": 1988,
+              "bottom": 685,
+              "width": 286,
+              "height": 585
+            }
+          },
+          "transform": {
+            "scale": 0.351,
+            "translateX": -14.769999999999996,
+            "translateY": 47.21400000000003,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1846,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 685,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 550,
+              "y": 240.264,
+              "transferredSourceY": 550.0396431371977,
+              "baselineRelativeSupport": 0.7713456565989987,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 29.807000000000016,
+            "top": 82.66500000000002,
+            "right": 129.8420000000001,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        }
+      },
+      "proofs": [
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.040-native-light.png",
+          "sha256": "9bc326df5fdcbb1f6af7385d4202613e3441099a1c5876937ce04c1462fd49a2",
+          "theme": "light",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.040-game-32x64-light.png",
+          "sha256": "de66670fcef9a29790f6532e25bd09cdcdfb5d6b0dd3e5e7a0e9325ba8d352db",
+          "theme": "light",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.040-native-dark.png",
+          "sha256": "fa5366128d0fb158b2ddc3ad83a3fe1a69714e70b90756503f67bfb01470f6af",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.040-game-32x64-dark.png",
+          "sha256": "efd21a695fbf54dc1d39e9eb7c242a05411e967720a8dd363012b2abc8e309b5",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.040-seat-contact-overlay-2x-dark.png",
+          "sha256": "b347aa5a50dd033fe6cc1e0b3e02a575f5918ca57d5abe1387e5554f0c8bbc7e",
+          "layout": "four corrected cardinal poses with authored chair-support plane overlay",
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "identityId": "patient.adult.044",
+      "authorization": "owner-authorized-correction",
+      "approval": "pending-parent-and-owner-visual-approval",
+      "calibration": {
+        "scale": 0.404,
+        "sourceSouthHeadWidth": 183,
+        "sourceSouthHeadBounds": null,
+        "standingSouthHeadWidth": 74,
+        "renderedSouthHeadWidth": 73.932,
+        "basis": "authored source-head envelope registered to accepted standing head width, followed by torso visual review; total seated height is not anatomy evidence"
+      },
+      "generation": {
+        "mode": "built-in image_gen",
+        "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-044-seated-cardinals-v1.png",
+        "sourceSha256": "f07eabdd8ab27999635b968eccda47a4d2b0c561c5c0dc4adf1c98327370a4ff",
+        "promptFile": "tools/character-mapping/gs026-seated-correction/prompts/patient-adult-044-v1.txt",
+        "promptSha256": "b7ff631dfd3cc9c33a3084e16fb8c227d38a3be3d43bc9e82fee383e19ac3342",
+        "standingProof": "artifacts/character-statics/gs-018-v1/proofs/patients-021-050/patient.adult.044-native-light.png",
+        "standingProofSha256": "a579b5f8b7b50381b5df3646e4674a02e80154f889bda45b608c34f9f8b93a0f",
+        "oldSeatedReference": "tools/character-mapping/gs-018-statics-v1/assets/patient-044-seated-v1.png",
+        "oldSeatedReferenceSha256": "cd9097b9ce9a3a763d8c38b110bbcf97776b6d7b8ecfff128099a0e564f73cba"
+      },
+      "poses": {
+        "south": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.044/sit-south.png",
+          "sha256": "da348d4046d771196fb09a7172fa3edd0f618ce8744201ad52a4cbca53e77ec8",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-044-seated-cardinals-v1.png",
+            "sha256": "f07eabdd8ab27999635b968eccda47a4d2b0c561c5c0dc4adf1c98327370a4ff",
+            "strip": {
+              "x": 0,
+              "y": 0,
+              "width": 564
+            },
+            "componentBounds": {
+              "count": 103283,
+              "left": 168,
+              "top": 93,
+              "right": 412,
+              "bottom": 653,
+              "width": 245,
+              "height": 561
+            }
+          },
+          "transform": {
+            "scale": 0.404,
+            "translateX": -37.16000000000001,
+            "translateY": 22.783999999999992,
+            "floorCorrectionY": -1,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 290,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 653,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 521,
+              "y": 233.268,
+              "transferredSourceY": 521,
+              "baselineRelativeSupport": 0.7629233511586453,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.71199999999999,
+            "top": 60.355999999999995,
+            "right": 129.288,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "east": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.044/sit-east.png",
+          "sha256": "d22bd443fd5a22aa305e65e7e73c734719155bb49d2d7ca84d823bf5a632e233",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-044-seated-cardinals-v1.png",
+            "sha256": "f07eabdd8ab27999635b968eccda47a4d2b0c561c5c0dc4adf1c98327370a4ff",
+            "strip": {
+              "x": 564,
+              "y": 0,
+              "width": 522
+            },
+            "componentBounds": {
+              "count": 88238,
+              "left": 714,
+              "top": 90,
+              "right": 992,
+              "bottom": 652,
+              "width": 279,
+              "height": 563
+            }
+          },
+          "transform": {
+            "scale": 0.404,
+            "translateX": -36.756000000000014,
+            "translateY": 23.187999999999988,
+            "floorCorrectionY": -1,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 853,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 652,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 520.1,
+              "y": 233.3084,
+              "transferredSourceY": 520.0684245612509,
+              "baselineRelativeSupport": 0.7638870773734475,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 23.843999999999994,
+            "top": 59.54799999999999,
+            "right": 136.156,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "west": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.044/sit-west.png",
+          "sha256": "32006de1d332f6c02b3eb4f4bb15d6eb838248c51319beb6485ec74a70f7121c",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-044-seated-cardinals-v1.png",
+            "sha256": "f07eabdd8ab27999635b968eccda47a4d2b0c561c5c0dc4adf1c98327370a4ff",
+            "strip": {
+              "x": 1086,
+              "y": 0,
+              "width": 519
+            },
+            "componentBounds": {
+              "count": 87292,
+              "left": 1178,
+              "top": 89,
+              "right": 1454,
+              "bottom": 652,
+              "width": 277,
+              "height": 564
+            }
+          },
+          "transform": {
+            "scale": 0.404,
+            "translateX": -12.920000000000002,
+            "translateY": 24.187999999999988,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1316,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 652,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 517.9,
+              "y": 233.4196,
+              "transferredSourceY": 517.9415020411653,
+              "baselineRelativeSupport": 0.7638870773734475,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 24.248000000000047,
+            "top": 60.14399999999999,
+            "right": 135.75200000000007,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "north": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.044/sit-north.png",
+          "sha256": "fc53209b51da97c0eef14bbf1d1fbb4027cb9884afaa16dd2c775d82c6c0b64f",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-044-seated-cardinals-v1.png",
+            "sha256": "f07eabdd8ab27999635b968eccda47a4d2b0c561c5c0dc4adf1c98327370a4ff",
+            "strip": {
+              "x": 1605,
+              "y": 0,
+              "width": 567
+            },
+            "componentBounds": {
+              "count": 100131,
+              "left": 1754,
+              "top": 97,
+              "right": 2002,
+              "bottom": 649,
+              "width": 249,
+              "height": 553
+            }
+          },
+          "transform": {
+            "scale": 0.404,
+            "translateX": -30.292,
+            "translateY": 25.399999999999977,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1878,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 649,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 515.9,
+              "y": 233.82359999999997,
+              "transferredSourceY": 515.9339786556725,
+              "baselineRelativeSupport": 0.7609721030200333,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 29.903999999999996,
+            "top": 64.58799999999998,
+            "right": 130.096,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        }
+      },
+      "proofs": [
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.044-native-light.png",
+          "sha256": "7b94265d2760f25ef8340b75d86321ff6f1bd91834f20cc361a49486499e50b2",
+          "theme": "light",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.044-game-32x64-light.png",
+          "sha256": "f77cd4ec6a07bd5815827f885bffb5b30646bd0fce8714e113a104d0dd814b46",
+          "theme": "light",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.044-native-dark.png",
+          "sha256": "b406e92ef5260e7dc8eaab97c3810dd3287e11b4e92b9418338b3e8446ce2ccf",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.044-game-32x64-dark.png",
+          "sha256": "ae346a42c761796348df9b6ecac7b0bb92eaee8012bae896b7d5cd01d00c965c",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.044-seat-contact-overlay-2x-dark.png",
+          "sha256": "b1f74179b0fbd1698adabda6f7df42f6beae95b54e52d7fb938f46ba0f0f429a",
+          "layout": "four corrected cardinal poses with authored chair-support plane overlay",
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "identityId": "patient.adult.048",
+      "authorization": "owner-authorized-correction",
+      "approval": "pending-parent-and-owner-visual-approval",
+      "calibration": {
+        "scale": 0.347,
+        "sourceSouthHeadWidth": 205,
+        "sourceSouthHeadBounds": null,
+        "standingSouthHeadWidth": 71,
+        "renderedSouthHeadWidth": 71.13499999999999,
+        "basis": "authored source-head envelope registered to accepted standing head width, followed by torso visual review; total seated height is not anatomy evidence"
+      },
+      "generation": {
+        "mode": "built-in image_gen",
+        "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-048-seated-cardinals-v1.png",
+        "sourceSha256": "442399889d6eeaec4ef84d1f2c86c0e25a95ef65dd80126920e00182ab7ffd63",
+        "promptFile": "tools/character-mapping/gs026-seated-correction/prompts/patient-adult-048-v1.txt",
+        "promptSha256": "9e0e89362af0b49757b316088fadcfcfd54c201fac99791bee37bdfe23521259",
+        "standingProof": "artifacts/character-statics/gs-018-v1/proofs/patients-021-050/patient.adult.048-native-light.png",
+        "standingProofSha256": "586f4fde9d27696130222a88e2e0f783d99681dd59f533a584b6cb4db727cfc7",
+        "oldSeatedReference": "tools/character-mapping/gs-018-statics-v1/assets/patient-048-seated-v1.png",
+        "oldSeatedReferenceSha256": "c018f1dc78fd9eeb17726b359198f5520887e1210f5b81b451ddf3fc4f51f709"
+      },
+      "poses": {
+        "south": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.048/sit-south.png",
+          "sha256": "d2517a5ca586f7de8d649f696e94dcc5faa5139d4de8424456330a1a30d6e7d8",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-048-seated-cardinals-v1.png",
+            "sha256": "442399889d6eeaec4ef84d1f2c86c0e25a95ef65dd80126920e00182ab7ffd63",
+            "strip": {
+              "x": 0,
+              "y": 0,
+              "width": 550
+            },
+            "componentBounds": {
+              "count": 122043,
+              "left": 146,
+              "top": 77,
+              "right": 433,
+              "bottom": 670,
+              "width": 288,
+              "height": 594
+            }
+          },
+          "transform": {
+            "scale": 0.347,
+            "translateX": -20.629999999999995,
+            "translateY": 55.16300000000001,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 290,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 670,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 527.8,
+              "y": 238.3096,
+              "transferredSourceY": 527.8022297907024,
+              "baselineRelativeSupport": 0.7626262626262627,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.032000000000004,
+            "top": 81.882,
+            "right": 129.62099999999998,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "east": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.048/sit-east.png",
+          "sha256": "beb09ec3a8e7bbb2da791196562d94a53e17693bd013b55ff6ed525d21bfb3ab",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-048-seated-cardinals-v1.png",
+            "sha256": "442399889d6eeaec4ef84d1f2c86c0e25a95ef65dd80126920e00182ab7ffd63",
+            "strip": {
+              "x": 550,
+              "y": 0,
+              "width": 510
+            },
+            "componentBounds": {
+              "count": 93630,
+              "left": 665,
+              "top": 77,
+              "right": 956,
+              "bottom": 670,
+              "width": 292,
+              "height": 594
+            }
+          },
+          "transform": {
+            "scale": 0.347,
+            "translateX": -10.219999999999999,
+            "translateY": 55.16300000000001,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 810,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 670,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 529.2,
+              "y": 238.7954,
+              "transferredSourceY": 529.2414284874301,
+              "baselineRelativeSupport": 0.7650609682482192,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 29.685000000000002,
+            "top": 81.882,
+            "right": 130.66199999999998,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "west": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.048/sit-west.png",
+          "sha256": "8045dbef856cc99f14be9951b65c015e3556665b78044029091666b8bf6470b5",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-048-seated-cardinals-v1.png",
+            "sha256": "442399889d6eeaec4ef84d1f2c86c0e25a95ef65dd80126920e00182ab7ffd63",
+            "strip": {
+              "x": 1060,
+              "y": 0,
+              "width": 540
+            },
+            "componentBounds": {
+              "count": 94999,
+              "left": 1163,
+              "top": 77,
+              "right": 1466,
+              "bottom": 670,
+              "width": 304,
+              "height": 594
+            }
+          },
+          "transform": {
+            "scale": 0.347,
+            "translateX": -8.485,
+            "translateY": 55.16300000000001,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1315,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 670,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 529.2,
+              "y": 238.7954,
+              "transferredSourceY": 529.2414284874301,
+              "baselineRelativeSupport": 0.7650609682482192,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 27.25600000000003,
+            "top": 81.882,
+            "right": 132.397,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "north": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.048/sit-north.png",
+          "sha256": "ea15b7c60a4e6c9eaec02f4467d0a9905c852fbc381be8a5ef3050cf95cb13f4",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-048-seated-cardinals-v1.png",
+            "sha256": "442399889d6eeaec4ef84d1f2c86c0e25a95ef65dd80126920e00182ab7ffd63",
+            "strip": {
+              "x": 1600,
+              "y": 0,
+              "width": 572
+            },
+            "componentBounds": {
+              "count": 120759,
+              "left": 1732,
+              "top": 77,
+              "right": 2020,
+              "bottom": 670,
+              "width": 289,
+              "height": 594
+            }
+          },
+          "transform": {
+            "scale": 0.347,
+            "translateX": -15.771999999999991,
+            "translateY": 55.16300000000001,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1876,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 670,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 531.2,
+              "y": 239.48940000000002,
+              "transferredSourceY": 531.2396547771015,
+              "baselineRelativeSupport": 0.7684413859712664,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Visible underside pelvis/thigh support plane; not clothing hem."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 30.031999999999925,
+            "top": 81.882,
+            "right": 129.96799999999996,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        }
+      },
+      "proofs": [
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.048-native-light.png",
+          "sha256": "d795674b57cf0a677aa477532b39159296410bebddcf73e3c773fc6f4fba5772",
+          "theme": "light",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.048-game-32x64-light.png",
+          "sha256": "af071651769472909ba6f205375165e35becef25d80c1c9b2b61b449791c98e5",
+          "theme": "light",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.048-native-dark.png",
+          "sha256": "52bf02288a02501b34dada31a53d3a5e48dd66d24bb583ed6d74334ad4c5c379",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.048-game-32x64-dark.png",
+          "sha256": "6a5a41ef139b94783dfded698375a2b7eac7e6caf603777c58193ecb8e2f78a1",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.048-seat-contact-overlay-2x-dark.png",
+          "sha256": "ac507fb1702ff3739c531f860d2a13988b117e4800f1aead720a1d23f44effc8",
+          "layout": "four corrected cardinal poses with authored chair-support plane overlay",
+          "scale": 2
+        }
+      ]
+    },
+    {
+      "identityId": "patient.adult.049",
+      "authorization": "owner-authorized-correction",
+      "approval": "pending-parent-and-owner-visual-approval",
+      "calibration": {
+        "scale": 0.372,
+        "sourceSouthHeadWidth": 180,
+        "sourceSouthHeadBounds": {
+          "x": 189,
+          "y": 109,
+          "width": 180,
+          "height": 191,
+          "includes": "beanie, ears, face, and beard; alpha envelope measured above y=300 before shoulders enter"
+        },
+        "standingSouthHeadWidth": 67,
+        "renderedSouthHeadWidth": 66.96,
+        "basis": "authored source-head envelope registered to accepted standing head width, followed by torso visual review; total seated height is not anatomy evidence"
+      },
+      "generation": {
+        "mode": "built-in image_gen",
+        "sourceFile": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-049-seated-cardinals-v1.png",
+        "sourceSha256": "367b87f24e97575dea8dfbe04b391ab880a77b0efb9bd6f6090f58f1da6afb02",
+        "promptFile": "tools/character-mapping/gs026-seated-correction/prompts/patient-adult-049-v1.txt",
+        "promptSha256": "74fe8b28332331520dc5c458049d2da91a5d9ba0261c9999dff5e3d74870f082",
+        "standingProof": "artifacts/character-statics/gs-018-v1/proofs/patients-021-050/patient.adult.049-native-light.png",
+        "standingProofSha256": "569c4e2b2c92ac8d9e78295f76b3908f5c6cf2b5a4929837b533a1bfea73a8ee",
+        "oldSeatedReference": "tools/character-mapping/gs-018-statics-v1/assets/patient-049-seated-v1.png",
+        "oldSeatedReferenceSha256": "cf7dff39caf682e974a70a8d7cc7ec0764ef1a35bf74f69e50ac73a9f3f8caa7"
+      },
+      "poses": {
+        "south": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.049/sit-south.png",
+          "sha256": "a12d9facd22b6a51b6bd7b9584e6f2ef7ad5ba295d5f2f40815369780082d97f",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-049-seated-cardinals-v1.png",
+            "sha256": "367b87f24e97575dea8dfbe04b391ab880a77b0efb9bd6f6090f58f1da6afb02",
+            "strip": {
+              "x": 0,
+              "y": 0,
+              "width": 561
+            },
+            "componentBounds": {
+              "count": 109822,
+              "left": 138,
+              "top": 109,
+              "right": 417,
+              "bottom": 660,
+              "width": 280,
+              "height": 552
+            }
+          },
+          "transform": {
+            "scale": 0.372,
+            "translateX": -23.415999999999997,
+            "translateY": 42.108000000000004,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 278,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 660,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 510,
+              "y": 231.828,
+              "transferredSourceY": 536.4800217564118,
+              "baselineRelativeSupport": 0.7782101167315174,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Anatomical underside pelvis/thigh support plane inferred beneath the long coat, not the visible coat hem; confirmed from both lateral poses."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 27.92,
+            "top": 82.656,
+            "right": 131.708,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "east": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.049/sit-east.png",
+          "sha256": "c57731d6bd4ddec78307f2f5e97608a94646896951749687276f7d9ec5ffe5a5",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-049-seated-cardinals-v1.png",
+            "sha256": "367b87f24e97575dea8dfbe04b391ab880a77b0efb9bd6f6090f58f1da6afb02",
+            "strip": {
+              "x": 561,
+              "y": 0,
+              "width": 523
+            },
+            "componentBounds": {
+              "count": 90298,
+              "left": 704,
+              "top": 109,
+              "right": 987,
+              "bottom": 660,
+              "width": 284,
+              "height": 552
+            }
+          },
+          "transform": {
+            "scale": 0.372,
+            "translateX": -26.019999999999996,
+            "translateY": 42.108000000000004,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 846,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 660,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 510,
+              "y": 231.828,
+              "transferredSourceY": 533.2551724694775,
+              "baselineRelativeSupport": 0.7723394088333675,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Anatomical underside pelvis/thigh support plane inferred beneath the long coat, not the visible coat hem; confirmed from both lateral poses."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 27.175999999999988,
+            "top": 82.656,
+            "right": 132.452,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "west": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.049/sit-west.png",
+          "sha256": "199a50f24e910ad2947d489f28eb4c6a831a8eb8287aafb319b4148be01f14f4",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-049-seated-cardinals-v1.png",
+            "sha256": "367b87f24e97575dea8dfbe04b391ab880a77b0efb9bd6f6090f58f1da6afb02",
+            "strip": {
+              "x": 1084,
+              "y": 0,
+              "width": 525
+            },
+            "componentBounds": {
+              "count": 90634,
+              "left": 1179,
+              "top": 109,
+              "right": 1464,
+              "bottom": 660,
+              "width": 286,
+              "height": 552
+            }
+          },
+          "transform": {
+            "scale": 0.372,
+            "translateX": -8.536000000000001,
+            "translateY": 42.108000000000004,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1322,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 660,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 510,
+              "y": 231.828,
+              "transferredSourceY": 533.2551724694775,
+              "baselineRelativeSupport": 0.7723394088333675,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Anatomical underside pelvis/thigh support plane inferred beneath the long coat, not the visible coat hem; confirmed from both lateral poses."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 26.80400000000003,
+            "top": 82.656,
+            "right": 132.82399999999996,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        },
+        "north": {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/replacements/patient.adult.049/sit-north.png",
+          "sha256": "eb284e1da8092cc3f259f15ffaef524bcf9994ce6be53a702dc1108a9bf1f458",
+          "width": 160,
+          "height": 320,
+          "source": {
+            "file": "tools/character-mapping/gs026-seated-correction/assets/patient-adult-049-seated-cardinals-v1.png",
+            "sha256": "367b87f24e97575dea8dfbe04b391ab880a77b0efb9bd6f6090f58f1da6afb02",
+            "strip": {
+              "x": 1609,
+              "y": 0,
+              "width": 563
+            },
+            "componentBounds": {
+              "count": 106276,
+              "left": 1753,
+              "top": 109,
+              "right": 2028,
+              "bottom": 660,
+              "width": 276,
+              "height": 552
+            }
+          },
+          "transform": {
+            "scale": 0.372,
+            "translateX": -24.531999999999996,
+            "translateY": 42.108000000000004,
+            "floorCorrectionY": 0,
+            "policy": "uniform whole-body source scaling; no segmented anatomical transforms"
+          },
+          "anchors": {
+            "bodyAxis": {
+              "sourceX": 1890,
+              "x": 80,
+              "status": "authored-source-axis"
+            },
+            "floor": {
+              "sourceY": 660,
+              "y": 287,
+              "status": "measured-main-component-lower-bound"
+            },
+            "seatContact": {
+              "sourceY": 510,
+              "y": 231.828,
+              "transferredSourceY": 536.4800217564118,
+              "baselineRelativeSupport": 0.7782101167315174,
+              "status": "authored-source-support-plane-visually-confirmed",
+              "note": "Anatomical underside pelvis/thigh support plane inferred beneath the long coat, not the visible coat hem; confirmed from both lateral poses."
+            }
+          },
+          "visibleBoundsExpected": {
+            "left": 29.035999999999945,
+            "top": 82.656,
+            "right": 131.3359999999999,
+            "bottom": 287
+          },
+          "reviewStatus": "candidate-pending-parent-and-owner-visual-approval"
+        }
+      },
+      "proofs": [
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.049-native-light.png",
+          "sha256": "49e596da4a030f0771e02dd17f0a1abde888a01a77d894a487f5c0b5eb371e59",
+          "theme": "light",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.049-game-32x64-light.png",
+          "sha256": "82071979f8514d303a082a4058f939ff1b9327bd622df7c16dbdbbed863c2c67",
+          "theme": "light",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.049-native-dark.png",
+          "sha256": "d343cec1a5c892779991cc4cc109601004a14ca55c8a75d29a00f257b4f68f42",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 160,
+            "height": 320
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.049-game-32x64-dark.png",
+          "sha256": "2bc1fd3c7ab27fd0b748d29934500b6ea6d4591f7a8fb7a6bdb3ace27fa6d43f",
+          "theme": "dark",
+          "spriteSize": {
+            "width": 32,
+            "height": 64
+          }
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.049-seat-contact-overlay-2x-dark.png",
+          "sha256": "10cf9121b41f0df45658cb7fd0394c70ba614a94f51de891057f6a03f2e45438",
+          "layout": "four corrected cardinal poses with authored chair-support plane overlay",
+          "scale": 2
+        },
+        {
+          "file": "artifacts/character-statics/gs026-seated-correction-v1/proofs/batch2/patient.adult.049-south-head-measurement.png",
+          "sha256": "eb4c242c1079cda7ff7c7e0d1fbf5dbaba665439a2ce5d8342dff2077a30878b",
+          "layout": "source SOUTH pose with explicit authored crown-to-neck head-envelope bounds",
+          "sourceBounds": {
+            "x": 189,
+            "y": 109,
+            "width": 180,
+            "height": 191,
+            "includes": "beanie, ears, face, and beard; alpha envelope measured above y=300 before shoulders enter"
+          }
+        }
+      ]
+    }
+  ]
+}

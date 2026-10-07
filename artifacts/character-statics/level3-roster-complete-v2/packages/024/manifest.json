@@ -1,0 +1,375 @@
+{
+  "schemaVersion": "level3-roster-complete-v2-package/v2",
+  "status": "candidate-packaged-not-runtime-ready",
+  "identity": {
+    "number": "024",
+    "stableId": "level3-roster-v2.024",
+    "category": "future-pediatric-presentation",
+    "targetKey": "younger-child",
+    "visualAge": 6,
+    "brief": "boy6, mediumbrown skin, short black curls, cobalt pullover, tan trousers, dark sneakers"
+  },
+  "source": {
+    "png": {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/sources/024/source.png",
+      "sha256": "94c628ff1752682aa567454a2fabf76f787d4dbab201f9c15cbe8ec8591affa7"
+    },
+    "exactPrompt": {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/sources/024/exact-prompt.txt",
+      "sha256": "107e0bb8c10b669bddc09026be81ad649c313d146cbad6f8a8ec76bf7bcf74d9"
+    },
+    "toolArguments": {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/sources/024/tool-args.json",
+      "sha256": "1a1e52dcfe9e3df651ac027f6b0b947309180fa8912eb0fd9109c14a29140107"
+    },
+    "provenance": {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/sources/024/provenance.json",
+      "sha256": "5a0e861e80d4388bc1ff9dcfd23909b4b8109fc889925cd4dbfd72396d443697"
+    }
+  },
+  "rootVisualAcceptance": {
+    "ledger": "tools/character-mapping/level3-roster-complete-v2/review-acceptance.json",
+    "sourceSha256": "94c628ff1752682aa567454a2fabf76f787d4dbab201f9c15cbe8ec8591affa7",
+    "scope": "source visual candidate only; no runtime promotion or seated-contact final approval"
+  },
+  "seatContactAcceptance": {
+    "ledger": "tools/character-mapping/level3-roster-complete-v2/review-acceptance.json",
+    "contractSha256": "3496d754745c04944bcec40b196ef807ce8d63c0716565c66e16efc971fe45ae",
+    "coordinates": {
+      "south": 243,
+      "east": 248,
+      "west": 248,
+      "north": 248
+    },
+    "scope": "all four approved seat-contact coordinates for all 32 accepted source hashes, including capped surgeons 005 and 006; authorized for local runtime registration",
+    "bindingStatus": "root-reviewed-source-hash-bound"
+  },
+  "extraction": {
+    "method": "immutable GS026 extractEight; alpha threshold 13 identifies the protected figure geometry; native PNG is preserved byte-for-byte",
+    "sourceRects": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 398,
+        "height": 540
+      },
+      {
+        "x": 398,
+        "y": 0,
+        "width": 366,
+        "height": 540
+      },
+      {
+        "x": 764,
+        "y": 0,
+        "width": 371,
+        "height": 540
+      },
+      {
+        "x": 1135,
+        "y": 0,
+        "width": 401,
+        "height": 540
+      },
+      {
+        "x": 0,
+        "y": 540,
+        "width": 393,
+        "height": 484
+      },
+      {
+        "x": 393,
+        "y": 540,
+        "width": 371,
+        "height": 484
+      },
+      {
+        "x": 764,
+        "y": 540,
+        "width": 376,
+        "height": 484
+      },
+      {
+        "x": 1140,
+        "y": 540,
+        "width": 396,
+        "height": 484
+      }
+    ]
+  },
+  "normalization": {
+    "target": {
+      "width": 160,
+      "height": 320,
+      "bodyAxisX": 80,
+      "floorY": 287,
+      "standingSouthVisibleHeight": 184,
+      "editorialScaleStatus": "accepted-younger-child-editorial-target;not-a-clinical-height-claim"
+    },
+    "policy": "one identity-wide whole-body scale resamples each complete extracted cell into a derived 160x320 pose; native PNG remains unchanged; alpha >=13 outside the derived canvas is forbidden; lower-alpha source pixels outside the canvas and output-edge alpha are measured per pose and require explicit root warning acceptance"
+  },
+  "poses": {
+    "stand": {
+      "south": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/stand-south.png",
+        "sha256": "0f8d053dc2ea765aaecf70b901da5806d5f60dbb962bec1ca0dc05913b085011",
+        "visibleBounds": {
+          "x": 37,
+          "y": 103,
+          "width": 86,
+          "height": 184
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 4.913131313131316,
+          "translateY": 91.10505050505051,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/stand-east.png",
+        "sha256": "1f5be09e6164e77f907a76ddf0d4f5d34db7c8e8c4ce943260d615bbb456247e",
+        "visibleBounds": {
+          "x": 47,
+          "y": 103,
+          "width": 66,
+          "height": 184
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 17.737373737373737,
+          "translateY": 90.73333333333332,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/stand-west.png",
+        "sha256": "e57f7e74f10bafa5ff6aceb68c6b9d770015f4ddff8a597a1162afe5ad2fdb5d",
+        "visibleBounds": {
+          "x": 47,
+          "y": 102,
+          "width": 66,
+          "height": 185
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 5.842424242424244,
+          "translateY": 90.36161616161615,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/stand-north.png",
+        "sha256": "0fd8f019e0376e3e99aa6adb610f7147c2b613eaca967c81fca10557db93f345",
+        "visibleBounds": {
+          "x": 38,
+          "y": 103,
+          "width": 84,
+          "height": 184
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 6.214141414141409,
+          "translateY": 91.10505050505051,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287
+        }
+      }
+    },
+    "sit": {
+      "south": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/sit-south.png",
+        "sha256": "28dc0916dce2bc5771df4b66d6b8e860a3d9260dc27782a760034f98d988239b",
+        "visibleBounds": {
+          "x": 41,
+          "y": 123,
+          "width": 78,
+          "height": 164
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 4.541414141414137,
+          "translateY": 118.6121212121212,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 243,
+          "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
+        }
+      },
+      "east": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/sit-east.png",
+        "sha256": "727c1f68b267f3cd14702535a9479fa1022148ec8859d90571c6639b4f856915",
+        "visibleBounds": {
+          "x": 34,
+          "y": 123,
+          "width": 92,
+          "height": 164
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 2.6828282828282823,
+          "translateY": 118.6121212121212,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 248,
+          "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
+        }
+      },
+      "west": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/sit-west.png",
+        "sha256": "388f7cc937ae1729b9b0195fe5bedd71c510b367d7688c541cae21ec9b9708eb",
+        "visibleBounds": {
+          "x": 34,
+          "y": 123,
+          "width": 92,
+          "height": 164
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 19.038383838383837,
+          "translateY": 118.6121212121212,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 248,
+          "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
+        }
+      },
+      "north": {
+        "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/sit-north.png",
+        "sha256": "e9c1769c3e42f9c3eec867c165dd4be6a01021c1572971f3c0ab7293a0944458",
+        "visibleBounds": {
+          "x": 41,
+          "y": 123,
+          "width": 78,
+          "height": 164
+        },
+        "transform": {
+          "scale": 0.3717171717171717,
+          "translateX": 8.630303030303025,
+          "translateY": 118.6121212121212,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "policy": "one identity-wide whole-body scale; no segmented edits, mirroring, cleanup, or repaint"
+        },
+        "alphaNormalization": {
+          "analysisThreshold": 13,
+          "sourceNonzeroPixelsWithFootprintOutside": 0,
+          "maxSourceAlphaWithFootprintOutside": 0,
+          "derivedBorderNonzeroPixels": 0,
+          "derivedBorderMaxAlpha": 0
+        },
+        "anchors": {
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "seatContactY": 248,
+          "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
+        }
+      }
+    }
+  },
+  "proofs": {
+    "fullTransparent": {
+      "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/full-poses-transparent.png",
+      "sha256": "f4500e3cac32af0888c7baca1154e4dbc69166948073ea5bfde4847f43b96b14"
+    },
+    "fullLight": {
+      "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/full-poses-light.png",
+      "sha256": "1ebdaaca21c608708e742667d671a6f4f6e1c680ea98a1a15a08469c1de8c415"
+    },
+    "fullDark": {
+      "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/full-poses-dark.png",
+      "sha256": "ca6f6bb1b7baebd91d7cf251624a21856d34f4e31d0538b7cd028aace0fc7b67"
+    },
+    "seatedContactGrid": {
+      "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/seated-contact-grid-2x.png",
+      "sha256": "c12b3a56ba95630804cb1d4b50a6c05d8a4076a3dea315ffaa403a3d3f18d773"
+    }
+  }
+}

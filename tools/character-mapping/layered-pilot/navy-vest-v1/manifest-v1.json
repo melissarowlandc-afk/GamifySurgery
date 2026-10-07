@@ -1,0 +1,3474 @@
+{
+  "schemaVersion": "character-atlas/v1",
+  "characterId": "patient.adult.035.navy-vest-v1",
+  "capabilities": {
+    "sitting": false,
+    "clipboard": false
+  },
+  "pages": {
+    "upper": {
+      "file": "assets/upper-v1.png",
+      "sha256": "eb38d999faf17b6cb24c6b3e1fddaf8693c2eee6c016548d314c6c0ddf8f82fd"
+    },
+    "identity": {
+      "file": "assets/identity-v1.png",
+      "sha256": "72de9dc4bd06d71e2ea2ca258e79ccd481bf92f15edb876629ad98e7138b23cb"
+    },
+    "lower": {
+      "file": "assets/lower-v1.png",
+      "sha256": "473796e8e67602a50e7d1f2bf0979e47af1743c59ed95e0a8001571d61f802ec"
+    },
+    "actions": {
+      "file": "assets/actions-v1.png",
+      "sha256": "9bb75e3b873c3e5cf214a32d7cea97a9863bb880af52135313cba68cc176555e"
+    },
+    "clipboard": {
+      "file": "assets/clipboard-v1.png",
+      "sha256": "df2ac9fff6c98c2ad4b270366027930dd233fe9b37bd2c6c4e3ccdaf723fa211"
+    }
+  },
+  "parts": {
+    "upper.south.torso": {
+      "slotId": "upper.south.torso",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\torso-south-original-v1.png",
+        "sha256": "f67960ce4b158871a3626abd9c1f2c86f6bb1ee0b03bb021bec0baf743050c2f",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB torso; neutral checkerboard and other anatomy removed by authored polygon from 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 113
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 153,
+              "y": 54
+            },
+            "right": {
+              "x": 103,
+              "y": 54
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 156,
+              "y": 121
+            },
+            "right": {
+              "x": 100,
+              "y": 121
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 30,
+          "y": -97
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 39,
+        "width": 64,
+        "height": 84
+      }
+    },
+    "upper.south.upperArm.left": {
+      "slotId": "upper.south.upperArm.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 135,
+          "y": 617,
+          "width": 94,
+          "height": 183
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual south anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 157.25,
+            "y": 137.75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -8.5,
+          "y": -413.5
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 53,
+        "width": 64,
+        "height": 132
+      }
+    },
+    "upper.south.forearmHand.left": {
+      "slotId": "upper.south.forearmHand.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 140,
+          "y": 1114,
+          "width": 82,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual south anatomical-left selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.2679738562092
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 104.86274509803921,
+            "y": 145.4640522875817
+          },
+          "anterior": {
+            "x": 104.86274509803921,
+            "y": 82.99346405228766
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.7712418300653595,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -11.594771241830074,
+          "y": -827.0718954248366
+        }
+      },
+      "contentBounds": {
+        "x": 100,
+        "y": 46,
+        "width": 55,
+        "height": 130
+      }
+    },
+    "upper.south.upperArm.right": {
+      "slotId": "upper.south.upperArm.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 135,
+          "y": 366,
+          "width": 94,
+          "height": 185
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual south anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 98.95172413793102,
+            "y": 137.9310344827586
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7448275862068966,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -7.558620689655186,
+          "y": -223.31034482758622
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 55,
+        "width": 62,
+        "height": 130
+      }
+    },
+    "upper.south.forearmHand.right": {
+      "slotId": "upper.south.forearmHand.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 142,
+          "y": 846,
+          "width": 80,
+          "height": 216
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual south anatomical-right selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 127.61849710982654
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 147.09826589595377,
+            "y": 141.26011560693632
+          },
+          "anterior": {
+            "x": 147.78034682080926,
+            "y": 84.64739884393055
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6820809248554913,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 3.1791907514450912,
+          "y": -540.820809248555
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 46,
+        "width": 47,
+        "height": 130
+      }
+    },
+    "upper.east.torso": {
+      "slotId": "upper.east.torso",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-torso-v1.png",
+        "sha256": "ea383467d07f75d94eada3aa34483d5ecbb19e838237db3b0d52394bd294fb4a",
+        "crop": {
+          "x": 450,
+          "y": 160,
+          "width": 340,
+          "height": 570
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced complete arm-free east navy vest from original 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2; shoulder opening filled with vest cloth and retained seam, no sleeve/hand pixels"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 113,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 143,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 129.23529411764707,
+            "y": 121.23529411764707
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 108.05882352941175,
+              "y": 59.470588235294116
+            },
+            "right": {
+              "x": 110.70588235294117,
+              "y": 59.470588235294116
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 108.05882352941175,
+              "y": 126.52941176470588
+            },
+            "right": {
+              "x": 146,
+              "y": 126.52941176470588
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 30,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.17647058823529413,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 16.294117647058812,
+          "y": 6.529411764705877
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 38,
+        "width": 53,
+        "height": 94
+      }
+    },
+    "upper.east.upperArm.left": {
+      "slotId": "upper.east.upperArm.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 386,
+          "y": 366,
+          "width": 110,
+          "height": 185
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual east anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 103.42068965517245,
+            "y": 137.9310344827586
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7448275862068966,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -200.46896551724137,
+          "y": -223.31034482758622
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 55,
+        "width": 60,
+        "height": 130
+      }
+    },
+    "upper.east.forearmHand.left": {
+      "slotId": "upper.east.forearmHand.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 403,
+          "y": 846,
+          "width": 83,
+          "height": 216
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual east anatomical-left selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 127.61849710982654
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 146.4161849710983,
+            "y": 141.26011560693632
+          },
+          "anterior": {
+            "x": 147.78034682080926,
+            "y": 84.64739884393055
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6820809248554913,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -175.52601156069363,
+          "y": -540.820809248555
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 46,
+        "width": 45,
+        "height": 132
+      }
+    },
+    "upper.east.upperArm.right": {
+      "slotId": "upper.east.upperArm.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 386,
+          "y": 366,
+          "width": 110,
+          "height": 185
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual east anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 103.42068965517245,
+            "y": 137.9310344827586
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7448275862068966,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -200.46896551724137,
+          "y": -223.31034482758622
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 55,
+        "width": 60,
+        "height": 130
+      }
+    },
+    "upper.east.forearmHand.right": {
+      "slotId": "upper.east.forearmHand.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 403,
+          "y": 846,
+          "width": 83,
+          "height": 216
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual east anatomical-right selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 127.61849710982654
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 146.4161849710983,
+            "y": 141.26011560693632
+          },
+          "anterior": {
+            "x": 147.78034682080926,
+            "y": 84.64739884393055
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6820809248554913,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -175.52601156069363,
+          "y": -540.820809248555
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 46,
+        "width": 45,
+        "height": 132
+      }
+    },
+    "upper.west.torso": {
+      "slotId": "upper.west.torso",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-torso-v1.png",
+        "sha256": "ea383467d07f75d94eada3aa34483d5ecbb19e838237db3b0d52394bd294fb4a",
+        "crop": {
+          "x": 1020,
+          "y": 160,
+          "width": 345,
+          "height": 570
+        },
+        "requireSingleComponent": true,
+        "derivation": "source-referenced complete arm-free west navy vest from original 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2; shoulder opening filled with vest cloth and retained seam, no sleeve/hand pixels"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 113,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 143,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 127.64705882352942,
+            "y": 121.23529411764707
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 147.41176470588235,
+              "y": 59.470588235294116
+            },
+            "right": {
+              "x": 144.76470588235296,
+              "y": 59.470588235294116
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 148.2941176470588,
+              "y": 126.52941176470588
+            },
+            "right": {
+              "x": 109.47058823529412,
+              "y": 126.52941176470588
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 30,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 0.17647058823529413,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -80.23529411764707,
+          "y": 6.529411764705877
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 38,
+        "width": 53,
+        "height": 94
+      }
+    },
+    "upper.west.upperArm.left": {
+      "slotId": "upper.west.upperArm.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 626,
+          "y": 366,
+          "width": 111,
+          "height": 185
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual west anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 153.32413793103444,
+            "y": 137.9310344827586
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7448275862068966,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -379.2275862068966,
+          "y": -223.31034482758622
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 55,
+        "width": 59,
+        "height": 130
+      }
+    },
+    "upper.west.forearmHand.left": {
+      "slotId": "upper.west.forearmHand.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 637,
+          "y": 846,
+          "width": 83,
+          "height": 216
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual west anatomical-left selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 127.61849710982654
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 109.58381502890171,
+            "y": 141.26011560693632
+          },
+          "anterior": {
+            "x": 107.53757225433526,
+            "y": 84.64739884393055
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6820809248554913,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -334.4508670520231,
+          "y": -540.820809248555
+        }
+      },
+      "contentBounds": {
+        "x": 106,
+        "y": 46,
+        "width": 45,
+        "height": 132
+      }
+    },
+    "upper.west.upperArm.right": {
+      "slotId": "upper.west.upperArm.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 626,
+          "y": 366,
+          "width": 111,
+          "height": 185
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual west anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 153.32413793103444,
+            "y": 137.9310344827586
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7448275862068966,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -379.2275862068966,
+          "y": -223.31034482758622
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 55,
+        "width": 59,
+        "height": 130
+      }
+    },
+    "upper.west.forearmHand.right": {
+      "slotId": "upper.west.forearmHand.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 637,
+          "y": 846,
+          "width": 83,
+          "height": 216
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual west anatomical-right selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 127.61849710982654
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 109.58381502890171,
+            "y": 141.26011560693632
+          },
+          "anterior": {
+            "x": 107.53757225433526,
+            "y": 84.64739884393055
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6820809248554913,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -334.4508670520231,
+          "y": -540.820809248555
+        }
+      },
+      "contentBounds": {
+        "x": 106,
+        "y": 46,
+        "width": 45,
+        "height": 132
+      }
+    },
+    "upper.north.torso": {
+      "slotId": "upper.north.torso",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\torso-north-original-v1.png",
+        "sha256": "0e39477965d84badbaa951a0b4209b92f9ace8cfc296d9ff24f1558322a53704",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB torso; neutral checkerboard and other anatomy removed by authored polygon from 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 117,
+            "y": 48
+          },
+          "screenRight": {
+            "x": 139,
+            "y": 48
+          }
+        },
+        "body": {
+          "axis": {
+            "x": 128,
+            "y": 120
+          }
+        },
+        "joint": {
+          "shoulder": {
+            "left": {
+              "x": 96,
+              "y": 61
+            },
+            "right": {
+              "x": 161,
+              "y": 61
+            }
+          },
+          "hip": {
+            "left": {
+              "x": 98,
+              "y": 128
+            },
+            "right": {
+              "x": 158,
+              "y": 128
+            }
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "torso",
+        "targetLength": 22,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 53,
+          "y": -90
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 42,
+        "width": 70,
+        "height": 88
+      }
+    },
+    "upper.north.upperArm.left": {
+      "slotId": "upper.north.upperArm.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 890,
+          "y": 366,
+          "width": 101,
+          "height": 185
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual north anatomical-left assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 107.88965517241377,
+            "y": 137.9310344827586
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.7448275862068966,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -572.1379310344828,
+          "y": -223.31034482758622
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 55,
+        "width": 63,
+        "height": 130
+      }
+    },
+    "upper.north.forearmHand.left": {
+      "slotId": "upper.north.forearmHand.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 898,
+          "y": 1114,
+          "width": 84,
+          "height": 198
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual north anatomical-left selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 129.2679738562092
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 154.22222222222217,
+            "y": 140.06535947712416
+          },
+          "anterior": {
+            "x": 152.67973856209142,
+            "y": 117.69934640522877
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.7712418300653595,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -596.967320261438,
+          "y": -827.0718954248366
+        }
+      },
+      "contentBounds": {
+        "x": 102,
+        "y": 46,
+        "width": 55,
+        "height": 130
+      }
+    },
+    "upper.north.upperArm.right": {
+      "slotId": "upper.north.upperArm.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 890,
+          "y": 617,
+          "width": 101,
+          "height": 183
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve upper arm; actual north anatomical-right assigned from visible outline, not source row label"
+      },
+      "landmarks": {
+        "joint": {
+          "shoulder": {
+            "x": 128,
+            "y": 56
+          },
+          "elbow": {
+            "x": 128,
+            "y": 164
+          }
+        },
+        "orientation": {
+          "outerElbow": {
+            "x": 149,
+            "y": 137.75
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "upperArm",
+        "targetLength": 108,
+        "sourceStartLandmark": "joint.shoulder",
+        "sourceEndLandmark": "joint.elbow",
+        "scale": 0.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -577,
+          "y": -413.5
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 53,
+        "width": 64,
+        "height": 132
+      }
+    },
+    "upper.north.forearmHand.right": {
+      "slotId": "upper.north.forearmHand.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\upper-generated-v1-corrected.png",
+        "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+        "crop": {
+          "x": 898,
+          "y": 846,
+          "width": 84,
+          "height": 216
+        },
+        "requireSingleComponent": true,
+        "derivation": "generated isolated long-sleeve forearm/cuff/hand; actual north anatomical-right selected by thumb direction, not row label"
+      },
+      "landmarks": {
+        "joint": {
+          "elbow": {
+            "x": 128,
+            "y": 56
+          },
+          "wrist": {
+            "x": 128,
+            "y": 127.61849710982654
+          }
+        },
+        "hand": {
+          "end": {
+            "x": 128,
+            "y": 174
+          }
+        },
+        "orientation": {
+          "thumbTip": {
+            "x": 106.85549132947983,
+            "y": 151.49132947976875
+          },
+          "anterior": {
+            "x": 107.53757225433526,
+            "y": 137.84971098265896
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "forearmHand",
+        "targetLength": 118,
+        "sourceStartLandmark": "joint.elbow",
+        "sourceEndLandmark": "hand.end",
+        "scale": 0.6820809248554913,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -513.1560693641618,
+          "y": -540.820809248555
+        }
+      },
+      "contentBounds": {
+        "x": 104,
+        "y": 46,
+        "width": 47,
+        "height": 130
+      }
+    },
+    "identity.south.head": {
+      "slotId": "identity.south.head",
+      "direction": "south",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\head-south-original-v1.png",
+        "sha256": "0ae8e9cac2c9e25609360eaeaeed5e97b9a7d1cb81c2b78a006980f2549d170d",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 111
+          },
+          "chin": {
+            "x": 128,
+            "y": 192
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 30,
+          "y": 51
+        }
+      },
+      "contentBounds": {
+        "x": 95,
+        "y": 112,
+        "width": 65,
+        "height": 86
+      }
+    },
+    "identity.east.head": {
+      "slotId": "identity.east.head",
+      "direction": "east",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\head-east-original-v1.png",
+        "sha256": "5010c709018c4d49cf6ebbbb5c05c17cf3b905f586cb57080b61f973526accf1",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 124,
+            "y": 117
+          },
+          "chin": {
+            "x": 146,
+            "y": 193
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 21,
+          "y": 58
+        }
+      },
+      "contentBounds": {
+        "x": 91,
+        "y": 117,
+        "width": 67,
+        "height": 81
+      }
+    },
+    "identity.west.head": {
+      "slotId": "identity.west.head",
+      "direction": "west",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\head-west-original-v1.png",
+        "sha256": "4fb96ea3ada17abba4cbdfdaad73a8b3196c34b199385ca316aed6e3ccc8b555",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 120,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 136,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 132,
+            "y": 117
+          },
+          "chin": {
+            "x": 110,
+            "y": 193
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 16,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 48,
+          "y": 58
+        }
+      },
+      "contentBounds": {
+        "x": 100,
+        "y": 117,
+        "width": 66,
+        "height": 81
+      }
+    },
+    "identity.north.head": {
+      "slotId": "identity.north.head",
+      "direction": "north",
+      "anatomicalSide": null,
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\head-north-original-v1.png",
+        "sha256": "01ded3b0cde960c7c2bc28a94e7f9096cccec17a5e385c12b90c94cc81638ecd",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 240,
+          "height": 330
+        },
+        "requireSingleComponent": true,
+        "derivation": "exact original RGB head; neutral checkerboard and other anatomy removed by authored polygon from 9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+      },
+      "landmarks": {
+        "neck": {
+          "screenLeft": {
+            "x": 117,
+            "y": 196
+          },
+          "screenRight": {
+            "x": 139,
+            "y": 196
+          }
+        },
+        "coverage": {
+          "crown": {
+            "x": 128,
+            "y": 117
+          },
+          "chin": {
+            "x": 128,
+            "y": 190
+          }
+        }
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "head",
+        "targetLength": 22,
+        "sourceStartLandmark": "neck.screenLeft",
+        "sourceEndLandmark": "neck.screenRight",
+        "scale": 1,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 53,
+          "y": 58
+        }
+      },
+      "contentBounds": {
+        "x": 96,
+        "y": 117,
+        "width": 63,
+        "height": 82
+      }
+    },
+    "lower.south.thigh.left": {
+      "slotId": "lower.south.thigh.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-south-left-original-v1.png",
+        "sha256": "c7430569111aa47854d9e5decc1cfae4dd420304b65c8163f6e043b104580871",
+        "derivation": "exact original RGB south anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 97,
+          "y": 214,
+          "width": 53,
+          "height": 56
+        },
+        "nominalRenderRect": {
+          "x": 97,
+          "y": 222,
+          "width": 53,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 110
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 146,
+            "y": 90
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 62,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -102,
+          "y": -404
+        }
+      },
+      "contentBounds": {
+        "x": 99,
+        "y": 41,
+        "width": 54,
+        "height": 95
+      }
+    },
+    "lower.south.shin.left": {
+      "slotId": "lower.south.shin.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-south-left-original-v1.png",
+        "sha256": "c7430569111aa47854d9e5decc1cfae4dd420304b65c8163f6e043b104580871",
+        "derivation": "exact original RGB south anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 97,
+          "y": 245,
+          "width": 53,
+          "height": 58
+        },
+        "nominalRenderRect": {
+          "x": 97,
+          "y": 250,
+          "width": 53,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 127.99999999999999,
+            "y": 48
+          },
+          "ankle": {
+            "x": 127.99999999999999,
+            "y": 114.03029607687677
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 144.659019652423,
+            "y": 92.5250161619307
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 66.03029607687671,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0.030293759918775098,
+        "translation": {
+          "x": -86.32586011008239,
+          "y": -472.7306652081029
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 23,
+        "width": 73,
+        "height": 119
+      }
+    },
+    "lower.south.shoe.left": {
+      "slotId": "lower.south.shoe.left",
+      "direction": "south",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-south-left-original-v1.png",
+        "sha256": "c7430569111aa47854d9e5decc1cfae4dd420304b65c8163f6e043b104580871",
+        "derivation": "exact original RGB south anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 102,
+          "y": 285,
+          "width": 45,
+          "height": 28
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 86.5,
+            "y": 144.5
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 69,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 121.5,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 97,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 86.5,
+            "y": 144.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 42,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -116.5,
+          "y": -363
+        }
+      },
+      "contentBounds": {
+        "x": 62,
+        "y": 135,
+        "width": 62,
+        "height": 45
+      }
+    },
+    "lower.south.thigh.right": {
+      "slotId": "lower.south.thigh.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-south-right-original-v1.png",
+        "sha256": "f3fa715f40610bab3de5e94adf75022808f9a336b9cd3af0967e6f26d3ec57cb",
+        "derivation": "exact original RGB south anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 53,
+          "y": 214,
+          "width": 52,
+          "height": 56
+        },
+        "nominalRenderRect": {
+          "x": 53,
+          "y": 222,
+          "width": 52,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 110
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 102,
+            "y": 90
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 62,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -40,
+          "y": -404
+        }
+      },
+      "contentBounds": {
+        "x": 97,
+        "y": 41,
+        "width": 64,
+        "height": 95
+      }
+    },
+    "lower.south.shin.right": {
+      "slotId": "lower.south.shin.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-south-right-original-v1.png",
+        "sha256": "f3fa715f40610bab3de5e94adf75022808f9a336b9cd3af0967e6f26d3ec57cb",
+        "derivation": "exact original RGB south anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 53,
+          "y": 245,
+          "width": 52,
+          "height": 58
+        },
+        "nominalRenderRect": {
+          "x": 53,
+          "y": 250,
+          "width": 52,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 114
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 102,
+            "y": 92
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 66,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -40,
+          "y": -466
+        }
+      },
+      "contentBounds": {
+        "x": 77,
+        "y": 24,
+        "width": 84,
+        "height": 116
+      }
+    },
+    "lower.south.shoe.right": {
+      "slotId": "lower.south.shoe.right",
+      "direction": "south",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-south-right-original-v1.png",
+        "sha256": "f3fa715f40610bab3de5e94adf75022808f9a336b9cd3af0967e6f26d3ec57cb",
+        "derivation": "exact original RGB south anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 57,
+          "y": 285,
+          "width": 45,
+          "height": 28
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 116.25,
+            "y": 144.5
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 77.75,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 128.5,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 97,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 116.25,
+            "y": 144.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 42,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -30.75,
+          "y": -363
+        }
+      },
+      "contentBounds": {
+        "x": 72,
+        "y": 135,
+        "width": 62,
+        "height": 45
+      }
+    },
+    "lower.north.thigh.left": {
+      "slotId": "lower.north.thigh.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-north-left-original-v1.png",
+        "sha256": "b4b0b95c1d4b3f0b106195f810dc6c6cdc7064fae38a3f22b3ad79f26012abf1",
+        "derivation": "exact original RGB north anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 20,
+          "y": 214,
+          "width": 54,
+          "height": 56
+        },
+        "nominalRenderRect": {
+          "x": 20,
+          "y": 222,
+          "width": 54,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 110
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 112,
+            "y": 90
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 62,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 26,
+          "y": -404
+        }
+      },
+      "contentBounds": {
+        "x": 109,
+        "y": 41,
+        "width": 56,
+        "height": 95
+      }
+    },
+    "lower.north.shin.left": {
+      "slotId": "lower.north.shin.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-north-left-original-v1.png",
+        "sha256": "b4b0b95c1d4b3f0b106195f810dc6c6cdc7064fae38a3f22b3ad79f26012abf1",
+        "derivation": "exact original RGB north anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 20,
+          "y": 245,
+          "width": 54,
+          "height": 58
+        },
+        "nominalRenderRect": {
+          "x": 20,
+          "y": 250,
+          "width": 54,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 114
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 112,
+            "y": 92
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 66,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 26,
+          "y": -466
+        }
+      },
+      "contentBounds": {
+        "x": 103,
+        "y": 24,
+        "width": 62,
+        "height": 116
+      }
+    },
+    "lower.north.shoe.left": {
+      "slotId": "lower.north.shoe.left",
+      "direction": "north",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-north-left-original-v1.png",
+        "sha256": "b4b0b95c1d4b3f0b106195f810dc6c6cdc7064fae38a3f22b3ad79f26012abf1",
+        "derivation": "exact original RGB north anatomical-left trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 24,
+          "y": 285,
+          "width": 46,
+          "height": 28
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 90,
+            "y": 144.5
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 72.5,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 119.75,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 97,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 118,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 90,
+            "y": 144.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 42,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": 0.75,
+          "y": -363
+        }
+      },
+      "contentBounds": {
+        "x": 68,
+        "y": 135,
+        "width": 54,
+        "height": 45
+      }
+    },
+    "lower.north.thigh.right": {
+      "slotId": "lower.north.thigh.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-north-right-original-v1.png",
+        "sha256": "5c2b7d810a2bc2bf0c4e2e9e7e77c5ccbc168c8ac4cefa4b8a3be77f77f6c7fa",
+        "derivation": "exact original RGB north anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 66,
+          "y": 214,
+          "width": 63,
+          "height": 56
+        },
+        "nominalRenderRect": {
+          "x": 66,
+          "y": 222,
+          "width": 63,
+          "height": 38
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 110
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 148,
+            "y": 90
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 62,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -64,
+          "y": -404
+        }
+      },
+      "contentBounds": {
+        "x": 76,
+        "y": 41,
+        "width": 77,
+        "height": 95
+      }
+    },
+    "lower.north.shin.right": {
+      "slotId": "lower.north.shin.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-north-right-original-v1.png",
+        "sha256": "5c2b7d810a2bc2bf0c4e2e9e7e77c5ccbc168c8ac4cefa4b8a3be77f77f6c7fa",
+        "derivation": "exact original RGB north anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 66,
+          "y": 245,
+          "width": 63,
+          "height": 58
+        },
+        "nominalRenderRect": {
+          "x": 66,
+          "y": 250,
+          "width": 63,
+          "height": 43
+        },
+        "overlapPixels": 18
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 114
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 148,
+            "y": 92
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 66,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 2,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -64,
+          "y": -466
+        }
+      },
+      "contentBounds": {
+        "x": 75,
+        "y": 24,
+        "width": 86,
+        "height": 116
+      }
+    },
+    "lower.north.shoe.right": {
+      "slotId": "lower.north.shoe.right",
+      "direction": "north",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\lower-north-right-original-v1.png",
+        "sha256": "5c2b7d810a2bc2bf0c4e2e9e7e77c5ccbc168c8ac4cefa4b8a3be77f77f6c7fa",
+        "derivation": "exact original RGB north anatomical-right trouser and shoe; neutral checkerboard and opposing leg masked; source orientation retained",
+        "crop": {
+          "x": 70,
+          "y": 285,
+          "width": 55,
+          "height": 28
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 100.5,
+            "y": 144.5
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 116.25,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 72.5,
+            "y": 162
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 126.75,
+            "y": 162
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 96.125,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 116.25,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 100.5,
+            "y": 144.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 40.25,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 1.75,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -67.5,
+          "y": -363
+        }
+      },
+      "contentBounds": {
+        "x": 55,
+        "y": 135,
+        "width": 74,
+        "height": 45
+      }
+    },
+    "lower.east.thigh.left": {
+      "slotId": "lower.east.thigh.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous east anatomical-left trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 250,
+          "y": 105,
+          "width": 205,
+          "height": 305
+        },
+        "nominalRenderRect": {
+          "x": 250,
+          "y": 105,
+          "width": 205,
+          "height": 305
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 129
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 98.75,
+            "y": 84
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 81,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -22.75,
+          "y": -28.5
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 23,
+        "width": 66,
+        "height": 133
+      }
+    },
+    "lower.east.shin.left": {
+      "slotId": "lower.east.shin.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous east anatomical-left trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 250,
+          "y": 300,
+          "width": 205,
+          "height": 265
+        },
+        "nominalRenderRect": {
+          "x": 250,
+          "y": 300,
+          "width": 205,
+          "height": 265
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 135.75
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 98.75,
+            "y": 97.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 87.75,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -22.75,
+          "y": -109.5
+        }
+      },
+      "contentBounds": {
+        "x": 93,
+        "y": 25,
+        "width": 78,
+        "height": 120
+      }
+    },
+    "lower.east.shoe.left": {
+      "slotId": "lower.east.shoe.left",
+      "direction": "east",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous east anatomical-left trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 250,
+          "y": 510,
+          "width": 205,
+          "height": 112
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 107.5,
+            "y": 144.5
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 147.10000000000002,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 74.2,
+            "y": 169.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 158.80000000000004,
+            "y": 169.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 111.55000000000001,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 147.10000000000002,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 107.5,
+            "y": 144.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 71.10000000000001,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 0.4500000000000001,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -43.25000000000003,
+          "y": -100.75000000000006
+        }
+      },
+      "contentBounds": {
+        "x": 74,
+        "y": 128,
+        "width": 85,
+        "height": 50
+      }
+    },
+    "lower.east.thigh.right": {
+      "slotId": "lower.east.thigh.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous east anatomical-right trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 735,
+          "y": 105,
+          "width": 230,
+          "height": 305
+        },
+        "nominalRenderRect": {
+          "x": 735,
+          "y": 105,
+          "width": 230,
+          "height": 305
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 129
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 98.75,
+            "y": 84
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 81,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -247.75,
+          "y": -28.5
+        }
+      },
+      "contentBounds": {
+        "x": 86,
+        "y": 23,
+        "width": 66,
+        "height": 133
+      }
+    },
+    "lower.east.shin.right": {
+      "slotId": "lower.east.shin.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous east anatomical-right trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 735,
+          "y": 300,
+          "width": 230,
+          "height": 265
+        },
+        "nominalRenderRect": {
+          "x": 735,
+          "y": 300,
+          "width": 230,
+          "height": 265
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 135.75
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 98.75,
+            "y": 97.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 87.75,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -247.75,
+          "y": -109.5
+        }
+      },
+      "contentBounds": {
+        "x": 91,
+        "y": 25,
+        "width": 84,
+        "height": 120
+      }
+    },
+    "lower.east.shoe.right": {
+      "slotId": "lower.east.shoe.right",
+      "direction": "east",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous east anatomical-right trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 735,
+          "y": 510,
+          "width": 230,
+          "height": 112
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 104.35000000000002,
+            "y": 144.49999999999997
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 76,
+            "y": 176
+          },
+          "front": {
+            "x": 147.55,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 73.75,
+            "y": 169.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 159.25000000000006,
+            "y": 169.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 111.77500000000003,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 147.55,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 104.35000000000002,
+            "y": 144.49999999999997
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 71.55,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 0.45000000000000007,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -271.40000000000003,
+          "y": -100.75000000000006
+        }
+      },
+      "contentBounds": {
+        "x": 74,
+        "y": 128,
+        "width": 86,
+        "height": 50
+      }
+    },
+    "lower.west.thigh.left": {
+      "slotId": "lower.west.thigh.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous west anatomical-left trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 1205,
+          "y": 105,
+          "width": 225,
+          "height": 305
+        },
+        "nominalRenderRect": {
+          "x": 1205,
+          "y": 105,
+          "width": 225,
+          "height": 305
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 129
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.89999999999998,
+            "y": 84
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 81,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -460.6,
+          "y": -28.5
+        }
+      },
+      "contentBounds": {
+        "x": 114,
+        "y": 23,
+        "width": 65,
+        "height": 133
+      }
+    },
+    "lower.west.shin.left": {
+      "slotId": "lower.west.shin.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous west anatomical-left trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 1205,
+          "y": 300,
+          "width": 225,
+          "height": 265
+        },
+        "nominalRenderRect": {
+          "x": 1205,
+          "y": 300,
+          "width": 225,
+          "height": 265
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 135.75
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.89999999999998,
+            "y": 97.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 87.75,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -460.6,
+          "y": -109.5
+        }
+      },
+      "contentBounds": {
+        "x": 95,
+        "y": 25,
+        "width": 84,
+        "height": 120
+      }
+    },
+    "lower.west.shoe.left": {
+      "slotId": "lower.west.shoe.left",
+      "direction": "west",
+      "anatomicalSide": "left",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-legs-v1.png",
+        "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+        "derivation": "source-referenced continuous west anatomical-left trouser and flat shoe; 100px source knee overlap",
+        "crop": {
+          "x": 1205,
+          "y": 510,
+          "width": 225,
+          "height": 112
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 106.14999999999998,
+            "y": 144.49999999999997
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 150.70000000000005,
+            "y": 176
+          },
+          "front": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 152.5,
+            "y": 169.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 64.30000000000007,
+            "y": 169.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 113.35000000000002,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 150.70000000000005,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 106.14999999999998,
+            "y": 144.49999999999997
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 74.7,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 0.44999999999999996,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -482.44999999999993,
+          "y": -100.75
+        }
+      },
+      "contentBounds": {
+        "x": 64,
+        "y": 128,
+        "width": 90,
+        "height": 50
+      }
+    },
+    "lower.west.thigh.right": {
+      "slotId": "lower.west.thigh.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-leg-west-right-reflected-v1.png",
+        "sha256": "ed073f3f898313a0b5f53f8b7b1fe0f1390bb5b849f5bebc1dfcb40a4bcd0395",
+        "derivation": "source-referenced continuous west anatomical-right trouser and flat shoe; 100px source knee overlap; source column reflected with all landmarks to correct toe direction",
+        "crop": {
+          "x": 195,
+          "y": 105,
+          "width": 220,
+          "height": 305
+        },
+        "nominalRenderRect": {
+          "x": 195,
+          "y": 105,
+          "width": 220,
+          "height": 305
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "hip": {
+            "x": 128,
+            "y": 48
+          },
+          "knee": {
+            "x": 128,
+            "y": 129
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.9,
+            "y": 84
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "thigh",
+        "targetLength": 81,
+        "sourceStartLandmark": "joint.hip",
+        "sourceEndLandmark": "joint.knee",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -12.849999999999994,
+          "y": -28.5
+        }
+      },
+      "contentBounds": {
+        "x": 105,
+        "y": 23,
+        "width": 65,
+        "height": 133
+      }
+    },
+    "lower.west.shin.right": {
+      "slotId": "lower.west.shin.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-leg-west-right-reflected-v1.png",
+        "sha256": "ed073f3f898313a0b5f53f8b7b1fe0f1390bb5b849f5bebc1dfcb40a4bcd0395",
+        "derivation": "source-referenced continuous west anatomical-right trouser and flat shoe; 100px source knee overlap; source column reflected with all landmarks to correct toe direction",
+        "crop": {
+          "x": 195,
+          "y": 300,
+          "width": 220,
+          "height": 265
+        },
+        "nominalRenderRect": {
+          "x": 195,
+          "y": 300,
+          "width": 220,
+          "height": 265
+        },
+        "overlapPixels": 100
+      },
+      "landmarks": {
+        "joint": {
+          "knee": {
+            "x": 128,
+            "y": 48
+          },
+          "ankle": {
+            "x": 128,
+            "y": 135.75
+          }
+        },
+        "orientation": {
+          "outer": {
+            "x": 155.9,
+            "y": 97.5
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": -1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shin",
+        "targetLength": 87.75,
+        "sourceStartLandmark": "joint.knee",
+        "sourceEndLandmark": "joint.ankle",
+        "scale": 0.45,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -12.849999999999994,
+          "y": -109.5
+        }
+      },
+      "contentBounds": {
+        "x": 89,
+        "y": 25,
+        "width": 81,
+        "height": 120
+      }
+    },
+    "lower.west.shoe.right": {
+      "slotId": "lower.west.shoe.right",
+      "direction": "west",
+      "anatomicalSide": "right",
+      "source": {
+        "path": "C:\\Users\\Kyle Kent\\Projects\\GamifySurgery\\tools\\character-mapping\\layered-pilot\\navy-vest-v1\\assets\\profile-leg-west-right-reflected-v1.png",
+        "sha256": "ed073f3f898313a0b5f53f8b7b1fe0f1390bb5b849f5bebc1dfcb40a4bcd0395",
+        "derivation": "source-referenced continuous west anatomical-right trouser and flat shoe; 100px source knee overlap; source column reflected with all landmarks to correct toe direction",
+        "crop": {
+          "x": 195,
+          "y": 510,
+          "width": 220,
+          "height": 112
+        }
+      },
+      "landmarks": {
+        "joint": {
+          "ankle": {
+            "x": 112.45,
+            "y": 144.49999999999997
+          }
+        },
+        "entry": {
+          "rear": {
+            "x": 148.45,
+            "y": 176
+          },
+          "front": {
+            "x": 76,
+            "y": 176
+          }
+        },
+        "heel": {
+          "rear": {
+            "x": 150.7,
+            "y": 169.25
+          }
+        },
+        "toe": {
+          "tip": {
+            "x": 64.3,
+            "y": 169.25
+          }
+        },
+        "sole": {
+          "contact": {
+            "x": 112.22500000000001,
+            "y": 176
+          }
+        },
+        "registration": {
+          "baselineLeft": {
+            "x": 76,
+            "y": 176
+          },
+          "baselineRight": {
+            "x": 148.45,
+            "y": 176
+          }
+        },
+        "reference": {
+          "center": {
+            "x": 112.45,
+            "y": 144.49999999999997
+          }
+        }
+      },
+      "orientation": {
+        "markerSign": 1
+      },
+      "accessories": [],
+      "normalization": {
+        "kind": "uniform-rigid",
+        "restPlacement": "shoe",
+        "targetLength": 72.45,
+        "sourceStartLandmark": "registration.baselineLeft",
+        "sourceEndLandmark": "registration.baselineRight",
+        "scale": 0.44999999999999996,
+        "rotationRadians": 0,
+        "translation": {
+          "x": -28.39999999999999,
+          "y": -100.75
+        }
+      },
+      "contentBounds": {
+        "x": 64,
+        "y": 128,
+        "width": 87,
+        "height": 50
+      }
+    }
+  },
+  "fallbacks": {},
+  "accessoryPolicy": {},
+  "layerOrder": {
+    "south": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "upperArmsBack",
+      "torso",
+      "forearmsFront",
+      "cuffsFront",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "north": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "arms",
+      "torso",
+      "shoulderCaps",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "east": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "west": [
+      "farLower",
+      "nearLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedSouth": [
+      "seatedLower",
+      "backHair",
+      "upperArmsBack",
+      "torso",
+      "forearmsFront",
+      "cuffsFront",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedNorth": [
+      "seatedLower",
+      "backHair",
+      "arms",
+      "torso",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedEast": [
+      "seatedLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "seatedWest": [
+      "seatedLower",
+      "backHair",
+      "farArm",
+      "torso",
+      "nearArm",
+      "head",
+      "frontHair",
+      "prop"
+    ],
+    "clipboardSouth": [
+      "lower",
+      "backHair",
+      "torso",
+      "head",
+      "prop",
+      "arms",
+      "frontHair"
+    ]
+  },
+  "sourceLineage": {
+    "original": {
+      "path": "Photos for Codex 2/Patients or Staff or Other Characters/exec-ee82180f-799f-4617-9159-27eefa97f158.png",
+      "sha256": "9f843a7297c830ce3263a95a6476f1a953a42fe9fef6b883c9f324fb6e7be4f2"
+    },
+    "upperGeneration": {
+      "path": "tools/character-mapping/layered-pilot/navy-vest-v1/assets/upper-generated-v1-corrected.png",
+      "sha256": "0bc7c2cd8c55479f95ad68f72a6c11b1895423d1aef59e77c9c82c70c4f22071",
+      "original": {
+        "path": "tools/character-mapping/layered-pilot/navy-vest-v1/assets/upper-generated-v1.png",
+        "sha256": "0463f2df90f09453166962ef3cc9d8339c9b8f827ea2aea51dd158c2ee0ce031"
+      },
+      "prompt": "assets/upper-generated-v1-prompt.txt",
+      "derivation": "narrow artificial elbow cut bands removed from both segment ends to place source borders inside overlap; no recoloring"
+    },
+    "profileTorso": {
+      "path": "tools/character-mapping/layered-pilot/navy-vest-v1/assets/profile-torso-v1.png",
+      "sha256": "ea383467d07f75d94eada3aa34483d5ecbb19e838237db3b0d52394bd294fb4a",
+      "prompt": "assets/profile-torso-v1-prompt.txt"
+    },
+    "profileLower": {
+      "path": "tools/character-mapping/layered-pilot/navy-vest-v1/assets/profile-legs-v1.png",
+      "sha256": "26b4a8ce2ee8dcb78fef6b4f41c1a2ab9fafb514f1a0a270b1d9e75f0ac2cfd0",
+      "prompt": "assets/profile-legs-v1-prompt.txt",
+      "derivation": "four continuous source-referenced legs; column 4 reflected with all landmarks for West toe direction"
+    }
+  },
+  "profile": {
+    "canvas": {
+      "width": 160,
+      "height": 320,
+      "axisX": 80,
+      "floorY": 287
+    }
+  },
+  "garment": {
+    "sleeveLength": "long",
+    "wristCuffOwner": "forearmHand",
+    "elbowUnderlapOwner": "upperArm"
+  }
+}

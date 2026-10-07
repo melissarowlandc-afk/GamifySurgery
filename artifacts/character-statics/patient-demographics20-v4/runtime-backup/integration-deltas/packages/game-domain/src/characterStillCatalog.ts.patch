@@ -1,0 +1,44 @@
+diff --git a/packages/game-domain/src/characterStillCatalog.ts b/packages/game-domain/src/characterStillCatalog.ts
+index 21251f18..00ec19f4 100644
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -16,7 +16,7 @@ export type CharacterStillCatalogEntry =
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "patient";
+-      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3";
++      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2" | "patient-women20-v3" | "patient-demographics20-v4";
+       readonly compatibleSexLabel: Exclude<PatientSexLabel, "Not specified">;
+       readonly ageBand: PatientVisualAgeBand;
+       readonly intendedAge?: number;
+@@ -158,6 +158,22 @@ const PATIENT_WOMEN20_V3_STILLS = PATIENT_WOMEN20_V3_ROWS.map(([number, intended
+   intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
+ }));
+ 
++const PATIENT_DEMOGRAPHICS20_V4_ROWS = [
++  ["001", 32, "Male"], ["002", 35, "Male"], ["003", 39, "Male"],
++  ["004", 42, "Male"], ["005", 44, "Male"], ["006", 46, "Male"],
++  ["007", 49, "Male"], ["008", 52, "Male"], ["009", 55, "Male"],
++  ["010", 58, "Male"], ["011", 61, "Male"], ["012", 64, "Male"],
++  ["013", 67, "Female"], ["014", 68, "Female"], ["015", 71, "Female"],
++  ["016", 67, "Male"], ["017", 68, "Male"], ["018", 71, "Male"],
++  ["019", 48, "Female"], ["020", 60, "Female"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const PATIENT_DEMOGRAPHICS20_V4_STILLS = PATIENT_DEMOGRAPHICS20_V4_ROWS.map(([number, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(`patient-demographics20-v4.${number}`), category: "patient" as const,
++  sourceCohort: "patient-demographics20-v4" as const, compatibleSexLabel,
++  intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -177,6 +193,7 @@ export const CHARACTER_STILL_CATALOG = [
+   ...STAFF_STILLS, ...LEVEL3_ROSTER_V2_STAFF_STILLS, ...FOUNDER_STILLS, ...EXPLICIT_EXTRA_STILLS,
+   ...LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS,
+   ...PATIENT_WOMEN20_V3_STILLS,
++  ...PATIENT_DEMOGRAPHICS20_V4_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");

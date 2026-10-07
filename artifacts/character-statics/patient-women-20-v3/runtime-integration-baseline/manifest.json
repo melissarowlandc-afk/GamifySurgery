@@ -1,0 +1,305 @@
+{
+  "schemaVersion": "patient-women20-v3-integration-baseline/v1",
+  "identityCount": 185,
+  "assetCount": 1510,
+  "patientCount": 76,
+  "pinnedAssetBaseline": {
+    "path": "tools/character-mapping/patient-women-20-v3/runtime-baseline.json",
+    "sha256": "65e24151579835f2bd5e2d9ba394ec460194c12c159e94a124d006e527aaf7a2"
+  },
+  "files": [
+    {
+      "path": "apps/player/src/art/characterStillRegistry.generated.json",
+      "copiedTo": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.generated.json",
+      "sha256": "31d62b5f13e8ce723fd6a9e3e1eb8cb9dcf756dd40f4540d720d7433a440ee7c"
+    },
+    {
+      "path": "tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "copiedTo": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/tools/character-mapping/gs026-runtime-stills/provenance-manifest.json",
+      "sha256": "9f0ef12bda1b24c55e4f4bafe8cce8298888eb2983180d011ff06e823a4cbd8d"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.ts",
+      "copiedTo": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.ts",
+      "sha256": "2018664d8990cef05b4d98cd0282d6f4ffe0621a81ce42ba5b6b7d93a5822d35"
+    },
+    {
+      "path": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "copiedTo": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.test.ts",
+      "sha256": "229a78f59c7285a32ae432aec2d115c58450027b0f108580f6a1a370cd9d9aa7"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.ts",
+      "copiedTo": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.ts",
+      "sha256": "2c3da634031cde0b504e9e6062f297539963b340c6b8181fddf283dd2a4d660b"
+    },
+    {
+      "path": "apps/player/src/art/characterStillRegistry.test.ts",
+      "copiedTo": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.test.ts",
+      "sha256": "71258ed5134f65ab956c63e5dc0adcde0da0a68168cf5f08747119c0432c6425"
+    }
+  ],
+  "catalog": {
+    "path": "artifacts/character-statics/patient-women-20-v3/runtime-integration-baseline/catalog-entries.json",
+    "sha256": "81ffb5c317c5611fd40d7b044b08bb7a669466301fb9a7205013061f070de7a7"
+  },
+  "level3Manifests": [
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/001/manifest.json",
+      "sha256": "9cbea39fc3f0b83d5ac75fdb447c0103f5f83e414e4b5baee7bd4fdb9be7aba5",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/001/provenance.json",
+        "sha256": "6492b5e3e696884f18d114e21a6aa7a3152826ed74a2b97a1b3b8c0968ab13c5"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/002/manifest.json",
+      "sha256": "d8e28daaf1e5a6b46bd67d97c1392b5dc1b254de526fac73c221de7da535b0ed",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/002/provenance.json",
+        "sha256": "5999754c49210b734ebf1e12071a3d711f6a323dba24bd93ff88c9fc60738e36"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/003/manifest.json",
+      "sha256": "93f799bd90c74ceb6016942459a776cee40d77bc4a1ae99dad312d05b79ad100",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/003/provenance.json",
+        "sha256": "f9bcad823a959d0cdd835f6bf8b6586dbe81a544ca5f65d806434d78e11fe9a3"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/004/manifest.json",
+      "sha256": "21bc6c806c9a1bc849588b3d10c656270c4b1e470ca4413abe6d632e81962579",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/004/provenance.json",
+        "sha256": "d2e156f055d86cc25bf82be57ce44af50e90a24274d8389692202c2c61c401df"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/005/manifest.json",
+      "sha256": "4ee594a9937c942cda81ea2541b9bf784e0ceff5a0b0fcffb60e2574a84d7956",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/005/provenance.json",
+        "sha256": "c3d8382ac028c02b00e180d983d70d8729d71f7ab4c5d51a65dc9ce0f49a7779"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/006/manifest.json",
+      "sha256": "8d5c79bd05f46cb855f2237b28ebe0a85af83509cbabb004df1c93ecda7805e4",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/006/provenance.json",
+        "sha256": "194fc28ff8ada2b0cdf7f6bfc54239b5b2807e3fce3f049b334bd86c7d349583"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/007/manifest.json",
+      "sha256": "ea275c9b926c3fa0b716f668d5600d3d452fbc0fc50c558b83e4ea46372fca19",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/007/provenance.json",
+        "sha256": "eddb6a4034d8042b84734b717263e0c21dfcd756d95f1115856f70e920b4f5ed"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/008/manifest.json",
+      "sha256": "d7c13565f65ad6dd1903bded6a2810a03bd4edce2a9cb95b6b7c7660c3e57a64",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/008/provenance.json",
+        "sha256": "f8ba14aeeeac671d045bc6d70b6b3a073a29d6304b11d29513ac87e7cf9ab4c8"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/009/manifest.json",
+      "sha256": "633a2b6569c0fe7dc298d7615e2a7d0ef96c75f7876d6d2abd0fb705f0460e94",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/009/provenance.json",
+        "sha256": "73eb1816601046845315660f9a5f10563d8028ece36875238937cea85d95fcca"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/010/manifest.json",
+      "sha256": "e2a665912ed2bb47a849186d77cdd371845387bb7fb32500be91655b709b2c5f",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/010/provenance.json",
+        "sha256": "6c189f93947061c702cb5e9c3a2521169125ecb7dd9c80cfa6ffc1cc5602e559"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/011/manifest.json",
+      "sha256": "1759f2c832805384aa0b39218ca7d9ad5fadfe90bb65b9a021d9d1cbc8e47f37",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/011/provenance.json",
+        "sha256": "c91e052209ea66f96f83ca5e25704c61827fd29ecdb9a4dfc7f5f80f14721a40"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/012/manifest.json",
+      "sha256": "e21e98a5139ebbe2a2095ea9c1771e046e2cbf6ae78adb3a806174dd245543e3",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/012/provenance.json",
+        "sha256": "d76332e749891dfd7f7a98a6ac30744256bacf41e5fe30f8c712f1914e59e5d7"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/013/manifest.json",
+      "sha256": "3ccbb17ab6e6caad22aed091edf8409451d573a32f746bbbc7e0b795656b65b2",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/013/provenance.json",
+        "sha256": "1563ae21a1991c9bb496bc275ffecdb2e6c2f20ef1f8fc7929da552659a56742"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/014/manifest.json",
+      "sha256": "888479904d9267c825906010cd8f66d78e810e3625cb7ff92306d60ba8e6d8d9",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/014/provenance.json",
+        "sha256": "f19a60356b611867b0ef683f78667e20d69705f37c5aa7a8c7b30e5d04cb4c9c"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/015/manifest.json",
+      "sha256": "9093187ab4b4fb76b8ef78ff73487f10925a06009925f41636e8f50743a9e433",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/015/provenance.json",
+        "sha256": "73ddd24b4650fc8b8a70d86a3c5cec9562d70471dd0fc3964710b40e164d59f0"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/016/manifest.json",
+      "sha256": "f82ebcda514d681bf6fd6c5ffa576c3cd166f28e3450a7649d7d46150230d499",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/016/provenance.json",
+        "sha256": "990956af38961da159b43c822a65b40398e42409b014ccd1e7ebed49a61d7b0d"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/017/manifest.json",
+      "sha256": "89c0ab03fe0dd7ccb03d3f459391409fa95e40e188f0d8cbe630aa0d7e7b6677",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/017/provenance.json",
+        "sha256": "b26eedc924a42bcad3f553b359175ffd4b217d0f08baecc3891ce8ee47e942b0"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/018/manifest.json",
+      "sha256": "a89f44a369e9ae81feb1ce11563e3270b8bc485f854be93c895bb1b8b5208d50",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/018/provenance.json",
+        "sha256": "b191d6b253a7b845e85df9b9bed22b5659c52a0d39c77296a5a9bf1b203970f4"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/019/manifest.json",
+      "sha256": "5ede4b66c3e954adbb0419109fe2074ebb018c278ad07a92aec308786dd86da8",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/019/provenance.json",
+        "sha256": "fcbf4135b3602e106202ea229c91d64229ac2a81eb47b2c4fbfa0b0d223a1200"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/020/manifest.json",
+      "sha256": "29ca657ec0d97a1caa774b60aa90219aea5f662d86800b7e9aeab2211f90c6fe",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/020/provenance.json",
+        "sha256": "b942d5030a6e1c7ae47cdaddbd4548f2a998be588615e95d957834403a7f7cf9"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/021/manifest.json",
+      "sha256": "f739628a493b9fb9a080584d1d6b83d38279444d206d3a22b7efb8658aac343c",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/021/provenance.json",
+        "sha256": "00589fcf2065234eb602709bdf981b24e26e510973fa61bbcbee9a403afb04b7"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/022/manifest.json",
+      "sha256": "9ffa7e1fefc7b243cd3d377760fd15ea71eb25203af65090c2e6d10968b4ff04",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/022/provenance.json",
+        "sha256": "a83cf37cb838fc399c451aa45f690baff880938da0a8ebab335f1fbe7125dc6d"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/023/manifest.json",
+      "sha256": "a1a6983f1669060f30577466cc0df8b93741f799dbe3e0b6ad38c866a2001226",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/023/provenance.json",
+        "sha256": "9a7685f4dfad606d0a24145e3d9373b640e23665b874a71636c9c15b23c43baa"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/024/manifest.json",
+      "sha256": "83893166ae103ee206b3e412d116ce2bf89af174cca36d1c560d50e1aa2040aa",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/024/provenance.json",
+        "sha256": "5a0e861e80d4388bc1ff9dcfd23909b4b8109fc889925cd4dbfd72396d443697"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/025/manifest.json",
+      "sha256": "9dbdc53bf305b688d7f3b4bbca7a169f64463918536eca382f55e5d2072dd197",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/025/provenance.json",
+        "sha256": "f9f30158f604a9b248545fa518856fda5f84725595235cc695b5de56a58f0516"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/026/manifest.json",
+      "sha256": "8ee24ed1d3ab49bb94d795b75eeb997370348a168324d9f98a5ee8a235a6d869",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/026/provenance.json",
+        "sha256": "01e590833537ba074ffde270f111c39980407a56a3451840a46eef7d424b399d"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/027/manifest.json",
+      "sha256": "8b8ce7372bcc7509b1bae8e804b580f710b50639e0ae5046518cff6d190cabcc",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/027/provenance.json",
+        "sha256": "86f35ccc9c3545a2f8ef55d2b3e7bcf1c293adf510c477f76a769451b58e9f55"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/028/manifest.json",
+      "sha256": "efe68fa2030b8a7b7865959c2cd424d7089d30b975050df21d8a59533892e5ee",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/028/provenance.json",
+        "sha256": "5e431fd1c26a367d1431337f23cf5187905e7f4ce08fc498790202ba57cbc0b8"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/029/manifest.json",
+      "sha256": "cb2fd05a7a3984c81a85a07e0beb738f665dabf8aef01add93726c3c4daeab51",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/029/provenance.json",
+        "sha256": "b5c496f406e5b2db62b7b08cd0cd999a29ec1d31c604cb9f013fecd782d442cd"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/030/manifest.json",
+      "sha256": "a418e358cf87b82fd47d870281502323d3a0b4dc4c30c7181904832da9e1b2c1",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/030/provenance.json",
+        "sha256": "cadd5bcc1625216f42eea42b42bdf3dc88bc30d9fb881a564f0db241a32455bc"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/031/manifest.json",
+      "sha256": "7aece046d5ca92c32d35658058848fb2e3c3a40e05123427ecf1a4089b22f56a",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/031/provenance.json",
+        "sha256": "7e0bddf5d5d2139234efd2610e2cb41673e229521e1d4ba361059520f24cfe53"
+      }
+    },
+    {
+      "path": "artifacts/character-statics/level3-roster-complete-v2/packages/032/manifest.json",
+      "sha256": "993721ef005b4970658836b916e9cc312e419cddf7deed77066ac4067f02414a",
+      "sourceProvenance": {
+        "path": "artifacts/character-statics/level3-roster-complete-v2/sources/032/provenance.json",
+        "sha256": "b73e1dc57fec1ce44f248156ef5f85e2331d46b0f44a3249d9dc3dcc8028b159"
+      }
+    }
+  ],
+  "provenanceLimitation": "The pre-edit global manifest records153 identities/1254 assets. The existing32 Level3 package manifests provide the remaining256 prior assets; consolidation does not alter their approval claims."
+}
