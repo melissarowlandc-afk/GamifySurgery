@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-07",
+  "server": "isolated QA dev server http://127.0.0.1:5181 with fresh Playwright storage (never the owner's 4173 origin)",
+  "unit": {
+    "apps/player/src/facility/roomTouchups.test.ts": "10/10 pass",
+    "apps/player src/facility": "274/274 pass (38 files) after the south-wall change",
+    "apps/player src/facility + src/art": "332/332 pass (46 files) after the decor change"
+  },
+  "e2e_desktop_chrome": {
+    "tests/e2e/hallway-decor.spec.ts": "pass; corridor decor sprites 0 before, 10 after on the 63-room layout fixture",
+    "tests/e2e/room-touchups.spec.ts": "pass",
+    "tests/e2e/canonical-hallway-edges.spec.ts": "pass"
+  },
+  "typecheck": "apps/player tsc --noEmit: no errors in Claude's files; one concurrent error in packages/game-domain/src/diagnostic-timing.ts(776) from other in-progress work",
+  "known_unrelated_failures": "13 apps/player session tests (clinical timing presentation, localCampaignRepository) outside these files"
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "path": "apps/player/src/facility/FacilityScene.ts",
+    "patch": "recovery/patches/apps__player__src__facility__FacilityScene.ts.patch",
+    "hunks": 5,
+    "reconstructsCurrentExactly": true,
+    "currentSha256": "1b1264c8e188ab9f0b070a0b41e0807f892ad3c2fa587733c93e440bc56d0a3b",
+    "baselineSha256": "6f4afa741dfbff2ad12686f70261ebcaa24abfcd66a8278b3fbd75f38c402aa8",
+    "baselineNote": "Equals currentSha256 recorded for this file in artifacts/checkpoints/minute-stutter-20261007/recovery/patch-verification.json.",
+    "method": "Baseline rebuilt by reversing exactly the hallway edits; git -c core.autocrlf=false apply of the patch to it reproduces the live file.",
+    "error": null
+  }
+]

@@ -1,0 +1,144 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index 59683cf..aa8e2d4 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -38,6 +38,7 @@ import {
+   getRoomTouchup,
+   getTouchupCorridorDecor,
+   getTouchupCorridorFloorPrimitives,
++  getTouchupCorridorRunnerPrimitives,
+   getTouchupFloorPrimitives,
+   getTouchupGlassPartitionPrimitives,
+   getTouchupLighting,
+@@ -1797,13 +1798,11 @@ export class FacilityScene extends Phaser.Scene {
+     const dark = parseApprovedCssColor(shell.edgeTrim).color;
+     const wood = parseApprovedCssColor(shell.doorJamb).color;
+     const light = 0x789173;
+-    const cream = 0xefe1bd;
+     const openings = this.getRoomDoorOpenings(room);
+     const expanded = (runs: readonly { offset: number; length: number }[]) => new Set(
+       runs.flatMap((run) => Array.from({ length: run.length }, (_, index) => run.offset + index)),
+     );
+     const north = expanded(this.exposedBoundaryRuns(room, "north"));
+-    const south = expanded(this.exposedBoundaryRuns(room, "south"));
+     const west = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "west"));
+     const east = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "east"));
+     const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms, openings));
+@@ -1855,21 +1854,62 @@ export class FacilityScene extends Phaser.Scene {
+         graphics.fillRect(left - px(2), top + this.layout.tileSize - inset - px(2), cap + px(4), px(5));
+       }
+     }
+-    for (const offset of south) {
+-      const left = rectangle.x + offset * this.layout.tileSize;
+-      const top = rectangle.y + rectangle.height;
+-      const paint = (x: number, width: number) => {
+-        graphics.fillStyle(cream, 1); graphics.fillRect(x, top, width, low);
+-        graphics.fillStyle(sage, 1); graphics.fillRect(x, top + px(21), width, px(8));
+-        graphics.fillStyle(dark, 1); graphics.fillRect(x, top - px(6), width, px(8));
+-        graphics.fillStyle(light, 1); graphics.fillRect(x, top - px(6), width, px(3));
+-      };
+-      if (!openingAt("south", offset)) { paint(left, this.layout.tileSize); continue; }
+-      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+-      graphics.fillStyle(wood, 1);
+-      graphics.fillRect(left + inset - px(5), top - px(6), px(5), low + px(6));
+-      graphics.fillRect(left + this.layout.tileSize - inset, top - px(6), px(5), low + px(6));
++  }
++
++  /**
++   * The hallway's short south wall where nothing is built to the south. It
++   * is drawn on a depth-sorted foreground layer, exactly like every room's
++   * south lip, so the sidewalk and landscaping cannot paint over it.
++   */
++  private drawApprovedHallwaySouthForeground(
++    room: FacilityRoomView,
++    rectangle: { x: number; y: number; width: number; height: number },
++    shell: ApprovedRoomShellPresentation,
++  ): void {
++    const south = this.exposedBoundaryRuns(room, "south");
++    if (south.length === 0) return;
++    const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `hallway-south:${room.instanceId}`);
++    const scale = this.layout.tileSize / shell.tilePixels;
++    const px = (value: number) => value * scale;
++    const low = px(shell.southHeightPixels);
++    const cap = px(shell.sideCapWidthPixels);
++    const inset = px(shell.doorInsetPixels);
++    const cream = shell.southFace ? parseApprovedCssColor(shell.southFace).color : 0xefe1bd;
++    const trim = parseApprovedCssColor(shell.baseTrim).color;
++    const dark = parseApprovedCssColor(shell.edgeTrim).color;
++    const light = shell.capLight ? parseApprovedCssColor(shell.capLight).color : 0x789173;
++    const wood = parseApprovedCssColor(shell.doorJamb).color;
++    const southY = rectangle.y + rectangle.height;
++    const openings = this.getRoomDoorOpenings(room);
++    const paint = (x: number, width: number) => {
++      graphics.fillStyle(cream, 1); graphics.fillRect(x, southY, width, low);
++      graphics.fillStyle(trim, 1); graphics.fillRect(x, southY + low - px(8), width, px(8));
++      graphics.fillStyle(dark, 1); graphics.fillRect(x, southY - px(6), width, px(8));
++      graphics.fillStyle(light, 1); graphics.fillRect(x, southY - px(6), width, px(3));
++    };
++    for (const run of south) {
++      for (let offset = run.offset; offset < run.offset + run.length; offset += 1) {
++        const left = rectangle.x + offset * this.layout.tileSize;
++        const opening = openings.some((door) => door.side === "south" && door.offset === offset);
++        if (!opening) { paint(left, this.layout.tileSize); continue; }
++        paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
++        graphics.fillStyle(wood, 1);
++        graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
++        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
++      }
+     }
++    // Exposed side walls run down over the short wall's face, as on rooms.
++    const lastRow = orientedSize(room).height - 1;
++    for (const side of ["west", "east"] as const) {
++      const edgeOffset = side === "west" ? 0 : orientedSize(room).width - 1;
++      if (!south.some((run) => edgeOffset >= run.offset && edgeOffset < run.offset + run.length)) continue;
++      if (!getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, side)
++        .some((run) => lastRow >= run.offset && lastRow < run.offset + run.length)) continue;
++      const x = side === "west" ? rectangle.x - cap : rectangle.x + rectangle.width;
++      graphics.fillStyle(dark, 1); graphics.fillRect(x, southY - px(6), cap, low + px(6));
++      graphics.fillStyle(light, 1); graphics.fillRect(x + (side === "east" ? 0 : cap - px(3)), southY - px(6), px(3), low + px(6));
++    }
++    graphics.setDepth(getFacilitySceneDepth(southY + low, "fixture", 63));
+   }
+ 
+   private getGroupedHallwayHorizontalRuns(
+@@ -2758,6 +2798,7 @@ export class FacilityScene extends Phaser.Scene {
+         this.drawTouchupCorridor(graphics, room, rectangle, "floor");
+         this.drawApprovedHallwayExposedEdges(graphics, room, rectangle, approvedHallway.shell);
+         this.drawTouchupCorridor(graphics, room, rectangle, "decor");
++        this.drawApprovedHallwaySouthForeground(room, rectangle, approvedHallway.shell);
+         return;
+       }
+       // Corridors remain open circulation floors. Only real exterior edges
+@@ -5405,19 +5446,27 @@ export class FacilityScene extends Phaser.Scene {
+     const exposedNorth = this.exposedBoundaryRuns(room, "north").some((run) => run.offset === 0);
+     const lowNorth = getOwnedBackedNorthBoundaryRuns(room, rooms, openings).some((run) => run.offset === 0);
+     const hasNorthWall = exposedNorth && !lowNorth;
++    const tile = { x: room.tileX, y: room.tileY };
+     if (phase === "floor") {
+-      this.drawTouchupPrimitives(graphics, getTouchupCorridorFloorPrimitives(hasNorthWall), rectangle.x, rectangle.y, this.layout.tileSize / TOUCHUP_TILE_PIXELS);
++      const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
++      this.drawTouchupPrimitives(graphics, getTouchupCorridorFloorPrimitives(hasNorthWall), rectangle.x, rectangle.y, scale);
++      this.drawTouchupPrimitives(graphics, getTouchupCorridorRunnerPrimitives(tile, isCorridor), rectangle.x, rectangle.y, scale);
+       return;
+     }
+-    const hasWestWall = getExposedVerticalBoundaryRuns(room, rooms, "west").some((run) => run.offset === 0);
++    // Decor also stands against walls shared with rooms (owner, 2026-10-07);
++    // only an outdoor-facing tall north wall carries art.
+     const items = getTouchupCorridorDecor(
+-      { x: room.tileX, y: room.tileY },
++      tile,
+       isCorridor,
+-      hasNorthWall,
+-      hasWestWall,
++      {
++        north: hasNorthWall ? "tall" : isCorridor(tile.x, tile.y - 1) ? null : "backed",
++        west: !isCorridor(tile.x - 1, tile.y),
++        east: !isCorridor(tile.x + 1, tile.y),
++      },
+       {
+         north: openings.some((opening) => opening.side === "north"),
+         west: openings.some((opening) => opening.side === "west"),
++        east: openings.some((opening) => opening.side === "east"),
+       },
+     );
+     items.forEach((item, index) => this.drawTouchupSprite(
