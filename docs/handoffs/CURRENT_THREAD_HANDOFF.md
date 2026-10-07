@@ -1,3 +1,19 @@
+> GS-037 EMPLOYEE TRAINING GITHUB BACKUP VERIFIED (2026-10-07).
+> Owner said "Push to GitHub". Checkpoint bb70744a778ade8bf7af2f1da9fbb728a91e594e
+> is on origin/beta, confirmed with git ls-remote. Recovery archive:
+> artifacts/checkpoints/employee-training-20261007/ Full owned training files,
+> verified training-only shared patches, exact regression fragment, hashes
+> and safety/validation evidence are included. Independent concurrent
+> room-upgrade/Claude/art work remains in the shared tree and is excluded.
+> Required GS-034/038/Claude compatibility is documented in the archive.
+> Training validation: 295 domain/catalog + 57 player tests, 2 isolated
+> Chrome scenarios, all three package typechecks, boundaries and build pass.
+> Sol extracted runtime patches; root inspected diffs and audited/reverified
+> recovery before the scoped commit/push. Live runtime files stay unchanged.
+> No merge, release, deployment or Pages publication. No owner storage or
+> pathway change: START_GAME.cmd -> http://127.0.0.1:4173, same profile.
+> Scoped handoff: docs/handoffs/GS-037_EMPLOYEE_TRAINING.md.
+
 > BUILD MODE REVAMP — READY FOR OWNER PLAYTEST (2026-10-07, Claude Code).
 > Owner-approved (artifact https://claude.ai/artifact/Lpk2UQV7N9Go7q3ZoiX5XR).
 > Ink stars under Build Mode room names (none for single-level rooms), green
