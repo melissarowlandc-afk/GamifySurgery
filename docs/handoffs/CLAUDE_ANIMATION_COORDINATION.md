@@ -1308,3 +1308,121 @@ Build Mode revamp`) is on `origin/beta`, confirmed with `git ls-remote`.
 - Not staged: shared dirty source files whole, other sessions' work and
   the owner's save. No merge, release, deployment or Pages publication.
   Owner pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173.
+
+## 2026-10-07 — Claude — recovery-bed sitters + front-door threshold layering (owner-requested)
+
+Owner request: seated patients on the recovery beds (endoscopy recovery) drew
+entirely over the bed — legs should hang behind the bed with the seat on the
+mattress; and a yellow bar at the front door painted over people walking in.
+
+- **Recovery beds:** `approvedSideChairLayers.ts` gains eight
+  `recovery-bed-*` masks (one per bed draw, reusing the existing side-chair
+  rear/foreground split). Each is a rectangle of the bed just below the seat
+  line around the sitter, kept clear of the bedside monitor; it paints at the
+  sitter's depth + 0.5 only while the bed is occupied. `approvedRoomPresentation.ts`
+  binds the `periop-bed:*` supports with `bindSideChairSupport`. Tests extended
+  (`approvedSideChairLayers.test.ts`: bindings, band starts just below the
+  seat, no monitor overlap).
+- **Front door:** the Front Desk entrance threshold strip (`0xccb783`) moved
+  out of the south-lip foreground graphics into its own
+  `front-desk-threshold:*` graphics at `FACILITY_DEPTH_WORLD + 31` (above the
+  sidewalk edge line, below every character). Jambs and wall lip unchanged.
+- **Other rooms checked:** exam, ultrasound, minor procedure and CT tables
+  seat the patient facing the camera at the near end (legs hanging in front is
+  physically correct); left unchanged pending owner choice. No other bed has a
+  back-facing or side sitter.
+- **Validation:** player typecheck clean; `src/facility` 38 files / 275 tests
+  pass. Door verified in a QA campaign on 127.0.0.1:5181 (separate storage);
+  beds verified by offline composite of the real bed/patient art (no Level 2
+  recovery campaign was built). Owner pathway unchanged:
+  START_GAME.cmd -> http://127.0.0.1:4173.
+- 2026-10-07 — Claude — **backup verified** — Owner asked to back up the
+  Level 4 designs. Checkpoint `1600e2e956c2772effb9ac9c14448585c7dfa8df`
+  (`backup: preserve Level 4 room designs (MRI, pediatric, wound/ostomy)`)
+  was pushed to `origin/beta` and confirmed with `git ls-remote`.
+  - **Archive:** `artifacts/checkpoints/level4-designs-20261007/`. Contains
+    the MRI, Pediatric Waiting, Pediatric Exam and Wound/Ostomy stand-ins,
+    art briefs, generators, `CODEX_ART_HANDOFF.md`, the lab layouts, review
+    sheets, and 3 verified Claude-only Call Room doc patches.
+  - **Not staged:** Codex's later `level-4/mri/assets/` and `mri/proof/`,
+    shared dirty files, other sessions' work and the owner's save. No merge,
+    release, deployment or Pages publication. Owner pathway unchanged.
+
+## 2026-10-07 — Claude claim — idle staff sit, use workstations, stand around (owner-approved)
+
+Owner request + approvals (chat, 2026-10-07): idle employees split time evenly
+between sitting on a free chair in their own room, standing/sitting facing
+the room's computer or workstation, and standing elsewhere in the room. They
+stay in their own room (existing coffee/snack/bathroom/break/training trips
+unchanged). Reception, radiologists and GLP-1 NPs keep their fixed posts.
+
+Claude claims (targeted hunks only; a parallel Claude session holds the map
+info-box / founder-seat / public-wander claim in reducer.ts and shared UI
+files — no overlap intended):
+- new `game-domain/src/employee-idle-spots.ts` (+ test), export in `index.ts`;
+- `game-domain/src/staff.ts`: `chooseIdleTarget` replaces only the random
+  idle-waypoint pick at the end of the idle loop;
+- new `apps/player/src/facility/staffIdleSupports.ts` (+ test);
+- `facility/types.ts`: `"staff-idle"` support role;
+- `session/viewModels.ts`: `idleSpotSupport` in the staff projection;
+- `facility/FacilityScene.ts`: `getApprovedActorSupportDisplayPosition`
+  resolves `staff-idle` from `staffIdleSupports`.
+No save-schema, clinical, income or timing changes.
+
+### Claude idle staff seating — complete, claim released (2026-10-07)
+
+Implemented as claimed. 17 spots: recovery station stools (2), ultrasound
+stool + machine, X-ray desk, CT desk, endoscopy rolling stool + scope tower
+(both layouts), phlebotomy stool (both layouts), surgeon desk chair, OR wall
+workstation, lab bench, pharmacy wall computer, maintenance bench. EVS and
+the medical assistant stand only (the exam stool is the founder's exam seat).
+Spots taken by another employee (standing on or walking to) are skipped;
+doorway tiles stay excluded as before.
+
+- **Validation:** new domain test (spots walkable) and player test (rules and
+  poses in sync) pass; `src/facility` 40 files / 285 tests pass. Headless
+  2,400-minute Level 2 run: endoscopy nurse 34% tower / 26% stool / 37%
+  standing; CT tech 41% at console; recovery nurse 38% on stools. Live QA run
+  (127.0.0.1:5181) showed the endoscopist seated on the rolling stool and the
+  view model resolving `ct:console` / `recovery:stool-*`.
+- Updated `session/patientMovementViewModels.test.ts`: after collection an
+  idle phlebotomist on the stool is now `staff-idle` (was: no support).
+- **Not mine, still failing:** game-domain `employee-discussions` (founder
+  `sit_in_chair`) and `waiting-destination-routing` C (public wander), plus a
+  game-domain typecheck error `publicWanderDwellMinutes` in reducer.ts — all
+  in the parallel founder-seat/public-wander claim's in-progress reducer work.
+  Player `surgeryCenterServicePreviews` timing-text test also fails
+  independently. Owner pathway unchanged: START_GAME.cmd -> 127.0.0.1:4173.
+
+### Claude — seat ease-in (owner-requested, 2026-10-07) — complete
+
+Owner: "Add a short ease-in for all seats." New `facility/characterSeatSettle.ts`
+(+ test): when a character's pose changes (walk/idle <-> seated, exam-table or
+any furniture post) and the drawn point jumps by up to 1.5 tiles, the character
+glides from where it was to the new point over 180 ms (ease-out cubic), both
+sitting down and standing up. Larger jumps (relocation, load) still snap.
+`FacilityScene.drawCharacterPresentation` applies the glide to the drawn
+container/graphics only; depth, returned baseline, routes and saves keep the
+destination. Per-character state is pruned with the other motion maps.
+Validation: 3 new tests; `src/facility` 40 files / 279 tests; player
+typecheck clean. Live QA (127.0.0.1:5181, stepped frames): seat transitions
+start with a 0–2 px frame step, then glide 7,6,5,4,2,2,2 px (was one ~28 px
+jump at that zoom). Owner pathway unchanged.
+
+### Claude — layering, idle seats and seat ease GitHub backup verified (2026-10-07)
+
+Owner said "push to GitHub". Checkpoint `ad6cc5ab9ecb5df62afd664d4e6630af4b5a278d`
+(`backup: preserve recovery-bed layering, front-door threshold, idle staff
+seats and seat ease`) is on `origin/beta`, confirmed with `git ls-remote`.
+
+- **Archive:** `artifacts/checkpoints/layering-idle-seats-20261007/`: six
+  whole new files (`employee-idle-spots`, `staffIdleSupports`,
+  `characterSeatSettle`, each with its test), nine Claude-only patches for
+  shared files (FacilityScene, approvedSideChairLayers + test,
+  approvedRoomPresentation, facility types, viewModels,
+  patientMovementViewModels test, game-domain staff and index), each verified
+  to rebuild its live file byte for byte, plus manifest and validation.
+- **Not staged:** other sessions' uncommitted work in the same files, the
+  owner's saves and Claude's `.local-dev/` harnesses. Live sources stay
+  uncommitted in the shared tree. No merge, release, deployment or Pages
+  publication. Owner pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173.

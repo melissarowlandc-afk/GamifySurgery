@@ -1,3 +1,16 @@
+> LAYERING + IDLE STAFF SEATS + SEAT EASE GITHUB BACKUP VERIFIED (2026-10-07,
+> Claude Code). Owner-requested: recovery-bed sitters' legs hang behind the
+> bed; Front Desk threshold no longer paints over people at the front door;
+> idle staff split time between a free chair, the room's workstation and
+> standing in their own room; sitting/standing glides over 180 ms. Owner said
+> "push to GitHub". Checkpoint ad6cc5ab9ecb5df62afd664d4e6630af4b5a278d
+> holds the recovery archive `artifacts/checkpoints/layering-idle-seats-20261007/`
+> (6 whole files, 9 verified Claude-only patches, hashes, validation). On
+> origin/beta, confirmed with git ls-remote. Live code stays uncommitted in
+> the shared tree. No merge, release, deployment or Pages publication. Owner
+> pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173. Details in
+> CLAUDE_ANIMATION_COORDINATION.md.
+
 > GS-037 EMPLOYEE TRAINING GITHUB BACKUP VERIFIED (2026-10-07).
 > Owner said "Push to GitHub". Checkpoint bb70744a778ade8bf7af2f1da9fbb728a91e594e
 > is on origin/beta, confirmed with git ls-remote. Recovery archive:
