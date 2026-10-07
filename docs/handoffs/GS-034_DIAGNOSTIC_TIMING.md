@@ -1,9 +1,40 @@
 # GS-034 — Facility diagnostic timing
 
-Implemented and validated locally on October 7, 2026. The owner subsequently
-requested **"Push to GitHub"** for a scoped audited backup. Archive preparation
-is in progress; no remote backup is claimed until its commit is pushed and
-verified. Publication and deployment remain separate.
+Implemented, validated and backed up on October 7, 2026. The owner requested
+**"Push to GitHub"**. Audited checkpoint d77aa13c8ad8d903cbcd9d01c85488fd610c9fca
+is verified on origin/beta. The archive is recovery-only; publication and
+deployment remain separate.
+
+## Verified GitHub backup
+
+Checkpoint **d77aa13c8ad8d903cbcd9d01c85488fd610c9fca** was pushed to
+**origin/beta** on October 7, 2026. git ls-remote returned that exact branch tip.
+Archive: artifacts/checkpoints/gs034-diagnostic-timing-20261007/README.md.
+Manifest SHA256: a942501a42bf4ee6a494efcdc72600021c95a9346375b4bc26f9b3c370729b17.
+
+The checkpoint contains 69 audited paths: 66 archive files and the three GS034
+live documents. Its 65 payloads total 682,050 bytes: 18 source/test copies,
+36 scoped patches covering 41 target contracts, three document copies and
+audit/recovery metadata. Sol testing_timing_inventory prepared this bounded
+package and stopped writes. Parent inspected the actual diffs, independently
+verified all payload/staged hashes and source/secret/privacy boundaries, and
+reran all 41 exact forward/reverse/reapply contracts. The worker also passed
+58 before/after syntax comparisons. Fresh runtime checks passed 126 domain,
+19 player tests and all three affected typechecks before the checkpoint.
+
+This recovery-only archive requires the documented compatible earlier/shared
+dependencies and comparison images; individual patch roundtrips do not prove
+a clean runnable aggregate checkout. GS037's separately backed training archive
+contains the lazy-sequence correction; GS038 and Claude work keep their own
+ownership. Mixed live source and unrelated work remain local and unstaged.
+No art, clinical corpora, owner saves/data, credentials, compiled builds or raw
+private QA reports are included. Clinical prose/review status and FSRS are intact.
+
+Literal patches retain exact whitespace. The byte-exact archived reading-stations
+test also retains its pre-existing blank EOF; all other staged non-patch text
+passed scoped whitespace checks. Archive preparation statuses and document copies
+remain point-in-time history; this live receipt records the subsequent push.
+The backup created no merge, release, deployment or Pages publication.
 
 ## Delivered behavior
 

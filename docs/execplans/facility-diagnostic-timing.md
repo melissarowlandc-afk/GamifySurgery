@@ -1,9 +1,10 @@
 # Facility diagnostic timing
 
-Status: completed locally on October 7, 2026. GS034 acceptance and remaining
-adjacent-task validation limits are recorded in
-`docs/handoffs/GS-034_DIAGNOSTIC_TIMING.md`. The owner subsequently requested
-"Push to GitHub" for this checkpoint. A scoped recovery backup is authorized;
+Status: completed and backed up on October 7, 2026. The owner requested
+"Push to GitHub". Audited checkpoint d77aa13c8ad8d903cbcd9d01c85488fd610c9fca
+was pushed to origin/beta and verified with git ls-remote. GS034 acceptance,
+archive recovery instructions and adjacent-task validation limits are recorded
+in `docs/handoffs/GS-034_DIAGNOSTIC_TIMING.md`. This is a recovery-only backup;
 publication, deployment and acceptance of adjacent tasks remain separate.
 
 ## Goal and scope
@@ -124,11 +125,17 @@ types, isolated production build, boundaries and scoped whitespace checks PASS.
 Parent inspected actual worker diffs and browser images. The full shared-tree
 runs retain adjacent active-task failures documented in the scoped handoff;
 these are not a clean release acceptance. Preserve GS037/GS038/Claude ownership.
-The owner requested "Push to GitHub" after acceptance. Sol
-testing_timing_inventory is assembling only the GS034 recovery archive; parent
-owns the source/privacy/secret audit, exact staging, commit, push and remote
-verification. Recorded task baselines and inferred narrow preimages separate
-this feature from the large shared dirty tree. The archive is recovery-only,
-with earlier and concurrent dependencies recorded explicitly; it is not a clean
-runnable checkout. Next: review the actual package and verify origin/beta.
-Owner pathway and saves are unchanged.
+The owner-requested GitHub backup is complete: checkpoint
+d77aa13c8ad8d903cbcd9d01c85488fd610c9fca is verified on origin/beta. Sol
+testing_timing_inventory packaged 65 payloads plus the manifest; parent inspected
+actual patches and independently verified hashes, source/privacy/secret scope,
+all 41 exact forward/reverse/reapply contracts and the staged bytes. The worker
+also checked 58 syntax comparison fixtures. All 69 committed paths belong to
+the recovery archive or the three GS034 documents. Dependencies and inferred
+preimages are explicit; this is not a clean runnable aggregate checkout. Exact
+patch bytes and one pre-existing blank EOF in the archived reading-stations test
+were retained; other staged text passed the scoped whitespace check. The frozen
+archive's preparation statuses remain historical, superseded by the live verified
+handoff. No runtime source, owner storage, launcher or server changed for backup.
+Next distinct work starts in a new bounded task after reading the handoffs and
+inspecting the shared dirty tree. Owner pathway and saves are unchanged.

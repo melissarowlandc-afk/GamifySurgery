@@ -1,3 +1,20 @@
+> GS-034 DIAGNOSTIC TIMING GITHUB BACKUP VERIFIED (2026-10-07).
+> Owner said "Push to GitHub". Checkpoint d77aa13c8ad8d903cbcd9d01c85488fd610c9fca
+> is on origin/beta, confirmed with git ls-remote. Recovery archive:
+> artifacts/checkpoints/gs034-diagnostic-timing-20261007/ (66 files, 65 payloads).
+> Checkpoint scope: archive plus three GS034 documents, 69 audited paths.
+> Sol testing_timing_inventory packaged the archive; parent inspected actual
+> patches and independently verified scope, secrets, all staged bytes and
+> 41 exact forward/reverse/reapply contracts. Worker syntax comparisons:58 PASS.
+> Fresh runtime validation:126 domain +19 player tests and three typechecks PASS.
+> Compatible dependencies/preimages and broad shared-tree limits are documented.
+> This recovery-only archive is not a clean runnable aggregate checkout.
+> Mixed live runtime/GS038/Claude/art work remains local and unstaged.
+> Exact patch bytes and the archived test's pre-existing blank EOF are retained.
+> No merge, release, deployment, Pages publication or owner storage change.
+> Owner pathway: START_GAME.cmd -> http://127.0.0.1:4173, same profile.
+> Receipt and manifest hash: docs/handoffs/GS-034_DIAGNOSTIC_TIMING.md.
+
 > LAYERING + IDLE STAFF SEATS + SEAT EASE GITHUB BACKUP VERIFIED (2026-10-07,
 > Claude Code). Owner-requested: recovery-bed sitters' legs hang behind the
 > bed; Front Desk threshold no longer paints over people at the front door;
