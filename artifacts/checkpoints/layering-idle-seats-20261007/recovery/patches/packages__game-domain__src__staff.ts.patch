@@ -1,0 +1,73 @@
+diff --git a/packages/game-domain/src/staff.ts b/packages/game-domain/src/staff.ts
+index f76278b..0f18737 100644
+--- a/packages/game-domain/src/staff.ts
++++ b/packages/game-domain/src/staff.ts
+@@ -16,7 +16,8 @@ import {
+   getRotatedFootprint,
+   getRoomNavigationAnchor,
+ } from "./spatial";
+-import type { DomainContext, EmployeeState, GameState, GridPoint } from "./types";
++import type { DomainContext, EmployeeState, GameState, GridPoint, PlacedRoom } from "./types";
++import { getPlacedRoomIdleSpots } from "./employee-idle-spots";
+ import { getAvailableEmployeeHomeRoom, reconcileImagingIdleSeats } from "./room-capacity";
+ import { findRouteFromDisplacedLocationToRoom } from "./displaced-routing";
+ import { isEmployeeAwayForTraining } from "./employee-training";
+@@ -26,6 +27,43 @@ function samePoint(left: GridPoint, right: GridPoint): boolean {
+   return left.x === right.x && left.y === right.y;
+ }
+ 
++/**
++ * An idle employee splits time evenly between sitting on a free chair,
++ * using a free workstation and standing somewhere else in their room. A room
++ * without a chair or workstation splits between what it has. Spots another
++ * employee stands on or is walking to are taken.
++ */
++function chooseIdleTarget(
++  state: GameState,
++  employee: EmployeeState,
++  homeRoom: PlacedRoom,
++  candidates: readonly GridPoint[],
++): GridPoint {
++  const pick = <T>(items: readonly T[], label: string): T => items[deterministicInteger(
++    state.campaignSeed,
++    RANDOM_STREAMS.environment,
++    `${employee.id}:${label}:${state.facilityTick}`,
++    items.length,
++  )]!;
++  const spots = getPlacedRoomIdleSpots(homeRoom);
++  const claimed = state.employees
++    .filter((other) => other.id !== employee.id)
++    .flatMap((other) => [other.location, other.path.at(-1)])
++    .filter((point): point is GridPoint => Boolean(point));
++  const open = (point: GridPoint) => candidates.some((candidate) => samePoint(candidate, point)) &&
++    !claimed.some((taken) => samePoint(taken, point));
++  const freeSpots = spots.filter((candidate) => open(candidate.tile));
++  const standing = candidates.filter((candidate) => !spots.some((idleSpot) => samePoint(idleSpot.tile, candidate)));
++  const activities = [
++    ...(standing.length > 0 ? [standing] : []),
++    ...(["seat", "workstation"] as const)
++      .map((kind) => freeSpots.filter((candidate) => candidate.kind === kind).map((candidate) => candidate.tile))
++      .filter((tiles) => tiles.length > 0),
++  ];
++  if (activities.length === 0) return pick(candidates, "waypoint");
++  return pick(pick(activities, "idle-activity"), "waypoint");
++}
++
+ function employeeAuthorizedCareRooms(
+   state: GameState,
+   employee: EmployeeState,
+@@ -414,13 +452,7 @@ export function advanceEmployeeMovement(
+     if (candidates.length === 0) {
+       continue;
+     }
+-    const candidateIndex = deterministicInteger(
+-      state.campaignSeed,
+-      RANDOM_STREAMS.environment,
+-      `${employee.id}:waypoint:${state.facilityTick}`,
+-      candidates.length,
+-    );
+-    const target = candidates[candidateIndex]!;
++    const target = chooseIdleTarget(state, employee, homeRoom, candidates);
+     const path = findCareAwareFacilityPath(state, context, employee.location, target, new Set([homeRoom.id]));
+     if (path.length <= 1) {
+       continue;

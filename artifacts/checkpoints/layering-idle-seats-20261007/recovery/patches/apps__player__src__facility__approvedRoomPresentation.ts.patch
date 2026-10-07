@@ -1,0 +1,22 @@
+diff --git a/apps/player/src/facility/approvedRoomPresentation.ts b/apps/player/src/facility/approvedRoomPresentation.ts
+index 5924a8d..fe6aaa8 100644
+--- a/apps/player/src/facility/approvedRoomPresentation.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.ts
+@@ -934,7 +934,7 @@ export function resolveApprovedRoomActorSupports(
+       ["EC", "west", { x: 4.570905, y: 2.254212 }, { x: 4.45, y: 2.6 }],
+       ["ED", "west", { x: 4.570905, y: 3.754212 }, { x: 4.45, y: 4.1 }],
+     ] as const;
+-    return beds.map(([bedId, facing, seat, ground]) => support(
++    return beds.map(([bedId, facing, seat, ground]) => bindSideChairSupport(definitionId, orientation, support(
+       `periop-bed:${bedId}`,
+       "periop-bed-patient",
+       "seated",
+@@ -942,7 +942,7 @@ export function resolveApprovedRoomActorSupports(
+       seat,
+       ground,
+       fixtureGround(bedId, ground),
+-    ));
++    ), draws));
+   }
+   if (capture && definitionId === "room.glp1_telehealth_suite") {
+     const model = isObject(capture.dataset.model) ? capture.dataset.model : undefined;

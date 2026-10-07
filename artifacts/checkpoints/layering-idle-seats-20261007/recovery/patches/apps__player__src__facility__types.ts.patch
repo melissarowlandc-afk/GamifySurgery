@@ -1,0 +1,15 @@
+diff --git a/apps/player/src/facility/types.ts b/apps/player/src/facility/types.ts
+index b4497c8..4bd8fc8 100644
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -40,7 +40,9 @@ export type FacilityActorSupportRole =
+   | "training-employee"
+   | "surgeon-office"
+   /** A hired radiologist seated at their Reading Room workstation. */
+-  | "reading-radiologist";
++  | "reading-radiologist"
++  /** An idle employee on a chair or at a workstation in their own room. */
++  | "staff-idle";
+ 
+ export interface FacilityPatientView {
+   instanceId: string;

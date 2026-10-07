@@ -1,0 +1,83 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index fdbfb65..2f230dc 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -169,6 +169,8 @@ import {
+   partitionApprovedSideChairPixels,
+   type ApprovedSideChairMaskDefinition,
+ } from "./approvedSideChairLayers";
++import { resolveStaffIdleSupports } from "./staffIdleSupports";
++import { advanceSeatSettle, type SeatSettleState } from "./characterSeatSettle";
+ import {
+   getPhaserTextureKey,
+   preloadBitmapAssets,
+@@ -577,6 +579,8 @@ export class FacilityScene extends Phaser.Scene {
+   private readonly characterHopStates = new Map<string, CharacterHopState>();
+   /** Last drawn motion per character; a frozen redraw reuses it exactly. */
+   private readonly characterStepBounceStates = new Map<string, CharacterDrawMotion>();
++  /** Glide onto and off seats per character (presentation only). */
++  private readonly characterSeatSettles = new Map<string, SeatSettleState>();
+   private readonly characterRenderCache = new WeakMap<
+     Phaser.GameObjects.Graphics,
+     { signature: string; width: number; height: number }
+@@ -3350,7 +3354,11 @@ export class FacilityScene extends Phaser.Scene {
+     }
+     if (room.definitionId === "room.front_desk") {
+       const entryLeft = rectangle.x + this.layout.tileSize * 2;
+-      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
++      // The entrance threshold is floor, not wall: keep it under everyone
++      // walking through the front door (above only the sidewalk edge line).
++      const threshold = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `front-desk-threshold:${room.instanceId}`);
++      threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
++      threshold.setDepth(FACILITY_DEPTH_WORLD + 31);
+       for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
+         graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
+         graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
+@@ -5721,6 +5729,24 @@ export class FacilityScene extends Phaser.Scene {
+       { ...motion, lift: motion.lift * this.cameraView.zoom },
+     );
+     if (!frozen) {
++      // Glide onto and off seats and furniture posts instead of snapping.
++      // Depth and the returned baseline stay at the destination.
++      const target = { x: Math.round(resolved.centerX), y: Math.round(drawn.baseY) };
++      const settle = advanceSeatSettle(
++        this.characterSeatSettles.get(key),
++        target,
++        resolved.pose,
++        this.frameDeltaMilliseconds,
++        this.layout.tileSize,
++      );
++      this.characterSeatSettles.set(key, settle.state);
++      const dx = Math.round(settle.point.x) - target.x;
++      const dy = Math.round(settle.point.y) - target.y;
++      if (dx !== 0 || dy !== 0) {
++        const container = this.characterBitmapContainers.get(key);
++        const shown = container?.visible ? container : graphics;
++        shown.setPosition(shown.x + dx, shown.y + dy);
++      }
+       this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
+         { ...resolved, baseY: drawn.baseY },
+         this.layout,
+@@ -6023,7 +6049,9 @@ export class FacilityScene extends Phaser.Scene {
+     if (!room) return undefined;
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+     const support = getNearestApprovedActorSupport(
+-      resolveApprovedRoomActorSupports(room.definitionId, orientation),
++      supportRole === "staff-idle"
++        ? resolveStaffIdleSupports(room.definitionId, orientation)
++        : resolveApprovedRoomActorSupports(room.definitionId, orientation),
+       { x: location.x - room.tileX, y: location.y - room.tileY },
+       supportRole,
+       supportId,
+@@ -6424,6 +6452,11 @@ export class FacilityScene extends Phaser.Scene {
+         this.characterHopStates.delete(key);
+       }
+     }
++    for (const key of this.characterSeatSettles.keys()) {
++      if (!representedKeys.has(key)) {
++        this.characterSeatSettles.delete(key);
++      }
++    }
+     this.removeInactiveGraphics(
+       this.characterGraphics,
+       this.activeCharacterGraphics,

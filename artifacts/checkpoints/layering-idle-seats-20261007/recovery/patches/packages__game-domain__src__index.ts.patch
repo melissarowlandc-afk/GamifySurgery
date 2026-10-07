@@ -1,0 +1,12 @@
+diff --git a/packages/game-domain/src/index.ts b/packages/game-domain/src/index.ts
+index b67cea2..6f14c87 100644
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -8,6 +8,7 @@ export * from "./routine-patient-availability";
+ export * from "./context";
+ export * from "./doors";
+ export * from "./employee-discussions";
++export * from "./employee-idle-spots";
+ export * from "./employee-training";
+ export * from "./employee-training-effects";
+ export * from "./displaced-routing";

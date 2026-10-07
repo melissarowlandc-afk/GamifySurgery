@@ -1,0 +1,49 @@
+diff --git a/apps/player/src/facility/approvedSideChairLayers.ts b/apps/player/src/facility/approvedSideChairLayers.ts
+index 0534875..0562020 100644
+--- a/apps/player/src/facility/approvedSideChairLayers.ts
++++ b/apps/player/src/facility/approvedSideChairLayers.ts
+@@ -6,7 +6,10 @@ export type ApprovedSideChairMaskId =
+   | "waiting-west-bench-east"
+   | "phlebotomy-east-patient"
+   | "telehealth-south-left-east"
+-  | "telehealth-south-right-west";
++  | "telehealth-south-right-west"
++  | `recovery-bed-${RecoveryBedId}`;
++
++type RecoveryBedId = "N3" | "N4" | "S3" | "S4" | "WC" | "WD" | "EC" | "ED";
+ 
+ export interface ApprovedSideChairLayerBinding {
+   readonly drawId: string;
+@@ -86,8 +89,32 @@ export const APPROVED_SIDE_CHAIR_MASKS: readonly ApprovedSideChairMaskDefinition
+     sourceRect: [289, 7, 277, 481],
+     southArmPolygon: [[101, 220], [201, 220], [210, 214], [217, 214], [222, 222], [222, 232], [217, 240], [207, 247], [100, 248], [89, 244], [85, 237], [85, 227], [91, 221]],
+   },
++  // Recovery beds: the bed just below the seat line paints over the sitter's
++  // legs, so they hang behind the bed while the seat stays on the mattress.
++  // Each band stops short of its bedside monitor, which stays in front.
++  ...recoveryBedMasks(["N3", "N4"], [0, 0, 253, 599], [[0, 480], [253, 480], [253, 599], [0, 599]]),
++  ...recoveryBedMasks(["S3", "S4"], [263, 0, 255, 573], [[0, 48], [255, 48], [255, 230], [0, 230]]),
++  ...recoveryBedMasks(["WC", "WD"], [528, 0, 656, 337], [[330, 190], [656, 190], [656, 337], [330, 337]]),
++  ...recoveryBedMasks(["EC", "ED"], [1194, 0, 657, 336], [[0, 190], [327, 190], [327, 336], [0, 336]]),
+ ] as const;
+ 
++function recoveryBedMasks(
++  bedIds: readonly RecoveryBedId[],
++  sourceRect: ApprovedSideChairMaskDefinition["sourceRect"],
++  southArmPolygon: ApprovedSideChairMaskDefinition["southArmPolygon"],
++): ApprovedSideChairMaskDefinition[] {
++  return bedIds.map((bedId) => ({
++    id: `recovery-bed-${bedId}`,
++    roomDefinitionId: "room.periop_recovery",
++    orientation: 0,
++    drawId: `${bedId}.bed`,
++    supportIds: [`periop-bed:${bedId}`],
++    assetId: "gs015:recovery:furniture",
++    sourceRect,
++    southArmPolygon,
++  }));
++}
++
+ export function getApprovedSideChairMask(
+   roomDefinitionId: string,
+   orientation: RoomOrientation,

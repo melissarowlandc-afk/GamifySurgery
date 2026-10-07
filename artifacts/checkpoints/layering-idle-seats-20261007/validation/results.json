@@ -1,0 +1,29 @@
+{
+  "checkpoint": "layering-idle-seats-20261007",
+  "recordedBy": "Claude Code",
+  "date": "2026-10-07",
+  "baseCommit": "d77aa13c8ad8d903cbcd9d01c85488fd610c9fca",
+  "tests": {
+    "apps/player: vitest src/facility + src/session/patientMovementViewModels.test.ts": "41 files, 288 tests passed",
+    "packages/game-domain: vitest src/employee-idle-spots.test.ts": "1 file, 2 tests passed",
+    "apps/player: tsc --noEmit -p tsconfig.json": "clean",
+    "packages/game-domain: tsc --noEmit": "clean"
+  },
+  "knownUnrelatedFailures": [
+    "packages/game-domain tests/employee-discussions.test.ts (founder sit_in_chair) and tests/waiting-destination-routing.test.ts C (public wander): parallel founder-seat/public-wander work in reducer.ts, observed during this session",
+    "apps/player src/session/surgeryCenterServicePreviews.test.ts (timing text): independent of this work"
+  ],
+  "headlessSimulation": {
+    "scenario": "Level 2 clinic, 2,400 game minutes, no patients (local Claude harness)",
+    "endoscopyNurse": "34% tower, 26% stool, 37% standing",
+    "imagingTechnicianCt": "41% at console",
+    "periopNurse": "38% on station stools"
+  },
+  "browserQa": {
+    "origin": "http://127.0.0.1:5181 (QA port, separate storage)",
+    "frontDoor": "front-desk-threshold graphics at depth 31, below every character (>= 100000); south-lip layer no longer paints it",
+    "idleSeats": "endoscopist rendered seated on the rolling stool; view model resolved ct:console and recovery:stool-*",
+    "seatEase": "seat transitions begin with a 0-2 px frame step, then glide 7,6,5,4,2,2,2 px (previously one ~28 px jump at that zoom)"
+  },
+  "bedLayering": "offline composite of the real recovery bed and patient art (no Level 2 recovery campaign was built in the browser)"
+}

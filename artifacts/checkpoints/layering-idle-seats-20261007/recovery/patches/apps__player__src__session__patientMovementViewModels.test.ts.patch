@@ -1,0 +1,16 @@
+diff --git a/apps/player/src/session/patientMovementViewModels.test.ts b/apps/player/src/session/patientMovementViewModels.test.ts
+index c49671c..8ed658a 100644
+--- a/apps/player/src/session/patientMovementViewModels.test.ts
++++ b/apps/player/src/session/patientMovementViewModels.test.ts
+@@ -521,7 +521,10 @@ describe("patient movement presentation", () => {
+     state.employees.at(-1)!.facilityTask = null;
+     facility = createPrototypePlayerView(state, null, false, null).facility;
+     expect(facility.patients?.find((candidate) => candidate.instanceId === encounter.id)?.supportRole).toBeUndefined();
+-    expect(facility.staff.find((candidate) => candidate.instanceId === "employee.test.phlebotomist-presentation")?.supportRole).toBeUndefined();
++    // Collection is over; an idle phlebotomist resting on the stool now just
++    // sits there as idle staff (owner-approved idle seating, 2026-10-07).
++    expect(facility.staff.find((candidate) => candidate.instanceId === "employee.test.phlebotomist-presentation"))
++      .toMatchObject({ supportRole: "staff-idle", supportId: "phlebotomy:stool" });
+   });
+ 
+   it("projects an active encounter service path without overriding a Front Desk return", () => {

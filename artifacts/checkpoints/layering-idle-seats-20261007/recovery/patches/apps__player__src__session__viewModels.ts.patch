@@ -1,0 +1,33 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 1220b68..74fe47f 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -9,6 +9,7 @@ import {
+   getDisplayedClinicSatisfaction,
+   getFacilityAccessValidation,
+   getFacilityProgressionStatus,
++  getPlacedRoomIdleSpotAt,
+   getFacilityClock,
+   getCurrentQuestion,
+   getCurrentCapabilities,
+@@ -2291,7 +2292,19 @@ export function createPrototypePlayerView(
+               supportRoomInstanceId: employee.training.roomInstanceId,
+             }
+           : undefined;
+-        const projectedSupport = trainingSupport ?? taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
++        // An idle employee resting on a chair or workstation tile of their own
++        // room sits there or faces it. If two share the tile, the first
++        // (by id) takes the spot and the other just stands.
++        const idleSpot = !departing && !employee.facilityTask && (!employee.training || employee.training.stage === "queued") && homeRoom &&
++          employee.pathIndex >= employee.path.length - 1
++          ? getPlacedRoomIdleSpotAt(homeRoom, employee.location)
++          : undefined;
++        const idleSpotSupport = idleSpot && homeRoom && !state.employees.some((other) =>
++          other.id < employee.id && !other.facilityTask && other.pathIndex >= other.path.length - 1 &&
++          samePoint(other.location, employee.location))
++          ? { supportRole: "staff-idle" as const, supportId: idleSpot.id, supportRoomInstanceId: homeRoom.id }
++          : undefined;
++        const projectedSupport = trainingSupport ?? taskSupport ?? readingSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? idleSpotSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
+         return {
+           instanceId: employee.id,
+           discussionActionRequired: Object.values(state.employeeDiscussions ?? {}).some((discussion) =>
