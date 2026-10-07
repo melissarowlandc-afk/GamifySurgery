@@ -49,5 +49,29 @@ Packaging delegated to the integration author because it knows the exact owned
 additions and compatible pre-batch assumptions. Parent retains Git operations and
 acceptance. No backup is claimed until push and independent remote verification.
 
-Next action: inspect the prepared archive and run its safe verification before
-staging. Do not change the owner launcher, 4173/4174 servers or saved campaign.
+## Completed checkpoint
+
+Sol oct7_author_first10 sealed 57 payloads / 58 archive files (1,058,642 payload
+bytes): 29 exact task-owned copies, 17 scoped patches and sanitized source,
+clinical, gameplay/browser, snapshot and packaging evidence. Manifest SHA256:
+ad3c1e4e48a6baf657e61f928abd649ddb9c4f93decdff9593a9e2f2f80a0cc6.
+All preimages are explicitly inferred; full mixed sources and private inputs
+are excluded. Three supply snapshots carry old/new object evidence only.
+
+Parent inspected actual deltas and recovery tooling; independently verified
+every payload, all 17 forward/reverse/reapply roundtrips and 29 exact scratch
+reconstructions with zero active-source/index/ref writes. Source, secret, privacy,
+clinical and asset audit passes. All 59 staged paths exactly match the audited
+allowlist; all archive blobs preserve their byte hashes. Source/doc whitespace
+checks pass with preserved CRLF recognized; literal unified-patch context spaces
+remain required and are covered by the successful patch roundtrips.
+
+Created and pushed checkpoint 964856b52ac0f108a61cfaf8d1484437240b6807 on beta.
+Independent git ls-remote returned that exact hash for origin/beta. Earlier
+concurrent motion checkpoint commits through 82e8979a remain preserved. The
+post-push handoff insertion records this verified backup while retaining every
+unrelated local handoff entry outside its staged insertion.
+
+This is a scoped recovery backup, not a clean runnable checkout or publication.
+No merge, release, deployment, Pages run, owner-server/profile/save intervention
+or clinical promotion. Ongoing GS-028 remains open for the next requested batch.

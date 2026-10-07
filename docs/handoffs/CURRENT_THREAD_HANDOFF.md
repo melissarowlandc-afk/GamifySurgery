@@ -1,3 +1,21 @@
+> GS-028 OCTOBER 7 VARIETY GITHUB BACKUP VERIFIED (2026-10-07, Codex).
+> Owner-authorized checkpoint 964856b52ac0f108a61cfaf8d1484437240b6807 pushed to origin/beta
+> and independently verified with git ls-remote. Recovery package:
+> artifacts/checkpoints/gs028-variety-20261007/. Exact authored 20-group/
+> 80-question packet, task tests, dated docs and sanitized validation retained.
+> Manifest records 57 hashed payloads. Oct7-only integration patches use
+> explicitly inferred compatible preimages; full mixed shared sources excluded.
+> Parent reviewed actual payloads/patches, safe scratch roundtrips and staged
+> blobs plus source/secret/privacy/clinical/generated-asset checks. Sol
+> oct7_author_first10 prepared the package; parent committed/pushed/verified.
+> Clinical records remain needs_clinician_review. Prior software acceptance
+> and concurrent regression limits are preserved in the implementation receipt.
+> This is a recovery checkpoint, not a clean runnable beta checkout. Compatible
+> prior shared changes are required separately; do not apply over diverged files.
+> Other local source/art/clinical work stays unstaged. No merge, release, deploy
+> or Pages publication. Owner START_GAME.cmd -> http://127.0.0.1:4173, same
+> persistent profile and saves, unchanged. Keep ongoing GS-028 open.
+
 > GS-036 LEVEL 3 GOALS GITHUB BACKUP VERIFIED (2026-10-07, Codex).
 > Owner-authorized checkpoint e9dbb0611e0f5d15216aacc41a9e872bcc025db9 was pushed
 > to origin/beta and independently verified with git ls-remote. Recovery package:
