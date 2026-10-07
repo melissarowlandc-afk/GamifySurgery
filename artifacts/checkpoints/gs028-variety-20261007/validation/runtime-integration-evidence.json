@@ -1,0 +1,1814 @@
+{
+  "checkedOn": "2026-10-07",
+  "reviewStatus": "needs_clinician_review",
+  "namedClinicianApproval": false,
+  "release": {
+    "concepts": 311,
+    "cases": 934,
+    "nodes": 1215,
+    "ordinaryCases": 898,
+    "employeeDiscussionCases": 36
+  },
+  "normalizedNewReleaseSha256": "d9f1b176ee05ed551494583c78cfd385d50a59007d737d5b3391305be7da9970",
+  "protectedBaseline": {
+    "concepts": 291,
+    "cases": 856,
+    "nodes": 1135,
+    "ordinaryCases": 820,
+    "employeeDiscussionCases": 36,
+    "exactDeepEqualAfterRemovingNewIds": true,
+    "baselineSha256": "bed6d41e73d29a8fb54eb107dd224e2087fbb412ea53c197566afc15a15e8abf",
+    "filteredOldReleaseSha256": "bed6d41e73d29a8fb54eb107dd224e2087fbb412ea53c197566afc15a15e8abf"
+  },
+  "newBatch": {
+    "contentVersion": "development-batch.2026-10-07.variety.1",
+    "authoringConceptCount": 20,
+    "testedConceptCount": 20,
+    "questionVariantCount": 80,
+    "caseCount": 78,
+    "decisionNodeCount": 80,
+    "sourceCount": 31,
+    "evidenceClaimCount": 51,
+    "timingEntryCount": 80,
+    "caseReviewCount": 78,
+    "resultGateCount": 2,
+    "publicReleaseAuthorized": false,
+    "caseProfileCount": 310,
+    "questionProfileCount": 318,
+    "conceptIds": [
+      "concept.imaging.ionizing-versus-nonionizing-modalities",
+      "concept.mri.device-specific-safety-verification",
+      "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+      "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+      "concept.naloxone.competitive-opioid-antagonist-mechanism",
+      "concept.perioperative-sglt2.drug-specific-interruption",
+      "concept.laparoscopy.co2-absorption-hypercarbia",
+      "concept.pneumoperitoneum.context-dependent-venous-return",
+      "concept.postlaparoscopy.benign-referred-shoulder-pain",
+      "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+      "concept.wound.hypertrophic-versus-keloid-extent",
+      "concept.wound.secondary-intention-healing",
+      "concept.immunology.ige-mast-cell-type-i",
+      "concept.immunology.t-cell-type-iv-contact",
+      "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "concept.coagulation.isolated-aptt-mixing-workup",
+      "concept.coagulation.mixing-study-initial-interpretation",
+      "concept.oncology.stage-versus-grade",
+      "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+      "concept.infection.operative-wound-classification"
+    ],
+    "caseIds": [
+      "case.gs028e.radiology.c1-prior-ct-ultrasound",
+      "case.gs028e.radiology.c1-planned-mri-ct",
+      "case.gs028e.radiology.c1-noncontrast-ct",
+      "case.gs028e.radiology.c1-ultrasound-sound",
+      "case.gs028e.radiology.c2-pacemaker-card",
+      "case.gs028e.radiology.c2-cochlear-model",
+      "case.gs028e.radiology.c2-unidentified-implant",
+      "case.gs028e.radiology.c2-prior-scan-different",
+      "case.gs028e.radiology.c3-brief-warmth",
+      "case.gs028e.radiology.c3-limited-hives",
+      "case.gs028e.radiology.c3-allergy-list-warmth",
+      "case.gs028e.radiology.c3-hives-not-just-warm",
+      "case.gs028e.pharmacology.c1-vomiting-empagliflozin",
+      "case.gs028e.pharmacology.c1-postop-record",
+      "case.gs028e.pharmacology.c1-ertugliflozin-illness",
+      "case.gs028e.pharmacology.c1-glucose-led-missed",
+      "case.gs028e.pharmacology.c2-postop-rescue-record",
+      "case.gs028e.pharmacology.c2-kit-is-not-analgesic",
+      "case.gs028e.pharmacology.c2-opioid-not-destroyed",
+      "case.gs028e.pharmacology.c2-opioid-specific-target",
+      "case.gs028e.preoperative-sglt2.c1-empagliflozin-hernia",
+      "case.gs028e.preoperative-sglt2.c1-ertugliflozin-colon",
+      "case.gs028e.preoperative-sglt2.c1-short-empa-plan",
+      "case.gs028e.preoperative-sglt2.c1-drug-switch-calendar",
+      "case.gs028e.mis-principles.c1-co2-source",
+      "case.gs028e.mis-principles.c1-respiratory-acidemia",
+      "case.gs028e.mis-principles.c1-absorbed-gas-exit",
+      "case.gs028e.mis-principles.c1-ventilation-record",
+      "case.gs028e.mis-principles.c2-caval-compression-record",
+      "case.gs028e.mis-principles.c2-early-central-filling",
+      "case.gs028e.mis-principles.c2-head-up-context",
+      "case.gs028e.mis-principles.c2-different-phases",
+      "case.gs028e.mis-principles.c3-improving-shoulder",
+      "case.gs028e.mis-principles.c3-phrenic-pathway",
+      "case.gs028e.mis-principles.c3-normal-joint-question",
+      "case.gs028e.mis-principles.c3-resolved-event-record",
+      "case.gs028e.collagen-remodeling.c1-maturing-incision",
+      "case.gs028e.collagen-remodeling.c1-early-matrix-record",
+      "case.gs028e.collagen-remodeling.c1-later-matrix-counseling",
+      "case.gs028e.collagen-remodeling.c1-reversed-diagram",
+      "case.gs028e.wound-healing-remaining.c1-incision-overgrowth",
+      "case.gs028e.wound-healing-remaining.c1-lipoma-margin",
+      "case.gs028e.wound-healing-remaining.c1-piercing-boundary",
+      "case.gs028e.wound-healing-remaining.c1-burn-outline",
+      "case.gs028e.wound-healing-remaining.c2-skin-excision-plan",
+      "case.gs028e.wound-healing-remaining.c2-no-stitch-mixup",
+      "case.gs028e.wound-healing-remaining.c2-scheduled-review",
+      "case.gs028e.wound-healing-remaining.c2-closure-method-form",
+      "case.gs028e.immunology.c1-food-allergy-effector",
+      "case.gs028e.immunology.c1-latex-type",
+      "case.gs028e.immunology.c1-antibody-class",
+      "case.gs028e.immunology.c1-mediator-release",
+      "case.gs028e.immunology.c2-adhesive-category",
+      "case.gs028e.immunology.c2-glove-accelerator",
+      "case.gs028e.immunology.c2-nickel-cellular",
+      "case.gs028e.immunology.c2-repeat-contact",
+      "case.gs028e.immunology.c3-historical-kidney-event",
+      "case.gs028e.immunology.c3-vascular-biopsy",
+      "case.gs028e.immunology.c3-antibody-timing",
+      "case.gs028e.immunology.c3-injury-pathway",
+      "case.gs028e.coagulation.paired-elective-record-workup",
+      "case.gs028e.coagulation.paired-specialist-bruising-review",
+      "case.gs028e.coagulation.c1-referral-test-purpose",
+      "case.gs028e.coagulation.c1-outside-lab-planning",
+      "case.gs028e.coagulation.c2-correction-lost-with-incubation",
+      "case.gs028e.coagulation.c2-immediate-only-report",
+      "case.gs028e.oncology.c1-colon-spread-summary",
+      "case.gs028e.oncology.c1-breast-microscopy",
+      "case.gs028e.oncology.c1-grade-means-metastatic",
+      "case.gs028e.oncology.c1-node-versus-cells",
+      "case.gs028e.oncology.c2-one-deleted-one-inactive",
+      "case.gs028e.oncology.c2-both-copies-deleted",
+      "case.gs028e.oncology.c2-two-hit-description",
+      "case.gs028e.oncology.c2-functional-consequence",
+      "case.gs028e.operative-infection.c1-clean-soft-tissue",
+      "case.gs028e.operative-infection.c1-controlled-bowel-entry",
+      "case.gs028e.operative-infection.c1-unexpected-gross-spill",
+      "case.gs028e.operative-infection.c1-purulent-perforation"
+    ]
+  },
+  "pools": [
+    {
+      "stage": 0,
+      "capabilities": [],
+      "before": {
+        "cases": 511,
+        "concepts": 141
+      },
+      "after": {
+        "cases": 589,
+        "concepts": 161
+      }
+    },
+    {
+      "stage": 1,
+      "capabilities": [],
+      "before": {
+        "cases": 746,
+        "concepts": 247
+      },
+      "after": {
+        "cases": 824,
+        "concepts": 267
+      }
+    },
+    {
+      "stage": 2,
+      "capabilities": [],
+      "before": {
+        "cases": 782,
+        "concepts": 263
+      },
+      "after": {
+        "cases": 860,
+        "concepts": 283
+      }
+    }
+  ],
+  "timing": {
+    "nodeEntries": 80,
+    "noTestNodes": 78,
+    "timedChoices": 8,
+    "exactOrders": 8,
+    "basicLabCentralProfile": {
+      "id": "timing.test.basic_labs",
+      "durationTicks": 60,
+      "serviceId": "service.basic_labs",
+      "displayName": "Laboratory testing"
+    },
+    "exactChoiceCoverage": [
+      {
+        "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+        "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+        "choiceId": "correct_1",
+        "choiceLabel": "aPTT mixing study",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "result_gate_route_override",
+          "serviceId": "service.basic_labs",
+          "allowedRouteIds": [
+            "route.basic_labs.outsourced"
+          ],
+          "allowOnsiteEquivalents": false,
+          "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "installed",
+            "choiceId": "correct_1",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_staff",
+            "choiceId": "correct_1",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "busy",
+            "choiceId": "correct_1",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_rooms",
+            "choiceId": "correct_1",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "lab_only",
+            "choiceId": "correct_1",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+        "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+        "choiceId": "d1_1",
+        "choiceLabel": "Platelet-function testing",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "not_executed",
+          "reason": "external_only"
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "installed",
+            "choiceId": "d1_1",
+            "choiceLabel": "Platelet-function testing",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_staff",
+            "choiceId": "d1_1",
+            "choiceLabel": "Platelet-function testing",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "busy",
+            "choiceId": "d1_1",
+            "choiceLabel": "Platelet-function testing",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_rooms",
+            "choiceId": "d1_1",
+            "choiceLabel": "Platelet-function testing",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "lab_only",
+            "choiceId": "d1_1",
+            "choiceLabel": "Platelet-function testing",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+        "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+        "choiceId": "d2_1",
+        "choiceLabel": "Fibrinogen activity measurement",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "not_executed",
+          "reason": "external_only"
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "installed",
+            "choiceId": "d2_1",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_staff",
+            "choiceId": "d2_1",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "busy",
+            "choiceId": "d2_1",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_rooms",
+            "choiceId": "d2_1",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "lab_only",
+            "choiceId": "d2_1",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+        "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+        "choiceId": "d3_1",
+        "choiceLabel": "Prothrombin-time measurement",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "not_executed",
+          "reason": "external_only"
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "installed",
+            "choiceId": "d3_1",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_staff",
+            "choiceId": "d3_1",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "busy",
+            "choiceId": "d3_1",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "missing_rooms",
+            "choiceId": "d3_1",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-elective-record-workup",
+            "nodeId": "node.gs028e.coagulation.paired-elective-record-workup.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v1",
+            "condition": "lab_only",
+            "choiceId": "d3_1",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_1",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+        "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+        "choiceId": "correct_2",
+        "choiceLabel": "aPTT mixing study",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "result_gate_route_override",
+          "serviceId": "service.basic_labs",
+          "allowedRouteIds": [
+            "route.basic_labs.outsourced"
+          ],
+          "allowOnsiteEquivalents": false,
+          "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "installed",
+            "choiceId": "correct_2",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_staff",
+            "choiceId": "correct_2",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "busy",
+            "choiceId": "correct_2",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_rooms",
+            "choiceId": "correct_2",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "lab_only",
+            "choiceId": "correct_2",
+            "choiceLabel": "aPTT mixing study",
+            "correct": true,
+            "disposition": {
+              "kind": "result_gate_route_override",
+              "serviceId": "service.basic_labs",
+              "allowedRouteIds": [
+                "route.basic_labs.outsourced"
+              ],
+              "allowOnsiteEquivalents": false,
+              "externalRemainder": "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis."
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "correct_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Basic laboratory testing",
+              "routeId": "route.basic_labs.outsourced",
+              "routeDisplayName": "Off-site basic laboratory testing",
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+        "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+        "choiceId": "d1_2",
+        "choiceLabel": "Platelet-count measurement",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "not_executed",
+          "reason": "external_only"
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "installed",
+            "choiceId": "d1_2",
+            "choiceLabel": "Platelet-count measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_staff",
+            "choiceId": "d1_2",
+            "choiceLabel": "Platelet-count measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "busy",
+            "choiceId": "d1_2",
+            "choiceLabel": "Platelet-count measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_rooms",
+            "choiceId": "d1_2",
+            "choiceLabel": "Platelet-count measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "lab_only",
+            "choiceId": "d1_2",
+            "choiceLabel": "Platelet-count measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d1_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+        "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+        "choiceId": "d2_2",
+        "choiceLabel": "Fibrinogen activity measurement",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "not_executed",
+          "reason": "external_only"
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "installed",
+            "choiceId": "d2_2",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_staff",
+            "choiceId": "d2_2",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "busy",
+            "choiceId": "d2_2",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_rooms",
+            "choiceId": "d2_2",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "lab_only",
+            "choiceId": "d2_2",
+            "choiceLabel": "Fibrinogen activity measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d2_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      },
+      {
+        "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+        "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+        "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+        "choiceId": "d3_2",
+        "choiceLabel": "Prothrombin-time measurement",
+        "timingProfileId": "timing.test.basic_labs",
+        "disposition": {
+          "kind": "not_executed",
+          "reason": "external_only"
+        },
+        "runtimePreviews": [
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "installed",
+            "choiceId": "d3_2",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_staff",
+            "choiceId": "d3_2",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "busy",
+            "choiceId": "d3_2",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "missing_rooms",
+            "choiceId": "d3_2",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          },
+          {
+            "caseId": "case.gs028e.coagulation.paired-specialist-bruising-review",
+            "nodeId": "node.gs028e.coagulation.paired-specialist-bruising-review.1",
+            "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v2",
+            "condition": "lab_only",
+            "choiceId": "d3_2",
+            "choiceLabel": "Prothrombin-time measurement",
+            "correct": false,
+            "disposition": {
+              "kind": "not_executed",
+              "reason": "external_only"
+            },
+            "centralProfileDurationTicks": 60,
+            "actualPreview": {
+              "kind": "test",
+              "answerChoiceId": "d3_2",
+              "serviceId": "service.basic_labs",
+              "serviceDisplayName": "Laboratory testing",
+              "routeId": null,
+              "routeDisplayName": null,
+              "durationTicks": 60,
+              "timingProfileId": "timing.test.basic_labs"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "gameplay": {
+    "actualReducer": true,
+    "casePathCount": 312,
+    "nodeCount": 80,
+    "distinctChoiceSubmissions": 320,
+    "sampledFrozenProfileCount": 211,
+    "choicesByNode": {
+      "node.gs028e.radiology.c1-prior-ct-ultrasound.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.radiology.c1-planned-mri-ct.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.radiology.c1-noncontrast-ct.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.radiology.c1-ultrasound-sound.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.radiology.c2-pacemaker-card.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.radiology.c2-cochlear-model.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.radiology.c2-unidentified-implant.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.radiology.c2-prior-scan-different.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.radiology.c3-brief-warmth.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.radiology.c3-limited-hives.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.radiology.c3-allergy-list-warmth.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.radiology.c3-hives-not-just-warm.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.pharmacology.c1-vomiting-empagliflozin.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.pharmacology.c1-postop-record.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.pharmacology.c1-ertugliflozin-illness.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.pharmacology.c1-glucose-led-missed.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.pharmacology.c2-postop-rescue-record.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.pharmacology.c2-kit-is-not-analgesic.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.pharmacology.c2-opioid-not-destroyed.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.pharmacology.c2-opioid-specific-target.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.preoperative-sglt2.c1-empagliflozin-hernia.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.preoperative-sglt2.c1-ertugliflozin-colon.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.preoperative-sglt2.c1-short-empa-plan.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.preoperative-sglt2.c1-drug-switch-calendar.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.mis-principles.c1-co2-source.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.mis-principles.c1-respiratory-acidemia.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.mis-principles.c1-absorbed-gas-exit.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.mis-principles.c1-ventilation-record.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.mis-principles.c2-caval-compression-record.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.mis-principles.c2-early-central-filling.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.mis-principles.c2-head-up-context.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.mis-principles.c2-different-phases.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.mis-principles.c3-improving-shoulder.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.mis-principles.c3-phrenic-pathway.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.mis-principles.c3-normal-joint-question.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.mis-principles.c3-resolved-event-record.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.collagen-remodeling.c1-maturing-incision.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.collagen-remodeling.c1-early-matrix-record.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.collagen-remodeling.c1-later-matrix-counseling.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.collagen-remodeling.c1-reversed-diagram.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.wound-healing-remaining.c1-incision-overgrowth.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.wound-healing-remaining.c1-lipoma-margin.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.wound-healing-remaining.c1-piercing-boundary.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.wound-healing-remaining.c1-burn-outline.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.wound-healing-remaining.c2-skin-excision-plan.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.wound-healing-remaining.c2-no-stitch-mixup.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.wound-healing-remaining.c2-scheduled-review.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.wound-healing-remaining.c2-closure-method-form.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.immunology.c1-food-allergy-effector.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.immunology.c1-latex-type.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.immunology.c1-antibody-class.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.immunology.c1-mediator-release.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.immunology.c2-adhesive-category.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.immunology.c2-glove-accelerator.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.immunology.c2-nickel-cellular.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.immunology.c2-repeat-contact.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.immunology.c3-historical-kidney-event.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.immunology.c3-vascular-biopsy.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.immunology.c3-antibody-timing.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.immunology.c3-injury-pathway.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.coagulation.paired-elective-record-workup.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.coagulation.paired-elective-record-workup.2": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.coagulation.paired-specialist-bruising-review.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.coagulation.paired-specialist-bruising-review.2": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.coagulation.c1-referral-test-purpose.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.coagulation.c1-outside-lab-planning.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.coagulation.c2-correction-lost-with-incubation.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.coagulation.c2-immediate-only-report.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.oncology.c1-colon-spread-summary.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.oncology.c1-breast-microscopy.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.oncology.c1-grade-means-metastatic.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.oncology.c1-node-versus-cells.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.oncology.c2-one-deleted-one-inactive.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.oncology.c2-both-copies-deleted.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.oncology.c2-two-hit-description.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.oncology.c2-functional-consequence.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ],
+      "node.gs028e.operative-infection.c1-clean-soft-tissue.1": [
+        "correct_1",
+        "d1_1",
+        "d2_1",
+        "d3_1"
+      ],
+      "node.gs028e.operative-infection.c1-controlled-bowel-entry.1": [
+        "correct_2",
+        "d1_2",
+        "d2_2",
+        "d3_2"
+      ],
+      "node.gs028e.operative-infection.c1-unexpected-gross-spill.1": [
+        "correct_3",
+        "d1_3",
+        "d2_3",
+        "d3_3"
+      ],
+      "node.gs028e.operative-infection.c1-purulent-perforation.1": [
+        "correct_4",
+        "d1_4",
+        "d2_4",
+        "d3_4"
+      ]
+    }
+  }
+}

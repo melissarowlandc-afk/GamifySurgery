@@ -1,0 +1,15 @@
+diff --git a/packages/clinical-content/src/answer-choice-timing.ts b/packages/clinical-content/src/answer-choice-timing.ts
+--- a/packages/clinical-content/src/answer-choice-timing.ts
++++ b/packages/clinical-content/src/answer-choice-timing.ts
+@@ -10,4 +10,5 @@ import { GS028_STATS_ETHICS_20260929_TIMING_ENTRIES } from "./development-batch/
+ import { GS028_20261002_TIMING_ENTRIES } from "./development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+ import { GS028_20261003_TIMING_ENTRIES } from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
++import { GS028_20261007_TIMING_ENTRIES } from "./development-batch/2026-10-07-variety/variety-batch";
+ 
+ /**
+@@ -5950,4 +5951,5 @@ const entries: AnswerChoiceTimingRegistryEntry[] = [
+   ...GS028_20261002_TIMING_ENTRIES,
+   ...GS028_20261003_TIMING_ENTRIES,
++  ...GS028_20261007_TIMING_ENTRIES,
+ ];
+ 

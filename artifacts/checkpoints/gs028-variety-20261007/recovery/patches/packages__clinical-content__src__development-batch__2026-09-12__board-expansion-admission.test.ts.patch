@@ -1,0 +1,14 @@
+diff --git a/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts b/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts
+--- a/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts
+@@ -61,7 +61,7 @@ describe("September 12 board-expansion batch admission", () => {
+       publicReleaseAuthorized: false,
+     });
+-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);
+-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);
+-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
++    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);
++    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);
++    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
+     for (const clinicalCase of BOARD_EXPANSION_20260912_CASES) {
+       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);

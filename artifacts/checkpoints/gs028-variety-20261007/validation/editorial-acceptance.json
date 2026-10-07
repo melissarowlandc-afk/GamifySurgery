@@ -1,0 +1,83 @@
+{
+  "checkedAt": "2026-10-07T20:41:45.931Z",
+  "reviewer": "/root/oct7_coverage_inventory (independent Sol)",
+  "decision": "acceptable for unapproved development prototype integration",
+  "clinicalApproval": false,
+  "clinicalReviewStatusRequired": "needs_clinician_review",
+  "counts": {
+    "concepts": 20,
+    "questions": 80,
+    "cases": 78,
+    "decisionNodes": 80,
+    "atomicClaims": 51,
+    "uniqueSources": 31,
+    "pairedCases": 2,
+    "orderedTestChoices": 8
+  },
+  "contentBundleSha256": "d714e60052a7124b4efa9a4c8b7d06a6f35a30e63087cef48c1eb5d0ef2d87b0",
+  "fileHashes": {
+    "radiology.ts": "3274064371a32f57d9a9366f57a9467d9a32bb2848d100c95f37f4d83d62469c",
+    "pharmacology.ts": "bba12ed903125c3d4171937c7cdba551bced7f9059a3f4af2355e6aeecc4b7ab",
+    "preoperative.ts": "65b7a90464389657c320d6698c62cccfb6e4f966e21f213452fbd5efabbf17d9",
+    "mis-principles.ts": "a0088eeb4e95e972798f72cf83cf89edf04afc4565ce16a4d47031527ae251cf",
+    "collagen-remodeling.ts": "ac13c29f2f0c34a0823d9275e5bd1983afce1df000635561f36f30379d1e3e1c",
+    "wound-healing-remaining.ts": "cdf08e8828c58d787c4545242205f2f6e2533fa46faf7ad38cf168126a8694fd",
+    "immunology.ts": "efe2b4c3e4bc89dfcbcee251012374d3ae27cb832a9fcf911e0861d94daed0b7",
+    "oncology.ts": "4059c79bfd1baeaf85770c528ad601da28f98f7511a002cc0adbbac9c47a6e5d",
+    "operative-infection.ts": "a80e1d16aa1de00cd2202b25317a5fb742aa48b616c87e09d247a97aaaa36d8d",
+    "coagulation.ts": "0fef0714b69bfc4087713ee122abbb51c34695493e947afaf07db2bc3aa2d405",
+    "source-catalog-first10.ts": "95c0909ba5f1b7b97c104f86837dd35441150357b998d8133a27ff8b14ed972f",
+    "source-catalog-remaining10.ts": "41bf7d82d7d26ab3cf3a0f4456fe6566fcad52d908ce11709945081888e8a857",
+    "batch-helpers.ts": "8207b51be9eab8ead04eb7fc9107d79ad74d7f4e1427c92e6f43baa5dface87d",
+    "family-builder.ts": "ed7f69c0a745e25faf3270371eb7310e5e33b680303809ed170120107cfd126b",
+    "spec-utils.ts": "145b286aaccb41dff66ed925dd54b8640b893bd727415bccb9a626135e158aaa",
+    "variety-batch.ts": "a80342ae3bc4ed347c6e38adece114fc426f69ba0964c84123d1d2837052d88f"
+  },
+  "first10ContentAndFilesUnchanged": false,
+  "structuralValidation": {
+    "command": "node node_modules/vitest/vitest.mjs run --config .local-dev/gs028-20261007/editorial-review/vitest.editorial-all.config.ts",
+    "filesPassed": 1,
+    "testsPassed": 8,
+    "runAtHost": "2026-10-07 16:41:17",
+    "durationMs": 310,
+    "addedRegression": "All80 keys are not uniquely longest; all accepted meanings/claims/sources/profiles/links unchanged."
+  },
+  "substantiveReview": {
+    "actualStemChoiceFeedbackClaimAndProfileReview": true,
+    "fourSubstantiveVariantsPerObjective": true,
+    "noActiveOrNonActiveClinicalMeaningOverlap": "20 selected meanings compared with 333 clinical stable IDs including one unadmitted legacy objective; six pure mechanic IDs are excluded from clinical coverage.",
+    "correctedSecondaryV4": "Chart-consistency audit of incompatible planned later edge approximation, distinct from plan-to-term, missing-stitches explanation and review-versus-delayed-closure distinction.",
+    "correctedRb1V4": "Normal RB1 function retrieval without absent-function clue, distinct from loss-mechanism classification, accelerator analogy and biallelic criterion.",
+    "earlyAccessibility": "All cases stage0, clinic, release.l0, no required capability. Each of the 20 meanings occurs as an initial standalone node; two mixing-order cases have honest outsourced-only result gates.",
+    "sourceAndClaimReview": "Targeted direct primary-source factual verification; original atomic synthesis with limitations, authority separate from reuse, all draft. No source expression, algorithm, table, source PDF or proprietary corpus stored.",
+    "remainingBlockingEditorialFindings": [],
+    "answerLengthCorrections": "Actual revised choices and named-key feedback independently reread for meaning, parallel plausibility and retained source support."
+  },
+  "limitations": [
+    "Agent editorial review and automated tests are not named clinician approval.",
+    "Registry admission, actual service routing and timing display, departure/reload/save preservation, gameplay and browser validation remain parent/integration work.",
+    "Exact durable 20-ID ABSITE/QE/SCORE locators are parent-owned. Primary subject meanings are acceptable; curriculum inclusion is not an exam-frequency prediction.",
+    "Stable mechanisms may use older sources. NHS scars remains reviewed2023; FDA immune1999/NIAID2010 and commissioned transplant2012 support mechanism/background only.",
+    "Secondary intention, scar morphology, collagen sequence and operative wound-class definitions have explicit single-source limits. NCI and FDA cross-check pages are not independent organizations; manufacturer/repackager cross-checks are not independent guidelines.",
+    "Haematologica CC BY-NC article-specific license version remains unverified; targeted guideline facts only. Czempik CC BY-NC-SA4 and OGL sources use conservative targeted-verification schema statuses. This review does not grant future commercial republication or license clearance.",
+    "No new clinic MRI/contrast challenge, active transplant/OR/ICU case or specialized onsite mixing-study capability is claimed.",
+    "All clinical records remain needs_clinician_review; no public release, push or deployment is authorized by this receipt."
+  ],
+  "editorialRevision": "Renewed after twelve answer-choice length corrections",
+  "supersedesContentBundleSha256": "4513bfc624a705b42bd64cba58dd92eec3fcf4972ea08362663a955a3cf06c68",
+  "sourceClaimsAndMeaningsUnchangedAfterLengthReview": true,
+  "changedQuestionIds": [
+    "question.mri.device-specific-safety-verification.v3",
+    "question.mri.device-specific-safety-verification.v4",
+    "question.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect.v4",
+    "question.perioperative-sglt2.drug-specific-interruption.v1",
+    "question.perioperative-sglt2.drug-specific-interruption.v3",
+    "question.postlaparoscopy.benign-referred-shoulder-pain.v3",
+    "question.wound-healing.type-iii-to-type-i-collagen-remodeling.v2",
+    "question.wound.hypertrophic-versus-keloid-extent.v2",
+    "question.wound.hypertrophic-versus-keloid-extent.v4",
+    "question.immunology.ige-mast-cell-type-i.v4",
+    "question.immunology.t-cell-type-iv-contact.v3",
+    "question.infection.operative-wound-classification.v2"
+  ]
+}

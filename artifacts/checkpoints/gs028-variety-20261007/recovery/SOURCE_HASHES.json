@@ -1,0 +1,628 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs028-variety-20261007",
+  "fullBaselinesIncluded": false,
+  "allBaselinesInferred": true,
+  "inferenceMethod": "Subtract only the listed Oct7-attributable additions from each captured accepted target. Preserve all remaining bytes. These are compatible fixture hashes, not proof of historical source capture.",
+  "baselineDependency": "Compatible earlier dirty clinical batches and shared implementation remain required and excluded.",
+  "patches": [
+    {
+      "targetPath": "packages/clinical-content/src/index.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__index.ts.patch",
+      "scope": "Only the Oct7 variety export",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "6cd7f341bdb1ed94b334cc835ae1da5b7d0bd13d644bda3d9b3b04bb4b840a16",
+      "baselineBytes": 3318,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 54,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "68bcc06d15a17d9382596ffecae79beec902a1ed8bd8f1029d9299a883317c4e",
+      "acceptedTargetBytes": 3388,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 55,
+        "finalNewline": true
+      },
+      "patchSha256": "f11e6052a8d2c9cd109ff4838eacb38770a16abc235f0fbdf72836e792ceb8d3",
+      "patchBytes": 519,
+      "hunks": [
+        "@@ -53,2 +53,3 @@ export * from \"./development-batch/2026-09-29-statistics-ethics/statistics-ethic"
+      ],
+      "changedLines": [
+        "+export * from \"./development-batch/2026-10-07-variety/variety-batch\";"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/synthetic-content.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__synthetic-content.ts.patch",
+      "scope": "Only the Oct7 import and two new concept/case spreads",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "dc3a4728bf5460b013b59a6bac28ff8aa361e7ba0396bb9e8ed022689e2656c8",
+      "baselineBytes": 51087,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 1262,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "ee8028bd320abc72dcf7a38f4d3f4318650ac1aac62cb6954e5f8cd3f47bd80f",
+      "acceptedTargetBytes": 51280,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 1265,
+        "finalNewline": true
+      },
+      "patchSha256": "3e63eae5489a1ca2063d5cb2fa71d7607b3b7159596efc2cf5212efe2a637544",
+      "patchBytes": 1204,
+      "hunks": [
+        "@@ -83,4 +83,5 @@ import { GS028_STATS_ETHICS_20260929_CASES, GS028_STATS_ETHICS_20260929_TESTED_C",
+        "@@ -1207,4 +1208,5 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({",
+        "@@ -1218,4 +1220,5 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({"
+      ],
+      "changedLines": [
+        "+import { GS028_20261007_CASES, GS028_20261007_TESTED_CONCEPTS } from \"./development-batch/2026-10-07-variety/variety-batch\";",
+        "+    ...GS028_20261007_TESTED_CONCEPTS,",
+        "+    ...GS028_20261007_CASES,"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/answer-choice-timing.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__answer-choice-timing.ts.patch",
+      "scope": "Only the Oct7 timing import and spread",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "159de9d0815089ce778f132968b1a8cc34acbcebb87572b6bd0dc1b9087fce89",
+      "baselineBytes": 184138,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 5956,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "a94b3de85559c0c26efaa443d2efca128326d56d2a6e0c7f7fb3988c10fb8832",
+      "acceptedTargetBytes": 184276,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 5958,
+        "finalNewline": true
+      },
+      "patchSha256": "ecba8d6becafae06d38994694cb09f6a92e6b691c97a89d8161419814fc1c992",
+      "patchBytes": 874,
+      "hunks": [
+        "@@ -10,4 +10,5 @@ import { GS028_STATS_ETHICS_20260929_TIMING_ENTRIES } from \"./development-batch/",
+        "@@ -5950,4 +5951,5 @@ const entries: AnswerChoiceTimingRegistryEntry[] = ["
+      ],
+      "changedLines": [
+        "+import { GS028_20261007_TIMING_ENTRIES } from \"./development-batch/2026-10-07-variety/variety-batch\";",
+        "+  ...GS028_20261007_TIMING_ENTRIES,"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/game-domain/src/test-choice-orders.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__test-choice-orders.ts.patch",
+      "scope": "Only the Oct7 eight exact records and their array spread; all prior record assembly and execution code preserved",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "a750fab5d5aa754fa2aea8baee61c0fc230fbae85021d9feabd48757d3fb38f2",
+      "baselineBytes": 37320,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 441,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "a7f2f884e0e91684c7b12bf4d25a2b3e84517b556e479c9ceff7b6725f9728db",
+      "acceptedTargetBytes": 39144,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 474,
+        "finalNewline": true
+      },
+      "patchSha256": "379b11da1b5544101d675e5129154a2e7c4f22b24a3cb2ab1861238c8ce37f02",
+      "patchBytes": 2837,
+      "hunks": [
+        "@@ -355,4 +355,36 @@ const gs028October3Records: ExactTestChoiceOrderRecord[] = [",
+        "@@ -404,4 +436,5 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor"
+      ],
+      "changedLines": [
+        "+// These are outside-specialist workup choices. Incorrect selections retain the",
+        "+// corrected-forward policy: only the correct mixing assessment is ordered.",
+        "+// Explicit non-execution records keep their estimates independent of local labs.",
+        "+const gs028October7Records: ExactTestChoiceOrderRecord[] = [",
+        "+  ...([",
+        "+    [\"elective-record-workup\", \"1\", \"Platelet-function testing\"],",
+        "+    [\"specialist-bruising-review\", \"2\", \"Platelet-count measurement\"],",
+        "+  ] as const).flatMap(([slug, version, plateletLabel]) => {",
+        "+    const caseId = `case.gs028e.coagulation.paired-${slug}`;",
+        "+    const nodeId = `node.gs028e.coagulation.paired-${slug}.1`;",
+        "+    const questionId = `question.coagulation.isolated-aptt-mixing-workup.v${version}`;",
+        "+    return [",
+        "+      record(caseId, nodeId, questionId, `correct_${version}`, \"aPTT mixing study\", \"timing.test.basic_labs\", {",
+        "+        kind: \"result_gate_route_override\",",
+        "+        serviceId: \"service.basic_labs\",",
+        "+        allowedRouteIds: [\"route.basic_labs.outsourced\"],",
+        "+        allowOnsiteEquivalents: false,",
+        "+        externalRemainder: \"The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis.\",",
+        "+      }),",
+        "+      record(caseId, nodeId, questionId, `d1_${version}`, plateletLabel, \"timing.test.basic_labs\", {",
+        "+        kind: \"not_executed\", reason: \"external_only\",",
+        "+      }),",
+        "+      record(caseId, nodeId, questionId, `d2_${version}`, \"Fibrinogen activity measurement\", \"timing.test.basic_labs\", {",
+        "+        kind: \"not_executed\", reason: \"external_only\",",
+        "+      }),",
+        "+      record(caseId, nodeId, questionId, `d3_${version}`, \"Prothrombin-time measurement\", \"timing.test.basic_labs\", {",
+        "+        kind: \"not_executed\", reason: \"external_only\",",
+        "+      }),",
+        "+    ];",
+        "+  }),",
+        "+];",
+        "+",
+        "+  ...gs028October7Records,"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "8fe80ba31e5c5ecc7e3d55b18bff61d90365dfd7d2549c53d6c8ee071f45be27",
+      "baselineBytes": 6540,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 91,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "5ad5a5ef160e862b772fe5ea992286afa315e3221d49b0548d828ff3ed81cfa5",
+      "acceptedTargetBytes": 6540,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 91,
+        "finalNewline": true
+      },
+      "patchSha256": "64289c6797913311674dd99bac83d0b36a9e880518a1b62751d1875c07226b6a",
+      "patchBytes": 1511,
+      "hunks": [
+        "@@ -48,7 +48,7 @@ describe(\"September 11 board-expansion batch admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "43666534afcf8b15e9ba06bd51fee84b33f6aa173590c7cfa70bd5dd7651e46b",
+      "baselineBytes": 7109,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 114,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "62303f718da3ae55b33166c6fe484cfa63b311bce4782a210d024d6fc2a72a85",
+      "acceptedTargetBytes": 7109,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 114,
+        "finalNewline": true
+      },
+      "patchSha256": "bc52c6a30968c9cb6fb5be558e14db2b8c5db54b0f69e95ad0e0c865d78d93a1",
+      "patchBytes": 1156,
+      "hunks": [
+        "@@ -61,7 +61,7 @@ describe(\"September 12 board-expansion batch admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "13877799399d5c79207a0f0c913fed9526729dcc03449eb3d64c15bf6dd66c09",
+      "baselineBytes": 6206,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 80,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "4404a8553277b8551015575bff41ab8f8520c64dd42f543b59affb026e604ce6",
+      "acceptedTargetBytes": 6206,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 80,
+        "finalNewline": true
+      },
+      "patchSha256": "52a28ae5d87df6a36e93a94dd7ae62ad49c0e95daf8393f996cd243013ef9803",
+      "patchBytes": 1493,
+      "hunks": [
+        "@@ -49,7 +49,7 @@ describe(\"September 13 early-level batch admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "a6883a1cc0a43956f9d71e61c35a01e419909c9b0113199a8cd0667a249c5426",
+      "baselineBytes": 5041,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 60,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "09bf5658ce363119e42054e3bb9bce0e350de5939ccd715b30cc8b4c9e446f2d",
+      "acceptedTargetBytes": 5041,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 60,
+        "finalNewline": true
+      },
+      "patchSha256": "1b37eba8a5c87550a0dea81d23b76f76e40d23c33e3938bcde5d0edcc67515f4",
+      "patchBytes": 1386,
+      "hunks": [
+        "@@ -12,7 +12,7 @@ describe(\"September 17 brief early-level admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "574c15c04c863320cc0cf182a1d515d933102426d3278a105127c3484c80ac00",
+      "baselineBytes": 6688,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 157,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "40bfaee0cf479d1490c0f5ee780b6422cc53420805175877a727fa08ab2c3f26",
+      "acceptedTargetBytes": 6688,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 157,
+        "finalNewline": true
+      },
+      "patchSha256": "873d3db1cf8a8ee0a49190cfb263e1d66b41e11f0592d1fdff2774ffadc080a9",
+      "patchBytes": 1039,
+      "hunks": [
+        "@@ -48,8 +48,8 @@ describe(\"September 17 bread-and-butter admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);",
+        "-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);",
+        "+    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);",
+        "-      .toHaveLength(1135);",
+        "+      .toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "2725993dbc3a8ae3d2257d63d9141f126b06f78ba2de86ce02f8ade15006bd58",
+      "baselineBytes": 9335,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 232,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "1bc6ff11d0236166eaac5ea925f1393ca22ed54719ad68e2774bc9616dddd5ba",
+      "acceptedTargetBytes": 9335,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 232,
+        "finalNewline": true
+      },
+      "patchSha256": "3b0398887079d743e1c9973a561c271cb24e12a4fc76e00d416e9a91d7be918c",
+      "patchBytes": 1270,
+      "hunks": [
+        "@@ -176,7 +176,7 @@ describe(\"GS-028 statistics and ethics runtime admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(291);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(856);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(311);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(934);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "bf44d96d5a318b16c4e06b2f775ed6385f6273d09f006c80fbc2868a260ff688",
+      "baselineBytes": 32320,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 574,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "83dc44af34d1ce4d99a3c3c0d1fd22c7d78c938c29ddd6b7c4287eed428c18c4",
+      "acceptedTargetBytes": 32320,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 574,
+        "finalNewline": true
+      },
+      "patchSha256": "cba6892f6cfed8a3a0db5a3784cde3c8ac99c1410b61358f2a28d86eba7a2366",
+      "patchBytes": 1305,
+      "hunks": [
+        "@@ -242,7 +242,7 @@ describe(\"GS-028 October 3 batch admission\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(291);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(856);",
+        "-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(311);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(934);",
+        "+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/game-domain/tests/patient-supply.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__patient-supply.test.ts.patch",
+      "scope": "Only the three active-bank count pins; all subset assertions and any current snapshots remain untouched",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "ae3229a4903e838910358c564344447b6d7aedf565e7d40f36b4d367a18bb44e",
+      "baselineBytes": 16997,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 471,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "7d573da7404e7dcc4a3817bb6f750046a87c1c44b3998d8aab61afa69f706b41",
+      "acceptedTargetBytes": 16997,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 471,
+        "finalNewline": true
+      },
+      "patchSha256": "c25a670759caa9f9c08ef2fa74c3198784057cb11aadd66afedb8886fb9ca751",
+      "patchBytes": 861,
+      "hunks": [
+        "@@ -226,7 +226,7 @@ describe(\"routine patient supply\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(release.concepts).toHaveLength(291);",
+        "-    expect(release.cases).toHaveLength(856);",
+        "-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);",
+        "+    expect(release.concepts).toHaveLength(311);",
+        "+    expect(release.cases).toHaveLength(934);",
+        "+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);"
+      ],
+      "limitations": [
+        "This count-only counterfactual retains current post-Oct7 snapshot literals; separate evidence documents the three snapshot deltas. It is not claimed to be the historical pre-Oct7 test."
+      ]
+    },
+    {
+      "targetPath": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__playable-patient-narrative.test.ts.patch",
+      "scope": "Only recognition of visits and discussing in the existing story-cue regex",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "ae1e0f5d8d90aaa93a14b8f98e7e6d5eef3e975cba5920d0d716011acc147c67",
+      "baselineBytes": 4660,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 103,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "565629e7b722d9f4570df20d51f3e8de3a5fb4996d5b0284f43554afd0756407",
+      "acceptedTargetBytes": 4679,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 103,
+        "finalNewline": true
+      },
+      "patchSha256": "f7eed42a65aa04bafc4c52c000998090464d29042edc7e7e079a7b2f570428df",
+      "patchBytes": 1876,
+      "hunks": [
+        "@@ -12,5 +12,5 @@ const PATIENT_REFERENCE ="
+      ],
+      "changedLines": [
+        "-  /\\b(?:asks?|wants?|requests?|reports?|returns?|arrives?|noticed|notes?|describes?|is seen|is offered|is invited|comes?|brings?|discuss|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|evaluates?|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives|reads?|sees?|declines?|lacks?|overhears?|recognizes?|waits?|considers?|compares?|moves?|records?|measures?|tabulates?|cross-classifies|designs?|tests?|recalls?|cannot|eats?|viene|consulta|llega|quiere|dice|pregunta|está|comprende)\\b/i;",
+        "+  /\\b(?:asks?|wants?|requests?|reports?|returns?|arrives?|noticed|notes?|describes?|is seen|is offered|is invited|comes?|visits?|brings?|discuss(?:es|ing)?|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|evaluates?|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives|reads?|sees?|declines?|lacks?|overhears?|recognizes?|waits?|considers?|compares?|moves?|records?|measures?|tabulates?|cross-classifies|designs?|tests?|recalls?|cannot|eats?|viene|consulta|llega|quiere|dice|pregunta|está|comprende)\\b/i;"
+      ],
+      "limitations": [
+        "The inferred comparator removes the two Oct7 verb extensions; it is not a captured historical regex file."
+      ]
+    },
+    {
+      "targetPath": "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+      "patchPath": "recovery/patches/packages__clinical-content__src__approved-data__breast-cyst-pathway.test.ts.patch",
+      "scope": "Only the Oct7 case import and ordered case-ID spread",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "a2662542bbcb58c4b70a690950740bd69b2908ceeb844e33806f7b35e2ac36db",
+      "baselineBytes": 11580,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 265,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "faa31f8768485f3795f5fc01da714c7463888ca3a3a7fbf789677dc49615abea",
+      "acceptedTargetBytes": 11744,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 267,
+        "finalNewline": true
+      },
+      "patchSha256": "494c538c870731c326ce94b5b86fb41f029eb28623b3e642d34f3b6b525cfada",
+      "patchBytes": 1178,
+      "hunks": [
+        "@@ -14,4 +14,5 @@ import { GS028_STATS_ETHICS_20260929_CASES } from \"../development-batch/2026-09-",
+        "@@ -253,4 +254,5 @@ describe(\"owner row 30 approved breast-cyst pathway\", () => {"
+      ],
+      "changedLines": [
+        "+import { GS028_20261007_CASES } from \"../development-batch/2026-10-07-variety/variety-batch\";",
+        "+      ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),"
+      ],
+      "limitations": []
+    },
+    {
+      "targetPath": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__approved-clinical-admission.test.ts.patch",
+      "scope": "Only the Oct7 concept import member and ordered concept-ID spread",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "76f74ae701fa3d62930fa84570387120b2303b0a48d8665492e43ac5f503e170",
+      "baselineBytes": 14203,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 336,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "5ad587cd3050e67e4c1ae7ba4c96f86821b699ef2eb5789d25c2848316a71e1d",
+      "acceptedTargetBytes": 14305,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 337,
+        "finalNewline": true
+      },
+      "patchSha256": "ece48405488d59ab24033a16f844db50710f7003ab06981a5422f48eed3da7fa",
+      "patchBytes": 1750,
+      "hunks": [
+        "@@ -1,4 +1,4 @@",
+        "@@ -206,4 +206,5 @@ describe(\"approved clinical admission boundaries\", () => {"
+      ],
+      "changedLines": [
+        "-import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, BREAD_BUTTER_20260917_TESTED_CONCEPTS, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, GS028_20260928_TESTED_CONCEPTS, GS028_20260929_TESTED_CONCEPTS, GS028_20261002_TESTED_CONCEPTS, GS028_20261003_TESTED_CONCEPTS, GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from \"@gamify-surgery/clinical-content\";",
+        "+import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, BREAD_BUTTER_20260917_TESTED_CONCEPTS, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, GS028_20260928_TESTED_CONCEPTS, GS028_20260929_TESTED_CONCEPTS, GS028_20261002_TESTED_CONCEPTS, GS028_20261003_TESTED_CONCEPTS, GS028_20261007_TESTED_CONCEPTS, GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from \"@gamify-surgery/clinical-content\";",
+        "+      ...GS028_20261007_TESTED_CONCEPTS.map((concept) => concept.id),"
+      ],
+      "limitations": [
+        "Whole historical source was not captured; earlier ordered IDs are retained in the inferred comparator."
+      ]
+    },
+    {
+      "targetPath": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__clinical-content-withdrawal.test.ts.patch",
+      "scope": "Only the Oct7 case import member and ordered case-ID spread",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "d96db60cb71a9e8199e6bd7f9c92b41a03e070839158b096813199c955dbf9f9",
+      "baselineBytes": 6698,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 170,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "531be1d5f073bb8050ca4763f68cbeee1f4d9813eda826ef151366f1109edf13",
+      "acceptedTargetBytes": 6792,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 172,
+        "finalNewline": true
+      },
+      "patchSha256": "8216dd2d94aad10e3fdc8a7a41c0ccf26db8b4398025e1bcd2772120f8cdea41",
+      "patchBytes": 741,
+      "hunks": [
+        "@@ -31,4 +31,5 @@ import {",
+        "@@ -108,4 +109,5 @@ describe(\"withdrawn AI-authored clinical pilot\", () => {"
+      ],
+      "changedLines": [
+        "+  GS028_20261007_CASES,",
+        "+      ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),"
+      ],
+      "limitations": [
+        "Whole historical source was not captured; earlier ordered IDs are retained in the inferred comparator."
+      ]
+    },
+    {
+      "targetPath": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__test-choice-order-inventory.test.ts.patch",
+      "scope": "Only timed inventory count and exact non-executed incorrect-record invariants, preserving choice-label/timing binding",
+      "preimageKind": "inferred-counterfactual-by-subtracting-only-attributable-Oct7-deltas",
+      "historicalPreEditSourceCaptured": false,
+      "baselineSha256": "2746b051c57369609545786c8ce286b26d34a158178c29d21f72d11bd3f76bfa",
+      "baselineBytes": 12935,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 172,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "0c70b6e0b7f7d86833075a9dfe781213efcddc866de32353fcbc9f76b4154ec5",
+      "acceptedTargetBytes": 13175,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 176,
+        "finalNewline": true
+      },
+      "patchSha256": "a9d65f44242ffa63d54257e88aa13d9c33b00bbed15482d0a1f5d4a8e6b3cf5f",
+      "patchBytes": 1956,
+      "hunks": [
+        "@@ -18,5 +18,5 @@ describe(\"active-release test-choice order inventory\", () => {",
+        "@@ -44,5 +44,9 @@ describe(\"active-release test-choice order inventory\", () => {",
+        "@@ -81,5 +85,5 @@ describe(\"active-release test-choice order inventory\", () => {"
+      ],
+      "changedLines": [
+        "-    expect(timed).toHaveLength(1414);",
+        "+    expect(timed).toHaveLength(1422);",
+        "-            expect(record, `incorrect test selection ${key} must not have an execution record`).toBeUndefined();",
+        "+            if (record) {",
+        "+              expect(record.disposition.kind, `incorrect test selection ${key} must retain no-extra-order policy`).toBe(\"not_executed\");",
+        "+              expect(record.choiceLabel).toBe(choice.label);",
+        "+              expect(record.timingProfileId).toBe(timing.timingProfileId);",
+        "+            }",
+        "-      expect(active?.correct).toBe(true);",
+        "+      if (!active?.correct) expect(record.disposition.kind).toBe(\"not_executed\");"
+      ],
+      "limitations": [
+        "The two former strict rejection assertions are inferred from the documented pre-Oct7 invariant; their precise historical wording was not captured. Test display names are retained. This is a semantic scoped counterfactual, not a historical whole-file preimage."
+      ]
+    }
+  ]
+}

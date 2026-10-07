@@ -1,0 +1,21 @@
+diff --git a/packages/clinical-content/src/synthetic-content.ts b/packages/clinical-content/src/synthetic-content.ts
+--- a/packages/clinical-content/src/synthetic-content.ts
++++ b/packages/clinical-content/src/synthetic-content.ts
+@@ -83,4 +83,5 @@ import { GS028_STATS_ETHICS_20260929_CASES, GS028_STATS_ETHICS_20260929_TESTED_C
+ import { GS028_20261002_CASES, GS028_20261002_TESTED_CONCEPTS } from "./development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+ import { GS028_20261003_CASES, GS028_20261003_TESTED_CONCEPTS } from "./development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
++import { GS028_20261007_CASES, GS028_20261007_TESTED_CONCEPTS } from "./development-batch/2026-10-07-variety/variety-batch";
+ 
+ const PROTOTYPE_REVIEW_NOTICE =
+@@ -1207,4 +1208,5 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+     ...GS028_20261002_TESTED_CONCEPTS,
+     ...GS028_20261003_TESTED_CONCEPTS,
++    ...GS028_20261007_TESTED_CONCEPTS,
+   ],
+   cases: [
+@@ -1218,4 +1220,5 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+     ...GS028_20261002_CASES,
+     ...GS028_20261003_CASES,
++    ...GS028_20261007_CASES,
+   ],
+ });

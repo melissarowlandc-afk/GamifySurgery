@@ -1,0 +1,92 @@
+{
+  "checkedOn": "2026-10-07",
+  "resultsAreHistorical": true,
+  "clinicalApproval": false,
+  "newGameplayAndInventory": {
+    "command": "node ../../node_modules/vitest/vitest.mjs run tests/gs028-20261007-batch.test.ts tests/test-choice-order-inventory.test.ts --maxWorkers=1",
+    "cwd": "packages/game-domain",
+    "environment": {
+      "GS028_EVIDENCE_DIR": ".local-dev/gs028-20261007/authoring"
+    },
+    "startedAtLocal": "16:44:24",
+    "filesPassed": 2,
+    "testsPassed": 338,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "durationSeconds": 26.14,
+    "log": ".local-dev/gs028-20261007/authoring/integration-domain-tests.log",
+    "breakdown": {
+      "newActualGameplay": 332,
+      "liveExactInventory": 6
+    }
+  },
+  "expandedBankSupplyCorrection": {
+    "command": "npm run test --workspace @gamify-surgery/game-domain -- tests/approved-clinical-admission.test.ts tests/clinical-content-withdrawal.test.ts tests/game-domain.test.ts tests/patient-supply.test.ts tests/diagnostics/patient-supply.test.ts --maxWorkers=1",
+    "cwd": "repository root",
+    "startedAtLocal": "16:56:03",
+    "durationSeconds": 27.38,
+    "filesPassed": 4,
+    "filesFailed": 1,
+    "testsPassed": 27,
+    "testsFailed": 1,
+    "snapshotsPassed": 3,
+    "exitCode": 1,
+    "log": ".local-dev/gs028-20261007/authoring/final-correction-tests.log",
+    "logSha256": "cfa29571012b67acff1d133dd9ed0fdd8efbaacb72e53ab0b3fee9cb898d18d5",
+    "snapshotPassEvidence": "All three snapshot-bearing tests are in the four passing files; Vitest's default successful snapshot output is silent."
+  },
+  "finalClinicalSuite": {
+    "filesPassed": 73,
+    "testsPassed": 466,
+    "testsFailed": 0
+  },
+  "finalDomainSerial": {
+    "filesPassed": 76,
+    "filesFailed": 2,
+    "testsPassed": 2123,
+    "testsFailed": 2,
+    "totalFiles": 78,
+    "durationSeconds": 249.35,
+    "concurrentFailures": [
+      "Level3 progression expectation",
+      "endoscopy/pathology diagnostic-timing phase expectation"
+    ]
+  },
+  "priorLoadedTimeoutSerialRepeat": {
+    "testsPassed": 449,
+    "testsFailed": 0
+  },
+  "player": {
+    "testsPassed": 594,
+    "testsFailed": 1,
+    "concurrentFailure": "reading-room count: seven expected versus eight"
+  },
+  "finalWorkspaceTypechecks": {
+    "configsPassed": 8,
+    "configsFailed": 0
+  },
+  "balance": {
+    "testsPassed": 51,
+    "testsFailed": 0
+  },
+  "boundariesAndLauncherContracts": "PASS",
+  "build": {
+    "modules": 505,
+    "exitCode": 0,
+    "largeBundleWarning": true
+  },
+  "browser": {
+    "passed": 4,
+    "failed": 0,
+    "origin": "http://127.0.0.1:4327",
+    "freshSyntheticContexts": true,
+    "resultInjection": false,
+    "ownerSaveAccess": false
+  },
+  "limits": [
+    "No full shared-tree green claim.",
+    "Software validation and agent editorial review are not named clinician approval.",
+    "Earlier dirty dependencies and compatible source baselines are required; the checkpoint is not a clean runnable checkout.",
+    "The supply whole-source capture limitation is retained in supply-snapshot-deltas.json."
+  ]
+}

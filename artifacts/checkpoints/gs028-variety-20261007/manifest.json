@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs028-variety-20261007",
+  "acceptedDate": "2026-10-07",
+  "sourceBranch": "beta",
+  "intakeSourceHead": "c3e568deb501b879f8b5f37ab28e549620c35fef",
+  "sourceHead": "82e8979a8b25f9e58f91a7c37879532067c10f79",
+  "sourceHeadMeaning": "Concurrent preparation HEAD; the accepted content fingerprints are independently pinned. Later HEAD advancement does not imply source changed.",
+  "recoveryOnly": true,
+  "cleanRunnableCheckout": false,
+  "fullBaselinesIncluded": false,
+  "allPatchBaselinesInferred": true,
+  "authorization": "Owner requested Push to GitHub. Worker creates only this package and ignored evidence; parent retains staging, commit, push, remote verification and handoff.",
+  "clinicalReviewStatus": "needs_clinician_review",
+  "namedClinicianApproval": false,
+  "publicReleaseAuthorized": false,
+  "counts": {
+    "datedTsFiles": 20,
+    "newGameplayTests": 2,
+    "datedDocumentCopies": 7,
+    "recoveryPatches": 17,
+    "concepts": 20,
+    "questions": 80,
+    "cases": 78,
+    "claims": 51,
+    "sources": 31
+  },
+  "excludedScope": [
+    "Full shared dirty source and fixture baselines",
+    "Earlier batch implementation",
+    "Owner saves/private inputs/raw sheets",
+    "Medical source PDFs/articles/corpora",
+    "Credentials",
+    "Artwork and build/dependency output",
+    "Concurrent facility/economy/timing/motion/retirement implementation",
+    "Mixed standing/current handoff/project history"
+  ],
+  "baselineLimitations": "Every patch preimage is an explicitly inferred counterfactual. The three supply snapshots have scoped object evidence only. Compatible earlier dirty dependencies are required separately; no clean runnable checkout claim.",
+  "payloadCount": 57,
+  "payloadBytes": 1058642,
+  "payloads": [
+    {
+      "archivePath": ".gitattributes",
+      "category": "checkpoint-byte-preservation",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "archivePath": "README.md",
+      "category": "recovery-instructions-and-limitations",
+      "bytes": 7547,
+      "sha256": "c94fe9bc0293c460e4c21ed805d63e525635706d1c599c60aef6bfe45c3773d4"
+    },
+    {
+      "archivePath": "files/docs/clinical-workbench/approvals/owner-delegated-variety-2026-10-07.md",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/clinical-workbench/approvals/owner-delegated-variety-2026-10-07.md",
+      "originalSha256": "20ae90e21e22c84da2abd274ae429309ecd9fca6997982dd452548f77611ce73",
+      "exactByteCopy": true,
+      "bytes": 14781,
+      "sha256": "20ae90e21e22c84da2abd274ae429309ecd9fca6997982dd452548f77611ce73"
+    },
+    {
+      "archivePath": "files/docs/clinical-workbench/audits/gs028-subject-coverage-2026-10-07.json",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/clinical-workbench/audits/gs028-subject-coverage-2026-10-07.json",
+      "originalSha256": "65b8cfda944de1d70f7f79617c90966dc6ec045b2e5765d25b2a124119db4669",
+      "exactByteCopy": true,
+      "bytes": 363293,
+      "sha256": "65b8cfda944de1d70f7f79617c90966dc6ec045b2e5765d25b2a124119db4669"
+    },
+    {
+      "archivePath": "files/docs/clinical-workbench/audits/gs028-subject-coverage-2026-10-07.md",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/clinical-workbench/audits/gs028-subject-coverage-2026-10-07.md",
+      "originalSha256": "771cfa58382cf3e3ef7112a8542ec04ae4102ecb48479cd1e300ae1f5d38d9f9",
+      "exactByteCopy": true,
+      "bytes": 3005,
+      "sha256": "771cfa58382cf3e3ef7112a8542ec04ae4102ecb48479cd1e300ae1f5d38d9f9"
+    },
+    {
+      "archivePath": "files/docs/clinical-workbench/audits/gs028-variety-provenance-2026-10-07.json",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/clinical-workbench/audits/gs028-variety-provenance-2026-10-07.json",
+      "originalSha256": "84fe4a36e19c894bb97e5ee4375356a37b45d2c61207d2e336bcec4ca94027ca",
+      "exactByteCopy": true,
+      "bytes": 146707,
+      "sha256": "84fe4a36e19c894bb97e5ee4375356a37b45d2c61207d2e336bcec4ca94027ca"
+    },
+    {
+      "archivePath": "files/docs/execplans/gs028-variety-20-2026-10-07.md",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/execplans/gs028-variety-20-2026-10-07.md",
+      "originalSha256": "d7871d24dfffa59cf354a6957005054ba93e9f2378acb84441d8a388f611a3f9",
+      "exactByteCopy": true,
+      "bytes": 17208,
+      "sha256": "d7871d24dfffa59cf354a6957005054ba93e9f2378acb84441d8a388f611a3f9"
+    },
+    {
+      "archivePath": "files/docs/execplans/gs028-variety-github-checkpoint-20261007.md",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/execplans/gs028-variety-github-checkpoint-20261007.md",
+      "originalSha256": "339106ed7d9842cbb8a0f4d4441f344cd57d87452787b3564871e4259a2dc8e8",
+      "exactByteCopy": true,
+      "bytes": 3050,
+      "sha256": "339106ed7d9842cbb8a0f4d4441f344cd57d87452787b3564871e4259a2dc8e8"
+    },
+    {
+      "archivePath": "files/docs/execplans/gs028-variety-source-contract-2026-10-07.md",
+      "category": "dated-task-document-snapshot",
+      "originalPath": "docs/execplans/gs028-variety-source-contract-2026-10-07.md",
+      "originalSha256": "333b336de6552f107164b7aa6f5f5cfdafda0ef4b58202e784b31778361b9ab0",
+      "exactByteCopy": true,
+      "bytes": 10497,
+      "sha256": "333b336de6552f107164b7aa6f5f5cfdafda0ef4b58202e784b31778361b9ab0"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/batch-helpers.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/batch-helpers.ts",
+      "originalSha256": "8207b51be9eab8ead04eb7fc9107d79ad74d7f4e1427c92e6f43baa5dface87d",
+      "exactByteCopy": true,
+      "bytes": 11596,
+      "sha256": "8207b51be9eab8ead04eb7fc9107d79ad74d7f4e1427c92e6f43baa5dface87d"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/coagulation.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/coagulation.ts",
+      "originalSha256": "0fef0714b69bfc4087713ee122abbb51c34695493e947afaf07db2bc3aa2d405",
+      "exactByteCopy": true,
+      "bytes": 18386,
+      "sha256": "0fef0714b69bfc4087713ee122abbb51c34695493e947afaf07db2bc3aa2d405"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/collagen-remodeling.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/collagen-remodeling.ts",
+      "originalSha256": "ac13c29f2f0c34a0823d9275e5bd1983afce1df000635561f36f30379d1e3e1c",
+      "exactByteCopy": true,
+      "bytes": 6389,
+      "sha256": "ac13c29f2f0c34a0823d9275e5bd1983afce1df000635561f36f30379d1e3e1c"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/family-builder.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/family-builder.ts",
+      "originalSha256": "ed7f69c0a745e25faf3270371eb7310e5e33b680303809ed170120107cfd126b",
+      "exactByteCopy": true,
+      "bytes": 6712,
+      "sha256": "ed7f69c0a745e25faf3270371eb7310e5e33b680303809ed170120107cfd126b"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/first10-content.test.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/first10-content.test.ts",
+      "originalSha256": "37387e86142c9823648b8d62564bc458e08804bf56a149997f9636fffa557879",
+      "exactByteCopy": true,
+      "bytes": 13095,
+      "sha256": "37387e86142c9823648b8d62564bc458e08804bf56a149997f9636fffa557879"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/full-batch-content.test.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/full-batch-content.test.ts",
+      "originalSha256": "2586688738b190f32fc6f621988d664510167d790a1b4884dfb7193c7a9368a9",
+      "exactByteCopy": true,
+      "bytes": 12303,
+      "sha256": "2586688738b190f32fc6f621988d664510167d790a1b4884dfb7193c7a9368a9"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/immunology.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/immunology.ts",
+      "originalSha256": "efe2b4c3e4bc89dfcbcee251012374d3ae27cb832a9fcf911e0861d94daed0b7",
+      "exactByteCopy": true,
+      "bytes": 21602,
+      "sha256": "efe2b4c3e4bc89dfcbcee251012374d3ae27cb832a9fcf911e0861d94daed0b7"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/mis-principles.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/mis-principles.ts",
+      "originalSha256": "a0088eeb4e95e972798f72cf83cf89edf04afc4565ce16a4d47031527ae251cf",
+      "exactByteCopy": true,
+      "bytes": 23644,
+      "sha256": "a0088eeb4e95e972798f72cf83cf89edf04afc4565ce16a4d47031527ae251cf"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/oncology.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/oncology.ts",
+      "originalSha256": "4059c79bfd1baeaf85770c528ad601da28f98f7511a002cc0adbbac9c47a6e5d",
+      "exactByteCopy": true,
+      "bytes": 15082,
+      "sha256": "4059c79bfd1baeaf85770c528ad601da28f98f7511a002cc0adbbac9c47a6e5d"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/operative-infection.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/operative-infection.ts",
+      "originalSha256": "a80e1d16aa1de00cd2202b25317a5fb742aa48b616c87e09d247a97aaaa36d8d",
+      "exactByteCopy": true,
+      "bytes": 8762,
+      "sha256": "a80e1d16aa1de00cd2202b25317a5fb742aa48b616c87e09d247a97aaaa36d8d"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/pharmacology.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/pharmacology.ts",
+      "originalSha256": "bba12ed903125c3d4171937c7cdba551bced7f9059a3f4af2355e6aeecc4b7ab",
+      "exactByteCopy": true,
+      "bytes": 14892,
+      "sha256": "bba12ed903125c3d4171937c7cdba551bced7f9059a3f4af2355e6aeecc4b7ab"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/preoperative.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/preoperative.ts",
+      "originalSha256": "65b7a90464389657c320d6698c62cccfb6e4f966e21f213452fbd5efabbf17d9",
+      "exactByteCopy": true,
+      "bytes": 7766,
+      "sha256": "65b7a90464389657c320d6698c62cccfb6e4f966e21f213452fbd5efabbf17d9"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/radiology.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/radiology.ts",
+      "originalSha256": "3274064371a32f57d9a9366f57a9467d9a32bb2848d100c95f37f4d83d62469c",
+      "exactByteCopy": true,
+      "bytes": 20284,
+      "sha256": "3274064371a32f57d9a9366f57a9467d9a32bb2848d100c95f37f4d83d62469c"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/remaining10-content.test.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/remaining10-content.test.ts",
+      "originalSha256": "bb0e8185376c84873612e2fcd26ad0e349bf6411a858f8dfb08de640925b67d7",
+      "exactByteCopy": true,
+      "bytes": 11285,
+      "sha256": "bb0e8185376c84873612e2fcd26ad0e349bf6411a858f8dfb08de640925b67d7"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/source-catalog-first10.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/source-catalog-first10.ts",
+      "originalSha256": "95c0909ba5f1b7b97c104f86837dd35441150357b998d8133a27ff8b14ed972f",
+      "exactByteCopy": true,
+      "bytes": 19850,
+      "sha256": "95c0909ba5f1b7b97c104f86837dd35441150357b998d8133a27ff8b14ed972f"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/source-catalog-remaining10.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/source-catalog-remaining10.ts",
+      "originalSha256": "41bf7d82d7d26ab3cf3a0f4456fe6566fcad52d908ce11709945081888e8a857",
+      "exactByteCopy": true,
+      "bytes": 18519,
+      "sha256": "41bf7d82d7d26ab3cf3a0f4456fe6566fcad52d908ce11709945081888e8a857"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/spec-utils.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/spec-utils.ts",
+      "originalSha256": "145b286aaccb41dff66ed925dd54b8640b893bd727415bccb9a626135e158aaa",
+      "exactByteCopy": true,
+      "bytes": 2034,
+      "sha256": "145b286aaccb41dff66ed925dd54b8640b893bd727415bccb9a626135e158aaa"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "originalSha256": "4ff1b5fdc9233c42b4a6fc813c7b8beab37ca1949227310602c837c75ba32533",
+      "exactByteCopy": true,
+      "bytes": 4770,
+      "sha256": "4ff1b5fdc9233c42b4a6fc813c7b8beab37ca1949227310602c837c75ba32533"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/variety-batch.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-batch.ts",
+      "originalSha256": "a80342ae3bc4ed347c6e38adece114fc426f69ba0964c84123d1d2837052d88f",
+      "exactByteCopy": true,
+      "bytes": 4120,
+      "sha256": "a80342ae3bc4ed347c6e38adece114fc426f69ba0964c84123d1d2837052d88f"
+    },
+    {
+      "archivePath": "files/packages/clinical-content/src/development-batch/2026-10-07-variety/wound-healing-remaining.ts",
+      "category": "task-owned-dated-clinical-content-and-tests",
+      "originalPath": "packages/clinical-content/src/development-batch/2026-10-07-variety/wound-healing-remaining.ts",
+      "originalSha256": "cdf08e8828c58d787c4545242205f2f6e2533fa46faf7ad38cf168126a8694fd",
+      "exactByteCopy": true,
+      "bytes": 12760,
+      "sha256": "cdf08e8828c58d787c4545242205f2f6e2533fa46faf7ad38cf168126a8694fd"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "category": "task-owned-new-gameplay-test",
+      "originalPath": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "originalSha256": "5ce6031c85857146d029614427dada5088731a787428fb830355ffc5d93ad141",
+      "exactByteCopy": true,
+      "bytes": 29129,
+      "sha256": "5ce6031c85857146d029614427dada5088731a787428fb830355ffc5d93ad141"
+    },
+    {
+      "archivePath": "files/tests/e2e/gs028-20261007.spec.ts",
+      "category": "task-owned-new-gameplay-test",
+      "originalPath": "tests/e2e/gs028-20261007.spec.ts",
+      "originalSha256": "df119c6a9b559232365dc3e7cc3a27ae64c569366660c5b011f68599d217397e",
+      "exactByteCopy": true,
+      "bytes": 22898,
+      "sha256": "df119c6a9b559232365dc3e7cc3a27ae64c569366660c5b011f68599d217397e"
+    },
+    {
+      "archivePath": "recovery/SOURCE_HASHES.json",
+      "category": "scoped-preconditions-hash-and-hunk-inventory",
+      "bytes": 33594,
+      "sha256": "1dfdbf35991f54a22d8dd25b2a5fe9ebdf1a32a7e38ee22df08f97f7ada8af19"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__answer-choice-timing.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 874,
+      "sha256": "ecba8d6becafae06d38994694cb09f6a92e6b691c97a89d8161419814fc1c992"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__approved-data__breast-cyst-pathway.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1178,
+      "sha256": "494c538c870731c326ce94b5b86fb41f029eb28623b3e642d34f3b6b525cfada"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-11__board-expansion-admission.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1511,
+      "sha256": "64289c6797913311674dd99bac83d0b36a9e880518a1b62751d1875c07226b6a"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-12__board-expansion-admission.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1156,
+      "sha256": "bc52c6a30968c9cb6fb5be558e14db2b8c5db54b0f69e95ad0e0c865d78d93a1"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-13__early-levels-admission.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1493,
+      "sha256": "52a28ae5d87df6a36e93a94dd7ae62ad49c0e95daf8393f996cd243013ef9803"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-17-bread-and-butter__bread-butter-admission.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1039,
+      "sha256": "873d3db1cf8a8ee0a49190cfb263e1d66b41e11f0592d1fdff2774ffadc080a9"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__development-batch__2026-09-17__brief-early-levels-admission.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1386,
+      "sha256": "1b37eba8a5c87550a0dea81d23b76f76e40d23c33e3938bcde5d0edcc67515f4"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__index.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 519,
+      "sha256": "f11e6052a8d2c9cd109ff4838eacb38770a16abc235f0fbdf72836e792ceb8d3"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__playable-patient-narrative.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1876,
+      "sha256": "f7eed42a65aa04bafc4c52c000998090464d29042edc7e7e079a7b2f570428df"
+    },
+    {
+      "archivePath": "recovery/patches/packages__clinical-content__src__synthetic-content.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1204,
+      "sha256": "3e63eae5489a1ca2063d5cb2fa71d7607b3b7159596efc2cf5212efe2a637544"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__test-choice-orders.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 2837,
+      "sha256": "379b11da1b5544101d675e5129154a2e7c4f22b24a3cb2ab1861238c8ce37f02"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__approved-clinical-admission.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1750,
+      "sha256": "ece48405488d59ab24033a16f844db50710f7003ab06981a5422f48eed3da7fa"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__clinical-content-withdrawal.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 741,
+      "sha256": "8216dd2d94aad10e3fdc8a7a41c0ccf26db8b4398025e1bcd2772120f8cdea41"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1305,
+      "sha256": "cba6892f6cfed8a3a0db5a3784cde3c8ac99c1410b61358f2a28d86eba7a2366"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__gs028-statistics-ethics-batch.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1270,
+      "sha256": "3b0398887079d743e1c9973a561c271cb24e12a4fc76e00d416e9a91d7be918c"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__patient-supply.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 861,
+      "sha256": "c25a670759caa9f9c08ef2fa74c3198784057cb11aadd66afedb8886fb9ca751"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__test-choice-order-inventory.test.ts.patch",
+      "category": "Oct7-only-inferred-counterfactual-recovery-patch",
+      "bytes": 1956,
+      "sha256": "a9d65f44242ffa63d54257e88aa13d9c33b00bbed15482d0a1f5d4a8e6b3cf5f"
+    },
+    {
+      "archivePath": "validation/accepted-validation-receipt.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 3057,
+      "sha256": "39c3841d187249f43ee88a806f819d6f098ff0cc1351ff4b703c49f153dc5b20"
+    },
+    {
+      "archivePath": "validation/browser-qa-receipt.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 2149,
+      "sha256": "caa81c729bd72b2a185221d1bc482243e6e2bcd9731d8655226a70e2edeef011"
+    },
+    {
+      "archivePath": "validation/editorial-acceptance.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 6411,
+      "sha256": "fda854b233a2253590f5e8097ab990a2f9c73a03a171db95d6714e95bbb9e18c"
+    },
+    {
+      "archivePath": "validation/packaging-checks.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 9442,
+      "sha256": "42213c593825f2ac7e90cfe8a5878bc8b17e63f2d4bc8839463066fed71be3a5"
+    },
+    {
+      "archivePath": "validation/payload-audit.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 1502,
+      "sha256": "8e2ba02f202a218233949aea8817f9189043e57c360e9deee3bc13d364955f68"
+    },
+    {
+      "archivePath": "validation/runtime-integration-evidence.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 68353,
+      "sha256": "d5d70d64d9df6df0401378ea5e938ae757f3222c932926e32bd0205252a2c0f3"
+    },
+    {
+      "archivePath": "validation/supply-snapshot-deltas.json",
+      "category": "sanitized-validation-or-audit-receipt",
+      "bytes": 28627,
+      "sha256": "92d250113107c2e0134d00440f68d1290fa7c096b966197e3a64b7a4ebe6ad3e"
+    },
+    {
+      "archivePath": "verify-checkpoint.mjs",
+      "category": "verify-only-scratch-reconstruction-tool",
+      "bytes": 10577,
+      "sha256": "371291111875f94698579f93200f318aa3fdaf42ef04957b7c0f833ffa89bd90"
+    }
+  ]
+}

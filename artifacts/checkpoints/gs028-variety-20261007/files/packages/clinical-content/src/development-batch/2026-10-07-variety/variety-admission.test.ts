@@ -1,0 +1,89 @@
+/// <reference types="node" />
+import { createHash } from "node:crypto";
+import { describe, expect, it } from "vitest";
+import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
+import { SYNTHETIC_CLINICAL_RELEASE as release } from "../../synthetic-content";
+import {
+  GS028_20261007_BATCH_MANIFEST as manifest,
+  GS028_20261007_CASES as cases,
+  GS028_20261007_CASE_REVIEWS as reviews,
+  GS028_20261007_TESTED_CONCEPTS as concepts,
+  GS028_20261007_TIMING_ENTRIES as timings,
+} from "./variety-batch";
+
+const conceptIds = new Set(concepts.map((item) => item.id));
+const caseIds = new Set(cases.map((item) => item.id));
+const hash = (value: unknown) => createHash("sha256")
+  .update(`${JSON.stringify(value, null, 2)}\n`).digest("hex");
+
+describe("GS-028 October 7 runtime admission", () => {
+  it("admits the accepted twenty objectives and eighty nodes exactly once", () => {
+    expect(manifest).toMatchObject({ testedConceptCount: 20, questionVariantCount: 80, caseCount: 78, decisionNodeCount: 80, resultGateCount: 2, publicReleaseAuthorized: false });
+    expect(release.concepts).toHaveLength(311);
+    expect(release.cases).toHaveLength(934);
+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
+    for (const concept of concepts) {
+      expect(release.concepts.filter((item) => item.id === concept.id)).toEqual([concept]);
+    }
+    for (const clinicalCase of cases) {
+      expect(release.cases.filter((item) => item.id === clinicalCase.id)).toEqual([clinicalCase]);
+    }
+  });
+
+  it("preserves every pre-batch release field and object exactly", () => {
+    const oldRelease = {
+      ...release,
+      concepts: release.concepts.filter((item) => !conceptIds.has(item.id)),
+      cases: release.cases.filter((item) => !caseIds.has(item.id)),
+    };
+    expect(oldRelease.concepts).toHaveLength(291);
+    expect(oldRelease.cases).toHaveLength(856);
+    expect(oldRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
+    // Captured from the complete active release before this batch was authored.
+    expect(hash(oldRelease)).toBe("bed6d41e73d29a8fb54eb107dd224e2087fbb412ea53c197566afc15a15e8abf");
+  });
+
+  it("retains clinic eligibility and unapproved draft metadata after admission", () => {
+    expect(release.publicationStatus).toBe("synthetic_unapproved_prototype");
+    for (const review of reviews) {
+      expect(review).toMatchObject({ reviewStatus: "needs_clinician_review", lastClinicianReview: null, earliestFacilityStage: 0, requiredClinicalSetting: "clinic" });
+    }
+    for (const clinicalCase of cases) {
+      expect(clinicalCase.routineEligible).toBe(true);
+      expect(clinicalCase.earliestFacilityStage).toBe(0);
+      expect(clinicalCase.requiredCapabilityIds).toEqual([]);
+      expect(clinicalCase.approvedInstantiationProfiles?.length).toBeGreaterThanOrEqual(2);
+      for (const node of clinicalCase.decisionNodes) expect(node.shuffleAnswers).toBe(true);
+    }
+  });
+
+  it("admits exact neutral timing for every node and all eight testing choices", () => {
+    expect(timings).toHaveLength(80);
+    expect(timings.filter((entry) => entry.classification.kind === "no_test")).toHaveLength(78);
+    let timedChoices = 0;
+    for (const entry of timings) {
+      expect(ANSWER_CHOICE_TIMING_REGISTRY.filter((registered) => registered.caseId === entry.caseId && registered.nodeId === entry.nodeId && registered.questionVariantId === entry.questionVariantId)).toEqual([entry]);
+      const node = cases.find((item) => item.id === entry.caseId)!.decisionNodes.find((item) => item.id === entry.nodeId)!;
+      if (entry.classification.kind === "test_choices") {
+        expect(entry.classification.choices).toHaveLength(4);
+        for (const choice of entry.classification.choices) {
+          expect(node.answerChoices.find((item) => item.id === choice.choiceId)?.label).toBe(choice.choiceLabel);
+          expect(choice.timing).toEqual({ kind: "test", timingProfileId: "timing.test.basic_labs" });
+          timedChoices += 1;
+        }
+      }
+    }
+    expect(timedChoices).toBe(8);
+  });
+
+  it("keeps all eighty new keys from being uniquely longest without exceptions", () => {
+    const nodes = cases.flatMap((clinicalCase) => clinicalCase.decisionNodes);
+    expect(nodes).toHaveLength(80);
+    for (const node of nodes) {
+      const key = node.answerChoices.find((choice) => choice.isCorrect)!;
+      const longestDistractor = Math.max(...node.answerChoices.filter((choice) => !choice.isCorrect).map((choice) => choice.label.length));
+      expect(key.label.length, node.questionVariantId).toBeLessThanOrEqual(longestDistractor);
+      expect(node.explanation, node.questionVariantId).toContain(`The correct answer is “${key.label}.”`);
+    }
+  });
+});

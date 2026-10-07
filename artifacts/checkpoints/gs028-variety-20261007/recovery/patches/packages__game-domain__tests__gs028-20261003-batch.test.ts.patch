@@ -1,0 +1,14 @@
+diff --git a/packages/game-domain/tests/gs028-20261003-batch.test.ts b/packages/game-domain/tests/gs028-20261003-batch.test.ts
+--- a/packages/game-domain/tests/gs028-20261003-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261003-batch.test.ts
+@@ -242,7 +242,7 @@ describe("GS-028 October 3 batch admission", () => {
+     expect(GS028_20261003_CASES).toHaveLength(78);
+     expect(GS028_20261003_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(80);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(291);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(856);
+-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts).toHaveLength(311);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases).toHaveLength(934);
++    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
+     for (const item of GS028_20261003_CASES) expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter((candidate) => candidate.id === item.id)).toHaveLength(1);
+     const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) => record.caseId.startsWith("case.gs028d."));

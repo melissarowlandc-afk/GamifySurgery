@@ -1,0 +1,46 @@
+diff --git a/packages/game-domain/src/test-choice-orders.ts b/packages/game-domain/src/test-choice-orders.ts
+--- a/packages/game-domain/src/test-choice-orders.ts
++++ b/packages/game-domain/src/test-choice-orders.ts
+@@ -355,4 +355,36 @@ const gs028October3Records: ExactTestChoiceOrderRecord[] = [
+ ];
+ 
++// These are outside-specialist workup choices. Incorrect selections retain the
++// corrected-forward policy: only the correct mixing assessment is ordered.
++// Explicit non-execution records keep their estimates independent of local labs.
++const gs028October7Records: ExactTestChoiceOrderRecord[] = [
++  ...([
++    ["elective-record-workup", "1", "Platelet-function testing"],
++    ["specialist-bruising-review", "2", "Platelet-count measurement"],
++  ] as const).flatMap(([slug, version, plateletLabel]) => {
++    const caseId = `case.gs028e.coagulation.paired-${slug}`;
++    const nodeId = `node.gs028e.coagulation.paired-${slug}.1`;
++    const questionId = `question.coagulation.isolated-aptt-mixing-workup.v${version}`;
++    return [
++      record(caseId, nodeId, questionId, `correct_${version}`, "aPTT mixing study", "timing.test.basic_labs", {
++        kind: "result_gate_route_override",
++        serviceId: "service.basic_labs",
++        allowedRouteIds: ["route.basic_labs.outsourced"],
++        allowOnsiteEquivalents: false,
++        externalRemainder: "The outside specialist coagulation laboratory performs immediate and incubated mixing analysis and the parallel factor workup; this clinic does not perform that specialized analysis.",
++      }),
++      record(caseId, nodeId, questionId, `d1_${version}`, plateletLabel, "timing.test.basic_labs", {
++        kind: "not_executed", reason: "external_only",
++      }),
++      record(caseId, nodeId, questionId, `d2_${version}`, "Fibrinogen activity measurement", "timing.test.basic_labs", {
++        kind: "not_executed", reason: "external_only",
++      }),
++      record(caseId, nodeId, questionId, `d3_${version}`, "Prothrombin-time measurement", "timing.test.basic_labs", {
++        kind: "not_executed", reason: "external_only",
++      }),
++    ];
++  }),
++];
++
+ const explicitNonExecutionRecords: ExactTestChoiceOrderRecord[] = [
+   record("case.l2.gastroparesis.general-confirmatory-testing.v1", "node.gastroparesis.general-confirmatory-testing.v1", "question.gastroparesis.general-confirmatory-testing.v1", "four_hour_solid_meal_scintigraphy", "Four-hour solid-meal gastric emptying scintigraphy", "timing.test.four_hour_protocol", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+@@ -404,4 +436,5 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
+   ...gs028October2Records,
+   ...gs028October3Records,
++  ...gs028October7Records,
+   ...explicitNonExecutionRecords,
+   ...existingTerminalProcedureRecords,

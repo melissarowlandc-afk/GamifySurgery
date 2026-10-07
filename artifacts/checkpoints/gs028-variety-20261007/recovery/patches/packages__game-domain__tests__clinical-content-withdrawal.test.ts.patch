@@ -1,0 +1,15 @@
+diff --git a/packages/game-domain/tests/clinical-content-withdrawal.test.ts b/packages/game-domain/tests/clinical-content-withdrawal.test.ts
+--- a/packages/game-domain/tests/clinical-content-withdrawal.test.ts
++++ b/packages/game-domain/tests/clinical-content-withdrawal.test.ts
+@@ -31,4 +31,5 @@ import {
+   GS028_20261002_CASES,
+   GS028_20261003_CASES,
++  GS028_20261007_CASES,
+ } from "@gamify-surgery/clinical-content";
+ import {
+@@ -108,4 +109,5 @@ describe("withdrawn AI-authored clinical pilot", () => {
+       ...GS028_20261002_CASES.map((clinicalCase) => clinicalCase.id),
+       ...GS028_20261003_CASES.map((clinicalCase) => clinicalCase.id),
++      ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),
+     ]);
+   });

@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-07",
+  "origin": "http://127.0.0.1:4327",
+  "browserProfile": "fresh Playwright contexts",
+  "owner4173OrPrivate4174Used": false,
+  "sourceEditorialReviewBundleSha256": "d714e60052a7124b4efa9a4c8b7d06a6f35a30e63087cef48c1eb5d0ef2d87b0",
+  "browserSpec": "tests/e2e/gs028-20261007.spec.ts",
+  "browserSpecSha256": "df119c6a9b559232365dc3e7cc3a27ae64c569366660c5b011f68599d217397e",
+  "buildCommand": "bundled-node node_modules/vite/bin/vite.js build --outDir ../../.local-dev/gs028-20261007/browser/build (cwd apps/player)",
+  "buildExitCode": 0,
+  "buildLog": ".local-dev/gs028-20261007/browser/build-final.log",
+  "largeBundleWarning": true,
+  "builtEntrySha256": "86174a105137d4cdb69bb72e0b2fe8acfb9383bd65dce0202d095e942c60adce",
+  "playwrightCommand": "GAMIFY_E2E_EXTERNAL_SERVER=1 GAMIFY_E2E_BASE_URL=http://127.0.0.1:4327 bundled-node node_modules/@playwright/test/cli.js test tests/e2e/gs028-20261007.spec.ts --project=desktop-chrome --workers=1 --output=.local-dev/gs028-20261007/browser/test-results-desktop-final",
+  "projectsExecuted": [
+    "desktop-chrome"
+  ],
+  "passed": 4,
+  "failed": 0,
+  "elapsedReported": "2.4m",
+  "browserLog": ".local-dev/gs028-20261007/browser/desktop-final.log",
+  "caseIds": [
+    "case.gs028e.radiology.c2-unidentified-implant",
+    "case.gs028e.immunology.c1-mediator-release",
+    "case.gs028e.immunology.c2-nickel-cellular",
+    "case.gs028e.mis-principles.c3-normal-joint-question",
+    "case.gs028e.coagulation.paired-elective-record-workup",
+    "case.gs028e.coagulation.paired-specialist-bruising-review"
+  ],
+  "liveClockReturnAndDeparture": true,
+  "resultFastForwardOrInjection": false,
+  "sourceClinicalApprovalGranted": false,
+  "visualInspection": "MRI, IgE, contact, shoulder, all timed choices and both returned interpretation choice sets inspected; readable at1440x1000.",
+  "supplementalStrictE2ETypecheck": "Only pre-existing unchanged tests/e2e/helpers.ts:601 possibly-undefined diagnostic; no new-spec diagnostic remains.",
+  "finalOwnPreviewPid": 19860,
+  "stoppedAndPortFree": true,
+  "shutdownReceipt": ".local-dev/gs028-20261007/browser/shutdown-final.json"
+}

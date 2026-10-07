@@ -1,0 +1,14 @@
+diff --git a/packages/game-domain/tests/patient-supply.test.ts b/packages/game-domain/tests/patient-supply.test.ts
+--- a/packages/game-domain/tests/patient-supply.test.ts
++++ b/packages/game-domain/tests/patient-supply.test.ts
+@@ -226,7 +226,7 @@ describe("routine patient supply", () => {
+   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
+     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+-    expect(release.concepts).toHaveLength(291);
+-    expect(release.cases).toHaveLength(856);
+-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
++    expect(release.concepts).toHaveLength(311);
++    expect(release.cases).toHaveLength(934);
++    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
+ 
+     const noCapabilities = new Set<string>();

@@ -1,0 +1,28 @@
+diff --git a/packages/game-domain/tests/test-choice-order-inventory.test.ts b/packages/game-domain/tests/test-choice-order-inventory.test.ts
+--- a/packages/game-domain/tests/test-choice-order-inventory.test.ts
++++ b/packages/game-domain/tests/test-choice-order-inventory.test.ts
+@@ -18,5 +18,5 @@ describe("active-release test-choice order inventory", () => {
+       return entry?.classification.kind === "test_choices" ? entry.classification.choices.map((choice) => ({ isTerminal: index === clinicalCase.decisionNodes.length - 1, isCorrect: node.answerChoices.find((candidate) => candidate.id === choice.choiceId)?.isCorrect === true, timing: choice.timing })) : [];
+     })).filter((item) => item.timing.kind === "test");
+-    expect(timed).toHaveLength(1414);
++    expect(timed).toHaveLength(1422);
+     expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(124);
+   });
+@@ -44,5 +44,9 @@ describe("active-release test-choice order inventory", () => {
+           }
+           if (!choice.isCorrect) {
+-            expect(record, `incorrect test selection ${key} must not have an execution record`).toBeUndefined();
++            if (record) {
++              expect(record.disposition.kind, `incorrect test selection ${key} must retain no-extra-order policy`).toBe("not_executed");
++              expect(record.choiceLabel).toBe(choice.label);
++              expect(record.timingProfileId).toBe(timing.timingProfileId);
++            }
+             continue;
+           }
+@@ -81,5 +85,5 @@ describe("active-release test-choice order inventory", () => {
+       const active = activeChoices.get(exactKey);
+       expect(active, `orphan or guessed record ${exactKey}`).toBeDefined();
+-      expect(active?.correct).toBe(true);
++      if (!active?.correct) expect(record.disposition.kind).toBe("not_executed");
+       expect(active?.label).toBe(record.choiceLabel);
+       expect(active?.timingProfileId).toBe(record.timingProfileId);

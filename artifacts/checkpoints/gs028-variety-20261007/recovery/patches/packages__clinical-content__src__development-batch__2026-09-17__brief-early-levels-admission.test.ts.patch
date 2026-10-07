@@ -1,0 +1,14 @@
+diff --git a/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts b/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
+--- a/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
+@@ -12,7 +12,7 @@ describe("September 17 brief early-level admission", () => {
+     expect(manifest).toMatchObject({ authoringConceptCount: 20, testedConceptCount: 20, questionVariantCount: 80, caseCount: 48, decisionNodeCount: 80, resultGateCount: 32 });
+     expect([concepts, questions, cases, reviews, timings].map((items) => items.length)).toEqual([20, 80, 48, 48, 80]);
+-    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(291);
+-    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(856);
+-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1135);
++    expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(311);
++    expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(934);
++    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1215);
+     for (const clinicalCase of cases) expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
+   });

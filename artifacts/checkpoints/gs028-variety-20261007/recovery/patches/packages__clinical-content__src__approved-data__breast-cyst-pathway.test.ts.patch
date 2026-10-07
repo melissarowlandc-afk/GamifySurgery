@@ -1,0 +1,15 @@
+diff --git a/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts b/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
+--- a/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
++++ b/packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts
+@@ -14,4 +14,5 @@ import { GS028_STATS_ETHICS_20260929_CASES } from "../development-batch/2026-09-
+ import { GS028_20261002_CASES } from "../development-batch/2026-10-02-pre-endoscopy/pre-endoscopy-batch";
+ import { GS028_20261003_CASES } from "../development-batch/2026-10-03-coverage-gaps/coverage-gaps-batch";
++import { GS028_20261007_CASES } from "../development-batch/2026-10-07-variety/variety-batch";
+ import { ROW_047_CASES } from "./aaa-female-sex-perioperative-mortality";
+ import { ROW_048_CASES } from "./desmoid-management-pathway";
+@@ -253,4 +254,5 @@ describe("owner row 30 approved breast-cyst pathway", () => {
+       ...GS028_20261002_CASES.map((clinicalCase) => clinicalCase.id),
+       ...GS028_20261003_CASES.map((clinicalCase) => clinicalCase.id),
++      ...GS028_20261007_CASES.map((clinicalCase) => clinicalCase.id),
+     ]);
+     expect(
