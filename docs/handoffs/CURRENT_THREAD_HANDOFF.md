@@ -1,3 +1,21 @@
+> GS-036 LEVEL 3 GOALS GITHUB BACKUP VERIFIED (2026-10-07, Codex).
+> Owner-authorized checkpoint e9dbb0611e0f5d15216aacc41a9e872bcc025db9 was pushed
+> to origin/beta and independently verified with git ls-remote. Recovery package:
+> artifacts/checkpoints/gs036-level-three-goals-20261007/ (28 files,27 payloads).
+> Preserves ten goal-only patches, three task tests, six synthetic browser PNGs,
+> validation records, plan snapshot and safe recovery tooling. Seven concurrent
+> availability hunks and all unrelated source/art/clinical/motion work excluded.
+> Sol ambulatory_setup_review verified prerequisites and prepared the package.
+> Root reviewed actual patches,11 exact copies,27 hashes, ten forward/reverse
+> reconstructions and baseline roundtrips, all six PNGs and30 staged blobs.
+> Source/secret/privacy/clinical/generated-asset audit PASS. Accepted implementation
+> checks:56 focused tests,6 browser tests,8 TypeScript configs and boundaries PASS.
+> Archive-local attributes preserve exact bytes. Recovery needs compatible dirty
+> baselines; beta is not a clean runnable Level3 checkout. Other active work stays
+> local. No merge/release/deployment/Pages publication or live save change.
+> Owner pathway stays START_GAME.cmd -> http://127.0.0.1:4173, same profile.
+> Plan: docs/execplans/gs036-level-three-goals.md. Bounded goal task complete.
+
 > GS-036 LEVEL 3 GOALS CONDENSED LOCALLY (2026-10-07, Codex).
 > Owner approved the Level 2-style simplification. Main Level 3 checklist is now
 > 500 current-level XP, satisfaction above90%, Hire Pharmacist, and Complete your

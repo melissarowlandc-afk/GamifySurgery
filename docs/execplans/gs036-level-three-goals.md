@@ -170,3 +170,37 @@ checkout or copy unrelated dirty source merely to make it self-contained.
   workflow: pushes deploy only from main, not beta.
 - Next: prepare the exact scoped package, independently audit it, commit/push,
   verify the remote commit, and record the verified backup in the handoff.
+
+## Verified GitHub checkpoint — 2026-10-07
+
+- Owner-authorized recovery checkpoint `e9dbb0611e0f5d15216aacc41a9e872bcc025db9` was pushed to
+  `origin/beta`; exact remote SHA independently verified with `git ls-remote`.
+  Commit: https://github.com/melissarowlandc-afk/GamifySurgery/commit/e9dbb0611e0f5d15216aacc41a9e872bcc025db9.
+- Sol `ambulatory_setup_review` prepared the bounded archive (28 files:
+  27 payloads plus manifest;1,075,452 payload bytes). Ten goal-only patches,
+  three exact new tests, six synthetic PNGs, plan snapshot, original/adapted
+  browser runners, validation receipt, verifier, README and byte-preserving
+  attributes. Seven concurrent availability hunks excluded; full dirty baselines
+  and unrelated implementation deliberately omitted.
+- Root inspected all ten actual patches and compared reconstructed AppShell,
+  viewModels and CSS to shared files: only the seven excluded availability hunks
+  differ. Reviewed all six PNGs and source/secret/privacy/clinical/asset scope.
+- Independent archive audit PASS:27 payload hashes,11 exact original copies,
+  ten forward/reverse checks and target hashes, exact baseline roundtrips,
+  three reconstructed new tests, and all30 staged blobs/path scope verified.
+  Staged non-patch whitespace is clean. Patch-container blank context lines are
+  intentionally preserved; introduced source lines are whitespace-clean and
+  worker strict apply checks passed10/10. No game-check rerun is claimed here;
+  accepted56 focused tests,6 browser checks,8 types and boundaries are above.
+- Manifest SHA256:3885fbe621b8e7f31303a30b2d770695238e1c6feffe826f3dc3ef62d3fac146.
+  This recovery package requires exact compatible baselines and shared Level3
+  dependencies. It is not a clean runnable beta snapshot. Frozen archive plan
+  and receipt describe pre-push evidence; this section records the verified push.
+- CURRENT_THREAD_HANDOFF.md records branch/commit. Only GS036 documentation
+  prefixes were staged over the committed handoff; all concurrent dirty entries
+  and runtime work were preserved. No merge, release, deployment, Pages
+  publication, owner storage/origin/launcher/profile changes or history rewrite.
+
+The requested goal changes and GitHub backup are complete. No further action is
+required within this bounded task; continue owner playtesting through the
+canonical local pathway in the existing profile.
