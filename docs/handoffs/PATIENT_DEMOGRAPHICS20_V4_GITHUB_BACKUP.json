@@ -1,0 +1,28 @@
+{
+  "status": "verified",
+  "branch": "beta",
+  "checkpointCommit": "dfe25aac04a2ce40424973471db1079cfc883daa",
+  "remoteRef": "refs/heads/beta",
+  "remoteVerifiedSha": "dfe25aac04a2ce40424973471db1079cfc883daa",
+  "verifiedAt": "2026-10-07T22:38:05.965Z",
+  "counts": {
+    "newPatients": 20,
+    "newPoses": 160,
+    "totalIdentities": 225,
+    "totalAssets": 1830,
+    "adultPatientDesigns": 116
+  },
+  "validation": {
+    "focusedTests": 56,
+    "domainTypecheck": "PASS",
+    "playerTypecheck": "PASS",
+    "portableFiles": 4362,
+    "auditedGitPaths": 4365,
+    "byteExactStagedBlobs": true,
+    "newHttpUrls": 160,
+    "recoveryPatches": 6
+  },
+  "backupGuide": "artifacts/character-statics/patient-demographics20-v4/runtime-backup/README.md",
+  "archiveBoundary": "Art/integration recovery checkpoint; mixed current-game runtime files and older historical native/proof chains excluded.",
+  "deployed": false
+}

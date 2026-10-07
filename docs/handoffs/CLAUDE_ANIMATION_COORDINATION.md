@@ -1020,3 +1020,7 @@ blurs on zoom-in. Litter verified at 110/50/10% zoom with a render-only injected
 item. Added a `player-qa-5176` entry to `.claude/launch.json` because 5175 was
 in use by another session. Owner pathway is unchanged: START_GAME.cmd ->
 http://127.0.0.1:4173. Nothing committed or pushed.
+
+
+## Codex complete — approved demographic batch4 integration and backup (2026-10-07)
+All20 approved demographic4 patients /160 poses are locally integrated;225 identities/1830 assets/116 adults. Existing205/1670 and source/contact/alpha claims retained. Sol integration and read-only audit finished; root actual-diff review, focused tests/typechecks, strict art/chair/runtime/rerun/HTTP and byte-exact recovery checks passed. Verified backup beta @ dfe25aac04a2ce40424973471db1079cfc883daa. Scope is faithful art/integration recovery archive with six post-runtime snapshots/deltas; mixed live game dependencies remain unstaged. No publication. Canonical origin127.0.0.1:4173 unchanged, owner storage untouched. Claimed catalog/registry/global-provenance and newbatch ownership is released; all workers stopped. See current handoff and runtime-backup/README.md for recovery boundary.
