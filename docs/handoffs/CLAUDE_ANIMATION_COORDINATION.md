@@ -1024,3 +1024,62 @@ http://127.0.0.1:4173. Nothing committed or pushed.
 
 ## Codex complete — approved demographic batch4 integration and backup (2026-10-07)
 All20 approved demographic4 patients /160 poses are locally integrated;225 identities/1830 assets/116 adults. Existing205/1670 and source/contact/alpha claims retained. Sol integration and read-only audit finished; root actual-diff review, focused tests/typechecks, strict art/chair/runtime/rerun/HTTP and byte-exact recovery checks passed. Verified backup beta @ dfe25aac04a2ce40424973471db1079cfc883daa. Scope is faithful art/integration recovery archive with six post-runtime snapshots/deltas; mixed live game dependencies remain unstaged. No publication. Canonical origin127.0.0.1:4173 unchanged, owner storage untouched. Claimed catalog/registry/global-provenance and newbatch ownership is released; all workers stopped. See current handoff and runtime-backup/README.md for recovery boundary.
+
+## 2026-10-07 — Hallway decor along room walls + runner rugs (Claude, owner-approved)
+
+- Owner report: no hallway benches, rugs, art or plants visible in the game.
+  Cause: corridor decor only placed against exterior (unbacked) north/west
+  walls; the owner's 63-room save has 0 such straight hallway tiles.
+- Owner approval (chat, 2026-10-07): "I approve all your proposals including
+  the runner rugs so you can create and implement those all into the game."
+  Scope: corridor decor also against walls shared with rooms; art where it
+  reads; new hallway runner rugs.
+- Files: `apps/player/src/facility/roomTouchups.ts`,
+  `roomTouchups.test.ts`, `drawTouchupCorridor` in `FacilityScene.ts`.
+  No save, balance, domain, clinical or launcher changes.
+- **Done 2026-10-07.** `getTouchupCorridorDecor` now takes walls
+  `{ north: "tall" | "backed" | null, west, east }` and openings
+  `{ north, west, east }`: benches/plants/sanitizers stand against
+  room-backed north edges (art only on tall exterior walls, since a
+  room-backed edge has no wall face); plants on west and east side walls.
+  New `getTouchupCorridorRunnerPrimitives`: 4-tile runners with 3-tile gaps
+  on straight one-wide runs (3 palettes), drawn in the hallway floor phase.
+  Layout fixture `tests/e2e/fixtures/hallway-decor-level3-layout.json`
+  (room/door coordinates only) + `tests/e2e/hallway-decor.spec.ts`; captures
+  in `artifacts/screenshots/hallway-decor/` (0 → 10 decor sprites plus
+  runners). Unit 10/10 in `roomTouchups.test.ts`; facility+art 332/332;
+  typecheck PASS; room-touchups e2e PASS on 5181. Remaining player failures
+  (13, session clinical-timing/storage tests) are outside these files.
+  Lab copy `tools/room-design/touchup-2026-10/build/room-touchups.mjs` keeps
+  the old signature (design snapshot). Owner pathway unchanged:
+  START_GAME.cmd -> http://127.0.0.1:4173; existing saves unaffected.
+
+## 2026-10-07 — Hallway short south wall (Claude, owner-requested)
+
+- Owner (chat): "The hallways also need a short wall on the south wall if
+  there is no room south of it. The short wall needs to match the style of
+  all the others." Scope: hallway exposed south edge rendering in
+  `FacilityScene.ts` (hallway edge painter) + tests/captures.
+- **Done 2026-10-07.** Cause: the hallway's exposed south lip was painted on
+  the floor layer inside `drawApprovedHallwayExposedEdges`, so the sidewalk
+  and grounds covered it. New `drawApprovedHallwaySouthForeground` paints it
+  on a depth-sorted `hallway-south:<id>` graphics (same depth rule, colours,
+  door jambs and side-cap run-down as `drawApprovedSouthForeground`); the old
+  floor-layer south loop was removed. Facility unit 274/274; hallway-decor,
+  room-touchups and canonical-hallway-edges e2e PASS on 5181; captures in
+  `artifacts/screenshots/hallway-decor/south-edge.png`. Player typecheck has
+  one unrelated error in Codex's in-progress
+  `packages/game-domain/src/diagnostic-timing.ts`. Owner pathway unchanged.
+- 2026-10-07 — Claude — **backup verified** — Owner said "push to GitHub".
+  Checkpoint `a2833734c07bdbf1e61cafb7f4da096d34dc0d09` (`backup: preserve
+  owner-approved hallway decor, runner rugs and south wall`) was pushed to
+  `origin/beta` and confirmed with `git ls-remote`.
+  - **Archive:** `artifacts/checkpoints/hallway-decor-20261007/`: full copies
+    of `roomTouchups.ts` and its test, the `touchup-v1` sprites, the
+    hallway-decor e2e spec and fixture; one Claude-only `FacilityScene.ts`
+    patch (5 hunks) that rebuilds the live file byte for byte; evidence;
+    manifest; validation.
+  - **Not staged:** shared dirty source files, the earlier room touch-up
+    wiring in shared files, other sessions' work and the owner's save.
+  - **Not done:** no merge, release, deployment or Pages publication. The
+    owner pathway is unchanged.
