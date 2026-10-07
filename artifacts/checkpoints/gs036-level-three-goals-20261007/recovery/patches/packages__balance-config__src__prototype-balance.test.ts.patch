@@ -1,0 +1,23 @@
+diff --git a/packages/balance-config/src/prototype-balance.test.ts b/packages/balance-config/src/prototype-balance.test.ts
+index be544a0cba7feda11600bfe114f6aa97b2acd0f8..8649716517d6092a108098d9f6bb6f08de8f977f 100644
+--- a/packages/balance-config/src/prototype-balance.test.ts
++++ b/packages/balance-config/src/prototype-balance.test.ts
+@@ -215,16 +215,8 @@ describe("Level 2 expanded outpatient definitions", () => {
+           level: 3,
+           minimumClinicalXp: 500,
+           satisfactionMustBeGreaterThan: 90,
+-          requiredRoomDefinitionIds: [
+-            "room.ambulatory_or",
+-            "room.laboratory",
+-            "room.pharmacy",
+-          ],
+-          requiredStaffRoleIds: [
+-            "staff.or_nurse",
+-            "staff.laboratory_technician",
+-            "staff.pharmacist",
+-          ],
++          requiredRoomDefinitionIds: [],
++          requiredStaffRoleIds: ["staff.pharmacist"],
+           nextFacilityLevel: null,
+         }),
+       ]),

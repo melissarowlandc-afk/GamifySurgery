@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs036-level-three-goals-20261007",
+  "acceptedDate": "2026-10-07",
+  "sourceBranch": "beta",
+  "sourceHead": "d0fc49b92a92d628f1ca025e9283589dfd887157",
+  "recoveryOnly": true,
+  "cleanRunnableCheckout": false,
+  "fullBaselinesIncluded": false,
+  "authorization": "Owner said Okay, push to GitHub; parent retains audit, commit, push and remote verification.",
+  "payloadCount": 27,
+  "payloadBytes": 1075452,
+  "excludedConcurrentScope": [
+    "patient availability",
+    "diagnostic timing",
+    "clinical production",
+    "art",
+    "motion",
+    "history retirement"
+  ],
+  "payloads": [
+    {
+      "archivePath": ".gitattributes",
+      "category": "checkpoint-byte-preservation",
+      "originalPath": null,
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "archivePath": "README.md",
+      "category": "recovery-instructions-and-limitations",
+      "originalPath": null,
+      "bytes": 6853,
+      "sha256": "f9bcb06aeeda93c690fe85db62466aa1879813636cf38460335f8f1293ef7d3c"
+    },
+    {
+      "archivePath": "documents/gs036-level-three-goals.md",
+      "category": "task-plan-snapshot",
+      "originalPath": "docs/execplans/gs036-level-three-goals.md",
+      "bytes": 10841,
+      "sha256": "8559c62c21b4482f5283cca89949c57c358d19abcacf3584014ff1387b782926"
+    },
+    {
+      "archivePath": "files/apps/player/src/session/level3GoalsViewModels.test.ts",
+      "category": "task-owned-new-test",
+      "originalPath": "apps/player/src/session/level3GoalsViewModels.test.ts",
+      "bytes": 5652,
+      "sha256": "94a59a3e397c8e67744affc6747e83f71e8b6d3a293d97228b6ba0532c5addf9"
+    },
+    {
+      "archivePath": "files/packages/game-domain/tests/level-three-goals.test.ts",
+      "category": "task-owned-new-test",
+      "originalPath": "packages/game-domain/tests/level-three-goals.test.ts",
+      "bytes": 6964,
+      "sha256": "0f7fe50e10bcddefe8837f23f1817096f2da47120db5fb5831939688bc9b15f2"
+    },
+    {
+      "archivePath": "files/tests/e2e/level-three-goals.spec.ts",
+      "category": "task-owned-new-test",
+      "originalPath": "tests/e2e/level-three-goals.spec.ts",
+      "bytes": 7788,
+      "sha256": "f0fa933eb3e218b0c000e082127b79cedab70fef766301f4401112d1fd4fa29c"
+    },
+    {
+      "archivePath": "recovery/SOURCE_HASHES.json",
+      "category": "recovery-preconditions-and-hunk-inventory",
+      "originalPath": null,
+      "bytes": 18573,
+      "sha256": "9e1b1896bb59289a42ad5bd62346b77256add22cc9a813dd886f88a57686ab53"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__AppShell.tsx.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/AppShell.tsx",
+      "bytes": 3031,
+      "sha256": "c98c3639cbba2c7f441780e071c78579546cd94e754b4de5df4eb032df783282"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/session/viewModels.ts",
+      "bytes": 5342,
+      "sha256": "56b76ea9630023b661878a531e170d5a5024ee81cba5739137d539955ffc034e"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__styles__global.css.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/styles/global.css",
+      "bytes": 1146,
+      "sha256": "7d6e16e278a255cddd99600971a1603060220cd621cfac23dac647a55340ea01"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__ui__GoalsPanel.test.tsx.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/ui/GoalsPanel.test.tsx",
+      "bytes": 585,
+      "sha256": "2796dfd6bf4376d524c83e17ae0df2c69af588d8d040a56c539ce09b6e073d48"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__ui__GoalsPanel.tsx.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/ui/GoalsPanel.tsx",
+      "bytes": 5658,
+      "sha256": "c1925ca9dc7bca894391b87dcde35348726447d80220af66980c526295e3eebe"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__ui__index.ts.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/ui/index.ts",
+      "bytes": 441,
+      "sha256": "a516483d3a09441560e909fbce4c0ef2c9e4e240eec6a70ab13823536c0d5070"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "apps/player/src/ui/types.ts",
+      "bytes": 1027,
+      "sha256": "a4a208100be1a329b84a1e0a03a192e5bdf4f342b04fe51d26e8bf5e4b375f4a"
+    },
+    {
+      "archivePath": "recovery/patches/packages__balance-config__src__prototype-balance.test.ts.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "packages/balance-config/src/prototype-balance.test.ts",
+      "bytes": 987,
+      "sha256": "a8a550a5bc8d36f7493b5d84b8101fb95995455e114d05b68c9f65898f6cd42f"
+    },
+    {
+      "archivePath": "recovery/patches/packages__balance-config__src__prototype-balance.ts.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "packages/balance-config/src/prototype-balance.ts",
+      "bytes": 1194,
+      "sha256": "f6f5baf73ce783182d8994c2fc05ac5241cb43dd8a7909de79c790eece294071"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__level-two-progression.test.ts.patch",
+      "category": "goal-only-recovery-patch",
+      "originalPath": "packages/game-domain/tests/level-two-progression.test.ts",
+      "bytes": 939,
+      "sha256": "1ec3852b5216a66975a9940003c5fe1587b48564d6333b89c67d9379e79bc10d"
+    },
+    {
+      "archivePath": "validation/accepted-validation-receipt.json",
+      "category": "recorded-validation-receipt",
+      "originalPath": null,
+      "bytes": 2271,
+      "sha256": "4dd279f9e4a5e203748fb29ea9cbc025afcab58850be0cc8f289be940edbddb0"
+    },
+    {
+      "archivePath": "validation/run-browser.mjs",
+      "category": "adapted-isolated-browser-runner",
+      "originalPath": ".local-dev/gs036-level-three-goals/run-browser.mjs",
+      "transformation": "Only root/import resolution adapted and compatible-checkout test existence checked; original runner retained separately.",
+      "bytes": 1630,
+      "sha256": "76386958299f696ef1ffef54daeca0ac9f8314f21aee86e8358032207b1c9ed1"
+    },
+    {
+      "archivePath": "validation/run-browser.original.mjs",
+      "category": "exact-original-isolated-browser-runner",
+      "originalPath": ".local-dev/gs036-level-three-goals/run-browser.mjs",
+      "bytes": 1292,
+      "sha256": "5e0187be1c73c6381deaa8048dd3795387509197a68557ba42df939da097a140"
+    },
+    {
+      "archivePath": "validation/screenshots/compact-desktop-chrome-completed.png",
+      "category": "synthetic-browser-screenshot",
+      "originalPath": ".local-dev/gs036-level-three-goals/browser/compact-desktop-chrome-completed.png",
+      "width": 1024,
+      "height": 768,
+      "syntheticFixture": true,
+      "visualReview": "Previously inspected by the parent during accepted GS-036 validation.",
+      "bytes": 177379,
+      "sha256": "aff0662d0a627f7ef045df14bd1e0c804821a8bc50ef80648467d97433833e54"
+    },
+    {
+      "archivePath": "validation/screenshots/compact-desktop-chrome-condensed.png",
+      "category": "synthetic-browser-screenshot",
+      "originalPath": ".local-dev/gs036-level-three-goals/browser/compact-desktop-chrome-condensed.png",
+      "width": 246,
+      "height": 222,
+      "syntheticFixture": true,
+      "visualReview": "Previously inspected by the parent during accepted GS-036 validation.",
+      "bytes": 7814,
+      "sha256": "618fd3b0cd3ed09626a27254b61678d8fc07ad43e4f48852605de76381c094c6"
+    },
+    {
+      "archivePath": "validation/screenshots/compact-desktop-chrome-expanded.png",
+      "category": "synthetic-browser-screenshot",
+      "originalPath": ".local-dev/gs036-level-three-goals/browser/compact-desktop-chrome-expanded.png",
+      "width": 1024,
+      "height": 768,
+      "syntheticFixture": true,
+      "visualReview": "Previously inspected by the parent during accepted GS-036 validation.",
+      "bytes": 176461,
+      "sha256": "5214d5c8bfd957c598f18d32ad324cae2110abfd8ebdf6d02f7dad1a1eb890d9"
+    },
+    {
+      "archivePath": "validation/screenshots/desktop-chrome-completed.png",
+      "category": "synthetic-browser-screenshot",
+      "originalPath": ".local-dev/gs036-level-three-goals/browser/desktop-chrome-completed.png",
+      "width": 1440,
+      "height": 1000,
+      "syntheticFixture": true,
+      "visualReview": "Previously inspected by the parent during accepted GS-036 validation.",
+      "bytes": 304086,
+      "sha256": "a65f5ff4249fcb49c011a07713fdea51c924196c9e660ee4e771f117e8881b67"
+    },
+    {
+      "archivePath": "validation/screenshots/desktop-chrome-condensed.png",
+      "category": "synthetic-browser-screenshot",
+      "originalPath": ".local-dev/gs036-level-three-goals/browser/desktop-chrome-condensed.png",
+      "width": 274,
+      "height": 302,
+      "syntheticFixture": true,
+      "visualReview": "Previously inspected by the parent during accepted GS-036 validation.",
+      "bytes": 10769,
+      "sha256": "70b60633992c98ab25b2c0470093eb9001b10941ee38b403b7218d2697bd6ee8"
+    },
+    {
+      "archivePath": "validation/screenshots/desktop-chrome-expanded.png",
+      "category": "synthetic-browser-screenshot",
+      "originalPath": ".local-dev/gs036-level-three-goals/browser/desktop-chrome-expanded.png",
+      "width": 1440,
+      "height": 1000,
+      "syntheticFixture": true,
+      "visualReview": "Previously inspected by the parent during accepted GS-036 validation.",
+      "bytes": 306265,
+      "sha256": "e6071ed52b35f38ce0ee03d1d8e51a01570416332dc59138198d7347512eb7ab"
+    },
+    {
+      "archivePath": "verify-checkpoint.mjs",
+      "category": "safe-archive-and-scratch-reconstruction-verifier",
+      "originalPath": null,
+      "bytes": 10456,
+      "sha256": "0e26226a989a6d059889ae8b21d5333316e8396044012a973bbb25ce9f0f4dcd"
+    }
+  ]
+}

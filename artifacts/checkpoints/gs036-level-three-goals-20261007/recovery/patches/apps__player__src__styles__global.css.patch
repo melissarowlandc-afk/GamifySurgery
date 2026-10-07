@@ -1,0 +1,45 @@
+diff --git a/apps/player/src/styles/global.css b/apps/player/src/styles/global.css
+index 99be431648c0c3941247463791bba638b7a59655..f50ed458b6722ed639d06296414aa5a92fbc3a1b 100644
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -955,11 +955,11 @@ p {
+   flex-direction: column;
+ }
+ 
+-.endoscopy-goal-setup {
++.procedure-goal-setup {
+   margin-top: 0.2rem;
+ }
+ 
+-.endoscopy-goal-setup > ul {
++.procedure-goal-setup > ul {
+   display: grid;
+   gap: 0.25rem;
+   margin: 0.25rem 0 0;
+@@ -970,7 +970,7 @@ p {
+   text-decoration: none;
+ }
+ 
+-.endoscopy-goal-setup > ul li {
++.procedure-goal-setup > ul li {
+   display: grid;
+   grid-template-columns: auto minmax(0, 1fr) auto;
+   gap: 0.3rem;
+@@ -979,7 +979,7 @@ p {
+   text-decoration: none;
+ }
+ 
+-.endoscopy-goal-setup .text-button {
++.procedure-goal-setup .text-button {
+   min-height: 24px;
+   padding: 0.1rem 0.3rem;
+   color: var(--accent-dark);
+@@ -5871,7 +5871,7 @@ body {
+     flex: 0 1 auto;
+   }
+ 
+-  .operations-column > .goals-panel.has-endoscopy-setup {
++  .operations-column > .goals-panel.has-procedure-setup {
+     max-height: min(60%, 520px);
+   }
+ 

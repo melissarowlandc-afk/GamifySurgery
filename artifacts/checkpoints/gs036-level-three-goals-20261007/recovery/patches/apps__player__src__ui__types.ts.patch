@@ -1,0 +1,30 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+index b9a6d2b75cfb173de276c31dcf61e473cde2b0a5..15b74226cfb8346214b777473dbf23fef569f48e 100644
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -390,7 +390,7 @@ export interface ProgressionGoalView {
+   progressLabel: string;
+ }
+ 
+-export interface EndoscopySetupRequirementView {
++export interface ProcedureSetupRequirementView {
+   id: string;
+   label: string;
+   detail: string;
+@@ -402,6 +402,8 @@ export interface EndoscopySetupRequirementView {
+   };
+ }
+ 
++export type EndoscopySetupRequirementView = ProcedureSetupRequirementView;
++
+ export interface ProgressionView {
+   facilityLevelLabel: string;
+   nextLevelLabel: string | null;
+@@ -410,6 +412,7 @@ export interface ProgressionView {
+   canLevelUp: boolean;
+   prototypeComplete: boolean;
+   endoscopySetupRequirements?: EndoscopySetupRequirementView[];
++  ambulatoryOperationSetupRequirements?: ProcedureSetupRequirementView[];
+ }
+ 
+ export interface DevelopmentView {

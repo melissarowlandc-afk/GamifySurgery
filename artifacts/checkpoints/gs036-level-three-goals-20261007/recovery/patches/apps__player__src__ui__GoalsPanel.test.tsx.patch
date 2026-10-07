@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/ui/GoalsPanel.test.tsx b/apps/player/src/ui/GoalsPanel.test.tsx
+index ef1b160aa089cd36bcafaaa80266d887a6808aa7..9618f83a60bc7a1118f8d2ccf523daf02705a9d6 100644
+--- a/apps/player/src/ui/GoalsPanel.test.tsx
++++ b/apps/player/src/ui/GoalsPanel.test.tsx
+@@ -15,7 +15,7 @@ describe("GoalsPanel secondary objectives", () => {
+           prototypeComplete: false,
+         }}
+         onLevelUp={vi.fn()}
+-        onEndoscopySetupAction={vi.fn()}
++        onProcedureSetupAction={vi.fn()}
+       />,
+     );
+     expect(markup).toContain("Secondary objectives");

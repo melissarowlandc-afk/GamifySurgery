@@ -1,0 +1,69 @@
+diff --git a/apps/player/src/AppShell.tsx b/apps/player/src/AppShell.tsx
+index abd9f30e3d4c6de3485a16f77035a677f00e7cb7..2c20f2237847aa57997e7b5824fe3f45c98187cd 100644
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -31,7 +31,7 @@ import {
+   type AdvertisingView,
+   type ChartView,
+   type DevelopmentView,
+-  type EndoscopySetupRequirementView,
++  type ProcedureSetupRequirementView,
+   type EmergencyGlp1View,
+   type MessageBoardItemView,
+   type MessageBoardTargetType,
+@@ -287,7 +287,7 @@ export function AppShell({
+     useState(0);
+   const [highlightedLitterId, setHighlightedLitterId] =
+     useState<string | null>(null);
+-  const [pendingEndoscopySetupAction, setPendingEndoscopySetupAction] = useState<NonNullable<EndoscopySetupRequirementView["action"]> | null>(null);
++  const [pendingProcedureSetupAction, setPendingProcedureSetupAction] = useState<NonNullable<ProcedureSetupRequirementView["action"]> | null>(null);
+   const messageActionFrameRef = useRef<number | null>(null);
+   const dailyRoutineHighlightTipRef = useRef<string | null>(null);
+   const activeCampaignId =
+@@ -338,7 +338,7 @@ export function AppShell({
+   }, [buildMode]);
+ 
+   useEffect(() => {
+-    const action = pendingEndoscopySetupAction;
++    const action = pendingProcedureSetupAction;
+     if (!action) return;
+     if (action.target === "room") {
+       if (managementMode) {
+@@ -350,7 +350,7 @@ export function AppShell({
+         return;
+       }
+       onBeginPlacement(action.id);
+-      setPendingEndoscopySetupAction(null);
++      setPendingProcedureSetupAction(null);
+       return;
+     }
+     if (buildMode) {
+@@ -365,8 +365,8 @@ export function AppShell({
+     scheduleLatestAnimationFrame(messageActionFrameRef, () => {
+       setHighlightedStaffRoleId(action.id);
+     });
+-    setPendingEndoscopySetupAction(null);
+-  }, [buildMode, managementMode, onBeginPlacement, onEnterBuildMode, onEnterManagementMode, onExitBuildMode, onExitManagementMode, pendingEndoscopySetupAction]);
++    setPendingProcedureSetupAction(null);
++  }, [buildMode, managementMode, onBeginPlacement, onEnterBuildMode, onEnterManagementMode, onExitBuildMode, onExitManagementMode, pendingProcedureSetupAction]);
+ 
+   useEffect(() => {
+     if (waterCoolerHighlightKey === 0) {
+@@ -824,7 +824,7 @@ export function AppShell({
+                 setUpgradeRequestRoomId(null)
+               }
+               endoscopySetupRequirements={progression.endoscopySetupRequirements}
+-              onEndoscopySetupAction={setPendingEndoscopySetupAction}
++              onEndoscopySetupAction={setPendingProcedureSetupAction}
+             />
+             <ManagementPanel
+               managementMode={managementMode}
+@@ -871,7 +871,7 @@ export function AppShell({
+           <GoalsPanel
+             view={progression}
+             onLevelUp={onLevelUp}
+-            onEndoscopySetupAction={setPendingEndoscopySetupAction}
++            onProcedureSetupAction={setPendingProcedureSetupAction}
+           />
+ 
+           {!buildMode ? (

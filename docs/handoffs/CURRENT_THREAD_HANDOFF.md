@@ -1,3 +1,31 @@
+> GS-036 LEVEL 3 GOALS CONDENSED LOCALLY (2026-10-07, Codex).
+> Owner approved the Level 2-style simplification. Main Level 3 checklist is now
+> 500 current-level XP, satisfaction above90%, Hire Pharmacist, and Complete your
+> first ambulatory operation. Removed separate Ambulatory OR/OR Nurse/Laboratory/
+> Laboratory Technician/Pharmacy build goals from both UI and progression checks.
+> Expand View setup requirements under the operation for operational OR/recovery
+> rooms, OR/periop nurses, and Surgeon or founder. Build/Hire buttons navigate;
+> they do not buy or hire automatically. Founder may operate; surgeon is optional.
+> Guidance explains Scheduled appointments and prep -> operation -> recovery.
+> Level2 gate, thresholds, operational-pharmacist check, secondary quality review,
+> and Level4 preview remain as before. No schema/save migration or clinical edits.
+> Completed/retired operation credit and XP survive reload; no live owner save
+> accessed. Concurrent clinical/timing/availability/Claude/art work is preserved.
+> Primary Sol implemented and reviewed scoped dirty-baseline diffs. Sol
+> ambulatory_setup_review verified actual prerequisites read-only. Root validation:
+> 18 domain +21 player +17 balance tests PASS;6 isolated desktop/compact browser
+> checks PASS, including setup actions, reload, readable completion guidance, and
+> Level2 regression. Boundary/launcher checks PASS; reviewed actual screenshots.
+> Final full workspace typecheck PASS across all8 configs. Earlier concurrent
+> diagnostic-timing/patient-flow/GS028/nav errors cleared before final acceptance.
+> All10 baseline-relative file diffs are whitespace-clean. The pre-existing
+> CSS trailing whitespace outside this task was preserved.
+> Plan: docs/execplans/gs036-level-three-goals.md. Proofs/baselines:
+> .local-dev/gs036-level-three-goals/. Temporary5173 QA server is closed; all
+> tests used fresh Playwright storage. Owner pathway stays START_GAME.cmd ->
+> http://127.0.0.1:4173 in the same persistent profile. This checkpoint is LOCAL
+> ONLY; say "push to GitHub" for an audited backup. No push, merge, deploy or release.
+
 > LEVEL 3 AND CHARACTER GITHUB BACKUP VERIFIED (2026-10-07).
 > Owner-requested checkpoint 156e5d222dcdd0925b47d4e8abc060189ec3c476 was pushed to
 > origin/beta and verified by git ls-remote. Recovery package:

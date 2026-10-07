@@ -1,0 +1,102 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 118a3c775b55c2c0162881406436558a7f1cccdf..6dadc3ea4813d645a62c1fa737810a473fa781bf 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -65,7 +65,7 @@ import type {
+   AdvertisingView,
+   ChartView,
+   DevelopmentView,
+-  EndoscopySetupRequirementView,
++  ProcedureSetupRequirementView,
+   EmergencyGlp1View,
+   MessageBoardItemView,
+   PatientFolder,
+@@ -111,18 +111,20 @@ function currency(value: number): string {
+   return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+ }
+ 
+-function getEndoscopySetupRequirements(
++function getProcedureSetupRequirements(
+   state: GameState,
+-): EndoscopySetupRequirementView[] | undefined {
+-  if (state.facilityLevel !== 2) return undefined;
+-  const roomRequirement = (id: string): EndoscopySetupRequirementView => {
++  procedure: "endoscopy" | "ambulatory_operation",
++): ProcedureSetupRequirementView[] | undefined {
++  const endoscopy = procedure === "endoscopy";
++  if (state.facilityLevel !== (endoscopy ? 2 : 3)) return undefined;
++  const roomRequirement = (id: string): ProcedureSetupRequirementView => {
+     const definition = getRoomDefinition(id)!;
+     const existing = state.rooms.filter((room) => room.roomDefinitionId === id);
+     const met = existing.some((room) =>
+       room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id),
+     );
+     return {
+-      id: `endoscopy.setup.${id}`,
++      id: `${procedure}.setup.${id}`,
+       label: definition.displayName,
+       detail: met
+         ? `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`
+@@ -133,7 +135,7 @@ function getEndoscopySetupRequirements(
+       ...(!met && existing.length === 0 ? { action: { label: "Build" as const, target: "room" as const, id } } : {}),
+     };
+   };
+-  const staffRequirement = (id: string): EndoscopySetupRequirementView => {
++  const staffRequirement = (id: string): ProcedureSetupRequirementView => {
+     const definition = getStaffRoleDefinition(id)!;
+     const hired = state.employees.filter((employee) =>
+       employee.staffRoleDefinitionId === id,
+@@ -142,7 +144,7 @@ function getEndoscopySetupRequirements(
+       employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id),
+     );
+     return {
+-      id: `endoscopy.setup.${id}`,
++      id: `${procedure}.setup.${id}`,
+       label: definition.displayName,
+       detail: met
+         ? `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`
+@@ -153,22 +155,24 @@ function getEndoscopySetupRequirements(
+       ...(!met && hired.length === 0 ? { action: { label: "Hire" as const, target: "staff" as const, id } } : {}),
+     };
+   };
+-  const endoscopist = getStaffRoleDefinition("staff.endoscopist")!;
+-  const hiredEndoscopist = state.employees.some((employee) =>
+-    employee.staffRoleDefinitionId === "staff.endoscopist" &&
++  const provider = getStaffRoleDefinition(endoscopy ? "staff.endoscopist" : "staff.surgeon")!;
++  const hiredProvider = state.employees.some((employee) =>
++    employee.staffRoleDefinitionId === provider.id &&
+       isEmployeeAssignedToOperationalRoom(state, employee.id),
+   );
+   return [
+-    roomRequirement("room.endoscopy"),
++    roomRequirement(endoscopy ? "room.endoscopy" : "room.ambulatory_or"),
+     roomRequirement("room.periop_recovery"),
+-    staffRequirement("staff.endoscopy_nurse"),
++    staffRequirement(endoscopy ? "staff.endoscopy_nurse" : "staff.or_nurse"),
+     staffRequirement("staff.periop_nurse"),
+     {
+-      id: "endoscopy.setup.provider",
+-      label: "Endoscopist or founder",
+-      detail: hiredEndoscopist
+-        ? "Endoscopist hired."
+-        : `Founder can perform endoscopy. Hire an endoscopist to keep yourself available for clinic patients. $${endoscopist.hiringCost.toLocaleString()} hire · $${endoscopist.salaryPerExpenseInterval.toLocaleString()}/hr salary.`,
++      id: `${procedure}.setup.provider`,
++      label: `${provider.displayName} or founder`,
++      detail: hiredProvider
++        ? `${provider.displayName} hired.`
++        : endoscopy
++          ? `Founder can perform endoscopy. Hire an endoscopist to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`
++          : `Founder can perform ambulatory operations. Hire a surgeon to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`,
+       met: true,
+     },
+   ];
+@@ -2183,7 +2187,8 @@ export function createPrototypePlayerView(
+         progressionStatus.requirements.every(
+           (requirement) => requirement.met,
+         ),
+-      endoscopySetupRequirements: getEndoscopySetupRequirements(state),
++      endoscopySetupRequirements: getProcedureSetupRequirements(state, "endoscopy"),
++      ambulatoryOperationSetupRequirements: getProcedureSetupRequirements(state, "ambulatory_operation"),
+     },
+     roomOptions: facilityBalance.roomDefinitions
+       .filter(

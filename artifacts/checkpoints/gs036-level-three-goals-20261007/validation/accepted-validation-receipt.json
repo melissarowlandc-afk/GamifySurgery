@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "acceptedDate": "2026-10-07",
+  "status": "Recorded parent-reviewed implementation validation; not a packaging-worker test rerun.",
+  "evidenceSource": "documents/gs036-level-three-goals.md",
+  "syntheticBrowserFixtures": true,
+  "results": [
+    {
+      "command": "npm run test --workspace @gamify-surgery/game-domain -- tests/level-three-goals.test.ts tests/level-two-progression.test.ts tests/retired-service-history.test.ts",
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "command": "npm run test --workspace @gamify-surgery/player -- src/session/level3GoalsViewModels.test.ts src/session/buildViewModels.test.ts src/ui/GoalsPanel.test.tsx src/ui/BuildPanel.test.tsx",
+      "passed": 21,
+      "failed": 0
+    },
+    {
+      "command": "npm run test --workspace @gamify-surgery/balance-config -- src/prototype-balance.test.ts",
+      "passed": 17,
+      "failed": 0
+    },
+    {
+      "command": "node .local-dev/gs036-level-three-goals/run-browser.mjs",
+      "passed": 6,
+      "failed": 0,
+      "projects": [
+        "desktop-chrome",
+        "compact-desktop-chrome"
+      ],
+      "viewports": [
+        "1440x1000",
+        "1024x768"
+      ],
+      "origin": "http://127.0.0.1:5173",
+      "storage": "Fresh isolated Playwright contexts",
+      "serverClosed": true
+    },
+    {
+      "command": "npm run test:boundaries",
+      "status": "PASS: dependency and launcher contracts"
+    },
+    {
+      "command": "npm run typecheck",
+      "status": "PASS: all eight workspace TypeScript configurations"
+    }
+  ],
+  "limitations": [
+    "Synthetic seeded/paused campaigns, not a full campaign playthrough or a fresh OR workflow proof.",
+    "Concurrent timing/availability/clinical/import/navigation errors cleared before final acceptance; their changes are excluded.",
+    "Pre-existing CSS whitespace outside GS-036 is preserved; all ten goal-only diffs are whitespace-clean.",
+    "The recovered goal-only sources were not separately executed as a complete checkout during packaging.",
+    "Software validation is not clinical approval."
+  ],
+  "canonicalOwnerPathway": "START_GAME.cmd -> http://127.0.0.1:4173 in the same persistent browser profile",
+  "ownerStorageAccessed": false,
+  "commitOrPushClaimed": false
+}

@@ -1,0 +1,507 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Exact dirty preimages and baseline-plus-goals reconstruction; full mixed source/baseline files deliberately excluded.",
+  "sourceBranch": "beta",
+  "sourceHead": "d0fc49b92a92d628f1ca025e9283589dfd887157",
+  "patches": [
+    {
+      "targetPath": "apps/player/src/AppShell.tsx",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/AppShell.tsx",
+      "baselineSha256": "c1f5fea0eb0e1b06a6be58acc928e658ebf42d0b96a4b3db279618b98c020511",
+      "baselineBytes": 31259,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 947,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "692b7539e41feee77fe22b83e6e15665f2209ed9e2ceac92ccac1632888bc2b6",
+      "goalOnlyTargetBytes": 31259,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 947,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "516b68dd832502002d4886e4a7adacb46d60ea341317bfc7ad038cecd2027402",
+      "observedSharedSourceBytes": 31411,
+      "observedSharedSourceMtime": "2026-10-07T20:36:19.230Z",
+      "patchPath": "recovery/patches/apps__player__src__AppShell.tsx.patch",
+      "patchSha256": "c98c3639cbba2c7f441780e071c78579546cd94e754b4de5df4eb032df783282",
+      "patchBytes": 3031,
+      "additions": 8,
+      "deletions": 8,
+      "hunks": [
+        {
+          "oldStart": 31,
+          "oldLines": 7,
+          "newStart": 31,
+          "newLines": 7,
+          "context": "import {"
+        },
+        {
+          "oldStart": 287,
+          "oldLines": 7,
+          "newStart": 287,
+          "newLines": 7,
+          "context": "export function AppShell({"
+        },
+        {
+          "oldStart": 338,
+          "oldLines": 7,
+          "newStart": 338,
+          "newLines": 7,
+          "context": "export function AppShell({"
+        },
+        {
+          "oldStart": 350,
+          "oldLines": 7,
+          "newStart": 350,
+          "newLines": 7,
+          "context": "export function AppShell({"
+        },
+        {
+          "oldStart": 365,
+          "oldLines": 8,
+          "newStart": 365,
+          "newLines": 8,
+          "context": "export function AppShell({"
+        },
+        {
+          "oldStart": 824,
+          "oldLines": 7,
+          "newStart": 824,
+          "newLines": 7,
+          "context": "export function AppShell({"
+        },
+        {
+          "oldStart": 871,
+          "oldLines": 7,
+          "newStart": 871,
+          "newLines": 7,
+          "context": "export function AppShell({"
+        }
+      ],
+      "scope": "Generalize the existing endoscopy navigation state/action type and wire GoalsPanel to the shared procedure action; retain BuildPanel compatibility.",
+      "excludedConcurrentHunks": [
+        "patientAvailabilityGuidance prop",
+        "patientAvailabilityGuidance destructuring default",
+        "PatientLists availabilityGuidance wiring"
+      ]
+    },
+    {
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/session/viewModels.ts",
+      "baselineSha256": "2ebb46129065f54a4183b169fd4c78ab3895a30f01a2d354d2232a421cea9775",
+      "baselineBytes": 108567,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 2488,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "1b75f12b2d48374c1f5b658198b71a41166563334f8ede8a0b93e46c5bc586c9",
+      "goalOnlyTargetBytes": 109165,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 2493,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "ba435462d31dfdfdc57abd4901ffb22dcd64696cd2e701e473188b681712a425",
+      "observedSharedSourceBytes": 109382,
+      "observedSharedSourceMtime": "2026-10-07T20:36:19.228Z",
+      "patchPath": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "patchSha256": "56b76ea9630023b661878a531e170d5a5024ee81cba5739137d539955ffc034e",
+      "patchBytes": 5342,
+      "additions": 24,
+      "deletions": 19,
+      "hunks": [
+        {
+          "oldStart": 65,
+          "oldLines": 7,
+          "newStart": 65,
+          "newLines": 7,
+          "context": "import type {"
+        },
+        {
+          "oldStart": 111,
+          "oldLines": 18,
+          "newStart": 111,
+          "newLines": 20,
+          "context": "function currency(value: number): string {"
+        },
+        {
+          "oldStart": 133,
+          "oldLines": 7,
+          "newStart": 135,
+          "newLines": 7,
+          "context": "function getEndoscopySetupRequirements("
+        },
+        {
+          "oldStart": 142,
+          "oldLines": 7,
+          "newStart": 144,
+          "newLines": 7,
+          "context": "function getEndoscopySetupRequirements("
+        },
+        {
+          "oldStart": 153,
+          "oldLines": 22,
+          "newStart": 155,
+          "newLines": 24,
+          "context": "function getEndoscopySetupRequirements("
+        },
+        {
+          "oldStart": 2183,
+          "oldLines": 7,
+          "newStart": 2187,
+          "newLines": 8,
+          "context": "export function createPrototypePlayerView("
+        }
+      ],
+      "scope": "Generalize the existing installed setup helper, add the ambulatory room/nurse/provider alternative, and project the new Level 3 setup rows.",
+      "excludedConcurrentHunks": [
+        "patientAvailabilityViewModel import",
+        "PrototypePlayerView patientAvailabilityGuidance field",
+        "patientAvailabilityGuidance projection"
+      ]
+    },
+    {
+      "targetPath": "apps/player/src/styles/global.css",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/styles/global.css",
+      "baselineSha256": "0bf28f0f901669b9beb62c59ec6adf9292ace470fa98068c757c08f2b6cc1e20",
+      "baselineBytes": 148400,
+      "baselineLineEndings": {
+        "crlf": 1,
+        "lf": 7738,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "7b08f1a9e2928edd0fb09eecff09f0689bc3901623b1355edc7b5e4ac264deb7",
+      "goalOnlyTargetBytes": 148400,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 1,
+        "lf": 7738,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "246449c451d5b103975ff8d94108066bfbb3c17a9161328e50a271e51996feca",
+      "observedSharedSourceBytes": 148436,
+      "observedSharedSourceMtime": "2026-10-07T20:43:25.007Z",
+      "patchPath": "recovery/patches/apps__player__src__styles__global.css.patch",
+      "patchSha256": "7d6e16e278a255cddd99600971a1603060220cd621cfac23dac647a55340ea01",
+      "patchBytes": 1146,
+      "additions": 5,
+      "deletions": 5,
+      "hunks": [
+        {
+          "oldStart": 955,
+          "oldLines": 11,
+          "newStart": 955,
+          "newLines": 11,
+          "context": "p {"
+        },
+        {
+          "oldStart": 970,
+          "oldLines": 7,
+          "newStart": 970,
+          "newLines": 7,
+          "context": "p {"
+        },
+        {
+          "oldStart": 979,
+          "oldLines": 7,
+          "newStart": 979,
+          "newLines": 7,
+          "context": "p {"
+        },
+        {
+          "oldStart": 5871,
+          "oldLines": 7,
+          "newStart": 5871,
+          "newLines": 7,
+          "context": "body {"
+        }
+      ],
+      "scope": "Rename exactly five endoscopy-specific setup selectors to shared procedure selectors.",
+      "excludedConcurrentHunks": [
+        "patient-availability-guidance empty-state CSS exception"
+      ]
+    },
+    {
+      "targetPath": "apps/player/src/ui/GoalsPanel.test.tsx",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/ui/GoalsPanel.test.tsx",
+      "baselineSha256": "1719f63026caad17e1e71a970de27050787129d0fbfc90639e9b061e05eb2afc",
+      "baselineBytes": 1238,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 25,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "685ee14c94b158c95cddb4702ba24f82aa1af2371a8b80a195d1ad845800c6dd",
+      "goalOnlyTargetBytes": 1238,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 25,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "685ee14c94b158c95cddb4702ba24f82aa1af2371a8b80a195d1ad845800c6dd",
+      "observedSharedSourceBytes": 1238,
+      "observedSharedSourceMtime": "2026-10-07T20:29:15.286Z",
+      "patchPath": "recovery/patches/apps__player__src__ui__GoalsPanel.test.tsx.patch",
+      "patchSha256": "2796dfd6bf4376d524c83e17ae0df2c69af588d8d040a56c539ce09b6e073d48",
+      "patchBytes": 585,
+      "additions": 1,
+      "deletions": 1,
+      "hunks": [
+        {
+          "oldStart": 15,
+          "oldLines": 7,
+          "newStart": 15,
+          "newLines": 7,
+          "context": "describe(\"GoalsPanel secondary objectives\", () => {"
+        }
+      ],
+      "scope": "Rename the existing GoalsPanel callback fixture to the shared procedure action.",
+      "excludedConcurrentHunks": []
+    },
+    {
+      "targetPath": "apps/player/src/ui/GoalsPanel.tsx",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/ui/GoalsPanel.tsx",
+      "baselineSha256": "f6dce73cc482e76afadb3e2a5aacc18fc61d1e532131e471cec00fc88536e9a1",
+      "baselineBytes": 3662,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 89,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "df6d3caf5c34c77b03f112175558797100f5fb419779cea42a6656e48765ae90",
+      "goalOnlyTargetBytes": 4484,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 103,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "df6d3caf5c34c77b03f112175558797100f5fb419779cea42a6656e48765ae90",
+      "observedSharedSourceBytes": 4484,
+      "observedSharedSourceMtime": "2026-10-07T20:35:26.852Z",
+      "patchPath": "recovery/patches/apps__player__src__ui__GoalsPanel.tsx.patch",
+      "patchSha256": "c1925ca9dc7bca894391b87dcde35348726447d80220af66980c526295e3eebe",
+      "patchBytes": 5658,
+      "additions": 42,
+      "deletions": 28,
+      "hunks": [
+        {
+          "oldStart": 1,
+          "oldLines": 26,
+          "newStart": 1,
+          "newLines": 27,
+          "context": ""
+        },
+        {
+          "oldStart": 30,
+          "oldLines": 32,
+          "newStart": 31,
+          "newLines": 45,
+          "context": "export function GoalsPanel({"
+        }
+      ],
+      "scope": "Render an expandable shared procedure checklist for the Level 2 or Level 3 goal, reset expansion on level change, and explain scheduled operations and completed recovery.",
+      "excludedConcurrentHunks": []
+    },
+    {
+      "targetPath": "apps/player/src/ui/index.ts",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/ui/index.ts",
+      "baselineSha256": "336038a22527613da0da18b680ad1a781e501673a5c6fb72fd30fa200013231b",
+      "baselineBytes": 1984,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 59,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "389c95c45c6160f9c6209c312573fecb47553e849f2505d9ed60f60a8fb50bb9",
+      "goalOnlyTargetBytes": 2017,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 60,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "389c95c45c6160f9c6209c312573fecb47553e849f2505d9ed60f60a8fb50bb9",
+      "observedSharedSourceBytes": 2017,
+      "observedSharedSourceMtime": "2026-10-07T20:28:32.264Z",
+      "patchPath": "recovery/patches/apps__player__src__ui__index.ts.patch",
+      "patchSha256": "a516483d3a09441560e909fbce4c0ef2c9e4e240eec6a70ab13823536c0d5070",
+      "patchBytes": 441,
+      "additions": 1,
+      "deletions": 0,
+      "hunks": [
+        {
+          "oldStart": 30,
+          "oldLines": 6,
+          "newStart": 30,
+          "newLines": 7,
+          "context": "export type {"
+        }
+      ],
+      "scope": "Export the shared procedure setup type.",
+      "excludedConcurrentHunks": []
+    },
+    {
+      "targetPath": "apps/player/src/ui/types.ts",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/apps/player/src/ui/types.ts",
+      "baselineSha256": "17a7cef47f78080adffcf7bd62cc650bc2930d06e8149c48cecaf92b011ab5d0",
+      "baselineBytes": 12254,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 492,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "2c392ea9bc4791f875a87ed7a2dd61abc07b81c3b5efba46d4e8506e9131606f",
+      "goalOnlyTargetBytes": 12404,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 495,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "2c392ea9bc4791f875a87ed7a2dd61abc07b81c3b5efba46d4e8506e9131606f",
+      "observedSharedSourceBytes": 12404,
+      "observedSharedSourceMtime": "2026-10-07T20:28:32.262Z",
+      "patchPath": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "patchSha256": "a4a208100be1a329b84a1e0a03a192e5bdf4f342b04fe51d26e8bf5e4b375f4a",
+      "patchBytes": 1027,
+      "additions": 4,
+      "deletions": 1,
+      "hunks": [
+        {
+          "oldStart": 390,
+          "oldLines": 7,
+          "newStart": 390,
+          "newLines": 7,
+          "context": "export interface ProgressionGoalView {"
+        },
+        {
+          "oldStart": 402,
+          "oldLines": 6,
+          "newStart": 402,
+          "newLines": 8,
+          "context": "export interface EndoscopySetupRequirementView {"
+        },
+        {
+          "oldStart": 410,
+          "oldLines": 6,
+          "newStart": 412,
+          "newLines": 7,
+          "context": "export interface ProgressionView {"
+        }
+      ],
+      "scope": "Generalize setup type while preserving the endoscopy alias, and add optional ambulatory setup projection.",
+      "excludedConcurrentHunks": []
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.test.ts",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/packages/balance-config/src/prototype-balance.test.ts",
+      "baselineSha256": "3e4b87f54672b07613806703d9b5af7deb25075f4b92c73120ddf6fa024a04b6",
+      "baselineBytes": 26140,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 545,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "912e92abfce6566189c6c559064fbe99931fcf004d629c374bc27b5e26da974c",
+      "goalOnlyTargetBytes": 25937,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 537,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "912e92abfce6566189c6c559064fbe99931fcf004d629c374bc27b5e26da974c",
+      "observedSharedSourceBytes": 25937,
+      "observedSharedSourceMtime": "2026-10-07T20:28:32.259Z",
+      "patchPath": "recovery/patches/packages__balance-config__src__prototype-balance.test.ts.patch",
+      "patchSha256": "a8a550a5bc8d36f7493b5d84b8101fb95995455e114d05b68c9f65898f6cd42f",
+      "patchBytes": 987,
+      "additions": 2,
+      "deletions": 10,
+      "hunks": [
+        {
+          "oldStart": 215,
+          "oldLines": 16,
+          "newStart": 215,
+          "newLines": 8,
+          "context": "describe(\"Level 2 expanded outpatient definitions\", () => {"
+        }
+      ],
+      "scope": "Expect only the pharmacist as a separate Level 3 staffing requirement, with no separate room requirements.",
+      "excludedConcurrentHunks": []
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.ts",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/packages/balance-config/src/prototype-balance.ts",
+      "baselineSha256": "a9e37d714daf27c45a21a653bef161e3f35b1577855e290a55a9a9fe1cba8a7b",
+      "baselineBytes": 90258,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 1868,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "d5582d1332672e652d6acf800fd08747a39bf4d49c57b2cb1d697001ff735aa0",
+      "goalOnlyTargetBytes": 90296,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 1863,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "d5582d1332672e652d6acf800fd08747a39bf4d49c57b2cb1d697001ff735aa0",
+      "observedSharedSourceBytes": 90296,
+      "observedSharedSourceMtime": "2026-10-07T20:28:32.256Z",
+      "patchPath": "recovery/patches/packages__balance-config__src__prototype-balance.ts.patch",
+      "patchSha256": "f6f5baf73ce783182d8994c2fc05ac5241cb43dd8a7909de79c790eece294071",
+      "patchBytes": 1194,
+      "additions": 5,
+      "deletions": 10,
+      "hunks": [
+        {
+          "oldStart": 891,
+          "oldLines": 16,
+          "newStart": 891,
+          "newLines": 11,
+          "context": "export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({"
+        }
+      ],
+      "scope": "Remove separate OR/lab/pharmacy room requirements and OR/lab staffing requirements; keep the pharmacist and existing thresholds.",
+      "excludedConcurrentHunks": []
+    },
+    {
+      "targetPath": "packages/game-domain/tests/level-two-progression.test.ts",
+      "baselinePath": ".local-dev/gs036-level-three-goals/baseline/packages/game-domain/tests/level-two-progression.test.ts",
+      "baselineSha256": "c3c5ee70099de81c6fd34a9e4482bbfe31ff36204a1b74ff543fefc34c594d2b",
+      "baselineBytes": 15772,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 362,
+        "trailingNewline": true
+      },
+      "goalOnlyTargetSha256": "a85789f1934875b44947b061dcd9ced31c9ca74dba3d9ef221ea27ed1e233dbf",
+      "goalOnlyTargetBytes": 15548,
+      "goalOnlyTargetLineEndings": {
+        "crlf": 0,
+        "lf": 357,
+        "trailingNewline": true
+      },
+      "observedSharedSourceSha256": "a85789f1934875b44947b061dcd9ced31c9ca74dba3d9ef221ea27ed1e233dbf",
+      "observedSharedSourceBytes": 15548,
+      "observedSharedSourceMtime": "2026-10-07T20:28:32.260Z",
+      "patchPath": "recovery/patches/packages__game-domain__tests__level-two-progression.test.ts.patch",
+      "patchSha256": "1ec3852b5216a66975a9940003c5fe1587b48564d6333b89c67d9379e79bc10d",
+      "patchBytes": 939,
+      "additions": 0,
+      "deletions": 5,
+      "hunks": [
+        {
+          "oldStart": 238,
+          "oldLines": 11,
+          "newStart": 238,
+          "newLines": 6,
+          "context": "describe(\"Level 2 facility progression\", () => {"
+        }
+      ],
+      "scope": "Update only the post-Level-2 Level 3 expected goal IDs to the condensed checklist.",
+      "excludedConcurrentHunks": []
+    }
+  ]
+}

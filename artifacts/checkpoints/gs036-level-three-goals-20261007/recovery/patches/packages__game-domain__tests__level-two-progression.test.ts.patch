@@ -1,0 +1,16 @@
+diff --git a/packages/game-domain/tests/level-two-progression.test.ts b/packages/game-domain/tests/level-two-progression.test.ts
+index d4524f4fb3fdc38d11835d0ca8a468e4fa3bfef9..3f6ee7ccbc54cdf7cb529d7f825e3deb81a2e01e 100644
+--- a/packages/game-domain/tests/level-two-progression.test.ts
++++ b/packages/game-domain/tests/level-two-progression.test.ts
+@@ -238,11 +238,6 @@ describe("Level 2 facility progression", () => {
+     expect(getFacilityProgressionStatus(advanced).requirements.map((requirement) => requirement.id)).toEqual([
+       "progression.clinical_xp",
+       "progression.satisfaction",
+-      "progression.room.room.ambulatory_or",
+-      "progression.room.room.laboratory",
+-      "progression.room.room.pharmacy",
+-      "progression.staff.staff.or_nurse",
+-      "progression.staff.staff.laboratory_technician",
+       "progression.staff.staff.pharmacist",
+       "progression.ambulatory_operation_completion",
+     ]);

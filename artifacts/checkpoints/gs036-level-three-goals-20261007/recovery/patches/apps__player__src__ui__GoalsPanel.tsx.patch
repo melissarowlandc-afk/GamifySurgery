@@ -1,0 +1,106 @@
+diff --git a/apps/player/src/ui/GoalsPanel.tsx b/apps/player/src/ui/GoalsPanel.tsx
+index 7c5c6b01508344a99c0eae090dfdab097b58ebd9..bfa88e3216a0f223b48026f3f48180af75b90be6 100644
+--- a/apps/player/src/ui/GoalsPanel.tsx
++++ b/apps/player/src/ui/GoalsPanel.tsx
+@@ -1,26 +1,27 @@
+ import { useEffect, useRef, useState } from "react";
+-import type { EndoscopySetupRequirementView, ProgressionView } from "./types";
++import type { ProcedureSetupRequirementView, ProgressionView } from "./types";
+ 
+ interface GoalsPanelProps {
+   view: ProgressionView;
+   onLevelUp: () => void;
+-  onEndoscopySetupAction: (action: NonNullable<EndoscopySetupRequirementView["action"]>) => void;
++  onProcedureSetupAction: (action: NonNullable<ProcedureSetupRequirementView["action"]>) => void;
+ }
+ 
+ export function GoalsPanel({
+   view,
+   onLevelUp,
+-  onEndoscopySetupAction,
++  onProcedureSetupAction,
+ }: GoalsPanelProps) {
+   const panelRef = useRef<HTMLElement>(null);
+   const [setupOpen, setSetupOpen] = useState(false);
+ 
+   useEffect(() => {
+     panelRef.current?.scrollTo({ top: 0 });
++    setSetupOpen(false);
+   }, [view.facilityLevelLabel]);
+ 
+   return (
+-    <aside className={`panel goals-panel${setupOpen ? " has-endoscopy-setup" : ""}`} ref={panelRef}>
++    <aside className={`panel goals-panel${setupOpen ? " has-procedure-setup" : ""}`} ref={panelRef}>
+       <div className="panel-heading">
+         <span>{view.facilityLevelLabel} goals</span>
+         <small>
+@@ -30,32 +31,45 @@ export function GoalsPanel({
+         </small>
+       </div>
+       <ul className="goal-list">
+-        {view.goals.map((goal) => (
+-          <li className={goal.complete ? "is-complete" : ""} key={goal.id}>
+-            <span aria-hidden="true">{goal.complete ? "■" : "□"}</span>
+-            <div className="goal-content">
+-              <span className="goal-label">{goal.label}<small>{goal.progressLabel}</small></span>
+-            {goal.id === "progression.endoscopy_completion" && view.endoscopySetupRequirements ? (
+-              <div className="endoscopy-goal-setup">
+-                <button className="text-button" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((open) => !open)}>
+-                  {setupOpen ? "Hide setup requirements" : "View setup requirements"}
+-                </button>
+-                {setupOpen ? (
+-                  <ul aria-label="Endoscopy setup requirements">
+-                    {view.endoscopySetupRequirements.map((requirement) => (
+-                      <li key={requirement.id}>
+-                        <span aria-hidden="true">{requirement.met ? "■" : "□"}</span>{" "}
+-                        <span>{requirement.label} <small>{requirement.met ? "Ready" : "Missing"} · {requirement.detail}</small></span>
+-                        {requirement.action ? <button className="text-button" type="button" onClick={() => onEndoscopySetupAction(requirement.action!)}>{requirement.action.label}</button> : null}
+-                      </li>
+-                    ))}
+-                  </ul>
++        {view.goals.map((goal) => {
++          const ambulatoryOperation = goal.id === "progression.ambulatory_operation_completion";
++          const setupRequirements = goal.id === "progression.endoscopy_completion"
++            ? view.endoscopySetupRequirements
++            : ambulatoryOperation
++              ? view.ambulatoryOperationSetupRequirements
++              : undefined;
++          return (
++            <li className={goal.complete ? "is-complete" : ""} key={goal.id}>
++              <span aria-hidden="true">{goal.complete ? "■" : "□"}</span>
++              <div className="goal-content">
++                <span className="goal-label">{goal.label}<small>{goal.progressLabel}</small></span>
++                {setupRequirements ? (
++                  <div className="procedure-goal-setup">
++                    <button className="text-button" type="button" aria-expanded={setupOpen} onClick={() => setSetupOpen((open) => !open)}>
++                      {setupOpen ? "Hide setup requirements" : "View setup requirements"}
++                    </button>
++                    {setupOpen ? (
++                      <>
++                        {ambulatoryOperation ? (
++                          <p>With Scheduled appointments enabled, ambulatory patients arrive when your setup is ready. Finish preparation, the operation, and recovery to complete this goal.</p>
++                        ) : null}
++                        <ul aria-label={ambulatoryOperation ? "Ambulatory operation setup requirements" : "Endoscopy setup requirements"}>
++                          {setupRequirements.map((requirement) => (
++                            <li key={requirement.id}>
++                              <span aria-hidden="true">{requirement.met ? "■" : "□"}</span>{" "}
++                              <span>{requirement.label} <small>{requirement.met ? "Ready" : "Missing"} · {requirement.detail}</small></span>
++                              {requirement.action ? <button className="text-button" type="button" onClick={() => onProcedureSetupAction(requirement.action!)}>{requirement.action.label}</button> : null}
++                            </li>
++                          ))}
++                        </ul>
++                      </>
++                    ) : null}
++                  </div>
+                 ) : null}
+               </div>
+-            ) : null}
+-            </div>
+-          </li>
+-        ))}
++            </li>
++          );
++        })}
+       </ul>
+       {view.secondaryGoals && view.secondaryGoals.length > 0 ? (
+         <section aria-label="Secondary objectives">

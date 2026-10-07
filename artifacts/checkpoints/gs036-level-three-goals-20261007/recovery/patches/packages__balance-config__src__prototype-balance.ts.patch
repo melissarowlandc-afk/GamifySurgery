@@ -1,0 +1,26 @@
+diff --git a/packages/balance-config/src/prototype-balance.ts b/packages/balance-config/src/prototype-balance.ts
+index c369d8095fdccc41060344dd16c0523e83c1278a..7449fed945dcd21108a21c16318d08de4b564ce0 100644
+--- a/packages/balance-config/src/prototype-balance.ts
++++ b/packages/balance-config/src/prototype-balance.ts
+@@ -891,16 +891,11 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         minimumClinicalXp: 500,
+         minimumCompletedEncounters: 0,
+         satisfactionMustBeGreaterThan: 90,
+-        requiredRoomDefinitionIds: [
+-          "room.ambulatory_or",
+-          "room.laboratory",
+-          "room.pharmacy",
+-        ],
+-        requiredStaffRoleIds: [
+-          "staff.or_nurse",
+-          "staff.laboratory_technician",
+-          "staff.pharmacist",
+-        ],
++        // The completed operation represents its room/staff setup, as with
++        // Level 2 endoscopy. Pharmacy construction is implicit in hiring and
++        // assigning the pharmacist; laboratory services are optional.
++        requiredRoomDefinitionIds: [],
++        requiredStaffRoleIds: ["staff.pharmacist"],
+         nextFacilityLevel: null,
+       },
+     ],
