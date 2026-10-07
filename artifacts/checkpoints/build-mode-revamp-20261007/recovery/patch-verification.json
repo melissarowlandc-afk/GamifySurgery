@@ -1,0 +1,189 @@
+{
+  "checkpoint": "build-mode-revamp-20261007",
+  "patches": [
+    {
+      "path": "apps/player/src/App.tsx",
+      "patch": "recovery/patches/apps__player__src__App.tsx.patch",
+      "baselineSha256": "6b7f467b05522a47cdd64a871f4135d5eae588cb96decb8303d0bc4fc3bb4461",
+      "liveSha256": "6280a6f99ca431e02ae391e4824e0875f38ed001bf3ace4c7b3dfa88543bc794",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "patch": "recovery/patches/apps__player__src__AppShell.tsx.patch",
+      "baselineSha256": "056c1f019c4746bc396a23ad0d8651cbef11f56273179847ce672c91e62dfd67",
+      "liveSha256": "1cfcee980506dfca4fca816422f73af1d0be6446a99f6777643d781d331e3c2c",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "patch": "recovery/patches/apps__player__src__facility__FacilityCanvas.tsx.patch",
+      "baselineSha256": "e4a314ef94cb3a04ec8f0a37a8c6eb36e64c097c539e6babc760421cb7000904",
+      "liveSha256": "4e03884bb1c4639fa7b7e1f6b8028b3fb551583f401b1ddc98cc7d66f1be9cea",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "patch": "recovery/patches/apps__player__src__facility__FacilityScene.ts.patch",
+      "baselineSha256": "aa86571a79d7db55bafaea52bd04f9d0f237e8000929e829b5a9b691fca9f9a4",
+      "liveSha256": "4be9216013250c91e3201c4597bd32ff1101605e8d3c579a8a7832524b34b1d7",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/facility/facilityWorldSignature.ts",
+      "patch": "recovery/patches/apps__player__src__facility__facilityWorldSignature.ts.patch",
+      "baselineSha256": "8c47e211db746259771b8129e579d779f3a40399c4e11e94e3bdeccdd1379178",
+      "liveSha256": "1d43e70424fecd33d142339eab458700a5525b1801651f25f6db1abe53a7d8a0",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/facility/index.ts",
+      "patch": "recovery/patches/apps__player__src__facility__index.ts.patch",
+      "baselineSha256": "ce0b1167797e8823e5bbd5a3028ea4283808524ce35067adc53d45132f25ec0a",
+      "liveSha256": "e6285b60a4b6a30f7ebd2231c764aa8cf594814bc172b7676158f6a1d9fd42d1",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "patch": "recovery/patches/apps__player__src__facility__types.ts.patch",
+      "baselineSha256": "7fda5bdcf21d13297a4666a4b45ac586d94d9f1d08f63777832cc13d1411840e",
+      "liveSha256": "cf808a032e47c119bc7890cb235500e6d408484d9c211898f2f935107b05e0dc",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.test.ts",
+      "patch": "recovery/patches/apps__player__src__session__tutorialViewModels.test.ts.patch",
+      "baselineSha256": "a5f21d3efa32070b7f7892d75c89330d486039a89dc16cc831a427a944e7443a",
+      "liveSha256": "83336cb718d9e5f9a3a6bee7d68be7c34a1587735bc2b5754101d073ac23400f",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.ts",
+      "patch": "recovery/patches/apps__player__src__session__tutorialViewModels.ts.patch",
+      "baselineSha256": "680f9398cc1cf1e7533d93013088f93ab0f6a27f8c82814f662dbef42cf16d10",
+      "liveSha256": "8212e99a46506184d074f3eb12bf04fc811e7edc6bc38a3477400b183f391165",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "patch": "recovery/patches/apps__player__src__session__usePrototypeSession.ts.patch",
+      "baselineSha256": "eb388404888473b4adc92c49d91f68c583a0305b89a6a7276979a0c1a838aeb2",
+      "liveSha256": "9e0144a76ea552472749afccb483fba08572d63870f943bd6133f053da6584a5",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "patch": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "baselineSha256": "2038436e37cabf0b25f8a6ec15ad434ebe3318b7c5a15cd92e6ae46b549de1e8",
+      "liveSha256": "8a928ca8169d2d665220aa2bec50bc2effa02b18ea698cb08ebc55543abef629",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/styles/global.css",
+      "patch": "recovery/patches/apps__player__src__styles__global.css.patch",
+      "baselineSha256": "d41be5549b7fb7a00fab8e986101772471f9eeaef78c8317d9f6812e8bfcfd33",
+      "liveSha256": "70b206f83a4fbc876624de3e61bd464fda2695816e17697122f89ad9e1b7c8e1",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "patch": "recovery/patches/apps__player__src__ui__HelpDialog.tsx.patch",
+      "baselineSha256": "898a4a511fcfaf568fb0a0a103e16b2cb1acc32fc9c19b8675783bbd7532adf2",
+      "liveSha256": "03025ff167075bf1703bfbe5e43a8b9bdccd63f7571280b84b5399173c669cb8",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "patch": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "baselineSha256": "46c4311d5b8b50b3c6b2500f9187a6ab3c23f3726cad355acc5e63db7ab31177",
+      "liveSha256": "68d441a31d1fe2bd01db9c964f967fb97ccd3f2fdbd9e59bacb0d89486720faa",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "tests/e2e/build-mode-usability.spec.ts",
+      "patch": "recovery/patches/tests__e2e__build-mode-usability.spec.ts.patch",
+      "baselineSha256": "05ec17187d59669d58a1d1bba961ba826adaa5667c1786efa0ac77421560709a",
+      "liveSha256": "0913d66f2b24f0c04ff532f1cec5adca9c561dcfbedf00675bfed1d1ca9a8a69",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "HEAD"
+    },
+    {
+      "path": "tests/e2e/examination-room-visual.spec.ts",
+      "patch": "recovery/patches/tests__e2e__examination-room-visual.spec.ts.patch",
+      "baselineSha256": "3244c3446c4ba44761e163130fad63c91308d3085e1cf310d74eb27fd6173689",
+      "liveSha256": "47114f61b7ac8b0c4f65654d49997a8cd105a986c9300f957d3414750f1568e3",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "HEAD"
+    },
+    {
+      "path": "tests/e2e/five-room-waiting-bathroom-visual.spec.ts",
+      "patch": "recovery/patches/tests__e2e__five-room-waiting-bathroom-visual.spec.ts.patch",
+      "baselineSha256": "551f8d389bb27dcdd0eb533f42b24106d5c5d0ca8ddd7c54cc94aadf6d40b389",
+      "liveSha256": "95fb3519b3ad99367fb675edea32f862b96543549c143cc44f62df9e5aaf00db",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "HEAD"
+    },
+    {
+      "path": "tests/e2e/fresh-campaign-examination-room.spec.ts",
+      "patch": "recovery/patches/tests__e2e__fresh-campaign-examination-room.spec.ts.patch",
+      "baselineSha256": "6a72f3a02f0feea5a18766270b2fd63dd722492ba1fe0e6c3663f81bd036e320",
+      "liveSha256": "0030e06e37b58b7e221ce38fdf801e2271261c1c84dbf8a5c8ba1a8b51958966",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "tests/e2e/front-desk-four-row-floor.spec.ts",
+      "patch": "recovery/patches/tests__e2e__front-desk-four-row-floor.spec.ts.patch",
+      "baselineSha256": "ed446fd233b0063732461e641c5119ee2f75ff5f1a85eeffcdf8871dc87c54c7",
+      "liveSha256": "ab42b179f7ed43e006e883e4314bd33c1fc2b2d2bcd22cf9467e88d575bb33de",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "HEAD"
+    },
+    {
+      "path": "tests/e2e/playthrough-batch.spec.ts",
+      "patch": "recovery/patches/tests__e2e__playthrough-batch.spec.ts.patch",
+      "baselineSha256": "e91b5d4b8815f1a2bbc8c4e7dceae06ffbe360b33972d5dc22292bddeaaa98a9",
+      "liveSha256": "aaf32a39f16467df30a85fbe4199f4eb8ce811e9c4d474f77adbe81b0956dba8",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "tests/e2e/room-capacity-sales.spec.ts",
+      "patch": "recovery/patches/tests__e2e__room-capacity-sales.spec.ts.patch",
+      "baselineSha256": "2ae30c13ef6bf1458a9df4fca3d016312d0e64d66e1632e088c0afa9a96eedc3",
+      "liveSha256": "6ce76422c5abe361fe2da742518b9298f66cb65834ea39463cc02ff795cd6c3e",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "tests/e2e/tutorial-graduation.spec.ts",
+      "patch": "recovery/patches/tests__e2e__tutorial-graduation.spec.ts.patch",
+      "baselineSha256": "e2a831b734499cce27d6d4d40ecc1cf28385e92564e866e826e14048b153a4b7",
+      "liveSha256": "304161dbe964426bdb7fbf88b6e496d5975c88c402ff000dba69dcbdbf0baf10",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    },
+    {
+      "path": "tests/e2e/ultrasound-first-imaging.spec.ts",
+      "patch": "recovery/patches/tests__e2e__ultrasound-first-imaging.spec.ts.patch",
+      "baselineSha256": "19a5300f21edcefb963ad921b07d35ecd6f34376d0008da0427aee938e4b03f8",
+      "liveSha256": "5ae401d85878bae8c33a34b211c200621d36b896832f1015d9b6fd25bd1ff381",
+      "rebuildsLiveByteForByte": true,
+      "baseline": "live with Claude's edits reversed"
+    }
+  ]
+}

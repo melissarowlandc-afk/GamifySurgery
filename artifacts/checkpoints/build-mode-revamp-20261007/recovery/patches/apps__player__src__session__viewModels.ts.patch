@@ -1,0 +1,208 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 8529217..6a800bb 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -4,6 +4,7 @@ import {
+   getAnswerChoiceServicePreview,
+   getDiagnosticOrderTiming,
+   getDisplayedClinicSatisfaction,
++  getFacilityAccessValidation,
+   getFacilityProgressionStatus,
+   getPlacedRoomIdleSpotAt,
+   getFacilityClock,
+@@ -62,6 +63,13 @@ import {
+   splitClinicalDecisionStem,
+ } from "./clinicalText";
+ import { getFounderActivityLabel } from "./founderActivityPresentation";
++import {
++  describeRoomUpgradeBenefit,
++  letteredRoomNames,
++  roomBuildCategory,
++  roomBuildPurpose,
++  roomBuildSortKey,
++} from "./buildModePresentation";
+ import { createPatientAvailabilityGuidance } from "./patientAvailabilityViewModel";
+ import { createEmployeeTrainingView } from "./employeeTrainingViewModels";
+ import {
+@@ -100,7 +108,12 @@ import type {
+   StaffHireOptionView,
+   StaffTrainingOverviewView,
+ } from "../ui";
+-import type { EmployeeDiscussionTabView, EmployeeDiscussionView } from "../ui/types";
++import type {
++  EmployeeDiscussionTabView,
++  EmployeeDiscussionView,
++  LockedRoomBuildView,
++  OwnedRoomBuildView,
++} from "../ui/types";
+ 
+ export interface PrototypePlayerView {
+   resourceBar: ResourceBarView;
+@@ -112,6 +125,10 @@ export interface PrototypePlayerView {
+   facility: FacilityViewModel;
+   progression: ProgressionView;
+   roomOptions: RoomBuildOptionView[];
++  /** Built rooms for the My Rooms tab, grouped and lettered. */
++  ownedRooms: OwnedRoomBuildView[];
++  /** Rooms that unlock at the next facility level, shown greyed out. */
++  lockedRoomOptions: LockedRoomBuildView[];
+   staffOptions: StaffHireOptionView[];
+   staffRoles: StaffRoleGroupView[];
+   staffTraining: StaffTrainingOverviewView | null;
+@@ -1386,6 +1403,44 @@ export function createPrototypePlayerView(
+   const initialRoomInstanceIds = new Set(
+     facilityBalance.initialRooms.map((room) => room.id),
+   );
++  // Build Mode presentation: lettered names, live access problems and the
++  // shared satisfaction bonus that upgrades currently feed.
++  const buildRoomNames = letteredRoomNames(
++    state.rooms,
++    (roomDefinitionId) =>
++      getRoomDefinition(roomDefinitionId)?.displayName ?? roomDefinitionId,
++  );
++  const buildUnreachableRoomIds = new Set(
++    buildMode ? getFacilityAccessValidation(state).unreachableRoomIds : [],
++  );
++  const satisfactionBalance =
++    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction;
++  const clinicUpgradeSatisfactionTotal = state.rooms.reduce((total, room) =>
++    getRoomDefinition(room.roomDefinitionId)?.kind === "hallway"
++      ? total
++      : total +
++        Math.max(0, room.upgradeLevel - 1) *
++          satisfactionBalance.roomUpgradeBonusPerLevel,
++  0);
++  const roomUpgradeable = (roomDefinitionId: string): boolean => {
++    const definition = getRoomDefinition(roomDefinitionId);
++    return Boolean(
++      definition?.buildable && definition.maximumUpgradeLevel > 1,
++    );
++  };
++  const roomUpgradeBenefit = (room: GameState["rooms"][number]) => {
++    const definition = getRoomDefinition(room.roomDefinitionId);
++    return definition && roomUpgradeable(room.roomDefinitionId)
++      ? describeRoomUpgradeBenefit({
++          upgradeLevel: room.upgradeLevel,
++          maxUpgradeLevel: definition.maximumUpgradeLevel,
++          satisfactionPerLevel: satisfactionBalance.roomUpgradeBonusPerLevel,
++          satisfactionCap: satisfactionBalance.maximumRoomUpgradeBonus,
++          clinicSatisfactionTotal: clinicUpgradeSatisfactionTotal,
++          upkeepPerLevel: definition.upkeepPerUpgradeLevel,
++        })
++      : undefined;
++  };
+   const placedRoomDefinitionIds = new Set(
+     state.rooms.map((room) => room.roomDefinitionId),
+   );
+@@ -2124,6 +2179,18 @@ export function createPrototypePlayerView(
+                 upgradeAvailable:
+                   definition.buildable &&
+                   getNextRoomUpgradeCost(state, room.id) !== null,
++                buildLabel:
++                  buildRoomNames.get(room.id) ?? definition.displayName,
++                upgradeMaxLevel: roomUpgradeable(room.roomDefinitionId)
++                  ? definition.maximumUpgradeLevel
++                  : 1,
++                upgradeAffordable: (() => {
++                  const cost = definition.buildable
++                    ? getNextRoomUpgradeCost(state, room.id)
++                    : null;
++                  return cost !== null && state.cash >= cost;
++                })(),
++                accessProblem: buildUnreachableRoomIds.has(room.id),
+               },
+             ]
+           : [];
+@@ -2349,9 +2416,12 @@ export function createPrototypePlayerView(
+                   definition.constructionCost - state.cash
+                 ).toLocaleString()} more.`
+               : undefined;
++        const purpose = roomBuildPurpose(definition.id);
+         return {
+           id: definition.id,
+           displayName: definition.displayName,
++          category: roomBuildCategory(definition.id),
++          ...(purpose ? { purpose } : {}),
+           footprintLabel: `${definition.width} × ${definition.height} tiles${definition.id === "room.reading" ? ` · ${DIAGNOSTIC_READING_WORKSTATIONS.length} reading positions` : ""}`,
+           costLabel: `$${definition.constructionCost.toLocaleString()}`,
+           upkeepLabel: `$${definition.upkeepPerExpenseInterval.toLocaleString()} upkeep / hr`,
+@@ -2368,6 +2438,59 @@ export function createPrototypePlayerView(
+           blockedReason,
+         };
+       }),
++    ownedRooms: state.rooms
++      .flatMap((room) => {
++        const definition = getRoomDefinition(room.roomDefinitionId);
++        if (!definition || definition.kind === "hallway") {
++          return [];
++        }
++        const upgradeable = roomUpgradeable(room.roomDefinitionId);
++        const upgradeCost = upgradeable
++          ? getNextRoomUpgradeCost(state, room.id)
++          : null;
++        const benefit = roomUpgradeBenefit(room);
++        const view: OwnedRoomBuildView = {
++          id: room.id,
++          roomDefinitionId: room.roomDefinitionId,
++          displayName: buildRoomNames.get(room.id) ?? definition.displayName,
++          category: roomBuildCategory(room.roomDefinitionId),
++          upgradeLevel: room.upgradeLevel,
++          maxUpgradeLevel: upgradeable ? definition.maximumUpgradeLevel : 1,
++          upgradeable,
++          ...(upgradeCost === null
++            ? {}
++            : { nextUpgradeCostLabel: `$${upgradeCost.toLocaleString()}` }),
++          canUpgrade: upgradeCost !== null && state.cash >= upgradeCost,
++          ...(benefit ? { benefitSummary: benefit.perUpgradeLabel } : {}),
++          accessProblem: buildUnreachableRoomIds.has(room.id),
++        };
++        return [view];
++      })
++      // Stable sort keeps build order inside a type, so A sits before B.
++      .sort(
++        (left, right) =>
++          roomBuildSortKey(left.roomDefinitionId) -
++          roomBuildSortKey(right.roomDefinitionId),
++      ),
++    lockedRoomOptions: facilityBalance.roomDefinitions
++      .filter(
++        (definition) =>
++          definition.constructionCost > 0 &&
++          definition.buildable &&
++          definition.unlockFacilityLevel === state.facilityLevel + 1,
++      )
++      .map((definition): LockedRoomBuildView => ({
++        id: definition.id,
++        displayName: definition.displayName,
++        category: roomBuildCategory(definition.id),
++        purpose: roomBuildPurpose(definition.id) ?? "",
++        costLabel: `$${definition.constructionCost.toLocaleString()}`,
++        unlockLabel: `Unlocks at Facility Level ${definition.unlockFacilityLevel}`,
++      }))
++      .sort(
++        (left, right) =>
++          roomBuildSortKey(left.id) - roomBuildSortKey(right.id),
++      ),
+     staffOptions: facilityBalance.staffRoleDefinitions
+       .filter(
+         (role) => role.unlockFacilityLevel <= state.facilityLevel,
+@@ -2572,11 +2695,18 @@ export function createPrototypePlayerView(
+                   ]
+                 : []),
+             ];
++      const upgradeable = roomUpgradeable(room.roomDefinitionId);
++      const benefit = roomUpgradeBenefit(room);
+       return {
+         id: room.id,
+         roomDefinitionId: room.roomDefinitionId,
+-        displayName: definition.displayName,
++        displayName: buildRoomNames.get(room.id) ?? definition.displayName,
+         upgradeLevel: room.upgradeLevel,
++        maxUpgradeLevel: upgradeable ? definition.maximumUpgradeLevel : 1,
++        upgradeable,
++        ...(benefit ? { benefit } : {}),
++        canMove: !protectedRoom,
++        accessProblem: buildUnreachableRoomIds.has(room.id),
+         nextUpgradeLevel,
+         upgradeCostLabel:
+           upgradeCost === null

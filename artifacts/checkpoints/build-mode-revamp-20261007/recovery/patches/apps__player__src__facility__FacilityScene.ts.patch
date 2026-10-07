@@ -1,0 +1,341 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index 2c639b8..0929863 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -293,8 +293,30 @@ export interface FacilitySceneBridge {
+   onPraiseEmployee?: PraiseEmployeeRequest;
+   onMoveFounder?: MoveFounderRequest;
+   onCameraChange?: FacilityCameraChangeRequest;
++  /** Build Mode room menu anchor, in canvas pixels; null when nothing is selected. */
++  onSelectedRoomRectChange?: (rect: FacilityScreenRect | null) => void;
+ }
+ 
++export interface FacilityScreenRect {
++  x: number;
++  y: number;
++  width: number;
++  height: number;
++}
++
++// 7x7 pixel star used under Build Mode room labels (owner-approved ink stars).
++const BUILD_LABEL_STAR_ROWS = [
++  "...#...",
++  "..###..",
++  "#######",
++  ".#####.",
++  "..###..",
++  ".##.##.",
++  ".#...#.",
++] as const;
++const BUILD_LABEL_UPGRADE_READY_COLOR = 0x3f6b3a;
++const BUILD_LABEL_STAR_EMPTY_COLOR = 0xb6b9aa;
++
+ interface GridLayout {
+   originX: number;
+   originY: number;
+@@ -499,6 +521,8 @@ export class FacilityScene extends Phaser.Scene {
+   private waterCoolerLabelText?: Phaser.GameObjects.Text;
+   private litterHighlightText?: Phaser.GameObjects.Text;
+   private roomTexts: Phaser.GameObjects.Text[] = [];
++  private roomStarGraphics: Phaser.GameObjects.Graphics | undefined;
++  private lastReportedSelectedRoomRect = "";
+   /** Local-only receipt cursor; it never participates in simulation state. */
+   private earningsPopupState: EarningsPopupState | undefined;
+   private readonly earningsPopupTexts = new Map<
+@@ -1143,6 +1167,7 @@ export class FacilityScene extends Phaser.Scene {
+     this.characterPresentationWasFrozen = motionFrozen;
+ 
+     this.refreshLayout();
++    this.reportSelectedRoomRect();
+     this.drawCharacters();
+     this.drawEarningsPopups(time);
+     // Atlas completion callbacks can redraw outside update(). Delta belongs to
+@@ -3530,39 +3555,54 @@ export class FacilityScene extends Phaser.Scene {
+       return [];
+     }
+     if (model.buildDoorTool === "place") {
+-      return (
+-        model.buildDoorSlots ??
+-        model.eligibleDoorSlots ??
+-        []
+-      ).flatMap((slot) => {
+-        if (slot.enabled === false) {
+-          return [];
+-        }
+-        const room = model.rooms.find(
+-          (candidate) => candidate.instanceId === slot.roomInstanceId,
+-        );
+-        return room && isRoomVisualDoorSlotClear({
+-          definitionId: room.definitionId,
+-          orientation: room.orientation,
+-          width: room.width,
+-          height: room.height,
+-          side: slot.side,
+-          offset: slot.offset,
+-        })
+-          ? [
+-              {
+-                kind: "place" as const,
+-                slot,
+-                geometry: this.getDoorGeometry(
+-                  room,
+-                  slot.side,
+-                  slot.offset,
+-                ),
+-              },
+-            ]
+-          : [];
+-      });
++      // Owner-approved single Doors tool: empty wall slots add a door and
++      // existing interior doors remove one, without switching modes.
++      return [
++        ...this.getBuildDoorPlaceTargets(),
++        ...this.getBuildDoorRemoveTargets(),
++      ];
+     }
++    return this.getBuildDoorRemoveTargets();
++  }
++
++  private getBuildDoorPlaceTargets(): FacilityDoorInteractionTarget[] {
++    const model = this.bridge.viewModel;
++    return (
++      model.buildDoorSlots ??
++      model.eligibleDoorSlots ??
++      []
++    ).flatMap((slot) => {
++      if (slot.enabled === false) {
++        return [];
++      }
++      const room = model.rooms.find(
++        (candidate) => candidate.instanceId === slot.roomInstanceId,
++      );
++      return room && isRoomVisualDoorSlotClear({
++        definitionId: room.definitionId,
++        orientation: room.orientation,
++        width: room.width,
++        height: room.height,
++        side: slot.side,
++        offset: slot.offset,
++      })
++        ? [
++            {
++              kind: "place" as const,
++              slot,
++              geometry: this.getDoorGeometry(
++                room,
++                slot.side,
++                slot.offset,
++              ),
++            },
++          ]
++        : [];
++    });
++  }
++
++  private getBuildDoorRemoveTargets(): FacilityDoorInteractionTarget[] {
++    const model = this.bridge.viewModel;
+     return (model.doors ?? []).flatMap((door) => {
+       // The public entrance is immutable in the domain and never becomes a
+       // pointer target, even while the remove tool is active.
+@@ -7047,18 +7087,128 @@ export class FacilityScene extends Phaser.Scene {
+     }
+   }
+ 
++  /** Draws filled/empty stars (and the affordable up arrow) under a room label. */
++  private drawBuildLabelStars(
++    graphics: Phaser.GameObjects.Graphics,
++    centerX: number,
++    top: number,
++    level: number,
++    maxLevel: number,
++    upgradeAffordable: boolean,
++    pixel: number,
++  ): number {
++    const starSize = BUILD_LABEL_STAR_ROWS.length * pixel;
++    const gap = pixel;
++    const padding = pixel + 1;
++    const readyWidth =
++      upgradeAffordable && level < maxLevel ? gap * 2 + starSize : 0;
++    const stripWidth =
++      maxLevel * starSize + (maxLevel - 1) * gap + readyWidth;
++    const plateWidth = stripWidth + padding * 2;
++    const plateHeight = starSize + padding * 2;
++    const left = Math.round(centerX - plateWidth / 2);
++    const plateTop = Math.round(top);
++    graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
++    graphics.fillRect(left, plateTop, plateWidth, plateHeight);
++    for (let index = 0; index < maxLevel; index += 1) {
++      const starLeft = left + padding + index * (starSize + gap);
++      graphics.fillStyle(
++        index < level
++          ? PIXEL_PALETTE_NUMBER.ink
++          : BUILD_LABEL_STAR_EMPTY_COLOR,
++        1,
++      );
++      BUILD_LABEL_STAR_ROWS.forEach((row, rowIndex) => {
++        for (let column = 0; column < row.length; column += 1) {
++          if (row[column] === "#") {
++            graphics.fillRect(
++              starLeft + column * pixel,
++              plateTop + padding + rowIndex * pixel,
++              pixel,
++              pixel,
++            );
++          }
++        }
++      });
++    }
++    if (readyWidth > 0) {
++      const chipLeft = left + padding + maxLevel * (starSize + gap) + gap;
++      const chipTop = plateTop + padding;
++      graphics.fillStyle(BUILD_LABEL_UPGRADE_READY_COLOR, 1);
++      graphics.fillRect(chipLeft, chipTop, starSize, starSize);
++      // Up arrow: an upgrade the clinic can pay for right now.
++      graphics.fillStyle(PIXEL_PALETTE_NUMBER.paper, 1);
++      for (let row = 1; row <= 4; row += 1) {
++        const half = row - 1;
++        graphics.fillRect(
++          chipLeft + (3 - half) * pixel,
++          chipTop + row * pixel,
++          (half * 2 + 1) * pixel,
++          pixel,
++        );
++      }
++    }
++    return plateTop + plateHeight;
++  }
++
++  /** Keeps the React room menu attached to the selected room while the camera moves. */
++  private reportSelectedRoomRect(): void {
++    const model = this.bridge.viewModel;
++    const room =
++      model.buildMode && model.selectedRoomInstanceId && this.layout
++        ? model.rooms.find(
++            (candidate) =>
++              candidate.instanceId === model.selectedRoomInstanceId,
++          )
++        : undefined;
++    const rect = room
++      ? this.toPixels({
++          tileX: room.tileX,
++          tileY: room.tileY,
++          ...orientedSize(room),
++        })
++      : null;
++    const key = rect
++      ? `${Math.round(rect.x)},${Math.round(rect.y)},${Math.round(rect.width)},${Math.round(rect.height)},${this.scale.width},${this.scale.height}`
++      : "";
++    if (key === this.lastReportedSelectedRoomRect) {
++      return;
++    }
++    this.lastReportedSelectedRoomRect = key;
++    this.bridge.onSelectedRoomRectChange?.(
++      rect
++        ? {
++            x: Math.round(rect.x),
++            y: Math.round(rect.y),
++            width: Math.round(rect.width),
++            height: Math.round(rect.height),
++          }
++        : null,
++    );
++  }
++
+   private positionText(): void {
+     const { originX, originY, width, tileSize } = this.layout;
+     const model = this.bridge.viewModel;
+     const compact = this.scale.width < 520;
+ 
+     this.roomTexts.forEach((text) => text.destroy());
+-    this.roomTexts = model.rooms
++    this.roomTexts = [];
++    this.roomStarGraphics ??= this.add
++      .graphics()
++      .setDepth(FACILITY_DEPTH_UI);
++    const starGraphics = this.roomStarGraphics;
++    starGraphics.clear();
++    starGraphics.setVisible(Boolean(model.buildMode));
++    const fontSize = Math.max(8, Math.min(12, Math.floor(tileSize * 0.26)));
++    // Stars grow with zoom in whole pixels so they stay crisp.
++    const starPixel = Math.max(1, Math.min(3, Math.round(tileSize / 26)));
++    model.rooms
+       .filter(
+         (room) =>
+           room.kind !== "hallway" && room.definitionId !== "room.hallway",
+       )
+-      .map((room) => {
++      .forEach((room) => {
+         const pixels = this.toPixels({
+           tileX: room.tileX,
+           tileY: room.tileY,
+@@ -7068,15 +7218,12 @@ export class FacilityScene extends Phaser.Scene {
+           .text(
+             pixels.x + pixels.width / 2,
+             pixels.y + Math.max(5, Math.floor(tileSize * 0.16)),
+-            room.displayName,
++            room.buildLabel ?? room.displayName,
+             {
+               color: "#232720",
+               backgroundColor: "#e0ded0",
+               fontFamily: '"Courier New", Courier, monospace',
+-              fontSize: `${Math.max(
+-                8,
+-                Math.min(10, Math.floor(tileSize * 0.26)),
+-              )}px`,
++              fontSize: `${fontSize}px`,
+               fontStyle: "bold",
+               align: "center",
+               resolution: 2,
+@@ -7096,7 +7243,37 @@ export class FacilityScene extends Phaser.Scene {
+         // on the illustrated room itself instead of covering the rear wall
+         // with debug-like labels.
+         label.setVisible(Boolean(model.buildMode));
+-        return label;
++        this.roomTexts.push(label);
++
++        let nextTop = label.y + label.displayHeight;
++        const maxLevel = room.upgradeMaxLevel ?? 1;
++        if (model.buildMode && maxLevel > 1) {
++          nextTop = this.drawBuildLabelStars(
++            starGraphics,
++            label.x,
++            nextTop,
++            Math.max(1, Math.min(maxLevel, room.upgradeLevel ?? 1)),
++            maxLevel,
++            Boolean(room.upgradeAffordable),
++            starPixel,
++          );
++        }
++        if (room.accessProblem) {
++          const problem = this.add
++            .text(label.x, nextTop + 2, "! NO ACCESS", {
++              color: "#f0eddd",
++              backgroundColor: "#9b3b25",
++              fontFamily: '"Courier New", Courier, monospace',
++              fontSize: `${Math.max(8, fontSize - 1)}px`,
++              fontStyle: "bold",
++              resolution: 2,
++              padding: { x: 3, y: 1 },
++            })
++            .setOrigin(0.5, 0)
++            .setDepth(FACILITY_DEPTH_UI)
++            .setVisible(Boolean(model.buildMode));
++          this.roomTexts.push(problem);
++        }
+       });
+ 
+     this.footerText
+@@ -7150,6 +7327,13 @@ export class FacilityScene extends Phaser.Scene {
+           target.kind === "place" ? "PLACE DOOR" : "REMOVE DOOR",
+           pointer,
+         );
++      } else if (
++        !activeDoorTool &&
++        !this.bridge.viewModel.placement &&
++        this.roomAtPointer(pointer)
++      ) {
++        // Rooms open the Build Mode room menu (upgrade, move, doors, sell).
++        this.setInteractionHint("MANAGE ROOM", pointer);
+       } else {
+         this.setInteractionHint(null);
+         if (activeDoorTool && this.game?.canvas) {

@@ -1,0 +1,23 @@
+diff --git a/tests/e2e/room-capacity-sales.spec.ts b/tests/e2e/room-capacity-sales.spec.ts
+index 3361266..c57c699 100644
+--- a/tests/e2e/room-capacity-sales.spec.ts
++++ b/tests/e2e/room-capacity-sales.spec.ts
+@@ -104,7 +104,7 @@ async function selectRoom(page: Page, roomId: string) {
+     };
+   }, roomId);
+   await page.getByTestId("facility-canvas").click({ position: point });
+-  await expect(page.locator(".selected-room-inspector")).toBeVisible();
++  await expect(page.locator(".room-action-menu")).toBeVisible();
+ }
+ 
+ function shot(testInfo: TestInfo, name: string): string {
+@@ -238,7 +238,8 @@ test("a sold staffed room can be rebuilt with a real door while the dismissed em
+   );
+   expect(rebuiltRoom).toBeTruthy();
+   expect(rebuiltRoom!.id).not.toBe("room.capacity.glp");
+-  await page.getByRole("button", { name: "Place Door" }).click();
++  // Placing a room turns the single Doors tool on automatically.
++  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
+   await clickGridPoint(page, 32, 21.5);
+   await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState)
+     .doors.some((door) => door.roomId === rebuiltRoom!.id)).toBe(true);

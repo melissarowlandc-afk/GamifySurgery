@@ -1,0 +1,78 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+index 9915aaf..dbc0af7 100644
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -344,9 +344,60 @@ export interface AdvertisingView {
+   canIncrease: boolean;
+ }
+ 
++/** Build Mode groups shared by the New Rooms and My Rooms tabs. */
++export type RoomBuildCategoryId =
++  | "patient"
++  | "diagnostics"
++  | "procedures"
++  | "support"
++  | "services";
++
++/**
++ * What one more upgrade does, in player words. Codex owns the upgrade rules
++ * (GS-038); Build Mode only describes the effect the game really applies.
++ */
++export interface RoomUpgradeBenefitView {
++  perUpgradeLabel: string;
++  /** Words before the running total, e.g. "Clinic total". */
++  totalCaption?: string;
++  currentLabel: string;
++  nextLabel?: string;
++  note?: string;
++  upkeepLabel?: string;
++}
++
++/** One built room in the My Rooms tab. */
++export interface OwnedRoomBuildView {
++  id: string;
++  roomDefinitionId: string;
++  /** Lettered ("Waiting Room A") only while 2+ rooms of the type exist. */
++  displayName: string;
++  category: RoomBuildCategoryId;
++  upgradeLevel: number;
++  maxUpgradeLevel: number;
++  upgradeable: boolean;
++  nextUpgradeCostLabel?: string;
++  canUpgrade: boolean;
++  benefitSummary?: string;
++  accessProblem: boolean;
++}
++
++/** A room that unlocks at the next facility level. */
++export interface LockedRoomBuildView {
++  id: string;
++  displayName: string;
++  category: RoomBuildCategoryId;
++  purpose: string;
++  costLabel: string;
++  unlockLabel: string;
++}
++
+ export interface RoomBuildOptionView {
+   id: string;
+   displayName: string;
++  category?: RoomBuildCategoryId;
++  /** One line saying what the room is for. */
++  purpose?: string;
+   footprintLabel: string;
+   costLabel: string;
+   upkeepLabel: string;
+@@ -365,6 +416,12 @@ export interface SelectedRoomBuildView {
+   roomDefinitionId: string;
+   displayName: string;
+   upgradeLevel: number;
++  maxUpgradeLevel?: number;
++  /** False for rooms with a single level (no stars, no upgrade button). */
++  upgradeable?: boolean;
++  benefit?: RoomUpgradeBenefitView;
++  canMove?: boolean;
++  accessProblem?: boolean;
+   nextUpgradeLevel?: number;
+   upgradeCostLabel?: string;
+   upgradeImprovements: string[];

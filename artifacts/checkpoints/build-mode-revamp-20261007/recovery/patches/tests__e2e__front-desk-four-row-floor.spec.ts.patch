@@ -1,0 +1,17 @@
+diff --git a/tests/e2e/front-desk-four-row-floor.spec.ts b/tests/e2e/front-desk-four-row-floor.spec.ts
+index 443e604..8f7a670 100644
+--- a/tests/e2e/front-desk-four-row-floor.spec.ts
++++ b/tests/e2e/front-desk-four-row-floor.spec.ts
+@@ -16,10 +16,10 @@ test("renders the Front Desk's full 5x4 Build Mode floor and destination-aware n
+   await startClinic(page, "Front Desk Tile Reviewer", "Front Desk Tile Clinic");
+   await installLevelOneVisualState(page);
+   // Phase A leaves the protected D3 exterior entrance as the only Front Desk
+-  // door, so Place Door can visibly expose the exact remaining candidates.
++  // door, so the Doors tool can visibly expose the exact remaining candidates.
+   await page.getByRole("button", { name: "Enter Build Mode" }).click();
+   await expect(page.getByRole("navigation", { name: "Build Mode tools" })).toBeVisible();
+-  await page.getByRole("button", { name: "Place Door" }).click();
++  await page.getByRole("button", { name: "Doors", exact: true }).click();
+   await page.addStyleTag({ content: ".facility-pause-indicator { visibility: hidden !important; }" });
+   await page.waitForTimeout(180);
+   await page.screenshot({

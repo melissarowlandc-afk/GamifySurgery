@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/facility/facilityWorldSignature.ts b/apps/player/src/facility/facilityWorldSignature.ts
+index 7cfc883..13cb9c6 100644
+--- a/apps/player/src/facility/facilityWorldSignature.ts
++++ b/apps/player/src/facility/facilityWorldSignature.ts
+@@ -18,7 +18,7 @@ export function getFacilityWorldSignature(
+   const rooms = model.rooms
+     .map(
+       (room) =>
+-        `${room.instanceId}:${room.definitionId}:${room.displayName}:${room.kind ?? "room"}:${room.isFounderRoom ? 1 : 0}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.doorSide ?? "-"},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}`,
++        `${room.instanceId}:${room.definitionId}:${room.displayName}:${room.kind ?? "room"}:${room.isFounderRoom ? 1 : 0}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.doorSide ?? "-"},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}:${room.buildLabel ?? "-"}:${room.upgradeMaxLevel ?? 1}:${room.upgradeAffordable ? 1 : 0}:${room.accessProblem ? 1 : 0}`,
+     )
+     .join("|");
+   const doors = (model.doors ?? [])

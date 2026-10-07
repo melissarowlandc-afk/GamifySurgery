@@ -1211,3 +1211,84 @@ Codex's next integrated checkpoint. No merge, release or Pages publication.
   - **Not staged:** Codex's later `level-4/mri/assets/` and `mri/proof/`,
     shared dirty files, other sessions' work and the owner's save. No merge,
     release, deployment or Pages publication. Owner pathway unchanged.
+
+## 2026-10-07 — Claude claim — Build Mode revamp (owner-approved UI)
+
+Owner approved the plan and mockup https://claude.ai/artifact/Lpk2UQV7N9Go7q3ZoiX5XR
+("Otherwise I approve all of your proposals" → "Implement!"). Decisions: ink
+pixel stars under Build Mode room labels (1 star when built, max-level stars,
+none for rooms that cannot upgrade); one-click upgrade from an on-map room menu
+(Undo refunds while in Build Mode); New Rooms / My Rooms tabs grouped Patient
+areas / Diagnostics / Procedures / Staff & support / Services; same-type rooms
+lettered A, B… only while 2+ exist, oldest = A, letters close up after a sale
+(presentation only, no save field); Move/Doors/Sell in the room menu; single
+Doors tool armed after placing a room; contextual Rotate (R)/Cancel (Esc);
+labelled Undo; live layout-problem markers.
+
+Ownership split (owner, 2026-10-07): **Codex designs the upgrade rules**
+(GS-038 cost/benefit table and domain effects). **Claude designs how upgrades
+look and work in Build Mode** and only reads the rules. Until GS-038 effects
+land, the room menu describes each room's real current upgrade effect.
+
+Claude claims (presentation/controls only): `ui/BuildPanel.tsx` + test, new
+`ui/RoomActionMenu.tsx`, new `session/buildModePresentation.ts` + test, Build
+Mode CSS in `styles/global.css`, additive build view fields in `ui/types.ts` /
+`session/viewModels.ts`, build-label/door-tool/menu-anchor code in
+`facility/FacilityScene.ts`, `FacilityCanvas.tsx`, `facility/types.ts`, undo
+labels in `session/usePrototypeSession.ts`, and BuildPanel/menu wiring in
+`AppShell.tsx` / `App.tsx`. No domain, balance, save or clinical edits.
+
+### Claude Build Mode revamp — complete, claim released (2026-10-07)
+
+Implemented the owner-approved Build Mode revamp; ready for owner playtest.
+
+- Map labels: lettered names ("Examination Room A/B" only while 2+ exist),
+  ink pixel stars under each name (filled to level, empty to max; no stars
+  for single-level rooms), green up-arrow chip when the next upgrade is
+  affordable, red "! NO ACCESS" tag for unreachable rooms (live
+  `unreachableRoomIds`). Stars scale with zoom in whole pixels.
+- Room menu (`ui/RoomActionMenu.tsx`): opens beside the clicked room (map,
+  My Rooms row, or a room message), follows the camera via the scene's new
+  `onSelectedRoomRectChange` bridge callback, docks on narrow maps, scrolls
+  on short ones. One-click "Upgrade to ★N · $X" (star pop + spent float),
+  benefit box, Move (wires the existing `beginMoveSelectedRoom`), Doors,
+  Sell (existing confirmation dialog moved here). Replaces the desk
+  inspector and the upgrade confirm dialog.
+- Build tab (`ui/BuildPanel.tsx`): New Rooms / My Rooms tabs; both grouped
+  Patient areas / Diagnostics / Procedures / Staff & support / Services
+  (`session/buildModePresentation.ts`); one-line purposes; next-level rooms
+  greyed with "Unlocks at Facility Level N"; My Rooms shows stars, benefit,
+  one-click Upgrade, group ▲/★ totals, collapsible groups and an "Only
+  affordable upgrades" filter; same-type rooms adjacent A→B. Single Doors
+  tool (scene: "place" mode also targets existing interior doors for
+  removal), auto-armed after placing a new room; placement strip with
+  Rotate (R) / Cancel (Esc); Undo names its action and money
+  ("Upgrade Examination Room A (+$140 back)"); live "N problems" chip.
+- **Upgrade benefit seam for Codex (GS-038):** `describeRoomUpgradeBenefit`
+  in `apps/player/src/session/buildModePresentation.ts` is the single place
+  Build Mode describes upgrade effects. It currently states the real effect
+  (shared +1 completed-visit satisfaction per level, clinic cap +3, plus
+  per-level upkeep). When GS-038 room-specific effects land in balance
+  config, extend that function (or hand Claude the new fields); nothing else
+  in the UI needs to change.
+- Copy updates: tutorial door steps, Help dialog and the Build Mode sidebar
+  now describe the single Doors tool and the room menu.
+- e2e specs updated for the new UI: build-mode-usability,
+  room-capacity-sales, tutorial-graduation, fresh-campaign-examination-room,
+  ultrasound-first-imaging, playthrough-batch, examination-room-visual,
+  five-room-waiting-bathroom-visual, front-desk-four-row-floor.
+- Validation: player typecheck clean; player unit suite 692/693 (the one
+  failure is chart pending-copy in surgeryCenterServicePreviews from
+  concurrent diagnostic-timing work; it passed earlier in this session).
+  e2e desktop: tutorial-graduation and front-desk-four-row-floor pass;
+  build-mode-usability passes every Build Mode step and then fails on the
+  retired Imaging Control exit-issue text; the other failures stop before or
+  outside Build Mode (patient-tab "Action required", capture fixtures stuck
+  on the title screen, Management hire-button strict mode, NP walk path,
+  door-count change from the uncommitted doors.ts work — reproduced with the
+  merged door targeting disabled). Live QA on 127.0.0.1:5176 with a Level 1
+  fixture: stars, ▲, NO ACCESS, A/B lettering, menu upgrade, named Undo, My
+  Rooms grouping, Doors, Move and zoomed-out menu tracking all verified.
+- No domain, balance, save or clinical edits. Saves unaffected (letters are
+  derived from build order; nothing new is stored). Owner pathway unchanged:
+  START_GAME.cmd -> http://127.0.0.1:4173; reload to see it.

@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/ui/HelpDialog.tsx b/apps/player/src/ui/HelpDialog.tsx
+index 6b7a3cd..5559fa1 100644
+--- a/apps/player/src/ui/HelpDialog.tsx
++++ b/apps/player/src/ui/HelpDialog.tsx
+@@ -29,7 +29,7 @@ const HELP_STEPS = [
+   ],
+   [
+     "Build Mode",
+-    "Enter Build Mode to pause the clinic. Its compact top bar provides Undo and Done / Save; Construction Tools provides Rotate, Place Door, Remove Door, and Build Hallway. Toggle Place Door, then click an emphasized eligible wall. Toggle Remove Door to highlight doors you can click to remove. If a layout is invalid, Done / Save lists every access problem while renovation stays paused.",
++    "Enter Build Mode to pause the clinic. The top bar shows your money, Undo (named for the last change) and Done / Save. New Rooms lists rooms to build by group; My Rooms lists the rooms you own with their stars and upgrades. Click a room on the map to upgrade, move, add doors or sell it. Select Doors, then click an emphasized wall to add a door or click a door to remove it. While placing a room, press R to rotate and Esc to cancel. Rooms marked NO ACCESS need a door; Done / Save lists every access problem while renovation stays paused.",
+   ],
+   [
+     "Rooms, doors, and hallways",

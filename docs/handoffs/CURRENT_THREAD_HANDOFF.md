@@ -1,3 +1,20 @@
+> BUILD MODE REVAMP — READY FOR OWNER PLAYTEST (2026-10-07, Claude Code).
+> Owner-approved (artifact https://claude.ai/artifact/Lpk2UQV7N9Go7q3ZoiX5XR).
+> Ink stars under Build Mode room names (none for single-level rooms), green
+> up-arrow when an upgrade is affordable, red NO ACCESS tag; clicking a room
+> opens an on-map menu with one-click upgrade, benefit text, Move, Doors and
+> Sell. Build tab now has New Rooms / My Rooms, both grouped Patient areas /
+> Diagnostics / Procedures / Staff & support / Services; same-type rooms are
+> lettered A/B (only while 2+ exist, oldest = A, letters close up after a
+> sale) and listed together. Single Doors tool auto-armed after placing a
+> room; R rotates, Esc cancels; Undo names its action and refund. Codex owns
+> upgrade rules: GS-038 effects should be described through
+> describeRoomUpgradeBenefit (session/buildModePresentation.ts). Details and
+> validation: CLAUDE_ANIMATION_COORDINATION.md (Build Mode revamp). No
+> domain/save/balance/clinical edits; saves compatible. Owner pathway
+> unchanged: START_GAME.cmd -> http://127.0.0.1:4173, same profile; reload.
+> LOCAL ONLY — say "push to GitHub" for a backup checkpoint.
+
 > MANAGEMENT REVAMP + PLAIN STAFF NAMES GITHUB BACKUP VERIFIED (2026-10-07,
 > Claude Code). Owner-approved Management mode redesign (Employees, Services
 > and Money tabs; GS-037 Train button, pips and role-average header shown only

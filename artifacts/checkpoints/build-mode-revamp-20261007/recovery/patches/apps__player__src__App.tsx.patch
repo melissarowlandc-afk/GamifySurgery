@@ -1,0 +1,31 @@
+diff --git a/apps/player/src/App.tsx b/apps/player/src/App.tsx
+index fafa3ff..11ab592 100644
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -74,6 +74,8 @@ function ActivePrototypeGame({
+       facility={view.facility}
+       progression={view.progression}
+       roomOptions={view.roomOptions}
++      ownedRooms={view.ownedRooms}
++      lockedRoomOptions={view.lockedRoomOptions}
+       selectedRoomBuild={view.selectedRoomBuild}
+       staffRoles={view.staffRoles}
+       staffTraining={view.staffTraining}
+@@ -110,6 +112,8 @@ function ActivePrototypeGame({
+       buildMode={session.buildMode}
+       managementMode={session.managementMode}
+       buildUndoCount={session.buildUndoCount}
++      buildUndoLabel={session.buildUndoLabel}
++      movingRoomInstanceId={session.movingRoomInstanceId}
+       buildExitBlockedReason={session.buildExitBlockedReason}
+       buildExitBlockedIssues={session.buildExitBlockedIssues}
+       placementOrientation={session.placementOrientation}
+@@ -122,6 +126,8 @@ function ActivePrototypeGame({
+       onSelectRoom={session.selectRoom}
+       onSellSelectedRoom={session.sellSelectedRoom}
+       onUpgradeSelectedRoom={session.upgradeSelectedRoom}
++      onUpgradeRoom={session.upgradeRoom}
++      onBeginMoveSelectedRoom={session.beginMoveSelectedRoom}
+       onPlaceDoor={session.placeDoor}
+       onRemoveDoor={session.removeDoor}
+       onUndoBuildAction={session.undoBuildAction}

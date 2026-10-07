@@ -1,0 +1,138 @@
+diff --git a/apps/player/src/session/usePrototypeSession.ts b/apps/player/src/session/usePrototypeSession.ts
+index b18b2c0..16878d0 100644
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -64,6 +64,7 @@ import {
+ } from "./questionReviewFlags";
+ import { getChartFeedbackAcknowledgmentCommand } from "./chartCloseBehavior";
+ import { getDailyRoutinePauseTransition, isDailyRoutineTipId } from "./dailyRoutineTutorialPause";
++import { describeBuildUndoAction } from "./buildModePresentation";
+ 
+ type GameCommandInput = {
+   [CommandType in GameCommand["type"]]: Omit<
+@@ -91,6 +92,10 @@ export interface PrototypeSession {
+   buildMode: boolean;
+   managementMode: boolean;
+   buildUndoCount: number;
++  /** What Undo would reverse, e.g. "Upgrade Waiting Room A (+$170 back)". */
++  buildUndoLabel: string | null;
++  /** Set while an existing room is being moved with the placement tool. */
++  movingRoomInstanceId: string | null;
+   buildExitBlockedReason: string | null;
+   buildExitBlockedIssues: string[];
+   facilityCamera: FacilityCameraView;
+@@ -131,6 +136,8 @@ export interface PrototypeSession {
+   selectRoom: (roomInstanceId: string) => void;
+   sellSelectedRoom: (roomId: string, saleConfirmationToken?: string) => void;
+   upgradeSelectedRoom: () => void;
++  /** One-click upgrade for any built room (My Rooms tab). */
++  upgradeRoom: (roomId: string) => void;
+   beginMoveSelectedRoom: () => void;
+   placeDoor: (
+     roomId: string,
+@@ -273,11 +280,13 @@ export function usePrototypeSession(
+   const [movingRoomInstanceId, setMovingRoomInstanceId] =
+     useState<string | null>(null);
+   const [buildUndoCount, setBuildUndoCount] = useState(0);
++  const [buildUndoLabel, setBuildUndoLabel] = useState<string | null>(null);
+   const [buildExitBlockedReason, setBuildExitBlockedReason] =
+     useState<string | null>(null);
+   const [buildExitBlockedIssues, setBuildExitBlockedIssues] =
+     useState<string[]>([]);
+   const buildHistoryRef = useRef<GameState[]>([]);
++  const buildHistoryLabelsRef = useRef<string[]>([]);
+   const [facilityCamera, setFacilityCamera] =
+     useState<FacilityCameraView>(() => getInitialFacilityCamera(
+       requireActiveCampaign(loadedRef.current!.profile).state,
+@@ -586,7 +595,20 @@ export function usePrototypeSession(
+           ...buildHistoryRef.current,
+           before,
+         ];
++        const undoLabel = describeBuildUndoAction(
++          before,
++          stateRef.current,
++          commandInput,
++          (roomDefinitionId) =>
++            getRoomDefinition(roomDefinitionId)?.displayName ??
++            roomDefinitionId,
++        );
++        buildHistoryLabelsRef.current = [
++          ...buildHistoryLabelsRef.current,
++          undoLabel,
++        ];
+         setBuildUndoCount(buildHistoryRef.current.length);
++        setBuildUndoLabel(undoLabel);
+         setBuildExitBlockedReason(null);
+         setBuildExitBlockedIssues([]);
+       }
+@@ -602,6 +624,8 @@ export function usePrototypeSession(
+     }
+     const previous = buildHistoryRef.current.at(-1)!;
+     buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
++    buildHistoryLabelsRef.current = buildHistoryLabelsRef.current.slice(0, -1);
++    setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
+     stateRef.current = previous;
+     setState(previous);
+     persistActiveState(previous);
+@@ -1123,7 +1147,9 @@ export function usePrototypeSession(
+     const current = stateRef.current;
+     preBuildPausedRef.current = current.paused;
+     buildHistoryRef.current = [];
++    buildHistoryLabelsRef.current = [];
+     setBuildUndoCount(0);
++    setBuildUndoLabel(null);
+     setBuildExitBlockedReason(null);
+     setBuildExitBlockedIssues([]);
+     setBuildExitBlockedIssues([]);
+@@ -1172,7 +1198,9 @@ export function usePrototypeSession(
+     }
+     setBuildMode(false);
+     buildHistoryRef.current = [];
++    buildHistoryLabelsRef.current = [];
+     setBuildUndoCount(0);
++    setBuildUndoLabel(null);
+     setBuildExitBlockedReason(null);
+     setBuildExitBlockedIssues([]);
+     setSelectedRoomDefinitionId(null);
+@@ -1225,6 +1253,14 @@ export function usePrototypeSession(
+     });
+   }, [executeBuildCommand, selectedRoomInstanceId]);
+ 
++  const upgradeRoom = useCallback((roomId: string) => {
++    if (!buildMode) {
++      setAnnouncement("Enter Build Mode before upgrading a room.");
++      return;
++    }
++    executeBuildCommand({ type: "UPGRADE_ROOM", roomId });
++  }, [buildMode, executeBuildCommand]);
++
+   const beginMoveSelectedRoom = useCallback(() => {
+     if (!selectedRoomInstanceId) {
+       setAnnouncement("Select a room to move.");
+@@ -1634,7 +1670,9 @@ export function usePrototypeSession(
+     setBuildMode(false);
+     setManagementMode(false);
+     buildHistoryRef.current = [];
++    buildHistoryLabelsRef.current = [];
+     setBuildUndoCount(0);
++    setBuildUndoLabel(null);
+     setBuildExitBlockedReason(null);
+     setFacilityCamera(getInitialFacilityCamera(selectedCampaign.state));
+     setSummaryVisible(false);
+@@ -1948,6 +1986,8 @@ export function usePrototypeSession(
+     buildMode,
+     managementMode,
+     buildUndoCount,
++    buildUndoLabel,
++    movingRoomInstanceId,
+     buildExitBlockedReason,
+     buildExitBlockedIssues,
+     facilityCamera,
+@@ -1983,6 +2023,7 @@ export function usePrototypeSession(
+     selectRoom,
+     sellSelectedRoom,
+     upgradeSelectedRoom,
++    upgradeRoom,
+     beginMoveSelectedRoom,
+     placeDoor,
+     removeDoor,

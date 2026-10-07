@@ -1,0 +1,516 @@
+diff --git a/apps/player/src/styles/global.css b/apps/player/src/styles/global.css
+index 490c11c..e4a26a9 100644
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -8426,3 +8426,511 @@ input[type="range"] {
+ .employee-discussion-body > p { max-width: 75ch; line-height: 1.5; }
+ .employee-discussion-body .answer-choices { display: grid; gap: .65rem; }
+ .employee-discussion-tab .patient-tab-copy small { display: block; font-size: .75rem; line-height: 1.3; }
++
++/*
++ * Build Mode revamp (owner-approved, October 7): New Rooms / My Rooms tabs,
++ * grouped rooms, ink level stars, the on-map room menu and live problems.
++ */
++.build-mode-topbar {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 0.4rem 0.6rem;
++}
++
++.build-mode-topbar .build-mode-money {
++  margin-inline: auto;
++}
++
++.build-problem-chip {
++  min-height: 24px;
++  padding: 0.12rem 0.45rem;
++  border: 2px solid #6e2a1a;
++  background: #9b3b25;
++  color: var(--panel);
++  font-size: 0.64rem;
++  font-weight: 900;
++  letter-spacing: 0.03em;
++  cursor: pointer;
++}
++
++.build-mode-topbar-actions .build-undo-button {
++  max-width: 17rem;
++  overflow: hidden;
++  text-overflow: ellipsis;
++  white-space: nowrap;
++}
++
++.build-mode-panel .build-tool-toolbar {
++  display: flex;
++  flex-wrap: wrap;
++}
++
++.build-tool-hint {
++  color: var(--ink-soft);
++  font-size: 0.62rem;
++  font-weight: 700;
++  line-height: 1.3;
++}
++
++.build-key {
++  display: inline-block;
++  margin-inline: 0.15rem;
++  padding: 0 0.22rem;
++  border: 1px solid currentColor;
++  font-size: 0.85em;
++  line-height: 1.25;
++}
++
++.build-mode-panel .build-placement-status {
++  position: sticky;
++  z-index: 10;
++  top: 40px;
++  border-bottom: 2px solid var(--ink);
++  background: var(--ink);
++  color: var(--panel);
++  flex-wrap: wrap;
++}
++
++.build-mode-panel .build-placement-status .placement-orientation {
++  color: var(--shade-2);
++}
++
++.build-mode-panel .build-placement-status .text-button {
++  color: var(--panel);
++  border-color: var(--panel);
++}
++
++.build-mode-panel .build-placement-status .text-button + .text-button {
++  margin-left: 0;
++}
++
++.build-tabs {
++  display: flex;
++  border-bottom: 2px solid var(--ink);
++  background: var(--shade-1);
++}
++
++.build-tab {
++  display: flex;
++  min-height: 34px;
++  flex: 1;
++  padding: 0.3rem 0.5rem;
++  border: 0;
++  border-right: 2px solid var(--ink);
++  background: var(--shade-1);
++  color: var(--ink-soft);
++  font-size: 0.72rem;
++  font-weight: 900;
++  letter-spacing: 0.03em;
++  gap: 0.4rem;
++  align-items: center;
++  justify-content: center;
++  cursor: pointer;
++}
++
++.build-tab:last-child {
++  border-right: 0;
++}
++
++.build-tab[aria-selected="true"] {
++  background: var(--paper-raised);
++  box-shadow: inset 0 -3px 0 var(--ink);
++  color: var(--ink);
++}
++
++.build-ready-badge {
++  padding: 0.05rem 0.3rem;
++  background: #3f6b3a;
++  color: var(--panel);
++  font-size: 0.6rem;
++  font-weight: 900;
++  letter-spacing: 0;
++}
++
++.build-mode-panel .build-room-catalog {
++  display: grid;
++  padding: 0.5rem 0.55rem 0.75rem;
++  gap: 0.65rem;
++}
++
++.build-group {
++  display: grid;
++  min-width: 0;
++  gap: 0.35rem;
++}
++
++.build-group-heading,
++.build-group-toggle {
++  display: flex;
++  margin: 0;
++  padding: 0 0 0.15rem;
++  border: 0;
++  border-bottom: 1px solid var(--shade-2);
++  background: none;
++  color: var(--ink-soft);
++  font-size: 0.62rem;
++  font-weight: 900;
++  letter-spacing: 0.08em;
++  text-align: left;
++  text-transform: uppercase;
++  gap: 0.5rem;
++  align-items: center;
++}
++
++.build-group-toggle {
++  width: 100%;
++  min-height: 26px;
++  cursor: pointer;
++}
++
++.build-group-toggle::before {
++  content: "\25BE";
++}
++
++.build-group-toggle[aria-expanded="false"]::before {
++  content: "\25B8";
++}
++
++.build-group-toggle > span:first-child {
++  margin-right: auto;
++}
++
++.build-group-stats {
++  display: inline-flex;
++  gap: 0.4rem;
++  align-items: center;
++  letter-spacing: 0;
++  font-variant-numeric: tabular-nums;
++}
++
++.build-mode-panel .build-room-catalog .build-card .build-card-purpose {
++  color: var(--ink);
++  font-weight: 700;
++}
++
++.build-mode-panel .build-room-catalog .build-card.is-locked {
++  border-style: dashed;
++  border-color: var(--shade-3);
++  background: var(--shade-1);
++  box-shadow: none;
++  color: var(--shade-4);
++  opacity: 0.85;
++}
++
++.build-owned-summary {
++  display: flex;
++  flex-wrap: wrap;
++  padding: 0.35rem 0.5rem;
++  border: 2px solid var(--ink);
++  background: var(--panel);
++  font-size: 0.66rem;
++  font-weight: 900;
++  gap: 0.35rem 1rem;
++  align-items: center;
++  justify-content: space-between;
++  font-variant-numeric: tabular-nums;
++}
++
++.build-owned-filter {
++  display: inline-flex;
++  gap: 0.3rem;
++  align-items: center;
++  font-weight: 700;
++  cursor: pointer;
++}
++
++.build-empty-note {
++  margin: 0;
++  color: var(--ink-soft);
++  font-size: 0.66rem;
++}
++
++.build-owned-list {
++  display: grid;
++}
++
++.build-owned-row {
++  display: grid;
++  padding: 0.35rem 0.1rem;
++  border-bottom: 1px dashed var(--shade-2);
++  grid-template-columns: minmax(0, 1fr) auto;
++  gap: 0.2rem 0.5rem;
++  align-items: center;
++}
++
++/* Same-type rooms (Waiting Room A, B...) sit together, joined by a rule. */
++.build-owned-row.is-sibling {
++  padding-left: 0.5rem;
++  border-left: 3px solid var(--shade-2);
++}
++
++.build-owned-row.is-first-sibling:not(:first-child) {
++  margin-top: 0.35rem;
++}
++
++.build-owned-row.is-selected {
++  background: var(--shade-1);
++  box-shadow: inset 0 0 0 2px var(--ink);
++}
++
++.build-owned-name {
++  min-height: 26px;
++  padding: 0;
++  border: 0;
++  background: none;
++  color: var(--ink);
++  font-size: 0.7rem;
++  font-weight: 900;
++  text-align: left;
++  text-decoration: underline;
++  text-decoration-color: var(--shade-2);
++  text-underline-offset: 3px;
++  cursor: pointer;
++}
++
++.build-owned-upgrade.button {
++  min-height: 28px;
++  padding: 0.2rem 0.5rem;
++  box-shadow: 1px 1px 0 var(--ink);
++  font-size: 0.64rem;
++  white-space: nowrap;
++}
++
++.build-owned-status {
++  font-size: 0.62rem;
++  font-weight: 900;
++  letter-spacing: 0.06em;
++}
++
++.build-owned-status.is-muted {
++  color: var(--shade-3);
++}
++
++.build-owned-detail {
++  display: flex;
++  flex-wrap: wrap;
++  grid-column: 1 / -1;
++  color: var(--ink-soft);
++  font-size: 0.6rem;
++  font-weight: 700;
++  gap: 0.2rem 0.5rem;
++  align-items: center;
++}
++
++.build-owned-problem {
++  color: #9b3b25;
++  font-weight: 900;
++}
++
++.room-level-stars {
++  display: inline-flex;
++  gap: 1px;
++  align-items: center;
++}
++
++.room-level-star {
++  width: 10px;
++  height: 10px;
++  fill: var(--shade-2);
++}
++
++.room-level-star.is-filled {
++  fill: var(--ink);
++}
++
++.room-level-star.is-new {
++  animation: room-star-pop 0.5s steps(4) both;
++}
++
++@keyframes room-star-pop {
++  0% { transform: scale(0.2); }
++  60% { transform: scale(1.7); }
++  100% { transform: scale(1); }
++}
++
++/* On-map room menu */
++.room-action-menu {
++  position: absolute;
++  z-index: 19;
++  display: grid;
++  width: min(17.5rem, calc(100% - 1rem));
++  padding: 0.7rem;
++  border: 3px solid var(--ink);
++  background: var(--panel);
++  box-shadow: 5px 5px 0 var(--deep-olive);
++  color: var(--ink);
++  gap: 0.5rem;
++}
++
++.room-action-menu.is-docked {
++  right: 0.5rem;
++  bottom: 0.5rem;
++  left: 0.5rem;
++  width: auto;
++}
++
++.room-action-menu h2 {
++  margin: 0 1.6rem 0 0;
++  font-size: 0.9rem;
++  line-height: 1.2;
++}
++
++.room-action-menu-close {
++  position: absolute;
++  top: 0.2rem;
++  right: 0.25rem;
++  min-width: 30px;
++  min-height: 30px;
++  border: 0;
++  background: none;
++  color: var(--ink);
++  font-size: 1rem;
++  font-weight: 900;
++  cursor: pointer;
++}
++
++.room-action-menu-level {
++  display: flex;
++  margin: 0;
++  gap: 0.5rem;
++  align-items: center;
++  font-size: 0.7rem;
++  font-weight: 700;
++}
++
++.room-action-menu-level .room-level-star {
++  width: 15px;
++  height: 15px;
++}
++
++.room-max-tag {
++  margin-left: 0.35rem;
++  padding: 0.05rem 0.25rem;
++  background: var(--ink);
++  color: var(--panel);
++  font-size: 0.6rem;
++  letter-spacing: 0.06em;
++}
++
++.room-upgrade-benefit {
++  display: grid;
++  padding: 0.45rem 0.5rem;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  font-size: 0.66rem;
++  gap: 0.2rem;
++}
++
++.room-upgrade-benefit-key {
++  color: var(--deep-olive);
++  font-size: 0.58rem;
++  font-weight: 900;
++  letter-spacing: 0.08em;
++  text-transform: uppercase;
++}
++
++.room-upgrade-benefit strong {
++  font-size: 0.74rem;
++  line-height: 1.3;
++}
++
++.room-upgrade-benefit-delta {
++  font-variant-numeric: tabular-nums;
++}
++
++.room-upgrade-benefit-delta b {
++  padding: 0 0.25rem;
++  background: var(--ink);
++  color: var(--panel);
++}
++
++.room-upgrade-benefit small {
++  color: var(--ink-soft);
++  font-size: 0.6rem;
++  line-height: 1.3;
++}
++
++.room-action-menu-buy {
++  position: relative;
++  display: grid;
++  gap: 0.25rem;
++}
++
++.room-action-menu-upgrade.button {
++  min-height: 38px;
++  font-size: 0.74rem;
++}
++
++.room-action-menu-shortfall,
++.room-action-menu-problem {
++  margin: 0;
++  color: #9b3b25;
++  font-size: 0.64rem;
++  font-weight: 900;
++}
++
++.room-action-menu-spent {
++  position: absolute;
++  top: -1.1rem;
++  right: 0.4rem;
++  color: #9b3b25;
++  font-size: 0.8rem;
++  font-weight: 900;
++  pointer-events: none;
++  animation: room-spent-float 1s ease-out forwards;
++}
++
++@keyframes room-spent-float {
++  from { opacity: 1; transform: translateY(0); }
++  to { opacity: 0; transform: translateY(-1.4rem); }
++}
++
++.room-action-menu-note {
++  margin: 0;
++  color: var(--ink-soft);
++  font-size: 0.66rem;
++}
++
++.room-action-menu-footer {
++  display: flex;
++  padding-top: 0.45rem;
++  border-top: 1px dashed var(--shade-3);
++  gap: 0.75rem;
++  align-items: center;
++}
++
++.room-action-menu-footer .text-button {
++  min-height: 28px;
++  padding: 0.1rem 0;
++  font-size: 0.68rem;
++}
++
++.room-action-menu-footer .room-action-menu-sell {
++  margin-left: auto;
++  color: #9b3b25;
++}
++
++.room-action-menu .endoscopy-setup-guide {
++  margin: 0;
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .room-level-star.is-new,
++  .room-action-menu-spent {
++    animation: none;
++  }
++
++  .room-action-menu-spent {
++    display: none;
++  }
++}
++
++.room-action-menu {
++  overflow-y: auto;
++  overscroll-behavior: contain;
++}
++
++/* A lone room in a group keeps card width instead of spanning the panel. */
++.build-mode-panel .build-room-catalog .build-group .build-option-list {
++  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
++}

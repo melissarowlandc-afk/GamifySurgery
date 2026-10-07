@@ -1,0 +1,14 @@
+diff --git a/tests/e2e/playthrough-batch.spec.ts b/tests/e2e/playthrough-batch.spec.ts
+index 12e82b5..df1c96d 100644
+--- a/tests/e2e/playthrough-batch.spec.ts
++++ b/tests/e2e/playthrough-batch.spec.ts
+@@ -430,7 +430,8 @@ test("fresh campaign builds a real Examination Room and door, then retains both"
+   const room = state.rooms.find((candidate) => candidate.roomDefinitionId === "room.examination")!;
+   expect(state.cashCents).toBe(beforeBuild.cashCents - 16_000);
+   await dismissCoach(page);
+-  await page.getByRole("button", { name: "Place Door" }).click();
++  // Placing a room turns the single Doors tool on automatically.
++  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
+   const beforeDoorCount = state.doors.length;
+   layout = await facilityLayout(page);
+   await canvas.click({ position: {

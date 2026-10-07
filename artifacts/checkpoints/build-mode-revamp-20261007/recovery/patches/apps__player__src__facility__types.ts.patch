@@ -1,0 +1,19 @@
+diff --git a/apps/player/src/facility/types.ts b/apps/player/src/facility/types.ts
+index 29d1bf7..f2f80f8 100644
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -90,6 +90,14 @@ export interface FacilityRoomView {
+   cleanliness?: number;
+   /** Build-only affordance; the domain still decides whether an upgrade applies. */
+   upgradeAvailable?: boolean;
++  /** Build Mode label; lettered ("Waiting Room A") while 2+ of a type exist. */
++  buildLabel?: string;
++  /** Star count under the Build Mode label; 1 means no upgrades and no stars. */
++  upgradeMaxLevel?: number;
++  /** The next upgrade exists and the clinic can pay for it now. */
++  upgradeAffordable?: boolean;
++  /** Build Mode marker: the room cannot be reached by patients or staff. */
++  accessProblem?: boolean;
+ }
+ 
+ export interface FacilityDoorView {

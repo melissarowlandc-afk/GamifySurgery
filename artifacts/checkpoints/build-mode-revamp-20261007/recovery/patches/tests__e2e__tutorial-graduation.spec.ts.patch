@@ -1,0 +1,14 @@
+diff --git a/tests/e2e/tutorial-graduation.spec.ts b/tests/e2e/tutorial-graduation.spec.ts
+index 2b77a74..3a1158a 100644
+--- a/tests/e2e/tutorial-graduation.spec.ts
++++ b/tests/e2e/tutorial-graduation.spec.ts
+@@ -142,7 +142,8 @@ test("a fresh all-wrong tutorial graduates after the ordinary examination-room b
+   const afterRoom = await state(page);
+   expect(afterRoom.cash).toBe(cashBeforeBuild - 160);
+   const examRoom = afterRoom.rooms.find((room) => room.roomDefinitionId === "room.examination")!;
+-  await page.getByRole("button", { name: "Place Door" }).click();
++  // Placing a room turns the single Doors tool on automatically.
++  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
+   layout = await facilityLayout(page);
+   await canvas.click({ position: { x: layout.originX + 35.5 * layout.tileSize, y: layout.originY + 28 * layout.tileSize } });
+   await expect.poll(async () => (await state(page)).doors.some((door) => door.roomId === examRoom.id)).toBe(true);

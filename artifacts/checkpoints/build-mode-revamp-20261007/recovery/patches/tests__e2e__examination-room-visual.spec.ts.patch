@@ -1,0 +1,13 @@
+diff --git a/tests/e2e/examination-room-visual.spec.ts b/tests/e2e/examination-room-visual.spec.ts
+index c0c6aa1..37a6cf3 100644
+--- a/tests/e2e/examination-room-visual.spec.ts
++++ b/tests/e2e/examination-room-visual.spec.ts
+@@ -193,7 +193,7 @@ test("renders Build Mode candidate door spans for the complete vertical Examinat
+   await openVisualRoom(page);
+   const capture = await openFreshCapture(page, 90);
+   await capture.getByRole("button", { name: "Enter Build Mode" }).click();
+-  const placeDoor = capture.getByRole("button", { name: "Place Door" });
++  const placeDoor = capture.getByRole("button", { name: "Doors", exact: true });
+   await expect(placeDoor).toBeVisible();
+   await placeDoor.evaluate((button) => (button as HTMLButtonElement).click());
+   await expect(placeDoor).toHaveAttribute("aria-pressed", "true");

@@ -1,0 +1,250 @@
+diff --git a/apps/player/src/AppShell.tsx b/apps/player/src/AppShell.tsx
+index 5943ca4..b89fe65 100644
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -1,6 +1,12 @@
+ import { useEffect, useRef, useState, type CSSProperties } from "react";
+ import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
+-import type { EmployeeDiscussionTabView, EmployeeDiscussionView } from "./ui/types";
++import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
++import type {
++  EmployeeDiscussionTabView,
++  EmployeeDiscussionView,
++  LockedRoomBuildView,
++  OwnedRoomBuildView,
++} from "./ui/types";
+ import type { GridPoint } from "@gamify-surgery/game-domain";
+ import {
+   FacilityCanvas,
+@@ -82,6 +88,8 @@ interface AppShellProps {
+   facility: FacilityViewModel;
+   progression: ProgressionView;
+   roomOptions: RoomBuildOptionView[];
++  ownedRooms?: OwnedRoomBuildView[];
++  lockedRoomOptions?: LockedRoomBuildView[];
+   selectedRoomBuild: SelectedRoomBuildView | null;
+   staffRoles: StaffRoleGroupView[];
+   staffTraining?: StaffTrainingOverviewView | null;
+@@ -102,6 +110,8 @@ interface AppShellProps {
+   buildMode: boolean;
+   managementMode: boolean;
+   buildUndoCount: number;
++  buildUndoLabel?: string | null;
++  movingRoomInstanceId?: string | null;
+   buildExitBlockedReason: string | null;
+   buildExitBlockedIssues: string[];
+   placementOrientation: RoomOrientation;
+@@ -135,6 +145,8 @@ interface AppShellProps {
+   onSelectRoom: (roomInstanceId: string) => void;
+   onSellSelectedRoom: (roomId: string, saleConfirmationToken?: string) => void;
+   onUpgradeSelectedRoom: () => void;
++  onUpgradeRoom?: (roomId: string) => void;
++  onBeginMoveSelectedRoom?: () => void;
+   onPlaceDoor: (
+     roomId: string,
+     side: CardinalDirection,
+@@ -192,6 +204,8 @@ export function AppShell({
+   facility,
+   progression,
+   roomOptions,
++  ownedRooms = [],
++  lockedRoomOptions = [],
+   selectedRoomBuild,
+   staffRoles,
+   staffTraining = null,
+@@ -212,6 +226,8 @@ export function AppShell({
+   buildMode,
+   managementMode,
+   buildUndoCount,
++  buildUndoLabel = null,
++  movingRoomInstanceId = null,
+   buildExitBlockedReason,
+   buildExitBlockedIssues,
+   placementOrientation,
+@@ -238,6 +254,8 @@ export function AppShell({
+   onSelectRoom,
+   onSellSelectedRoom,
+   onUpgradeSelectedRoom,
++  onUpgradeRoom,
++  onBeginMoveSelectedRoom,
+   onPlaceDoor,
+   onRemoveDoor,
+   onUndoBuildAction,
+@@ -279,9 +297,12 @@ export function AppShell({
+   const [praiseCandidateId, setPraiseCandidateId] = useState<
+     string | null
+   >(null);
+-  const [upgradeRequestRoomId, setUpgradeRequestRoomId] = useState<
+-    string | null
+-  >(null);
++  // Build Mode room menu: opened by clicking a room (map, My Rooms or a
++  // message), anchored to the rectangle the map reports for that room.
++  const [roomMenuOpen, setRoomMenuOpen] = useState(false);
++  const [selectedRoomRect, setSelectedRoomRect] =
++    useState<RoomMenuAnchor | null>(null);
++  const facilityHostRef = useRef<HTMLDivElement>(null);
+   const [buildDoorTool, setBuildDoorTool] =
+     useState<BuildDoorTool>(null);
+   const [waterCoolerHighlightKey, setWaterCoolerHighlightKey] =
+@@ -341,6 +362,7 @@ export function AppShell({
+   useEffect(() => {
+     if (!buildMode) {
+       setBuildDoorTool(null);
++      setRoomMenuOpen(false);
+     }
+   }, [buildMode]);
+ 
+@@ -446,6 +468,35 @@ export function AppShell({
+       )
+     : null;
+ 
++  const placementActive = roomOptions.some((room) => room.selected);
++  const roomMenuVisible =
++    buildMode && roomMenuOpen && !buildDoorTool && !placementActive;
++  const openRoomMenu = (roomInstanceId: string) => {
++    onSelectRoom(roomInstanceId);
++    setBuildDoorTool(null);
++    setRoomMenuOpen(true);
++  };
++  // After a new room lands, the Doors tool turns on so its walls light up.
++  const placeRoomAndArmDoors = (
++    tileX: number,
++    tileY: number,
++    orientation?: RoomOrientation,
++  ): boolean => {
++    const placingNewRoom =
++      !movingRoomInstanceId &&
++      roomOptions.some(
++        (room) => room.selected && room.id !== "room.hallway",
++      );
++    const placed = onPlaceRoom(tileX, tileY, orientation);
++    if (placed) {
++      setRoomMenuOpen(false);
++      if (placingNewRoom) {
++        setBuildDoorTool("place");
++      }
++    }
++    return placed;
++  };
++
+   const handleMessageAction = (
+     _itemId: string,
+     target?: { type: MessageBoardTargetType; id?: string },
+@@ -459,6 +510,7 @@ export function AppShell({
+         onEnterBuildMode();
+       }
+       onSelectRoom(target.id);
++      setRoomMenuOpen(true);
+       return;
+     }
+     if (target?.type === "employee" && target.id) {
+@@ -621,9 +673,9 @@ export function AppShell({
+               <span className="eyebrow">Build Mode</span>
+               <h2>Remodel while time is paused</h2>
+               <p>
+-                Use the construction tools on the desk. Place a room
+-                footprint, toggle Place Door, then click an emphasized
+-                eligible wall to validate access.
++                Pick a room in New Rooms and place it, then use Doors to
++                click an emphasized wall. Click any room on the map to
++                upgrade, move or sell it.
+               </p>
+             </section>
+           )}
+@@ -654,7 +706,7 @@ export function AppShell({
+           }
+         >
+           <section className="facility-frame" aria-label="Facility map">
+-            <div className="facility-host">
++            <div className="facility-host" ref={facilityHostRef}>
+               <div
+                 className="facility-zoom-overlay"
+                 role="group"
+@@ -728,14 +780,12 @@ export function AppShell({
+                       }
+                     : {}),
+                 }}
+-                onPlaceRoom={onPlaceRoom}
+-                onSelectRoom={onSelectRoom}
++                onPlaceRoom={placeRoomAndArmDoors}
++                onSelectRoom={openRoomMenu}
+                 onPlaceDoor={onPlaceDoor}
+                 onRemoveDoor={onRemoveDoor}
+-                onRequestRoomUpgrade={(roomId) => {
+-                  onSelectRoom(roomId);
+-                  setUpgradeRequestRoomId(roomId);
+-                }}
++                onRequestRoomUpgrade={openRoomMenu}
++                onSelectedRoomRectChange={setSelectedRoomRect}
+                 onCollectLitter={onCollectLitter}
+                 onRefillWaterCooler={onRefillWaterCooler}
+                 onSeatFounderAtFrontDesk={onSeatFounderAtFrontDesk}
+@@ -744,6 +794,26 @@ export function AppShell({
+                 onMoveFounder={onMoveFounder}
+                 onCameraChange={onFacilityCameraChange}
+               />
++              {roomMenuVisible && selectedRoomBuild ? (
++                <RoomActionMenu
++                  room={selectedRoomBuild}
++                  anchor={selectedRoomRect}
++                  containerRef={facilityHostRef}
++                  onUpgrade={onUpgradeSelectedRoom}
++                  onMove={() => {
++                    setRoomMenuOpen(false);
++                    onBeginMoveSelectedRoom?.();
++                  }}
++                  onDoors={() => {
++                    setRoomMenuOpen(false);
++                    setBuildDoorTool("place");
++                  }}
++                  onSell={onSellSelectedRoom}
++                  onClose={() => setRoomMenuOpen(false)}
++                  endoscopySetupRequirements={progression.endoscopySetupRequirements}
++                  onEndoscopySetupAction={setPendingProcedureSetupAction}
++                />
++              ) : null}
+             </div>
+             {praiseCandidate ? (
+               <div
+@@ -812,25 +882,33 @@ export function AppShell({
+               showInactiveTrigger={!chart && !managementMode}
+               cashLabel={resourceBar.moneyLabel}
+               roomOptions={roomOptions}
+-              selectedRoom={selectedRoomBuild}
++              ownedRooms={ownedRooms}
++              lockedRoomOptions={lockedRoomOptions}
++              selectedRoomId={roomMenuVisible ? selectedRoomBuild?.id ?? null : null}
+               placementOrientation={placementOrientation}
++              movingRoomName={
++                movingRoomInstanceId
++                  ? ownedRooms.find((room) => room.id === movingRoomInstanceId)
++                      ?.displayName ?? null
++                  : null
++              }
+               onEnterBuildMode={onEnterBuildMode}
+               onExitBuildMode={onExitBuildMode}
+-              onSelectRoom={onBeginPlacement}
++              onSelectRoom={(roomDefinitionId) => {
++                setRoomMenuOpen(false);
++                onBeginPlacement(roomDefinitionId);
++              }}
+               onCancelPlacement={onCancelPlacement}
+               onRotatePlacement={onRotatePlacement}
+-              onUpgradeSelectedRoom={onUpgradeSelectedRoom}
+-              onSellSelectedRoom={onSellSelectedRoom}
++              onUpgradeRoom={(roomId) => onUpgradeRoom?.(roomId)}
++              onOpenRoom={openRoomMenu}
+               buildDoorTool={buildDoorTool}
+               onBuildDoorToolChange={setBuildDoorTool}
+               onUndoBuildAction={onUndoBuildAction}
+               undoCount={buildUndoCount}
++              undoLabel={buildUndoLabel}
+               exitBlockedReason={buildExitBlockedReason}
+               exitBlockedIssues={buildExitBlockedIssues}
+-              upgradeRequestRoomId={upgradeRequestRoomId}
+-              onUpgradeRequestHandled={() =>
+-                setUpgradeRequestRoomId(null)
+-              }
+               endoscopySetupRequirements={progression.endoscopySetupRequirements}
+               onEndoscopySetupAction={setPendingProcedureSetupAction}
+             />

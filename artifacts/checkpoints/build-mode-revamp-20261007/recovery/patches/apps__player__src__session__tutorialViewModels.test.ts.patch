@@ -1,0 +1,17 @@
+diff --git a/apps/player/src/session/tutorialViewModels.test.ts b/apps/player/src/session/tutorialViewModels.test.ts
+index 67b1ed7..164271d 100644
+--- a/apps/player/src/session/tutorialViewModels.test.ts
++++ b/apps/player/src/session/tutorialViewModels.test.ts
+@@ -550,10 +550,10 @@ describe("state-driven tutorial coach", () => {
+       targetSelector: "[data-tutorial-anchor='place-door']",
+     });
+     expect(doorTutorial?.body).toContain(
+-      "Toggle Place Door, then click an emphasized eligible wall.",
++      "Select Doors, then click an emphasized eligible wall.",
+     );
+     expect(doorTutorial?.body).toContain(
+-      "Remove Door similarly highlights the doors you can click to remove.",
++      "Click an existing door with the same tool to remove it.",
+     );
+     expect(doorTutorial?.body).not.toContain("wall slot");
+     expect(doorTutorial?.avoidSelector).toBeUndefined();

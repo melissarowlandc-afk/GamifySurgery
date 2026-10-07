@@ -1,0 +1,15 @@
+diff --git a/tests/e2e/ultrasound-first-imaging.spec.ts b/tests/e2e/ultrasound-first-imaging.spec.ts
+index acccd59..08986ac 100644
+--- a/tests/e2e/ultrasound-first-imaging.spec.ts
++++ b/tests/e2e/ultrasound-first-imaging.spec.ts
+@@ -126,8 +126,8 @@ test("Level 1 presents ultrasound construction and ordinary doors without contro
+     const current = (await getActiveState(page)) as unknown as GameState;
+     return current.rooms.find((room) => room.roomDefinitionId === "room.ultrasound")!.id;
+   });
+-  const placeDoor = page.getByRole("button", { name: "Place Door" });
+-  await placeDoor.click();
++  // Placing a room turns the single Doors tool on automatically.
++  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
+   layout = await facilityLayout(page);
+   for (const [tileX, tileY] of [
+     [34.5, 28], [35.5, 28], [36.5, 28],

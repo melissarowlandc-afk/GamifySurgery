@@ -1,0 +1,14 @@
+diff --git a/tests/e2e/fresh-campaign-examination-room.spec.ts b/tests/e2e/fresh-campaign-examination-room.spec.ts
+index ef9c38c..857a022 100644
+--- a/tests/e2e/fresh-campaign-examination-room.spec.ts
++++ b/tests/e2e/fresh-campaign-examination-room.spec.ts
+@@ -240,7 +240,8 @@ test("a fresh player campaign builds and retains its first Examination Room", as
+     (room) => room.roomDefinitionId === "room.examination",
+   )!;
+ 
+-  await page.getByRole("button", { name: "Place Door" }).click();
++  // Placing a room turns the single Doors tool on automatically.
++  await expect(page.getByRole("button", { name: "Doors", exact: true })).toHaveAttribute("aria-pressed", "true");
+   layout = await facilityLayout(page);
+   await canvas.click({
+     position: {

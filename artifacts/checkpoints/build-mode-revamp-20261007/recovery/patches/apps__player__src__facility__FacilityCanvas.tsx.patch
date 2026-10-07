@@ -1,0 +1,36 @@
+diff --git a/apps/player/src/facility/FacilityCanvas.tsx b/apps/player/src/facility/FacilityCanvas.tsx
+index 5df75b1..3d3f129 100644
+--- a/apps/player/src/facility/FacilityCanvas.tsx
++++ b/apps/player/src/facility/FacilityCanvas.tsx
+@@ -9,6 +9,7 @@ import Phaser from "phaser";
+ import {
+   FacilityScene,
+   type FacilitySceneBridge,
++  type FacilityScreenRect,
+ } from "./FacilityScene";
+ import type {
+   FacilityCameraChangeRequest,
+@@ -40,6 +41,7 @@ export interface FacilityCanvasProps {
+   onPraiseEmployee?: PraiseEmployeeRequest;
+   onMoveFounder?: MoveFounderRequest;
+   onCameraChange?: FacilityCameraChangeRequest;
++  onSelectedRoomRectChange?: (rect: FacilityScreenRect | null) => void;
+   className?: string;
+   style?: CSSProperties;
+   ariaLabel?: string;
+@@ -75,6 +77,7 @@ export function FacilityCanvas({
+   onPraiseEmployee,
+   onMoveFounder,
+   onCameraChange,
++  onSelectedRoomRectChange,
+   className,
+   style,
+   ariaLabel,
+@@ -101,6 +104,7 @@ export function FacilityCanvas({
+   bridgeRef.current.onPraiseEmployee = onPraiseEmployee;
+   bridgeRef.current.onMoveFounder = onMoveFounder;
+   bridgeRef.current.onCameraChange = onCameraChange;
++  bridgeRef.current.onSelectedRoomRectChange = onSelectedRoomRectChange;
+ 
+   useEffect(() => {
+     const host = hostRef.current;

@@ -1,0 +1,48 @@
+{
+  "checkpoint": "build-mode-revamp-20261007",
+  "date": "2026-10-07",
+  "typecheck": {
+    "command": "npx tsc --noEmit -p apps/player",
+    "result": "Clean for all Build Mode files. At backup time the only error is reducer.ts(479) publicWanderDwellMinutes, from another session's in-progress domain edit."
+  },
+  "unitTests": {
+    "command": "npx vitest run (apps/player)",
+    "result": "692 passed / 693",
+    "newTests": [
+      "apps/player/src/session/buildModePresentation.test.ts",
+      "apps/player/src/ui/BuildPanel.test.tsx (rewritten, includes room menu tests)"
+    ],
+    "failure": "surgeryCenterServicePreviews.test.ts chart pending-card copy, from concurrent diagnostic-timing work; it passed earlier in the same session and does not touch Build Mode."
+  },
+  "e2e": {
+    "project": "desktop-chrome",
+    "passed": [
+      "tutorial-graduation (build exam room, Doors auto-armed, add door, Done / Save)",
+      "front-desk-four-row-floor"
+    ],
+    "failedOutsideBuildMode": {
+      "build-mode-usability": "All Build Mode steps pass; fails later on the retired Imaging Control exit-issue text.",
+      "fresh-campaign-examination-room": "Patient tab 'Action required' before Build Mode.",
+      "playthrough-batch:368": "Patient tab 'Action required' before Build Mode.",
+      "room-capacity-sales:157": "Management hire button strict-mode violation.",
+      "room-capacity-sales:221": "Dismissed NP walk path position.",
+      "ultrasound-first-imaging:91": "Door count 3 instead of 1; reproduced with Claude's merged door targeting disabled, so it comes from uncommitted doors.ts changes.",
+      "ultrasound-first-imaging:165": "Chart pending-card copy.",
+      "examination-room-visual:190 and five-room-waiting-bathroom-visual": "Capture fixture stays on the title screen before Build Mode."
+    }
+  },
+  "liveQa": {
+    "server": "http://127.0.0.1:5176 (separate QA origin and browser storage)",
+    "fixture": "Synthetic Level 1 clinic plus a second, doorless Examination Room",
+    "verified": [
+      "Stars, affordable up arrow and NO ACCESS tag on map labels",
+      "Examination Room A / B lettering on the map, in the menu and in My Rooms",
+      "Menu one-click upgrade ($140, Level 2 to 3) and Undo label 'Upgrade Examination Room A (+$140 back)'",
+      "My Rooms grouping, A/B adjacency, group totals and filter",
+      "Doors tool hides the menu; Esc puts it down",
+      "Move from the menu shows 'Moving Examination Room B'; Esc cancels",
+      "Menu stays beside the room when zoomed out to 40%"
+    ]
+  },
+  "lineEndings": "Claude's Python edits had converted touched files to CRLF; all were restored to LF before this backup, so the patches carry no line-ending noise."
+}

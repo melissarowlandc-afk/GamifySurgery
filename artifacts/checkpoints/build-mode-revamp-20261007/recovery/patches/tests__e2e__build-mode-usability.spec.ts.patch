@@ -1,0 +1,93 @@
+diff --git a/tests/e2e/build-mode-usability.spec.ts b/tests/e2e/build-mode-usability.spec.ts
+index 867f8eb..e0e7126 100644
+--- a/tests/e2e/build-mode-usability.spec.ts
++++ b/tests/e2e/build-mode-usability.spec.ts
+@@ -92,39 +92,31 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
+         "A patient requested a more comfortable Examination Room. Upgrade Examination Room.",
+     })
+     .click();
+-  const inspector = page.locator(".selected-room-inspector");
++  // Owner-approved Build Mode revamp: the message opens the room menu on the
++  // map; upgrades are one click there and Undo refunds them.
++  const roomMenu = page.locator(".room-action-menu");
+   await expect(
+     page.getByRole("navigation", { name: "Build Mode tools" }),
+   ).toBeVisible();
+-  await expect(page.getByRole("button", { name: "Rotate" })).toBeVisible();
+-  await expect(page.getByRole("button", { name: "Rotate" })).toBeDisabled();
+   await expect(
+     page.getByRole("button", { name: /Build Hallway.*\$35/ }),
+   ).toBeVisible();
++  const doorsTool = page.getByRole("button", { name: "Doors", exact: true });
++  await expect(doorsTool).toBeVisible();
+   await expect(
+-    page.getByRole("button", { name: "Place Door" }),
++    page.getByRole("button", { name: "Undo", exact: true }),
+   ).toBeVisible();
+   await expect(
+-    page.getByRole("button", { name: "Remove Door" }),
+-  ).toBeVisible();
+-  await expect(
+-    page.getByRole("button", { name: "Undo" }),
++    page.getByRole("button", { name: "Done / Save" }),
+   ).toBeVisible();
++  await expect(roomMenu).toContainText("Examination Room");
++  await expect(roomMenu).toContainText("Level 2 of 5");
++  await expect(roomMenu).toContainText(
++    "patient satisfaction per completed visit",
++  );
+   await expect(
+-    page.getByRole("button", { name: "Done / Save" }),
++    roomMenu.getByRole("button", { name: /Upgrade to ★3 · \$140/ }),
+   ).toBeVisible();
+-  await expect(inspector).toContainText("Examination Room");
+-
+-  await page
+-    .getByRole("button", { name: /Upgrade - \$140/ })
+-    .click();
+-  const upgradeDialog = page.getByRole("dialog", {
+-    name: "Examination Room",
+-  });
+-  await expect(upgradeDialog).toContainText(/Level 2.*Level 3/);
+-  await expect(upgradeDialog).toContainText("Exact cost: $140");
+-  await expect(upgradeDialog).toContainText("Room service time 5% faster.");
+-  await upgradeDialog.getByRole("button", { name: "Cancel" }).click();
+ 
+   await page.screenshot({
+     path: "artifacts/screenshots/build-mode-condensed-desktop.png",
+@@ -132,19 +124,17 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
+     animations: "disabled",
+   });
+ 
+-  const placeDoor = page.getByRole("button", { name: "Place Door" });
+-  const removeDoor = page.getByRole("button", { name: "Remove Door" });
+-  await placeDoor.click();
+-  await expect(placeDoor).toHaveAttribute("aria-pressed", "true");
+-  await expect(removeDoor).toHaveAttribute("aria-pressed", "false");
++  await doorsTool.click();
++  await expect(doorsTool).toHaveAttribute("aria-pressed", "true");
++  await expect(roomMenu).toBeHidden();
++  await expect(page.locator(".build-tool-hint")).toContainText(
++    "Click a door to remove it.",
++  );
+   await page.screenshot({
+     path: "artifacts/screenshots/build-mode-door-highlights.png",
+     fullPage: false,
+     animations: "disabled",
+   });
+-  await removeDoor.click();
+-  await expect(removeDoor).toHaveAttribute("aria-pressed", "true");
+-  await expect(placeDoor).toHaveAttribute("aria-pressed", "false");
+   await expect(page.locator(".build-mode-panel")).not.toContainText(
+     /North wall|South wall|East wall|West wall/,
+   );
+@@ -154,8 +144,7 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
+   });
+   await hallwayTool.click();
+   await expect(hallwayTool).toHaveAttribute("aria-pressed", "true");
+-  await expect(placeDoor).toHaveAttribute("aria-pressed", "false");
+-  await expect(removeDoor).toHaveAttribute("aria-pressed", "false");
++  await expect(doorsTool).toHaveAttribute("aria-pressed", "false");
+ 
+   const hallwayCount = () =>
+     page.evaluate((profileKey) => {

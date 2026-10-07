@@ -1,0 +1,10 @@
+diff --git a/apps/player/src/facility/index.ts b/apps/player/src/facility/index.ts
+index 8911321..554e4c9 100644
+--- a/apps/player/src/facility/index.ts
++++ b/apps/player/src/facility/index.ts
+@@ -1,4 +1,5 @@
+ export { FacilityCanvas, type FacilityCanvasProps } from "./FacilityCanvas";
++export type { FacilityScreenRect } from "./FacilityScene";
+ export type {
+   BuildDoorTool,
+   FacilityAmbientPedestrianView,

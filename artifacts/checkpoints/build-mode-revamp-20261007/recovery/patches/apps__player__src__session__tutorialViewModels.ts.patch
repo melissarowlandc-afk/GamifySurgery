@@ -1,0 +1,40 @@
+diff --git a/apps/player/src/session/tutorialViewModels.ts b/apps/player/src/session/tutorialViewModels.ts
+index cb21160..ac8a5d7 100644
+--- a/apps/player/src/session/tutorialViewModels.ts
++++ b/apps/player/src/session/tutorialViewModels.ts
+@@ -234,7 +234,7 @@ function createLevelZeroBuildTutorialStepView(
+           eyebrow: "Level 0 tutorial · Door access",
+           title: "Select the new Examination Room",
+           body:
+-            "Click the room you just placed. Its renovation tools will open on the desk.",
++            "Click the room you just placed. Its room menu opens beside it on the map.",
+           flavor:
+             "Four walls have been acquired. Access remains aspirational.",
+           target: "room-selection",
+@@ -250,7 +250,7 @@ function createLevelZeroBuildTutorialStepView(
+         eyebrow: "Level 0 tutorial · Door access",
+         title: "Add a zero-cost door",
+         body:
+-          "Toggle Place Door, then click an emphasized eligible wall. Doors connect rooms to reachable rooms or hallways. Remove Door similarly highlights the doors you can click to remove.",
++          "Select Doors, then click an emphasized eligible wall. Doors connect rooms to reachable rooms or hallways. Click an existing door with the same tool to remove it.",
+         note:
+           "Done / Save opens a modal listing every problem that must be corrected.",
+         flavor:
+@@ -1384,7 +1384,7 @@ export function createTutorialStepView({
+         eyebrow: "Level 0 tutorial · Step 17",
+         title: "Select the new Examination Room",
+         body:
+-          "Click the room you just placed. Its renovation tools will open on the desk.",
++          "Click the room you just placed. Its room menu opens beside it on the map.",
+         flavor:
+           "Four walls have been acquired. Access remains aspirational.",
+         target: "room-selection",
+@@ -1396,7 +1396,7 @@ export function createTutorialStepView({
+       eyebrow: "Level 0 tutorial · Step 18",
+       title: "Add a zero-cost door",
+       body:
+-        "Toggle Place Door, then click an emphasized eligible wall. The door must connect the Examination Room to the Front Desk, another reachable room, or a hallway. Remove Door highlights the doors you can click to remove.",
++        "Select Doors, then click an emphasized eligible wall. The door must connect the Examination Room to the Front Desk, another reachable room, or a hallway. Click an existing door with the same tool to remove it.",
+       note:
+         "If no wall is eligible, move the room until one wall touches a reachable space. The exact reason Build Mode cannot close appears beside Done / Save.",
+       flavor:
