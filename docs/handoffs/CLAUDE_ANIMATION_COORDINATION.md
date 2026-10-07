@@ -1083,3 +1083,104 @@ All20 approved demographic4 patients /160 poses are locally integrated;225 ident
     wiring in shared files, other sessions' work and the owner's save.
   - **Not done:** no merge, release, deployment or Pages publication. The
     owner pathway is unchanged.
+
+## 2026-10-07 — Claude claim — Management mode revamp (owner-approved UI)
+
+Owner asked Claude directly to redesign Management mode and approved the
+mockup https://claude.ai/artifact/HWY5RZoqjv5CXXKXWKYQZe (Employees, Services,
+Money tabs). Approved details:
+
+- Employees: one header; summary line (staff, payroll/hr, avg morale);
+  collapsible role sections whose header keeps count, morale, payroll and Hire;
+  min-width employee cards that flow into columns; "Morale NN%" beside its bar;
+  "Salary − $X/hr +"; Fire moved away from salary to a quiet link with confirm;
+  dashed "Open position" slots with Hire; alert highlight auto-opens the role.
+- Training (GS-037 button): nothing training-related shows until a Training
+  Room is built. Then cards show level pips (1-5, hired at Level 1) + status +
+  Train popover (cost, gain, current level). Owner direction 2026-10-07: the
+  role header shows the role's AVERAGE training level and the average benefit,
+  because "the training improvement effect will be the average of all the
+  employees in that category."
+- Services & income split into Services (attention items, services grouped
+  Earning now / Needs a room or staff / Higher levels with fix buttons, how the
+  money arrives, lab queue on its row, appointments switch explained, in
+  progress, Level 3 upkeep) and Money (since-opening Earned / Running costs /
+  Profit, hourly cost split staff/rooms/advertising, cash runway, recent
+  payments table). Owner let Claude pick: no new domain tracking now; "Today"
+  totals and lifetime per-service totals are deferred (see §6 request below).
+
+Claude claims (UI/layout only): `apps/player/src/ui/StaffPanel.tsx`,
+`ManagementPanel.tsx`, `ServiceIncomePanel.tsx`, new `MoneyPanel.tsx`, their
+tests, the Management/staff/service CSS blocks in `styles/global.css`, and
+narrow additive fields in `ui/types.ts` + `session/viewModels.ts` plus
+ManagementPanel prop wiring in `AppShell.tsx`. No domain, save, balance or
+clinical edits. Codex's GS-037 `employeeTrainingViewModels.ts` and
+`trainEmployee` are consumed as-is.
+
+Request for Codex (GS-037): the owner's "role average" direction differs from
+the execplan's per-employee / assigned-staff averaging. Benefit consumers are
+not wired yet, so please confirm the rule with the owner when wiring them. The
+UI header shows the role average either way. Also optional later: a daily
+income/expense tally and per-service lifetime counts (only 50 receipts are
+retained) would let Money add a "Today" view and earnings by service.
+
+### Claude Management revamp — complete, claim released (2026-10-07)
+
+Built the approved Employees / Services / Money layout. Files:
+- UI: `ui/StaffPanel.tsx` (rewrite), `ui/ManagementPanel.tsx` (three tabs,
+  `staffTraining`, `onTrain`, `onSetupAction` props), `ui/ServiceIncomePanel.tsx`
+  (Services tab + shared `ManagementSection`), new `ui/MoneyPanel.tsx`, tests
+  for all four (+ `MoneyPanel.test.tsx`), `ui/index.ts` exports.
+- Data: new `session/managementViewModels.ts` (+ test): Training Room
+  overview, role-average training summary, team-average-after label, service
+  grouping/Build-Hire shortcuts/arrival labels, since-opening finance view.
+  `ui/types.ts`: additive optional fields only. `session/viewModels.ts`: narrow
+  hunks adding `staffTraining`, `trainingSummary`, `salaryPerHour`,
+  `trainingTeamAverageAfterLabel`, catalog `group/arrivalLabel/scheduled/
+  pausedReason/setupActions`, receipt `timeLabel`, `serviceIncome.finances`.
+- Wiring: `App.tsx` passes `staffTraining` and `onTrainEmployee={session.trainEmployee}`;
+  `AppShell.tsx` forwards them and routes Services Build/Hire buttons through
+  the existing `setPendingProcedureSetupAction` flow.
+- CSS: replaced the old staff block, management/service-income block, old
+  staff gradient theme rules, obsolete progress rules and the old compact
+  staff media rules in `styles/global.css`.
+
+Kept for alerts/e2e: `.management-panel`, `.staff-panel`, `data-staff-role-id`
+(+ `is-alert-highlighted`), one `data-staff-role-hire` per role header, and
+`data-employee-id`. Highlighted roles open automatically.
+
+Validation: player typecheck clean. Management tests 18/18; all `src/ui` 86/86.
+Full player suite 656/669; the 13 failures are in chart timing labels and
+`localCampaignRepository` (concurrent work, untouched here). Browser QA on
+127.0.0.1:5175 with a temporary harness (deleted) at 480/760/1080 px: 1/3/4
+card columns, no overflow, Train popover, queued/max-level states, training
+hidden without a Training Room, Services grouping and Money tab; real game
+opens all three tabs with no new console errors. Owner pathway unchanged:
+START_GAME.cmd -> http://127.0.0.1:4173. Nothing committed or pushed.
+
+### Claude — owner-requested plain employee first names (2026-10-07)
+
+Owner asked: no "Blake 2" / "Sam 2"; every employee gets a plain first name.
+- `game-domain/src/appearance.ts`: STAFF_NAMES grew from 22 to 56 neutral
+  first names; `createStaffDisplayName(seed, id, usedNames?)` walks from the
+  seeded pick to the first unused name; new `dedupeStaffDisplayNames()`.
+- `reducer.ts` hire: replaced the numeric-suffix branch with an unused
+  generated name (a requested name is kept only if not already in use).
+- `persistence.ts` `finishApprovedRoomMigration`: one call to
+  `dedupeStaffDisplayNames` so existing saves rename numbered/repeated staff
+  on load. IDs, history and departing staff are unchanged; old alert text
+  keeps its original wording.
+- Test: `appearance.test.ts` (+2). Domain suite 2209/2216; the 7 failures
+  are training timing / balance contracts from concurrent GS-037 work, and
+  diagnostic-orders + patient-supply pass when run alone.
+
+### Claude — Management revamp + plain names GitHub backup verified (2026-10-07)
+
+Owner said "push to GitHub". Checkpoint
+b3df6d188f872a72f5f484d0e1b6b8cd8cdcce5d on origin/beta (verified with
+git ls-remote) holds `artifacts/checkpoints/management-revamp-20261007/`:
+whole copies of StaffPanel, ManagementPanel, ServiceIncomePanel, MoneyPanel
+(+ test) and managementViewModels (+ test; includes Codex's documented
+role-average fix), plus 14 Claude-only patches for shared files, each verified
+to rebuild the live file byte for byte. Live sources stay uncommitted for
+Codex's next integrated checkpoint. No merge, release or Pages publication.

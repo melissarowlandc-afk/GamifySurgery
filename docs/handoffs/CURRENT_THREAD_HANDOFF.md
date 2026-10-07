@@ -1,3 +1,16 @@
+> MANAGEMENT REVAMP + PLAIN STAFF NAMES GITHUB BACKUP VERIFIED (2026-10-07,
+> Claude Code). Owner-approved Management mode redesign (Employees, Services
+> and Money tabs; GS-037 Train button, pips and role-average header shown only
+> once a Training Room is built) and plain employee first names (no "Sam 2";
+> saves rename numbered staff on load). Owner said "push to GitHub".
+> Checkpoint b3df6d188f872a72f5f484d0e1b6b8cd8cdcce5d holds the recovery
+> archive `artifacts/checkpoints/management-revamp-20261007/` (7 whole files,
+> 14 verified Claude-only patches, hashes, validation). On origin/beta,
+> confirmed with git ls-remote. Live code stays uncommitted in the shared tree
+> for Codex's next integrated checkpoint. No merge, release, deployment or
+> Pages publication. Owner pathway unchanged: START_GAME.cmd ->
+> http://127.0.0.1:4173. Details in CLAUDE_ANIMATION_COORDINATION.md §4.
+
 > GS-028 OCTOBER 7 VARIETY GITHUB BACKUP VERIFIED (2026-10-07, Codex).
 > Owner-authorized checkpoint 964856b52ac0f108a61cfaf8d1484437240b6807 pushed to origin/beta
 > and independently verified with git ls-remote. Recovery package:
