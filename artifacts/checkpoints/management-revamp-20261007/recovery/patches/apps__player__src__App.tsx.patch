@@ -1,0 +1,20 @@
+diff --git a/apps/player/src/App.tsx b/apps/player/src/App.tsx
+index 37b5dbe..fafa3ff 100644
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -76,6 +76,7 @@ function ActivePrototypeGame({
+       roomOptions={view.roomOptions}
+       selectedRoomBuild={view.selectedRoomBuild}
+       staffRoles={view.staffRoles}
++      staffTraining={view.staffTraining}
+       serviceIncome={view.serviceIncome}
+       messages={view.messages}
+       systemNotices={session.systemNotices}
+@@ -129,6 +130,7 @@ function ActivePrototypeGame({
+       onDecreaseEmployeeSalary={session.decreaseEmployeeSalary}
+       onIncreaseEmployeeSalary={session.increaseEmployeeSalary}
+       onFireEmployee={session.fireEmployee}
++      onTrainEmployee={session.trainEmployee}
+       onCollectLitter={session.collectLitter}
+       onRefillWaterCooler={session.refillWaterCooler}
+       onSeatFounderAtFrontDesk={session.seatFounderAtFrontDesk}

@@ -1,0 +1,1566 @@
+diff --git a/apps/player/src/styles/global.css b/apps/player/src/styles/global.css
+index 71f39c2..490c11c 100644
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -1951,14 +1951,6 @@ textarea {
+   transform: translate(-50%, -50%);
+ }
+ 
+-.staff-member-details progress::-webkit-progress-value {
+-  background: var(--deep-olive);
+-}
+-
+-.staff-member-details progress::-moz-progress-bar {
+-  background: var(--deep-olive);
+-}
+-
+ .desk-workspace {
+   background:
+     linear-gradient(rgb(202 200 187 / 94%), rgb(202 200 187 / 94%)),
+@@ -2009,20 +2001,6 @@ textarea {
+     linear-gradient(100deg, var(--light-sage, #b6b9aa), var(--paper-raised));
+ }
+ 
+-.staff-role-group {
+-  background:
+-    linear-gradient(145deg, var(--paper-raised), var(--shade-1));
+-}
+-
+-.staff-member-card {
+-  border-color: var(--ink);
+-  background:
+-    linear-gradient(145deg, var(--paper-raised), var(--paper));
+-  box-shadow:
+-    3px 3px 0 var(--shade-3),
+-    inset 0 1px 0 var(--pixel-highlight);
+-}
+-
+ .paper-chart {
+   border-color: var(--ink);
+   background: var(--paper-raised);
+@@ -3602,9 +3580,65 @@ textarea {
+   max-height: min(46vh, 540px);
+ }
+ 
++/* Management employees: summary line, collapsible roles, reflowing cards. */
++.staff-summary {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 0.25rem 0.9rem;
++  align-items: center;
++  padding: 0.4rem 0.55rem;
++  border-bottom: 2px solid var(--ink);
++  background: var(--panel);
++  font-size: 0.68rem;
++  flex: 0 0 auto;
++}
++
++.staff-summary-stat {
++  display: inline-flex;
++  gap: 0.3rem;
++  align-items: baseline;
++}
++
++.staff-summary-stat > span,
++.staff-stat-label,
++.service-fact > span,
++.money-tile > span {
++  color: var(--ink-soft);
++  font-size: 0.58rem;
++  font-weight: 900;
++  letter-spacing: 0.04em;
++  text-transform: uppercase;
++}
++
++.staff-summary-stat strong,
++.staff-role-count,
++.staff-role-meta,
++.staff-morale-value,
++.staff-salary-value {
++  font-variant-numeric: tabular-nums;
++}
++
++.staff-summary-actions {
++  display: inline-flex;
++  margin-left: auto;
++  gap: 0.3rem;
++}
++
++.staff-mini-button {
++  min-height: 24px;
++  padding: 0.1rem 0.4rem;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  color: var(--ink);
++  font: inherit;
++  font-size: 0.6rem;
++  font-weight: 900;
++  cursor: pointer;
++}
++
+ .staff-role-group {
+-  padding: 0.6rem;
+   border-bottom: 3px solid var(--ink);
++  background: var(--paper-raised);
+ }
+ 
+ .staff-role-group.is-alert-highlighted,
+@@ -3623,179 +3657,413 @@ textarea {
+ 
+ .staff-role-heading {
+   display: flex;
+-  gap: 0.5rem;
++  padding-right: 0.5rem;
++  background: var(--panel);
++  gap: 0.4rem;
+   align-items: center;
+-  justify-content: space-between;
+ }
+ 
+-.staff-role-heading > div {
++.staff-role-group.is-open > .staff-role-heading {
++  border-bottom: 2px solid var(--ink);
++}
++
++.staff-role-toggle,
++.management-section-toggle {
+   display: flex;
+-  gap: 0.4rem;
++  min-width: 0;
++  min-height: 38px;
++  padding: 0.35rem 0.55rem;
++  border: 0;
++  background: transparent;
++  color: var(--ink);
++  font: inherit;
++  text-align: left;
++  cursor: pointer;
++  gap: 0.2rem 0.45rem;
+   align-items: center;
++  flex: 1 1 auto;
++  flex-wrap: wrap;
+ }
+ 
+-.staff-role-heading h3 {
+-  margin: 0;
+-  font-size: 0.86rem;
++.staff-role-toggle:hover,
++.management-section-toggle:hover {
++  background: var(--shade-1);
+ }
+ 
+-.staff-role-heading > div > span {
+-  padding: 0.15rem 0.3rem;
+-  border: 2px solid var(--ink);
+-  font-size: 0.7rem;
+-  font-weight: 900;
++.staff-role-chevron {
++  width: 0;
++  height: 0;
++  border-color: transparent transparent transparent var(--ink);
++  border-style: solid;
++  border-width: 5px 0 5px 7px;
++  flex: 0 0 auto;
++  transition: transform 0.12s;
+ }
+ 
+-.staff-role-heading .button {
+-  min-height: 34px;
+-  padding: 0.3rem 0.45rem;
+-  font-size: 0.7rem;
++.staff-role-group.is-open > .staff-role-heading .staff-role-chevron,
++.management-section.is-open > .management-section-toggle .staff-role-chevron {
++  transform: rotate(90deg);
+ }
+ 
+-.staff-blocked-reason {
+-  margin: 0.35rem 0 0;
+-  color: var(--ink-soft);
+-  font-size: 0.7rem;
++.staff-role-toggle h3,
++.management-section-toggle h3 {
++  margin: 0;
++  font-size: 0.82rem;
+ }
+ 
+-.staff-member-card {
+-  display: grid;
+-  margin-top: 0.55rem;
+-  padding: 0.5rem;
++.staff-role-count {
++  padding: 0 0.25rem;
+   border: 2px solid var(--ink);
+-  background: var(--shade-1);
+-  grid-template-columns: auto 1fr;
+-  gap: 0.55rem;
++  font-size: 0.66rem;
++  font-weight: 900;
++}
++
++.staff-role-count.is-full {
++  background: var(--ink);
++  color: var(--paper-raised);
+ }
+ 
+-.staff-member-details {
++.staff-role-meta {
+   display: flex;
+-  min-width: 0;
+-  flex-direction: column;
++  margin-left: auto;
++  color: var(--ink-soft);
++  font-size: 0.62rem;
++  gap: 0.1rem 0.7rem;
++  flex-wrap: wrap;
+ }
+ 
+-.staff-member-details h4 {
+-  margin: 0;
+-  font-size: 0.82rem;
++.staff-role-meta b,
++.staff-role-training {
++  color: var(--ink);
+ }
+ 
+-.staff-member-details > small {
+-  color: var(--ink-soft);
++.staff-hire-button {
++  min-height: 30px;
++  padding: 0.2rem 0.5rem;
++  border: 2px solid var(--ink);
++  background: var(--ink);
++  color: var(--paper-raised);
++  box-shadow: 2px 2px 0 var(--shade-3);
++  font: inherit;
++  font-size: 0.66rem;
++  font-weight: 900;
++  white-space: nowrap;
++  cursor: pointer;
+ }
+ 
+-.staff-morale {
+-  display: flex;
+-  margin-top: 0.35rem;
+-  gap: 0.2rem;
+-  font-size: 0.68rem;
+-  justify-content: space-between;
++.staff-hire-button:disabled {
++  background: var(--shade-1);
++  color: var(--ink-soft);
++  box-shadow: none;
++  cursor: not-allowed;
+ }
+ 
+-.staff-salary-control {
++.staff-role-body {
+   display: grid;
+-  margin-top: 0.35rem;
+-  font-size: 0.68rem;
+-  align-items: center;
+-  gap: 0.35rem;
+-  grid-template-columns: auto minmax(0, 1fr) auto;
++  padding: 0.5rem;
++  gap: 0.45rem;
+ }
+ 
+-.staff-salary-buttons {
++.staff-role-note {
+   display: flex;
+-  gap: 0.2rem;
++  margin: 0;
++  color: var(--ink-soft);
++  font-size: 0.66rem;
++  gap: 0.35rem;
+ }
+ 
+-.staff-salary-buttons button {
++.staff-role-note::before {
+   display: grid;
+-  width: 26px;
+-  height: 26px;
+-  padding: 0;
+-  border: 2px solid var(--ink);
+-  background: var(--panel);
++  width: 13px;
++  height: 13px;
++  border: 1px solid var(--ink-soft);
++  content: "i";
++  font-size: 0.55rem;
++  font-style: italic;
+   font-weight: 900;
++  flex: 0 0 auto;
+   place-items: center;
+ }
+ 
+-.staff-fire-button {
+-  min-height: 26px;
+-  padding: 0.1rem 0.35rem;
+-  border: 2px solid var(--ink);
+-  background: var(--panel);
++.staff-role-note.is-blocked {
+   color: var(--ink);
+-  font: inherit;
+-  font-weight: 900;
++  font-weight: 700;
++}
++
++.staff-role-note.is-blocked::before {
++  border-color: var(--ink);
++  background: var(--ink);
++  color: var(--paper-raised);
++  content: "!";
++  font-style: normal;
+ }
+ 
+-.staff-fire-confirmation {
++.staff-card-grid {
++  display: grid;
++  gap: 0.5rem;
++  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
++  align-items: start;
++}
++
++.staff-member-card {
+   display: grid;
+-  margin-top: 0.45rem;
+   padding: 0.45rem;
+   border: 2px solid var(--ink);
+-  background: var(--panel);
+-  gap: 0.35rem;
++  background: var(--shade-1);
++  box-shadow: 2px 2px 0 var(--shade-3);
+   font-size: 0.68rem;
++  gap: 0.4rem;
+ }
+ 
+-.staff-fire-confirmation > div {
+-  display: flex;
+-  flex-wrap: wrap;
+-  gap: 0.35rem;
++.staff-member-identity {
++  display: grid;
++  grid-template-columns: auto minmax(0, 1fr);
++  gap: 0.45rem;
++  align-items: center;
+ }
+ 
+-@media (max-width: 1100px) {
+-  .resource-grid-primary {
+-    grid-template-columns: repeat(2, minmax(180px, 1fr));
+-  }
+-
+-  .chart-workspace {
+-    grid-template-columns: 135px 215px minmax(0, 1fr);
+-  }
++.staff-member-name h4 {
++  margin: 0;
++  font-size: 0.8rem;
++  line-height: 1.15;
++  overflow-wrap: anywhere;
++}
+ 
+-  .chart-step-column {
+-    width: 310px;
+-    min-width: 310px;
+-  }
++.staff-training-pips {
++  display: flex;
++  margin-top: 0.2rem;
++  gap: 2px;
++  align-items: center;
+ }
+ 
+-@media (max-width: 760px) {
+-  .resource-bar-main {
+-    flex-direction: column;
+-  }
++.staff-training-pips i {
++  width: 9px;
++  height: 7px;
++  border: 1px solid var(--ink);
++  background: var(--paper-raised);
++}
+ 
+-  .resource-grid-primary {
+-    grid-template-columns: repeat(2, minmax(130px, 1fr));
+-  }
++.staff-training-pips i.is-filled {
++  background: var(--ink);
++}
+ 
+-  .resource-level-chip {
+-    grid-column: 1 / -1;
+-  }
++.staff-training-pips small {
++  margin-left: 0.25rem;
++  color: var(--ink-soft);
++  font-size: 0.6rem;
++  font-weight: 900;
++}
+ 
+-  .resource-controls {
+-    display: grid;
+-    width: 100%;
+-    grid-template-columns: 1fr 1fr;
+-    grid-template-rows: auto;
+-  }
++.staff-stat-row {
++  display: flex;
++  gap: 0.35rem;
++  align-items: center;
++}
+ 
+-  .chart-drawer {
+-    inset: auto 0 0;
+-    width: 100%;
+-    height: min(78%, 610px);
+-    padding: 0;
+-  }
++.staff-stat-label {
++  flex: 0 0 3.4rem;
++}
+ 
+-  .chart-workspace {
+-    min-width: 760px;
+-    grid-template-columns: 125px 205px minmax(0, 1fr);
+-  }
++.staff-morale-value {
++  min-width: 3.2ch;
++}
+ 
+-  .chart-action-bar {
+-    align-items: stretch;
+-    flex-direction: column;
+-  }
++.staff-morale-bar {
++  height: 8px;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  flex: 1 1 auto;
++}
+ 
+-  .chart-action-buttons {
+-    display: grid;
++.staff-morale-bar > i {
++  display: block;
++  height: 100%;
++  background: var(--ink);
++}
++
++.staff-salary-step {
++  display: grid;
++  width: 24px;
++  height: 24px;
++  min-height: 24px;
++  padding: 0;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  color: var(--ink);
++  font: inherit;
++  font-weight: 900;
++  cursor: pointer;
++  place-items: center;
++}
++
++.staff-salary-step:disabled {
++  opacity: 0.45;
++  cursor: not-allowed;
++}
++
++.staff-salary-value {
++  min-width: 6.5ch;
++  text-align: center;
++}
++
++.staff-card-actions {
++  display: flex;
++  padding-top: 0.35rem;
++  border-top: 1px dashed var(--shade-3);
++  gap: 0.4rem;
++  align-items: center;
++}
++
++.staff-train-button {
++  min-height: 26px;
++  padding: 0.1rem 0.55rem;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  color: var(--ink);
++  box-shadow: 2px 2px 0 var(--ink);
++  font: inherit;
++  font-size: 0.64rem;
++  font-weight: 900;
++  cursor: pointer;
++}
++
++.staff-train-button:disabled {
++  box-shadow: none;
++  opacity: 0.55;
++  cursor: not-allowed;
++}
++
++.staff-training-status {
++  padding: 0 0.3rem;
++  border: 2px dashed var(--ink);
++  font-size: 0.6rem;
++  font-weight: 900;
++}
++
++.staff-fire-button {
++  min-height: 24px;
++  margin-left: auto;
++  padding: 0.1rem 0.25rem;
++  border: 0;
++  background: transparent;
++  color: var(--ink-soft);
++  font: inherit;
++  font-size: 0.62rem;
++  font-weight: 700;
++  text-decoration: underline;
++  cursor: pointer;
++}
++
++.staff-card-popover {
++  display: grid;
++  padding: 0.5rem;
++  border: 3px solid var(--ink);
++  background: var(--pixel-highlight);
++  box-shadow: 3px 3px 0 var(--ink);
++  font-size: 0.68rem;
++  gap: 0.3rem;
++}
++
++.staff-card-popover small {
++  color: var(--ink-soft);
++}
++
++.staff-card-popover .staff-popover-blocked {
++  color: var(--ink);
++  font-weight: 800;
++}
++
++.staff-popover-actions {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 0.35rem;
++  align-items: center;
++}
++
++.staff-popover-actions .button {
++  min-height: 28px;
++  padding: 0.2rem 0.55rem;
++  box-shadow: 2px 2px 0 var(--shade-3);
++  font-size: 0.66rem;
++}
++
++.staff-popover-actions .text-button {
++  min-height: 26px;
++  padding: 0.1rem 0.45rem;
++  font-size: 0.64rem;
++}
++
++.staff-open-slot {
++  display: grid;
++  min-height: 120px;
++  padding: 0.5rem;
++  border: 2px dashed var(--shade-3);
++  color: var(--ink-soft);
++  font-size: 0.66rem;
++  text-align: center;
++  gap: 0.4rem;
++  justify-items: center;
++  place-content: center;
++}
++
++.staff-open-slot.is-summary {
++  min-height: 0;
++}
++
++@media (max-width: 1100px) {
++  .resource-grid-primary {
++    grid-template-columns: repeat(2, minmax(180px, 1fr));
++  }
++
++  .chart-workspace {
++    grid-template-columns: 135px 215px minmax(0, 1fr);
++  }
++
++  .chart-step-column {
++    width: 310px;
++    min-width: 310px;
++  }
++}
++
++@media (max-width: 760px) {
++  .resource-bar-main {
++    flex-direction: column;
++  }
++
++  .resource-grid-primary {
++    grid-template-columns: repeat(2, minmax(130px, 1fr));
++  }
++
++  .resource-level-chip {
++    grid-column: 1 / -1;
++  }
++
++  .resource-controls {
++    display: grid;
++    width: 100%;
++    grid-template-columns: 1fr 1fr;
++    grid-template-rows: auto;
++  }
++
++  .chart-drawer {
++    inset: auto 0 0;
++    width: 100%;
++    height: min(78%, 610px);
++    padding: 0;
++  }
++
++  .chart-workspace {
++    min-width: 760px;
++    grid-template-columns: 125px 205px minmax(0, 1fr);
++  }
++
++  .chart-action-bar {
++    align-items: stretch;
++    flex-direction: column;
++  }
++
++  .chart-action-buttons {
++    display: grid;
+     grid-template-columns: 1fr 1fr;
+   }
+ 
+@@ -4698,250 +4966,686 @@ body {
+   overflow-y: auto;
+ }
+ 
+-.invalid-layout-backdrop {
+-  /*
+-   * Build Mode lives inside an isolated, overflow-clipped desk surface while
+-   * Phaser renders the facility in a sibling stacking context. The invalid
+-   * layout overlay is portaled to <body>; keep its explicit modal layer above
+-   * the map, construction desk, tutorial callouts, and phone chart sheet.
+-   */
+-  z-index: 2200;
++.invalid-layout-backdrop {
++  /*
++   * Build Mode lives inside an isolated, overflow-clipped desk surface while
++   * Phaser renders the facility in a sibling stacking context. The invalid
++   * layout overlay is portaled to <body>; keep its explicit modal layer above
++   * the map, construction desk, tutorial callouts, and phone chart sheet.
++   */
++  z-index: 2200;
++}
++
++.room-upgrade-dialog h2,
++.invalid-layout-dialog h2 {
++  margin: 0.35rem 0 0.7rem;
++}
++
++.room-upgrade-dialog h3 {
++  margin: 0.9rem 0 0.35rem;
++  font-size: 0.78rem;
++  text-transform: uppercase;
++}
++
++.room-upgrade-dialog ul,
++.invalid-layout-dialog ul {
++  display: grid;
++  gap: 0.35rem;
++  margin: 0.4rem 0 1rem;
++  padding-left: 1.25rem;
++}
++
++.upgrade-level-change {
++  display: inline-block;
++  padding: 0.4rem 0.55rem;
++  border: 3px double var(--ink);
++  background: var(--shade-1);
++  font-size: 1rem;
++  font-weight: 900;
++}
++
++@media (max-width: 700px) {
++  .build-tool-toolbar {
++    position: static;
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++  }
++}
++
++.empty-desk-message {
++  position: relative;
++  z-index: 1;
++  display: grid;
++  width: min(24rem, 76%);
++  min-height: 8rem;
++  margin: auto;
++  padding: 1rem;
++  border: 2px dashed rgb(24 25 20 / 35%);
++  background: rgb(255 254 242 / 52%);
++  color: var(--ink-soft);
++  text-align: center;
++  place-content: center;
++}
++
++.empty-desk-message strong {
++  color: var(--ink);
++  font-size: 1rem;
++  text-transform: uppercase;
++}
++
++.build-mode-panel {
++  position: relative;
++  z-index: 2;
++  width: 100%;
++  height: 100%;
++  max-height: none;
++  overflow: auto;
++  border: 3px solid var(--ink);
++  background: var(--paper-raised);
++  box-shadow: var(--paper-shadow);
++  overscroll-behavior: contain;
++}
++
++.build-mode-panel .build-option-list {
++  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
++}
++
++.build-mode-panel .build-card {
++  background: var(--panel);
++  box-shadow: 2px 2px 0 var(--shade-3);
++}
++
++.build-mode-panel .build-card:active:not(:disabled) {
++  box-shadow: none;
++  transform: translate(2px, 2px);
++}
++
++/* Condensed construction desk */
++
++.desk-workspace.is-build-desk {
++  padding: 0;
++}
++
++.desk-workspace.is-management-desk {
++  padding: 0;
++}
++
++.desk-workspace.has-chart {
++  padding: 0;
++}
++
++.desk-workspace.is-build-desk::before,
++.desk-workspace.is-build-desk > .desk-surface-details,
++.desk-workspace.is-management-desk::before,
++.desk-workspace.is-management-desk > .desk-surface-details,
++.desk-workspace.has-chart::before,
++.desk-workspace.has-chart > .desk-surface-details {
++  display: none;
++}
++
++.desk-workspace.has-chart > .chart-drawer {
++  top: 0;
++  height: 100%;
++  max-height: none;
++}
++
++.desk-workspace.is-build-desk > .build-mode-panel {
++  border: 0;
++  box-shadow: none;
++}
++
++.desk-workspace.is-build-desk > .build-mode-panel::after {
++  display: none;
++}
++
++.management-panel {
++  position: relative;
++  z-index: 2;
++  display: flex;
++  width: 100%;
++  height: 100%;
++  min-height: 0;
++  max-height: none;
++  overflow: hidden;
++  border: 0;
++  background: var(--paper-raised);
++  box-shadow: none;
++  flex-direction: column;
++}
++
++.management-mode-topbar {
++  display: flex;
++  min-height: 38px;
++  padding: 0.3rem 0.55rem;
++  border-bottom: 2px solid var(--ink);
++  background: var(--ink);
++  color: var(--paper-raised);
++  gap: 0.5rem;
++  align-items: center;
++  flex: 0 0 auto;
++}
++
++.management-mode-title {
++  font-size: 0.8rem;
++  letter-spacing: 0.06em;
++  text-transform: uppercase;
++}
++
++.management-paused-chip {
++  padding: 0 0.3rem;
++  border: 1px solid var(--paper-raised);
++  font-size: 0.58rem;
++  font-weight: 900;
++  letter-spacing: 0.05em;
++  text-transform: uppercase;
++}
++
++.management-done-button {
++  min-height: 28px;
++  margin-left: auto;
++  padding: 0.2rem 0.75rem;
++  border: 2px solid var(--paper-raised);
++  background: var(--paper-raised);
++  color: var(--ink);
++  font: inherit;
++  font-size: 0.7rem;
++  font-weight: 900;
++  cursor: pointer;
++}
++
++.management-panel > .staff-panel {
++  width: 100%;
++  max-height: none;
++  border: 0;
++  background: transparent;
++  box-shadow: none;
++  flex: 1 1 auto;
++}
++.management-tabs { display: flex; border-bottom: 2px solid var(--ink); flex: 0 0 auto; }
++.management-tabs button { flex: 1; min-height: 32px; border: 0; border-right: 1px solid var(--ink); padding: 0.38rem; background: var(--panel); color: var(--ink-soft); font: inherit; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; cursor: pointer; }
++.management-tabs button:last-child { border-right: 0; }
++.management-tabs button[aria-selected="true"] { background: var(--paper-raised); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
++
++/* Management Services and Money tabs. */
++.service-income-panel,
++.money-panel {
++  display: flex;
++  min-height: 0;
++  overflow: hidden;
++  background: var(--paper-raised);
++  flex: 1 1 auto;
++  flex-direction: column;
++}
++
++.service-income-scroll {
++  min-height: 0;
++  overflow-y: auto;
++  overscroll-behavior: contain;
++  flex: 1 1 auto;
++}
++
++.service-appointments-row {
++  display: flex;
++  padding: 0.4rem 0.55rem;
++  border-bottom: 2px solid var(--ink);
++  background: var(--panel);
++  font-size: 0.66rem;
++  gap: 0.6rem;
++  align-items: center;
++  flex: 0 0 auto;
++}
++
++.service-appointments-row p {
++  min-width: 0;
++  margin: 0;
++  color: var(--ink-soft);
++  flex: 1;
++}
++
++.service-appointments-row strong {
++  color: var(--ink);
++}
++
++.management-switch {
++  display: inline-flex;
++  border: 2px solid var(--ink);
++  flex: 0 0 auto;
++}
++
++.management-switch button {
++  min-height: 24px;
++  padding: 0.1rem 0.55rem;
++  border: 0;
++  background: var(--paper-raised);
++  color: var(--ink);
++  font: inherit;
++  font-size: 0.64rem;
++  font-weight: 900;
++  cursor: pointer;
++}
++
++.management-switch button[aria-pressed="true"] {
++  background: var(--ink);
++  color: var(--paper-raised);
++}
++
++.service-attention {
++  display: grid;
++  padding: 0.5rem;
++  border-bottom: 3px solid var(--ink);
++  gap: 0.3rem;
++}
++
++.service-attention-line {
++  display: flex;
++  margin: 0;
++  padding: 0.3rem 0.45rem;
++  border: 2px solid var(--ink);
++  background: var(--pixel-highlight);
++  font-size: 0.68rem;
++  gap: 0.45rem;
++  align-items: center;
++}
++
++.service-attention-line::before {
++  display: grid;
++  width: 15px;
++  height: 15px;
++  background: var(--ink);
++  color: var(--paper-raised);
++  content: "!";
++  font-size: 0.6rem;
++  font-weight: 900;
++  flex: 0 0 auto;
++  place-items: center;
++}
++
++.service-attention-line > span {
++  min-width: 0;
++  flex: 1;
++}
++
++.management-section {
++  border-bottom: 3px solid var(--ink);
++}
++
++.management-section-toggle {
++  width: 100%;
++  background: var(--panel);
++}
++
++.management-section.is-open > .management-section-toggle {
++  border-bottom: 2px solid var(--ink);
++}
++
++.management-section-meta {
++  margin-left: auto;
++  color: var(--ink-soft);
++  font-size: 0.62rem;
++  font-variant-numeric: tabular-nums;
++}
++
++.management-section-body {
++  display: grid;
++  padding: 0.5rem;
++  gap: 0.45rem;
++}
++
++.service-list {
++  display: grid;
++  margin: 0;
++  padding: 0;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  list-style: none;
++}
++
++.service-row {
++  display: grid;
++  padding: 0.35rem 0.5rem;
++  border-bottom: 1px solid var(--shade-2);
++  font-size: 0.68rem;
++  gap: 0.1rem 0.6rem;
++  align-items: center;
++  grid-template-columns: minmax(0, 1fr) auto;
++}
++
++.service-row:last-child {
++  border-bottom: 0;
++}
++
++.service-row.is-locked {
++  background: var(--panel);
++  color: var(--ink-soft);
++}
++
++.service-row-name {
++  display: flex;
++  min-width: 0;
++  gap: 0.35rem;
++  align-items: center;
++  flex-wrap: wrap;
++}
++
++.service-row-name strong {
++  font-size: 0.74rem;
++}
++
++.service-kind {
++  padding: 0 0.25rem;
++  border: 1px solid var(--ink-soft);
++  color: var(--ink-soft);
++  font-size: 0.55rem;
++  font-weight: 900;
++  letter-spacing: 0.04em;
++  text-transform: uppercase;
++}
++
++.service-row-price {
++  max-width: 15rem;
++  font-variant-numeric: tabular-nums;
++  font-weight: 900;
++  text-align: right;
++  grid-column: 2;
++  grid-row: 1;
++}
++
++.service-row-price small {
++  color: var(--ink-soft);
++  font-weight: 400;
++}
++
++.service-row-how {
++  color: var(--ink-soft);
++  font-size: 0.62rem;
++  grid-column: 1;
++}
++
++.service-row-how.is-paused {
++  color: var(--ink);
++  font-weight: 800;
++}
++
++.service-row-side {
++  display: flex;
++  color: var(--ink-soft);
++  font-size: 0.6rem;
++  text-align: right;
++  gap: 0.35rem;
++  align-items: center;
++  flex-wrap: wrap;
++  grid-column: 2;
++  justify-content: flex-end;
++}
++
++.service-row-side.is-wide {
++  padding-top: 0.15rem;
++  text-align: left;
++  grid-column: 1 / -1;
++  justify-content: flex-start;
++}
++
++.service-action-button {
++  min-height: 24px;
++  padding: 0.1rem 0.45rem;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  color: var(--ink);
++  box-shadow: 2px 2px 0 var(--ink);
++  font: inherit;
++  font-size: 0.62rem;
++  font-weight: 900;
++  white-space: nowrap;
++  cursor: pointer;
++}
++
++.service-action-button.is-primary {
++  background: var(--ink);
++  color: var(--paper-raised);
++  box-shadow: 2px 2px 0 var(--shade-3);
++}
++
++.service-action-button:disabled {
++  box-shadow: none;
++  opacity: 0.5;
++  cursor: not-allowed;
++}
++
++.service-level-tag {
++  padding: 0 0.3rem;
++  background: var(--shade-2);
++  color: var(--ink);
++  font-weight: 900;
++}
++
++.service-status-tag {
++  padding: 0 0.3rem;
++  border: 2px solid var(--ink);
++  color: var(--ink);
++  font-size: 0.58rem;
++  font-weight: 900;
++  text-transform: uppercase;
++}
++
++.service-facts {
++  display: grid;
++  gap: 0.4rem;
++  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
++}
++
++.service-fact {
++  display: grid;
++  padding: 0.4rem 0.5rem;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  font-size: 0.66rem;
++  gap: 0.1rem;
++}
++
++.service-fact small {
++  color: var(--ink-soft);
++}
++
++.service-income-empty {
++  margin: 0;
++  color: var(--ink-soft);
++  font-size: 0.66rem;
+ }
+ 
+-.room-upgrade-dialog h2,
+-.invalid-layout-dialog h2 {
+-  margin: 0.35rem 0 0.7rem;
++.service-income-panel .blocked-reason {
++  color: var(--ink);
++  font-size: 0.64rem;
++  font-weight: 800;
+ }
+ 
+-.room-upgrade-dialog h3 {
+-  margin: 0.9rem 0 0.35rem;
+-  font-size: 0.78rem;
++.money-period {
++  padding: 0.4rem 0.55rem;
++  border-bottom: 2px solid var(--ink);
++  background: var(--panel);
++  color: var(--ink-soft);
++  font-size: 0.6rem;
++  font-weight: 900;
++  letter-spacing: 0.05em;
+   text-transform: uppercase;
++  flex: 0 0 auto;
+ }
+ 
+-.room-upgrade-dialog ul,
+-.invalid-layout-dialog ul {
++.money-tiles {
+   display: grid;
+-  gap: 0.35rem;
+-  margin: 0.4rem 0 1rem;
+-  padding-left: 1.25rem;
++  padding: 0.5rem;
++  border-bottom: 3px solid var(--ink);
++  gap: 0.4rem;
++  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+ }
+ 
+-.upgrade-level-change {
+-  display: inline-block;
+-  padding: 0.4rem 0.55rem;
+-  border: 3px double var(--ink);
+-  background: var(--shade-1);
+-  font-size: 1rem;
+-  font-weight: 900;
++.money-tile {
++  display: grid;
++  padding: 0.45rem 0.55rem;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
++  gap: 0.05rem;
+ }
+ 
+-@media (max-width: 700px) {
+-  .build-tool-toolbar {
+-    position: static;
+-    grid-template-columns: repeat(2, minmax(0, 1fr));
+-  }
++.money-tile strong {
++  font-size: 1.1rem;
++  font-variant-numeric: tabular-nums;
+ }
+ 
+-.empty-desk-message {
+-  position: relative;
+-  z-index: 1;
+-  display: grid;
+-  width: min(24rem, 76%);
+-  min-height: 8rem;
+-  margin: auto;
+-  padding: 1rem;
+-  border: 2px dashed rgb(24 25 20 / 35%);
+-  background: rgb(255 254 242 / 52%);
++.money-tile small {
+   color: var(--ink-soft);
+-  text-align: center;
+-  place-content: center;
++  font-size: 0.6rem;
+ }
+ 
+-.empty-desk-message strong {
+-  color: var(--ink);
+-  font-size: 1rem;
+-  text-transform: uppercase;
++.money-tile.is-result {
++  background: var(--ink);
++  color: var(--paper-raised);
+ }
+ 
+-.build-mode-panel {
+-  position: relative;
+-  z-index: 2;
+-  width: 100%;
+-  height: 100%;
+-  max-height: none;
+-  overflow: auto;
+-  border: 3px solid var(--ink);
+-  background: var(--paper-raised);
+-  box-shadow: var(--paper-shadow);
+-  overscroll-behavior: contain;
++.money-tile.is-result > span,
++.money-tile.is-result small {
++  color: var(--shade-2);
+ }
+ 
+-.build-mode-panel .build-option-list {
+-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
++.money-tile.is-result.is-loss {
++  background: repeating-linear-gradient(45deg, var(--ink) 0 6px, var(--ink-soft) 6px 12px);
+ }
+ 
+-.build-mode-panel .build-card {
+-  background: var(--panel);
+-  box-shadow: 2px 2px 0 var(--shade-3);
++.money-cost-stack {
++  display: flex;
++  height: 16px;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
+ }
+ 
+-.build-mode-panel .build-card:active:not(:disabled) {
+-  box-shadow: none;
+-  transform: translate(2px, 2px);
++.money-cost-stack > i {
++  display: block;
++  height: 100%;
+ }
+ 
+-/* Condensed construction desk */
++.money-cost-stack > i + i {
++  border-left: 2px solid var(--paper-raised);
++}
+ 
+-.desk-workspace.is-build-desk {
+-  padding: 0;
++.money-panel .is-staff {
++  background: var(--ink);
+ }
+ 
+-.desk-workspace.is-management-desk {
+-  padding: 0;
++.money-panel .is-rooms {
++  background: var(--shade-3);
+ }
+ 
+-.desk-workspace.has-chart {
++.money-panel .is-advertising {
++  background: repeating-linear-gradient(45deg, var(--ink) 0 2px, var(--shade-2) 2px 5px);
++}
++
++.money-cost-legend {
++  display: flex;
++  margin: 0;
+   padding: 0;
++  font-size: 0.64rem;
++  list-style: none;
++  gap: 0.2rem 0.8rem;
++  flex-wrap: wrap;
+ }
+ 
+-.desk-workspace.is-build-desk::before,
+-.desk-workspace.is-build-desk > .desk-surface-details,
+-.desk-workspace.is-management-desk::before,
+-.desk-workspace.is-management-desk > .desk-surface-details,
+-.desk-workspace.has-chart::before,
+-.desk-workspace.has-chart > .desk-surface-details {
+-  display: none;
++.money-cost-legend li {
++  display: inline-flex;
++  gap: 0.3rem;
++  align-items: center;
+ }
+ 
+-.desk-workspace.has-chart > .chart-drawer {
+-  top: 0;
+-  height: 100%;
+-  max-height: none;
++.money-cost-legend i {
++  width: 10px;
++  height: 10px;
++  border: 1px solid var(--ink);
+ }
+ 
+-.desk-workspace.is-build-desk > .build-mode-panel {
+-  border: 0;
+-  box-shadow: none;
++.money-cost-legend b,
++.money-runway b {
++  font-variant-numeric: tabular-nums;
+ }
+ 
+-.desk-workspace.is-build-desk > .build-mode-panel::after {
+-  display: none;
++.money-runway {
++  margin: 0;
++  font-size: 0.66rem;
+ }
+ 
+-.management-panel {
+-  position: relative;
+-  z-index: 2;
+-  display: flex;
+-  width: 100%;
+-  height: 100%;
+-  min-height: 0;
+-  max-height: none;
+-  overflow: hidden;
+-  border: 0;
+-  background: var(--paper-raised);
+-  box-shadow: none;
+-  flex-direction: column;
++.money-earnings {
++  display: grid;
++  margin: 0;
++  padding: 0;
++  list-style: none;
++  gap: 0.3rem;
+ }
+ 
+-.management-mode-topbar {
+-  display: flex;
+-  min-height: 40px;
+-  padding: 0.3rem 0.55rem;
+-  border-bottom: 2px solid var(--ink);
+-  background: var(--paper-raised);
++.money-earnings li {
++  display: grid;
++  font-size: 0.64rem;
+   gap: 0.5rem;
+   align-items: center;
+-  justify-content: space-between;
+-  flex: 0 0 auto;
++  grid-template-columns: minmax(90px, 34%) minmax(0, 1fr) auto;
+ }
+ 
+-.management-mode-topbar > div {
+-  display: grid;
+-  min-width: 0;
+-  gap: 0.05rem;
++.money-earnings-name {
++  overflow: hidden;
++  text-overflow: ellipsis;
++  white-space: nowrap;
+ }
+ 
+-.management-mode-title {
+-  font-size: 0.8rem;
+-  letter-spacing: 0.05em;
+-  text-transform: uppercase;
++.money-earnings-track {
++  height: 10px;
++  border: 1px solid var(--shade-3);
++  background: var(--shade-1);
+ }
+ 
+-.management-mode-topbar span {
+-  color: var(--ink-soft);
+-  font-size: 0.62rem;
++.money-earnings-track > i {
++  display: block;
++  height: 100%;
++  background: var(--ink);
++}
++
++.money-earnings-value {
++  min-width: 9ch;
++  font-variant-numeric: tabular-nums;
+   font-weight: 900;
+-  text-transform: uppercase;
++  text-align: right;
+ }
+ 
+-.management-done-button {
+-  min-height: 28px;
+-  padding: 0.25rem 0.48rem;
+-  box-shadow: 1px 1px 0 var(--ink);
+-  font-size: 0.68rem;
++.money-ledger-wrap {
++  overflow-x: auto;
++  border: 2px solid var(--ink);
++  background: var(--paper-raised);
+ }
+ 
+-.management-panel > .staff-panel {
++.money-ledger {
+   width: 100%;
+-  max-height: none;
+-  border: 0;
+-  background: transparent;
+-  box-shadow: none;
+-  flex: 1 1 auto;
++  border-collapse: collapse;
++  font-size: 0.64rem;
+ }
+-.management-tabs { display: flex; border-bottom: 2px solid var(--ink); flex: 0 0 auto; }
+-.management-tabs button { flex: 1; border: 0; border-right: 1px solid var(--ink); padding: 0.38rem; background: var(--paper); color: var(--ink-soft); font: inherit; font-size: 0.68rem; font-weight: 900; text-transform: uppercase; }
+-.management-tabs button[aria-selected="true"] { background: var(--paper-raised); color: var(--ink); box-shadow: inset 0 -3px 0 var(--accent); }
+-.management-panel > .service-income-panel { flex: 1 1 auto; }
+ 
+-.service-income-panel {
+-  display: flex;
+-  flex-direction: column;
+-  min-height: 0;
+-  border-top: 2px solid var(--ink);
+-  background: var(--paper);
+-  flex: 1 1 auto;
+-  overflow: hidden;
++.money-ledger th {
++  padding: 0.25rem 0.4rem;
++  border-bottom: 2px solid var(--ink);
++  background: var(--shade-1);
++  font-size: 0.56rem;
++  letter-spacing: 0.04em;
++  text-align: left;
++  text-transform: uppercase;
+ }
+ 
+-.service-income-heading,
+-.service-income-totals,
+-.service-income-note {
+-  flex: 0 0 auto;
++.money-ledger td {
++  padding: 0.25rem 0.4rem;
++  border-bottom: 1px solid var(--shade-2);
++  white-space: nowrap;
+ }
+ 
+-.service-income-heading,
+-.service-income-totals,
+-.service-income-list > li {
+-  display: flex;
+-  gap: 0.45rem;
+-  align-items: center;
+-  justify-content: space-between;
++.money-ledger tr:last-child td {
++  border-bottom: 0;
+ }
+ 
+-.service-income-heading { padding: 0.45rem 0.55rem; }
+-.service-income-heading h2, .service-income-panel h3 { margin: 0; font-size: 0.74rem; text-transform: uppercase; }
+-.service-income-heading span, .service-income-list span, .service-income-list small, .service-income-empty { color: var(--ink-soft); font-size: 0.64rem; }
+-.service-appointment-toggle { display: flex; gap: 0.25rem; align-items: center; font-size: 0.66rem; font-weight: 800; }
+-.service-income-totals { margin: 0; padding: 0.35rem 0.55rem; border-top: 1px solid var(--ink-soft); border-bottom: 1px solid var(--ink-soft); }
+-.service-income-totals div { display: grid; gap: 0.05rem; }
+-.service-income-totals dt { color: var(--ink-soft); font-size: 0.58rem; text-transform: uppercase; }
+-.service-income-totals dd { margin: 0; font-weight: 900; font-size: 0.7rem; }
+-.service-income-note { margin: 0; padding: 0.25rem 0.55rem; color: var(--ink-soft); font-size: 0.6rem; }
+-.service-income-scroll { height: auto; min-height: 0; overflow: auto; padding: 0.45rem 0.55rem; flex: 1 1 auto; }
+-.service-income-scroll section + section { margin-top: 0.6rem; }
+-.service-income-work-queue { display: grid; gap: 0.32rem; padding: 0.45rem; border: 1px solid var(--ink-soft); background: var(--paper-raised); }
+-.service-income-work-queue > div { display: grid; gap: 0.12rem; }
+-.service-income-work-queue small { display: block; color: var(--ink-soft); font-size: 0.64rem; line-height: 1.35; overflow-wrap: anywhere; }
+-.service-income-work-queue .button { width: fit-content; max-width: 100%; white-space: normal; }
+-.service-income-work-queue .blocked-reason { color: var(--ink); font-weight: 800; }
+-.service-income-list { display: grid; margin: 0.3rem 0 0; padding: 0; list-style: none; }
+-.service-income-list > li { padding: 0.3rem 0; border-top: 1px dotted var(--ink-soft); align-items: start; }
+-.service-income-list > li > div { display: grid; gap: 0.04rem; }
+-.service-income-list > li.is-locked { opacity: 0.62; }
+-.service-income-list > li small { text-align: right; max-width: 44%; }
+-.service-income-empty { margin: 0.3rem 0; }
++.money-ledger .is-number {
++  font-variant-numeric: tabular-nums;
++  text-align: right;
++}
+ 
+ .build-mode-topbar {
+   position: sticky;
+@@ -6241,6 +6945,7 @@ body {
+   .facility-pause-indicator,
+   .message-board-item.is-new-message,
+   .staff-role-group.is-alert-highlighted,
++  .staff-member-card.is-alert-highlighted,
+   .advertising-panel.is-alert-highlighted {
+     animation: none;
+     transition: none;
+@@ -6249,6 +6954,10 @@ body {
+   .message-board-feed {
+     scroll-behavior: auto;
+   }
++
++  .staff-role-chevron {
++    transition: none;
++  }
+ }
+ 
+ /* Current display title and restrained outline-only resource symbols. */
+@@ -7499,47 +8208,6 @@ body {
+     font-size: 0.62rem;
+   }
+ 
+-  .staff-role-group {
+-    padding: 0.42rem;
+-    border-bottom-width: 2px;
+-  }
+-
+-  .staff-role-heading,
+-  .staff-role-heading > div {
+-    gap: 0.3rem;
+-  }
+-
+-  .staff-role-heading h3 {
+-    font-size: 0.78rem;
+-  }
+-
+-  .staff-role-heading .button {
+-    min-height: 30px;
+-    padding: 0.22rem 0.35rem;
+-    font-size: 0.64rem;
+-  }
+-
+-  .staff-blocked-reason {
+-    margin-top: 0.22rem;
+-    font-size: 0.64rem;
+-  }
+-
+-  .staff-member-card {
+-    margin-top: 0.35rem;
+-    padding: 0.35rem;
+-    gap: 0.35rem;
+-  }
+-
+-  .staff-member-details h4 {
+-    font-size: 0.74rem;
+-  }
+-
+-  .staff-morale,
+-  .staff-salary-control {
+-    margin-top: 0.22rem;
+-    font-size: 0.62rem;
+-  }
+-
+   .message-board-item {
+     padding: 0.34rem 0.42rem;
+     gap: 0.3rem;

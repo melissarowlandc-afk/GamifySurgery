@@ -1,0 +1,16 @@
+diff --git a/apps/player/src/ui/ManagementPanel.test.tsx b/apps/player/src/ui/ManagementPanel.test.tsx
+index 6a3aa58..21464d7 100644
+--- a/apps/player/src/ui/ManagementPanel.test.tsx
++++ b/apps/player/src/ui/ManagementPanel.test.tsx
+@@ -85,7 +85,10 @@ describe("ManagementPanel", () => {
+     expect(markup).toContain("Hire $60");
+     expect(markup).toContain("Fire");
+     expect(markup).toContain('role="tablist"');
+-    expect(markup).toContain("Services &amp; income");
++    expect(markup).toContain(">Services<");
++    expect(markup).toContain(">Money<");
++    expect(markup).toContain("Clinic paused");
++    expect(markup.match(/role="tab"/g)).toHaveLength(3);
+     expect(markup).toContain('aria-selected="true"');
+     expect(markup).not.toContain("Scheduled appointments");
+   });

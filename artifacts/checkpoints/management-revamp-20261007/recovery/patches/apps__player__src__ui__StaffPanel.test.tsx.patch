@@ -1,0 +1,126 @@
+diff --git a/apps/player/src/ui/StaffPanel.test.tsx b/apps/player/src/ui/StaffPanel.test.tsx
+index e999028..61d4347 100644
+--- a/apps/player/src/ui/StaffPanel.test.tsx
++++ b/apps/player/src/ui/StaffPanel.test.tsx
+@@ -4,7 +4,7 @@ import { createPixelAppearance } from "@gamify-surgery/game-domain";
+ import { StaffPanel } from "./StaffPanel";
+ 
+ describe("StaffPanel", () => {
+-  it("shows morale as a percentage and places Fire before salary without a morale bar", () => {
++  it("shows morale beside its label and keeps Fire away from the salary controls", () => {
+     const markup = renderToStaticMarkup(
+       <StaffPanel
+         highlightedRoleId="staff.receptionist"
+@@ -44,12 +44,16 @@ describe("StaffPanel", () => {
+       />,
+     );
+ 
+-    expect(markup).toContain("Morale");
+-    expect(markup).toContain("75%");
++    expect(markup).toMatch(/>Morale<\/span><strong[^>]*>75%</);
+     expect(markup).not.toContain("<progress");
+-    expect(markup.indexOf(">Fire<")).toBeLessThan(
+-      markup.indexOf("Salary"),
++    // Salary reads "Salary − $18/hr +": the steppers sit directly around the amount.
++    expect(markup).toMatch(/>Salary<\/span><button[^>]*aria-label="Decrease Morgan&#x27;s salary"[^>]*>−<\/button><strong[^>]*>\$18\/hr<\/strong><button[^>]*aria-label="Increase Morgan&#x27;s salary"/);
++    expect(markup.indexOf(">Fire<")).toBeGreaterThan(
++      markup.indexOf("Increase Morgan"),
+     );
++    expect(markup).toContain('aria-expanded="true"');
++    expect(markup).not.toContain("Train");
++    expect(markup).not.toContain("Lv ");
+     expect(markup).toContain("is-alert-highlighted");
+     expect(markup).toContain(
+       'data-staff-role-id="staff.receptionist"',
+@@ -60,9 +64,10 @@ describe("StaffPanel", () => {
+     );
+   });
+ 
+-  it("renders role-specific staffing guidance", () => {
++  it("renders role-specific staffing guidance when the role is opened", () => {
+     const markup = renderToStaticMarkup(
+       <StaffPanel
++        highlightedRoleId="staff.glp1_np"
+         roles={[{
+           id: "staff.glp1_np", displayName: "GLP-1 NP", currentCount: 2,
+           maximumCount: 10, hiringCostLabel: "$600", canHire: true,
+@@ -80,3 +85,79 @@ describe("StaffPanel", () => {
+     expect(markup).toContain("Each staffed NP earns $50 per facility hour.");
+   });
+ });
++
++describe("StaffPanel training and layout", () => {
++  const trainingView = {
++    level: 2,
++    nextLevel: 3,
++    cost: 150,
++    costLabel: "$150",
++    canTrain: true,
++    blockedReason: null,
++    status: "idle" as const,
++    statusLabel: "Level 2",
++    minutesRemaining: null,
++    sessionDurationMinutes: 60,
++    currentBenefitLabel: "Reduces scan time 10%",
++    nextBenefitLabel: "Reduces scan time 20%",
++    incrementBenefitLabel: "Reduces scan time 10%",
++  };
++  const role = {
++    id: "staff.imaging_technician",
++    displayName: "Imaging Technician",
++    currentCount: 1,
++    maximumCount: 3,
++    hiringCostLabel: "$300",
++    canHire: true,
++    trainingSummary: { averageLevelLabel: "Avg Lv 2", averageBenefitLabel: "Reduces scan time 10%" },
++    employees: [{
++      id: "employee.tech",
++      displayName: "Kofi",
++      roleDisplayName: "Imaging Technician",
++      salaryLabel: "$30/hr",
++      salaryPerHour: 30,
++      moraleLabel: "72%",
++      moralePercent: 72,
++      canDecreaseSalary: true,
++      canIncreaseSalary: true,
++      training: trainingView,
++      trainingTeamAverageAfterLabel: "Reduces scan time 20%",
++    }],
++  };
++  const render = (staffTraining: Parameters<typeof StaffPanel>[0]["staffTraining"]) => renderToStaticMarkup(
++    <StaffPanel
++      roles={[role]}
++      staffTraining={staffTraining}
++      onHire={vi.fn()}
++      onDecreaseSalary={vi.fn()}
++      onIncreaseSalary={vi.fn()}
++      onFire={vi.fn()}
++      onTrain={vi.fn()}
++    />,
++  );
++
++  it("hides every training element until a Training Room is built", () => {
++    const markup = render(null);
++    expect(markup).not.toContain("Train");
++    expect(markup).not.toContain("Avg Lv");
++    expect(markup).not.toContain("staff-training-pips");
++  });
++
++  it("shows the role's average training and each card's level once built", () => {
++    const markup = render({ inTrainingCount: 1, queuedCount: 2, capacity: 2, summaryLabel: "1/2 training · 2 queued" });
++    expect(markup).toContain("Avg Lv 2");
++    expect(markup).toContain("Reduces scan time 10%");
++    expect(markup).toContain('aria-label="Training level 2 of 5"');
++    expect(markup).toContain("Lv 2/5");
++    expect(markup).toContain(">Train<");
++    expect(markup).toContain("1/2 training · 2 queued");
++  });
++
++  it("fills open positions with dashed hire slots and keeps one alert hire target", () => {
++    const markup = render(null);
++    expect(markup.match(/staff-open-slot/g)).toHaveLength(2);
++    expect(markup.match(/data-staff-role-hire/g)).toHaveLength(1);
++    expect(markup).toContain("Payroll");
++    expect(markup).toContain("$30/hr");
++  });
++});

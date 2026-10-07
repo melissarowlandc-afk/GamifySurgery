@@ -1,0 +1,26 @@
+diff --git a/apps/player/src/ui/index.ts b/apps/player/src/ui/index.ts
+index 0d8632e..875d7a2 100644
+--- a/apps/player/src/ui/index.ts
++++ b/apps/player/src/ui/index.ts
+@@ -10,6 +10,7 @@ export { GoalsPanel } from "./GoalsPanel";
+ export { HelpDialog } from "./HelpDialog";
+ export { ManagementPanel } from "./ManagementPanel";
+ export { ServiceIncomePanel } from "./ServiceIncomePanel";
++export { MoneyPanel } from "./MoneyPanel";
+ export { OpeningSequence } from "./OpeningSequence";
+ export { PatientLists } from "./PatientLists";
+ export { PixelAvatar } from "./PixelAvatar";
+@@ -52,9 +53,13 @@ export type {
+   ServiceIncomeOperationView,
+   ServiceIncomeReceiptView,
+   ServiceIncomeView,
++  ServiceSetupActionView,
++  ManagementFinanceView,
+   RoomBuildOptionView,
+   SelectedRoomBuildView,
+   StaffHireOptionView,
+   StaffMemberView,
+   StaffRoleGroupView,
++  StaffRoleTrainingSummaryView,
++  StaffTrainingOverviewView,
+ } from "./types";

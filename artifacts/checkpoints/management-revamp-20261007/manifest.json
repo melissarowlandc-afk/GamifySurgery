@@ -1,0 +1,131 @@
+{
+  "checkpoint": "management-revamp-20261007",
+  "createdBy": "Claude Code",
+  "branch": "beta",
+  "entries": [
+    {
+      "path": "README.md",
+      "sha256": "fa4c1b4c62bf19d787d9433ebe8399d3fb3ed380245e9fdb7d91ed7175f71b03"
+    },
+    {
+      "path": "validation/results.json",
+      "sha256": "eced4bafa2b4042c7cbb3eb7aa88b237646bab36e110462e8ae47a5bffc802b0"
+    },
+    {
+      "path": "recovery/patch-verification.json",
+      "sha256": "6c34e93f722139167d47425d5309e967db0cc9f2226a1990d53449f8a5e6ee76"
+    },
+    {
+      "path": "files/apps/player/src/ui/StaffPanel.tsx",
+      "sha256": "599280783d375d6441cb2206567278692c04fa3a57bb87ed0d4cd140ef0d9dc4",
+      "liveSource": "apps/player/src/ui/StaffPanel.tsx",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/ui/ManagementPanel.tsx",
+      "sha256": "b75d4c3dde5af9334a6c3697f72b7c09c34e388223c143783abe448910c63193",
+      "liveSource": "apps/player/src/ui/ManagementPanel.tsx",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/ui/ServiceIncomePanel.tsx",
+      "sha256": "9a1cd79060fb9eab4816477650d66055978ebaeb0a7360845361674319f76d64",
+      "liveSource": "apps/player/src/ui/ServiceIncomePanel.tsx",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/ui/MoneyPanel.tsx",
+      "sha256": "a540392202d568f01047c5984e8c8a4d219128c5c3ae6bffc04e15c53ac4dc90",
+      "liveSource": "apps/player/src/ui/MoneyPanel.tsx",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/ui/MoneyPanel.test.tsx",
+      "sha256": "94dc1db058371bd7bdde17cf7e66fbfd77a22f1d1693b6daf559118cb7ee2e0f",
+      "liveSource": "apps/player/src/ui/MoneyPanel.test.tsx",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/session/managementViewModels.ts",
+      "sha256": "5c9244736801dd4569603a234be5f9cb1ee9bcdff060f716a50058bd5ee51745",
+      "liveSource": "apps/player/src/session/managementViewModels.ts",
+      "matchesLive": true
+    },
+    {
+      "path": "files/apps/player/src/session/managementViewModels.test.ts",
+      "sha256": "e02f9512ff4c5e83318a760c082ec10a22dfe7f21a895e36413658bdd7e33926",
+      "liveSource": "apps/player/src/session/managementViewModels.test.ts",
+      "matchesLive": true
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "sha256": "27679a6a0607b2f81de3d85cd65a5a2424d49e0e0fd214f6efd568810ff6145a",
+      "liveSource": "apps/player/src/ui/types.ts"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__index.ts.patch",
+      "sha256": "85370e18113e8af6c55a9900c1f9dfb7b296b9b80d240634b2c3472eeeaad88f",
+      "liveSource": "apps/player/src/ui/index.ts"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "sha256": "62bf073ac7c440b839eddad5eef7edcc3d74526cc32c2246cac893995396e62d",
+      "liveSource": "apps/player/src/session/viewModels.ts"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__App.tsx.patch",
+      "sha256": "feae719799c0fdb5b0427851c26dfafad7f34c8d060d84896c4135397253242b",
+      "liveSource": "apps/player/src/App.tsx"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__AppShell.tsx.patch",
+      "sha256": "5d2857a7fa3ba0ef4beb92af3e229b99a0035432d7dac8bbd8315f4048feebeb",
+      "liveSource": "apps/player/src/AppShell.tsx"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__styles__global.css.patch",
+      "sha256": "067df07cc2908d808c86b961ac2dfbb0f42a43194ccf75162d2fac1c12ecedaf",
+      "liveSource": "apps/player/src/styles/global.css"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__StaffPanel.test.tsx.patch",
+      "sha256": "a9295faf74e19e12f445322cd8fb4628962b6da045bb8311017febedd73c4514",
+      "liveSource": "apps/player/src/ui/StaffPanel.test.tsx"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__ManagementPanel.test.tsx.patch",
+      "sha256": "a47f778b1be952ae88bfe509815b177ee7594c2693544f37f2d7eb8f1dc43073",
+      "liveSource": "apps/player/src/ui/ManagementPanel.test.tsx"
+    },
+    {
+      "path": "recovery/patches/apps__player__src__ui__ServiceIncomePanel.test.tsx.patch",
+      "sha256": "2e80a8398445e33502360ac4c538bb2bbdf9b328d9ea781af0cf115dfa92f866",
+      "liveSource": "apps/player/src/ui/ServiceIncomePanel.test.tsx"
+    },
+    {
+      "path": "recovery/patches/packages__game-domain__src__appearance.ts.patch",
+      "sha256": "e3f727cfcee40c208b8ec6b8b582262fcbf58e15514b4d77a014494ba908664d",
+      "liveSource": "packages/game-domain/src/appearance.ts"
+    },
+    {
+      "path": "recovery/patches/packages__game-domain__src__appearance.test.ts.patch",
+      "sha256": "4d56f2ac3f0912cd4d7eacbaa23eaafb865e0326737c9ef14415cef3366fc73c",
+      "liveSource": "packages/game-domain/src/appearance.test.ts"
+    },
+    {
+      "path": "recovery/patches/packages__game-domain__src__reducer.ts.patch",
+      "sha256": "7fa2bd612fe2abc41d185e6a7c780e9c49693fb9d21d01bd2f312263e252ff72",
+      "liveSource": "packages/game-domain/src/reducer.ts"
+    },
+    {
+      "path": "recovery/patches/packages__game-domain__src__persistence.ts.patch",
+      "sha256": "0365fdea1e6e49c5489cf22476e16a661ebfa2c8576d5e6c7892df66224de3ae",
+      "liveSource": "packages/game-domain/src/persistence.ts"
+    },
+    {
+      "path": "recovery/patches/docs__handoffs__CLAUDE_ANIMATION_COORDINATION.md.patch",
+      "sha256": "88e83182941d3fb90758402054fcbc6155e2b3de2f6afc52d931b5c980571ab3",
+      "liveSource": "docs/handoffs/CLAUDE_ANIMATION_COORDINATION.md"
+    }
+  ]
+}

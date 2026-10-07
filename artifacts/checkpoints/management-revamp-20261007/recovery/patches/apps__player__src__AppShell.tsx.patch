@@ -1,0 +1,61 @@
+diff --git a/apps/player/src/AppShell.tsx b/apps/player/src/AppShell.tsx
+index 77c4f96..5943ca4 100644
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -42,6 +42,7 @@ import {
+   type SelectedRoomBuildView,
+   type ServiceIncomeView,
+   type StaffRoleGroupView,
++  type StaffTrainingOverviewView,
+ } from "./ui";
+ import {
+   cancelScheduledAnimationFrame,
+@@ -83,6 +84,7 @@ interface AppShellProps {
+   roomOptions: RoomBuildOptionView[];
+   selectedRoomBuild: SelectedRoomBuildView | null;
+   staffRoles: StaffRoleGroupView[];
++  staffTraining?: StaffTrainingOverviewView | null;
+   serviceIncome: ServiceIncomeView;
+   messages: MessageBoardItemView[];
+   systemNotices: MessageBoardItemView[];
+@@ -145,6 +147,7 @@ interface AppShellProps {
+   onDecreaseEmployeeSalary: (employeeId: string) => void;
+   onIncreaseEmployeeSalary: (employeeId: string) => void;
+   onFireEmployee: (employeeId: string) => void;
++  onTrainEmployee?: (employeeId: string) => void;
+   onCollectLitter: (litterId: string) => void;
+   onRefillWaterCooler: () => void;
+   onSeatFounderAtFrontDesk: () => boolean;
+@@ -191,6 +194,7 @@ export function AppShell({
+   roomOptions,
+   selectedRoomBuild,
+   staffRoles,
++  staffTraining = null,
+   serviceIncome,
+   messages,
+   systemNotices,
+@@ -242,6 +246,7 @@ export function AppShell({
+   onDecreaseEmployeeSalary,
+   onIncreaseEmployeeSalary,
+   onFireEmployee,
++  onTrainEmployee,
+   onCollectLitter,
+   onRefillWaterCooler,
+   onSeatFounderAtFrontDesk,
+@@ -833,6 +838,7 @@ export function AppShell({
+               managementMode={managementMode}
+               showInactiveTrigger={!chart && !employeeDiscussion && !buildMode}
+               roles={staffRoles}
++              staffTraining={staffTraining}
+               serviceIncome={serviceIncome}
+               highlightedRoleId={highlightedStaffRoleId}
+               highlightedEmployeeId={highlightedEmployeeId}
+@@ -842,6 +848,8 @@ export function AppShell({
+               onDecreaseSalary={onDecreaseEmployeeSalary}
+               onIncreaseSalary={onIncreaseEmployeeSalary}
+               onFire={onFireEmployee}
++              onTrain={onTrainEmployee}
++              onSetupAction={(action) => setPendingProcedureSetupAction({ label: action.target === "room" ? "Build" : "Hire", target: action.target, id: action.id })}
+               onAppointmentsEnabledChange={onServiceAppointmentsEnabledChange}
+               onStartLaboratoryProcessing={onStartLaboratoryProcessing}
+             />

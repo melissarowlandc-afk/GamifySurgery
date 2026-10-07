@@ -1,0 +1,91 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+index d373a1f..9915aaf 100644
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -259,6 +259,21 @@ export interface ServiceIncomeCatalogLineView {
+   requirementLabel: string;
+   available: boolean;
+   unavailableReason?: string;
++  /** Management grouping: earning now, temporarily paused, missing setup, or a later level. */
++  group?: "earning" | "paused" | "needs" | "future";
++  /** How this income arrives, e.g. booked visitors, chart orders or walk-up sales. */
++  arrivalLabel?: string;
++  /** Booked visitors stop while scheduled appointments are switched off. */
++  scheduled?: boolean;
++  pausedReason?: string;
++  /** Build/Hire shortcuts for the missing room or staff role. */
++  setupActions?: ServiceSetupActionView[];
++}
++
++export interface ServiceSetupActionView {
++  label: string;
++  target: "room" | "staff";
++  id: string;
+ }
+ 
+ export interface ServiceIncomeOperationView {
+@@ -276,6 +291,23 @@ export interface ServiceIncomeReceiptView {
+   grossLabel: string;
+   stockCostLabel: string;
+   netLabel: string;
++  timeLabel?: string;
++}
++
++/** Since-opening operating picture for Management's Money tab. */
++export interface ManagementFinanceView {
++  cashLabel: string;
++  earnedLabel: string;
++  billedLabel: string;
++  stockLabel: string;
++  runningCostsLabel: string;
++  profitLabel: string;
++  profitPositive: boolean;
++  hourlyCostLabel: string;
++  hourlyCosts: { id: "staff" | "rooms" | "advertising"; label: string; amount: number; amountLabel: string }[];
++  runwayLabel: string;
++  recentEarnings: { displayName: string; net: number; netLabel: string; count: number }[];
++  recentEarningsReceiptCount: number;
+ }
+ 
+ export interface ServiceIncomeView {
+@@ -300,6 +332,7 @@ export interface ServiceIncomeView {
+     completedQiReviewCount: number;
+     staffOnBreakCount: number;
+   };
++  finances?: ManagementFinanceView;
+ }
+ 
+ export interface AdvertisingView {
+@@ -391,6 +424,10 @@ export interface StaffMemberView {
+   canIncreaseSalary: boolean;
+   /** Optional only for older UI fixtures; live employee cards supply this. */
+   training?: EmployeeTrainingView;
++  /** Numeric hourly salary for Management payroll totals. */
++  salaryPerHour?: number;
++  /** Role-average benefit if this employee completes their next level. */
++  trainingTeamAverageAfterLabel?: string;
+ }
+ 
+ export interface StaffRoleGroupView {
+@@ -403,6 +440,21 @@ export interface StaffRoleGroupView {
+   canHire: boolean;
+   blockedReason?: string;
+   staffingGuidance?: string;
++  /** Present once a Training Room is built and the role has employees. */
++  trainingSummary?: StaffRoleTrainingSummaryView;
++}
++
++export interface StaffRoleTrainingSummaryView {
++  averageLevelLabel: string;
++  averageBenefitLabel: string;
++}
++
++/** Training Room status for Management; absent until a Training Room is built. */
++export interface StaffTrainingOverviewView {
++  inTrainingCount: number;
++  queuedCount: number;
++  capacity: number;
++  summaryLabel: string;
+ }
+ 
+ export interface ProgressionGoalView {

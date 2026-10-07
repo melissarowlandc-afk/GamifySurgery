@@ -1,0 +1,101 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 5826559..22a294f 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -68,6 +68,15 @@ import {
+   diagnosticPendingPresentation,
+   roomUsesFixedDiagnosticTiming,
+ } from "./diagnosticTimingPresentation";
++import {
++  createManagementFinanceView,
++  createRoleTrainingSummary,
++  createRoleAverageAfterTrainingLabel,
++  createServiceSetupState,
++  createStaffTrainingOverview,
++  facilityTimeLabel,
++  serviceArrivalLabel,
++} from "./managementViewModels";
+ import {
+   isQuestionFlagOpen,
+   type QuestionReviewFlag,
+@@ -88,6 +97,7 @@ import type {
+   SelectedRoomBuildView,
+   StaffRoleGroupView,
+   StaffHireOptionView,
++  StaffTrainingOverviewView,
+ } from "../ui";
+ import type { EmployeeDiscussionTabView, EmployeeDiscussionView } from "../ui/types";
+ 
+@@ -103,6 +113,7 @@ export interface PrototypePlayerView {
+   roomOptions: RoomBuildOptionView[];
+   staffOptions: StaffHireOptionView[];
+   staffRoles: StaffRoleGroupView[];
++  staffTraining: StaffTrainingOverviewView | null;
+   messages: MessageBoardItemView[];
+   selectedRoomBuild: SelectedRoomBuildView | null;
+   emergencyGlp1: EmergencyGlp1View;
+@@ -1530,7 +1541,21 @@ export function createPrototypePlayerView(
+         ...missingStaff.map((roleId) => getStaffRoleDefinition(roleId)?.displayName ?? humanizeIdentifier(roleId)),
+         ...(providerAvailable ? [] : ["approved provider"]),
+       ])];
++      const lineAvailable = !levelLocked && unavailableRequirements.length === 0 && (line.retail ? retailOutletAvailable === true : true);
++      // Retail outlets name their own room/staff; offer the first outlet's setup.
++      const firstRetailOutlet = line.retail && !retailOutletAvailable ? line.retail.outlets[0] : undefined;
++      const retailMissingRooms = firstRetailOutlet ? [firstRetailOutlet.roomDefinitionId] : [];
++      const retailMissingStaff = firstRetailOutlet?.staffRoleDefinitionId ? [firstRetailOutlet.staffRoleDefinitionId] : [];
+       return {
++        ...createServiceSetupState(state, {
++          levelLocked,
++          available: lineAvailable,
++          missingCapabilityIds: missingCapabilities,
++          missingRoomDefinitionIds: [...missingRooms, ...retailMissingRooms.filter((id) => !state.rooms.some((room) => room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id)))],
++          missingStaffRoleIds: [...missingStaff, ...retailMissingStaff.filter((id) => !state.employees.some((employee) => employee.staffRoleDefinitionId === id && isEmployeeOperational(state, employee.id)))],
++        }),
++        arrivalLabel: serviceArrivalLabel(line, retailOutletLabel),
++        scheduled: line.operation?.visitorMode === "scheduled",
+         id: line.id,
+         displayName: line.displayName,
+         kind: line.kind,
+@@ -1541,7 +1566,7 @@ export function createPrototypePlayerView(
+           : `${currency(line.scheduledVisitorFee)} per scheduled visitor · ${currency(line.fee)} question-ordered`,
+         minimumFacilityLevel: line.minimumFacilityLevel,
+         requirementLabel,
+-        available: !levelLocked && unavailableRequirements.length === 0 && (line.retail ? retailOutletAvailable === true : true),
++        available: lineAvailable,
+         unavailableReason: levelLocked
+           ? `Locked until Facility Level ${line.minimumFacilityLevel}`
+           : unavailableRequirements.length > 0
+@@ -1579,7 +1604,13 @@ export function createPrototypePlayerView(
+         grossLabel: currency(receipt.grossAmount),
+         stockCostLabel: currency(receipt.stockCost),
+         netLabel: currency(receipt.netCashDelta),
++        timeLabel: facilityTimeLabel(state, receipt.completedAtFacilityTick),
+       })),
++    finances: createManagementFinanceView(
++      state,
++      serviceIncomeTotals,
++      (incomeLineId) => SERVICE_INCOME_CATALOG.find((line) => line.id === incomeLineId)?.displayName ?? incomeLineId,
++    ),
+     // Includes receipts retired from live state; see retiredServiceHistory.
+     grossTotalLabel: currency(serviceIncomeTotals.grossCents / 100),
+     stockCostTotalLabel: currency(serviceIncomeTotals.stockCostCents / 100),
+@@ -2445,6 +2476,8 @@ export function createPrototypePlayerView(
+             moralePercent: employee.morale,
+             avatar: employee.appearance,
+             training: createEmployeeTrainingView(state, employee.id),
++            salaryPerHour: employee.salaryPerExpenseInterval,
++            trainingTeamAverageAfterLabel: createRoleAverageAfterTrainingLabel(state, role.id, employees, employee.id),
+             canDecreaseSalary:
+               employee.salaryPerExpenseInterval >
+               role.minimumSalaryPerExpenseInterval,
+@@ -2469,8 +2502,10 @@ export function createPrototypePlayerView(
+             !lacksGlp1StaffingSlot &&
+             affordable,
+           blockedReason,
++          trainingSummary: createRoleTrainingSummary(state, role.id, employees),
+         };
+       }),
++    staffTraining: createStaffTrainingOverview(state),
+     messages: createMessageBoardView(state),
+     selectedRoomBuild: (() => {
+       if (!selectedRoomInstanceId) {

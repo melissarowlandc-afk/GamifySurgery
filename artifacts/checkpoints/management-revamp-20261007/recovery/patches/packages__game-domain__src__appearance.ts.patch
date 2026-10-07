@@ -1,0 +1,104 @@
+diff --git a/packages/game-domain/src/appearance.ts b/packages/game-domain/src/appearance.ts
+index 1c00254..a2fc96a 100644
+--- a/packages/game-domain/src/appearance.ts
++++ b/packages/game-domain/src/appearance.ts
+@@ -54,6 +54,40 @@ const STAFF_NAMES = [
+   "Rowan",
+   "Sam",
+   "Taylor",
++  "Ari",
++  "Blair",
++  "Cameron",
++  "Charlie",
++  "Dana",
++  "Devon",
++  "Eden",
++  "Ellis",
++  "Frankie",
++  "Hayden",
++  "Hollis",
++  "Jesse",
++  "Jules",
++  "Kendall",
++  "Lane",
++  "Lee",
++  "Lennon",
++  "Marley",
++  "Micah",
++  "Nico",
++  "Noel",
++  "Oakley",
++  "Peyton",
++  "Remy",
++  "River",
++  "Robin",
++  "Rory",
++  "Sage",
++  "Sasha",
++  "Shay",
++  "Skyler",
++  "Spencer",
++  "Sydney",
++  "Tatum",
+ ] as const;
+ 
+ const PATIENT_NEUTRAL_FIRST_NAMES = [
+@@ -824,16 +858,57 @@ export function createPatientPixelAppearance(
+   };
+ }
+ 
++/**
++ * Plain first name for an employee. Starting from the seeded pick, it skips
++ * names already in use so staff never need numbered names like "Sam 2".
++ */
+ export function createStaffDisplayName(
+   campaignSeed: string,
+   employeeId: string,
++  usedDisplayNames: Iterable<string> = [],
+ ): string {
+   const random = createDeterministicRandom(
+     campaignSeed,
+     RANDOM_STREAMS.staffAppearance,
+     `${employeeId}:display-name.v1`,
+   );
+-  return STAFF_NAMES[random.integer(STAFF_NAMES.length)]!;
++  const start = random.integer(STAFF_NAMES.length);
++  const used = new Set(usedDisplayNames);
++  for (let offset = 0; offset < STAFF_NAMES.length; offset += 1) {
++    const name = STAFF_NAMES[(start + offset) % STAFF_NAMES.length]!;
++    if (!used.has(name)) return name;
++  }
++  return STAFF_NAMES[start]!;
++}
++
++const NUMBERED_STAFF_NAME = /^(.+?) \d+$/;
++
++/**
++ * Renames employees whose names repeat another employee's or carry an old
++ * numeric suffix ("Blake 2") to an unused plain first name. Mutates in place.
++ */
++export function dedupeStaffDisplayNames(
++  campaignSeed: string,
++  employees: { id: string; displayName: string }[],
++  reservedDisplayNames: Iterable<string> = [],
++): void {
++  const used = new Set(reservedDisplayNames);
++  for (const employee of employees) {
++    if (!NUMBERED_STAFF_NAME.test(employee.displayName) && !used.has(employee.displayName)) {
++      used.add(employee.displayName);
++    }
++  }
++  const kept = new Set<string>();
++  for (const employee of employees) {
++    const numbered = NUMBERED_STAFF_NAME.test(employee.displayName);
++    if (!numbered && !kept.has(employee.displayName)) {
++      kept.add(employee.displayName);
++      continue;
++    }
++    employee.displayName = createStaffDisplayName(campaignSeed, employee.id, used);
++    used.add(employee.displayName);
++    kept.add(employee.displayName);
++  }
+ }
+ 
+ export function createPatientDisplayName(

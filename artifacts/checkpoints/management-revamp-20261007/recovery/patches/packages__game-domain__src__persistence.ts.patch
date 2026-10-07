@@ -1,0 +1,24 @@
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+index 2ef325a..7237fe4 100644
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -21,6 +21,7 @@ import {
+ import {
+   createPatientPixelAppearance,
+   createPixelAppearance,
++  dedupeStaffDisplayNames,
+   normalizePixelAppearance,
+   normalizePatientAppearanceForSex,
+   roleStyleForStaffDefinition,
+@@ -4314,6 +4315,11 @@ function finishApprovedRoomMigration(
+     throw new Error("The saved employee has conflicting training and work assignments.");
+   }
+   reconcileEmployeeTrainingReservations(migrated);
++  dedupeStaffDisplayNames(
++    migrated.campaignSeed,
++    migrated.employees,
++    (migrated.departingEmployees ?? []).map((employee) => employee.displayName),
++  );
+   normalizeGlp1AutomationState(
+     migrated,
+     isRecord(parsed.environment) ? parsed.environment : {},

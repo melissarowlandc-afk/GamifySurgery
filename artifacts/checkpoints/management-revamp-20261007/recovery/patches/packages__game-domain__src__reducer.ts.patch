@@ -1,0 +1,31 @@
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+index 83a56c8..e6ad62c 100644
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -9689,19 +9689,14 @@ function reduceHireStaff(
+ 
+   const next = clonePlain(state);
+   reconcileEmployeeRoomSeats(next);
+-  const generatedName = createStaffDisplayName(
+-    next.campaignSeed,
+-    command.employeeId,
+-  );
++  const usedNames = [
++    ...next.employees.map((candidate) => candidate.displayName),
++    ...(next.departingEmployees ?? []).map((candidate) => candidate.displayName),
++  ];
+   const requestedName = command.displayName?.trim();
+-  const baseName = requestedName || generatedName;
+-  const duplicateNameCount = next.employees.filter(
+-    (candidate) => candidate.displayName === baseName,
+-  ).length;
+-  const displayName =
+-    duplicateNameCount === 0
+-      ? baseName
+-      : `${baseName} ${duplicateNameCount + 1}`;
++  const displayName = requestedName && !usedNames.includes(requestedName)
++    ? requestedName
++    : createStaffDisplayName(next.campaignSeed, command.employeeId, usedNames);
+   const arrival = getEmployeeArrival(
+     next,
+     definition.id,
