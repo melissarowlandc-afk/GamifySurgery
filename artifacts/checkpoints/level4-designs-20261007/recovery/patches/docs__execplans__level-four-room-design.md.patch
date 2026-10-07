@@ -1,0 +1,22 @@
+diff --git a/docs/execplans/level-four-room-design.md b/docs/execplans/level-four-room-design.md
+index 2113485d76a34ebb76ecc275573ac2071121744c..d4f900d1c688f9d5023dc81cf2b0aa797117e346 100644
+--- a/docs/execplans/level-four-room-design.md
++++ b/docs/execplans/level-four-room-design.md
+@@ -33,7 +33,8 @@ orthographic elevated-front art style and uniform furniture/character scale.
+ ## References / repository state
+ 
+ - docs/features/facility-levels-and-clinical-release-points.md: Level4 includes
+-  Reading, MRI, Pediatric Waiting/Examination, Wound/Ostomy and Call rooms.
++  Reading, MRI, Pediatric Waiting/Examination and Wound/Ostomy rooms. The Call
++  Room was removed by the owner on 2026-10-07 (does not fit a surgery center).
+ - https://www.setdecorators.org/sites/setdecorators/pdf/SEVERANCE-Rev-8-25.pdf
+   (set-decorator reference, accessed2026-10-03): central pedestal desk and
+   matching chairs/green carpet, concealed wiring. Store link, not copied PDF.
+@@ -175,3 +176,7 @@ review the corrected controls; no remaining repair milestone or runtime changes.
+ ## Radiology Reading Room — design approved, backup authorized (2026-10-07)
+ 
+ Owner: "Okay, that is approved. Push to GitHub". Approves corrected4×4 candidate D574AA0FC11292D8A2F8A92A3BA082C8755B00067A99066FDAD3BA30C72EB1BB,723115bytes. Receipt: tools/room-design/level-4/radiology-reading/approval-2026-10-07.md. Frozen review-time metadata remains unchanged and is superseded for design approval by this receipt. Runtime integration remains separate. Current source/delivery hash and focused layout/browser checks independently PASS on October7. Scoped reading-room backup on beta in progress; unrelated shared work excluded. Next: verify remote checkpoint and record branch/commit.
++
++Owner direction (2026-10-07, via Claude Code): touch up all existing rooms first
++(preview: tools/room-design/touchup-2026-10/), then design the MRI Room next.
++Call Room removed from Level 4.
