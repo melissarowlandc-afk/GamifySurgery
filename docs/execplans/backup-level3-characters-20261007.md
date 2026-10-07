@@ -35,3 +35,7 @@ Sol prepared the scoped recovery archive; root reviewed actual scene/style/reduc
 Archive is a recovery checkpoint with exact compatible-baseline prerequisites, not a clean runnable beta snapshot. Prior gameplay evidence is historical October4; fresh packaging checks are recorded separately. Worker added local Git attributes to preserve exact payload bytes across clone line-ending settings.
 
 Next: explicitly stage audited archive and this plan, inspect staged paths, commit and push beta, verify remote SHA, then record pushed checkpoint in current handoff.
+
+
+### Remote verified
+Checkpoint 156e5d222dcdd0925b47d4e8abc060189ec3c476 pushed to origin/beta and independently verified by git ls-remote. All1163 staged Git blobs matched audited local bytes; unrelated staged paths zero. Byte-preserved archive formatting was checked with blank-at-eol/blank-at-eof disabled for immutable CRLF provenance and patch context lines. No production code, clinical content or deployment files staged. Current handoff backup record is selectively staged against HEAD so unrelated local handoff content remains intact. All authorized backup work is complete after the small metadata follow-up push and final remote verification.

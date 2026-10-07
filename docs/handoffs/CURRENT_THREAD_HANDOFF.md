@@ -1,3 +1,22 @@
+> LEVEL 3 AND CHARACTER GITHUB BACKUP VERIFIED (2026-10-07).
+> Owner-requested checkpoint 156e5d222dcdd0925b47d4e8abc060189ec3c476 was pushed to
+> origin/beta and verified by git ls-remote. Recovery package:
+> artifacts/checkpoints/level3-character-20261007/ (1161 payloads plus manifest).
+> Preserves32 accepted native identities/256 poses, both capped surgeons,
+> seven approved room proofs/82 promoted images, provenance, modules/tests,
+> 46 exact baseline-relative patches and accepted October4 browser evidence.
+> Sol level3_backup_package prepared the archive; root reviewed actual patches,
+> independently verified all hashes/1106 source copies, asset validators,
+> 46 reconstructions and1163 staged blobs; no unrelated staged files or secrets.
+> Archive-local Git attributes preserve exact bytes across clone line endings.
+> Recovery archive requires compatible shared baselines; beta is not a clean
+> runnable Level3 snapshot. Concurrent scene/clinical/animation work stays local.
+> Historical chair-proof renderer hash pin is stale after Level3 integration;
+> fresh roster/runtime/room checks passed; original approval hashes preserved.
+> No merge, release, deployment, Pages publication, launcher or save changes.
+> Owner pathway remains START_GAME.cmd -> http://127.0.0.1:4173, same profile.
+> Details: docs/execplans/backup-level3-characters-20261007.md.
+
 > PREFERRED MOVEMENT GITHUB BACKUP VERIFIED (2026-10-04).
 > Owner requested push; archival checkpoint d304797dbd566db03d5dffa6cdfc852ac126d2f0
 > was pushed to origin/beta and verified by git ls-remote. Package:
