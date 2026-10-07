@@ -1,0 +1,500 @@
+diff --git a/packages/game-domain/src/service-operations.ts b/packages/game-domain/src/service-operations.ts
+index f04e67e6..f81d32c6 100644
+--- a/packages/game-domain/src/service-operations.ts
++++ b/packages/game-domain/src/service-operations.ts
+@@ -22,3 +22,6 @@ import { findCareAwareFacilityPath, pathEntersUnauthorizedProtectedRoom } from "
+ import { hasActivePatientAmenityTrip } from "./patient-amenities";
++import { getRadiologistReadingStation } from "./reading-stations";
+ import type {
++  DiagnosticOrderPlan,
++  DiagnosticResourceChoice,
+   DomainContext,
+@@ -30,3 +33,3 @@ import type {
+ import { recordLevelThreeRoomUse } from "./level-three-support";
+-import { isEmployeeAwayForTraining } from "./employee-training";
++import { isDiagnosticResourceWaitingForTraining, isEmployeeAwayForTraining } from "./employee-training";
+ import { bindServiceOperationTraining, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
+@@ -67,2 +70,14 @@ function cloneOperationPhase(phase: ServiceOperationPhase): FrozenOperationPhase
+ 
++function diagnosticPhysicalIncomeLine(line: ServiceIncomeLine | null, phases: readonly FrozenOperationPhase[]): ServiceIncomeLine | null {
++  if (!line || line.kind === "retail" || phases.length === 0) return null;
++  // Some existing route fee rows predate the physical operation engine.
++  // Marked work supplies its own frozen engine contract and keeps that fee ID.
++  return line.operation ? line : { ...line, operation: { visitorMode: "explicit_only", arrivalCadenceMinutes: null, encounterOnly: true, phases } };
++}
++
++function operationIncomeLine(operation: ServiceOperationState): ServiceIncomeLine | null {
++  const line = getServiceIncomeLine(operation.incomeLineId);
++  return operation.diagnosticPhysicalWork ? diagnosticPhysicalIncomeLine(line, operation.frozenOperationPhases ?? []) : line;
++}
++
+ /** Frozen phase contract for newly-created periop-first operations only. */
+@@ -241,2 +256,3 @@ function hasActiveClinicalResourcePhase(encounter: EncounterState, facilityTick:
+   const pending = encounter.pendingResult;
++  if (pending?.diagnosticTiming) return false;
+   return Boolean(
+@@ -640,3 +656,3 @@ function roomConflictsWithActiveOperation(
+     ) return false;
+-    const candidateLine = getServiceIncomeLine(candidate.incomeLineId);
++    const candidateLine = operationIncomeLine(candidate);
+     const candidateStation = candidateLine
+@@ -672,2 +688,3 @@ function availablePeriopBedReservation(
+ ): NonNullable<ServiceOperationState["periopBedReservation"]> | null {
++  const preferred = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
+   if (operation.periopBedReservation) {
+@@ -692,2 +709,3 @@ function availablePeriopBedReservation(
+       candidate.roomDefinitionId === "room.periop_recovery" &&
++      (!preferred || candidate.id === preferred.roomInstanceId) &&
+       !blockedRoomIds.has(candidate.id) &&
+@@ -709,3 +727,3 @@ function availablePeriopBedReservation(
+     for (const station of stations) {
+-      if (station.kind !== "periop_bed" || occupied.has(`${room.id}:${station.id}`)) continue;
++      if (station.kind !== "periop_bed" || (preferred && station.id !== preferred.stationId) || occupied.has(`${room.id}:${station.id}`)) continue;
+       const actorLocation = operationLocation(state, operation);
+@@ -794,2 +812,85 @@ function commitPeriopCoveragePlan(
+ 
++function diagnosticProcessingChoices(state: GameState, operation: ServiceOperationState, context: DomainContext): DiagnosticResourceChoice[] {
++  const work = operation.diagnosticPhaseWork!;
++  const reading = work.kind === "interpretation";
++  const roomDefinitionId = reading ? "room.reading" : "room.laboratory";
++  const roleId = reading ? "staff.radiologist" : "staff.laboratory_technician";
++  return state.employees.filter((employee) => employee.staffRoleDefinitionId === roleId && employee.homeRoomInstanceId &&
++    isEmployeeAssignedToOperationalRoom(state, employee.id, context)).flatMap((employee) => {
++    const room = state.rooms.find((candidate) => candidate.id === employee.homeRoomInstanceId && candidate.roomDefinitionId === roomDefinitionId);
++    const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
++    if (!room || !definition || !isRoomAvailableForNewFacilityWork(state, room.id, context)) return [];
++    const post = reading ? getRadiologistReadingStation(state, employee, context) : null;
++    if (reading && !post) return [];
++    const anchor = post?.location ?? getRoomNavigationAnchor(room, definition, "staff");
++    return [{ roomInstanceId: room.id, roomDefinitionId, stationId: post?.station.id ?? null, employeeIds: [employee.id], provider: null,
++      patientAnchor: anchor, staffAnchor: anchor } satisfies DiagnosticResourceChoice];
++  }).sort((a, b) => a.roomInstanceId.localeCompare(b.roomInstanceId) || (a.stationId ?? "").localeCompare(b.stationId ?? "") || a.employeeIds[0]!.localeCompare(b.employeeIds[0]!));
++}
++
++function sameDiagnosticChoice(a: DiagnosticResourceChoice, b: DiagnosticResourceChoice): boolean {
++  return a.roomInstanceId === b.roomInstanceId && a.stationId === b.stationId && a.employeeIds.join(":") === b.employeeIds.join(":") &&
++    JSON.stringify(a.provider) === JSON.stringify(b.provider);
++}
++
++function diagnosticPhysicalChoiceCompatible(state: GameState, operation: ServiceOperationState, context: DomainContext): boolean {
++  const resource = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
++  if (!resource) return true;
++  if (isDiagnosticResourceWaitingForTraining(state, resource)) return false;
++  const room = state.rooms.find((candidate) => candidate.id === resource.roomInstanceId);
++  if (!room || room.roomDefinitionId !== resource.roomDefinitionId || !isRoomOperationalForFacilityWork(state, room.id, context)) return false;
++  if (!resource.employeeIds.every((id) => isEmployeeAssignedToOperationalRoom(state, id, context))) return false;
++  if (resource.provider?.kind === "employee" && !isEmployeeAssignedToOperationalRoom(state, resource.provider.employeeId, context)) return false;
++  if (resource.stationId) {
++    const definition = getRoomDefinition(room.roomDefinitionId, context);
++    if (!definition || !getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context)).some((station) =>
++      station.id === resource.stationId && samePoint(station.patientAnchor, resource.patientAnchor))) return false;
++  }
++  return true;
++}
++
++function queueDiagnosticProcessing(state: GameState, operation: ServiceOperationState): void {
++  const work = operation.diagnosticPhaseWork!;
++  if (operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null) work.remainingMinutes = Math.max(0, operation.phaseEndsAtFacilityTick - state.facilityTick);
++  releaseResources(state, operation);
++  work.resource = null;
++  operation.status = "waiting_for_resources";
++  operation.phaseStartedAtFacilityTick = null;
++  operation.phaseEndsAtFacilityTick = null;
++  operation.path = [];
++  operation.pathIndex = 0;
++  operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
++}
++
++function tryReserveDiagnosticProcessing(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
++  const work = operation.diagnosticPhaseWork!;
++  const choices = diagnosticProcessingChoices(state, operation, context);
++  if (work.resource && (isDiagnosticResourceWaitingForTraining(state, work.resource) || !choices.some((choice) => sameDiagnosticChoice(choice, work.resource!)))) work.resource = null;
++  const clinical = getClinicalResourceReservations(state, context);
++  for (const resource of choices.filter((choice) => !work.resource || sameDiagnosticChoice(choice, work.resource))) {
++    const employee = state.employees.find((candidate) => candidate.id === resource.employeeIds[0])!;
++    if (isEmployeeAwayForTraining(employee) || employee.facilityTask || clinical.employeeIds.has(employee.id) || getActiveServiceOperationEmployeeIds(state).has(employee.id) || clinical.roomIds.has(resource.roomInstanceId) ||
++      (clinical.roomDefinitionCounts.get(resource.roomDefinitionId) ?? 0) > 0) continue;
++    const roomBusy = state.serviceOperations.some((other) => other.id !== operation.id && active(other) && operationRoomIds(other).includes(resource.roomInstanceId) &&
++      !(work.kind === "interpretation" && other.diagnosticPhaseWork?.kind === "interpretation" && other.diagnosticPhaseWork.resource?.stationId !== resource.stationId));
++    if (roomBusy) continue;
++    const employeePath = findCareAwareFacilityPath(state, context, employee.location, resource.staffAnchor, new Set([resource.roomInstanceId]));
++    if (!employeePath.length) continue;
++    work.resource = resource;
++    operation.reservedRoomInstanceIds = [resource.roomInstanceId];
++    operation.reservedEmployeeIds = [employee.id];
++    operation.path = [];
++    operation.pathIndex = 0;
++    operation.status = "walking_to_service";
++    preemptEmployeeShopping(state, employee.id);
++    employee.path = employeePath;
++    employee.pathIndex = 0;
++    employee.lastMovedAtFacilityTick = state.facilityTick;
++    employee.facilityTask = { kind: "perform_service", targetId: operation.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: Number.MAX_SAFE_INTEGER };
++    if (resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
++    return true;
++  }
++  return false;
++}
++
+ function tryReserve(
+@@ -801,2 +902,6 @@ function tryReserve(
+ ): boolean {
++  if (operation.diagnosticPhaseWork) return tryReserveDiagnosticProcessing(state, operation, line, context);
++  if (operation.diagnosticPhysicalWork && !diagnosticPhysicalChoiceCompatible(state, operation, context)) {
++    operation.diagnosticPhysicalWork.phaseBindings[operation.phaseIndex]!.resource = null;
++  }
+   const amenityKind = operation.actorKind === "encounter" ? "encounter" : "service_visitor";
+@@ -810,2 +915,3 @@ function tryReserve(
+   const clinical = getClinicalResourceReservations(state, context);
++  const preferred = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
+   const desiredStation = reservationPhases[0]?.roomStationId ?? null;
+@@ -822,2 +928,3 @@ function tryReserve(
+       .filter((room) => room.roomDefinitionId === definitionId &&
++        (!preferred || room.id === preferred.roomInstanceId) &&
+         !roomConflictsWithActiveOperation(state, operation, line, room.id, desiredStation) &&
+@@ -836,3 +943,4 @@ function tryReserve(
+     const available = state.employees
+-      .filter((candidate) => candidate.staffRoleDefinitionId === roleId && !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) && isServiceEmployeeOperational(state, candidate.id, roleId, context))
++      .filter((candidate) => candidate.staffRoleDefinitionId === roleId && (!preferred || preferred.employeeIds.includes(candidate.id)) && !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
++        (operation.diagnosticPhysicalWork ? isEmployeeAssignedToOperationalRoom(state, candidate.id, context) : isServiceEmployeeOperational(state, candidate.id, roleId, context)))
+       .sort((a, b) => a.id.localeCompare(b.id));
+@@ -847,3 +955,4 @@ function tryReserve(
+     const providerEmployee = state.employees
+-      .filter((candidate) => providerPhase.providerRoleDefinitionIds?.includes(candidate.staffRoleDefinitionId) && !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) && isEmployeeOperational(state, candidate.id, context))
++      .filter((candidate) => providerPhase.providerRoleDefinitionIds?.includes(candidate.staffRoleDefinitionId) && (!preferred || preferred.provider?.kind === "employee" && preferred.provider.employeeId === candidate.id) && !candidate.facilityTask && !isEmployeeAwayForTraining(candidate) && !clinical.employeeIds.has(candidate.id) && !usedEmployees.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
++        (operation.diagnosticPhysicalWork ? isEmployeeAssignedToOperationalRoom(state, candidate.id, context) : isEmployeeOperational(state, candidate.id, context)))
+       .sort((a, b) => a.id.localeCompare(b.id))[0];
+@@ -852,2 +961,3 @@ function tryReserve(
+       providerPhase.founderEligible &&
++      (!preferred || preferred.provider?.kind === "founder") &&
+       (state.environment.founderActivity === null ||
+@@ -866,3 +976,3 @@ function tryReserve(
+   const reservedRoomIds = new Set(rooms.map((room) => room!.id));
+-  const patientTarget = bedReservation
++  const patientTarget = preferred?.patientAnchor ?? (bedReservation
+     ? bedReservation.endpoint
+@@ -873,3 +983,3 @@ function tryReserve(
+       ? getRoomCareAnchor(firstRoom, firstDefinition, "patient")
+-      : getRoomNavigationAnchor(firstRoom, firstDefinition, "primary");
++      : getRoomNavigationAnchor(firstRoom, firstDefinition, "primary"));
+   let actorPath: GridPoint[] = [];
+@@ -894,6 +1004,6 @@ function tryReserve(
+     const targetDefinition = getRoomDefinition(targetRoom.roomDefinitionId, context)!;
+-    const staffTarget = employee.staffRoleDefinitionId === "staff.phlebotomist" &&
++    const staffTarget = preferred?.staffAnchor ?? (employee.staffRoleDefinitionId === "staff.phlebotomist" &&
+       targetRoom.roomDefinitionId === "room.phlebotomy"
+       ? getRoomCareAnchor(targetRoom, targetDefinition, "clinician")
+-      : getRoomNavigationAnchor(targetRoom, targetDefinition, "staff");
++      : getRoomNavigationAnchor(targetRoom, targetDefinition, "staff"));
+     const targetRoomIds = new Set([targetRoom.id]);
+@@ -916,3 +1026,3 @@ function tryReserve(
+   const providerDefinition = getRoomDefinition(providerRoom.roomDefinitionId, context)!;
+-  const providerTarget = getRoomNavigationAnchor(providerRoom, providerDefinition, "staff");
++  const providerTarget = preferred?.staffAnchor ?? getRoomNavigationAnchor(providerRoom, providerDefinition, "staff");
+   if (provider?.kind === "employee") {
+@@ -947,2 +1057,8 @@ function tryReserve(
+   };
++  if (operation.diagnosticPhysicalWork) {
++    const binding = operation.diagnosticPhysicalWork.phaseBindings[operation.phaseIndex]!;
++    binding.resource = { roomInstanceId: firstRoom.id, roomDefinitionId: firstRoom.roomDefinitionId,
++      stationId: bedReservation?.bedId ?? null, employeeIds: coveragePlan ? [coveragePlan.employee.id] : [...selectedEmployees], provider: provider ? { ...provider } : null,
++      patientAnchor: { ...patientTarget }, staffAnchor: coveragePlan ? getRoomSharedStaffAnchor(firstRoom, firstDefinition) : { ...providerTarget } };
++  }
+   if (operation.actorKind === "encounter") {
+@@ -1223,2 +1339,4 @@ function operationActorTarget(
+ ): { point: GridPoint; roomIds: Set<string> } | null {
++  const frozenResource = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
++  if (frozenResource) return { point: { ...frozenResource.patientAnchor }, roomIds: new Set([frozenResource.roomInstanceId]) };
+   if (operation.periopBedReservation && isPeriopBedPhase(operation, line)) {
+@@ -1288,3 +1406,4 @@ function resourcesArrived(state: GameState, operation: ServiceOperationState, li
+   const actorTarget = operationActorTarget(state, operation, line, context);
+-  const actorArrived = operation.actorKind === "remote" || Boolean(
++  const frozenTarget = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource?.patientAnchor;
++  const actorArrived = operation.actorKind === "remote" || (frozenTarget ? samePoint(actorLocation, frozenTarget) : Boolean(
+     actorLocation && actorTarget && [...actorTarget.roomIds].some((roomId) =>
+@@ -1292,3 +1411,3 @@ function resourcesArrived(state: GameState, operation: ServiceOperationState, li
+     ),
+-  );
++  ));
+   const phases = currentReservationPhases(operation, line);
+@@ -1359,5 +1478,11 @@ function queueInterruptedCurrentPhase(
+   const remainingPhaseMinutes = operation.saleTransfer?.remainingPhaseMinutes ??
++    operation.diagnosticPhysicalWork?.remainingPhaseMinutes ??
+     (operation.phaseEndsAtFacilityTick === null
+       ? phase?.durationMinutes ?? 1
+-      : Math.max(1, operation.phaseEndsAtFacilityTick - state.facilityTick));
++      : Math.max(operation.diagnosticPhysicalWork ? 0 : 1, operation.phaseEndsAtFacilityTick - state.facilityTick));
++  if (operation.diagnosticPhysicalWork) {
++    operation.diagnosticPhysicalWork.remainingPhaseMinutes = operation.phaseEndsAtFacilityTick === null ? remainingPhaseMinutes : Math.max(0, operation.phaseEndsAtFacilityTick - state.facilityTick);
++    const interruptedRoomId = operation.diagnosticPhysicalWork.phaseBindings[operation.phaseIndex]?.resource?.roomInstanceId;
++    for (const binding of operation.diagnosticPhysicalWork.phaseBindings) if (binding.resource?.roomInstanceId === interruptedRoomId) binding.resource = null;
++  }
+   releaseResources(state, operation);
+@@ -1374,3 +1499,3 @@ function queueInterruptedCurrentPhase(
+     interruptedAtFacilityTick: state.facilityTick,
+-    remainingPhaseMinutes,
++    remainingPhaseMinutes: operation.diagnosticPhysicalWork?.remainingPhaseMinutes ?? remainingPhaseMinutes,
+   };
+@@ -1397,4 +1522,17 @@ export function interruptServiceOperationsForRoomSale(
+     interrupted.push(operation.id);
+-    const line = getServiceIncomeLine(operation.incomeLineId);
++    if (operation.diagnosticPhaseWork) { queueDiagnosticProcessing(state, operation); continue; }
++    const line = operationIncomeLine(operation);
+     const currentPhase = line ? operationPhases(operation, line)[operation.phaseIndex] : null;
++    if (operation.diagnosticPhysicalWork && line) {
++      for (const binding of operation.diagnosticPhysicalWork.phaseBindings) if (binding.resource?.roomInstanceId === roomId) binding.resource = null;
++      operation.transitionHeldRoomInstanceIds = (operation.transitionHeldRoomInstanceIds ?? []).filter((id) => id !== roomId);
++      if (operation.periopBedReservation?.roomInstanceId === roomId) releasePeriopBed(operation);
++      if (operation.status === "discharging") { operation.status = "completed"; continue; }
++      if (operation.status === "waiting_for_next_phase") {
++        releaseResources(state, operation);
++        continue;
++      }
++      if (currentPhase?.roomDefinitionId === roomDefinitionId) queueInterruptedCurrentPhase(state, operation, line);
++      continue;
++    }
+     if (operation.status === "waiting_for_next_phase") {
+@@ -1481,2 +1619,6 @@ export function interruptServiceOperationsForEmployeeDismissal(
+     if (!active(operation)) continue;
++    if (operation.diagnosticPhaseWork && operation.diagnosticPhaseWork.resource?.employeeIds.some((id) => employeeIds.has(id))) {
++      queueDiagnosticProcessing(state, operation);
++      continue;
++    }
+     const affected = operation.reservedEmployeeIds.some((id) => employeeIds.has(id)) ||
+@@ -1484,3 +1626,3 @@ export function interruptServiceOperationsForEmployeeDismissal(
+     if (!affected) continue;
+-    const line = getServiceIncomeLine(operation.incomeLineId);
++    const line = operationIncomeLine(operation);
+     if (!line?.operation) continue;
+@@ -1523,2 +1665,8 @@ function cancel(
+ ): void {
++  if (operation.diagnosticPhaseWork && operation.phaseEndsAtFacilityTick !== null) {
++    operation.diagnosticPhaseWork.remainingMinutes = Math.max(0, operation.phaseEndsAtFacilityTick - state.facilityTick);
++  }
++  if (operation.diagnosticPhysicalWork && operation.phaseEndsAtFacilityTick !== null) {
++    operation.diagnosticPhysicalWork.remainingPhaseMinutes = Math.max(0, operation.phaseEndsAtFacilityTick - state.facilityTick);
++  }
+   releaseResources(state, operation);
+@@ -1527,3 +1675,5 @@ function cancel(
+   operation.cancellationReason = reason;
+-  if (operation.actorKind === "visitor") {
++  if (operation.diagnosticPhysicalWork || operation.diagnosticPhaseWork) {
++    operation.status = "cancelled";
++  } else if (operation.actorKind === "visitor") {
+     const location = operationLocation(state, operation);
+@@ -1557,2 +1707,3 @@ function validateReservedResources(state: GameState, operation: ServiceOperation
+ function credit(state: GameState, operation: ServiceOperationState): void {
++  if (operation.diagnosticPhaseWork || operation.diagnosticPhysicalWork?.billing === "none") return;
+   const transactionKey = `income.service-operation.${operation.id}.${operation.incomeLineId}`;
+@@ -1579,3 +1730,8 @@ function beginPhase(state: GameState, operation: ServiceOperationState, line: Se
+   operation.phaseEndsAtFacilityTick = state.facilityTick +
+-    (operation.saleTransfer?.remainingPhaseMinutes ?? phase.durationMinutes);
++    (operation.diagnosticPhaseWork?.remainingMinutes ?? operation.saleTransfer?.remainingPhaseMinutes ?? operation.diagnosticPhysicalWork?.remainingPhaseMinutes ?? phase.durationMinutes);
++  if (operation.diagnosticPhysicalWork) {
++    operation.diagnosticPhysicalWork.remainingPhaseMinutes = operation.phaseEndsAtFacilityTick - state.facilityTick;
++    const witness = operation.diagnosticPhysicalWork.phaseWitnesses[operation.phaseIndex]!;
++    if (witness.startedAtFacilityTick === null) witness.startedAtFacilityTick = state.facilityTick;
++  }
+   operation.saleTransfer = undefined;
+@@ -1598,3 +1754,3 @@ function releaseCompletedPhase(
+     : undefined;
+-  if (completedRoomId) {
++  if (completedRoomId && !operation.diagnosticPhaseWork && operation.diagnosticPhysicalWork?.billing !== "none") {
+     recordLevelThreeRoomUse(state, completedRoomId, `service:${operation.id}:phase:${operation.phaseIndex}`, context);
+@@ -1706,2 +1862,3 @@ function beginPeriopBedDischarge(
+   operation.status = "discharging";
++  if (operation.diagnosticPhysicalWork) return;
+   if (operation.actorKind === "visitor") {
+@@ -1759,2 +1916,8 @@ function moveToNextPhase(
+ ): void {
++  if (operation.diagnosticPhysicalWork) {
++    const witness = operation.diagnosticPhysicalWork.phaseWitnesses[operation.phaseIndex];
++    if (witness) witness.completedAtFacilityTick = state.facilityTick;
++    operation.diagnosticPhysicalWork.remainingPhaseMinutes = null;
++  }
++  if (operation.diagnosticPhaseWork) operation.diagnosticPhaseWork.remainingMinutes = 0;
+   if (operation.periopBedFlowVersion === 1) {
+@@ -1770,3 +1933,5 @@ function moveToNextPhase(
+     operation.completedAtFacilityTick = state.facilityTick;
+-    if (operation.actorKind === "visitor") {
++    if (operation.diagnosticPhysicalWork) {
++      operation.status = "completed";
++    } else if (operation.actorKind === "visitor") {
+       const location = operationLocation(state, operation);
+@@ -1899,2 +2064,101 @@ export function startEncounterTestOperation(
+ 
++/** New accepted patient work uses the frozen plan, with the existing paid engine. */
++export function startDiagnosticAcquisitionOperation(
++  state: GameState,
++  encounter: EncounterState,
++  plan: DiagnosticOrderPlan,
++  componentId: string | null,
++  lineId: string | null,
++  testChoiceOrder: NonNullable<ServiceOperationState["testChoiceOrder"]>,
++  context: DomainContext,
++): string | null {
++  if (plan.execution !== "supported" || plan.encounterId !== encounter.id) return null;
++  const existing = state.serviceOperations.find((operation) => operation.diagnosticPhysicalWork?.orderId === plan.orderId &&
++    operation.diagnosticPhysicalWork.componentId === componentId);
++  if (existing) return existing.id;
++  if (encounterHasActiveServiceOperation(state, encounter.id)) return null;
++  const physical = plan.phases.filter((phase) => phase.componentId === componentId && phase.mode === "local" && phase.patientPresent && phase.requirement);
++  const currentIndex = physical.findIndex((phase) => phase.status !== "completed");
++  if (currentIndex < 0 || physical.some((phase) => phase.status === "cancelled")) return null;
++  const current = physical[currentIndex]!;
++  if (!current.dependsOn.every((id) => plan.phases.find((phase) => phase.id === id)?.status === "completed")) return null;
++  // A nonbillable physical operation still needs a catalog identity for the
++  // legacy engine. Its frozen requirements, never this template, bind work.
++  const source = plan.sources.find((entry) => entry.componentId === componentId);
++  const frozenLineId = source?.incomeLineId ?? lineId;
++  const frozenPhases: FrozenOperationPhase[] = physical.map((phase) => ({
++    id: phase.operationPhaseId ?? phase.id,
++    roomDefinitionId: phase.requirement!.roomDefinitionId,
++    durationMinutes: phase.durationMinutes,
++    staffRoleDefinitionIds: [...phase.requirement!.staffRoleDefinitionIds],
++    ...(phase.requirement!.providerRoleDefinitionIds.length ? { providerRoleDefinitionIds: [...phase.requirement!.providerRoleDefinitionIds] } : {}),
++    ...(phase.requirement!.founderEligible ? { founderEligible: true as const } : {}),
++    ...(phase.kind === "preparation" ? { roomStationId: "periop_preparation" as const } :
++      phase.kind === "recovery" && phase.requirement!.stationKind === "periop_bed" ? { roomStationId: "periop_recovery" as const } : {}),
++  }));
++  const line = diagnosticPhysicalIncomeLine(getServiceIncomeLine(frozenLineId ?? "income.ultrasound"), frozenPhases);
++  if (!line?.operation) return null;
++  const operation = createOperation(state, line, "encounter", encounter.id, encounter, context);
++  if (!operation) return null;
++  operation.frozenOperationPhases = frozenPhases;
++  operation.trainingTiming = undefined;
++  operation.phaseFlowVersion = 1;
++  operation.periopBedFlowVersion = operation.frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery") ? 1 : undefined;
++  operation.phaseIndex = currentIndex;
++  operation.nextPhaseReadyAtFacilityTick = null;
++  operation.transitionHeldRoomInstanceIds = [];
++  operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
++  operation.quoteFee = source?.quoteFee ?? (frozenLineId === null ? 0 : operation.quoteFee);
++  // The plan is the original acceptance contract. Older plans must not inherit
++  // the factory's new opt-in snapshot when they dispatch after an upgrade.
++  operation.roomUpgradeRevenue = cloneRoomUpgradeRevenueQuote(source?.roomUpgradeRevenue);
++  operation.testChoiceOrder = { ...testChoiceOrder };
++  operation.diagnosticPhysicalWork = {
++    version: "diagnostic-physical-work.v1", orderId: plan.orderId, encounterId: encounter.id, componentId,
++    billing: frozenLineId === null ? "none" : "existing_service",
++    phaseBindings: physical.map((phase, index) => ({ diagnosticPhaseId: phase.id, operationPhaseId: operation.frozenOperationPhases![index]!.id,
++      resource: phase.resource ? JSON.parse(JSON.stringify(phase.resource)) as DiagnosticResourceChoice : null })),
++    phaseWitnesses: physical.map((phase, index) => ({ operationPhaseId: operation.frozenOperationPhases![index]!.id,
++      startedAtFacilityTick: phase.startedAtTick, completedAtFacilityTick: phase.completedAtTick })),
++    remainingPhaseMinutes: current.remainingMinutes,
++  };
++  encounter.patientMovement = null;
++  state.serviceOperations.push(operation);
++  if (tryReserve(state, operation, line, context) && resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
++  return operation.id;
++}
++
++/** A diagnostic read/process job is remote encounter work with no new payout. */
++export function startDiagnosticProcessingOperation(
++  state: GameState,
++  plan: DiagnosticOrderPlan,
++  phaseId: string,
++  context: DomainContext,
++): string | null {
++  if (plan.execution !== "supported") return null;
++  const existing = state.serviceOperations.find((operation) => operation.diagnosticPhaseWork?.orderId === plan.orderId && operation.diagnosticPhaseWork.phaseId === phaseId);
++  if (existing) return existing.id;
++  const phase = plan.phases.find((entry) => entry.id === phaseId);
++  if (!phase || phase.mode !== "local" || phase.patientPresent || !phase.requirement ||
++    (phase.kind !== "interpretation" && phase.kind !== "laboratory_processing" && phase.kind !== "pathology") ||
++    phase.status === "completed" || phase.status === "cancelled" ||
++    !phase.dependsOn.every((id) => plan.phases.find((entry) => entry.id === id)?.status === "completed")) return null;
++  const line = getServiceIncomeLine(phase.kind === "interpretation" ? "income.image_read" : "income.laboratory_processing")!;
++  const operation = createOperation(state, line, "remote", plan.encounterId, undefined, context);
++  if (!operation) return null;
++  operation.quoteFee = 0;
++  operation.roomUpgradeRevenue = undefined;
++  operation.location = null;
++  operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
++  operation.frozenOperationPhases = [{ id: phase.id, roomDefinitionId: phase.requirement.roomDefinitionId,
++    durationMinutes: phase.durationMinutes, staffRoleDefinitionIds: [...phase.requirement.staffRoleDefinitionIds] }];
++  operation.trainingTiming = undefined;
++  operation.diagnosticPhaseWork = { version: "diagnostic-phase-work.v1", orderId: plan.orderId, encounterId: plan.encounterId,
++    phaseId: phase.id, kind: phase.kind, billing: "none", durationMinutes: phase.durationMinutes, remainingMinutes: phase.remainingMinutes,
++    resource: phase.resource ? JSON.parse(JSON.stringify(phase.resource)) as DiagnosticResourceChoice : null };
++  state.serviceOperations.push(operation);
++  tryReserveDiagnosticProcessing(state, operation, line, context);
++  return operation.id;
++}
++
+ function scheduleArrivals(state: GameState, context: DomainContext): void {
+@@ -1976,5 +2240,15 @@ export function advanceServiceOperations(
+   for (const operation of state.serviceOperations) {
+-    const line = getServiceIncomeLine(operation.incomeLineId);
++    const line = operationIncomeLine(operation);
+     if (!line?.operation) continue;
+     if (operation.status === "completed" || operation.status === "cancelled") continue;
++    if (operation.diagnosticPhaseWork) {
++      const resource = operation.diagnosticPhaseWork.resource;
++      if ((operation.status === "in_service" || operation.status === "walking_to_service") &&
++        (!resource || !diagnosticProcessingChoices(state, operation, context).some((choice) => sameDiagnosticChoice(choice, resource)) ||
++          !validateReservedResources(state, operation, context))) queueDiagnosticProcessing(state, operation);
++      if (operation.status === "waiting_for_resources") tryReserveDiagnosticProcessing(state, operation, line, context);
++      else if (operation.status === "walking_to_service" && resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
++      if (operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null && state.facilityTick >= operation.phaseEndsAtFacilityTick) moveToNextPhase(state, operation, line, context);
++      continue;
++    }
+     const amenityKind = operation.actorKind === "encounter" ? "encounter" : "service_visitor";
+@@ -2056,2 +2330,12 @@ export function advanceServiceOperations(
+     if (operation.status === "discharging") {
++      if (operation.diagnosticPhysicalWork) {
++        const location = operationLocation(state, operation);
++        if (location) operation.location = { ...location };
++        const bedRoomId = operation.periopBedReservation?.roomInstanceId;
++        if (!bedRoomId || !operationInsideRoom(state, operation, bedRoomId, context)) {
++          releasePeriopBed(operation);
++          operation.status = "completed";
++        }
++        continue;
++      }
+       if (!operation.periopBedReservation && operation.departureItinerary) {
+@@ -2120,2 +2404,3 @@ export function advanceServiceOperations(
+       const reserved = tryReserve(state, operation, line, context);
++      if (reserved && operation.diagnosticPhysicalWork && resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
+       if (!reserved && isPhaseBlockedOnlyByMaintenance(state, operation, line, waitingPhase, context)) {
+@@ -2141,10 +2426,10 @@ export function advanceServiceOperations(
+       ) {
+-        cancel(
+-          state,
+-          operation,
+-          "The room holding the patient between service phases became unavailable.",
+-          context,
+-          departurePlanner,
+-        );
+-        continue;
++        if (operation.diagnosticPhysicalWork) {
++          releaseResources(state, operation);
++          if (operation.periopBedReservation && !isRoomOperationalForFacilityWork(state, operation.periopBedReservation.roomInstanceId, context)) releasePeriopBed(operation);
++          operation.transitionHeldRoomInstanceIds = (operation.transitionHeldRoomInstanceIds ?? []).filter((id) => isRoomOperationalForFacilityWork(state, id, context));
++        } else {
++          cancel(state, operation, "The room holding the patient between service phases became unavailable.", context, departurePlanner);
++          continue;
++        }
+       }
+@@ -2156,3 +2441,9 @@ export function advanceServiceOperations(
+     }
+-    if (!validateReservedResources(state, operation, context)) { cancel(state, operation, "Required service capacity became unavailable.", context, departurePlanner); continue; }
++    if (!validateReservedResources(state, operation, context) || operation.diagnosticPhysicalWork && !diagnosticPhysicalChoiceCompatible(state, operation, context)) {
++      if (operation.diagnosticPhysicalWork) {
++        if (operation.periopBedReservation && !isRoomOperationalForFacilityWork(state, operation.periopBedReservation.roomInstanceId, context)) releasePeriopBed(operation);
++        queueInterruptedCurrentPhase(state, operation, line);
++      } else cancel(state, operation, "Required service capacity became unavailable.", context, departurePlanner);
++      continue;
++    }
+     if (operation.status === "walking_to_service" || operation.status === "walking_between_phases") {
+@@ -2192,7 +2483,7 @@ export function advanceServiceOperations(
+     )) {
+-    const line = getServiceIncomeLine(operation.incomeLineId);
+-    if (!line?.operation || !operation.periopBedReservation) continue;
++    const line = operationIncomeLine(operation);
++    if (!line?.operation || !operation.periopBedReservation && !operation.diagnosticPhysicalWork) continue;
+     const completedPhase = operationPhases(operation, line)[operation.phaseIndex];
+     if (
+-      completedPhase?.roomDefinitionId === "room.periop_recovery" &&
++      completedPhase?.roomDefinitionId === "room.periop_recovery" && operation.periopBedReservation &&
+       !samePoint(operationLocation(state, operation), operation.periopBedReservation.endpoint)

@@ -1,0 +1,40 @@
+diff --git a/packages/game-domain/tests/service-procedure-operations.test.ts b/packages/game-domain/tests/service-procedure-operations.test.ts
+index c2a0290c..204fc786 100644
+--- a/packages/game-domain/tests/service-procedure-operations.test.ts
++++ b/packages/game-domain/tests/service-procedure-operations.test.ts
+@@ -203,3 +203,3 @@ function endoscopyProcedureState(): GameState {
+ 
+-function prepareQuestion(state: GameState, caseId: string, conceptId: string): GameState {
++function prepareQuestion(state: GameState, caseId: string, conceptId: string, markerless = true): GameState {
+   let next = gameReducer(state, {
+@@ -214,2 +214,11 @@ function prepareQuestion(state: GameState, caseId: string, conceptId: string): G
+   const encounter = next.encounters["procedure-patient"]!;
++  // These scenarios exercise the saved, markerless operation contract. A
++  // previous-version alternative prevents the complete current choice group
++  // from opting into diagnostic-order.v1, while the exact correct operational
++  // choice remains unchanged. New current-release orders are tested separately
++  // in diagnostic-orders.test.ts and diagnostic-service-operations.test.ts.
++  for (const node of markerless ? encounter.frozenCase.decisionNodes : []) {
++    const alternative = node.answerChoices.find((choice) => !choice.isCorrect);
++    if (alternative) alternative.label += " [frozen prior wording]";
++  }
+   const nodeIndex = encounter.frozenCase.decisionNodes.findIndex((node) => node.primaryConceptId === conceptId);
+@@ -1506,3 +1515,3 @@ describe("mapped in-clinic procedure operations", () => {
+     )!;
+-    const state = prepareQuestion(ultrasoundProcedureState(), clinicalCase.id, node.primaryConceptId);
++    const state = prepareQuestion(ultrasoundProcedureState(), clinicalCase.id, node.primaryConceptId, false);
+     const preview = getAnswerChoiceServicePreview(
+@@ -1515,5 +1524,10 @@ describe("mapped in-clinic procedure operations", () => {
+     });
+-    
+-    
+-    
++    expect(preview.diagnosticTiming!.phases).toEqual(expect.arrayContaining([
++      expect.objectContaining({ kind: "acquisition", mode: "local", durationMinutes: 45 }),
++      expect.objectContaining({ kind: "interpretation", mode: "external", durationMinutes: 30 }),
++      expect.objectContaining({ id: "diagnostic.remainder", durationMinutes: 120, patientPresent: true }),
++      expect.objectContaining({ id: "diagnostic.remainder.patient_departure" }),
++    ]));
++    expect(preview.durationTicks).toBe(Math.max(...preview.diagnosticTiming!.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick);
++    expect(preview.durationTicks).toBeGreaterThan(165);
+   });

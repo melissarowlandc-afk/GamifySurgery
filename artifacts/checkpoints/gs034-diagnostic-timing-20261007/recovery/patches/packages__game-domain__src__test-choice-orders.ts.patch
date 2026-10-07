@@ -1,0 +1,30 @@
+diff --git a/packages/game-domain/src/test-choice-orders.ts b/packages/game-domain/src/test-choice-orders.ts
+index 448637c6..445e7ddf 100644
+--- a/packages/game-domain/src/test-choice-orders.ts
++++ b/packages/game-domain/src/test-choice-orders.ts
+@@ -11,2 +11,3 @@ export type TestChoiceOrderDisposition =
+       externalRemainder?: string;
++      externalRemainderMode?: "external_patient_visit" | "external_processing" | "retained_protocol";
+     }
+@@ -17,2 +18,3 @@ export type TestChoiceOrderDisposition =
+       externalRemainder: string;
++      externalRemainderMode?: "external_patient_visit" | "external_processing" | "retained_protocol";
+     }
+@@ -72,2 +74,3 @@ const terminalService = (
+   externalRemainder?: string,
++  externalRemainderMode: "external_patient_visit" | "external_processing" | "retained_protocol" = "retained_protocol",
+ ) => record(caseId, nodeId, questionVariantId, choiceId, choiceLabel, timingProfileId, {
+@@ -76,3 +79,3 @@ const terminalService = (
+   allowedRouteIds,
+-  ...(externalRemainder ? { externalRemainder } : {}),
++  ...(externalRemainder ? { externalRemainder, externalRemainderMode } : {}),
+ });
+@@ -137,6 +140,6 @@ const terminalServices: ExactTestChoiceOrderRecord[] = [
+   ...["resistant-three-drugs", "early-stroke-risk", "headache-free", "family-pressure"].map((slug, index) =>
+-    terminalService(`case.primary-aldosteronism.${slug}`, `node.primary-aldosteronism.${slug}.2`, `question.primary-aldosteronism.ct-avs-lateralization.v${index + 1}`, `ct_avs_${index + 1}`, "Adrenal CT with venous sampling", "timing.test.adrenal_ct_avs", "service.ct", ["route.ct.in_house", "route.ct.outsourced"], "Adrenal venous sampling remains an external specialty component."),
++    terminalService(`case.primary-aldosteronism.${slug}`, `node.primary-aldosteronism.${slug}.2`, `question.primary-aldosteronism.ct-avs-lateralization.v${index + 1}`, `ct_avs_${index + 1}`, "Adrenal CT with venous sampling", "timing.test.adrenal_ct_avs", "service.ct", ["route.ct.in_house", "route.ct.outsourced"], "Adrenal venous sampling remains an external specialty component.", "external_patient_visit"),
+   ),
+   ...["crusted-nipple", "nipple-erosion", "areolar-rash", "scaly-nipple"].map((slug, index) =>
+-    terminalService(`case.mammary-paget.${slug}`, `node.mammary-paget.${slug}.2`, `question.mammary-paget.underlying-breast-evaluation.v${index + 1}`, `mammo_us_${index + 1}`, "Mammography with ultrasound", "timing.test.breast_imaging_bundle", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"], "Mammography remains an external component."),
++    terminalService(`case.mammary-paget.${slug}`, `node.mammary-paget.${slug}.2`, `question.mammary-paget.underlying-breast-evaluation.v${index + 1}`, `mammo_us_${index + 1}`, "Mammography with ultrasound", "timing.test.breast_imaging_bundle", "service.ultrasound", ["route.ultrasound.in_house", "route.ultrasound.outsourced"], "Mammography remains an external component.", "external_patient_visit"),
+   ),

@@ -1,0 +1,510 @@
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+index bb4ca016..e9fe6740 100644
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -142,2 +142,4 @@ import {
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
++import { getDiagnosticChoicePlanning } from "./diagnostic-order-requests";
++import { advanceDiagnosticOrders, createDiagnosticPendingResult, encounterHasActiveDiagnosticWalk, encounterHasDiagnosticCareWork } from "./diagnostic-orders";
+ import {
+@@ -2073,2 +2075,47 @@ function getCurrentNode(encounter: EncounterState): DecisionNode | null {
+ 
++function advanceNewDiagnosticOrders(state: GameState, context: DomainContext): void {
++  advanceDiagnosticOrders(state, context, {
++    walkingPath(encounter, phase) {
++      const target = phase.forecast.patientPath.at(-1);
++      if (!target) return [];
++      if (!encounter.patientLocation) return phase.forecast.patientPath.map((point) => ({ ...point }));
++      const targetRoom = state.rooms.find((room) => {
++        const definition = getRoomDefinition(room.roomDefinitionId, context);
++        return definition && getRoomNavigableTiles(room, definition, state.doors).some((tile) => samePoint(tile, target));
++      });
++      return pathFromLocationToFacilityPoint(state, context, encounter.patientLocation, target, new Set(targetRoom ? [targetRoom.id] : []));
++    },
++    startMovement(encounter, kind, path, roomId) { startPatientMovement(state, context, encounter, kind, path, roomId); },
++    roomAt(point) {
++      return state.rooms.find((room) => {
++        const definition = getRoomDefinition(room.roomDefinitionId, context);
++        return definition && getRoomNavigableTiles(room, definition, state.doors).some((tile) => samePoint(tile, point));
++      })?.id ?? null;
++    },
++    releaseCare(encounter) { releaseEncounterCareReservation(encounter); encounter.waitingDestination = null; },
++    careCompleted(encounter) {
++      releaseEncounterCareReservation(encounter);
++      encounter.waitingDestination = null;
++      if (!encounter.patientLocation || encounter.patientMovement) return;
++      if (encounter.lifecycle === "resolved") {
++        startPatientMovement(state, context, encounter, "leaving_after_resolution",
++          pathFromLocationToOffscreen(state, context, encounter.patientLocation, encounter.id), null);
++      } else {
++        const destination = chooseWaitingDestination(state, context, encounter);
++        encounter.waitingDestination = destination.reservation;
++        if (destination.path.length > 1) startPatientMovement(state, context, encounter, "walking_to_waiting", destination.path, destination.roomId);
++      }
++    },
++  });
++}
++
++function prepareNewDiagnosticPatient(state: GameState, encounter: EncounterState): void {
++  cancelRetailTripsForActor(state, "encounter", encounter.id, "The ordered diagnostic test superseded optional shopping.");
++  if (encounter.patientMovement && ["walking_to_care", "walking_to_waiting", "idle_within_room"].includes(encounter.patientMovement.kind)) {
++    encounter.patientMovement = null;
++  }
++  encounter.queuedCareRoomInstanceId = null;
++  encounter.waitingDestination = null;
++}
++
+ function scheduleResult(
+@@ -2228,3 +2275,3 @@ function bindPendingResultRoomRevenue(state: GameState, context: DomainContext,
+   const quote = pending.roomUpgradeRevenue;
+-  if (!quote || quote.boundRoom || pending.localServiceOperation || pending.resourceQueue ||
++  if (!quote || quote.boundRoom || pending.diagnosticTiming || pending.localServiceOperation || pending.resourceQueue ||
+     encounter.lifecycle !== "active_pending_result" || !encounter.patientLocation) return;
+@@ -2482,2 +2529,3 @@ function creditEligibleServiceIncome(
+     encounter.lifecycle !== "active_pending_result" ||
++    pending?.diagnosticTiming !== undefined ||
+     pending?.deliveredAtTick !== null ||
+@@ -3494,2 +3542,7 @@ function reduceOpenChart(
+   );
++  if (encounterHasDiagnosticCareWork(next, nextEncounter.id) && nextEncounter.steps[nextEncounter.currentNodeIndex]?.status !== "feedback_pending") {
++    next.openChartEncounterId = nextEncounter.id;
++    clearPatientFeedAttention(nextEncounter);
++    return recordReceipt(next, command, "applied", "Chart opened while the ordered diagnostic care continues.");
++  }
+   const careEligibleLifecycle =
+@@ -3809,2 +3862,7 @@ function reduceCloseChart(
+   }
++  if (nextEncounter.lifecycle !== "active_action_required" && encounterHasDiagnosticCareWork(next, nextEncounter.id)) {
++    if (nextEncounter.lifecycle === "resolved_summary_available" && nextEncounter.terminalFeedback?.acknowledged) nextEncounter.lifecycle = "resolved";
++    releaseFounderAttendance();
++    return recordReceipt(next, command, "applied", "Chart closed; the ordered diagnostic care continues.");
++  }
+   if (
+@@ -3985,2 +4043,6 @@ function reduceSubmitAnswer(
+     : null;
++  const diagnostic = correctChoice && (!isFinalNode || choice.isCorrect)
++    ? getDiagnosticChoicePlanning(state, encounter, node, correctChoice.id, context) : null;
++  const diagnosticPlan = diagnostic?.executionAllowed && diagnostic.quote.kind === "planned" && diagnostic.quote.plan.execution === "supported"
++    ? diagnostic.quote.plan : null;
+   const stagedDisposition =
+@@ -4007,3 +4069,3 @@ function reduceSubmitAnswer(
+   let scheduledResult: PendingResult | null = null;
+-  if (!isFinalNode && node.resultGateAfter && stagedComponents.length === 0) {
++  if (!diagnosticPlan && !isFinalNode && node.resultGateAfter && stagedComponents.length === 0) {
+     const resultGateRouteOverride =
+@@ -4036,2 +4098,3 @@ function reduceSubmitAnswer(
+   const terminalTestSelection =
++    !diagnosticPlan &&
+     isFinalNode &&
+@@ -4048,2 +4111,3 @@ function reduceSubmitAnswer(
+   const continuationSelection =
++    !diagnosticPlan &&
+     !isFinalNode &&
+@@ -4121,3 +4185,3 @@ function reduceSubmitAnswer(
+   currentStep.answer = clonePlain(answerRecord);
+-  if (stagedComponents.length > 0 && node.resultGateAfter && correctTestOrder) {
++  if (!diagnosticPlan && stagedComponents.length > 0 && node.resultGateAfter && correctTestOrder) {
+     const remainder = scheduleResult(state, context, encounter, node, node.resultGateAfter);
+@@ -4255,3 +4319,16 @@ function reduceSubmitAnswer(
+       }
+-      if (terminalTestSelection) {
++      if (diagnosticPlan && diagnostic) {
++        const source = diagnosticPlan.sources[0]!;
++        const externalRemainder = correctTestOrder?.disposition.kind === "terminal_service" ? correctTestOrder.disposition.externalRemainder ?? null : null;
++        nextEncounter.terminalTestOrder = {
++          diagnosticTiming: clonePlain(diagnosticPlan), version: "terminal-test-order.v1",
++          caseId: nextEncounter.frozenCase.id, nodeId: node.id, questionVariantId: node.questionVariantId,
++          choiceId: correctChoice!.id, choiceLabel: correctChoice!.label, serviceId: diagnostic.serviceId!,
++          routeId: source.routeId ?? `route.diagnostic.external.${diagnostic.timingProfileId}`,
++          routeDisplayName: source.routeDisplayName, externalRemainder,
++          status: diagnosticPlan.phases.some((phase) => phase.mode === "local" && phase.requirement && phase.patientPresent) ? "onsite_service" : "external_arranged",
++          serviceOperationId: null, scheduledAtFacilityTick: next.facilityTick,
++        };
++        prepareNewDiagnosticPatient(next, nextEncounter);
++      } else if (terminalTestSelection) {
+         const incomeLine = getServiceIncomeForRoute(terminalTestSelection.route.id);
+@@ -4328,2 +4405,43 @@ function reduceSubmitAnswer(
+     }
++  } else if (diagnosticPlan && diagnostic) {
++    const pending = createDiagnosticPendingResult(next, nextEncounter, node, diagnostic, diagnosticPlan);
++    nextEncounter.pendingResult = pending;
++    currentStep.result = clonePlain(pending);
++    if (correctTestOrder?.disposition.kind === "test_only_continuation") {
++      const source = diagnosticPlan.sources[0]!;
++      nextEncounter.testOnlyContinuation = {
++        diagnosticTiming: clonePlain(diagnosticPlan), version: "test-only-continuation.v1", originatingNodeIndex: nextEncounter.currentNodeIndex,
++        serviceId: correctTestOrder.disposition.serviceId, routeId: pending.routeId, routeDisplayName: source.routeDisplayName,
++        incomeLineId: source.routeId ? getServiceIncomeForRoute(source.routeId)?.id ?? null : null,
++        externalRemainder: correctTestOrder.disposition.externalRemainder, status: "feedback_pending", serviceOperationId: null,
++        scheduledAtFacilityTick: next.facilityTick, completedAtFacilityTick: null,
++      };
++    }
++    if (correctTestOrder?.disposition.kind === "staged_result_gate" && diagnostic.request.components?.length) {
++      nextEncounter.stagedResultOrder = {
++        diagnosticTiming: clonePlain(diagnosticPlan), version: "staged-result-order.v1", originatingNodeIndex: nextEncounter.currentNodeIndex,
++        caseId: correctTestOrder.caseId, nodeId: correctTestOrder.nodeId, questionVariantId: correctTestOrder.questionVariantId,
++        choiceId: correctTestOrder.choiceId, choiceLabel: correctTestOrder.choiceLabel, status: "feedback_pending",
++        remainderMode: correctTestOrder.disposition.remainderMode, currentComponentIndex: 0,
++        components: diagnostic.request.components.flatMap((component) => {
++          const source = diagnosticPlan.sources.find((entry) => entry.componentId === component.componentId);
++          const input = correctTestOrder.disposition.kind === "staged_result_gate" ? correctTestOrder.disposition.components.find((entry) => entry.componentId === component.componentId) : null;
++          const income = source?.routeId ? getServiceIncomeForRoute(source.routeId) : null;
++          return source?.routeId && income && input ? [{
++            componentId: component.componentId!, serviceId: input.serviceId, routeId: source.routeId, routeDisplayName: source.routeDisplayName,
++            incomeLineId: income.id, quoteFee: source.quoteFee ?? income.fee,
++            roomUpgradeRevenue: cloneRoomUpgradeRevenueQuote(source.roomUpgradeRevenue),
++            operationPhases: source.operationPhases.map((phase) => ({
++              id: phase.id, roomDefinitionId: phase.roomDefinitionId, durationMinutes: phase.durationMinutes,
++              staffRoleDefinitionIds: [...phase.staffRoleDefinitionIds], providerRoleDefinitionIds: [...phase.providerRoleDefinitionIds],
++              ...(phase.founderEligible ? { founderEligible: true as const } : {}),
++            })), externalRemainder: input.externalRemainder, status: "pending" as const, serviceOperationId: null,
++          }] : [];
++        }), remainder: clonePlain(pending),
++      };
++    }
++    currentStep.status = "feedback_pending";
++    nextEncounter.lifecycle = "active_action_required";
++    nextEncounter.idleWaitingSinceTick = null;
++    nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
+   } else if (nextEncounter.stagedResultOrder?.status === "feedback_pending") {
+@@ -4380,2 +4498,4 @@ function reduceSubmitAnswer(
+ 
++  if (diagnosticPlan && isFinalNode) advanceNewDiagnosticOrders(next, context);
++
+   return recordReceipt(
+@@ -4832,3 +4952,3 @@ function beginPendingResultTravel(
+   const pending = encounter.pendingResult;
+-  if (!pending || pending.deliveredAtTick !== null) {
++  if (!pending || pending.diagnosticTiming || pending.deliveredAtTick !== null) {
+     return;
+@@ -5116,2 +5236,3 @@ function maybeBeginOnsiteFrontDeskReturn(
+   const pending = encounter.pendingResult;
++  if (pending?.diagnosticTiming) return;
+   const onsiteReturn = pending?.onsiteReturn;
+@@ -5160,2 +5281,3 @@ function maybeBeginTestOnlyContinuationReturn(
+   const continuation = encounter.testOnlyContinuation;
++  if (continuation?.diagnosticTiming) return;
+   if (
+@@ -5294,2 +5416,3 @@ function synchronizePendingResultServiceOperation(
+   const pending = encounter.pendingResult;
++  if (pending?.diagnosticTiming) return;
+   const link = pending?.localServiceOperation;
+@@ -5343,2 +5466,3 @@ function maybeBeginStagedResultReturn(
+   const order = encounter.stagedResultOrder;
++  if (order?.diagnosticTiming) return;
+   const component = order?.components[order.currentComponentIndex];
+@@ -5610,2 +5734,21 @@ function reduceAcknowledgeDecisionFeedback(
+   const nextStep = nextEncounter.steps[nextEncounter.currentNodeIndex]!;
++  if (nextEncounter.pendingResult?.diagnosticTiming && nextEncounter.pendingResult.originatingNodeIndex === nextEncounter.currentNodeIndex) {
++    prepareNewDiagnosticPatient(next, nextEncounter);
++    nextStep.status = "result_pending";
++    nextEncounter.lifecycle = "active_pending_result";
++    nextEncounter.idleWaitingSinceTick = null;
++    nextEncounter.lastSatisfactionDecayAtTick = next.facilityTick;
++    if (nextEncounter.stagedResultOrder?.diagnosticTiming?.orderId === nextEncounter.pendingResult.diagnosticTiming.orderId) {
++      nextEncounter.stagedResultOrder.status = "waiting_for_component";
++    }
++    if (nextEncounter.testOnlyContinuation?.diagnosticTiming?.orderId === nextEncounter.pendingResult.diagnosticTiming.orderId) {
++      nextEncounter.testOnlyContinuation.status = "waiting_for_service";
++    }
++    releaseFounderAttendanceForEncounter(next, context, nextEncounter);
++    if (next.openChartEncounterId === nextEncounter.id) next.openChartEncounterId = null;
++    if (next.attendedEncounterId === nextEncounter.id) next.attendedEncounterId = null;
++    advanceNewDiagnosticOrders(next, context);
++    nextStep.result = clonePlain(nextEncounter.pendingResult);
++    return recordReceipt(next, command, "applied", "Feedback reviewed; the ordered diagnostic work is now underway.");
++  }
+   const staged = nextEncounter.stagedResultOrder;
+@@ -7271,2 +7414,8 @@ function completePatientMovement(
+ 
++  if (encounterHasActiveDiagnosticWalk(state, encounter.id) && ["departing_for_offsite_testing", "returning_from_offsite_testing", "returning_from_onsite_service"].includes(movement.kind)) {
++    if (movement.kind === "departing_for_offsite_testing") encounter.patientLocation = null;
++    encounter.idleWaitingSinceTick = null;
++    return;
++  }
++
+   switch (movement.kind) {
+@@ -8057,2 +8206,135 @@ function advanceServiceDepartureItineraries(state: GameState, context: DomainCon
+ 
++function deliverReadyPendingResults(next: GameState, context: DomainContext, diagnosticOnly = false): void {
++  for (const encounter of Object.values(next.encounters)) {
++    if (diagnosticOnly && !encounter.pendingResult?.diagnosticTiming) continue;
++    if (
++      encounter.lifecycle === "active_pending_result" &&
++      encounter.pendingResult &&
++      encounter.pendingResult.deliveredAtTick === null &&
++      (!encounter.pendingResult.diagnosticTiming || (encounter.pendingResult.diagnosticTiming.resultReady.reachedAtTick !== null && encounter.pendingResult.diagnosticTiming.careComplete.reachedAtTick !== null)) &&
++      (!encounter.pendingResult.localServiceOperation ||
++        encounter.pendingResult.localServiceOperation.status === "external_processing") &&
++      encounter.pendingResult.resourceQueue === undefined &&
++      encounter.pendingResult.dueTick <= next.facilityTick
++    ) {
++      if (hasActivePatientAmenityTrip(next, "encounter", encounter.id)) {
++        requestPatientAmenityReturn(next, "encounter", encounter.id, context);
++        continue;
++      }
++      if (
++        encounter.pendingResult.onsiteReturn &&
++        encounter.pendingResult.onsiteReturn.frontDeskArrivalTick === null
++      ) {
++        continue;
++      }
++      if (
++        encounter.pendingResult.patientTravel &&
++        !encounter.pendingResult.onsiteReturn
++      ) {
++        const travel = encounter.pendingResult.patientTravel;
++        const projected = getFrozenPatientTravelLocation(
++          travel,
++          next.facilityTick,
++        );
++        const returnEndpoint = travel.returnPath.at(-1) ?? null;
++        if (
++          next.facilityTick < travel.returnArrivalTick ||
++          !projected ||
++          !returnEndpoint ||
++          !samePoint(projected, returnEndpoint)
++        ) {
++          continue;
++        }
++      }
++      const retailTrip = activeRetailOperationForActor(next, "encounter", encounter.id);
++      if (retailTrip) {
++        const returnLocation = retailTrip.returnLocation;
++        cancelRetailTripsForActor(next, "encounter", encounter.id, "A result became actionable and superseded optional shopping.");
++        if (returnLocation && encounter.patientLocation && (encounter.patientLocation.x !== returnLocation.x || encounter.patientLocation.y !== returnLocation.y)) {
++          const returnPath = findDeterministicFacilityPath(encounter.patientLocation, returnLocation, next.rooms, next.doors, (id) => getRoomDefinition(id, context));
++          if (returnPath.length > 0) startPatientMovement(next, context, encounter, "idle_within_room", returnPath, encounter.assignedRoomInstanceId);
++          continue;
++        }
++      }
++      if (
++        encounter.patientMovement?.kind ===
++          "returning_from_offsite_testing" ||
++        encounter.patientMovement?.kind === "returning_from_onsite_service"
++      ) {
++        continue;
++      }
++      if (
++        encounter.pendingResult.offsiteTravel &&
++        (encounter.pendingResult.offsiteReturnStartedAtTick === null ||
++          encounter.patientLocation === null)
++      ) {
++        continue;
++      }
++      encounter.pendingResult.deliveredAtTick = next.facilityTick;
++      if (encounter.stagedResultOrder && (encounter.stagedResultOrder.status === "remainder_pending" ||
++        encounter.pendingResult.diagnosticTiming && encounter.stagedResultOrder.diagnosticTiming?.orderId === encounter.pendingResult.diagnosticTiming.orderId)) {
++        encounter.stagedResultOrder.status = "completed";
++      }
++      if (
++        encounter.pendingResult.patientTravel &&
++        !encounter.pendingResult.onsiteReturn
++      ) {
++        encounter.patientLocation =
++          encounter.pendingResult.patientTravel.returnPath.at(-1) ??
++          encounter.patientLocation;
++        encounter.assignedRoomInstanceId =
++          encounter.pendingResult.approvedProcedureTimingVersion === 1
++            ? null
++            : encounter.pendingResult.patientTravel.originRoomInstanceId;
++      }
++      const completedStep =
++        encounter.steps[encounter.pendingResult.originatingNodeIndex];
++      if (
++        !completedStep ||
++        completedStep.decisionNodeId !==
++          encounter.frozenCase.decisionNodes[
++            encounter.pendingResult.originatingNodeIndex
++          ]?.id
++      ) {
++        throw new Error("Pending result does not match encounter step history.");
++      }
++      completedStep.result = clonePlain(encounter.pendingResult);
++      completedStep.status = "completed";
++      encounter.deliveredResultNarratives.push(
++        encounter.pendingResult.resultNarrative,
++      );
++      encounter.currentNodeIndex += 1;
++      encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
++      encounter.lifecycle = "active_action_required";
++      const completedRoute = context.balanceRelease.services
++        .flatMap((service) => service.routes)
++        .find((route) => route.id === encounter.pendingResult?.routeId);
++      const configuredResultSatisfactionDelta =
++        completedRoute?.satisfactionOnResult ?? 0;
++      if (configuredResultSatisfactionDelta !== 0) {
++        applyPatientSatisfactionDelta(
++          encounter,
++          configuredResultSatisfactionDelta,
++          encounter.pendingResult.resultTypeId.includes("xray")
++            ? "imaging_unavailable"
++            : "general",
++          next.facilityTick,
++        );
++      }
++      encounter.idleWaitingSinceTick =
++        next.openChartEncounterId === encounter.id
++          ? null
++          : next.facilityTick;
++      encounter.lastSatisfactionDecayAtTick = next.facilityTick;
++      if (next.openChartEncounterId !== encounter.id) {
++        beginPatientFeedAttention(
++          encounter,
++          "result_ready",
++          next.facilityTick,
++        );
++      }
++    }
++  }
++}
++
+ function reduceAdvanceTick(
+@@ -8396,2 +8678,3 @@ function reduceAdvanceTick(
+   dispatchQueuedPendingResults(next, context);
++  advanceNewDiagnosticOrders(next, context);
+ 
+@@ -8403,2 +8686,3 @@ function reduceAdvanceTick(
+       !encounter.pendingResult ||
++      encounter.pendingResult.diagnosticTiming !== undefined ||
+       encounter.pendingResult.deliveredAtTick !== null
+@@ -8440,129 +8724,3 @@ function reduceAdvanceTick(
+ 
+-  for (const encounter of Object.values(next.encounters)) {
+-    if (
+-      encounter.lifecycle === "active_pending_result" &&
+-      encounter.pendingResult &&
+-      encounter.pendingResult.deliveredAtTick === null &&
+-      (!encounter.pendingResult.localServiceOperation ||
+-        encounter.pendingResult.localServiceOperation.status === "external_processing") &&
+-      encounter.pendingResult.resourceQueue === undefined &&
+-      encounter.pendingResult.dueTick <= next.facilityTick
+-    ) {
+-      if (hasActivePatientAmenityTrip(next, "encounter", encounter.id)) {
+-        requestPatientAmenityReturn(next, "encounter", encounter.id, context);
+-        continue;
+-      }
+-      if (
+-        encounter.pendingResult.onsiteReturn &&
+-        encounter.pendingResult.onsiteReturn.frontDeskArrivalTick === null
+-      ) {
+-        continue;
+-      }
+-      if (
+-        encounter.pendingResult.patientTravel &&
+-        !encounter.pendingResult.onsiteReturn
+-      ) {
+-        const travel = encounter.pendingResult.patientTravel;
+-        const projected = getFrozenPatientTravelLocation(
+-          travel,
+-          next.facilityTick,
+-        );
+-        const returnEndpoint = travel.returnPath.at(-1) ?? null;
+-        if (
+-          next.facilityTick < travel.returnArrivalTick ||
+-          !projected ||
+-          !returnEndpoint ||
+-          !samePoint(projected, returnEndpoint)
+-        ) {
+-          continue;
+-        }
+-      }
+-      const retailTrip = activeRetailOperationForActor(next, "encounter", encounter.id);
+-      if (retailTrip) {
+-        const returnLocation = retailTrip.returnLocation;
+-        cancelRetailTripsForActor(next, "encounter", encounter.id, "A result became actionable and superseded optional shopping.");
+-        if (returnLocation && encounter.patientLocation && (encounter.patientLocation.x !== returnLocation.x || encounter.patientLocation.y !== returnLocation.y)) {
+-          const returnPath = findDeterministicFacilityPath(encounter.patientLocation, returnLocation, next.rooms, next.doors, (id) => getRoomDefinition(id, context));
+-          if (returnPath.length > 0) startPatientMovement(next, context, encounter, "idle_within_room", returnPath, encounter.assignedRoomInstanceId);
+-          continue;
+-        }
+-      }
+-      if (
+-        encounter.patientMovement?.kind ===
+-          "returning_from_offsite_testing" ||
+-        encounter.patientMovement?.kind === "returning_from_onsite_service"
+-      ) {
+-        continue;
+-      }
+-      if (
+-        encounter.pendingResult.offsiteTravel &&
+-        (encounter.pendingResult.offsiteReturnStartedAtTick === null ||
+-          encounter.patientLocation === null)
+-      ) {
+-        continue;
+-      }
+-      encounter.pendingResult.deliveredAtTick = next.facilityTick;
+-      if (encounter.stagedResultOrder?.status === "remainder_pending") {
+-        encounter.stagedResultOrder.status = "completed";
+-      }
+-      if (
+-        encounter.pendingResult.patientTravel &&
+-        !encounter.pendingResult.onsiteReturn
+-      ) {
+-        encounter.patientLocation =
+-          encounter.pendingResult.patientTravel.returnPath.at(-1) ??
+-          encounter.patientLocation;
+-        encounter.assignedRoomInstanceId =
+-          encounter.pendingResult.approvedProcedureTimingVersion === 1
+-            ? null
+-            : encounter.pendingResult.patientTravel.originRoomInstanceId;
+-      }
+-      const completedStep =
+-        encounter.steps[encounter.pendingResult.originatingNodeIndex];
+-      if (
+-        !completedStep ||
+-        completedStep.decisionNodeId !==
+-          encounter.frozenCase.decisionNodes[
+-            encounter.pendingResult.originatingNodeIndex
+-          ]?.id
+-      ) {
+-        throw new Error("Pending result does not match encounter step history.");
+-      }
+-      completedStep.result = clonePlain(encounter.pendingResult);
+-      completedStep.status = "completed";
+-      encounter.deliveredResultNarratives.push(
+-        encounter.pendingResult.resultNarrative,
+-      );
+-      encounter.currentNodeIndex += 1;
+-      encounter.steps[encounter.currentNodeIndex]!.status = "action_required";
+-      encounter.lifecycle = "active_action_required";
+-      const completedRoute = context.balanceRelease.services
+-        .flatMap((service) => service.routes)
+-        .find((route) => route.id === encounter.pendingResult?.routeId);
+-      const configuredResultSatisfactionDelta =
+-        completedRoute?.satisfactionOnResult ?? 0;
+-      if (configuredResultSatisfactionDelta !== 0) {
+-        applyPatientSatisfactionDelta(
+-          encounter,
+-          configuredResultSatisfactionDelta,
+-          encounter.pendingResult.resultTypeId.includes("xray")
+-            ? "imaging_unavailable"
+-            : "general",
+-          next.facilityTick,
+-        );
+-      }
+-      encounter.idleWaitingSinceTick =
+-        next.openChartEncounterId === encounter.id
+-          ? null
+-          : next.facilityTick;
+-      encounter.lastSatisfactionDecayAtTick = next.facilityTick;
+-      if (next.openChartEncounterId !== encounter.id) {
+-        beginPatientFeedAttention(
+-          encounter,
+-          "result_ready",
+-          next.facilityTick,
+-        );
+-      }
+-    }
+-  }
++  deliverReadyPendingResults(next, context);
+ 
+@@ -8728,2 +8886,4 @@ function reduceAdvanceTick(
+   );
++  advanceNewDiagnosticOrders(next, context);
++  deliverReadyPendingResults(next, context, true);
+   advanceServiceDepartureItineraries(next, context);
+@@ -9779,2 +9939,3 @@ function reduceHireStaff(
+   next.employees.push(employee);
++  if (definition.id === "staff.radiologist") reconcileEmployeeRoomSeats(next);
+   if (

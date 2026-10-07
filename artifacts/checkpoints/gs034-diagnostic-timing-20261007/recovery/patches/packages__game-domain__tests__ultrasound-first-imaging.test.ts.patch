@@ -1,0 +1,14 @@
+diff --git a/packages/game-domain/tests/ultrasound-first-imaging.test.ts b/packages/game-domain/tests/ultrasound-first-imaging.test.ts
+index 3797f3fd..99987514 100644
+--- a/packages/game-domain/tests/ultrasound-first-imaging.test.ts
++++ b/packages/game-domain/tests/ultrasound-first-imaging.test.ts
+@@ -118,2 +118,9 @@ function admitQuestionAtCare(
+   const encounter = admitted.encounters[encounterId]!;
++  // These assertions exercise a saved, markerless question contract. A prior
++  // distractor wording keeps it outside the exact current-release opt-in guard.
++  // Current facility-dependent orders have their own diagnostic-orders suite.
++  for (const node of encounter.frozenCase.decisionNodes) {
++    const alternative = node.answerChoices.find((choice) => !choice.isCorrect);
++    if (alternative) alternative.label += " [frozen prior wording]";
++  }
+   encounter.currentNodeIndex = selected!.nodeIndex;

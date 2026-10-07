@@ -1,0 +1,21 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 813af2d9..74fe47f3 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -980,3 +980,4 @@ function createChartView(
+       const diagnosticForStep = visibleResult?.diagnosticTiming && diagnosticTiming &&
+-        visibleResult.diagnosticTiming.orderId === diagnosticTiming.orderId
++        visibleResult.diagnosticTiming.orderId === diagnosticTiming.orderId &&
++        (isCurrent || diagnosticPresentation?.hasPendingWork)
+           ? diagnosticPresentation : null;
+@@ -1102,3 +1103,3 @@ function createChartView(
+             ? diagnosticForStep.etaLabel
+-          : visibleResult && !resultDelivered && !visibleResult.resourceQueue
++          : visibleResult && !resultDelivered && !visibleResult.resourceQueue && !visibleResult.diagnosticTiming
+             ? `${formatFacilityDuration(
+@@ -1243,4 +1244,3 @@ function createChartView(
+       showDiagnosticPending
+-        ? `${encounter.pendingResult?.diagnosticTiming?.orderId === diagnosticTiming?.orderId
+-            ? `${encounter.pendingResult?.routeDisplayName ?? "Diagnostic work"}. ` : ""}${diagnosticPresentation!.body}`
++        ? diagnosticPresentation!.body
+       : encounter.lifecycle === "active_pending_result"

@@ -1,0 +1,16 @@
+diff --git a/packages/game-domain/src/retired-service-history.ts b/packages/game-domain/src/retired-service-history.ts
+index 91b5d1bd..0c8e4365 100644
+--- a/packages/game-domain/src/retired-service-history.ts
++++ b/packages/game-domain/src/retired-service-history.ts
+@@ -3,2 +3,3 @@ import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
++import { getDiagnosticOrderPlans } from "./diagnostic-timing";
+ import type {
+@@ -150,2 +151,7 @@ function referencedServiceOperationIds(state: GameState): Set<string> {
+   };
++  for (const plan of getDiagnosticOrderPlans(state)) {
++    for (const phase of plan.phases) {
++      if (phase.status !== "completed" && phase.status !== "cancelled") add(phase.serviceOperationId);
++    }
++  }
+   for (const encounter of Object.values(state.encounters)) {

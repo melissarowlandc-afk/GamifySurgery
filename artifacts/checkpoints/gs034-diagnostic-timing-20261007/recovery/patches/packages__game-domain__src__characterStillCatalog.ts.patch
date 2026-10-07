@@ -1,0 +1,17 @@
+diff --git a/packages/game-domain/src/characterStillCatalog.ts b/packages/game-domain/src/characterStillCatalog.ts
+index 2fc32b46..00ec19f4 100644
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -121,2 +121,4 @@ const LEVEL3_ROSTER_V2_ADULT_PATIENT_STILLS = LEVEL3_ROSTER_V2_ADULT_PATIENT_ROW
+ const LEVEL3_ROSTER_V2_STAFF_ROWS = [
++  ["level3-roster-v2.001", "staff.radiologist"], ["level3-roster-v2.002", "staff.radiologist"],
++  ["level3-roster-v2.003", "staff.radiologist"], ["level3-roster-v2.004", "staff.radiologist"],
+   ["level3-roster-v2.005", "staff.surgeon"], ["level3-roster-v2.006", "staff.surgeon"],
+@@ -134,7 +136,2 @@ const LEVEL3_ROSTER_V2_STAFF_STILLS = LEVEL3_ROSTER_V2_STAFF_ROWS.map(([stillId,
+ const LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS = [
+-  ...["001", "002", "003", "004"].map(number => ({
+-    stillId: id(`level3-roster-v2.${number}`), category: "future-presentation" as const,
+-    sourceCohort: "level3-roster-v2" as const, futurePresentationKind: "radiologist" as const,
+-    availability: "level4-locked" as const, futureStaffRoleDefinitionId: "staff.radiologist" as const,
+-  })),
+   ...[

@@ -1,0 +1,24 @@
+diff --git a/apps/player/src/session/answerChoiceTimingPresentation.test.ts b/apps/player/src/session/answerChoiceTimingPresentation.test.ts
+index 10973261..eed34430 100644
+--- a/apps/player/src/session/answerChoiceTimingPresentation.test.ts
++++ b/apps/player/src/session/answerChoiceTimingPresentation.test.ts
+@@ -8,2 +8,3 @@ import {
+   gameReducer,
++  getAnswerChoiceServicePreview,
+   serializeGameState,
+@@ -35,7 +36,12 @@ describe("answer-choice timing presentation", () => {
+   it("uses one neutral label for all tests and an explicit no-test label on mixed nodes", () => {
+-    const { chart } = chartFor("case.fhh.suggestive-results-confirmation");
++    const { state, encounter, chart } = chartFor("case.fhh.suggestive-results-confirmation");
+     const choices = chart.decisionSteps!.find((step) => step.current)!.answerChoices;
++    const preview = getAnswerChoiceServicePreview(state, encounter.id, "suspect_fhh_genetic_testing")!;
++    expect(preview.diagnosticTiming?.phases.filter((phase) => phase.durationMinutes)).toEqual([
++      expect.objectContaining({ kind: "collection", mode: "external", durationMinutes: 120 }),
++    ]);
++    const minutes = preview.durationTicks!;
+     expect(choices.find((choice) => choice.id === "suspect_fhh_genetic_testing")).toMatchObject({
+-      etaLabel: "3 hours",
+-      detailLabel: "Estimated test wait (game time)",
++      etaLabel: minutes >= 60 && minutes % 60 === 0 ? `${minutes / 60} hours` : `${minutes} min`,
++      detailLabel: expect.stringContaining("Estimated total (game time; includes queues and walking)."),
+     });

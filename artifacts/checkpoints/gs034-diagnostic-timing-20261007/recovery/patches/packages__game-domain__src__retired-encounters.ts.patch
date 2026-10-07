@@ -1,0 +1,14 @@
+diff --git a/packages/game-domain/src/retired-encounters.ts b/packages/game-domain/src/retired-encounters.ts
+index d0d0dc43..2344c3fa 100644
+--- a/packages/game-domain/src/retired-encounters.ts
++++ b/packages/game-domain/src/retired-encounters.ts
+@@ -3,2 +3,3 @@ import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { patientStillIdForAppearance } from "./appearance";
++import { getDiagnosticOrderPlans, hasOutstandingDiagnosticWork } from "./diagnostic-timing";
+ import {
+@@ -84,2 +85,5 @@ function referencedEncounterIds(state: GameState): Set<string> {
+   add(state.attendedEncounterId);
++  for (const plan of getDiagnosticOrderPlans(state)) {
++    if (hasOutstandingDiagnosticWork(plan)) add(plan.encounterId);
++  }
+   const environment = state.environment;

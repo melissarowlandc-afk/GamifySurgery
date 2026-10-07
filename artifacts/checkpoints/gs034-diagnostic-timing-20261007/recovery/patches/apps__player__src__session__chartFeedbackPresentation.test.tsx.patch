@@ -1,0 +1,9 @@
+diff --git a/apps/player/src/session/chartFeedbackPresentation.test.tsx b/apps/player/src/session/chartFeedbackPresentation.test.tsx
+index 20c58c3a..8c41f115 100644
+--- a/apps/player/src/session/chartFeedbackPresentation.test.tsx
++++ b/apps/player/src/session/chartFeedbackPresentation.test.tsx
+@@ -21,2 +21,4 @@ function preparedState(): GameState {
+   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
++  state.rooms.push({ id: "room.chart-feedback.examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
++  state.doors.push({ id: "door.chart-feedback.examination", roomId: "room.chart-feedback.examination", side: "south", offset: 1, exterior: false });
+   return state;

@@ -1,0 +1,159 @@
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+index f7dfc96f..6ade4b0b 100644
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -130,2 +130,124 @@ export interface GridPoint {
+ 
++/** Frozen inputs and progress for new diagnostic work; absent on legacy orders. */
++export interface DiagnosticResourceChoice {
++  roomInstanceId: string;
++  roomDefinitionId: string;
++  /** Reading workstations and Periop beds share a room without sharing a queue. */
++  stationId: string | null;
++  employeeIds: string[];
++  provider: { kind: "employee"; employeeId: string } | { kind: "founder" } | null;
++  patientAnchor: GridPoint;
++  staffAnchor: GridPoint;
++}
++
++export interface DiagnosticResourceRequirement {
++  roomDefinitionId: string;
++  staffRoleDefinitionIds: string[];
++  providerRoleDefinitionIds: string[];
++  founderEligible: boolean;
++  stationKind: "reading" | "periop_bed" | null;
++}
++
++export interface DiagnosticOrderPhase {
++  id: string;
++  componentId: string | null;
++  kind: "collection" | "acquisition" | "preparation" | "procedure" | "recovery" |
++    "interpretation" | "laboratory_processing" | "pathology" | "retained" | "patient_departure" | "patient_return";
++  mode: "local" | "external";
++  patientPresent: boolean;
++  durationMinutes: number;
++  dependsOn: string[];
++  requirement: DiagnosticResourceRequirement | null;
++  resource: DiagnosticResourceChoice | null;
++  forecast: {
++    readyAtTick: number;
++    startsAtTick: number;
++    endsAtTick: number;
++    queueMinutes: number;
++    walkingMinutes: number;
++    patientPath: GridPoint[];
++    employeePaths: Array<{ employeeId: string; path: GridPoint[] }>;
++    founderPath: GridPoint[];
++    tilesPerTick: number;
++  };
++  status: "pending" | "queued" | "active" | "completed" | "cancelled";
++  /** Interrupted work keeps this value; it never rereads balance or restarts. */
++  remainingMinutes: number;
++  startedAtTick: number | null;
++  completedAtTick: number | null;
++  serviceOperationId: string | null;
++  /** Phase identity inside a linked multi-phase physical operation. */
++  operationPhaseId: string | null;
++}
++
++export interface DiagnosticOrderMilestone {
++  afterPhaseIds: string[];
++  forecastAtTick: number;
++  reachedAtTick: number | null;
++}
++
++export interface DiagnosticOrderPlan {
++  version: "diagnostic-order.v1";
++  timingVersion: "diagnostic-timing.v1";
++  orderId: string;
++  encounterId: string;
++  createdAtTick: number;
++  /** Generic profiles can quote work without inventing an executable procedure. */
++  execution: "supported" | "preview_only";
++  sources: Array<{
++    componentId: string | null;
++    serviceId: string | null;
++    timingProfileId: string | null;
++    routeId: string | null;
++    routeDisplayName: string;
++    /** Optional for older v1 plans; new local acquisitions freeze their fee. */
++    incomeLineId?: string;
++    quoteFee?: number;
++    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
++    kind: "explicit_route_phases" | "approved_operation" | "retained_inclusive_total" | "retained_profile";
++    inclusiveDurationMinutes: number;
++    routePhases: Array<{ id: string; durationMinutes: number; resourceBound: boolean }>;
++    operationPhases: Array<{
++      id: string;
++      roomDefinitionId: string | null;
++      durationMinutes: number;
++      staffRoleDefinitionIds: string[];
++      providerRoleDefinitionIds: string[];
++      founderEligible: boolean;
++      roomStationId: string | null;
++    }>;
++  }>;
++  phases: DiagnosticOrderPhase[];
++  resultReady: DiagnosticOrderMilestone;
++  /** Visual endoscopy findings can be viewed while recovery/pathology continues. */
++  visualResultReady: DiagnosticOrderMilestone | null;
++  careComplete: DiagnosticOrderMilestone;
++}
++
++/** Internal remote work, never an additional paid clinical service. */
++export interface DiagnosticPhaseWork {
++  version: "diagnostic-phase-work.v1";
++  orderId: string;
++  encounterId: string;
++  phaseId: string;
++  kind: "interpretation" | "laboratory_processing" | "pathology";
++  billing: "none";
++  durationMinutes: number;
++  remainingMinutes: number;
++  resource: DiagnosticResourceChoice | null;
++}
++
++/** Binding of frozen diagnostic patient work to the existing physical engine. */
++export interface DiagnosticPhysicalWork {
++  version: "diagnostic-physical-work.v1";
++  orderId: string;
++  encounterId: string;
++  componentId: string | null;
++  billing: "existing_service" | "none";
++  phaseBindings: Array<{ diagnosticPhaseId: string; operationPhaseId: string; resource: DiagnosticResourceChoice | null }>;
++  phaseWitnesses: Array<{ operationPhaseId: string; startedAtFacilityTick: number | null; completedAtFacilityTick: number | null }>;
++  /** Frozen remaining work at the most recent start/resume, never tick-decremented. */
++  remainingPhaseMinutes: number | null;
++}
++
+ export type PixelAppearanceVariant =
+@@ -290,2 +412,3 @@ export interface SchedulerPins {
+ export interface PendingResult {
++  diagnosticTiming?: DiagnosticOrderPlan;
+   operationId: string;
+@@ -525,2 +648,4 @@ export type ServiceOperationStatus =
+ export interface ServiceOperationState {
++  diagnosticPhaseWork?: DiagnosticPhaseWork;
++  diagnosticPhysicalWork?: DiagnosticPhysicalWork;
+   id: string;
+@@ -797,2 +922,3 @@ export interface EncounterState {
+   testOnlyContinuation?: {
++    diagnosticTiming?: DiagnosticOrderPlan;
+     version: "test-only-continuation.v1";
+@@ -820,2 +946,3 @@ export interface EncounterState {
+   stagedResultOrder?: {
++    diagnosticTiming?: DiagnosticOrderPlan;
+     version: "staged-result-order.v1";
+@@ -831,2 +958,3 @@ export interface EncounterState {
+     components: Array<{
++      diagnosticTiming?: DiagnosticOrderPlan;
+       componentId: string;
+@@ -855,2 +983,3 @@ export interface EncounterState {
+   terminalTestOrder?: {
++    diagnosticTiming?: DiagnosticOrderPlan;
+     version: "terminal-test-order.v1";
+@@ -974,2 +1103,4 @@ export interface EmployeeState {
+   homeRoomInstanceId: string | null;
++  /** Stable approved reading cubicle; absent for other/legacy employees. */
++  readingStationId?: string;
+   location: GridPoint;

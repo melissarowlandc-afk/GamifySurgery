@@ -1,0 +1,878 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs034-diagnostic-timing-20261007",
+  "recoveryOnly": true,
+  "cleanRunnableCheckout": false,
+  "publicReleaseAuthorized": false,
+  "preparationReceiptOnly": true,
+  "remoteBackupVerifiedAtPreparation": false,
+  "preparedAt": "2026-10-07T23:45:45.892Z",
+  "frozenAt": "2026-10-07T23:46:23.078Z",
+  "intakeHead": "2eab83fbf96648ee011f2b0cb2cd4e33f91f94ca",
+  "initialPreparationHead": "64682fceaaae6d335b3c5b6ca5c5c2b4de85f9c1",
+  "preparationHead": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+  "finalObservedHead": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+  "sourceFreezeMode": "byte-exact per-file current copies plus scoped exact patches; mixed shared tree, not clean checkout",
+  "manifestSelfHashExcluded": true,
+  "payloadCount": 65,
+  "payloadBytes": 682050,
+  "patchTargetContracts": 41,
+  "payloads": [
+    {
+      "archivePath": ".gitattributes",
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "bytes": 8,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 1,
+        "finalNewline": true
+      },
+      "sourceKind": "archive-byte-preservation-policy"
+    },
+    {
+      "archivePath": "documents/docs/execplans/facility-diagnostic-timing.md",
+      "sha256": "0516195aff749817aa4f5056d9041c0d2312d2605e2f9309cad09589212a8485",
+      "bytes": 26760,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 134,
+        "finalNewline": true
+      },
+      "sourcePath": "docs/execplans/facility-diagnostic-timing.md",
+      "sourceKind": "GS034-current-point-in-time-document-copy",
+      "note": "Preparation status is historical; subsequent commit/remote verification is recorded by parent in live handoff, not retroactively asserted here."
+    },
+    {
+      "archivePath": "documents/docs/features/diagnostic-timing-future-design.md",
+      "sha256": "bc9cac782ee0058c59ed6cdfaa5644535a7c44d29ed0960dfe0f569d47bc467d",
+      "bytes": 4997,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 77,
+        "finalNewline": true
+      },
+      "sourcePath": "docs/features/diagnostic-timing-future-design.md",
+      "sourceKind": "GS034-current-point-in-time-document-copy",
+      "note": "Preparation status is historical; subsequent commit/remote verification is recorded by parent in live handoff, not retroactively asserted here."
+    },
+    {
+      "archivePath": "documents/docs/handoffs/GS-034_DIAGNOSTIC_TIMING.md",
+      "sha256": "f0ea32896ceda8390778275a50051d6ee76f207f12af8be14f25acdc11fc0fc3",
+      "bytes": 7351,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 114,
+        "finalNewline": true
+      },
+      "sourcePath": "docs/handoffs/GS-034_DIAGNOSTIC_TIMING.md",
+      "sourceKind": "GS034-current-point-in-time-document-copy",
+      "note": "Preparation status is historical; subsequent commit/remote verification is recorded by parent in live handoff, not retroactively asserted here."
+    },
+    {
+      "archivePath": "README.md",
+      "sha256": "3cbc91d71c8d5187c3e7689d8a0a59dc4ca61ce96d0823c4b56a100f815694b0",
+      "bytes": 4139,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 23,
+        "finalNewline": true
+      },
+      "sourceKind": "recovery-archive-intake-receipt"
+    },
+    {
+      "archivePath": "recovery/DEPENDENCIES.md",
+      "sha256": "a252aa468a4c50e6e92616266f85b9b76d413128d10bca761310178d5cae78be",
+      "bytes": 4219,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 13,
+        "finalNewline": true
+      },
+      "sourceKind": "explicit-recovery-limitations-and-dependencies"
+    },
+    {
+      "archivePath": "recovery/PATCH_VERIFICATION.json",
+      "sha256": "e00311ad2edb60286fad8e0c19452da99f6cabfcbd02c3227eed6cbe94f4bbf2",
+      "bytes": 17166,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 429,
+        "finalNewline": true
+      },
+      "sourceKind": "sanitized-exact-reconstruction-receipt"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__answerChoiceTimingPresentation.test.ts.patch",
+      "sha256": "915dc1f5ffa3f6693927a4ef54a24da47a2c53cae5267e4484921634f979a7ea",
+      "bytes": 1588,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 24,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/answerChoiceTimingPresentation.test.ts",
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__breadButterPresentation.test.ts.patch",
+      "sha256": "4651921b84a83629ebeb8020caddf4f8a2e5af1fbf10332d1c5c2a28088c3e8c",
+      "bytes": 630,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 10,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/breadButterPresentation.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__briefEarlyLevelsPresentation.test.ts.patch",
+      "sha256": "55c0f34d3f508c364598922067d2266defa198f283c5c00eb07e5768d51e850d",
+      "bytes": 1662,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 9,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__chartFeedbackPresentation.test.tsx.patch",
+      "sha256": "cb1a33a0928bdddba2d38dea3cd1eb45896ab411d2424430171a59cab5ad2556",
+      "bytes": 763,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 9,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__clinicalServiceLabels.test.ts.patch",
+      "sha256": "afc4d6ac2cc80ba15fc48f9512318e0196a4280acd191f6d87de5fdf4401a927",
+      "bytes": 729,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 14,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/clinicalServiceLabels.test.ts",
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__earlyLevelsPresentation.test.ts.patch",
+      "sha256": "77b7de73da63266b3c0e47afdc22304ac515d908d9c20e6c579396e0cce1dfb8",
+      "bytes": 6443,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 13,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "archivePath": "recovery/patches/apps__player__src__session__multistepChoiceTiming.test.ts.patch",
+      "sha256": "53be3357cd0f9491be50e185dc654ad28772f170eece92a31ec39e941399c658",
+      "bytes": 1936,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 48,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/multistepChoiceTiming.test.ts",
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "archivePath": "recovery/patches/final-pending-body-history-guard.patch",
+      "sha256": "9317a8a1fba4332005ee44dd6046b4badf7f6a9e84beb2e446448e6e435e0910",
+      "bytes": 1326,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 21,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/historical-balance__approved-room-layouts.test.ts.patch",
+      "sha256": "75ab0cd36d8624e628de4adae888539a5f4ec5b70f27885a32418067a0d75577",
+      "bytes": 1409,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 20,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/historical-balance__approved-room-layouts.ts.patch",
+      "sha256": "4eb09e5c8f8a3a3612e0063060ac7c056c70620e810488db6c06f0dea35596b9",
+      "bytes": 2652,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 35,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/balance-config/src/approved-room-layouts.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/historical-balance__index.ts.patch",
+      "sha256": "a12db022133ba0362422bcbbcbae95785160ff9ea480f5bb30be6fdfd2eb201f",
+      "bytes": 343,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 7,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/balance-config/src/index.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/historical-balance__prototype-balance.test.ts.patch",
+      "sha256": "e35703dc9e46d35e56249ace93a54678e0d73eb740d5a1d895895a7a1d02b70a",
+      "bytes": 869,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 15,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/balance-config/src/prototype-balance.test.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/historical-balance__prototype-balance.ts.patch",
+      "sha256": "56a6fc940ad95b5f4689010e171811fca1f31722bcd5d26cc4c7f42820194d10",
+      "bytes": 1858,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 49,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/balance-config/src/prototype-balance.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/historical-balance__room-instance-caps.test.ts.patch",
+      "sha256": "8db87d6e2c27a98f9cb7793165b4eb753dc83b276b0028aff003430d92d5caaf",
+      "bytes": 407,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 8,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/balance-config/src/room-instance-caps.test.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "sha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "bytes": 45229,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 765,
+        "finalNewline": true
+      },
+      "sourceKind": "original-reviewed-six-file-UI-patch",
+      "historicalMilestone": true
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__characterStillCatalog.ts.patch",
+      "sha256": "63208c335d0ab3d9f04a937d86feae0bda28b4510eb0af480633ba9c0b2af123",
+      "bytes": 1196,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 17,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/characterStillCatalog.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__index.ts.patch",
+      "sha256": "b5ce9e87243b75e1c73bf15eb8351f4335395756e355b8c2984623d4672ac8be",
+      "bytes": 580,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 13,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/index.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__persistence.ts.patch",
+      "sha256": "0e9bb9e021047114351f2840e957c0eb4e8339d39f4942139e3141f9c1f973ba",
+      "bytes": 13513,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 197,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/persistence.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__reducer.ts.patch",
+      "sha256": "71e4af65839103be32f568bfbc9139fc22426cd49e0d62915713ae316bb789a2",
+      "bytes": 26341,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 510,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/reducer.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__retired-encounters.ts.patch",
+      "sha256": "3e0d7b0e4c1da9946a9a1f65d16861142b5c1152e6c944619ccfbb52f6248ccc",
+      "bytes": 788,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 14,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/retired-encounters.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__retired-service-history.ts.patch",
+      "sha256": "6e9fb6a23a550cb50d3e6bcfb671f12e1a28d2608004782756a32314c3e8cc5f",
+      "bytes": 860,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 16,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/retired-service-history.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__room-capacity.ts.patch",
+      "sha256": "e7177dfd52627332ac6661048bd8ee8020c9587221e25d9569b38cd537ae00a9",
+      "bytes": 844,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 16,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/room-capacity.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__selectors.ts.patch",
+      "sha256": "c5c6d96e765e9219db8fb18815ba3d00a69845a15e24af54f499a094215570cc",
+      "bytes": 5446,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 77,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/selectors.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__service-operations.ts.patch",
+      "sha256": "c8931b7e2c6db1b8eabb0cce04ca83757167a29b3356c3cde7087b9ecd38e830",
+      "bytes": 34935,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 500,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/service-operations.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__staff.ts.patch",
+      "sha256": "9aec21b00e26268c6b48fc5358cd887a803bcd5db903cdb54f55150300843cd2",
+      "bytes": 2038,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 35,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/staff.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__test-choice-orders.ts.patch",
+      "sha256": "e650f98b898967847dbe0f8582de9fbae970d42376e21dedbca96b5520879a28",
+      "bytes": 3014,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 30,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/test-choice-orders.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__src__types.ts.patch",
+      "sha256": "90ed5e12e989b0090c08160c107e796434f110cccf51df9b8692b75adb1e904e",
+      "bytes": 6161,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 159,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/src/types.ts",
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__bread-butter-20260917-batch.test.ts.patch",
+      "sha256": "2d3928b258dca366e419498647224a55e9ca6572cc891891eca7439cc97d2100",
+      "bytes": 1852,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 31,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/bread-butter-20260917-batch.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__gs028-20260928-batch.test.ts.patch",
+      "sha256": "8bdb38cc7c62c16774c80a4a55fec7e2eded29e4d6fcf0bdd5926285a096fc30",
+      "bytes": 2684,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 38,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__gs028-20261002-batch.test.ts.patch",
+      "sha256": "335161c5c0d87d8a9e8baf17948636c0472fd321dbf7a2a9bf5eadbbe0f8b404",
+      "bytes": 7116,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 97,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "sha256": "dc9828e70179c7c5d5a35a780cfec5238312495a0bc005222dca5cb335cd445c",
+      "bytes": 3022,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 46,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__gs028-20261007-batch.test.ts.patch",
+      "sha256": "34c1d0257c2dafe6fbfe82839fa5af4e81e151ea18788edeaadc23eab4f8158f",
+      "bytes": 4750,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 44,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__level-two-endoscopy.test.ts.patch",
+      "sha256": "0fb79369dbb5f48e2ae0f235a28f14bfe87e608626869a41070c7a2ec6611ba9",
+      "bytes": 2186,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 32,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__service-procedure-operations.test.ts.patch",
+      "sha256": "af0d43fba7d18b8d99caac2b4ce02627bcfad8e390792df9eeef301a3fc3f3c1",
+      "bytes": 2675,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 40,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__surgery-center-batch.test.ts.patch",
+      "sha256": "82f95893419ee4def28321bc5728c6890b693bf06e499d43574b425374f320e2",
+      "bytes": 1936,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 39,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/patches/packages__game-domain__tests__ultrasound-first-imaging.test.ts.patch",
+      "sha256": "4d4fb2e78c3a0fac0bc5dd00a3e5256b20db8154785ee24b59d244a78f5455d9",
+      "bytes": 915,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 14,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-task-only-patch",
+      "targetPath": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "archivePath": "recovery/SCOPE.md",
+      "sha256": "37904ccfbbe6dd29ee5a350b42e2bc7f5a14a91edc73f8cd87ac1340c4f98233",
+      "bytes": 10182,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 49,
+        "finalNewline": true
+      },
+      "sourceKind": "patch-ownership-audit"
+    },
+    {
+      "archivePath": "recovery/SOURCE_HASHES.json",
+      "sha256": "4e38fc0a1be8a372cfe80c8e54d2cebb8a36606c52b94b6a8c1a80c17560ace6",
+      "bytes": 75580,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 1476,
+        "finalNewline": true
+      },
+      "sourceKind": "scoped-patch-preimage-target-hash-provenance"
+    },
+    {
+      "archivePath": "source/apps/player/src/session/diagnosticTimingPresentation.test.ts",
+      "sha256": "b012f4421f361d238a170ec6802d0163ebf7fd5b0e3c9f0da7bd71952725fe35",
+      "bytes": 9899,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 144,
+        "finalNewline": true
+      },
+      "sourcePath": "apps/player/src/session/diagnosticTimingPresentation.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/apps/player/src/session/diagnosticTimingPresentation.ts",
+      "sha256": "900ff03b504bcfb8f5022f83bc963965a301557691e141130c12ebcd1779a48a",
+      "bytes": 7015,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 123,
+        "finalNewline": true
+      },
+      "sourcePath": "apps/player/src/session/diagnosticTimingPresentation.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/apps/player/src/session/diagnosticTimingViewModels.test.ts",
+      "sha256": "079172e31e586a9858be570d3334fc67480a6be3b50a2ef2e24e27fc80a0543c",
+      "bytes": 13664,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 218,
+        "finalNewline": true
+      },
+      "sourcePath": "apps/player/src/session/diagnosticTimingViewModels.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/balance-config/src/diagnostic-timing.test.ts",
+      "sha256": "0a15c43c84bcac5fd76f0c97d55f72dc7fa6a26987d9fc5d2a6f58b030d9a0e1",
+      "bytes": 12253,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 247,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/balance-config/src/diagnostic-timing.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/balance-config/src/diagnostic-timing.ts",
+      "sha256": "69dc49becd94ef7b8073c4d614aff6247aa22f7e28388b3428403fbb4dad4bd5",
+      "bytes": 14778,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 310,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/balance-config/src/diagnostic-timing.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/src/diagnostic-order-requests.ts",
+      "sha256": "9c721ebd63a473fbe29d1ffb368c27282c5cd559b98d607b0c93036861f6ca7d",
+      "bytes": 7723,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 99,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/src/diagnostic-order-requests.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": [
+        "Existing shared engine and approved GS037/GS038 interfaces; their implementations are excluded"
+      ]
+    },
+    {
+      "archivePath": "source/packages/game-domain/src/diagnostic-orders.ts",
+      "sha256": "04109572d469801a2eaae243aec0f6c8f48df282c7502c9e7fbd889fc1e246a5",
+      "bytes": 14303,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 217,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/src/diagnostic-orders.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": [
+        "Existing shared engine and approved GS037/GS038 interfaces; their implementations are excluded"
+      ]
+    },
+    {
+      "archivePath": "source/packages/game-domain/src/diagnostic-result-dispositions.ts",
+      "sha256": "3c79223463663ad4dfce9b1be384f244fb914d0426ac49755910b365224402a6",
+      "bytes": 7014,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 87,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/src/diagnostic-result-dispositions.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/src/diagnostic-timing.ts",
+      "sha256": "ccc78cae522e484801b9f3f5b00ad98a9dc16f5f20dee8d2c9d247ddbc11d0ba",
+      "bytes": 93318,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 1116,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/src/diagnostic-timing.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": [
+        "Existing shared engine and approved GS037/GS038 interfaces; their implementations are excluded"
+      ]
+    },
+    {
+      "archivePath": "source/packages/game-domain/src/reading-stations.ts",
+      "sha256": "343fd586cbeebadd3b8165c9b8a560e0f426110d3ee9488b2cab8c4009f9a166",
+      "bytes": 5112,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 72,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/src/reading-stations.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": [
+        "Existing shared engine and approved GS037/GS038 interfaces; their implementations are excluded"
+      ]
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/diagnostic-orders.test.ts",
+      "sha256": "54a50538d65396631b1b63ca3ed222fdd914e6b22efc5f22f3fc0a2bbf22de46",
+      "bytes": 19268,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 270,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/diagnostic-orders.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": [
+        "Existing shared engine and approved GS037/GS038 interfaces; their implementations are excluded"
+      ]
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/diagnostic-result-dispositions.test.ts",
+      "sha256": "e78313da018a57635b457b206ee8989d8165cad47dcdd90a8f73b94d1354d164",
+      "bytes": 3255,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 45,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/diagnostic-result-dispositions.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/diagnostic-service-operations.test.ts",
+      "sha256": "49ebe8167f7f4dcd631efcc08dca13ab5c347f68309dfb3cff91cd2b6324c7fb",
+      "bytes": 29796,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 466,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/diagnostic-timing-fixtures.ts",
+      "sha256": "4093906208674ebf02d867661ba404dcce64292b0be425cd30a68856e6d49cd1",
+      "bytes": 5657,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 81,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/diagnostic-timing-fixtures.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/diagnostic-timing-persistence.test.ts",
+      "sha256": "cbd9d18b9a09a0c362cff52ada416727e1a4ff5808cf8c8857aae3caf14896a4",
+      "bytes": 11855,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 160,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/diagnostic-timing-persistence.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/diagnostic-timing.test.ts",
+      "sha256": "c95c5009e15a885a04162a56ce56ec38a19dcd843c106fb2f3472ca9867212af",
+      "bytes": 49230,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 613,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/diagnostic-timing.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/packages/game-domain/tests/reading-stations.test.ts",
+      "sha256": "7b30f3c88824c02374803b5194cd64085760d864a3ee2d100ee0dcf57c29df1e",
+      "bytes": 4880,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 76,
+        "finalNewline": true
+      },
+      "sourcePath": "packages/game-domain/tests/reading-stations.test.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "source/tests/e2e/facility-diagnostic-timing.spec.ts",
+      "sha256": "a6e1fc290bdd4772d9aaae83338b61942350fac8e3a8f745ef5dd8b2c20580a0",
+      "bytes": 21318,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 222,
+        "finalNewline": true
+      },
+      "sourcePath": "tests/e2e/facility-diagnostic-timing.spec.ts",
+      "sourceKind": "GS034-origin-current-byte-exact-copy",
+      "ownership": "GS034 named worker/parent milestone",
+      "dependencies": []
+    },
+    {
+      "archivePath": "VALIDATION_SUMMARY.json",
+      "sha256": "53cf39e8b9015bb1a502458b6c1f7ff6ffdc7e81d1e49fdf29137229027dff40",
+      "bytes": 3669,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 126,
+        "finalNewline": true
+      },
+      "sourceKind": "sanitized-validation-summary"
+    },
+    {
+      "archivePath": "verify-checkpoint.mjs",
+      "sha256": "48be7459069b84916efe26440baddb79509d1810e92c4e6c10fce4bad14b9629",
+      "bytes": 6945,
+      "lineEndings": {
+        "crlf": 0,
+        "lf": 87,
+        "finalNewline": true
+      },
+      "sourceKind": "dependency-free-archive-verifier"
+    }
+  ]
+}

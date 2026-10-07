@@ -1,0 +1,16 @@
+diff --git a/packages/game-domain/src/room-capacity.ts b/packages/game-domain/src/room-capacity.ts
+index 0163e216..335e7065 100644
+--- a/packages/game-domain/src/room-capacity.ts
++++ b/packages/game-domain/src/room-capacity.ts
+@@ -3,2 +3,3 @@ import { isEmployeeAwayForTraining } from "./employee-training";
+ import type { DomainContext, EmployeeState, GameState, PlacedRoom } from "./types";
++import { reconcileReadingStations } from "./reading-stations";
+ 
+@@ -20,2 +21,3 @@ const STAFF_SLOTS: Readonly<Record<string, Readonly<Record<string, number>>>> =
+   "staff.laboratory_technician": { "room.laboratory": 1 },
++  "staff.radiologist": { "room.reading": 4 },
+   "staff.pharmacist": { "room.pharmacy": 1 },
+@@ -106,2 +108,3 @@ export function reconcileEmployeeRoomSeats(state: GameState): void {
+   }
++  reconcileReadingStations(state);
+ }

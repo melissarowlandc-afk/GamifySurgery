@@ -1,0 +1,44 @@
+diff --git a/packages/game-domain/tests/gs028-20261007-batch.test.ts b/packages/game-domain/tests/gs028-20261007-batch.test.ts
+index 5cb02ebf..32d240a7 100644
+--- a/packages/game-domain/tests/gs028-20261007-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261007-batch.test.ts
+@@ -198,4 +198,9 @@ function complete(clinicalCase: SyntheticClinicalCase, path: "correct" | 0 | 1 |
+     const gate = node.resultGateAfter!;
+-    const operationId = `result.${encounterId}.${node.id}.${gate.id}`;
++    const operationId = `diagnostic.${encounterId}.${node.id}.${node.answerChoices.find((choice) => choice.isCorrect)!.id}`;
+     expect(state.encounters[encounterId]?.pendingResult).toMatchObject({ operationId, gateId: gate.id, routeId: OUTSIDE_ROUTE, resultTypeId: "service.basic_labs", resultNarrative: gate.resultNarrative, deliveredAtTick: null });
++    const plan = state.encounters[encounterId]!.pendingResult!.diagnosticTiming!;
++    expect(plan).toMatchObject({ orderId: operationId, execution: "supported", timingVersion: "diagnostic-timing.v1" });
++    expect(plan.phases.filter((phase) => phase.kind !== "patient_departure" && phase.kind !== "patient_return")).toEqual([
++      expect.objectContaining({ kind: "collection", mode: "external", durationMinutes: 120, requirement: null, resource: null }),
++    ]);
+     expect(state.encounters[encounterId]?.pendingResult?.patientTravel).toBeNull();
+@@ -294,5 +299,10 @@ describe("GS-028 October 7 real gameplay admission", () => {
+       const preview = getAnswerChoiceServicePreview(state, encounterId, choice.id);
+-      expect(preview).toMatchObject({ kind: "test", timingProfileId: profile.id, durationTicks: profile.durationTicks });
+-      expect(preview?.routeId).toBe(choice.isCorrect ? OUTSIDE_ROUTE : null);
+-      if (!choice.isCorrect) expect(preview?.routeDisplayName).toBeNull();
++      expect(preview).toMatchObject({ kind: "test", timingProfileId: profile.id, routeId: OUTSIDE_ROUTE,
++        diagnosticTiming: { execution: choice.isCorrect ? "supported" : "preview_only", timingVersion: "diagnostic-timing.v1" } });
++      const plan = preview!.diagnosticTiming!;
++      expect(plan.phases.filter((phase) => phase.kind !== "patient_departure" && phase.kind !== "patient_return")).toEqual([
++        expect.objectContaining({ kind: "collection", mode: "external", durationMinutes: 120, requirement: null, resource: null }),
++      ]);
++      expect(preview!.durationTicks).toBe(Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick);
++      expect(preview!.routeDisplayName).toBe(plan.sources[0]!.routeDisplayName);
+       choicePreviewEvidence.push({ caseId: clinicalCase.id, nodeId: question.node.id, questionVariantId: question.node.questionVariantId, condition, choiceId: choice.id, choiceLabel: choice.label, correct: choice.isCorrect, disposition: exact.find((record) => record.caseId === clinicalCase.id && record.choiceId === choice.id)?.disposition, centralProfileDurationTicks: profile.durationTicks, actualPreview: preview });
+@@ -305,3 +315,3 @@ describe("GS-028 October 7 real gameplay admission", () => {
+     noExtraService(state, encounterId);
+-    routingEvidence.push({ caseId: clinicalCase.id, condition, ordinaryRouteId: ordinary?.route.id, selectedRouteId: state.encounters[encounterId]?.pendingResult?.routeId, allChoiceEtasFromCentralProfile: true });
++    routingEvidence.push({ caseId: clinicalCase.id, condition, ordinaryRouteId: ordinary?.route.id, selectedRouteId: state.encounters[encounterId]?.pendingResult?.routeId, allChoiceEtasFromDiagnosticPlan: true });
+   });
+@@ -313,3 +323,8 @@ describe("GS-028 October 7 real gameplay admission", () => {
+       const profile = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.answerChoiceTimingProfiles.find((item) => item.id === "timing.test.basic_labs")!;
+-      expect(getAnswerChoiceServicePreview(state, encounterId, wrong.id)).toMatchObject({ routeId: null, durationTicks: profile.durationTicks });
++      const preview = getAnswerChoiceServicePreview(state, encounterId, wrong.id)!;
++      expect(preview).toMatchObject({ timingProfileId: profile.id, routeId: OUTSIDE_ROUTE, diagnosticTiming: { execution: "preview_only" } });
++      expect(preview.diagnosticTiming!.phases.filter((phase) => phase.kind !== "patient_departure" && phase.kind !== "patient_return")).toEqual([
++        expect.objectContaining({ kind: "collection", mode: "external", durationMinutes: 120, requirement: null, resource: null }),
++      ]);
++      expect(preview.durationTicks).toBe(Math.max(...preview.diagnosticTiming!.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick);
+       const selected = answer(state, encounterId, wrong.id, `${encounterId}.answer`, REAL_MS + 1);

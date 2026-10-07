@@ -1,0 +1,13 @@
+diff --git a/packages/game-domain/src/index.ts b/packages/game-domain/src/index.ts
+index eb586372..6f14c875 100644
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -15,2 +15,4 @@ export * from "./displaced-routing";
+ export * from "./departure-risk-alerts";
++export * from "./diagnostic-timing";
++export * from "./diagnostic-result-dispositions";
+ export * from "./facility-alert-conditions";
+@@ -26,2 +28,3 @@ export * from "./patientDemographics";
+ export * from "./randomness";
++export * from "./reading-stations";
+ export * from "./reducer";

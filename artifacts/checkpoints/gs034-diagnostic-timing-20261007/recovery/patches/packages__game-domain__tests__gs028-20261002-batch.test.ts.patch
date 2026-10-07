@@ -1,0 +1,97 @@
+diff --git a/packages/game-domain/tests/gs028-20261002-batch.test.ts b/packages/game-domain/tests/gs028-20261002-batch.test.ts
+index a16dc943..766821e9 100644
+--- a/packages/game-domain/tests/gs028-20261002-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261002-batch.test.ts
+@@ -4,4 +4,4 @@ import {
+   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState,
+-  gameReducer, getCurrentQuestion, getEligibleServiceRoute,
+-  selectRoutineClinicalCase, serializeGameState,
++  gameReducer, getCurrentQuestion, getEligibleServiceRoute, getAnswerChoiceServicePreview,
++  selectRoutineClinicalCase, serializeGameState, advanceServiceOperations, startServiceOperation,
+   type ConceptReviewEvidence, type GameState,
+@@ -56,2 +56,26 @@ function preparedUltrasoundClinic(seed: string): GameState {
+ 
++function occupyUltrasound(state: GameState): string {
++  const operationId = startServiceOperation(state, "income.ultrasound", "visitor", PROTOTYPE_DOMAIN_CONTEXT);
++  expect(operationId).not.toBeNull();
++  const operation = state.serviceOperations.find((candidate) => candidate.id === operationId)!;
++  // Place this synthetic competing visitor and its worker at each actual path
++  // endpoint; the existing engine still owns reservations and finite work.
++  const arrive = () => {
++    operation.pathIndex = operation.path.length - 1;
++    operation.location = { ...operation.path.at(-1)! };
++    for (const employee of state.employees.filter((candidate) => candidate.facilityTask?.targetId === operationId)) {
++      employee.pathIndex = employee.path.length - 1;
++      employee.location = { ...employee.path.at(-1)! };
++    }
++  };
++  arrive();
++  advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++  advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++  arrive();
++  advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++  expect(operation).toMatchObject({ status: "in_service", reservedEmployeeIds: ["employee.gs028c.imaging"], reservedRoomInstanceIds: ["room.gs028c.ultrasound"] });
++  expect(operation.phaseEndsAtFacilityTick).toBeGreaterThan(state.facilityTick);
++  return operationId!;
++}
++
+ function admit(state: GameState, clinicalCase: BatchCase, encounterId: string, operationId: string): GameState {
+@@ -239,7 +263,18 @@ describe("GS-028 October 2 batch admission", () => {
+       const first = answerCommand(state, encounterId, true, `${encounterId}.first-answer`, REAL_MS + 1);
++      const preview = getAnswerChoiceServicePreview(state, encounterId, first.choice.id)!;
++      expect(preview.diagnosticTiming?.execution).toBe("supported");
+       state = gameReducer(state, first.command);
+-      expect(state.encounters[encounterId]?.pendingResult).toMatchObject({
+-        routeId: "route.ultrasound.in_house", imagingTechnicianId: "employee.gs028c.imaging",
++      const pending = state.encounters[encounterId]!.pendingResult!;
++      expect(pending).toMatchObject({
++        routeId: "route.ultrasound.in_house",
+         resultTypeId: "service.ultrasound", deliveredAtTick: null,
+       });
++      expect(pending.diagnosticTiming?.sources).toEqual(preview.diagnosticTiming!.sources);
++      expect(pending.diagnosticTiming?.phases.map((phase) => [phase.id, phase.kind, phase.mode, phase.durationMinutes, phase.requirement, phase.resource])).toEqual(
++        preview.diagnosticTiming!.phases.map((phase) => [phase.id, phase.kind, phase.mode, phase.durationMinutes, phase.requirement, phase.resource]),
++      );
++      expect(pending.diagnosticTiming?.phases.find((phase) => phase.kind === "acquisition")).toMatchObject({
++        mode: "local",
++        resource: { roomInstanceId: "room.gs028c.ultrasound", employeeIds: ["employee.gs028c.imaging"] },
++      });
+       expect(state.encounters[encounterId]?.deliveredResultNarratives).toEqual([]);
+@@ -247,2 +282,9 @@ describe("GS-028 October 2 batch admission", () => {
+       state = acknowledge(state, encounterId, `${encounterId}.acknowledge`);
++      const acquisition = state.encounters[encounterId]!.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")!;
++      expect(state.serviceOperations.find((operation) => operation.id === acquisition.serviceOperationId)).toMatchObject({
++        actorId: encounterId,
++        reservedEmployeeIds: ["employee.gs028c.imaging"],
++        diagnosticPhysicalWork: { orderId: pending.diagnosticTiming!.orderId },
++        testChoiceOrder: { purpose: "result_gate", choiceId: first.choice.id },
++      });
+       const frozenCase = jsonClone(state.encounters[encounterId]!.frozenCase);
+@@ -419,7 +461,13 @@ describe("GS-028 October 2 batch admission", () => {
+       let busy = preparedUltrasoundClinic(`terminal.busy.${record.choiceId}`);
+-      const technician = busy.employees.find((employee) => employee.id === "employee.gs028c.imaging")!;
+-      technician.facilityTask = { kind: "perform_imaging", targetId: "existing-ultrasound-service", startedAtFacilityTick: busy.facilityTick, workMinutesRemaining: Number.MAX_SAFE_INTEGER };
+       busy = admit(busy, clinicalCase, busyId, `${busyId}.admit`);
+       busy = readyAtNode(busy, busyId, record.nodeId, `${busyId}.ready`);
++      const technician = busy.employees.find((employee) => employee.id === "employee.gs028c.imaging")!;
++      const competingOperationId = occupyUltrasound(busy);
+       const busyAnswer = answerCommand(busy, busyId, true, `${busyId}.answer`, REAL_MS + 5);
++      const busyPreview = getAnswerChoiceServicePreview(busy, busyId, busyAnswer.choice.id)!;
++      expect(busyPreview.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")).toMatchObject({
++        mode: "local", forecast: { queueMinutes: expect.any(Number) },
++        resource: { employeeIds: [technician.id] },
++      });
++      expect(busyPreview.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")!.forecast.queueMinutes).toBeGreaterThan(0);
+       busy = gameReducer(busy, busyAnswer.command);
+@@ -437,3 +485,2 @@ describe("GS-028 October 2 batch admission", () => {
+       expect(busy.learningHistories[busyAnswer.question.node.primaryConceptId]?.reviews).toHaveLength(1);
+-      busy.employees.find((employee) => employee.id === technician.id)!.facilityTask = null;
+       for (let tick = 0; tick < 1_500 && busy.serviceIncomeReceipts.filter((receipt) => receipt.actorId === busyId).length === 0; tick += 1) {
+@@ -441,2 +488,7 @@ describe("GS-028 October 2 batch admission", () => {
+       }
++      const operation = busy.serviceOperations.find((candidate) => candidate.actorId === busyId)!;
++      const competing = busy.serviceOperations.find((candidate) => candidate.id === competingOperationId)!;
++      expect(competing.completedAtFacilityTick).not.toBeNull();
++      expect(operation.diagnosticPhysicalWork!.phaseWitnesses[0]!.startedAtFacilityTick).toBeGreaterThanOrEqual(competing.completedAtFacilityTick!);
++      expect(busy.serviceIncomeReceipts.filter((receipt) => receipt.actorId === competing.actorId)).toHaveLength(1);
+       expect(busy.serviceIncomeReceipts.filter((receipt) => receipt.actorId === busyId)).toHaveLength(1);

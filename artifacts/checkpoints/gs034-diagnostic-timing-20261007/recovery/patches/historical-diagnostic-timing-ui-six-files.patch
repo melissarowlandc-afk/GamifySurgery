@@ -1,0 +1,765 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index 9d7ff992..b0f74c31 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -2,6 +2,7 @@ import {
+   PROTOTYPE_DOMAIN_CONTEXT,
+   TUTORIAL_ENCOUNTER_ID,
+   getAnswerChoiceServicePreview,
++  getDiagnosticOrderTiming,
+   getDisplayedClinicSatisfaction,
+   getFacilityProgressionStatus,
+   getFacilityClock,
+@@ -60,6 +61,11 @@ import {
+ import { getFounderActivityLabel } from "./founderActivityPresentation";
+ import { createPatientAvailabilityGuidance } from "./patientAvailabilityViewModel";
+ import { createEmployeeTrainingView } from "./employeeTrainingViewModels";
++import {
++  diagnosticChoiceTimingPresentation,
++  diagnosticPendingPresentation,
++  roomUsesFixedDiagnosticTiming,
++} from "./diagnosticTimingPresentation";
+ import {
+   createManagementFinanceView,
+   createRoleTrainingSummary,
+@@ -876,6 +882,17 @@ function createChartView(
+   const terminalFeedback = encounter.terminalFeedback;
+   const currentStep =
+     encounter.steps[encounter.currentNodeIndex] ?? null;
++  const diagnosticTiming = getDiagnosticOrderTiming(state, encounter.id);
++  const diagnosticPresentation = diagnosticTiming
++    ? diagnosticPendingPresentation(
++        diagnosticTiming,
++        encounter.pendingResult?.diagnosticTiming?.orderId === diagnosticTiming.orderId
++          ? encounter.pendingResult.resultNarrative : "",
++        formatFacilityDuration,
++      )
++    : null;
++  const showDiagnosticPending = diagnosticPresentation?.hasPendingWork === true &&
++    currentStep?.status !== "feedback_pending";
+   const showInterimFeedback =
+     currentStep?.status === "feedback_pending" &&
+     lastAnswer !== undefined;
+@@ -932,6 +949,9 @@ function createChartView(
+       const resultDelivered =
+         visibleResult !== null &&
+         visibleResult.deliveredAtTick !== null;
++      const diagnosticForStep = visibleResult?.diagnosticTiming && diagnosticTiming &&
++        visibleResult.diagnosticTiming.orderId === diagnosticTiming.orderId
++          ? diagnosticPresentation : null;
+       const selectedAnswerLabel = answer
+         ? (node.answerChoices.find(
+             (choice) => choice.id === answer.answerChoiceId,
+@@ -993,11 +1013,11 @@ function createChartView(
+           step.status === "action_required" && !isCurrent
+             ? "Patient en route"
+             : step.status === "result_pending"
+-            ? result?.patientTravel || pendingLocalServiceIsInProgress(result)
++            ? diagnosticForStep?.statusLabel ?? (result?.patientTravel || pendingLocalServiceIsInProgress(result)
+               ? "Onsite care in progress"
+               : result?.offsiteTravel
+                 ? "External service in progress"
+-                : "Awaiting result"
++                : "Awaiting result")
+             : step.status === "feedback_pending"
+               ? "Review feedback"
+             : step.status === "action_required"
+@@ -1024,25 +1044,22 @@ function createChartView(
+               !isCurrent ||
+               terminalFeedbackNeedsAcknowledgment ||
+               readOnly,
+-            etaLabel: preview?.kind === "no_test"
+-              ? "No test wait"
+-              : preview?.durationTicks === null || preview?.durationTicks === undefined
+-                ? undefined
+-                : formatFacilityDuration(preview.durationTicks),
+-            detailLabel: preview?.kind === "test"
+-              ? "Estimated test wait (game time)"
+-              : undefined,
++            ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
+           };
+         }) : [],
+         resultHeading:
+-          !isCurrent || visibleResult === null
++          (!isCurrent && !diagnosticForStep) || visibleResult === null
+             ? undefined
++            : diagnosticForStep
++              ? diagnosticForStep.heading
+             : resultDelivered
+               ? "Result returned"
+               : visibleResult.pendingLabel,
+         resultBody:
+-          !isCurrent || visibleResult === null
++          (!isCurrent && !diagnosticForStep) || visibleResult === null
+             ? undefined
++            : diagnosticForStep
++              ? diagnosticForStep.body
+             : resultDelivered
+               ? visibleResult.resultNarrative
+               : `${visibleResult.routeDisplayName}. ${pendingPatientAwaitingCopy(
+@@ -1053,7 +1070,9 @@ function createChartView(
+                   ),
+                 )}`,
+         etaLabel:
+-          visibleResult && !resultDelivered && !visibleResult.resourceQueue
++          diagnosticForStep
++            ? diagnosticForStep.etaLabel
++          : visibleResult && !resultDelivered && !visibleResult.resourceQueue
+             ? `${formatFacilityDuration(
+                 Math.max(
+                   0,
+@@ -1097,7 +1116,7 @@ function createChartView(
+         collapsedResultLabel: answer
+           ? `${
+               answer.correct ? "Correct" : "Incorrect"
+-            } — ${selectedAnswerLabel}`
++            } — ${selectedAnswerLabel}${diagnosticForStep?.pathologyPending ? " · Collected pathology pending" : ""}`
+           : undefined,
+         currentUpdate: isCurrent
+           ? normalizeFrozenClinicalText({
+@@ -1178,7 +1197,8 @@ function createChartView(
+           },
+         ]
+       : undefined,
+-    statusLabel: periopStatus ?? encounterStatus(encounter),
++    statusLabel: encounter.lifecycle === "active_pending_result" && diagnosticPresentation
++      ? diagnosticPresentation.statusLabel : periopStatus ?? encounterStatus(encounter),
+     presentation: normalizeFrozenClinicalText({
+       clinicalCaseId: encounter.frozenCase.id,
+       patientDisplayName: encounter.patientDisplayName,
+@@ -1192,7 +1212,10 @@ function createChartView(
+         ? currentDecisionText?.context
+         : undefined,
+     pendingLabel:
+-      encounter.lifecycle === "active_pending_result"
++      showDiagnosticPending
++        ? `${encounter.pendingResult?.diagnosticTiming?.orderId === diagnosticTiming?.orderId
++            ? `${encounter.pendingResult?.routeDisplayName ?? "Diagnostic work"}. ` : ""}${diagnosticPresentation!.body}`
++      : encounter.lifecycle === "active_pending_result"
+         ? activeStagedResult && activeStagedComponent
+           ? activeStagedResult.status === "returning_to_front_desk"
+             ? `Returning to Front Desk after ${activeStagedComponent.routeDisplayName}. ${activeStagedComponent.externalRemainder}`
+@@ -1208,7 +1231,9 @@ function createChartView(
+             }`
+         : undefined,
+     pendingPatientIsAway:
+-      encounter.lifecycle === "active_pending_result"
++      showDiagnosticPending
++        ? encounter.patientLocation === null
++      : encounter.lifecycle === "active_pending_result"
+         ? activeStagedResult
+           ? false
+         : activeTestOnlyContinuation
+@@ -1221,7 +1246,9 @@ function createChartView(
+           )
+         : undefined,
+     etaLabel:
+-      pendingEta === null
++      showDiagnosticPending
++        ? diagnosticPresentation!.etaLabel
++      : pendingEta === null
+         ? undefined
+         : `${formatFacilityDuration(pendingEta)} remaining`,
+     questionPrompt: question
+@@ -1254,14 +1281,7 @@ function createChartView(
+             answerForQuestion !== undefined ||
+             terminalFeedbackNeedsAcknowledgment ||
+             readOnly,
+-          etaLabel: preview?.kind === "no_test"
+-            ? "No test wait"
+-            : preview?.durationTicks === null || preview?.durationTicks === undefined
+-              ? undefined
+-              : formatFacilityDuration(preview.durationTicks),
+-          detailLabel: preview?.kind === "test"
+-            ? "Estimated test wait (game time)"
+-            : undefined,
++          ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
+         };
+       }) ?? [],
+     feedbackTitle,
+@@ -2307,7 +2327,7 @@ export function createPrototypePlayerView(
+         return {
+           id: definition.id,
+           displayName: definition.displayName,
+-          footprintLabel: `${definition.width} × ${definition.height} tiles`,
++          footprintLabel: `${definition.width} × ${definition.height} tiles${definition.id === "room.reading" ? ` · ${DIAGNOSTIC_READING_WORKSTATIONS.length} reading positions` : ""}`,
+           costLabel: `$${definition.constructionCost.toLocaleString()}`,
+           upkeepLabel: `$${definition.upkeepPerExpenseInterval.toLocaleString()} upkeep / hr`,
+           builtCountLabel: definition.maximumInstances === null
+@@ -2344,7 +2364,9 @@ export function createPrototypePlayerView(
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+         const blockedReason = roomCapacity.capacity === 0
+-          ? role.id === "staff.imaging_technician"
++          ? role.id === "staff.radiologist"
++            ? "Build a Reading Room to add four radiologist positions."
++          : role.id === "staff.imaging_technician"
+             ? "Build an Ultrasound, X-ray, or CT Room to add imaging technician capacity."
+             : "Build a compatible room to add hiring capacity."
+           : atMaximum
+@@ -2400,7 +2422,9 @@ export function createPrototypePlayerView(
+         const lacksGlp1StaffingSlot =
+           role.id === "staff.glp1_np" && !hasGlp1StaffingSlot;
+         const blockedReason = roomCapacity.capacity === 0
+-          ? role.id === "staff.imaging_technician"
++          ? role.id === "staff.radiologist"
++            ? "Build a Reading Room to add four radiologist positions."
++          : role.id === "staff.imaging_technician"
+             ? "Build an Ultrasound, X-ray, or CT Room to add imaging technician capacity."
+             : "Build a compatible room to add hiring capacity."
+           : atMaximum
+@@ -2450,6 +2474,8 @@ export function createPrototypePlayerView(
+           })),
+           staffingGuidance: role.id === "staff.periop_nurse"
+             ? "Each Peri-op/Recovery Room has two peri-op nurse positions."
++            : role.id === "staff.radiologist"
++              ? "Each Reading Room has four radiologist positions. Each operational radiologist has a separate queue and reads one study at a time."
+             : role.id === "staff.glp1_np"
+               ? "Each GLP-1 Telehealth Suite has two NP positions. Each staffed NP earns $50 per facility hour."
+               : role.id === "staff.imaging_technician"
+@@ -2495,14 +2521,16 @@ export function createPrototypePlayerView(
+         nextUpgradeLevel === undefined
+           ? []
+           : [
+-              `Room finish and fixed fixtures advance to Level ${nextUpgradeLevel}.`,
++              roomUsesFixedDiagnosticTiming(definition.id)
++                ? `Room operating level advances to Level ${nextUpgradeLevel}; approved diagnostic phase times stay fixed.`
++                : `Room finish and fixed fixtures advance to Level ${nextUpgradeLevel}.`,
+               ...(definition.workloadLimitContributionPerUpgradeLevel > 0
+                 ? [
+                     `Routine workload capacity +${definition.workloadLimitContributionPerUpgradeLevel}.`,
+                   ]
+                 : []),
+               ...(definition.serviceDurationReductionPercentPerUpgradeLevel >
+-              0
++              0 && !roomUsesFixedDiagnosticTiming(definition.id)
+                 ? [
+                     `Room service time ${definition.serviceDurationReductionPercentPerUpgradeLevel}% faster.`,
+                   ]
+diff --git a/apps/player/src/session/level3ControlsViewModels.test.ts b/apps/player/src/session/level3ControlsViewModels.test.ts
+index e2d24e53..b968b83f 100644
+--- a/apps/player/src/session/level3ControlsViewModels.test.ts
++++ b/apps/player/src/session/level3ControlsViewModels.test.ts
+@@ -60,8 +60,8 @@ describe("Level 3 control view models", () => {
+     const level3 = createInitialGameState();
+     level3.facilityLevel = 3;
+     const view = viewOf(level3);
+-    expect(view.roomOptions.filter((room) => PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find((definition) => definition.id === room.id)?.unlockFacilityLevel === 3)).toHaveLength(7);
+-    expect(view.staffRoles.filter((role) => PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.staffRoleDefinitions.find((definition) => definition.id === role.id)?.unlockFacilityLevel === 3)).toHaveLength(5);
++    expect(view.roomOptions.filter((room) => PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.find((definition) => definition.id === room.id)?.unlockFacilityLevel === 3)).toHaveLength(8);
++    expect(view.staffRoles.filter((role) => PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.staffRoleDefinitions.find((definition) => definition.id === role.id)?.unlockFacilityLevel === 3)).toHaveLength(6);
+     expect(view.progression.nextLevelLabel).toBe("Level 4 preview");
+   });
+ 
+diff --git a/apps/player/src/session/surgeryCenterServicePreviews.test.ts b/apps/player/src/session/surgeryCenterServicePreviews.test.ts
+index 80af9127..1198ebb2 100644
+--- a/apps/player/src/session/surgeryCenterServicePreviews.test.ts
++++ b/apps/player/src/session/surgeryCenterServicePreviews.test.ts
+@@ -3,6 +3,7 @@ import {
+   createInitialGameState,
+   deserializeGameState,
+   gameReducer,
++  getAnswerChoiceServicePreview,
+   getCurrentQuestion,
+   PROTOTYPE_DOMAIN_CONTEXT,
+   serializeGameState,
+@@ -50,19 +51,18 @@ describe("surgery-center test timing previews", () => {
+     ).toBe(false);
+     const view = chart(state, "encounter.sc.thyroid");
+     for (const choice of view.answerChoices) {
+-      expect(choice.detailLabel).toBe("Estimated test wait (game time)");
+-      expect(choice.etaLabel).toBeDefined();
++      const preview = getAnswerChoiceServicePreview(state, "encounter.sc.thyroid", choice.id)!;
++      const total = preview.durationTicks!;
++      expect(choice.detailLabel).toContain("game time");
++      expect(choice.etaLabel).toBe(total >= 60 && total % 60 === 0
++        ? `${total / 60} hour${total === 60 ? "" : "s"}` : `${total} min`);
+     }
+     for (const choice of view.decisionSteps!.find((step) => step.current)!.answerChoices) {
+-      expect(choice.detailLabel).toBe("Estimated test wait (game time)");
+-      expect(choice.etaLabel).toBeDefined();
++      expect(choice.detailLabel).toEqual(view.answerChoices.find((entry) => entry.id === choice.id)?.detailLabel);
++      expect(choice.etaLabel).toEqual(view.answerChoices.find((entry) => entry.id === choice.id)?.etaLabel);
+     }
+-    expect(Object.fromEntries(view.answerChoices.map((choice) => [choice.id, choice.etaLabel]))).toEqual({
+-      thyroid_fna_1: "3 hours",
+-      repeat_tsh_1: "1 hour",
+-      radionuclide_scan_1: "3 hours",
+-      repeat_ultrasound_1: "150 min",
+-    });
++    expect(view.answerChoices.find((choice) => choice.id === "thyroid_fna_1")?.detailLabel).toContain("Pathology 1 hour offsite");
++    expect(view.answerChoices.find((choice) => choice.id === "repeat_tsh_1")?.detailLabel).toContain("Collection 2 hours offsite");
+   });
+ 
+   it("ignores the retired concealment flag and preserves the scheduled external service after an answer", () => {
+@@ -70,7 +70,7 @@ describe("surgery-center test timing previews", () => {
+     const encounterId = "encounter.sc.thyroid";
+     const node = state.encounters[encounterId]!.frozenCase.decisionNodes[0]!;
+     node.showServicePreviews = undefined;
+-    expect(chart(state, encounterId).answerChoices.find((choice) => choice.id === "thyroid_fna_1")?.detailLabel).toBe("Estimated test wait (game time)");
++    expect(chart(state, encounterId).answerChoices.find((choice) => choice.id === "thyroid_fna_1")?.detailLabel).toContain("Estimated total (game time");
+ 
+     node.showServicePreviews = false;
+     state = gameReducer(state, {
+diff --git a/apps/player/src/session/diagnosticTimingPresentation.ts b/apps/player/src/session/diagnosticTimingPresentation.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/player/src/session/diagnosticTimingPresentation.ts
+@@ -0,0 +1,118 @@
++import type {
++  DiagnosticOrderPhase,
++  getAnswerChoiceServicePreview,
++  getDiagnosticOrderTiming,
++} from "@gamify-surgery/game-domain";
++
++type ChoicePreview = ReturnType<typeof getAnswerChoiceServicePreview>;
++export type DiagnosticTimingView = NonNullable<ReturnType<typeof getDiagnosticOrderTiming>>;
++type DurationFormatter = (minutes: number) => string;
++
++const phaseLabels: Record<DiagnosticOrderPhase["kind"], string> = {
++  collection: "Collection",
++  acquisition: "Image acquisition",
++  preparation: "Preparation",
++  procedure: "Procedure",
++  recovery: "Recovery",
++  interpretation: "Interpretation",
++  laboratory_processing: "Laboratory processing",
++  pathology: "Pathology",
++  retained: "Remaining outside work",
++  patient_departure: "Travel to outside service",
++  patient_return: "Return to Front Desk",
++};
++
++/** Format the shared quote; never add phase durations to obtain another total. */
++export function diagnosticChoiceTimingPresentation(
++  preview: ChoicePreview,
++  now: number,
++  formatDuration: DurationFormatter,
++): { etaLabel?: string; detailLabel?: string } {
++  if (!preview) return {};
++  if (preview.kind === "no_test") return { etaLabel: "No test wait" };
++  const etaLabel = preview.durationTicks == null ? undefined : formatDuration(preview.durationTicks);
++  const plan = "diagnosticTiming" in preview ? preview.diagnosticTiming : undefined;
++  if (!plan) return { etaLabel, detailLabel: "Estimated test wait (game time)" };
++  const details = plan.phases.filter((phase) => phase.status !== "cancelled").map((phase) => {
++    if (phase.kind === "patient_departure" || phase.kind === "patient_return") {
++      return `${phaseLabels[phase.kind]} ${formatDuration(phase.forecast.walkingMinutes)}`;
++    }
++    const delays = [
++      ...(phase.forecast.queueMinutes > 0 ? [`${formatDuration(phase.forecast.queueMinutes)} queue`] : []),
++      ...(phase.forecast.walkingMinutes > 0 ? [`${formatDuration(phase.forecast.walkingMinutes)} walking`] : []),
++    ];
++    return `${phaseLabels[phase.kind]} ${formatDuration(phase.durationMinutes)} ${phase.mode === "local" ? "onsite" : "offsite"}${delays.length ? ` (${delays.join(", ")})` : ""}`;
++  });
++  const result = Math.max(0, plan.resultReady.forecastAtTick - now);
++  const visual = plan.visualResultReady ? Math.max(0, plan.visualResultReady.forecastAtTick - now) : null;
++  if (visual !== null && preview.durationTicks !== null && visual < preview.durationTicks) {
++    details.push(`Visual findings estimated at ${formatDuration(visual)}`);
++  }
++  if (preview.durationTicks !== null && result < preview.durationTicks && result !== visual) {
++    details.push(`Result estimated at ${formatDuration(result)}`);
++  }
++  return { etaLabel, detailLabel: `Estimated total (game time; includes queues and walking). ${details.join("; ")}.` };
++}
++
++/** Reached result clocks control prose visibility; forecasts only describe waits. */
++export function diagnosticPendingPresentation(
++  timing: DiagnosticTimingView,
++  resultNarrative: string,
++  formatDuration: DurationFormatter,
++) {
++  const unfinished = timing.phases.filter((phase) => phase.status !== "completed" && phase.status !== "cancelled");
++  const pathology = timing.phases.filter((phase) => phase.kind === "pathology" && phase.status !== "cancelled");
++  const pathologyPending = pathology.some((phase) => phase.status !== "completed");
++  const externalPatientWork = unfinished.some((phase) => phase.mode === "external" &&
++    ["collection", "acquisition", "procedure", "retained"].includes(phase.kind));
++  const heading = timing.resultReady ? "Result available"
++    : timing.visualResultReady ? "Visual findings available" : "Diagnostic work in progress";
++  const clauses = [timing.resultReady
++    ? resultNarrative || "The result is available."
++    : timing.visualResultReady ? "Visual findings are available; the complete result is pending." : "The result is pending."];
++  if (!timing.careComplete) {
++    clauses.push("Patient care and return are still in progress. The next decision waits for care completion.");
++  } else if (!timing.resultReady) {
++    clauses.push("Patient care is complete; awaiting the result.");
++  } else if (pathologyPending) {
++    clauses.push("Patient care is complete; collected pathology continues separately.");
++  }
++  if (timing.blocked) clauses.push("Waiting for compatible room or staff capacity; the full time estimate is unavailable.");
++  const phasesToShow = timing.phases.filter((phase) => phase.status !== "cancelled" &&
++    (phase.status !== "completed" || phase.kind === "pathology"));
++  const phaseDetails = phasesToShow.map((phase) => {
++    const location = phase.mode === "local" ? "onsite" : "offsite";
++    if (phase.status === "completed") return `${phase.label} (${location}): complete`;
++    const progress = phase.remainingTicks === null ? "waiting for capacity"
++      : `${formatDuration(phase.remainingTicks)} remaining`;
++    const delays = [
++      ...(phase.queueMinutes > 0 ? [`${formatDuration(phase.queueMinutes)} queue`] : []),
++      ...(phase.walkingMinutes > 0 ? [`${formatDuration(phase.walkingMinutes)} walking`] : []),
++    ];
++    return `${phase.label} (${location}): ${progress}${delays.length ? ` (${delays.join(", ")})` : ""}`;
++  });
++  if (phaseDetails.length) clauses.push(`Game time: ${phaseDetails.join("; ")}.`);
++  return {
++    heading,
++    body: clauses.join(" "),
++    etaLabel: timing.blocked || timing.totalRemainingTicks === null || unfinished.length === 0 ? undefined
++      : `${formatDuration(timing.totalRemainingTicks)} remaining (game time)`,
++    hasPendingWork: unfinished.length > 0,
++    pathologyPending,
++    statusLabel: timing.resultReady && !timing.careComplete ? "Result available; care in progress"
++      : timing.blocked ? "Diagnostic work waiting for capacity"
++      : timing.visualResultReady && !timing.resultReady ? "Visual findings available; result pending"
++      : timing.resultReady && pathologyPending ? "Result available; pathology in progress"
++      : timing.resultReady ? "Result available"
++      : timing.careComplete && !timing.resultReady ? "Awaiting result processing"
++      : externalPatientWork ? "External service in progress"
++      : "Diagnostic care in progress",
++  };
++}
++
++/** The owner's fixed diagnostic phase times do not receive generic room speed boosts. */
++export function roomUsesFixedDiagnosticTiming(roomDefinitionId: string): boolean {
++  return ["room.xray", "room.ultrasound", "room.ct", "room.imaging_control", "room.minor_procedure",
++    "room.phlebotomy", "room.endoscopy", "room.periop_recovery", "room.ambulatory_or", "room.laboratory", "room.reading"]
++    .includes(roomDefinitionId);
++}
+diff --git a/apps/player/src/session/diagnosticTimingPresentation.test.ts b/apps/player/src/session/diagnosticTimingPresentation.test.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/player/src/session/diagnosticTimingPresentation.test.ts
+@@ -0,0 +1,124 @@
++import { describe, expect, it } from "vitest";
++import type { DiagnosticOrderPhase, DiagnosticOrderPlan, getAnswerChoiceServicePreview } from "@gamify-surgery/game-domain";
++import { diagnosticChoiceTimingPresentation, diagnosticPendingPresentation, type DiagnosticTimingView } from "./diagnosticTimingPresentation";
++
++const duration = (value: number) => `${value} min`;
++const phase = (id: string, kind: DiagnosticOrderPhase["kind"], minutes: number, end: number,
++  overrides: Partial<DiagnosticOrderPhase> = {}): DiagnosticOrderPhase => ({
++  id, componentId: null, kind, mode: "local", patientPresent: kind !== "pathology", durationMinutes: minutes,
++  dependsOn: [], requirement: null, resource: null, operationPhaseId: null, serviceOperationId: null,
++  status: "pending", remainingMinutes: minutes, startedAtTick: null, completedAtTick: null,
++  forecast: { readyAtTick: end - minutes, startsAtTick: end - minutes, endsAtTick: end, queueMinutes: 0,
++    walkingMinutes: 0, patientPath: [], employeePaths: [], founderPath: [], tilesPerTick: 1 }, ...overrides,
++});
++const plan = (): DiagnosticOrderPlan => ({
++  version: "diagnostic-order.v1", timingVersion: "diagnostic-timing.v1", orderId: "order.test", encounterId: "encounter.test",
++  createdAtTick: 100, execution: "supported", sources: [],
++  phases: [phase("procedure", "procedure", 45, 145), phase("recovery", "recovery", 60, 205),
++    phase("pathology", "pathology", 60, 235, { mode: "external", forecast: { readyAtTick: 145, startsAtTick: 175,
++      endsAtTick: 235, queueMinutes: 30, walkingMinutes: 0, patientPath: [], employeePaths: [], founderPath: [], tilesPerTick: 1 } })],
++  resultReady: { afterPhaseIds: ["procedure"], forecastAtTick: 145, reachedAtTick: null },
++  visualResultReady: { afterPhaseIds: ["procedure"], forecastAtTick: 145, reachedAtTick: null },
++  careComplete: { afterPhaseIds: ["recovery"], forecastAtTick: 205, reachedAtTick: null },
++});
++const preview = (frozen = plan()): ReturnType<typeof getAnswerChoiceServicePreview> => ({
++  kind: "test", answerChoiceId: "test", serviceId: null, serviceDisplayName: "Test", routeId: null,
++  routeDisplayName: null, timingProfileId: null, durationTicks: 135, diagnosticTiming: frozen,
++});
++const timing = (overrides: Partial<DiagnosticTimingView> = {}): DiagnosticTimingView => ({
++  orderId: "order.test", blocked: false, totalRemainingTicks: 60, resultReady: false, resultRemainingTicks: 30,
++  visualResultReady: false, visualResultRemainingTicks: 30, careComplete: false, careRemainingTicks: 60,
++  phases: [ { id: "recovery", kind: "recovery", label: "Recovery", mode: "local", durationMinutes: 60,
++    status: "active", queueMinutes: 0, walkingMinutes: 0, remainingTicks: 60 },
++    { id: "pathology", kind: "pathology", label: "Pathology", mode: "external", durationMinutes: 60,
++      status: "active", queueMinutes: 0, walkingMinutes: 0, remainingTicks: 30 } ], ...overrides,
++});
++
++describe("shared diagnostic timing presentation", () => {
++  it("uses the quoted total while showing overlapping work, queue delays and earlier visual findings", () => {
++    const view = diagnosticChoiceTimingPresentation(preview(), 100, duration);
++    expect(view.etaLabel).toBe("135 min");
++    expect(view.detailLabel).toContain("includes queues and walking");
++    expect(view.detailLabel).toContain("Recovery 60 min onsite");
++    expect(view.detailLabel).toContain("Pathology 60 min offsite (30 min queue)");
++    expect(view.detailLabel).toContain("Visual findings estimated at 45 min");
++    expect(view.detailLabel).not.toContain("Result estimated");
++  });
++
++  it("shows patient walking and an earlier complete result without guessing from a choice label", () => {
++    const frozen = plan();
++    frozen.visualResultReady = null;
++    frozen.phases.push(phase("return", "patient_return", 0, 210, { forecast: {
++      readyAtTick: 205, startsAtTick: 210, endsAtTick: 210, queueMinutes: 0, walkingMinutes: 5,
++      patientPath: [], employeePaths: [], founderPath: [], tilesPerTick: 1,
++    } }));
++    const view = diagnosticChoiceTimingPresentation(preview(frozen), 100, duration);
++    expect(view.detailLabel).toContain("Return to Front Desk 5 min");
++    expect(view.detailLabel).toContain("Result estimated at 45 min");
++  });
++
++  it("preserves legacy quotes, no-test labels and unavailable estimates", () => {
++    const legacy = { kind: "test" as const, answerChoiceId: "test", serviceId: null, serviceDisplayName: "Test",
++      routeId: null, routeDisplayName: null, timingProfileId: "timing.test.upper_endoscopy", durationTicks: 120 };
++    expect(diagnosticChoiceTimingPresentation(legacy, 100, duration)).toEqual({ etaLabel: "120 min", detailLabel: "Estimated test wait (game time)" });
++    expect(diagnosticChoiceTimingPresentation({ kind: "test", answerChoiceId: "test", serviceId: null, serviceDisplayName: "Test",
++      routeId: null, routeDisplayName: null, timingProfileId: null, diagnosticTiming: null, durationTicks: null }, 100, duration).etaLabel).toBeUndefined();
++    expect(diagnosticChoiceTimingPresentation({ kind: "no_test", answerChoiceId: "observe", serviceId: null,
++      serviceDisplayName: null, routeId: null, routeDisplayName: null, durationTicks: null, timingProfileId: null }, 100, duration))
++      .toEqual({ etaLabel: "No test wait" });
++  });
++
++  it("shows an actual early result while keeping recovery, pathology and the next-decision gate separate", () => {
++    const view = diagnosticPendingPresentation(timing({ resultReady: true, resultRemainingTicks: 0, visualResultReady: true }),
++      "Existing visual result narrative.", duration);
++    expect(view.heading).toBe("Result available");
++    expect(view.body).toContain("Existing visual result narrative.");
++    expect(view.body).toContain("The next decision waits for care completion");
++    expect(view.body).toContain("Recovery (onsite): 60 min remaining");
++    expect(view.body).toContain("Pathology (offsite): 30 min remaining");
++    expect(view.etaLabel).toBe("60 min remaining (game time)");
++  });
++
++  it("does not reveal biopsy prose at a visual milestone or from an elapsed forecast", () => {
++    const visual = diagnosticPendingPresentation(timing({ visualResultReady: true }), "Unreleased biopsy findings.", duration);
++    expect(visual.body).toContain("Visual findings are available");
++    expect(visual.body).not.toContain("Unreleased biopsy findings");
++    const forecastOnly = diagnosticPendingPresentation(timing({ resultRemainingTicks: 0, visualResultRemainingTicks: 0 }),
++      "Unreleased biopsy findings.", duration);
++    expect(forecastOnly.heading).toBe("Diagnostic work in progress");
++    expect(forecastOnly.body).not.toContain("Unreleased biopsy findings");
++  });
++
++  it("suppresses a finite full ETA when capacity is missing and retains already-ready results", () => {
++    const blocked = timing({ blocked: true, totalRemainingTicks: null, resultReady: true, resultRemainingTicks: 0 });
++    blocked.phases[1]!.remainingTicks = null;
++    blocked.phases[1]!.status = "queued";
++    const view = diagnosticPendingPresentation(blocked, "Existing returned finding.", duration);
++    expect(view.etaLabel).toBeUndefined();
++    expect(view.body).toContain("Existing returned finding.");
++    expect(view.body).toContain("full time estimate is unavailable");
++    expect(view.body).toContain("Pathology (offsite): waiting for capacity");
++  });
++
++  it("keeps collected background pathology visible after patient care and clinical delivery", () => {
++    const background = timing({ resultReady: true, resultRemainingTicks: 0, careComplete: true, careRemainingTicks: 0, totalRemainingTicks: 30 });
++    background.phases[0]!.status = "completed";
++    background.phases[0]!.remainingTicks = 0;
++    const view = diagnosticPendingPresentation(background, "Existing returned visual finding.", duration);
++    expect(view.hasPendingWork).toBe(true);
++    expect(view.pathologyPending).toBe(true);
++    expect(view.body).toContain("collected pathology continues separately");
++    expect(view.body).not.toContain("next decision waits");
++    expect(view.etaLabel).toBe("30 min remaining (game time)");
++  });
++
++  it("shows completed pathology without retaining a pending countdown", () => {
++    const completed = timing({ resultReady: true, careComplete: true, totalRemainingTicks: 0 });
++    completed.phases.forEach((entry) => { entry.status = "completed"; entry.remainingTicks = 0; });
++    const view = diagnosticPendingPresentation(completed, "Existing result.", duration);
++    expect(view.hasPendingWork).toBe(false);
++    expect(view.pathologyPending).toBe(false);
++    expect(view.etaLabel).toBeUndefined();
++    expect(view.body).toContain("Pathology (offsite): complete");
++  });
++});
+diff --git a/apps/player/src/session/diagnosticTimingViewModels.test.ts b/apps/player/src/session/diagnosticTimingViewModels.test.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/player/src/session/diagnosticTimingViewModels.test.ts
+@@ -0,0 +1,205 @@
++import { describe, expect, it } from "vitest";
++import {
++  PROTOTYPE_DOMAIN_CONTEXT,
++  createInitialGameState,
++  gameReducer,
++  getAnswerChoiceServicePreview,
++  getDiagnosticOrderTiming,
++  type GameState,
++} from "@gamify-surgery/game-domain";
++import { createPrototypePlayerView } from "./viewModels";
++
++function actionable(caseId: string) {
++  const state = createInitialGameState();
++  state.facilityLevel = 3;
++  state.cash = 10_000; state.cashCents = 1_000_000;
++  state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
++  const encounter = structuredClone(Object.values(state.encounters)[0]!);
++  encounter.id = "encounter.timing.presentation";
++  encounter.frozenCase = structuredClone(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find((entry) => entry.id === caseId)!);
++  encounter.arrivalClass = "routine"; encounter.checkInStatus = "checked_in";
++  encounter.lifecycle = "active_action_required"; encounter.currentNodeIndex = 0;
++  encounter.patientMovement = null; encounter.patientLocation = { ...state.environment.founderLocation };
++  encounter.assignedRoomInstanceId = null; encounter.terminalFeedback = null;
++  encounter.steps = encounter.frozenCase.decisionNodes.map((node, nodeIndex) => ({
++    nodeIndex, decisionNodeId: node.id, questionVariantId: node.questionVariantId, primaryConceptId: node.primaryConceptId,
++    status: nodeIndex === 0 ? "action_required" : "locked", answer: null, result: null,
++  }));
++  state.encounters = { [encounter.id]: encounter };
++  state.openChartEncounterId = encounter.id;
++  return state;
++}
++
++function accepted(caseId: string) {
++  let state = actionable(caseId);
++  const encounter = Object.values(state.encounters)[0]!;
++  const node = encounter.frozenCase.decisionNodes[0]!;
++  state = gameReducer(state, { type: "SUBMIT_ANSWER", operationId: "timing.presentation.answer", encounterId: encounter.id,
++    decisionNodeId: node.id, answerChoiceId: node.answerChoices.find((choice) => choice.isCorrect)!.id });
++  state = gameReducer(state, { type: "ACKNOWLEDGE_DECISION_FEEDBACK", operationId: "timing.presentation.ack",
++    encounterId: encounter.id, decisionNodeId: node.id });
++  expect(state.operationReceipts["timing.presentation.ack"]?.status).toBe("applied");
++  return state;
++}
++
++function procedureSnapshot(state: GameState) {
++  const encounter = Object.values(state.encounters)[0]!;
++  const plan = encounter.pendingResult!.diagnosticTiming!;
++  const procedure = plan.phases.find((phase) => phase.kind === "procedure")!;
++  state.facilityTick = procedure.forecast.endsAtTick;
++  for (const phase of plan.phases) {
++    if (phase.forecast.endsAtTick > state.facilityTick || phase.kind === "pathology") continue;
++    phase.status = "completed"; phase.remainingMinutes = 0;
++    phase.startedAtTick = phase.forecast.startsAtTick; phase.completedAtTick = phase.forecast.endsAtTick;
++  }
++  plan.visualResultReady!.reachedAtTick = state.facilityTick;
++  if (plan.resultReady.afterPhaseIds.includes(procedure.id)) plan.resultReady.reachedAtTick = state.facilityTick;
++  const pathology = plan.phases.find((phase) => phase.kind === "pathology");
++  if (pathology) { pathology.status = "active"; pathology.startedAtTick = state.facilityTick; }
++  encounter.patientMovement = null; encounter.patientLocation = null;
++  encounter.steps[0]!.result = structuredClone(encounter.pendingResult);
++  return { encounter, plan };
++}
++
++function view(state: GameState) {
++  return createPrototypePlayerView(state, Object.values(state.encounters)[0]!.id, false, null).chart!;
++}
++
++describe("diagnostic chart and facility presentation", () => {
++  it("uses each shared total in both answer lists, including distractors and walking", () => {
++    const state = actionable("case.esophageal-dysphagia.bread-sticking");
++    const encounter = Object.values(state.encounters)[0]!;
++    const before = JSON.stringify(state);
++    const chart = view(state);
++    const stepChoices = chart.decisionSteps!.find((step) => step.current)!.answerChoices;
++    for (const choice of chart.answerChoices) {
++      const preview = getAnswerChoiceServicePreview(state, encounter.id, choice.id)!;
++      const total = preview.durationTicks!;
++      expect(choice.etaLabel).toBe(total >= 60 && total % 60 === 0
++        ? `${total / 60} hour${total === 60 ? "" : "s"}` : `${total} min`);
++      expect(stepChoices.find((entry) => entry.id === choice.id)).toMatchObject({ etaLabel: choice.etaLabel, detailLabel: choice.detailLabel });
++    }
++    expect(chart.answerChoices.find((choice) => choice.id === "egd_1")?.detailLabel).toContain("Pathology");
++    expect(chart.answerChoices.find((choice) => choice.id === "egd_1")?.detailLabel).toContain("Travel");
++    expect(JSON.stringify(state)).toBe(before);
++  });
++
++  it("shows a reached visual result during return while retaining the next-decision care gate", () => {
++    const state = accepted("case.colorectal.routine-screen");
++    const { encounter } = procedureSnapshot(state);
++    const chart = view(state);
++    expect(chart.pendingLabel).toContain(encounter.pendingResult!.resultNarrative);
++    expect(chart.decisionSteps![0]!.resultBody).toContain(encounter.pendingResult!.resultNarrative);
++    expect(chart.pendingLabel).toContain("Pathology (offsite)");
++    expect(chart.pendingLabel).toContain("next decision waits for care completion");
++    expect(chart.questionPrompt).toBeUndefined();
++    expect(chart.answerChoices).toEqual([]);
++    expect(encounter.currentNodeIndex).toBe(0);
++  });
++
++  it("keeps background pathology visible after visual delivery unlocks the next decision", () => {
++    const state = accepted("case.colorectal.routine-screen");
++    const { encounter, plan } = procedureSnapshot(state);
++    for (const id of plan.careComplete.afterPhaseIds) {
++      const phase = plan.phases.find((entry) => entry.id === id)!;
++      phase.status = "completed"; phase.completedAtTick = state.facilityTick; phase.remainingMinutes = 0;
++    }
++    plan.careComplete.reachedAtTick = state.facilityTick;
++    encounter.pendingResult!.deliveredAtTick = state.facilityTick;
++    encounter.steps[0]!.status = "completed"; encounter.steps[0]!.result = structuredClone(encounter.pendingResult);
++    encounter.currentNodeIndex = 1; encounter.steps[1]!.status = "action_required";
++    encounter.lifecycle = "active_action_required"; encounter.patientLocation = { ...state.environment.founderLocation };
++    const chart = view(state);
++    expect(chart.questionPrompt).toBeDefined();
++    expect(chart.pendingLabel).toContain("collected pathology continues separately");
++    expect(chart.pendingPatientIsAway).toBe(false);
++    expect(chart.decisionSteps![0]!.collapsedResultLabel).toContain("Collected pathology pending");
++    expect(chart.decisionSteps![0]!.resultBody).toContain("Pathology (offsite)");
++    expect(chart.etaLabel).toContain("remaining (game time)");
++  });
++
++  it("does not reveal combined biopsy prose when only the visual milestone is reached", () => {
++    const state = accepted("case.esophageal-dysphagia.bread-sticking");
++    const { encounter } = procedureSnapshot(state);
++    const chart = view(state);
++    expect(chart.pendingLabel).toContain("Visual findings are available");
++    expect(chart.pendingLabel).not.toContain(encounter.pendingResult!.resultNarrative);
++    expect(chart.decisionSteps![0]!.resultBody).not.toContain(encounter.pendingResult!.resultNarrative);
++    expect(chart.questionPrompt).toBeUndefined();
++  });
++
++  it("shows no finite total countdown when a frozen local pathology phase loses capacity", () => {
++    const state = accepted("case.esophageal-dysphagia.bread-sticking");
++    const { encounter, plan } = procedureSnapshot(state);
++    const pathology = plan.phases.find((phase) => phase.kind === "pathology")!;
++    pathology.mode = "local"; pathology.status = "queued"; pathology.startedAtTick = null; pathology.resource = null;
++    pathology.requirement = { roomDefinitionId: "room.laboratory", staffRoleDefinitionIds: ["staff.laboratory_technician"],
++      providerRoleDefinitionIds: [], founderEligible: false, stationKind: null };
++    encounter.steps[0]!.result = structuredClone(encounter.pendingResult);
++    expect(getDiagnosticOrderTiming(state, encounter.id)?.blocked).toBe(true);
++    const chart = view(state);
++    expect(chart.etaLabel).toBeUndefined();
++    expect(chart.decisionSteps![0]!.etaLabel).toBeUndefined();
++    expect(chart.pendingLabel).toContain("full time estimate is unavailable");
++    expect(chart.pendingLabel).toContain("Pathology (onsite): waiting for capacity");
++  });
++
++  it("shows a terminal endoscopy order after an earlier laboratory result has been delivered", () => {
++    let state = accepted("case.iron-deficiency.adult-man-fatigue");
++    const encounter = Object.values(state.encounters)[0]!;
++    const previousResult = encounter.pendingResult!;
++    const previousPlan = previousResult.diagnosticTiming!;
++    state.facilityTick = Math.max(...previousPlan.phases.map((phase) => phase.forecast.endsAtTick));
++    for (const phase of previousPlan.phases) {
++      phase.status = "completed"; phase.remainingMinutes = 0;
++      phase.startedAtTick = phase.forecast.startsAtTick; phase.completedAtTick = phase.forecast.endsAtTick;
++    }
++    previousPlan.resultReady.reachedAtTick = state.facilityTick;
++    previousPlan.careComplete.reachedAtTick = state.facilityTick;
++    previousResult.deliveredAtTick = state.facilityTick;
++    encounter.steps[0]!.status = "completed"; encounter.steps[0]!.result = structuredClone(previousResult);
++    encounter.currentNodeIndex = 1; encounter.steps[1]!.status = "action_required";
++    encounter.lifecycle = "active_action_required";
++    encounter.patientLocation = { ...state.environment.founderLocation }; encounter.patientMovement = null;
++    const node = encounter.frozenCase.decisionNodes[1]!;
++    state = gameReducer(state, { type: "SUBMIT_ANSWER", operationId: "timing.presentation.terminal.answer",
++      encounterId: encounter.id, decisionNodeId: node.id, answerChoiceId: "bidirectional_1" });
++    expect(state.operationReceipts["timing.presentation.terminal.answer"]?.status).toBe("applied");
++    if (state.encounters[encounter.id]!.steps[1]!.status === "feedback_pending") {
++      state = gameReducer(state, { type: "ACKNOWLEDGE_DECISION_FEEDBACK", operationId: "timing.presentation.terminal.ack",
++        encounterId: encounter.id, decisionNodeId: node.id });
++      expect(state.operationReceipts["timing.presentation.terminal.ack"]?.status).toBe("applied");
++    }
++    const currentEncounter = state.encounters[encounter.id]!;
++    expect(currentEncounter.pendingResult?.diagnosticTiming?.orderId).toBe(previousPlan.orderId);
++    expect(getDiagnosticOrderTiming(state, encounter.id)?.orderId).toBe(currentEncounter.terminalTestOrder?.diagnosticTiming?.orderId);
++    expect(currentEncounter.terminalTestOrder?.diagnosticTiming?.orderId).not.toBe(previousPlan.orderId);
++    const chart = view(state);
++    expect(chart.pendingLabel).toContain("The result is pending.");
++    expect(chart.pendingLabel).not.toContain(previousResult.resultNarrative);
++    expect(chart.etaLabel).toContain("remaining (game time)");
++  });
++
++  it("presents the approved reading-room prices, four-reader capacity and functional upgrade benefits", () => {
++    const state = createInitialGameState(); state.facilityLevel = 3; state.cash = 10_000; state.cashCents = 1_000_000;
++    let facility = createPrototypePlayerView(state, null, false, null);
++    expect(facility.roomOptions.find((room) => room.id === "room.reading")).toMatchObject({
++      costLabel: "$1,800", upkeepLabel: "$24 upkeep / hr", footprintLabel: "4 × 4 tiles · 4 reading positions",
++    });
++    expect(facility.staffOptions.find((role) => role.id === "staff.radiologist")).toMatchObject({
++      costLabel: "$300 hire", salaryLabel: "$26 salary / hr", blockedReason: "Build a Reading Room to add four radiologist positions.",
++    });
++    state.rooms.push({ id: "reading.presentation", roomDefinitionId: "room.reading", x: 20, y: 12,
++      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++    state.rooms.push({ id: "laboratory.presentation", roomDefinitionId: "room.laboratory", x: 26, y: 12,
++      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++    facility = createPrototypePlayerView(state, null, false, null, true, "laboratory.presentation");
++    expect(facility.staffRoles.find((role) => role.id === "staff.radiologist")).toMatchObject({
++      maximumCount: 4, staffingGuidance: expect.stringContaining("separate queue and reads one study at a time"),
++    });
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).toContain("diagnostic phase times stay fixed");
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toContain("faster");
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toContain("fixed fixtures");
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).toContain("satisfaction");
++  });
++});

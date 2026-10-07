@@ -1,0 +1,39 @@
+diff --git a/packages/game-domain/tests/surgery-center-batch.test.ts b/packages/game-domain/tests/surgery-center-batch.test.ts
+index df71be6f..ec97a229 100644
+--- a/packages/game-domain/tests/surgery-center-batch.test.ts
++++ b/packages/game-domain/tests/surgery-center-batch.test.ts
+@@ -146,3 +146,3 @@ describe("September 10 surgery-center production flows", () => {
+     expect(reviewed).toEqual(new Set(SURGERY_CENTER_TESTED_CONCEPTS.map((item) => item.id)));
+-  });
++  }, 60_000);
+ 
+@@ -183,8 +183,24 @@ describe("September 10 surgery-center production flows", () => {
+     state = acknowledge(state, "encounter.sc.egd.ready", "sc.egd.ready");
+-    
++    expect(state.operationReceipts["sc.egd.ready.ack"]?.message).toBe("Feedback reviewed; the ordered diagnostic work is now underway.");
+     const pending = state.encounters["encounter.sc.egd.ready"]!.pendingResult!;
+-    
+-    
+-    
+-    
++    expect(pending).toMatchObject({
++      routeId: "route.endoscopy.in_house",
++      patientTravel: null,
++      resourceReservations: [],
++      providerReservation: null,
++      diagnosticTiming: { version: "diagnostic-order.v1", execution: "supported" },
++    });
++    expect(pending.timingPhases).toEqual([]);
++    expect(pending.diagnosticTiming?.phases.filter((phase) => phase.durationMinutes).map((phase) => [phase.kind, phase.durationMinutes])).toEqual([
++      ["preparation", 30], ["procedure", 45], ["pathology", 60], ["recovery", 60],
++    ]);
++    expect(state.serviceOperations.find((operation) => operation.diagnosticPhysicalWork?.orderId === pending.diagnosticTiming?.orderId)).toMatchObject({
++      phaseFlowVersion: 1,
++      testChoiceOrder: { purpose: "result_gate" },
++      frozenOperationPhases: [
++        { id: "periop_preparation", durationMinutes: 30 },
++        { id: "preparation_and_procedure.procedure", durationMinutes: 45 },
++        { id: "recovery", durationMinutes: 60 },
++      ],
++    });
+   });

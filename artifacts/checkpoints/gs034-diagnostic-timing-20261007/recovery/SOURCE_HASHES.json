@@ -1,0 +1,1476 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs034-diagnostic-timing-20261007",
+  "recoveryOnly": true,
+  "cleanRunnableCheckout": false,
+  "fullSharedBaselinesIncluded": false,
+  "inferenceMethod": "Exact current-minus-attributable-GS034 edit reversals retain concurrent changes. Current assertion additions do not invent earlier numeric expectations. Historical balance/UI patches retain their accepted milestone contracts. All byte comparisons are independent, not a clean runnable restore chain.",
+  "preparationHead": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+  "initialPreparationHead": "64682fceaaae6d335b3c5b6ca5c5c2b4de85f9c1",
+  "intakeHead": "2eab83fbf96648ee011f2b0cb2cd4e33f91f94ca",
+  "patches": [
+    {
+      "targetPath": "packages/game-domain/src/types.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__types.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__types.ts",
+      "scope": "Versioned order/resource/work/witness types, all four carriers and persistent reader seat; diagnostic-facing upgraded fee type is a GS038 dependency.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/domain-plan-baseline/packages/game-domain/src/types.ts",
+        "capturedComparatorSha256": "5fc234079bbe69dd9b1b42b90fbfd24a10a5f46fd39b9cc3386e7477268fe2c6",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "6a930e862382b1baac99fadfe666e0e34b285bd89a2d2d7a4a702ca3299619d8",
+      "baselineBytes": 53488,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 1666,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "8203ae9902ba03f25da19ffa204ea984825899311ecfad5add79dc541fe6f3e7",
+      "acceptedTargetBytes": 58421,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 1797,
+        "finalNewline": true
+      },
+      "patchSha256": "90ed5e12e989b0090c08160c107e796434f110cccf51df9b8692b75adb1e904e",
+      "patchBytes": 6161,
+      "hunks": [
+        "@@ -130,2 +130,124 @@ export interface GridPoint {",
+        "@@ -290,2 +412,3 @@ export interface SchedulerPins {",
+        "@@ -525,2 +648,4 @@ export type ServiceOperationStatus =",
+        "@@ -797,2 +922,3 @@ export interface EncounterState {",
+        "@@ -820,2 +946,3 @@ export interface EncounterState {",
+        "@@ -831,2 +958,3 @@ export interface EncounterState {",
+        "@@ -855,2 +983,3 @@ export interface EncounterState {",
+        "@@ -974,2 +1103,4 @@ export interface EmployeeState {"
+      ],
+      "changedLines": 131
+    },
+    {
+      "targetPath": "packages/game-domain/src/index.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__index.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__index.ts",
+      "scope": "Only three GS034 module exports.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/domain-plan-baseline/packages/game-domain/src/index.ts",
+        "capturedComparatorSha256": "0b7da1667f9314072e52def9a408ca951150ff79ff268db0bb5a29fd176d30cc",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "19e4b2836d8136834adedd66b8709cef688d1dcd134d529ef28d17eac58d3c1b",
+      "baselineBytes": 1390,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 39,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "8c12c6ae86e953ff60843881400229b4b10f4a72013f764fd7438a01d6c1b4d5",
+      "acceptedTargetBytes": 1513,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 42,
+        "finalNewline": true
+      },
+      "patchSha256": "b5ce9e87243b75e1c73bf15eb8351f4335395756e355b8c2984623d4672ac8be",
+      "patchBytes": 580,
+      "hunks": [
+        "@@ -15,2 +15,4 @@ export * from \"./displaced-routing\";",
+        "@@ -26,2 +28,3 @@ export * from \"./patientDemographics\";"
+      ],
+      "changedLines": 3
+    },
+    {
+      "targetPath": "packages/game-domain/src/persistence.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__persistence.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__persistence.ts",
+      "scope": "Strict additive marked-plan/physical/remote parsers, history/current carriers and reader seat; nonbillable/training compatibility guards only, no training or upgrade implementation.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/domain-plan-baseline/packages/game-domain/src/persistence.ts",
+        "capturedComparatorSha256": "bacaed899c3b6e163a91c963e6be5b90081e8d24592253c972ce44a8fcd31d7c",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "0408cf0935467ec81e78da2f7a6bd719593f24a966ec8bae46596e18a5d35ab4",
+      "baselineBytes": 193210,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 4324,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "60d43faf4cf8ebb2d0aed6161d979663844aeeaaae4a756088ab6bf8503f85bb",
+      "acceptedTargetBytes": 201010,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 4417,
+        "finalNewline": true
+      },
+      "patchSha256": "0e9bb9e021047114351f2840e957c0eb4e8339d39f4942139e3141f9c1f973ba",
+      "patchBytes": 13513,
+      "hunks": [
+        "@@ -10,2 +10,3 @@ import {",
+        "@@ -55,2 +56,3 @@ import { normalizeRetiredEncounterSummary } from \"./retired-encounters\";",
+        "@@ -98,2 +100,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {",
+        "@@ -781,2 +792,16 @@ function normalizeServiceOperations(",
+        "@@ -785,3 +810,3 @@ function normalizeServiceOperations(",
+        "@@ -800,4 +825,16 @@ function normalizeServiceOperations(",
+        "@@ -886,3 +923,27 @@ function normalizeServiceOperations(",
+        "@@ -890,6 +951,10 @@ function normalizeServiceOperations(",
+        "@@ -941,3 +1006,6 @@ function normalizeServiceOperations(",
+        "@@ -1023,2 +1091,4 @@ function normalizeServiceOperations(",
+        "@@ -1652,2 +1722,3 @@ function normalizePendingResult(",
+        "@@ -1656,2 +1727,3 @@ function normalizePendingResult(",
+        "@@ -1753,2 +1825,3 @@ function normalizePendingResult(",
+        "@@ -2045,2 +2118,3 @@ function normalizeEncounter(",
+        "@@ -2186,3 +2260,3 @@ function normalizeEncounter(",
+        "@@ -2270,2 +2344,3 @@ function normalizeEncounter(",
+        "@@ -2334,2 +2409,3 @@ function normalizeEncounter(",
+        "@@ -2340,2 +2416,3 @@ function normalizeEncounter(",
+        "@@ -2370,2 +2447,3 @@ function normalizeEncounter(",
+        "@@ -2373,2 +2451,3 @@ function normalizeEncounter(",
+        "@@ -2378,2 +2457,3 @@ function normalizeEncounter(",
+        "@@ -2418,2 +2498,3 @@ function normalizeEncounter(",
+        "@@ -2424,3 +2505,3 @@ function normalizeEncounter(",
+        "@@ -2449,2 +2530,3 @@ function normalizeEncounter(",
+        "@@ -2452,2 +2534,8 @@ function normalizeEncounter(",
+        "@@ -3022,2 +3110,6 @@ function migrateVersionTwo(",
+        "@@ -3130,2 +3222,3 @@ function migrateVersionTwo("
+      ],
+      "changedLines": 109
+    },
+    {
+      "targetPath": "packages/game-domain/src/service-operations.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__service-operations.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__service-operations.ts",
+      "scope": "Frozen diagnostic physical and nonbillable remote factories, queue/resource loss, actual witnesses and independent patient return; preserve all ordinary GS037/GS038 engine additions.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/domain-execution-baseline/packages/game-domain/src/service-operations.ts",
+        "capturedComparatorSha256": "c61acb85f7e6438d599a0094ea424ded45d818e59473d055e829e1cbe866c777",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "67cfc807bb1c03716f49406b93706d553f09782ceb1661796e29a36d27648c34",
+      "baselineBytes": 99981,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 2220,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "379b5cac447153c40c03b18c997376029f0f0b14655f4adddd86c88f9ebbb781",
+      "acceptedTargetBytes": 121768,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 2511,
+        "finalNewline": true
+      },
+      "patchSha256": "c8931b7e2c6db1b8eabb0cce04ca83757167a29b3356c3cde7087b9ecd38e830",
+      "patchBytes": 34935,
+      "hunks": [
+        "@@ -22,3 +22,6 @@ import { findCareAwareFacilityPath, pathEntersUnauthorizedProtectedRoom } from \"",
+        "@@ -30,3 +33,3 @@ import type {",
+        "@@ -67,2 +70,14 @@ function cloneOperationPhase(phase: ServiceOperationPhase): FrozenOperationPhase",
+        "@@ -241,2 +256,3 @@ function hasActiveClinicalResourcePhase(encounter: EncounterState, facilityTick:",
+        "@@ -640,3 +656,3 @@ function roomConflictsWithActiveOperation(",
+        "@@ -672,2 +688,3 @@ function availablePeriopBedReservation(",
+        "@@ -692,2 +709,3 @@ function availablePeriopBedReservation(",
+        "@@ -709,3 +727,3 @@ function availablePeriopBedReservation(",
+        "@@ -794,2 +812,85 @@ function commitPeriopCoveragePlan(",
+        "@@ -801,2 +902,6 @@ function tryReserve(",
+        "@@ -810,2 +915,3 @@ function tryReserve(",
+        "@@ -822,2 +928,3 @@ function tryReserve(",
+        "@@ -836,3 +943,4 @@ function tryReserve(",
+        "@@ -847,3 +955,4 @@ function tryReserve(",
+        "@@ -852,2 +961,3 @@ function tryReserve(",
+        "@@ -866,3 +976,3 @@ function tryReserve(",
+        "@@ -873,3 +983,3 @@ function tryReserve(",
+        "@@ -894,6 +1004,6 @@ function tryReserve(",
+        "@@ -916,3 +1026,3 @@ function tryReserve(",
+        "@@ -947,2 +1057,8 @@ function tryReserve(",
+        "@@ -1223,2 +1339,4 @@ function operationActorTarget(",
+        "@@ -1288,3 +1406,4 @@ function resourcesArrived(state: GameState, operation: ServiceOperationState, li",
+        "@@ -1292,3 +1411,3 @@ function resourcesArrived(state: GameState, operation: ServiceOperationState, li",
+        "@@ -1359,5 +1478,11 @@ function queueInterruptedCurrentPhase(",
+        "@@ -1374,3 +1499,3 @@ function queueInterruptedCurrentPhase(",
+        "@@ -1397,4 +1522,17 @@ export function interruptServiceOperationsForRoomSale(",
+        "@@ -1481,2 +1619,6 @@ export function interruptServiceOperationsForEmployeeDismissal(",
+        "@@ -1484,3 +1626,3 @@ export function interruptServiceOperationsForEmployeeDismissal(",
+        "@@ -1523,2 +1665,8 @@ function cancel(",
+        "@@ -1527,3 +1675,5 @@ function cancel(",
+        "@@ -1557,2 +1707,3 @@ function validateReservedResources(state: GameState, operation: ServiceOperation",
+        "@@ -1579,3 +1730,8 @@ function beginPhase(state: GameState, operation: ServiceOperationState, line: Se",
+        "@@ -1598,3 +1754,3 @@ function releaseCompletedPhase(",
+        "@@ -1706,2 +1862,3 @@ function beginPeriopBedDischarge(",
+        "@@ -1759,2 +1916,8 @@ function moveToNextPhase(",
+        "@@ -1770,3 +1933,5 @@ function moveToNextPhase(",
+        "@@ -1899,2 +2064,101 @@ export function startEncounterTestOperation(",
+        "@@ -1976,5 +2240,15 @@ export function advanceServiceOperations(",
+        "@@ -2056,2 +2330,12 @@ export function advanceServiceOperations(",
+        "@@ -2120,2 +2404,3 @@ export function advanceServiceOperations(",
+        "@@ -2141,10 +2426,10 @@ export function advanceServiceOperations(",
+        "@@ -2156,3 +2441,9 @@ export function advanceServiceOperations(",
+        "@@ -2192,7 +2483,7 @@ export function advanceServiceOperations("
+      ],
+      "changedLines": 357
+    },
+    {
+      "targetPath": "packages/game-domain/src/reducer.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__reducer.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__reducer.ts",
+      "scope": "New order preview/accept/ACK, diagnostic physical-care and walk guards, actual result delivery/tick hooks, reading hiring reconciliation; keep unrelated finance/training/founder work.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/execution-integration-baseline/reducer.ts",
+        "capturedComparatorSha256": "a97ab94207400fca7d08fec96adbd1b93605348c601df2daf5e634f093017cf5",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "8c5f79885d4aba18132c289dc27794ac2cdebd5abcdd72ad5b45a3ef469daead",
+      "baselineBytes": 386933,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 10971,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "305b632a0fb588ea0ee63b49e37453bdfd603cfcd62d156e9e95b28a6b84cf8d",
+      "acceptedTargetBytes": 398237,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 11132,
+        "finalNewline": true
+      },
+      "patchSha256": "71e4af65839103be32f568bfbc9139fc22426cd49e0d62915713ae316bb789a2",
+      "patchBytes": 26341,
+      "hunks": [
+        "@@ -142,2 +142,4 @@ import {",
+        "@@ -2073,2 +2075,47 @@ function getCurrentNode(encounter: EncounterState): DecisionNode | null {",
+        "@@ -2228,3 +2275,3 @@ function bindPendingResultRoomRevenue(state: GameState, context: DomainContext,",
+        "@@ -2482,2 +2529,3 @@ function creditEligibleServiceIncome(",
+        "@@ -3494,2 +3542,7 @@ function reduceOpenChart(",
+        "@@ -3809,2 +3862,7 @@ function reduceCloseChart(",
+        "@@ -3985,2 +4043,6 @@ function reduceSubmitAnswer(",
+        "@@ -4007,3 +4069,3 @@ function reduceSubmitAnswer(",
+        "@@ -4036,2 +4098,3 @@ function reduceSubmitAnswer(",
+        "@@ -4048,2 +4111,3 @@ function reduceSubmitAnswer(",
+        "@@ -4121,3 +4185,3 @@ function reduceSubmitAnswer(",
+        "@@ -4255,3 +4319,16 @@ function reduceSubmitAnswer(",
+        "@@ -4328,2 +4405,43 @@ function reduceSubmitAnswer(",
+        "@@ -4380,2 +4498,4 @@ function reduceSubmitAnswer(",
+        "@@ -4832,3 +4952,3 @@ function beginPendingResultTravel(",
+        "@@ -5116,2 +5236,3 @@ function maybeBeginOnsiteFrontDeskReturn(",
+        "@@ -5160,2 +5281,3 @@ function maybeBeginTestOnlyContinuationReturn(",
+        "@@ -5294,2 +5416,3 @@ function synchronizePendingResultServiceOperation(",
+        "@@ -5343,2 +5466,3 @@ function maybeBeginStagedResultReturn(",
+        "@@ -5610,2 +5734,21 @@ function reduceAcknowledgeDecisionFeedback(",
+        "@@ -7271,2 +7414,8 @@ function completePatientMovement(",
+        "@@ -8057,2 +8206,135 @@ function advanceServiceDepartureItineraries(state: GameState, context: DomainCon",
+        "@@ -8396,2 +8678,3 @@ function reduceAdvanceTick(",
+        "@@ -8403,2 +8686,3 @@ function reduceAdvanceTick(",
+        "@@ -8440,129 +8724,3 @@ function reduceAdvanceTick(",
+        "@@ -8728,2 +8886,4 @@ function reduceAdvanceTick(",
+        "@@ -9779,2 +9939,3 @@ function reduceHireStaff("
+      ],
+      "changedLines": 425
+    },
+    {
+      "targetPath": "packages/game-domain/src/selectors.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__selectors.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__selectors.ts",
+      "scope": "Same planner for current-choice quote and dynamic pending/history phase estimates; no employee-training selector implementation.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/execution-integration-baseline/selectors.ts",
+        "capturedComparatorSha256": "0c60c9d02d7fb19118ad45107fe4e9b0381bfad4882521de7e9ad1fc0c457ce5",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "f91fc6893c0f2def853975b2385e477a367a8f726fccbfd41f21112bf6418dbd",
+      "baselineBytes": 70888,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 2020,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "1c13efe9e07dcc6d90c997d5789c7230c41697e24958eb4f573f370953cd31db",
+      "acceptedTargetBytes": 75348,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 2077,
+        "finalNewline": true
+      },
+      "patchSha256": "c5c6d96e765e9219db8fb18815ba3d00a69845a15e24af54f499a094215570cc",
+      "patchBytes": 5446,
+      "hunks": [
+        "@@ -46,3 +46,5 @@ import { getServiceIncomeForRoute, getServiceIncomeLine } from \"@gamify-surgery/",
+        "@@ -952,2 +954,21 @@ export function getAnswerChoiceServicePreview(",
+        "@@ -1857,2 +1878,32 @@ export function getCurrentQuestion(",
+        "@@ -1860,2 +1911,3 @@ export function getPendingResultEta(",
+        "@@ -1865,2 +1917,7 @@ export function getPendingResultEta("
+      ],
+      "changedLines": 57
+    },
+    {
+      "targetPath": "packages/game-domain/src/retired-encounters.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__retired-encounters.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__retired-encounters.ts",
+      "scope": "Protect outstanding diagnostic encounter/history references during retirement.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/execution-integration-baseline/retired-encounters.ts",
+        "sha256": "e1ee7c837d06c2143dc98a3606488ec90aad01b23e5c33a9272287970eb4e27b"
+      },
+      "baselineSha256": "e1ee7c837d06c2143dc98a3606488ec90aad01b23e5c33a9272287970eb4e27b",
+      "baselineBytes": 10292,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 287,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "14f55ae5d94d46d0b9397e68cc1f6a4c49a2df8f7ac178b887d5064cb8691a66",
+      "acceptedTargetBytes": 10511,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 291,
+        "finalNewline": true
+      },
+      "patchSha256": "3e0d7b0e4c1da9946a9a1f65d16861142b5c1152e6c944619ccfbb52f6248ccc",
+      "patchBytes": 788,
+      "hunks": [
+        "@@ -3,2 +3,3 @@ import { getServiceIncomeLine } from \"@gamify-surgery/balance-config\";",
+        "@@ -84,2 +85,5 @@ function referencedEncounterIds(state: GameState): Set<string> {"
+      ],
+      "changedLines": 4
+    },
+    {
+      "targetPath": "packages/game-domain/src/retired-service-history.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__retired-service-history.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__retired-service-history.ts",
+      "scope": "Protect outstanding diagnostic encounter/history references during retirement.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/execution-integration-baseline/retired-service-history.ts",
+        "sha256": "71de70a9bbbfbc9734ac47d9612588cf6d10bf7026a690de2c073bd924301c81"
+      },
+      "baselineSha256": "71de70a9bbbfbc9734ac47d9612588cf6d10bf7026a690de2c073bd924301c81",
+      "baselineBytes": 16345,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 394,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "b4ccd003837f42262699814782b81ab5e94c7b39810f04df96c28280500baa03",
+      "acceptedTargetBytes": 16615,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 400,
+        "finalNewline": true
+      },
+      "patchSha256": "6e9fb6a23a550cb50d3e6bcfb671f12e1a28d2608004782756a32314c3e8cc5f",
+      "patchBytes": 860,
+      "hunks": [
+        "@@ -3,2 +3,3 @@ import { getServiceIncomeLine } from \"@gamify-surgery/balance-config\";",
+        "@@ -150,2 +151,7 @@ function referencedServiceOperationIds(state: GameState): Set<string> {"
+      ],
+      "changedLines": 6
+    },
+    {
+      "targetPath": "packages/game-domain/src/room-capacity.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__room-capacity.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__room-capacity.ts",
+      "scope": "Four staff slots per reading room plus stable-seat reconciliation; leave training capacity behavior.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/reading-staff-baseline/packages/game-domain/src/room-capacity.ts",
+        "capturedComparatorSha256": "36721a61dd224619c5b34d3d91657b448819f46604bb967282afffcdc37d478e",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "d123aef77d8f7244ed4dd4439d1f0f40145dec9d45a6708887a5628b3205c31d",
+      "baselineBytes": 9247,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 212,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "b91e0752f4ef0da7fe50744a35671f965c3411c234eb0134fdea4b78a498c52d",
+      "acceptedTargetBytes": 9391,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 215,
+        "finalNewline": true
+      },
+      "patchSha256": "e7177dfd52627332ac6661048bd8ee8020c9587221e25d9569b38cd537ae00a9",
+      "patchBytes": 844,
+      "hunks": [
+        "@@ -3,2 +3,3 @@ import { isEmployeeAwayForTraining } from \"./employee-training\";",
+        "@@ -20,2 +21,3 @@ const STAFF_SLOTS: Readonly<Record<string, Readonly<Record<string, number>>>> =",
+        "@@ -106,2 +108,3 @@ export function reconcileEmployeeRoomSeats(state: GameState): void {"
+      ],
+      "changedLines": 3
+    },
+    {
+      "targetPath": "packages/game-domain/src/staff.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__staff.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__staff.ts",
+      "scope": "Fixed radiologist desk home, movement targets and seat reconciliation; preserve concurrent idle/training movement.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/reading-staff-baseline/packages/game-domain/src/staff.ts",
+        "capturedComparatorSha256": "b7f9e6efc0b5e16388a1fde9bca4662c47028fbb388f3f430739878e30f1d6ac",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "6e4e82f368441d1b3b679275495dad0f2e9244b8fcc3a6b12f023504e62f67dc",
+      "baselineBytes": 24102,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 691,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "e1172f9544721fe9c9bf8f42aad44e82af3340c0d08334daad2ac9eff32ba731",
+      "acceptedTargetBytes": 24543,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 696,
+        "finalNewline": true
+      },
+      "patchSha256": "9aec21b00e26268c6b48fc5358cd887a803bcd5db903cdb54f55150300843cd2",
+      "patchBytes": 2038,
+      "hunks": [
+        "@@ -23,2 +23,3 @@ import { findRouteFromDisplacedLocationToRoom } from \"./displaced-routing\";",
+        "@@ -127,3 +128,4 @@ function employeeHomeTarget(",
+        "@@ -281,2 +283,3 @@ export function advanceEmployeeMovement(",
+        "@@ -353,3 +356,3 @@ export function advanceEmployeeMovement(",
+        "@@ -364,3 +367,4 @@ export function advanceEmployeeMovement(",
+        "@@ -534,3 +538,4 @@ export function getEmployeeHomeLocation("
+      ],
+      "changedLines": 13
+    },
+    {
+      "targetPath": "packages/game-domain/src/characterStillCatalog.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__characterStillCatalog.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__characterStillCatalog.ts",
+      "scope": "Activate only four existing approved radiologist identities; preserve later demographics and all existing art.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "capturedComparatorPath": ".local-dev/facility-diagnostic-timing/reading-staff-baseline/packages/game-domain/src/characterStillCatalog.ts",
+        "capturedComparatorSha256": "5e3ef2cf88d68d1ff41ae0caa747df0eb79bd09c34ffc90659da24c9a11ebe7a",
+        "note": "Recorded comparator establishes hunk provenance; archive preimage retains later unrelated changes. Not a historical pre-edit snapshot."
+      },
+      "baselineSha256": "34a199857b28efe77c180f0800301f6675e369a16ae6f2d0711969683ce74f9e",
+      "baselineBytes": 14828,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 249,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "9af981fb9dec9e861f3eeab8245cc52b193dad486458f654c26b7f96bcdc195d",
+      "acceptedTargetBytes": 14675,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 246,
+        "finalNewline": true
+      },
+      "patchSha256": "63208c335d0ab3d9f04a937d86feae0bda28b4510eb0af480633ba9c0b2af123",
+      "patchBytes": 1196,
+      "hunks": [
+        "@@ -121,2 +121,4 @@ const LEVEL3_ROSTER_V2_ADULT_PATIENT_STILLS = LEVEL3_ROSTER_V2_ADULT_PATIENT_ROW",
+        "@@ -134,7 +136,2 @@ const LEVEL3_ROSTER_V2_STAFF_STILLS = LEVEL3_ROSTER_V2_STAFF_ROWS.map(([stillId,"
+      ],
+      "changedLines": 7
+    },
+    {
+      "targetPath": "packages/game-domain/src/test-choice-orders.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__test-choice-orders.ts.patch",
+      "verificationFixtureId": "packages__game-domain__src__test-choice-orders.ts",
+      "scope": "Optional outside remainder modality and exactly two direct compound visit annotations; no clinical prose edits.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No recorded baseline; preserve all existing clinical records and helpers except GS034 additive modality annotation."
+      },
+      "baselineSha256": "a7f2f884e0e91684c7b12bf4d25a2b3e84517b556e479c9ceff7b6725f9728db",
+      "baselineBytes": 39144,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 474,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "95775a223739e3e8dd44978801783d0dbccd07699378054d7b2e8b8e2a2edc48",
+      "acceptedTargetBytes": 39542,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 477,
+        "finalNewline": true
+      },
+      "patchSha256": "e650f98b898967847dbe0f8582de9fbae970d42376e21dedbca96b5520879a28",
+      "patchBytes": 3014,
+      "hunks": [
+        "@@ -11,2 +11,3 @@ export type TestChoiceOrderDisposition =",
+        "@@ -17,2 +18,3 @@ export type TestChoiceOrderDisposition =",
+        "@@ -72,2 +74,3 @@ const terminalService = (",
+        "@@ -76,3 +79,3 @@ const terminalService = (",
+        "@@ -137,6 +140,6 @@ const terminalServices: ExactTestChoiceOrderRecord[] = ["
+      ],
+      "changedLines": 9
+    },
+    {
+      "targetPath": "packages/balance-config/src/index.ts",
+      "patchPath": "recovery/patches/historical-balance__index.ts.patch",
+      "verificationFixtureId": "historical-balance__index.ts",
+      "scope": "Original accepted reading-room/staff/navigation integration; intentionally excludes later GS038 upgrades/L3 progression changes.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/balance-baseline/packages/balance-config/src/index.ts",
+        "originalReviewedPatchSha256": "1bb219d4359727d0f9bc641f5a24371fe6d6246aabadce576a231bb307210576",
+        "historicalMilestone": true
+      },
+      "baselineSha256": "0c28c1d8626dbdecc4dd6685b1ed3fd3368c092541605b062a5be6831f5f7540",
+      "baselineBytes": 182,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 5,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "0ce24dea7a4498e19d6e3bcfe672f3ec1f293086c7b97065f39b2711200032a8",
+      "acceptedTargetBytes": 219,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 6,
+        "finalNewline": true
+      },
+      "patchSha256": "a12db022133ba0362422bcbbcbae95785160ff9ea480f5bb30be6fdfd2eb201f",
+      "patchBytes": 343,
+      "hunks": [
+        "@@ -5 +5,2 @@ export * from \"./service-income-catalog\";"
+      ],
+      "changedLines": 1
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.ts",
+      "patchPath": "recovery/patches/historical-balance__prototype-balance.ts.patch",
+      "verificationFixtureId": "historical-balance__prototype-balance.ts",
+      "scope": "Original accepted reading-room/staff/navigation integration; intentionally excludes later GS038 upgrades/L3 progression changes.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/balance-baseline/packages/balance-config/src/prototype-balance.ts",
+        "originalReviewedPatchSha256": "1bb219d4359727d0f9bc641f5a24371fe6d6246aabadce576a231bb307210576",
+        "historicalMilestone": true
+      },
+      "baselineSha256": "6ca1d938146dd8ed72408547f87cd939bfb1535aab1ad9b2404a3c55fd13a782",
+      "baselineBytes": 88922,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 1829,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "a9e37d714daf27c45a21a653bef161e3f35b1577855e290a55a9a9fe1cba8a7b",
+      "acceptedTargetBytes": 90258,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 1868,
+        "finalNewline": true
+      },
+      "patchSha256": "56a6fc940ad95b5f4689010e171811fca1f31722bcd5d26cc4c7f42820194d10",
+      "patchBytes": 1858,
+      "hunks": [
+        "@@ -584,2 +584,24 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({",
+        "@@ -810,2 +832,19 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({"
+      ],
+      "changedLines": 39
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.test.ts",
+      "patchPath": "recovery/patches/historical-balance__prototype-balance.test.ts.patch",
+      "verificationFixtureId": "historical-balance__prototype-balance.test.ts",
+      "scope": "Original accepted reading-room/staff/navigation integration; intentionally excludes later GS038 upgrades/L3 progression changes.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/balance-baseline/packages/balance-config/src/prototype-balance.test.ts",
+        "originalReviewedPatchSha256": "1bb219d4359727d0f9bc641f5a24371fe6d6246aabadce576a231bb307210576",
+        "historicalMilestone": true
+      },
+      "baselineSha256": "f3e7663e39019aa13d6eb1516443c5f6353d983611ebfc7c18136f502fca467b",
+      "baselineBytes": 26021,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 543,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "3e4b87f54672b07613806703d9b5af7deb25075f4b92c73120ddf6fa024a04b6",
+      "acceptedTargetBytes": 26140,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 545,
+        "finalNewline": true
+      },
+      "patchSha256": "e35703dc9e46d35e56249ace93a54678e0d73eb740d5a1d895895a7a1d02b70a",
+      "patchBytes": 869,
+      "hunks": [
+        "@@ -243,2 +243,3 @@ describe(\"Level 2 expanded outpatient definitions\", () => {",
+        "@@ -254,4 +255,5 @@ describe(\"Level 2 expanded outpatient definitions\", () => {"
+      ],
+      "changedLines": 4
+    },
+    {
+      "targetPath": "packages/balance-config/src/approved-room-layouts.ts",
+      "patchPath": "recovery/patches/historical-balance__approved-room-layouts.ts.patch",
+      "verificationFixtureId": "historical-balance__approved-room-layouts.ts",
+      "scope": "Original accepted reading-room/staff/navigation integration; intentionally excludes later GS038 upgrades/L3 progression changes.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/balance-baseline/packages/balance-config/src/approved-room-layouts.ts",
+        "originalReviewedPatchSha256": "1bb219d4359727d0f9bc641f5a24371fe6d6246aabadce576a231bb307210576",
+        "historicalMilestone": true
+      },
+      "baselineSha256": "f082eadf6c8507e26c8fa4576bde8ae16fc1397fc68452820b23fd2bdbd68618",
+      "baselineBytes": 18772,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 291,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "37be214f046d210bd5f0204891bb545c7b7c77e7418cdcc7e8ed4919ce9374a7",
+      "acceptedTargetBytes": 20986,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 317,
+        "finalNewline": true
+      },
+      "patchSha256": "4eb09e5c8f8a3a3612e0063060ac7c056c70620e810488db6c06f0dea35596b9",
+      "patchBytes": 2652,
+      "hunks": [
+        "@@ -1 +1,3 @@",
+        "@@ -263,2 +265,26 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<"
+      ],
+      "changedLines": 26
+    },
+    {
+      "targetPath": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "patchPath": "recovery/patches/historical-balance__approved-room-layouts.test.ts.patch",
+      "verificationFixtureId": "historical-balance__approved-room-layouts.test.ts",
+      "scope": "Original accepted reading-room/staff/navigation integration; intentionally excludes later GS038 upgrades/L3 progression changes.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/balance-baseline/packages/balance-config/src/approved-room-layouts.test.ts",
+        "originalReviewedPatchSha256": "1bb219d4359727d0f9bc641f5a24371fe6d6246aabadce576a231bb307210576",
+        "historicalMilestone": true
+      },
+      "baselineSha256": "afa360f93fe550aad12973e2cf45b54bf16822fd8cb2f09584da743342ba6b82",
+      "baselineBytes": 6492,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 149,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "e1b64d0e03ee12502fc6dab0b02328d248e66520721d84d89f5ac70ba77ad0c4",
+      "acceptedTargetBytes": 6536,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 150,
+        "finalNewline": true
+      },
+      "patchSha256": "75ab0cd36d8624e628de4adae888539a5f4ec5b70f27885a32418067a0d75577",
+      "patchBytes": 1409,
+      "hunks": [
+        "@@ -29,4 +29,4 @@ describe(\"approved proof navigation contract\", () => {",
+        "@@ -54,3 +54,3 @@ describe(\"approved proof navigation contract\", () => {",
+        "@@ -67,2 +67,3 @@ describe(\"approved proof navigation contract\", () => {"
+      ],
+      "changedLines": 7
+    },
+    {
+      "targetPath": "packages/balance-config/src/room-instance-caps.test.ts",
+      "patchPath": "recovery/patches/historical-balance__room-instance-caps.test.ts.patch",
+      "verificationFixtureId": "historical-balance__room-instance-caps.test.ts",
+      "scope": "Original accepted reading-room/staff/navigation integration; intentionally excludes later GS038 upgrades/L3 progression changes.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/balance-baseline/packages/balance-config/src/room-instance-caps.test.ts",
+        "originalReviewedPatchSha256": "1bb219d4359727d0f9bc641f5a24371fe6d6246aabadce576a231bb307210576",
+        "historicalMilestone": true
+      },
+      "baselineSha256": "c5a3a46eabfceaae52aa9b544c729dba46ff54dc2d412e808f8a98116a6575c4",
+      "baselineBytes": 912,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 29,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "f9174521d1f58b8c1cde7350a423d4d481da7fad313b579e643579ec35cd50fb",
+      "acceptedTargetBytes": 937,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 30,
+        "finalNewline": true
+      },
+      "patchSha256": "8db87d6e2c27a98f9cb7793165b4eb753dc83b276b0028aff003430d92d5caaf",
+      "patchBytes": 407,
+      "hunks": [
+        "@@ -25,2 +25,3 @@ describe(\"owner-approved room instance caps\", () => {"
+      ],
+      "changedLines": 1
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261002-batch.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__gs028-20261002-batch.test.ts",
+      "scope": "Reviewed current-plan assertions, preserved clinical/FSRS/fee coverage and genuine finite ultrasound queue.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/batch-tests-baseline-20261007/gs028-20261002-batch.test.ts",
+        "reviewedPatchPath": ".local-dev/facility-diagnostic-timing/batch-tests-scoped.patch",
+        "reviewedPatchSha256": "22309728e50a5de79f747a54b62eb61aaec115480c4bff3a56a6e19cfef5aafc"
+      },
+      "baselineSha256": "2e8703ae78b6106cbc0b74776f20cd5d7c2f3974397d8063da08b869b52ff1e4",
+      "baselineBytes": 27591,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 446,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "b307fb755a7eaadf86b2a7fe492b2e40892539272ec00959912c4961aebf6235",
+      "acceptedTargetBytes": 31101,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 498,
+        "finalNewline": true
+      },
+      "patchSha256": "335161c5c0d87d8a9e8baf17948636c0472fd321dbf7a2a9bf5eadbbe0f8b404",
+      "patchBytes": 7116,
+      "hunks": [
+        "@@ -4,4 +4,4 @@ import {",
+        "@@ -56,2 +56,26 @@ function preparedUltrasoundClinic(seed: string): GameState {",
+        "@@ -239,7 +263,18 @@ describe(\"GS-028 October 2 batch admission\", () => {",
+        "@@ -247,2 +282,9 @@ describe(\"GS-028 October 2 batch admission\", () => {",
+        "@@ -419,7 +461,13 @@ describe(\"GS-028 October 2 batch admission\", () => {",
+        "@@ -437,3 +485,2 @@ describe(\"GS-028 October 2 batch admission\", () => {",
+        "@@ -441,2 +488,7 @@ describe(\"GS-028 October 2 batch admission\", () => {"
+      ],
+      "changedLines": 66
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__gs028-20261003-batch.test.ts",
+      "scope": "Reviewed current-plan assertions, preserved clinical/FSRS/fee coverage and genuine finite ultrasound queue.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/batch-tests-baseline-20261007/gs028-20261003-batch.test.ts",
+        "reviewedPatchPath": ".local-dev/facility-diagnostic-timing/batch-tests-scoped.patch",
+        "reviewedPatchSha256": "22309728e50a5de79f747a54b62eb61aaec115480c4bff3a56a6e19cfef5aafc"
+      },
+      "baselineSha256": "83dc44af34d1ce4d99a3c3c0d1fd22c7d78c938c29ddd6b7c4287eed428c18c4",
+      "baselineBytes": 32320,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 574,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "7e954206758e24d2dfa51173abed0f1014aa2505ec99167ba3bd7ee6855dac04",
+      "acceptedTargetBytes": 33662,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 585,
+        "finalNewline": true
+      },
+      "patchSha256": "dc9828e70179c7c5d5a35a780cfec5238312495a0bc005222dca5cb335cd445c",
+      "patchBytes": 3022,
+      "hunks": [
+        "@@ -73,5 +73,2 @@ function allRoutesAvailableContext(): typeof PROTOTYPE_DOMAIN_CONTEXT {",
+        "@@ -435,7 +432,18 @@ describe(\"GS-028 October 3 batch admission\", () => {",
+        "@@ -468,8 +476,11 @@ describe(\"GS-028 October 3 batch admission\", () => {"
+      ],
+      "changedLines": 27
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261007-batch.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__gs028-20261007-batch.test.ts",
+      "scope": "Reviewed current-plan assertions, preserved clinical/FSRS/fee coverage and genuine finite ultrasound queue.",
+      "preimageKind": "captured-task-baseline",
+      "historicalPreEditSourceCaptured": true,
+      "baselineEvidence": {
+        "capturedPath": ".local-dev/facility-diagnostic-timing/batch-tests-baseline-20261007/gs028-20261007-batch.test.ts",
+        "reviewedPatchPath": ".local-dev/facility-diagnostic-timing/batch-tests-scoped.patch",
+        "reviewedPatchSha256": "22309728e50a5de79f747a54b62eb61aaec115480c4bff3a56a6e19cfef5aafc"
+      },
+      "baselineSha256": "5ce6031c85857146d029614427dada5088731a787428fb830355ffc5d93ad141",
+      "baselineBytes": 29129,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 413,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "5c09404329438a5fc73e5a1f3d4b18cdf67e3233c65471a78fc32b6b26acf0df",
+      "acceptedTargetBytes": 30657,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 428,
+        "finalNewline": true
+      },
+      "patchSha256": "34c1d0257c2dafe6fbfe82839fa5af4e81e151ea18788edeaadc23eab4f8158f",
+      "patchBytes": 4750,
+      "hunks": [
+        "@@ -198,4 +198,9 @@ function complete(clinicalCase: SyntheticClinicalCase, path: \"correct\" | 0 | 1 |",
+        "@@ -294,5 +299,10 @@ describe(\"GS-028 October 7 real gameplay admission\", () => {",
+        "@@ -305,3 +315,3 @@ describe(\"GS-028 October 7 real gameplay admission\", () => {",
+        "@@ -313,3 +323,8 @@ describe(\"GS-028 October 7 real gameplay admission\", () => {"
+      ],
+      "changedLines": 27
+    },
+    {
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "verificationFixtureId": "historical-ui__viewModels.ts",
+      "scope": "Accepted six-file UI milestone, before final caption and later GS038 copy.",
+      "preimageKind": "reviewed-virtual-preimage-normalized-LF",
+      "historicalPreEditSourceCaptured": false,
+      "historicalMilestone": true,
+      "baselineEvidence": {
+        "reviewReceiptPath": ".local-dev/facility-diagnostic-timing/ui-review/receipt.json",
+        "note": "View-model virtual preimage preserves concurrent Management; older test images normalized to the accepted LF review contract."
+      },
+      "baselineSha256": "ffa840b1f46e724de2eeffe8f780971bbdbbe624768fb437703cf6b886d7ce71",
+      "baselineBytes": 114481,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 2575,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "1020443bcc091703f15c99c77deb0f6c7a2acd8a79fcf6b90ee879044ba23cf3",
+      "acceptedTargetBytes": 116492,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 2603,
+        "finalNewline": true
+      },
+      "patchSha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "patchBytes": 45229,
+      "sectionSha256": "75b172a83c7463037147fdbf15824b2313c09f84525370a201763d00bebf98fa"
+    },
+    {
+      "targetPath": "apps/player/src/session/level3ControlsViewModels.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "verificationFixtureId": "historical-ui__level3ControlsViewModels.test.ts",
+      "scope": "Accepted six-file UI milestone, before final caption and later GS038 copy.",
+      "preimageKind": "reviewed-virtual-preimage-normalized-LF",
+      "historicalPreEditSourceCaptured": false,
+      "historicalMilestone": true,
+      "baselineEvidence": {
+        "reviewReceiptPath": ".local-dev/facility-diagnostic-timing/ui-review/receipt.json",
+        "note": "View-model virtual preimage preserves concurrent Management; older test images normalized to the accepted LF review contract."
+      },
+      "baselineSha256": "2126e2399397cfd04acef442ea19152cbda7af876b614d6c7d970ccd04b284f4",
+      "baselineBytes": 20243,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 262,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "e06a432eda458cbbef26e5688beb56ea087c833fce8fb7e018b0925be02a01ca",
+      "acceptedTargetBytes": 20243,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 262,
+        "finalNewline": true
+      },
+      "patchSha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "patchBytes": 45229,
+      "sectionSha256": "f75e7b1a18898a3431575a7c86fbc9b5eccbd77ebbd3ff824ea67485b1fdf9d3"
+    },
+    {
+      "targetPath": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "verificationFixtureId": "historical-ui__surgeryCenterServicePreviews.test.ts",
+      "scope": "Accepted six-file UI milestone, before final caption and later GS038 copy.",
+      "preimageKind": "reviewed-virtual-preimage-normalized-LF",
+      "historicalPreEditSourceCaptured": false,
+      "historicalMilestone": true,
+      "baselineEvidence": {
+        "reviewReceiptPath": ".local-dev/facility-diagnostic-timing/ui-review/receipt.json",
+        "note": "View-model virtual preimage preserves concurrent Management; older test images normalized to the accepted LF review contract."
+      },
+      "baselineSha256": "14a39392754bf880a0fe7a18876daa1c053b05c230a8c9414b0913282efefb98",
+      "baselineBytes": 36372,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 566,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "aedd1e37d7507eccb05c7aa6292d7f8a539b538e725dec5387d4084907dbf849",
+      "acceptedTargetBytes": 36741,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 566,
+        "finalNewline": true
+      },
+      "patchSha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "patchBytes": 45229,
+      "sectionSha256": "722daf93e7aebccd61b85cb0ec334ad18d2d3cd652bc7abcf1799e6000e4488a"
+    },
+    {
+      "targetPath": "apps/player/src/session/diagnosticTimingPresentation.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "verificationFixtureId": "historical-ui__diagnosticTimingPresentation.ts",
+      "scope": "Accepted six-file UI milestone, before final caption and later GS038 copy.",
+      "preimageKind": "new-file",
+      "historicalPreEditSourceCaptured": false,
+      "historicalMilestone": true,
+      "baselineEvidence": {
+        "reviewReceiptPath": ".local-dev/facility-diagnostic-timing/ui-review/receipt.json",
+        "note": "View-model virtual preimage preserves concurrent Management; older test images normalized to the accepted LF review contract."
+      },
+      "baselineSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baselineBytes": 0,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 0,
+        "finalNewline": false
+      },
+      "acceptedTargetSha256": "91ad1d6017ea049d97c83b34f50876626b69ea16ce135cc7faaff9a0724a5eb7",
+      "acceptedTargetBytes": 6609,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 118,
+        "finalNewline": true
+      },
+      "patchSha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "patchBytes": 45229,
+      "sectionSha256": "52c7f45bcfd394ff63f23ddf3ead945431606a45a3b974df72ba34a6609876d7"
+    },
+    {
+      "targetPath": "apps/player/src/session/diagnosticTimingPresentation.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "verificationFixtureId": "historical-ui__diagnosticTimingPresentation.test.ts",
+      "scope": "Accepted six-file UI milestone, before final caption and later GS038 copy.",
+      "preimageKind": "new-file",
+      "historicalPreEditSourceCaptured": false,
+      "historicalMilestone": true,
+      "baselineEvidence": {
+        "reviewReceiptPath": ".local-dev/facility-diagnostic-timing/ui-review/receipt.json",
+        "note": "View-model virtual preimage preserves concurrent Management; older test images normalized to the accepted LF review contract."
+      },
+      "baselineSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baselineBytes": 0,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 0,
+        "finalNewline": false
+      },
+      "acceptedTargetSha256": "33731131be4df0984d978cee84dde07ca98ebe07774bb787e89f8f461b596212",
+      "acceptedTargetBytes": 8660,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 124,
+        "finalNewline": true
+      },
+      "patchSha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "patchBytes": 45229,
+      "sectionSha256": "9d5c3086931a5746f6ab7b654757c479a1298c2c3ee5f7aedb6db4153ef83773"
+    },
+    {
+      "targetPath": "apps/player/src/session/diagnosticTimingViewModels.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "verificationFixtureId": "historical-ui__diagnosticTimingViewModels.test.ts",
+      "scope": "Accepted six-file UI milestone, before final caption and later GS038 copy.",
+      "preimageKind": "new-file",
+      "historicalPreEditSourceCaptured": false,
+      "historicalMilestone": true,
+      "baselineEvidence": {
+        "reviewReceiptPath": ".local-dev/facility-diagnostic-timing/ui-review/receipt.json",
+        "note": "View-model virtual preimage preserves concurrent Management; older test images normalized to the accepted LF review contract."
+      },
+      "baselineSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baselineBytes": 0,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 0,
+        "finalNewline": false
+      },
+      "acceptedTargetSha256": "67d155d974b65048b1148b5a83b7defdfbbf0a7d2f007bea97c1a16824b027c0",
+      "acceptedTargetBytes": 12903,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 205,
+        "finalNewline": true
+      },
+      "patchSha256": "f552566006a8e737b8465062cb1ec98d7b32f8f9845725e4ff6b97417dc9ad71",
+      "patchBytes": 45229,
+      "sectionSha256": "63a73240c4ce2cf47f4308b660f6acb5ec897cc4cacbc3d269db705df113bb51"
+    },
+    {
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "patchPath": "recovery/patches/final-pending-body-history-guard.patch",
+      "verificationFixtureId": "final-pending-body-history-guard",
+      "scope": "Final pending caption omits old route prefix; completed historical findings cannot replace unrelated current-result content. GS038 benefits and Claude view-model changes retained.",
+      "preimageKind": "inferred-current-minus-attributable-GS034",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "historicalPriorPatch": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+        "note": "Compatible comparator for two final corrections, not historical snapshot."
+      },
+      "baselineSha256": "0e7749c0bf3151d68665b988fd0c74ad917eb91a721eb12be8285c307d738e95",
+      "baselineBytes": 124096,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 2766,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "fe7d45b37545f2ed89e74deca33ca45addb62edb963c054ab2b346beb767f76c",
+      "acceptedTargetBytes": 124019,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 2766,
+        "finalNewline": true
+      },
+      "patchSha256": "9317a8a1fba4332005ee44dd6046b4badf7f6a9e84beb2e446448e6e435e0910",
+      "patchBytes": 1326,
+      "hunks": [
+        "@@ -980,3 +980,4 @@ function createChartView(",
+        "@@ -1102,3 +1103,3 @@ function createChartView(",
+        "@@ -1243,4 +1244,3 @@ function createChartView("
+      ],
+      "changedLines": 8
+    },
+    {
+      "targetPath": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__service-procedure-operations.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__service-procedure-operations.test.ts",
+      "scope": "Prior-wording markerless helper parameter/loop and exact current compound phase/walking assertions; no prior timing number invented.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "5fc1f9142fe0722701dcfff6a9dea98656f741d79cf22990542c7b8bb6cfb57c",
+      "baselineBytes": 88395,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 1854,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "5132241ff267d16394fbafc2c97873d868abe2f50d69e5575baa2cd20d8d15ff",
+      "acceptedTargetBytes": 89694,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 1868,
+        "finalNewline": true
+      },
+      "patchSha256": "af0d43fba7d18b8d99caac2b4ce02627bcfad8e390792df9eeef301a3fc3f3c1",
+      "patchBytes": 2675,
+      "hunks": [
+        "@@ -203,3 +203,3 @@ function endoscopyProcedureState(): GameState {",
+        "@@ -214,2 +214,11 @@ function prepareQuestion(state: GameState, caseId: string, conceptId: string): G",
+        "@@ -1506,3 +1515,3 @@ describe(\"mapped in-clinic procedure operations\", () => {",
+        "@@ -1515,5 +1524,10 @@ describe(\"mapped in-clinic procedure operations\", () => {"
+      ],
+      "changedLines": 24
+    },
+    {
+      "targetPath": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__ultrasound-first-imaging.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__ultrasound-first-imaging.test.ts",
+      "scope": "Only saved markerless question fixture loop; every existing legacy route/save/fee assertion preserved.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "bf5570f6fc24a9c44bf01e307dc79756a4e22b7f8bc7d8085f2486e637b8f623",
+      "baselineBytes": 48179,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 978,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "a608b263df16106090982f4f9cdacba83fb0666717196b00838a4404f68ed735",
+      "acceptedTargetBytes": 48629,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 985,
+        "finalNewline": true
+      },
+      "patchSha256": "4d4fb2e78c3a0fac0bc5dd00a3e5256b20db8154785ee24b59d244a78f5455d9",
+      "patchBytes": 915,
+      "hunks": [
+        "@@ -118,2 +118,9 @@ function admitQuestionAtCare("
+      ],
+      "changedLines": 7
+    },
+    {
+      "targetPath": "packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__level-two-endoscopy.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__level-two-endoscopy.test.ts",
+      "scope": "Prior-wording frozen colonoscopy fixture, exact current terminal-care witnesses and explicit preserved frozen180 assertions as additions; no larger older endoscopy test body.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "e69b436eb3ea13b607d1fcc8a45160439da97366aa5d42c0301b74b99f54e50d",
+      "baselineBytes": 31763,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 601,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "c4a03132078b78ee7a6e1625c114cf18f07a4016c185a7f064deae77339e8ce2",
+      "acceptedTargetBytes": 32624,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 609,
+        "finalNewline": true
+      },
+      "patchSha256": "0fb79369dbb5f48e2ae0f235a28f14bfe87e608626869a41070c7a2ec6611ba9",
+      "patchBytes": 2186,
+      "hunks": [
+        "@@ -324,3 +324,3 @@ describe(\"Level 2 endoscopy operational capacity\", () => {",
+        "@@ -329,3 +329,3 @@ describe(\"Level 2 endoscopy operational capacity\", () => {",
+        "@@ -346,2 +346,8 @@ describe(\"Level 2 endoscopy operational capacity\", () => {",
+        "@@ -462,4 +468,6 @@ describe(\"Level 2 endoscopy operational capacity\", () => {"
+      ],
+      "changedLines": 16
+    },
+    {
+      "targetPath": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__surgery-center-batch.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__surgery-center-batch.test.ts",
+      "scope": "Current result-gate marker, frozen physical prep/procedure/recovery, actual ACK assertions and additive 60-second test timeout; clinical/FSRS/fees untouched.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "27f6cc501078016b1b45663cd2143804eb73bac6c69eca2f91dcb126d1f240b4",
+      "baselineBytes": 14300,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 211,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "a2f992919893bee5ba5b84cfc1d059020e51e075139f93e97eb1590034375bfe",
+      "acceptedTargetBytes": 15432,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 227,
+        "finalNewline": true
+      },
+      "patchSha256": "82f95893419ee4def28321bc5728c6890b693bf06e499d43574b425374f320e2",
+      "patchBytes": 1936,
+      "hunks": [
+        "@@ -146,3 +146,3 @@ describe(\"September 10 surgery-center production flows\", () => {",
+        "@@ -183,8 +183,24 @@ describe(\"September 10 surgery-center production flows\", () => {"
+      ],
+      "changedLines": 28
+    },
+    {
+      "targetPath": "packages/game-domain/tests/bread-butter-20260917-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__bread-butter-20260917-batch.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__bread-butter-20260917-batch.test.ts",
+      "scope": "Four bedside-bladder cases retain exact5 acquisition, no read, quote/milestone completion assertions; only current diagnostic assertion additions.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "e81ba7353075f221d28a52cbc00867085019f81645488546eec8379720c61dba",
+      "baselineBytes": 21424,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 624,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "0f06676d05c35ce6c2a08e634867c99c3fed61d01be0a2b205d51da12ceb3631",
+      "acceptedTargetBytes": 22399,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 630,
+        "finalNewline": true
+      },
+      "patchSha256": "2d3928b258dca366e419498647224a55e9ca6572cc891891eca7439cc97d2100",
+      "patchBytes": 1852,
+      "hunks": [
+        "@@ -562,8 +562,12 @@ describe(\"September 17 bread-and-butter production flows\", () => {",
+        "@@ -591,4 +595,6 @@ describe(\"September 17 bread-and-butter production flows\", () => {"
+      ],
+      "changedLines": 20
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20260928-batch.test.ts.patch",
+      "verificationFixtureId": "packages__game-domain__tests__gs028-20260928-batch.test.ts",
+      "scope": "Declared venous phase/resource quote, genuine queue waiting and actual first/second acquisition witnesses; no invented legacy resourceQueue comparator.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "583eef790d9ccb3cbfe0b4f8da8680babea971690a3618a25c94cf2fcbdfd1a1",
+      "baselineBytes": 24989,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 485,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "2100aabed7cd41cde815b2b5e3e7fd06d692c2113feea37d49209b9e92587426",
+      "acceptedTargetBytes": 26524,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 490,
+        "finalNewline": true
+      },
+      "patchSha256": "8bdb38cc7c62c16774c80a4a55fec7e2eded29e4d6fcf0bdd5926285a096fc30",
+      "patchBytes": 2684,
+      "hunks": [
+        "@@ -405,5 +405,8 @@ describe(\"GS-028 September 28 pre-Endoscopy batch\", () => {",
+        "@@ -427,7 +430,9 @@ describe(\"GS-028 September 28 pre-Endoscopy batch\", () => {",
+        "@@ -435,5 +440,5 @@ describe(\"GS-028 September 28 pre-Endoscopy batch\", () => {"
+      ],
+      "changedLines": 23
+    },
+    {
+      "targetPath": "apps/player/src/session/answerChoiceTimingPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__answerChoiceTimingPresentation.test.ts.patch",
+      "verificationFixtureId": "apps__player__src__session__answerChoiceTimingPresentation.test.ts",
+      "scope": "HEAD diff reviewed as GS034 timing/fixture-only: complete plan/walking label or operational synthetic room setup, preserving clinical wording assertions.",
+      "preimageKind": "git-blob-comparator-reviewed-task-only",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "gitCommit": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+        "gitPath": "apps/player/src/session/answerChoiceTimingPresentation.test.ts",
+        "note": "Real Git source comparator, not a task-start snapshot; only narrow attributable changes are present."
+      },
+      "baselineSha256": "2ac09016a17866cacd2d5b891f5b1c568ad803170d3e8279bac4d605f23cf64a",
+      "baselineBytes": 5239,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 102,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "59c432b059b0d4ff23a930014169a49894303e862a58900e0082479505eabae0",
+      "acceptedTargetBytes": 5759,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 108,
+        "finalNewline": true
+      },
+      "patchSha256": "915dc1f5ffa3f6693927a4ef54a24da47a2c53cae5267e4484921634f979a7ea",
+      "patchBytes": 1588,
+      "hunks": [
+        "@@ -8,2 +8,3 @@ import {",
+        "@@ -35,7 +36,12 @@ describe(\"answer-choice timing presentation\", () => {"
+      ],
+      "changedLines": 12
+    },
+    {
+      "targetPath": "apps/player/src/session/clinicalServiceLabels.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__clinicalServiceLabels.test.ts.patch",
+      "verificationFixtureId": "apps__player__src__session__clinicalServiceLabels.test.ts",
+      "scope": "HEAD diff reviewed as GS034 timing/fixture-only: complete plan/walking label or operational synthetic room setup, preserving clinical wording assertions.",
+      "preimageKind": "git-blob-comparator-reviewed-task-only",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "gitCommit": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+        "gitPath": "apps/player/src/session/clinicalServiceLabels.test.ts",
+        "note": "Real Git source comparator, not a task-start snapshot; only narrow attributable changes are present."
+      },
+      "baselineSha256": "41f8bdd46810ee537bd093420672ad6b723ebeda0573bc2eced16cd129d098b1",
+      "baselineBytes": 3902,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 109,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "42dec92049e0003f1561c78eaea67e33ac349901e76ca861900fe7faae47917f",
+      "acceptedTargetBytes": 3964,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 109,
+        "finalNewline": true
+      },
+      "patchSha256": "afc4d6ac2cc80ba15fc48f9512318e0196a4280acd191f6d87de5fdf4401a927",
+      "patchBytes": 729,
+      "hunks": [
+        "@@ -46,3 +46,3 @@ describe(\"clinical service choice labels\", () => {",
+        "@@ -51,3 +51,3 @@ describe(\"clinical service choice labels\", () => {"
+      ],
+      "changedLines": 4
+    },
+    {
+      "targetPath": "apps/player/src/session/multistepChoiceTiming.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__multistepChoiceTiming.test.ts.patch",
+      "verificationFixtureId": "apps__player__src__session__multistepChoiceTiming.test.ts",
+      "scope": "HEAD diff reviewed as GS034 timing/fixture-only: complete plan/walking label or operational synthetic room setup, preserving clinical wording assertions.",
+      "preimageKind": "git-blob-comparator-reviewed-task-only",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "gitCommit": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+        "gitPath": "apps/player/src/session/multistepChoiceTiming.test.ts",
+        "note": "Real Git source comparator, not a task-start snapshot; only narrow attributable changes are present."
+      },
+      "baselineSha256": "b7dec2c5682ef305a145922ac37434f62074262536270285a860651eb4b5f18c",
+      "baselineBytes": 2044,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 66,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "c3ca4defef0cf314a24670706025131835dab30039493c6423ceb765dbc4fb8d",
+      "acceptedTargetBytes": 1972,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 48,
+        "finalNewline": true
+      },
+      "patchSha256": "53be3357cd0f9491be50e185dc654ad28772f170eece92a31ec39e941399c658",
+      "patchBytes": 1936,
+      "hunks": [
+        "@@ -4,2 +4,3 @@ import {",
+        "@@ -36,30 +37,11 @@ describe(\"multistep diagnostic choice timing\", () => {"
+      ],
+      "changedLines": 38
+    },
+    {
+      "targetPath": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__earlyLevelsPresentation.test.ts.patch",
+      "verificationFixtureId": "apps__player__src__session__earlyLevelsPresentation.test.ts",
+      "scope": "HEAD diff reviewed as GS034 timing/fixture-only: complete plan/walking label or operational synthetic room setup, preserving clinical wording assertions.",
+      "preimageKind": "git-blob-comparator-reviewed-task-only",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "gitCommit": "87567bd8b32a8e318862dbbee7c37b9ca0c174ce",
+        "gitPath": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+        "note": "Real Git source comparator, not a task-start snapshot; only narrow attributable changes are present."
+      },
+      "baselineSha256": "399fe6420c6e3443cc43911cd597661e0505669420bca8f2285481749d38aca5",
+      "baselineBytes": 2926,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 10,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "1499c953b76e2a3adbf2f641ccc467df47c43bfe48962b6ef0a8a5ccaff70f6f",
+      "acceptedTargetBytes": 3865,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 10,
+        "finalNewline": true
+      },
+      "patchSha256": "77b7de73da63266b3c0e47afdc22304ac515d908d9c20e6c579396e0cce1dfb8",
+      "patchBytes": 6443,
+      "hunks": [
+        "@@ -5,6 +5,6 @@ import { createPrototypePlayerView } from \"./viewModels\";"
+      ],
+      "changedLines": 4
+    },
+    {
+      "targetPath": "apps/player/src/session/breadButterPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__breadButterPresentation.test.ts.patch",
+      "verificationFixtureId": "apps__player__src__session__breadButterPresentation.test.ts",
+      "scope": "Only exact complete-timing caption assertion as addition; no inferred previous label and no older clinical/presentation test copy.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "5825293b4b23acdab8c480a0fbb6d5c2a99008125314dae138350119dfe6309d",
+      "baselineBytes": 5042,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 106,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "3fa4996c8056a481d6db5bfc02cdcb8870bbf75e6ffc21171a508cb1f31f1ae4",
+      "acceptedTargetBytes": 5203,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 107,
+        "finalNewline": true
+      },
+      "patchSha256": "4651921b84a83629ebeb8020caddf4f8a2e5af1fbf10332d1c5c2a28088c3e8c",
+      "patchBytes": 630,
+      "hunks": [
+        "@@ -93,3 +93,4 @@ describe(\"September 17 bread-and-butter chart presentation\", () => {"
+      ],
+      "changedLines": 3
+    },
+    {
+      "targetPath": "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__briefEarlyLevelsPresentation.test.ts.patch",
+      "verificationFixtureId": "apps__player__src__session__briefEarlyLevelsPresentation.test.ts",
+      "scope": "Only exact complete-timing caption assertion as addition; no inferred previous label and no older clinical/presentation test copy.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "c0a470605b5e6455195886b29e256c0b01d6bc63952ee80acdd05bf2b4a05f42",
+      "baselineBytes": 3115,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 28,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "ec9c2c6f869bd641c359238e3bd49f86b0c4fac5b212de044d8c84d12be4ad26",
+      "acceptedTargetBytes": 3213,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 28,
+        "finalNewline": true
+      },
+      "patchSha256": "55c0f34d3f508c364598922067d2266defa198f283c5c00eb07e5768d51e850d",
+      "patchBytes": 1662,
+      "hunks": [
+        "@@ -23,3 +23,3 @@ describe(\"September 17 brief early-level chart presentation\", () => {"
+      ],
+      "changedLines": 2
+    },
+    {
+      "targetPath": "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "patchPath": "recovery/patches/apps__player__src__session__chartFeedbackPresentation.test.tsx.patch",
+      "verificationFixtureId": "apps__player__src__session__chartFeedbackPresentation.test.tsx",
+      "scope": "Two synthetic operational Examination fixture lines for current diagnostic return/care; pre-existing deliberate-close tests and helper import excluded.",
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions",
+      "historicalPreEditSourceCaptured": false,
+      "baselineEvidence": {
+        "note": "No task snapshot. Comparator removes only the specified current diagnostic fixture/assertions; it is not proof of previous numeric assertions or a runnable legacy test version."
+      },
+      "baselineSha256": "7273f91a030f615c998163f5802ea040c00b8a8acfdd3af296385a1316fa6194",
+      "baselineBytes": 10137,
+      "baselineLineEndings": {
+        "crlf": 0,
+        "lf": 275,
+        "finalNewline": true
+      },
+      "acceptedTargetSha256": "65b128f0414b3cb7e7cd4ccd6c6274520127dd58d4430e098dd3102f55b5c779",
+      "acceptedTargetBytes": 10471,
+      "acceptedTargetLineEndings": {
+        "crlf": 0,
+        "lf": 277,
+        "finalNewline": true
+      },
+      "patchSha256": "cb1a33a0928bdddba2d38dea3cd1eb45896ab411d2424430171a59cab5ad2556",
+      "patchBytes": 763,
+      "hunks": [
+        "@@ -21,2 +21,4 @@ function preparedState(): GameState {"
+      ],
+      "changedLines": 2
+    }
+  ]
+}

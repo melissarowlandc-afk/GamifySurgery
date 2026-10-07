@@ -1,0 +1,35 @@
+diff --git a/packages/game-domain/src/staff.ts b/packages/game-domain/src/staff.ts
+index a8c7c986..0f187379 100644
+--- a/packages/game-domain/src/staff.ts
++++ b/packages/game-domain/src/staff.ts
+@@ -23,2 +23,3 @@ import { findRouteFromDisplacedLocationToRoom } from "./displaced-routing";
+ import { isEmployeeAwayForTraining } from "./employee-training";
++import { getNextReadingStationLocation, getRadiologistReadingStation, reconcileReadingStations } from "./reading-stations";
+ 
+@@ -127,3 +128,4 @@ function employeeHomeTarget(
+ ): GridPoint | null {
+-  const fixedStation = getGlp1NursePractitionerStation(state, employee, context);
++  const fixedStation = getRadiologistReadingStation(state, employee, context)?.location ??
++    getGlp1NursePractitionerStation(state, employee, context);
+   if (fixedStation) return fixedStation;
+@@ -281,2 +283,3 @@ export function advanceEmployeeMovement(
+   reconcileImagingIdleSeats(state);
++  reconcileReadingStations(state);
+   const interval = context.balanceRelease.facility.staffMovementIntervalTicks;
+@@ -353,3 +356,3 @@ export function advanceEmployeeMovement(
+     }
+-    // Reception and GLP-1 NPs are posts, not idle-wander roles. The water-
++    // Reception, radiologists and GLP-1 NPs are fixed posts. The water-
+     // cooler task is the intentional exception above; once it is complete,
+@@ -364,3 +367,4 @@ export function advanceEmployeeMovement(
+         })()
+-      : getGlp1NursePractitionerStation(state, employee, context);
++      : getRadiologistReadingStation(state, employee, context)?.location ??
++        getGlp1NursePractitionerStation(state, employee, context);
+     if (fixedStation) {
+@@ -534,3 +538,4 @@ export function getEmployeeHomeLocation(
+         homeRoomInstanceId: availableConfiguredRoom.id,
+-        location: getRoomNavigationAnchor(
++        location: (employeeRoleId === "staff.radiologist"
++          ? getNextReadingStationLocation(state, availableConfiguredRoom.id, context) : null) ?? getRoomNavigationAnchor(
+           availableConfiguredRoom,

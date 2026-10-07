@@ -1,0 +1,10 @@
+diff --git a/apps/player/src/session/breadButterPresentation.test.ts b/apps/player/src/session/breadButterPresentation.test.ts
+index a0820cea..a7a94100 100644
+--- a/apps/player/src/session/breadButterPresentation.test.ts
++++ b/apps/player/src/session/breadButterPresentation.test.ts
+@@ -93,3 +93,4 @@ describe("September 17 bread-and-butter chart presentation", () => {
+                 .not.toBe("No test wait");
+-              
++              expect(choice.detailLabel, `${clinicalCase.id}/${node.id}/${choice.id}`)
++                .toContain("Estimated total (game time; includes queues and walking).");
+             } else {

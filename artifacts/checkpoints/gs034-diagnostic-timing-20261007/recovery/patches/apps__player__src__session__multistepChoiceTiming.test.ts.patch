@@ -1,0 +1,48 @@
+diff --git a/apps/player/src/session/multistepChoiceTiming.test.ts b/apps/player/src/session/multistepChoiceTiming.test.ts
+index e7427cbc..b379b6cd 100644
+--- a/apps/player/src/session/multistepChoiceTiming.test.ts
++++ b/apps/player/src/session/multistepChoiceTiming.test.ts
+@@ -4,2 +4,3 @@ import {
+   gameReducer,
++  getAnswerChoiceServicePreview,
+ } from "@gamify-surgery/game-domain";
+@@ -36,30 +37,11 @@ describe("multistep diagnostic choice timing", () => {
+     expect(current?.answerChoices).toHaveLength(4);
+-    expect(
+-      Object.fromEntries(
+-        current!.answerChoices.map((choice) => [
+-          choice.id,
+-          {
+-            etaLabel: choice.etaLabel,
+-            detailLabel: choice.detailLabel,
+-          },
+-        ]),
+-      ),
+-    ).toEqual({
+-      targeted_ultrasound: {
+-        etaLabel: "150 min",
+-        detailLabel: "Estimated test wait (game time)",
+-      },
+-      diagnostic_mammography: {
+-        etaLabel: "2 hours",
+-        detailLabel: "Estimated test wait (game time)",
+-      },
+-      breast_mri: {
+-        etaLabel: "3 hours",
+-        detailLabel: "Estimated test wait (game time)",
+-      },
+-      core_biopsy: {
+-        etaLabel: "3 hours",
+-        detailLabel: "Estimated test wait (game time)",
+-      },
+-    });
++    for (const choice of current!.answerChoices) {
++      const preview = getAnswerChoiceServicePreview(state, encounter.id, choice.id)!;
++      const plan = preview.diagnosticTiming!;
++      const total = Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick;
++      expect(preview.durationTicks).toBe(total);
++      expect(choice.etaLabel).toBe(total >= 60 && total % 60 === 0 ? `${total / 60} hours` : `${total} min`);
++      expect(choice.detailLabel).toContain("Estimated total (game time; includes queues and walking).");
++      expect(choice.detailLabel).toContain("Travel to outside service");
++    }
+   });

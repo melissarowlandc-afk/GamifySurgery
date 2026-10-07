@@ -1,0 +1,197 @@
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+index 4abb9b7a..6f841aa7 100644
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -10,2 +10,3 @@ import {
+   getServiceIncomeLine,
++  DIAGNOSTIC_READING_WORKSTATIONS,
+   PROTOTYPE_ALERT_SCHEDULING,
+@@ -55,2 +56,3 @@ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
++import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+ import { getDefaultDoorOffset } from "./doors";
+@@ -98,2 +100,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
+ 
++function readDiagnosticTiming(value: unknown, encounterId?: string) {
++  if (value === undefined) return undefined;
++  const plan = normalizeDiagnosticOrderPlan(value);
++  if (!plan || plan.execution !== "supported" || (encounterId !== undefined && plan.encounterId !== encounterId)) {
++    throw new Error("The saved diagnostic order plan is invalid.");
++  }
++  return plan;
++}
++
+ const DISSATISFACTION_CAUSES = new Set<PatientDissatisfactionCause>([
+@@ -781,2 +792,16 @@ function normalizeServiceOperations(
+     if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteFee);
++    const diagnosticPhaseWork = isRecord(raw) && raw.diagnosticPhaseWork !== undefined
++      ? normalizeDiagnosticPhaseWork(raw.diagnosticPhaseWork)
++      : undefined;
++    const diagnosticPhysicalWork = isRecord(raw) && raw.diagnosticPhysicalWork !== undefined ? normalizeDiagnosticPhysicalWork(raw.diagnosticPhysicalWork) : undefined;
++    const markedDiagnostic = Boolean(diagnosticPhaseWork || diagnosticPhysicalWork);
++    if (isRecord(raw) && raw.diagnosticPhysicalWork !== undefined && (!diagnosticPhysicalWork || diagnosticPhaseWork || raw.actorKind !== "encounter" ||
++      raw.actorId !== diagnosticPhysicalWork.encounterId || diagnosticPhysicalWork.billing === "none" && raw.quoteFee !== 0)) {
++      throw new Error("The saved diagnostic physical work marker is invalid.");
++    }
++    if (isRecord(raw) && raw.diagnosticPhaseWork !== undefined && (!diagnosticPhaseWork ||
++      raw.actorKind !== "remote" || raw.actorId !== diagnosticPhaseWork.encounterId || raw.quoteFee !== 0 ||
++      raw.incomeLineId !== (diagnosticPhaseWork.kind === "interpretation" ? "income.image_read" : "income.laboratory_processing"))) {
++      throw new Error("The saved nonbillable diagnostic work marker is invalid.");
++    }
+     if (
+@@ -785,3 +810,3 @@ function normalizeServiceOperations(
+       typeof raw.incomeLineId !== "string" ||
+-      !getServiceIncomeLine(raw.incomeLineId)?.operation ||
++      !(diagnosticPhysicalWork ? getServiceIncomeLine(raw.incomeLineId) && getServiceIncomeLine(raw.incomeLineId)?.kind !== "retail" : getServiceIncomeLine(raw.incomeLineId)?.operation) ||
+       (raw.actorKind !== "visitor" && raw.actorKind !== "encounter" && raw.actorKind !== "remote") ||
+@@ -800,4 +825,16 @@ function normalizeServiceOperations(
+       typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)
+-    ) return [];
++    ) {
++      if (markedDiagnostic) throw new Error("The saved diagnostic service operation is invalid.");
++      return [];
++    }
+     const line = getServiceIncomeLine(raw.incomeLineId)!;
++    if (markedDiagnostic && (
++      raw.catalogVersion !== 1 ||
++      !raw.reservedRoomInstanceIds.every((id) => typeof id === "string") || !raw.reservedEmployeeIds.every((id) => typeof id === "string") || !raw.path.every(isGridPoint) ||
++      raw.createdAtFacilityTick < 0 || raw.waitDeadlineFacilityTick < 0 || raw.lastMovedAtFacilityTick < 0 || raw.pathIndex < 0 ||
++      (raw.status === "completed" && diagnosticPhaseWork && diagnosticPhaseWork.remainingMinutes !== 0) ||
++      [raw.startedAtFacilityTick, raw.completedAtFacilityTick, raw.cancelledAtFacilityTick, raw.phaseStartedAtFacilityTick, raw.phaseEndsAtFacilityTick].some((tick) =>
++        tick !== null && (typeof tick !== "number" || !Number.isSafeInteger(tick) || tick < 0)))) {
++      throw new Error("The saved diagnostic service operation is invalid.");
++    }
+     const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
+@@ -886,3 +923,27 @@ function normalizeServiceOperations(
+         : -1
+-      : line.operation!.phases.length;
++      : line.operation?.phases.length ?? 0;
++    if (diagnosticPhaseWork && (frozenOperationPhases.length !== 1 || rawFrozenPhases.length !== 1 ||
++      frozenOperationPhases[0]!.durationMinutes !== diagnosticPhaseWork.durationMinutes ||
++      frozenOperationPhases[0]!.roomDefinitionId !== (diagnosticPhaseWork.kind === "interpretation" ? "room.reading" : "room.laboratory") ||
++      frozenOperationPhases[0]!.staffRoleDefinitionIds.length !== 1 ||
++      frozenOperationPhases[0]!.staffRoleDefinitionIds[0] !== (diagnosticPhaseWork.kind === "interpretation" ? "staff.radiologist" : "staff.laboratory_technician") ||
++      (frozenOperationPhases[0]!.providerRoleDefinitionIds?.length ?? 0) > 0 || frozenOperationPhases[0]!.founderEligible ||
++      frozenOperationPhases[0]!.roomStationId !== undefined)) {
++      throw new Error("The saved diagnostic work phase is invalid.");
++    }
++    if (diagnosticPhysicalWork && (rawFrozenPhases.length !== frozenOperationPhases.length || frozenOperationPhases.length !== diagnosticPhysicalWork.phaseBindings.length ||
++      raw.phaseFlowVersion !== 1 ||
++      frozenOperationPhases.some((phase, index) => phase.id !== diagnosticPhysicalWork.phaseBindings[index]!.operationPhaseId ||
++        phase.roomDefinitionId === null || diagnosticPhysicalWork.phaseBindings[index]!.resource !== null && diagnosticPhysicalWork.phaseBindings[index]!.resource!.roomDefinitionId !== phase.roomDefinitionId) ||
++      diagnosticPhysicalWork.remainingPhaseMinutes !== null && diagnosticPhysicalWork.remainingPhaseMinutes > (frozenOperationPhases[raw.phaseIndex]?.durationMinutes ?? 0))) {
++      throw new Error("The saved diagnostic physical phase is invalid.");
++    }
++    const diagnosticPhaseIndex = raw.phaseIndex;
++    if (diagnosticPhysicalWork && (diagnosticPhysicalWork.phaseWitnesses.some((witness, index) =>
++      index < diagnosticPhaseIndex && witness.completedAtFacilityTick === null || index > diagnosticPhaseIndex && witness.startedAtFacilityTick !== null ||
++      index === diagnosticPhaseIndex && witness.completedAtFacilityTick !== null && raw.status !== "waiting_for_next_phase" && raw.status !== "discharging" && raw.status !== "completed" && raw.status !== "cancelled") ||
++      raw.status === "in_service" && diagnosticPhysicalWork.phaseWitnesses[raw.phaseIndex]?.startedAtFacilityTick === null ||
++      raw.status === "waiting_for_next_phase" && diagnosticPhysicalWork.phaseWitnesses[raw.phaseIndex]?.completedAtFacilityTick === null)) {
++      throw new Error("The saved diagnostic physical phase witness is invalid.");
++    }
+     const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
+@@ -890,6 +951,10 @@ function normalizeServiceOperations(
+       frozenOperationPhases.map((phase) => phase.roomDefinitionId));
++    if (roomUpgradeRevenue && (diagnosticPhaseWork || diagnosticPhysicalWork?.billing === "none")) {
++      throw new Error("Nonbillable diagnostic work must not carry an upgraded payment.");
++    }
++    if (trainingTiming && (diagnosticPhaseWork || diagnosticPhysicalWork)) throw new Error("Diagnostic work must use its accepted effective timing.");
+     const phaseFlowVersion = raw.phaseFlowVersion === 1 &&
+-      frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
++      (diagnosticPhysicalWork || frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
+       (frozenOperationPhases[0]?.durationMinutes === 30 || trainingTiming?.phases[0]?.baselineMinutes === 30) &&
+-      frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery")
++      frozenOperationPhases.some((phase) => phase.roomStationId === "periop_recovery"))
+         ? 1 as const
+@@ -941,3 +1006,6 @@ function normalizeServiceOperations(
+       (raw.phaseIndex === phaseCount && raw.status !== "discharging" && raw.status !== "leaving" && raw.status !== "completed" && raw.status !== "cancelled")
+-    ) return [];
++    ) {
++      if (markedDiagnostic) throw new Error("The saved diagnostic service operation phase is invalid.");
++      return [];
++    }
+     if (!terminalStatus && bedKey !== null) activePeriopBeds.add(bedKey);
+@@ -1023,2 +1091,4 @@ function normalizeServiceOperations(
+       testChoiceOrder,
++      ...(diagnosticPhaseWork ? { diagnosticPhaseWork } : {}),
++      ...(diagnosticPhysicalWork ? { diagnosticPhysicalWork } : {}),
+       ...(completedCareProvenance ? { completedCareProvenance } : {}),
+@@ -1652,2 +1722,3 @@ function normalizePendingResult(
+   context: DomainContext,
++  encounterId?: string,
+ ): PendingResult | null {
+@@ -1656,2 +1727,3 @@ function normalizePendingResult(
+   }
++  const diagnosticTiming = readDiagnosticTiming(candidate.diagnosticTiming, encounterId);
+   const completedCareProvenance =
+@@ -1753,2 +1825,3 @@ function normalizePendingResult(
+     ...(JSON.parse(JSON.stringify(candidate)) as PendingResult),
++    ...(diagnosticTiming ? { diagnosticTiming } : {}),
+     ...(candidate.approvedProcedureTimingVersion === 1
+@@ -2045,2 +2118,3 @@ function normalizeEncounter(
+     context,
++    String(candidate.id),
+   );
+@@ -2186,3 +2260,3 @@ function normalizeEncounter(
+       existingStep && isRecord(existingStep.result)
+-        ? normalizePendingResult(existingStep.result, context)
++        ? normalizePendingResult(existingStep.result, context, String(candidate.id))
+         : pendingResult?.originatingNodeIndex === nodeIndex
+@@ -2270,2 +2344,3 @@ function normalizeEncounter(
+     : null;
++  const continuationDiagnosticTiming = readDiagnosticTiming(rawContinuation?.diagnosticTiming, String(candidate.id));
+   const rawContinuationOffsite = rawContinuation && isRecord(rawContinuation.saleInterruptedOffsite)
+@@ -2334,2 +2409,3 @@ function normalizeEncounter(
+           completedAtFacilityTick: rawContinuation.completedAtFacilityTick,
++          ...(continuationDiagnosticTiming ? { diagnosticTiming: continuationDiagnosticTiming } : {}),
+           ...(continuationOffsite ? { saleInterruptedOffsite: continuationOffsite } : {}),
+@@ -2340,2 +2416,3 @@ function normalizeEncounter(
+     : null;
++  const terminalDiagnosticTiming = readDiagnosticTiming(rawTerminalTestOrder?.diagnosticTiming, String(candidate.id));
+   const terminalTestOrder =
+@@ -2370,2 +2447,3 @@ function normalizeEncounter(
+           scheduledAtFacilityTick: rawTerminalTestOrder.scheduledAtFacilityTick,
++          ...(terminalDiagnosticTiming ? { diagnosticTiming: terminalDiagnosticTiming } : {}),
+         }
+@@ -2373,2 +2451,3 @@ function normalizeEncounter(
+   const rawStaged = isRecord(candidate.stagedResultOrder) ? candidate.stagedResultOrder : null;
++  const stagedDiagnosticTiming = readDiagnosticTiming(rawStaged?.diagnosticTiming, String(candidate.id));
+   const stagedStatuses = new Set(["feedback_pending", "waiting_for_component", "returning_to_front_desk", "remainder_pending", "completed"]);
+@@ -2378,2 +2457,3 @@ function normalizeEncounter(
+     .filter(isRecord).flatMap((component) => {
++      const diagnosticTiming = readDiagnosticTiming(component.diagnosticTiming, String(candidate.id));
+       const rawPhases = Array.isArray(component.operationPhases) ? component.operationPhases : [];
+@@ -2418,2 +2498,3 @@ function normalizeEncounter(
+               serviceOperationId: component.serviceOperationId,
++              ...(diagnosticTiming ? { diagnosticTiming } : {}),
+             }]
+@@ -2424,3 +2505,3 @@ function normalizeEncounter(
+   const stagedRemainder = isRecord(rawStaged?.remainder)
+-    ? normalizePendingResult(rawStaged.remainder, context)
++    ? normalizePendingResult(rawStaged.remainder, context, String(candidate.id))
+     : null;
+@@ -2449,2 +2530,3 @@ function normalizeEncounter(
+           remainder: stagedRemainder,
++          ...(stagedDiagnosticTiming ? { diagnosticTiming: stagedDiagnosticTiming } : {}),
+         }
+@@ -2452,2 +2534,8 @@ function normalizeEncounter(
+ 
++  if ((continuationDiagnosticTiming && !testOnlyContinuation) || (terminalDiagnosticTiming && !terminalTestOrder) ||
++    (stagedDiagnosticTiming && !stagedResultOrder) ||
++    (rawStagedComponents.some((component) => isRecord(component) && component.diagnosticTiming !== undefined) && !stagedResultOrder)) {
++    throw new Error("The saved diagnostic order carrier is invalid.");
++  }
++
+   const terminalFeedback = isRecord(candidate.terminalFeedback)
+@@ -3022,2 +3110,6 @@ function migrateVersionTwo(
+     );
++    if (candidate.readingStationId !== undefined && (candidate.staffRoleDefinitionId !== "staff.radiologist" ||
++      !DIAGNOSTIC_READING_WORKSTATIONS.some((station) => station.id === candidate.readingStationId))) {
++      throw new Error("The saved reading workstation is invalid.");
++    }
+     const home = getEmployeeHomeLocation(
+@@ -3130,2 +3222,3 @@ function migrateVersionTwo(
+           : home.homeRoomInstanceId,
++      ...(typeof candidate.readingStationId === "string" ? { readingStationId: candidate.readingStationId } : {}),
+       location: path[pathIndex]

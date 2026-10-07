@@ -1,0 +1,77 @@
+diff --git a/packages/game-domain/src/selectors.ts b/packages/game-domain/src/selectors.ts
+index c0061e6b..957c1af6 100644
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -46,3 +46,5 @@ import { getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
++import { getDiagnosticChoicePlanning } from "./diagnostic-order-requests";
+ import { isEmployeeAwayForTraining } from "./employee-training";
++import { forecastDiagnosticOrderPlan, getDiagnosticOrderPlans } from "./diagnostic-timing";
+ import {
+@@ -952,2 +954,21 @@ export function getAnswerChoiceServicePreview(
+   }
++  const diagnostic = getDiagnosticChoicePlanning(state, encounter, question.node, choice.id, context);
++  if (diagnostic) {
++    const plan = diagnostic.quote.kind === "planned" ? diagnostic.quote.plan : null;
++    const forecast = plan ? forecastDiagnosticOrderPlan(state, plan, context) : null;
++    const source = plan?.sources[0];
++    return {
++      kind: "test" as const,
++      answerChoiceId,
++      serviceId: diagnostic.serviceId,
++      serviceDisplayName: diagnostic.serviceDisplayName,
++      routeId: source?.routeId ?? null,
++      routeDisplayName: source?.routeDisplayName ?? null,
++      durationTicks: forecast
++        ? forecast.blockedPhaseIds.length ? null : Math.max(...forecast.plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick
++        : diagnostic.quote.kind === "unavailable" ? diagnostic.quote.estimateMinutes : null,
++      timingProfileId: diagnostic.timingProfileId,
++      diagnosticTiming: forecast?.plan ?? plan,
++    };
++  }
+   const operationalOrder = getExactTestChoiceOrderRecord(
+@@ -1857,2 +1878,32 @@ export function getCurrentQuestion(
+ 
++export function getDiagnosticOrderTiming(state: GameState, encounterId: string, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT) {
++  const encounter = state.encounters[encounterId];
++  const plans = getDiagnosticOrderPlans(state).filter((plan) => plan.encounterId === encounterId);
++  const currentOrderId = encounter?.terminalTestOrder?.diagnosticTiming?.orderId ??
++    (encounter?.pendingResult?.deliveredAtTick === null ? encounter.pendingResult.diagnosticTiming?.orderId : undefined);
++  const selected = plans.find((plan) => plan.orderId === currentOrderId) ??
++    plans.filter((plan) => plan.phases.some((phase) => phase.status !== "completed" && phase.status !== "cancelled")).at(-1) ?? plans.at(-1);
++  if (!selected) return null;
++  const forecast = forecastDiagnosticOrderPlan(state, selected, context);
++  const plan = forecast.plan;
++  const remaining = (atTick: number) => Math.max(0, atTick - state.facilityTick);
++  const labels = { collection: "Collection", acquisition: "Image acquisition", preparation: "Preparation", procedure: "Procedure", recovery: "Recovery",
++    interpretation: "Interpretation", laboratory_processing: "Laboratory processing", pathology: "Pathology", retained: "Remaining outside work",
++    patient_departure: "Travelling to the outside service", patient_return: "Returning to Front Desk" } as const;
++  return {
++    orderId: plan.orderId, blocked: forecast.blockedPhaseIds.length > 0,
++    totalRemainingTicks: forecast.blockedPhaseIds.length ? null : remaining(Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick))),
++    resultReady: plan.resultReady.reachedAtTick !== null,
++    resultRemainingTicks: plan.resultReady.reachedAtTick !== null ? 0 : plan.resultReady.afterPhaseIds.some((id) => forecast.blockedPhaseIds.includes(id)) ? null : remaining(plan.resultReady.forecastAtTick),
++    visualResultReady: plan.visualResultReady?.reachedAtTick !== null && plan.visualResultReady?.reachedAtTick !== undefined,
++    visualResultRemainingTicks: !plan.visualResultReady ? null : plan.visualResultReady.reachedAtTick !== null ? 0 :
++      plan.visualResultReady.afterPhaseIds.some((id) => forecast.blockedPhaseIds.includes(id)) ? null : remaining(plan.visualResultReady.forecastAtTick),
++    careComplete: plan.careComplete.reachedAtTick !== null,
++    careRemainingTicks: plan.careComplete.reachedAtTick !== null ? 0 : plan.careComplete.afterPhaseIds.some((id) => forecast.blockedPhaseIds.includes(id)) ? null : remaining(plan.careComplete.forecastAtTick),
++    phases: plan.phases.map((phase) => ({ id: phase.id, kind: phase.kind, label: labels[phase.kind], mode: phase.mode, durationMinutes: phase.durationMinutes,
++      status: phase.status, queueMinutes: phase.forecast.queueMinutes, walkingMinutes: phase.forecast.walkingMinutes,
++      remainingTicks: forecast.blockedPhaseIds.includes(phase.id) ? null : phase.status === "completed" ? 0 : remaining(phase.forecast.endsAtTick) })),
++  };
++}
++
+ export function getPendingResultEta(
+@@ -1860,2 +1911,3 @@ export function getPendingResultEta(
+   encounterId: string,
++  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): number | null {
+@@ -1865,2 +1917,7 @@ export function getPendingResultEta(
+   }
++  if (pendingResult.diagnosticTiming) {
++    const forecast = forecastDiagnosticOrderPlan(state, pendingResult.diagnosticTiming, context);
++    if (forecast.blockedPhaseIds.length) return null;
++    return Math.max(0, Math.max(forecast.plan.resultReady.forecastAtTick, forecast.plan.careComplete.forecastAtTick) - state.facilityTick);
++  }
+   if (pendingResult.resourceQueue?.status === "waiting_for_resources") {

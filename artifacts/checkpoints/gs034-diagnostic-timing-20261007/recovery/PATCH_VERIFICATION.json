@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs034-diagnostic-timing-20261007",
+  "verifiedAt": "2026-10-07T23:46:23.076Z",
+  "gitIndexOrRefsChanged": false,
+  "activeSourceChanged": false,
+  "contractCount": 41,
+  "results": [
+    {
+      "targetPath": "packages/game-domain/src/types.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__types.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/index.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__index.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/persistence.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__persistence.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/service-operations.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__service-operations.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/reducer.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__reducer.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/selectors.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__selectors.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/retired-encounters.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__retired-encounters.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/game-domain/src/retired-service-history.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__retired-service-history.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/game-domain/src/room-capacity.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__room-capacity.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/staff.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__staff.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/characterStillCatalog.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__characterStillCatalog.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/src/test-choice-orders.ts",
+      "patchPath": "recovery/patches/packages__game-domain__src__test-choice-orders.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/balance-config/src/index.ts",
+      "patchPath": "recovery/patches/historical-balance__index.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.ts",
+      "patchPath": "recovery/patches/historical-balance__prototype-balance.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.test.ts",
+      "patchPath": "recovery/patches/historical-balance__prototype-balance.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/balance-config/src/approved-room-layouts.ts",
+      "patchPath": "recovery/patches/historical-balance__approved-room-layouts.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "patchPath": "recovery/patches/historical-balance__approved-room-layouts.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/balance-config/src/room-instance-caps.test.ts",
+      "patchPath": "recovery/patches/historical-balance__room-instance-caps.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261002-batch.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261003-batch.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20261007-batch.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "captured-task-baseline"
+    },
+    {
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "reviewed-virtual-preimage-normalized-LF"
+    },
+    {
+      "targetPath": "apps/player/src/session/level3ControlsViewModels.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "reviewed-virtual-preimage-normalized-LF"
+    },
+    {
+      "targetPath": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "reviewed-virtual-preimage-normalized-LF"
+    },
+    {
+      "targetPath": "apps/player/src/session/diagnosticTimingPresentation.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "new-file"
+    },
+    {
+      "targetPath": "apps/player/src/session/diagnosticTimingPresentation.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "new-file"
+    },
+    {
+      "targetPath": "apps/player/src/session/diagnosticTimingViewModels.test.ts",
+      "patchPath": "recovery/patches/historical-diagnostic-timing-ui-six-files.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "new-file"
+    },
+    {
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "patchPath": "recovery/patches/final-pending-body-history-guard.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-attributable-GS034"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__service-procedure-operations.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__ultrasound-first-imaging.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__level-two-endoscopy.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__surgery-center-batch.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/bread-butter-20260917-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__bread-butter-20260917-batch.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "patchPath": "recovery/patches/packages__game-domain__tests__gs028-20260928-batch.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "apps/player/src/session/answerChoiceTimingPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__answerChoiceTimingPresentation.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "targetPath": "apps/player/src/session/clinicalServiceLabels.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__clinicalServiceLabels.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "targetPath": "apps/player/src/session/multistepChoiceTiming.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__multistepChoiceTiming.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "targetPath": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__earlyLevelsPresentation.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "git-blob-comparator-reviewed-task-only"
+    },
+    {
+      "targetPath": "apps/player/src/session/breadButterPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__breadButterPresentation.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+      "patchPath": "recovery/patches/apps__player__src__session__briefEarlyLevelsPresentation.test.ts.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    },
+    {
+      "targetPath": "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "patchPath": "recovery/patches/apps__player__src__session__chartFeedbackPresentation.test.tsx.patch",
+      "check": "PASS",
+      "forwardByteEquality": true,
+      "reverseByteEquality": true,
+      "reapplyByteEquality": true,
+      "isolatedScratch": true,
+      "preimageKind": "inferred-current-minus-GS034-fixture-or-current-assertion-additions"
+    }
+  ],
+  "syntax": [
+    {
+      "syntaxCheck": "PASS",
+      "sourceComparatorsChecked": 58,
+      "note": "Parse only; package is intentionally not a clean runnable checkout."
+    }
+  ],
+  "command": "node .local-dev/facility-diagnostic-timing/backup-preparation/prepare-checkpoint.mjs",
+  "isolatedIgnoredScratchOnly": true
+}

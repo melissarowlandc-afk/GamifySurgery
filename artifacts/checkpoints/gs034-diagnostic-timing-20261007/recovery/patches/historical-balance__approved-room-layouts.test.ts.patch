@@ -1,0 +1,20 @@
+diff --git a/packages/balance-config/src/approved-room-layouts.test.ts b/packages/balance-config/src/approved-room-layouts.test.ts
+index 7f20f17c..6a2f4327 100644
+--- a/packages/balance-config/src/approved-room-layouts.test.ts
++++ b/packages/balance-config/src/approved-room-layouts.test.ts
+@@ -29,4 +29,4 @@ describe("approved proof navigation contract", () => {
+ 
+-  it("covers all twenty-three approved rooms and resolves the same navigation used by balance", () => {
+-    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(23);
++  it("covers all twenty-four approved rooms and resolves the same navigation used by balance", () => {
++    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(24);
+     for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
+@@ -54,3 +54,3 @@ describe("approved proof navigation contract", () => {
+     expect(Object.fromEntries(
+-      ["room.ambulatory_or", "room.laboratory", "room.pharmacy", "room.maintenance_workshop", "room.staff_break", "room.surgeon_office", "room.vending"]
++      ["room.ambulatory_or", "room.laboratory", "room.pharmacy", "room.maintenance_workshop", "room.staff_break", "room.surgeon_office", "room.vending", "room.reading"]
+         .map((id) => {
+@@ -67,2 +67,3 @@ describe("approved proof navigation contract", () => {
+       "room.vending": "2x2",
++      "room.reading": "4x4",
+     });

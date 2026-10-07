@@ -1,0 +1,31 @@
+diff --git a/packages/game-domain/tests/bread-butter-20260917-batch.test.ts b/packages/game-domain/tests/bread-butter-20260917-batch.test.ts
+index b78d4f50..7855f16b 100644
+--- a/packages/game-domain/tests/bread-butter-20260917-batch.test.ts
++++ b/packages/game-domain/tests/bread-butter-20260917-batch.test.ts
+@@ -562,8 +562,12 @@ describe("September 17 bread-and-butter production flows", () => {
+         patientTravel: null,
++        diagnosticTiming: { version: "diagnostic-order.v1", execution: "supported" },
+       });
+-      
+-      
+-      
+-      
+-      
++      const plan = pending!.diagnosticTiming!;
++      expect(plan.phases.filter((phase) => phase.durationMinutes)).toEqual([
++        expect.objectContaining({ kind: "acquisition", mode: "local", durationMinutes: 5,
++          resource: expect.objectContaining({ patientAnchor: locationBeforeScan }) }),
++      ]);
++      expect(plan.phases.some((phase) => phase.kind === "interpretation")).toBe(false);
++      expect(pending!.dueTick).toBe(Math.max(plan.resultReady.forecastAtTick, plan.careComplete.forecastAtTick));
++      expect(pending!.dueTick - pending!.scheduledAtTick).toBeGreaterThanOrEqual(5);
+       expect(pending?.resourceReservations ?? []).toEqual([]);
+@@ -591,4 +595,6 @@ describe("September 17 bread-and-butter production flows", () => {
+       state = advanceUntilResult(state, encounterId, `${prefix}.wait`);
+-      
+-      
++      expect(state.encounters[encounterId]?.pendingResult?.diagnosticTiming?.careComplete.reachedAtTick).toEqual(expect.any(Number));
++      expect(state.encounters[encounterId]?.pendingResult?.diagnosticTiming?.phases.find((phase) => phase.kind === "acquisition")).toMatchObject({
++        status: "completed", durationMinutes: 5,
++      });
+       expect(state.encounters[encounterId]?.patientLocation).not.toEqual(locationBeforeScan);

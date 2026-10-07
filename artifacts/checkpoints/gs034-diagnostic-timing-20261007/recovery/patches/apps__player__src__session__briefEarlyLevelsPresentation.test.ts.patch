@@ -1,0 +1,9 @@
+diff --git a/apps/player/src/session/briefEarlyLevelsPresentation.test.ts b/apps/player/src/session/briefEarlyLevelsPresentation.test.ts
+index 10345cb3..8d5b7bbc 100644
+--- a/apps/player/src/session/briefEarlyLevelsPresentation.test.ts
++++ b/apps/player/src/session/briefEarlyLevelsPresentation.test.ts
+@@ -23,3 +23,3 @@ describe("September 17 brief early-level chart presentation", () => {
+         const timing = ANSWER_CHOICE_TIMING_REGISTRY.find((entry) => entry.questionVariantId === node.questionVariantId)!;
+-        for (const choice of choices) { const authored = timing.classification.kind === "test_choices" ? timing.classification.choices.find((item) => item.choiceId === choice.id) : undefined; if (authored?.timing.kind === "test") { expect(choice.etaLabel).toBeTruthy();  } else if (timing.classification.kind === "test_choices") { expect(choice.etaLabel).toBe("No test wait"); expect(choice.detailLabel).toBeUndefined(); } else { expect(choice.etaLabel).toBeUndefined(); expect(choice.detailLabel).toBeUndefined(); } }
++        for (const choice of choices) { const authored = timing.classification.kind === "test_choices" ? timing.classification.choices.find((item) => item.choiceId === choice.id) : undefined; if (authored?.timing.kind === "test") { expect(choice.etaLabel).toBeTruthy(); expect(choice.detailLabel).toContain("Estimated total (game time; includes queues and walking)."); } else if (timing.classification.kind === "test_choices") { expect(choice.etaLabel).toBe("No test wait"); expect(choice.detailLabel).toBeUndefined(); } else { expect(choice.etaLabel).toBeUndefined(); expect(choice.detailLabel).toBeUndefined(); } }
+       }

@@ -1,0 +1,46 @@
+diff --git a/packages/game-domain/tests/gs028-20261003-batch.test.ts b/packages/game-domain/tests/gs028-20261003-batch.test.ts
+index 2ae23e26..56c77a10 100644
+--- a/packages/game-domain/tests/gs028-20261003-batch.test.ts
++++ b/packages/game-domain/tests/gs028-20261003-batch.test.ts
+@@ -73,5 +73,2 @@ function allRoutesAvailableContext(): typeof PROTOTYPE_DOMAIN_CONTEXT {
+       requiredCapabilityIds: [],
+-      resourceRequirements: [],
+-      providerRequirement: null,
+-      patientTravel: null,
+     }));
+@@ -435,7 +432,18 @@ describe("GS-028 October 3 batch admission", () => {
+         kind: "test",
+-        routeId: null,
+-        routeDisplayName: null,
+         durationTicks: expect.any(Number),
+         timingProfileId: record.timingProfileId,
++        diagnosticTiming: { execution: "preview_only", timingVersion: "diagnostic-timing.v1" },
+       });
++      const plan = preview!.diagnosticTiming!;
++      expect(plan.phases.some((phase) => phase.mode === "local" && phase.patientPresent && phase.requirement)).toBe(false);
++      expect(preview!.durationTicks).toBe(Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick);
++      expect(preview!.routeDisplayName).toBe(plan.sources[0]!.routeDisplayName);
++      if (plan.sources[0]!.routeId) {
++        const route = context.balanceRelease.services.flatMap((service) => service.routes).find((candidate) => candidate.id === plan.sources[0]!.routeId)!;
++        expect(route).toMatchObject({ patientTravel: null, resourceRequirements: [] });
++        expect(route.patientRemainsOnsite).not.toBe(true);
++      } else {
++        expect(plan.sources[0]!.kind).toBe("retained_profile");
++        expect(preview!.routeDisplayName).toBe(context.balanceRelease.answerChoiceTimingProfiles.find((profile) => profile.id === record.timingProfileId)!.displayName);
++      }
+       if (preview?.serviceId && context.balanceRelease.services.some((service) => service.id === preview.serviceId)) {
+@@ -468,8 +476,11 @@ describe("GS-028 October 3 batch admission", () => {
+     expect(getEligibleServiceRoute(external, "service.ct", null, context, "encounter.older.external")).not.toBeNull();
+-    expect(getAnswerChoiceServicePreview(external, "encounter.older.external", externalCorrect.id, context)).toMatchObject({
++    const externalPreview = getAnswerChoiceServicePreview(external, "encounter.older.external", externalCorrect.id, context)!;
++    expect(externalPreview).toMatchObject({
+       kind: "test",
+-      routeId: null,
+-      routeDisplayName: null,
++      routeId: "route.ct.outsourced",
+       timingProfileId: "timing.test.ct",
++      diagnosticTiming: { execution: "preview_only" },
+     });
++    expect(externalPreview.diagnosticTiming!.phases.find((phase) => phase.kind === "acquisition")).toMatchObject({ mode: "external", requirement: null });
++    expect(externalPreview.durationTicks).toBe(Math.max(...externalPreview.diagnosticTiming!.phases.map((phase) => phase.forecast.endsAtTick)) - external.facilityTick);
+ 

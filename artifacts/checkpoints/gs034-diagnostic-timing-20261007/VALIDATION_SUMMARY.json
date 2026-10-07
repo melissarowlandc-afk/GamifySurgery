@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "purpose": "GS034 scoped acceptance and package validation, not clinical approval or clean shared-tree release acceptance",
+  "historicalAccepted": {
+    "domain": {
+      "passed": 126,
+      "total": 126,
+      "diagnostic": 78,
+      "legacyProcedure": 48
+    },
+    "datedBatch": {
+      "passed": 842,
+      "days": [
+        "2026-10-02",
+        "2026-10-03",
+        "2026-10-07"
+      ],
+      "preservedOct7Nodes": 80,
+      "preservedOct7Choices": 320
+    },
+    "balance": {
+      "passed": 66,
+      "total": 66
+    },
+    "player": {
+      "focusedPassed": 55,
+      "postCaptionPassed": 19,
+      "note": "Separate runs; counts are not asserted as unique additive tests."
+    },
+    "browser": {
+      "desktopPhonePassed": 12,
+      "postCaptionEndoscopyPassed": 4,
+      "fourReaderRenderPassed": 1
+    },
+    "affectedTypechecks": "PASS",
+    "dependencyAndLauncherBoundaries": "PASS",
+    "isolatedProductionBuild": "PASS",
+    "scopedWhitespaceChecks": "PASS"
+  },
+  "freshBackupAcceptance": {
+    "domain": {
+      "evidencePath": "packages/game-domain/.local-dev/facility-diagnostic-timing/backup-domain-current.json",
+      "totalTests": 126,
+      "passedTests": 126,
+      "failedTests": 0,
+      "files": [
+        {
+          "pathSuffix": "tests/diagnostic-orders.test.ts",
+          "status": "passed",
+          "testCount": 13
+        },
+        {
+          "pathSuffix": "tests/diagnostic-result-dispositions.test.ts",
+          "status": "passed",
+          "testCount": 3
+        },
+        {
+          "pathSuffix": "tests/diagnostic-service-operations.test.ts",
+          "status": "passed",
+          "testCount": 18
+        },
+        {
+          "pathSuffix": "tests/diagnostic-timing-persistence.test.ts",
+          "status": "passed",
+          "testCount": 10
+        },
+        {
+          "pathSuffix": "tests/diagnostic-timing.test.ts",
+          "status": "passed",
+          "testCount": 31
+        },
+        {
+          "pathSuffix": "tests/reading-stations.test.ts",
+          "status": "passed",
+          "testCount": 3
+        },
+        {
+          "pathSuffix": "tests/service-procedure-operations.test.ts",
+          "status": "passed",
+          "testCount": 48
+        }
+      ]
+    },
+    "player": {
+      "evidencePath": "apps/player/.local-dev/facility-diagnostic-timing/backup-player-current.json",
+      "totalTests": 19,
+      "passedTests": 19,
+      "failedTests": 0,
+      "files": [
+        {
+          "pathSuffix": "session/chartFeedbackPresentation.test.tsx",
+          "status": "passed",
+          "testCount": 2
+        },
+        {
+          "pathSuffix": "session/diagnosticTimingPresentation.test.ts",
+          "status": "passed",
+          "testCount": 9
+        },
+        {
+          "pathSuffix": "session/diagnosticTimingViewModels.test.ts",
+          "status": "passed",
+          "testCount": 8
+        }
+      ]
+    },
+    "balanceDomainPlayerTypechecks": "PASS",
+    "parentVerified": true
+  },
+  "fullSharedTreeLimits": {
+    "domainPassed": 2264,
+    "domainTotal": 2271,
+    "playerPassed": 674,
+    "playerTotal": 678,
+    "cleanAcceptance": false,
+    "note": "Adjacent GS037/GS038/Claude work was active; GS037 was subsequently accepted separately by its owner. No acceptance of those implementations is claimed by this archive."
+  },
+  "packageChecks": {
+    "patchTargetContracts": 41,
+    "forwardReverseReapplyExactBytes": "PASS",
+    "syntaxFixtures": 58,
+    "syntax": "PASS",
+    "broadTestsRerunForPackaging": false
+  },
+  "exclusions": "No raw logs/reports/browser traces/screenshots/saves; only counts and relative evidence references."
+}

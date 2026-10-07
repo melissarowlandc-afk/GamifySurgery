@@ -1,0 +1,32 @@
+diff --git a/packages/game-domain/tests/level-two-endoscopy.test.ts b/packages/game-domain/tests/level-two-endoscopy.test.ts
+index 555894b7..b13e4cc8 100644
+--- a/packages/game-domain/tests/level-two-endoscopy.test.ts
++++ b/packages/game-domain/tests/level-two-endoscopy.test.ts
+@@ -324,3 +324,3 @@ describe("Level 2 endoscopy operational capacity", () => {
+     expect(state.encounters[encounter.id]!.patientMovement?.kind).toBe("returning_from_onsite_service");
+-    
++    expect(state.encounters[encounter.id]!.terminalTestOrder?.diagnosticTiming?.careComplete.reachedAtTick).toBeNull();
+     for (let minute = 0; minute < 120 && state.encounters[encounter.id]!.patientLocation !== null; minute += 1) {
+@@ -329,3 +329,3 @@ describe("Level 2 endoscopy operational capacity", () => {
+     expect(state.encounters[encounter.id]!.patientLocation).toBeNull();
+-    
++    expect(state.encounters[encounter.id]!.terminalTestOrder?.diagnosticTiming?.careComplete.reachedAtTick).toEqual(expect.any(Number));
+     expect(state.serviceOperations[0]).toMatchObject({ status: "completed" });
+@@ -346,2 +346,8 @@ describe("Level 2 endoscopy operational capacity", () => {
+     const encounter = state.encounters["encounter.colonoscopy"]!;
++    // Preserve the previous question-group contract rather than reinterpreting
++    // saved work through the new exact-release phase planner.
++    for (const node of encounter.frozenCase.decisionNodes) {
++      const alternative = node.answerChoices.find((choice) => !choice.isCorrect);
++      if (alternative) alternative.label += " [frozen prior wording]";
++    }
+     const nodeIndex = encounter.frozenCase.decisionNodes.findIndex(
+@@ -462,4 +468,6 @@ describe("Level 2 endoscopy operational capacity", () => {
+     expect(etaBeforeCountdown).toBeLessThanOrEqual(180);
+-    
+-    
++    expect(pending.dueTick - pending.scheduledAtTick).toBe(180);
++    expect(pending.timingPhases).toEqual([
++      expect.objectContaining({ durationTicks: 180, resourceBound: false, startsAtTick: pending.scheduledAtTick, endsAtTick: pending.dueTick }),
++    ]);
+     state = gameReducer(state, { type: "ADVANCE_TICK", operationId: "colonoscopy.external-countdown" });
