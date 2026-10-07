@@ -1,0 +1,310 @@
+{
+  "schemaVersion": "level3-and-radiologists-20-design/v1",
+  "status": "all-20-candidate_pending_owner_review;no-runtime-integration;no-owner-art-approval-recorded",
+  "poseContract": {
+    "poses": [
+      "stand-south",
+      "stand-east",
+      "stand-west",
+      "stand-north"
+    ],
+    "seated": "deferred-no-approved-level3-seat-contract",
+    "background": "genuine-transparent-rgba"
+  },
+  "ownership": {
+    "001-008": "character_level3_baseline",
+    "009-020": "patient_six_artist"
+  },
+  "records": [
+    {
+      "id": "001",
+      "name": "Mark",
+      "category": "radiologist",
+      "inspiration": "Mark Scout",
+      "appearance": "dark swept side-part hair; fair skin; weary kind face; white shirt, narrow dark tie, muted-blue sweater, charcoal trousers, black shoes; blank centered or omitted badge",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/001/mark-radiologist-standing-cardinals-v1.png",
+        "sha256": "ccb459c49ef0cfc4cb5c8dd8f4584d23d3179d2245193279ec832b03dba6497b",
+        "prompt": "sources/001/mark-radiologist-standing-cardinals-v1-exact-prompt.txt",
+        "provenance": "sources/001/mark-radiologist-standing-cardinals-v1-provenance.md",
+        "generationInput": "visual-references-inspected-textual-guidance-only-no-images-attached"
+      }
+    },
+    {
+      "id": "002",
+      "name": "Helly",
+      "category": "radiologist",
+      "inspiration": "Helly R",
+      "appearance": "auburn shoulder-length hair; fair skin; cream blouse, moss cardigan, charcoal trousers, black shoes",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/002/helly-radiologist-standing-cardinals-v1.png",
+        "sha256": "db870ac94b6cb2e578ebb4de7f0501a2ec00378a6929fd506767bfeb0e671f24",
+        "prompt": "sources/002/exact-prompt.txt",
+        "provenance": "sources/002/helly-radiologist-standing-cardinals-v1-provenance.md",
+        "generationInput": "visual-references-inspected-textual-guidance-only-no-images-attached"
+      }
+    },
+    {
+      "id": "003",
+      "name": "Irving",
+      "category": "radiologist",
+      "inspiration": "Irving B",
+      "appearance": "older fair-skinned man; slicked-back salt-and-pepper hair; narrow long face; dark-gray mustache; dark suit and restrained tie",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/003/irving-radiologist-standing-cardinals-v1.png",
+        "sha256": "af55256e91d12d5c88a761c6f91e53102ec58d747bc0c3ef579ad881ad2b6153",
+        "prompt": "sources/003/exact-prompt.txt",
+        "provenance": "sources/003/irving-radiologist-standing-cardinals-v1-provenance.md",
+        "generationInput": "visual-references-inspected-textual-guidance-only-no-images-attached"
+      }
+    },
+    {
+      "id": "004",
+      "name": "Dylan",
+      "category": "radiologist",
+      "inspiration": "Dylan G",
+      "appearance": "stocky fair-skinned man; wavy brown hair; brown beard; thick rectangular glasses; pale-blue shirt, burgundy tie, gray sweater vest",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/004/standing-cardinals-v1.png",
+        "sha256": "afa84ca1d24b941b014baaa612681861032b94e75d39f61f006f82751e0b7c7e",
+        "prompt": "sources/004/exact-prompt.txt",
+        "provenance": "sources/004/provenance.md",
+        "generationInput": "visual-references-inspected-textual-guidance-only-no-images-attached"
+      }
+    },
+    {
+      "id": "005",
+      "category": "staff",
+      "role": "surgeon",
+      "appearance": "woman, silver pixie, medium-light skin, dark teal scrubs",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/005/standing-cardinals-v1.png",
+        "sha256": "7bd7a0619c6ad0f8be2ee6f05ad52d56ccaab5d7ff025d7cfdff381e24754d65",
+        "prompt": "sources/005/exact-prompt.txt",
+        "provenance": "sources/005/provenance.md",
+        "generationInput": "visual-references-inspected-textual-guidance-only-no-images-attached"
+      }
+    },
+    {
+      "id": "006",
+      "category": "staff",
+      "role": "surgeon",
+      "appearance": "man, shaved head and trimmed dark beard, deep-brown skin, navy scrubs",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/006/standing-cardinals-v1.png",
+        "sha256": "c727d244a55e49def3a6c529fc4a7bf1efe3ace28415db293d40696d85365cce",
+        "prompt": "sources/006/exact-prompt-v2.txt",
+        "provenance": "sources/006/provenance-v2.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-patient-015-style-only"
+      }
+    },
+    {
+      "id": "007",
+      "category": "staff",
+      "role": "or-nurse",
+      "appearance": "woman, black braided bun, deep-brown skin, eucalyptus scrubs",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/007/standing-cardinals-v1.png",
+        "sha256": "b49dffab84ddf72611fb40d2a83b6f13f19f8afff81b5a3637f669aa5b032a1d",
+        "prompt": "sources/007/exact-prompt-v2.txt",
+        "provenance": "sources/007/provenance-v2.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-patient-015-style-only"
+      }
+    },
+    {
+      "id": "008",
+      "category": "staff",
+      "role": "or-nurse",
+      "appearance": "man, sandy curls, fair skin, slate scrubs",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/008/standing-cardinals-v1.png",
+        "sha256": "47fac80972b00aa76a540390321c6bfddcf663a8ccd9e30255f59a5dd8365580",
+        "prompt": "sources/008/exact-prompt-v2.txt",
+        "provenance": "sources/008/provenance-v2.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-patient-015-style-only"
+      }
+    },
+    {
+      "id": "009",
+      "category": "staff",
+      "role": "laboratory-technician",
+      "appearance": "woman, short dark bob, East Asian appearance, plum scrub top",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/009/laboratory-technician-009-standing-cardinals-v1.png",
+        "sha256": "eb433f84e63fe669beb0a0fc6febd933072dcac2767b1a0ed2acba6d1f418eaa",
+        "prompt": "sources/009/exact-prompt.txt",
+        "provenance": "sources/009/laboratory-technician-009-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-path-gs026-employee-001-style-only"
+      }
+    },
+    {
+      "id": "010",
+      "category": "staff",
+      "role": "laboratory-technician",
+      "appearance": "man, wavy auburn hair, light skin, olive scrub top",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/010/laboratory-technician-010-standing-cardinals-v1.png",
+        "sha256": "4b736fd3053e54513c77c354f5d7fabbf2eeb3a83d5f47c5dd300d69165f070d",
+        "prompt": "sources/010/exact-prompt.txt",
+        "provenance": "sources/010/laboratory-technician-010-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-path-gs026-employee-001-style-only"
+      }
+    },
+    {
+      "id": "011",
+      "category": "staff",
+      "role": "pharmacist",
+      "appearance": "woman, dark shoulder-length curls, brown skin, white short coat and lavender top",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/011/pharmacist-011-standing-cardinals-v1.png",
+        "sha256": "76fd8a88e4abb7b8906fc13ade74fd9c537e68d0a1c6bfb49094ae06e6fe54ce",
+        "prompt": "sources/011/exact-prompt.txt",
+        "provenance": "sources/011/pharmacist-011-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-path-gs026-employee-001-style-only"
+      }
+    },
+    {
+      "id": "012",
+      "category": "staff",
+      "role": "pharmacist",
+      "appearance": "man, salt-and-pepper side part, light skin, white short coat, pale-blue shirt and muted tie",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/012/pharmacist-012-standing-cardinals-v1.png",
+        "sha256": "ab1debdc8e0b6512d5c05de685376ebc84818570ded986c202df9313315ac3c4",
+        "prompt": "sources/012/pharmacist-012-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/012/pharmacist-012-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-patient-015-style-only"
+      }
+    },
+    {
+      "id": "013",
+      "category": "staff",
+      "role": "repair-person",
+      "appearance": "woman, cropped black hair, medium skin, rust work overshirt and charcoal utility trousers",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/013/repair-person-013-standing-cardinals-v1.png",
+        "sha256": "f4b4ea686036259c749f41eceb80b55934551923ff7218d6267828962ebdc01c",
+        "prompt": "sources/013/repair-person-013-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/013/repair-person-013-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-patient-015-style-only"
+      }
+    },
+    {
+      "id": "014",
+      "category": "staff",
+      "role": "repair-person",
+      "appearance": "man, wavy dark hair and short beard, medium-brown skin, forest work jacket and utility trousers",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/014/repair-person-014-standing-cardinals-v1.png",
+        "sha256": "d4c3a2c34349afdbd73d5cc844d28c1b426b7435261c58ba87e5c1cc4e7961f2",
+        "prompt": "sources/014/repair-person-014-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/014/repair-person-014-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-patient-015-style-only"
+      }
+    },
+    {
+      "id": "015",
+      "category": "patient",
+      "sex": "Male",
+      "age": 19,
+      "ageBand": "young_adult",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/015/patient-015-standing-cardinals-v1.png",
+        "sha256": "b022ece061ae241142bd22568644dc50b477a021d0c5e845066ce02056c1e741",
+        "prompt": "sources/015/patient-015-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/015/patient-015-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-source-001-mark-composition-only"
+      }
+    },
+    {
+      "id": "016",
+      "category": "patient",
+      "sex": "Male",
+      "age": 24,
+      "ageBand": "young_adult",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/016/patient-016-standing-cardinals-v1.png",
+        "sha256": "83b60869078927452652696d35b693b4aedef1b080c0c9007fdca14d5ac4db90",
+        "prompt": "sources/016/patient-016-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/016/patient-016-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-source-001-mark-composition-only"
+      }
+    },
+    {
+      "id": "017",
+      "category": "patient",
+      "sex": "Male",
+      "age": 28,
+      "ageBand": "young_adult",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/017/patient-017-standing-cardinals-v1.png",
+        "sha256": "11c8bd8d67b373b4d2dd00d2af50bd38ab9cfcf71ed88e972a87cfc8a41fbf5e",
+        "prompt": "sources/017/patient-017-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/017/patient-017-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-paths-gs026-employee-001-and-source-001-mark-composition-only"
+      }
+    },
+    {
+      "id": "018",
+      "category": "patient",
+      "sex": "Female",
+      "age": 21,
+      "ageBand": "young_adult",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/018/patient-018-standing-cardinals-v1.png",
+        "sha256": "b63137a87fbabd0b911627a50b106f04b049bccada79949f08410fcab1e9d0da",
+        "prompt": "sources/018/patient-018-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/018/patient-018-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-path-gs026-employee-001-style-only"
+      }
+    },
+    {
+      "id": "019",
+      "category": "patient",
+      "sex": "Female",
+      "age": 26,
+      "ageBand": "young_adult",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/019/patient-019-standing-cardinals-v1.png",
+        "sha256": "ddecd0d3d7e713b881d9ac4c7c9071c1370b2bc45e6df4d77bbc38ea4f4ef874",
+        "prompt": "sources/019/patient-019-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/019/patient-019-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-path-gs026-employee-001-style-only"
+      }
+    },
+    {
+      "id": "020",
+      "category": "patient",
+      "sex": "Male",
+      "age": 38,
+      "ageBand": "adult",
+      "status": "candidate_pending_owner_review",
+      "source": {
+        "png": "sources/020/patient-020-standing-cardinals-v1.png",
+        "sha256": "8e62ab9ffb8208f7701d61782566d367352ba021f5fdb6b7176159b200e9281d",
+        "prompt": "sources/020/patient-020-standing-cardinals-v1.prompt.txt",
+        "provenance": "sources/020/patient-020-standing-cardinals-v1.provenance.md",
+        "generationInput": "explicit-referenced-image-path-gs026-employee-001-style-only"
+      }
+    }
+  ]
+}

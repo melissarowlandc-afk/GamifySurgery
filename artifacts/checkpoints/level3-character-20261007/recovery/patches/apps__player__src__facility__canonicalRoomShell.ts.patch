@@ -1,0 +1,18 @@
+diff --git a/apps/player/src/facility/canonicalRoomShell.ts b/apps/player/src/facility/canonicalRoomShell.ts
+index 0fc9860..e880444 100644
+--- a/apps/player/src/facility/canonicalRoomShell.ts
++++ b/apps/player/src/facility/canonicalRoomShell.ts
+@@ -130,6 +130,13 @@ export const CANONICAL_ENCLOSED_ROOM_DEFINITION_IDS = [
+   "room.training",
+   "room.coffee_kiosk",
+   "room.glp1_telehealth_suite",
++  "room.ambulatory_or",
++  "room.laboratory",
++  "room.pharmacy",
++  "room.maintenance_workshop",
++  "room.staff_break",
++  "room.surgeon_office",
++  "room.vending",
+ ] as const;
+ 
+ export function isCanonicalEnclosedRoomDefinition(definitionId: string): boolean {

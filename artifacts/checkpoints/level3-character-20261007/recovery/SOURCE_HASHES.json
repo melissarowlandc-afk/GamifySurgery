@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Exact dirty-baseline preconditions; baseline files deliberately not archived.",
+  "patches": [
+    {
+      "targetPath": "packages/game-domain/src/appearance.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/integration-baseline/appearance.ts.baseline",
+      "baselineSha256": "5ce57f564a390fb61216bffc915caaf1752b4179b7d8a4f376932d523a66bcbf",
+      "acceptedSha256": "b03ee7e825873b8d9d7e65584a398ef88daab80ba0fe989d7dfba004fca3c010",
+      "acceptedBytes": 24124,
+      "patchPath": "recovery/patches/packages__game-domain__src__appearance.ts.patch",
+      "patchSha256": "806dcc63742a4e44e74c5fae8c1f7000f1dbc5a2bd7032ed1dc260540c5faf06",
+      "capturedTargetMtime": "2026-10-04T22:38:35.316Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/ambient-pedestrians.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/integration-baseline/ambient-pedestrians.ts.baseline",
+      "baselineSha256": "7f7773383d8743df6d84693fe29fdc1b04192ec9b751d900d63a60828e9cbb4d",
+      "acceptedSha256": "0a744e9c59b1884ec645f7dd55c2320b9a5a931c373aaa992a4762fd871fc1b9",
+      "acceptedBytes": 3803,
+      "patchPath": "recovery/patches/packages__game-domain__src__ambient-pedestrians.ts.patch",
+      "patchSha256": "f20ae5f72da5cb12c3b604d5fe2aa070aa7ca206a09e2e5758e96d1a230b44b1",
+      "capturedTargetMtime": "2026-10-04T22:31:01.165Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/reducer.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/integration-baseline/reducer.ts.baseline",
+      "baselineSha256": "73e9c9d2e66192bcd9e9b2c3b90698ff692d61b6bad1c73c71a094fa339d5cf4",
+      "acceptedSha256": "ed51bc5a8fdcc644dc7170e333f5dedab807670e46dbd60f56c6b59b00e2342a",
+      "acceptedBytes": 371956,
+      "patchPath": "recovery/patches/packages__game-domain__src__reducer.ts.patch",
+      "patchSha256": "c46d9d7f64d1c7d0d65e79f35c499ef6f97cdaecef0a34c5b14814bbaaa11c0b",
+      "capturedTargetMtime": "2026-10-05T02:20:15.638Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/service-operations.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/integration-baseline/service-operations.ts.baseline",
+      "baselineSha256": "2b115d97d6f600e630685529830d6735f871507f56e37a339ec486b73b64a31f",
+      "acceptedSha256": "c61acb85f7e6438d599a0094ea424ded45d818e59473d055e829e1cbe866c777",
+      "acceptedBytes": 98493,
+      "patchPath": "recovery/patches/packages__game-domain__src__service-operations.ts.patch",
+      "patchSha256": "0de367fe1565c548f2957d4671cee518c1c24dc35c06b5f796445989a40c9a81",
+      "capturedTargetMtime": "2026-10-05T02:25:32.704Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/retail-operations.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/integration-baseline/retail-operations.ts.baseline",
+      "baselineSha256": "7d8b86b2f02e5afdee6d29a7c01c1ccfc7eaea7955a34065481758ced4339e08",
+      "acceptedSha256": "3c7625cd0a84760fafff786180e93e860e802e0a6da4c9872df6ee2cc1cdca30",
+      "acceptedBytes": 51610,
+      "patchPath": "recovery/patches/packages__game-domain__src__retail-operations.ts.patch",
+      "patchSha256": "2a729f61d5a38a20fd0d73e9b93c0a11f33991e15c2aa1d0b8d97f2e1d924f58",
+      "capturedTargetMtime": "2026-10-05T02:35:44.160Z"
+    },
+    {
+      "targetPath": "apps/player/src/art/characterStillRegistry.generated.json",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.generated.json",
+      "baselineSha256": "c9cbd1f60a69f8ed03269be30feda4d0394521f8d0740d8cc68991295980d180",
+      "acceptedSha256": "31d62b5f13e8ce723fd6a9e3e1eb8cb9dcf756dd40f4540d720d7433a440ee7c",
+      "acceptedBytes": 854781,
+      "patchPath": "recovery/patches/apps__player__src__art__characterStillRegistry.generated.json.patch",
+      "patchSha256": "1c6670599bc2f24d7033f6c23bb93996d91200b64d7a2b919c46bd58a2876393",
+      "capturedTargetMtime": "2026-10-05T01:16:51.865Z"
+    },
+    {
+      "targetPath": "apps/player/src/art/characterStillRegistry.test.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.test.ts",
+      "baselineSha256": "45f76128d3914a4e3073e5698e6455bb4da7a68582f9777ae269c3559698945b",
+      "acceptedSha256": "71258ed5134f65ab956c63e5dc0adcde0da0a68168cf5f08747119c0432c6425",
+      "acceptedBytes": 4546,
+      "patchPath": "recovery/patches/apps__player__src__art__characterStillRegistry.test.ts.patch",
+      "patchSha256": "6563b7decef7d54a47b7e81230c0da51be79780a8fbc1c10d590cbbb52fba698",
+      "capturedTargetMtime": "2026-10-05T01:17:58.415Z"
+    },
+    {
+      "targetPath": "apps/player/src/art/characterStillRegistry.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/runtime-integration-baseline/apps/player/src/art/characterStillRegistry.ts",
+      "baselineSha256": "7e65a098ff79c2d82c33059de9f05673b23316b144544932d15e23ba0c8458f3",
+      "acceptedSha256": "2c3da634031cde0b504e9e6062f297539963b340c6b8181fddf283dd2a4d660b",
+      "acceptedBytes": 3317,
+      "patchPath": "recovery/patches/apps__player__src__art__characterStillRegistry.ts.patch",
+      "patchSha256": "bffde4fb6f1c403d510fbe33d39c437ca593f574e9abcf64da7544bdf7936d77",
+      "capturedTargetMtime": "2026-10-05T01:09:13.476Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/characterStillCatalog.test.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.test.ts",
+      "baselineSha256": "3fcd5111e0f19b33e5a0a202a2889a135a97a12adc5bb353ed98e104b04f4ff3",
+      "acceptedSha256": "229a78f59c7285a32ae432aec2d115c58450027b0f108580f6a1a370cd9d9aa7",
+      "acceptedBytes": 7132,
+      "patchPath": "recovery/patches/packages__game-domain__src__characterStillCatalog.test.ts.patch",
+      "patchSha256": "31d873a5763a49fdf5c8a20306a6db10403dbd8b6962a442e76023a65a9e175e",
+      "capturedTargetMtime": "2026-10-05T01:07:16.060Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/characterStillCatalog.ts",
+      "baselinePath": "artifacts/character-statics/level3-roster-complete-v2/runtime-integration-baseline/packages/game-domain/src/characterStillCatalog.ts",
+      "baselineSha256": "83b180ac179bf26ab0df4b231e8390b9bb34c0755663f519431d4e7c7e6308f2",
+      "acceptedSha256": "2018664d8990cef05b4d98cd0282d6f4ffe0621a81ce42ba5b6b7d93a5822d35",
+      "acceptedBytes": 13126,
+      "patchPath": "recovery/patches/packages__game-domain__src__characterStillCatalog.ts.patch",
+      "patchSha256": "3d7a109a70454a47023df7f4ce423c9cfdedef53995d9d3f0e3110a0099b78c2",
+      "capturedTargetMtime": "2026-10-05T01:09:34.408Z"
+    },
+    {
+      "targetPath": "packages/balance-config/src/approved-room-layouts.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/balance-config/src/approved-room-layouts.test.ts",
+      "baselineSha256": "7d036b6f18a546cb2380542e9ecad1ffb97fffb7e0f4206d06b7c2948ff1c14d",
+      "acceptedSha256": "afa360f93fe550aad12973e2cf45b54bf16822fd8cb2f09584da743342ba6b82",
+      "acceptedBytes": 6492,
+      "patchPath": "recovery/patches/packages__balance-config__src__approved-room-layouts.test.ts.patch",
+      "patchSha256": "84aa740a28c8fbe1fb75ae0a84eeb70c0af8fcf3fb2861e2ca55eff98fe89518",
+      "capturedTargetMtime": "2026-10-05T01:29:54.380Z"
+    },
+    {
+      "targetPath": "packages/balance-config/src/approved-room-layouts.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/balance-config/src/approved-room-layouts.ts",
+      "baselineSha256": "65f89fe69632a5dbd2a812234c41593aeb567f604143091d1c8ab094bd0a6e2e",
+      "acceptedSha256": "f082eadf6c8507e26c8fa4576bde8ae16fc1397fc68452820b23fd2bdbd68618",
+      "acceptedBytes": 18772,
+      "patchPath": "recovery/patches/packages__balance-config__src__approved-room-layouts.ts.patch",
+      "patchSha256": "1392336507e5d875945c9712997221644e67e285096b8f9fa98404a2c0ac67fb",
+      "capturedTargetMtime": "2026-10-05T01:23:26.290Z"
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-alerts.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/balance-config/src/prototype-alerts.ts",
+      "baselineSha256": "ba226c157859a9c6c3caf5cddd1dcf8f88604afe59f4c0a374be1fa56f794980",
+      "acceptedSha256": "4002e6430539894cc2addfd51b575ffd9c411e95b27d58cc27d08850dc6290eb",
+      "acceptedBytes": 48356,
+      "patchPath": "recovery/patches/packages__balance-config__src__prototype-alerts.ts.patch",
+      "patchSha256": "1e5d25c79cf9b3c06b6074faaae4c87e6f8da55f55458deaa50ef79adf0263cc",
+      "capturedTargetMtime": "2026-10-05T01:57:53.105Z"
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/balance-config/src/prototype-balance.test.ts",
+      "baselineSha256": "cddfab3ce6587e69052545acbee3b85ba9a9184478de99cb099a4c82e8431ac4",
+      "acceptedSha256": "f3e7663e39019aa13d6eb1516443c5f6353d983611ebfc7c18136f502fca467b",
+      "acceptedBytes": 26021,
+      "patchPath": "recovery/patches/packages__balance-config__src__prototype-balance.test.ts.patch",
+      "patchSha256": "0162d816464760ec511377abc1530775bd332513697e92aa4b72552e9f2a11ef",
+      "capturedTargetMtime": "2026-10-05T02:09:48.683Z"
+    },
+    {
+      "targetPath": "packages/balance-config/src/prototype-balance.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/balance-config/src/prototype-balance.ts",
+      "baselineSha256": "c017fea8df30ae3b1c198f0dc74ba43b9b27cf3ea5018877e1648f3f9b980cf5",
+      "acceptedSha256": "6ca1d938146dd8ed72408547f87cd939bfb1535aab1ad9b2404a3c55fd13a782",
+      "acceptedBytes": 88922,
+      "patchPath": "recovery/patches/packages__balance-config__src__prototype-balance.ts.patch",
+      "patchSha256": "7dc8547500a61517ad54e423cda11c7ee325561a46e47e6fa564910caafe1932",
+      "capturedTargetMtime": "2026-10-05T02:10:44.997Z"
+    },
+    {
+      "targetPath": "packages/balance-config/src/schema.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/balance-config/src/schema.ts",
+      "baselineSha256": "cd3c62b67216282cb216891a52b76d51804eb6b4993b90e61d2b5d9f4b051e2d",
+      "acceptedSha256": "6b1481cec0342882c8d29645d740d7ee77ed0c7f102e46dd2bccd0535ebd1715",
+      "acceptedBytes": 45489,
+      "patchPath": "recovery/patches/packages__balance-config__src__schema.ts.patch",
+      "patchSha256": "a036847f1f7a3d46de8d2573c05ea61451f44358cbcbf7266cdad08d45aa1078",
+      "capturedTargetMtime": "2026-10-05T01:46:13.066Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/persistence.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/game-domain/src/persistence.ts",
+      "baselineSha256": "f6c29d9de6434578ebdf6db0fe58588c7f64f99e9fea9b041925a8af867ad011",
+      "acceptedSha256": "cb1c19d7ebd1d2018d5b07c2769f820ca0bfb0e354d54c4d4920c27d9815153e",
+      "acceptedBytes": 183193,
+      "patchPath": "recovery/patches/packages__game-domain__src__persistence.ts.patch",
+      "patchSha256": "8530af8bf3aac61499f688a73c3173c206bdd351920af959e6a35b6f2c59a0ac",
+      "capturedTargetMtime": "2026-10-05T02:33:50.781Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/selectors.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/game-domain/src/selectors.ts",
+      "baselineSha256": "a01e1294274c9d1376a8a5d0e692c09fbf166f94cbfb1e61789a51e03f81f072",
+      "acceptedSha256": "f7a8c48b0b007b7681d28bd7f7102899c519226b336e25018be713a2f17be09b",
+      "acceptedBytes": 70415,
+      "patchPath": "recovery/patches/packages__game-domain__src__selectors.ts.patch",
+      "patchSha256": "58fc5adf865b05646b6f20fbe180d39d0f95778cb644c57cca31246a9a6e07ad",
+      "capturedTargetMtime": "2026-10-05T02:25:25.373Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/types.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/game-domain/src/types.ts",
+      "baselineSha256": "5fa91c529c4feee4df441954fddcaabcbcc714fb0b1d7b1101155e3bffd8f025",
+      "acceptedSha256": "e7be42e47b533108a7dde9e52352de239e952748749c57c9c77108e2d6cb31bb",
+      "acceptedBytes": 47522,
+      "patchPath": "recovery/patches/packages__game-domain__src__types.ts.patch",
+      "patchSha256": "6d859bfa65cf6d8927567b9c7c260e07dfa6edd985e9c06ba36417e6b75ecae1",
+      "capturedTargetMtime": "2026-10-05T02:19:57.310Z"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/level-two-progression.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/game-domain/tests/level-two-progression.test.ts",
+      "baselineSha256": "efd87b7db1be58259c1b07dc30f4b31288095611814941829dd43c37bca1702c",
+      "acceptedSha256": "c3c5ee70099de81c6fd34a9e4482bbfe31ff36204a1b74ff543fefc34c594d2b",
+      "acceptedBytes": 15772,
+      "patchPath": "recovery/patches/packages__game-domain__tests__level-two-progression.test.ts.patch",
+      "patchSha256": "b00e912175ea5b73ebd9400abc15c04810021c7ff25b68284b829a5d2c5d8b66",
+      "capturedTargetMtime": "2026-10-05T02:25:47.472Z"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/retail-operations.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/game-domain/tests/retail-operations.test.ts",
+      "baselineSha256": "0cb692cf828986ecd8da77bf7868489ff82ab09a8859384062447226c61bd814",
+      "acceptedSha256": "f3ede2a807f90938ec98870d4001d686b4dd42a948bc0ce3889dbcfcd70f0da0",
+      "acceptedBytes": 36812,
+      "patchPath": "recovery/patches/packages__game-domain__tests__retail-operations.test.ts.patch",
+      "patchSha256": "7ef24362f290a4816e85bced664a6bc1305b8dbcb1d7fc73433267a6fe0163a0",
+      "capturedTargetMtime": "2026-10-05T02:36:57.823Z"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/service-operations.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/core-baseline/packages/game-domain/tests/service-operations.test.ts",
+      "baselineSha256": "cf3c19f656b2a599892c71e69529b92b1abfe0109a7f0744209ba10fa32761ca",
+      "acceptedSha256": "d724441907a6ba2dea96c339ec402fcfe2bc947063be4672cf391bde90f89424",
+      "acceptedBytes": 78134,
+      "patchPath": "recovery/patches/packages__game-domain__tests__service-operations.test.ts.patch",
+      "patchSha256": "064a84654ea50027234f45f494546f6684733d56d23e973fe0c30dfca98c1814",
+      "capturedTargetMtime": "2026-10-05T02:55:09.278Z"
+    },
+    {
+      "targetPath": "apps/player/src/art/bitmapAssetManifest.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/art/bitmapAssetManifest.test.ts",
+      "baselineSha256": "96bfc107ed4fd44ee9ad3e8235991c0fa5605ddf87c8c7b1f40b7b21ab76e011",
+      "acceptedSha256": "7d2c823bd8819b7d7d3af25cdba95ede941985176740536f86921f9288745b8f",
+      "acceptedBytes": 13988,
+      "patchPath": "recovery/patches/apps__player__src__art__bitmapAssetManifest.test.ts.patch",
+      "patchSha256": "c96c7f27ce2bb1b2641f8ccf23870635834dd85d684889b803b60aac1ee9502b",
+      "capturedTargetMtime": "2026-10-05T01:31:10.314Z"
+    },
+    {
+      "targetPath": "apps/player/src/art/bitmapAssetManifest.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/art/bitmapAssetManifest.ts",
+      "baselineSha256": "86c1c77a4e5b85f1675346d41b6d38b1a3d0f51ebef00248eef010c7320ac52a",
+      "acceptedSha256": "20a9091c3347ad34a0c86c2a350c662356fddfeee6f7e4e7feab1852fe6fc347",
+      "acceptedBytes": 56185,
+      "patchPath": "recovery/patches/apps__player__src__art__bitmapAssetManifest.ts.patch",
+      "patchSha256": "227663380aedd6174fd969283cef1fa105da817187dbeb5cab61874b3a8d8111",
+      "capturedTargetMtime": "2026-10-05T01:29:28.843Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "baselineSha256": "0f6b98c7edc83b40522c6929f90ec5ebc8f6d100bb35ae1c336ea726e15c762b",
+      "acceptedSha256": "f0773101798a2e75837e8bfcb47beaa02221da31e0447c13bbbf5a1e28e945f0",
+      "acceptedBytes": 36031,
+      "patchPath": "recovery/patches/apps__player__src__facility__approvedRoomPresentation.test.ts.patch",
+      "patchSha256": "528ef232de457ca81f57f280f09b807644ded54b9db0f79dc84dcfa7de0f7b3e",
+      "capturedTargetMtime": "2026-10-05T02:00:38.248Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/facility/approvedRoomPresentation.ts",
+      "baselineSha256": "1e647ff4d18d096078f440931599e6ba1bfaa9a591dc3caed7af1b512c39507f",
+      "acceptedSha256": "003557c657794a8f3c34bf9a08233d91decf600a7ec0508d3dc9ece1c67d7b41",
+      "acceptedBytes": 77272,
+      "patchPath": "recovery/patches/apps__player__src__facility__approvedRoomPresentation.ts.patch",
+      "patchSha256": "7e198bd8bd68b81ed3020c961fe4bb70c6422320476602f798691e4ee79fc255",
+      "capturedTargetMtime": "2026-10-05T02:00:09.655Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "baselineSha256": "2fbb71a041671c1394ddfdd80721bf38caa54f7ac50c19178e3ad082cc5342ee",
+      "acceptedSha256": "c29cdafb687699086a64eeafa05934fac89daa99cc5607966ee6b7741efbbd4b",
+      "acceptedBytes": 10421,
+      "patchPath": "recovery/patches/apps__player__src__facility__approvedRoomRenderer.test.ts.patch",
+      "patchSha256": "ff7459cfe4595be672bce7948cf720db10f96b26120e998eff7aa4aa1e605ac1",
+      "capturedTargetMtime": "2026-10-05T02:00:50.643Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/approvedRoomRenderer.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/facility/approvedRoomRenderer.ts",
+      "baselineSha256": "80e1014d4450e89621295c19ed9cb9ec64aa3eac05cab21028dea8aa149d557e",
+      "acceptedSha256": "67bad0e51f05acce993100ee0cccf012545dbcdfe398f82e8d0af21e099d510a",
+      "acceptedBytes": 17407,
+      "patchPath": "recovery/patches/apps__player__src__facility__approvedRoomRenderer.ts.patch",
+      "patchSha256": "58312fbc700c266668b1b02455e89cd50aab13f4456510d4e7cae12025d90aad",
+      "capturedTargetMtime": "2026-10-05T01:57:42.006Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/canonicalRoomShell.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/facility/canonicalRoomShell.ts",
+      "baselineSha256": "99266c88f56e5a3397e4855ede0fe7f9d9b478e07cfab2ee8a2aa9a4f8d00eb0",
+      "acceptedSha256": "92fa19787c14250001f25fc2bf917ae6c89386d69cbf64d87cb84035eff714ee",
+      "acceptedBytes": 16869,
+      "patchPath": "recovery/patches/apps__player__src__facility__canonicalRoomShell.ts.patch",
+      "patchSha256": "5f4487556e84be31f3b84a2a9f8b5157b7029643f893eb409c06a8c64a72c01b",
+      "capturedTargetMtime": "2026-10-05T01:50:13.041Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/FacilityScene.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/room-baseline/apps/player/src/facility/FacilityScene.ts",
+      "baselineSha256": "be0b7b58090eb7d0fcf5ae773de5a40ac339f951cc1e8875d73ae2f56137213f",
+      "acceptedSha256": "b6b8fe35d1c598403358e7ab7df216e92bfc32f4ea80a05dc476738f4efd9a52",
+      "acceptedBytes": 282441,
+      "patchPath": "recovery/patches/apps__player__src__facility__FacilityScene.ts.patch",
+      "patchSha256": "9d795e477b21e11d7359a6465e2a3fca88071bc4a4fa1fa1612189f6846bf7ea",
+      "capturedTargetMtime": "2026-10-05T02:07:43.127Z"
+    },
+    {
+      "targetPath": "apps/player/src/App.tsx",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/App.tsx",
+      "baselineSha256": "e6f26eecca54c5ad983e8da770b96399fc0b395f4a72dd2bb09cf3178415958d",
+      "acceptedSha256": "3e1e4cd449c01dec27d1830c4ccb3b2e5fad0656e62973755336f19c9b3a601b",
+      "acceptedBytes": 11056,
+      "patchPath": "recovery/patches/apps__player__src__App.tsx.patch",
+      "patchSha256": "b3b915638086cc46ea8bba0312ec44ebce335b34d15240f2c228d8341f40a51b",
+      "capturedTargetMtime": "2026-10-05T01:51:28.005Z"
+    },
+    {
+      "targetPath": "apps/player/src/AppShell.tsx",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/AppShell.tsx",
+      "baselineSha256": "ef05390e98341f9c939a693f33b408bc44c72904c88999f9c7e308569c58ab48",
+      "acceptedSha256": "c1f5fea0eb0e1b06a6be58acc928e658ebf42d0b96a4b3db279618b98c020511",
+      "acceptedBytes": 31259,
+      "patchPath": "recovery/patches/apps__player__src__AppShell.tsx.patch",
+      "patchSha256": "befdbb86eaa65ac8b077dd92f73c4d463de7c99787d2537888dd0d3c1ecb422c",
+      "capturedTargetMtime": "2026-10-05T01:52:08.378Z"
+    },
+    {
+      "targetPath": "apps/player/src/session/usePrototypeSession.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/session/usePrototypeSession.ts",
+      "baselineSha256": "2a209ce8d844dcb35232445d546e4fb8afeb1457aa7a88c17b262c7c7e423b9c",
+      "acceptedSha256": "4ca903f43117b4ea17b8d24bd16ad7a4f6f213e49882938e8871a5909f587f78",
+      "acceptedBytes": 64667,
+      "patchPath": "recovery/patches/apps__player__src__session__usePrototypeSession.ts.patch",
+      "patchSha256": "0a0f096e4ff781423d73ec4e9ff10cc941f9496555425e84a5a8f78b75e70bcc",
+      "capturedTargetMtime": "2026-10-05T01:51:24.063Z"
+    },
+    {
+      "targetPath": "apps/player/src/session/viewModels.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/session/viewModels.ts",
+      "baselineSha256": "569f28f21aef0059d9735b23adfb7782f7c8a2deff11ffae3cbe7322bcc720e0",
+      "acceptedSha256": "dfed42f769dc294f532643178e76103a89aae9f58fe52094cc46b981b2277044",
+      "acceptedBytes": 107723,
+      "patchPath": "recovery/patches/apps__player__src__session__viewModels.ts.patch",
+      "patchSha256": "2a10842b4eebc815b78b0e9eb5157fcc7ac136412bff2ef87516b99e96617379",
+      "capturedTargetMtime": "2026-10-05T02:58:08.747Z"
+    },
+    {
+      "targetPath": "apps/player/src/ui/GoalsPanel.tsx",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/ui/GoalsPanel.tsx",
+      "baselineSha256": "23f360328c7e33dae2c7cd2cd3aed60a95a3c11ad1dd01b57b65a2882ef42463",
+      "acceptedSha256": "f6dce73cc482e76afadb3e2a5aacc18fc61d1e532131e471cec00fc88536e9a1",
+      "acceptedBytes": 3662,
+      "patchPath": "recovery/patches/apps__player__src__ui__GoalsPanel.tsx.patch",
+      "patchSha256": "c068277732584998f04f04a4728092277d9cb9bd4186e31471091b998ba4f565",
+      "capturedTargetMtime": "2026-10-05T02:23:11.736Z"
+    },
+    {
+      "targetPath": "apps/player/src/ui/ManagementPanel.test.tsx",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/ui/ManagementPanel.test.tsx",
+      "baselineSha256": "3b1a6769f799edc432de5eb6309ea6ef63cc8d5292693b272fb0fa98e4ecc53e",
+      "acceptedSha256": "afa0da47f4a204ab239b332fb93b290b5597c691f5e315eb9f6447c43f337d18",
+      "acceptedBytes": 3352,
+      "patchPath": "recovery/patches/apps__player__src__ui__ManagementPanel.test.tsx.patch",
+      "patchSha256": "6684a4e7750fca9548051db0da985c0df81bc5bc8a8e9fbf405c8b4975c36d32",
+      "capturedTargetMtime": "2026-10-05T01:55:53.623Z"
+    },
+    {
+      "targetPath": "apps/player/src/ui/ManagementPanel.tsx",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/ui/ManagementPanel.tsx",
+      "baselineSha256": "d2460f1c9ca6239a38eddc6c1496ca11e9d94c491538bcf3906a5fe8d646dc77",
+      "acceptedSha256": "71a4cdd2e058be9061b2a806dde747e4d19a2d8b183b6b1de580020f2a03efc3",
+      "acceptedBytes": 3322,
+      "patchPath": "recovery/patches/apps__player__src__ui__ManagementPanel.tsx.patch",
+      "patchSha256": "99acddbb7138d77892503397878e5eadfa66b5239e86d04548635b5ee96648e2",
+      "capturedTargetMtime": "2026-10-05T01:55:45.806Z"
+    },
+    {
+      "targetPath": "apps/player/src/ui/ServiceIncomePanel.tsx",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/ui/ServiceIncomePanel.tsx",
+      "baselineSha256": "7a99d090bab0e7c9acbd300bd80d9b0cec30577c0d67390192d3a07ffb516c6f",
+      "acceptedSha256": "b361aa6cae8d979ce210d9706154e43ce5c5aaee41b82e2e4316cd6dee3514dc",
+      "acceptedBytes": 5618,
+      "patchPath": "recovery/patches/apps__player__src__ui__ServiceIncomePanel.tsx.patch",
+      "patchSha256": "dc5cf3328ccf35ea4d7378b4e6465b868506a89dead329d720f684d7bdbfaa12",
+      "capturedTargetMtime": "2026-10-05T02:33:20.746Z"
+    },
+    {
+      "targetPath": "apps/player/src/ui/types.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/ui-baseline/apps/player/src/ui/types.ts",
+      "baselineSha256": "e6a7aeede98d537820b090e61ee77be6a5ce9ec67e044214837c23072a257e84",
+      "acceptedSha256": "17a7cef47f78080adffcf7bd62cc650bc2930d06e8149c48cecaf92b011ab5d0",
+      "acceptedBytes": 12254,
+      "patchPath": "recovery/patches/apps__player__src__ui__types.ts.patch",
+      "patchSha256": "52ce4e7169a675bddf2c05e2a40a1f1ddf679e40b368cc9a371a5eafb46ec3f3",
+      "capturedTargetMtime": "2026-10-05T02:22:42.201Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/index.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-baseline/packages/game-domain/src/index.ts",
+      "baselineSha256": "4b68927b77c054f9547137755392a59d596d07119188bc2093c3e543a0c256c0",
+      "acceptedSha256": "74dc04a5e2b18459d62ef235f4d702b22b6584be5ee5587e1d828b5e11cd8531",
+      "acceptedBytes": 1067,
+      "patchPath": "recovery/patches/packages__game-domain__src__index.ts.patch",
+      "patchSha256": "e2840a0c617c15c7846154275e1b00388e77876a915550975630dd024be1fcdb",
+      "capturedTargetMtime": "2026-10-05T01:49:20.564Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/room-capacity.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-baseline/packages/game-domain/src/room-capacity.ts",
+      "baselineSha256": "968e73c580fed9e82b7e18c33b87a99c14d85ee9900d7d26d5a2ccefdd38dd54",
+      "acceptedSha256": "36721a61dd224619c5b34d3d91657b448819f46604bb967282afffcdc37d478e",
+      "acceptedBytes": 9141,
+      "patchPath": "recovery/patches/packages__game-domain__src__room-capacity.ts.patch",
+      "patchSha256": "c8f34d4e6d6c8da87f797df288db057661c16584658e6d8a77ac8a4eaf221d1a",
+      "capturedTargetMtime": "2026-10-05T02:38:52.318Z"
+    },
+    {
+      "targetPath": "packages/game-domain/src/staff.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-baseline/packages/game-domain/src/staff.ts",
+      "baselineSha256": "5a3a30711666aae795af83796d696b5ef8b29bf044c9491e3d7f944e18df5c3c",
+      "acceptedSha256": "b7f9e6efc0b5e16388a1fde9bca4662c47028fbb388f3f430739878e30f1d6ac",
+      "acceptedBytes": 22335,
+      "patchPath": "recovery/patches/packages__game-domain__src__staff.ts.patch",
+      "patchSha256": "a101da4ec43b84ec57e2dac62b9b8521c120c2d7dc0712a4cfa16e04100cdbf1",
+      "capturedTargetMtime": "2026-10-05T01:49:29.259Z"
+    },
+    {
+      "targetPath": "apps/player/src/facility/types.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-ui-baseline/apps/player/src/facility/types.ts",
+      "baselineSha256": "91d49870afce7e7d2f7213fb430af13b2515b02f482a7ac44eebe71586ff52af",
+      "acceptedSha256": "e556b1d4be7263337fce73b33409193420f0bc56f866fc948ae2f0bca11ddda2",
+      "acceptedBytes": 10198,
+      "patchPath": "recovery/patches/apps__player__src__facility__types.ts.patch",
+      "patchSha256": "2b5eaff0a70d5651a124bd5c02a46e2f799c3d512680813d1a7b772d01be378c",
+      "capturedTargetMtime": "2026-10-05T02:06:30.243Z"
+    },
+    {
+      "targetPath": "apps/player/src/styles/global.css",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-ui-escalation-baseline/apps__player__src__styles__global.css",
+      "baselineSha256": "6f6c88f75f8577543914c7423d1cbded6e27afd20f0fc451e75db5e2f556b0ad",
+      "acceptedSha256": "0bf28f0f901669b9beb62c59ec6adf9292ace470fa98068c757c08f2b6cc1e20",
+      "acceptedBytes": 148400,
+      "patchPath": "recovery/patches/apps__player__src__styles__global.css.patch",
+      "patchSha256": "eab728019406ac7155c28d2041c44333cb84af0406a3812fb3f335ed1bce5ea2",
+      "capturedTargetMtime": "2026-10-05T02:33:24.668Z"
+    },
+    {
+      "targetPath": "apps/player/src/session/prototypeAlertContent.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-ui-escalation-baseline/apps__player__src__session__prototypeAlertContent.test.ts",
+      "baselineSha256": "19ddaadfd706de54cf1a50829dc6b4e4dc95b4475acb22837cf79a01b546e010",
+      "acceptedSha256": "87e23e91e4ca83569924e5b7817c3a5643226a49db6fe7d4ac80cfd05b7b489a",
+      "acceptedBytes": 11630,
+      "patchPath": "recovery/patches/apps__player__src__session__prototypeAlertContent.test.ts.patch",
+      "patchSha256": "4e920710a38b08cb6a1eae2147c93724f8185bd37114fffddba1abb35b03721b",
+      "capturedTargetMtime": "2026-10-05T02:36:26.179Z"
+    },
+    {
+      "targetPath": "packages/game-domain/tests/room-capacity-sales.test.ts",
+      "baselinePath": "artifacts/level3-implementation-20261004/support-baseline/late-room-capacity/room-capacity-sales.test.ts",
+      "baselineSha256": "aa313d5b980a71d724ebbaa56e0643b229838e536b8c161d0dedba0db6ce7e02",
+      "acceptedSha256": "9c4ed6e7e54b84dd17ada189af3982cc251e9eaab52389f3aafd84c47ea1521a",
+      "acceptedBytes": 24671,
+      "patchPath": "recovery/patches/packages__game-domain__tests__room-capacity-sales.test.ts.patch",
+      "patchSha256": "e64c6c5a376e73da23ff5c4e465d8dbe8b0fe86efa32d4a09876b583c679b3ec",
+      "capturedTargetMtime": "2026-10-05T02:38:59.671Z"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "ambulatory-or-proof/v2",
+  "status": "owner-approved-design",
+  "ownerApproval": {
+    "date": "2026-10-02",
+    "approvedProofSha256": "98759E8F0C2ACF681B469D47F84B6F447B52D1D0FD24DBF5E37AEF9F59C90C56",
+    "evidence": "Looks good, let’s do another room."
+  },
+  "runtimeIntegrationAuthorized": false,
+  "orientation": 0,
+  "dimensions": { "cols": 4, "rows": 4, "tilePixels": 120 },
+  "table": {
+    "footprint": { "left": 1.55, "top": 1.4, "width": 0.9, "height": 1.8 },
+    "navigationBlocker": { "left": 1.55, "top": 1.4, "width": 0.9, "height": 1.8 },
+    "approach": { "x": 2, "y": 3.55 },
+    "head": "north",
+    "emptyAndOccupiedShareBlocker": true,
+    "dimensionReason": "The 4 by 4 revision preserves the same 0.9 by 1.8 tile surgical surface, source scale, and 120 pixel tile scale used in the 6 by 6 candidate."
+  },
+  "staff": {
+    "surgeon": { "source": "founder.01", "contact": { "x": 1.15, "y": 2.6 }, "facing": "E" },
+    "nurse": { "source": "gs022-new-employee-007", "contact": { "x": 2.85, "y": 2.6 }, "facing": "W" }
+  },
+  "replacement": {
+    "empty": "tableEmpty",
+    "occupied": "tableOccupied",
+    "individualPatientVisibleWhenOccupied": false,
+    "requiredVisual": "Raised head-end drape covers the head and anesthesia end; generic abdominal skin remains visible with no incision, gore, or instruments."
+  }
+}

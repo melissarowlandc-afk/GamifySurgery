@@ -1,0 +1,64 @@
+diff --git a/apps/player/src/facility/approvedRoomRenderer.test.ts b/apps/player/src/facility/approvedRoomRenderer.test.ts
+index a0be97b..c2b424f 100644
+--- a/apps/player/src/facility/approvedRoomRenderer.test.ts
++++ b/apps/player/src/facility/approvedRoomRenderer.test.ts
+@@ -3,13 +3,16 @@ import { describe, expect, it } from "vitest";
+ import {
+   APPROVED_ROOM_PRESENTATIONS,
+   resolveApprovedRoomActorSupports,
++  resolveApprovedRoomDrawRecords,
+   resolveApprovedRoomProceduralDrawRecords,
+ } from "./approvedRoomPresentation";
+ import {
+   getApprovedFloorPrimitives,
++  getApprovedDrawPainterGround,
+   getApprovedProceduralScreenRect,
+   getApprovedSupportFacing,
+   getApprovedSupportPainterGround,
++  getApprovedRoomStateVariant,
+   getNearestApprovedActorSupport,
+   parseApprovedCssColor,
+ } from "./approvedRoomRenderer";
+@@ -129,4 +132,42 @@ describe("approved room renderer helpers", () => {
+     }
+   });
+ 
++  it("selects occupied presentation only for rooms with an approved covered-patient proof", () => {
++    expect(getApprovedRoomStateVariant("room.ambulatory_or", true, false)).toBe("occupiedCovered");
++    expect(getApprovedRoomStateVariant("room.endoscopy", true, false)).toBe("occupiedCovered");
++    expect(getApprovedRoomStateVariant("room.front_desk", false, true)).toBe("emptyWater");
++    expect(getApprovedRoomStateVariant("room.laboratory", true, true)).toBeUndefined();
++  });
++
++  it("preserves the approved OR table, light, and live-character painter order", () => {
++    const empty = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0);
++    const occupied = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0, "occupiedCovered");
++    for (const records of [empty, occupied]) {
++      expect(getApprovedDrawPainterGround(records.find((draw) => draw.id === "table")!)).toBe(2.58);
++      expect(getApprovedDrawPainterGround(records.find((draw) => draw.id === "lights")!)).toBe(2.59);
++      expect(resolveApprovedRoomActorSupports("room.ambulatory_or", 0).map((support) =>
++        getApprovedSupportPainterGround(support).y
++      )).toEqual([2.6, 2.6]);
++    }
++  });
++
++  it("ports the Level 3 proof floor phases and fixed procedural details", () => {
++    const byId = (id: string) => APPROVED_ROOM_PRESENTATIONS.find((room) => room.roomDefinitionId === id)!;
++    const operatingRoom = getApprovedFloorPrimitives(byId("room.ambulatory_or").shell, 4, 4, [60, 130]);
++    expect(operatingRoom[0]).toMatchObject({ color: "#69757a", width: 480, height: 480 });
++    expect(operatingRoom).toContainEqual(expect.objectContaining({ shape: "line", x: 24, y: 0, color: "#1d272e", alpha: .24 }));
++
++    const workshop = getApprovedFloorPrimitives(byId("room.maintenance_workshop").shell, 3, 3, [60, 130]);
++    expect(workshop[0]).toMatchObject({ color: "#aaa9a2", width: 360, height: 360 });
++    expect(workshop).toContainEqual(expect.objectContaining({ shape: "line", x: 198, y: 0, height: 360 }));
++    expect(workshop).toContainEqual(expect.objectContaining({ shape: "line", x: 0, y: 252, width: 360 }));
++
++    const breakRoom = getApprovedFloorPrimitives(byId("room.staff_break").shell, 4, 4, [60, 130]);
++    expect(breakRoom).toContainEqual(expect.objectContaining({ shape: "rect", x: 30, y: 156, width: 198, height: 240, color: "#a85f4e" }));
++
++    const vending = getApprovedFloorPrimitives(byId("room.vending").shell, 2, 2, [150, 150]);
++    expect(vending[0]).toMatchObject({ color: "#d9c1a5", width: 240, height: 240 });
++    expect(vending.some((primitive) => primitive.shape === "ellipse" && primitive.x === 0 && primitive.y === 0)).toBe(true);
++  });
++
+ });

@@ -1,0 +1,26 @@
+{
+  "roomId": "staff-break-room",
+  "revision": "staff-break-room-proof-03-owner-approved-unique-large-table",
+  "status": "owner-approved-design",
+  "runtimeIntegrationAuthorized": false,
+  "dimensions": { "cols": 4, "rows": 4, "orientation": 0, "tilePixels": 120 },
+  "ownerBrief": ["Retain the varied lounge, kitchenette, reading details, plank floor, and exact optional fixture ownership from the first proof.", "Add one larger four-chair table in the back middle, move the smaller two-chair table south, and make all seven chairs demonstrably sittable."],
+  "priorOwnerQuote": "Staff break room sounds good. Can you make it more interesting/different than the last three rooms? Maybe a massage chair, fridge, microwave, table, bookshelf, art, plants, rug, etc. I don't want it to just be table in the middle with three things on the back wall because I want more variety between the rooms",
+  "exactOwnerQuote": "The room looks a little empty to me. Could we put another larger table with four chairs in the open space in the back middle of the room? Around A2-A3 and B2-B3? Then the side smaller table could move a little more south in the room. I want all 7 chairs proposed to be sittable with the employees sitting in the chairs in the correct direction",
+  "layoutSource": "../seating-study/layout.json",
+  "occupancyStates": ["none", "all", "massage", "largeNorth", "largeSouth", "largeWest", "largeEast", "smallNorth", "smallSouth"],
+  "seatingContract": {
+    "seatCount": 7,
+    "cardinalFacings": { "massage": "S", "largeNorth": "S", "largeSouth": "N", "largeWest": "E", "largeEast": "W", "smallNorth": "S", "smallSouth": "N" },
+    "collision": "owning-chair-footprint",
+    "defaultOccupancy": "all",
+    "legacyMissingOccupancy": "all"
+  },
+  "furnitureContract": { "permanentSolidCount": 9, "diningWorktopRisePixels": 80, "chairSeatRisePixels": 45, "standingWorktopRisePixels": 100.54054054054055 },
+  "ownerApproval": {
+    "date": "2026-10-03",
+    "exactQuote": "Change the things on the big table so it is unique and not the same as the small table. Otherwise this room is approved and we can move on to the next room",
+    "conditionFulfilled": "The large table now shows a fruit bowl, open magazine, water carafe, and tumblers; the small table retains its original mugs and lunchbox."
+  },
+  "approval": "owner-approved-design"
+}

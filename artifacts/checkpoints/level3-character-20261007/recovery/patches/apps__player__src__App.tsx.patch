@@ -1,0 +1,12 @@
+diff --git a/apps/player/src/App.tsx b/apps/player/src/App.tsx
+index 958e099..55f42ea 100644
+--- a/apps/player/src/App.tsx
++++ b/apps/player/src/App.tsx
+@@ -116,6 +116,7 @@ function ActivePrototypeGame({
+       onEnterManagementMode={session.enterManagementMode}
+       onExitManagementMode={session.exitManagementMode}
+       onServiceAppointmentsEnabledChange={session.setServiceAppointmentsEnabled}
++      onStartLaboratoryProcessing={session.startLaboratoryProcessing}
+       onSelectRoom={session.selectRoom}
+       onSellSelectedRoom={session.sellSelectedRoom}
+       onUpgradeSelectedRoom={session.upgradeSelectedRoom}

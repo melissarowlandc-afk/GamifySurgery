@@ -1,0 +1,35 @@
+diff --git a/apps/player/src/session/usePrototypeSession.ts b/apps/player/src/session/usePrototypeSession.ts
+index 6fcbb1c..be140dc 100644
+--- a/apps/player/src/session/usePrototypeSession.ts
++++ b/apps/player/src/session/usePrototypeSession.ts
+@@ -157,6 +157,7 @@ export interface PrototypeSession {
+   runEmergencyGlp1Consultation: () => void;
+   setAdvertisingLevel: (level: number) => void;
+   setServiceAppointmentsEnabled: (enabled: boolean) => void;
++  startLaboratoryProcessing: () => void;
+   switchCampaign: (campaignId: string) => void;
+   openTutorialPatient: () => void;
+   dismissTutorialIntro: () => void;
+@@ -1493,6 +1494,14 @@ export function usePrototypeSession(
+     [execute],
+   );
+ 
++  const startLaboratoryProcessing = useCallback(() => {
++    execute({
++      type: "START_SERVICE_OPERATION",
++      incomeLineId: "income.laboratory_processing",
++      actorKind: "remote",
++    });
++  }, [execute]);
++
+   const togglePause = useCallback(() => {
+     if (buildMode || managementMode) {
+       setAnnouncement(
+@@ -1988,6 +1997,7 @@ export function usePrototypeSession(
+     runEmergencyGlp1Consultation,
+     setAdvertisingLevel,
+     setServiceAppointmentsEnabled,
++    startLaboratoryProcessing,
+     switchCampaign,
+     openTutorialPatient,
+     dismissTutorialIntro,

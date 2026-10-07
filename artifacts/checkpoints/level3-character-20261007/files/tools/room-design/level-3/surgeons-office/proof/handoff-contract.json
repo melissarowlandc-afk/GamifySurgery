@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "surgeons-office-proof/v2-compact",
+  "revision": "surgeons-office-proof-02-compact",
+  "status": "provisional-owner-review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "ownerRevisionRequest": {
+    "recordedDate": "2026-10-03",
+    "exactQuote": "Could we get rid of the chair that the patient sits in and make it 2x2? The plant could be in B1. Bookshelf in A1 instead of the filing cabinet. Desk chair right behind the desk"
+  },
+  "orientation": 0,
+  "dimensions": { "cols": 2, "rows": 2, "tilePixels": 120 },
+  "removedFromCurrentRevision": ["visitorChair", "visitor actor", "filingCabinet"],
+  "permanentFurniture": [
+    { "id": "writingDesk", "footprint": { "left": 0.46, "top": 0.78, "width": 1.35, "height": 0.65 }, "ground": { "x": 1.135, "y": 1.43 } },
+    { "id": "surgeonChair", "footprint": { "left": 0.895, "top": 0.45, "width": 0.48, "height": 0.42 }, "ground": { "x": 1.135, "y": 0.87 } }
+  ],
+  "seat": { "id": "surgeon", "fixture": "surgeonChair", "identity": "gs022-new-employee-013", "facing": "S", "attachment": { "x": 1.135, "y": 0.495 }, "transition": { "x": 0.68, "y": 0.45 } },
+  "optionalFixtureOwnership": [
+    { "id": "bookcase", "cell": "A1", "doors": ["N1", "WA"], "backing": ["N1"] },
+    { "id": "plant", "cell": "B1", "doors": ["WB", "S1"], "backing": [] },
+    { "id": "diplomas", "cell": "A2", "doors": ["N2"], "backing": ["N2"] }
+  ],
+  "previousReviewCandidate": { "path": "history/pre-compact-2026-10-03/surgeons-office-proof.html", "bytes": 836942, "sha256": "03B20AB181F697587A99E40CF535968FEA26F81E9F2B78109E0605AE2BB54DDC" }
+}

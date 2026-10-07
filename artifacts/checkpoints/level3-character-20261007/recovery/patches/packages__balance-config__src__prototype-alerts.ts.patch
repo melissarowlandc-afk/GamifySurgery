@@ -1,0 +1,98 @@
+diff --git a/packages/balance-config/src/prototype-alerts.ts b/packages/balance-config/src/prototype-alerts.ts
+index 28ba536..1be95dc 100644
+--- a/packages/balance-config/src/prototype-alerts.ts
++++ b/packages/balance-config/src/prototype-alerts.ts
+@@ -26,7 +26,7 @@ export type PrototypeAlertTargetKind =
+ 
+ export type PrototypeAlertEligibility =
+   | { kind: "always" }
+-  | { kind: "facility_level"; levels: readonly (0 | 1 | 2)[] }
++  | { kind: "facility_level"; levels: readonly (0 | 1 | 2 | 3)[] }
+   | { kind: "room_exists"; roomDefinitionId: string }
+   | { kind: "object_exists"; objectId: "water_cooler" }
+   | { kind: "checked_in_patient_exists" };
+@@ -72,7 +72,7 @@ export interface PrototypeAlertDefinition {
+   reviewRatings?: readonly (1 | 2)[];
+   persistent: boolean;
+   tickerEligible: boolean;
+-  eligibleFacilityLevels: readonly (0 | 1 | 2)[];
++  eligibleFacilityLevels: readonly (0 | 1 | 2 | 3)[];
+   consolidationKeyTemplate: string;
+ }
+ 
+@@ -719,8 +719,12 @@ function enrichBaseDefinition(
+   definition: BasePrototypeAlertDefinition,
+ ): PrototypeAlertDefinition {
+   const category = categoryForBaseDefinition(definition);
++  const eligibleFacilityLevels = definition.eligibleFacilityLevels.includes(2)
++    ? [...definition.eligibleFacilityLevels, 3 as const]
++    : definition.eligibleFacilityLevels;
+   return {
+     ...definition,
++    eligibleFacilityLevels,
+     category,
+     variants: [
+       {
+@@ -733,7 +737,7 @@ function enrichBaseDefinition(
+     eligibility: [
+       {
+         kind: "facility_level",
+-        levels: definition.eligibleFacilityLevels,
++        levels: eligibleFacilityLevels,
+       },
+     ],
+     selectionWeight: 1,
+@@ -1082,7 +1086,7 @@ const AMBIENT_ALERT_INPUTS = [
+   [
+     "09",
+     "The break-room fridge contains a yogurt with tenure.",
+-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
++    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
+   ],
+   [
+     "10",
+@@ -1104,7 +1108,7 @@ const AMBIENT_ALERT_INPUTS = [
+   [
+     "15",
+     "Someone labeled their leftovers DO NOT EAT. Interest has increased.",
+-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
++    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
+   ],
+   [
+     "16",
+@@ -1129,7 +1133,7 @@ const AMBIENT_ALERT_INPUTS = [
+   [
+     "20",
+     "The break-room microwave finished heating something no one remembers starting.",
+-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
++    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
+   ],
+   [
+     "21",
+@@ -1139,7 +1143,7 @@ const AMBIENT_ALERT_INPUTS = [
+   [
+     "22",
+     "Someone found a clean mug. Spirits are high.",
+-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
++    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
+   ],
+   [
+     "23",
+@@ -1180,7 +1184,7 @@ const AMBIENT_ALERT_INPUTS = [
+   [
+     "31",
+     "A break-room spoon has been declared communal by unanimous absence.",
+-    [{ kind: "room_exists", roomDefinitionId: "room.break_room" }],
++    [{ kind: "room_exists", roomDefinitionId: "room.staff_break" }],
+   ],
+   [
+     "32",
+@@ -1486,7 +1490,7 @@ export function renderPrototypeAlert(
+ }
+ 
+ export interface PrototypeAlertEligibilityContext {
+-  facilityLevel: 0 | 1 | 2;
++  facilityLevel: 0 | 1 | 2 | 3;
+   roomDefinitionIds: ReadonlySet<string>;
+   objectIds: ReadonlySet<string>;
+   hasCheckedInPatient: boolean;

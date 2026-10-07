@@ -1,0 +1,38 @@
+diff --git a/apps/player/src/ui/GoalsPanel.tsx b/apps/player/src/ui/GoalsPanel.tsx
+index 29586a4..7c5c6b0 100644
+--- a/apps/player/src/ui/GoalsPanel.tsx
++++ b/apps/player/src/ui/GoalsPanel.tsx
+@@ -57,6 +57,19 @@ export function GoalsPanel({
+           </li>
+         ))}
+       </ul>
++      {view.secondaryGoals && view.secondaryGoals.length > 0 ? (
++        <section aria-label="Secondary objectives">
++          <h3>Secondary objectives</h3>
++          <ul className="goal-list">
++            {view.secondaryGoals.map((goal) => (
++              <li className={goal.complete ? "is-complete" : ""} key={goal.id}>
++                <span aria-hidden="true">{goal.complete ? "■" : "□"}</span>
++                <span className="goal-label">{goal.label}<small>{goal.progressLabel}</small></span>
++              </li>
++            ))}
++          </ul>
++        </section>
++      ) : null}
+       {view.canLevelUp ? (
+         <button
+           className="button button-primary level-up-button"
+@@ -68,12 +81,7 @@ export function GoalsPanel({
+       ) : null}
+       {view.prototypeComplete ? (
+         <p className="prototype-complete">
+-          {view.facilityLevelLabel} complete. Level 3 is a locked preview and
+-          is not implemented in this prototype.
+-        </p>
+-      ) : view.nextLevelLabel === "Level 3" ? (
+-        <p className="prototype-complete">
+-          Level 3 preview progress only. Level 3 is locked and not implemented.
++          {view.facilityLevelLabel} complete. Level 4 is a preview and is not implemented in this prototype.
+         </p>
+       ) : null}
+     </aside>

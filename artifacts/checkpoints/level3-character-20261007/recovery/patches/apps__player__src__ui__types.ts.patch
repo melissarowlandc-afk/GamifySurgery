@@ -1,0 +1,33 @@
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+index 2c97595..b9a6d2b 100644
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -286,6 +286,20 @@ export interface ServiceIncomeView {
+   grossTotalLabel: string;
+   stockCostTotalLabel: string;
+   netTotalLabel: string;
++  laboratoryWorkQueue?: {
++    enabled: boolean;
++    statusLabel: string;
++    disabledReason?: string;
++  };
++  levelThreeSupport?: {
++    maintenanceDueRoomNames: string[];
++    maintenanceOutOfServiceRoomNames: string[];
++    maintenanceRepairingRoomNames: string[];
++    queuedQiReviewCount: number;
++    inProgressQiReviewCount: number;
++    completedQiReviewCount: number;
++    staffOnBreakCount: number;
++  };
+ }
+ 
+ export interface AdvertisingView {
+@@ -392,6 +406,7 @@ export interface ProgressionView {
+   facilityLevelLabel: string;
+   nextLevelLabel: string | null;
+   goals: ProgressionGoalView[];
++  secondaryGoals?: ProgressionGoalView[];
+   canLevelUp: boolean;
+   prototypeComplete: boolean;
+   endoscopySetupRequirements?: EndoscopySetupRequirementView[];

@@ -1,0 +1,131 @@
+diff --git a/apps/player/src/facility/approvedRoomPresentation.test.ts b/apps/player/src/facility/approvedRoomPresentation.test.ts
+index 303e82d..ada74d1 100644
+--- a/apps/player/src/facility/approvedRoomPresentation.test.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.test.ts
+@@ -18,10 +18,10 @@ import {
+ import { APPROVED_GS015_ROOM_ATLASES } from "../art/bitmapAssetManifest";
+ 
+ describe("approved GS-015 room presentation contract", () => {
+-  it("covers each of the sixteen approved proofs exactly once", () => {
+-    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(16);
+-    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(16);
+-    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(16);
++  it("covers each of the twenty-three approved proofs exactly once", () => {
++    expect(APPROVED_ROOM_PRESENTATIONS).toHaveLength(23);
++    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.proofId)).size).toBe(23);
++    expect(new Set(APPROVED_ROOM_PRESENTATIONS.map((room) => room.roomDefinitionId)).size).toBe(23);
+     expect(getApprovedRoomPresentation("room.imaging_control")).toBeUndefined();
+   });
+ 
+@@ -441,9 +441,11 @@ describe("approved GS-015 room presentation contract", () => {
+             draw.renderSizeTiles[0] * tilePixels,
+             draw.renderSizeTiles[1] * tilePixels,
+           ];
+-          const matchingCalls = capture.drawImages.filter((call) => call.args.slice(-4).every((value, index) =>
+-            Math.abs(value - destination[index]!) < .01
+-          ));
++          const matchingCalls = capture.drawImages.filter((call) =>
++            call.src.assetId === draw.assetId && call.args.slice(-4).every((value, index) =>
++              Math.abs(value - destination[index]!) < .01
++            )
++          );
+           expect(matchingCalls, `${room.proofId}:${draw.id}:destination`).toHaveLength(1);
+           expect(draw.assetId, `${room.proofId}:${draw.id}:asset`).toBe(matchingCalls[0]!.src.assetId);
+           expect(draw.destinationTopLeftTiles.every(Number.isFinite)).toBe(true);
+@@ -485,4 +487,96 @@ describe("approved GS-015 room presentation contract", () => {
+     expect(() => resolveApprovedRoomDrawRecords("room.ct", 0, "occupiedCovered")).toThrow(/no occupiedCovered variant/);
+   });
+ 
++  it("registers the seven Level 3 proofs with their approved footprints and exact draw counts", () => {
++    const expected = [
++      ["room.ambulatory_or", "98759E8F0C2ACF681B469D47F84B6F447B52D1D0FD24DBF5E37AEF9F59C90C56", [4, 4], 8],
++      ["room.laboratory", "1A2D3AE0A8A0623114B52F3D23D56956AC5E21C8E38E496535060766488A4C95", [3, 3], 4],
++      ["room.pharmacy", "F2775A9104E494E7F9F51E3424054DAC4CE4A91969266799CA0CD6A03CD00C1C", [3, 3], 4],
++      ["room.maintenance_workshop", "A7C8D8BFAC5F5087B795B96EA67D2E3E0DAB7C1BF536701F586945213CFBE439", [3, 3], 4],
++      ["room.staff_break", "FD4DE2CA6EAF353AA52D5BAFB2D8C1E9C42C5E3F15498F35DA1433905A71ACFC", [4, 4], 20],
++      ["room.surgeon_office", "AE268AD14EC7F6A9365031C4C7FA45AFFC9F4E1C5AA69CDF077EA9C5E0E375C5", [2, 2], 5],
++      ["room.vending", "939A3CFA901891DBFED1578B7CA68819844BB821A7E3E01174347DB6B959573B", [2, 2], 3],
++    ] as const;
++    for (const [definitionId, sha256, footprint, drawCount] of expected) {
++      const room = getApprovedRoomPresentation(definitionId)!;
++      const capture = getApprovedRoomProofCapture(definitionId, 0)!;
++      expect(room.orientations[0]!.footprint, definitionId).toEqual(footprint);
++      expect(room.proofPath, definitionId).toContain(`/level-3/${room.proofId}/proof/`);
++      expect(capture.dataset.proofSha256, definitionId).toBe(sha256);
++      expect(resolveApprovedRoomDrawRecords(definitionId, 0), definitionId).toHaveLength(drawCount);
++    }
++    expect(getApprovedRoomProofCapture("room.ambulatory_or", 0)!.coordinateSpace.floorOriginPixels).toEqual([60, 130]);
++    expect(getApprovedRoomProofCapture("room.surgeon_office", 0)!.coordinateSpace.floorOriginPixels).toEqual([60, 120]);
++    expect(getApprovedRoomProofCapture("room.vending", 0)!.coordinateSpace.floorOriginPixels).toEqual([150, 150]);
++    expect(resolveApprovedRoomDrawRecords("room.vending", 0).find((draw) => draw.id === "machine")!.worldLocalGround).toEqual([1, 1.24]);
++  });
++
++  it("uses live actor supports instead of approved-proof character stand-ins", () => {
++    const level3Ids = [
++      "room.ambulatory_or", "room.laboratory", "room.pharmacy",
++      "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
++      "room.vending",
++    ];
++    const forbiddenFiles = /(?:^|:)(?:actor-|surgeon\.webp|nurse\.webp|technician\.webp|pharmacist\.webp|repairPerson\.webp|staff\.webp|employee\.webp|founder\.webp|patient\.webp|visitor\.webp)/;
++    for (const definitionId of level3Ids) {
++      expect(resolveApprovedRoomDrawRecords(definitionId, 0).every((draw) =>
++        !forbiddenFiles.test(draw.assetId)
++      ), definitionId).toBe(true);
++    }
++    expect(resolveApprovedRoomActorSupports("room.ambulatory_or", 0).map((support) => support.role)).toEqual([
++      "ambulatory-or-surgeon", "ambulatory-or-nurse",
++    ]);
++    expect(resolveApprovedRoomActorSupports("room.laboratory", 0)[0]?.role).toBe("laboratory-technician");
++    expect(resolveApprovedRoomActorSupports("room.pharmacy", 0)[0]?.role).toBe("pharmacist");
++    expect(resolveApprovedRoomActorSupports("room.maintenance_workshop", 0)[0]?.role).toBe("repair-person");
++  });
++
++  it("keeps all seven stable Break Room seats on their approved contacts and facings", () => {
++    expect(resolveApprovedRoomActorSupports("room.staff_break", 0).map(({ id, facing, seat, fixtureGround }) =>
++      [id, facing, seat, fixtureGround]
++    )).toEqual([
++      ["massage", "south", { x: 1.05, y: 2.51 }, { x: 1.05, y: 3 }],
++      ["largeNorth", "south", { x: 2, y: .595 }, { x: 2, y: .97 }],
++      ["largeSouth", "north", { x: 2, y: 1.745 }, { x: 2, y: 2.12 }],
++      ["largeWest", "east", { x: 1.05, y: 1.16 }, { x: .99, y: 1.56 }],
++      ["largeEast", "west", { x: 2.95, y: 1.16 }, { x: 3.01, y: 1.56 }],
++      ["smallNorth", "south", { x: 2.7, y: 2.095 }, { x: 2.7, y: 2.47 }],
++      ["smallSouth", "north", { x: 2.7, y: 3.195 }, { x: 2.7, y: 3.57 }],
++    ]);
++    expect(resolveApprovedRoomActorSupports("room.surgeon_office", 0)).toMatchObject([
++      { id: "surgeon", role: "surgeon-office", pose: "seated", facing: "south", seat: { x: 1.135, y: .495 }, fixtureGround: { x: 1.135, y: .87 } },
++    ]);
++  });
++
++  it("hides and restores every Level 3 proof-owned draw for each door and backing owner", () => {
++    const level3Ids = [
++      "room.ambulatory_or", "room.laboratory", "room.pharmacy",
++      "room.maintenance_workshop", "room.staff_break", "room.surgeon_office",
++      "room.vending",
++    ];
++    for (const definitionId of level3Ids) {
++      for (const draw of resolveApprovedRoomDrawRecords(definitionId, 0)) {
++        expect(isApprovedDrawVisible(draw, new Set(), new Set()), `${definitionId}:${draw.id}:restore`).toBe(true);
++        for (const owner of draw.doorOwners) {
++          expect(isApprovedDrawVisible(draw, new Set([owner]), new Set()), `${definitionId}:${draw.id}:door:${owner}`).toBe(false);
++        }
++        for (const owner of draw.backedOwners) {
++          expect(isApprovedDrawVisible(draw, new Set(), new Set([owner])), `${definitionId}:${draw.id}:backing:${owner}`).toBe(false);
++        }
++      }
++    }
++  });
++
++  it("switches only the OR table to the approved covered-patient bitmap", () => {
++    const empty = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0);
++    const occupied = resolveApprovedRoomDrawRecords("room.ambulatory_or", 0, "occupiedCovered");
++    const emptyTable = empty.find((draw) => draw.id === "table")!;
++    const occupiedTable = occupied.find((draw) => draw.id === "table")!;
++    expect(emptyTable.assetId).toBe("level3:ambulatory-or:tableEmpty.webp");
++    expect(occupiedTable.assetId).toBe("level3:ambulatory-or:tableOccupied.webp");
++    expect(occupied.filter((draw) => draw.id !== "table")).toEqual(empty.filter((draw) => draw.id !== "table"));
++    expect(occupiedTable.worldLocalGround).toEqual(emptyTable.worldLocalGround);
++    expect(occupiedTable.depthKey).toBe(emptyTable.depthKey);
++  });
++
+ });

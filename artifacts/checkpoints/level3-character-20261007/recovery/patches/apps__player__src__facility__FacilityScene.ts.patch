@@ -1,0 +1,67 @@
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+index 1978760..8865a62 100644
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -117,7 +117,9 @@ import {
+ } from "./approvedRoomPresentation";
+ import {
+   getApprovedFloorPrimitives,
++  getApprovedDrawPainterGround,
+   getApprovedProceduralScreenRect,
++  getApprovedRoomStateVariant,
+   getApprovedSupportFacing,
+   getApprovedSupportPainterGround,
+   getNearestApprovedActorSupport,
+@@ -4887,13 +4889,13 @@ export class FacilityScene extends Phaser.Scene {
+     const presentation = getApprovedRoomPresentation(room.definitionId);
+     if (!presentation) return false;
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+-    const occupied = room.definitionId === "room.endoscopy" &&
++    const occupied = (room.definitionId === "room.endoscopy" || room.definitionId === "room.ambulatory_or") &&
+       this.bridge.viewModel.endoscopyOccupancy?.roomInstanceIds.includes(room.instanceId);
+-    const variant = occupied
+-      ? "occupiedCovered" as const
+-      : room.definitionId === "room.front_desk" && (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0
+-        ? "emptyWater" as const
+-        : undefined;
++    const variant = getApprovedRoomStateVariant(
++      room.definitionId,
++      occupied === true,
++      (this.bridge.viewModel.waterCooler?.fillPercent ?? 100) <= 0,
++    );
+     const records = resolveApprovedRoomDrawRecords(
+       room.definitionId,
+       orientation,
+@@ -4925,9 +4927,7 @@ export class FacilityScene extends Phaser.Scene {
+       const top = rectangle.y + topTiles * this.layout.tileSize;
+       const width = Math.max(1, widthTiles * this.layout.tileSize);
+       const height = Math.max(1, heightTiles * this.layout.tileSize);
+-      const contactY = record.worldLocalGround
+-        ? rectangle.y + record.worldLocalGround[1] * this.layout.tileSize
+-        : top + height;
++      const contactY = rectangle.y + getApprovedDrawPainterGround(record) * this.layout.tileSize;
+       const key = `approved:${room.instanceId}:${orientation}:${record.id}:${order}`;
+       let image = this.fixtureBitmapImages.get(key);
+       if (!image) {
+@@ -5486,10 +5486,12 @@ export class FacilityScene extends Phaser.Scene {
+     moving: boolean,
+     supportRole: FacilityActorSupportRole | undefined,
+     supportId?: string,
++    supportRoomInstanceId?: string,
+   ): Readonly<{ centerX: number; baseY: number; depthBaseY: number; scale: number; seatTarget: boolean; supportRole: FacilityActorSupportRole; supportId: string; supportRoomInstanceId: string; pose: CharacterPose; direction: CharacterDirection; rightFacing: boolean }> | undefined {
+     if (!location || moving || !supportRole) return undefined;
+     const room = this.bridge.viewModel.rooms.find((candidate) => {
+       if (!getApprovedRoomPresentation(candidate.definitionId) || candidate.definitionId === "room.front_desk") return false;
++      if (supportRoomInstanceId !== undefined) return candidate.instanceId === supportRoomInstanceId;
+       const size = orientedSize(candidate);
+       return location.x >= candidate.tileX && location.x < candidate.tileX + size.width &&
+         location.y >= candidate.tileY && location.y < candidate.tileY + size.height;
+@@ -5723,6 +5725,8 @@ export class FacilityScene extends Phaser.Scene {
+             employeeLocation,
+             employeePresentation.moving,
+             employee.supportRole,
++            employee.supportId,
++            employee.supportRoomInstanceId,
+           );
+       employeePose = employeeDisplay?.pose ?? employeePose;
+       const founderSeatedAdjacentReceptionist =

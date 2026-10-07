@@ -1,0 +1,72 @@
+diff --git a/packages/balance-config/src/approved-room-layouts.ts b/packages/balance-config/src/approved-room-layouts.ts
+index 588ea05..e80480c 100644
+--- a/packages/balance-config/src/approved-room-layouts.ts
++++ b/packages/balance-config/src/approved-room-layouts.ts
+@@ -200,6 +200,67 @@ export const APPROVED_ROOM_NAVIGATION_CONTRACTS: Record<
+     solidFixtures: [{ id: "station", footprint: { left: 1, top: 0.5, width: 1, height: 1 }, blockedTiles: [{ x: 1, y: 0 }] }],
+     primaryAnchor: { x: 0, y: 1 }, waitingAnchors: [], staffAnchor: { x: 2, y: 1 }, patientCareAnchor: { x: 0, y: 1 }, clinicianCareAnchor: { x: 2, y: 1 },
+   },
++  "room.ambulatory_or": {
++    roomDefinitionId: "room.ambulatory_or", width: 4, height: 4, allowedOrientations: [0],
++    solidFixtures: [{
++      id: "surgical-table",
++      footprint: { left: 1.55, top: 1.4, width: 0.9, height: 1.8 },
++      blockedTiles: [{ x: 1, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 2 }, { x: 2, y: 2 }],
++    }],
++    primaryAnchor: { x: 2, y: 3 }, waitingAnchors: [], staffAnchor: { x: 3, y: 2 },
++    patientCareAnchor: { x: 2, y: 3 }, clinicianCareAnchor: { x: 0, y: 2 },
++  },
++  "room.laboratory": {
++    roomDefinitionId: "room.laboratory", width: 3, height: 3, allowedOrientations: [0],
++    solidFixtures: [{
++      id: "testing-bench",
++      footprint: { left: 0.8, top: 1.1, width: 1.4, height: 0.65 },
++      blockedTiles: [{ x: 1, y: 1 }],
++    }],
++    primaryAnchor: { x: 1, y: 2 }, waitingAnchors: [], staffAnchor: { x: 1, y: 2 },
++  },
++  "room.pharmacy": {
++    roomDefinitionId: "room.pharmacy", width: 3, height: 3, allowedOrientations: [0],
++    solidFixtures: [{
++      id: "dispensing-counter",
++      footprint: { left: 0.4, top: 1.15, width: 1.75, height: 0.65 },
++      blockedTiles: [{ x: 0, y: 1 }, { x: 1, y: 1 }],
++    }],
++    primaryAnchor: { x: 1, y: 2 }, waitingAnchors: [], staffAnchor: { x: 2, y: 1 },
++  },
++  "room.maintenance_workshop": {
++    roomDefinitionId: "room.maintenance_workshop", width: 3, height: 3, allowedOrientations: [0],
++    solidFixtures: [{
++      id: "repair-bench",
++      footprint: { left: 0.575, top: 1.2, width: 1.85, height: 0.65 },
++      blockedTiles: [{ x: 1, y: 1 }],
++    }],
++    primaryAnchor: { x: 1, y: 2 }, waitingAnchors: [], staffAnchor: { x: 1, y: 2 },
++  },
++  "room.staff_break": {
++    roomDefinitionId: "room.staff_break", width: 4, height: 4, allowedOrientations: [0],
++    solidFixtures: [
++      { id: "large-seating", footprint: { left: 0.78, top: 0.55, width: 2.44, height: 1.57 }, blockedTiles: [{ x: 1, y: 1 }, { x: 2, y: 1 }], endpointOnlyContacts: [{ x: 1, y: 1 }, { x: 2, y: 1 }] },
++      { id: "massage-chair", footprint: { left: 0.65, top: 2, width: 0.8, height: 1 }, blockedTiles: [{ x: 1, y: 2 }], endpointOnlyContacts: [{ x: 1, y: 2 }] },
++      { id: "small-seating", footprint: { left: 2.3, top: 2.05, width: 0.8, height: 1.52 }, blockedTiles: [{ x: 2, y: 2 }, { x: 2, y: 3 }], endpointOnlyContacts: [{ x: 2, y: 2 }, { x: 2, y: 3 }] },
++      // The approved bookshelf and plants intentionally remain pass-through
++      // decor at the domain's coarse navigation resolution.
++    ],
++    primaryAnchor: { x: 1, y: 3 }, waitingAnchors: [], staffAnchor: { x: 1, y: 3 },
++  },
++  "room.surgeon_office": {
++    roomDefinitionId: "room.surgeon_office", width: 2, height: 2, allowedOrientations: [0],
++    // The compact proof's plant and bookcase are deliberate pass-through
++    // decor. The desk is retained visually without consuming the only coarse
++    // grid route to its seated work contact.
++    solidFixtures: [{ id: "writing-desk", footprint: { left: 0.46, top: 0.78, width: 1.35, height: 0.65 }, blockedTiles: [] }],
++    primaryAnchor: { x: 1, y: 1 }, waitingAnchors: [], staffAnchor: { x: 1, y: 1 },
++  },
++  "room.vending": {
++    roomDefinitionId: "room.vending", width: 2, height: 2, allowedOrientations: [0],
++    solidFixtures: [{ id: "vending-machine", footprint: { left: 0.5, top: 0.05, width: 1, height: 1.05 }, blockedTiles: [{ x: 0, y: 0 }, { x: 1, y: 0 }] }],
++    primaryAnchor: { x: 1, y: 1 }, waitingAnchors: [], staffAnchor: null, publicWaitingArea: true,
++  },
+ };
+ 
+ export function getApprovedRoomNavigation(roomDefinitionId: string) {

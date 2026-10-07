@@ -1,0 +1,127 @@
+diff --git a/packages/game-domain/src/selectors.ts b/packages/game-domain/src/selectors.ts
+index 0e73aa3..239467f 100644
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -234,7 +234,7 @@ export function isEmployeeOperational(
+   );
+ }
+ 
+-function isRoomOperational(
++function isRoomAccessible(
+   state: GameState,
+   roomId: string,
+   context: DomainContext,
+@@ -254,6 +254,17 @@ function isRoomOperational(
+   );
+ }
+ 
++function isRoomOperational(
++  state: GameState,
++  roomId: string,
++  context: DomainContext,
++  access: FacilityAccessValidation,
++): boolean {
++  const room = state.rooms.find((candidate) => candidate.id === roomId);
++  return Boolean(room?.maintenance?.status !== "out_of_service" &&
++    isRoomAccessible(state, roomId, context, access));
++}
++
+ function isEmployeeOperationalInAccessibleRoom(
+   state: GameState,
+   employeeId: string,
+@@ -303,6 +314,28 @@ export function isRoomOperationalForFacilityWork(
+   return isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context));
+ }
+ 
++/** Capacity acquisition excludes overdue equipment and rooms already claimed for repair. */
++export function isRoomAvailableForNewFacilityWork(
++  state: GameState,
++  roomId: string,
++  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++): boolean {
++  const room = state.rooms.find((candidate) => candidate.id === roomId);
++  if (!room || !isRoomOperationalForFacilityWork(state, roomId, context)) return false;
++  if (state.employees.some((employee) => employee.facilityTask?.kind === "repair_room" && employee.facilityTask.targetId === roomId)) return false;
++  return room.maintenance?.status !== "due" || room.maintenance.outOfServiceAtFacilityTick === null ||
++    state.facilityTick < room.maintenance.outOfServiceAtFacilityTick;
++}
++
++/** Geometry-only access used to let already-reserved work finish safely. */
++export function isRoomAccessibleForFacilityWork(
++  state: GameState,
++  roomId: string,
++  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++): boolean {
++  return isRoomAccessible(state, roomId, context, getFacilityAccessValidation(state, context));
++}
++
+ export function getCurrentCapabilities(
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+@@ -1480,6 +1513,26 @@ export function getFacilityProgressionStatus(
+         required: 1,
+       }]
+     : [];
++  const hasCompletedAmbulatoryOperation = state.serviceOperations.some(
++    (operation) =>
++      (operation.incomeLineId === "income.ambulatory_operation" ||
++        operation.incomeLineId === "income.ambulatory_operation_extended") &&
++      operation.status !== "cancelled" &&
++      operation.completedAtFacilityTick !== null,
++  ) || state.serviceIncomeReceipts.some(
++    (receipt) =>
++      receipt.incomeLineId === "income.ambulatory_operation" ||
++      receipt.incomeLineId === "income.ambulatory_operation_extended",
++  );
++  const ambulatoryCompletionRequirement = state.facilityLevel === 3
++    ? [{
++        id: "progression.ambulatory_operation_completion",
++        label: "Complete your first ambulatory operation",
++        met: hasCompletedAmbulatoryOperation,
++        current: hasCompletedAmbulatoryOperation ? 1 : 0,
++        required: 1,
++      }]
++    : [];
+   const requirements = [
+     ...(tutorialGraduationEligible
+       ? [
+@@ -1533,15 +1586,27 @@ export function getFacilityProgressionStatus(
+     ...requiredRooms,
+     ...definition.requiredStaffRoleIds.map((staffRoleDefinitionId) => {
+       const role = getStaffRoleDefinition(staffRoleDefinitionId, context);
++      const operational = state.facilityLevel === 3
++        ? state.employees.some(
++            (employee) =>
++              employee.staffRoleDefinitionId === staffRoleDefinitionId &&
++              isEmployeeAssignedToOperationalRoom(
++                state,
++                employee.id,
++                context,
++              ),
++          )
++        : hiredRoleTypes.has(staffRoleDefinitionId);
+       return {
+         id: `progression.staff.${staffRoleDefinitionId}`,
+         label: `Hire ${role?.displayName ?? staffRoleDefinitionId}`,
+-        met: hiredRoleTypes.has(staffRoleDefinitionId),
+-        current: hiredRoleTypes.has(staffRoleDefinitionId) ? 1 : 0,
++        met: operational,
++        current: operational ? 1 : 0,
+         required: 1,
+       };
+     }),
+     ...endoscopyCompletionRequirement,
++    ...ambulatoryCompletionRequirement,
+   ];
+   return {
+     facilityLevel: state.facilityLevel,
+@@ -1551,7 +1616,8 @@ export function getFacilityProgressionStatus(
+       definition.nextFacilityLevel !== null &&
+       requirements.every((requirement) => requirement.met),
+     nextFacilityLevel:
+-      definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2
++      definition.nextFacilityLevel === 1 || definition.nextFacilityLevel === 2 ||
++      definition.nextFacilityLevel === 3
+         ? definition.nextFacilityLevel
+         : null,
+     maximumPlayableLevel:

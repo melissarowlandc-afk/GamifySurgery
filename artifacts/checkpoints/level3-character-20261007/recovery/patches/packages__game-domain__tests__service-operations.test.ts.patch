@@ -1,0 +1,151 @@
+diff --git a/packages/game-domain/tests/service-operations.test.ts b/packages/game-domain/tests/service-operations.test.ts
+index 54387f9..4c4c472 100644
+--- a/packages/game-domain/tests/service-operations.test.ts
++++ b/packages/game-domain/tests/service-operations.test.ts
+@@ -13,6 +13,8 @@ import {
+   advanceServiceOperations,
+   getCapacityScaledArrivalCadenceMinutes,
+   getFunctionalScheduledEndoscopyCapacity,
++  getFunctionalScheduledAmbulatoryOperationCapacity,
++  getRemoteWorkQueueAvailability,
+   getNewPeriopServiceOperationPhases,
+   getRoomDefinition,
+   getRoomCareStations,
+@@ -21,6 +23,7 @@ import {
+   serializeGameState,
+   startEncounterProcedureOperation,
+   protectedCareRoomAtPoint,
++  recordLevelThreeRoomUse,
+   tryStartPatientBathroomTrip,
+   type GameState,
+   type DomainContext,
+@@ -259,6 +262,129 @@ function startEndoscopyEncounter(state: GameState, encounterId: string): GameSta
+ }
+ 
+ describe("service-only operations", () => {
++  it("keeps Endoscopy and Advanced Endoscopy in one shared admission group", () => {
++    const state = periopServiceState();
++    state.serviceAppointmentsEnabled = true;
++    state.nextServiceAppointmentTicks = {
++      "income.endoscopy": state.facilityTick,
++      "income.advanced_endoscopy": state.facilityTick,
++    };
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(state.serviceOperations).toHaveLength(1);
++    advanceServiceOperations(state, PROTOTYPE_DOMAIN_CONTEXT);
++    expect(state.serviceOperations).toHaveLength(1);
++  });
++
++  it("uses staffed OR, recovery, and provider capacity for scheduled operations", () => {
++    let state = periopServiceState();
++    state.facilityLevel = 3;
++    const procedureRoom = state.rooms.find((room) => room.id === "room.test.endoscopy")!;
++    procedureRoom.roomDefinitionId = "room.ambulatory_or";
++    const nurse = state.employees.find((employee) => employee.staffRoleDefinitionId === "staff.endoscopy_nurse")!;
++    nurse.staffRoleDefinitionId = "staff.or_nurse";
++    expect(getFunctionalScheduledAmbulatoryOperationCapacity(state, PROTOTYPE_DOMAIN_CONTEXT)).toBe(1);
++    state.rooms.push(
++      { id: "room.test.staff-break", roomDefinitionId: "room.staff_break", x: 28, y: 18, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      ...[18, 19, 20, 21].map((y) => ({ id: `room.test.staff-break-hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
++    );
++    state.doors.push({ id: "door.test.staff-break", roomId: "room.test.staff-break", side: "east", offset: 1, exterior: false });
++    state = gameReducer(state, {
++      type: "START_SERVICE_OPERATION",
++      operationId: "or.start",
++      incomeLineId: "income.ambulatory_operation",
++      actorKind: "visitor",
++    });
++    const breakRoom = state.rooms.find((room) => room.id === "room.test.staff-break")!;
++    const breakLocation = getRoomNavigationAnchor(breakRoom, getRoomDefinition(breakRoom.roomDefinitionId)!, "staff");
++    const activeNurse = state.employees.find((employee) => employee.id === nurse.id)!;
++    activeNurse.location = breakLocation;
++    activeNurse.path = [{ ...breakLocation }];
++    activeNurse.pathIndex = 0;
++    activeNurse.facilityTask = { kind: "take_break", targetId: breakRoom.id, seatId: "massage", startedAtFacilityTick: state.facilityTick, workMinutesRemaining: 30 };
++    expect(state.serviceOperations[0]?.frozenOperationPhases?.map((phase) => [phase.id, phase.durationMinutes])).toEqual([
++      ["periop_preparation", 30],
++      ["operation", 120],
++      ["recovery", 60],
++    ]);
++    state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.phaseIndex === 1 && candidate.serviceOperations[0]?.status === "in_service", 180);
++    expect(state.employees.find((employee) => employee.id === nurse.id)?.facilityTask?.kind).toBe("perform_service");
++    expect(isEmployeeOperational(state, nurse.id, PROTOTYPE_DOMAIN_CONTEXT)).toBe(true);
++    expect(state.serviceIncomeReceipts).toHaveLength(0);
++    for (let index = 0; index < 8; index += 1) {
++      recordLevelThreeRoomUse(state, procedureRoom.id, `forced-active-wear.${index}`, PROTOTYPE_DOMAIN_CONTEXT);
++    }
++    state.rooms.find((room) => room.id === procedureRoom.id)!.maintenance!.outOfServiceAtFacilityTick = state.facilityTick;
++    state = gameReducer(state, {
++      type: "START_SERVICE_OPERATION",
++      operationId: "or.waiting-behind-maintenance",
++      incomeLineId: "income.ambulatory_operation",
++      actorKind: "visitor",
++    });
++    expect(state.serviceOperations).toHaveLength(2);
++    state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.phaseIndex === 2 && candidate.serviceOperations[0]?.status === "in_service", 180);
++    expect(state.serviceOperations[0]?.cancellationReason).toBeNull();
++    expect(state.serviceIncomeReceipts).toHaveLength(0);
++    state = advanceUntil(state, (candidate) => candidate.serviceOperations[0]?.status === "completed", 180);
++    expect(state.serviceIncomeReceipts).toEqual([
++      expect.objectContaining({ incomeLineId: "income.ambulatory_operation", grossAmount: 900 }),
++    ]);
++    state = advance(state, 2);
++    expect(state.rooms.find((room) => room.id === procedureRoom.id)!.maintenance?.status).toBe("out_of_service");
++    expect(state.serviceOperations[1]).toMatchObject({ status: "waiting_for_next_phase", resourceWaitReason: "Waiting for equipment repair." });
++    state.rooms.push(
++      { id: "room.test.workshop", roomDefinitionId: "room.maintenance_workshop", x: 29, y: 14, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      ...[14, 15, 16, 17].map((y) => ({ id: `room.test.workshop-hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
++    );
++    state.doors.push({ id: "door.test.workshop", roomId: "room.test.workshop", side: "east", offset: 1, exterior: false });
++    const workshop = state.rooms.find((room) => room.id === "room.test.workshop")!;
++    const repairAnchor = getRoomNavigationAnchor(workshop, getRoomDefinition(workshop.roomDefinitionId)!, "staff");
++    state.employees.push({
++      id: "employee.test.repair", staffRoleDefinitionId: "staff.repair_person", displayName: "Repair Person", appearance: state.founder.appearance,
++      hiredAtFacilityTick: 0, salaryPerExpenseInterval: 30, morale: 100, trainingLevel: 1, homeRoomInstanceId: workshop.id,
++      location: repairAnchor, path: [{ ...repairAnchor }], pathIndex: 0, lastMovedAtFacilityTick: 0, lastPraisedAtFacilityTick: null,
++      lastBreakAtFacilityTick: null, nextIdleActionAtFacilityTick: Number.MAX_SAFE_INTEGER, facilityTask: null,
++    });
++    state = advanceUntil(state, (candidate) => candidate.rooms.find((room) => room.id === procedureRoom.id)?.maintenance?.status === "operational", 120);
++    state = advanceUntil(state, (candidate) => candidate.serviceOperations[1]?.phaseIndex === 1 && candidate.serviceOperations[1]?.status === "in_service", 180);
++    expect(state.serviceOperations[1]?.cancellationReason).toBeNull();
++
++    const unstaffed = periopServiceState();
++    unstaffed.facilityLevel = 3;
++    unstaffed.rooms.find((room) => room.id === "room.test.endoscopy")!.roomDefinitionId = "room.ambulatory_or";
++    unstaffed.employees.find((employee) => employee.staffRoleDefinitionId === "staff.endoscopy_nurse")!.staffRoleDefinitionId = "staff.or_nurse";
++    unstaffed.employees = unstaffed.employees.filter((employee) => employee.staffRoleDefinitionId !== "staff.periop_nurse");
++    expect(getFunctionalScheduledAmbulatoryOperationCapacity(unstaffed, PROTOTYPE_DOMAIN_CONTEXT)).toBe(0);
++  });
++
++  it("rejects unstaffed and over-capacity manual Lab work and pays only on completion", () => {
++    let state = serviceState("manual-lab-work");
++    state.facilityLevel = 3;
++    const lab = state.rooms.find((room) => room.id === "room.test.ultrasound")!;
++    lab.roomDefinitionId = "room.laboratory";
++    const technician = state.employees.find((employee) => employee.id === "employee.test.imaging")!;
++    technician.staffRoleDefinitionId = "staff.laboratory_technician";
++    state.employees = [];
++    expect(getRemoteWorkQueueAvailability(state, "income.laboratory_processing", PROTOTYPE_DOMAIN_CONTEXT)).toMatchObject({
++      functionalCapacity: 0,
++      canStart: false,
++    });
++    state = gameReducer(state, { type: "START_SERVICE_OPERATION", operationId: "lab.unstaffed", incomeLineId: "income.laboratory_processing", actorKind: "remote" });
++    expect(state.serviceOperations).toHaveLength(0);
++    state.employees.push(technician);
++    state = gameReducer(state, { type: "START_SERVICE_OPERATION", operationId: "lab.first", incomeLineId: "income.laboratory_processing", actorKind: "remote" });
++    expect(state.serviceOperations).toHaveLength(1);
++    expect(state.serviceIncomeReceipts).toHaveLength(0);
++    state = gameReducer(state, { type: "START_SERVICE_OPERATION", operationId: "lab.over-capacity", incomeLineId: "income.laboratory_processing", actorKind: "remote" });
++    expect(state.serviceOperations).toHaveLength(1);
++    state = advance(state, 59);
++    expect(state.serviceIncomeReceipts).toHaveLength(0);
++    state = advance(state, 5);
++    expect(state.serviceIncomeReceipts).toEqual([
++      expect.objectContaining({ incomeLineId: "income.laboratory_processing", grossAmount: 80 }),
++    ]);
++    expect(state.rooms.find((room) => room.id === lab.id)!.maintenance).toMatchObject({ completedUses: 1, status: "operational" });
++  });
++
+   it("replans a saved service visitor route out of an unrelated care room before starting work", () => {
+     let state = advanceUntil(
+       startUltrasound(serviceState("saved-service-route-repair")),

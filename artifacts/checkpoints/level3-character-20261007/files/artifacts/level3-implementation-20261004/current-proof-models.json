@@ -1,0 +1,6909 @@
+{
+  "ambulatory-or": {
+    "dimensions": {
+      "cols": 4,
+      "rows": 4
+    },
+    "orientation": 0,
+    "segments": [
+      "N1",
+      "N2",
+      "N3",
+      "N4",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "WA",
+      "WB",
+      "WC",
+      "WD",
+      "EA",
+      "EB",
+      "EC",
+      "ED"
+    ],
+    "doors": [],
+    "selected": "S2",
+    "adjacency": [],
+    "hidden": [],
+    "tableState": "occupiedCovered",
+    "individualPatientVisible": false,
+    "fixtures": {
+      "table": {
+        "id": "operatingTable",
+        "label": "north-headed ambulatory OR table",
+        "footprint": {
+          "left": 1.55,
+          "top": 1.4,
+          "width": 0.9,
+          "height": 1.8
+        },
+        "navigationBlocker": {
+          "left": 1.55,
+          "top": 1.4,
+          "width": 0.9,
+          "height": 1.8
+        },
+        "ground": {
+          "x": 2,
+          "y": 3.2
+        },
+        "approach": {
+          "x": 2,
+          "y": 3.55
+        },
+        "head": "N",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "anesthesia": {
+        "id": "anesthesia",
+        "label": "head-end anesthesia machine",
+        "footprint": {
+          "left": 0.75,
+          "top": 0.58,
+          "width": 0.7,
+          "height": 0.72
+        },
+        "ground": {
+          "x": 1.1,
+          "y": 1.3
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "tray": {
+        "id": "tray",
+        "label": "nurse instrument tray",
+        "footprint": {
+          "left": 3.15,
+          "top": 2.55,
+          "width": 0.55,
+          "height": 0.75
+        },
+        "ground": {
+          "x": 3.425,
+          "y": 3.3
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "lights": {
+        "id": "lights",
+        "label": "elevated articulated surgical lights",
+        "ground": {
+          "x": 2,
+          "y": -0.2
+        },
+        "collision": "none",
+        "persistence": "permanent",
+        "layer": "above-table-below-characters"
+      },
+      "workstation": {
+        "id": "workstation",
+        "label": "northwest charting workstation",
+        "footprint": {
+          "left": 0.05,
+          "top": 0.05,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 0.45,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N1",
+          "WA"
+        ],
+        "backedConflicts": [
+          "N1"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "storageLeft": {
+        "id": "storageLeft",
+        "label": "central folded-drape supply shelf",
+        "footprint": {
+          "left": 1.05,
+          "top": 0.05,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 1.5,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N2"
+        ],
+        "backedConflicts": [
+          "N2"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "storageRight": {
+        "id": "storageRight",
+        "label": "central wrapped-pack and tray shelf",
+        "footprint": {
+          "left": 2.05,
+          "top": 0.05,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 2.5,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N3"
+        ],
+        "backedConflicts": [
+          "N3"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "sink": {
+        "id": "sink",
+        "label": "northeast steel scrub sink",
+        "footprint": {
+          "left": 3.05,
+          "top": 0.05,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 3.55,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N4",
+          "EA"
+        ],
+        "backedConflicts": [
+          "N4"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      }
+    },
+    "staff": {
+      "surgeon": {
+        "id": "surgeon",
+        "source": "surgeon",
+        "ground": {
+          "x": 1.15,
+          "y": 2.6
+        },
+        "facing": "E",
+        "role": "surgeon"
+      },
+      "nurse": {
+        "id": "nurse",
+        "source": "nurse",
+        "ground": {
+          "x": 2.85,
+          "y": 2.6
+        },
+        "facing": "W",
+        "role": "circulating-nurse",
+        "adjacentFixture": "tray"
+      }
+    },
+    "draws": {
+      "workstation": {
+        "id": "workstation",
+        "x": 54.336000000000006,
+        "y": 31.616000000000014,
+        "w": 118.976,
+        "h": 142.56,
+        "scale": 0.352,
+        "crop": [
+          0,
+          0,
+          338,
+          405
+        ],
+        "groundContact": {
+          "x": 114,
+          "y": 169.6
+        }
+      },
+      "storageLeft": {
+        "id": "storageLeft",
+        "x": 182.18184349763297,
+        "y": 61.67277452891487,
+        "w": 116.52582310477048,
+        "h": 112.07827260458839,
+        "scale": 0.2965033666788053,
+        "crop": [
+          0,
+          0,
+          393,
+          378
+        ],
+        "groundContact": {
+          "x": 240,
+          "y": 169.6
+        }
+      },
+      "storageRight": {
+        "id": "storageRight",
+        "x": 301.65835478335475,
+        "y": 61.52692692692692,
+        "w": 117.27709852709853,
+        "h": 112.22972972972974,
+        "scale": 0.2969040469040469,
+        "crop": [
+          0,
+          0,
+          395,
+          378
+        ],
+        "groundContact": {
+          "x": 360,
+          "y": 169.6
+        }
+      },
+      "sink": {
+        "id": "sink",
+        "x": 426.8810572687225,
+        "y": 41.993538913362684,
+        "w": 118.88399412628488,
+        "h": 131.80616740088107,
+        "scale": 0.32305433186490456,
+        "crop": [
+          0,
+          0,
+          368,
+          408
+        ],
+        "groundContact": {
+          "x": 486,
+          "y": 169.6
+        }
+      },
+      "anesthesia": {
+        "id": "anesthesia",
+        "x": 146.7196261682243,
+        "y": 163.7429906542056,
+        "w": 103.8785046728972,
+        "h": 133.17757009345794,
+        "scale": 0.4439252336448598,
+        "crop": [
+          0,
+          0,
+          234,
+          300
+        ],
+        "groundContact": {
+          "x": 192,
+          "y": 286
+        }
+      },
+      "table": {
+        "id": "tableOccupied",
+        "x": 228.55900621118013,
+        "y": 212.13664596273287,
+        "w": 144.22360248447205,
+        "h": 311.92546583850935,
+        "scale": 0.6708074534161491,
+        "anchor": [
+          106.5,
+          450
+        ],
+        "groundContact": {
+          "x": 300,
+          "y": 514
+        },
+        "footprint": {
+          "left": 1.55,
+          "top": 1.4,
+          "width": 0.9,
+          "height": 1.8
+        }
+      },
+      "lights": {
+        "id": "lights",
+        "x": 210.88974854932303,
+        "y": 92.84719535783366,
+        "w": 192.68858800773694,
+        "h": 203.86847195357834,
+        "scale": 0.6576402321083172,
+        "crop": [
+          0,
+          0,
+          293,
+          310
+        ],
+        "groundContact": {
+          "x": 300,
+          "y": 106
+        }
+      },
+      "tray": {
+        "id": "tray",
+        "x": 414.1075697211155,
+        "y": 419.7450199203187,
+        "w": 114.34262948207171,
+        "h": 117.13147410358566,
+        "scale": 0.46480743691899074,
+        "crop": [
+          0,
+          0,
+          246,
+          252
+        ],
+        "groundContact": {
+          "x": 471,
+          "y": 526
+        }
+      },
+      "surgeon": {
+        "id": "surgeon",
+        "source": "surgeon",
+        "x": 134.14547038327527,
+        "y": 212.92187499999997,
+        "w": 127.7090592334495,
+        "h": 255.418118466899,
+        "groundContact": {
+          "x": 198,
+          "y": 442
+        },
+        "facing": "E",
+        "role": "surgeon"
+      },
+      "nurse": {
+        "id": "nurse",
+        "source": "nurse",
+        "x": 338.14547038327527,
+        "y": 212.92187499999997,
+        "w": 127.7090592334495,
+        "h": 255.418118466899,
+        "groundContact": {
+          "x": 402,
+          "y": 442
+        },
+        "facing": "W",
+        "role": "circulating-nurse"
+      }
+    },
+    "layerOrder": [
+      "table",
+      "lights",
+      "tray",
+      "surgeon",
+      "nurse"
+    ],
+    "routes": {
+      "N1": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 0.24,
+          "y": 3.56
+        },
+        {
+          "x": 0.24,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.64,
+          "y": 3.56
+        },
+        {
+          "x": 2.64,
+          "y": 1.2
+        },
+        {
+          "x": 1.68,
+          "y": 1.2
+        },
+        {
+          "x": 1.68,
+          "y": 0.2
+        }
+      ],
+      "N3": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.68,
+          "y": 3.56
+        },
+        {
+          "x": 2.68,
+          "y": 0.2
+        }
+      ],
+      "N4": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 2.36
+        },
+        {
+          "x": 3.24,
+          "y": 2.36
+        },
+        {
+          "x": 3.24,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 0.24,
+          "y": 3.56
+        },
+        {
+          "x": 0.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "S2": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 1.24,
+          "y": 3.56
+        },
+        {
+          "x": 1.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "S3": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.24,
+          "y": 3.56
+        },
+        {
+          "x": 2.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "S4": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 3.24,
+          "y": 3.56
+        },
+        {
+          "x": 3.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "WA": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 0.24
+        }
+      ],
+      "WB": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        }
+      ],
+      "WC": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 2.24
+        }
+      ],
+      "WD": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 3.56
+        },
+        {
+          "x": 0.2,
+          "y": 3.24
+        }
+      ],
+      "EA": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 2.36
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 2.36
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 0.24
+        }
+      ],
+      "EB": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 2.36
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 2.36
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 1.24
+        }
+      ],
+      "EC": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 3.56
+        },
+        {
+          "x": 2.96,
+          "y": 2.36
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 2.36
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 2.24
+        }
+      ],
+      "ED": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 3.56
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 3.52
+        }
+      ]
+    },
+    "useRoutes": {
+      "surgeon": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 1.16,
+          "y": 3.56
+        },
+        {
+          "x": 1.16,
+          "y": 2.6
+        }
+      ],
+      "nurse": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.84,
+          "y": 3.56
+        },
+        {
+          "x": 2.84,
+          "y": 2.6
+        }
+      ],
+      "anesthesia": [
+        {
+          "x": 2,
+          "y": 3.56
+        },
+        {
+          "x": 2.64,
+          "y": 3.56
+        },
+        {
+          "x": 2.64,
+          "y": 1.2
+        },
+        {
+          "x": 1.6400000000000001,
+          "y": 1.2
+        },
+        {
+          "x": 1.6400000000000001,
+          "y": 1.04
+        }
+      ],
+      "table": [
+        {
+          "x": 2,
+          "y": 3.56
+        }
+      ]
+    },
+    "scaleContract": {
+      "tilePixels": 120,
+      "actorRadius": 0.18,
+      "table": {
+        "footprint": {
+          "left": 1.55,
+          "top": 1.4,
+          "width": 0.9,
+          "height": 1.8
+        },
+        "physicalPixels": {
+          "width": 108,
+          "length": 216
+        },
+        "uniformImageScale": 0.33540372670807456,
+        "visibleWorktopRisePixels": 57.35403726708075,
+        "raisedOccupiedDrapeExtensionPixels": 28.509316770186338
+      },
+      "tray": {
+        "uniformImageScale": 0.46480743691899074,
+        "worktopRisePixels": 70
+      },
+      "endoscopy": {
+        "blocker": [
+          1,
+          1.6
+        ],
+        "renderedHeightPixels": 205
+      },
+      "recovery": {
+        "blocker": [
+          0.7,
+          1.55
+        ],
+        "renderedWidthPixels": 84
+      },
+      "characters": {
+        "nativeWidth": 160,
+        "nativeHeight": 320,
+        "bodyAxisX": 80,
+        "floorY": 287,
+        "widthTiles": 1.0642421602787457
+      }
+    },
+    "replacementContract": {
+      "empty": "tableEmpty",
+      "occupied": "tableOccupied",
+      "individualPatientVisibleWhenOccupied": false,
+      "requiredVisual": "Raised head-end drape covers the head and anesthesia end; generic abdominal skin remains visible with no incision, gore, or instruments."
+    },
+    "shell": {
+      "tileSize": 120,
+      "rearWallHeight": 90,
+      "lowNorthHeight": 29,
+      "sideCapWidth": 14,
+      "southHeight": 29,
+      "floor": "24px dark slate procedure tile",
+      "floorPatternOrigin": {
+        "x": 60,
+        "y": 130
+      }
+    },
+    "ready": true
+  },
+  "laboratory": {
+    "dimensions": {
+      "cols": 3,
+      "rows": 3
+    },
+    "orientation": 0,
+    "segments": [
+      "N1",
+      "N2",
+      "N3",
+      "S1",
+      "S2",
+      "S3",
+      "WA",
+      "WB",
+      "WC",
+      "EA",
+      "EB",
+      "EC"
+    ],
+    "doors": [],
+    "selected": "S2",
+    "adjacency": [],
+    "hidden": [],
+    "fixtures": {
+      "bench": {
+        "id": "testingBench",
+        "label": "central laboratory testing bench",
+        "footprint": {
+          "left": 0.8,
+          "top": 1.1,
+          "width": 1.4,
+          "height": 0.65
+        },
+        "navigationBlocker": {
+          "left": 0.8,
+          "top": 1.1,
+          "width": 1.4,
+          "height": 0.65
+        },
+        "ground": {
+          "x": 1.5,
+          "y": 1.75
+        },
+        "approach": {
+          "x": 1.5,
+          "y": 2.65
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "sink": {
+        "id": "sink",
+        "label": "northwest utility sink",
+        "footprint": {
+          "left": 0.05,
+          "top": 0.05,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 0.45,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N1",
+          "WA"
+        ],
+        "backedConflicts": [
+          "N1"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "workstation": {
+        "id": "workstation",
+        "label": "north charting workstation",
+        "footprint": {
+          "left": 1.1,
+          "top": 0.05,
+          "width": 0.8,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 1.5,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N2"
+        ],
+        "backedConflicts": [
+          "N2"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "fridge": {
+        "id": "fridge",
+        "label": "northeast compact laboratory refrigerator and supplies",
+        "footprint": {
+          "left": 2.05,
+          "top": 0.05,
+          "width": 0.9,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 2.55,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N3",
+          "EA"
+        ],
+        "backedConflicts": [
+          "N3"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      }
+    },
+    "staff": {
+      "technician": {
+        "id": "technician",
+        "source": "technician",
+        "ground": {
+          "x": 1.5,
+          "y": 2.35
+        },
+        "facing": "N",
+        "role": "laboratory-technician",
+        "approach": {
+          "x": 1.5,
+          "y": 2.65
+        }
+      }
+    },
+    "draws": {
+      "sink": {
+        "id": "sink",
+        "x": 75.96850393700788,
+        "y": 66.8736220472441,
+        "w": 76.06299212598425,
+        "h": 105,
+        "scale": 0.41338582677165353,
+        "crop": [
+          0,
+          0,
+          184,
+          254
+        ],
+        "groundContact": {
+          "x": 114,
+          "y": 169.6
+        }
+      },
+      "workstation": {
+        "id": "workstation",
+        "x": 187.29427564210172,
+        "y": 13.855833473224749,
+        "w": 106.16081920429747,
+        "h": 157.36780258519389,
+        "scale": 0.2497901628336411,
+        "crop": [
+          0,
+          0,
+          425,
+          630
+        ],
+        "groundContact": {
+          "x": 240,
+          "y": 169.6
+        }
+      },
+      "fridge": {
+        "id": "fridge",
+        "x": 321.65045992115637,
+        "y": 16.249145860709604,
+        "w": 89.88173455978975,
+        "h": 159.65834428383704,
+        "scale": 0.39421813403416556,
+        "crop": [
+          0,
+          0,
+          228,
+          405
+        ],
+        "groundContact": {
+          "x": 366,
+          "y": 169.6
+        }
+      },
+      "bench": {
+        "id": "bench",
+        "x": 150.9099099099099,
+        "y": 183.60360360360357,
+        "w": 178.73873873873876,
+        "h": 158.25825825825828,
+        "scale": 0.3723723723723724,
+        "crop": [
+          0,
+          0,
+          480,
+          425
+        ],
+        "groundContact": {
+          "x": 240,
+          "y": 340
+        }
+      },
+      "technician": {
+        "id": "technician",
+        "source": "technician",
+        "x": 176.14547038327527,
+        "y": 182.92187499999997,
+        "w": 127.7090592334495,
+        "h": 255.418118466899,
+        "groundContact": {
+          "x": 240,
+          "y": 412
+        },
+        "facing": "N",
+        "role": "laboratory-technician"
+      }
+    },
+    "layerOrder": [
+      "wall-fixtures",
+      "bench",
+      "technician"
+    ],
+    "routes": {
+      "N1": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.6,
+          "y": 2.64
+        },
+        {
+          "x": 0.6,
+          "y": 0.92
+        },
+        {
+          "x": 1.24,
+          "y": 0.92
+        },
+        {
+          "x": 1.24,
+          "y": 0.2
+        }
+      ],
+      "N3": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.4,
+          "y": 2.64
+        },
+        {
+          "x": 2.4,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "S2": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 1.52,
+          "y": 2.8000000000000003
+        }
+      ],
+      "S3": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.24,
+          "y": 2.64
+        },
+        {
+          "x": 2.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "WA": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 0.24
+        }
+      ],
+      "WB": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        }
+      ],
+      "WC": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.24
+        }
+      ],
+      "EA": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 0.24
+        }
+      ],
+      "EB": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 1.24
+        }
+      ],
+      "EC": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.24
+        }
+      ]
+    },
+    "useRoutes": {
+      "technician": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 1.52,
+          "y": 2.36
+        }
+      ],
+      "bench": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        }
+      ]
+    },
+    "scaleContract": {
+      "tilePixels": 120,
+      "actorRadius": 0.18,
+      "bench": {
+        "footprint": {
+          "left": 0.8,
+          "top": 1.1,
+          "width": 1.4,
+          "height": 0.65
+        },
+        "visibleWidthPixels": 171.10510510510514,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "fridge": {
+        "visibleHeightPixels": 150
+      },
+      "workstation": {
+        "visibleWidthPixels": 100.16585529629009,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "frontDesk": {
+        "visibleWidthPixels": 261.8918918918919,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "pharmacyCounter": {
+        "visibleWidthPixels": 186.35812593596236,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "endoscopyCounter": {
+        "renderedHeight": 110,
+        "worktopRisePixels": 72.16350947158524,
+        "approvalStatus": "owner-approved-for-runtime",
+        "approvalDate": "2026-09-24"
+      },
+      "characters": {
+        "nativeWidth": 160,
+        "nativeHeight": 320,
+        "bodyAxisX": 80,
+        "floorY": 287,
+        "widthTiles": 1.0642421602787457
+      }
+    },
+    "shell": {
+      "tileSize": 120,
+      "rearWallHeight": 90,
+      "lowNorthHeight": 29,
+      "sideCapWidth": 14,
+      "southHeight": 29,
+      "floor": "24px light blue-gray laboratory tile",
+      "floorPatternOrigin": {
+        "x": 60,
+        "y": 130
+      }
+    },
+    "ready": true
+  },
+  "pharmacy": {
+    "dimensions": {
+      "cols": 3,
+      "rows": 3
+    },
+    "orientation": 0,
+    "segments": [
+      "N1",
+      "N2",
+      "N3",
+      "S1",
+      "S2",
+      "S3",
+      "WA",
+      "WB",
+      "WC",
+      "EA",
+      "EB",
+      "EC"
+    ],
+    "doors": [],
+    "selected": "S2",
+    "adjacency": [],
+    "hidden": [],
+    "fixtures": {
+      "counter": {
+        "id": "dispensingCounter",
+        "label": "permanent dispensing counter",
+        "footprint": {
+          "left": 0.4,
+          "top": 1.15,
+          "width": 1.75,
+          "height": 0.65
+        },
+        "navigationBlocker": {
+          "left": 0.4,
+          "top": 1.15,
+          "width": 1.75,
+          "height": 0.65
+        },
+        "ground": {
+          "x": 1.275,
+          "y": 1.8
+        },
+        "approach": {
+          "x": 2.55,
+          "y": 2.55
+        },
+        "pickupContact": {
+          "x": 1.275,
+          "y": 2.55
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "stock": {
+        "id": "stock",
+        "label": "northwest locked medicine stock cabinet",
+        "footprint": {
+          "left": 0.05,
+          "top": 0.05,
+          "width": 0.8,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 0.45,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N1",
+          "WA"
+        ],
+        "backedConflicts": [
+          "N1"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "shelves": {
+        "id": "shelves",
+        "label": "north open medicine shelves",
+        "footprint": {
+          "left": 1.1,
+          "top": 0.05,
+          "width": 0.8,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 1.5,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N2"
+        ],
+        "backedConflicts": [
+          "N2"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "computer": {
+        "id": "computer",
+        "label": "northeast charting workstation",
+        "footprint": {
+          "left": 2.15,
+          "top": 0.05,
+          "width": 0.8,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 2.55,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N3",
+          "EA"
+        ],
+        "backedConflicts": [
+          "N3"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      }
+    },
+    "staff": {
+      "pharmacist": {
+        "id": "pharmacist",
+        "source": "pharmacist",
+        "ground": {
+          "x": 2.35,
+          "y": 1.65
+        },
+        "facing": "W",
+        "role": "pharmacist",
+        "approach": {
+          "x": 2.55,
+          "y": 2.55
+        }
+      }
+    },
+    "draws": {
+      "stock": {
+        "id": "stock",
+        "x": 62.489208633093526,
+        "y": 6.146762589928045,
+        "w": 103.59712230215827,
+        "h": 166.13908872901678,
+        "scale": 0.38369304556354916,
+        "crop": [
+          0,
+          0,
+          270,
+          433
+        ],
+        "groundContact": {
+          "x": 114,
+          "y": 169.6
+        }
+      },
+      "shelves": {
+        "id": "shelves",
+        "x": 183.46153846153845,
+        "y": 31.715384615384608,
+        "w": 113.46153846153847,
+        "h": 139.6153846153846,
+        "scale": 0.38461538461538464,
+        "crop": [
+          0,
+          0,
+          295,
+          363
+        ],
+        "groundContact": {
+          "x": 240,
+          "y": 169.6
+        }
+      },
+      "computer": {
+        "id": "computer",
+        "x": 313.29427564210175,
+        "y": 13.855833473224749,
+        "w": 106.16081920429747,
+        "h": 157.36780258519389,
+        "scale": 0.2497901628336411,
+        "crop": [
+          0,
+          0,
+          425,
+          630
+        ],
+        "groundContact": {
+          "x": 366,
+          "y": 169.6
+        }
+      },
+      "counter": {
+        "id": "counter",
+        "x": 117.69870926335305,
+        "y": 214.55451757826427,
+        "w": 191.00049917991873,
+        "h": 135.29202025244243,
+        "scale": 0.26527847108322045,
+        "crop": [
+          0,
+          0,
+          720,
+          510
+        ],
+        "groundContact": {
+          "x": 213,
+          "y": 346
+        }
+      },
+      "pharmacist": {
+        "id": "pharmacist",
+        "source": "pharmacist",
+        "x": 278.14547038327527,
+        "y": 98.92187499999997,
+        "w": 127.7090592334495,
+        "h": 255.418118466899,
+        "groundContact": {
+          "x": 342,
+          "y": 328
+        },
+        "facing": "W",
+        "role": "pharmacist"
+      }
+    },
+    "layerOrder": [
+      "wall-fixtures",
+      "counter",
+      "pharmacist"
+    ],
+    "routes": {
+      "N1": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.36,
+          "y": 2.56
+        },
+        {
+          "x": 2.36,
+          "y": 0.96
+        },
+        {
+          "x": 0.24,
+          "y": 0.96
+        },
+        {
+          "x": 0.24,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.36,
+          "y": 2.56
+        },
+        {
+          "x": 2.36,
+          "y": 0.96
+        },
+        {
+          "x": 1.24,
+          "y": 0.96
+        },
+        {
+          "x": 1.24,
+          "y": 0.2
+        }
+      ],
+      "N3": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.4,
+          "y": 2.56
+        },
+        {
+          "x": 2.4,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 0.24,
+          "y": 2.56
+        },
+        {
+          "x": 0.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "S2": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 1.24,
+          "y": 2.56
+        },
+        {
+          "x": 1.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "S3": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.24,
+          "y": 2.56
+        },
+        {
+          "x": 2.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "WA": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 0.2,
+          "y": 2.56
+        },
+        {
+          "x": 0.2,
+          "y": 0.24
+        }
+      ],
+      "WB": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 0.2,
+          "y": 2.56
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        }
+      ],
+      "WC": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 0.2,
+          "y": 2.56
+        },
+        {
+          "x": 0.2,
+          "y": 2.24
+        }
+      ],
+      "EA": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.56
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 0.24
+        }
+      ],
+      "EB": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.56
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 1.24
+        }
+      ],
+      "EC": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.56
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.24
+        }
+      ]
+    },
+    "useRoutes": {
+      "pharmacist": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 2.36,
+          "y": 2.56
+        },
+        {
+          "x": 2.36,
+          "y": 1.6400000000000001
+        }
+      ],
+      "counter": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        }
+      ],
+      "pickup": [
+        {
+          "x": 2.56,
+          "y": 2.56
+        },
+        {
+          "x": 1.28,
+          "y": 2.56
+        }
+      ]
+    },
+    "scaleContract": {
+      "tilePixels": 120,
+      "actorRadius": 0.18,
+      "counter": {
+        "footprint": {
+          "left": 0.4,
+          "top": 1.15,
+          "width": 1.75,
+          "height": 0.65
+        },
+        "visibleWidthPixels": 186.35812593596236,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "stock": {
+        "visibleHeightPixels": 160
+      },
+      "shelves": {
+        "visibleHeightPixels": 135
+      },
+      "computer": {
+        "visibleWidthPixels": 100.16585529629009,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "frontDesk": {
+        "visibleWidthPixels": 261.8918918918919,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "laboratoryBench": {
+        "visibleWidthPixels": 171.10510510510514,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "endoscopyCounter": {
+        "renderedHeight": 110,
+        "worktopRisePixels": 72.16350947158524,
+        "approvalStatus": "owner-approved-for-runtime",
+        "approvalDate": "2026-09-24"
+      },
+      "characters": {
+        "nativeWidth": 160,
+        "nativeHeight": 320,
+        "bodyAxisX": 80,
+        "floorY": 287,
+        "widthTiles": 1.0642421602787457
+      }
+    },
+    "shell": {
+      "tileSize": 120,
+      "rearWallHeight": 90,
+      "lowNorthHeight": 29,
+      "sideCapWidth": 14,
+      "southHeight": 29,
+      "floor": "24px warm neutral pharmacy tile",
+      "floorPatternOrigin": {
+        "x": 60,
+        "y": 130
+      }
+    },
+    "ready": true
+  },
+  "maintenance-workshop": {
+    "dimensions": {
+      "cols": 3,
+      "rows": 3
+    },
+    "orientation": 0,
+    "segments": [
+      "N1",
+      "N2",
+      "N3",
+      "S1",
+      "S2",
+      "S3",
+      "WA",
+      "WB",
+      "WC",
+      "EA",
+      "EB",
+      "EC"
+    ],
+    "doors": [],
+    "selected": "S2",
+    "adjacency": [],
+    "hidden": [],
+    "fixtures": {
+      "bench": {
+        "id": "repairBench",
+        "label": "permanent central repair workbench",
+        "footprint": {
+          "left": 0.575,
+          "top": 1.2,
+          "width": 1.85,
+          "height": 0.65
+        },
+        "navigationBlocker": {
+          "left": 0.575,
+          "top": 1.2,
+          "width": 1.85,
+          "height": 0.65
+        },
+        "ground": {
+          "x": 1.5,
+          "y": 1.85
+        },
+        "approach": {
+          "x": 1.5,
+          "y": 2.65
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "parts": {
+        "id": "parts",
+        "label": "northwest parts-bin cabinet",
+        "footprint": {
+          "left": 0.05,
+          "top": 0.05,
+          "width": 0.8,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 0.45,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N1",
+          "WA"
+        ],
+        "backedConflicts": [
+          "N1"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      },
+      "pegboard": {
+        "id": "pegboard",
+        "label": "north wall-mounted tool pegboard",
+        "footprint": {
+          "left": 1.1,
+          "top": -0.65,
+          "width": 0.8,
+          "height": 0.1
+        },
+        "ground": {
+          "x": 1.5,
+          "y": -0.04
+        },
+        "conflicts": [
+          "N2"
+        ],
+        "backedConflicts": [
+          "N2"
+        ],
+        "collision": "none",
+        "persistence": "optional"
+      },
+      "cupboard": {
+        "id": "cupboard",
+        "label": "northeast locked tool cupboard",
+        "footprint": {
+          "left": 2.15,
+          "top": 0.05,
+          "width": 0.8,
+          "height": 0.28
+        },
+        "ground": {
+          "x": 2.55,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N3",
+          "EA"
+        ],
+        "backedConflicts": [
+          "N3"
+        ],
+        "collision": "nonblocking",
+        "persistence": "optional"
+      }
+    },
+    "staff": {
+      "repairPerson": {
+        "id": "repairPerson",
+        "source": "repairPerson",
+        "ground": {
+          "x": 1.5,
+          "y": 2.35
+        },
+        "facing": "N",
+        "role": "repair-person",
+        "approach": {
+          "x": 1.5,
+          "y": 2.65
+        }
+      }
+    },
+    "draws": {
+      "parts": {
+        "id": "parts",
+        "x": 67.21294559099437,
+        "y": 60.857035647279545,
+        "w": 94.55909943714822,
+        "h": 112.28893058161351,
+        "scale": 0.39399624765478425,
+        "crop": [
+          0,
+          0,
+          240,
+          285
+        ],
+        "groundContact": {
+          "x": 114,
+          "y": 169.6
+        }
+      },
+      "pegboard": {
+        "id": "pegboard",
+        "x": 184.07407407407408,
+        "y": 40.570370370370384,
+        "w": 112.96296296296296,
+        "h": 88.88888888888889,
+        "scale": 0.37037037037037035,
+        "crop": [
+          0,
+          0,
+          305,
+          240
+        ],
+        "groundContact": {
+          "x": 240,
+          "y": 125.2
+        }
+      },
+      "cupboard": {
+        "id": "cupboard",
+        "x": 317.8485237483954,
+        "y": 10.819512195121945,
+        "w": 95.50706033376123,
+        "h": 163.1578947368421,
+        "scale": 0.3979460847240051,
+        "crop": [
+          0,
+          0,
+          240,
+          410
+        ],
+        "groundContact": {
+          "x": 366,
+          "y": 169.6
+        }
+      },
+      "bench": {
+        "id": "bench",
+        "x": 126.32508091295026,
+        "y": 200.48556176705475,
+        "w": 228.28800807027872,
+        "h": 153.2344163759405,
+        "scale": 0.3127232987264092,
+        "crop": [
+          0,
+          0,
+          730,
+          490
+        ],
+        "groundContact": {
+          "x": 240,
+          "y": 352
+        }
+      },
+      "repairPerson": {
+        "id": "repairPerson",
+        "source": "repairPerson",
+        "x": 176.14547038327527,
+        "y": 182.92187499999997,
+        "w": 127.7090592334495,
+        "h": 255.418118466899,
+        "groundContact": {
+          "x": 240,
+          "y": 412
+        },
+        "facing": "N",
+        "role": "repair-person"
+      }
+    },
+    "layerOrder": [
+      "wall-fixtures",
+      "bench",
+      "repair-person"
+    ],
+    "routes": {
+      "N1": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.36,
+          "y": 2.64
+        },
+        {
+          "x": 0.36,
+          "y": 1
+        },
+        {
+          "x": 1.24,
+          "y": 1
+        },
+        {
+          "x": 1.24,
+          "y": 0.2
+        }
+      ],
+      "N3": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.68,
+          "y": 2.64
+        },
+        {
+          "x": 2.68,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 2.64
+        },
+        {
+          "x": 0.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "S2": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 1.52,
+          "y": 2.8000000000000003
+        }
+      ],
+      "S3": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.24,
+          "y": 2.64
+        },
+        {
+          "x": 2.24,
+          "y": 2.8000000000000003
+        }
+      ],
+      "WA": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 0.24
+        }
+      ],
+      "WB": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        }
+      ],
+      "WC": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.64
+        },
+        {
+          "x": 0.2,
+          "y": 2.24
+        }
+      ],
+      "EA": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 0.24
+        }
+      ],
+      "EB": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 1.24
+        }
+      ],
+      "EC": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.64
+        },
+        {
+          "x": 2.8000000000000003,
+          "y": 2.24
+        }
+      ]
+    },
+    "useRoutes": {
+      "repairPerson": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        },
+        {
+          "x": 1.52,
+          "y": 2.36
+        }
+      ],
+      "bench": [
+        {
+          "x": 1.52,
+          "y": 2.64
+        }
+      ]
+    },
+    "scaleContract": {
+      "tilePixels": 120,
+      "actorRadius": 0.18,
+      "bench": {
+        "footprint": {
+          "left": 0.575,
+          "top": 1.2,
+          "width": 1.85,
+          "height": 0.65
+        },
+        "visibleWidthPixels": 222.50262704384014,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "parts": {
+        "visibleWidthPixels": 86.28517823639775,
+        "visibleHeightPixels": 105
+      },
+      "pegboard": {
+        "visibleWidthPixels": 105,
+        "visibleHeightPixels": 80.92592592592592,
+        "mounted": true
+      },
+      "cupboard": {
+        "visibleWidthPixels": 84.96148908857509,
+        "visibleHeightPixels": 155
+      },
+      "frontDesk": {
+        "visibleWidthPixels": 261.8918918918919,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "laboratoryBench": {
+        "visibleWidthPixels": 171.10510510510514,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "characters": {
+        "nativeWidth": 160,
+        "nativeHeight": 320,
+        "bodyAxisX": 80,
+        "floorY": 287,
+        "widthTiles": 1.0642421602787457
+      }
+    },
+    "shell": {
+      "tileSize": 120,
+      "rearWallHeight": 90,
+      "lowNorthHeight": 29,
+      "sideCapWidth": 14,
+      "southHeight": 29,
+      "floor": {
+        "material": "sealed-poured-concrete",
+        "texture": "broad-subtle-mottling",
+        "seams": "two large rectangular expansion seams",
+        "smallSquareGrid": false,
+        "patternOrigin": {
+          "x": 60,
+          "y": 130
+        }
+      }
+    },
+    "ready": true
+  },
+  "staff-break-room": {
+    "revision": "owner-approved-unique-large-table-03",
+    "dimensions": {
+      "cols": 4,
+      "rows": 4
+    },
+    "orientation": 0,
+    "segments": [
+      "N1",
+      "N2",
+      "N3",
+      "N4",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "WA",
+      "WB",
+      "WC",
+      "WD",
+      "EA",
+      "EB",
+      "EC",
+      "ED"
+    ],
+    "doors": [
+      "S2"
+    ],
+    "selected": "S2",
+    "adjacency": [],
+    "occupancy": "all",
+    "fixtures": {
+      "rug": {
+        "id": "rug",
+        "footprint": {
+          "left": 0.25,
+          "top": 1.3,
+          "width": 1.65,
+          "height": 2
+        },
+        "collision": "none",
+        "persistence": "permanent"
+      },
+      "massageChair": {
+        "id": "massageChair",
+        "footprint": {
+          "left": 0.65,
+          "top": 2,
+          "width": 0.8,
+          "height": 1
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "largeTable": {
+        "id": "largeTable",
+        "footprint": {
+          "left": 1.2,
+          "top": 0.95,
+          "width": 1.6,
+          "height": 0.75
+        },
+        "ground": {
+          "x": 2,
+          "y": 1.7
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "largeNorthChair": {
+        "id": "largeNorthChair",
+        "footprint": {
+          "left": 1.77,
+          "top": 0.55,
+          "width": 0.46,
+          "height": 0.42
+        },
+        "ground": {
+          "x": 2,
+          "y": 0.97
+        },
+        "facing": "S",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "largeSouthChair": {
+        "id": "largeSouthChair",
+        "footprint": {
+          "left": 1.77,
+          "top": 1.7,
+          "width": 0.46,
+          "height": 0.42
+        },
+        "ground": {
+          "x": 2,
+          "y": 2.12
+        },
+        "facing": "N",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "largeWestChair": {
+        "id": "largeWestChair",
+        "footprint": {
+          "left": 0.78,
+          "top": 1.1,
+          "width": 0.42,
+          "height": 0.46
+        },
+        "ground": {
+          "x": 0.99,
+          "y": 1.56
+        },
+        "facing": "E",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "largeEastChair": {
+        "id": "largeEastChair",
+        "footprint": {
+          "left": 2.8,
+          "top": 1.1,
+          "width": 0.42,
+          "height": 0.46
+        },
+        "ground": {
+          "x": 3.01,
+          "y": 1.56
+        },
+        "facing": "W",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "smallTable": {
+        "id": "smallTable",
+        "footprint": {
+          "left": 2.3,
+          "top": 2.45,
+          "width": 0.8,
+          "height": 0.7
+        },
+        "ground": {
+          "x": 2.7,
+          "y": 3.15
+        },
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "smallNorthChair": {
+        "id": "smallNorthChair",
+        "footprint": {
+          "left": 2.47,
+          "top": 2.05,
+          "width": 0.46,
+          "height": 0.42
+        },
+        "ground": {
+          "x": 2.7,
+          "y": 2.47
+        },
+        "facing": "S",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "smallSouthChair": {
+        "id": "smallSouthChair",
+        "footprint": {
+          "left": 2.47,
+          "top": 3.15,
+          "width": 0.46,
+          "height": 0.42
+        },
+        "ground": {
+          "x": 2.7,
+          "y": 3.57
+        },
+        "facing": "N",
+        "collision": "solid",
+        "persistence": "permanent"
+      },
+      "kitchen": {
+        "id": "kitchen",
+        "ground": {
+          "x": 0.65,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N1",
+          "WA"
+        ],
+        "backedConflicts": [
+          "N1"
+        ],
+        "persistence": "optional"
+      },
+      "art": {
+        "id": "art",
+        "ground": {
+          "x": 2.5,
+          "y": -0.04
+        },
+        "conflicts": [
+          "N3"
+        ],
+        "backedConflicts": [
+          "N3"
+        ],
+        "persistence": "optional"
+      },
+      "fridge": {
+        "id": "fridge",
+        "ground": {
+          "x": 3.35,
+          "y": 0.33
+        },
+        "conflicts": [
+          "N4",
+          "EA"
+        ],
+        "backedConflicts": [
+          "N4"
+        ],
+        "persistence": "optional"
+      },
+      "bookshelf": {
+        "id": "bookshelf",
+        "ground": {
+          "x": 3.55,
+          "y": 1.85
+        },
+        "conflicts": [
+          "EB"
+        ],
+        "backedConflicts": [],
+        "persistence": "optional"
+      },
+      "eastPlant": {
+        "id": "eastPlant",
+        "ground": {
+          "x": 3.55,
+          "y": 2.7
+        },
+        "conflicts": [
+          "EC"
+        ],
+        "backedConflicts": [],
+        "persistence": "optional"
+      },
+      "southwestPlant": {
+        "id": "southwestPlant",
+        "ground": {
+          "x": 0.45,
+          "y": 3.65
+        },
+        "conflicts": [
+          "WD",
+          "S1"
+        ],
+        "backedConflicts": [],
+        "persistence": "optional"
+      }
+    },
+    "seats": {
+      "massage": {
+        "id": "massage",
+        "fixture": "massageChair",
+        "asset": "actor-massage",
+        "identity": "gs022-new-employee-017",
+        "facing": "S",
+        "seatContact": {
+          "x": 1.05,
+          "y": 2.51
+        },
+        "transition": {
+          "x": 1.05,
+          "y": 3.5
+        },
+        "chairGround": {
+          "x": 1.05,
+          "y": 3
+        }
+      },
+      "largeNorth": {
+        "id": "largeNorth",
+        "fixture": "largeNorthChair",
+        "asset": "actor-largeNorth",
+        "identity": "gs022-new-employee-001",
+        "facing": "S",
+        "seatContact": {
+          "x": 2,
+          "y": 0.595
+        },
+        "transition": {
+          "x": 2,
+          "y": 0.28
+        },
+        "chairGround": {
+          "x": 2,
+          "y": 0.97
+        }
+      },
+      "largeSouth": {
+        "id": "largeSouth",
+        "fixture": "largeSouthChair",
+        "asset": "actor-largeSouth",
+        "identity": "gs022-new-employee-004",
+        "facing": "N",
+        "seatContact": {
+          "x": 2,
+          "y": 1.745
+        },
+        "transition": {
+          "x": 2,
+          "y": 2.32
+        },
+        "chairGround": {
+          "x": 2,
+          "y": 2.12
+        }
+      },
+      "largeWest": {
+        "id": "largeWest",
+        "fixture": "largeWestChair",
+        "asset": "actor-largeWest",
+        "identity": "gs022-new-employee-007",
+        "facing": "E",
+        "seatContact": {
+          "x": 1.05,
+          "y": 1.16
+        },
+        "transition": {
+          "x": 0.55,
+          "y": 1.33
+        },
+        "chairGround": {
+          "x": 0.99,
+          "y": 1.56
+        }
+      },
+      "largeEast": {
+        "id": "largeEast",
+        "fixture": "largeEastChair",
+        "asset": "actor-largeEast",
+        "identity": "gs022-new-employee-010",
+        "facing": "W",
+        "seatContact": {
+          "x": 2.95,
+          "y": 1.16
+        },
+        "transition": {
+          "x": 3.45,
+          "y": 1.33
+        },
+        "chairGround": {
+          "x": 3.01,
+          "y": 1.56
+        }
+      },
+      "smallNorth": {
+        "id": "smallNorth",
+        "fixture": "smallNorthChair",
+        "asset": "actor-smallNorth",
+        "identity": "gs022-new-employee-013",
+        "facing": "S",
+        "seatContact": {
+          "x": 2.7,
+          "y": 2.095
+        },
+        "transition": {
+          "x": 3.32,
+          "y": 2.25
+        },
+        "chairGround": {
+          "x": 2.7,
+          "y": 2.47
+        }
+      },
+      "smallSouth": {
+        "id": "smallSouth",
+        "fixture": "smallSouthChair",
+        "asset": "actor-smallSouth",
+        "identity": "gs022-new-employee-015",
+        "facing": "N",
+        "seatContact": {
+          "x": 2.7,
+          "y": 3.195
+        },
+        "transition": {
+          "x": 2.7,
+          "y": 3.8
+        },
+        "chairGround": {
+          "x": 2.7,
+          "y": 3.57
+        }
+      }
+    },
+    "hidden": [],
+    "draws": {
+      "kitchen": {
+        "id": "kitchen",
+        "x": 98.5858953864456,
+        "y": 15.539254247369769,
+        "w": 78.82820922710881,
+        "h": 157.65641845421763,
+        "groundContact": {
+          "x": 138,
+          "y": 169.6
+        }
+      },
+      "art": {
+        "id": "art",
+        "x": 299.86206896551727,
+        "y": 57.751724137931035,
+        "w": 121.37931034482759,
+        "h": 71.72413793103448,
+        "groundContact": {
+          "x": 360,
+          "y": 125.2
+        }
+      },
+      "fridge": {
+        "id": "fridge",
+        "x": 418.66238767650833,
+        "y": 4.875994865211794,
+        "w": 88.31835686777922,
+        "h": 170.4749679075738,
+        "groundContact": {
+          "x": 462,
+          "y": 169.6
+        }
+      },
+      "rug": {
+        "id": "rug",
+        "x": 90,
+        "y": 286,
+        "w": 198,
+        "h": 240
+      },
+      "largeNorthChair": {
+        "id": "chairSouth",
+        "x": 273.4308510638298,
+        "y": 167.57021276595742,
+        "w": 54.255319148936174,
+        "h": 81.38297872340426,
+        "groundContact": {
+          "x": 300,
+          "y": 246.39999999999998
+        }
+      },
+      "largeWestChair": {
+        "id": "chairEast",
+        "x": 143.64802431610943,
+        "y": 230.48267477203655,
+        "w": 71.12462006079026,
+        "h": 91.64133738601824,
+        "groundContact": {
+          "x": 178.8,
+          "y": 317.20000000000005
+        }
+      },
+      "largeEastChair": {
+        "id": "chairWest",
+        "x": 383.9963525835866,
+        "y": 230.48267477203655,
+        "w": 71.12462006079026,
+        "h": 91.64133738601824,
+        "groundContact": {
+          "x": 421.2,
+          "y": 317.20000000000005
+        }
+      },
+      "largeTable": {
+        "id": "largeTable",
+        "x": 187,
+        "y": 131.2,
+        "w": 228,
+        "h": 212,
+        "groundContact": {
+          "x": 300,
+          "y": 334
+        }
+      },
+      "largeTableFront": {
+        "id": "largeTableFront",
+        "x": 187,
+        "y": 131.2,
+        "w": 228,
+        "h": 212,
+        "groundContact": {
+          "x": 300,
+          "y": 334
+        }
+      },
+      "largeSouthChair": {
+        "id": "chairNorth",
+        "x": 272.5833333333333,
+        "y": 303.9,
+        "w": 55,
+        "h": 83.33333333333333,
+        "groundContact": {
+          "x": 300,
+          "y": 384.4
+        }
+      },
+      "largeSouthChairFront": {
+        "id": "chairNorthFront",
+        "x": 272.5833333333333,
+        "y": 303.9,
+        "w": 55,
+        "h": 83.33333333333333,
+        "groundContact": {
+          "x": 300,
+          "y": 384.4
+        }
+      },
+      "massageChair": {
+        "id": "massage",
+        "x": 123.07191780821917,
+        "y": 335.3767123287671,
+        "w": 128.4246575342466,
+        "h": 159.24657534246577,
+        "groundContact": {
+          "x": 186,
+          "y": 490
+        }
+      },
+      "massageFront": {
+        "id": "massageFront",
+        "x": 123.07191780821917,
+        "y": 335.3767123287671,
+        "w": 128.4246575342466,
+        "h": 159.24657534246577,
+        "groundContact": {
+          "x": 186,
+          "y": 490
+        }
+      },
+      "bookshelf": {
+        "id": "bookshelf",
+        "x": 444.13291139240505,
+        "y": 212.63291139240505,
+        "w": 85.44303797468355,
+        "h": 144.30379746835445,
+        "groundContact": {
+          "x": 486,
+          "y": 352
+        }
+      },
+      "eastPlant": {
+        "id": "plant",
+        "x": 451.5007645259939,
+        "y": 354.64220183486236,
+        "w": 69.72477064220183,
+        "h": 103.13455657492355,
+        "groundContact": {
+          "x": 486,
+          "y": 454
+        }
+      },
+      "smallNorthChair": {
+        "id": "chairSouth",
+        "x": 357.4308510638298,
+        "y": 347.5702127659575,
+        "w": 54.255319148936174,
+        "h": 81.38297872340426,
+        "groundContact": {
+          "x": 384,
+          "y": 426.40000000000003
+        }
+      },
+      "smallTable": {
+        "id": "smallTable",
+        "x": 329.3424657534247,
+        "y": 368.41095890410963,
+        "w": 109.58904109589041,
+        "h": 142.46575342465752,
+        "groundContact": {
+          "x": 384,
+          "y": 508
+        }
+      },
+      "smallTableFront": {
+        "id": "smallTableFront",
+        "x": 329.3424657534247,
+        "y": 368.41095890410963,
+        "w": 109.58904109589041,
+        "h": 142.46575342465752,
+        "groundContact": {
+          "x": 384,
+          "y": 508
+        }
+      },
+      "smallSouthChair": {
+        "id": "chairNorth",
+        "x": 356.5833333333333,
+        "y": 477.9,
+        "w": 55,
+        "h": 83.33333333333333,
+        "groundContact": {
+          "x": 384,
+          "y": 558.4
+        }
+      },
+      "smallSouthChairFront": {
+        "id": "chairNorthFront",
+        "x": 356.5833333333333,
+        "y": 477.9,
+        "w": 55,
+        "h": 83.33333333333333,
+        "groundContact": {
+          "x": 384,
+          "y": 558.4
+        }
+      },
+      "southwestPlant": {
+        "id": "plant",
+        "x": 79.50076452599389,
+        "y": 468.64220183486236,
+        "w": 69.72477064220183,
+        "h": 103.13455657492355,
+        "groundContact": {
+          "x": 114,
+          "y": 568
+        }
+      }
+    },
+    "actors": {
+      "largeNorth": {
+        "id": "largeNorth",
+        "source": "actor-largeNorth",
+        "identity": "gs022-new-employee-001",
+        "facing": "S",
+        "x": 239.31329288472148,
+        "y": 34.461460273808655,
+        "w": 121.37341423055707,
+        "h": 242.74682846111415,
+        "seatContact": {
+          "x": 300,
+          "y": 201.39999999999998
+        },
+        "floorAnchor": {
+          "x": 300,
+          "y": 252.1750220498704
+        },
+        "identityScale": 0.9498069498069498
+      },
+      "largeWest": {
+        "id": "largeWest",
+        "source": "actor-largeWest",
+        "identity": "gs022-new-employee-007",
+        "facing": "E",
+        "x": 128.21376050420167,
+        "y": 97.98997870904691,
+        "w": 115.57247899159663,
+        "h": 231.14495798319325,
+        "seatContact": {
+          "x": 186,
+          "y": 269.2
+        },
+        "floorAnchor": {
+          "x": 186,
+          "y": 305.2981129002234
+        },
+        "identityScale": 0.9044117647058824
+      },
+      "largeEast": {
+        "id": "largeEast",
+        "source": "actor-largeEast",
+        "identity": "gs022-new-employee-010",
+        "facing": "W",
+        "x": 357.66359447004606,
+        "y": 101.5393769015889,
+        "w": 112.67281105990781,
+        "h": 225.34562211981563,
+        "seatContact": {
+          "x": 414,
+          "y": 269.2
+        },
+        "floorAnchor": {
+          "x": 414,
+          "y": 303.6462317402985
+        },
+        "identityScale": 0.8817204301075269
+      },
+      "largeSouth": {
+        "id": "largeSouth",
+        "source": "actor-largeSouth",
+        "identity": "gs022-new-employee-004",
+        "facing": "N",
+        "x": 242.00052714812864,
+        "y": 173.5716994951543,
+        "w": 115.99894570374273,
+        "h": 231.99789140748547,
+        "seatContact": {
+          "x": 300,
+          "y": 339.4
+        },
+        "floorAnchor": {
+          "x": 300,
+          "y": 381.6448083512428
+        },
+        "identityScale": 0.9077490774907749
+      },
+      "massage": {
+        "id": "massage",
+        "source": "actor-massage",
+        "identity": "gs022-new-employee-017",
+        "facing": "S",
+        "x": 122.1062717770035,
+        "y": 235.41736642346285,
+        "w": 127.787456445993,
+        "h": 255.574912891986,
+        "seatContact": {
+          "x": 186,
+          "y": 431.2
+        },
+        "floorAnchor": {
+          "x": 186,
+          "y": 464.6361164234628
+        },
+        "identityScale": 1
+      },
+      "smallNorth": {
+        "id": "smallNorth",
+        "source": "actor-smallNorth",
+        "identity": "gs022-new-employee-013",
+        "facing": "S",
+        "x": 324.4626623376623,
+        "y": 208.86157590653735,
+        "w": 119.0746753246753,
+        "h": 238.1493506493506,
+        "seatContact": {
+          "x": 384,
+          "y": 381.40000000000003
+        },
+        "floorAnchor": {
+          "x": 384,
+          "y": 422.45177477017364
+        },
+        "identityScale": 0.9318181818181818
+      },
+      "smallSouth": {
+        "id": "smallSouth",
+        "source": "actor-smallSouth",
+        "identity": "gs022-new-employee-015",
+        "facing": "N",
+        "x": 323.77832512315274,
+        "y": 328.9611971556595,
+        "w": 120.44334975369455,
+        "h": 240.8866995073891,
+        "seatContact": {
+          "x": 384,
+          "y": 513.4
+        },
+        "floorAnchor": {
+          "x": 384,
+          "y": 545.0064557763491
+        },
+        "identityScale": 0.9425287356321839
+      }
+    },
+    "layerOrder": [
+      "wall-fixtures",
+      "rug",
+      "large-rear-and-side-chairs",
+      "large-rear-and-side-actors",
+      "large-table",
+      "large-front-chair",
+      "large-front-actor",
+      "large-front-backrest",
+      "massage-back",
+      "massage-actor",
+      "massage-arms-and-front-lip",
+      "nook",
+      "small-rear-chair-and-actor",
+      "small-table",
+      "small-front-chair",
+      "small-front-actor",
+      "small-front-backrest",
+      "southwest-plant"
+    ],
+    "routes": {
+      "N1": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.24,
+          "y": 3.6
+        },
+        {
+          "x": 0.24,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 1.8
+        },
+        {
+          "x": 0.6,
+          "y": 1.8
+        },
+        {
+          "x": 0.6,
+          "y": 0.92
+        },
+        {
+          "x": 1,
+          "y": 0.92
+        },
+        {
+          "x": 1,
+          "y": 0.76
+        },
+        {
+          "x": 1.24,
+          "y": 0.76
+        },
+        {
+          "x": 1.24,
+          "y": 0.2
+        }
+      ],
+      "N3": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.44,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.44,
+          "y": 0.92
+        },
+        {
+          "x": 3,
+          "y": 0.92
+        },
+        {
+          "x": 3,
+          "y": 0.76
+        },
+        {
+          "x": 2.52,
+          "y": 0.76
+        },
+        {
+          "x": 2.52,
+          "y": 0.2
+        }
+      ],
+      "N4": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.52,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.52,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.24,
+          "y": 3.6
+        },
+        {
+          "x": 0.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "S2": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 1.24,
+          "y": 3.6
+        },
+        {
+          "x": 1.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "S3": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.24,
+          "y": 3.6
+        },
+        {
+          "x": 2.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "S4": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.24,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.24,
+          "y": 3.8000000000000003
+        }
+      ],
+      "WA": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 0.24
+        }
+      ],
+      "WB": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        }
+      ],
+      "WC": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 2.24
+        }
+      ],
+      "WD": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.2,
+          "y": 3.6
+        }
+      ],
+      "EA": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 0.24
+        }
+      ],
+      "EB": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 1.24
+        }
+      ],
+      "EC": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 2.24
+        }
+      ],
+      "ED": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.8000000000000003,
+          "y": 3.7600000000000002
+        }
+      ]
+    },
+    "seatRoutes": {
+      "massage": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 1.04,
+          "y": 3.6
+        },
+        {
+          "x": 1.04,
+          "y": 3.52
+        }
+      ],
+      "largeNorth": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 1.8
+        },
+        {
+          "x": 0.6,
+          "y": 1.8
+        },
+        {
+          "x": 0.6,
+          "y": 0.92
+        },
+        {
+          "x": 1,
+          "y": 0.92
+        },
+        {
+          "x": 1,
+          "y": 0.76
+        },
+        {
+          "x": 1.56,
+          "y": 0.76
+        },
+        {
+          "x": 1.56,
+          "y": 0.36
+        },
+        {
+          "x": 2,
+          "y": 0.36
+        },
+        {
+          "x": 2,
+          "y": 0.28
+        }
+      ],
+      "largeSouth": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2,
+          "y": 3.6
+        },
+        {
+          "x": 2,
+          "y": 2.32
+        }
+      ],
+      "largeWest": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 1.8
+        },
+        {
+          "x": 0.56,
+          "y": 1.8
+        },
+        {
+          "x": 0.56,
+          "y": 1.32
+        }
+      ],
+      "largeEast": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.44,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.44,
+          "y": 1.32
+        }
+      ],
+      "smallNorth": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.3200000000000003,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.3200000000000003,
+          "y": 2.24
+        }
+      ],
+      "smallSouth": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 2.72,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 2.72,
+          "y": 3.8000000000000003
+        }
+      ]
+    },
+    "serviceRoutes": {
+      "kitchen": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 3.6
+        },
+        {
+          "x": 0.44,
+          "y": 1.8
+        },
+        {
+          "x": 0.6,
+          "y": 1.8
+        },
+        {
+          "x": 0.6,
+          "y": 0.92
+        },
+        {
+          "x": 0.72,
+          "y": 0.92
+        },
+        {
+          "x": 0.72,
+          "y": 0.72
+        }
+      ],
+      "fridge": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.44,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.44,
+          "y": 0.92
+        },
+        {
+          "x": 3.36,
+          "y": 0.92
+        },
+        {
+          "x": 3.36,
+          "y": 0.72
+        }
+      ],
+      "bookshelf": [
+        {
+          "x": 1.8,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.6
+        },
+        {
+          "x": 2.2800000000000002,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.36,
+          "y": 3.7600000000000002
+        },
+        {
+          "x": 3.36,
+          "y": 1.92
+        }
+      ]
+    },
+    "occupiedCollision": {
+      "mode": "owning-chair-footprint",
+      "actorRadius": 0.18
+    },
+    "scaleContract": {
+      "tilePixels": 120,
+      "actorRadius": 0.18,
+      "largeTable": {
+        "visibleWidthPixels": 203.60000000000002,
+        "worktopRisePixels": 80,
+        "tabletopContents": [
+          "fruit bowl",
+          "open magazine",
+          "water carafe",
+          "tumblers"
+        ]
+      },
+      "smallTable": {
+        "visibleWidthPixels": 102.73972602739725,
+        "worktopRisePixels": 80
+      },
+      "kitchen": {
+        "visibleWidthPixels": 70.5305029926763,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "frontDesk": {
+        "visibleWidthPixels": 261.8918918918919,
+        "worktopRisePixels": 100.54054054054055
+      },
+      "chairs": {
+        "seatRisePixels": 45,
+        "eastWestHeightPixels": 82.88753799392097
+      },
+      "characters": {
+        "massage": {
+          "identity": "gs022-new-employee-017",
+          "renderedWidthPixels": 127.78745644599302,
+          "renderScale": 0.7986716027874563,
+          "identityScale": 1,
+          "seatContactY": 245.13533834586468
+        },
+        "largeNorth": {
+          "identity": "gs022-new-employee-001",
+          "renderedWidthPixels": 121.37341423055707,
+          "renderScale": 0.7585838389409817,
+          "identityScale": 0.9498069498069498,
+          "seatContactY": 220.06603773584905
+        },
+        "largeSouth": {
+          "identity": "gs022-new-employee-004",
+          "renderedWidthPixels": 115.99894570374273,
+          "renderScale": 0.7249934106483921,
+          "identityScale": 0.9077490774907749,
+          "seatContactY": 228.73076923076925
+        },
+        "largeWest": {
+          "identity": "gs022-new-employee-007",
+          "renderedWidthPixels": 115.57247899159663,
+          "renderScale": 0.7223279936974789,
+          "identityScale": 0.9044117647058824,
+          "seatContactY": 237.0253164556962
+        },
+        "largeEast": {
+          "identity": "gs022-new-employee-010",
+          "renderedWidthPixels": 112.67281105990781,
+          "renderScale": 0.7042050691244238,
+          "identityScale": 0.8817204301075269,
+          "seatContactY": 238.0849420849421
+        },
+        "smallNorth": {
+          "identity": "gs022-new-employee-013",
+          "renderedWidthPixels": 119.0746753246753,
+          "renderScale": 0.7442167207792206,
+          "identityScale": 0.9318181818181818,
+          "seatContactY": 231.83895131086143
+        },
+        "smallSouth": {
+          "identity": "gs022-new-employee-015",
+          "renderedWidthPixels": 120.44334975369456,
+          "renderScale": 0.752770935960591,
+          "identityScale": 0.9425287356321839,
+          "seatContactY": 245.0131826741996
+        }
+      }
+    },
+    "shell": {
+      "floor": {
+        "material": "warm-staggered-wood-planks",
+        "patternOrigin": {
+          "x": 60,
+          "y": 130
+        }
+      }
+    },
+    "ready": true
+  },
+  "surgeons-office": {
+    "revision": "surgeons-office-proof-02-compact",
+    "dimensions": {
+      "cols": 2,
+      "rows": 2
+    },
+    "status": "provisional-owner-review-required",
+    "approval": null,
+    "runtimeIntegrationAuthorized": false,
+    "segments": [
+      "N1",
+      "N2",
+      "S1",
+      "S2",
+      "WA",
+      "WB",
+      "EA",
+      "EB"
+    ],
+    "doors": [
+      "S2"
+    ],
+    "adjacency": [],
+    "occupancy": "surgeon",
+    "hidden": [],
+    "fixtures": {
+      "writingDesk": {
+        "id": "writingDesk",
+        "collision": "solid",
+        "persistence": "permanent",
+        "footprint": {
+          "left": 0.46,
+          "top": 0.78,
+          "width": 1.35,
+          "height": 0.65
+        },
+        "ground": {
+          "x": 1.135,
+          "y": 1.43
+        },
+        "workContact": {
+          "x": 1.135,
+          "y": 0.74
+        }
+      },
+      "surgeonChair": {
+        "id": "surgeonChair",
+        "collision": "solid",
+        "persistence": "permanent",
+        "footprint": {
+          "left": 0.895,
+          "top": 0.45,
+          "width": 0.48,
+          "height": 0.42
+        },
+        "ground": {
+          "x": 1.135,
+          "y": 0.87
+        },
+        "seatContact": {
+          "x": 1.135,
+          "y": 0.495
+        },
+        "transition": {
+          "x": 0.68,
+          "y": 0.45
+        },
+        "facing": "S"
+      },
+      "bookcase": {
+        "id": "bookcase",
+        "cell": "A1",
+        "collision": "nonblocking",
+        "doorOwners": [
+          "N1",
+          "WA"
+        ],
+        "backingOwners": [
+          "N1"
+        ],
+        "ground": {
+          "x": 0.38,
+          "y": 0.32
+        }
+      },
+      "plant": {
+        "id": "plant",
+        "cell": "B1",
+        "collision": "nonblocking",
+        "doorOwners": [
+          "WB",
+          "S1"
+        ],
+        "backingOwners": [],
+        "ground": {
+          "x": 0.22,
+          "y": 1.7
+        }
+      },
+      "diplomas": {
+        "id": "diplomas",
+        "cell": "A2",
+        "collision": "nonblocking",
+        "doorOwners": [
+          "N2"
+        ],
+        "backingOwners": [
+          "N2"
+        ],
+        "ground": {
+          "x": 1.5,
+          "y": -0.4
+        }
+      }
+    },
+    "seats": {
+      "surgeon": {
+        "id": "surgeon",
+        "fixture": "surgeonChair",
+        "identity": "gs022-new-employee-013",
+        "asset": "art/characters/gs026-stills-v1/gs022-new-employee-013/sit-south.png",
+        "sourceSha256": "47ad52f4fc15fe613251176badfe271df05fa67f300d0c13c7ecc56052f6bf08",
+        "facing": "S",
+        "seatContact": {
+          "x": 1.135,
+          "y": 0.495
+        },
+        "transition": {
+          "x": 0.68,
+          "y": 0.45
+        },
+        "role": "surgeon",
+        "sourceSeatContactY": 231.83895131086143,
+        "identityScale": 0.9318181818181818
+      }
+    },
+    "draws": {
+      "bookcase": {
+        "id": "bookcase",
+        "source": "bookcase",
+        "x": 52.31602749999999,
+        "y": 18.695764999999994,
+        "w": 106.3634,
+        "h": 145.22695000000002,
+        "groundContact": {
+          "x": 105.6,
+          "y": 158.4
+        }
+      },
+      "diplomas": {
+        "id": "diplomas",
+        "source": "diplomas",
+        "x": 177.99233716475095,
+        "y": 36.59770114942528,
+        "w": 124.44444444444444,
+        "h": 70.80459770114943,
+        "groundContact": {
+          "x": 240,
+          "y": 72
+        }
+      },
+      "surgeonChair": {
+        "id": "chairSouth",
+        "source": "chairSouth",
+        "x": 150.17394136807815,
+        "y": 113.73224755700326,
+        "w": 92.34527687296418,
+        "h": 114.33224755700327,
+        "groundContact": {
+          "x": 196.2,
+          "y": 224.4
+        }
+      },
+      "writingDesk": {
+        "id": "desk",
+        "source": "desk",
+        "x": 106.55639412997903,
+        "y": 146.19119496855348,
+        "w": 180.29350104821805,
+        "h": 149.26624737945494,
+        "groundContact": {
+          "x": 196.2,
+          "y": 291.6
+        }
+      },
+      "plant": {
+        "id": "plant",
+        "source": "plant",
+        "x": 56.185405,
+        "y": 225.6269,
+        "w": 60.42919,
+        "h": 101.88642499999999,
+        "groundContact": {
+          "x": 86.4,
+          "y": 324
+        }
+      }
+    },
+    "actors": {
+      "surgeon": {
+        "id": "surgeon",
+        "source": "surgeon",
+        "identity": "gs022-new-employee-013",
+        "facing": "S",
+        "x": 136.66266233766234,
+        "y": 6.861575906537325,
+        "w": 119.0746753246753,
+        "h": 238.1493506493506,
+        "hipContact": {
+          "x": 196.2,
+          "y": 179.4
+        },
+        "seatContactY": 231.83895131086143,
+        "renderScale": 0.7442167207792206,
+        "floorAnchor": {
+          "x": 196.2,
+          "y": 220.45177477017364
+        },
+        "sourceSha256": "47ad52f4fc15fe613251176badfe271df05fa67f300d0c13c7ecc56052f6bf08"
+      }
+    },
+    "routes": {
+      "N1": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.72,
+          "y": 1.76
+        },
+        {
+          "x": 0.68,
+          "y": 1.76
+        },
+        {
+          "x": 0.64,
+          "y": 1.76
+        },
+        {
+          "x": 0.6,
+          "y": 1.76
+        },
+        {
+          "x": 0.56,
+          "y": 1.76
+        },
+        {
+          "x": 0.52,
+          "y": 1.76
+        },
+        {
+          "x": 0.48,
+          "y": 1.76
+        },
+        {
+          "x": 0.44,
+          "y": 1.76
+        },
+        {
+          "x": 0.4,
+          "y": 1.76
+        },
+        {
+          "x": 0.36,
+          "y": 1.76
+        },
+        {
+          "x": 0.32,
+          "y": 1.76
+        },
+        {
+          "x": 0.28,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.72
+        },
+        {
+          "x": 0.24,
+          "y": 1.68
+        },
+        {
+          "x": 0.24,
+          "y": 1.6400000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.6
+        },
+        {
+          "x": 0.24,
+          "y": 1.56
+        },
+        {
+          "x": 0.24,
+          "y": 1.52
+        },
+        {
+          "x": 0.24,
+          "y": 1.48
+        },
+        {
+          "x": 0.24,
+          "y": 1.44
+        },
+        {
+          "x": 0.24,
+          "y": 1.4000000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.36
+        },
+        {
+          "x": 0.24,
+          "y": 1.32
+        },
+        {
+          "x": 0.24,
+          "y": 1.28
+        },
+        {
+          "x": 0.24,
+          "y": 1.24
+        },
+        {
+          "x": 0.24,
+          "y": 1.2
+        },
+        {
+          "x": 0.24,
+          "y": 1.16
+        },
+        {
+          "x": 0.24,
+          "y": 1.12
+        },
+        {
+          "x": 0.24,
+          "y": 1.08
+        },
+        {
+          "x": 0.24,
+          "y": 1.04
+        },
+        {
+          "x": 0.24,
+          "y": 1
+        },
+        {
+          "x": 0.24,
+          "y": 0.96
+        },
+        {
+          "x": 0.24,
+          "y": 0.92
+        },
+        {
+          "x": 0.24,
+          "y": 0.88
+        },
+        {
+          "x": 0.24,
+          "y": 0.84
+        },
+        {
+          "x": 0.24,
+          "y": 0.8
+        },
+        {
+          "x": 0.24,
+          "y": 0.76
+        },
+        {
+          "x": 0.24,
+          "y": 0.72
+        },
+        {
+          "x": 0.24,
+          "y": 0.68
+        },
+        {
+          "x": 0.24,
+          "y": 0.64
+        },
+        {
+          "x": 0.24,
+          "y": 0.6
+        },
+        {
+          "x": 0.24,
+          "y": 0.56
+        },
+        {
+          "x": 0.24,
+          "y": 0.52
+        },
+        {
+          "x": 0.24,
+          "y": 0.48
+        },
+        {
+          "x": 0.24,
+          "y": 0.44
+        },
+        {
+          "x": 0.24,
+          "y": 0.4
+        },
+        {
+          "x": 0.24,
+          "y": 0.36
+        },
+        {
+          "x": 0.24,
+          "y": 0.32
+        },
+        {
+          "x": 0.24,
+          "y": 0.28
+        },
+        {
+          "x": 0.24,
+          "y": 0.24
+        },
+        {
+          "x": 0.24,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.72,
+          "y": 1.76
+        },
+        {
+          "x": 0.68,
+          "y": 1.76
+        },
+        {
+          "x": 0.64,
+          "y": 1.76
+        },
+        {
+          "x": 0.6,
+          "y": 1.76
+        },
+        {
+          "x": 0.56,
+          "y": 1.76
+        },
+        {
+          "x": 0.52,
+          "y": 1.76
+        },
+        {
+          "x": 0.48,
+          "y": 1.76
+        },
+        {
+          "x": 0.44,
+          "y": 1.76
+        },
+        {
+          "x": 0.4,
+          "y": 1.76
+        },
+        {
+          "x": 0.36,
+          "y": 1.76
+        },
+        {
+          "x": 0.32,
+          "y": 1.76
+        },
+        {
+          "x": 0.28,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.72
+        },
+        {
+          "x": 0.24,
+          "y": 1.68
+        },
+        {
+          "x": 0.24,
+          "y": 1.6400000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.6
+        },
+        {
+          "x": 0.24,
+          "y": 1.56
+        },
+        {
+          "x": 0.24,
+          "y": 1.52
+        },
+        {
+          "x": 0.24,
+          "y": 1.48
+        },
+        {
+          "x": 0.24,
+          "y": 1.44
+        },
+        {
+          "x": 0.24,
+          "y": 1.4000000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.36
+        },
+        {
+          "x": 0.24,
+          "y": 1.32
+        },
+        {
+          "x": 0.24,
+          "y": 1.28
+        },
+        {
+          "x": 0.24,
+          "y": 1.24
+        },
+        {
+          "x": 0.24,
+          "y": 1.2
+        },
+        {
+          "x": 0.24,
+          "y": 1.16
+        },
+        {
+          "x": 0.24,
+          "y": 1.12
+        },
+        {
+          "x": 0.24,
+          "y": 1.08
+        },
+        {
+          "x": 0.24,
+          "y": 1.04
+        },
+        {
+          "x": 0.24,
+          "y": 1
+        },
+        {
+          "x": 0.24,
+          "y": 0.96
+        },
+        {
+          "x": 0.24,
+          "y": 0.92
+        },
+        {
+          "x": 0.24,
+          "y": 0.88
+        },
+        {
+          "x": 0.24,
+          "y": 0.84
+        },
+        {
+          "x": 0.24,
+          "y": 0.8
+        },
+        {
+          "x": 0.24,
+          "y": 0.76
+        },
+        {
+          "x": 0.24,
+          "y": 0.72
+        },
+        {
+          "x": 0.24,
+          "y": 0.68
+        },
+        {
+          "x": 0.24,
+          "y": 0.64
+        },
+        {
+          "x": 0.24,
+          "y": 0.6
+        },
+        {
+          "x": 0.28,
+          "y": 0.6
+        },
+        {
+          "x": 0.32,
+          "y": 0.6
+        },
+        {
+          "x": 0.36,
+          "y": 0.6
+        },
+        {
+          "x": 0.4,
+          "y": 0.6
+        },
+        {
+          "x": 0.44,
+          "y": 0.6
+        },
+        {
+          "x": 0.48,
+          "y": 0.6
+        },
+        {
+          "x": 0.52,
+          "y": 0.6
+        },
+        {
+          "x": 0.56,
+          "y": 0.6
+        },
+        {
+          "x": 0.6,
+          "y": 0.6
+        },
+        {
+          "x": 0.64,
+          "y": 0.6
+        },
+        {
+          "x": 0.68,
+          "y": 0.6
+        },
+        {
+          "x": 0.68,
+          "y": 0.56
+        },
+        {
+          "x": 0.68,
+          "y": 0.52
+        },
+        {
+          "x": 0.68,
+          "y": 0.48
+        },
+        {
+          "x": 0.68,
+          "y": 0.44
+        },
+        {
+          "x": 0.68,
+          "y": 0.4
+        },
+        {
+          "x": 0.68,
+          "y": 0.36
+        },
+        {
+          "x": 0.68,
+          "y": 0.32
+        },
+        {
+          "x": 0.68,
+          "y": 0.28
+        },
+        {
+          "x": 0.68,
+          "y": 0.24
+        },
+        {
+          "x": 0.72,
+          "y": 0.24
+        },
+        {
+          "x": 0.76,
+          "y": 0.24
+        },
+        {
+          "x": 0.8,
+          "y": 0.24
+        },
+        {
+          "x": 0.84,
+          "y": 0.24
+        },
+        {
+          "x": 0.88,
+          "y": 0.24
+        },
+        {
+          "x": 0.92,
+          "y": 0.24
+        },
+        {
+          "x": 0.96,
+          "y": 0.24
+        },
+        {
+          "x": 1,
+          "y": 0.24
+        },
+        {
+          "x": 1.04,
+          "y": 0.24
+        },
+        {
+          "x": 1.08,
+          "y": 0.24
+        },
+        {
+          "x": 1.12,
+          "y": 0.24
+        },
+        {
+          "x": 1.16,
+          "y": 0.24
+        },
+        {
+          "x": 1.2,
+          "y": 0.24
+        },
+        {
+          "x": 1.24,
+          "y": 0.24
+        },
+        {
+          "x": 1.24,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.8
+        }
+      ],
+      "S2": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.84,
+          "y": 1.76
+        },
+        {
+          "x": 0.88,
+          "y": 1.76
+        },
+        {
+          "x": 0.92,
+          "y": 1.76
+        },
+        {
+          "x": 0.96,
+          "y": 1.76
+        },
+        {
+          "x": 1,
+          "y": 1.76
+        },
+        {
+          "x": 1.04,
+          "y": 1.76
+        },
+        {
+          "x": 1.08,
+          "y": 1.76
+        },
+        {
+          "x": 1.12,
+          "y": 1.76
+        },
+        {
+          "x": 1.16,
+          "y": 1.76
+        },
+        {
+          "x": 1.2,
+          "y": 1.76
+        },
+        {
+          "x": 1.24,
+          "y": 1.76
+        },
+        {
+          "x": 1.24,
+          "y": 1.8
+        }
+      ],
+      "WA": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.72,
+          "y": 1.76
+        },
+        {
+          "x": 0.68,
+          "y": 1.76
+        },
+        {
+          "x": 0.64,
+          "y": 1.76
+        },
+        {
+          "x": 0.6,
+          "y": 1.76
+        },
+        {
+          "x": 0.56,
+          "y": 1.76
+        },
+        {
+          "x": 0.52,
+          "y": 1.76
+        },
+        {
+          "x": 0.48,
+          "y": 1.76
+        },
+        {
+          "x": 0.44,
+          "y": 1.76
+        },
+        {
+          "x": 0.4,
+          "y": 1.76
+        },
+        {
+          "x": 0.36,
+          "y": 1.76
+        },
+        {
+          "x": 0.32,
+          "y": 1.76
+        },
+        {
+          "x": 0.28,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.76
+        },
+        {
+          "x": 0.2,
+          "y": 1.76
+        },
+        {
+          "x": 0.2,
+          "y": 1.72
+        },
+        {
+          "x": 0.2,
+          "y": 1.68
+        },
+        {
+          "x": 0.2,
+          "y": 1.6400000000000001
+        },
+        {
+          "x": 0.2,
+          "y": 1.6
+        },
+        {
+          "x": 0.2,
+          "y": 1.56
+        },
+        {
+          "x": 0.2,
+          "y": 1.52
+        },
+        {
+          "x": 0.2,
+          "y": 1.48
+        },
+        {
+          "x": 0.2,
+          "y": 1.44
+        },
+        {
+          "x": 0.2,
+          "y": 1.4000000000000001
+        },
+        {
+          "x": 0.2,
+          "y": 1.36
+        },
+        {
+          "x": 0.2,
+          "y": 1.32
+        },
+        {
+          "x": 0.2,
+          "y": 1.28
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        },
+        {
+          "x": 0.2,
+          "y": 1.2
+        },
+        {
+          "x": 0.2,
+          "y": 1.16
+        },
+        {
+          "x": 0.2,
+          "y": 1.12
+        },
+        {
+          "x": 0.2,
+          "y": 1.08
+        },
+        {
+          "x": 0.2,
+          "y": 1.04
+        },
+        {
+          "x": 0.2,
+          "y": 1
+        },
+        {
+          "x": 0.2,
+          "y": 0.96
+        },
+        {
+          "x": 0.2,
+          "y": 0.92
+        },
+        {
+          "x": 0.2,
+          "y": 0.88
+        },
+        {
+          "x": 0.2,
+          "y": 0.84
+        },
+        {
+          "x": 0.2,
+          "y": 0.8
+        },
+        {
+          "x": 0.2,
+          "y": 0.76
+        }
+      ],
+      "WB": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.72,
+          "y": 1.76
+        },
+        {
+          "x": 0.68,
+          "y": 1.76
+        },
+        {
+          "x": 0.64,
+          "y": 1.76
+        },
+        {
+          "x": 0.6,
+          "y": 1.76
+        },
+        {
+          "x": 0.56,
+          "y": 1.76
+        },
+        {
+          "x": 0.52,
+          "y": 1.76
+        },
+        {
+          "x": 0.48,
+          "y": 1.76
+        },
+        {
+          "x": 0.44,
+          "y": 1.76
+        },
+        {
+          "x": 0.4,
+          "y": 1.76
+        },
+        {
+          "x": 0.36,
+          "y": 1.76
+        },
+        {
+          "x": 0.32,
+          "y": 1.76
+        },
+        {
+          "x": 0.28,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.76
+        },
+        {
+          "x": 0.2,
+          "y": 1.76
+        }
+      ],
+      "EA": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.72,
+          "y": 1.76
+        },
+        {
+          "x": 0.68,
+          "y": 1.76
+        },
+        {
+          "x": 0.64,
+          "y": 1.76
+        },
+        {
+          "x": 0.6,
+          "y": 1.76
+        },
+        {
+          "x": 0.56,
+          "y": 1.76
+        },
+        {
+          "x": 0.52,
+          "y": 1.76
+        },
+        {
+          "x": 0.48,
+          "y": 1.76
+        },
+        {
+          "x": 0.44,
+          "y": 1.76
+        },
+        {
+          "x": 0.4,
+          "y": 1.76
+        },
+        {
+          "x": 0.36,
+          "y": 1.76
+        },
+        {
+          "x": 0.32,
+          "y": 1.76
+        },
+        {
+          "x": 0.28,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.72
+        },
+        {
+          "x": 0.24,
+          "y": 1.68
+        },
+        {
+          "x": 0.24,
+          "y": 1.6400000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.6
+        },
+        {
+          "x": 0.24,
+          "y": 1.56
+        },
+        {
+          "x": 0.24,
+          "y": 1.52
+        },
+        {
+          "x": 0.24,
+          "y": 1.48
+        },
+        {
+          "x": 0.24,
+          "y": 1.44
+        },
+        {
+          "x": 0.24,
+          "y": 1.4000000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.36
+        },
+        {
+          "x": 0.24,
+          "y": 1.32
+        },
+        {
+          "x": 0.24,
+          "y": 1.28
+        },
+        {
+          "x": 0.24,
+          "y": 1.24
+        },
+        {
+          "x": 0.24,
+          "y": 1.2
+        },
+        {
+          "x": 0.24,
+          "y": 1.16
+        },
+        {
+          "x": 0.24,
+          "y": 1.12
+        },
+        {
+          "x": 0.24,
+          "y": 1.08
+        },
+        {
+          "x": 0.24,
+          "y": 1.04
+        },
+        {
+          "x": 0.24,
+          "y": 1
+        },
+        {
+          "x": 0.24,
+          "y": 0.96
+        },
+        {
+          "x": 0.24,
+          "y": 0.92
+        },
+        {
+          "x": 0.24,
+          "y": 0.88
+        },
+        {
+          "x": 0.24,
+          "y": 0.84
+        },
+        {
+          "x": 0.24,
+          "y": 0.8
+        },
+        {
+          "x": 0.24,
+          "y": 0.76
+        },
+        {
+          "x": 0.24,
+          "y": 0.72
+        },
+        {
+          "x": 0.24,
+          "y": 0.68
+        },
+        {
+          "x": 0.24,
+          "y": 0.64
+        },
+        {
+          "x": 0.24,
+          "y": 0.6
+        },
+        {
+          "x": 0.28,
+          "y": 0.6
+        },
+        {
+          "x": 0.32,
+          "y": 0.6
+        },
+        {
+          "x": 0.36,
+          "y": 0.6
+        },
+        {
+          "x": 0.4,
+          "y": 0.6
+        },
+        {
+          "x": 0.44,
+          "y": 0.6
+        },
+        {
+          "x": 0.48,
+          "y": 0.6
+        },
+        {
+          "x": 0.52,
+          "y": 0.6
+        },
+        {
+          "x": 0.56,
+          "y": 0.6
+        },
+        {
+          "x": 0.6,
+          "y": 0.6
+        },
+        {
+          "x": 0.64,
+          "y": 0.6
+        },
+        {
+          "x": 0.68,
+          "y": 0.6
+        },
+        {
+          "x": 0.68,
+          "y": 0.56
+        },
+        {
+          "x": 0.68,
+          "y": 0.52
+        },
+        {
+          "x": 0.68,
+          "y": 0.48
+        },
+        {
+          "x": 0.68,
+          "y": 0.44
+        },
+        {
+          "x": 0.68,
+          "y": 0.4
+        },
+        {
+          "x": 0.68,
+          "y": 0.36
+        },
+        {
+          "x": 0.68,
+          "y": 0.32
+        },
+        {
+          "x": 0.68,
+          "y": 0.28
+        },
+        {
+          "x": 0.68,
+          "y": 0.24
+        },
+        {
+          "x": 0.72,
+          "y": 0.24
+        },
+        {
+          "x": 0.76,
+          "y": 0.24
+        },
+        {
+          "x": 0.8,
+          "y": 0.24
+        },
+        {
+          "x": 0.84,
+          "y": 0.24
+        },
+        {
+          "x": 0.88,
+          "y": 0.24
+        },
+        {
+          "x": 0.92,
+          "y": 0.24
+        },
+        {
+          "x": 0.96,
+          "y": 0.24
+        },
+        {
+          "x": 1,
+          "y": 0.24
+        },
+        {
+          "x": 1.04,
+          "y": 0.24
+        },
+        {
+          "x": 1.08,
+          "y": 0.24
+        },
+        {
+          "x": 1.12,
+          "y": 0.24
+        },
+        {
+          "x": 1.16,
+          "y": 0.24
+        },
+        {
+          "x": 1.2,
+          "y": 0.24
+        },
+        {
+          "x": 1.24,
+          "y": 0.24
+        },
+        {
+          "x": 1.28,
+          "y": 0.24
+        },
+        {
+          "x": 1.32,
+          "y": 0.24
+        },
+        {
+          "x": 1.36,
+          "y": 0.24
+        },
+        {
+          "x": 1.4000000000000001,
+          "y": 0.24
+        },
+        {
+          "x": 1.44,
+          "y": 0.24
+        },
+        {
+          "x": 1.48,
+          "y": 0.24
+        },
+        {
+          "x": 1.52,
+          "y": 0.24
+        },
+        {
+          "x": 1.56,
+          "y": 0.24
+        },
+        {
+          "x": 1.6,
+          "y": 0.24
+        },
+        {
+          "x": 1.6400000000000001,
+          "y": 0.24
+        },
+        {
+          "x": 1.68,
+          "y": 0.24
+        },
+        {
+          "x": 1.72,
+          "y": 0.24
+        },
+        {
+          "x": 1.76,
+          "y": 0.24
+        },
+        {
+          "x": 1.8,
+          "y": 0.24
+        }
+      ],
+      "EB": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.84,
+          "y": 1.76
+        },
+        {
+          "x": 0.88,
+          "y": 1.76
+        },
+        {
+          "x": 0.92,
+          "y": 1.76
+        },
+        {
+          "x": 0.96,
+          "y": 1.76
+        },
+        {
+          "x": 1,
+          "y": 1.76
+        },
+        {
+          "x": 1.04,
+          "y": 1.76
+        },
+        {
+          "x": 1.08,
+          "y": 1.76
+        },
+        {
+          "x": 1.12,
+          "y": 1.76
+        },
+        {
+          "x": 1.16,
+          "y": 1.76
+        },
+        {
+          "x": 1.2,
+          "y": 1.76
+        },
+        {
+          "x": 1.24,
+          "y": 1.76
+        },
+        {
+          "x": 1.28,
+          "y": 1.76
+        },
+        {
+          "x": 1.32,
+          "y": 1.76
+        },
+        {
+          "x": 1.36,
+          "y": 1.76
+        },
+        {
+          "x": 1.4000000000000001,
+          "y": 1.76
+        },
+        {
+          "x": 1.44,
+          "y": 1.76
+        },
+        {
+          "x": 1.48,
+          "y": 1.76
+        },
+        {
+          "x": 1.52,
+          "y": 1.76
+        },
+        {
+          "x": 1.56,
+          "y": 1.76
+        },
+        {
+          "x": 1.6,
+          "y": 1.76
+        },
+        {
+          "x": 1.6400000000000001,
+          "y": 1.76
+        },
+        {
+          "x": 1.68,
+          "y": 1.76
+        },
+        {
+          "x": 1.72,
+          "y": 1.76
+        },
+        {
+          "x": 1.76,
+          "y": 1.76
+        },
+        {
+          "x": 1.8,
+          "y": 1.76
+        }
+      ]
+    },
+    "seatRoutes": {
+      "surgeon": [
+        {
+          "x": 0.8,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.72,
+          "y": 1.76
+        },
+        {
+          "x": 0.68,
+          "y": 1.76
+        },
+        {
+          "x": 0.64,
+          "y": 1.76
+        },
+        {
+          "x": 0.6,
+          "y": 1.76
+        },
+        {
+          "x": 0.56,
+          "y": 1.76
+        },
+        {
+          "x": 0.52,
+          "y": 1.76
+        },
+        {
+          "x": 0.48,
+          "y": 1.76
+        },
+        {
+          "x": 0.44,
+          "y": 1.76
+        },
+        {
+          "x": 0.4,
+          "y": 1.76
+        },
+        {
+          "x": 0.36,
+          "y": 1.76
+        },
+        {
+          "x": 0.32,
+          "y": 1.76
+        },
+        {
+          "x": 0.28,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.76
+        },
+        {
+          "x": 0.24,
+          "y": 1.72
+        },
+        {
+          "x": 0.24,
+          "y": 1.68
+        },
+        {
+          "x": 0.24,
+          "y": 1.6400000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.6
+        },
+        {
+          "x": 0.24,
+          "y": 1.56
+        },
+        {
+          "x": 0.24,
+          "y": 1.52
+        },
+        {
+          "x": 0.24,
+          "y": 1.48
+        },
+        {
+          "x": 0.24,
+          "y": 1.44
+        },
+        {
+          "x": 0.24,
+          "y": 1.4000000000000001
+        },
+        {
+          "x": 0.24,
+          "y": 1.36
+        },
+        {
+          "x": 0.24,
+          "y": 1.32
+        },
+        {
+          "x": 0.24,
+          "y": 1.28
+        },
+        {
+          "x": 0.24,
+          "y": 1.24
+        },
+        {
+          "x": 0.24,
+          "y": 1.2
+        },
+        {
+          "x": 0.24,
+          "y": 1.16
+        },
+        {
+          "x": 0.24,
+          "y": 1.12
+        },
+        {
+          "x": 0.24,
+          "y": 1.08
+        },
+        {
+          "x": 0.24,
+          "y": 1.04
+        },
+        {
+          "x": 0.24,
+          "y": 1
+        },
+        {
+          "x": 0.24,
+          "y": 0.96
+        },
+        {
+          "x": 0.24,
+          "y": 0.92
+        },
+        {
+          "x": 0.24,
+          "y": 0.88
+        },
+        {
+          "x": 0.24,
+          "y": 0.84
+        },
+        {
+          "x": 0.24,
+          "y": 0.8
+        },
+        {
+          "x": 0.24,
+          "y": 0.76
+        },
+        {
+          "x": 0.24,
+          "y": 0.72
+        },
+        {
+          "x": 0.24,
+          "y": 0.68
+        },
+        {
+          "x": 0.24,
+          "y": 0.64
+        },
+        {
+          "x": 0.24,
+          "y": 0.6
+        },
+        {
+          "x": 0.28,
+          "y": 0.6
+        },
+        {
+          "x": 0.32,
+          "y": 0.6
+        },
+        {
+          "x": 0.36,
+          "y": 0.6
+        },
+        {
+          "x": 0.4,
+          "y": 0.6
+        },
+        {
+          "x": 0.44,
+          "y": 0.6
+        },
+        {
+          "x": 0.48,
+          "y": 0.6
+        },
+        {
+          "x": 0.52,
+          "y": 0.6
+        },
+        {
+          "x": 0.56,
+          "y": 0.6
+        },
+        {
+          "x": 0.6,
+          "y": 0.6
+        },
+        {
+          "x": 0.64,
+          "y": 0.6
+        },
+        {
+          "x": 0.68,
+          "y": 0.6
+        },
+        {
+          "x": 0.68,
+          "y": 0.56
+        },
+        {
+          "x": 0.68,
+          "y": 0.52
+        },
+        {
+          "x": 0.68,
+          "y": 0.48
+        },
+        {
+          "x": 0.68,
+          "y": 0.44
+        }
+      ]
+    },
+    "layerOrder": [
+      "wall-fixtures",
+      "surgeon-chair",
+      "surgeon-actor",
+      "writing-desk",
+      "southwest-plant"
+    ],
+    "seatCollision": {
+      "mode": "owning-chair-footprint",
+      "note": "The seated surgeon attaches inside the owning chair; transparent actor pixels are not an additional blocker."
+    },
+    "removed": [
+      "visitorChair",
+      "visitor actor",
+      "filingCabinet"
+    ],
+    "scaleContract": {
+      "tilePixels": 120,
+      "actorRadius": 0.18,
+      "desk": {
+        "worktopRisePixels": 80,
+        "visibleWidthPixels": 171.57232704402514
+      },
+      "chairs": {
+        "seatRisePixels": 45,
+        "surgeonWidthPixels": 92.34527687296418
+      },
+      "frontDesk": {
+        "worktopRisePixels": 100.54054054054055
+      },
+      "characters": {
+        "surgeon": {
+          "identity": "gs022-new-employee-013",
+          "facing": "S",
+          "seatContactY": 231.83895131086143,
+          "bodyAxisX": 80,
+          "floorY": 287,
+          "renderScale": 0.7442167207792206,
+          "identityScale": 0.9318181818181818,
+          "sourceSha256": "47ad52f4fc15fe613251176badfe271df05fa67f300d0c13c7ecc56052f6bf08"
+        }
+      }
+    },
+    "floor": {
+      "material": "subdued blue-gray broad native texture",
+      "phase": "room-fixed with doorway continuity"
+    },
+    "ready": true
+  },
+  "vending": {
+    "revision": "vending-proof-02-public",
+    "status": "provisional-owner-review-required",
+    "approval": null,
+    "runtimeIntegrationAuthorized": false,
+    "dimensions": {
+      "cols": 2,
+      "rows": 2,
+      "tilePixels": 120
+    },
+    "segments": [
+      "N1",
+      "N2",
+      "S1",
+      "S2",
+      "WA",
+      "WB",
+      "EA",
+      "EB"
+    ],
+    "doors": [
+      "S1"
+    ],
+    "adjacency": [],
+    "occupancy": "patient",
+    "hidden": [],
+    "draws": {
+      "print1": {
+        "id": "print1",
+        "source": "print1",
+        "x": 153.06835443037974,
+        "y": 91.86835443037975,
+        "w": 65.31645569620254,
+        "h": 60.75949367088608,
+        "groundContact": {
+          "x": 183.6,
+          "y": 146.4
+        },
+        "renderScale": 0.1518987341772152
+      },
+      "print2": {
+        "id": "print2",
+        "source": "print2",
+        "x": 322.3543973941368,
+        "y": 86.26970684039088,
+        "w": 72.83387622149837,
+        "h": 67.75244299674267,
+        "groundContact": {
+          "x": 356.4,
+          "y": 146.4
+        },
+        "renderScale": 0.16938110749185667
+      },
+      "machine": {
+        "id": "machine",
+        "source": "machine",
+        "x": 205.8957654723127,
+        "y": 112.9368078175896,
+        "w": 128.9902280130293,
+        "h": 191.53094462540716,
+        "groundContact": {
+          "x": 270,
+          "y": 298.8
+        },
+        "renderScale": 0.19543973941368079
+      }
+    },
+    "actor": {
+      "id": "patient",
+      "source": "patient",
+      "x": 215,
+      "y": 139.88750000000005,
+      "w": 110,
+      "h": 220,
+      "groundContact": {
+        "x": 270,
+        "y": 337.20000000000005
+      },
+      "floorAnchor": {
+        "x": 270,
+        "y": 337.20000000000005
+      },
+      "facing": "N",
+      "renderScale": 0.6875,
+      "renderedWidthPixels": 110,
+      "sourceSha256": "493F37BD75152DB23E3D7D1F2394EBABD6737BF95B40F6D2AF0CC302ADEB6590"
+    },
+    "routes": {
+      "N1": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 0.96,
+          "y": 1.72
+        },
+        {
+          "x": 0.92,
+          "y": 1.72
+        },
+        {
+          "x": 0.88,
+          "y": 1.72
+        },
+        {
+          "x": 0.84,
+          "y": 1.72
+        },
+        {
+          "x": 0.8,
+          "y": 1.72
+        },
+        {
+          "x": 0.76,
+          "y": 1.72
+        },
+        {
+          "x": 0.72,
+          "y": 1.72
+        },
+        {
+          "x": 0.68,
+          "y": 1.72
+        },
+        {
+          "x": 0.64,
+          "y": 1.72
+        },
+        {
+          "x": 0.6,
+          "y": 1.72
+        },
+        {
+          "x": 0.56,
+          "y": 1.72
+        },
+        {
+          "x": 0.52,
+          "y": 1.72
+        },
+        {
+          "x": 0.48,
+          "y": 1.72
+        },
+        {
+          "x": 0.44,
+          "y": 1.72
+        },
+        {
+          "x": 0.4,
+          "y": 1.72
+        },
+        {
+          "x": 0.36,
+          "y": 1.72
+        },
+        {
+          "x": 0.32,
+          "y": 1.72
+        },
+        {
+          "x": 0.32,
+          "y": 1.68
+        },
+        {
+          "x": 0.32,
+          "y": 1.64
+        },
+        {
+          "x": 0.32,
+          "y": 1.6
+        },
+        {
+          "x": 0.32,
+          "y": 1.56
+        },
+        {
+          "x": 0.32,
+          "y": 1.52
+        },
+        {
+          "x": 0.32,
+          "y": 1.48
+        },
+        {
+          "x": 0.32,
+          "y": 1.44
+        },
+        {
+          "x": 0.32,
+          "y": 1.4
+        },
+        {
+          "x": 0.32,
+          "y": 1.36
+        },
+        {
+          "x": 0.32,
+          "y": 1.32
+        },
+        {
+          "x": 0.32,
+          "y": 1.28
+        },
+        {
+          "x": 0.32,
+          "y": 1.24
+        },
+        {
+          "x": 0.32,
+          "y": 1.2
+        },
+        {
+          "x": 0.32,
+          "y": 1.16
+        },
+        {
+          "x": 0.32,
+          "y": 1.12
+        },
+        {
+          "x": 0.32,
+          "y": 1.08
+        },
+        {
+          "x": 0.32,
+          "y": 1.04
+        },
+        {
+          "x": 0.32,
+          "y": 1
+        },
+        {
+          "x": 0.32,
+          "y": 0.96
+        },
+        {
+          "x": 0.32,
+          "y": 0.92
+        },
+        {
+          "x": 0.32,
+          "y": 0.88
+        },
+        {
+          "x": 0.32,
+          "y": 0.84
+        },
+        {
+          "x": 0.32,
+          "y": 0.8
+        },
+        {
+          "x": 0.32,
+          "y": 0.76
+        },
+        {
+          "x": 0.32,
+          "y": 0.72
+        },
+        {
+          "x": 0.32,
+          "y": 0.68
+        },
+        {
+          "x": 0.32,
+          "y": 0.64
+        },
+        {
+          "x": 0.32,
+          "y": 0.6
+        },
+        {
+          "x": 0.32,
+          "y": 0.56
+        },
+        {
+          "x": 0.32,
+          "y": 0.52
+        },
+        {
+          "x": 0.32,
+          "y": 0.48
+        },
+        {
+          "x": 0.32,
+          "y": 0.44
+        },
+        {
+          "x": 0.32,
+          "y": 0.4
+        },
+        {
+          "x": 0.32,
+          "y": 0.36
+        },
+        {
+          "x": 0.32,
+          "y": 0.32
+        },
+        {
+          "x": 0.32,
+          "y": 0.28
+        },
+        {
+          "x": 0.32,
+          "y": 0.24
+        },
+        {
+          "x": 0.32,
+          "y": 0.2
+        }
+      ],
+      "N2": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 1.04,
+          "y": 1.72
+        },
+        {
+          "x": 1.08,
+          "y": 1.72
+        },
+        {
+          "x": 1.12,
+          "y": 1.72
+        },
+        {
+          "x": 1.16,
+          "y": 1.72
+        },
+        {
+          "x": 1.2,
+          "y": 1.72
+        },
+        {
+          "x": 1.24,
+          "y": 1.72
+        },
+        {
+          "x": 1.28,
+          "y": 1.72
+        },
+        {
+          "x": 1.32,
+          "y": 1.72
+        },
+        {
+          "x": 1.36,
+          "y": 1.72
+        },
+        {
+          "x": 1.4,
+          "y": 1.72
+        },
+        {
+          "x": 1.44,
+          "y": 1.72
+        },
+        {
+          "x": 1.48,
+          "y": 1.72
+        },
+        {
+          "x": 1.52,
+          "y": 1.72
+        },
+        {
+          "x": 1.56,
+          "y": 1.72
+        },
+        {
+          "x": 1.6,
+          "y": 1.72
+        },
+        {
+          "x": 1.64,
+          "y": 1.72
+        },
+        {
+          "x": 1.68,
+          "y": 1.72
+        },
+        {
+          "x": 1.68,
+          "y": 1.68
+        },
+        {
+          "x": 1.68,
+          "y": 1.64
+        },
+        {
+          "x": 1.68,
+          "y": 1.6
+        },
+        {
+          "x": 1.68,
+          "y": 1.56
+        },
+        {
+          "x": 1.68,
+          "y": 1.52
+        },
+        {
+          "x": 1.68,
+          "y": 1.48
+        },
+        {
+          "x": 1.68,
+          "y": 1.44
+        },
+        {
+          "x": 1.68,
+          "y": 1.4
+        },
+        {
+          "x": 1.68,
+          "y": 1.36
+        },
+        {
+          "x": 1.68,
+          "y": 1.32
+        },
+        {
+          "x": 1.68,
+          "y": 1.28
+        },
+        {
+          "x": 1.68,
+          "y": 1.24
+        },
+        {
+          "x": 1.68,
+          "y": 1.2
+        },
+        {
+          "x": 1.68,
+          "y": 1.16
+        },
+        {
+          "x": 1.68,
+          "y": 1.12
+        },
+        {
+          "x": 1.68,
+          "y": 1.08
+        },
+        {
+          "x": 1.68,
+          "y": 1.04
+        },
+        {
+          "x": 1.68,
+          "y": 1
+        },
+        {
+          "x": 1.68,
+          "y": 0.96
+        },
+        {
+          "x": 1.68,
+          "y": 0.92
+        },
+        {
+          "x": 1.68,
+          "y": 0.88
+        },
+        {
+          "x": 1.68,
+          "y": 0.84
+        },
+        {
+          "x": 1.68,
+          "y": 0.8
+        },
+        {
+          "x": 1.68,
+          "y": 0.76
+        },
+        {
+          "x": 1.68,
+          "y": 0.72
+        },
+        {
+          "x": 1.68,
+          "y": 0.68
+        },
+        {
+          "x": 1.68,
+          "y": 0.64
+        },
+        {
+          "x": 1.68,
+          "y": 0.6
+        },
+        {
+          "x": 1.68,
+          "y": 0.56
+        },
+        {
+          "x": 1.68,
+          "y": 0.52
+        },
+        {
+          "x": 1.68,
+          "y": 0.48
+        },
+        {
+          "x": 1.68,
+          "y": 0.44
+        },
+        {
+          "x": 1.68,
+          "y": 0.4
+        },
+        {
+          "x": 1.68,
+          "y": 0.36
+        },
+        {
+          "x": 1.68,
+          "y": 0.32
+        },
+        {
+          "x": 1.68,
+          "y": 0.28
+        },
+        {
+          "x": 1.68,
+          "y": 0.24
+        },
+        {
+          "x": 1.68,
+          "y": 0.2
+        }
+      ],
+      "S1": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 0.96,
+          "y": 1.72
+        },
+        {
+          "x": 0.92,
+          "y": 1.72
+        },
+        {
+          "x": 0.88,
+          "y": 1.72
+        },
+        {
+          "x": 0.84,
+          "y": 1.72
+        },
+        {
+          "x": 0.8,
+          "y": 1.72
+        },
+        {
+          "x": 0.76,
+          "y": 1.72
+        },
+        {
+          "x": 0.76,
+          "y": 1.76
+        },
+        {
+          "x": 0.76,
+          "y": 1.8
+        }
+      ],
+      "S2": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 1.04,
+          "y": 1.72
+        },
+        {
+          "x": 1.08,
+          "y": 1.72
+        },
+        {
+          "x": 1.12,
+          "y": 1.72
+        },
+        {
+          "x": 1.16,
+          "y": 1.72
+        },
+        {
+          "x": 1.2,
+          "y": 1.72
+        },
+        {
+          "x": 1.24,
+          "y": 1.72
+        },
+        {
+          "x": 1.24,
+          "y": 1.76
+        },
+        {
+          "x": 1.24,
+          "y": 1.8
+        }
+      ],
+      "WA": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 0.96,
+          "y": 1.72
+        },
+        {
+          "x": 0.92,
+          "y": 1.72
+        },
+        {
+          "x": 0.88,
+          "y": 1.72
+        },
+        {
+          "x": 0.84,
+          "y": 1.72
+        },
+        {
+          "x": 0.8,
+          "y": 1.72
+        },
+        {
+          "x": 0.76,
+          "y": 1.72
+        },
+        {
+          "x": 0.72,
+          "y": 1.72
+        },
+        {
+          "x": 0.68,
+          "y": 1.72
+        },
+        {
+          "x": 0.64,
+          "y": 1.72
+        },
+        {
+          "x": 0.6,
+          "y": 1.72
+        },
+        {
+          "x": 0.56,
+          "y": 1.72
+        },
+        {
+          "x": 0.52,
+          "y": 1.72
+        },
+        {
+          "x": 0.48,
+          "y": 1.72
+        },
+        {
+          "x": 0.44,
+          "y": 1.72
+        },
+        {
+          "x": 0.4,
+          "y": 1.72
+        },
+        {
+          "x": 0.36,
+          "y": 1.72
+        },
+        {
+          "x": 0.32,
+          "y": 1.72
+        },
+        {
+          "x": 0.28,
+          "y": 1.72
+        },
+        {
+          "x": 0.24,
+          "y": 1.72
+        },
+        {
+          "x": 0.2,
+          "y": 1.72
+        },
+        {
+          "x": 0.2,
+          "y": 1.68
+        },
+        {
+          "x": 0.2,
+          "y": 1.64
+        },
+        {
+          "x": 0.2,
+          "y": 1.6
+        },
+        {
+          "x": 0.2,
+          "y": 1.56
+        },
+        {
+          "x": 0.2,
+          "y": 1.52
+        },
+        {
+          "x": 0.2,
+          "y": 1.48
+        },
+        {
+          "x": 0.2,
+          "y": 1.44
+        },
+        {
+          "x": 0.2,
+          "y": 1.4
+        },
+        {
+          "x": 0.2,
+          "y": 1.36
+        },
+        {
+          "x": 0.2,
+          "y": 1.32
+        },
+        {
+          "x": 0.2,
+          "y": 1.28
+        },
+        {
+          "x": 0.2,
+          "y": 1.24
+        },
+        {
+          "x": 0.2,
+          "y": 1.2
+        },
+        {
+          "x": 0.2,
+          "y": 1.16
+        },
+        {
+          "x": 0.2,
+          "y": 1.12
+        },
+        {
+          "x": 0.2,
+          "y": 1.08
+        },
+        {
+          "x": 0.2,
+          "y": 1.04
+        },
+        {
+          "x": 0.2,
+          "y": 1
+        },
+        {
+          "x": 0.2,
+          "y": 0.96
+        },
+        {
+          "x": 0.2,
+          "y": 0.92
+        },
+        {
+          "x": 0.2,
+          "y": 0.88
+        },
+        {
+          "x": 0.2,
+          "y": 0.84
+        },
+        {
+          "x": 0.2,
+          "y": 0.8
+        },
+        {
+          "x": 0.2,
+          "y": 0.76
+        }
+      ],
+      "WB": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 0.96,
+          "y": 1.72
+        },
+        {
+          "x": 0.92,
+          "y": 1.72
+        },
+        {
+          "x": 0.88,
+          "y": 1.72
+        },
+        {
+          "x": 0.84,
+          "y": 1.72
+        },
+        {
+          "x": 0.8,
+          "y": 1.72
+        },
+        {
+          "x": 0.76,
+          "y": 1.72
+        },
+        {
+          "x": 0.72,
+          "y": 1.72
+        },
+        {
+          "x": 0.68,
+          "y": 1.72
+        },
+        {
+          "x": 0.64,
+          "y": 1.72
+        },
+        {
+          "x": 0.6,
+          "y": 1.72
+        },
+        {
+          "x": 0.56,
+          "y": 1.72
+        },
+        {
+          "x": 0.52,
+          "y": 1.72
+        },
+        {
+          "x": 0.48,
+          "y": 1.72
+        },
+        {
+          "x": 0.44,
+          "y": 1.72
+        },
+        {
+          "x": 0.4,
+          "y": 1.72
+        },
+        {
+          "x": 0.36,
+          "y": 1.72
+        },
+        {
+          "x": 0.32,
+          "y": 1.72
+        },
+        {
+          "x": 0.28,
+          "y": 1.72
+        },
+        {
+          "x": 0.24,
+          "y": 1.72
+        },
+        {
+          "x": 0.2,
+          "y": 1.72
+        },
+        {
+          "x": 0.2,
+          "y": 1.68
+        }
+      ],
+      "EA": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 1.04,
+          "y": 1.72
+        },
+        {
+          "x": 1.08,
+          "y": 1.72
+        },
+        {
+          "x": 1.12,
+          "y": 1.72
+        },
+        {
+          "x": 1.16,
+          "y": 1.72
+        },
+        {
+          "x": 1.2,
+          "y": 1.72
+        },
+        {
+          "x": 1.24,
+          "y": 1.72
+        },
+        {
+          "x": 1.28,
+          "y": 1.72
+        },
+        {
+          "x": 1.32,
+          "y": 1.72
+        },
+        {
+          "x": 1.36,
+          "y": 1.72
+        },
+        {
+          "x": 1.4,
+          "y": 1.72
+        },
+        {
+          "x": 1.44,
+          "y": 1.72
+        },
+        {
+          "x": 1.48,
+          "y": 1.72
+        },
+        {
+          "x": 1.52,
+          "y": 1.72
+        },
+        {
+          "x": 1.56,
+          "y": 1.72
+        },
+        {
+          "x": 1.6,
+          "y": 1.72
+        },
+        {
+          "x": 1.64,
+          "y": 1.72
+        },
+        {
+          "x": 1.68,
+          "y": 1.72
+        },
+        {
+          "x": 1.72,
+          "y": 1.72
+        },
+        {
+          "x": 1.76,
+          "y": 1.72
+        },
+        {
+          "x": 1.8,
+          "y": 1.72
+        },
+        {
+          "x": 1.8,
+          "y": 1.68
+        },
+        {
+          "x": 1.8,
+          "y": 1.64
+        },
+        {
+          "x": 1.8,
+          "y": 1.6
+        },
+        {
+          "x": 1.8,
+          "y": 1.56
+        },
+        {
+          "x": 1.8,
+          "y": 1.52
+        },
+        {
+          "x": 1.8,
+          "y": 1.48
+        },
+        {
+          "x": 1.8,
+          "y": 1.44
+        },
+        {
+          "x": 1.8,
+          "y": 1.4
+        },
+        {
+          "x": 1.8,
+          "y": 1.36
+        },
+        {
+          "x": 1.8,
+          "y": 1.32
+        },
+        {
+          "x": 1.8,
+          "y": 1.28
+        },
+        {
+          "x": 1.8,
+          "y": 1.24
+        },
+        {
+          "x": 1.8,
+          "y": 1.2
+        },
+        {
+          "x": 1.8,
+          "y": 1.16
+        },
+        {
+          "x": 1.8,
+          "y": 1.12
+        },
+        {
+          "x": 1.8,
+          "y": 1.08
+        },
+        {
+          "x": 1.8,
+          "y": 1.04
+        },
+        {
+          "x": 1.8,
+          "y": 1
+        },
+        {
+          "x": 1.8,
+          "y": 0.96
+        },
+        {
+          "x": 1.8,
+          "y": 0.92
+        },
+        {
+          "x": 1.8,
+          "y": 0.88
+        },
+        {
+          "x": 1.8,
+          "y": 0.84
+        },
+        {
+          "x": 1.8,
+          "y": 0.8
+        },
+        {
+          "x": 1.8,
+          "y": 0.76
+        }
+      ],
+      "EB": [
+        {
+          "x": 1,
+          "y": 1.72
+        },
+        {
+          "x": 1.04,
+          "y": 1.72
+        },
+        {
+          "x": 1.08,
+          "y": 1.72
+        },
+        {
+          "x": 1.12,
+          "y": 1.72
+        },
+        {
+          "x": 1.16,
+          "y": 1.72
+        },
+        {
+          "x": 1.2,
+          "y": 1.72
+        },
+        {
+          "x": 1.24,
+          "y": 1.72
+        },
+        {
+          "x": 1.28,
+          "y": 1.72
+        },
+        {
+          "x": 1.32,
+          "y": 1.72
+        },
+        {
+          "x": 1.36,
+          "y": 1.72
+        },
+        {
+          "x": 1.4,
+          "y": 1.72
+        },
+        {
+          "x": 1.44,
+          "y": 1.72
+        },
+        {
+          "x": 1.48,
+          "y": 1.72
+        },
+        {
+          "x": 1.52,
+          "y": 1.72
+        },
+        {
+          "x": 1.56,
+          "y": 1.72
+        },
+        {
+          "x": 1.6,
+          "y": 1.72
+        },
+        {
+          "x": 1.64,
+          "y": 1.72
+        },
+        {
+          "x": 1.68,
+          "y": 1.72
+        },
+        {
+          "x": 1.72,
+          "y": 1.72
+        },
+        {
+          "x": 1.76,
+          "y": 1.72
+        },
+        {
+          "x": 1.8,
+          "y": 1.72
+        },
+        {
+          "x": 1.8,
+          "y": 1.68
+        }
+      ]
+    },
+    "serviceRoute": [
+      {
+        "x": 1,
+        "y": 1.72
+      },
+      {
+        "x": 1,
+        "y": 1.68
+      },
+      {
+        "x": 1,
+        "y": 1.64
+      },
+      {
+        "x": 1,
+        "y": 1.6
+      },
+      {
+        "x": 1,
+        "y": 1.56
+      }
+    ],
+    "selectedDoor": "S1",
+    "selectedRoute": [
+      {
+        "x": 1,
+        "y": 1.72
+      },
+      {
+        "x": 0.96,
+        "y": 1.72
+      },
+      {
+        "x": 0.92,
+        "y": 1.72
+      },
+      {
+        "x": 0.88,
+        "y": 1.72
+      },
+      {
+        "x": 0.84,
+        "y": 1.72
+      },
+      {
+        "x": 0.8,
+        "y": 1.72
+      },
+      {
+        "x": 0.76,
+        "y": 1.72
+      },
+      {
+        "x": 0.76,
+        "y": 1.76
+      },
+      {
+        "x": 0.76,
+        "y": 1.8
+      }
+    ],
+    "machine": {
+      "id": "machine",
+      "footprint": {
+        "left": 0.51,
+        "top": 0.6,
+        "width": 0.98,
+        "height": 0.64
+      },
+      "ground": {
+        "x": 1,
+        "y": 1.24
+      },
+      "service": {
+        "x": 1,
+        "y": 1.56,
+        "facing": "N"
+      },
+      "permanent": true
+    },
+    "prints": [
+      {
+        "id": "print1",
+        "ground": {
+          "x": 0.28,
+          "y": -0.03
+        },
+        "door": "N1",
+        "backing": "N1"
+      },
+      {
+        "id": "print2",
+        "ground": {
+          "x": 1.72,
+          "y": -0.03
+        },
+        "door": "N2",
+        "backing": "N2"
+      }
+    ],
+    "publicAccess": [
+      "patients",
+      "visitors",
+      "employees",
+      "founders"
+    ],
+    "roleRestrictions": [],
+    "careRoomRestrictions": [],
+    "floor": {
+      "material": "warm seamless speckled terrazzo",
+      "phase": "room-fixed through all doorway strips",
+      "phaseOrigin": {
+        "x": 150,
+        "y": 150
+      }
+    },
+    "geometryVisible": false,
+    "comparison": {
+      "canvas": {
+        "width": 1000,
+        "height": 330
+      },
+      "baseline": 285,
+      "items": [
+        {
+          "id": "machine",
+          "cx": 70,
+          "left": 5.8957654723127035,
+          "top": 99.13680781758958,
+          "right": 134.88599348534203,
+          "bottom": 290.66775244299674
+        },
+        {
+          "id": "patient",
+          "cx": 202.5,
+          "left": 147.5,
+          "top": 87.6875,
+          "right": 257.5,
+          "bottom": 307.6875
+        },
+        {
+          "id": "visitor",
+          "cx": 327.5,
+          "left": 269,
+          "top": 75.13125000000002,
+          "right": 386,
+          "bottom": 309.13125
+        },
+        {
+          "id": "employee",
+          "cx": 455,
+          "left": 395.5,
+          "top": 71.54374999999999,
+          "right": 514.5,
+          "bottom": 309.54375
+        },
+        {
+          "id": "founder",
+          "cx": 590,
+          "left": 526,
+          "top": 55.39999999999998,
+          "right": 654,
+          "bottom": 311.4
+        },
+        {
+          "id": "frontDesk",
+          "cx": 830,
+          "left": 698.918918918919,
+          "top": 77.97297297297297,
+          "right": 960.8108108108108,
+          "bottom": 293.9189189189189
+        }
+      ]
+    },
+    "scaleContract": {
+      "tilePixels": 120,
+      "machineHeightPixels": 180,
+      "actors": {
+        "patient": {
+          "renderedWidthPixels": 110,
+          "renderScale": 0.6875,
+          "anchor": [
+            80,
+            287
+          ],
+          "sourceSha256": "493F37BD75152DB23E3D7D1F2394EBABD6737BF95B40F6D2AF0CC302ADEB6590"
+        },
+        "visitor": {
+          "renderedWidthPixels": 117,
+          "renderScale": 0.73125,
+          "anchor": [
+            80,
+            287
+          ],
+          "sourceSha256": "F489692300DDF4739BB9EF38D18C13BFA4F75307D7D06BF0A3B6A659CFA7A5A9"
+        },
+        "employee": {
+          "renderedWidthPixels": 119,
+          "renderScale": 0.74375,
+          "anchor": [
+            80,
+            287
+          ],
+          "sourceSha256": "62AF139BB6AC0E980A59DDD79DB0DB5BCF8314EB53178ECFB1E6870004E5CBBC"
+        },
+        "founder": {
+          "renderedWidthPixels": 128,
+          "renderScale": 0.8,
+          "anchor": [
+            80,
+            287
+          ],
+          "sourceSha256": "E947557C62DDB716C9B150ABE9737506E066A753F94ECD89799848C159B648F6"
+        }
+      },
+      "frontDesk": {
+        "renderScale": 0.2702702702702703,
+        "anchor": [
+          485,
+          766
+        ]
+      }
+    },
+    "ready": true
+  }
+}

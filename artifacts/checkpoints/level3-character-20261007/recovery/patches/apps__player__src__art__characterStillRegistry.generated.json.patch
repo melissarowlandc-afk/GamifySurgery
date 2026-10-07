@@ -1,0 +1,4789 @@
+diff --git a/apps/player/src/art/characterStillRegistry.generated.json b/apps/player/src/art/characterStillRegistry.generated.json
+index cd119ed..6720007 100644
+--- a/apps/player/src/art/characterStillRegistry.generated.json
++++ b/apps/player/src/art/characterStillRegistry.generated.json
+@@ -9,10 +9,10 @@
+     "floorY": 287
+   },
+   "counts": {
+-    "identities": 153,
+-    "cardinalPoses": 1224,
++    "identities": 185,
++    "cardinalPoses": 1480,
+     "clipboardPoses": 30,
+-    "assets": 1254
++    "assets": 1510
+   },
+   "characters": [
+     {
+@@ -22478,6 +22478,4770 @@
+           }
+         }
+       }
++    },
++    {
++      "id": "level3-roster-v2.001",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/stand-south.png",
++            "sha256": "5df5f686c0922030f65ffcaa6de8787e51ae9b37d405af35034dc7aa935c0e6b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 109,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/stand-east.png",
++            "sha256": "640f52f0ddc17c18a2fb63b509f3659097caea2639c887c8e43ab760ba643516",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 43,
++              "width": 88,
++              "height": 244
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/stand-west.png",
++            "sha256": "89256aa011c537807b6c7ca11dcf7a681c3ea5a9d37b7d296f70072f7b890044",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 43,
++              "width": 88,
++              "height": 244
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/stand-north.png",
++            "sha256": "3418b7d263ccad18f558992fe6f1c5c288fb4135640c5648bc4a56360bc0a7e3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 42,
++              "width": 108,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/sit-south.png",
++            "sha256": "7a62182d96a399ee760ff1f07cf8a560261126ae1b2edaf00a1d05abf94075fa",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 250,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 95,
++              "width": 101,
++              "height": 192
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/sit-east.png",
++            "sha256": "4fe57b395d549c023e54938960860cc72b34da6b4a17368d671e58a4833a9467",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 98,
++              "width": 110,
++              "height": 189
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/sit-west.png",
++            "sha256": "c0a90d1dfa62d78fa65cc67e58252d476a795e85740ac8414aeb9ed283b4777a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 98,
++              "width": 110,
++              "height": 189
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.001/sit-north.png",
++            "sha256": "474e4c162b4449eb4c671b4f4e1f9cbd042cda8f6b724c866dbaac87a5304d35",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 250,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 98,
++              "width": 100,
++              "height": 189
++            }
++          }
++        }
++      },
++      "category": "future-staff-presentation",
++      "role": "staff.radiologist",
++      "availability": "level4-locked"
++    },
++    {
++      "id": "level3-roster-v2.002",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/stand-south.png",
++            "sha256": "fb2344175a3afb4b77e7508abb254c5f5ad52ed5fd6963be4d455c3673c12e39",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/stand-east.png",
++            "sha256": "e169edf4e47331ad98598bbf4e01c5e0cca22ac3d8a91889820fa4975ea3b992",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 41,
++              "width": 88,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/stand-west.png",
++            "sha256": "4065a9d43f4595cd4c8dfc41d3c46101df685914f59077bb4ffbe10fb705afb4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 42,
++              "width": 90,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/stand-north.png",
++            "sha256": "b8880ad39f08321d7e6829d2b6d9ce2cad4c89e04caec9d27fa7b325280420fb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 41,
++              "width": 106,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/sit-south.png",
++            "sha256": "982e16b366aeb884f78047ee3c414fba40d8d3fdfd990627e2349c53443cb8cc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 83,
++              "width": 100,
++              "height": 204
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/sit-east.png",
++            "sha256": "7481dd1562b6e878588ae9788f2004bd4adc3c52fbc4c714de2d34d4e77ca4c7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 84,
++              "width": 126,
++              "height": 203
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/sit-west.png",
++            "sha256": "91e9ba3a9319f51e0c30ed929fa61725fd434ec211e0304ab12f95955930f952",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 84,
++              "width": 126,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.002/sit-north.png",
++            "sha256": "8a5469962adaf131811ad73b3892c5087590f28bf30d4f9b971f177afa3e91d6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 84,
++              "width": 96,
++              "height": 203
++            }
++          }
++        }
++      },
++      "category": "future-staff-presentation",
++      "role": "staff.radiologist",
++      "availability": "level4-locked"
++    },
++    {
++      "id": "level3-roster-v2.003",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/stand-south.png",
++            "sha256": "aa56df552f8a17a2b416bb8bb74230fa9ad8169c2742503c5b1838a2c7d0d023",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/stand-east.png",
++            "sha256": "f5a608e3084ba90a2c178f59b69bb5990632a65cf323a5ab60627202d29322f2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 41,
++              "width": 85,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/stand-west.png",
++            "sha256": "282783d15e9fe0279cc402e4f8b06e9c6596bb05de4da73959c764e6af668570",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/stand-north.png",
++            "sha256": "62b15d4af52fd8189ade96a2980890122ee0dd6e2efb890493bc4bce21025cf4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 114,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/sit-south.png",
++            "sha256": "3df6360463a3a793d22b0d6bbeaab3fa3f67ee6908b878ff3ae355afc87b523d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 86,
++              "width": 109,
++              "height": 201
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/sit-east.png",
++            "sha256": "a35fd24b2ad8571a39232302fc82a5d0cd8ca36163dc5a62b0ce1e80e1bc0c5b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 86,
++              "width": 110,
++              "height": 201
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/sit-west.png",
++            "sha256": "dbdd558e0f5f16a1e624596e40187fbdf2b4744aad404c946c8e89ce1dc0b08e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 86,
++              "width": 112,
++              "height": 201
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.003/sit-north.png",
++            "sha256": "cd79e3ebeffa072495f29ecb1b2917d5c2b927aff7e6eecbfd53e5e147ea01be",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 85,
++              "width": 102,
++              "height": 202
++            }
++          }
++        }
++      },
++      "category": "future-staff-presentation",
++      "role": "staff.radiologist",
++      "availability": "level4-locked"
++    },
++    {
++      "id": "level3-roster-v2.004",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/stand-south.png",
++            "sha256": "98f0045b6e90b16f26354466ba0a9f882c01f282816184e552c699fab27f1496",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 16,
++              "y": 41,
++              "width": 128,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/stand-east.png",
++            "sha256": "6b95bf8613c223e7efd09d1faf25fde3238f60858e947c324d291f21a521c14a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/stand-west.png",
++            "sha256": "2b732cd48bb546d3bc78fa6c10ec99489ece4de9b64a55d3748bab26b10c69ca",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/stand-north.png",
++            "sha256": "ac2adb442d8dbd8b71c1d94a44149be51a2582087c48359582c42f8da41d4984",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 127,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/sit-south.png",
++            "sha256": "71b3b781ba342841a33ef177226ff00a65bf7cae5785d216c0d5e577303b90b2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 250,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 79,
++              "width": 112,
++              "height": 208
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/sit-east.png",
++            "sha256": "b8aa01dc8e4c8fba1c47e751d797717c582f44e3ee840037903625ea1e610236",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 80,
++              "width": 124,
++              "height": 207
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/sit-west.png",
++            "sha256": "1f0a06a8512558faeba1673ba12e4e550254291741bbd9da02a155d126b57a3a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 18,
++              "y": 80,
++              "width": 124,
++              "height": 207
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.004/sit-north.png",
++            "sha256": "5055a418c28998cc8f496189d89a2049afe1f2b5ba3490f0b2c5d3f158a3fe8d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 79,
++              "width": 112,
++              "height": 208
++            }
++          }
++        }
++      },
++      "category": "future-staff-presentation",
++      "role": "staff.radiologist",
++      "availability": "level4-locked"
++    },
++    {
++      "id": "level3-roster-v2.005",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/stand-south.png",
++            "sha256": "c4a16e0a7804a0cd82e15011ff7457e366f55a1e318db663cfe8d881e5cfdb93",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 41,
++              "width": 108,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/stand-east.png",
++            "sha256": "8b8b0f3c628b391e476601efb3199ef8f3abf9ffd3b587b68c1686e2847a00a0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 41,
++              "width": 80,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/stand-west.png",
++            "sha256": "495a102d9a8b4901113c4f08cf5431389427ec43d0614d02179b7814dae2fea8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 40,
++              "width": 80,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/stand-north.png",
++            "sha256": "6c3bfa5d6f7e3d95f35716224238c8b9a31abec0397d54fa730ffaef44f1fc95",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 40,
++              "width": 109,
++              "height": 247
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/sit-south.png",
++            "sha256": "e91bddd5985521d73045e05eab2d892a9d1d5885b513074f6f4e080f2f29d271",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 88,
++              "width": 92,
++              "height": 199
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/sit-east.png",
++            "sha256": "e88790d7be2b07f59f00f7307d1b011b3a3c73b891969c56e676a5f73ddee142",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 88,
++              "width": 117,
++              "height": 199
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/sit-west.png",
++            "sha256": "d3b2c4e3567159812a8f2ecdfd9fc1bef6b341f25571be84c1aaa69752a17f5a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 89,
++              "width": 116,
++              "height": 198
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.005/sit-north.png",
++            "sha256": "5da91920ffd9e4cad3699defce7eb2925904d1c98639631ee2685115af99ee42",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 89,
++              "width": 92,
++              "height": 198
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.surgeon"
++    },
++    {
++      "id": "level3-roster-v2.006",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/stand-south.png",
++            "sha256": "bc852b0dbc8b761f208c0dfd897182454709a7fd79a0b6c7a161b2ba5d4e9348",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 41,
++              "width": 126,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/stand-east.png",
++            "sha256": "0c98c5cfa9a92d3e04a9801ee534db4f4ae1343c78a6bf686023a991514b8cd3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 42,
++              "width": 78,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/stand-west.png",
++            "sha256": "3b11dd8e79db0a744b355647bbc3447de29b2461919aa85d55beeff79b3b46e4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 42,
++              "width": 78,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/stand-north.png",
++            "sha256": "596f02579af21f852c658b16dc70a3c98f32223b9932b63ba0efaaa9942539c3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 17,
++              "y": 42,
++              "width": 126,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/sit-south.png",
++            "sha256": "740d520746e04ae58a8048c380f76633f1038b87de9efb5a8b1f9b3f7dd895cb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 87,
++              "width": 112,
++              "height": 200
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/sit-east.png",
++            "sha256": "10c7b94bd97777737473e502cf372da3bc2d2b6bbcc6ea59e90a6242d59df51b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 87,
++              "width": 114,
++              "height": 200
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/sit-west.png",
++            "sha256": "12ec5985091f64c34baf39d6e9ade7e5d76389071ff541e899feb41f5fd4dd59",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 87,
++              "width": 114,
++              "height": 200
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.006/sit-north.png",
++            "sha256": "4750b4be996b70902caf5ce05a403b1ecfaae7c47ad47423177181cea9658647",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 88,
++              "width": 112,
++              "height": 199
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.surgeon"
++    },
++    {
++      "id": "level3-roster-v2.007",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/stand-south.png",
++            "sha256": "473d3a2035d2c35beee7ebac01756b0c449e0f486d58ffee7cef87a4e4d03be2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/stand-east.png",
++            "sha256": "5a979a7ba111ffc134bea1bf907357450720fafc1ce14d6e1f646c0815cfb250",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 41,
++              "width": 86,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/stand-west.png",
++            "sha256": "b2301da33ea37426f469d04a55adb0fb3490ab7ee4ad284e7e0e79cef9f2f877",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 41,
++              "width": 87,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/stand-north.png",
++            "sha256": "c84eb8cfbfff6e085af321294739136c2f96ae59b9359eadc6e78cfe3bf24e06",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 41,
++              "width": 112,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/sit-south.png",
++            "sha256": "a62bf9f71fde171e5431913ec2d2b50d4d87c054c6128d24dc787cdfcc868b55",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 85,
++              "width": 92,
++              "height": 202
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/sit-east.png",
++            "sha256": "77560d49a78b6157d9c147a5322649ebeab3edfe9e562b173b07d85676006991",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 88,
++              "width": 115,
++              "height": 199
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/sit-west.png",
++            "sha256": "fd9f63350b0d38c058b58bedb7fd062d539e535b18ffb87215559726836545ba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 88,
++              "width": 118,
++              "height": 199
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.007/sit-north.png",
++            "sha256": "aa422572babbb176c9fd774477f208862d86ec5c472f45bdcb6d279a23a876e1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 88,
++              "width": 92,
++              "height": 199
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.or_nurse"
++    },
++    {
++      "id": "level3-roster-v2.008",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/stand-south.png",
++            "sha256": "668ae8b7d6515bb966cfeadf656d7f07dcfd6fe797424ef79fbe3f4d2f9dbe6c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/stand-east.png",
++            "sha256": "10b54cc8af4dff182975d1e4916455b2b32616772acc7a0aaef0a6ebfac22067",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 42,
++              "width": 78,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/stand-west.png",
++            "sha256": "e397a557146457ee527aef04c1340d45b3c458d0f138d49f6d6f80a453d9e157",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 43,
++              "width": 78,
++              "height": 244
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/stand-north.png",
++            "sha256": "0731b13c41c735b01e585e455b25e8a94eb78343b7b250a311a802a3cd7a6ada",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 117,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/sit-south.png",
++            "sha256": "495d4994e0d9d56d3db5e91c8cf45f43e7e7960c73d22a25271abc41e922efd7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 84,
++              "width": 98,
++              "height": 203
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/sit-east.png",
++            "sha256": "a53f99b9f5c83f143e05b2c7c79a559cce628e68eadbec02c535af9a533120c2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 85,
++              "width": 116,
++              "height": 202
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/sit-west.png",
++            "sha256": "275d65918e5752650d634937686e33b3066ec1007f1e658380e80e238af41e45",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 238,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 84,
++              "width": 118,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.008/sit-north.png",
++            "sha256": "7f08e494bbc6b124dbb4d042f4fd8b8a3dcf4238138184d9f4a1bf9af5b1eea9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 84,
++              "width": 100,
++              "height": 203
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.or_nurse"
++    },
++    {
++      "id": "level3-roster-v2.009",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/stand-south.png",
++            "sha256": "511b6203c2b51a364ca8307d102f87c035094526268b765d314aa29b94238f0b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 41,
++              "width": 110,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/stand-east.png",
++            "sha256": "9ade75089eb2abbe23b6f0f0209c76f7044ff81df592285288d2081b20720a47",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 91,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/stand-west.png",
++            "sha256": "3a949602b5307f82f27ca8d444f755a7b4f2ee93572f503a403c1019ceffc604",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 41,
++              "width": 90,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/stand-north.png",
++            "sha256": "3114cc72349c43761976d178639266c24ca849741facd5b6d34df49f30b7f2ff",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 41,
++              "width": 109,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/sit-south.png",
++            "sha256": "7ddd59878a1d308bc6f0d10cd67a900e62dc0dbc3b7bc7651210b55efb3840bf",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 96,
++              "width": 91,
++              "height": 191
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/sit-east.png",
++            "sha256": "f296f2b470c92638ac293034ef1cc808531ea4216669b3bf929f5f729a07243a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 98,
++              "width": 118,
++              "height": 189
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/sit-west.png",
++            "sha256": "278d8e0dd5f927a3ffc8262b858d585b795527ba19a1da31acd9ac48f75f8093",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 98,
++              "width": 117,
++              "height": 189
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.009/sit-north.png",
++            "sha256": "09f17deed0c4f3fb3347b1a29063f6f116dcb3f106a6e5d7c4d94c875c10b5c7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 98,
++              "width": 90,
++              "height": 189
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.laboratory_technician"
++    },
++    {
++      "id": "level3-roster-v2.010",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/stand-south.png",
++            "sha256": "6eeea8ae3bb482d1159bf384da487241d03f225fc6191bd98596187e267fa17f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/stand-east.png",
++            "sha256": "8c9f44daf3ccc86d4106e519d2cc4df8a206d69f9c902c595b4e1397710cbaba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/stand-west.png",
++            "sha256": "7b369a3596fc56d2a7831528f5ef6b3d14edbb9c71f3052478b04d879f58c905",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/stand-north.png",
++            "sha256": "302be20e23ca4f90d1123c72b8f1e846e599f3fd3610f7f62698179a8350d2b7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 42,
++              "width": 116,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/sit-south.png",
++            "sha256": "8bfda556a70b606bc03de557265b0feff1abe0c60e8836fb47b90217675dc489",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 88,
++              "width": 97,
++              "height": 199
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/sit-east.png",
++            "sha256": "1c9e68a6a2c038bb5701c4ef940a548b50b0e7bc4198b026df79c29cec3ac58a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 89,
++              "width": 112,
++              "height": 198
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/sit-west.png",
++            "sha256": "73b2e48998bac30cd70cdb530e10a1ee1dfad732d9d65c604ed1f05858d4b7df",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 90,
++              "width": 111,
++              "height": 197
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.010/sit-north.png",
++            "sha256": "3699ca998237643ce83a8c738495b9d61eb673e9852025249e40d6f52c810603",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 91,
++              "width": 98,
++              "height": 196
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.laboratory_technician"
++    },
++    {
++      "id": "level3-roster-v2.011",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/stand-south.png",
++            "sha256": "916267a31d29b19d52f9994478fe317cd6f7c6f7ddf9b960d55f590f16676c78",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/stand-east.png",
++            "sha256": "6fbb7f621e77e2dc04a43180b44ee6078fa0f6ad54655fb07c72886c56b364b6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 42,
++              "width": 94,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/stand-west.png",
++            "sha256": "b475c078fbbcb4cdd12d93d023041adea4a48382e07b30f341c637d0273405ab",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 42,
++              "width": 92,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/stand-north.png",
++            "sha256": "80e83c04d9914ccfec1f406c16d27a198f35cf241467b76ac49f06272f04b32a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 42,
++              "width": 118,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/sit-south.png",
++            "sha256": "a1a74676ad8c32fab7d7d5cccdc5df82519e933469cf710c076ab323ca9452b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 84,
++              "width": 100,
++              "height": 203
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/sit-east.png",
++            "sha256": "fb59292507347ae614c9198cdec9c18a11acff1155d30defd4cc2075ea3fe13b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 15,
++              "y": 86,
++              "width": 130,
++              "height": 201
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/sit-west.png",
++            "sha256": "a067846f5a12369e7fa6d62dd0d4487e1c469f92e16464a932569a953ae1cd85",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 16,
++              "y": 85,
++              "width": 128,
++              "height": 202
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.011/sit-north.png",
++            "sha256": "59b256498175e29276923d0afc687673095c06404983e84c623931012ddf7c66",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 85,
++              "width": 100,
++              "height": 202
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.pharmacist"
++    },
++    {
++      "id": "level3-roster-v2.012",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/stand-south.png",
++            "sha256": "831d90ffc56985e6ad2a8808b6b31d66c92fca3f1129caad92b469357d31338b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/stand-east.png",
++            "sha256": "a4686f2f5fa8bdb7ff925bf599855de21c392effcae5fae154d55c18f1b2f931",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/stand-west.png",
++            "sha256": "f49df0e21fe4e9f33657a33373256faf7b6707bb45902f53abf6cc404089f327",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/stand-north.png",
++            "sha256": "8096edb08bce2ff82e85f90cff1385560d16d094821d5ccbc7574cb035f57fef",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/sit-south.png",
++            "sha256": "e0813d06f614f7e33c2d50217f76f5ef42ff1b64901e6346cd39071f01c170d5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 84,
++              "width": 105,
++              "height": 203
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/sit-east.png",
++            "sha256": "61f3fec24dd8f97821e0af41de446d1e782b6d66a4ea5d6694f3d9bc1d4d1e7d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 85,
++              "width": 118,
++              "height": 202
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/sit-west.png",
++            "sha256": "3b0a22c4ce54ba144f8bcec9bb5a84731330db98dfa851395d55bf28dba8b5ed",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 85,
++              "width": 120,
++              "height": 202
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.012/sit-north.png",
++            "sha256": "5654b16a0233101e55d4593af77f97c559067a8dc684f67330ce59174efd3386",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 85,
++              "width": 105,
++              "height": 202
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.pharmacist"
++    },
++    {
++      "id": "level3-roster-v2.013",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/stand-south.png",
++            "sha256": "41559ff65519d23183605efe4a0384582159b12b426a774f74ae7a1fd67175e3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 41,
++              "width": 121,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/stand-east.png",
++            "sha256": "fa988e003dd924d00a3d91ff27a2d6737c663d941eab846e41c249427a84f9be",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 41,
++              "width": 80,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/stand-west.png",
++            "sha256": "99605ad6fc5e353c493077b89a5d8fc0cd30735d7960a1a3671a5bc9fbdf625d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 41,
++              "width": 78,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/stand-north.png",
++            "sha256": "3f6b4b2f90e50f26fb648804733d39034685566f5abc879594815e5ca3d416f4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 43,
++              "width": 120,
++              "height": 244
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/sit-south.png",
++            "sha256": "93f9b2c18839204d9358d9dd8d5408f0b420e56241899f5de11c9d71b7e861a6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 92,
++              "width": 100,
++              "height": 195
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/sit-east.png",
++            "sha256": "a3038ae4a864dc534cc91bbb55cc95a6d24b156136e69dace38ac09b40b1c513",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 92,
++              "width": 115,
++              "height": 195
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/sit-west.png",
++            "sha256": "15baf5155d81e41de6ac8607586988c69e0f081a49df06d0ded0b4a4fa65a052",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 92,
++              "width": 115,
++              "height": 195
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.013/sit-north.png",
++            "sha256": "162dc66205d10fe93b2b472cc45b13edb3cd099d1d1e69a3a9e0ebdf72e2f65f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 93,
++              "width": 95,
++              "height": 194
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.repair_person"
++    },
++    {
++      "id": "level3-roster-v2.014",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/stand-south.png",
++            "sha256": "5a8fc50313158745e4ad5692374256a6a40b29eb3558d5dc4e740e5177fa8a91",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/stand-east.png",
++            "sha256": "a3810350c3975137ef861d83b5224a4002ae2dc7b29806aa7ce7166df9038992",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 39,
++              "width": 83,
++              "height": 248
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/stand-west.png",
++            "sha256": "b8e3ee24aad28937d9d58a24922f6a6352ba20addb8e8f16c58dc4918013e4e6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 40,
++              "width": 83,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/stand-north.png",
++            "sha256": "8e2097e1a8636711361bbcba381775acffedaa3c571af3b210e994d8be8a028d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 39,
++              "width": 119,
++              "height": 248
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/sit-south.png",
++            "sha256": "fe00b24093a198d7f136320db02daea42abc208b43ca7fd506b71c696ea2663b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 86,
++              "width": 106,
++              "height": 201
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/sit-east.png",
++            "sha256": "2038d18c2a60466fe88c79f8deb4a1764b9052263c07f2c7434cf3722b5101e6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 87,
++              "width": 120,
++              "height": 200
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/sit-west.png",
++            "sha256": "5bd91df408b56da2d50a87fac26fa2b633f9ffc80cc5103ff1021d108414aeb2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 87,
++              "width": 118,
++              "height": 200
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.014/sit-north.png",
++            "sha256": "1a8fcd55e5e2d0049471bbd6384e3ea12b01f3597f76c5cc999a2c9d86bc2fab",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 88,
++              "width": 104,
++              "height": 199
++            }
++          }
++        }
++      },
++      "category": "employee",
++      "role": "staff.repair_person"
++    },
++    {
++      "id": "level3-roster-v2.015",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/stand-south.png",
++            "sha256": "5f473aa588de6633b0d9fb40602e2c1e43b699d563e66e3a127188040f08b2ee",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/stand-east.png",
++            "sha256": "9d8b1f833e2e6e52ae8c1cc07f46606abaee7006ab05ad8275c0fbd9aa0b2083",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 42,
++              "width": 78,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/stand-west.png",
++            "sha256": "086134849505fe8108e9ab7dbe0cd300e057ef97f4e069fb3e6c29ea3c5cb5f2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 42,
++              "width": 80,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/stand-north.png",
++            "sha256": "af459e76361be036694a0ba2a8af311ab6c193a4fe94e2d84287f7477ac0e776",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 41,
++              "width": 116,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/sit-south.png",
++            "sha256": "b33ce33aa6ee685e1be4bc4c0af1e9fa2c7c14bd7aea2ed4875aa53595e75292",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 82,
++              "width": 102,
++              "height": 205
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/sit-east.png",
++            "sha256": "217446041748084e44d7c8076c6d403328574717437a5bf5e6aaa033835b1624",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 84,
++              "width": 118,
++              "height": 203
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/sit-west.png",
++            "sha256": "413c05388203242ef86dc6a0c67d2caf159d8d44adbf91ef8e7d4164fcbed62b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 84,
++              "width": 118,
++              "height": 203
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.015/sit-north.png",
++            "sha256": "b1d73a89a1b7753780729f7bc25f598daf706419f072b728da51934369cac965",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 85,
++              "width": 102,
++              "height": 202
++            }
++          }
++        }
++      },
++      "category": "patient-or-general-population",
++      "intendedAge": 19,
++      "intendedSex": "Male",
++      "displayGender": "Man"
++    },
++    {
++      "id": "level3-roster-v2.016",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/stand-south.png",
++            "sha256": "483c0a69305616958cf5fee43b6eabe4baac6f905e81d4490d277dae85dba396",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/stand-east.png",
++            "sha256": "d6bc65f69b8c754e2a5e3a4be726360cec96044a5622bd33c12f45377720fa0d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 42,
++              "width": 80,
++              "height": 245
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/stand-west.png",
++            "sha256": "61a0fa3ff1140c0c5c9752eb12a280400566d6be9adccca324b5722127ac0ad3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 42,
++              "width": 80,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/stand-north.png",
++            "sha256": "0a7ae9a1a8af423ab0533b54e167152273b88b3b3f8b49fce5e18589b2219e46",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 42,
++              "width": 120,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/sit-south.png",
++            "sha256": "2eaeeba13265a06630607c8f341edc94b2d970e9d514040c2acdbddba31b622d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 93,
++              "width": 100,
++              "height": 194
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/sit-east.png",
++            "sha256": "0bc9641344cf721a8f7c641264095e7bb6df57aa95cba70e62b1a328b43bdc8c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 95,
++              "width": 116,
++              "height": 192
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/sit-west.png",
++            "sha256": "ec059d015e68e65346f2db237e294a19d19bbea5bd8df9bf09109e882749534d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 95,
++              "width": 116,
++              "height": 192
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.016/sit-north.png",
++            "sha256": "613f39450a45c9e332f491a4bafaf0597d8eb33f2ddd82681aeb18f214ab260b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 95,
++              "width": 100,
++              "height": 192
++            }
++          }
++        }
++      },
++      "category": "patient-or-general-population",
++      "intendedAge": 24,
++      "intendedSex": "Male",
++      "displayGender": "Man"
++    },
++    {
++      "id": "level3-roster-v2.017",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/stand-south.png",
++            "sha256": "778aa397a9cb2b60950a2315b90c82f37549752e6f6d15d8f152f25e7013b1be",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 41,
++              "width": 115,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/stand-east.png",
++            "sha256": "068a18338dea0b843b0db925403127e7c85c4c775789090b0cd228b4405cc0b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 41,
++              "width": 84,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/stand-west.png",
++            "sha256": "f10e34c8b876dbbc94fd95a724625f3451f2a996e38ab8fe82cb77c85eee700a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 42,
++              "width": 86,
++              "height": 245
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/stand-north.png",
++            "sha256": "5adf272d89e85fa7c1c27a4673615a364807ebe220dfafa42c6e72a006538aee",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 22,
++              "y": 42,
++              "width": 116,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/sit-south.png",
++            "sha256": "29e1710b3bfc34e50a2e69ded0c4132a3d933830e0bca469e9bea344317a3caf",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 27,
++              "y": 84,
++              "width": 106,
++              "height": 203
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/sit-east.png",
++            "sha256": "7fc1f51a07c6c93fa31aac595e9f0c3aef42946fb4a9c2a0b695655f766e0a31",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 85,
++              "width": 118,
++              "height": 202
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/sit-west.png",
++            "sha256": "bb466a0518b9f67df3afe77d1c167d80ebde7b79c5dc5a86dcd138cfcdfbe7f7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 86,
++              "width": 118,
++              "height": 201
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.017/sit-north.png",
++            "sha256": "c27d6cef5db089c854bb0a86cf364a77a7e31d7021b3dd79f0cd2d217ee8fe73",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 85,
++              "width": 103,
++              "height": 202
++            }
++          }
++        }
++      },
++      "category": "patient-or-general-population",
++      "intendedAge": 28,
++      "intendedSex": "Male",
++      "displayGender": "Man"
++    },
++    {
++      "id": "level3-roster-v2.018",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/stand-south.png",
++            "sha256": "88ea32ef752205f324dd9d9caf7a7d242f82dd1185f03762ef0c89fab7117035",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 41,
++              "width": 118,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/stand-east.png",
++            "sha256": "23cf971843ada9c7865d5cec84a55ce0129d325afafd83ac92ef9cb97d421954",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 40,
++              "width": 78,
++              "height": 247
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/stand-west.png",
++            "sha256": "4c1e59ba9a2f9723120af6d479f6e059c85062db6959c7c4138c506ab3eeb634",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 40,
++              "width": 78,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/stand-north.png",
++            "sha256": "9e0a181622d3d1560eaaf287d25a9ac353a04767c5b451e4ac83e13981196882",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 41,
++              "width": 120,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/sit-south.png",
++            "sha256": "555724797888071fdbbe64cf38b9c6e0179574d899695fb2e7079eb9a6909220",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 85,
++              "width": 103,
++              "height": 202
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/sit-east.png",
++            "sha256": "ecd8e7c720a59cb2eee0b3bfe54d69ba1c735d89fda474b2acf182a0591a7577",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 86,
++              "width": 119,
++              "height": 201
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/sit-west.png",
++            "sha256": "f806edea8ebdadf5b8ced04aa6041705ae54049939233c95b586875342e768cb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 86,
++              "width": 120,
++              "height": 201
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.018/sit-north.png",
++            "sha256": "81286fa16205bf986f1761c082948d923165a18d6c739d5351cc91f522b4b5cd",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 87,
++              "width": 104,
++              "height": 200
++            }
++          }
++        }
++      },
++      "category": "patient-or-general-population",
++      "intendedAge": 21,
++      "intendedSex": "Female",
++      "displayGender": "Woman"
++    },
++    {
++      "id": "level3-roster-v2.019",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/stand-south.png",
++            "sha256": "ee6d2f5da459d6bac05ad12fb20f2560cef846ce6d1c5720a012ffedadd5aa8b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 41,
++              "width": 110,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/stand-east.png",
++            "sha256": "56527c98246990221921e12bc0d2f4de9c406974cbf2c15dc132535182a3360d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 41,
++              "width": 92,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/stand-west.png",
++            "sha256": "7637cf298835ae76da5aeb591acd9b8e39d0b16ba079174b22e16ff83b485e3e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 40,
++              "width": 92,
++              "height": 247
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/stand-north.png",
++            "sha256": "9dc7b0f0b0e77e44f622fcf50ce01d39ebfde000fd8ec89a5a26c06175420bd8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 25,
++              "y": 42,
++              "width": 110,
++              "height": 245
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/sit-south.png",
++            "sha256": "67a8cef6172940181a2ad1754c370936f6e3b80fb3288f1019604550670d7b40",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 94,
++              "width": 96,
++              "height": 193
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/sit-east.png",
++            "sha256": "c5d4d38a15197a550fc05a7043f02873d249f21ef9deb814cf352e5e1c074cf7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 20,
++              "y": 95,
++              "width": 120,
++              "height": 192
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/sit-west.png",
++            "sha256": "e314454ddcb8a404c92de6c7f6e3010e9b6f88f49586c7f6b49a0a8e9bbcce95",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 241,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 96,
++              "width": 122,
++              "height": 191
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.019/sit-north.png",
++            "sha256": "bd323d9923c43b9248eb88e72d890c6232226141fecebfb2a085e2febcd3dff8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 96,
++              "width": 95,
++              "height": 191
++            }
++          }
++        }
++      },
++      "category": "patient-or-general-population",
++      "intendedAge": 26,
++      "intendedSex": "Female",
++      "displayGender": "Woman"
++    },
++    {
++      "id": "level3-roster-v2.020",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/stand-south.png",
++            "sha256": "2a8cec40a498b54b969081ad13d6b425e8c61ff009609209aa312c3ada726811",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 15,
++              "y": 41,
++              "width": 130,
++              "height": 246
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/stand-east.png",
++            "sha256": "ef87eb25bc2b7aa480b373447e922a54b2c2713f3e6a69eb48c5efd46cd59c00",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 41,
++              "width": 80,
++              "height": 246
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/stand-west.png",
++            "sha256": "63866376bf15ad4ea257e46d71af4dc51842cb4cc5ca3c42167a516387b24883",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 41,
++              "width": 80,
++              "height": 246
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/stand-north.png",
++            "sha256": "36f6d8e91f6171eb6beabbe888a61378bef2780dc570ece72520cc8a36f379d2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 14,
++              "y": 41,
++              "width": 132,
++              "height": 246
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/sit-south.png",
++            "sha256": "1f65c7a8fd7e412436d9e5881b8966c495b05dcc3081bb45a260a4cc051a6f64",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 84,
++              "width": 114,
++              "height": 203
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/sit-east.png",
++            "sha256": "4165eadbf7683fd061b9d134460b138be51ff78196d7fd7fa19f63e470eac23d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 85,
++              "width": 122,
++              "height": 202
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/sit-west.png",
++            "sha256": "8511a5eae3e76c6da7807c1eb0903979d7c585ef7abc563180b838efb5b98be1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 240,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 85,
++              "width": 122,
++              "height": 202
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.020/sit-north.png",
++            "sha256": "f8c878f7962646521184547c260dc206915e7e30f3f6709edd4a48a12d89c54e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 24,
++              "y": 86,
++              "width": 112,
++              "height": 201
++            }
++          }
++        }
++      },
++      "category": "patient-or-general-population",
++      "intendedAge": 38,
++      "intendedSex": "Male",
++      "displayGender": "Man"
++    },
++    {
++      "id": "level3-roster-v2.021",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/stand-south.png",
++            "sha256": "a629daf60b2133a0c99e1e55caae70afdd50a78c2595c60e1d521a8977b5da4a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 103,
++              "width": 90,
++              "height": 184
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/stand-east.png",
++            "sha256": "768d10b90efe69f350ff1f57f9a5d93509097bba5edbb17cdf416810689a94ce",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 102,
++              "width": 74,
++              "height": 185
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/stand-west.png",
++            "sha256": "92511e2d856166961566bc80e90976a6f6ae92e231f7d794da617bc7aaefcf40",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 102,
++              "width": 74,
++              "height": 185
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/stand-north.png",
++            "sha256": "5dd7cb4319b51d252c1136356599ebdfed41a483b03ee308f158514199d51a66",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 102,
++              "width": 90,
++              "height": 185
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/sit-south.png",
++            "sha256": "2f298cfcad3262299331be0fa9ffb7522bdd23c7f8f6befd2e69bdf5c73a70d1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 242,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 128,
++              "width": 90,
++              "height": 159
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/sit-east.png",
++            "sha256": "a3f399442a5e2331964cf004b71692ca26bc9cb673dc7f1ea316e8da0dd9da76",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 128,
++              "width": 100,
++              "height": 159
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/sit-west.png",
++            "sha256": "d44d9aa7efac5b7b54cfae7f09292a97dac9e08d66ca404c249f261b27896625",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 251,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 127,
++              "width": 96,
++              "height": 160
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.021/sit-north.png",
++            "sha256": "cfc94a31b2f84e655a961e4085617677462eb859383e06edf71f8758ba083e63",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 250,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 128,
++              "width": 90,
++              "height": 159
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 6,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.022",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/stand-south.png",
++            "sha256": "7138acb6244d94ecbacff4209440570388787540dcd11071886c3cc22b8f26b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 103,
++              "width": 85,
++              "height": 184
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/stand-east.png",
++            "sha256": "7858d0f700e628d6932ce2603fa7a85e8a9c743e064f1bff08089c501db79a1b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 104,
++              "width": 74,
++              "height": 183
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/stand-west.png",
++            "sha256": "19c4cd023ef0574fec9fa2d8f96c33ea19ee3ae2072aacbd9afb132de2c544a0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 103,
++              "width": 74,
++              "height": 184
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/stand-north.png",
++            "sha256": "8cb13ae73e063fd293a2ec337710a83bb32bcdebd6407b9492b1fbdf4dd368bf",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 103,
++              "width": 86,
++              "height": 184
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/sit-south.png",
++            "sha256": "57587971e5569aeae43057ef020dc733b6e70cf497dace56812dd75ee465ecf4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 44,
++              "y": 131,
++              "width": 72,
++              "height": 156
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/sit-east.png",
++            "sha256": "ca4b887112edef46abd55d76f510d2022e5ff67e7da16781eef211a4c4f43a96",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 253,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 132,
++              "width": 94,
++              "height": 155
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/sit-west.png",
++            "sha256": "246019236e6b58956f221d6d8afa4b9e80f33ee3173fec907f162237955a5ca4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 252,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 133,
++              "width": 92,
++              "height": 154
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.022/sit-north.png",
++            "sha256": "bbb9242d95a01bb79b280f2189a610e0844348166d015d04455e859d7522c0c2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 251,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 132,
++              "width": 74,
++              "height": 155
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 5,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.023",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/stand-south.png",
++            "sha256": "9fd039093483600c2ca614392485b7dce7de2ff772ff381d227388dbe04fb5fa",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 103,
++              "width": 90,
++              "height": 184
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/stand-east.png",
++            "sha256": "afdb289bfdf1a58d45ae48e7229b90f1933c46e47b4c0a03bf704eeb7a34b4f8",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 103,
++              "width": 80,
++              "height": 184
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/stand-west.png",
++            "sha256": "3803628810de229f8eea128a323bbe4cd3352720eb6fd9d8e735431642810543",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 103,
++              "width": 80,
++              "height": 184
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/stand-north.png",
++            "sha256": "c0aed2b2a46de583e9c61f1a61584ce99dcbf808cb9fc19d34980b2d91e7f9b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 103,
++              "width": 86,
++              "height": 184
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/sit-south.png",
++            "sha256": "84f4485666c3db376b3e5fc4e0bacb6a6fd96772cff1094c2b38a28bc8000d4f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 136,
++              "width": 90,
++              "height": 151
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/sit-east.png",
++            "sha256": "afe614de713b1126e91a0870eb30fed8d1a11dc9592ab9c65b831b6c1f26afc9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 255,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 137,
++              "width": 100,
++              "height": 150
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/sit-west.png",
++            "sha256": "54ec87e92ea267840c3d2611b92a1e7eb36d4990ab918f9828d3609c359db136",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 254,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 137,
++              "width": 100,
++              "height": 150
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.023/sit-north.png",
++            "sha256": "de0cb6910db0e97c396329f7dfcb40d49a020a5d6e9be1c78f98406c4d5798d1",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 253,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 137,
++              "width": 86,
++              "height": 150
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 7,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.024",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/stand-south.png",
++            "sha256": "0f8d053dc2ea765aaecf70b901da5806d5f60dbb962bec1ca0dc05913b085011",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 103,
++              "width": 86,
++              "height": 184
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/stand-east.png",
++            "sha256": "1f5be09e6164e77f907a76ddf0d4f5d34db7c8e8c4ce943260d615bbb456247e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 47,
++              "y": 103,
++              "width": 66,
++              "height": 184
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/stand-west.png",
++            "sha256": "e57f7e74f10bafa5ff6aceb68c6b9d770015f4ddff8a597a1162afe5ad2fdb5d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 47,
++              "y": 102,
++              "width": 66,
++              "height": 185
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/stand-north.png",
++            "sha256": "0fd8f019e0376e3e99aa6adb610f7147c2b613eaca967c81fca10557db93f345",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 103,
++              "width": 84,
++              "height": 184
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/sit-south.png",
++            "sha256": "28dc0916dce2bc5771df4b66d6b8e860a3d9260dc27782a760034f98d988239b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 243,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 123,
++              "width": 78,
++              "height": 164
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/sit-east.png",
++            "sha256": "727c1f68b267f3cd14702535a9479fa1022148ec8859d90571c6639b4f856915",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 123,
++              "width": 92,
++              "height": 164
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/sit-west.png",
++            "sha256": "388f7cc937ae1729b9b0195fe5bedd71c510b367d7688c541cae21ec9b9708eb",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 123,
++              "width": 92,
++              "height": 164
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.024/sit-north.png",
++            "sha256": "e9c1769c3e42f9c3eec867c165dd4be6a01021c1572971f3c0ab7293a0944458",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 248,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 41,
++              "y": 123,
++              "width": 78,
++              "height": 164
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 6,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.025",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/stand-south.png",
++            "sha256": "f052b4dbe39919e1aee034592f2500c8670d9c98e3a80f3823ec5ca99c0f067a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 76,
++              "width": 94,
++              "height": 211
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/stand-east.png",
++            "sha256": "285085a788ee8a44856a684576b92ea2a08afbc86ae32ff6a253ae2e92dab57a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 45,
++              "y": 76,
++              "width": 70,
++              "height": 211
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/stand-west.png",
++            "sha256": "05c23619063e174c99fad3b9b3851cd55efe91491475120a87142cd54f5b4228",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 45,
++              "y": 76,
++              "width": 70,
++              "height": 211
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/stand-north.png",
++            "sha256": "215a2e6704137829c947c6d0eb66df97f2d85b743cef7a52e91ac5e02678fac2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 76,
++              "width": 94,
++              "height": 211
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/sit-south.png",
++            "sha256": "5a7d31f979c6abf4db8cfb9ec469179b06bd89134fd59956eb943e64505cf544",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 116,
++              "width": 82,
++              "height": 171
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/sit-east.png",
++            "sha256": "e961ca793a3008816ecc03f2c02f259c71b7d4d25c6a6bdaae627ac9c2e5ae4b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 116,
++              "width": 100,
++              "height": 171
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/sit-west.png",
++            "sha256": "6f5405da6a7665dba5fb8991e5ecd0d820d4493993ac706fc95c7e9212bf7a3d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 116,
++              "width": 99,
++              "height": 171
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.025/sit-north.png",
++            "sha256": "20d91187498ebb8533acbbd01eeef5d4832634955e2a2da5f6f10a25620e1108",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 116,
++              "width": 82,
++              "height": 171
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 9,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.026",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/stand-south.png",
++            "sha256": "4066b17cc53d9d8943e43719bd651c8afd951bee6a529dec2440a70467b96ac6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 76,
++              "width": 91,
++              "height": 211
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/stand-east.png",
++            "sha256": "1eca79b97f421de74a821f9230bb476c6f589eab88496fcdc3c8b528a32d4c4c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 75,
++              "width": 74,
++              "height": 212
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/stand-west.png",
++            "sha256": "db8d29e5859ac469a5ed72586e5b50a41604c32ab9724a900ca5dd398281ac1d",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 75,
++              "width": 74,
++              "height": 212
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/stand-north.png",
++            "sha256": "9563559afa38703aec342fccc2761aad0065b98d4023a234c02e1e74140665d6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 77,
++              "width": 91,
++              "height": 210
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/sit-south.png",
++            "sha256": "082ce0b725a171e6fd5c09ae926fb719cee6ebf8c02b6e95854ca70be0aeeba3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 117,
++              "width": 82,
++              "height": 170
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/sit-east.png",
++            "sha256": "85d97b35393c503fc231bd6f6003f276036e158c57acf99f3153502b6f9d0a62",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 116,
++              "width": 100,
++              "height": 171
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/sit-west.png",
++            "sha256": "6f60db61082af1a848908f150e9fa3969b45f09cbae993c86a626a08997fc3e7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 30,
++              "y": 116,
++              "width": 100,
++              "height": 171
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.026/sit-north.png",
++            "sha256": "f472f33daa83d4d0f7c8af675745956427aebc124afe84c9f6840f003e16be41",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 40,
++              "y": 119,
++              "width": 80,
++              "height": 168
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 10,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.027",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/stand-south.png",
++            "sha256": "97b0321d91fcf6027b4fcf0354d88d71a5e0d06170023b45a4ab5d70a680c48e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 76,
++              "width": 98,
++              "height": 211
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/stand-east.png",
++            "sha256": "2949ce6fdc0fef2862ff92a88d7a99990e3e46dc3924b5e5e0c81f5a1eb1c194",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 42,
++              "y": 75,
++              "width": 76,
++              "height": 212
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/stand-west.png",
++            "sha256": "99834246e3f2341f2ae9aa1d1fd20606dedd67f9c8849693159f781f54bf6de2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 42,
++              "y": 75,
++              "width": 76,
++              "height": 212
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/stand-north.png",
++            "sha256": "fe39ad4d76229ff6def1180207c4cb0929f5e1624be46eb1bfe994ab0660d188",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 76,
++              "width": 96,
++              "height": 211
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/sit-south.png",
++            "sha256": "96bfd47fe38f4bb5449d7926d9488570b1b07d1e7ad6e7153d482cfba055c9d2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 114,
++              "width": 86,
++              "height": 173
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/sit-east.png",
++            "sha256": "1ad5e268bf0872ad5cb6bcfa04efc51075431478f2e3de3b4f59ce27f6c8fd05",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 116,
++              "width": 108,
++              "height": 171
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/sit-west.png",
++            "sha256": "ce0e289621e4fc969a9af800bd314d6f696860d33f6344aeb863fa8eeaeb073b",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 26,
++              "y": 116,
++              "width": 108,
++              "height": 171
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.027/sit-north.png",
++            "sha256": "17d70992f3825e7cf7ff28a7d6187c50a555718710ed5facc2a5e4f6551188d3",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 115,
++              "width": 84,
++              "height": 172
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 11,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.028",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/stand-south.png",
++            "sha256": "6dd9b28903914068e740e2762c75687c978aea8e1d3f2c15bc0cee79f4949605",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 76,
++              "width": 98,
++              "height": 211
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/stand-east.png",
++            "sha256": "1197963a9bd58fee96d997dd5300f0ae79e21dd08b7cfe15e7fa491898b4ece6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 45,
++              "y": 76,
++              "width": 71,
++              "height": 211
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/stand-west.png",
++            "sha256": "c96c8c36095e21f241eff74b49e3f30dcca787f2fc72a8183fdef2fd224f8cdc",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 45,
++              "y": 76,
++              "width": 70,
++              "height": 211
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/stand-north.png",
++            "sha256": "120e296b259fe25bcaee353d33d6aa47b1832773b351a5ac851eb43d81d13264",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 78,
++              "width": 98,
++              "height": 209
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/sit-south.png",
++            "sha256": "a097f4be826c407d47def383a59cac0d051c70735396ba82466c3d0c0c867c55",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 115,
++              "width": 85,
++              "height": 172
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/sit-east.png",
++            "sha256": "ef6406729ce904f55240e8a10d4ad34e3435213970b55bda934d02b436781fef",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 115,
++              "width": 98,
++              "height": 172
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/sit-west.png",
++            "sha256": "8f3e5a4e2fd81338c22050d9991f29b599672c4a1a53b46f41a04a9d75ab01d9",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 115,
++              "width": 96,
++              "height": 172
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.028/sit-north.png",
++            "sha256": "ed89843317ded72960cd0df36e9c40a20eb766dda4d0ec1abc930ca0c42efac6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 38,
++              "y": 116,
++              "width": 84,
++              "height": 171
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 12,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.029",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/stand-south.png",
++            "sha256": "106814ad0c87a0a76a16ef0078ecebd07efa50fe9fcee4386959b3dcc3d6b3b0",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 53,
++              "width": 93,
++              "height": 234
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/stand-east.png",
++            "sha256": "861a42ad0504948b221deac4c51f55a2c4cadcadb21060842359e9d9f109f736",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 53,
++              "width": 82,
++              "height": 234
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/stand-west.png",
++            "sha256": "b536598341b31b35476484eb47d36a2f9350cfacfccb73c2c499d1c70f686ed4",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 39,
++              "y": 54,
++              "width": 82,
++              "height": 233
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/stand-north.png",
++            "sha256": "7371b9e199bb21943455ee6938d3889411eb8a414a956d1d082822dd1e57f1f7",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 55,
++              "width": 92,
++              "height": 232
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/sit-south.png",
++            "sha256": "29a7dd34836df7978e1fee035023af048a4e8f99164ae5bca5c585e613fcb64e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 34,
++              "y": 99,
++              "width": 92,
++              "height": 188
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/sit-east.png",
++            "sha256": "a48b56a6381cfdc292f6cf1f49c9a5468245cfa4762bbac7ecd447cadba6c600",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 21,
++              "y": 102,
++              "width": 118,
++              "height": 185
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/sit-west.png",
++            "sha256": "d2556f32aadec694e8f5152380fd92e67f5c09529adc25b97b2502379c883c7f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 245,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 23,
++              "y": 102,
++              "width": 114,
++              "height": 185
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.029/sit-north.png",
++            "sha256": "9b7cb38319b3777af1cca1b0a8a7ef141673a1d1342f8d7947b73e350f62061f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 244,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 102,
++              "width": 91,
++              "height": 185
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 14,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.030",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/stand-south.png",
++            "sha256": "4ac93466dee44e53bdbdd568e6ae963f3d468b7a9b9881dfc8a7f0dd49023552",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 53,
++              "width": 96,
++              "height": 234
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/stand-east.png",
++            "sha256": "e45bdbca1e7ae47da90f2eddab313a8e62ac14a114566cef5c3e56b6e3c4dc31",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 44,
++              "y": 53,
++              "width": 72,
++              "height": 234
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/stand-west.png",
++            "sha256": "32433a60db8a2ffa0e08a0e90985a6a06030b9b874503e00c982e1d48dc55e3a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 44,
++              "y": 53,
++              "width": 72,
++              "height": 234
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/stand-north.png",
++            "sha256": "6fc9651d90ea380d25cdbfa25bc75e3f6baccdaa7e8eeca2959f2ac295ed5e74",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 53,
++              "width": 96,
++              "height": 234
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/sit-south.png",
++            "sha256": "2fd18d2f91172b26710865419bf5a09b5af5531ae471c0a70b99a43de11dfa24",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 249,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 109,
++              "width": 90,
++              "height": 178
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/sit-east.png",
++            "sha256": "d60660930c2d2c1b1e5f4ea238aeed72d6db3938a7040fe312fe70ccf934accf",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 110,
++              "width": 103,
++              "height": 177
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/sit-west.png",
++            "sha256": "8a9020cace80093ac07095ee04bc8cc2aab84d0fc77852a93ea0134cdf3aed0e",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 109,
++              "width": 102,
++              "height": 178
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.030/sit-north.png",
++            "sha256": "e818bb718af629b294fabab71e803223c3ab293c6ace9bf7f1ff2c4907a27cba",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 36,
++              "y": 111,
++              "width": 88,
++              "height": 176
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 14,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.031",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/stand-south.png",
++            "sha256": "fc89f3dcd09198e71c95c441fc7169cdc4462d21cab4f61b3bc53e5aea804e2c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 53,
++              "width": 104,
++              "height": 234
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/stand-east.png",
++            "sha256": "d101b38285202503a534b7b2028584cd18eb9ec0ebbb704d00188db180289462",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 52,
++              "width": 86,
++              "height": 235
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/stand-west.png",
++            "sha256": "d19d7bc82b9339d9c981f03c066085a2fbb3d31a311a59a68f896d5f590389e6",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 37,
++              "y": 52,
++              "width": 86,
++              "height": 235
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/stand-north.png",
++            "sha256": "f8c867bcc5e69cab6f850de84eff888d849d9430d2708440f79cf0c79c23c875",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 28,
++              "y": 53,
++              "width": 104,
++              "height": 234
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/sit-south.png",
++            "sha256": "dfa5a0181fd0c141c5f24b4ce8cf8f3e3d7f8aafdd9597095fbb6e088708de3a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 97,
++              "width": 96,
++              "height": 190
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/sit-east.png",
++            "sha256": "d08a86c8099807b14ef3de7e4153581747c271da97f26a758da0895b56ae0a17",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 99,
++              "width": 122,
++              "height": 188
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/sit-west.png",
++            "sha256": "c7112ff27edab5f46ba1e80ddd9532111c1990dae132bbbc52bf9c2b3a767588",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 19,
++              "y": 99,
++              "width": 122,
++              "height": 188
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.031/sit-north.png",
++            "sha256": "8d8046fd80c7d7455987e1e5c65bbda7d795dd46ee0d11060bf7af13de0024a2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 33,
++              "y": 98,
++              "width": 94,
++              "height": 189
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 16,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
++    },
++    {
++      "id": "level3-roster-v2.032",
++      "cohort": "level3RosterV2",
++      "poses": {
++        "stand": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/stand-south.png",
++            "sha256": "d9ef760987bdf7ba3c7589638d7c655b5a8b6b35b70f86deeda07c24ebd4b36f",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 31,
++              "y": 53,
++              "width": 98,
++              "height": 234
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/stand-east.png",
++            "sha256": "4952711f0c76bbe31fc4c5afe4b9356cac44bf75e303febe2b957f9ce60198e2",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 53,
++              "width": 74,
++              "height": 234
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/stand-west.png",
++            "sha256": "ac4bbd3647a94275b6b56747b55c8eab4fe0a9224ff895cc9913f2997b293470",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 43,
++              "y": 53,
++              "width": 74,
++              "height": 234
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/stand-north.png",
++            "sha256": "219f69a43885e3565251a7f85a33c8fee929c42c77d9545c55401c9b5985e897",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287
++            },
++            "visibleBounds": {
++              "x": 32,
++              "y": 53,
++              "width": 96,
++              "height": 234
++            }
++          }
++        },
++        "sit": {
++          "south": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/sit-south.png",
++            "sha256": "d862ee561731957471d7865885ac95913876f5a717d1ef9aa51246aba69b7e5a",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 247,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 107,
++              "width": 90,
++              "height": 180
++            }
++          },
++          "east": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/sit-east.png",
++            "sha256": "6575111c60d43987a84af56b86dc858051d80bce1428ef0871c6fe07e6b73927",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 109,
++              "width": 102,
++              "height": 178
++            }
++          },
++          "west": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/sit-west.png",
++            "sha256": "1c4a951f82daddda4cc892828322b3e4be26a9efabbcb9bfb73740f69139b76c",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 29,
++              "y": 109,
++              "width": 102,
++              "height": 178
++            }
++          },
++          "north": {
++            "url": "art/characters/level3-roster-v2/level3-roster-v2.032/sit-north.png",
++            "sha256": "8e63bbdf31fd1d5d3d69238d45cc8e8497e3adb55aa82a09ad9bfc83cd00e6a5",
++            "width": 160,
++            "height": 320,
++            "anchors": {
++              "bodyAxisX": 80,
++              "floorY": 287,
++              "seatContactY": 246,
++              "seatContactStatus": "root-reviewed-contact-candidate;no-runtime-promotion"
++            },
++            "visibleBounds": {
++              "x": 35,
++              "y": 109,
++              "width": 90,
++              "height": 178
++            }
++          }
++        }
++      },
++      "category": "future-pediatric-presentation",
++      "intendedVisualAge": 17,
++      "currentClinicalEligibility": "excluded-until-future-approved-pediatric-release"
+     }
+   ]
+ }

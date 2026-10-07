@@ -1,0 +1,233 @@
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+index afbd087..63b54b5 100644
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -34,6 +34,8 @@ import {
+   getRoomResaleValue,
+   getRoomSalePreview,
+   getRoomStaffCapacity,
++  getRemoteWorkQueueAvailability,
++  getLevelThreeSupportStatus,
+   getStaffRoleDefinition,
+   getWorkloadSnapshot,
+   validateDoorPlacement,
+@@ -466,6 +468,8 @@ function clinicianSupportRoleForRoom(definitionId: string): FacilityActorSupport
+   if (definitionId === "room.minor_procedure") return "minor-procedure-clinician";
+   if (definitionId === "room.ct") return "ct-operator";
+   if (definitionId === "room.phlebotomy") return "phlebotomy-clinician";
++  if (definitionId === "room.ambulatory_or") return "ambulatory-or-surgeon";
++  if (definitionId === "room.laboratory") return "laboratory-technician";
+   return undefined;
+ }
+ 
+@@ -523,9 +527,12 @@ function getServiceTargetRoom(state: GameState, targetId: string, workerId?: str
+         (operation.providerReservation?.kind === "employee" && operation.providerReservation.employeeId === workerId)
+     : Boolean(operation);
+   if (operation && operationAssigned && !["waiting_for_resources", "leaving", "completed", "cancelled"].includes(operation.status)) {
++    const activeRoomDefinitionId = operationPhase(operation)?.roomDefinitionId;
+     return operation.reservedRoomInstanceIds
+       .map((id) => state.rooms.find((candidate) => candidate.id === id))
+-      .find((room) => room && clinicianSupportRoleForRoom(room.roomDefinitionId));
++      .find((room) => room &&
++        (!activeRoomDefinitionId || room.roomDefinitionId === activeRoomDefinitionId) &&
++        clinicianSupportRoleForRoom(room.roomDefinitionId));
+   }
+   for (const encounter of Object.values(state.encounters)) {
+     const pending = encounter.pendingResult;
+@@ -1359,6 +1366,47 @@ export function createPrototypePlayerView(
+       capabilityLabels.set(capabilityId, definition.displayName);
+     }
+   }
++  const laboratoryQueue = getRemoteWorkQueueAvailability(
++    state,
++    "income.laboratory_processing",
++    PROTOTYPE_DOMAIN_CONTEXT,
++  );
++  const operationalLaboratory = state.rooms.some(
++    (room) => room.roomDefinitionId === "room.laboratory" && isRoomOperationalForFacilityWork(state, room.id),
++  );
++  const laboratoryOutOfService = state.rooms.some((room) => room.roomDefinitionId === "room.laboratory" && room.maintenance?.status === "out_of_service");
++  const operationalLaboratoryTechnician = state.employees.some(
++    (employee) => employee.staffRoleDefinitionId === "staff.laboratory_technician" && isEmployeeAssignedToOperationalRoom(state, employee.id),
++  );
++  const laboratoryQueueStatus = laboratoryQueue.activeCount === 0
++    ? laboratoryQueue.canStart ? "Ready to queue processing" : "No work queued"
++    : laboratoryQueue.waitingCount > 0
++      ? `${laboratoryQueue.waitingCount} queued · ${laboratoryQueue.activeCount - laboratoryQueue.waitingCount} working`
++      : `${laboratoryQueue.activeCount} working`;
++  const laboratoryQueueDisabledReason = laboratoryQueue.canStart
++    ? undefined
++    : !operationalLaboratory
++      ? laboratoryOutOfService
++        ? "Laboratory equipment is awaiting repair."
++        : "Requires a reachable, operational Laboratory."
++      : !operationalLaboratoryTechnician
++        ? "Requires a laboratory technician assigned to a reachable Laboratory."
++        : laboratoryQueue.functionalCapacity === 0
++          ? "Waiting for the laboratory technician to return."
++          : "Laboratory work queue is full.";
++  const levelThreeQiReviews = state.levelThreeQiReviews ?? [];
++  const levelThreeSupport = getLevelThreeSupportStatus(
++    state.levelThreeQiReviews ? state : { ...state, levelThreeQiReviews },
++  );
++  const levelThreeRoomName = (id: string): string | null => {
++    const room = state.rooms.find((candidate) => candidate.id === id);
++    return room ? getRoomDefinition(room.roomDefinitionId)?.displayName ?? room.roomDefinitionId : null;
++  };
++  const repairingRoomIds = [...new Set(state.employees.flatMap((employee) =>
++    employee.facilityTask?.kind === "repair_room" && employee.facilityTask.targetId
++      ? [employee.facilityTask.targetId]
++      : [],
++  ))];
+   const serviceIncome: ServiceIncomeView = {
+     appointmentsEnabled: state.serviceAppointmentsEnabled,
+     catalogLines: SERVICE_INCOME_CATALOG.filter((line) => line.showInCatalog !== false).map((line) => {
+@@ -1432,7 +1480,7 @@ export function createPrototypePlayerView(
+         id: operation.id,
+         displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+         actorLabel: operation.actorKind === "visitor" ? operation.displayName : operation.actorKind === "remote" ? "Remote service" : operation.displayName,
+-        statusLabel: periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
++        statusLabel: operation.resourceWaitReason ?? periopPreparationStatusLabel(operation) ?? serviceOperationStatusLabel(operation.status),
+         quoteFeeLabel: currency(operation.quoteFee),
+       })),
+       ...state.retailOperations
+@@ -1441,7 +1489,7 @@ export function createPrototypePlayerView(
+           id: operation.id,
+           displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === operation.incomeLineId)?.displayName ?? operation.incomeLineId,
+           actorLabel: operation.displayName,
+-          statusLabel: serviceOperationStatusLabel(operation.status),
++          statusLabel: operation.resourceWaitReason ?? serviceOperationStatusLabel(operation.status),
+           quoteFeeLabel: `${currency(operation.quoteGross)} gross · ${currency(operation.quoteStockCost)} stock`,
+         })),
+     ],
+@@ -1459,6 +1507,20 @@ export function createPrototypePlayerView(
+     grossTotalLabel: currency(state.serviceIncomeReceipts.reduce((total, receipt) => total + receipt.grossAmount, 0)),
+     stockCostTotalLabel: currency(state.serviceIncomeReceipts.reduce((total, receipt) => total + receipt.stockCost, 0)),
+     netTotalLabel: currency(state.serviceIncomeReceipts.reduce((total, receipt) => total + receipt.netCashDelta, 0)),
++    ...(state.facilityLevel >= 3 ? { laboratoryWorkQueue: {
++      enabled: laboratoryQueue.canStart,
++      statusLabel: laboratoryQueueStatus,
++      ...(laboratoryQueueDisabledReason ? { disabledReason: laboratoryQueueDisabledReason } : {}),
++    } } : {}),
++    ...(state.facilityLevel >= 3 ? { levelThreeSupport: {
++      maintenanceDueRoomNames: levelThreeSupport.maintenanceDueRoomIds.map(levelThreeRoomName).filter((name): name is string => name !== null),
++      maintenanceOutOfServiceRoomNames: levelThreeSupport.maintenanceOutOfServiceRoomIds.map(levelThreeRoomName).filter((name): name is string => name !== null),
++      maintenanceRepairingRoomNames: repairingRoomIds.map(levelThreeRoomName).filter((name): name is string => name !== null),
++      queuedQiReviewCount: levelThreeSupport.queuedQiReviewCount,
++      inProgressQiReviewCount: levelThreeQiReviews.filter((review) => review.status === "in_progress").length,
++      completedQiReviewCount: levelThreeSupport.completedQiReviewCount,
++      staffOnBreakCount: levelThreeSupport.occupiedBreakSeats.length,
++    } } : {}),
+   };
+   const hourlyOperatingDelta = getOperatingExpensePerFacilityHour(state);
+   const xpRequirement = progressionStatus.requirements.find(
+@@ -1610,10 +1672,15 @@ export function createPrototypePlayerView(
+         for (const operation of state.serviceOperations) {
+           const phase = operationPhase(operation);
+           if (
+-            (operation.status !== "in_service" && operation.status !== "waiting_for_next_phase") ||
+-            phase?.roomDefinitionId !== "room.endoscopy"
++            (phase?.roomDefinitionId !== "room.endoscopy" && phase?.roomDefinitionId !== "room.ambulatory_or") ||
++            (phase.roomDefinitionId === "room.ambulatory_or"
++              ? operation.status !== "in_service"
++              : operation.status !== "in_service" && operation.status !== "waiting_for_next_phase")
+           ) continue;
+-          const roomId = operation.reservedRoomInstanceIds.find((candidate) => state.rooms.find((room) => room.id === candidate)?.roomDefinitionId === "room.endoscopy");
++          const roomId = operation.reservedRoomInstanceIds.find((candidate) => {
++            const definitionId = state.rooms.find((room) => room.id === candidate)?.roomDefinitionId;
++            return definitionId === phase.roomDefinitionId;
++          });
+           if (!roomId) continue;
+           roomIds.add(roomId);
+           if (operation.actorKind === "visitor") visitors.add(operation.id);
+@@ -1959,7 +2026,13 @@ export function createPrototypePlayerView(
+         const serviceRoom = taskAtEndpoint && employee.facilityTask?.targetId
+           ? getServiceTargetRoom(state, employee.facilityTask.targetId, employee.id)
+           : undefined;
+-        const serviceSupportRole = serviceRoom
++        const serviceSupportRole = serviceRoom?.roomDefinitionId === "room.ambulatory_or"
++          ? employee.staffRoleDefinitionId === "staff.or_nurse"
++            ? "ambulatory-or-nurse"
++            : employee.staffRoleDefinitionId === "staff.surgeon"
++              ? "ambulatory-or-surgeon"
++              : undefined
++          : serviceRoom
+           ? clinicianSupportRoleForRoom(serviceRoom.roomDefinitionId)
+           : undefined;
+         const homeRoom = employee.homeRoomInstanceId
+@@ -1971,9 +2044,38 @@ export function createPrototypePlayerView(
+           employee.pathIndex >= employee.path.length - 1 &&
+           samePoint(employee.location, getRoomNavigationAnchor(homeRoom, homeDefinition, "staff"));
+         const glp1SupportRole = departing ? undefined : getGlp1NursePractitionerSupportRole(state, employee);
+-        const supportRole = serviceSupportRole === "ct-operator" && employee.staffRoleDefinitionId !== "staff.imaging_technician"
++        const arrivedSupportTask = !departing && employee.facilityTask && employee.pathIndex >= employee.path.length - 1 && samePoint(employee.location, employee.path.at(-1));
++        const activeQiReview = arrivedSupportTask && employee.facilityTask?.kind === "review_ambulatory_qi"
++          ? levelThreeQiReviews.find((review) =>
++              review.id === employee.facilityTask?.targetId &&
++              review.status === "in_progress" &&
++              review.surgeonEmployeeId === employee.id)
++          : undefined;
++        const taskSupport = arrivedSupportTask && employee.facilityTask?.kind === "take_break" &&
++          employee.facilityTask.seatId &&
++          state.rooms.find((candidate) => candidate.id === employee.facilityTask?.targetId)?.roomDefinitionId === "room.staff_break"
++          ? { supportRole: "staff-break-seat" as const, supportId: employee.facilityTask.seatId, supportRoomInstanceId: employee.facilityTask.targetId }
++          : activeQiReview && homeRoom?.roomDefinitionId === "room.surgeon_office"
++            ? { supportRole: "surgeon-office" as const, supportId: "surgeon", supportRoomInstanceId: homeRoom.id }
++            : undefined;
++        const atHomeAnchor = !employee.facilityTask && homeRoom && homeDefinition &&
++          employee.pathIndex >= employee.path.length - 1 &&
++          samePoint(employee.location, getRoomNavigationAnchor(homeRoom, homeDefinition, "staff"));
++        const homeSupport = atHomeAnchor
++          ? homeRoom.roomDefinitionId === "room.laboratory" && employee.staffRoleDefinitionId === "staff.laboratory_technician"
++            ? { supportRole: "laboratory-technician" as const, supportRoomInstanceId: homeRoom.id }
++            : homeRoom.roomDefinitionId === "room.pharmacy" && employee.staffRoleDefinitionId === "staff.pharmacist"
++              ? { supportRole: "pharmacist" as const, supportRoomInstanceId: homeRoom.id }
++              : homeRoom.roomDefinitionId === "room.maintenance_workshop" && employee.staffRoleDefinitionId === "staff.repair_person"
++                ? { supportRole: "repair-person" as const, supportRoomInstanceId: homeRoom.id }
++                : undefined
++          : undefined;
++        const serviceSupport = serviceSupportRole === "ct-operator" && employee.staffRoleDefinitionId !== "staff.imaging_technician"
+           ? undefined
+-          : serviceSupportRole ?? glp1SupportRole ?? (atFrontDeskSeat ? "front-desk-staff" : undefined);
++          : serviceSupportRole && serviceRoom
++            ? { supportRole: serviceSupportRole, supportRoomInstanceId: serviceRoom.id }
++            : undefined;
++        const projectedSupport = taskSupport ?? serviceSupport ?? (glp1SupportRole ? { supportRole: glp1SupportRole } : undefined) ?? homeSupport ?? (atFrontDeskSeat ? { supportRole: "front-desk-staff" as const } : undefined);
+         return {
+           instanceId: employee.id,
+           discussionActionRequired: Object.values(state.employeeDiscussions ?? {}).some((discussion) =>
+@@ -1988,7 +2090,9 @@ export function createPrototypePlayerView(
+             employee.salaryPerExpenseInterval,
+           morale: employee.morale,
+           trainingLevel: employee.trainingLevel,
+-          ...(supportRole ? { supportRole } : {}),
++          ...(projectedSupport?.supportRole ? { supportRole: projectedSupport.supportRole } : {}),
++          ...(projectedSupport && "supportId" in projectedSupport && projectedSupport.supportId ? { supportId: projectedSupport.supportId } : {}),
++          ...(projectedSupport && "supportRoomInstanceId" in projectedSupport && projectedSupport.supportRoomInstanceId ? { supportRoomInstanceId: projectedSupport.supportRoomInstanceId } : {}),
+           ...(retailTripPresentation("employee", employee.id) ?? {
+             location: employee.location, path: employee.path, pathIndex: employee.pathIndex,
+             ...movementPresentation(employee.path, employee.pathIndex),
+@@ -2024,7 +2128,9 @@ export function createPrototypePlayerView(
+         progressionStatus.nextFacilityLevel === null
+           ? state.facilityLevel === 2
+             ? "Level 3"
+-            : null
++            : state.facilityLevel === 3
++              ? "Level 4 preview"
++              : null
+           : `Level ${progressionStatus.nextFacilityLevel}`,
+       goals: progressionStatus.requirements.map((requirement) => ({
+         id: requirement.id,
+@@ -2035,6 +2141,12 @@ export function createPrototypePlayerView(
+           requirement.required,
+         )}/${requirement.required}`,
+       })),
++      ...(state.facilityLevel >= 3 ? { secondaryGoals: [{
++        id: "secondary.level_three_first_qi_review",
++        label: "Complete the first administrative quality review",
++        complete: levelThreeSupport.completedQiReviewCount > 0,
++        progressLabel: `${Math.min(levelThreeSupport.completedQiReviewCount, 1)}/1`,
++      }] } : {}),
+       canLevelUp: progressionStatus.eligible,
+       prototypeComplete:
+         progressionStatus.nextFacilityLevel === null &&

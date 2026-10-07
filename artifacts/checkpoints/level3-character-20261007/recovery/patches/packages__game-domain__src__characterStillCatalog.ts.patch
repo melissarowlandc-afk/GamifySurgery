@@ -1,0 +1,103 @@
+diff --git a/packages/game-domain/src/characterStillCatalog.ts b/packages/game-domain/src/characterStillCatalog.ts
+index b78d956..48e4a08 100644
+--- a/packages/game-domain/src/characterStillCatalog.ts
++++ b/packages/game-domain/src/characterStillCatalog.ts
+@@ -16,7 +16,7 @@ export type CharacterStillCatalogEntry =
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "patient";
+-      readonly sourceCohort: "gs018-patient50" | "gs022-public20";
++      readonly sourceCohort: "gs018-patient50" | "gs022-public20" | "level3-roster-v2";
+       readonly compatibleSexLabel: Exclude<PatientSexLabel, "Not specified">;
+       readonly ageBand: PatientVisualAgeBand;
+       readonly intendedAge?: number;
+@@ -24,7 +24,7 @@ export type CharacterStillCatalogEntry =
+   | {
+       readonly stillId: CharacterStillId;
+       readonly category: "staff";
+-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage";
++      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2";
+       readonly eligibleStaffRoleDefinitionIds: readonly string[];
+     }
+   | {
+@@ -37,6 +37,16 @@ export type CharacterStillCatalogEntry =
+       readonly stillId: CharacterStillId;
+       readonly category: "explicit-avatar-extra";
+       readonly sourceCohort: "gs018-retained-reference" | "gs018-foundation-patient";
++    }
++  | {
++      /** Renderable art registered for a deliberately future-only release seam. */
++      readonly stillId: CharacterStillId;
++      readonly category: "future-presentation";
++      readonly sourceCohort: "level3-roster-v2";
++      readonly futurePresentationKind: "pediatric" | "radiologist";
++      readonly availability: "level4-locked" | "excluded-until-future-approved-pediatric-release";
++      readonly futureStaffRoleDefinitionId?: "staff.radiologist";
++      readonly intendedVisualAge?: number;
+     };
+ 
+ const id = (value: string) => value as CharacterStillId;
+@@ -97,6 +107,46 @@ const STAFF_STILLS = [
+   { stillId: id("mixed-20260910-nurse-01"), category: "staff" as const, sourceCohort: "gs018-foundation-employee" as const, eligibleStaffRoleDefinitionIds: ["staff.periop_nurse", "staff.endoscopy_nurse"] },
+ ];
+ 
++const LEVEL3_ROSTER_V2_ADULT_PATIENT_ROWS = [
++  ["level3-roster-v2.015", 19, "Male"], ["level3-roster-v2.016", 24, "Male"],
++  ["level3-roster-v2.017", 28, "Male"], ["level3-roster-v2.018", 21, "Female"],
++  ["level3-roster-v2.019", 26, "Female"], ["level3-roster-v2.020", 38, "Male"],
++] as const satisfies readonly (readonly [string, number, Exclude<PatientSexLabel, "Not specified">])[];
++
++const LEVEL3_ROSTER_V2_ADULT_PATIENT_STILLS = LEVEL3_ROSTER_V2_ADULT_PATIENT_ROWS.map(([stillId, intendedAge, compatibleSexLabel]) => ({
++  stillId: id(stillId), category: "patient" as const, sourceCohort: "level3-roster-v2" as const,
++  compatibleSexLabel, intendedAge, ageBand: patientVisualAgeBand(intendedAge)!,
++}));
++
++const LEVEL3_ROSTER_V2_STAFF_ROWS = [
++  ["level3-roster-v2.005", "staff.surgeon"], ["level3-roster-v2.006", "staff.surgeon"],
++  ["level3-roster-v2.007", "staff.or_nurse"], ["level3-roster-v2.008", "staff.or_nurse"],
++  ["level3-roster-v2.009", "staff.laboratory_technician"], ["level3-roster-v2.010", "staff.laboratory_technician"],
++  ["level3-roster-v2.011", "staff.pharmacist"], ["level3-roster-v2.012", "staff.pharmacist"],
++  ["level3-roster-v2.013", "staff.repair_person"], ["level3-roster-v2.014", "staff.repair_person"],
++] as const;
++
++const LEVEL3_ROSTER_V2_STAFF_STILLS = LEVEL3_ROSTER_V2_STAFF_ROWS.map(([stillId, role]) => ({
++  stillId: id(stillId), category: "staff" as const, sourceCohort: "level3-roster-v2" as const,
++  eligibleStaffRoleDefinitionIds: [role] as readonly string[],
++}));
++
++const LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS = [
++  ...["001", "002", "003", "004"].map(number => ({
++    stillId: id(`level3-roster-v2.${number}`), category: "future-presentation" as const,
++    sourceCohort: "level3-roster-v2" as const, futurePresentationKind: "radiologist" as const,
++    availability: "level4-locked" as const, futureStaffRoleDefinitionId: "staff.radiologist" as const,
++  })),
++  ...[
++    ["021", 6], ["022", 5], ["023", 7], ["024", 6], ["025", 9], ["026", 10],
++    ["027", 11], ["028", 12], ["029", 14], ["030", 14], ["031", 16], ["032", 17],
++  ].map(([number, intendedVisualAge]) => ({
++    stillId: id(`level3-roster-v2.${number}`), category: "future-presentation" as const,
++    sourceCohort: "level3-roster-v2" as const, futurePresentationKind: "pediatric" as const,
++    availability: "excluded-until-future-approved-pediatric-release" as const, intendedVisualAge,
++  })),
++];
++
+ export const FOUNDER_STILL_IDS = Array.from({ length: 30 }, (_, index) => id(`founder.${String(index + 1).padStart(2, "0")}`));
+ const FOUNDER_STILLS = FOUNDER_STILL_IDS.map((stillId, index) => ({
+   stillId, category: "founder" as const, sourceCohort: "gs018-founder30" as const, founderPresetIndex: index,
+@@ -112,12 +162,15 @@ const EXPLICIT_EXTRA_STILLS = EXPLICIT_ADDITIONAL_AVATAR_STILL_IDS.map((stillId)
+ }));
+ 
+ export const CHARACTER_STILL_CATALOG = [
+-  ...LEGACY_PATIENT_STILLS, ...PUBLIC_PATIENT_STILLS, ...STAFF_STILLS, ...FOUNDER_STILLS, ...EXPLICIT_EXTRA_STILLS,
++  ...LEGACY_PATIENT_STILLS, ...PUBLIC_PATIENT_STILLS, ...LEVEL3_ROSTER_V2_ADULT_PATIENT_STILLS,
++  ...STAFF_STILLS, ...LEVEL3_ROSTER_V2_STAFF_STILLS, ...FOUNDER_STILLS, ...EXPLICIT_EXTRA_STILLS,
++  ...LEVEL3_ROSTER_V2_FUTURE_PRESENTATION_STILLS,
+ ] as readonly CharacterStillCatalogEntry[];
+ 
+ export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");
+ export const STAFF_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "staff" }> => entry.category === "staff");
+ export const EXPLICIT_ADDITIONAL_AVATAR_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "explicit-avatar-extra" }> => entry.category === "explicit-avatar-extra");
++export const FUTURE_PRESENTATION_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "future-presentation" }> => entry.category === "future-presentation");
+ 
+ export function isCharacterStillId(value: unknown): value is CharacterStillId {
+   return typeof value === "string" && value.length > 0 && value.length <= MAX_CHARACTER_STILL_ID_LENGTH && value.trim() === value;

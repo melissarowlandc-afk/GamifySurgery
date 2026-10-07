@@ -1,0 +1,1283 @@
+{
+  "schemaVersion": "level3-roster-complete-v2-staging/v3",
+  "runtimeIntegration": {
+    "authorized": false,
+    "ready": false
+  },
+  "baseline": "artifacts/character-statics/level3-roster-complete-v2/runtime-baseline.json",
+  "rosterContract": {
+    "identities": 32,
+    "posesPerIdentity": 8,
+    "totalPoses": 256,
+    "adultTargets": 20,
+    "pediatricTargets": 12
+  },
+  "derivedAlphaReport": {
+    "path": "artifacts/character-statics/level3-roster-complete-v2/alpha-normalization-report.json",
+    "sha256": "5e2b4fb0ef006f476dcc1f81c0c0f7693db22a2050c591c2685c591168d36947",
+    "rootWarningAccepted": true
+  },
+  "adultReferenceContract": "tools/character-mapping/level3-roster-complete-v2/reference-contract.json",
+  "furniturePlacementReference": {
+    "path": "artifacts/character-movement/whole-body-static-v1/review/static-sit-east-chair-736.png",
+    "sha256": "cb5cf25ce016f0be615f13616d89258e964a97630cc22ed0c1a959b236e5b98e",
+    "status": "accepted-reference-only; no runtime placement mutation"
+  },
+  "entries": [
+    {
+      "number": "001",
+      "stableId": "level3-roster-v2.001",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/001/manifest.json",
+      "sourceSha256": "a01fb77bb962130d75c2b43d2d21eb8e9129c6b115cc2175a9bbc5c1f98b8919",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 250,
+        "east": 248,
+        "west": 248,
+        "north": 250
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/001/full-poses-transparent.png",
+          "sha256": "c9bfb48831498af8b790a9ca96222622e9ac190ad3e6d38e03ccbac10255bea0"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/001/full-poses-light.png",
+          "sha256": "abe7cf16fd146ae48455d81c7b6d6e451f23d64bf4985c822a2a7b92f521a917"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/001/full-poses-dark.png",
+          "sha256": "c109a6c0e2059f6985c4d61532a902158cf141cd6a3a9d47395a636c83d644ca"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/001/seated-contact-grid-2x.png",
+          "sha256": "9d5d9eda60f144a6ec6f5a716a1c9ae254b4bce9208646a3fe7134a7c5da14b0"
+        }
+      }
+    },
+    {
+      "number": "002",
+      "stableId": "level3-roster-v2.002",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/002/manifest.json",
+      "sourceSha256": "bfb3fc72ca258760101c0a8db403fe8c2ea8a67571b89877407b0391025d7fb8",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 240
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/002/full-poses-transparent.png",
+          "sha256": "6d8b422539423c63a7e7dca84948515530d338eef1e507c164eafc0034b7b97e"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/002/full-poses-light.png",
+          "sha256": "2f47d4a26de9a0417dfcdd6e56d1666c232ef8c6e36670ea670f8cbea9daed88"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/002/full-poses-dark.png",
+          "sha256": "91721d6db81b73453f428ffa99730e621f76cab12fbc9e1630cbb6a7fd20d358"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/002/seated-contact-grid-2x.png",
+          "sha256": "64f2641b8f89732c6418e2df124fad3b645c4db03c49f259e5522b8567740a8e"
+        }
+      }
+    },
+    {
+      "number": "003",
+      "stableId": "level3-roster-v2.003",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/003/manifest.json",
+      "sourceSha256": "6d1ad410e6117a45f84db00496d52f36de568637d170ac15668c23e5ca3480bf",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 248,
+        "east": 245,
+        "west": 245,
+        "north": 246
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/003/full-poses-transparent.png",
+          "sha256": "c8159af7e79d3d8df50ee5aa22cb7123c7c168f29a5752c647db51bfc4b04c9c"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/003/full-poses-light.png",
+          "sha256": "cc29c26afb9242af3ab2483825c988431bf3729cbc758e5f3a27181281f83c4b"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/003/full-poses-dark.png",
+          "sha256": "10977079605320ab967dff234ff4a909581b1fdb297bea2a7171c536272717ea"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/003/seated-contact-grid-2x.png",
+          "sha256": "075ea3da12957c008fc63314ba35f0b4fe7d2d1ad17ce7412c5d005040425053"
+        }
+      }
+    },
+    {
+      "number": "004",
+      "stableId": "level3-roster-v2.004",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/004/manifest.json",
+      "sourceSha256": "501be7f5cf804016b3bad0a7b9b495af2e8af59d442740b9c483ba8a7cbbd39f",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 250,
+        "east": 241,
+        "west": 241,
+        "north": 241
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/004/full-poses-transparent.png",
+          "sha256": "c724e7b729d2e6100ee09d1a9ce024396493c7d100179931de38ee0ad0df7b11"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/004/full-poses-light.png",
+          "sha256": "7dbbf7a81d82717621e9e54504384ee557524c966a4f743e0e5b11370a3d5b26"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/004/full-poses-dark.png",
+          "sha256": "5905acc4b91fb1b2a074b69c51a127febc79ede4619d6c4dcee725202bdb03ec"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/004/seated-contact-grid-2x.png",
+          "sha256": "1766af9d6f463ffa936c817a9fb03cf0c74a92193c9a16a835304d58b7e81790"
+        }
+      }
+    },
+    {
+      "number": "005",
+      "stableId": "level3-roster-v2.005",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/005/manifest.json",
+      "sourceSha256": "419ca4d2fae0a05f215a37fc79af16eb17888f6ac8b92ff38dfa0b647f9d551b",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/005/full-poses-transparent.png",
+          "sha256": "fdf465e651c04833bcdb0c72f28f1736f3fa2cf7797dd1a5c7dc474d7ff8feeb"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/005/full-poses-light.png",
+          "sha256": "b83e0b216246da89e99948fdb4ec79cc30bff1e7a970b66c556d7ebea545f3b8"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/005/full-poses-dark.png",
+          "sha256": "e72f4071a611fba99fa129c76b5dbf8a935005b6c704d7e4d8327c15a9c30fd1"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/005/seated-contact-grid-2x.png",
+          "sha256": "66554a564f0e1d8d26ed5389c578e8bc717a6fd9cf9627d313863d25a9ad440c"
+        }
+      }
+    },
+    {
+      "number": "006",
+      "stableId": "level3-roster-v2.006",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/006/manifest.json",
+      "sourceSha256": "289fe9c54c8d5bf9f048a1492e3e4efa67324d8415ba6774083c212e0124b995",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 248,
+        "east": 242,
+        "west": 242,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/006/full-poses-transparent.png",
+          "sha256": "99d7193ddb8c4d82dc520aad57b4572d447fe7d05050c36403ea14191213ebca"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/006/full-poses-light.png",
+          "sha256": "941938004a67dbc3a5a21d811993f6c61dc9c47539b39c441c1e18f147b9cee1"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/006/full-poses-dark.png",
+          "sha256": "765c4a03dc0310921d6eb99473fa3d69c216043016dc8fe950e127a46717f877"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/006/seated-contact-grid-2x.png",
+          "sha256": "146d1deeff4c09ea14788ab49e4e5e6f737ce4c409b25b813b2d4ba90c6372d7"
+        }
+      }
+    },
+    {
+      "number": "007",
+      "stableId": "level3-roster-v2.007",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/007/manifest.json",
+      "sourceSha256": "5478e0116035c7aa69bb3645828c813812e9cbf64d87c754de7a568f00a03463",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/007/full-poses-transparent.png",
+          "sha256": "3f2f51e13ee8f97a500bdb9d4eb8fae816622cc798b988b4a9981f1f898bbedf"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/007/full-poses-light.png",
+          "sha256": "9181591842fda696f1a1422edcf1a1a25913e3e88c27e9ecdf5666dc5227850b"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/007/full-poses-dark.png",
+          "sha256": "7aa76d6dc432359220d1b598e77eb5c5f1e64ee17fde3b21af300ee0ccbc844a"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/007/seated-contact-grid-2x.png",
+          "sha256": "74d08b43611ef49dc02828a8e50fc5b8496c466423d20555c0d800162367f656"
+        }
+      }
+    },
+    {
+      "number": "008",
+      "stableId": "level3-roster-v2.008",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/008/manifest.json",
+      "sourceSha256": "075a626ff4d1b85ca3efa27681c72cd5553456dc25d8c1631d11bb112e422eeb",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 243,
+        "east": 238,
+        "west": 238,
+        "north": 240
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/008/full-poses-transparent.png",
+          "sha256": "257e89465a03079a754ad1ea4ebc60792c13bf95c09bf12318125432357171eb"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/008/full-poses-light.png",
+          "sha256": "eef753a2739312f9981592c51bef62f0b55c9517474769b7c756fca8337bb021"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/008/full-poses-dark.png",
+          "sha256": "dcd81fb67db7cffeb85a48371be352e12ca3fd3e8fadecfa38f55f84f300717b"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/008/seated-contact-grid-2x.png",
+          "sha256": "693ef147ff365781c7fbf712b1616bf8526935f1213b5f7b4b9468d0c013d7fc"
+        }
+      }
+    },
+    {
+      "number": "009",
+      "stableId": "level3-roster-v2.009",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/009/manifest.json",
+      "sourceSha256": "a7555307c0194c2ee53588a5f34be2405c3f702fd6142b1479784c26e28094d1",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 246,
+        "east": 243,
+        "west": 243,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/009/full-poses-transparent.png",
+          "sha256": "8d634727b21521bebdd567cf59939fb04f6eb4552a36007f33aed40ec2ced9b0"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/009/full-poses-light.png",
+          "sha256": "25399d45e5d25bcbc94fb4440de95d3acde8f469e53ca76f5d3ff06d6a6dcd82"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/009/full-poses-dark.png",
+          "sha256": "eb7a8097b3e348c907a224eedfc98402aeaba20f202ca81d2d450fce038232ef"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/009/seated-contact-grid-2x.png",
+          "sha256": "21b03e521854f4fb6aeeef56bc9fa8cec3d2b78f387a0a45dd63936ec0b1cb5b"
+        }
+      }
+    },
+    {
+      "number": "010",
+      "stableId": "level3-roster-v2.010",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/010/manifest.json",
+      "sourceSha256": "d6f55da65a1440f9c5ef4049e9a0653e87165840e88a5c22ece8cde44b6ea3d0",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 243,
+        "east": 241,
+        "west": 241,
+        "north": 241
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/010/full-poses-transparent.png",
+          "sha256": "fd62fa16790de0b95bc387f768263835fd86b5511305747b8c0a13dcc5b793c5"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/010/full-poses-light.png",
+          "sha256": "8253c02660e065cf3b36cbc64608314d810e9c5278cfad19aef35de2cf17ce68"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/010/full-poses-dark.png",
+          "sha256": "156bf8a8f40d392a68b0337061352a2aed6ca3c4613dc51be868c9cb827ee0ec"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/010/seated-contact-grid-2x.png",
+          "sha256": "c19d9d0d9e9b25fe41a1ab915e8462a963b9810a5e05f6461e7c65f127c7a0b0"
+        }
+      }
+    },
+    {
+      "number": "011",
+      "stableId": "level3-roster-v2.011",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/011/manifest.json",
+      "sourceSha256": "0a693b512a3f7193883762efc94bafaeea114e11a5be06a3419d09ed5e29574f",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 247,
+        "east": 242,
+        "west": 242,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/011/full-poses-transparent.png",
+          "sha256": "3f22f6fcafecf6ee3d6340e1dd39b6aecffc21a2720743528c6171f0e7349de8"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/011/full-poses-light.png",
+          "sha256": "8520246d6c6816b61f70222fb54044a67edfc4ebb737886745f389f1d4b83bcf"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/011/full-poses-dark.png",
+          "sha256": "2e68bc3db4496a1d28588901c603d5206e709b0e846b8dd12b327cb01e1e2e0a"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/011/seated-contact-grid-2x.png",
+          "sha256": "610a2e1d3fe79145d818b8c3fd88a79a8619cd5eae34502a8fb036cae4a7070d"
+        }
+      }
+    },
+    {
+      "number": "012",
+      "stableId": "level3-roster-v2.012",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/012/manifest.json",
+      "sourceSha256": "1b7d81a5416688f69d532eab37ceb8536c199151a76221039d27b9185e87a932",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 248,
+        "east": 242,
+        "west": 242,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/012/full-poses-transparent.png",
+          "sha256": "67ee9159624ef75cb220c595ce686469cc49fea7c1d3fbcbb39862e56362326b"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/012/full-poses-light.png",
+          "sha256": "4896aa043ba1ce5830ae4689fc891dba0759539570b04515ac896508dcaa59d3"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/012/full-poses-dark.png",
+          "sha256": "1b320a32d42201d945f58c0925c52e965eaa5c261f284e690fcb9efa4f5ac51b"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/012/seated-contact-grid-2x.png",
+          "sha256": "1817ebc2318f6a8796f1b2df5907772a5979550540524ba684ec08e781c65db6"
+        }
+      }
+    },
+    {
+      "number": "013",
+      "stableId": "level3-roster-v2.013",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/013/manifest.json",
+      "sourceSha256": "d79980bf12e6e0fbb99ad376f92f1bb6cc98af9296aed3636e2702543bf7e569",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 246,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/013/full-poses-transparent.png",
+          "sha256": "b13ceaffb4fdb9809426bc7c2d47245d9dd569dc2c10cc339c1ebf4c4229851f"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/013/full-poses-light.png",
+          "sha256": "44658a1d43151fa3a4bdbf7fe54c8c3803cd4281e5cf4b453961720e62088da9"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/013/full-poses-dark.png",
+          "sha256": "c50612e02c33d9e48293170e3c7bb77c8a4a3583427508794dfbcd819d97b88f"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/013/seated-contact-grid-2x.png",
+          "sha256": "bcb277821a89396e640f198852bf4efaeb194e1c80034164357ad72d92bedf54"
+        }
+      }
+    },
+    {
+      "number": "014",
+      "stableId": "level3-roster-v2.014",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/014/manifest.json",
+      "sourceSha256": "3447f97427e11ff09c4608d62e05de79008504de8040a255d1eb9cbe776a626d",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 249,
+        "east": 243,
+        "west": 243,
+        "north": 245
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/014/full-poses-transparent.png",
+          "sha256": "f44585ab9e47e3453960f89e952897546848b14aef0d9b0862a5c18186855342"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/014/full-poses-light.png",
+          "sha256": "62e3febee76f058b512938e4eb78c022b7e994bf398d033d2c95bf0d9fbfb3be"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/014/full-poses-dark.png",
+          "sha256": "742982ecb43a6940fedbb04e46eea2b55d30da43ecf51024dc0e88782229a87a"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/014/seated-contact-grid-2x.png",
+          "sha256": "96b8db8ab55858bce32aaaf985f81a38b6901c7c6a0bfbdb528f4959fdc967c5"
+        }
+      }
+    },
+    {
+      "number": "015",
+      "stableId": "level3-roster-v2.015",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/015/manifest.json",
+      "sourceSha256": "eb0343658d68b915c9a41a1aa5299c458a3fd3fa048a499e3f28d0639b4e5cfc",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/015/full-poses-transparent.png",
+          "sha256": "127b9e29b231fca1891054a4675d33a29cec897b7800762b2b68514fde59b96e"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/015/full-poses-light.png",
+          "sha256": "941f146d5981fbf3cc0104349f7aa095e30901ee03af2d0d039f26c9910eb6be"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/015/full-poses-dark.png",
+          "sha256": "acc85410d8a3914d01f8c796571f123971967dc75aeb5e416bb0742ed7459ada"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/015/seated-contact-grid-2x.png",
+          "sha256": "c2a71d802753fc39d74207c489b1b185e7d9a5857992c2cf43334dbcc20bfc55"
+        }
+      }
+    },
+    {
+      "number": "016",
+      "stableId": "level3-roster-v2.016",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/016/manifest.json",
+      "sourceSha256": "732f4a5114b63b0373b28b90774407836c4a1d90e3fbd414dfead1e2207d0f9b",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/016/full-poses-transparent.png",
+          "sha256": "d075ed7a05c0d96b5eaaf01b61423e6a2d5fb7e78db30407ffc21543179567d4"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/016/full-poses-light.png",
+          "sha256": "7662bd40a3332245b85aa5fea80fac0d1a4ff0f75cc438e2e6a9577422c2cbaf"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/016/full-poses-dark.png",
+          "sha256": "f4d126a963b0decc58e6799c01202bab10ee25fa58636b4b9164d0046b05de31"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/016/seated-contact-grid-2x.png",
+          "sha256": "739c50ac3e1207780d99536b0b2d9a65357d6dab6c254ddb8cddfe8b357c56b5"
+        }
+      }
+    },
+    {
+      "number": "017",
+      "stableId": "level3-roster-v2.017",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/017/manifest.json",
+      "sourceSha256": "2d04a2f95e10bf76588137239037eabac1343f6f0de60b09157afd09f6f849bb",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 246,
+        "east": 241,
+        "west": 241,
+        "north": 243
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/017/full-poses-transparent.png",
+          "sha256": "65fb491fb0e25e465b476fcb263fb356e586d8abddee41b1fc8a9dde5296fafd"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/017/full-poses-light.png",
+          "sha256": "868fb9aac3b80c65b608882c62d1fafb8b18b18965421b678e769cd38ce3b4cd"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/017/full-poses-dark.png",
+          "sha256": "0c12abeb39dca48f2c4e7e58f07764f7b76ac12a49d330a680cbe150c7edfa22"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/017/seated-contact-grid-2x.png",
+          "sha256": "e1c8781dbdfb6d9be1993ff9a02605ff81375e58d4a69a27b3860a241882efab"
+        }
+      }
+    },
+    {
+      "number": "018",
+      "stableId": "level3-roster-v2.018",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/018/manifest.json",
+      "sourceSha256": "d0d71d20cb611c15e428bdd17e8ece928da98313375f24e4f9de6d47869325ca",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/018/full-poses-transparent.png",
+          "sha256": "4eba7380bef626040c483c195c5de6f8df2c606ed301b0423f9a28fb6a66c8c7"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/018/full-poses-light.png",
+          "sha256": "2652a80b6ac90e983c6a992e040a34eac34a1af3ed47c5df57744c75cf2b49ba"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/018/full-poses-dark.png",
+          "sha256": "ff8da16c633748f912d5c7c69aac0af30946b9b9a4765f97bca5f121e2d3e53a"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/018/seated-contact-grid-2x.png",
+          "sha256": "c4436060e4cf8e8b31afd079d71f7d0728ad765cf8515ed842a2af63367cab72"
+        }
+      }
+    },
+    {
+      "number": "019",
+      "stableId": "level3-roster-v2.019",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/019/manifest.json",
+      "sourceSha256": "f016eb5c668331e53993b3eaecd6f44aa0fc32953b8876ca6dfb32359644ab8f",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 246,
+        "east": 241,
+        "west": 241,
+        "north": 243
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/019/full-poses-transparent.png",
+          "sha256": "1b33f72f9f0b4ae059cec614d7a168c598485cf78b3ceb303ed2580d62553480"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/019/full-poses-light.png",
+          "sha256": "65790f0a9c88385aa46d64a8a475e25969a9a53e6110cac2248450805303f233"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/019/full-poses-dark.png",
+          "sha256": "abb17cac6675cb672b1e0dc098020b4461357b348202d7ca3cd749a0954bb5dd"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/019/seated-contact-grid-2x.png",
+          "sha256": "a9968e3bff71bb5302a0e0019f096dc40068bdfbb22619a295dd4463f6c28a2d"
+        }
+      }
+    },
+    {
+      "number": "020",
+      "stableId": "level3-roster-v2.020",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/020/manifest.json",
+      "sourceSha256": "52258c1a5d00d7d528ea5b9088601bd01dcfd4109ba57418514d0ee5cdb42f1d",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 240,
+        "west": 240,
+        "north": 242
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/020/full-poses-transparent.png",
+          "sha256": "2e7d561ceb1b29e262f0c3e01d8f7d82e689b24a1aaa2168ac9712867a93b225"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/020/full-poses-light.png",
+          "sha256": "888c1af53c86653266b484a46c42c53c3923b8be825d6076891cce52d42bf90d"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/020/full-poses-dark.png",
+          "sha256": "70a08767b24f040a59ea08a69646ebaa2cd386acba4fc8e6aa37dee744e80ac9"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/020/seated-contact-grid-2x.png",
+          "sha256": "546b666a2de793e52242491102126a0803025e2fdeae0560c1cc4731c9177e00"
+        }
+      }
+    },
+    {
+      "number": "021",
+      "stableId": "level3-roster-v2.021",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/021/manifest.json",
+      "sourceSha256": "50ec37c891c3eb259e3976f0839d2bd995ae7a35f3c68033a17f5559c0682573",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 242,
+        "east": 252,
+        "west": 251,
+        "north": 250
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/021/full-poses-transparent.png",
+          "sha256": "abb688676edadc73eb235e9afec1e6cf85c8d6b85f58c9f179de4a759185e8dc"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/021/full-poses-light.png",
+          "sha256": "ee730684da74ca87f34f6750032ef595c4445bb5bd4ac8d0190f6acfe576d6e0"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/021/full-poses-dark.png",
+          "sha256": "d674b6013794f6e78461d97052f4a634d14f78b101e046a6207ae509a0c42249"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/021/seated-contact-grid-2x.png",
+          "sha256": "eb2cd482638236b79583a29d10ead0546beaeb915b682a217899ead052f6d41b"
+        }
+      }
+    },
+    {
+      "number": "022",
+      "stableId": "level3-roster-v2.022",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/022/manifest.json",
+      "sourceSha256": "8b19f93744659ec6136a2e4c2bf39ae5412b98a4b3babd977f8632267d167636",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 243,
+        "east": 253,
+        "west": 252,
+        "north": 251
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/022/full-poses-transparent.png",
+          "sha256": "7eaf0b4072947433d0a829313bf4699cf5d2cfedc30d6068572f526e56877b61"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/022/full-poses-light.png",
+          "sha256": "faef9b34ae82df64291b04fd5e22910490b7f65affb98f8ed7d511256e8048f5"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/022/full-poses-dark.png",
+          "sha256": "9f80c5fcaa9ec04ded070bfa96ac0ca5a16f97dd4ccdf9b66ae78527eb626c98"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/022/seated-contact-grid-2x.png",
+          "sha256": "5085e9d802d113608b6b164822453d12ff6c79daeabe04a413998e2a4f854a43"
+        }
+      }
+    },
+    {
+      "number": "023",
+      "stableId": "level3-roster-v2.023",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/023/manifest.json",
+      "sourceSha256": "b646c368e3237a23bfff0312088d7e696453f07b26a8cbad546b0321a02690e1",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 255,
+        "west": 254,
+        "north": 253
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/023/full-poses-transparent.png",
+          "sha256": "84ffcf8005c337eca6beee881819e8b6111de33162c63f75c32841b2caec48f7"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/023/full-poses-light.png",
+          "sha256": "d502c7469f6bb84cab13c793a16a800e42704fdfb4c75954f5fb28e8403a7eeb"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/023/full-poses-dark.png",
+          "sha256": "0753be928c2d70ed2a5a6a51f449ace003a7b46c0f5dafa49c2a93079ba06ddc"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/023/seated-contact-grid-2x.png",
+          "sha256": "888474e5e49995ba9f8dfd277c0ed6110ddf8ac3850e50789c7564f205acecef"
+        }
+      }
+    },
+    {
+      "number": "024",
+      "stableId": "level3-roster-v2.024",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/024/manifest.json",
+      "sourceSha256": "94c628ff1752682aa567454a2fabf76f787d4dbab201f9c15cbe8ec8591affa7",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 243,
+        "east": 248,
+        "west": 248,
+        "north": 248
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/full-poses-transparent.png",
+          "sha256": "f4500e3cac32af0888c7baca1154e4dbc69166948073ea5bfde4847f43b96b14"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/full-poses-light.png",
+          "sha256": "1ebdaaca21c608708e742667d671a6f4f6e1c680ea98a1a15a08469c1de8c415"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/full-poses-dark.png",
+          "sha256": "ca6f6bb1b7baebd91d7cf251624a21856d34f4e31d0538b7cd028aace0fc7b67"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/024/seated-contact-grid-2x.png",
+          "sha256": "c12b3a56ba95630804cb1d4b50a6c05d8a4076a3dea315ffaa403a3d3f18d773"
+        }
+      }
+    },
+    {
+      "number": "025",
+      "stableId": "level3-roster-v2.025",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/025/manifest.json",
+      "sourceSha256": "efb02f718b46a372993ea75688db4d339e4c66d633a413f5349a1f659561ec25",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 246,
+        "east": 247,
+        "west": 246,
+        "north": 245
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/025/full-poses-transparent.png",
+          "sha256": "c48b6dff3a1c5defbdc4252fcdd0ce5c72f3f6c29bae53f929bd4d0bd1224405"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/025/full-poses-light.png",
+          "sha256": "ccfed59e4a586a114a95100d453660b95da60e01341a20fc99fffe86ea20dfac"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/025/full-poses-dark.png",
+          "sha256": "2f75e423ebed70fb3afbfffff15a6c787ada59b6042fc35c123554296dbd8a47"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/025/seated-contact-grid-2x.png",
+          "sha256": "cce3e60f8686c2a98edd13a79fa3dfdc2b6cd39a716ea8516428bb7410ae999a"
+        }
+      }
+    },
+    {
+      "number": "026",
+      "stableId": "level3-roster-v2.026",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/026/manifest.json",
+      "sourceSha256": "a3e833f6de138df348a2e4edb8cc2663f849e995b6e3895abc057f39263358be",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 246,
+        "west": 245,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/026/full-poses-transparent.png",
+          "sha256": "83ccfc5af9dafacadfe55542044f94845c2cdaf29a3f76a8f9537eed2ce9d99e"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/026/full-poses-light.png",
+          "sha256": "12ac37b0486126f8fc21ff6fad20927ac4d724b2ee24e824ab911aa0fee8af93"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/026/full-poses-dark.png",
+          "sha256": "d0dea6275e4d4e15a0776bac3567549fcb0370a36d6bb425601ec716a0a82385"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/026/seated-contact-grid-2x.png",
+          "sha256": "5e00adc86f49addffc3f2d6dea42705944221064371215b7013d7910c54f67b1"
+        }
+      }
+    },
+    {
+      "number": "027",
+      "stableId": "level3-roster-v2.027",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/027/manifest.json",
+      "sourceSha256": "5ce64d0f50daa7db92dba71c1386e0aa40df53653823ec3d5bbcb226c94bcc8e",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 246,
+        "east": 247,
+        "west": 246,
+        "north": 245
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/027/full-poses-transparent.png",
+          "sha256": "8af850947e47a2bf127917fa8daa5d6a5ee49b3f32e82f85ec8fdbe28d2b3811"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/027/full-poses-light.png",
+          "sha256": "347e713f172da5299be700b750656e68aa6e179fb09a177eb820a5ffba93f9ab"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/027/full-poses-dark.png",
+          "sha256": "d3d5750210a14db76af804553def4ae676a0f14d623c6e1d3a67576b5a5bfb91"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/027/seated-contact-grid-2x.png",
+          "sha256": "0acf2f1745ec1c50c95e5ffcbb76c991e75f2bde68c6326343dadb7c044fb351"
+        }
+      }
+    },
+    {
+      "number": "028",
+      "stableId": "level3-roster-v2.028",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/028/manifest.json",
+      "sourceSha256": "04736acf8b35ffb707c4b78dc2e315c9eb305c0a75c624e96cc419ea8f055402",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 246,
+        "west": 245,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/028/full-poses-transparent.png",
+          "sha256": "b26ae0316b06c73fec40b62f22da339af38af82a0f7733e05218f0534f1e5b6c"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/028/full-poses-light.png",
+          "sha256": "511748252aef7646a9334ff19da64cd89b1beefac57c9350e165d33ba59ceaa9"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/028/full-poses-dark.png",
+          "sha256": "570d232424aeae0e7b70c28aa1e64a1a745150bbfdc733bab3393a3679ea23d2"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/028/seated-contact-grid-2x.png",
+          "sha256": "197dc413a363776894579ffdf397d55f6b08d3fd7359791fd524ce5d25cc3575"
+        }
+      }
+    },
+    {
+      "number": "029",
+      "stableId": "level3-roster-v2.029",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/029/manifest.json",
+      "sourceSha256": "0a737cdd39ea9be0b7f1f4a15b9da4998e96836e815b1c051b2e025cda1def1d",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 245,
+        "east": 244,
+        "west": 245,
+        "north": 244
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/029/full-poses-transparent.png",
+          "sha256": "945e32981a4095dc8c520d4fe751d2af3f0e3552946dbecdc46fabc27731f500"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/029/full-poses-light.png",
+          "sha256": "9ace0df8267993085b8b5d7bbeeeb90fba22d288b1e99b14b987ac663f2ddd8e"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/029/full-poses-dark.png",
+          "sha256": "c0c4dfdb1fc0b674d468767bf55d6f88de72d452c39e4eca951e7f87c5a69084"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/029/seated-contact-grid-2x.png",
+          "sha256": "9b01c52742b71203080d3848597c5be7191a97fe09d499c1f78cc666f8bc5725"
+        }
+      }
+    },
+    {
+      "number": "030",
+      "stableId": "level3-roster-v2.030",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/030/manifest.json",
+      "sourceSha256": "baa2c99267b2d7efd1d57187715839bbb3365aee0917c2595e2f1665fb92a901",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 249,
+        "east": 247,
+        "west": 247,
+        "north": 247
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/030/full-poses-transparent.png",
+          "sha256": "cbc4398f7e5e654bbaa30eb908e6a8f641ded23843153953616dd8e4a1b8088e"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/030/full-poses-light.png",
+          "sha256": "38d85e01b6b42d270f5d3a316fd5ef4a19bc2fcbd532eed11e61799dd49b55da"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/030/full-poses-dark.png",
+          "sha256": "f79108419c33f050261460211242e77e08f72ebf549e0bd99a7638d248803e91"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/030/seated-contact-grid-2x.png",
+          "sha256": "bf2ef55f768e70c79d5f913fce4434b1cf47092cecec5605c1fb1df568aec807"
+        }
+      }
+    },
+    {
+      "number": "031",
+      "stableId": "level3-roster-v2.031",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/031/manifest.json",
+      "sourceSha256": "502c9088aecd9bc65802444209bbf2a0d5d0524e9628e7247c9c8dfdeac07567",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 247,
+        "east": 246,
+        "west": 246,
+        "north": 246
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/031/full-poses-transparent.png",
+          "sha256": "36c9838255feea946f75d101c30704b4ed0d5327c5166d04968d1d36636eb68a"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/031/full-poses-light.png",
+          "sha256": "df47168982a83177b96f09ec8d296a419a0be20f2565a0fba2be756036b0e6ff"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/031/full-poses-dark.png",
+          "sha256": "2cbc3c2c7e2fa038370192b94f5dd2ea891dee947be8e5daf71f4fc260018c34"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/031/seated-contact-grid-2x.png",
+          "sha256": "6c197c7cd9cdceb6a7586643e5b19c0bdd843d7e4c87d8ec275479e39725b179"
+        }
+      }
+    },
+    {
+      "number": "032",
+      "stableId": "level3-roster-v2.032",
+      "status": "candidate-packaged-not-runtime-ready",
+      "manifest": "artifacts/character-statics/level3-roster-complete-v2/packages/032/manifest.json",
+      "sourceSha256": "8c53d04ea70e1d1b566b6dbe53af1e298d4281a895195bcaf5dd6998806ca759",
+      "rootVisualAccepted": true,
+      "contactStatus": "root-reviewed-all-cardinals-candidate;no-runtime-promotion",
+      "contactDirectionsReviewed": [
+        "south",
+        "east",
+        "west",
+        "north"
+      ],
+      "contactCoordinates": {
+        "south": 247,
+        "east": 246,
+        "west": 246,
+        "north": 246
+      },
+      "proofs": {
+        "fullTransparent": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/032/full-poses-transparent.png",
+          "sha256": "31475100f2f6b96fac1dedcd9fe1008920a6d825dd3383a60c627b76001635a7"
+        },
+        "fullLight": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/032/full-poses-light.png",
+          "sha256": "da46744edca320969e2692626175cd71e4d32ca59d48ba695871de032e9a311d"
+        },
+        "fullDark": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/032/full-poses-dark.png",
+          "sha256": "f1e0fb96fea1a03ff462b3dcaf9d41446376118e2072ab800294b90d3801595e"
+        },
+        "seatedContactGrid": {
+          "file": "artifacts/character-statics/level3-roster-complete-v2/packages/032/seated-contact-grid-2x.png",
+          "sha256": "69eb39d888fc4f952467e13ba0bae58f6980e3a4a133e46378ea08280ff0eaea"
+        }
+      }
+    }
+  ],
+  "issues": [],
+  "totals": {
+    "expected": 32,
+    "packaged": 32,
+    "poses": 256,
+    "issues": 0
+  }
+}

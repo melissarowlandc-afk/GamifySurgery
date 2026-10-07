@@ -1,0 +1,64 @@
+diff --git a/apps/player/src/art/characterStillRegistry.test.ts b/apps/player/src/art/characterStillRegistry.test.ts
+index 252bff2..2203b9e 100644
+--- a/apps/player/src/art/characterStillRegistry.test.ts
++++ b/apps/player/src/art/characterStillRegistry.test.ts
+@@ -12,24 +12,27 @@ import { STAFF_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
+ 
+ describe("characterStillRegistry", () => {
+   it("exposes every packaged identity and cardinal still without fallback", () => {
+-    expect(characterStillRegistry.counts).toEqual({ identities: 153, cardinalPoses: 1224, clipboardPoses: 30, assets: 1254 });
++    expect(characterStillRegistry.counts).toEqual({ identities: 185, cardinalPoses: 1480, clipboardPoses: 30, assets: 1510 });
+     const entries = getAllCharacterStillEntries();
+-    expect(entries).toHaveLength(153);
+-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(153);
++    expect(entries).toHaveLength(185);
++    expect(new Set(entries.map((entry) => entry.id)).size).toBe(185);
+     for (const entry of entries) {
+       for (const posture of ["stand", "sit"] as const) {
+         for (const direction of CHARACTER_STILL_DIRECTIONS) {
+           const asset = getCharacterStill(entry.id, posture, direction);
+           expect(asset?.width).toBe(160);
+           expect(asset?.height).toBe(320);
+-          expect(asset?.url).toBe(entry.cohort === "employeeCoverage"
+-            ? `art/characters/gs026-employee-expansion-v1/${entry.id}/${posture}-${direction}.png`
+-            : `art/characters/gs026-stills-v1/${entry.id}/${posture}-${direction}.png`);
++          const assetRoot = entry.cohort === "employeeCoverage"
++            ? "gs026-employee-expansion-v1"
++            : entry.cohort === "level3RosterV2"
++              ? "level3-roster-v2"
++              : "gs026-stills-v1";
++          expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
+         }
+       }
+     }
+     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
+-    expect(seatedAssets).toHaveLength(612);
++    expect(seatedAssets).toHaveLength(740);
+     for (const asset of seatedAssets) {
+       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
+       expect(asset.anchors.seatContactY).toBeGreaterThan(0);
+@@ -62,6 +65,24 @@ describe("characterStillRegistry", () => {
+       category: "employee",
+       role: "staff.periop_nurse",
+     });
++    expect(getCharacterStillEntry("level3-roster-v2.020")).toMatchObject({
++      cohort: "level3RosterV2",
++      category: "patient-or-general-population",
++      intendedAge: 38,
++      intendedSex: "Male",
++    });
++    expect(getCharacterStillEntry("level3-roster-v2.021")).toMatchObject({
++      cohort: "level3RosterV2",
++      category: "future-pediatric-presentation",
++      intendedVisualAge: 6,
++      currentClinicalEligibility: "excluded-until-future-approved-pediatric-release",
++    });
++    expect(getCharacterStillEntry("level3-roster-v2.001")).toMatchObject({
++      cohort: "level3RosterV2",
++      category: "future-staff-presentation",
++      role: "staff.radiologist",
++      availability: "level4-locked",
++    });
+     for (const staff of STAFF_CHARACTER_STILLS) {
+       const entry = getCharacterStillEntry(staff.stillId);
+       expect(entry, `missing renderable staff still ${staff.stillId}`).toBeDefined();

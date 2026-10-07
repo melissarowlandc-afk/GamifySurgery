@@ -1,0 +1,16 @@
+diff --git a/apps/player/src/styles/global.css b/apps/player/src/styles/global.css
+index 190dd42..99be431 100644
+--- a/apps/player/src/styles/global.css
++++ b/apps/player/src/styles/global.css
+@@ -4931,6 +4931,11 @@ body {
+ .service-income-note { margin: 0; padding: 0.25rem 0.55rem; color: var(--ink-soft); font-size: 0.6rem; }
+ .service-income-scroll { height: auto; min-height: 0; overflow: auto; padding: 0.45rem 0.55rem; flex: 1 1 auto; }
+ .service-income-scroll section + section { margin-top: 0.6rem; }
++.service-income-work-queue { display: grid; gap: 0.32rem; padding: 0.45rem; border: 1px solid var(--ink-soft); background: var(--paper-raised); }
++.service-income-work-queue > div { display: grid; gap: 0.12rem; }
++.service-income-work-queue small { display: block; color: var(--ink-soft); font-size: 0.64rem; line-height: 1.35; overflow-wrap: anywhere; }
++.service-income-work-queue .button { width: fit-content; max-width: 100%; white-space: normal; }
++.service-income-work-queue .blocked-reason { color: var(--ink); font-weight: 800; }
+ .service-income-list { display: grid; margin: 0.3rem 0 0; padding: 0; list-style: none; }
+ .service-income-list > li { padding: 0.3rem 0; border-top: 1px dotted var(--ink-soft); align-items: start; }
+ .service-income-list > li > div { display: grid; gap: 0.04rem; }

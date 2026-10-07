@@ -1,0 +1,11 @@
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { resolve, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const tool=resolve(fileURLToPath(new URL('.',import.meta.url))),repo=resolve(tool,'../../..');
+const registryPath=resolve(repo,'apps/player/src/art/characterStillRegistry.generated.json'), registry=JSON.parse(readFileSync(registryPath,'utf8'));
+const sha=p=>createHash('sha256').update(readFileSync(p)).digest('hex'), rel=p=>relative(repo,p).replaceAll('\\','/');
+const assets=registry.characters.flatMap(character=>[...Object.values(character.poses.stand),...Object.values(character.poses.sit),...(character.clipboard?[character.clipboard]:[])]).map(asset=>{const file=resolve(repo,'apps/player/public',asset.url.replace(/^\//,''));return {path:rel(file),sha256:sha(file),bytes:statSync(file).size};});
+if(registry.characters.length!==153||assets.length!==1254)throw Error(`runtime baseline count drift: identities=${registry.characters.length}, assets=${assets.length}`);
+const output={schemaVersion:'level3-roster-complete-v2-runtime-baseline/v1',registry:{path:rel(registryPath),sha256:sha(registryPath)},identityCount:registry.characters.length,assetCount:assets.length,assets};
+const root=resolve(repo,'artifacts/character-statics/level3-roster-complete-v2');mkdirSync(root,{recursive:true});writeFileSync(resolve(root,'runtime-baseline.json'),JSON.stringify(output,null,2)+'\n');console.log(JSON.stringify({status:'PASS',identities:output.identityCount,assets:output.assetCount,registry:output.registry.sha256}));

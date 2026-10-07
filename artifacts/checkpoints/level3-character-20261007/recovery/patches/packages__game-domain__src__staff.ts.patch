@@ -1,0 +1,14 @@
+diff --git a/packages/game-domain/src/staff.ts b/packages/game-domain/src/staff.ts
+index a12795c..4ab76cd 100644
+--- a/packages/game-domain/src/staff.ts
++++ b/packages/game-domain/src/staff.ts
+@@ -33,7 +33,8 @@ function employeeAuthorizedCareRooms(
+   const task = employee.facilityTask;
+   if (!task) return allowed;
+ 
+-  if (task.kind === "clean_room" || task.kind === "cover_periop") {
++  if (task.kind === "clean_room" || task.kind === "cover_periop" ||
++      task.kind === "take_break" || task.kind === "repair_room") {
+     if (task.targetId && state.rooms.some((room) => room.id === task.targetId)) {
+       allowed.add(task.targetId);
+     }

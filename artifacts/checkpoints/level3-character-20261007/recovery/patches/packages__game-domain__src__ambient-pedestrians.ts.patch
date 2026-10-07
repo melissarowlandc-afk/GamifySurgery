@@ -1,0 +1,21 @@
+diff --git a/packages/game-domain/src/ambient-pedestrians.ts b/packages/game-domain/src/ambient-pedestrians.ts
+index 262701d..658d151 100644
+--- a/packages/game-domain/src/ambient-pedestrians.ts
++++ b/packages/game-domain/src/ambient-pedestrians.ts
+@@ -1,4 +1,7 @@
+-import { createPatientPixelAppearance } from "./appearance";
++import {
++  createPatientPixelAppearance,
++  getPatientAppearanceSelectionContext,
++} from "./appearance";
+ import {
+   RANDOM_STREAMS,
+   deterministicInteger,
+@@ -76,6 +79,7 @@ function createAmbientPedestrian(
+       id,
+       {},
+       "ambient-pedestrian",
++      getPatientAppearanceSelectionContext(state),
+     ),
+     path: sidewalkPath(start, destination),
+     pathIndex: 0,

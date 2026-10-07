@@ -1,0 +1,37 @@
+diff --git a/apps/player/src/AppShell.tsx b/apps/player/src/AppShell.tsx
+index 365d867..abd9f30 100644
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -128,6 +128,7 @@ interface AppShellProps {
+   onEnterManagementMode: () => void;
+   onExitManagementMode: () => void;
+   onServiceAppointmentsEnabledChange: (enabled: boolean) => void;
++  onStartLaboratoryProcessing: () => void;
+   onSelectRoom: (roomInstanceId: string) => void;
+   onSellSelectedRoom: (roomId: string, saleConfirmationToken?: string) => void;
+   onUpgradeSelectedRoom: () => void;
+@@ -227,6 +228,7 @@ export function AppShell({
+   onEnterManagementMode,
+   onExitManagementMode,
+   onServiceAppointmentsEnabledChange,
++  onStartLaboratoryProcessing,
+   onSelectRoom,
+   onSellSelectedRoom,
+   onUpgradeSelectedRoom,
+@@ -838,6 +840,7 @@ export function AppShell({
+               onIncreaseSalary={onIncreaseEmployeeSalary}
+               onFire={onFireEmployee}
+               onAppointmentsEnabledChange={onServiceAppointmentsEnabledChange}
++              onStartLaboratoryProcessing={onStartLaboratoryProcessing}
+             />
+             {employeeDiscussion ? (
+               <EmployeeDiscussionPanel discussion={employeeDiscussion}
+@@ -896,7 +899,7 @@ export function AppShell({
+           <span>{workloadStatus}</span>
+           {progression.prototypeComplete ? (
+             <strong className="prototype-complete">
+-              {progression.facilityLevelLabel} complete — Level 3 is a locked preview in this prototype.
++              {progression.facilityLevelLabel} complete — Level 4 is a preview in this prototype.
+             </strong>
+           ) : null}
+         </div>

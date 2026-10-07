@@ -1,0 +1,224 @@
+diff --git a/packages/game-domain/src/appearance.ts b/packages/game-domain/src/appearance.ts
+index 40ffebf..fbabc70 100644
+--- a/packages/game-domain/src/appearance.ts
++++ b/packages/game-domain/src/appearance.ts
+@@ -294,6 +294,69 @@ export interface PatientAppearanceProfile {
+   readonly ageYears?: number;
+ }
+ 
++export interface PatientAppearanceSelectionContext {
++  /** Still IDs currently carried by visible patient-like actors. */
++  readonly occupiedStillIds: ReadonlySet<string>;
++  /** Previously used encounter still IDs, ordered oldest to newest. */
++  readonly recentlyUsedStillIds: readonly string[];
++}
++
++type PatientAppearanceSelectionState = Pick<
++  GameState,
++  "encounters" | "serviceOperations" | "retailExternalActors" | "environment"
++>;
++
++function patientStillIdForAppearance(
++  appearance: PixelAppearanceDescriptor | null | undefined,
++): string | undefined {
++  if (!appearance) return undefined;
++  if (isCharacterStillId(appearance.stillId)) return appearance.stillId;
++  return legacyPatientStillId(appearance.patientIdentityId);
++}
++
++/**
++ * Builds the transient reservation and rotation inputs for a newly created
++ * patient-like actor. The state already retains encounter history, so this
++ * needs no new persisted schema.
++ */
++export function getPatientAppearanceSelectionContext(
++  state: PatientAppearanceSelectionState,
++): PatientAppearanceSelectionContext {
++  const visibleAppearances = [
++    ...Object.values(state.encounters)
++      .filter((encounter) => encounter.patientLocation !== null)
++      .map((encounter) => encounter.patientAppearance),
++    ...state.serviceOperations
++      .filter(
++        (operation) =>
++          operation.actorKind === "visitor" && operation.location !== null,
++      )
++      .map((operation) => operation.appearance),
++    ...state.retailExternalActors
++      .filter((actor) => actor.lifecycle !== "departed" && actor.location !== null)
++      .map((actor) => actor.appearance),
++    ...state.environment.ambientPedestrians.map(
++      (pedestrian) => pedestrian.appearance,
++    ),
++  ];
++  const occupiedStillIds = new Set<string>();
++  for (const appearance of visibleAppearances) {
++    const stillId = patientStillIdForAppearance(appearance);
++    if (stillId) occupiedStillIds.add(stillId);
++  }
++
++  const recentlyUsedStillIds = Object.values(state.encounters)
++    .sort(
++      (left, right) =>
++        left.waiting.arrivedAtTick - right.waiting.arrivedAtTick ||
++        left.id.localeCompare(right.id),
++    )
++    .map((encounter) => patientStillIdForAppearance(encounter.patientAppearance))
++    .filter((stillId): stillId is string => stillId !== undefined);
++
++  return { occupiedStillIds, recentlyUsedStillIds };
++}
++
+ /** Names of patient-like actors currently visible in the facility. */
+ export function getPresentPatientDisplayNames(
+   state: Pick<GameState, "encounters" | "serviceOperations" | "retailExternalActors">,
+@@ -405,6 +468,82 @@ export function selectPatientStillId(
+     : undefined;
+ }
+ 
++/**
++ * Selects one still for a newly created patient-like actor. Unoccupied stills
++ * always win. Within that pool, never-used stills precede the least recently
++ * used stills, with the existing seeded stream resolving ties.
++ */
++export function selectNewPatientStillId(
++  campaignSeed: string,
++  selectionKey: string,
++  profile: PatientAppearanceProfile,
++  selectionContext?: PatientAppearanceSelectionContext,
++): CharacterStillId | undefined {
++  const eligible = patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
++  if (eligible.length === 0) return undefined;
++
++  const occupiedStillIds = selectionContext?.occupiedStillIds ?? new Set<string>();
++  const unoccupied = eligible.filter(
++    (entry) => !occupiedStillIds.has(entry.stillId),
++  );
++  const available = unoccupied.length > 0 ? unoccupied : eligible;
++  const lastUseIndex = new Map<string, number>();
++  for (const [index, stillId] of (
++    selectionContext?.recentlyUsedStillIds ?? []
++  ).entries()) {
++    lastUseIndex.set(stillId, index);
++  }
++  const leastRecentIndex = Math.min(
++    ...available.map((entry) => lastUseIndex.get(entry.stillId) ?? -1),
++  );
++  const leastRecentlyUsed = available.filter(
++    (entry) => (lastUseIndex.get(entry.stillId) ?? -1) === leastRecentIndex,
++  );
++  return leastRecentlyUsed[
++    deterministicInteger(
++      campaignSeed,
++      RANDOM_STREAMS.patientAppearance,
++      `${selectionKey}:patient-still.lru.v1`,
++      leastRecentlyUsed.length,
++    )
++  ]?.stillId;
++}
++
++function patientIdentityForNewStill(
++  campaignSeed: string,
++  selectionKey: string,
++  profile: PatientAppearanceProfile,
++  stillId: CharacterStillId | undefined,
++): PatientIdentityId | undefined {
++  if (!stillId) return undefined;
++  const canonicalIdentity = patientRosterEntryById(stillId as PatientIdentityId);
++  if (canonicalIdentity) return canonicalIdentity.id;
++  const still = characterStillCatalogEntryById(stillId);
++  const visualProfile = still?.category === "patient"
++    ? {
++        sexLabel: still.compatibleSexLabel,
++        ageYears: still.intendedAge ?? (
++          still.ageBand === "young_adult" ? 24
++            : still.ageBand === "adult" ? 38
++              : still.ageBand === "middle_aged" ? 54
++                : 70
++        ),
++      }
++    : profile;
++  const eligible = patientRosterEligibleEntries(
++    visualProfile.sexLabel,
++    visualProfile.ageYears,
++  );
++  return eligible[
++    deterministicInteger(
++      campaignSeed,
++      RANDOM_STREAMS.patientAppearance,
++      `${selectionKey}:${stillId}:patient-roster-for-still.v1`,
++      eligible.length,
++    )
++  ]?.id;
++}
++
+ export function selectStaffStillId(
+   campaignSeed: string,
+   employeeId: string,
+@@ -590,6 +729,7 @@ export function createPatientPixelAppearance(
+   encounterId: string,
+   profile: PatientAppearanceProfile | PatientSexLabel = {},
+   selectionScope: "patient" | "ambient-pedestrian" = "patient",
++  selectionContext?: PatientAppearanceSelectionContext,
+ ): PixelAppearanceDescriptor {
+   const normalizedProfile: PatientAppearanceProfile =
+     typeof profile === "string" ? { sexLabel: profile } : profile;
+@@ -602,8 +742,28 @@ export function createPatientPixelAppearance(
+   );
+   if (sexLabel === "Female" || sexLabel === "Male") {
+     const normalized = normalizePatientAppearanceForSex(base, sexLabel, ageYears, `${campaignSeed}:${selectionScope}:${encounterId}:patient-roster.v1`);
+-    const stillId = selectPatientStillId(campaignSeed, `${selectionScope}:${encounterId}`, { sexLabel, ageYears });
+-    return { ...normalized, ...(stillId ? { stillId } : {}) };
++    const stillId = selectNewPatientStillId(
++      campaignSeed,
++      `${selectionScope}:${encounterId}`,
++      { sexLabel, ageYears },
++      selectionContext,
++    );
++    const patientIdentityId = patientIdentityForNewStill(
++      campaignSeed,
++      `${selectionScope}:${encounterId}`,
++      { sexLabel, ageYears },
++      stillId,
++    );
++    const {
++      patientIdentityId: _discardedPatientIdentityId,
++      stillId: _discardedStillId,
++      ...appearanceWithoutIdentity
++    } = normalized;
++    return {
++      ...appearanceWithoutIdentity,
++      ...(patientIdentityId ? { patientIdentityId } : {}),
++      ...(stillId ? { stillId } : {}),
++    };
+   }
+ 
+   // When the chart intentionally does not specify sex, keep one coherent
+@@ -618,19 +778,17 @@ export function createPatientPixelAppearance(
+       ? 0
+       : 10;
+   const normalized = normalizePixelAppearance(base, "patient");
+-  const eligible = patientRosterEligibleEntries(undefined, ageYears);
+-  const patientIdentityId = eligible.length > 0
+-    ? eligible[deterministicInteger(
+-        campaignSeed,
+-        RANDOM_STREAMS.patientAppearance,
+-        `${selectionScope}:${encounterId}:patient-roster.unspecified.v1`,
+-        eligible.length,
+-    )]?.id as PatientIdentityId | undefined
+-    : undefined;
+-  const stillId = selectPatientStillId(
++  const stillId = selectNewPatientStillId(
++    campaignSeed,
++    `${selectionScope}:${encounterId}`,
++    { sexLabel, ageYears },
++    selectionContext,
++  );
++  const patientIdentityId = patientIdentityForNewStill(
+     campaignSeed,
+     `${selectionScope}:${encounterId}`,
+     { sexLabel, ageYears },
++    stillId,
+   );
+   return {
+     ...normalized,

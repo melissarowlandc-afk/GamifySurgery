@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "laboratory-proof/v1",
+  "status": "owner-approved-design",
+  "runtimeIntegrationAuthorized": false,
+  "orientation": 0,
+  "dimensions": { "cols": 3, "rows": 3, "tilePixels": 120 },
+  "bench": {
+    "footprint": { "left": 0.8, "top": 1.1, "width": 1.4, "height": 0.65 },
+    "navigationBlocker": { "left": 0.8, "top": 1.1, "width": 1.4, "height": 0.65 },
+    "ground": { "x": 1.5, "y": 1.75 },
+    "approach": { "x": 1.5, "y": 2.65 },
+    "persistence": "permanent",
+    "dimensionReason": "A uniform source scale gives the bench the approved Front Desk's 100.54054 pixel worktop rise at the same 120 pixel tile scale. Its approximately 171 pixel visible width has a small worktop overhang beyond the retained 1.4 tile blocker; the cabinet base, routes, and clearance remain valid without stretching."
+  },
+  "staff": {
+    "technician": { "source": "founder.01", "contact": { "x": 1.5, "y": 2.35 }, "facing": "N" }
+  },
+  "wallFixtures": [
+    { "id": "sink", "doors": ["N1", "WA"], "backing": "N1", "persistence": "optional" },
+    { "id": "workstation", "doors": ["N2"], "backing": "N2", "persistence": "optional" },
+    { "id": "fridge", "doors": ["N3", "EA"], "backing": "N3", "persistence": "optional" }
+  ],
+  "ownerApproval": {
+    "date": "2026-10-03",
+    "quote": "Can you rearrange the northwall furniture so that it isn't in the same places as other rooms. I would say sink - computer - cabinet. Otherwise that is approved. Let's do another room on this level",
+    "conditionalExactLayoutRequestSatisfied": true,
+    "heightApproval": {
+      "date": "2026-10-03",
+      "quote": "Are the desks in the pharmacy and the laboratory the same height as the front desk? If so then these are approved, if not then make the desks higher and then they are approved. We can work on another room next",
+      "frontDeskNormalizedWorktopRisePixels": 100.54054054054055,
+      "conditionSatisfied": true
+    }
+  }
+}
+

@@ -1,0 +1,13 @@
+diff --git a/apps/player/src/session/prototypeAlertContent.test.ts b/apps/player/src/session/prototypeAlertContent.test.ts
+index 7542a61..ce7a1ba 100644
+--- a/apps/player/src/session/prototypeAlertContent.test.ts
++++ b/apps/player/src/session/prototypeAlertContent.test.ts
+@@ -173,7 +173,7 @@ describe("PROTOTYPE_ALERT_CONTENT registry contract", () => {
+           "alert.ambient.31",
+         ],
+         enabled: eligibilityContext({
+-          roomDefinitionIds: new Set(["room.break_room"]),
++          roomDefinitionIds: new Set(["room.staff_break"]),
+         }),
+       },
+       {

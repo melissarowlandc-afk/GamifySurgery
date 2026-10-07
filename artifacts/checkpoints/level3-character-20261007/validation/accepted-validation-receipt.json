@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "acceptedDate": "2026-10-04",
+  "packagedDate": "2026-10-07",
+  "rerunDuringPackaging": false,
+  "results": {
+    "domain": "Root passed122 tests across12 files; final64 affected-domain regression rerun passed.",
+    "balance": "42 tests passed.",
+    "playerUi": "21 tests passed; final11 UI tests passed.",
+    "typecheck": "All8 workspace TypeScript configurations passed; final player check passed.",
+    "productionBuild": "Final player Vite production build passed.",
+    "browser": "6/6 integrated scenarios passed in1.3m; focused canvas-preview rerun1/1 passed.",
+    "assetChecks": "Original153 identities/1254 assets unchanged; appended32 identities/256 poses;7 approved proofs and82 byte-exact room source/runtime pairs."
+  },
+  "knownLimitations": [
+    "Full player suite576/579:3 pre-existing GS032 tests expect older3px motion or lack setAngle mocks; preferred7px/2Hz motion unchanged by this feature.",
+    "The browser Level2 qualification and seated support presentation are seeded fixtures; the recorded UI/reducer/service operations use current default domain rules.",
+    "Historical candidate status strings in source/proof metadata are preserved. Later runtime authorization and final acceptance are recorded in the completed handoff.",
+    "No clinical admission allowlist, case authorship, pediatric case content or clinical approval was changed.",
+    "Historical chair-proof validation was accepted before Level3 integration. Its independent renderer-file hash pin is stale after authorized Level3 changes; fresh strict roster/runtime/room validation passes, and accepted integrated browser evidence covers current placement."
+  ],
+  "packagingValidation": {
+    "strictRoster": "Parent rerun PASS32 identities/256 poses/0 issues.",
+    "runtimeIntegration": "Parent rerun PASS original153/1254 unchanged and additive32/256.",
+    "approvedRoomPromotion": "Parent rerun PASS7 approved proof hashes/82 source-runtime pairs.",
+    "placementQa": "Fresh rerun FAIL at expected stale pre-integration approvedRoomPresentation hash pin: expected1e647ff4d18d096078f440931599e6ba1bfaa9a591dc3caed7af1b512c39507f, actual003557c657794a8f3c34bf9a08233d91decf600a7ec0508d3dc9ece1c67d7b41(authorized Level3 renderer changes). The original source-bound chair-proof bytes are preserved; hashes are not rewritten.",
+    "patchReconstruction": "Worker reconstructed all46 remaining patches in memory from exact captured baselines; resulting bytes match acceptedSha256.",
+    "clinicalSafety": "No new clinical content, admission allowlists or clinical approval. Authoring/development statuses preserved."
+  }
+}

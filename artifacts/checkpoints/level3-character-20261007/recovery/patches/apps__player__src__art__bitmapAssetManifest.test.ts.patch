@@ -1,0 +1,23 @@
+diff --git a/apps/player/src/art/bitmapAssetManifest.test.ts b/apps/player/src/art/bitmapAssetManifest.test.ts
+index 7f68d79..1f7f133 100644
+--- a/apps/player/src/art/bitmapAssetManifest.test.ts
++++ b/apps/player/src/art/bitmapAssetManifest.test.ts
+@@ -42,10 +42,10 @@ import {
+ 
+ describe("bitmap art asset seam", () => {
+   it("declares every approved GS-015 atlas without activating the runtime preload set", () => {
+-    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(29);
+-    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(29);
++    expect(APPROVED_GS015_ROOM_ATLASES).toHaveLength(111);
++    expect(new Set(APPROVED_GS015_ROOM_ATLASES.map((asset) => asset.id)).size).toBe(111);
+     for (const asset of APPROVED_GS015_ROOM_ATLASES) {
+-      expect(asset.relativePath).toMatch(/^art\/rooms\/gs015-v1\/.+\.webp$/);
++      expect(asset.relativePath).toMatch(/^art\/rooms\/(?:gs015-v1|level3-v1)\/.+\.webp$/);
+       expect(asset.nativeWidth).toBeGreaterThan(0);
+       expect(asset.nativeHeight).toBeGreaterThan(0);
+       expect(ROOM_FIXTURE_ATLASES).not.toContain(asset);
+@@ -296,3 +296,4 @@ describe("bitmap art asset seam", () => {
+     await expect(cache.preload([noSource])).resolves.toEqual([]);
+   });
+ });
++

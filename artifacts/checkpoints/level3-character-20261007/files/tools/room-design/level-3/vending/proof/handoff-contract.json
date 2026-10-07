@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "vending-proof-handoff/v1",
+  "room": "vending",
+  "status": "provisional-owner-review",
+  "approval": null,
+  "runtimeIntegrationAuthorized": false,
+  "ownerDirection": {
+    "recordedDate": "2026-10-03",
+    "exactQuote": "So I think we should maybe make it like the espresso room that is 2x2 so that there is room for the doors on all sides. The vending machine should be available to anyone"
+  },
+  "dimensions": { "cols": 2, "rows": 2, "tilePixels": 120 },
+  "publicAccess": ["patients", "visitors", "employees", "founders"],
+  "permanentFixture": "machine",
+  "sharedServiceContact": { "x": 1, "y": 1.56, "facing": "N" },
+  "doorSegments": ["N1", "N2", "S1", "S2", "WA", "WB", "EA", "EB"],
+  "northBackingSegments": ["N1", "N2"],
+  "outOfScope": ["runtime integration", "prices", "hunger", "consumption effects", "clinical rules"]
+}

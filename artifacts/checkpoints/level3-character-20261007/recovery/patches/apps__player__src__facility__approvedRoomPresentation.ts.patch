@@ -1,0 +1,198 @@
+diff --git a/apps/player/src/facility/approvedRoomPresentation.ts b/apps/player/src/facility/approvedRoomPresentation.ts
+index a6fbe95..5d8930e 100644
+--- a/apps/player/src/facility/approvedRoomPresentation.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.ts
+@@ -5,6 +5,13 @@ import {
+   type ApprovedSideChairLayerBinding,
+ } from "./approvedSideChairLayers";
+ import proofDataJson from "./approvedRoomProofData.json";
++import {
++  APPROVED_LEVEL3_ACTOR_SUPPORTS,
++  APPROVED_LEVEL3_FLOOR_ORIGINS,
++  APPROVED_LEVEL3_PROOF_SHA256,
++  APPROVED_LEVEL3_ROOM_DRAW_RECORDS,
++  APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS,
++} from "./approvedLevel3RoomProofData";
+ 
+ export type ApprovedRoomCollision = "solid" | "nonblocking" | "none";
+ export type ApprovedRoomDepth = "wall" | "rear-floor" | "actor-seat" | "floor" | "front";
+@@ -42,7 +49,7 @@ export interface ApprovedRoomShellPresentation {
+   floorPatternKind: "square-tile" | "terrazzo" | "vinyl" | "carpet" | "hallway-phase";
+   floorPatternSizePixels: number;
+   floorPatternSeed: number;
+-  floorAlgorithm: "front-desk-square" | "examination-tile" | "hallway-phase" | "waiting-carpet" | "bathroom-tile" | "minor-vinyl" | "ultrasound-vinyl" | "xray-vinyl" | "ct-vinyl" | "phlebotomy-terrazzo" | "evs-utility-tile" | "endoscopy-slate" | "recovery-terrazzo" | "training-terrazzo" | "coffee-terrazzo" | "telehealth-terrazzo";
++  floorAlgorithm: "front-desk-square" | "examination-tile" | "hallway-phase" | "waiting-carpet" | "bathroom-tile" | "minor-vinyl" | "ultrasound-vinyl" | "xray-vinyl" | "ct-vinyl" | "phlebotomy-terrazzo" | "evs-utility-tile" | "endoscopy-slate" | "recovery-terrazzo" | "training-terrazzo" | "coffee-terrazzo" | "telehealth-terrazzo" | "level3-or-slate" | "level3-laboratory-tile" | "level3-pharmacy-tile" | "level3-concrete" | "level3-break-wood" | "level3-office-texture" | "level3-vending-terrazzo";
+   floorPalette: readonly string[];
+   floorGrout: string;
+   floorAccent: string;
+@@ -181,6 +188,14 @@ const asset = (id: string, file: string): ApprovedRoomAsset => ({
+   relativePath: `art/rooms/gs015-v1/${file}`,
+ });
+ 
++const level3Asset = (room: string, file: string): ApprovedRoomAsset => ({
++  id: `level3:${room}:${file}`,
++  relativePath: `art/rooms/level3-v1/${room}/${file}`,
++});
++
++const level3Assets = (room: string, files: readonly string[]): readonly ApprovedRoomAsset[] =>
++  files.map((file) => level3Asset(room, file));
++
+ const clinicalShell = (
+   floorPattern: string,
+   floorBase = "#efe7d1",
+@@ -386,6 +401,91 @@ export const APPROVED_ROOM_PRESENTATIONS = [
+       { id: "windows", assetId: "gs015:telehealth:window", quantity: 3, collision: "none", depth: "wall", contacts: [[.5, 0], [1.5, 0], [2.5, 0]], doorOwners: ["N1", "N2", "N3"], backedOwners: ["N1", "N2", "N3"] },
+     ],
+   },
++  {
++    proofId: "ambulatory-or", roomDefinitionId: "room.ambulatory_or", proofPath: "tools/room-design/level-3/ambulatory-or/proof/ambulatory-or-proof.html",
++    assets: level3Assets("ambulatory-or", ["anesthesia.webp", "lights.webp", "sink.webp", "storageLeft.webp", "storageRight.webp", "tableEmpty.webp", "tableOccupied.webp", "tray.webp", "workstation.webp"]),
++    orientations: fixed("north-up", 4, 4),
++    shell: { ...clinicalShell("24px dark slate procedure tile", "#69757a", "#d7ddd8"), floorAlgorithm: "level3-or-slate", floorPalette: ["#69757a"], floorGrout: "rgba(39,49,54,.22)", floorAccent: "rgba(205,170,153,.12)", background: "#e7dfc7" },
++    variantPolicy: { occupiedCoveredWhen: "active-in-service-or-legacy-frozen-care-interval", hideIndividualPatient: true, preserveGlobalActorScale: true },
++    fixtures: [
++      { id: "table", assetId: "level3:ambulatory-or:tableEmpty.webp", collision: "solid", depth: "actor-seat", contacts: [[2, 3.2]], footprint: [1.55, 1.4, .9, 1.8], approach: [2, 3.55], variants: ["empty", "occupiedCovered"] },
++      { id: "anesthesia", assetId: "level3:ambulatory-or:anesthesia.webp", collision: "solid", depth: "floor", contacts: [[1.1, 1.3]], footprint: [.75, .58, .7, .72] },
++      { id: "tray", assetId: "level3:ambulatory-or:tray.webp", collision: "solid", depth: "floor", contacts: [[3.425, 3.3]], footprint: [3.15, 2.55, .55, .75] },
++      { id: "lights", assetId: "level3:ambulatory-or:lights.webp", collision: "none", depth: "front", contacts: [[2, -.2]] },
++      { id: "workstation", assetId: "level3:ambulatory-or:workstation.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
++      { id: "storageLeft", assetId: "level3:ambulatory-or:storageLeft.webp", collision: "nonblocking", depth: "wall", contacts: [[1.5, .33]], doorOwners: ["N2"], backedOwners: ["N2"] },
++      { id: "storageRight", assetId: "level3:ambulatory-or:storageRight.webp", collision: "nonblocking", depth: "wall", contacts: [[2.5, .33]], doorOwners: ["N3"], backedOwners: ["N3"] },
++      { id: "sink", assetId: "level3:ambulatory-or:sink.webp", collision: "nonblocking", depth: "wall", contacts: [[3.55, .33]], doorOwners: ["N4", "EA"], backedOwners: ["N4"] },
++    ],
++  },
++  {
++    proofId: "laboratory", roomDefinitionId: "room.laboratory", proofPath: "tools/room-design/level-3/laboratory/proof/laboratory-proof.html",
++    assets: level3Assets("laboratory", ["bench.webp", "fridge.webp", "sink.webp", "workstation.webp"]), orientations: fixed("north-up", 3, 3),
++    shell: { ...clinicalShell("24px light blue-gray laboratory tile", "#b8c6c6", "#d9e3e1"), floorAlgorithm: "level3-laboratory-tile", floorPalette: ["#b8c6c6"], floorGrout: "rgba(63,88,91,.18)", floorAccent: "rgba(126,158,158,.13)", baseTrim: "#3f756d", edgeTrim: "#294d49", doorJamb: "#6e4935", background: "#e5e2d8" },
++    fixtures: [
++      { id: "bench", assetId: "level3:laboratory:bench.webp", collision: "solid", depth: "front", contacts: [[1.5, 1.75]], footprint: [.8, 1.1, 1.4, .65], approach: [1.5, 2.65] },
++      { id: "sink", assetId: "level3:laboratory:sink.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
++      { id: "workstation", assetId: "level3:laboratory:workstation.webp", collision: "nonblocking", depth: "wall", contacts: [[1.5, .33]], doorOwners: ["N2"], backedOwners: ["N2"] },
++      { id: "fridge", assetId: "level3:laboratory:fridge.webp", collision: "nonblocking", depth: "wall", contacts: [[2.55, .33]], doorOwners: ["N3", "EA"], backedOwners: ["N3"] },
++    ],
++  },
++  {
++    proofId: "pharmacy", roomDefinitionId: "room.pharmacy", proofPath: "tools/room-design/level-3/pharmacy/proof/pharmacy-proof.html",
++    assets: level3Assets("pharmacy", ["computer.webp", "counter.webp", "shelves.webp", "stock.webp"]), orientations: fixed("north-up", 3, 3),
++    shell: { ...clinicalShell("24px warm neutral pharmacy tile", "#c8c8b9", "#e0dcc9"), floorAlgorithm: "level3-pharmacy-tile", floorPalette: ["#c8c8b9"], floorGrout: "rgba(79,91,70,.18)", floorAccent: "rgba(147,151,119,.14)", baseTrim: "#6f806a", edgeTrim: "#465545", doorJamb: "#6e4935", background: "#e8e3d6" },
++    fixtures: [
++      { id: "counter", assetId: "level3:pharmacy:counter.webp", collision: "solid", depth: "front", contacts: [[1.275, 1.8]], footprint: [.4, 1.15, 1.75, .65], approach: [2.55, 2.55] },
++      { id: "stock", assetId: "level3:pharmacy:stock.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
++      { id: "shelves", assetId: "level3:pharmacy:shelves.webp", collision: "nonblocking", depth: "wall", contacts: [[1.5, .33]], doorOwners: ["N2"], backedOwners: ["N2"] },
++      { id: "computer", assetId: "level3:pharmacy:computer.webp", collision: "nonblocking", depth: "wall", contacts: [[2.55, .33]], doorOwners: ["N3", "EA"], backedOwners: ["N3"] },
++    ],
++  },
++  {
++    proofId: "maintenance-workshop", roomDefinitionId: "room.maintenance_workshop", proofPath: "tools/room-design/level-3/maintenance-workshop/proof/maintenance-workshop-proof.html",
++    assets: level3Assets("maintenance-workshop", ["bench.webp", "cupboard.webp", "parts.webp", "pegboard.webp"]), orientations: fixed("north-up", 3, 3),
++    shell: { ...clinicalShell("sealed poured concrete", "#aaa9a2", "#a9aa9e", 120), floorAlgorithm: "level3-concrete", floorPalette: ["#aaa9a2"], floorGrout: "rgba(65,67,63,.20)", floorAccent: "rgba(255,255,255,.055)", background: "#dedbcf" },
++    fixtures: [
++      { id: "bench", assetId: "level3:maintenance-workshop:bench.webp", collision: "solid", depth: "front", contacts: [[1.5, 1.85]], footprint: [.575, 1.2, 1.85, .65], approach: [1.5, 2.65] },
++      { id: "parts", assetId: "level3:maintenance-workshop:parts.webp", collision: "nonblocking", depth: "wall", contacts: [[.45, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
++      { id: "pegboard", assetId: "level3:maintenance-workshop:pegboard.webp", collision: "none", depth: "wall", contacts: [[1.5, -.04]], doorOwners: ["N2"], backedOwners: ["N2"] },
++      { id: "cupboard", assetId: "level3:maintenance-workshop:cupboard.webp", collision: "nonblocking", depth: "wall", contacts: [[2.55, .33]], doorOwners: ["N3", "EA"], backedOwners: ["N3"] },
++    ],
++  },
++  {
++    proofId: "staff-break-room", roomDefinitionId: "room.staff_break", proofPath: "tools/room-design/level-3/staff-break-room/proof/staff-break-room-proof.html",
++    assets: level3Assets("staff-break-room", ["art.webp", "bookshelf.webp", "chairEast.webp", "chairNorth.webp", "chairNorthFront.webp", "chairSouth.webp", "chairWest.webp", "fridge.webp", "kitchen.webp", "largeTable.webp", "largeTableFront.webp", "massage.webp", "massageFront.webp", "plant.webp", "smallTable.webp", "smallTableFront.webp", "table.webp"]), orientations: fixed("north-up", 4, 4),
++    shell: { ...clinicalShell("warm staggered wood planks", "#b98a5e", "#e3d5bd", 30), floorAlgorithm: "level3-break-wood", floorPalette: ["#b98a5e", "#c59667", "#aa794f"], floorGrout: "rgba(77,51,34,.18)", floorAccent: "rgba(255,241,210,.08)", background: "#e9e0d0" },
++    fixtures: [
++      { id: "largeTable", assetId: "level3:staff-break-room:largeTable.webp", collision: "solid", depth: "actor-seat", contacts: [[2, 1.7]], footprint: [1.2, .95, 1.6, .75] },
++      { id: "massageChair", assetId: "level3:staff-break-room:massage.webp", collision: "solid", depth: "actor-seat", contacts: [[1.05, 3]], footprint: [.65, 2, .8, 1] },
++      { id: "smallTable", assetId: "level3:staff-break-room:smallTable.webp", collision: "solid", depth: "actor-seat", contacts: [[2.7, 3.15]], footprint: [2.3, 2.45, .8, .7] },
++      { id: "kitchen", assetId: "level3:staff-break-room:kitchen.webp", collision: "nonblocking", depth: "wall", contacts: [[.65, .33]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
++      { id: "art", assetId: "level3:staff-break-room:art.webp", collision: "none", depth: "wall", contacts: [[2.5, -.04]], doorOwners: ["N3"], backedOwners: ["N3"] },
++      { id: "fridge", assetId: "level3:staff-break-room:fridge.webp", collision: "nonblocking", depth: "wall", contacts: [[3.35, .33]], doorOwners: ["N4", "EA"], backedOwners: ["N4"] },
++      { id: "bookshelf-plants", assetId: "level3:staff-break-room:bookshelf.webp", collision: "none", depth: "floor", contacts: [[3.55, 1.85], [3.55, 2.7], [.45, 3.65]], doorOwners: ["EB", "EC", "WD", "S1"] },
++    ],
++  },
++  {
++    proofId: "surgeons-office", roomDefinitionId: "room.surgeon_office", proofPath: "tools/room-design/level-3/surgeons-office/proof/surgeons-office-proof.html",
++    assets: level3Assets("surgeons-office", ["bookcase.webp", "chairSouth.webp", "desk.webp", "diplomas.webp", "plant.webp"]), orientations: fixed("north-up", 2, 2),
++    shell: { ...clinicalShell("subdued blue-gray broad native texture", "#8e9ca0", "#ccd7d5", 30), floorAlgorithm: "level3-office-texture", floorPalette: ["#8e9ca0"], floorGrout: "rgba(65,76,80,.12)", floorAccent: "rgba(235,243,240,.08)", background: "#e4e0d7" },
++    fixtures: [
++      { id: "writingDesk", assetId: "level3:surgeons-office:desk.webp", collision: "solid", depth: "front", contacts: [[1.135, 1.43]], footprint: [.46, .78, 1.35, .65], approach: [.68, .45] },
++      { id: "surgeonChair", assetId: "level3:surgeons-office:chairSouth.webp", collision: "solid", depth: "actor-seat", contacts: [[1.135, .87]], seat: [1.135, .495] },
++      { id: "bookcase", assetId: "level3:surgeons-office:bookcase.webp", collision: "none", depth: "wall", contacts: [[.38, .32]], doorOwners: ["N1", "WA"], backedOwners: ["N1"] },
++      { id: "diplomas", assetId: "level3:surgeons-office:diplomas.webp", collision: "none", depth: "wall", contacts: [[1.5, -.4]], doorOwners: ["N2"], backedOwners: ["N2"] },
++      { id: "plant", assetId: "level3:surgeons-office:plant.webp", collision: "none", depth: "floor", contacts: [[.22, 1.7]], doorOwners: ["WB", "S1"] },
++    ],
++  },
++  {
++    proofId: "vending", roomDefinitionId: "room.vending", proofPath: "tools/room-design/level-3/vending/proof/vending-proof.html",
++    assets: level3Assets("vending", ["machine.webp", "print1.webp", "print2.webp"]), orientations: fixed("north-up", 2, 2),
++    shell: { ...clinicalShell("warm seamless speckled terrazzo", "#d9c1a5", "#b77f72", 31), floorAlgorithm: "level3-vending-terrazzo", floorPalette: ["#d9c1a5"], floorGrout: "rgba(0,0,0,0)", floorAccent: "rgba(122,76,61,.15)", baseTrim: "#627965", background: "#e8e0ce", doorJamb: "#755345" },
++    fixtures: [
++      { id: "machine", assetId: "level3:vending:machine.webp", collision: "solid", depth: "front", contacts: [[1, 1.24]], footprint: [.51, .6, .98, .64], approach: [1, 1.56] },
++      { id: "prints", assetId: "level3:vending:print1.webp", collision: "none", depth: "wall", contacts: [[.28, -.03], [1.72, -.03]], doorOwners: ["N1", "N2"], backedOwners: ["N1", "N2"] },
++    ],
++  },
+ ] as const satisfies readonly ApprovedRoomPresentation[];
+ 
+ const BY_DEFINITION = new Map<string, ApprovedRoomPresentation>(APPROVED_ROOM_PRESENTATIONS.map((room) => [room.roomDefinitionId, room]));
+@@ -510,6 +610,40 @@ export function getApprovedRoomProofCapture(
+ ): ApprovedRoomProofCapture | undefined {
+   const room = getApprovedRoomPresentation(definitionId);
+   if (!room) return undefined;
++  const level3Records = APPROVED_LEVEL3_ROOM_DRAW_RECORDS[definitionId];
++  if (level3Records && orientation === 0) {
++    const floorOrigin = APPROVED_LEVEL3_FLOOR_ORIGINS[definitionId]!;
++    const toDrawImages = (records: readonly ApprovedRoomDrawRecord[]) => records.map((record) => ({
++      canvas: `${room.proofId}-art`,
++      src: {
++        width: record.sourceRect[2],
++        height: record.sourceRect[3],
++        assetId: record.assetId,
++      },
++      transform: record.canvasTransform,
++      args: [
++        ...record.sourceRect,
++        floorOrigin[0] + record.destinationTopLeftTiles[0] * 120,
++        floorOrigin[1] + record.destinationTopLeftTiles[1] * 120,
++        record.renderSizeTiles[0] * 120,
++        record.renderSizeTiles[1] * 120,
++      ],
++    }));
++    const variants = APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS[definitionId];
++    return {
++      state: "approved-runtime-integration",
++      canvasId: `${room.proofId}-art`,
++      dataset: { proofSha256: APPROVED_LEVEL3_PROOF_SHA256[definitionId] },
++      drawImages: toDrawImages(level3Records),
++      coordinateSpace: { floorOriginPixels: floorOrigin, tilePixels: 120 },
++      ...(variants ? {
++        variants: Object.fromEntries(Object.entries(variants).map(([variant, records]) => [variant, {
++          dataset: { tableState: variant },
++          drawImages: toDrawImages(records),
++        }])) as ApprovedRoomProofCapture["variants"],
++      } : {}),
++    };
++  }
+   const key = PROOF_DATA_KEYS[room.proofId];
+   const rawRoom = key ? (proofDataJson.rooms as JsonObject)[key] : undefined;
+   if (!isObject(rawRoom) || !Array.isArray(rawRoom.orientations)) return undefined;
+@@ -645,6 +779,8 @@ export function resolveApprovedRoomActorSupports(
+   definitionId: string,
+   orientation: RoomOrientation,
+ ): readonly ApprovedActorSupport[] {
++  const level3Supports = orientation === 0 ? APPROVED_LEVEL3_ACTOR_SUPPORTS[definitionId] : undefined;
++  if (level3Supports) return level3Supports;
+   const capture = getApprovedRoomProofCapture(definitionId, orientation);
+   if (capture && definitionId === "room.examination") {
+     const table = isObject(capture.dataset.table) ? capture.dataset.table : undefined;
+@@ -887,6 +1023,13 @@ export function resolveApprovedRoomDrawRecords(
+   orientation: RoomOrientation,
+   variant?: ApprovedRoomStateVariant,
+ ): readonly ApprovedRoomDrawRecord[] {
++  const level3Records = orientation === 0 ? APPROVED_LEVEL3_ROOM_DRAW_RECORDS[definitionId] : undefined;
++  if (level3Records) {
++    if (!variant) return level3Records;
++    const variantRecords = APPROVED_LEVEL3_ROOM_VARIANT_DRAW_RECORDS[definitionId]?.[variant];
++    if (!variantRecords) throw new Error(`Approved proof ${definitionId}:${orientation} has no ${variant} variant`);
++    return variantRecords;
++  }
+   const room = getApprovedRoomPresentation(definitionId);
+   const baseCapture = getApprovedRoomProofCapture(definitionId, orientation);
+   if (!room || !baseCapture) return [];

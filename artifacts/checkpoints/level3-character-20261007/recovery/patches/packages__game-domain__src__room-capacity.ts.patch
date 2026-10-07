@@ -1,0 +1,16 @@
+diff --git a/packages/game-domain/src/room-capacity.ts b/packages/game-domain/src/room-capacity.ts
+index d91ff43..5459425 100644
+--- a/packages/game-domain/src/room-capacity.ts
++++ b/packages/game-domain/src/room-capacity.ts
+@@ -14,6 +14,11 @@ const STAFF_SLOTS: Readonly<Record<string, Readonly<Record<string, number>>>> =
+   "staff.phlebotomist": { "room.phlebotomy": 1 },
+   "staff.evs_worker": { "room.evs_closet": 1 },
+   "staff.glp1_np": { "room.glp1_telehealth_suite": 2 },
++  "staff.surgeon": { "room.surgeon_office": 2 },
++  "staff.or_nurse": { "room.ambulatory_or": 1 },
++  "staff.laboratory_technician": { "room.laboratory": 1 },
++  "staff.pharmacist": { "room.pharmacy": 1 },
++  "staff.repair_person": { "room.maintenance_workshop": 1 },
+ };
+ 
+ export interface RoomStaffCapacity {

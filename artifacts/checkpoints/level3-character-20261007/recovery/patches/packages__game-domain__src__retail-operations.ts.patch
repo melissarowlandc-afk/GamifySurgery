@@ -1,0 +1,124 @@
+diff --git a/packages/game-domain/src/retail-operations.ts b/packages/game-domain/src/retail-operations.ts
+index ef27725..6d059f3 100644
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -1,5 +1,5 @@
+ import { SERVICE_INCOME_CATALOG, getServiceIncomeLine, type RetailOutletContract, type ServiceIncomeLine } from "@gamify-surgery/balance-config";
+-import { createPatientDisplayName, createPatientPixelAppearance, getPresentPatientDisplayNames } from "./appearance";
++import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
+ import { getDoorCells } from "./doors";
+ import {
+   encounterHasActiveServiceOperation,
+@@ -11,7 +11,7 @@ import {
+ } from "./service-operations";
+ import { deterministicInteger } from "./randomness";
+ import { hasActivePatientAmenityTrip } from "./patient-amenities";
+-import { getCurrentCapabilities, getRoomDefinition, isEmployeeOperational, isRoomOperationalForFacilityWork } from "./selectors";
++import { getCurrentCapabilities, getRoomDefinition, isEmployeeOperational, isRoomAvailableForNewFacilityWork, isRoomOperationalForFacilityWork } from "./selectors";
+ import {
+   findDeterministicFacilityPath,
+   getOccupiedTiles,
+@@ -23,6 +23,7 @@ import {
+ import type { DomainContext, GameState, GridPoint, RetailActorKind, RetailExternalActorState, RetailOperationState } from "./types";
+ import { findRouteFromDisplacedLocationOffscreen, findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+ import { findCareAwareFacilityPath } from "./care-room-access";
++import { recordLevelThreeRoomUse } from "./level-three-support";
+ 
+ function facilityRoute(state: GameState, context: DomainContext, start: GridPoint, goal: GridPoint): GridPoint[] {
+   const ordinary = findCareAwareFacilityPath(state, context, start, goal);
+@@ -77,7 +78,7 @@ function outletForLine(state: GameState, line: ServiceIncomeLine, context: Domai
+   for (const contract of line.retail?.outlets ?? []) {
+     if (!contract.requiredCapabilityIds.every((id) => capabilities.has(id))) continue;
+     const room = [...state.rooms]
+-      .filter((candidate) => candidate.roomDefinitionId === contract.roomDefinitionId && isRoomOperationalForFacilityWork(state, candidate.id, context))
++      .filter((candidate) => candidate.roomDefinitionId === contract.roomDefinitionId && isRoomAvailableForNewFacilityWork(state, candidate.id, context))
+       .sort((a, b) => a.id.localeCompare(b.id))[0];
+     const definition = room ? getRoomDefinition(room.roomDefinitionId, context) : null;
+     if (!room || !definition) continue;
+@@ -294,7 +295,7 @@ export function authorizeRetailOrder(state: GameState, orderId: string, lineId:
+     if (!context || state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return false;
+     const entry = entrance(state, context);
+     if (!entry) return false;
+-    state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, actorId), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, actorId, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+   }
+   state.retailOrders.push({ id: orderId, actorKind: kind, actorId, incomeLineId: lineId, allowance: Math.max(1, Math.floor(allowance)), fulfilledQuantity: 0, createdAtFacilityTick: state.facilityTick });
+   return true;
+@@ -365,7 +366,7 @@ function recordTripStart(state: GameState, operation: RetailOperationState): voi
+   } : { dayNumber, foodDayNumber: dayNumber, discretionarySpent: 0, foodDrinkPurchases: 0, giftSupplyPurchases: 0, lastTripAtFacilityTick: state.facilityTick };
+ }
+ 
+-function fulfill(state: GameState, operation: RetailOperationState, line: ServiceIncomeLine): boolean {
++function fulfill(state: GameState, operation: RetailOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
+   if (state.cashCents < operation.quoteStockCost * 100) return false;
+   const transactionKey = `income.retail.${operation.id}.${operation.incomeLineId}`;
+   if (state.serviceIncomeReceipts.some((receipt) => receipt.transactionKey === transactionKey)) return true;
+@@ -375,6 +376,7 @@ function fulfill(state: GameState, operation: RetailOperationState, line: Servic
+   state.cash = state.cashCents / 100;
+   const receiptActorKind = operation.actorKind === "encounter" ? "patient" : operation.actorKind === "service_visitor" ? "visitor" : operation.actorKind;
+   state.serviceIncomeReceipts.push({ id: `${transactionKey}.${state.nextServiceIncomeReceiptSequence++}`, transactionKey, incomeLineId: operation.incomeLineId, catalogVersion: 1, routeId: null, actorKind: receiptActorKind, actorId: operation.actorId, grossAmount: founderConsumption ? 0 : operation.quoteGross, stockCost: operation.quoteStockCost, netCashDelta: cashDelta, completedAtFacilityTick: state.facilityTick });
++  recordLevelThreeRoomUse(state, operation.outletRoomInstanceId, `retail:${operation.id}`, context);
+   const order = operation.authorizedOrderId ? state.retailOrders.find((candidate) => candidate.id === operation.authorizedOrderId) : null;
+   if (order) order.fulfilledQuantity += 1;
+   updateLedger(state, operation, line);
+@@ -433,7 +435,7 @@ function createExternalRetailVisitor(state: GameState, context: DomainContext):
+   const id = `retail-visitor.${opportunity}`;
+   const entry = entrance(state, context);
+   if (!entry) return;
+-  const actor: RetailExternalActorState = { id, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };
++  const actor: RetailExternalActorState = { id, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };
+   state.retailExternalActors.push(actor);
+   const product = candidates[deterministicInteger(state.campaignSeed, "environment", `retail-product.${opportunity}`, candidates.length)]!;
+   if (!startRetailPurchase(state, product.id, "retail_visitor", id, context)) actor.lifecycle = "departed";
+@@ -619,12 +621,12 @@ function ensureCompanions(state: GameState, context: DomainContext): void {
+         ? choosePeriopCompanionPublicTarget(state, context, entry.outside, id)
+         : null;
+       if (!entry || !plan) continue;
+-      state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...entry.outside }, path: plan.path, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++      state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...entry.outside }, path: plan.path, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+       continue;
+     }
+     const location = operation.location;
+     if (!location) continue;
+-    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+   }
+   for (const encounter of Object.values(state.encounters)) {
+     if (!encounter.pendingResult || !legacyCompanionRoutes.has(encounter.pendingResult.routeId) || !encounter.patientLocation || encounter.lifecycle !== "active_pending_result") continue;
+@@ -637,7 +639,7 @@ function ensureCompanions(state: GameState, context: DomainContext): void {
+     )) continue;
+     if (state.retailExternalActors.some((actor) => actor.kind === "companion" && actor.linkedEncounterId === encounter.id)) continue;
+     const id = `companion.${state.companionSequence++}`;
+-    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "onsite", location: { ...encounter.patientLocation }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "onsite", location: { ...encounter.patientLocation }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+   }
+ }
+ 
+@@ -760,6 +762,18 @@ export function advanceRetailOperations(state: GameState, context: DomainContext
+       continue;
+     }
+     if (operation.status === "queued") {
++      const outlet = state.rooms.find((room) => room.id === operation.outletRoomInstanceId);
++      const repairAssigned = state.employees.some((employee) =>
++        employee.facilityTask?.kind === "repair_room" && employee.facilityTask.targetId === outlet?.id);
++      const maintenanceUnavailable = outlet?.maintenance?.status === "out_of_service" ||
++        outlet?.maintenance?.status === "due" && outlet.maintenance.outOfServiceAtFacilityTick !== null &&
++          state.facilityTick >= outlet.maintenance.outOfServiceAtFacilityTick || repairAssigned;
++      if (maintenanceUnavailable && outlet && !isRoomAvailableForNewFacilityWork(state, outlet.id, context)) {
++        operation.resourceWaitReason = "Waiting for equipment repair.";
++        operation.waitDeadlineFacilityTick = state.facilityTick + QUEUE_ABANDON_MINUTES;
++        continue;
++      }
++      operation.resourceWaitReason = null;
+       if (state.facilityTick >= operation.waitDeadlineFacilityTick) { cancelTrip(state, operation, "The outlet queue took longer than 10 minutes.", context); continue; }
+       const ahead = state.retailOperations.some((candidate) => candidate.id !== operation.id && candidate.outletRoomInstanceId === operation.outletRoomInstanceId &&
+         (candidate.status === "purchasing" || candidate.status === "queued" && (candidate.createdAtFacilityTick < operation.createdAtFacilityTick || candidate.createdAtFacilityTick === operation.createdAtFacilityTick && candidate.id.localeCompare(operation.id) < 0)));
+@@ -768,7 +782,7 @@ export function advanceRetailOperations(state: GameState, context: DomainContext
+     }
+     if (operation.status === "purchasing" && operation.purchaseEndsAtFacilityTick !== null && state.facilityTick >= operation.purchaseEndsAtFacilityTick) {
+       if (!isOutletStaffed(state, operation, context)) { cancelTrip(state, operation, "The outlet could not fulfill the purchase.", context); continue; }
+-      if (!fulfill(state, operation, line)) { cancelTrip(state, operation, "The clinic could not procure the item.", context); continue; }
++      if (!fulfill(state, operation, line, context)) { cancelTrip(state, operation, "The clinic could not procure the item.", context); continue; }
+       operation.completedAtFacilityTick = state.facilityTick;
+       beginReturn(state, operation, context);
+     }

@@ -1,0 +1,71 @@
+diff --git a/packages/game-domain/src/characterStillCatalog.test.ts b/packages/game-domain/src/characterStillCatalog.test.ts
+index 12fa274..f0ce00e 100644
+--- a/packages/game-domain/src/characterStillCatalog.test.ts
++++ b/packages/game-domain/src/characterStillCatalog.test.ts
+@@ -11,6 +11,7 @@ import {
+   EXPLICIT_ADDITIONAL_AVATAR_STILL_IDS,
+   EXPLICIT_ADDITIONAL_AVATAR_STILLS,
+   FOUNDER_STILL_IDS,
++  FUTURE_PRESENTATION_CHARACTER_STILLS,
+   PATIENT_CHARACTER_STILLS,
+   STAFF_CHARACTER_STILLS,
+   founderStillIdForPresetIds,
+@@ -20,13 +21,14 @@ import {
+ } from "./characterStillCatalog";
+ 
+ describe("character still selection catalog", () => {
+-  it("covers all 153 packaged identities through explicit selection categories", () => {
+-    expect(CHARACTER_STILL_CATALOG).toHaveLength(153);
+-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(153);
+-    expect(PATIENT_CHARACTER_STILLS).toHaveLength(70);
+-    expect(STAFF_CHARACTER_STILLS).toHaveLength(47);
++  it("covers all 185 packaged identities through explicit selection categories", () => {
++    expect(CHARACTER_STILL_CATALOG).toHaveLength(185);
++    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(185);
++    expect(PATIENT_CHARACTER_STILLS).toHaveLength(76);
++    expect(STAFF_CHARACTER_STILLS).toHaveLength(57);
+     expect(FOUNDER_STILL_IDS).toHaveLength(30);
+     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
++    expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(16);
+   });
+ 
+   it("makes all twenty public designs reachable only through compatible adult profiles", () => {
+@@ -48,6 +50,17 @@ describe("character still selection catalog", () => {
+     expect(createPatientPixelAppearance("child-seed", "child", { sexLabel: "Female", ageYears: 12 }).stillId).toBeUndefined();
+   });
+ 
++  it("adds six authorized adult Level 3 designs to the existing adult-only pool", () => {
++    const additions = PATIENT_CHARACTER_STILLS.filter((entry) => entry.sourceCohort === "level3-roster-v2");
++    expect(additions.map((entry) => [entry.stillId, entry.compatibleSexLabel, entry.intendedAge])).toEqual([
++      ["level3-roster-v2.015", "Male", 19], ["level3-roster-v2.016", "Male", 24],
++      ["level3-roster-v2.017", "Male", 28], ["level3-roster-v2.018", "Female", 21],
++      ["level3-roster-v2.019", "Female", 26], ["level3-roster-v2.020", "Male", 38],
++    ]);
++    for (const entry of additions) expect(patientStillEligibleEntries(entry.compatibleSexLabel, entry.intendedAge)).toContainEqual(entry);
++    expect(patientStillEligibleEntries("Female", 12)).toEqual([]);
++  });
++
+   it("retains compatible saved stills, preserves forward-compatible unknown IDs, and selects deterministically", () => {
+     const profile = { sexLabel: "Female" as const, ageYears: 67 };
+     expect(selectPatientStillId("seed", "patient", profile, "gs022-new-person-017")).toBe("gs022-new-person-017");
+@@ -75,6 +88,20 @@ describe("character still selection catalog", () => {
+     expect(selectStaffStillId("seed", "employee.1", "staff.imaging_technician", "future.staff-art.v2")).toBe("future.staff-art.v2");
+     expect(selectStaffStillId("seed", "employee.1", "staff.imaging_technician", "gs022-new-employee-001")).toBe(first);
+     expect(selectStaffStillId("seed", "employee.1", "staff.imaging_technician", "patient.adult.001")).toBe(first);
++    for (const role of ["staff.surgeon", "staff.or_nurse", "staff.laboratory_technician", "staff.pharmacist", "staff.repair_person"]) {
++      expect(staffStillEligibleEntries(role).filter((entry) => entry.sourceCohort === "level3-roster-v2")).toHaveLength(2);
++    }
++  });
++
++  it("registers future pediatric and radiologist art without making it selectable", () => {
++    const pediatric = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "pediatric");
++    const radiologists = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "radiologist");
++    expect(pediatric).toHaveLength(12);
++    expect(pediatric.every((entry) => entry.availability === "excluded-until-future-approved-pediatric-release")).toBe(true);
++    expect(radiologists).toHaveLength(4);
++    expect(radiologists.every((entry) => entry.futureStaffRoleDefinitionId === "staff.radiologist" && entry.availability === "level4-locked")).toBe(true);
++    expect(patientStillEligibleEntries(undefined, undefined).map((entry) => entry.stillId)).not.toContain("level3-roster-v2.021");
++    expect(staffStillEligibleEntries("staff.radiologist")).toEqual([]);
+   });
+ 
+   it("maps all thirty founder presets exactly and keeps six extras explicit-only", () => {

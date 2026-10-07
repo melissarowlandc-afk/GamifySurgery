@@ -1,0 +1,205 @@
+diff --git a/packages/game-domain/tests/level-two-progression.test.ts b/packages/game-domain/tests/level-two-progression.test.ts
+index 9834a84..d4524f4 100644
+--- a/packages/game-domain/tests/level-two-progression.test.ts
++++ b/packages/game-domain/tests/level-two-progression.test.ts
+@@ -144,16 +144,18 @@ describe("Level 2 facility progression", () => {
+     ).toHaveLength(1);
+   });
+ 
+-  it("shows exact Level 2 requirements and the locked Level 3 preview", () => {
++  it("shows exact unchanged Level 2 requirements and the Level 3 destination", () => {
+     const state = createInitialGameState();
+     state.facilityLevel = 2;
+     state.clinicalXp = 300;
++    state.cash = 1_000;
++    state.cashCents = 100_000;
+ 
+     const progression = getFacilityProgressionStatus(state);
+     expect(progression).toMatchObject({
+       facilityLevel: 2,
+-      maximumPlayableLevel: 2,
+-      nextFacilityLevel: null,
++      maximumPlayableLevel: 3,
++      nextFacilityLevel: 3,
+       eligible: false,
+     });
+     expect(progression.requirements.map((requirement) => requirement.id)).toEqual([
+@@ -163,6 +165,160 @@ describe("Level 2 facility progression", () => {
+     ]);
+   });
+ 
++  it("reloads a schema-8 Level 2 save and advances through the unchanged gate", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 2;
++    state.clinicalXp = 300;
++    state.cash = 1_000;
++    state.cashCents = 100_000;
++    const first = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
++    first.resolutionReason = "completed";
++    first.resolvedAtFacilityTick = 1;
++    first.finalPatientSatisfaction = 100;
++    state.serviceIncomeReceipts.push({
++      id: "receipt.level-three-gate",
++      transactionKey: "receipt.level-three-gate",
++      incomeLineId: "income.endoscopy",
++      catalogVersion: 1,
++      routeId: "route.colonoscopy.in_house",
++      actorKind: "patient",
++      actorId: first.id,
++      grossAmount: 450,
++      stockCost: 0,
++      netCashDelta: 450,
++      completedAtFacilityTick: 10,
++    });
++    state.rooms.push(
++      { id: "room.level-three-gate.bathroom", roomDefinitionId: "room.bathroom", x: 30, y: 20, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      { id: "room.level-three-gate.examination", roomDefinitionId: "room.examination", x: 29, y: 22, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      { id: "room.level-three-gate.waiting", roomDefinitionId: "room.waiting", x: 28, y: 25, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      { id: "room.level-three-gate.xray", roomDefinitionId: "room.xray", x: 33, y: 23, orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 },
++      ...[20, 21, 22, 23, 24, 25, 26, 27, 28].map((y) => ({ id: `room.level-three-gate.hall.${y}`, roomDefinitionId: "room.hallway", x: 32, y, orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 })),
++    );
++    state.doors.push(
++      { id: "door.level-three-gate.bathroom", roomId: "room.level-three-gate.bathroom", side: "east", offset: 0, exterior: false },
++      { id: "door.level-three-gate.examination", roomId: "room.level-three-gate.examination", side: "east", offset: 1, exterior: false },
++      { id: "door.level-three-gate.waiting", roomId: "room.level-three-gate.waiting", side: "east", offset: 1, exterior: false },
++      { id: "door.level-three-gate.xray", roomId: "room.level-three-gate.xray", side: "west", offset: 1, exterior: false },
++      { id: "door.level-three-gate.front", roomId: "room.instance.founder_desk", side: "west", offset: 0, exterior: false },
++    );
++
++    let staffed = gameReducer(state, {
++      type: "HIRE_STAFF",
++      operationId: "level-three-gate.receptionist",
++      employeeId: "employee.level-three-gate.receptionist",
++      staffRoleDefinitionId: "staff.receptionist",
++    });
++    expect(staffed.operationReceipts["level-three-gate.receptionist"]).toMatchObject({ status: "applied" });
++    staffed = gameReducer(staffed, {
++      type: "HIRE_STAFF",
++      operationId: "level-three-gate.imaging",
++      employeeId: "employee.level-three-gate.imaging",
++      staffRoleDefinitionId: "staff.imaging_technician",
++    });
++    expect(staffed.operationReceipts["level-three-gate.imaging"]).toMatchObject({ status: "applied" });
++    staffed.employees[0]!.morale = 100;
++    staffed.employees[0]!.salaryPerExpenseInterval = 1_000;
++    const versionEight = JSON.parse(serializeGameState(staffed)) as Record<string, unknown>;
++    versionEight.schemaVersion = 8;
++    const restored = deserializeGameState(JSON.stringify(versionEight));
++    expect(restored.schemaVersion).toBe(9);
++    expect(getFacilityProgressionStatus(restored).requirements.filter((requirement) => !requirement.met)).toEqual([]);
++    expect(getFacilityProgressionStatus(restored)).toMatchObject({
++      facilityLevel: 2,
++      eligible: true,
++      nextFacilityLevel: 3,
++    });
++    const advanced = gameReducer(restored, {
++      type: "LEVEL_UP",
++      operationId: "level-three.advance",
++    });
++    expect(advanced.facilityLevel).toBe(3);
++    expect(advanced.clinicalXp).toBe(0);
++    expect(getFacilityProgressionStatus(advanced).requirements.map((requirement) => requirement.id)).toEqual([
++      "progression.clinical_xp",
++      "progression.satisfaction",
++      "progression.room.room.ambulatory_or",
++      "progression.room.room.laboratory",
++      "progression.room.room.pharmacy",
++      "progression.staff.staff.or_nurse",
++      "progression.staff.staff.laboratory_technician",
++      "progression.staff.staff.pharmacist",
++      "progression.ambulatory_operation_completion",
++    ]);
++  });
++
++  it("counts only a completed ambulatory operation toward the terminal Level 3 objective", () => {
++    const state = createInitialGameState();
++    state.facilityLevel = 3;
++    const objective = () => getFacilityProgressionStatus(state).requirements.find(
++      (requirement) => requirement.id === "progression.ambulatory_operation_completion",
++    );
++    expect(objective()).toMatchObject({ met: false, current: 0 });
++    state.serviceIncomeReceipts.push({
++      id: "receipt.first-or",
++      transactionKey: "receipt.first-or",
++      incomeLineId: "income.ambulatory_operation",
++      catalogVersion: 1,
++      routeId: null,
++      actorKind: "visitor",
++      actorId: "visitor.first-or",
++      grossAmount: 900,
++      stockCost: 0,
++      netCashDelta: 900,
++      completedAtFacilityTick: 220,
++    });
++    expect(objective()).toMatchObject({ met: true, current: 1 });
++    expect(getFacilityProgressionStatus(state)).toMatchObject({
++      facilityLevel: 3,
++      maximumPlayableLevel: 3,
++      nextFacilityLevel: null,
++      eligible: false,
++    });
++  });
++
++  it("keeps Level 3 rooms and staff locked below Level 3", () => {
++    let state = createInitialGameState();
++    state.facilityLevel = 2;
++    state.cash = 10_000;
++    state.cashCents = 1_000_000;
++    state = gameReducer(state, {
++      type: "PLACE_ROOM",
++      operationId: "level-three.room.locked",
++      roomId: "room.instance.level-three-pharmacy",
++      roomDefinitionId: "room.pharmacy",
++      x: 0,
++      y: 0,
++    });
++    expect(state.operationReceipts["level-three.room.locked"]).toMatchObject({ status: "rejected" });
++    state = gameReducer(state, {
++      type: "HIRE_STAFF",
++      operationId: "level-three.staff.locked",
++      employeeId: "employee.level-three-pharmacist",
++      staffRoleDefinitionId: "staff.pharmacist",
++    });
++    expect(state.operationReceipts["level-three.staff.locked"]).toMatchObject({ status: "rejected" });
++
++    state.facilityLevel = 3;
++    state = gameReducer(state, {
++      type: "PLACE_ROOM",
++      operationId: "level-three.room.unlocked",
++      roomId: "room.instance.level-three-pharmacy",
++      roomDefinitionId: "room.pharmacy",
++      x: 0,
++      y: 0,
++    });
++    expect(state.operationReceipts["level-three.room.unlocked"]).toMatchObject({ status: "applied" });
++    state = gameReducer(state, {
++      type: "HIRE_STAFF",
++      operationId: "level-three.staff.unlocked",
++      employeeId: "employee.level-three-pharmacist",
++      staffRoleDefinitionId: "staff.pharmacist",
++    });
++    expect(state.operationReceipts["level-three.staff.unlocked"]).toMatchObject({ status: "rejected" });
++    expect(state.operationReceipts["level-three.staff.unlocked"]!.message).not.toContain("unlocks at Level 3");
++  });
++
+   it("does not apply the tutorial-only graduation exception to Level 1", () => {
+     const state = createInitialGameState();
+     state.facilityLevel = 1;
+@@ -188,7 +344,7 @@ describe("Level 2 facility progression", () => {
+     ]);
+   });
+ 
+-  it("loads existing Level 0/1 saves and round-trips a Level 2 state without a schema bump", () => {
++  it("loads existing Level 0/1 saves and migrates a Level 2 state to schema 9", () => {
+     const levelZero = createInitialGameState();
+     const levelOne = createInitialGameState();
+     levelOne.facilityLevel = 1;
+@@ -199,7 +355,7 @@ describe("Level 2 facility progression", () => {
+     expect(deserializeGameState(serializeGameState(levelZero)).facilityLevel).toBe(0);
+     expect(deserializeGameState(serializeGameState(levelOne)).facilityLevel).toBe(1);
+     const restored = deserializeGameState(serializeGameState(levelTwo));
+-    expect(restored.schemaVersion).toBe(8);
++    expect(restored.schemaVersion).toBe(9);
+     expect(restored.facilityLevel).toBe(2);
+     expect(restored.clinicalXp).toBe(123);
+   });

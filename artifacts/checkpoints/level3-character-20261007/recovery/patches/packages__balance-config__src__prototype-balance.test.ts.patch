@@ -1,0 +1,74 @@
+diff --git a/packages/balance-config/src/prototype-balance.test.ts b/packages/balance-config/src/prototype-balance.test.ts
+index 6176a22..c19a997 100644
+--- a/packages/balance-config/src/prototype-balance.test.ts
++++ b/packages/balance-config/src/prototype-balance.test.ts
+@@ -112,7 +112,7 @@ describe("Level 2 expanded outpatient definitions", () => {
+       expect(PROTOTYPE_BALANCE_RELEASE.services.find((service) => service.id === serviceId)?.routes[0]?.durationTicks).toBe(480);
+     }
+   });
+-  it("unlocks the accepted rooms, staff, capabilities, and locked Level 3 preview", () => {
++  it("preserves Level 2 and unlocks the approved Level 3 facility catalog", () => {
+     const facility = PROTOTYPE_BALANCE_RELEASE.facility;
+     const rooms = facility.roomDefinitions.filter((definition) =>
+       LEVEL_TWO_ROOM_DEFINITION_IDS.includes(
+@@ -125,7 +125,7 @@ describe("Level 2 expanded outpatient definitions", () => {
+       ),
+     );
+ 
+-    expect(facility.maximumPlayableLevel).toBe(2);
++    expect(facility.maximumPlayableLevel).toBe(3);
+     expect(rooms.map((room) => room.id)).toEqual(LEVEL_TWO_ROOM_DEFINITION_IDS);
+     expect(staff.map((role) => role.id)).toEqual(LEVEL_TWO_STAFF_ROLE_IDS);
+     expect(rooms.every((room) => room.unlockFacilityLevel === 2)).toBe(true);
+@@ -209,10 +209,51 @@ describe("Level 2 expanded outpatient definitions", () => {
+           satisfactionMustBeGreaterThan: 90,
+           requiredRoomDefinitionIds: [],
+           requiredStaffRoleIds: [],
++          nextFacilityLevel: 3,
++        }),
++        expect.objectContaining({
++          level: 3,
++          minimumClinicalXp: 500,
++          satisfactionMustBeGreaterThan: 90,
++          requiredRoomDefinitionIds: [
++            "room.ambulatory_or",
++            "room.laboratory",
++            "room.pharmacy",
++          ],
++          requiredStaffRoleIds: [
++            "staff.or_nurse",
++            "staff.laboratory_technician",
++            "staff.pharmacist",
++          ],
+           nextFacilityLevel: null,
+         }),
+       ]),
+     );
++    expect(
++      facility.roomDefinitions
++        .filter((room) => room.unlockFacilityLevel === 3)
++        .map((room) => [room.id, room.constructionCost, room.upkeepPerExpenseInterval, room.maximumInstances]),
++    ).toEqual([
++      ["room.ambulatory_or", 2400, 36, 2],
++      ["room.laboratory", 1800, 24, 2],
++      ["room.pharmacy", 1200, 16, 2],
++      ["room.maintenance_workshop", 800, 10, 1],
++      ["room.staff_break", 900, 10, 2],
++      ["room.surgeon_office", 700, 8, 1],
++      ["room.vending", 450, 4, 5],
++    ]);
++    expect(
++      facility.staffRoleDefinitions
++        .filter((role) => role.unlockFacilityLevel === 3)
++        .map((role) => [role.id, role.hiringCost, role.salaryPerExpenseInterval, role.maximumEmployees]),
++    ).toEqual([
++      ["staff.laboratory_technician", 500, 36, 2],
++      ["staff.surgeon", 1400, 90, 2],
++      ["staff.or_nurse", 650, 44, 2],
++      ["staff.pharmacist", 600, 42, 2],
++      ["staff.repair_person", 400, 30, 2],
++    ]);
++    expect(facility.staffRoleDefinitions.some((role) => role.id === "staff.radiologist")).toBe(false);
+   });
+ });
+ 

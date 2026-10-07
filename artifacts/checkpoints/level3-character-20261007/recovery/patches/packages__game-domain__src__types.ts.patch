@@ -1,0 +1,116 @@
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+index 9cbb04d..8f70dbbd 100644
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -546,6 +546,7 @@ export interface ServiceOperationState {
+   pathIndex: number;
+   lastMovedAtFacilityTick: number;
+   cancellationReason: string | null;
++  resourceWaitReason?: string | null;
+   /** Frozen sidewalk continuity for scheduled diagnostic visitors. */
+   visitorTravel?: {
+     version: "service-visitor-travel.v1";
+@@ -660,6 +661,7 @@ export interface RetailOperationState {
+   lastMovedAtFacilityTick: number;
+   purchaseEndsAtFacilityTick: number | null;
+   cancellationReason: string | null;
++  resourceWaitReason?: string | null;
+   departureServiceOperationId?: string;
+ }
+ 
+@@ -860,6 +862,14 @@ export interface PlacedRoom {
+   upgradeLevel: RoomUpgradeLevel;
+   /** Version-5 saves always persist this; optional only for legacy fixtures/imports. */
+   cleanliness?: number;
++  /** Level 3 equipment upkeep is independent of EVS cleanliness. */
++  maintenance?: {
++    status: "operational" | "due" | "out_of_service";
++    completedUses: number;
++    dueAtFacilityTick: number | null;
++    outOfServiceAtFacilityTick: number | null;
++    appliedUseKeys: string[];
++  };
+ }
+ 
+ export interface DoorState {
+@@ -872,10 +882,11 @@ export interface DoorState {
+ }
+ 
+ export interface EmployeeFacilityTaskState {
+-  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "participate_qi_discussion";
++  kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi";
+   startedAtFacilityTick: number;
+   workMinutesRemaining: number;
+   targetId?: string;
++  seatId?: LevelThreeBreakSeatId;
+ }
+ 
+ export interface EmployeeState {
+@@ -893,11 +904,24 @@ export interface EmployeeState {
+   pathIndex: number;
+   lastMovedAtFacilityTick: number;
+   lastPraisedAtFacilityTick: number | null;
++  lastBreakAtFacilityTick?: number | null;
+   nextIdleActionAtFacilityTick: number;
+   /** Persisted operational work that temporarily supersedes room idling. */
+   facilityTask?: EmployeeFacilityTaskState | null;
+ }
+ 
++export type LevelThreeBreakSeatId = "massage" | "largeNorth" | "largeSouth" | "largeWest" | "largeEast" | "smallNorth" | "smallSouth";
++
++export interface LevelThreeQiReviewState {
++  id: string;
++  receiptId: string;
++  status: "queued" | "in_progress" | "completed";
++  surgeonEmployeeId: string | null;
++  enqueuedAtFacilityTick: number;
++  startedAtFacilityTick: number | null;
++  completedAtFacilityTick: number | null;
++}
++
+ /** A dismissed employee retained only while their visible exit walk completes. */
+ export interface DepartingEmployeeState extends EmployeeState {
+   dismissedAtFacilityTick: number;
+@@ -1158,7 +1182,7 @@ export interface DomainEvent {
+ }
+ 
+ export interface GameState {
+-  schemaVersion: 8;
++  schemaVersion: 8 | 9;
+   /** Present only when an older campaign required the approved-room geometry migration. */
+   approvedRoomGeometryMigration?: {
+     version: "approved-room-geometry.v1";
+@@ -1176,7 +1200,7 @@ export interface GameState {
+   clinicalReleaseId: string;
+   balanceReleaseId: string;
+   schedulerPins: SchedulerPins;
+-  facilityLevel: 0 | 1 | 2;
++  facilityLevel: 0 | 1 | 2 | 3;
+   facilityTick: number;
+   paused: boolean;
+   simulationSpeed: SimulationSpeed;
+@@ -1198,6 +1222,10 @@ export interface GameState {
+   employeeDiscussionSequence?: number;
+   nextEmployeeDiscussionTick?: number;
+   openEmployeeDiscussionId?: string | null;
++  levelThreeQiReviews: LevelThreeQiReviewState[];
++  levelThreeQiReviewSequence: number;
++  /** Durable room-use event ledger; survives repair and sale/rebuild cycles. */
++  levelThreeMaintenanceAppliedUseKeys: string[];
+   rooms: PlacedRoom[];
+   doors: DoorState[];
+   employees: EmployeeState[];
+@@ -1483,10 +1511,10 @@ export interface ProgressionRequirementStatus {
+ }
+ 
+ export interface FacilityProgressionStatus {
+-  facilityLevel: 0 | 1 | 2;
++  facilityLevel: 0 | 1 | 2 | 3;
+   displayName: string;
+   requirements: ProgressionRequirementStatus[];
+   eligible: boolean;
+-  nextFacilityLevel: 1 | 2 | null;
+-  maximumPlayableLevel: 2;
++  nextFacilityLevel: 1 | 2 | 3 | null;
++  maximumPlayableLevel: 3;
+ }

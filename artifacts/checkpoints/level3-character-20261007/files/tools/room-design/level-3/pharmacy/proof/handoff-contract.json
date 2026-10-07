@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "pharmacy-proof/v1",
+  "status": "owner-approved-design",
+  "runtimeIntegrationAuthorized": false,
+  "orientation": 0,
+  "dimensions": { "cols": 3, "rows": 3, "tilePixels": 120 },
+  "counter": {
+    "footprint": { "left": 0.4, "top": 1.15, "width": 1.75, "height": 0.65 },
+    "navigationBlocker": { "left": 0.4, "top": 1.15, "width": 1.75, "height": 0.65 },
+    "ground": { "x": 1.275, "y": 1.8 },
+    "approach": { "x": 2.55, "y": 2.55 },
+    "pickupContact": { "x": 1.275, "y": 2.55 },
+    "persistence": "permanent"
+  },
+  "staff": {
+    "pharmacist": {
+      "source": "gs022-new-employee-007/stand-west",
+      "contact": { "x": 2.35, "y": 1.65 },
+      "facing": "W",
+      "role": "pharmacist"
+    }
+  },
+  "wallFixtures": [
+    { "id": "stock", "doors": ["N1", "WA"], "backing": "N1", "persistence": "optional" },
+    { "id": "shelves", "doors": ["N2"], "backing": "N2", "persistence": "optional" },
+    { "id": "computer", "doors": ["N3", "EA"], "backing": "N3", "persistence": "optional" }
+  ],
+  "ownerApproval": {
+    "date": "2026-10-03",
+    "quote": "Are the desks in the pharmacy and the laboratory the same height as the front desk? If so then these are approved, if not then make the desks higher and then they are approved. We can work on another room next",
+    "frontDeskNormalizedWorktopRisePixels": 100.54054054054055,
+    "conditionalDeskHeightSatisfied": true
+  }
+}

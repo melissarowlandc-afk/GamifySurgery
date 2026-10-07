@@ -1,0 +1,73 @@
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+index 47857da..b9f164f 100644
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -66,6 +66,7 @@ import {
+ } from "./fsrs-adapter";
+ import {
+   createPatientDisplayName,
++  getPatientAppearanceSelectionContext,
+   getPresentPatientDisplayNames,
+   createPatientPixelAppearance,
+   createPixelAppearance,
+@@ -106,6 +107,7 @@ import {
+ } from "./facility-experience";
+ import { synchronizeFacilityOperationalAlertOccurrences } from "./facility-alert-conditions";
+ import { operatingDayMinutes } from "./alert-cadence";
++import { advanceLevelThreeSupport } from "./level-three-support";
+ import {
+   employeeDepartureRiskCadenceGroup,
+   employeeDepartureRiskWarningIsDue,
+@@ -1465,6 +1467,8 @@ function createEncounter(
+         sexLabel: patientSexLabel,
+         ageYears: patientDemographics?.ageYears,
+       },
++      "patient",
++      getPatientAppearanceSelectionContext(state),
+     ),
+     patientSatisfaction:
+       context.balanceRelease.patientSatisfaction.startingValue,
+@@ -8419,6 +8423,7 @@ function reduceAdvanceTick(
+   maybeEmitEmployeeDepartureRiskWarnings(next, context);
+   prioritizeReceptionistPatients(next, context);
+   maybeAssignReceptionistWaterRefill(next, context);
++  advanceLevelThreeSupport(next, context);
+     advanceEmployeeMovement(next, context);
+     advanceDepartingEmployees(next, context);
+   advanceFounderActivity(next, context);
+@@ -9499,6 +9504,7 @@ function reduceHireStaff(
+     pathIndex: 0,
+     lastMovedAtFacilityTick: next.facilityTick,
+     lastPraisedAtFacilityTick: null,
++    lastBreakAtFacilityTick: null,
+     nextIdleActionAtFacilityTick: getNextIdleActionTick(
+       next,
+       context,
+@@ -9704,7 +9710,7 @@ function reduceLevelUp(
+     return rejectCommand(
+       state,
+       command,
+-      "The Level 3 preview remains locked in this prototype.",
++      "The next facility level remains locked in this prototype.",
+     );
+   }
+   if (!progression.eligible) {
+@@ -10264,7 +10270,7 @@ export function createInitialGameState(
+       )
+     : { x: founderRoom.x, y: founderRoom.y };
+   const state: GameState = {
+-    schemaVersion: 8,
++    schemaVersion: 9,
+     approvedRoomNavigationMigration: {
+       version: "approved-room-navigation.v1",
+     },
+@@ -10312,6 +10318,9 @@ export function createInitialGameState(
+     nextEmployeeDiscussionTick:
+       EMPLOYEE_DISCUSSION_FIRST_DELAY_MINUTES,
+     openEmployeeDiscussionId: null,
++    levelThreeQiReviews: [],
++    levelThreeQiReviewSequence: 0,
++    levelThreeMaintenanceAppliedUseKeys: [],
+     rooms: initialRooms,
+     doors: [
+       {

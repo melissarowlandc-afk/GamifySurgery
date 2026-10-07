@@ -1,0 +1,45 @@
+diff --git a/packages/balance-config/src/approved-room-layouts.test.ts b/packages/balance-config/src/approved-room-layouts.test.ts
+index eebbf4a..7f20f17 100644
+--- a/packages/balance-config/src/approved-room-layouts.test.ts
++++ b/packages/balance-config/src/approved-room-layouts.test.ts
+@@ -27,8 +27,8 @@ describe("approved proof navigation contract", () => {
+     }
+   });
+ 
+-  it("covers all sixteen approved rooms and resolves the same navigation used by balance", () => {
+-    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(16);
++  it("covers all twenty-three approved rooms and resolves the same navigation used by balance", () => {
++    expect(Object.keys(APPROVED_ROOM_NAVIGATION_CONTRACTS)).toHaveLength(23);
+     for (const contract of Object.values(APPROVED_ROOM_NAVIGATION_CONTRACTS)) {
+       const definition = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(
+         (candidate) => candidate.id === contract.roomDefinitionId,
+@@ -50,6 +50,29 @@ describe("approved proof navigation contract", () => {
+     }
+   });
+ 
++  it("publishes the approved Level 3 dimensions and pass-through office contract", () => {
++    expect(Object.fromEntries(
++      ["room.ambulatory_or", "room.laboratory", "room.pharmacy", "room.maintenance_workshop", "room.staff_break", "room.surgeon_office", "room.vending"]
++        .map((id) => {
++          const contract = APPROVED_ROOM_NAVIGATION_CONTRACTS[id]!;
++          return [id, `${contract.width}x${contract.height}`];
++        }),
++    )).toEqual({
++      "room.ambulatory_or": "4x4",
++      "room.laboratory": "3x3",
++      "room.pharmacy": "3x3",
++      "room.maintenance_workshop": "3x3",
++      "room.staff_break": "4x4",
++      "room.surgeon_office": "2x2",
++      "room.vending": "2x2",
++    });
++    expect(
++      APPROVED_ROOM_NAVIGATION_CONTRACTS["room.surgeon_office"]!.solidFixtures.flatMap(
++        (fixture) => fixture.blockedTiles,
++      ),
++    ).toEqual([]);
++  });
++
+   it("preserves canonical proof collision and clearance metadata", () => {
+     const examination = APPROVED_ROOM_NAVIGATION_CONTRACTS["room.examination"]!;
+     expect(examination.solidFixtures[0]).toMatchObject({

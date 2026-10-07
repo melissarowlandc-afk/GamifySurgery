@@ -1,0 +1,26 @@
+diff --git a/apps/player/src/art/characterStillRegistry.ts b/apps/player/src/art/characterStillRegistry.ts
+index e3028ec..4a01999 100644
+--- a/apps/player/src/art/characterStillRegistry.ts
++++ b/apps/player/src/art/characterStillRegistry.ts
+@@ -6,7 +6,7 @@ export const CHARACTER_STILL_POSTURES = ["stand", "sit"] as const;
+ 
+ export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
+ export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
+-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage";
++export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2";
+ 
+ export interface CharacterStillAsset {
+   readonly url: string;
+@@ -36,6 +36,12 @@ export interface CharacterStillEntry {
+   readonly intendedAge?: number;
+   readonly intendedSex?: string;
+   readonly displayGender?: string;
++  /** Editorial-only display metadata; never a clinical case selector. */
++  readonly intendedVisualAge?: number;
++  /** Explicit gate for future assets that must not enter the current case pool. */
++  readonly currentClinicalEligibility?: "excluded-until-future-approved-pediatric-release";
++  /** Explicit release gate for future staff presentation art. */
++  readonly availability?: "level4-locked";
+   readonly poses: Readonly<Record<CharacterStillPosture, CharacterStillCardinals>>;
+   readonly clipboard?: CharacterStillAsset;
+ }

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "maintenance-workshop-proof/v1",
+  "status": "owner-approved-design",
+  "ownerApproval": {
+    "date": "2026-10-03",
+    "quote": "Can you make the floor in the maintenance workshop more different? I don't want too many rooms having the small square tiles. The floor variety is important. After that change we can move on to another room",
+    "conditionalFloorRevisionSatisfied": true
+  },
+  "runtimeIntegrationAuthorized": false,
+  "orientation": 0,
+  "dimensions": { "cols": 3, "rows": 3, "tilePixels": 120 },
+  "bench": {
+    "footprint": { "left": 0.575, "top": 1.2, "width": 1.85, "height": 0.65 },
+    "navigationBlocker": { "left": 0.575, "top": 1.2, "width": 1.85, "height": 0.65 },
+    "ground": { "x": 1.5, "y": 1.85 },
+    "approach": { "x": 1.5, "y": 2.65 },
+    "persistence": "permanent",
+    "dimensionReason": "The selected bench is uniformly scaled to the approved Front Desk 100.54054 pixel worktop rise. Its 222.49 pixel visible width establishes a 1.85 tile solid footprint while preserving open routes around both sides."
+  },
+  "staff": {
+    "repairPerson": { "source": "gs022-new-employee-016", "contact": { "x": 1.5, "y": 2.35 }, "facing": "N", "role": "repair-person" }
+  },
+  "wallFixtures": [
+    { "id": "parts", "doors": ["N1", "WA"], "backing": "N1", "persistence": "optional" },
+    { "id": "pegboard", "doors": ["N2"], "backing": "N2", "persistence": "optional" },
+    { "id": "cupboard", "doors": ["N3", "EA"], "backing": "N3", "persistence": "optional" }
+  ]
+}

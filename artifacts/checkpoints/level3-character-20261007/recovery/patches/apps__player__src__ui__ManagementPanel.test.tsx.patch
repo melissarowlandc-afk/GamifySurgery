@@ -1,0 +1,12 @@
+diff --git a/apps/player/src/ui/ManagementPanel.test.tsx b/apps/player/src/ui/ManagementPanel.test.tsx
+index 114a8e1..6a3aa58 100644
+--- a/apps/player/src/ui/ManagementPanel.test.tsx
++++ b/apps/player/src/ui/ManagementPanel.test.tsx
+@@ -60,6 +60,7 @@ function renderPanel(managementMode: boolean, showInactiveTrigger = true) {
+       onIncreaseSalary={noop}
+       onFire={noop}
+       onAppointmentsEnabledChange={noop}
++      onStartLaboratoryProcessing={noop}
+     />,
+   );
+ }

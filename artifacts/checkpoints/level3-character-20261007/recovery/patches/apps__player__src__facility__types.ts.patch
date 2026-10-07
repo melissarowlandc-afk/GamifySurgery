@@ -1,0 +1,15 @@
+diff --git a/apps/player/src/facility/types.ts b/apps/player/src/facility/types.ts
+index bd5ffdd..b4fd451 100644
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -133,6 +133,10 @@ export interface FacilityStaffView {
+   moving?: boolean;
+   direction?: "front" | "side" | "back";
+   supportRole?: FacilityActorSupportRole;
++  /** Exact stationary furniture support selected by the domain projection. */
++  supportId?: string;
++  /** Room owning supportId when the support role is shared across rooms. */
++  supportRoomInstanceId?: string;
+ }
+ 
+ export interface FacilityFounderView {

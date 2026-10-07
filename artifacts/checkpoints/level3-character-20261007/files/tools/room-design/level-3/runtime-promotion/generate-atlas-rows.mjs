@@ -1,0 +1,5 @@
+import { readFileSync, writeFileSync } from "node:fs";
+const manifest=JSON.parse(readFileSync('artifacts/level3-implementation-20261004/room-promotion-manifest.json','utf8'));
+function webpSize(path){const b=readFileSync(path); const tag=b.toString('ascii',12,16); if(tag==='VP8X')return {width:1+b.readUIntLE(24,3),height:1+b.readUIntLE(27,3)}; if(tag==='VP8 '){const i=b.indexOf(Buffer.from([0x9d,1,0x2a]));return {width:b.readUInt16LE(i+3)&0x3fff,height:b.readUInt16LE(i+5)&0x3fff};} if(tag==='VP8L'){const bits=b.readUInt32LE(21); return {width:(bits&0x3fff)+1,height:((bits>>14)&0x3fff)+1};} throw Error(tag)}
+const rows=manifest.rooms.flatMap(room=>room.files.map(file=>{const s=webpSize(`apps/player/public/art/rooms/level3-v1/${room.runtimeName}/${file.file}`);return `  levelOneRoomAtlas("level3:${room.runtimeName}:${file.file.replace(/\\.webp$/,'')}", "art/rooms/level3-v1/${room.runtimeName}/${file.file}", ${s.width}, ${s.height}),`; }));
+writeFileSync('artifacts/level3-implementation-20261004/level3-atlas-rows.ts',rows.join('\n')+'\n'); console.log(rows.join('\n'));

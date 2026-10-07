@@ -1,0 +1,48 @@
+diff --git a/apps/player/src/ui/ServiceIncomePanel.tsx b/apps/player/src/ui/ServiceIncomePanel.tsx
+index db97da4..a1b2b3f 100644
+--- a/apps/player/src/ui/ServiceIncomePanel.tsx
++++ b/apps/player/src/ui/ServiceIncomePanel.tsx
+@@ -3,12 +3,14 @@ import type { ServiceIncomeView } from "./types";
+ interface ServiceIncomePanelProps {
+   serviceIncome: ServiceIncomeView;
+   onAppointmentsEnabledChange: (enabled: boolean) => void;
++  onStartLaboratoryProcessing: () => void;
+ }
+ 
+ /** Management-only catalogue and accounting projection. It never changes cash. */
+ export function ServiceIncomePanel({
+   serviceIncome,
+   onAppointmentsEnabledChange,
++  onStartLaboratoryProcessing,
+ }: ServiceIncomePanelProps) {
+   return (
+     <section className="service-income-panel" aria-labelledby="service-income-title">
+@@ -33,8 +35,27 @@ export function ServiceIncomePanel({
+         <div><dt>Net cash</dt><dd>{serviceIncome.netTotalLabel}</dd></div>
+       </dl>
+       <p className="service-income-note">Net is after stock costs, before clinic operating expenses.</p>
+-
+       <div className="service-income-scroll">
++        {serviceIncome.laboratoryWorkQueue ? (
++          <section className="service-income-work-queue" aria-label="Laboratory work queue">
++            <div><strong>Onsite laboratory processing</strong><small>{serviceIncome.laboratoryWorkQueue.statusLabel}</small></div>
++            <button type="button" className="button button-primary" onClick={onStartLaboratoryProcessing} disabled={!serviceIncome.laboratoryWorkQueue.enabled} title={serviceIncome.laboratoryWorkQueue.disabledReason}>
++              Queue laboratory work
++            </button>
++            {serviceIncome.laboratoryWorkQueue.disabledReason ? <small className="blocked-reason">{serviceIncome.laboratoryWorkQueue.disabledReason}</small> : null}
++          </section>
++        ) : null}
++        {serviceIncome.levelThreeSupport ? (
++          <section className="service-income-work-queue" aria-label="Level 3 support status">
++            <strong>Level 3 support</strong>
++            {serviceIncome.levelThreeSupport.maintenanceDueRoomNames.length > 0 ? <small>Maintenance due: {serviceIncome.levelThreeSupport.maintenanceDueRoomNames.join(", ")}</small> : null}
++            {serviceIncome.levelThreeSupport.maintenanceOutOfServiceRoomNames.length > 0 ? <small>Out of service: {serviceIncome.levelThreeSupport.maintenanceOutOfServiceRoomNames.join(", ")}</small> : null}
++            {serviceIncome.levelThreeSupport.maintenanceRepairingRoomNames.length > 0 ? <small>Repairing: {serviceIncome.levelThreeSupport.maintenanceRepairingRoomNames.join(", ")}</small> : null}
++            {serviceIncome.levelThreeSupport.maintenanceDueRoomNames.length === 0 && serviceIncome.levelThreeSupport.maintenanceOutOfServiceRoomNames.length === 0 ? <small>Equipment operational</small> : null}
++            <small>Quality reviews: {serviceIncome.levelThreeSupport.queuedQiReviewCount} queued · {serviceIncome.levelThreeSupport.inProgressQiReviewCount} in progress · {serviceIncome.levelThreeSupport.completedQiReviewCount} completed</small>
++            <small>Staff on break: {serviceIncome.levelThreeSupport.staffOnBreakCount}</small>
++          </section>
++        ) : null}
+         <section aria-labelledby="service-catalog-title">
+           <h3 id="service-catalog-title">Catalog</h3>
+           <ul className="service-income-list">

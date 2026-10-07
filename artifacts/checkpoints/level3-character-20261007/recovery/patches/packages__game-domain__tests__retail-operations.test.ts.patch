@@ -1,0 +1,70 @@
+diff --git a/packages/game-domain/tests/retail-operations.test.ts b/packages/game-domain/tests/retail-operations.test.ts
+index 29b15d5..44045d1 100644
+--- a/packages/game-domain/tests/retail-operations.test.ts
++++ b/packages/game-domain/tests/retail-operations.test.ts
+@@ -6,6 +6,7 @@ import {
+   deserializeGameState,
+   gameReducer,
+   PROTOTYPE_DOMAIN_CONTEXT,
++  recordLevelThreeRoomUse,
+   serializeGameState,
+   startRetailPurchase,
+   type DomainContext,
+@@ -78,10 +79,16 @@ function futureOutletContext(roomId: string, capability: string, role?: string):
+   const context = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT)) as DomainContext;
+   const rooms = context.balanceRelease.facility.roomDefinitions as unknown as Array<(typeof context.balanceRelease.facility.roomDefinitions)[number]>;
+   const stages = context.balanceRelease.facility.stageDefinitions as unknown as Array<(typeof context.balanceRelease.facility.stageDefinitions)[number]>;
+-  rooms.push({ ...rooms.find((room) => room.id === "room.coffee_kiosk")!, id: roomId, displayName: roomId, capabilityIds: [capability] });
++  const outletFixture = { ...rooms.find((room) => room.id === "room.coffee_kiosk")!, id: roomId, displayName: roomId, capabilityIds: [capability] };
++  const existingRoom = rooms.find((room) => room.id === roomId);
++  if (existingRoom) Object.assign(existingRoom, outletFixture);
++  else rooms.push(outletFixture);
+   if (role) {
+     const roles = context.balanceRelease.facility.staffRoleDefinitions as unknown as Array<(typeof context.balanceRelease.facility.staffRoleDefinitions)[number]>;
+-    roles.push({ ...roles.find((candidate) => candidate.id === "staff.imaging_technician")!, id: role, displayName: role, requiredAnyRoomDefinitionIds: [roomId], capabilityIds: [`capability.${role}`] });
++    const roleFixture = { ...roles.find((candidate) => candidate.id === "staff.imaging_technician")!, id: role, displayName: role, requiredAnyRoomDefinitionIds: [roomId], capabilityIds: [`capability.${role}`] };
++    const existingRole = roles.find((candidate) => candidate.id === role);
++    if (existingRole) Object.assign(existingRole, roleFixture);
++    else roles.push(roleFixture);
+   }
+   for (const level of [3, 4, 5] as const) if (!stages.some((stage) => stage.level === level)) stages.push({ ...stages.find((stage) => stage.level === 2)!, level, displayName: `L${level}`, nextFacilityLevel: null } as (typeof stages)[number]);
+   return context;
+@@ -340,12 +347,38 @@ describe("retail operations", () => {
+     state = advance(state, 40, context);
+     expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", grossAmount: 25, stockCost: 15, netCashDelta: 10 })]));
+     expect(state.retailOrders[0]).toMatchObject({ fulfilledQuantity: 1 });
++    expect(state.rooms.find((room) => room.id === "room.retail.coffee")?.maintenance).toMatchObject({ completedUses: 1, status: "operational" });
+     state = gameReducer(state, { type: "AUTHORIZE_RETAIL_ORDER", operationId: "authorize-supply", orderId: "order.supply", incomeLineId: "income.wound_supply", actorKind: "retail_visitor", actorId: "supply.customer" }, context);
+     state = start(state, "income.wound_supply", "retail_visitor", "supply.customer", "order.supply", context);
+     state = advance(state, 40, context);
+     expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ incomeLineId: "income.wound_supply", grossAmount: 20, stockCost: 10 })]));
+   });
+ 
++  it("finishes an active pharmacy purchase at the maintenance deadline and blocks the queued purchase", () => {
++    const context = futureOutletContext("room.pharmacy", "capability.pharmacy", "staff.pharmacist");
++    let state = retailState();
++    state.facilityLevel = 3;
++    const pharmacy = state.rooms.find((room) => room.id === "room.retail.coffee")!;
++    pharmacy.roomDefinitionId = "room.pharmacy";
++    state.employees.push(employee(state, "employee.pharmacist", "staff.pharmacist", pharmacy.id, { x: 30, y: 28 }));
++    state = gameReducer(state, { type: "AUTHORIZE_RETAIL_ORDER", operationId: "authorize.order.active", orderId: "order.active", incomeLineId: "income.pharmacy_pickup", actorKind: "retail_visitor", actorId: "rx.active" }, context);
++    state = start(state, "income.pharmacy_pickup", "retail_visitor", "rx.active", "order.active", context);
++    for (let minute = 0; minute < 60 && !state.retailOperations.some((operation) => operation.status === "purchasing"); minute += 1) {
++      state = advance(state, 1, context);
++    }
++    const active = state.retailOperations.find((operation) => operation.status === "purchasing")!;
++    expect(active).toBeDefined();
++    const queued = { ...active, id: "retail-operation.queued-maintenance", actorId: "rx.queued", status: "queued" as const, createdAtFacilityTick: active.createdAtFacilityTick + 1, startedAtFacilityTick: null, purchaseEndsAtFacilityTick: null, resourceWaitReason: null };
++    state.retailOperations.push(queued);
++    expect(queued).toBeDefined();
++    for (let index = 0; index < 8; index += 1) recordLevelThreeRoomUse(state, pharmacy.id, `pharmacy.deadline.${index}`, context);
++    state.rooms.find((room) => room.id === pharmacy.id)!.maintenance!.outOfServiceAtFacilityTick = state.facilityTick;
++    active.purchaseEndsAtFacilityTick = state.facilityTick + 1;
++    state = advance(state, 1, context);
++    expect(state.serviceIncomeReceipts).toEqual(expect.arrayContaining([expect.objectContaining({ actorId: active.actorId, incomeLineId: "income.pharmacy_pickup" })]));
++    expect(state.retailOperations.find((operation) => operation.id === queued.id)).toMatchObject({ status: "queued", resourceWaitReason: "Waiting for equipment repair." });
++  });
++
+   it("enforces explicit food restrictions, 120-minute cooldowns, and the two-per-day food cap", () => {
+     let state = retailState();
+     addWaitingPatient(state);

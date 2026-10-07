@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "level3-roster-complete-v2-root-visual-acceptance/v1",
+  "reviewer": "root",
+  "scope": "source visual candidate only; no runtime promotion or seated-contact final approval",
+  "seatContactAcceptance": {
+    "reviewer": "root",
+    "scope": "all four approved seat-contact coordinates for all 32 accepted source hashes, including capped surgeons 005 and 006; authorized for local runtime registration",
+    "contractEncoding": "sha256(JSON.stringify(roster.identities.map(({number}) => ({number,sourceSha256:accepted[number],contacts:{south,east,west,north}}))))",
+    "contractSha256": "3496d754745c04944bcec40b196ef807ce8d63c0716565c66e16efc971fe45ae"
+  },
+  "derivedAlphaWarningAcceptance": {
+    "reviewer": "root",
+    "scope": "measured sub-13-alpha normalization loss in the exact generated report, including capped surgeons 005 and 006; authorized for local runtime cropping",
+    "reportSha256": "5e2b4fb0ef006f476dcc1f81c0c0f7693db22a2050c591c2685c591168d36947"
+  },
+  "accepted": {
+    "001": "a01fb77bb962130d75c2b43d2d21eb8e9129c6b115cc2175a9bbc5c1f98b8919",
+    "002": "bfb3fc72ca258760101c0a8db403fe8c2ea8a67571b89877407b0391025d7fb8",
+    "003": "6d1ad410e6117a45f84db00496d52f36de568637d170ac15668c23e5ca3480bf",
+    "004": "501be7f5cf804016b3bad0a7b9b495af2e8af59d442740b9c483ba8a7cbbd39f",
+    "005": "419ca4d2fae0a05f215a37fc79af16eb17888f6ac8b92ff38dfa0b647f9d551b",
+    "006": "289fe9c54c8d5bf9f048a1492e3e4efa67324d8415ba6774083c212e0124b995",
+    "007": "5478e0116035c7aa69bb3645828c813812e9cbf64d87c754de7a568f00a03463",
+    "008": "075a626ff4d1b85ca3efa27681c72cd5553456dc25d8c1631d11bb112e422eeb",
+    "009": "a7555307c0194c2ee53588a5f34be2405c3f702fd6142b1479784c26e28094d1",
+    "010": "d6f55da65a1440f9c5ef4049e9a0653e87165840e88a5c22ece8cde44b6ea3d0",
+    "011": "0a693b512a3f7193883762efc94bafaeea114e11a5be06a3419d09ed5e29574f",
+    "012": "1b7d81a5416688f69d532eab37ceb8536c199151a76221039d27b9185e87a932",
+    "013": "d79980bf12e6e0fbb99ad376f92f1bb6cc98af9296aed3636e2702543bf7e569",
+    "014": "3447f97427e11ff09c4608d62e05de79008504de8040a255d1eb9cbe776a626d",
+    "015": "eb0343658d68b915c9a41a1aa5299c458a3fd3fa048a499e3f28d0639b4e5cfc",
+    "016": "732f4a5114b63b0373b28b90774407836c4a1d90e3fbd414dfead1e2207d0f9b",
+    "017": "2d04a2f95e10bf76588137239037eabac1343f6f0de60b09157afd09f6f849bb",
+    "018": "d0d71d20cb611c15e428bdd17e8ece928da98313375f24e4f9de6d47869325ca",
+    "019": "f016eb5c668331e53993b3eaecd6f44aa0fc32953b8876ca6dfb32359644ab8f",
+    "020": "52258c1a5d00d7d528ea5b9088601bd01dcfd4109ba57418514d0ee5cdb42f1d",
+    "021": "50ec37c891c3eb259e3976f0839d2bd995ae7a35f3c68033a17f5559c0682573",
+    "022": "8b19f93744659ec6136a2e4c2bf39ae5412b98a4b3babd977f8632267d167636",
+    "023": "b646c368e3237a23bfff0312088d7e696453f07b26a8cbad546b0321a02690e1",
+    "024": "94c628ff1752682aa567454a2fabf76f787d4dbab201f9c15cbe8ec8591affa7",
+    "025": "efb02f718b46a372993ea75688db4d339e4c66d633a413f5349a1f659561ec25",
+    "026": "a3e833f6de138df348a2e4edb8cc2663f849e995b6e3895abc057f39263358be",
+    "027": "5ce64d0f50daa7db92dba71c1386e0aa40df53653823ec3d5bbcb226c94bcc8e",
+    "028": "04736acf8b35ffb707c4b78dc2e315c9eb305c0a75c624e96cc419ea8f055402",
+    "029": "0a737cdd39ea9be0b7f1f4a15b9da4998e96836e815b1c051b2e025cda1def1d"
+    ,"030": "baa2c99267b2d7efd1d57187715839bbb3365aee0917c2595e2f1665fb92a901"
+    ,"031": "502c9088aecd9bc65802444209bbf2a0d5d0524e9628e7247c9c8dfdeac07567"
+    ,"032": "8c53d04ea70e1d1b566b6dbe53af1e298d4281a895195bcaf5dd6998806ca759"
+  },
+  "rejected": {
+    "011": ["9e74ab48c55523781f599bcf8a9c19e8c0fd7ea564bcb82ef2acb12a5e148c0f"],
+    "012": ["1e730772fc8c937c3ed645fd1d0c11806153c60e4f2921d29e3066e54578ddac"],
+    "014": ["50730f58f91426b704846879196aebddb4d1d2f8a820e5dcc6ef015101673955"],
+    "015": ["13a83229cc7f6d7afac25143be0389b8eddfa14b00feff4465ff95107235a99f"],
+    "017": ["e5e98e36ba0eb4c72ac9e8da473ca7d8689d8d946c5d16e6dbbffa6cd04a7d5f"],
+    "018": ["b250ea208dff6f05ea14b71a3691ead85ed7dd8596d7095effcb5de225785f76"]
+  }
+}

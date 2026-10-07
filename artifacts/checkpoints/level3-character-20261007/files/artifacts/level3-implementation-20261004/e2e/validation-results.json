@@ -1,0 +1,36 @@
+{
+  "validatedAt": "2026-10-04",
+  "origin": "http://127.0.0.1:5173",
+  "storage": "Fresh Playwright browser contexts; isolated from owner browser profiles and canonical 4173 storage.",
+  "serverCleanup": "The owned Vite session 1496 was stopped after validation.",
+  "commands": [
+    {
+      "command": "$env:GAMIFY_E2E_BASE_URL='http://127.0.0.1:5173'; $env:GAMIFY_E2E_EXTERNAL_SERVER='1'; .\\node_modules\\.bin\\playwright.CMD test tests/e2e/level-three.spec.ts --project=desktop-chrome --workers=1",
+      "result": "PASS: 6 passed in 1.3m"
+    },
+    {
+      "command": "$env:GAMIFY_E2E_BASE_URL='http://127.0.0.1:5173'; $env:GAMIFY_E2E_EXTERNAL_SERVER='1'; .\\node_modules\\.bin\\playwright.CMD test tests/e2e/level-three.spec.ts --project=desktop-chrome --grep \"Level 2 advances\" --workers=1",
+      "result": "PASS: 1 passed in 12.2s; generated the additive canvas-only preview"
+    },
+    {
+      "command": ".\\node_modules\\.bin\\tsc.CMD --noEmit -p apps/player/tsconfig.json",
+      "result": "PASS"
+    }
+  ],
+  "scenarios": [
+    "The UI advances a qualified Level 2 campaign to Level 3; all seven room cards and five staff cards are visible; reducer placement/hiring produces reachable rooms, valid doors, five unique Level 3 staff stills, including a capped surgeon, and a schema-9 reload.",
+    "The real management control queues laboratory work without immediate cash, then unpaused facility time completes one exact $80 receipt.",
+    "A scheduled ambulatory visitor completes peri-op preparation, occupies the covered OR table with its visitor actor hidden, recovers, settles exactly one $900 receipt, and produces an administrative quality review.",
+    "An accepted support-state fixture renders the OR nurse in the stable largeNorth break seat and the surgeon in the office QI chair, both using current Level 3 stills.",
+    "The approved default layout completes pharmacy OTC and vending purchases, exposes maintenance due status, and returns the laboratory to operational status after repair.",
+    "A 390x844 compact viewport keeps the facility canvas, Level 3 staff cards, laboratory queue action, and support status reachable."
+  ],
+  "fixtureLimitations": [
+    "The qualifying Level 2 facility is seeded, while the Level 2-to-Level 3 gate is exercised through the real UI.",
+    "Level 3 rooms, doors, and hires are created through actual reducer commands instead of pointer placement; their UI cards are checked separately.",
+    "The seated break and office screenshot stages accepted support tasks directly to prove renderer identity, room, seat, pose, and current-still forwarding. Automatic support assignment is covered by domain tests outside this browser fixture.",
+    "Laboratory, scheduled ambulatory, retail, maintenance, persistence, access, and receipt flows use the current default domain context and actual reducers.",
+    "or-timeout-state.json records an intermediate fixture diagnosis where MAX_SAFE_INTEGER idle scheduling prevented normal post-retail return; final validation restores ordinary idle scheduling."
+  ]
+}
+
