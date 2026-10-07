@@ -1,0 +1,262 @@
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -27,11 +27,20 @@
+   createFrozenServiceRouteTiming,
+   getFrozenPatientTravelLocation,
+ } from "./patient-travel";
++import type { FacilityAccessValidation } from "./doors";
++import { evaluateFacilityExperienceConditions } from "./facility-experience";
++import { getCachedFacilityAccessValidation } from "./facility-access-cache";
+ import {
+-  validateFacilityAccess,
+-  type FacilityAccessValidation,
+-} from "./doors";
+-import { evaluateFacilityExperienceConditions } from "./facility-experience";
++  encounterHasDeliveredInHouseEndoscopy,
++  getRetiredCompletedEncounterCount,
++  getRetiredEndedSatisfactionSamples,
++} from "./retired-encounters";
++import {
++  isAmbulatoryOperationReceipt,
++  isCompletedAmbulatoryOperation,
++  isCompletedEndoscopyOperation,
++  isEndoscopyCompletionReceipt,
++} from "./retired-service-history";
+ import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content";
+ import { getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+@@ -1327,7 +1336,7 @@
+ }
+ 
+ export function getCompletedEncounterCount(state: GameState): number {
+-  return Object.values(state.encounters).filter(
++  return getRetiredCompletedEncounterCount(state) + Object.values(state.encounters).filter(
+     (encounter) => encounter.resolutionReason === "completed",
+   ).length;
+ }
+@@ -1336,14 +1345,16 @@
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): number | null {
+-  const completed = Object.values(state.encounters)
+-    .filter(
++  const completed = [
++    ...Object.values(state.encounters).filter(
+       (encounter) =>
+         encounter.finalPatientSatisfaction !== null &&
+         encounter.resolvedAtFacilityTick !== null &&
+         (encounter.resolutionReason === "completed" ||
+           encounter.resolutionReason === "walkout"),
+-    )
++    ),
++    ...getRetiredEndedSatisfactionSamples(state),
++  ]
+     .sort(
+       (left, right) =>
+         (right.resolvedAtFacilityTick ?? 0) -
+@@ -1401,15 +1412,7 @@
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): FacilityAccessValidation {
+-  const facility = context.balanceRelease.facility;
+-  return validateFacilityAccess(
+-    state.rooms,
+-    state.doors,
+-    (definitionId) => getRoomDefinition(definitionId, context),
+-    facility.gridWidth,
+-    facility.gridHeight,
+-    new Set(facility.protectedRoomDefinitionIds),
+-  );
++  return getCachedFacilityAccessValidation(state, context);
+ }
+ 
+ export function getFacilityProgressionStatus(
+@@ -1480,48 +1483,15 @@
+     state.facilityLevel === 0 &&
+     completedProtectedTutorials === 2 &&
+     hasFunctionalTutorialExaminationRoom;
+-  const isInHouseEndoscopyResult = (result: NonNullable<EncounterState["pendingResult"]>) => {
+-    const lineIds = result.serviceIncomeLineId
+-      ? [result.serviceIncomeLineId]
+-      : ["income.endoscopy", "income.advanced_endoscopy"];
+-    return lineIds.some((lineId) =>
+-      (lineId === "income.endoscopy" || lineId === "income.advanced_endoscopy") &&
+-      Boolean(getServiceIncomeLine(lineId)?.eligibleRouteIds.includes(result.routeId)),
+-    );
+-  };
+-  const hasCompletedEndoscopyOperation = state.serviceOperations.some((operation) => {
+-    if (
+-      operation.status === "cancelled" ||
+-      (operation.incomeLineId !== "income.endoscopy" &&
+-        operation.incomeLineId !== "income.advanced_endoscopy")
+-    ) {
+-      return false;
+-    }
+-    const phases = operation.frozenOperationPhases ??
+-      getServiceIncomeLine(operation.incomeLineId)?.operation?.phases ?? [];
+-    return phases.some((phase) => phase.roomDefinitionId === "room.endoscopy") &&
+-      phases.some((phase) => phase.roomDefinitionId === "room.periop_recovery") &&
+-      // `leaving` is the normal post-recovery sidewalk trip. Count the
+-      // completed episode there, rather than waiting for the visitor sprite to
+-      // leave the map; a legacy terminal completed operation is also valid.
+-      ((operation.completedAtFacilityTick !== null && operation.phaseIndex >= phases.length) ||
+-        operation.status === "completed");
+-  });
+-  const hasCompletedFrozenEndoscopy = state.serviceIncomeReceipts.some((receipt) =>
+-    (receipt.incomeLineId === "income.endoscopy" || receipt.incomeLineId === "income.advanced_endoscopy") &&
+-    receipt.routeId !== null &&
+-    Boolean(getServiceIncomeLine(receipt.incomeLineId)?.eligibleRouteIds.includes(receipt.routeId)),
+-  ) || Object.values(state.encounters).some((encounter) =>
+-    encounter.steps.some((step) => {
+-      const result = step.result;
+-      return Boolean(
+-        step.status === "completed" &&
+-          result &&
+-          result.deliveredAtTick !== null &&
+-          isInHouseEndoscopyResult(result),
+-      );
+-    }),
+-  );
++  const retiredService = state.retiredServiceHistory;
++  const hasCompletedEndoscopyOperation =
++    retiredService?.endoscopyOperationCompleted === true ||
++    state.serviceOperations.some(isCompletedEndoscopyOperation);
++  const hasCompletedFrozenEndoscopy =
++    retiredService?.endoscopyReceipt === true ||
++    state.serviceIncomeReceipts.some(isEndoscopyCompletionReceipt) ||
++    state.retiredEncounterSummary?.inHouseEndoscopyCompleted === true ||
++    Object.values(state.encounters).some(encounterHasDeliveredInHouseEndoscopy);
+   const hasCompletedEndoscopy = hasCompletedEndoscopyOperation || hasCompletedFrozenEndoscopy;
+   const endoscopyCompletionRequirement = state.facilityLevel === 2
+     ? [{
+@@ -1532,17 +1502,11 @@
+         required: 1,
+       }]
+     : [];
+-  const hasCompletedAmbulatoryOperation = state.serviceOperations.some(
+-    (operation) =>
+-      (operation.incomeLineId === "income.ambulatory_operation" ||
+-        operation.incomeLineId === "income.ambulatory_operation_extended") &&
+-      operation.status !== "cancelled" &&
+-      operation.completedAtFacilityTick !== null,
+-  ) || state.serviceIncomeReceipts.some(
+-    (receipt) =>
+-      receipt.incomeLineId === "income.ambulatory_operation" ||
+-      receipt.incomeLineId === "income.ambulatory_operation_extended",
+-  );
++  const hasCompletedAmbulatoryOperation =
++    retiredService?.ambulatoryOperationCompleted === true ||
++    retiredService?.ambulatoryOperationReceipt === true ||
++    state.serviceOperations.some(isCompletedAmbulatoryOperation) ||
++    state.serviceIncomeReceipts.some(isAmbulatoryOperationReceipt);
+   const ambulatoryCompletionRequirement = state.facilityLevel === 3
+     ? [{
+         id: "progression.ambulatory_operation_completion",
+@@ -1743,32 +1707,65 @@
+   };
+ }
+ 
++interface ResolutionTickIndex {
++  settledAtFacilityTickBySettlementId: ReadonlyMap<string, number>;
++  latestResolutionEventTickByEncounterId: ReadonlyMap<string, number>;
++}
++
++/**
++ * Indexes settlements and resolution events once per patient-list build. The
++ * resolved-list sort previously searched both histories inside its comparator,
++ * which made every render quadratic in the number of filed charts.
++ */
++function createResolutionTickIndex(state: GameState): ResolutionTickIndex {
++  const settledAtFacilityTickBySettlementId = new Map<string, number>();
++  for (const settlement of state.settlements) {
++    if (!settledAtFacilityTickBySettlementId.has(settlement.id)) {
++      settledAtFacilityTickBySettlementId.set(
++        settlement.id,
++        settlement.settledAtFacilityTick,
++      );
++    }
++  }
++  const latestResolutionEventTickByEncounterId = new Map<string, number>();
++  for (const event of state.events) {
++    if (
++      event.encounterId !== null &&
++      (event.type === "encounter_settled" ||
++        event.type === "left_before_seen")
++    ) {
++      const previous = latestResolutionEventTickByEncounterId.get(
++        event.encounterId,
++      );
++      if (previous === undefined || event.facilityTick > previous) {
++        latestResolutionEventTickByEncounterId.set(
++          event.encounterId,
++          event.facilityTick,
++        );
++      }
++    }
++  }
++  return {
++    settledAtFacilityTickBySettlementId,
++    latestResolutionEventTickByEncounterId,
++  };
++}
++
+ function getResolutionTick(
+-  state: GameState,
++  index: ResolutionTickIndex,
+   encounter: EncounterState,
+ ): number {
+   if (encounter.settlementId !== null) {
+-    const settlement = state.settlements.find(
+-      (candidate) => candidate.id === encounter.settlementId,
+-    );
+-    if (settlement) {
+-      return settlement.settledAtFacilityTick;
++    const settledAtFacilityTick =
++      index.settledAtFacilityTickBySettlementId.get(encounter.settlementId);
++    if (settledAtFacilityTick !== undefined) {
++      return settledAtFacilityTick;
+     }
+   }
+ 
+-  let resolutionEventTick: number | null = null;
+-  for (const event of state.events) {
+-    if (
+-      event.encounterId === encounter.id &&
+-      (event.type === "encounter_settled" ||
+-        event.type === "left_before_seen") &&
+-      (resolutionEventTick === null ||
+-        event.facilityTick > resolutionEventTick)
+-    ) {
+-      resolutionEventTick = event.facilityTick;
+-    }
+-  }
+-  if (resolutionEventTick !== null) {
++  const resolutionEventTick =
++    index.latestResolutionEventTickByEncounterId.get(encounter.id);
++  if (resolutionEventTick !== undefined) {
+     return resolutionEventTick;
+   }
+ 
+@@ -1790,11 +1787,21 @@
+   const byArrivalThenId = (left: EncounterState, right: EncounterState) =>
+     left.waiting.arrivedAtTick - right.waiting.arrivedAtTick ||
+     left.id.localeCompare(right.id);
++  const resolutionTickIndex = createResolutionTickIndex(state);
++  const resolutionTicks = new Map<string, number>();
++  const resolutionTick = (encounter: EncounterState): number => {
++    let tick = resolutionTicks.get(encounter.id);
++    if (tick === undefined) {
++      tick = getResolutionTick(resolutionTickIndex, encounter);
++      resolutionTicks.set(encounter.id, tick);
++    }
++    return tick;
++  };
+   const byNewestResolution = (
+     left: EncounterState,
+     right: EncounterState,
+   ) =>
+-    getResolutionTick(state, right) - getResolutionTick(state, left) ||
++    resolutionTick(right) - resolutionTick(left) ||
+     right.waiting.arrivedAtTick - left.waiting.arrivedAtTick ||
+     left.id.localeCompare(right.id);
+   const encounters = Object.values(state.encounters).sort(byArrivalThenId);

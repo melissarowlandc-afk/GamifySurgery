@@ -1,0 +1,11 @@
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -26,6 +26,8 @@
+ export * from "./reading-stations";
+ export * from "./reducer";
+ export * from "./retail-operations";
++export * from "./retired-encounters";
++export * from "./retired-service-history";
+ export * from "./room-capacity";
+ export * from "./selectors";
+ export * from "./service-operations";

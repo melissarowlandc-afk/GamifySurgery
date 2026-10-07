@@ -1,0 +1,44 @@
+--- a/packages/game-domain/tests/level-two-endoscopy.test.ts
++++ b/packages/game-domain/tests/level-two-endoscopy.test.ts
+@@ -478,20 +478,38 @@
+     expect(pending.deliveredAtTick).toBe(state.facilityTick);
+     expect(state.encounters[encounter.id]!.currentNodeIndex).toBe(nodeIndex + 1);
+     expect(state.employees.find((employee) => employee.id === "employee.test.endoscopist")?.facilityTask).toBeNull();
++    const beforeReturnedQuestion = state;
+     state = gameReducer(state, {
+       type: "OPEN_CHART",
+       operationId: "colonoscopy.returned-question.open",
+       encounterId: encounter.id,
+     });
+     const endoscopyRoom = state.rooms.find((room) => room.id === "room.test.endoscopy")!;
++    const endoscopyConsultAnchor = getRoomNavigationAnchor(endoscopyRoom, getRoomDefinition(endoscopyRoom.roomDefinitionId)!, "staff");
+     expect(state.environment.founderActivity).toMatchObject({
+       kind: "attend_encounter",
+       targetId: encounter.id,
+     });
+-    expect(state.environment.founderActivity?.path.at(-1)).toEqual(
+-      getRoomNavigationAnchor(endoscopyRoom, getRoomDefinition(endoscopyRoom.roomDefinitionId)!, "staff"),
+-    );
++    expect(state.environment.founderActivity?.path.at(-1)).toEqual(endoscopyConsultAnchor);
+     expect(state.employees.find((employee) => employee.id === "employee.test.endoscopist")?.facilityTask).toBeNull();
++
++    // Another patient's finished in-suite test keeps its last in-room location
++    // after that patient walks back to wait. It must not block the suite.
++    const withStaleFinishedTest = deserializeGameState(serializeGameState(beforeReturnedQuestion));
++    const finished = withStaleFinishedTest.serviceOperations.find((operation) => operation.id === retryOperationId)!;
++    withStaleFinishedTest.serviceOperations.push({
++      ...finished,
++      id: "service-operation.other-patient-finished-test",
++      actorId: "encounter.other-patient-waiting-for-results",
++      status: "completed",
++      location: { ...endoscopyConsultAnchor },
++    });
++    const reopened = gameReducer(withStaleFinishedTest, {
++      type: "OPEN_CHART",
++      operationId: "colonoscopy.returned-question.open-with-stale-test",
++      encounterId: encounter.id,
++    });
++    expect(reopened.environment.founderActivity?.path.at(-1)).toEqual(endoscopyConsultAnchor);
+   });
+ 
+   it("holds both rooms, nurses, and Founder only through the last resource-bound phase", () => {

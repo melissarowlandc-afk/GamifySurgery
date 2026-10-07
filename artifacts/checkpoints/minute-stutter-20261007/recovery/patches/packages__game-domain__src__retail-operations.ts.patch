@@ -1,0 +1,20 @@
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -478,11 +478,14 @@
+ }
+ 
+ function scheduleOptionalShopping(state: GameState, context: DomainContext): void {
++  // Resolved patients, finished visitor operations and departed companions can
++  // never start a purchase again. Excluding them keeps this per-minute pass
++  // proportional to the people present rather than to campaign history.
+   const actors: Array<{ kind: RetailActorKind; id: string }> = [
+     ...state.employees.map((actor) => ({ kind: "employee" as const, id: actor.id })),
+-    ...Object.values(state.encounters).map((actor) => ({ kind: "encounter" as const, id: actor.id })),
+-    ...state.serviceOperations.filter((actor) => actor.actorKind === "visitor").map((actor) => ({ kind: "service_visitor" as const, id: actor.id })),
+-    ...state.retailExternalActors.filter((actor) => actor.kind === "companion").map((actor) => ({ kind: "companion" as const, id: actor.id })),
++    ...Object.values(state.encounters).filter((actor) => actor.lifecycle !== "resolved" && actor.lifecycle !== "resolved_summary_available").map((actor) => ({ kind: "encounter" as const, id: actor.id })),
++    ...state.serviceOperations.filter((actor) => actor.actorKind === "visitor" && actor.status !== "completed" && actor.status !== "cancelled").map((actor) => ({ kind: "service_visitor" as const, id: actor.id })),
++    ...state.retailExternalActors.filter((actor) => actor.kind === "companion" && actor.lifecycle !== "departed").map((actor) => ({ kind: "companion" as const, id: actor.id })),
+     { kind: "founder", id: "founder" },
+   ];
+   const priorityWindow = Math.floor(state.facilityTick / 30);

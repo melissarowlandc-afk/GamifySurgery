@@ -1,0 +1,68 @@
+--- a/apps/player/src/facility/earningsPopupPresentation.ts
++++ b/apps/player/src/facility/earningsPopupPresentation.ts
+@@ -43,6 +43,12 @@
+   campaignId: string | null;
+   observedTransactionKeys: readonly string[];
+   activePopups: readonly EarningsPopup[];
++  /**
++   * The exact receipt list last reconciled. The scene redraws every frame but
++   * the projection only changes once per facility tick, so an identical list
++   * needs expiry only instead of a full pass over every historical receipt.
++   */
++  observedReceipts?: readonly FacilityEarningsReceipt[];
+ }
+ 
+ export const EARNINGS_POPUP_DURATION_MILLISECONDS = 1_500;
+@@ -86,18 +92,35 @@
+   input: {
+     campaignId: string;
+     receipts: readonly FacilityEarningsReceipt[];
+-    actorAnchors: EarningsPopupActorAnchors;
++    /** A function defers anchor collection until a new receipt list arrives. */
++    actorAnchors: EarningsPopupActorAnchors | (() => EarningsPopupActorAnchors);
+     nowMilliseconds: number;
+   },
+ ): EarningsPopupState {
++  if (
++    previous &&
++    previous.campaignId === input.campaignId &&
++    previous.observedReceipts === input.receipts
++  ) {
++    const unexpired = previous.activePopups.filter(
++      (popup) => popup.expiresAtMilliseconds > input.nowMilliseconds,
++    );
++    return unexpired.length === previous.activePopups.length
++      ? previous
++      : { ...previous, activePopups: unexpired };
++  }
+   const receiptKeys = [...new Set(input.receipts.map((receipt) => receipt.transactionKey))];
+   if (!previous || previous.campaignId !== input.campaignId) {
+     return {
+       campaignId: input.campaignId,
+       observedTransactionKeys: receiptKeys,
+       activePopups: [],
++      observedReceipts: input.receipts,
+     };
+   }
++  const actorAnchors = typeof input.actorAnchors === "function"
++    ? input.actorAnchors()
++    : input.actorAnchors;
+ 
+   const observedTransactionKeys = new Set(previous.observedTransactionKeys);
+   const activePopups = previous.activePopups.filter(
+@@ -110,7 +133,7 @@
+   for (const receipt of input.receipts) {
+     if (observedTransactionKeys.has(receipt.transactionKey)) continue;
+     observedTransactionKeys.add(receipt.transactionKey);
+-    if (!hasVisibleActor(receipt, input.actorAnchors)) continue;
++    if (!hasVisibleActor(receipt, actorAnchors)) continue;
+     if (activeTransactionKeys.has(receipt.transactionKey)) continue;
+     activeTransactionKeys.add(receipt.transactionKey);
+     activePopups.push({
+@@ -127,5 +150,6 @@
+     campaignId: previous.campaignId,
+     observedTransactionKeys: [...observedTransactionKeys],
+     activePopups,
++    observedReceipts: input.receipts,
+   };
+ }

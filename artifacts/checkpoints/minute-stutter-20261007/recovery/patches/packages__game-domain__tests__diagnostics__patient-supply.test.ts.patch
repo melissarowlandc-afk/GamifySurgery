@@ -1,0 +1,74 @@
+--- a/packages/game-domain/tests/diagnostics/patient-supply.test.ts
++++ b/packages/game-domain/tests/diagnostics/patient-supply.test.ts
+@@ -55,7 +55,16 @@
+     let state = preparedClinic();
+     let operations = 0;
+     let answers = 0;
++    // Older finished patients are retired from live state; arrival ticks are
++    // fixed at creation, so record them while each encounter is present.
++    const arrivalTickByEncounterId = new Map<string, number>();
++    const recordArrivals = () => {
++      for (const encounter of Object.values(state.encounters)) {
++        arrivalTickByEncounterId.set(encounter.id, encounter.waiting.arrivedAtTick);
++      }
++    };
+     while (state.facilityTick < OPERATING_MINUTES_PER_DAY * 8) {
++      recordArrivals();
+       if (operations >= 10_000) {
+         throw new Error(
+           `Diagnostic operation bound exceeded: ${JSON.stringify({
+@@ -186,7 +195,10 @@
+       state = tick(state, `${prefix}.tick`);
+     }
+ 
++    recordArrivals();
+     const encounters = Object.values(state.encounters);
++    const arrivalTicks = [...arrivalTickByEncounterId.values()];
++    const retired = state.retiredEncounterSummary;
+     const eligibleCases =
+       PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(
+         (clinicalCase) =>
+@@ -200,27 +212,27 @@
+       ),
+     );
+     const arrivalsByDay = Array.from({ length: 8 }, (_, day) =>
+-      encounters.filter(
+-        (encounter) =>
+-          encounter.waiting.arrivedAtTick >=
+-            day * OPERATING_MINUTES_PER_DAY &&
+-          encounter.waiting.arrivedAtTick <
+-            (day + 1) * OPERATING_MINUTES_PER_DAY,
++      arrivalTicks.filter(
++        (arrivedAtTick) =>
++          arrivedAtTick >= day * OPERATING_MINUTES_PER_DAY &&
++          arrivedAtTick < (day + 1) * OPERATING_MINUTES_PER_DAY,
+       ).length,
+     );
+     const evidence = {
+       facilityTick: state.facilityTick,
+       arrivalsByDay,
+-      totalArrivals: encounters.length,
+-      lastArrivalTick: Math.max(
+-        ...encounters.map((encounter) => encounter.waiting.arrivedAtTick),
+-      ),
+-      completed: encounters.filter(
+-        (encounter) => encounter.resolutionReason === "completed",
+-      ).length,
+-      walkouts: encounters.filter(
+-        (encounter) => encounter.resolutionReason === "walkout",
+-      ).length,
++      totalArrivals: arrivalTicks.length,
++      lastArrivalTick: Math.max(...arrivalTicks),
++      completed:
++        (retired?.completedCount ?? 0) +
++        encounters.filter(
++          (encounter) => encounter.resolutionReason === "completed",
++        ).length,
++      walkouts:
++        (retired ? retired.retiredCount - retired.completedCount : 0) +
++        encounters.filter(
++          (encounter) => encounter.resolutionReason === "walkout",
++        ).length,
+       unresolved: encounters.filter(
+         (encounter) => encounter.resolutionReason === null,
+       ).length,

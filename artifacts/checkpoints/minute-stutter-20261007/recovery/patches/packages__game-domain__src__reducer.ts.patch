@@ -1,0 +1,106 @@
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -152,6 +152,14 @@
+   startRetailPurchase,
+   getViableDepartureRetailLineIds,
+ } from "./retail-operations";
++import {
++  getRetiredEndedSatisfactionSamples,
++  retireDepartedEncounters,
++} from "./retired-encounters";
++import {
++  retireFinishedRetailHistory,
++  retireFinishedServiceHistory,
++} from "./retired-service-history";
+ import type {
+   AnswerRecord,
+   DoorState,
+@@ -2408,15 +2416,17 @@
+   context: DomainContext,
+   excludedEncounterId: string | null = null,
+ ): number | null {
+-  const ended = Object.values(state.encounters)
+-    .filter(
++  const ended = [
++    ...Object.values(state.encounters).filter(
+       (encounter) =>
+         encounter.id !== excludedEncounterId &&
+         encounter.finalPatientSatisfaction !== null &&
+         encounter.resolvedAtFacilityTick !== null &&
+         (encounter.resolutionReason === "completed" ||
+           encounter.resolutionReason === "walkout"),
+-    )
++    ),
++    ...getRetiredEndedSatisfactionSamples(state),
++  ]
+     .sort(
+       (left, right) =>
+         (right.resolvedAtFacilityTick ?? 0) -
+@@ -2532,14 +2542,14 @@
+   if (encounter.arrivalClass !== "tutorial") {
+     const firstOrdinaryDefinitionId =
+       "alert.success.first-ordinary-patient-resolved";
+-    const priorOrdinaryCompleted = Object.values(
+-      state.encounters,
+-    ).some(
+-      (candidate) =>
+-        candidate.id !== encounter.id &&
+-        candidate.arrivalClass !== "tutorial" &&
+-        candidate.resolutionReason === "completed",
+-    );
++    const priorOrdinaryCompleted =
++      state.retiredEncounterSummary?.ordinaryEncounterCompleted === true ||
++      Object.values(state.encounters).some(
++        (candidate) =>
++          candidate.id !== encounter.id &&
++          candidate.arrivalClass !== "tutorial" &&
++          candidate.resolutionReason === "completed",
++      );
+     if (!priorOrdinaryCompleted) {
+       appendSuccessMessage(
+         state,
+@@ -3428,12 +3438,15 @@
+       ),
+     ) || next.serviceOperations.some((operation) =>
+       operation.actorId !== nextEncounter.id &&
+-      ((operation.status !== "completed" && operation.status !== "cancelled" && (
+-          operation.reservedRoomInstanceIds.includes(room.id) ||
+-          operation.transitionHeldRoomInstanceIds?.includes(room.id) ||
+-          operation.periopBedReservation?.roomInstanceId === room.id
+-        )) ||
+-        (operation.location !== null && pointInsideRoom(operation.location, room, context))),
++      // A finished operation keeps the last in-room location of a patient who
++      // has since walked back to wait for results; only live work occupies
++      // the room. Patients are covered by their own locations above.
++      operation.status !== "completed" && operation.status !== "cancelled" && (
++        operation.reservedRoomInstanceIds.includes(room.id) ||
++        operation.transitionHeldRoomInstanceIds?.includes(room.id) ||
++        operation.periopBedReservation?.roomInstanceId === room.id ||
++        (operation.location !== null && pointInsideRoom(operation.location, room, context))
++      ),
+     );
+     return occupiedByAnotherPatient ? null : room;
+   })();
+@@ -8516,6 +8529,9 @@
+   );
+   prioritizeReceptionistPatients(next, context);
+   advanceEmployeeFacilityTasks(next, context, "refill_only");
++  retireDepartedEncounters(next, context);
++  retireFinishedServiceHistory(next, context);
++  retireFinishedRetailHistory(next);
+   synchronizeFacilityConditionOccurrences(next, context);
+   synchronizeFacilityOperationalAlertOccurrences(next, context);
+   maybeEmitAmbientMessage(next, context);
+@@ -10705,6 +10721,12 @@
+   if (next === state) {
+     return next;
+   }
++  // An unpaused tick already synchronized both condition histories as its
++  // final simulation step. A second whole-facility evaluation of the same state
++  // only adds per-minute main-thread work.
++  if (command.type === "ADVANCE_TICK" && !state.paused) {
++    return next;
++  }
+   // Facility conditions can change through paused build/staff commands as
+   // well as through simulation time. Reconcile every applied/rejected clone so
+   // history and attention clear at the exact persisted facility tick.

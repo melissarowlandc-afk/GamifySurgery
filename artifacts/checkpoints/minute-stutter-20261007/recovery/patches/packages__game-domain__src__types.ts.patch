@@ -1,0 +1,68 @@
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -1378,6 +1378,65 @@
+   emergencyGlp1: EmergencyGlp1State;
+   environment: FacilityEnvironmentState;
+   alertHumor: AlertHumorState;
++  /**
++   * Compact history of resolved patients whose full records were removed from
++   * `encounters` after they left the facility. Optional for save compatibility.
++   */
++  retiredEncounterSummary?: RetiredEncounterSummary;
++  /**
++   * Totals and milestones of income receipts and finished service operations
++   * removed from live state. Optional for save compatibility.
++   */
++  retiredServiceHistory?: RetiredServiceHistory;
++}
++
++export interface RetiredServiceHistory {
++  version: "retired-service-history.v1";
++  retiredReceiptCount: number;
++  grossCents: number;
++  stockCostCents: number;
++  netCashDeltaCents: number;
++  /** A retired receipt satisfied the first-endoscopy receipt check. */
++  endoscopyReceipt: boolean;
++  /** A retired receipt satisfied the first-ambulatory-operation receipt check. */
++  ambulatoryOperationReceipt: boolean;
++  retiredOperationCount: number;
++  /** A retired operation satisfied the first-endoscopy operation check. */
++  endoscopyOperationCompleted: boolean;
++  /** A retired operation satisfied the first-ambulatory-operation check. */
++  ambulatoryOperationCompleted: boolean;
++}
++
++export interface RetiredEncounterSatisfactionSample {
++  id: string;
++  resolvedAtFacilityTick: number;
++  finalPatientSatisfaction: number;
++  resolutionReason: "completed" | "walkout";
++}
++
++/**
++ * Everything campaign rules still need from retired encounters. Each full
++ * encounter retains its frozen case (several kilobytes), and every facility
++ * tick clones the whole state, so retained history made each minute slower.
++ */
++export interface RetiredEncounterSummary {
++  version: "retired-encounter-summary.v1";
++  retiredCount: number;
++  completedCount: number;
++  /** A non-tutorial encounter has been completed. */
++  ordinaryEncounterCompleted: boolean;
++  /** A delivered in-house endoscopy result existed on a retired encounter. */
++  inHouseEndoscopyCompleted: boolean;
++  /** Newest-last satisfaction samples for the rolling clinic window. */
++  recentEndedSatisfaction: RetiredEncounterSatisfactionSample[];
++  /** Latest retired use of each still, merged by arrival for appearance rotation. */
++  recentStillUses: RetiredEncounterStillUse[];
++}
++
++export interface RetiredEncounterStillUse {
++  stillId: string;
++  encounterId: string;
++  arrivedAtTick: number;
+ }
+ 
+ interface CommandBase {

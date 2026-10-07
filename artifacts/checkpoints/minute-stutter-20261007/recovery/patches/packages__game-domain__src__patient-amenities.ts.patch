@@ -1,0 +1,20 @@
+--- a/packages/game-domain/src/patient-amenities.ts
++++ b/packages/game-domain/src/patient-amenities.ts
+@@ -372,10 +372,15 @@
+   state.patientAmenityTripSequence ??= 0;
+   state.patientAmenityTrips = state.patientAmenityTrips.filter((trip) => advanceTrip(state, trip, context));
+ 
++  // A resolved patient who has left the map, or a finished visitor operation,
++  // can never become eligible again. Skip that campaign history each minute.
+   const actors: Array<{ kind: AmenityActorKind; id: string }> = [
+-    ...Object.keys(state.encounters).sort().map((id) => ({ kind: "encounter" as const, id })),
++    ...Object.keys(state.encounters)
++      .filter((id) => state.encounters[id]!.lifecycle !== "resolved" || state.encounters[id]!.patientLocation !== null)
++      .sort()
++      .map((id) => ({ kind: "encounter" as const, id })),
+     ...state.serviceOperations
+-      .filter((operation) => operation.actorKind === "visitor")
++      .filter((operation) => operation.actorKind === "visitor" && operation.status !== "completed" && operation.status !== "cancelled")
+       .sort((left, right) => left.id.localeCompare(right.id))
+       .map((operation) => ({ kind: "service_visitor" as const, id: operation.id })),
+   ];

@@ -1,0 +1,21 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -6316,7 +6316,8 @@
+    */
+   private drawEarningsPopups(nowMilliseconds: number): void {
+     const model = this.bridge.viewModel;
+-    const actorAnchors = {
++    // Collected lazily: only a new per-tick receipt list needs actor anchors.
++    const actorAnchors = () => ({
+       patient: Object.fromEntries(
+         (model.patients ?? [])
+           .filter((patient) => this.getEarningsPopupPosition("patient", patient.instanceId))
+@@ -6342,7 +6343,7 @@
+       ),
+       retail_visitor: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "retail_visitor" && this.getEarningsPopupPosition("retail_visitor", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
+       companion: Object.fromEntries((model.retailExternalActors ?? []).filter((actor) => actor.actorKind === "companion" && this.getEarningsPopupPosition("companion", actor.instanceId)).map((actor) => [actor.instanceId, true] as const)),
+-    };
++    });
+     this.earningsPopupState = reconcileEarningsPopups(
+       this.earningsPopupState,
+       {

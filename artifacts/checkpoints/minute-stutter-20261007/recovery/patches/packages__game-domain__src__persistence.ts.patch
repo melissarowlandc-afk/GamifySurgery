@@ -1,0 +1,24 @@
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -47,6 +47,8 @@
+ } from "./selectors";
+ import { getEmployeeHomeLocation } from "./staff";
+ import { reconcileEmployeeRoomSeats } from "./room-capacity";
++import { normalizeRetiredEncounterSummary } from "./retired-encounters";
++import { normalizeRetiredServiceHistory } from "./retired-service-history";
+ import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork } from "./diagnostic-timing";
+ import { getDefaultDoorOffset } from "./doors";
+ import { findDeterministicFacilityPath, getRoomCareStations, getRoomNavigationAnchor } from "./spatial";
+@@ -2856,6 +2858,12 @@
+         ? parsed.patientAmenityTripSequence
+         : 0,
+     ),
++    retiredEncounterSummary: normalizeRetiredEncounterSummary(
++      parsed.retiredEncounterSummary,
++    ),
++    retiredServiceHistory: normalizeRetiredServiceHistory(
++      parsed.retiredServiceHistory,
++    ),
+     retailOperationSequence: Math.max(retailOperations.length, typeof parsed.retailOperationSequence === "number" && Number.isSafeInteger(parsed.retailOperationSequence) && parsed.retailOperationSequence >= 0 ? parsed.retailOperationSequence : 0),
+     retailOperations,
+     retailExternalActors,

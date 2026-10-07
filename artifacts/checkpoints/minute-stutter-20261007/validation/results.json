@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-07",
+  "typecheck": {
+    "game-domain": "pass, excluding Codex's in-progress tests/diagnostic-timing.test.ts",
+    "player": "pass"
+  },
+  "focusedTests": {
+    "game-domain": "7 files, 32/32 (retired-encounters, retired-service-history, tick-history-performance, level-two-endoscopy, diagnostics/patient-supply, level-two-persistence, patient-appearance-rotation)",
+    "player": "3 files, 9/9 (earningsPopupPresentation, earningsPopupFrameCost, newestServiceIncomeReceipts)"
+  },
+  "fullSuites": "Remaining failures belong to Codex's concurrent work in progress: character still catalog, content validation, the GS-028 variety batch, the player level3ControlsViewModels room count, and intermittent diagnostic-timing (passes alone). The original baseline also had load-slow GS-028 and surgery-center tests that pass alone.",
+  "equivalence": "Retirement A/B (on vs off): identical live state, cash, events, learning, progression, satisfaction, completed count and totals on the 8-day GS-017 autoplay and on 900 ticks of the owner's real save.",
+  "ownerSaveMeasurement": {
+    "before": {
+      "reducerMsPerTick": "100-275",
+      "viewMsPerTick": "50-120"
+    },
+    "after": {
+      "reducerMsPerTick": "10-15",
+      "viewMsPerTick": "4-5"
+    },
+    "idle900TickReducerMedianMs": {
+      "before": 356,
+      "after": 38
+    }
+  },
+  "ownerPlaytest": "Owner confirmed the stutter is gone (2026-10-07)."
+}

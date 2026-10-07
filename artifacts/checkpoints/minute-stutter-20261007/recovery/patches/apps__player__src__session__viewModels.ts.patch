@@ -1,0 +1,107 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -36,6 +36,7 @@
+   getRoomStaffCapacity,
+   getRemoteWorkQueueAvailability,
+   getLevelThreeSupportStatus,
++  getServiceIncomeTotalsCents,
+   getStaffRoleDefinition,
+   getWorkloadSnapshot,
+   validateDoorPlacement,
+@@ -1292,6 +1293,30 @@
+   };
+ }
+ 
++/**
++ * Equivalent to a stable newest-first sort followed by `slice(0, limit)`, but
++ * linear in the receipt history that is re-projected on every facility tick.
++ */
++export function newestServiceIncomeReceipts<
++  Receipt extends { completedAtFacilityTick: number },
++>(receipts: readonly Receipt[], limit: number): Receipt[] {
++  const newest: Receipt[] = [];
++  for (const receipt of receipts) {
++    let index = newest.length;
++    while (
++      index > 0 &&
++      newest[index - 1]!.completedAtFacilityTick <
++        receipt.completedAtFacilityTick
++    ) {
++      index -= 1;
++    }
++    if (index >= limit) continue;
++    newest.splice(index, 0, receipt);
++    if (newest.length > limit) newest.pop();
++  }
++  return newest;
++}
++
+ export function createPrototypePlayerView(
+   state: GameState,
+   selectedEncounterId: string | null,
+@@ -1308,6 +1333,17 @@
+   questionReviewFlags: readonly QuestionReviewFlag[] = [],
+ ): PrototypePlayerView {
+   const lists = getPatientLists(state);
++  // One pass over service history instead of one pass per resolved patient.
++  const encounterIdsWithActiveServiceOperation = new Set(
++    state.serviceOperations
++      .filter(
++        (operation) =>
++          operation.actorKind === "encounter" &&
++          operation.status !== "completed" &&
++          operation.status !== "cancelled",
++      )
++      .map((operation) => operation.actorId),
++  );
+   const workload = getWorkloadSnapshot(state);
+   const progressionStatus = getFacilityProgressionStatus(state);
+   const facilityBalance =
+@@ -1356,6 +1392,7 @@
+       ? { location: trip.location, ...movementPresentation(trip.path, trip.pathIndex) }
+       : null;
+   };
++  const serviceIncomeTotals = getServiceIncomeTotalsCents(state);
+   const receiptActorLabel = (actorKind: string, actorId: string): string => {
+     if (actorKind === "remote") return "Remote service";
+     if (actorKind === "founder") return state.founder.displayName;
+@@ -1500,9 +1537,7 @@
+           quoteFeeLabel: `${currency(operation.quoteGross)} gross · ${currency(operation.quoteStockCost)} stock`,
+         })),
+     ],
+-    recentReceipts: [...state.serviceIncomeReceipts]
+-      .sort((left, right) => right.completedAtFacilityTick - left.completedAtFacilityTick)
+-      .slice(0, 8)
++    recentReceipts: newestServiceIncomeReceipts(state.serviceIncomeReceipts, 8)
+       .map((receipt) => ({
+         id: receipt.id,
+         displayName: SERVICE_INCOME_CATALOG.find((line) => line.id === receipt.incomeLineId)?.displayName ?? receipt.incomeLineId,
+@@ -1511,9 +1546,10 @@
+         stockCostLabel: currency(receipt.stockCost),
+         netLabel: currency(receipt.netCashDelta),
+       })),
+-    grossTotalLabel: currency(state.serviceIncomeReceipts.reduce((total, receipt) => total + receipt.grossAmount, 0)),
+-    stockCostTotalLabel: currency(state.serviceIncomeReceipts.reduce((total, receipt) => total + receipt.stockCost, 0)),
+-    netTotalLabel: currency(state.serviceIncomeReceipts.reduce((total, receipt) => total + receipt.netCashDelta, 0)),
++    // Includes receipts retired from live state; see retiredServiceHistory.
++    grossTotalLabel: currency(serviceIncomeTotals.grossCents / 100),
++    stockCostTotalLabel: currency(serviceIncomeTotals.stockCostCents / 100),
++    netTotalLabel: currency(serviceIncomeTotals.netCashDeltaCents / 100),
+     ...(state.facilityLevel >= 3 ? { laboratoryWorkQueue: {
+       enabled: laboratoryQueue.canStart,
+       statusLabel: laboratoryQueueStatus,
+@@ -1829,13 +1865,7 @@
+           (encounter) =>
+             encounter.lifecycle !== "resolved" ||
+             encounter.patientMovement !== null ||
+-            state.serviceOperations.some(
+-              (operation) =>
+-                operation.actorKind === "encounter" &&
+-                operation.actorId === encounter.id &&
+-                operation.status !== "completed" &&
+-                operation.status !== "cancelled",
+-            ),
++            encounterIdsWithActiveServiceOperation.has(encounter.id),
+         )
+         .map((encounter) => {
+           const location = getEncounterPatientLocation(

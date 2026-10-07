@@ -1,0 +1,29 @@
+--- a/packages/game-domain/src/facility-experience.ts
++++ b/packages/game-domain/src/facility-experience.ts
+@@ -9,7 +9,7 @@
+   conditionAlertIsDue,
+   recordConditionAlertEmission,
+ } from "./alert-cadence";
+-import { validateFacilityAccess } from "./doors";
++import { getCachedFacilityAccessValidation } from "./facility-access-cache";
+ import { getOccupiedTiles } from "./spatial";
+ import type {
+   DomainContext,
+@@ -71,16 +71,7 @@
+   state: GameState,
+   context: DomainContext,
+ ) {
+-  return validateFacilityAccess(
+-    state.rooms,
+-    state.doors,
+-    (definitionId) => roomDefinition(context, definitionId),
+-    context.balanceRelease.facility.gridWidth,
+-    context.balanceRelease.facility.gridHeight,
+-    new Set(
+-      context.balanceRelease.facility.protectedRoomDefinitionIds,
+-    ),
+-  );
++  return getCachedFacilityAccessValidation(state, context);
+ }
+ 
+ function isRoomAvailable(

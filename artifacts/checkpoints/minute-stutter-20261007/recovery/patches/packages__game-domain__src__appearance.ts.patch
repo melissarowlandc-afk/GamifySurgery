@@ -1,0 +1,27 @@
+--- a/packages/game-domain/src/appearance.ts
++++ b/packages/game-domain/src/appearance.ts
+@@ -7,6 +7,7 @@
+   PixelAppearanceDescriptor,
+   PixelAppearanceVariant,
+   CharacterStillId,
++  EncounterState,
+   GameState,
+   PatientIdentityId,
+   PatientSexLabel,
+@@ -303,10 +304,14 @@
+ 
+ type PatientAppearanceSelectionState = Pick<
+   GameState,
+-  "encounters" | "serviceOperations" | "retailExternalActors" | "environment"
++  | "encounters"
++  | "serviceOperations"
++  | "retailExternalActors"
++  | "environment"
++  | "retiredEncounterSummary"
+ >;
+ 
+-function patientStillIdForAppearance(
++export function patientStillIdForAppearance(
+   appearance: PixelAppearanceDescriptor | null | undefined,
+ ): string | undefined {
+   if (!appearance) return undefined;
