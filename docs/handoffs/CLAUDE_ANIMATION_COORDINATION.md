@@ -763,6 +763,12 @@ Status is one of `claimed`, `in progress`, `ready for review`, `done`,
   only this archive and this coordination file. Checks before staging found
   no secrets, credentials, personal paths or clinical content, and no
   ignored files.
+- 2026-10-07 — Claude — **backup verified** — Checkpoint
+  `a84d8c7805af1e642ebc729056c9b7033fa949a2` was pushed to `origin/beta` and
+  confirmed with `git ls-remote`. The live source changes stay uncommitted in
+  the shared worktree; the archive is the recovery copy. There was no merge,
+  release, deployment or Pages publication. Task closed at the owner's
+  request.
 
 ## 5. Movement baseline (as of October 5, 2026; verify before relying on it)
 
