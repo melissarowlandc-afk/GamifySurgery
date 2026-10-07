@@ -1200,3 +1200,14 @@ Codex's next integrated checkpoint. No merge, release or Pages publication.
   - **Not staged:** shared dirty source files, other sessions' work, Level 4
     design previews and the owner's save. No merge, release, deployment or
     Pages publication. Owner pathway unchanged.
+- 2026-10-07 — Claude — **backup verified** — Owner asked to back up the
+  Level 4 designs. Checkpoint `1600e2e956c2772effb9ac9c14448585c7dfa8df`
+  (`backup: preserve Level 4 room designs (MRI, pediatric, wound/ostomy)`)
+  was pushed to `origin/beta` and confirmed with `git ls-remote`.
+  - **Archive:** `artifacts/checkpoints/level4-designs-20261007/`. Contains
+    the MRI, Pediatric Waiting, Pediatric Exam and Wound/Ostomy stand-ins,
+    art briefs, generators, `CODEX_ART_HANDOFF.md`, the lab layouts, review
+    sheets, and 3 verified Claude-only Call Room doc patches.
+  - **Not staged:** Codex's later `level-4/mri/assets/` and `mri/proof/`,
+    shared dirty files, other sessions' work and the owner's save. No merge,
+    release, deployment or Pages publication. Owner pathway unchanged.
