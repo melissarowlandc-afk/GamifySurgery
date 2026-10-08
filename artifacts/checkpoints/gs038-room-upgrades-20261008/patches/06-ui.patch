@@ -1,0 +1,1246 @@
+diff --git a/apps/player/src/session/buildModePresentation.ts b/apps/player/src/session/buildModePresentation.ts
+--- a/apps/player/src/session/buildModePresentation.ts
++++ b/apps/player/src/session/buildModePresentation.ts
+@@ -1,3 +1,10 @@
++import {
++  getCurrentRoomUpgradeDefinition,
++  getRoomUpgradeLevelBenefit,
++  getRoomUpgradePerPurchaseLabel,
++  getRoomUpgradePurchaseCount,
++  type RoomUpgradeEffectKind,
++} from "@gamify-surgery/balance-config";
+ import type {
+   RoomBuildCategoryId,
+   RoomUpgradeBenefitView,
+@@ -118,57 +125,45 @@
+   return letters;
+ }
+ 
+-/**
+- * Describes the upgrade effect the game applies today: every non-hallway
+- * upgrade level adds the shared completed-visit satisfaction bonus, capped
+- * clinic-wide, plus any per-level upkeep. When GS-038 room-specific effects
+- * land in balance config, this is the one place Build Mode reads them from.
+- */
++function roomUpgradeTotalLabel(effectKind: RoomUpgradeEffectKind, amount: number): string {
++  if (amount === 0) return "Baseline";
++  if (effectKind === "revenue_percent") return `+${amount}%`;
++  if (effectKind === "cleanliness_decay_reduction_percent") return `${amount}% slower loss`;
++  if (effectKind.endsWith("_reduction_percent")) return `${amount}% less time`;
++  return `+${amount} point${amount === 1 ? "" : "s"}`;
++}
++
++/** Describes this room's purchased catalog benefit, independent of other rooms. */
+ export function describeRoomUpgradeBenefit(input: {
++  roomDefinitionId: string;
+   upgradeLevel: number;
+   maxUpgradeLevel: number;
+-  satisfactionPerLevel: number;
+-  satisfactionCap: number;
+-  clinicSatisfactionTotal: number;
+   upkeepPerLevel: number;
+-}): RoomUpgradeBenefitView {
++}): RoomUpgradeBenefitView | undefined {
+   const {
++    roomDefinitionId,
+     upgradeLevel,
+     maxUpgradeLevel,
+-    satisfactionPerLevel,
+-    satisfactionCap,
+-    clinicSatisfactionTotal,
+     upkeepPerLevel,
+   } = input;
++  const definition = getCurrentRoomUpgradeDefinition(roomDefinitionId);
++  const perUpgradeLabel = getRoomUpgradePerPurchaseLabel(roomDefinitionId);
++  const current = getRoomUpgradeLevelBenefit(roomDefinitionId, upgradeLevel);
++  if (!definition?.upgradeCosts.length || maxUpgradeLevel <= 1 || !perUpgradeLabel || !current) {
++    return undefined;
++  }
+   const atMaximum = upgradeLevel >= maxUpgradeLevel;
+-  const clinicNow = Math.min(satisfactionCap, clinicSatisfactionTotal);
+-  const clinicNext = Math.min(
+-    satisfactionCap,
+-    clinicSatisfactionTotal + satisfactionPerLevel,
+-  );
++  const next = atMaximum ? null : getRoomUpgradeLevelBenefit(roomDefinitionId, upgradeLevel + 1);
+   const upkeepLabel =
+     upkeepPerLevel > 0
+       ? atMaximum
+-        ? `Upkeep +$${(upgradeLevel - 1) * upkeepPerLevel}/hr from upgrades`
++        ? `Upkeep +$${getRoomUpgradePurchaseCount(upgradeLevel) * upkeepPerLevel}/hr from upgrades`
+         : `Upkeep +$${upkeepPerLevel}/hr`
+       : undefined;
+-  if (satisfactionPerLevel <= 0) {
+-    return {
+-      perUpgradeLabel: "Raises the room's level",
+-      currentLabel: `Level ${upgradeLevel} of ${maxUpgradeLevel}`,
+-      ...(upkeepLabel ? { upkeepLabel } : {}),
+-    };
+-  }
+-  const capped = clinicNow >= satisfactionCap;
+   return {
+-    perUpgradeLabel: `+${satisfactionPerLevel} patient satisfaction per completed visit`,
+-    totalCaption: "Clinic total",
+-    currentLabel: `+${clinicNow}`,
+-    ...(atMaximum || capped ? {} : { nextLabel: `+${clinicNext}` }),
+-    note:
+-      !atMaximum && capped
+-        ? `Your clinic already has the full +${satisfactionCap}, so this upgrade adds no satisfaction for now.`
+-        : `Shared by all rooms, up to +${satisfactionCap} for the clinic.`,
++    perUpgradeLabel,
++    currentLabel: roomUpgradeTotalLabel(current.effectKind, current.totalAmount),
++    ...(next ? { nextLabel: roomUpgradeTotalLabel(next.effectKind, next.totalAmount) } : {}),
+     ...(upkeepLabel ? { upkeepLabel } : {}),
+   };
+ }
+diff --git a/apps/player/src/session/viewModels.ts b/apps/player/src/session/viewModels.ts
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -56,7 +56,7 @@
+   type RoomOrientation,
+   type ServiceOperationState,
+ } from "@gamify-surgery/game-domain";
+-import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG } from "@gamify-surgery/balance-config";
++import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG, getCurrentRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
+ import type { FacilityActorSupportRole } from "../facility/types";
+ import { isTouchupImagingDimRoom } from "../facility/roomTouchups";
+ import type { FacilityBuildDoorSlotView, FacilityViewModel } from "../facility";
+@@ -75,10 +75,10 @@
+ } from "./buildModePresentation";
+ import { createPatientAvailabilityGuidance } from "./patientAvailabilityViewModel";
+ import { createEmployeeTrainingView } from "./employeeTrainingViewModels";
++import { formatFacilityDuration } from "./facilityDuration";
+ import {
+   diagnosticChoiceTimingPresentation,
+   diagnosticPendingPresentation,
+-  roomUsesFixedDiagnosticTiming,
+ } from "./diagnosticTimingPresentation";
+ import {
+   createManagementFinanceView,
+@@ -661,14 +661,6 @@
+   return assigned.findIndex((candidate) => candidate.id === employee.id) === 0
+     ? "glp1-np-station-1"
+     : "glp1-np-station-2";
+-}
+-
+-function formatFacilityDuration(value: number): string {
+-  if (value >= 60 && value % 60 === 0) {
+-    const hours = value / 60;
+-    return `${hours} hour${hours === 1 ? "" : "s"}`;
+-  }
+-  return `${value} min`;
+ }
+ 
+ let learningCardDateTimeFormatter: Intl.DateTimeFormat | undefined;
+@@ -1424,8 +1416,8 @@
+   const initialRoomInstanceIds = new Set(
+     facilityBalance.initialRooms.map((room) => room.id),
+   );
+-  // Build Mode presentation: lettered names, live access problems and the
+-  // shared satisfaction bonus that upgrades currently feed.
++  // Build Mode presentation: lettered names, live access and each room's
++  // purchased catalog benefits.
+   const buildRoomNames = letteredRoomNames(
+     state.rooms,
+     (roomDefinitionId) =>
+@@ -1434,30 +1426,20 @@
+   const buildUnreachableRoomIds = new Set(
+     buildMode ? getFacilityAccessValidation(state).unreachableRoomIds : [],
+   );
+-  const satisfactionBalance =
+-    PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction;
+-  const clinicUpgradeSatisfactionTotal = state.rooms.reduce((total, room) =>
+-    getRoomDefinition(room.roomDefinitionId)?.kind === "hallway"
+-      ? total
+-      : total +
+-        Math.max(0, room.upgradeLevel - 1) *
+-          satisfactionBalance.roomUpgradeBonusPerLevel,
+-  0);
+   const roomUpgradeable = (roomDefinitionId: string): boolean => {
+     const definition = getRoomDefinition(roomDefinitionId);
+     return Boolean(
+-      definition?.buildable && definition.maximumUpgradeLevel > 1,
++      definition?.buildable && definition.maximumUpgradeLevel > 1 &&
++        getCurrentRoomUpgradeDefinition(roomDefinitionId)?.upgradeCosts.length,
+     );
+   };
+   const roomUpgradeBenefit = (room: GameState["rooms"][number]) => {
+     const definition = getRoomDefinition(room.roomDefinitionId);
+     return definition && roomUpgradeable(room.roomDefinitionId)
+       ? describeRoomUpgradeBenefit({
++          roomDefinitionId: room.roomDefinitionId,
+           upgradeLevel: room.upgradeLevel,
+           maxUpgradeLevel: definition.maximumUpgradeLevel,
+-          satisfactionPerLevel: satisfactionBalance.roomUpgradeBonusPerLevel,
+-          satisfactionCap: satisfactionBalance.maximumRoomUpgradeBonus,
+-          clinicSatisfactionTotal: clinicUpgradeSatisfactionTotal,
+           upkeepPerLevel: definition.upkeepPerUpgradeLevel,
+         })
+       : undefined;
+@@ -2482,7 +2464,7 @@
+             ? {}
+             : { nextUpgradeCostLabel: `$${upgradeCost.toLocaleString()}` }),
+           canUpgrade: upgradeCost !== null && state.cash >= upgradeCost,
+-          ...(benefit ? { benefitSummary: benefit.perUpgradeLabel } : {}),
++          ...(benefit ? { benefitSummary: benefit.perUpgradeLabel, benefit } : {}),
+           accessProblem: buildUnreachableRoomIds.has(room.id),
+         };
+         return [view];
+@@ -2690,26 +2672,7 @@
+         nextUpgradeLevel === undefined
+           ? []
+           : [
+-              roomUsesFixedDiagnosticTiming(definition.id)
+-                ? `Room operating level advances to Level ${nextUpgradeLevel}; approved diagnostic phase times stay fixed.`
+-                : `Room finish and fixed fixtures advance to Level ${nextUpgradeLevel}.`,
+-              ...(definition.workloadLimitContributionPerUpgradeLevel > 0
+-                ? [
+-                    `Routine workload capacity +${definition.workloadLimitContributionPerUpgradeLevel}.`,
+-                  ]
+-                : []),
+-              ...(definition.serviceDurationReductionPercentPerUpgradeLevel >
+-              0 && !roomUsesFixedDiagnosticTiming(definition.id)
+-                ? [
+-                    `Room service time ${definition.serviceDurationReductionPercentPerUpgradeLevel}% faster.`,
+-                  ]
+-                : []),
+-              ...(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease
+-                .patientSatisfaction.roomUpgradeBonusPerLevel > 0
+-                ? [
+-                    `Completed-encounter satisfaction +${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction.roomUpgradeBonusPerLevel} (clinic upgrade bonus capped at +${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.patientSatisfaction.maximumRoomUpgradeBonus}).`,
+-                  ]
+-                : []),
++              roomUpgradeBenefit(room)?.perUpgradeLabel ?? "",
+               ...(definition.upkeepPerUpgradeLevel > 0
+                 ? [
+                     `Hourly upkeep +$${definition.upkeepPerUpgradeLevel}.`,
+diff --git a/apps/player/src/session/employeeTrainingViewModels.ts b/apps/player/src/session/employeeTrainingViewModels.ts
+--- a/apps/player/src/session/employeeTrainingViewModels.ts
++++ b/apps/player/src/session/employeeTrainingViewModels.ts
+@@ -6,6 +6,7 @@
+   PROTOTYPE_DOMAIN_CONTEXT,
+ } from "@gamify-surgery/game-domain";
+ import type { EmployeeTrainingView } from "../ui/types";
++import { formatFacilityDuration } from "./facilityDuration";
+ 
+ const ROLE_BENEFIT_PREFIXES: Readonly<Record<string, string>> = {
+   "staff.receptionist": "Reduces wait penalties",
+@@ -47,11 +48,17 @@
+   const quote = getEmployeeTrainingQuote(state, employeeId, context);
+   const employee = state.employees.find((candidate) => candidate.id === employeeId);
+   const roleId = employee?.staffRoleDefinitionId ?? "";
++  const session = employee?.training;
++  const sessionDurationMinutes = !session || session.stage === "queued"
++    ? null
++    : session.roomUpgradeWork
++      ? session.roomUpgradeWork.durationMinutes
++      : EMPLOYEE_TRAINING_SESSION_MINUTES;
+   const labels: Record<EmployeeTrainingView["status"], string> = {
+     idle: `Level ${quote.currentLevel}`,
+     queued: "Queued · working",
+     walking: "Walking to training",
+-    training: `Training · ${quote.minutesRemaining ?? EMPLOYEE_TRAINING_SESSION_MINUTES} min left`,
++    training: `Training · ${formatFacilityDuration(quote.minutesRemaining ?? sessionDurationMinutes ?? EMPLOYEE_TRAINING_SESSION_MINUTES)} left`,
+     returning: "Returning to work",
+     max_level: "Level 5 · fully trained",
+   };
+@@ -70,7 +77,7 @@
+     status: quote.status,
+     statusLabel: labels[quote.status],
+     minutesRemaining: quote.minutesRemaining,
+-    sessionDurationMinutes: EMPLOYEE_TRAINING_SESSION_MINUTES,
++    sessionDurationMinutes,
+     currentBenefitLabel: benefitLabel(quote.currentBenefit?.percent ?? 0),
+     nextBenefitLabel: quote.nextBenefit ? benefitLabel(quote.nextBenefit.percent) : null,
+     incrementBenefitLabel: quote.nextBenefit ? benefitLabel(quote.nextBenefit.incrementalPercent) : null,
+diff --git a/apps/player/src/session/alertViewModels.ts b/apps/player/src/session/alertViewModels.ts
+--- a/apps/player/src/session/alertViewModels.ts
++++ b/apps/player/src/session/alertViewModels.ts
+@@ -1,6 +1,7 @@
+ import {
+   PROTOTYPE_ALERT_SCHEDULING,
+   getPrototypeAlertDefinition,
++  getCurrentRoomUpgradeDefinition,
+   isPrototypeEventSuppressedFromPlayerFeed,
+   renderPrototypeAlert,
+ } from "@gamify-surgery/balance-config";
+@@ -1137,6 +1138,9 @@
+           "returning_from_offsite_testing" &&
+         room.upgradeLevel === 1 &&
+         definition.maximumUpgradeLevel > 1 &&
++        ["waiting_satisfaction_points", "examination_satisfaction_points", "recovery_satisfaction_points"].includes(
++          getCurrentRoomUpgradeDefinition(room.roomDefinitionId)?.effectKind ?? "none",
++        ) &&
+         encounter.patientSatisfaction < 90 &&
+         state.facilityTick - encounter.waiting.arrivedAtTick >=
+           (roomUpgradeComplaintDefinition?.cooldownMinutes ?? 60)
+diff --git a/apps/player/src/ui/types.ts b/apps/player/src/ui/types.ts
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -386,7 +386,7 @@
+  */
+ export interface RoomUpgradeBenefitView {
+   perUpgradeLabel: string;
+-  /** Words before the running total, e.g. "Clinic total". */
++  /** Words before this room's running total; defaults to "Now". */
+   totalCaption?: string;
+   currentLabel: string;
+   nextLabel?: string;
+@@ -407,6 +407,7 @@
+   nextUpgradeCostLabel?: string;
+   canUpgrade: boolean;
+   benefitSummary?: string;
++  benefit?: RoomUpgradeBenefitView;
+   accessProblem: boolean;
+ }
+ 
+@@ -490,7 +491,8 @@
+   status: "idle" | "queued" | "walking" | "training" | "returning" | "max_level";
+   statusLabel: string;
+   minutesRemaining: number | null;
+-  sessionDurationMinutes: number;
++  /** Null until a room is bound; an active session keeps its saved duration. */
++  sessionDurationMinutes: number | null;
+   currentBenefitLabel: string;
+   nextBenefitLabel: string | null;
+   /** Additional benefit earned by this purchase, separate from target total. */
+diff --git a/apps/player/src/ui/BuildPanel.tsx b/apps/player/src/ui/BuildPanel.tsx
+--- a/apps/player/src/ui/BuildPanel.tsx
++++ b/apps/player/src/ui/BuildPanel.tsx
+@@ -383,7 +383,12 @@
+           {room.accessProblem ? (
+             <span className="build-owned-problem">! No access</span>
+           ) : room.benefitSummary && room.upgradeable ? (
+-            <span>{room.benefitSummary}</span>
++            <span>
++              {room.benefitSummary} per upgrade
++              {room.benefit ? (
++                <> · Now {room.benefit.currentLabel}{room.benefit.nextLabel ? <> → Next {room.benefit.nextLabel}</> : null}</>
++              ) : null}
++            </span>
+           ) : null}
+         </span>
+       </div>
+diff --git a/apps/player/src/ui/RoomActionMenu.tsx b/apps/player/src/ui/RoomActionMenu.tsx
+--- a/apps/player/src/ui/RoomActionMenu.tsx
++++ b/apps/player/src/ui/RoomActionMenu.tsx
+@@ -332,7 +332,7 @@
+               {room.benefit.totalCaption ?? "Now"} <b>{room.benefit.currentLabel}</b>
+               {room.benefit.nextLabel ? (
+                 <>
+-                  {" "}→ <b>{room.benefit.nextLabel}</b>
++                  {" "}→ Next <b>{room.benefit.nextLabel}</b>
+                 </>
+               ) : null}
+             </span>
+diff --git a/apps/player/src/ui/StaffPanel.tsx b/apps/player/src/ui/StaffPanel.tsx
+--- a/apps/player/src/ui/StaffPanel.tsx
++++ b/apps/player/src/ui/StaffPanel.tsx
+@@ -1,5 +1,6 @@
+ import { useEffect, useState } from "react";
+ import { PixelAvatar } from "./PixelAvatar";
++import { formatFacilityDuration } from "../session/facilityDuration";
+ import type {
+   StaffMemberView,
+   StaffRoleGroupView,
+@@ -309,7 +310,12 @@
+ 
+       <div className="staff-card-actions">
+         {training && inTrainingFlow ? (
+-          <span className="staff-training-status">{training.statusLabel}</span>
++          <span className="staff-training-status">
++            {training.statusLabel}
++            {training.sessionDurationMinutes !== null ? (
++              <small> · {formatFacilityDuration(training.sessionDurationMinutes)} session</small>
++            ) : null}
++          </span>
+         ) : training && onTrain ? (
+           <button
+             type="button"
+@@ -337,7 +343,11 @@
+           {employee.trainingTeamAverageAfterLabel ? (
+             <span>Team average after: {employee.trainingTeamAverageAfterLabel}.</span>
+           ) : null}
+-          <small>Away about {Math.round(training.sessionDurationMinutes / 60)} hr; keeps working while queued.</small>
++          <small>
++            {training.sessionDurationMinutes === null
++              ? "Duration depends on the assigned Training Room; keeps working while queued."
++              : `Training session: ${formatFacilityDuration(training.sessionDurationMinutes)}; keeps working while queued.`}
++          </small>
+           {!training.canTrain && training.blockedReason ? (
+             <small className="staff-popover-blocked">{training.blockedReason}</small>
+           ) : null}
+diff --git a/apps/player/src/facility/FacilityScene.ts b/apps/player/src/facility/FacilityScene.ts
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -1,4 +1,5 @@
+ import Phaser from "phaser";
++import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
+ import type {
+   CardinalDirection,
+   GridPoint,
+@@ -3453,7 +3454,7 @@
+     rectangle: { x: number; y: number; width: number; height: number },
+   ): void {
+     const tier = Math.max(1, Math.min(5, room.upgradeLevel ?? 1));
+-    if (tier < 2) {
++    if (tier < 2 || !getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges) {
+       return;
+     }
+     const inset = Math.max(5, Math.floor(this.layout.tileSize * 0.14));
+@@ -5102,10 +5103,9 @@
+         place("visitorChair", 0.68, 0.62, 0.25, 0.3);
+     }
+ 
+-    const visualTier = Math.max(
+-      1,
+-      Math.min(5, room.upgradeLevel ?? 1),
+-    );
++    const visualTier = getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges
++      ? Math.max(1, Math.min(5, room.upgradeLevel ?? 1))
++      : 1;
+     if (visualTier >= 2 && !isFiveReferenceRoomDefinition(room.definitionId)) {
+       switch (room.definitionId) {
+         case "room.front_desk":
+diff --git a/packages/game-domain/src/selectors.ts b/packages/game-domain/src/selectors.ts
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -42,7 +42,7 @@
+   isEndoscopyCompletionReceipt,
+ } from "./retired-service-history";
+ import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content";
+-import { getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { getCurrentRoomUpgradeDefinition, getServiceIncomeForRoute, getServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { getExactTestChoiceOrderRecord } from "./test-choice-orders";
+ import { getDiagnosticChoicePlanning } from "./diagnostic-order-requests";
+ import { isEmployeeAwayForTraining } from "./employee-training";
+@@ -1280,6 +1280,8 @@
+   if (
+     !room ||
+     !definition ||
++    !definition.buildable ||
++    !getCurrentRoomUpgradeDefinition(room.roomDefinitionId)?.upgradeCosts.length ||
+     room.upgradeLevel >= definition.maximumUpgradeLevel
+   ) {
+     return null;
+diff --git a/packages/game-domain/src/facility-alert-conditions.ts b/packages/game-domain/src/facility-alert-conditions.ts
+--- a/packages/game-domain/src/facility-alert-conditions.ts
++++ b/packages/game-domain/src/facility-alert-conditions.ts
+@@ -1,5 +1,6 @@
+ import {
+   getPrototypeAlertDefinition,
++  getCurrentRoomUpgradeDefinition,
+   renderPrototypeAlert,
+ } from "@gamify-surgery/balance-config";
+ import {
+@@ -122,6 +123,9 @@
+           "returning_from_offsite_testing" &&
+         room.upgradeLevel === 1 &&
+         roomDefinition.maximumUpgradeLevel > 1 &&
++        ["waiting_satisfaction_points", "examination_satisfaction_points", "recovery_satisfaction_points"].includes(
++          getCurrentRoomUpgradeDefinition(room.roomDefinitionId)?.effectKind ?? "none",
++        ) &&
+         encounter.patientSatisfaction < 90 &&
+         state.facilityTick - encounter.waiting.arrivedAtTick >=
+           (definition?.cooldownMinutes ?? 60)
+diff --git a/apps/player/src/session/buildModePresentation.test.ts b/apps/player/src/session/buildModePresentation.test.ts
+--- a/apps/player/src/session/buildModePresentation.test.ts
++++ b/apps/player/src/session/buildModePresentation.test.ts
+@@ -62,46 +62,62 @@
+ 
+ describe("Build Mode upgrade benefit text", () => {
+   const base = {
++    roomDefinitionId: "room.waiting",
+     maxUpgradeLevel: 5,
+-    satisfactionPerLevel: 1,
+-    satisfactionCap: 3,
+     upkeepPerLevel: 2,
+   };
+ 
+-  it("describes the shared satisfaction bonus with now and next totals", () => {
++  it("describes the used room's satisfaction points with current and next totals", () => {
+     const benefit = describeRoomUpgradeBenefit({
+       ...base,
+       upgradeLevel: 2,
+-      clinicSatisfactionTotal: 1,
+-    });
+-    expect(benefit.perUpgradeLabel).toBe("+1 patient satisfaction per completed visit");
+-    expect(benefit.totalCaption).toBe("Clinic total");
+-    expect(benefit.currentLabel).toBe("+1");
+-    expect(benefit.nextLabel).toBe("+2");
+-    expect(benefit.note).toBe("Shared by all rooms, up to +3 for the clinic.");
++    })!;
++    expect(benefit.perUpgradeLabel).toBe("+2 satisfaction points for waiting patients");
++    expect(benefit.currentLabel).toBe("+2 points");
++    expect(benefit.nextLabel).toBe("+4 points");
++    expect(benefit.totalCaption).toBeUndefined();
++    expect(benefit.note).toBeUndefined();
+     expect(benefit.upkeepLabel).toBe("Upkeep +$2/hr");
+   });
+ 
+-  it("warns when the clinic already has the full shared bonus", () => {
++  it("starts at Baseline and has no clinic-wide cap", () => {
+     const benefit = describeRoomUpgradeBenefit({
+       ...base,
+-      upgradeLevel: 2,
+-      clinicSatisfactionTotal: 5,
+-    });
+-    expect(benefit.currentLabel).toBe("+3");
+-    expect(benefit.nextLabel).toBeUndefined();
+-    expect(benefit.note).toContain("adds no satisfaction for now");
++      upgradeLevel: 1,
++    })!;
++    expect(benefit.currentLabel).toBe("Baseline");
++    expect(benefit.nextLabel).toBe("+2 points");
++    expect(describeRoomUpgradeBenefit({ ...base, upgradeLevel: 4 })?.currentLabel).toBe("+6 points");
+   });
+ 
+   it("omits the next total at maximum level", () => {
+     const benefit = describeRoomUpgradeBenefit({
+       ...base,
+       upgradeLevel: 5,
+-      clinicSatisfactionTotal: 3,
+-    });
++    })!;
++    expect(benefit.currentLabel).toBe("+8 points");
+     expect(benefit.nextLabel).toBeUndefined();
+     expect(benefit.upkeepLabel).toBe("Upkeep +$8/hr from upgrades");
+   });
++
++  it.each([
++    ["room.examination", "+2 satisfaction points after examination", "+6 points", "+8 points"],
++    ["room.laboratory", "+6% paid laboratory-processing revenue", "+18%", "+24%"],
++    ["room.reading", "Scan reading takes 10% less time", "30% less time", "40% less time"],
++    ["room.bathroom", "10% slower cleanliness loss", "30% slower loss", "40% slower loss"],
++    ["room.coffee_kiosk", "+1 staff morale point from daily coffee", "+3 points", "+4 points"],
++    ["room.staff_break", "+2 staff morale points per break", "+6 points", "+8 points"],
++  ])("describes the approved scope for %s", (roomDefinitionId, perUpgradeLabel, currentLabel, nextLabel) => {
++    expect(describeRoomUpgradeBenefit({ ...base, roomDefinitionId, upgradeLevel: 4 })).toMatchObject({
++      perUpgradeLabel, currentLabel, nextLabel,
++    });
++  });
++
++  it.each(["room.front_desk", "room.hallway", "room.imaging_control", "room.founder_office", "room.unknown"])(
++    "does not offer a benefit for non-purchasable %s", (roomDefinitionId) => {
++      expect(describeRoomUpgradeBenefit({ ...base, roomDefinitionId, upgradeLevel: 1 })).toBeUndefined();
++    },
++  );
+ });
+ 
+ describe("Build Mode undo label", () => {
+diff --git a/apps/player/src/session/buildViewModels.test.ts b/apps/player/src/session/buildViewModels.test.ts
+--- a/apps/player/src/session/buildViewModels.test.ts
++++ b/apps/player/src/session/buildViewModels.test.ts
+@@ -3,6 +3,8 @@
+   SECOND_TUTORIAL_ENCOUNTER_ID,
+   TUTORIAL_ENCOUNTER_ID,
+   createInitialGameState,
++  getWorkloadSnapshot,
++  type RoomUpgradeLevel,
+   gameReducer,
+ } from "@gamify-surgery/game-domain";
+ import { createPrototypePlayerView } from "./viewModels";
+@@ -256,11 +258,11 @@
+     });
+     expect(view.selectedRoomBuild?.upgradeImprovements).toEqual(
+       expect.arrayContaining([
+-        "Room finish and fixed fixtures advance to Level 2.",
+-        "Completed-encounter satisfaction +1 (clinic upgrade bonus capped at +3).",
++        "+2 satisfaction points after examination",
+         "Hourly upkeep +$1.",
+       ]),
+     );
++    expect(view.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toMatch(/finish|capacity|clinic|capped/);
+     expect(view.selectedRoomBuild?.upgradeImprovements).not.toContain(
+       "Room service time 5% faster.",
+     );
+@@ -286,3 +288,105 @@
+     ).toBe(true);
+   });
+ });
++
++describe("approved room upgrade ladders in player views", () => {
++  // Owner-approved table, checked through the actual player projection.
++  const rows: ReadonlyArray<readonly [string, string, string[], number[]]> = [
++    ["room.examination", "+2 satisfaction points after examination", ["+2 points", "+4 points", "+6 points", "+8 points"], [90, 140, 210, 300]],
++    ["room.waiting", "+2 satisfaction points for waiting patients", ["+2 points", "+4 points", "+6 points", "+8 points"], [110, 170, 250, 360]],
++    ["room.bathroom", "10% slower cleanliness loss", ["10% slower loss", "20% slower loss", "30% slower loss", "40% slower loss"], [70, 110, 170, 250]],
++    ["room.minor_procedure", "+6% procedure revenue", ["+6%", "+12%", "+18%", "+24%"], [220, 330, 480, 680]],
++    ["room.ultrasound", "+6% ultrasound service revenue", ["+6%", "+12%", "+18%", "+24%"], [240, 360, 525, 715]],
++    ["room.xray", "+6% X-ray service revenue", ["+6%", "+12%", "+18%", "+24%"], [190, 280, 400, 560]],
++    ["room.ct", "+6% CT/CTA revenue", ["+6%", "+12%", "+18%", "+24%"], [400, 600, 880, 1200]],
++    ["room.phlebotomy", "+6% specimen-collection revenue", ["+6%", "+12%", "+18%", "+24%"], [140, 210, 305, 415]],
++    ["room.evs_closet", "Cleaning takes 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [120, 180, 260, 360]],
++    ["room.endoscopy", "+6% endoscopy revenue", ["+6%", "+12%", "+18%", "+24%"], [365, 545, 800, 1090]],
++    ["room.periop_recovery", "+2 satisfaction points after recovery", ["+2 points", "+4 points", "+6 points", "+8 points"], [225, 340, 495, 675]],
++    ["room.training", "Training sessions take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [165, 245, 360, 490]],
++    ["room.coffee_kiosk", "+1 staff morale point from daily coffee", ["+1 point", "+2 points", "+3 points", "+4 points"], [125, 190, 275, 375]],
++    ["room.glp1_telehealth_suite", "+6% telehealth revenue", ["+6%", "+12%", "+18%", "+24%"], [300, 450, 660, 900]],
++    ["room.ambulatory_or", "+6% operation revenue", ["+6%", "+12%", "+18%", "+24%"], [600, 900, 1320, 1800]],
++    ["room.laboratory", "+6% paid laboratory-processing revenue", ["+6%", "+12%", "+18%", "+24%"], [450, 675, 990, 1350]],
++    ["room.pharmacy", "+6% pharmacy sales revenue", ["+6%", "+12%", "+18%", "+24%"], [300, 450, 660, 900]],
++    ["room.maintenance_workshop", "Repairs take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [200, 300, 440, 600]],
++    ["room.staff_break", "+2 staff morale points per break", ["+2 points", "+4 points", "+6 points", "+8 points"], [225, 340, 495, 675]],
++    ["room.surgeon_office", "Quality reviews take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [175, 265, 385, 525]],
++    ["room.vending", "+6% vending revenue", ["+6%", "+12%", "+18%", "+24%"], [115, 170, 250, 340]],
++    ["room.reading", "Scan reading takes 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [450, 675, 990, 1350]],
++  ];
++
++  it.each(rows)("shows the complete playable ladder for %s", (roomDefinitionId, perUpgradeLabel, totals, prices) => {
++    const state = createInitialGameState(); state.facilityLevel = 3; state.cash = 100_000; state.cashCents = 10_000_000;
++    state.encounters = {};
++    const room = { id: "room.upgrade.view", roomDefinitionId, x: 20, y: 12,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as RoomUpgradeLevel, cleanliness: 100 };
++    state.rooms.push(room);
++    for (const level of [1, 2, 3, 4, 5] as const) {
++      room.upgradeLevel = level;
++      const view = createPrototypePlayerView(state, null, false, null, true, room.id);
++      const selected = view.selectedRoomBuild!;
++      const owned = view.ownedRooms.find((candidate) => candidate.id === room.id)!;
++      const expected = { perUpgradeLabel, currentLabel: level === 1 ? "Baseline" : totals[level - 2] };
++      expect(selected.benefit).toMatchObject(expected);
++      expect(owned.benefit).toEqual(selected.benefit);
++      expect(owned.benefitSummary).toBe(perUpgradeLabel);
++      expect(selected.maxUpgradeLevel).toBe(5);
++      expect(view.facility.rooms.find((candidate) => candidate.instanceId === room.id)?.upgradeMaxLevel).toBe(5);
++      if (level < 5) {
++        expect(selected.benefit?.nextLabel).toBe(totals[level - 1]);
++        const price = `$${prices[level - 1]!.toLocaleString()}`;
++        expect(selected.upgradeCostLabel).toBe(price);
++        expect(owned.nextUpgradeCostLabel).toBe(price);
++        expect(selected.nextUpgradeLevel).toBe(level + 1);
++        expect(selected.canUpgrade).toBe(true);
++        expect(selected.upgradeImprovements).toContain(perUpgradeLabel);
++      } else {
++        expect(selected.benefit?.nextLabel).toBeUndefined();
++        expect(selected.upgradeCostLabel).toBeUndefined();
++        expect(owned.nextUpgradeCostLabel).toBeUndefined();
++        expect(selected.canUpgrade).toBe(false);
++        expect(selected.upgradeImprovements).toEqual([]);
++      }
++      expect(JSON.stringify(selected.benefit)).not.toMatch(/Clinic total|shared|capped|capacity|fixture|finish/);
++    }
++  });
++
++  it("shows each room copy's totals and retains Examination capacity and admitted patients", () => {
++    let state = createInitialGameState(); state.facilityLevel = 3; state.cash = 10_000; state.cashCents = 1_000_000;
++    const front = state.rooms.find((room) => room.roomDefinitionId === "room.front_desk")!;
++    const caseId = state.encounters[TUTORIAL_ENCOUNTER_ID]!.frozenCase.id;
++    const placed = { id: "room.upgrade.exam", roomDefinitionId: "room.examination", x: front.x, y: front.y - 2,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as RoomUpgradeLevel, cleanliness: 100 };
++    state.rooms.push(placed);
++    state.doors.push({ id: "door.upgrade.exam", roomId: placed.id, side: "south", offset: 1, exterior: false });
++    state.encounters = {};
++    state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: "upgrade-view.admit",
++      encounterId: "encounter.upgrade-view.admitted", caseId, patientDisplayName: "Upgrade Test Patient", arrivalClass: "routine" });
++    expect(state.operationReceipts["upgrade-view.admit"]).toMatchObject({ status: "applied" });
++    expect(Object.keys(state.encounters)).toEqual(["encounter.upgrade-view.admitted"]);
++    const exam = state.rooms.find((room) => room.id === placed.id)!;
++    const beforeCapacity = getWorkloadSnapshot(state).routineLimit;
++    const beforeEncounters = structuredClone(state.encounters);
++    state.rooms.push({ ...exam, id: "room.upgrade.exam-copy", x: 25, y: 12, upgradeLevel: 1 });
++    exam.upgradeLevel = 5;
++    const view = createPrototypePlayerView(state, null, false, null, true, exam.id);
++    expect(view.ownedRooms.find((room) => room.id === exam.id)?.benefit?.currentLabel).toBe("+8 points");
++    expect(view.ownedRooms.find((room) => room.id === "room.upgrade.exam-copy")?.benefit).toMatchObject({ currentLabel: "Baseline", nextLabel: "+2 points" });
++    state.rooms.pop();
++    expect(getWorkloadSnapshot(state).routineLimit).toBe(beforeCapacity);
++    expect(state.encounters).toEqual(beforeEncounters);
++  });
++
++  it.each(["room.front_desk", "room.hallway", "room.imaging_control"])("shows no purchase or stars for %s", (roomDefinitionId) => {
++    const state = createInitialGameState();
++    const room = { id: "room.upgrade.non-purchase", roomDefinitionId, x: 20, y: 12,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 3 as const, cleanliness: 100 };
++    state.rooms.push(room);
++    const view = createPrototypePlayerView(state, null, false, null, true, room.id);
++    expect(view.selectedRoomBuild).toMatchObject({ upgradeable: false, maxUpgradeLevel: 1, canUpgrade: false });
++    expect(view.selectedRoomBuild?.benefit).toBeUndefined();
++    expect(view.selectedRoomBuild?.upgradeCostLabel).toBeUndefined();
++    expect(view.facility.rooms.find((candidate) => candidate.instanceId === room.id)?.upgradeMaxLevel ?? 1).toBe(1);
++  });
++});
+diff --git a/apps/player/src/session/diagnosticTimingViewModels.test.ts b/apps/player/src/session/diagnosticTimingViewModels.test.ts
+--- a/apps/player/src/session/diagnosticTimingViewModels.test.ts
++++ b/apps/player/src/session/diagnosticTimingViewModels.test.ts
+@@ -66,6 +66,24 @@
+ }
+ 
+ describe("diagnostic chart and facility presentation", () => {
++  it("formats fractional pending time in the actual chart and step without mutating frozen work", () => {
++    const state = accepted("case.colorectal.routine-screen");
++    const encounter = Object.values(state.encounters)[0]!;
++    const pending = encounter.pendingResult!;
++    // This legacy/custom wait deliberately has no new service quote markers.
++    delete pending.diagnosticTiming; delete pending.localServiceOperation;
++    delete pending.roomUpgradeRevenue; delete pending.roomUpgradeRecovery;
++    delete pending.resourceQueue;
++    pending.durationTicks = pending.serviceDurationTicks = 4.2749999999999995;
++    pending.dueTick = state.facilityTick + pending.durationTicks;
++    encounter.steps[0]!.result = structuredClone(pending);
++    const before = JSON.stringify(state);
++    const chart = view(state);
++    expect(chart.etaLabel).toBe("4.275 min remaining");
++    expect(chart.decisionSteps![0]!.etaLabel).toBe("4.275 min remaining");
++    expect(JSON.stringify(state)).toBe(before);
++  });
++
+   it("uses each shared total in both answer lists, including distractors and walking", () => {
+     const state = actionable("case.esophageal-dysphagia.bread-sticking");
+     const encounter = Object.values(state.encounters)[0]!;
+@@ -210,9 +228,21 @@
+     expect(facility.staffRoles.find((role) => role.id === "staff.radiologist")).toMatchObject({
+       maximumCount: 4, staffingGuidance: expect.stringContaining("separate queue and reads one study at a time"),
+     });
+-    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).toContain("diagnostic phase times stay fixed");
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toContain("phase times");
+     expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toContain("faster");
+     expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toContain("fixed fixtures");
+-    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).toContain("satisfaction");
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).toContain("+6% paid laboratory-processing revenue");
++    expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toContain("satisfaction");
++    const reading = state.rooms.find((room) => room.id === "reading.presentation")!;
++    for (const level of [1, 2, 4, 5] as const) {
++      reading.upgradeLevel = level;
++      facility = createPrototypePlayerView(state, null, false, null, true, reading.id);
++      expect(facility.staffRoles.find((role) => role.id === "staff.radiologist")?.maximumCount).toBe(4);
++      expect(facility.roomOptions.find((room) => room.id === "room.reading")).toMatchObject({
++        costLabel: "$1,800", upkeepLabel: "$24 upkeep / hr", footprintLabel: "4 × 4 tiles · 4 reading positions",
++      });
++      expect(facility.selectedRoomBuild?.benefit?.perUpgradeLabel).toBe("Scan reading takes 10% less time");
++      expect(facility.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toMatch(/capacity|fixture|satisfaction/);
++    }
+   });
+ });
+diff --git a/apps/player/src/session/employeeTrainingViewModels.test.ts b/apps/player/src/session/employeeTrainingViewModels.test.ts
+--- a/apps/player/src/session/employeeTrainingViewModels.test.ts
++++ b/apps/player/src/session/employeeTrainingViewModels.test.ts
+@@ -1,6 +1,10 @@
+ import { describe, expect, it } from "vitest";
+ import {
+   createInitialGameState,
++  createRoomUpgradeSupportWork,
++  bindRoomUpgradeSupportWork,
++  deserializeGameState,
++  serializeGameState,
+   gameReducer,
+   type EmployeeState,
+   type EmployeeTrainingState,
+@@ -41,6 +45,50 @@
+ }
+ 
+ describe("employee training presentation", () => {
++  it.each([[1, 60], [2, 54], [3, 48], [4, 42], [5, 36]] as const)(
++    "shows the saved Level %s room session duration after upgrade and reload", (level, duration) => {
++      const state = createInitialGameState(); state.facilityLevel = 2; state.facilityTick = 20;
++      const room = { id: "room.training-copy", roomDefinitionId: "room.training", x: 38, y: 24,
++        orientation: 0 as const, doorSide: null, upgradeLevel: level, cleanliness: 100 };
++      state.rooms.push(room);
++      const employee = addEmployee(state, "staff.radiologist", 1);
++      const work = createRoomUpgradeSupportWork(state, "training_duration_reduction_percent", 60);
++      expect(bindRoomUpgradeSupportWork(work, room.id)).toBe(duration);
++      employee.training = { ...session("training"), remainingMinutes: duration - 19,
++        lastProgressAtFacilityTick: 20, roomUpgradeWork: work };
++      room.upgradeLevel = 5;
++      const view = createEmployeeTrainingView(deserializeGameState(serializeGameState(state)), employee.id);
++      expect(view.sessionDurationMinutes).toBe(duration);
++      expect(view.minutesRemaining).toBe(duration - 19);
++      expect(view.statusLabel).toBe(`Training · ${duration - 19} min left`);
++    },
++  );
++
++  it("keeps a bound walking duration, a legacy active hour, and no unbound promise", () => {
++    const state = createInitialGameState(); state.facilityLevel = 2;
++    state.rooms.push({ id: "room.training-copy", roomDefinitionId: "room.training", x: 38, y: 24,
++      orientation: 0, doorSide: null, upgradeLevel: 5, cleanliness: 100 });
++    const employee = addEmployee(state, "staff.radiologist", 1);
++    employee.training = session("walking_to_training");
++    employee.training.roomUpgradeWork = createRoomUpgradeSupportWork(state, "training_duration_reduction_percent", 60);
++    bindRoomUpgradeSupportWork(employee.training.roomUpgradeWork, "room.training-copy");
++    expect(createEmployeeTrainingView(state, employee.id).sessionDurationMinutes).toBe(36);
++    employee.training = session("training");
++    expect(createEmployeeTrainingView(state, employee.id).sessionDurationMinutes).toBe(60);
++    employee.training = session("queued");
++    employee.training.roomUpgradeWork = createRoomUpgradeSupportWork(state, "training_duration_reduction_percent", 60);
++    expect(createEmployeeTrainingView(state, employee.id).sessionDurationMinutes).toBeNull();
++    employee.training = null;
++    expect(createEmployeeTrainingView(state, employee.id).sessionDurationMinutes).toBeNull();
++  });
++
++  it("formats fractional remaining training work without a float tail", () => {
++    const state = createInitialGameState();
++    const employee = addEmployee(state, "staff.radiologist", 1);
++    employee.training = { ...session("training"), remainingMinutes: 4.2749999999999995 };
++    expect(createEmployeeTrainingView(state, employee.id).statusLabel).toBe("Training · 4.275 min left");
++  });
++
+   it.each([
+     ["staff.receptionist", "Reduces wait penalties 10%", 150],
+     ["staff.imaging_technician", "Reduces scan time 10%", 150],
+@@ -64,7 +112,7 @@
+     expect(view.incrementBenefitLabel).toBe(description);
+     expect(view.cost).toBe(nextCost);
+     expect(view.nextLevel).toBe(3);
+-    expect(view.sessionDurationMinutes).toBe(60);
++    expect(view.sessionDurationMinutes).toBeNull();
+   });
+ 
+   it("distinguishes the next consultation's total bonus from the one-level increase", () => {
+diff --git a/apps/player/src/session/alertViewModels.test.ts b/apps/player/src/session/alertViewModels.test.ts
+--- a/apps/player/src/session/alertViewModels.test.ts
++++ b/apps/player/src/session/alertViewModels.test.ts
+@@ -1,5 +1,5 @@
+ import { describe, expect, it } from "vitest";
+-import { renderPrototypeAlert } from "@gamify-surgery/balance-config";
++import { ROOM_UPGRADE_CATALOG, renderPrototypeAlert } from "@gamify-surgery/balance-config";
+ import {
+   TUTORIAL_ENCOUNTER_ID,
+   SECOND_TUTORIAL_ENCOUNTER_ID,
+@@ -8,6 +8,9 @@
+   gameReducer,
+   serializeGameState,
+   synchronizeFacilityConditionOccurrences,
++  synchronizeFacilityOperationalAlertOccurrences,
++  getRoomDefinition,
++  getRoomNavigableTiles,
+   type DomainEvent,
+   type GameState,
+ } from "@gamify-surgery/game-domain";
+@@ -1693,3 +1696,34 @@
+     }));
+   });
+ });
++
++describe("room-specific upgrade comfort messages", () => {
++  it.each(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future"))(
++    "only generates new satisfaction guidance for $roomDefinitionId", ({ roomDefinitionId }) => {
++      const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
++      const room = { id: "room.player.comfort", roomDefinitionId, x: 20, y: 12,
++        orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
++      state.rooms.push(room);
++      const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
++      encounter.lifecycle = "waiting_unopened"; encounter.assignedRoomInstanceId = room.id;
++      encounter.patientMovement = null; encounter.patientSatisfaction = 82;
++      encounter.waiting.arrivedAtTick = 0;
++      encounter.patientLocation = getRoomNavigableTiles(room, getRoomDefinition(roomDefinitionId)!, state.doors)[0] ?? null;
++      state.encounters = { [encounter.id]: encounter };
++      synchronizeFacilityOperationalAlertOccurrences(state);
++      const messages = createMessageBoardView(state).filter((item) => item.targetType === "room" && item.targetId === room.id);
++      expect(messages.length > 0).toBe(["room.waiting", "room.examination", "room.periop_recovery"].includes(roomDefinitionId));
++    },
++  );
++
++  it("continues to display old recorded revenue-room upgrade requests unchanged", () => {
++    const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
++    const saved = event({ id: "event.old-revenue-comfort", type: "success_message", facilityTick: 60,
++      definitionId: "alert.patient.room-upgrade-requested", message: "Historical X-ray Room upgrade request.",
++      target: { kind: "room", id: "room.old.xray" }, priority: "informational" });
++    state.events.push(saved);
++    const reloaded = deserializeGameState(serializeGameState(state));
++    expect(reloaded.events.find((item) => item.id === saved.id)).toEqual(saved);
++    expect(createMessageBoardView(reloaded).find((item) => item.id === saved.id)?.message).toBe(saved.message);
++  });
++});
+diff --git a/apps/player/src/ui/BuildPanel.test.tsx b/apps/player/src/ui/BuildPanel.test.tsx
+--- a/apps/player/src/ui/BuildPanel.test.tsx
++++ b/apps/player/src/ui/BuildPanel.test.tsx
+@@ -62,7 +62,8 @@
+     upgradeable: true,
+     nextUpgradeCostLabel: "$170",
+     canUpgrade: true,
+-    benefitSummary: "+1 patient satisfaction per completed visit",
++    benefitSummary: "+2 satisfaction points for waiting patients",
++    benefit: { perUpgradeLabel: "+2 satisfaction points for waiting patients", currentLabel: "+2 points", nextLabel: "+4 points" },
+     accessProblem: false,
+   },
+   {
+@@ -300,6 +301,10 @@
+     expect(xray).toBeGreaterThan(roomB);
+     expect(markup).toContain("build-owned-row is-sibling is-first-sibling");
+     expect(markup).toContain("Upgrade $170");
++    expect(markup).toContain("+2 satisfaction points for waiting patients per upgrade");
++    expect(markup).toContain("Now +2 points");
++    expect(markup).toContain("→ Next +4 points");
++    expect(markup).not.toContain("Clinic total");
+     expect(markup).toMatch(/disabled=""[^>]*>Upgrade \$110<\/button>/);
+     expect(markup).toContain(">MAX<");
+     expect(markup).toContain("No upgrades");
+@@ -347,11 +352,9 @@
+   upgradeable: true,
+   canMove: true,
+   benefit: {
+-    perUpgradeLabel: "+1 patient satisfaction per completed visit",
+-    totalCaption: "Clinic total",
+-    currentLabel: "+1",
+-    nextLabel: "+2",
+-    note: "Shared by all rooms, up to +3 for the clinic.",
++    perUpgradeLabel: "+2 satisfaction points for waiting patients",
++    currentLabel: "+2 points",
++    nextLabel: "+4 points",
+     upkeepLabel: "Upkeep +$1/hr",
+   },
+   nextUpgradeLevel: 3,
+@@ -390,9 +393,9 @@
+     expect(markup).toContain("Waiting Room A");
+     expect(markup).toContain('aria-label="Level 2 of 5"');
+     expect(markup).toContain("Level 2 of 5");
+-    expect(markup).toContain("+1 patient satisfaction per completed visit");
+-    expect(markup).toContain("Clinic total <b>+1</b>");
+-    expect(markup).toContain("→ <b>+2</b>");
++    expect(markup).toContain("+2 satisfaction points for waiting patients");
++    expect(markup).toContain("Now <b>+2 points</b>");
++    expect(markup).toContain("→ Next <b>+4 points</b>");
+     expect(markup).toContain("Upkeep +$1/hr");
+     expect(markup).toContain("Upgrade to ★3 · $170");
+     expect(markup).toContain(">Move<");
+@@ -417,7 +420,7 @@
+       upgradeLevel: 5,
+       nextUpgradeLevel: undefined,
+       upgradeCostLabel: undefined,
+-      benefit: { perUpgradeLabel: "+1 patient satisfaction per completed visit", totalCaption: "Clinic total", currentLabel: "+3" },
++      benefit: { perUpgradeLabel: "+2 satisfaction points for waiting patients", currentLabel: "+8 points" },
+     });
+     expect(markup).toContain("Fully upgraded");
+     expect(markup).toContain(">MAX<");
+diff --git a/apps/player/src/ui/StaffPanel.test.tsx b/apps/player/src/ui/StaffPanel.test.tsx
+--- a/apps/player/src/ui/StaffPanel.test.tsx
++++ b/apps/player/src/ui/StaffPanel.test.tsx
+@@ -160,4 +160,28 @@
+     expect(markup).toContain("Payroll");
+     expect(markup).toContain("$30/hr");
+   });
++
++  it("shows the active frozen 36-minute session without rounding it to an hour", () => {
++    const upgradedRole: Parameters<typeof StaffPanel>[0]["roles"][number] = structuredClone(role);
++    upgradedRole.employees[0]!.training = {
++      ...trainingView, status: "training", statusLabel: "Training · 24 min left",
++      minutesRemaining: 24, sessionDurationMinutes: 36,
++    };
++    const markup = renderToStaticMarkup(<StaffPanel roles={[upgradedRole]}
++      staffTraining={{ inTrainingCount: 1, queuedCount: 0, capacity: 2, summaryLabel: "1/2 training" }}
++      onHire={vi.fn()} onDecreaseSalary={vi.fn()} onIncreaseSalary={vi.fn()} onFire={vi.fn()} onTrain={vi.fn()} />);
++    expect(markup).toContain("Training · 24 min left");
++    expect(markup).toContain("36 min session");
++    expect(markup).not.toContain("1 hr");
++  });
++
++  it("keeps queued work neutral about its unbound duration", () => {
++    const queuedRole: Parameters<typeof StaffPanel>[0]["roles"][number] = structuredClone(role);
++    queuedRole.employees[0]!.training = { ...trainingView, status: "queued", statusLabel: "Queued · working", sessionDurationMinutes: null };
++    const markup = renderToStaticMarkup(<StaffPanel roles={[queuedRole]}
++      staffTraining={{ inTrainingCount: 0, queuedCount: 1, capacity: 2, summaryLabel: "0/2 training · 1 queued" }}
++      onHire={vi.fn()} onDecreaseSalary={vi.fn()} onIncreaseSalary={vi.fn()} onFire={vi.fn()} onTrain={vi.fn()} />);
++    expect(markup).toContain("Queued · working");
++    expect(markup).not.toMatch(/60 min|1 hr|1 hour/);
++  });
+ });
+diff --git a/packages/game-domain/tests/facility-alert-conditions.test.ts b/packages/game-domain/tests/facility-alert-conditions.test.ts
+--- a/packages/game-domain/tests/facility-alert-conditions.test.ts
++++ b/packages/game-domain/tests/facility-alert-conditions.test.ts
+@@ -1,8 +1,12 @@
+ import { describe, expect, it } from "vitest";
++import { ROOM_UPGRADE_CATALOG } from "@gamify-surgery/balance-config";
+ import {
+   SECOND_TUTORIAL_ENCOUNTER_ID,
+   TUTORIAL_ENCOUNTER_ID,
+   createInitialGameState,
++  evaluateFacilityOperationalAlertConditions,
++  getRoomDefinition,
++  getRoomNavigableTiles,
+   deserializeGameState,
+   serializeGameState,
+   synchronizeFacilityOperationalAlertOccurrences,
+@@ -177,3 +181,42 @@
+     ).toHaveLength(2);
+   });
+ });
++
++describe("current room satisfaction upgrade guidance", () => {
++  const rooms = ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future");
++  it.each(rooms)("only offers comfort upgrades for the actual satisfaction room $roomDefinitionId", ({ roomDefinitionId }) => {
++    const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
++    const room = { id: "room.comfort.alert", roomDefinitionId, x: 20, y: 12,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100 };
++    state.rooms.push(room);
++    const encounter = state.encounters[TUTORIAL_ENCOUNTER_ID]!;
++    encounter.lifecycle = "waiting_unopened"; encounter.patientMovement = null;
++    encounter.assignedRoomInstanceId = room.id; encounter.patientSatisfaction = 82;
++    encounter.waiting.arrivedAtTick = 0;
++    encounter.patientLocation = getRoomNavigableTiles(room, getRoomDefinition(roomDefinitionId)!, state.doors)[0] ?? null;
++    state.encounters = { [encounter.id]: encounter };
++    const guidance = evaluateFacilityOperationalAlertConditions(state).filter((condition) => condition.conditionKey === "room_upgrade_requested");
++    if (["room.waiting", "room.examination", "room.periop_recovery"].includes(roomDefinitionId)) {
++      expect(guidance).toHaveLength(1);
++      expect(guidance[0]?.target).toEqual({ kind: "room", id: room.id });
++      encounter.patientLocation = null;
++      expect(evaluateFacilityOperationalAlertConditions(state).some((condition) => condition.conditionKey === "room_upgrade_requested")).toBe(false);
++    } else {
++      expect(guidance).toEqual([]);
++    }
++  });
++
++  it("retains recorded revenue-room complaint history through synchronization and reload", () => {
++    const state = createInitialGameState(); state.facilityLevel = 3; state.facilityTick = 120;
++    state.environment.facilityConditionOccurrences.push({
++      id: "condition.old.xray-comfort", conditionKey: "room_upgrade_requested", kind: "onset",
++      occurredAtFacilityTick: 0, resolvedAtFacilityTick: 60,
++      definitionId: "alert.patient.room-upgrade-requested", message: "Historical X-ray Room upgrade request.",
++      priority: "informational", target: { kind: "room", id: "room.old.xray" },
++    });
++    const before = structuredClone(state.environment.facilityConditionOccurrences);
++    synchronizeFacilityOperationalAlertOccurrences(state);
++    const reloaded = deserializeGameState(serializeGameState(state));
++    expect(reloaded.environment.facilityConditionOccurrences).toEqual(expect.arrayContaining(before));
++  });
++});
+diff --git a/packages/game-domain/tests/room-capacity-sales.test.ts b/packages/game-domain/tests/room-capacity-sales.test.ts
+--- a/packages/game-domain/tests/room-capacity-sales.test.ts
++++ b/packages/game-domain/tests/room-capacity-sales.test.ts
+@@ -7,6 +7,8 @@
+   gameReducer,
+   getRoomSalePreview,
+   getRoomStaffCapacity,
++  getNextRoomUpgradeCost,
++  getRoomResaleValue,
+   getRoomDefinition,
+   getRoomNavigationAnchor,
+   interruptServiceOperationsForRoomSale,
+@@ -544,3 +546,42 @@
+     expect(operation.saleTransfer).toBeUndefined();
+   });
+ });
++
++describe("current room purchase eligibility and historical investment", () => {
++  it("does not quote retired upgrades while retaining their invested resale amount", () => {
++    const state = createInitialGameState();
++    const definition = getRoomDefinition("room.imaging_control")!;
++    const room = { id: "room.legacy.upgraded-control", roomDefinitionId: definition.id, x: 20, y: 12,
++      orientation: 0 as const, doorSide: null, upgradeLevel: 3 as const, cleanliness: 100 };
++    state.rooms.push(room);
++    const historicalInvestment = definition.constructionCost + definition.upgradeCosts[0]! + definition.upgradeCosts[1]!;
++    expect(historicalInvestment).toBeGreaterThan(definition.constructionCost);
++    expect(getNextRoomUpgradeCost(state, room.id)).toBeNull();
++    expect(getRoomResaleValue(state, room.id)).toBe(Math.floor(historicalInvestment * PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomResalePercent / 100));
++    const reloaded = deserializeGameState(serializeGameState(state));
++    expect(getRoomResaleValue(reloaded, room.id)).toBe(getRoomResaleValue(state, room.id));
++    expect(getNextRoomUpgradeCost(reloaded, room.id)).toBeNull();
++  });
++
++  it.each(["room.front_desk", "room.hallway", "room.founder_office", "room.unknown"])(
++    "never quotes a new purchase for %s, even if a custom context declares prices", (roomDefinitionId) => {
++      const state = createInitialGameState();
++      state.rooms.push({ id: "room.no-purchase", roomDefinitionId, x: 20, y: 12,
++        orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++      const context = structuredClone(PROTOTYPE_DOMAIN_CONTEXT);
++      const definition = { ...getRoomDefinition("room.examination")!, id: roomDefinitionId, buildable: true };
++      context.balanceRelease.facility.roomDefinitions = context.balanceRelease.facility.roomDefinitions.filter((room) => room.id !== roomDefinitionId);
++      context.balanceRelease.facility.roomDefinitions.push(definition);
++      expect(getNextRoomUpgradeCost(state, "room.no-purchase", context)).toBeNull();
++    },
++  );
++
++  it("rejects an otherwise current room marked nonbuildable in its context", () => {
++    const state = createInitialGameState();
++    state.rooms.push({ id: "room.unbuildable-exam", roomDefinitionId: "room.examination", x: 20, y: 12,
++      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++    const context = structuredClone(PROTOTYPE_DOMAIN_CONTEXT);
++    context.balanceRelease.facility.roomDefinitions.find((room) => room.id === "room.examination")!.buildable = false;
++    expect(getNextRoomUpgradeCost(state, "room.unbuildable-exam", context)).toBeNull();
++  });
++});
+diff --git a/tests/e2e/build-mode-usability.spec.ts b/tests/e2e/build-mode-usability.spec.ts
+--- a/tests/e2e/build-mode-usability.spec.ts
++++ b/tests/e2e/build-mode-usability.spec.ts
+@@ -1,4 +1,6 @@
+ import { expect, test } from "@playwright/test";
++import { mkdirSync } from "node:fs";
++import { join } from "node:path";
+ import {
+   PROFILE_KEY,
+   installLevelOneVisualState,
+@@ -12,6 +14,8 @@
+     testInfo.project.name !== "desktop-chrome",
+     "The construction interaction is exercised once in desktop Chromium.",
+   );
++  const screenshotDirectory = process.env.GAMIFY_E2E_SCREENSHOT_DIR ?? "artifacts/screenshots";
++  mkdirSync(screenshotDirectory, { recursive: true });
+ 
+   await startClinic(
+     page,
+@@ -112,14 +116,14 @@
+   await expect(roomMenu).toContainText("Examination Room");
+   await expect(roomMenu).toContainText("Level 2 of 5");
+   await expect(roomMenu).toContainText(
+-    "patient satisfaction per completed visit",
++    "+2 satisfaction points after examination",
+   );
+   await expect(
+     roomMenu.getByRole("button", { name: /Upgrade to ★3 · \$140/ }),
+   ).toBeVisible();
+ 
+   await page.screenshot({
+-    path: "artifacts/screenshots/build-mode-condensed-desktop.png",
++    path: join(screenshotDirectory, "build-mode-condensed-desktop.png"),
+     fullPage: false,
+     animations: "disabled",
+   });
+@@ -131,7 +135,7 @@
+     "Click a door to remove it.",
+   );
+   await page.screenshot({
+-    path: "artifacts/screenshots/build-mode-door-highlights.png",
++    path: join(screenshotDirectory, "build-mode-door-highlights.png"),
+     fullPage: false,
+     animations: "disabled",
+   });
+diff --git a/apps/player/src/session/facilityDuration.ts b/apps/player/src/session/facilityDuration.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/player/src/session/facilityDuration.ts
+@@ -0,0 +1,13 @@
++/** Display precision only; frozen work and facility clocks retain their fractions. */
++export function formatFacilityDuration(value: number): string {
++  if (value >= 60 && value % 60 === 0) {
++    const hours = value / 60;
++    return `${hours} hour${hours === 1 ? "" : "s"}`;
++  }
++  const rounded = Number(value.toFixed(3));
++  // Multiplying approved modifiers can leave binary float noise. That is not
++  // a meaningful rounding of the quoted duration.
++  const tolerance = Number.EPSILON * Math.max(1, Math.abs(value)) * 8;
++  const approximate = Math.abs(value - rounded) > tolerance;
++  return `${approximate ? "≈" : ""}${rounded} min`;
++}
+diff --git a/apps/player/src/session/facilityDuration.test.ts b/apps/player/src/session/facilityDuration.test.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/player/src/session/facilityDuration.test.ts
+@@ -0,0 +1,15 @@
++import { describe, expect, it } from "vitest";
++import { formatFacilityDuration } from "./facilityDuration";
++
++describe("facility duration labels", () => {
++  it.each([
++    [0, "0 min"], [1, "1 min"], [59, "59 min"], [60, "1 hour"],
++    [90, "90 min"], [120, "2 hours"], [240, "4 hours"],
++    [36, "36 min"], [54, "54 min"], [4.5, "4.5 min"],
++    [4.275, "4.275 min"], [4.2749999999999995, "4.275 min"],
++    [3.0000000000000004, "3 min"], [4.27549, "≈4.275 min"],
++    [4.2755, "≈4.276 min"], [0.0001, "≈0 min"],
++  ])("formats %s without changing the runtime quantity", (value, label) => {
++    expect(formatFacilityDuration(value)).toBe(label);
++  });
++});
+diff --git a/apps/player/src/facility/roomUpgradeAppearance.test.ts b/apps/player/src/facility/roomUpgradeAppearance.test.ts
+new file mode 100644
+--- /dev/null
++++ b/apps/player/src/facility/roomUpgradeAppearance.test.ts
+@@ -0,0 +1,108 @@
++import { ROOM_UPGRADE_CATALOG } from "@gamify-surgery/balance-config";
++import { getRoomDefinition } from "@gamify-surgery/game-domain";
++import { describe, expect, it, vi } from "vitest";
++
++vi.mock("phaser", () => ({ default: {
++  Scene: class { constructor(_config?: unknown) {} },
++  BlendModes: { MULTIPLY: "multiply", SCREEN: "screen" },
++} }));
++
++import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
++import type { FacilityRoomView } from "./types";
++
++const currentRooms = ROOM_UPGRADE_CATALOG.filter((definition) =>
++  definition.status === "current" && definition.upgradeCosts.length > 0,
++);
++type Draw = readonly unknown[];
++
++function graphics(draws: Draw[]) {
++  const sink: Record<string, unknown> = new Proxy({}, {
++    get: (_target, method) => (...args: unknown[]) => {
++      draws.push([String(method), ...args]);
++      return sink;
++    },
++  });
++  return sink;
++}
++
++function roomView(definitionId: string, upgradeLevel: number): FacilityRoomView {
++  const definition = getRoomDefinition(definitionId);
++  return {
++    instanceId: "room.appearance.probe", definitionId, displayName: definition?.displayName ?? "Future office",
++    tileX: 10, tileY: 10, width: definition?.width ?? 4, height: definition?.height ?? 4,
++    orientation: 0, isFounderRoom: false, upgradeLevel,
++  } as FacilityRoomView;
++}
++
++function renderer(room: FacilityRoomView, fallback = false) {
++  const draws: Draw[] = [];
++  const bridge = { viewModel: { rooms: [room], doors: [], staff: [], patients: [], founder: null }, onPlaceRoom: () => false } as unknown as FacilitySceneBridge;
++  const scene = new FacilityScene(bridge) as any;
++  const sink = graphics(draws);
++  scene.layout = { originX: 0, originY: 0, tileSize: 32, width: 640, height: 640 };
++  scene.getSortableGraphics = () => sink;
++  scene.textures = { exists: () => true };
++  // Keep the real fixture/record selection and positioning; replace only GPU
++  // image/graphics output and atlas registration in this headless probe.
++  scene.registerApprovedRoomFrame = (record: { id: string }) => record.id;
++  scene.ensureApprovedSideChairTextures = () => null;
++  scene.drawTouchupTintedTop = (...args: unknown[]) => draws.push(["tinted-top", ...args]);
++  scene.add = { image: (...args: unknown[]) => {
++    draws.push(["image", ...args]);
++    const image: Record<string, unknown> = {};
++    for (const method of ["setTexture", "setOrigin", "setPosition", "setDisplaySize", "setDepth", "setVisible", "setData"]) {
++      image[method] = (...values: unknown[]) => { draws.push([method, ...values]); return image; };
++    }
++    return image;
++  } };
++  scene.drawAuthoredFixture = (...args: unknown[]) => { draws.push(["authored-fixture", ...args]); return true; };
++  scene.drawPixelFrameSized = (_target: unknown, ...args: unknown[]) => draws.push(["wall-fixture", ...args]);
++  scene.drawExaminationRoomV3ArchitectureArt = (...args: unknown[]) => draws.push(["exam-art", ...args]);
++  if (fallback) scene.drawApprovedRoomFixtures = () => false;
++  return { scene, sink, draws, rectangle: { x: 100, y: 100, width: room.width * 32, height: room.height * 32 } };
++}
++
++function fixtureDraws(definitionId: string, level: number, fallback = false): Draw[] {
++  const room = roomView(definitionId, level);
++  const { scene, sink, draws, rectangle } = renderer(room, fallback);
++  scene.drawRoomFixtures(sink, room, rectangle, 5);
++  return draws;
++}
++
++describe("catalog room upgrade appearance in the actual renderer", () => {
++  it.each(currentRooms)("does not paint upgraded finishes for $roomDefinitionId", ({ roomDefinitionId }) => {
++    for (const level of [1, 2, 3, 5]) {
++      const room = roomView(roomDefinitionId, level);
++      const { scene, sink, draws, rectangle } = renderer(room);
++      scene.drawRoomUpgradeFinish(sink, room, rectangle);
++      expect(draws).toEqual([]);
++    }
++  });
++
++  it.each(currentRooms)("keeps nonempty base fixture draws identical at Level 5 for $roomDefinitionId", ({ roomDefinitionId }) => {
++    const baseline = fixtureDraws(roomDefinitionId, 1);
++    expect(baseline.length).toBeGreaterThan(0);
++    expect(fixtureDraws(roomDefinitionId, 5)).toEqual(baseline);
++  });
++
++  it.each(["room.periop_recovery", "room.glp1_telehealth_suite", "room.minor_procedure"])(
++    "also retains the actual fallback composition for %s", (definitionId) => {
++      const baseline = fixtureDraws(definitionId, 1, true);
++      expect(baseline.some((draw) => draw[0] === "authored-fixture")).toBe(true);
++      expect(fixtureDraws(definitionId, 5, true)).toEqual(baseline);
++    },
++  );
++
++  it("honors the declared future Founder Office appearance exception without offering a room", () => {
++    expect(getRoomDefinition("room.founder_office")).toBeNull();
++    const base = roomView("room.founder_office", 1);
++    const first = renderer(base);
++    first.scene.drawRoomUpgradeFinish(first.sink, base, first.rectangle);
++    expect(first.draws).toEqual([]);
++    const upgraded = roomView("room.founder_office", 5);
++    const final = renderer(upgraded);
++    final.scene.drawRoomUpgradeFinish(final.sink, upgraded, final.rectangle);
++    expect(final.draws.some((draw) => draw[0] === "strokeRect")).toBe(true);
++    expect(fixtureDraws("room.founder_office", 5, true).length).toBeGreaterThan(fixtureDraws("room.founder_office", 1, true).length);
++  });
++});

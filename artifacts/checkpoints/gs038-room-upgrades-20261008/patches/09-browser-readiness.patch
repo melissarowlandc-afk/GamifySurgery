@@ -1,0 +1,23 @@
+diff --git a/tests/e2e/room-upgrades.spec.ts b/tests/e2e/room-upgrades.spec.ts
+--- a/tests/e2e/room-upgrades.spec.ts
++++ b/tests/e2e/room-upgrades.spec.ts
+@@ -64,11 +64,18 @@ async function resumeCampaign(page: Page, name: string): Promise<void> {
+   const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
+   if (await resume.isVisible()) await resume.click();
+   await expect(page.getByTestId("facility-canvas")).toBeVisible();
++  await expect.poll(() => page.evaluate(() => {
++    const host = document.querySelector("[data-testid='facility-canvas']") as any;
++    return Boolean(host?.__facilityGame);
++  }), {
++    timeout: 10_000,
++    message: "Canvas upgrade checks require the DEV facility-gait-proof hook. Use the Playwright Vite dev server; a production preview does not expose it.",
++  }).toBe(true);
+   await page.waitForFunction((roomId) => {
+     const host = document.querySelector("[data-testid='facility-canvas']") as any;
+     const scene = host?.__facilityGame?.scene?.getScene("facility-scene");
+     return scene?.bridge?.viewModel?.rooms?.some((room: { instanceId: string }) => room.instanceId === roomId);
+-  }, ids.reading);
++  }, ids.reading, { timeout: 10_000 });
+ }
+ 
+ async function install(page: Page, name: string) {

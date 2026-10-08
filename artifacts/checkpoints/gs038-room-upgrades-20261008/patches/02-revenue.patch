@@ -1,0 +1,1647 @@
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -23,6 +23,16 @@ export type SimulationSpeed = 1 | 2 | 4;
+ export type RoomOrientation = 0 | 90 | 180 | 270;
+ export type CardinalDirection = "north" | "east" | "south" | "west";
+ export type RoomUpgradeLevel = 1 | 2 | 3 | 4 | 5;
++
++/** Optional opt-in contract: old work without this marker keeps its original fee. */
++export interface RoomUpgradeRevenueQuote {
++  version: "room-upgrade-revenue.v1";
++  baseFee: number;
++  roomDefinitionId: string;
++  candidates: Array<{ roomInstanceId: string; upgradeLevel: RoomUpgradeLevel; multiplier: number }>;
++  /** Bound exactly once to the room that earns the fee, never to preparation or recovery. */
++  boundRoom: { roomInstanceId: string; multiplier: number } | null;
++}
+ export type PrototypeAlertCategory =
+   | "action_required"
+   | "guidance"
+@@ -193,6 +203,7 @@ export interface DiagnosticOrderPlan {
+     /** Optional for older v1 plans; new local acquisitions freeze their fee. */
+     incomeLineId?: string;
+     quoteFee?: number;
++    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+     kind: "explicit_route_phases" | "approved_operation" | "retained_inclusive_total" | "retained_profile";
+     inclusiveDurationMinutes: number;
+     routePhases: Array<{ id: string; durationMinutes: number; resourceBound: boolean }>;
+@@ -463,6 +474,7 @@ export interface PendingResult {
+   /** Frozen only for work scheduled after the income feature was introduced. */
+   serviceIncomeLineId?: string;
+   serviceIncomeFee?: number;
++  roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+   resourceReservations?: Array<{ roomDefinitionId: string; staffRoleDefinitionId: string | null }>;
+   /** Concrete mobile imaging worker selected for this frozen onsite service. */
+   imagingTechnicianId?: string | null;
+@@ -650,6 +662,7 @@ export interface ServiceOperationState {
+   completedAtFacilityTick: number | null;
+   cancelledAtFacilityTick: number | null;
+   quoteFee: number;
++  roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+   phaseIndex: number;
+   phaseStartedAtFacilityTick: number | null;
+   phaseEndsAtFacilityTick: number | null;
+@@ -779,6 +792,7 @@ export interface RetailOperationState {
+   startedAtFacilityTick: number | null;
+   completedAtFacilityTick: number | null;
+   quoteGross: number;
++  roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+   quoteStockCost: number;
+   outletRoomInstanceId: string;
+   outletDurationMinutes: number;
+@@ -914,6 +928,8 @@ export interface EncounterState {
+     routeDisplayName: string;
+     incomeLineId: string | null;
+     externalRemainder: string;
++    quoteFee?: number;
++    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+     status: "feedback_pending" | "waiting_for_service" | "returning_to_front_desk" | "completed" | "external_arranged";
+     serviceOperationId: string | null;
+     scheduledAtFacilityTick: number;
+@@ -947,6 +963,7 @@ export interface EncounterState {
+       routeDisplayName: string;
+       incomeLineId: string;
+       quoteFee: number;
++      roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+       operationPhases: Array<{
+         id: string;
+         roomDefinitionId: string | null;
+@@ -1153,6 +1170,9 @@ export interface FacilityEnvironmentState {
+     suiteRoomInstanceId: string;
+     employeeId: string;
+     nextPayoutTick: number;
++    /** Optional frozen staff-only legacy payment, or the full new room-and-staff quote. */
++    quotePayment?: number;
++    roomUpgradeRevenue?: RoomUpgradeRevenueQuote;
+   }>;
+   /** One due tick per currently operational staffed GLP-1 suite. */
+   glp1AutomationNextPayoutTicks: number[];
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -50,6 +50,7 @@ import { getEmployeeHomeLocation } from "./staff";
+ import { reconcileEmployeeRoomSeats } from "./room-capacity";
+ import { isEmployeeAwayForTraining, normalizeEmployeeTraining, reconcileEmployeeTrainingReservations } from "./employee-training";
+ import { normalizeServiceOperationTraining } from "./employee-training-effects";
++import { normalizeRoomUpgradeRevenueQuote } from "./room-upgrades";
+ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
+ import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+@@ -787,6 +788,7 @@ function normalizeServiceOperations(
+   if (!Array.isArray(candidate)) return [];
+   const activePeriopBeds = new Set<string>();
+   return candidate.flatMap((raw) => {
++    if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteFee);
+     const diagnosticPhaseWork = isRecord(raw) && raw.diagnosticPhaseWork !== undefined
+       ? normalizeDiagnosticPhaseWork(raw.diagnosticPhaseWork)
+       : undefined;
+@@ -944,6 +946,11 @@ function normalizeServiceOperations(
+       throw new Error("The saved diagnostic physical phase witness is invalid.");
+     }
+     const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
++    const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteFee,
++      frozenOperationPhases.map((phase) => phase.roomDefinitionId));
++    if (roomUpgradeRevenue && (diagnosticPhaseWork || diagnosticPhysicalWork?.billing === "none")) {
++      throw new Error("Nonbillable diagnostic work must not carry an upgraded payment.");
++    }
+     if (trainingTiming && (diagnosticPhaseWork || diagnosticPhysicalWork)) throw new Error("Diagnostic work must use its accepted effective timing.");
+     const phaseFlowVersion = raw.phaseFlowVersion === 1 &&
+       (diagnosticPhysicalWork || frozenOperationPhases[0]?.roomStationId === "periop_preparation" &&
+@@ -1027,6 +1034,7 @@ function normalizeServiceOperations(
+       completedAtFacilityTick: nullableTick(raw.completedAtFacilityTick),
+       cancelledAtFacilityTick: nullableTick(raw.cancelledAtFacilityTick),
+       quoteFee: raw.quoteFee,
++      ...(roomUpgradeRevenue ? { roomUpgradeRevenue } : {}),
+       phaseIndex: raw.phaseIndex,
+       phaseStartedAtFacilityTick: nullableTick(raw.phaseStartedAtFacilityTick),
+       phaseEndsAtFacilityTick: nullableTick(raw.phaseEndsAtFacilityTick),
+@@ -1093,6 +1101,7 @@ const RETAIL_OPERATION_STATUSES = new Set<RetailOperationState["status"]>(["walk
+ function normalizeRetailOperations(candidate: unknown): RetailOperationState[] {
+   if (!Array.isArray(candidate)) return [];
+   return candidate.flatMap((raw) => {
++    if (isRecord(raw) && raw.roomUpgradeRevenue !== undefined) normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteGross);
+     if (!isRecord(raw) || typeof raw.id !== "string" || typeof raw.incomeLineId !== "string" || !getServiceIncomeLine(raw.incomeLineId)?.retail ||
+       typeof raw.actorKind !== "string" || !RETAIL_ACTOR_KINDS.has(raw.actorKind as RetailActorKind) || typeof raw.actorId !== "string" ||
+       typeof raw.displayName !== "string" || !isPixelAppearance(raw.appearance) || typeof raw.status !== "string" || !RETAIL_OPERATION_STATUSES.has(raw.status as RetailOperationState["status"]) ||
+@@ -1101,11 +1110,17 @@ function normalizeRetailOperations(candidate: unknown): RetailOperationState[] {
+       typeof raw.outletRoomInstanceId !== "string" || (raw.outletDurationMinutes !== 1 && raw.outletDurationMinutes !== 2) || !isGridPoint(raw.location) || !Array.isArray(raw.path) ||
+       typeof raw.pathIndex !== "number" || !Number.isSafeInteger(raw.pathIndex) || typeof raw.lastMovedAtFacilityTick !== "number" || !Number.isSafeInteger(raw.lastMovedAtFacilityTick)) return [];
+     const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
++    const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, raw.quoteGross,
++      getServiceIncomeLine(raw.incomeLineId)!.retail!.outlets.map((outlet) => outlet.roomDefinitionId));
++    if (roomUpgradeRevenue && roomUpgradeRevenue.boundRoom?.roomInstanceId !== raw.outletRoomInstanceId) {
++      throw new Error("The saved upgraded sale does not match its outlet.");
++    }
+     const tick = (value: unknown) => typeof value === "number" && Number.isSafeInteger(value) ? value : null;
+     return [{ id: raw.id, incomeLineId: raw.incomeLineId, catalogVersion: 1 as const, actorKind: raw.actorKind as RetailActorKind, actorId: raw.actorId, displayName: raw.displayName, appearance: raw.appearance,
+       linkedServiceOperationId: typeof raw.linkedServiceOperationId === "string" ? raw.linkedServiceOperationId : null, authorizedOrderId: typeof raw.authorizedOrderId === "string" ? raw.authorizedOrderId : null,
+       status: raw.status as RetailOperationState["status"], createdAtFacilityTick: raw.createdAtFacilityTick, waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
+       startedAtFacilityTick: tick(raw.startedAtFacilityTick), completedAtFacilityTick: tick(raw.completedAtFacilityTick), quoteGross: raw.quoteGross, quoteStockCost: raw.quoteStockCost,
++      ...(roomUpgradeRevenue ? { roomUpgradeRevenue } : {}),
+       outletRoomInstanceId: raw.outletRoomInstanceId, outletDurationMinutes: raw.outletDurationMinutes, staffRoleDefinitionId: typeof raw.staffRoleDefinitionId === "string" ? raw.staffRoleDefinitionId : null, servingEmployeeId: typeof raw.servingEmployeeId === "string" ? raw.servingEmployeeId : null,
+       location: { ...raw.location }, returnLocation: isGridPoint(raw.returnLocation) ? { ...raw.returnLocation } : null, path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0,
+       lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick, purchaseEndsAtFacilityTick: tick(raw.purchaseEndsAtFacilityTick), cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null, resourceWaitReason: typeof raw.resourceWaitReason === "string" ? raw.resourceWaitReason : null,
+@@ -1873,6 +1888,9 @@ function normalizePendingResult(
+       candidate.serviceIncomeEligible === true && typeof candidate.serviceIncomeFee === "number" && Number.isFinite(candidate.serviceIncomeFee) && candidate.serviceIncomeFee >= 0
+         ? candidate.serviceIncomeFee
+         : undefined,
++    roomUpgradeRevenue: normalizeRoomUpgradeRevenueQuote(candidate.roomUpgradeRevenue, candidate.serviceIncomeFee,
++      typeof candidate.serviceIncomeLineId === "string"
++        ? getServiceIncomeLine(candidate.serviceIncomeLineId)?.operation?.phases.map((phase) => phase.roomDefinitionId) : []),
+     timingPhases: Array.isArray(candidate.timingPhases)
+       ? candidate.timingPhases.filter(isRecord).map((phase) => ({ id: typeof phase.id === "string" ? phase.id : "phase.legacy", durationTicks: typeof phase.durationTicks === "number" ? phase.durationTicks : 1, resourceBound: phase.resourceBound === true, startsAtTick: typeof phase.startsAtTick === "number" ? phase.startsAtTick : 0, endsAtTick: typeof phase.endsAtTick === "number" ? phase.endsAtTick : 1 }))
+       : [],
+@@ -2378,6 +2396,11 @@ function normalizeEncounter(
+           routeId: rawContinuation.routeId,
+           routeDisplayName: rawContinuation.routeDisplayName,
+           incomeLineId: rawContinuation.incomeLineId,
++          ...(typeof rawContinuation.quoteFee === "number" && Number.isFinite(rawContinuation.quoteFee) && rawContinuation.quoteFee >= 0
++            ? { quoteFee: rawContinuation.quoteFee } : {}),
++          roomUpgradeRevenue: normalizeRoomUpgradeRevenueQuote(rawContinuation.roomUpgradeRevenue, rawContinuation.quoteFee,
++            typeof rawContinuation.incomeLineId === "string"
++              ? getServiceIncomeLine(rawContinuation.incomeLineId)?.operation?.phases.map((phase) => phase.roomDefinitionId) : undefined),
+           externalRemainder: rawContinuation.externalRemainder,
+           status: rawContinuation.status as NonNullable<EncounterState["testOnlyContinuation"]>["status"],
+           serviceOperationId: rawContinuation.serviceOperationId,
+@@ -2466,6 +2489,8 @@ function normalizeEncounter(
+               routeDisplayName: component.routeDisplayName,
+               incomeLineId: component.incomeLineId,
+               quoteFee: component.quoteFee,
++              roomUpgradeRevenue: normalizeRoomUpgradeRevenueQuote(component.roomUpgradeRevenue, component.quoteFee,
++                operationPhases.map((phase) => phase.roomDefinitionId)),
+               operationPhases,
+               externalRemainder: component.externalRemainder,
+               status: component.status as NonNullable<EncounterState["stagedResultOrder"]>["components"][number]["status"],
+@@ -3203,11 +3228,15 @@ function migrateVersionTwo(
+     if (candidate.training !== undefined) employee.training = normalizeEmployeeTraining(candidate.training, employee, next.facilityTick);
+     return [employee];
+   });
+-  next.employeeTrainingSequence = Math.max(
+-    typeof parsed.employeeTrainingSequence === "number" && Number.isSafeInteger(parsed.employeeTrainingSequence) && parsed.employeeTrainingSequence >= 0
+-      ? parsed.employeeTrainingSequence : 0,
+-    ...next.employees.map((employee) => (employee.training?.requestSequence ?? -1) + 1),
+-  );
++  if (parsed.employeeTrainingSequence !== undefined || next.employees.some((employee) => employee.training)) {
++    next.employeeTrainingSequence = Math.max(
++      typeof parsed.employeeTrainingSequence === "number" && Number.isSafeInteger(parsed.employeeTrainingSequence) && parsed.employeeTrainingSequence >= 0
++        ? parsed.employeeTrainingSequence : 0,
++      ...next.employees.map((employee) => (employee.training?.requestSequence ?? -1) + 1),
++    );
++  } else {
++    delete next.employeeTrainingSequence;
++  }
+   next.levelThreeQiReviews = Array.isArray(parsed.levelThreeQiReviews)
+     ? parsed.levelThreeQiReviews.flatMap((candidate) => {
+         if (!isRecord(candidate) || typeof candidate.id !== "string" || typeof candidate.receiptId !== "string" ||
+@@ -4134,10 +4163,19 @@ function normalizeGlp1AutomationState(
+     const key = `${slot.suiteRoomInstanceId}:${slot.employeeId}`;
+     if (normalizedSlotKeys.has(key)) return [];
+     normalizedSlotKeys.add(key);
++    if (slot.quotePayment !== undefined && (typeof slot.quotePayment !== "number" || !Number.isFinite(slot.quotePayment) || slot.quotePayment < 0)) {
++      throw new Error("The saved GLP-1 interval payment is invalid.");
++    }
++    const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(slot.roomUpgradeRevenue, slot.quotePayment, ["room.glp1_telehealth_suite"]);
++    if (roomUpgradeRevenue && roomUpgradeRevenue.boundRoom?.roomInstanceId !== slot.suiteRoomInstanceId) {
++      throw new Error("The saved upgraded GLP-1 payment does not match its suite.");
++    }
+     return [{
+       suiteRoomInstanceId: slot.suiteRoomInstanceId,
+       employeeId: slot.employeeId,
+       nextPayoutTick: slot.nextPayoutTick,
++      ...(typeof slot.quotePayment === "number" ? { quotePayment: slot.quotePayment } : {}),
++      ...(roomUpgradeRevenue ? { roomUpgradeRevenue } : {}),
+     }];
+   });
+   const rawPayoutTicks = Array.isArray(rawEnvironment.glp1AutomationNextPayoutTicks)
+diff --git a/packages/game-domain/src/diagnostic-timing.ts b/packages/game-domain/src/diagnostic-timing.ts
+--- a/packages/game-domain/src/diagnostic-timing.ts
++++ b/packages/game-domain/src/diagnostic-timing.ts
+@@ -15,8 +15,9 @@ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { getNewPeriopServiceOperationPhases, straightServiceVisitorSidewalkPath } from "./service-operations";
+ import { getDoorCells } from "./doors";
+-import { getEmployeeTrainingAvailability, getEmployeeTrainingHomeLocation } from "./employee-training";
++import { getEmployeeTrainingAvailability, getEmployeeTrainingHomeLocation, isDiagnosticResourceWaitingForTraining } from "./employee-training";
+ import { getEmployeeTrainingWorkMinutes, getEmployeeTrainingWorkPercent, getServiceOperationTrainingMinutes, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
++import { createRoomUpgradeRevenueQuote, isRoomUpgradeRevenueQuoteValid } from "./room-upgrades";
+ import {
+   getRoomDefinition,
+   getStaffRoleDefinition,
+@@ -277,12 +278,13 @@ function containingRoomId(state: GameState, context: DomainContext, point: GridP
+ 
+ function schedulePhase(state: GameState, context: DomainContext, calendar: Calendar, draft: DraftPhase, ready: number,
+   patientOrigin: GridPoint, preferred?: DiagnosticResourceChoice | null, remaining = draft.durationMinutes, ownerId?: string, workHasArrived = false,
+-  initialTiming?: (resource: DiagnosticResourceChoice | null) => number): DiagnosticOrderPhase | null {
++  initialTiming?: (resource: DiagnosticResourceChoice | null) => number, preferredStationOnly = false): DiagnosticOrderPhase | null {
+   const tilesPerTick = context.balanceRelease.facility.characterTravelTilesPerTick;
++  // A replacement nurse can cover the accepted bed without changing its station.
+   const choices = draft.requirement ? resourceCandidates(state, context, draft.requirement).filter((resource) =>
+     !heldByAnother(calendar, resource, ownerId) && (!preferred || (resource.roomInstanceId === preferred.roomInstanceId && resource.stationId === preferred.stationId &&
+-      resource.employeeIds.join(":") === preferred.employeeIds.join(":") && JSON.stringify(resource.provider) === JSON.stringify(preferred.provider))))
+-    .map((resource) => preferred ? copy(preferred) : resource) : [null];
++      (preferredStationOnly || resource.employeeIds.join(":") === preferred.employeeIds.join(":") && JSON.stringify(resource.provider) === JSON.stringify(preferred.provider)))))
++    .map((resource) => preferred && !preferredStationOnly ? copy(preferred) : resource) : [null];
+   const options = choices.flatMap((resource) => {
+     const workMinutes = initialTiming ? initialTiming(resource) : remaining;
+     const patientPath = !workHasArrived && draft.patientPresent && resource ? path(state, context, patientOrigin, resource.patientAnchor, resource.roomInstanceId) : [];
+@@ -329,6 +331,24 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+     status: "pending", remainingMinutes: option.workMinutes, startedAtTick: null, completedAtTick: null, serviceOperationId: null, operationPhaseId: null };
+ }
+ 
++/** Prefer any schedulable spare before constructing a paused local contract. */
++function scheduleNewPhase(state: GameState, context: DomainContext, calendar: Calendar, draft: DraftPhase, ready: number,
++  origin: GridPoint, preferred?: DiagnosticResourceChoice | null, initialTiming?: (resource: DiagnosticResourceChoice | null) => number): DiagnosticOrderPhase | null {
++  const actual = schedulePhase(state, context, calendar, draft, ready, origin, preferred, draft.durationMinutes, undefined, false, initialTiming);
++  if (actual) return actual;
++  const structural = cloneCalendar(calendar);
++  let relaxed = false;
++  for (const [key, owners] of structural.heldResources) {
++    for (const owner of owners) if (owner.startsWith("training:")) { owners.delete(owner); relaxed = true; }
++    if (!owners.size) structural.heldResources.delete(key);
++  }
++  if (!relaxed) return null;
++  // Nominal clocks allow acceptance, never a player ETA or completion witness.
++  const nominal = schedulePhase(state, context, structural, draft, ready, origin, preferred, draft.durationMinutes, undefined, false, initialTiming);
++  if (nominal) { calendar.intervals = structural.intervals; calendar.actors = structural.actors; }
++  return nominal;
++}
++
+ function routeIsLocal(route: ServiceRouteDefinition): boolean {
+   return Boolean(route.patientTravel || route.patientRemainsOnsite || route.resourceRequirements.length);
+ }
+@@ -434,8 +454,11 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+       continue;
+     }
+     if (training.kind === "returning_at") {
+-      calendar.intervals.set(`employee:${employee.id}`, [{ starts: now, ends: training.availableAtTick }]);
+-      calendar.actors.set(employee.id, [{ starts: now, ends: training.availableAtTick, destination: training.homeLocation }]);
++      // Service reservations run before training clears the returning stage on
++      // tick T. New queued work can first claim that employee on tick T + 1.
++      const reservableAtTick = training.availableAtTick + 1;
++      calendar.intervals.set(`employee:${employee.id}`, [{ starts: now, ends: reservableAtTick }]);
++      calendar.actors.set(employee.id, [{ starts: now, ends: reservableAtTick, destination: training.homeLocation }]);
+       continue;
+     }
+     const task = employee.facilityTask;
+@@ -514,10 +537,13 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+         const heldBed = requirement.stationKind === "periop_bed" && operation.periopBedReservation ? resourceCandidates(state, context, requirement).find((resource) =>
+           resource.roomInstanceId === operation.periopBedReservation!.roomInstanceId && resource.stationId === operation.periopBedReservation!.bedId) : null;
+         if (requirement.stationKind === "periop_bed" && operation.periopBedReservation && !heldBed) { blocked = true; break; }
++        const acceptedResource = operation.diagnosticPhysicalWork?.phaseBindings[index]?.resource ?? (isCurrent ? operation.diagnosticPhaseWork?.resource ?? heldBed : heldBed);
++        const replaceStaff = isDiagnosticResourceWaitingForTraining(state, acceptedResource);
++        const retainBed = replaceStaff && requirement.stationKind === "periop_bed" && Boolean(heldBed ?? acceptedResource);
+         const scheduled = schedulePhase(state, context, calendar, { id: operation.id + ":" + phase.id, componentId: null, kind: "retained", mode: "local",
+           patientPresent: operation.actorKind !== "remote", durationMinutes: phase.durationMinutes, dependsOn: [], requirement }, ready, actorOrigin,
+-          operation.diagnosticPhysicalWork?.phaseBindings[index]?.resource ?? (isCurrent ? operation.diagnosticPhaseWork?.resource ?? heldBed : heldBed), remaining, operation.id, false,
+-          operation.trainingTiming?.phases[index]?.boundPercent === null ? (resource) => getServiceOperationTrainingMinutes(state, operation, index, resource?.provider ?? null) : undefined);
++          replaceStaff ? retainBed ? heldBed ?? acceptedResource : null : acceptedResource, remaining, operation.id, false,
++          operation.trainingTiming?.phases[index]?.boundPercent === null ? (resource) => getServiceOperationTrainingMinutes(state, operation, index, resource?.provider ?? null) : undefined, retainBed);
+         if (!scheduled) { blocked = true; break; }
+         const movementStarts = scheduled.forecast.readyAtTick + scheduled.forecast.queueMinutes;
+         if (index === startIndex) for (const roomId of [...(operation.transitionHeldRoomInstanceIds ?? []), ...(waitingForNext ? operation.reservedRoomInstanceIds : [])]) {
+@@ -642,7 +668,10 @@ function forecastFrozenPlan(state: GameState, frozenPlan: DiagnosticOrderPlan, c
+       continue;
+     }
+     const remaining = Math.max(0, phase.remainingMinutes - elapsed);
+-    const scheduled = schedulePhase(state, context, calendar, phase, ready, origin, phase.resource, remaining, plan.orderId, phase.status === "active");
++    const replaceStaff = phase.status !== "active" && isDiagnosticResourceWaitingForTraining(state, phase.resource);
++    const retainBed = replaceStaff && phase.requirement?.stationKind === "periop_bed";
++    const preferred = replaceStaff && !retainBed ? null : phase.resource;
++    const scheduled = schedulePhase(state, context, calendar, phase, ready, origin, preferred, remaining, plan.orderId, phase.status === "active", undefined, retainBed);
+     if (!scheduled) { blocked.add(phase.id); continue; }
+     phase.forecast = scheduled.forecast;
+     // A cleared choice may be forecast against compatible capacity without
+@@ -685,12 +714,6 @@ function appendFrozenWalking(plan: DiagnosticOrderPlan, id: string, patientPath:
+ /** One calculation for a quote and the frozen accepted order; never writes state. */
+ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingRequest, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): DiagnosticTimingQuote {
+   const calendar = calendarFor(state, context, request.orderId, request.encounterId);
+-  // Accept installed local work during a paused session. These structural clocks
+-  // are not ETAs; live forecasts retain unknown training holds and report blocked.
+-  for (const [key, owners] of calendar.heldResources) {
+-    for (const owner of owners) if (owner.startsWith("training:")) owners.delete(owner);
+-    if (!owners.size) calendar.heldResources.delete(key);
+-  }
+   const trainingCategories = snapshotEmployeeTrainingCategories(state);
+   const plan: DiagnosticOrderPlan = { version: "diagnostic-order.v1", timingVersion: DIAGNOSTIC_TIMING_VERSION, orderId: request.orderId, encounterId: request.encounterId,
+     createdAtTick: state.facilityTick, execution: "supported", sources: [], phases: [], resultReady: milestone([], [], state.facilityTick), visualResultReady: null, careComplete: milestone([], [], state.facilityTick) };
+@@ -742,7 +765,7 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+       let ready = Math.max(state.facilityTick, ...careIds.map((id) => plan.phases.find((phase) => phase.id === id)!.forecast.endsAtTick));
+       let location = patientLocation;
+       for (const [index, input] of physicalPhases(route, component, actualRule as DiagnosticTimingRule).entries()) {
+-        const phase = schedulePhase(state, context, probe, { id: `probe.${index}`, componentId: null, kind: "acquisition", mode: "local", patientPresent: true,
++        const phase = scheduleNewPhase(state, context, probe, { id: `probe.${index}`, componentId: null, kind: "acquisition", mode: "local", patientPresent: true,
+           durationMinutes: input.durationMinutes, dependsOn: [], requirement: requirementForOperation(input) }, ready, location);
+         if (!phase) return false;
+         ready = phase.forecast.endsAtTick;
+@@ -764,7 +787,7 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+     // The owner authorized a supplied answer-choice profile as the external
+     // fallback for an explicit local-only service. Inferred representatives
+     // remain preview-only and never authorize execution.
+-    const profileFallback = !route && Boolean(component.serviceId && service && profile && !service.routes.some((entry) => !routeIsLocal(entry)));
++    const profileFallback = !route && Boolean(service && profile && !service.routes.some((entry) => !routeIsLocal(entry)));
+     if (!route && service && actualRule.family !== "bladder_scan" && !profileFallback) return { kind: "unavailable", reason: profile ? "no_valid_route" : "missing_acquisition_contract", estimateMinutes: profile?.durationTicks ?? null };
+     const inclusive = route?.durationTicks ?? profile?.durationTicks ?? DIAGNOSTIC_TIMING_TABLE.bladderScan.offsiteTotalMinutes;
+     const componentId = component.componentId ?? (components.length > 1 ? `component.${componentIndex + 1}` : null);
+@@ -783,8 +806,8 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+         return getEmployeeTrainingWorkMinutes(durationMinutes, getEmployeeTrainingWorkPercent(trainingCategories,
+           { kind, roomDefinitionId: requirement?.roomDefinitionId ?? null, staffRoleDefinitionIds: requirement?.staffRoleDefinitionIds ?? [] }, providerRole));
+       };
+-      const phase = schedulePhase(state, context, calendar, { id: `${prefix}.${suffix}`, componentId, kind, mode, durationMinutes, patientPresent, requirement, dependsOn },
+-        ready, patientLocation, requirement?.stationKind === "periop_bed" ? selectedBed : preferred, durationMinutes, undefined, false,
++      const phase = scheduleNewPhase(state, context, calendar, { id: `${prefix}.${suffix}`, componentId, kind, mode, durationMinutes, patientPresent, requirement, dependsOn },
++        ready, patientLocation, requirement?.stationKind === "periop_bed" ? selectedBed : preferred,
+         mode === "local" && requirement ? effectiveMinutes : undefined);
+       if (phase) {
+         plan.phases.push(phase);
+@@ -909,7 +932,10 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+     plan.sources.push({ componentId, serviceId, timingProfileId: component.timingProfileId ?? null, routeId: route?.id ?? null,
+       routeDisplayName: route?.displayName ?? profile?.displayName ?? "External diagnostic work", kind: sourceKind, inclusiveDurationMinutes: inclusive,
+       ...(acquisitionIncome && plan.phases.some((phase) => phase.componentId === componentId && phase.mode === "local" && phase.patientPresent && phase.requirement)
+-        ? { incomeLineId: acquisitionIncome.id, quoteFee: acquisitionIncome.fee } : {}),
++        ? { incomeLineId: acquisitionIncome.id, quoteFee: acquisitionIncome.fee,
++            roomUpgradeRevenue: createRoomUpgradeRevenueQuote(state, acquisitionIncome.fee,
++              plan.phases.filter((phase) => phase.componentId === componentId && phase.mode === "local" && phase.patientPresent && phase.requirement)
++                .map((phase) => phase.requirement!.roomDefinitionId)) } : {}),
+       routePhases: route?.timingPhases.map((phase) => ({ id: phase.id, durationMinutes: phase.durationTicks, resourceBound: phase.resourceBound })) ?? [],
+       operationPhases: physical.map((phase) => ({ id: phase.id, roomDefinitionId: phase.roomDefinitionId, durationMinutes: phase.durationMinutes,
+         staffRoleDefinitionIds: [...phase.staffRoleDefinitionIds], providerRoleDefinitionIds: [...(phase.providerRoleDefinitionIds ?? [])], founderEligible: phase.founderEligible === true, roomStationId: phase.roomStationId ?? null })) });
+@@ -1021,10 +1047,12 @@ function validPhase(value: unknown): value is DiagnosticOrderPhase {
+ }
+ 
+ function validSource(value: unknown): boolean {
+-  return record(value) && only(value, ["componentId", "serviceId", "timingProfileId", "routeId", "routeDisplayName", "incomeLineId", "quoteFee", "kind", "inclusiveDurationMinutes", "routePhases", "operationPhases"]) &&
++  return record(value) && only(value, ["componentId", "serviceId", "timingProfileId", "routeId", "routeDisplayName", "incomeLineId", "quoteFee", "roomUpgradeRevenue", "kind", "inclusiveDurationMinutes", "routePhases", "operationPhases"]) &&
+     nullableId(value.componentId) && nullableId(value.serviceId) && nullableId(value.timingProfileId) && nullableId(value.routeId) && textId(value.routeDisplayName) &&
+     ((value.incomeLineId === undefined && value.quoteFee === undefined) || textId(value.incomeLineId) && Boolean(getServiceIncomeLine(value.incomeLineId)) && getServiceIncomeLine(value.incomeLineId)?.kind !== "retail" &&
+       typeof value.quoteFee === "number" && Number.isFinite(value.quoteFee) && value.quoteFee >= 0) &&
++    isRoomUpgradeRevenueQuoteValid(value.roomUpgradeRevenue, value.quoteFee,
++      typeof value.incomeLineId === "string" ? getServiceIncomeLine(value.incomeLineId)?.operation?.phases.map((phase) => phase.roomDefinitionId) : []) &&
+     oneOf(value.kind, ["explicit_route_phases", "approved_operation", "retained_inclusive_total", "retained_profile"]) && minute(value.inclusiveDurationMinutes) && value.inclusiveDurationMinutes > 0 &&
+     Array.isArray(value.routePhases) && value.routePhases.every((phase) => record(phase) && only(phase, ["id", "durationMinutes", "resourceBound"]) && textId(phase.id) && minute(phase.durationMinutes) && phase.durationMinutes > 0 && typeof phase.resourceBound === "boolean") &&
+     Array.isArray(value.operationPhases) && value.operationPhases.every((phase) => record(phase) && only(phase, ["id", "roomDefinitionId", "durationMinutes", "staffRoleDefinitionIds", "providerRoleDefinitionIds", "founderEligible", "roomStationId"]) &&
+@@ -1039,6 +1067,11 @@ export function normalizeDiagnosticOrderPlan(value: unknown): DiagnosticOrderPla
+     !oneOf(value.execution, ["supported", "preview_only"]) || !Array.isArray(value.sources) || value.sources.length === 0 || !value.sources.every(validSource) ||
+     !Array.isArray(value.phases) || value.phases.length === 0 || !value.phases.every(validPhase)) return null;
+   const phases = value.phases as DiagnosticOrderPhase[];
++  for (const source of value.sources as DiagnosticOrderPlan["sources"]) {
++    if (!isRoomUpgradeRevenueQuoteValid(source.roomUpgradeRevenue, source.quoteFee,
++      phases.filter((phase) => phase.componentId === source.componentId && phase.mode === "local" && phase.patientPresent && phase.requirement)
++        .map((phase) => phase.requirement!.roomDefinitionId))) return null;
++  }
+   const createdAtTick = value.createdAtTick;
+   const previous = new Set<string>();
+   for (const phase of phases) {
+diff --git a/packages/game-domain/src/service-operations.ts b/packages/game-domain/src/service-operations.ts
+--- a/packages/game-domain/src/service-operations.ts
++++ b/packages/game-domain/src/service-operations.ts
+@@ -31,8 +31,9 @@ import type {
+   ServiceOperationState,
+ } from "./types";
+ import { recordLevelThreeRoomUse } from "./level-three-support";
+-import { isEmployeeAwayForTraining } from "./employee-training";
++import { isDiagnosticResourceWaitingForTraining, isEmployeeAwayForTraining } from "./employee-training";
+ import { bindServiceOperationTraining, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
++import { bindServiceOperationRoomRevenue, cloneRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote } from "./room-upgrades";
+ 
+ const WAIT_TIMEOUT_MINUTES = 60;
+ const GLOBAL_ARRIVAL_SPACING_MINUTES = 30;
+@@ -835,6 +836,7 @@ function sameDiagnosticChoice(a: DiagnosticResourceChoice, b: DiagnosticResource
+ function diagnosticPhysicalChoiceCompatible(state: GameState, operation: ServiceOperationState, context: DomainContext): boolean {
+   const resource = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
+   if (!resource) return true;
++  if (isDiagnosticResourceWaitingForTraining(state, resource)) return false;
+   const room = state.rooms.find((candidate) => candidate.id === resource.roomInstanceId);
+   if (!room || room.roomDefinitionId !== resource.roomDefinitionId || !isRoomOperationalForFacilityWork(state, room.id, context)) return false;
+   if (!resource.employeeIds.every((id) => isEmployeeAssignedToOperationalRoom(state, id, context))) return false;
+@@ -863,7 +865,7 @@ function queueDiagnosticProcessing(state: GameState, operation: ServiceOperation
+ function tryReserveDiagnosticProcessing(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
+   const work = operation.diagnosticPhaseWork!;
+   const choices = diagnosticProcessingChoices(state, operation, context);
+-  if (work.resource && !choices.some((choice) => sameDiagnosticChoice(choice, work.resource!))) work.resource = null;
++  if (work.resource && (isDiagnosticResourceWaitingForTraining(state, work.resource) || !choices.some((choice) => sameDiagnosticChoice(choice, work.resource!)))) work.resource = null;
+   const clinical = getClinicalResourceReservations(state, context);
+   for (const resource of choices.filter((choice) => !work.resource || sameDiagnosticChoice(choice, work.resource))) {
+     const employee = state.employees.find((candidate) => candidate.id === resource.employeeIds[0])!;
+@@ -1722,6 +1724,7 @@ function credit(state: GameState, operation: ServiceOperationState): void {
+ 
+ function beginPhase(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine): void {
+   const phase = operationPhases(operation, line)[operation.phaseIndex]!;
++  bindServiceOperationRoomRevenue(state, operation);
+   operation.status = "in_service";
+   operation.phaseStartedAtFacilityTick = state.facilityTick;
+   operation.phaseEndsAtFacilityTick = state.facilityTick +
+@@ -1994,7 +1997,7 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
+     version: "employee-training-timing.v1", categoryPercents: snapshotEmployeeTrainingCategories(state),
+     phases: frozenPhases.map((phase) => ({ phaseId: phase.id, baselineMinutes: phase.durationMinutes, boundPercent: null })),
+   };
+-  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, {}, "patient", getPatientAppearanceSelectionContext(state)) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, frozenOperationPhases: frozenPhases, trainingTiming, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [] } : {}) };
++  return { id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, undefined, excludedDisplayNames) : line.displayName), appearance: encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, {}, "patient", getPatientAppearanceSelectionContext(state)) : null), status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, roomUpgradeRevenue: createRoomUpgradeRevenueQuote(state, actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, frozenPhases.map((phase) => phase.roomDefinitionId)), phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, frozenOperationPhases: frozenPhases, trainingTiming, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [] } : {}) };
+ }
+ 
+ export function startServiceOperation(state: GameState, lineId: string, actorKind: "visitor" | "remote", context: DomainContext): string | null {
+@@ -2106,6 +2109,9 @@ export function startDiagnosticAcquisitionOperation(
+   operation.transitionHeldRoomInstanceIds = [];
+   operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
+   operation.quoteFee = source?.quoteFee ?? (frozenLineId === null ? 0 : operation.quoteFee);
++  // The plan is the original acceptance contract. Older plans must not inherit
++  // the factory's new opt-in snapshot when they dispatch after an upgrade.
++  operation.roomUpgradeRevenue = cloneRoomUpgradeRevenueQuote(source?.roomUpgradeRevenue);
+   operation.testChoiceOrder = { ...testChoiceOrder };
+   operation.diagnosticPhysicalWork = {
+     version: "diagnostic-physical-work.v1", orderId: plan.orderId, encounterId: encounter.id, componentId,
+@@ -2141,6 +2147,7 @@ export function startDiagnosticProcessingOperation(
+   const operation = createOperation(state, line, "remote", plan.encounterId, undefined, context);
+   if (!operation) return null;
+   operation.quoteFee = 0;
++  operation.roomUpgradeRevenue = undefined;
+   operation.location = null;
+   operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
+   operation.frozenOperationPhases = [{ id: phase.id, roomDefinitionId: phase.requirement.roomDefinitionId,
+diff --git a/packages/game-domain/src/retail-operations.ts b/packages/game-domain/src/retail-operations.ts
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -1,5 +1,6 @@
+ import { SERVICE_INCOME_CATALOG, getServiceIncomeLine, type RetailOutletContract, type ServiceIncomeLine } from "@gamify-surgery/balance-config";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
++import { bindRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote, getRoomUpgradeQuotedFee } from "./room-upgrades";
+ import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
+ import { getDoorCells } from "./doors";
+ import {
+@@ -300,12 +301,15 @@ export function startRetailPurchase(
+       : facilityRoute(state, context, location, outlet.target);
+   if (!path.length) return null;
+   const id = `retail-operation.${state.retailOperationSequence++}`;
++  const roomUpgradeRevenue = createRoomUpgradeRevenueQuote(state, line.fee, [outlet.contract.roomDefinitionId]);
++  bindRoomUpgradeRevenueQuote(roomUpgradeRevenue, outlet.roomId);
+   const operation: RetailOperationState = {
+     id, incomeLineId: line.id, catalogVersion: 1, actorKind: kind, actorId, displayName: identity.displayName, appearance: identity.appearance,
+     linkedServiceOperationId: kind === "service_visitor" ? actorId : kind === "companion" ? state.retailExternalActors.find((actor) => actor.id === actorId)?.linkedServiceOperationId ?? null : null,
+     authorizedOrderId: order?.id ?? null, status: "walking_to_outlet", createdAtFacilityTick: state.facilityTick,
+     waitDeadlineFacilityTick: state.facilityTick + QUEUE_ABANDON_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null,
+-    quoteGross: line.fee, quoteStockCost: outlet.contract.staffRoleDefinitionId === "staff.pharmacist"
++    quoteGross: roomUpgradeRevenue ? getRoomUpgradeQuotedFee(roomUpgradeRevenue) : line.fee, roomUpgradeRevenue,
++    quoteStockCost: outlet.contract.staffRoleDefinitionId === "staff.pharmacist"
+       ? getEmployeeTrainingMoney(line.retail.stockCost, getEmployeeRoleTrainingPercent(state, "staff.pharmacist"), "decrease")
+       : line.retail.stockCost, outletRoomInstanceId: outlet.roomId,
+     outletDurationMinutes: outlet.contract.durationMinutes, staffRoleDefinitionId: outlet.contract.staffRoleDefinitionId ?? null, servingEmployeeId: outlet.servingEmployeeId,
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -31,6 +31,7 @@ import {
+ } from "./employee-discussions";
+ import { materializePatientName } from "./patientText";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
++import { bindRoomUpgradeRevenueQuote, cloneRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote, getRoomUpgradeQuotedFee } from "./room-upgrades";
+ import {
+   findCareAwareFacilityPath,
+   isProtectedCareRoom,
+@@ -2138,6 +2139,10 @@ function scheduleResult(
+       : {}),
+   };
+   const incomeLine = getServiceIncomeForRoute(selected.route.id);
++  if (incomeLine) {
++    pending.roomUpgradeRevenue = createRoomUpgradeRevenueQuote(state, incomeLine.fee,
++      selected.route.resourceRequirements.map((resource) => resource.roomDefinitionId));
++  }
+   if (incomeLine && getNewPeriopServiceOperationPhases(incomeLine.id)) {
+     const externalPhases = selected.route.timingPhases
+       .filter((phase) => !phase.resourceBound)
+@@ -2179,6 +2184,30 @@ function scheduleResult(
+   return pending;
+ }
+ 
++function bindPendingResultRoomRevenue(state: GameState, context: DomainContext, encounter: EncounterState, pending: PendingResult): void {
++  const quote = pending.roomUpgradeRevenue;
++  if (!quote || quote.boundRoom || pending.diagnosticTiming || pending.localServiceOperation || pending.resourceQueue ||
++    encounter.lifecycle !== "active_pending_result" || !encounter.patientLocation) return;
++  const earningPhase = pending.timingPhases?.find((phase) => phase.resourceBound);
++  if (!earningPhase || state.facilityTick < earningPhase.startsAtTick || state.facilityTick > earningPhase.endsAtTick) return;
++  // A planned destination or assigned care room is not evidence of local work.
++  const roomId = pending.patientTravel?.destinationRoomInstanceId ??
++    (pending.patientRemainsOnsite ? state.rooms.find((room) => room.roomDefinitionId === quote.roomDefinitionId &&
++      pointInsideRoom(encounter.patientLocation!, room, context))?.id : null);
++  const room = state.rooms.find((candidate) => candidate.id === roomId && candidate.roomDefinitionId === quote.roomDefinitionId);
++  if (!room || !pointInsideRoom(encounter.patientLocation, room, context)) return;
++  const employeeIds = [pending.imagingTechnicianId, pending.phlebotomistId,
++    pending.providerReservation?.kind === "employee" ? pending.providerReservation.employeeId : null];
++  if (employeeIds.some((employeeId) => employeeId && !state.employees.some((employee) =>
++    employee.id === employeeId && employee.pathIndex >= employee.path.length - 1 && pointInsideRoom(employee.location, room, context)))) return;
++  if (pending.providerReservation?.kind === "founder" &&
++    (state.environment.founderActivity?.targetId !== pending.operationId ||
++      state.environment.founderActivity.pathIndex < state.environment.founderActivity.path.length - 1 ||
++      !pointInsideRoom(state.environment.founderLocation, room, context))) return;
++  bindRoomUpgradeRevenueQuote(quote, room.id);
++  pending.serviceIncomeFee = getRoomUpgradeQuotedFee(quote);
++}
++
+ function routeImagingTechnicianToScheduledService(
+   state: GameState,
+   context: DomainContext,
+@@ -4090,6 +4119,8 @@ function reduceSubmitAnswer(
+         routeDisplayName: selected.route.displayName,
+         incomeLineId: income.id,
+         quoteFee: income.fee,
++        roomUpgradeRevenue: createRoomUpgradeRevenueQuote(next, income.fee,
++          selected.route.resourceRequirements.map((resource) => resource.roomDefinitionId)),
+         operationPhases: income.operation!.phases.map((phase) => ({
+           id: phase.id,
+           roomDefinitionId: phase.roomDefinitionId,
+@@ -4128,6 +4159,9 @@ function reduceSubmitAnswer(
+       routeDisplayName: continuationSelection.route.displayName,
+       incomeLineId: getServiceIncomeForRoute(continuationSelection.route.id)?.id ?? null,
+       externalRemainder: correctTestOrder.disposition.externalRemainder,
++      quoteFee: getServiceIncomeForRoute(continuationSelection.route.id)?.fee,
++      roomUpgradeRevenue: createRoomUpgradeRevenueQuote(next, getServiceIncomeForRoute(continuationSelection.route.id)?.fee ?? 0,
++        continuationSelection.route.resourceRequirements.map((resource) => resource.roomDefinitionId)),
+       status: "feedback_pending",
+       serviceOperationId: null,
+       scheduledAtFacilityTick: next.facilityTick,
+@@ -4308,7 +4342,9 @@ function reduceSubmitAnswer(
+           const income = source?.routeId ? getServiceIncomeForRoute(source.routeId) : null;
+           return source?.routeId && income && input ? [{
+             componentId: component.componentId!, serviceId: input.serviceId, routeId: source.routeId, routeDisplayName: source.routeDisplayName,
+-            incomeLineId: income.id, quoteFee: income.fee, operationPhases: source.operationPhases.map((phase) => ({
++            incomeLineId: income.id, quoteFee: source.quoteFee ?? income.fee,
++            roomUpgradeRevenue: cloneRoomUpgradeRevenueQuote(source.roomUpgradeRevenue),
++            operationPhases: source.operationPhases.map((phase) => ({
+               id: phase.id, roomDefinitionId: phase.roomDefinitionId, durationMinutes: phase.durationMinutes,
+               staffRoleDefinitionIds: [...phase.staffRoleDefinitionIds], providerRoleDefinitionIds: [...phase.providerRoleDefinitionIds],
+               ...(phase.founderEligible ? { founderEligible: true as const } : {}),
+@@ -5225,6 +5261,7 @@ function startCurrentStagedResultComponent(
+   const operation = state.serviceOperations.find((candidate) => candidate.id === operationId);
+   if (!operation) return false;
+   operation.quoteFee = component.quoteFee;
++  operation.roomUpgradeRevenue = cloneRoomUpgradeRevenueQuote(component.roomUpgradeRevenue);
+   operation.frozenOperationPhases =
+     getNewPeriopServiceOperationPhases(
+       component.incomeLineId,
+@@ -5278,6 +5315,7 @@ function startPendingResultServiceOperation(
+   if (typeof pending.serviceIncomeFee === "number") {
+     operation.quoteFee = pending.serviceIncomeFee;
+   }
++  operation.roomUpgradeRevenue = cloneRoomUpgradeRevenueQuote(pending.roomUpgradeRevenue);
+   link.serviceOperationId = operationId;
+   link.status = "waiting_for_service";
+   return true;
+@@ -5685,6 +5723,8 @@ function reduceAcknowledgeDecisionFeedback(
+       if (!operation) {
+         return rejectCommand(state, command, "The collection order could not be created.");
+       }
++      if (continuation.quoteFee !== undefined) operation.quoteFee = continuation.quoteFee;
++      operation.roomUpgradeRevenue = cloneRoomUpgradeRevenueQuote(continuation.roomUpgradeRevenue);
+       continuation.status = "waiting_for_service";
+       continuation.serviceOperationId = operation.id;
+       nextStep.status = "result_pending";
+@@ -6791,6 +6831,13 @@ function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+     return;
+   }
+   const config = context.balanceRelease.environment;
++  const quoteNextInterval = (suiteRoomInstanceId: string) => {
++    const employeePayment = getEmployeeTrainingMoney(config.glp1AutomationPayment,
++      getEmployeeRoleTrainingPercent(state, "staff.glp1_np"), "increase");
++    const roomUpgradeRevenue = createRoomUpgradeRevenueQuote(state, employeePayment, ["room.glp1_telehealth_suite"]);
++    bindRoomUpgradeRevenueQuote(roomUpgradeRevenue, suiteRoomInstanceId);
++    return { roomUpgradeRevenue, quotePayment: roomUpgradeRevenue ? getRoomUpgradeQuotedFee(roomUpgradeRevenue) : employeePayment };
++  };
+   const activeSlots = assignments.map((assignment) => {
+     const prior = priorSlots.find(
+       (slot) =>
+@@ -6798,7 +6845,11 @@ function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+         slot.employeeId === assignment.employeeId,
+     );
+     return {
++      ...prior,
+       ...assignment,
++      // Existing slots preserve their legacy interval; new ones freeze both
++      // employee and actual-suite effects before any work is performed.
++      ...(prior ? {} : quoteNextInterval(assignment.suiteRoomInstanceId)),
+       // The current tick is the first full facility minute after a new slot
+       // became operational, so its first payout lands after 60 such minutes.
+       nextPayoutTick:
+@@ -6824,7 +6875,7 @@ function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+         `income.glp1.automation.${slot.suiteRoomInstanceId}.` +
+         `${slot.employeeId}.${slot.nextPayoutTick}`;
+       if (!state.serviceIncomeReceipts.some((receipt) => receipt.transactionKey === transactionKey)) {
+-      const payment = getEmployeeTrainingMoney(config.glp1AutomationPayment, getEmployeeRoleTrainingPercent(state, "staff.glp1_np"), "increase");
++      const payment = slot.quotePayment ?? config.glp1AutomationPayment;
+       state.serviceIncomeReceipts.push({
+         id: `${transactionKey}.${state.nextServiceIncomeReceiptSequence++}`,
+         transactionKey,
+@@ -6842,6 +6893,7 @@ function advanceGlp1Automation(state: GameState, context: DomainContext): void {
+         adjustCash(state, payment);
+       }
+       slot.nextPayoutTick += config.glp1AutomationIntervalMinutes;
++      Object.assign(slot, quoteNextInterval(slot.suiteRoomInstanceId));
+     }
+   }
+   environment.glp1AutomationSlots = slots;
+@@ -8445,6 +8497,7 @@ function reduceAdvanceTick(
+   advanceNewDiagnosticOrders(next, context);
+ 
+   for (const encounter of Object.values(next.encounters)) {
++    if (encounter.pendingResult) bindPendingResultRoomRevenue(next, context, encounter, encounter.pendingResult);
+     creditEligibleServiceIncome(next, encounter);
+     if (
+       encounter.lifecycle !== "active_pending_result" ||
+@@ -8609,6 +8662,9 @@ function reduceAdvanceTick(
+     advanceEmployeeMovement(next, context);
+     advanceDepartingEmployees(next, context);
+   advanceFounderActivity(next, context);
++  for (const encounter of Object.values(next.encounters)) {
++    if (encounter.pendingResult) bindPendingResultRoomRevenue(next, context, encounter, encounter.pendingResult);
++  }
+   if (next.environment.pendingFounderConsult?.kind === "encounter" &&
+       next.openChartEncounterId === next.environment.pendingFounderConsult.targetId &&
+       !(next.environment.founderActivity?.kind === "attend_encounter" &&
+@@ -9055,6 +9111,7 @@ function reduceSellRoom(
+       delete pending.serviceIncomeEligible;
+       delete pending.serviceIncomeLineId;
+       delete pending.serviceIncomeFee;
++      delete pending.roomUpgradeRevenue;
+       pending.patientTravel = null;
+       pending.offsiteTravel = null;
+       pending.offsiteReturnStartedAtTick = null;
+@@ -9109,6 +9166,7 @@ function reduceSellRoom(
+         delete pending.serviceIncomeEligible;
+         delete pending.serviceIncomeLineId;
+         delete pending.serviceIncomeFee;
++        delete pending.roomUpgradeRevenue;
+         // Defer route selection until the next unpaused simulation tick. This
+         // lets Build Mode replace the sold footprint before off-site travel is
+         // planned and safely retries if the temporary layout has no exit.
+diff --git a/packages/game-domain/tests/diagnostic-service-operations.test.ts b/packages/game-domain/tests/diagnostic-service-operations.test.ts
+--- a/packages/game-domain/tests/diagnostic-service-operations.test.ts
++++ b/packages/game-domain/tests/diagnostic-service-operations.test.ts
+@@ -145,8 +145,8 @@ describe("frozen diagnostic operation execution", () => {
+     const contract = plan(fixture, { serviceId: "service.ultrasound", patientOrigin: us.anchor });
+     expect(contract.sources[0]).toMatchObject({ incomeLineId: "income.ultrasound", quoteFee: 120 });
+     // An existing accepted component may freeze an explicit quoted fee override.
++    delete contract.sources[0]!.roomUpgradeRevenue;
+     contract.sources[0]!.quoteFee = 37;
+-    if (contract.sources[0]!.roomUpgradeRevenue) contract.sources[0]!.roomUpgradeRevenue!.baseFee = 37;
+     fixture.encounter.pendingResult = pending(contract);
+     const saved = deserializeGameState(serializeGameState(fixture.state), fixture.context).encounters[fixture.encounter.id]!.pendingResult!.diagnosticTiming!;
+     expect(saved.sources[0]!.quoteFee).toBe(37);
+diff --git a/packages/game-domain/tests/service-operations.test.ts b/packages/game-domain/tests/service-operations.test.ts
+--- a/packages/game-domain/tests/service-operations.test.ts
++++ b/packages/game-domain/tests/service-operations.test.ts
+@@ -1092,6 +1092,9 @@ describe("service-only operations", () => {
+     delete legacyState.serviceOperations[0]!.nextPhaseReadyAtFacilityTick;
+     delete legacyState.serviceOperations[0]!.transitionHeldRoomInstanceIds;
+     delete legacyState.serviceOperations[0]!.frozenOperationPhases;
++    // Legacy work predates both acceptance snapshots.
++    delete legacyState.serviceOperations[0]!.trainingTiming;
++    delete legacyState.serviceOperations[0]!.roomUpgradeRevenue;
+     legacyState = deserializeGameState(serializeGameState(legacyState));
+     legacyState = advanceUntil(
+       legacyState,
+@@ -1126,6 +1129,9 @@ describe("service-only operations", () => {
+     operation.status = "waiting_for_next_phase";
+     operation.phaseIndex = 0;
+     delete operation.frozenOperationPhases;
++    // Isolate the incomplete periop marker from newer quote contracts.
++    delete operation.trainingTiming;
++    delete operation.roomUpgradeRevenue;
+     const restored = deserializeGameState(serializeGameState(state));
+     expect(restored.serviceOperations).toEqual([]);
+   });
+diff --git a/packages/game-domain/tests/service-procedure-operations.test.ts b/packages/game-domain/tests/service-procedure-operations.test.ts
+--- a/packages/game-domain/tests/service-procedure-operations.test.ts
++++ b/packages/game-domain/tests/service-procedure-operations.test.ts
+@@ -573,6 +573,9 @@ describe("mapped in-clinic procedure operations", () => {
+       durationMinutes: 7,
+       staffRoleDefinitionIds: ["staff.imaging_technician"],
+     }];
++    // A custom legacy contract has no snapshots from the original factory phases.
++    delete state.serviceOperations[0]!.trainingTiming;
++    delete state.serviceOperations[0]!.roomUpgradeRevenue;
+     state = deserializeGameState(serializeGameState(state));
+     for (let minute = 0; minute < 80 && state.serviceOperations[0]?.status !== "in_service"; minute += 1) {
+       state = advance(state, 1);
+diff --git a/packages/game-domain/tests/employee-training-benefits.test.ts b/packages/game-domain/tests/employee-training-benefits.test.ts
+--- a/packages/game-domain/tests/employee-training-benefits.test.ts
++++ b/packages/game-domain/tests/employee-training-benefits.test.ts
+@@ -74,10 +74,10 @@ function endoscopyFixture(withProvider = true) {
+   fixture.state.environment.founderLocation = { ...endoscopy.anchor };
+   return fixture;
+ }
+-function readyLabFixture(): Fixture {
++function readyLabFixture(caseId = "case.fhh.suggestive-results-confirmation"): Fixture {
+   const fixture = timingFixture(); controlled(fixture);
+   const encounter = fixture.encounter;
+-  encounter.frozenCase = structuredClone(fixture.context.clinicalRelease.cases.find((entry) => entry.id === "case.fhh.suggestive-results-confirmation")!);
++  encounter.frozenCase = structuredClone(fixture.context.clinicalRelease.cases.find((entry) => entry.id === caseId)!);
+   encounter.arrivalClass = "routine"; encounter.checkInStatus = "checked_in"; encounter.lifecycle = "active_action_required";
+   encounter.currentNodeIndex = 0; encounter.terminalFeedback = null;
+   encounter.steps = encounter.frozenCase.decisionNodes.map((node, index) => ({ nodeIndex: index, decisionNodeId: node.id, questionVariantId: node.questionVariantId,
+@@ -101,6 +101,13 @@ function placeInWaiting(fixture: Fixture): void {
+   fixture.encounter.waitingDestination = destination.reservation;
+   fixture.encounter.patientMovement = null;
+ }
++function completeDependencies(plan: DiagnosticOrderPlan, workId: string, atTick: number): void {
++  for (const id of plan.phases.find((entry) => entry.id === workId)!.dependsOn) {
++    completeDependencies(plan, id, atTick);
++    const dependency = plan.phases.find((entry) => entry.id === id)!;
++    dependency.status = "completed"; dependency.startedAtTick = atTick; dependency.completedAtTick = atTick; dependency.remainingMinutes = 0;
++  }
++}
+ 
+ describe("role-average employee training benefits", () => {
+   it("averages hired identities including away staff, excludes departures, and retains fractional skill", () => {
+@@ -223,6 +230,19 @@ describe("role-average employee training benefits", () => {
+     expect(job.phaseEndsAtFacilityTick! - job.phaseStartedAtFacilityTick!).toBe(duration - 5);
+   });
+ 
++  it.each([false, true])("freezes new diagnostic team preparation/procedure alternatives with employee provider=%s", (employeeProvider) => {
++    const fixture = endoscopyFixture();
++    const provider = fixture.state.employees.find((employee) => employee.staffRoleDefinitionId === "staff.endoscopist")!;
++    if (!employeeProvider) provider.facilityTask = { kind: "take_break", targetId: "busy.fixture", startedAtFacilityTick: 0, workMinutesRemaining: 500 };
++    const plan = quote(fixture, { serviceId: "service.endoscopy" });
++    expect(phase(plan, "preparation").durationMinutes).toBe(18);
++    expect(phase(plan, "procedure").resource!.provider!.kind).toBe(employeeProvider ? "employee" : "founder");
++    expect(phase(plan, "procedure").durationMinutes).toBe(employeeProvider ? 27 : 36);
++    expect(phase(plan, "recovery").durationMinutes).toBe(60);
++    fixture.state.employees.forEach((employee) => employee.trainingLevel = 1);
++    expect(forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context).plan.phases.map((entry) => entry.durationMinutes)).toEqual(plan.phases.map((entry) => entry.durationMinutes));
++  });
++
+   it("keeps legacy queued and active service jobs at baseline despite newly trained categories", () => {
+     const fixture = endoscopyFixture();
+     const job = startWaiting(fixture, "income.endoscopy"); delete job.trainingTiming;
+@@ -253,6 +273,155 @@ describe("role-average employee training benefits", () => {
+ });
+ 
+ describe("training-aware local diagnostic queues", () => {
++  it("uses an available farther collector before a nearer paused trainee at initial acceptance", () => {
++    const fixture = timingFixture(); controlled(fixture);
++    const station = fixture.addRoom("room.phlebotomy", "staff.phlebotomist", 2); const training = fixture.addRoom("room.training"); controlled(fixture);
++    const trainee = fixture.state.employees[0]!; const spare = fixture.state.employees[1]!;
++    expect(requestEmployeeTraining(fixture.state, trainee.id, fixture.context).applied).toBe(true);
++    for (let minute = 0; trainee.training?.stage !== "training" && minute < 60; minute++) advanceTrainingMinutes(fixture.state, 1, fixture.context);
++    fixture.state.doors = fixture.state.doors.filter((door) => door.roomId !== training.room.id);
++    spare.location = { ...fixture.state.environment.founderLocation }; spare.path = [{ ...spare.location }]; spare.pathIndex = 0;
++    fixture.encounter.patientLocation = { ...station.anchor };
++    const plan = quote(fixture, { patientOrigin: station.anchor });
++    expect(phase(plan, "collection").resource!.employeeIds).toEqual([spare.id]);
++    expect(forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context).blockedPhaseIds).toEqual([]);
++    const id = startDiagnosticAcquisitionOperation(fixture.state, fixture.encounter, plan, null, "income.phlebotomy", choiceOrder(fixture, plan), fixture.context)!;
++    const job = fixture.state.serviceOperations.find((entry) => entry.id === id)!;
++    expect(job.reservedEmployeeIds).toEqual([spare.id]);
++    expect(trainee.facilityTask).toBeNull();
++    arrive(fixture, job);
++    fixture.state.facilityTick = job.phaseEndsAtFacilityTick!; advanceServiceOperations(fixture.state, fixture.context);
++    expect(job.status).toBe("completed");
++    expect(fixture.state.serviceIncomeReceipts).toHaveLength(1);
++  });
++
++  it.each([["room.phlebotomy", "staff.phlebotomist", "collection"], ["room.laboratory", "staff.laboratory_technician", "laboratory_processing"], ["room.reading", "staff.radiologist", "interpretation"]] as const)
++    ("rebinds queued %s work to a spare after the accepted worker leaves, preserving work and saved duration", (roomId, role, kind) => {
++      const fixture = timingFixture(); controlled(fixture);
++      if (kind !== "collection") fixture.addRoom("room.phlebotomy", "staff.phlebotomist");
++      if (kind === "interpretation") fixture.addRoom("room.ultrasound", "staff.imaging_technician");
++      const station = fixture.addRoom(roomId, role, 2); const training = fixture.addRoom("room.training"); controlled(fixture);
++      const employees = fixture.state.employees.filter((employee) => employee.staffRoleDefinitionId === role);
++      const trainee = employees[0]!; const spare = employees[1]!; trainee.trainingLevel = 4;
++      const plan = quote(fixture, { serviceId: kind === "interpretation" ? "service.ultrasound" : "service.basic_labs", patientOrigin: station.anchor });
++      const work = phase(plan, kind); const acceptedMinutes = work.durationMinutes;
++      expect(work.resource!.employeeIds).toEqual([trainee.id]);
++      expect(requestEmployeeTraining(fixture.state, trainee.id, fixture.context).applied).toBe(true);
++      advanceTrainingMinutes(fixture.state, 1, fixture.context);
++      fixture.state.doors = fixture.state.doors.filter((door) => door.roomId !== training.room.id);
++      const forecast = forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context);
++      expect(forecast.blockedPhaseIds).toEqual([]);
++      expect(phase(forecast.plan, kind).forecast.employeePaths.map((entry) => entry.employeeId)).toEqual([spare.id]);
++      let id: string | null;
++      if (kind === "collection") {
++        fixture.encounter.patientLocation = { ...station.anchor };
++        id = startDiagnosticAcquisitionOperation(fixture.state, fixture.encounter, plan, null, "income.phlebotomy", choiceOrder(fixture, plan), fixture.context);
++      } else {
++        completeDependencies(plan, work.id, fixture.state.facilityTick);
++        id = startDiagnosticProcessingOperation(fixture.state, plan, work.id, fixture.context);
++      }
++      expect(id).not.toBeNull();
++      const job = fixture.state.serviceOperations.find((entry) => entry.id === id)!;
++      expect(job.reservedEmployeeIds).toEqual([spare.id]);
++      expect(job.frozenOperationPhases![0]!.durationMinutes).toBe(acceptedMinutes);
++      expect(trainee.facilityTask).toBeNull();
++      const restored = deserializeGameState(serializeGameState(fixture.state), fixture.context);
++      expect(restored.serviceOperations.find((entry) => entry.id === id)!.frozenOperationPhases![0]!.durationMinutes).toBe(acceptedMinutes);
++    });
++
++  it("replaces a training nurse while retaining the accepted periop bed in unlinked/linked forecasts and execution", () => {
++    const fixture = timingFixture(); controlled(fixture);
++    const recovery = fixture.addRoom("room.periop_recovery", "staff.periop_nurse", 2);
++    const endoscopy = fixture.addRoom("room.endoscopy", "staff.endoscopy_nurse");
++    const training = fixture.addRoom("room.training"); controlled(fixture);
++    const trainee = fixture.state.employees[0]!; const spare = fixture.state.employees[1]!;
++    trainee.trainingLevel = 4; fixture.state.employees[2]!.trainingLevel = 5;
++    fixture.state.environment.founderLocation = { ...endoscopy.anchor };
++    const acceptedBed = { x: recovery.room.x + 2, y: recovery.room.y + 1 };
++    fixture.encounter.patientLocation = { ...acceptedBed };
++    const plan = quote(fixture, { serviceId: "service.endoscopy", patientOrigin: acceptedBed });
++    expect(phase(plan, "preparation").resource).toMatchObject({ stationId: "N4", employeeIds: [trainee.id] });
++    const durations = plan.phases.map((entry) => entry.durationMinutes);
++    expect(requestEmployeeTraining(fixture.state, trainee.id, fixture.context).applied).toBe(true);
++    advanceTrainingMinutes(fixture.state, 1, fixture.context);
++    fixture.state.doors = fixture.state.doors.filter((door) => door.roomId !== training.room.id);
++    // The other bed is now closer, but the accepted bed remains the patient's.
++    fixture.encounter.patientLocation = { ...recovery.anchor };
++    const unlinked = forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context);
++    expect(unlinked.blockedPhaseIds).toEqual([]);
++    for (const kind of ["preparation", "recovery"]) {
++      expect(phase(unlinked.plan, kind).forecast.patientPath.at(-1)).toEqual(acceptedBed);
++      expect(phase(unlinked.plan, kind).forecast.employeePaths.map((entry) => entry.employeeId)).toEqual([spare.id]);
++    }
++
++    spare.facilityTask = { kind: "refill_water", targetId: recovery.room.id, startedAtFacilityTick: fixture.state.facilityTick, workMinutesRemaining: 1 };
++    const id = startDiagnosticAcquisitionOperation(fixture.state, fixture.encounter, plan, null, "income.endoscopy", choiceOrder(fixture, plan), fixture.context)!;
++    const job = fixture.state.serviceOperations.find((entry) => entry.id === id)!;
++    expect(job.status).toBe("waiting_for_resources");
++    // Retained bedside occupancy can precede a successful replacement claim.
++    job.periopBedReservation = { version: "periop-bed-reservation.v1", roomInstanceId: recovery.room.id, bedId: "N4", endpoint: { ...acceptedBed } };
++    spare.facilityTask = null;
++    for (const entry of plan.phases.filter((entry) => entry.patientPresent && entry.requirement)) entry.serviceOperationId = id;
++    const linked = forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context);
++    expect(linked.blockedPhaseIds).toEqual([]);
++    expect(phase(linked.plan, "preparation").forecast.endsAtTick).toBe(phase(unlinked.plan, "preparation").forecast.endsAtTick);
++    expect(phase(linked.plan, "recovery").forecast.endsAtTick).toBe(phase(unlinked.plan, "recovery").forecast.endsAtTick);
++    advanceServiceOperations(fixture.state, fixture.context);
++    for (let index = 0; index < 3; index++) {
++      expect(job.periopBedReservation).toMatchObject({ bedId: "N4", endpoint: acceptedBed });
++      if (index !== 1) expect(job.path.at(-1)).toEqual(acceptedBed);
++      arrive(fixture, job);
++      expect(job.status).toBe("in_service");
++      fixture.state.facilityTick = job.phaseEndsAtFacilityTick!;
++      advanceServiceOperations(fixture.state, fixture.context);
++      if (index < 2) {
++        fixture.state.facilityTick++;
++        advanceServiceOperations(fixture.state, fixture.context);
++      }
++    }
++    expect(job.status).toBe("discharging");
++    expect(job.diagnosticPhysicalWork!.phaseWitnesses.every((witness) => witness.completedAtFacilityTick !== null)).toBe(true);
++    // Release the retained bed only after the patient actually clears the room.
++    fixture.encounter.patientLocation = { x: recovery.room.x - 1, y: recovery.room.y + 1 };
++    job.location = { ...fixture.encounter.patientLocation };
++    advanceServiceOperations(fixture.state, fixture.context);
++    expect(job.status).toBe("completed");
++    expect(job.frozenOperationPhases!.map((entry) => entry.durationMinutes)).toEqual(durations.filter((minutes) => minutes > 0));
++    expect(plan.phases.map((entry) => entry.durationMinutes)).toEqual(durations);
++  });
++
++  it("does not reserve a zero-length returning employee until the service tick after physical home clearance", () => {
++    const fixture = readyLabFixture(); fixture.addRoom("room.phlebotomy", "staff.phlebotomist"); fixture.addRoom("room.training"); controlled(fixture); placeInWaiting(fixture);
++    const employee = fixture.state.employees[0]!;
++    expect(requestEmployeeTraining(fixture.state, employee.id, fixture.context).applied).toBe(true);
++    employee.trainingLevel = 2;
++    Object.assign(employee.training!, { stage: "returning", startedAtFacilityTick: 0, completedAtFacilityTick: 0, remainingMinutes: 0, roomInstanceId: null, placeId: null });
++    employee.location = { ...getEmployeeTrainingHomeLocation(fixture.state, employee, fixture.context)! }; employee.path = [{ ...employee.location }]; employee.pathIndex = 0;
++    const plan = quote(fixture);
++    expect(phase(plan, "collection").forecast.queueMinutes).toBe(2);
++    let state = acceptLab(fixture);
++    state = tick(state, fixture.context);
++    expect(state.employees[0]!.training).toBeNull();
++    expect(state.serviceOperations.find((entry) => entry.diagnosticPhysicalWork)!.reservedEmployeeIds).toEqual([]);
++    state = tick(state, fixture.context);
++    expect(state.serviceOperations.find((entry) => entry.diagnosticPhysicalWork)!.reservedEmployeeIds).toEqual([employee.id]);
++  });
++
++  it("marks preparation and a linked unstarted endoscopy operation blocked while its sole periop nurse is paused", () => {
++    const fixture = endoscopyFixture(); fixture.addRoom("room.training");
++    const nurse = fixture.state.employees.find((entry) => entry.staffRoleDefinitionId === "staff.periop_nurse")!; nurse.trainingLevel = 1;
++    expect(requestEmployeeTraining(fixture.state, nurse.id, fixture.context).applied).toBe(true);
++    advanceTrainingMinutes(fixture.state, 1, fixture.context);
++    fixture.state.doors = fixture.state.doors.filter((door) => !door.roomId.endsWith("training"));
++    const plan = quote(fixture, { serviceId: "service.endoscopy" });
++    expect(forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context).blockedPhaseIds).toContain(phase(plan, "preparation").id);
++    const id = startDiagnosticAcquisitionOperation(fixture.state, fixture.encounter, plan, null, "income.endoscopy", choiceOrder(fixture, plan), fixture.context)!;
++    expect(fixture.state.serviceOperations.find((entry) => entry.id === id)!.status).toBe("waiting_for_resources");
++    for (const work of plan.phases.filter((entry) => entry.patientPresent && entry.requirement)) work.serviceOperationId = id;
++    expect(forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context).blockedPhaseIds).toContain(phase(plan, "preparation").id);
++    expect(fixture.state.serviceIncomeReceipts).toHaveLength(0);
++  });
++
+   it("includes outbound, seated hour and actual home return in a sole collector's local estimate and waits in execution", () => {
+     const fixture = readyLabFixture();
+     const station = fixture.addRoom("room.phlebotomy", "staff.phlebotomist");
+@@ -333,6 +502,41 @@ describe("training-aware local diagnostic queues", () => {
+       fixture.encounter.pendingResult = pending(plan);
+       expect(getPendingResultEta(fixture.state, fixture.encounter.id, fixture.context)).toBeNull();
+     });
++
++  it.each([["room.laboratory", "staff.laboratory_technician", "laboratory_processing"], ["room.reading", "staff.radiologist", "interpretation"]] as const)
++    ("retains paused %s processing through nominal due and reload, then waits for the actual return/completion witness", (roomId, role, kind) => {
++      const fixture = readyLabFixture("case.primary-hyperparathyroidism.stone-history");
++      fixture.addRoom("room.phlebotomy", "staff.phlebotomist"); fixture.addRoom("room.ultrasound", "staff.imaging_technician");
++      fixture.addRoom(roomId, role); const training = fixture.addRoom("room.training"); controlled(fixture);
++      const employee = fixture.state.employees.find((entry) => entry.staffRoleDefinitionId === role)!;
++      expect(requestEmployeeTraining(fixture.state, employee.id, fixture.context).applied).toBe(true);
++      for (let minute = 0; employee.training?.stage !== "training" && minute < 80; minute++) advanceTrainingMinutes(fixture.state, 1, fixture.context);
++      const door = fixture.state.doors.find((entry) => entry.roomId === training.room.id)!;
++      fixture.state.doors = fixture.state.doors.filter((entry) => entry.id !== door.id);
++      const plan = quote(fixture, { serviceId: kind === "interpretation" ? "service.ultrasound" : "service.basic_labs" });
++      const work = phase(plan, kind); const acceptedMinutes = work.durationMinutes;
++      completeDependencies(plan, work.id, fixture.state.facilityTick);
++      const jobId = startDiagnosticProcessingOperation(fixture.state, plan, work.id, fixture.context)!;
++      expect(jobId).not.toBeNull();
++      work.serviceOperationId = jobId;
++      fixture.encounter.pendingResult = pending(plan);
++      fixture.encounter.lifecycle = "active_pending_result";
++      fixture.encounter.steps[0]!.status = "result_pending"; fixture.encounter.steps[0]!.result = fixture.encounter.pendingResult;
++      const cash = fixture.state.cash;
++      let state = tick(fixture.state, fixture.context, 120);
++      expect(state.serviceOperations.find((entry) => entry.id === jobId)!.status).toBe("waiting_for_resources");
++      expect(getDiagnosticOrderPlans(state)[0]!.resultReady.reachedAtTick).toBeNull();
++      expect(getPendingResultEta(state, fixture.encounter.id, fixture.context)).toBeNull();
++      expect(state.serviceIncomeReceipts).toHaveLength(0);
++      state = deserializeGameState(serializeGameState(state), fixture.context);
++      state.doors.push(door);
++      for (let minute = 0; getDiagnosticOrderPlans(state)[0]!.resultReady.reachedAtTick === null && minute < 180; minute++) state = tick(state, fixture.context);
++      expect(getDiagnosticOrderPlans(state)[0]!.resultReady.reachedAtTick).not.toBeNull();
++      expect(state.serviceOperations.find((entry) => entry.id === jobId)!.frozenOperationPhases![0]!.durationMinutes).toBe(acceptedMinutes);
++      expect(state.employees.find((entry) => entry.id === employee.id)!.trainingLevel).toBe(2);
++      expect(state.serviceIncomeReceipts).toHaveLength(0);
++      expect(state.cash).toBe(cash);
++    });
+ });
+ 
+ describe("nonclinical training consumers", () => {
+@@ -378,16 +582,50 @@ describe("nonclinical training consumers", () => {
+     expect(tick(legacy).rooms[0]!.cleanliness).toBe(60);
+   });
+ 
+-  it("increases completed NP payments from category skill with unchanged hourly cadence and no duplicate receipt on reload", () => {
++  it("freezes each new NP interval's category payment through changes and reload, then quotes the next hour", () => {
+     const fixture = timingFixture(); controlled(fixture); fixture.state.encounters = {};
+-    const room = fixture.addRoom("room.glp1_telehealth_suite", "staff.glp1_np", 2);
++    fixture.addRoom("room.glp1_telehealth_suite", "staff.glp1_np", 2);
+     fixture.state.employees[0]!.trainingLevel = 5;
+-    fixture.state.environment.glp1AutomationSlots = [{ suiteRoomInstanceId: room.room.id, employeeId: fixture.state.employees[0]!.id, nextPayoutTick: 1 }];
+     let state = tick(fixture.state, fixture.context);
+-    expect(state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.glp1_telehealth").map((receipt) => receipt.grossAmount)).toEqual([60]);
+-    expect(state.environment.glp1AutomationSlots.find((slot) => slot.employeeId === fixture.state.employees[0]!.id)!.nextPayoutTick).toBe(61);
++    const employeeId = fixture.state.employees[0]!.id;
++    const interval = state.environment.glp1AutomationSlots.find((slot) => slot.employeeId === employeeId)!;
++    expect(interval.quotePayment).toBe(60);
++    expect(interval.nextPayoutTick - state.facilityTick + 1).toBe(60);
++    state.employees.forEach((employee) => employee.trainingLevel = 1);
++    state = deserializeGameState(serializeGameState(state), fixture.context);
++    expect(state.environment.glp1AutomationSlots.find((slot) => slot.employeeId === employeeId)!.quotePayment).toBe(60);
++    state = tick(state, fixture.context, interval.nextPayoutTick - state.facilityTick);
++    const receipts = (current: GameState) => current.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.glp1_telehealth" && receipt.actorId === employeeId);
++    expect(receipts(state).map((receipt) => receipt.grossAmount)).toEqual([60]);
++    expect(state.environment.glp1AutomationSlots.find((slot) => slot.employeeId === employeeId)!).toMatchObject({
++      nextPayoutTick: interval.nextPayoutTick + 60, quotePayment: 50,
++    });
++    state = tick(deserializeGameState(serializeGameState(state), fixture.context), fixture.context);
++    expect(receipts(state)).toHaveLength(1);
++    state = tick(state, fixture.context, interval.nextPayoutTick + 60 - state.facilityTick);
++    expect(receipts(state).map((receipt) => receipt.grossAmount)).toEqual([60, 50]);
++    state = tick(deserializeGameState(serializeGameState(state), fixture.context), fixture.context);
++    expect(receipts(state)).toHaveLength(2);
++  });
++
++  it("preserves the baseline payment for a legacy NP interval and applies category skill to its next hour", () => {
++    const fixture = timingFixture(); controlled(fixture); fixture.state.encounters = {};
++    fixture.addRoom("room.glp1_telehealth_suite", "staff.glp1_np");
++    fixture.state.employees[0]!.trainingLevel = 5;
++    let state = tick(fixture.state, fixture.context);
++    const accepted = state.environment.glp1AutomationSlots[0]!;
++    const firstPayout = accepted.nextPayoutTick;
++    delete accepted.quotePayment;
++    delete accepted.roomUpgradeRevenue;
++    state = deserializeGameState(serializeGameState(state), fixture.context);
++    state = tick(state, fixture.context, firstPayout - state.facilityTick);
++    const receipts = (current: GameState) => current.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.glp1_telehealth");
++    expect(receipts(state).map((receipt) => receipt.grossAmount)).toEqual([50]);
++    expect(state.environment.glp1AutomationSlots[0]!).toMatchObject({ nextPayoutTick: firstPayout + 60, quotePayment: 70 });
++    state = tick(deserializeGameState(serializeGameState(state), fixture.context), fixture.context, 60);
++    expect(receipts(state).map((receipt) => receipt.grossAmount)).toEqual([50, 70]);
+     state = tick(deserializeGameState(serializeGameState(state), fixture.context), fixture.context);
+-    expect(state.serviceIncomeReceipts.filter((receipt) => receipt.incomeLineId === "income.glp1_telehealth")).toHaveLength(1);
++    expect(receipts(state)).toHaveLength(2);
+   });
+ 
+   it("discounts quoted pharmacy stock costs, freezes them across skill changes/reload, and keeps coffee prices unchanged", () => {
+diff --git a/packages/game-domain/src/room-upgrades.ts b/packages/game-domain/src/room-upgrades.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/game-domain/src/room-upgrades.ts
+@@ -0,0 +1,89 @@
++import { getCurrentRoomUpgradeDefinition, getRoomUpgradeRevenueMultiplier } from "@gamify-surgery/balance-config";
++import type { GameState, RoomUpgradeLevel, RoomUpgradeRevenueQuote, ServiceOperationState } from "./types";
++
++const money = (amount: number): number => Math.round(amount * 100) / 100;
++
++/** Snapshot installed alternatives at acceptance; future copies cannot backdate a bonus. */
++export function createRoomUpgradeRevenueQuote(
++  state: Pick<GameState, "rooms">,
++  baseFee: number,
++  roomDefinitionIds: readonly (string | null)[],
++): RoomUpgradeRevenueQuote | undefined {
++  const earningDefinitions = [...new Set(roomDefinitionIds.filter((id): id is string =>
++    id !== null && getCurrentRoomUpgradeDefinition(id)?.effectKind === "revenue_percent"))];
++  if (earningDefinitions.length !== 1) return undefined;
++  const roomDefinitionId = earningDefinitions[0]!;
++  return {
++    version: "room-upgrade-revenue.v1", baseFee, roomDefinitionId,
++    candidates: state.rooms.filter((room) => room.roomDefinitionId === roomDefinitionId)
++      .sort((left, right) => left.id.localeCompare(right.id))
++      .map((room) => ({ roomInstanceId: room.id, upgradeLevel: room.upgradeLevel,
++        multiplier: getRoomUpgradeRevenueMultiplier(roomDefinitionId, room.upgradeLevel) })),
++    boundRoom: null,
++  };
++}
++
++/** A quote binds to one actual room. Later transfers retain the accepted payment. */
++export function bindRoomUpgradeRevenueQuote(quote: RoomUpgradeRevenueQuote | undefined, roomInstanceId: string): void {
++  if (!quote || quote.boundRoom) return;
++  quote.boundRoom = { roomInstanceId,
++    multiplier: quote.candidates.find((room) => room.roomInstanceId === roomInstanceId)?.multiplier ?? 1 };
++}
++
++export function getRoomUpgradeQuotedFee(quote: RoomUpgradeRevenueQuote): number {
++  return money(quote.baseFee * (quote.boundRoom?.multiplier ?? 1));
++}
++
++export function cloneRoomUpgradeRevenueQuote(quote: RoomUpgradeRevenueQuote | undefined): RoomUpgradeRevenueQuote | undefined {
++  return quote ? { ...quote, candidates: quote.candidates.map((room) => ({ ...room })),
++    boundRoom: quote.boundRoom ? { ...quote.boundRoom } : null } : undefined;
++}
++
++/** Called at actual phase start; reservations for future work are not earning evidence. */
++export function bindServiceOperationRoomRevenue(state: Pick<GameState, "rooms">, operation: ServiceOperationState): void {
++  const quote = operation.roomUpgradeRevenue;
++  if (!quote || quote.boundRoom || operation.diagnosticPhaseWork || operation.diagnosticPhysicalWork?.billing === "none") return;
++  if (operation.frozenOperationPhases?.[operation.phaseIndex]?.roomDefinitionId !== quote.roomDefinitionId) return;
++  const room = state.rooms.find((candidate) => candidate.roomDefinitionId === quote.roomDefinitionId &&
++    operation.reservedRoomInstanceIds.includes(candidate.id));
++  if (!room) return;
++  bindRoomUpgradeRevenueQuote(quote, room.id);
++  operation.quoteFee = getRoomUpgradeQuotedFee(quote);
++}
++
++const record = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
++const id = (value: unknown): value is string => typeof value === "string" && value.length > 0;
++const validMoney = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value) && value >= 0;
++const keys = (value: Record<string, unknown>, allowed: readonly string[]): boolean => Object.keys(value).every((key) => allowed.includes(key));
++
++/** Strict marked parsing; never silently drops a malformed upgraded payment into legacy semantics. */
++export function normalizeRoomUpgradeRevenueQuote(value: unknown, quotedFee: unknown, roomDefinitionIds?: readonly (string | null)[]): RoomUpgradeRevenueQuote | undefined {
++  if (value === undefined) return undefined;
++  const invalid = (): never => { throw new Error("The saved room upgrade revenue quote is invalid."); };
++  if (!record(value) || !keys(value, ["version", "baseFee", "roomDefinitionId", "candidates", "boundRoom"]) ||
++    value.version !== "room-upgrade-revenue.v1" || !validMoney(value.baseFee) || !id(value.roomDefinitionId) ||
++    getCurrentRoomUpgradeDefinition(value.roomDefinitionId)?.effectKind !== "revenue_percent" ||
++    roomDefinitionIds !== undefined && !roomDefinitionIds.includes(value.roomDefinitionId) || !Array.isArray(value.candidates)) return invalid();
++  const seen = new Set<string>();
++  const candidates = value.candidates.map((room: unknown) => {
++    if (!record(room) || !keys(room, ["roomInstanceId", "upgradeLevel", "multiplier"]) || !id(room.roomInstanceId) ||
++      seen.has(room.roomInstanceId) || typeof room.upgradeLevel !== "number" || !Number.isInteger(room.upgradeLevel) ||
++      room.upgradeLevel < 1 || room.upgradeLevel > 5 || room.multiplier !== 1 + 6 * (room.upgradeLevel - 1) / 100) return invalid();
++    seen.add(room.roomInstanceId);
++    return { roomInstanceId: room.roomInstanceId, upgradeLevel: room.upgradeLevel as RoomUpgradeLevel, multiplier: room.multiplier as number };
++  });
++  const bound = value.boundRoom;
++  if (bound !== null && (!record(bound) || !keys(bound, ["roomInstanceId", "multiplier"]) || !id(bound.roomInstanceId) ||
++    bound.multiplier !== (candidates.find((room) => room.roomInstanceId === bound.roomInstanceId)?.multiplier ?? 1))) return invalid();
++  const quote: RoomUpgradeRevenueQuote = { version: "room-upgrade-revenue.v1", baseFee: value.baseFee,
++    roomDefinitionId: value.roomDefinitionId, candidates,
++    boundRoom: bound === null ? null : { roomInstanceId: (bound as Record<string, unknown>).roomInstanceId as string,
++      multiplier: (bound as Record<string, unknown>).multiplier as number } };
++  if (!validMoney(quotedFee) || quotedFee !== getRoomUpgradeQuotedFee(quote)) return invalid();
++  return quote;
++}
++
++export function isRoomUpgradeRevenueQuoteValid(value: unknown, quotedFee: unknown, roomDefinitionIds?: readonly (string | null)[]): boolean {
++  try { normalizeRoomUpgradeRevenueQuote(value, quotedFee, roomDefinitionIds); return true; }
++  catch { return false; }
++}
+diff --git a/packages/game-domain/tests/room-upgrade-revenue.test.ts b/packages/game-domain/tests/room-upgrade-revenue.test.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/game-domain/tests/room-upgrade-revenue.test.ts
+@@ -0,0 +1,522 @@
++import { describe, expect, it } from "vitest";
++import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
++import {
++  advanceEmployeeMovement, advanceRetailOperations, advanceServiceOperations, authorizeRetailOrder,
++  deserializeGameState, gameReducer, interruptServiceOperationsForRoomSale, planDiagnosticOrder,
++  serializeGameState, startDiagnosticAcquisitionOperation, startDiagnosticProcessingOperation,
++  startEncounterProcedureOperation, startRetailPurchase, startServiceOperation,
++  type DiagnosticOrderPlan, type DiagnosticTimingRequest, type DomainContext, type GameState,
++  type PlacedRoom, type ServiceOperationState,
++} from "../src";
++import {
++  bindRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote, getRoomUpgradeQuotedFee,
++  normalizeRoomUpgradeRevenueQuote,
++} from "../src/room-upgrades";
++import { pending, timingFixture } from "./diagnostic-timing-fixtures";
++
++type Fixture = ReturnType<typeof timingFixture>;
++let sequence = 0;
++
++function fixture(): Fixture {
++  const result = timingFixture();
++  const state = result.state;
++  state.paused = false;
++  state.cash = 10_000;
++  state.cashCents = 1_000_000;
++  state.serviceAppointmentsEnabled = false;
++  state.nextRoutineArrivalTick = state.nextFinancialPostingTick = state.nextExternalRetailOpportunityTick =
++    state.nextEmployeeDiscussionTick = Number.MAX_SAFE_INTEGER;
++  state.environment.nextLitterSpawnTick = state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
++  state.environment.waterCoolerFillPercent = 100;
++  state.environment.pendingFounderConsult = null;
++  state.retailNextOpportunityTicks["founder:founder"] = Number.MAX_SAFE_INTEGER;
++  return result;
++}
++
++function tick(state: GameState, context: DomainContext, minutes = 1): GameState {
++  for (let index = 0; index < minutes; index++) state = gameReducer(state,
++    { type: "ADVANCE_TICK", operationId: `upgrade.revenue.tick.${sequence++}` }, context);
++  return state;
++}
++
++function advance(result: Fixture, atTick = result.state.facilityTick): void {
++  result.state.facilityTick = atTick;
++  advanceServiceOperations(result.state, result.context);
++}
++
++/** Explicit arrival keeps payment assertions independent of idle staff policy. */
++function arrive(result: Fixture, job: ServiceOperationState): void {
++  if (job.path.length) {
++    job.pathIndex = job.path.length - 1;
++    job.location = { ...job.path.at(-1)! };
++    if (job.actorKind === "encounter") result.state.encounters[job.actorId]!.patientLocation = { ...job.location };
++  }
++  for (const employee of result.state.employees) if (employee.facilityTask?.targetId === job.id || employee.facilityTask?.kind === "cover_periop") {
++    employee.pathIndex = employee.path.length - 1;
++    if (employee.path.length) employee.location = { ...employee.path.at(-1)! };
++  }
++  const founder = result.state.environment.founderActivity;
++  if (founder?.targetId === job.id) {
++    founder.pathIndex = founder.path.length - 1;
++    result.state.environment.founderLocation = { ...founder.path.at(-1)! };
++  }
++}
++
++function finish(result: Fixture, job: ServiceOperationState): void {
++  for (let attempt = 0; attempt < 20 && !result.state.serviceIncomeReceipts.some((receipt) => receipt.actorId === job.actorId); attempt++) {
++    arrive(result, job);
++    advance(result);
++    if (job.status === "in_service") advance(result, job.phaseEndsAtFacilityTick!);
++  }
++  expect(result.state.serviceIncomeReceipts.some((receipt) => receipt.actorId === job.actorId)).toBe(true);
++}
++
++function alternative(result: Fixture, original: PlacedRoom, level: PlacedRoom["upgradeLevel"]): PlacedRoom {
++  const room = { ...original, id: `${original.id}.alternative`, y: original.y + 6, upgradeLevel: level };
++  result.state.rooms.push(room);
++  result.state.doors.push({ id: `door.${room.id}`, roomId: room.id, side: "west", offset: 1, exterior: false });
++  return room;
++}
++
++function diagnosticPlan(result: Fixture, request: Omit<DiagnosticTimingRequest, "orderId" | "encounterId">): DiagnosticOrderPlan {
++  const quote = planDiagnosticOrder(result.state,
++    { orderId: `upgrade.order.${sequence++}`, encounterId: result.encounter.id, ...request }, result.context);
++  if (quote.kind !== "planned") throw new Error(quote.reason);
++  return quote.plan;
++}
++
++function choiceOrder(result: Fixture, plan: DiagnosticOrderPlan): NonNullable<ServiceOperationState["testChoiceOrder"]> {
++  const source = plan.sources[0]!;
++  return { version: "test-choice-order.v1", purpose: "terminal", caseId: result.encounter.frozenCase.id,
++    nodeId: "node.upgrade", questionVariantId: "variant.upgrade", choiceId: "choice.upgrade", choiceLabel: "Upgrade fixture",
++    serviceId: source.serviceId!, routeId: source.routeId!, routeDisplayName: source.routeDisplayName, externalRemainder: null };
++}
++
++describe("actual-room revenue upgrades", () => {
++  it.each([
++    ["income.minor_procedure_simple", "room.minor_procedure", undefined, 112],
++    ["income.ultrasound", "room.ultrasound", "staff.imaging_technician", 134.4],
++    ["income.xray", "room.xray", "staff.imaging_technician", 100.8],
++    ["income.ct", "room.ct", "staff.imaging_technician", 201.6],
++    ["income.collection", "room.phlebotomy", "staff.phlebotomist", 56],
++  ] as const)("pays %s once using its actual Level 3 room", (lineId, roomDefinitionId, roleId, gross) => {
++    const result = fixture();
++    const room = result.addRoom(roomDefinitionId, roleId);
++    room.room.upgradeLevel = 3;
++    result.encounter.patientLocation = { ...room.anchor };
++    result.state.environment.founderLocation = { ...room.anchor };
++    expect(startEncounterProcedureOperation(result.state, result.encounter, lineId, result.context)).toBe(true);
++    const job = result.state.serviceOperations[0]!;
++    advance(result);
++    arrive(result, job);
++    advance(result);
++    expect(job.roomUpgradeRevenue?.boundRoom?.roomInstanceId).toBe(room.room.id);
++    expect(job.quoteFee).toBe(gross);
++    room.room.upgradeLevel = 5;
++    const restored = deserializeGameState(serializeGameState(result.state), result.context);
++    Object.assign(result.state, restored);
++    const savedJob = result.state.serviceOperations[0]!;
++    const cash = result.state.cash;
++    finish(result, savedJob);
++    expect(result.state.cash).toBeCloseTo(cash + gross);
++    expect(result.state.serviceIncomeReceipts).toEqual([expect.objectContaining({ incomeLineId: lineId, grossAmount: gross })]);
++    advance(result, result.state.facilityTick + 1);
++    expect(result.state.serviceIncomeReceipts).toHaveLength(1);
++  });
++
++  it("uses one copy's accepted level rather than later upgrades or unused copies", () => {
++    const result = fixture();
++    const primary = result.addRoom("room.ultrasound", "staff.imaging_technician");
++    primary.room.upgradeLevel = 2;
++    const other = alternative(result, primary.room, 5);
++    result.encounter.patientLocation = { ...primary.anchor };
++    expect(startEncounterProcedureOperation(result.state, result.encounter, "income.ultrasound", result.context)).toBe(true);
++    const job = result.state.serviceOperations[0]!;
++    expect(job.roomUpgradeRevenue?.boundRoom).toBeNull();
++    primary.room.upgradeLevel = 5;
++    other.upgradeLevel = 1;
++    advance(result);
++    arrive(result, job);
++    advance(result);
++    expect(job.quoteFee).toBe(127.2);
++    expect(job.roomUpgradeRevenue?.boundRoom).toEqual({ roomInstanceId: primary.room.id, multiplier: 1.06 });
++    finish(result, job);
++    expect(result.state.serviceIncomeReceipts[0]?.grossAmount).toBe(127.2);
++  });
++
++  it.each([
++    ["income.endoscopy", "room.endoscopy", "staff.endoscopy_nurse", 504],
++    ["income.ambulatory_operation", "room.ambulatory_or", "staff.or_nurse", 1008],
++  ] as const)("attributes %s to the procedure suite, not upgraded prep/recovery", (lineId, roomId, roleId, gross) => {
++    const result = fixture();
++    const recovery = result.addRoom("room.periop_recovery", "staff.periop_nurse");
++    recovery.room.upgradeLevel = 5;
++    const earning = result.addRoom(roomId, roleId);
++    earning.room.upgradeLevel = 3;
++    result.encounter.patientLocation = { ...recovery.anchor };
++    result.state.environment.founderLocation = { ...earning.anchor };
++    expect(startEncounterProcedureOperation(result.state, result.encounter, lineId, result.context)).toBe(true);
++    const job = result.state.serviceOperations[0]!;
++    advance(result); arrive(result, job); advance(result);
++    expect(job).toMatchObject({ phaseIndex: 0, status: "in_service" });
++    expect(job.roomUpgradeRevenue?.boundRoom).toBeNull();
++    finish(result, job);
++    expect(job.roomUpgradeRevenue?.boundRoom?.roomInstanceId).toBe(earning.room.id);
++    expect(result.state.serviceIncomeReceipts[0]?.grossAmount).toBe(gross);
++  });
++
++  it.each([false, true])("transfers a reserved earning room while preserving work-start attribution (started=%s)", (started) => {
++    const result = fixture();
++    const recovery = result.addRoom("room.periop_recovery", "staff.periop_nurse");
++    const earning = result.addRoom("room.endoscopy", "staff.endoscopy_nurse");
++    earning.room.upgradeLevel = 2;
++    const replacement = alternative(result, earning.room, 4);
++    result.encounter.patientLocation = { ...recovery.anchor };
++    result.state.environment.founderLocation = { ...earning.anchor };
++    expect(startEncounterProcedureOperation(result.state, result.encounter, "income.endoscopy", result.context)).toBe(true);
++    const job = result.state.serviceOperations[0]!;
++    advance(result); arrive(result, job); advance(result);
++    expect(job.roomUpgradeRevenue?.boundRoom).toBeNull();
++    advance(result, job.phaseEndsAtFacilityTick!);
++    advance(result);
++    expect(job.phaseIndex).toBe(1);
++    expect(job.reservedRoomInstanceIds).toContain(earning.room.id);
++    expect(job.roomUpgradeRevenue?.boundRoom).toBeNull();
++    if (started) {
++      arrive(result, job); advance(result);
++      expect(job.status).toBe("in_service");
++      advance(result, result.state.facilityTick + 5);
++      expect(job.quoteFee).toBe(477);
++    }
++    interruptServiceOperationsForRoomSale(result.state, earning.room.id, earning.room.roomDefinitionId, result.context);
++    result.state.rooms = result.state.rooms.filter((room) => room.id !== earning.room.id);
++    result.state.doors = result.state.doors.filter((door) => door.roomId !== earning.room.id);
++    const nurse = result.state.employees.find((employee) => employee.staffRoleDefinitionId === "staff.endoscopy_nurse")!;
++    nurse.homeRoomInstanceId = replacement.id;
++    // The room-sale reducer displaces stranded actors to surviving public floor.
++    const publicFloor = { x: 7, y: earning.room.y + 1 };
++    nurse.location = { x: replacement.x + 1, y: replacement.y + 1 };
++    nurse.path = [{ ...nurse.location }]; nurse.pathIndex = 0;
++    result.state.environment.founderLocation = { ...publicFloor };
++    job.location = { ...publicFloor };
++    result.encounter.patientLocation = { ...publicFloor };
++    replacement.upgradeLevel = 5;
++    advance(result); arrive(result, job); advance(result);
++    expect(job.status).toBe("in_service");
++    expect(job.quoteFee).toBe(started ? 477 : 531);
++    expect(job.roomUpgradeRevenue?.boundRoom?.roomInstanceId).toBe(started ? earning.room.id : replacement.id);
++    finish(result, job);
++    expect(result.state.serviceIncomeReceipts[0]?.grossAmount).toBe(started ? 477 : 531);
++  });
++
++  it("applies the suite bonus to the separate scheduled Endoscopy visitor fee", () => {
++    const result = fixture();
++    const recovery = result.addRoom("room.periop_recovery", "staff.periop_nurse");
++    const earning = result.addRoom("room.endoscopy", "staff.endoscopy_nurse"); earning.room.upgradeLevel = 2;
++    result.state.environment.founderLocation = { ...earning.anchor };
++    const id = startServiceOperation(result.state, "income.endoscopy", "visitor", result.context);
++    expect(id).not.toBeNull();
++    const job = result.state.serviceOperations.find((entry) => entry.id === id)!;
++    expect(job.quoteFee).toBe(600);
++    job.status = "waiting_for_resources";
++    job.location = { ...recovery.anchor }; job.path = [{ ...recovery.anchor }]; job.pathIndex = 0;
++    job.visitorTravel!.arrivedAtFacilityTick = 0;
++    finish(result, job);
++    expect(result.state.serviceIncomeReceipts[0]).toMatchObject({ actorKind: "visitor", grossAmount: 636 });
++  });
++
++  it("binds a pending fee to actual resource-phase presence after a pre-work room transfer", () => {
++    const result = fixture();
++    const initial = result.addRoom("room.ultrasound", "staff.imaging_technician"); initial.room.upgradeLevel = 2;
++    const replacement = alternative(result, initial.room, 4);
++    const accepted = pending();
++    Object.assign(accepted, { resultTypeId: "service.ultrasound", routeId: "route.ultrasound.in_house",
++      serviceDurationTicks: 30, durationTicks: 30, dueTick: 30, patientRemainsOnsite: true,
++      serviceIncomeEligible: true, serviceIncomeLineId: "income.ultrasound", serviceIncomeFee: 120,
++      roomUpgradeRevenue: createRoomUpgradeRevenueQuote(result.state, 120, ["room.ultrasound"]),
++      timingPhases: [{ id: "acquisition", durationTicks: 8, resourceBound: true, startsAtTick: 2, endsAtTick: 10 },
++        { id: "interpretation", durationTicks: 20, resourceBound: false, startsAtTick: 10, endsAtTick: 30 }] });
++    result.encounter.lifecycle = "active_pending_result";
++    result.encounter.pendingResult = accepted;
++    result.encounter.steps[0]!.status = "result_pending";
++    result.encounter.steps[0]!.result = accepted;
++    result.encounter.assignedRoomInstanceId = initial.room.id;
++    let state = tick(result.state, result.context);
++    expect(state.encounters[result.encounter.id]!.pendingResult!.roomUpgradeRevenue?.boundRoom).toBeNull();
++    const encounter = state.encounters[result.encounter.id]!;
++    encounter.patientLocation = { x: replacement.x + 1, y: replacement.y + 1 };
++    encounter.patientMovement = null;
++    encounter.assignedRoomInstanceId = replacement.id;
++    state.rooms.find((room) => room.id === replacement.id)!.upgradeLevel = 5;
++    state = tick(state, result.context);
++    expect(state.encounters[encounter.id]!.pendingResult).toMatchObject({ serviceIncomeFee: 141.6,
++      roomUpgradeRevenue: { boundRoom: { roomInstanceId: replacement.id, multiplier: 1.18 } } });
++    state = deserializeGameState(serializeGameState(state), result.context);
++    state = tick(state, result.context, 8);
++    expect(state.serviceIncomeReceipts).toEqual([expect.objectContaining({ incomeLineId: "income.ultrasound", grossAmount: 141.6 })]);
++  });
++
++  it("does not backdate a bonus from a new room and keeps future revenue metadata inert", () => {
++    const result = fixture();
++    const room = result.addRoom("room.ultrasound");
++    room.room.upgradeLevel = 2;
++    const quote = createRoomUpgradeRevenueQuote(result.state, 120, ["room.ultrasound"])!;
++    const newRoom = alternative(result, room.room, 5);
++    bindRoomUpgradeRevenueQuote(quote, newRoom.id);
++    expect(getRoomUpgradeQuotedFee(quote)).toBe(120);
++    expect(createRoomUpgradeRevenueQuote(result.state, 120, ["room.mri"])).toBeUndefined();
++  });
++
++  it("preserves markerless queued operation overrides and rejects inconsistent marked saves", () => {
++    const result = fixture();
++    const room = result.addRoom("room.ultrasound", "staff.imaging_technician");
++    room.room.upgradeLevel = 5;
++    result.encounter.patientLocation = { ...room.anchor };
++    startEncounterProcedureOperation(result.state, result.encounter, "income.ultrasound", result.context);
++    const job = result.state.serviceOperations[0]!;
++    delete job.roomUpgradeRevenue;
++    job.quoteFee = 37;
++    Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
++    finish(result, result.state.serviceOperations[0]!);
++    expect(result.state.serviceIncomeReceipts[0]?.grossAmount).toBe(37);
++    const marked = createRoomUpgradeRevenueQuote(result.state, 120, ["room.ultrasound"])!;
++    expect(() => normalizeRoomUpgradeRevenueQuote(marked, 37)).toThrow(/room upgrade revenue/i);
++    bindRoomUpgradeRevenueQuote(marked, room.room.id);
++    marked.boundRoom!.multiplier = 2;
++    expect(() => normalizeRoomUpgradeRevenueQuote(marked, 240)).toThrow(/room upgrade revenue/i);
++  });
++});
++
++describe("diagnostic revenue carriers", () => {
++  it.each([
++    ["pending", true], ["pending", false], ["staged", true], ["staged", false],
++    ["continuation", true], ["continuation", false],
++  ] as const)("preserves %s carrier acceptance when a factory wraps it (marked=%s)", (carrier, marked) => {
++    const result = fixture();
++    const us = result.addRoom("room.ultrasound", "staff.imaging_technician"); us.room.upgradeLevel = 2;
++    const encounter = result.encounter;
++    const node = encounter.frozenCase.decisionNodes[0]!;
++    const choice = node.answerChoices.find((entry) => entry.isCorrect)!;
++    encounter.lifecycle = "active_action_required";
++    encounter.steps[0]!.status = "feedback_pending";
++    encounter.steps[0]!.answer = { decisionNodeId: node.id, primaryConceptId: node.primaryConceptId,
++      answerChoiceId: choice.id, correct: true, ratingIntent: "Good", answeredAtFacilityTick: 0,
++      explanation: "Fixture feedback", correctedForward: false };
++    encounter.answers = [encounter.steps[0]!.answer];
++    const quoteFee = marked ? 120 : 37;
++    const roomUpgradeRevenue = marked ? createRoomUpgradeRevenueQuote(result.state, quoteFee, ["room.ultrasound"]) : undefined;
++    if (carrier === "pending") {
++      const accepted = pending();
++      Object.assign(accepted, { resultTypeId: "service.ultrasound", routeId: "route.ultrasound.in_house",
++        serviceIncomeEligible: true, serviceIncomeLineId: "income.ultrasound", serviceIncomeFee: quoteFee, roomUpgradeRevenue,
++        localServiceOperation: { version: "pending-result-service-operation.v1", status: "feedback_pending",
++          incomeLineId: "income.ultrasound", serviceOperationId: null, externalDurationTicks: 0 } });
++      encounter.pendingResult = accepted;
++      encounter.steps[0]!.result = accepted;
++    } else if (carrier === "staged") {
++      encounter.stagedResultOrder = { version: "staged-result-order.v1", originatingNodeIndex: 0,
++        caseId: encounter.frozenCase.id, nodeId: node.id, questionVariantId: node.questionVariantId,
++        choiceId: choice.id, choiceLabel: choice.label, status: "feedback_pending", remainderMode: "external_processing",
++        currentComponentIndex: 0, components: [{ componentId: "upgrade.acquisition", serviceId: "service.ultrasound",
++          routeId: "route.ultrasound.in_house", routeDisplayName: "Fixture ultrasound", incomeLineId: "income.ultrasound",
++          quoteFee, roomUpgradeRevenue, operationPhases: getServiceIncomeLine("income.ultrasound")!.operation!.phases.map((phase) =>
++            ({ id: phase.id, roomDefinitionId: phase.roomDefinitionId, durationMinutes: phase.durationMinutes,
++              staffRoleDefinitionIds: [...phase.staffRoleDefinitionIds], providerRoleDefinitionIds: [...(phase.providerRoleDefinitionIds ?? [])],
++              ...(phase.founderEligible ? { founderEligible: true as const } : {}) })),
++          externalRemainder: "Fixture external work", status: "pending", serviceOperationId: null }], remainder: pending() };
++    } else {
++      encounter.testOnlyContinuation = { version: "test-only-continuation.v1", originatingNodeIndex: 0,
++        serviceId: "service.ultrasound", routeId: "route.ultrasound.in_house", routeDisplayName: "Fixture ultrasound",
++        incomeLineId: "income.ultrasound", externalRemainder: "Fixture external work", roomUpgradeRevenue,
++        ...(marked ? { quoteFee } : {}), status: "feedback_pending", serviceOperationId: null,
++        scheduledAtFacilityTick: 0, completedAtFacilityTick: null };
++    }
++    us.room.upgradeLevel = 5;
++    const restored = deserializeGameState(serializeGameState(result.state), result.context);
++    const commandId = `upgrade.carrier.enact.${sequence++}`;
++    Object.assign(result.state, gameReducer(restored, { type: "ACKNOWLEDGE_DECISION_FEEDBACK", operationId: commandId,
++      encounterId: encounter.id, decisionNodeId: node.id }, result.context));
++    expect(result.state.operationReceipts[commandId]?.status).toBe("applied");
++    const job = result.state.serviceOperations[0]!;
++    expect(Boolean(job.roomUpgradeRevenue)).toBe(marked);
++    finish(result, job);
++    expect(result.state.serviceIncomeReceipts[0]?.grossAmount).toBe(marked ? 127.2 : carrier === "continuation" ? 120 : 37);
++  });
++
++  it("carries the accepted source through reload and operation creation without compounding it", () => {
++    const result = fixture();
++    const us = result.addRoom("room.ultrasound", "staff.imaging_technician");
++    us.room.upgradeLevel = 2;
++    result.encounter.patientLocation = { ...us.anchor };
++    const plan = diagnosticPlan(result, { serviceId: "service.ultrasound", patientOrigin: us.anchor });
++    result.encounter.pendingResult = pending(plan);
++    Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
++    const savedEncounter = result.state.encounters[result.encounter.id]!;
++    const savedPlan = savedEncounter.pendingResult!.diagnosticTiming!;
++    result.state.rooms.find((room) => room.id === us.room.id)!.upgradeLevel = 5;
++    const id = startDiagnosticAcquisitionOperation(result.state, savedEncounter, savedPlan, null, "income.ultrasound", choiceOrder(result, savedPlan), result.context);
++    const job = result.state.serviceOperations.find((entry) => entry.id === id)!;
++    expect(job.quoteFee).toBe(127.2);
++    expect(savedPlan.sources[0]!.quoteFee).toBe(120);
++    expect(savedPlan.sources[0]!.roomUpgradeRevenue?.boundRoom).toBeNull();
++    Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
++    finish(result, result.state.serviceOperations[0]!);
++    expect(result.state.serviceIncomeReceipts.map((receipt) => receipt.grossAmount)).toEqual([127.2]);
++  });
++
++  it.each([
++    ["service.anoscopy", "room.minor_procedure", "income.procedure.anoscopy", 224],
++    ["service.thyroid_fna", "room.ultrasound", "income.procedure.ultrasound_guided_thyroid_fna", 168],
++    ["service.breast_core_needle_biopsy", "room.ultrasound", "income.procedure.image_guided_breast_core_biopsy", 168],
++  ] as const)("applies the actual-room bonus to fee-only %s", (serviceId, roomDefinitionId, incomeLineId, gross) => {
++    const result = fixture();
++    const room = result.addRoom(roomDefinitionId, roomDefinitionId === "room.ultrasound" ? "staff.imaging_technician" : undefined);
++    room.room.upgradeLevel = 3;
++    result.encounter.patientLocation = { ...room.anchor };
++    result.state.environment.founderLocation = { ...room.anchor };
++    const plan = diagnosticPlan(result, { serviceId, patientOrigin: room.anchor });
++    const id = startDiagnosticAcquisitionOperation(result.state, result.encounter, plan, null, incomeLineId, choiceOrder(result, plan), result.context);
++    const job = result.state.serviceOperations.find((entry) => entry.id === id)!;
++    expect(job.quoteFee).toBe(gross);
++    Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
++    finish(result, result.state.serviceOperations[0]!);
++    expect(result.state.serviceIncomeReceipts[0]).toMatchObject({ incomeLineId, grossAmount: gross });
++  });
++
++  it("does not add a fresh quote when a new operation wraps a legacy diagnostic source", () => {
++    const result = fixture();
++    const us = result.addRoom("room.ultrasound", "staff.imaging_technician");
++    us.room.upgradeLevel = 5;
++    result.encounter.patientLocation = { ...us.anchor };
++    const plan = diagnosticPlan(result, { serviceId: "service.ultrasound", patientOrigin: us.anchor });
++    delete plan.sources[0]!.roomUpgradeRevenue;
++    plan.sources[0]!.quoteFee = 37;
++    const id = startDiagnosticAcquisitionOperation(result.state, result.encounter, plan, null, "income.ultrasound", choiceOrder(result, plan), result.context);
++    const job = result.state.serviceOperations.find((entry) => entry.id === id)!;
++    expect(job.roomUpgradeRevenue).toBeUndefined();
++    finish(result, job);
++    expect(result.state.serviceIncomeReceipts[0]?.grossAmount).toBe(37);
++  });
++
++  it("upgrades paid manual Lab processing while its diagnostic child stays nonbillable", () => {
++    const result = fixture();
++    result.addRoom("room.phlebotomy", "staff.phlebotomist");
++    const lab = result.addRoom("room.laboratory", "staff.laboratory_technician");
++    lab.room.upgradeLevel = 5;
++    const manualId = startServiceOperation(result.state, "income.laboratory_processing", "remote", result.context);
++    expect(manualId).not.toBeNull();
++    const manual = result.state.serviceOperations.find((entry) => entry.id === manualId)!;
++    advance(result); arrive(result, manual); advance(result);
++    expect(manual.quoteFee).toBe(99.2);
++    const plan = diagnosticPlan(result, { serviceId: "service.basic_labs" });
++    const work = plan.phases.find((entry) => entry.kind === "laboratory_processing")!;
++    for (const entry of plan.phases) if (entry.id !== work.id) {
++      entry.status = "completed"; entry.startedAtTick = 0; entry.completedAtTick = 0; entry.remainingMinutes = 0;
++    }
++    const childId = startDiagnosticProcessingOperation(result.state, plan, work.id, result.context);
++    const child = result.state.serviceOperations.find((entry) => entry.id === childId)!;
++    expect(child).toMatchObject({ quoteFee: 0, status: "waiting_for_resources" });
++    expect(child.roomUpgradeRevenue).toBeUndefined();
++    const xp = result.state.clinicalXp;
++    advance(result, manual.phaseEndsAtFacilityTick!);
++    arrive(result, child); advance(result);
++    advance(result, child.phaseEndsAtFacilityTick!);
++    expect(child.status).toBe("completed");
++    expect(result.state.clinicalXp).toBe(xp);
++    expect(result.state.serviceIncomeReceipts.map((receipt) => receipt.grossAmount)).toEqual([99.2]);
++  });
++});
++
++describe("retail gross and GLP interval revenue", () => {
++  it("freezes pharmacy gross separately from trained procurement costs", () => {
++    const result = fixture(); result.state.encounters = {};
++    const pharmacy = result.addRoom("room.pharmacy", "staff.pharmacist", 2);
++    result.state.employees.forEach((employee) => result.state.retailNextOpportunityTicks[`employee:${employee.id}`] = Number.MAX_SAFE_INTEGER);
++    pharmacy.room.upgradeLevel = 3;
++    result.state.employees[0]!.trainingLevel = 5;
++    expect(authorizeRetailOrder(result.state, "upgrade.rx", "income.pharmacy_pickup", "retail_visitor", "upgrade.rx.actor", 1, result.context)).toBe(true);
++    const id = startRetailPurchase(result.state, "income.pharmacy_pickup", "retail_visitor", "upgrade.rx.actor", result.context, "upgrade.rx");
++    expect(id).not.toBeNull();
++    expect(result.state.retailOperations[0]).toMatchObject({ quoteGross: 28, quoteStockCost: 13.5 });
++    pharmacy.room.upgradeLevel = 5;
++    result.state.employees.forEach((employee) => employee.trainingLevel = 1);
++    Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
++    const cash = result.state.cash;
++    for (let count = 0; !result.state.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.pharmacy_pickup") && count < 150; count++) {
++      result.state.facilityTick++; advanceRetailOperations(result.state, result.context); advanceEmployeeMovement(result.state, result.context);
++    }
++    expect(result.state.serviceIncomeReceipts.find((receipt) => receipt.incomeLineId === "income.pharmacy_pickup")).toMatchObject({ grossAmount: 28, stockCost: 13.5, netCashDelta: 14.5 });
++    expect(result.state.cash).toBeCloseTo(cash + 14.5);
++    advanceRetailOperations(result.state, result.context);
++    expect(result.state.serviceIncomeReceipts).toHaveLength(1);
++  });
++
++  it("upgrades vending sales but leaves founder consumption at stock expense only", () => {
++    const result = fixture(); result.state.encounters = {};
++    result.addRoom("room.ultrasound", "staff.imaging_technician");
++    const vending = result.addRoom("room.vending"); vending.room.upgradeLevel = 5;
++    const customer = result.state.employees[0]!;
++    result.state.retailNextOpportunityTicks[`employee:${customer.id}`] = Number.MAX_SAFE_INTEGER;
++    expect(startRetailPurchase(result.state, "income.vending_snack", "employee", customer.id, result.context)).not.toBeNull();
++    expect(startRetailPurchase(result.state, "income.vending_snack", "founder", "founder", result.context)).not.toBeNull();
++    const cash = result.state.cash;
++    for (let count = 0; result.state.serviceIncomeReceipts.length < 2 && count < 200; count++) {
++      result.state.facilityTick++; advanceRetailOperations(result.state, result.context);
++    }
++    expect(result.state.serviceIncomeReceipts).toEqual(expect.arrayContaining([
++      expect.objectContaining({ actorKind: "employee", grossAmount: 4.96, stockCost: 2, netCashDelta: 2.96 }),
++      expect.objectContaining({ actorKind: "founder", grossAmount: 0, stockCost: 2, netCashDelta: -2 }),
++    ]));
++    expect(result.state.cash).toBeCloseTo(cash + 0.96);
++  });
++
++  it("keeps a legacy retail gross quote after reloading an upgraded outlet", () => {
++    const result = fixture(); result.state.encounters = {};
++    const vending = result.addRoom("room.vending"); vending.room.upgradeLevel = 5;
++    const id = startRetailPurchase(result.state, "income.vending_snack", "founder", "founder", result.context);
++    expect(id).not.toBeNull();
++    const legacy = result.state.retailOperations[0]!;
++    delete legacy.roomUpgradeRevenue;
++    legacy.quoteGross = 4;
++    Object.assign(result.state, deserializeGameState(serializeGameState(result.state), result.context));
++    expect(result.state.retailOperations[0]!.quoteGross).toBe(4);
++    for (let count = 0; !result.state.serviceIncomeReceipts.length && count < 150; count++) {
++      result.state.facilityTick++; advanceRetailOperations(result.state, result.context);
++    }
++    expect(result.state.serviceIncomeReceipts[0]).toMatchObject({ grossAmount: 0, stockCost: 2, netCashDelta: -2 });
++    expect(result.state.retailOperations[0]!.quoteGross).toBe(4);
++  });
++
++  it("freezes both category pay and actual-suite bonus until the next GLP interval", () => {
++    const result = fixture(); result.state.encounters = {};
++    const suite = result.addRoom("room.glp1_telehealth_suite", "staff.glp1_np");
++    suite.room.upgradeLevel = 2; result.state.employees[0]!.trainingLevel = 5;
++    alternative(result, suite.room, 5);
++    let state = tick(result.state, result.context);
++    const interval = state.environment.glp1AutomationSlots[0]!;
++    expect(interval.quotePayment).toBe(74.2);
++    expect(interval.nextPayoutTick).toBe(60);
++    state.rooms.find((room) => room.id === suite.room.id)!.upgradeLevel = 5;
++    state.employees[0]!.trainingLevel = 1;
++    state = deserializeGameState(serializeGameState(state), result.context);
++    state = tick(state, result.context, 59);
++    expect(state.serviceIncomeReceipts.map((receipt) => receipt.grossAmount)).toEqual([74.2]);
++    expect(state.environment.glp1AutomationSlots[0]).toMatchObject({ quotePayment: 62, nextPayoutTick: 120 });
++    state = tick(deserializeGameState(serializeGameState(state), result.context), result.context, 60);
++    expect(state.serviceIncomeReceipts.map((receipt) => receipt.grossAmount)).toEqual([74.2, 62]);
++    expect(new Set(state.serviceIncomeReceipts.map((receipt) => receipt.transactionKey)).size).toBe(2);
++  });
++
++  it.each([undefined, 63])("preserves an unmarked GLP interval's legacy payment (saved=%s)", (quotePayment) => {
++    const result = fixture(); result.state.encounters = {};
++    const suite = result.addRoom("room.glp1_telehealth_suite", "staff.glp1_np");
++    suite.room.upgradeLevel = 5; result.state.employees[0]!.trainingLevel = 5;
++    result.state.environment.glp1AutomationSlots = [{ suiteRoomInstanceId: suite.room.id,
++      employeeId: result.state.employees[0]!.id, nextPayoutTick: 1, ...(quotePayment === undefined ? {} : { quotePayment }) }];
++    let state = tick(deserializeGameState(serializeGameState(result.state), result.context), result.context);
++    expect(state.serviceIncomeReceipts.map((receipt) => receipt.grossAmount)).toEqual([quotePayment ?? 50]);
++    expect(state.environment.glp1AutomationSlots[0]).toMatchObject({ quotePayment: 86.8, nextPayoutTick: 61 });
++    state = tick(deserializeGameState(serializeGameState(state), result.context), result.context, 60);
++    expect(state.serviceIncomeReceipts.map((receipt) => receipt.grossAmount)).toEqual([quotePayment ?? 50, 86.8]);
++  });
++});

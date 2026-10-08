@@ -1,0 +1,590 @@
+diff --git a/packages/balance-config/src/index.ts b/packages/balance-config/src/index.ts
+--- a/packages/balance-config/src/index.ts
++++ b/packages/balance-config/src/index.ts
+@@ -5,3 +5,4 @@ export * from "./service-income-catalog";
+ export * from "./approved-room-layouts";
+ export * from "./diagnostic-timing";
+ export * from "./employee-training";
++export * from "./room-upgrades";
+diff --git a/packages/balance-config/src/prototype-balance.ts b/packages/balance-config/src/prototype-balance.ts
+--- a/packages/balance-config/src/prototype-balance.ts
++++ b/packages/balance-config/src/prototype-balance.ts
+@@ -100,8 +100,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [90, 140, 210, 300],
+         upkeepPerUpgradeLevel: 1,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.front_desk"],
+         capabilityIds: [
+           "capability.examination",
+@@ -147,7 +147,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [110, 170, 250, 360],
+         upkeepPerUpgradeLevel: 1,
+-        workloadLimitContributionPerUpgradeLevel: 1,
++        workloadLimitContributionPerUpgradeLevel: 0,
+         serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.front_desk"],
+         capabilityIds: ["capability.waiting_seats"],
+@@ -170,7 +170,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         upgradeCosts: [190, 280, 400, 560],
+         upkeepPerUpgradeLevel: 2,
+         workloadLimitContributionPerUpgradeLevel: 0,
+-        serviceDurationReductionPercentPerUpgradeLevel: 8,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: [],
+         capabilityIds: ["capability.xray_machine", "capability.fluoroscopy"],
+         navigation: getApprovedRoomNavigation("room.xray"),
+@@ -195,7 +195,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         upgradeCosts: [90, 140, 210, 300],
+         upkeepPerUpgradeLevel: 0,
+         workloadLimitContributionPerUpgradeLevel: 0,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: [],
+         capabilityIds: [],
+         navigation: {
+@@ -224,8 +224,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [220, 330, 480, 680],
+         upkeepPerUpgradeLevel: 2,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.examination"],
+         capabilityIds: ["capability.minor_procedure"],
+         navigation: getApprovedRoomNavigation("room.minor_procedure"),
+@@ -247,7 +247,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         upgradeCosts: [240, 360, 525, 715],
+         upkeepPerUpgradeLevel: 2,
+         workloadLimitContributionPerUpgradeLevel: 0,
+-        serviceDurationReductionPercentPerUpgradeLevel: 8,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: [],
+         capabilityIds: ["capability.ultrasound_machine", "capability.endoanal_probe", "capability.abi_doppler"],
+         navigation: getApprovedRoomNavigation("room.ultrasound"),
+@@ -269,7 +269,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         upgradeCosts: [400, 600, 880, 1200],
+         upkeepPerUpgradeLevel: 3,
+         workloadLimitContributionPerUpgradeLevel: 0,
+-        serviceDurationReductionPercentPerUpgradeLevel: 8,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: [],
+         capabilityIds: ["capability.ct_scanner"],
+         navigation: getApprovedRoomNavigation("room.ct"),
+@@ -290,8 +290,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [140, 210, 305, 415],
+         upkeepPerUpgradeLevel: 1,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.front_desk"],
+         capabilityIds: ["capability.phlebotomy_collection", "capability.breath_collection_kit"],
+         navigation: getApprovedRoomNavigation("room.phlebotomy"),
+@@ -334,8 +334,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [365, 545, 800, 1090],
+         upkeepPerUpgradeLevel: 3,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.examination"],
+         capabilityIds: [],
+         navigation: getApprovedRoomNavigation("room.endoscopy"),
+@@ -356,8 +356,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [225, 340, 495, 675],
+         upkeepPerUpgradeLevel: 2,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.examination"],
+         capabilityIds: ["capability.periop_recovery"],
+         navigation: getApprovedRoomNavigation("room.periop_recovery"),
+@@ -444,8 +444,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [600, 900, 1320, 1800],
+         upkeepPerUpgradeLevel: 4,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.periop_recovery"],
+         capabilityIds: ["capability.ambulatory_or"],
+         navigation: getApprovedRoomNavigation("room.ambulatory_or"),
+@@ -466,8 +466,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         maximumUpgradeLevel: 5,
+         upgradeCosts: [450, 675, 990, 1350],
+         upkeepPerUpgradeLevel: 3,
+-        workloadLimitContributionPerUpgradeLevel: 1,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        workloadLimitContributionPerUpgradeLevel: 0,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.front_desk"],
+         capabilityIds: ["capability.in_house_laboratory"],
+         navigation: getApprovedRoomNavigation("room.laboratory"),
+@@ -489,7 +489,7 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         upgradeCosts: [300, 450, 660, 900],
+         upkeepPerUpgradeLevel: 2,
+         workloadLimitContributionPerUpgradeLevel: 0,
+-        serviceDurationReductionPercentPerUpgradeLevel: 5,
++        serviceDurationReductionPercentPerUpgradeLevel: 0,
+         requiredRoomDefinitionIds: ["room.front_desk"],
+         capabilityIds: ["capability.pharmacy"],
+         navigation: getApprovedRoomNavigation("room.pharmacy"),
+@@ -595,8 +595,8 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
+         satisfactionOnBuild: 0,
+         workloadLimitContribution: 0,
+         maximumInstances: 4,
+-        maximumUpgradeLevel: 1,
+-        upgradeCosts: [],
++        maximumUpgradeLevel: 5,
++        upgradeCosts: [450, 675, 990, 1350],
+         upkeepPerUpgradeLevel: 0,
+         workloadLimitContributionPerUpgradeLevel: 0,
+         serviceDurationReductionPercentPerUpgradeLevel: 0,
+diff --git a/packages/balance-config/src/diagnostic-timing.test.ts b/packages/balance-config/src/diagnostic-timing.test.ts
+--- a/packages/balance-config/src/diagnostic-timing.test.ts
++++ b/packages/balance-config/src/diagnostic-timing.test.ts
+@@ -168,14 +168,14 @@ describe("versioned owner-approved diagnostic timing", () => {
+ });
+ 
+ describe("approved four-workstation Level 3 reading room", () => {
+-  it("publishes the approved economics without new upgrade or progression requirements", () => {
++  it("publishes the approved reading upgrades without new progression requirements", () => {
+     const { facility } = PROTOTYPE_BALANCE_RELEASE;
+     const room = facility.roomDefinitions.find((candidate) => candidate.id === DIAGNOSTIC_READING_ROOM_DEFINITION_ID)!;
+     const role = facility.staffRoleDefinitions.find((candidate) => candidate.id === DIAGNOSTIC_RADIOLOGIST_ROLE_ID)!;
+     expect(room).toMatchObject({
+       unlockFacilityLevel: 3, width: 4, height: 4,
+       constructionCost: 1800, upkeepPerExpenseInterval: 24,
+-      maximumInstances: 4, maximumUpgradeLevel: 1, upgradeCosts: [],
++      maximumInstances: 4, maximumUpgradeLevel: 5, upgradeCosts: [450, 675, 990, 1350],
+       workloadLimitContribution: 0,
+       upkeepPerUpgradeLevel: 0,
+       workloadLimitContributionPerUpgradeLevel: 0,
+diff --git a/packages/balance-config/src/room-upgrades.ts b/packages/balance-config/src/room-upgrades.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/balance-config/src/room-upgrades.ts
+@@ -0,0 +1,215 @@
++export const ROOM_UPGRADE_BASE_LEVEL = 1;
++export const ROOM_UPGRADE_MAXIMUM_LEVEL = 5;
++
++export type RoomUpgradeStatus = "current" | "future" | "retired";
++
++export type RoomUpgradeDurationEffectKind =
++  | "cleaning_duration_reduction_percent"
++  | "training_duration_reduction_percent"
++  | "repair_duration_reduction_percent"
++  | "quality_review_duration_reduction_percent"
++  | "reading_duration_reduction_percent"
++  | "administration_duration_reduction_percent";
++
++export type RoomUpgradePointEffectKind =
++  | "waiting_satisfaction_points"
++  | "examination_satisfaction_points"
++  | "recovery_satisfaction_points"
++  | "daily_coffee_morale_points"
++  | "break_morale_points"
++  | "founder_office_morale_points"
++  | "garden_satisfaction_points"
++  | "gym_morale_points";
++
++export type RoomUpgradeEffectKind =
++  | "none"
++  | "revenue_percent"
++  | "cleanliness_decay_reduction_percent"
++  | RoomUpgradeDurationEffectKind
++  | RoomUpgradePointEffectKind;
++
++export type RoomUpgradeCosts = readonly [] | readonly [number, number, number, number];
++
++export interface RoomUpgradeDefinition {
++  readonly roomDefinitionId: string;
++  readonly displayName: string;
++  readonly status: RoomUpgradeStatus;
++  readonly effectKind: RoomUpgradeEffectKind;
++  readonly amountPerUpgrade: number;
++  /** Prices for the four purchases from Level 1 to Levels 2, 3, 4 and 5. */
++  readonly upgradeCosts: RoomUpgradeCosts;
++  readonly benefitSubject: string;
++  readonly appearanceChanges: boolean;
++}
++
++function upgrade(
++  roomDefinitionId: string,
++  displayName: string,
++  effectKind: RoomUpgradeEffectKind,
++  amountPerUpgrade: number,
++  upgradeCosts: RoomUpgradeCosts,
++  benefitSubject = "",
++  status: RoomUpgradeStatus = "current",
++  appearanceChanges = false,
++): RoomUpgradeDefinition {
++  return {
++    roomDefinitionId, displayName, status, effectKind, amountPerUpgrade,
++    upgradeCosts, benefitSubject, appearanceChanges,
++  };
++}
++
++/**
++ * Owner-approved editorial game balance. Future entries are planning metadata;
++ * they do not construct rooms, unlock services or enable runtime modifiers.
++ */
++export const ROOM_UPGRADE_CATALOG: readonly RoomUpgradeDefinition[] = [
++  upgrade("room.front_desk", "Front Desk", "none", 0, []),
++  upgrade("room.hallway", "Hallway", "none", 0, []),
++  upgrade("room.examination", "Examination Room", "examination_satisfaction_points", 2, [90, 140, 210, 300], "examination"),
++  upgrade("room.waiting", "Waiting Room", "waiting_satisfaction_points", 2, [110, 170, 250, 360], "waiting patients"),
++  upgrade("room.bathroom", "Bathroom", "cleanliness_decay_reduction_percent", 10, [70, 110, 170, 250]),
++  upgrade("room.minor_procedure", "Minor-Procedure Room", "revenue_percent", 6, [220, 330, 480, 680], "procedure revenue"),
++  upgrade("room.ultrasound", "Ultrasound Room", "revenue_percent", 6, [240, 360, 525, 715], "ultrasound service revenue"),
++  upgrade("room.xray", "X-ray Room", "revenue_percent", 6, [190, 280, 400, 560], "X-ray service revenue"),
++  upgrade("room.ct", "CT Suite", "revenue_percent", 6, [400, 600, 880, 1200], "CT/CTA revenue"),
++  upgrade("room.phlebotomy", "Phlebotomy Station", "revenue_percent", 6, [140, 210, 305, 415], "specimen-collection revenue"),
++  upgrade("room.evs_closet", "Environmental-Services Closet", "cleaning_duration_reduction_percent", 10, [120, 180, 260, 360]),
++  upgrade("room.endoscopy", "Endoscopy Room", "revenue_percent", 6, [365, 545, 800, 1090], "endoscopy revenue"),
++  upgrade("room.periop_recovery", "Peri-op/Recovery Room", "recovery_satisfaction_points", 2, [225, 340, 495, 675]),
++  upgrade("room.training", "Training Room", "training_duration_reduction_percent", 10, [165, 245, 360, 490]),
++  upgrade("room.coffee_kiosk", "Coffee Kiosk", "daily_coffee_morale_points", 1, [125, 190, 275, 375]),
++  upgrade("room.glp1_telehealth_suite", "GLP-1 Telehealth Suite", "revenue_percent", 6, [300, 450, 660, 900], "telehealth revenue"),
++  upgrade("room.ambulatory_or", "Ambulatory OR", "revenue_percent", 6, [600, 900, 1320, 1800], "operation revenue"),
++  upgrade("room.laboratory", "In-house Laboratory", "revenue_percent", 6, [450, 675, 990, 1350], "paid laboratory-processing revenue"),
++  upgrade("room.pharmacy", "Pharmacy", "revenue_percent", 6, [300, 450, 660, 900], "pharmacy sales revenue"),
++  upgrade("room.maintenance_workshop", "Maintenance Workshop", "repair_duration_reduction_percent", 10, [200, 300, 440, 600]),
++  upgrade("room.staff_break", "Staff Break Room", "break_morale_points", 2, [225, 340, 495, 675]),
++  upgrade("room.surgeon_office", "Surgeon's Office", "quality_review_duration_reduction_percent", 10, [175, 265, 385, 525]),
++  upgrade("room.vending", "Vending Machine", "revenue_percent", 6, [115, 170, 250, 340], "vending revenue"),
++  upgrade("room.reading", "Radiology Reading Room", "reading_duration_reduction_percent", 10, [450, 675, 990, 1350]),
++  upgrade("room.imaging_control", "Imaging Control Room", "none", 0, [], "", "retired"),
++  upgrade("room.mri", "MRI Room", "revenue_percent", 6, [600, 900, 1300, 1800], "MRI service revenue", "future"),
++  upgrade("room.pediatric_waiting", "Pediatric Waiting Room", "waiting_satisfaction_points", 2, [150, 225, 325, 450], "waiting families", "future"),
++  upgrade("room.pediatric_examination", "Pediatric Examination Room", "examination_satisfaction_points", 2, [150, 225, 325, 450], "visits", "future"),
++  upgrade("room.wound_ostomy", "Wound/Ostomy Clinic", "revenue_percent", 6, [250, 375, 550, 750], "clinic service revenue", "future"),
++  upgrade("room.founder_office", "Founder's Office", "founder_office_morale_points", 2, [300, 500, 750, 1000], "", "future", true),
++  upgrade("room.executive_office", "Executive Office", "administration_duration_reduction_percent", 5, [500, 750, 1100, 1500], "", "future"),
++  upgrade("room.gift_shop", "Gift Shop", "revenue_percent", 6, [200, 300, 450, 600], "gift sales revenue", "future"),
++  upgrade("room.indoor_garden", "Indoor Garden", "garden_satisfaction_points", 2, [200, 300, 450, 600], "", "future"),
++  upgrade("room.staff_gym", "Staff Gym", "gym_morale_points", 2, [250, 375, 550, 750], "", "future"),
++];
++
++export function getRoomUpgradeDefinition(roomDefinitionId: string): RoomUpgradeDefinition | null {
++  return ROOM_UPGRADE_CATALOG.find((definition) => definition.roomDefinitionId === roomDefinitionId) ?? null;
++}
++
++export function getCurrentRoomUpgradeDefinition(roomDefinitionId: string): RoomUpgradeDefinition | null {
++  const definition = getRoomUpgradeDefinition(roomDefinitionId);
++  return definition?.status === "current" ? definition : null;
++}
++
++/** Reject invalid targets rather than silently charging for a different tier. */
++export function getRoomUpgradeCost(roomDefinitionId: string, targetLevel: number): number | null {
++  const definition = getCurrentRoomUpgradeDefinition(roomDefinitionId);
++  return definition && Number.isInteger(targetLevel) && targetLevel >= 2 && targetLevel <= ROOM_UPGRADE_MAXIMUM_LEVEL
++    ? definition.upgradeCosts[targetLevel - 2] ?? null : null;
++}
++
++/** Level 1 has no purchased bonuses; saved valid levels produce 0–4 purchases. */
++export function getRoomUpgradePurchaseCount(level: number): number {
++  if (!Number.isFinite(level)) return 0;
++  return Math.max(0, Math.min(ROOM_UPGRADE_MAXIMUM_LEVEL, Math.floor(level)) - ROOM_UPGRADE_BASE_LEVEL);
++}
++
++/** Runtime totals are neutral for unknown, future, retired and non-upgrade rooms. */
++export function getRoomUpgradeAmount(roomDefinitionId: string, level: number): number {
++  const definition = getCurrentRoomUpgradeDefinition(roomDefinitionId);
++  return (definition?.amountPerUpgrade ?? 0) * getRoomUpgradePurchaseCount(level);
++}
++
++export function getRoomUpgradeRevenueMultiplier(roomDefinitionId: string, level: number): number {
++  return getCurrentRoomUpgradeDefinition(roomDefinitionId)?.effectKind === "revenue_percent"
++    ? 1 + getRoomUpgradeAmount(roomDefinitionId, level) / 100 : 1;
++}
++
++/**
++ * Apply only to the named work phase. This retains fractional duration values;
++ * independent employee duration modifiers multiply this factor in the domain.
++ */
++export function getRoomUpgradeDurationMultiplier(
++  roomDefinitionId: string,
++  level: number,
++  effectKind: RoomUpgradeDurationEffectKind,
++): number {
++  return getCurrentRoomUpgradeDefinition(roomDefinitionId)?.effectKind === effectKind
++    ? 1 - getRoomUpgradeAmount(roomDefinitionId, level) / 100 : 1;
++}
++
++export function getRoomUpgradeCleanlinessDecayMultiplier(roomDefinitionId: string, level: number): number {
++  return getCurrentRoomUpgradeDefinition(roomDefinitionId)?.effectKind === "cleanliness_decay_reduction_percent"
++    ? 1 - getRoomUpgradeAmount(roomDefinitionId, level) / 100 : 1;
++}
++
++export function getRoomUpgradePoints(
++  roomDefinitionId: string,
++  level: number,
++  effectKind: RoomUpgradePointEffectKind,
++): number {
++  return getCurrentRoomUpgradeDefinition(roomDefinitionId)?.effectKind === effectKind
++    ? getRoomUpgradeAmount(roomDefinitionId, level) : 0;
++}
++
++function benefitDescription(definition: RoomUpgradeDefinition, amount: number): string {
++  const points = amount === 1 ? "point" : "points";
++  switch (definition.effectKind) {
++    case "none": return "No upgrades";
++    case "revenue_percent": return `+${amount}% ${definition.benefitSubject}`;
++    case "cleanliness_decay_reduction_percent": return `${amount}% slower cleanliness loss`;
++    case "cleaning_duration_reduction_percent": return `Cleaning takes ${amount}% less time`;
++    case "training_duration_reduction_percent": return `Training sessions take ${amount}% less time`;
++    case "repair_duration_reduction_percent": return `Repairs take ${amount}% less time`;
++    case "quality_review_duration_reduction_percent": return `Quality reviews take ${amount}% less time`;
++    case "reading_duration_reduction_percent": return `Scan reading takes ${amount}% less time`;
++    case "administration_duration_reduction_percent": return `Administrative work takes ${amount}% less time`;
++    case "waiting_satisfaction_points": return `+${amount} satisfaction ${points} for ${definition.benefitSubject}`;
++    case "examination_satisfaction_points": return `+${amount} satisfaction ${points} after ${definition.benefitSubject}`;
++    case "recovery_satisfaction_points": return `+${amount} satisfaction ${points} after recovery`;
++    case "daily_coffee_morale_points": return `+${amount} staff morale ${points} from daily coffee`;
++    case "break_morale_points": return `+${amount} staff morale ${points} per break`;
++    case "founder_office_morale_points": return `+${amount} staff morale ${points}; improved office appearance`;
++    case "garden_satisfaction_points": return `+${amount} satisfaction ${points} for visitors`;
++    case "gym_morale_points": return `+${amount} staff morale ${points} after gym use`;
++  }
++}
++
++/** Includes future planning labels; it does not authorize a runtime purchase. */
++export function getRoomUpgradePerPurchaseLabel(roomDefinitionId: string): string | null {
++  const definition = getRoomUpgradeDefinition(roomDefinitionId);
++  return definition ? benefitDescription(definition, definition.amountPerUpgrade) : null;
++}
++
++export interface RoomUpgradeLevelBenefit {
++  readonly effectKind: RoomUpgradeEffectKind;
++  readonly totalAmount: number;
++  readonly incrementalAmount: number;
++  readonly totalDescription: string;
++  readonly incrementalDescription: string;
++}
++
++/**
++ * UI/planning totals, including future rows. Runtime code must use the scoped
++ * multiplier/points helpers above so future metadata remains inactive.
++ */
++export function getRoomUpgradeLevelBenefit(roomDefinitionId: string, level: number): RoomUpgradeLevelBenefit | null {
++  const definition = getRoomUpgradeDefinition(roomDefinitionId);
++  if (!definition) return null;
++  const purchases = getRoomUpgradePurchaseCount(level);
++  const totalAmount = definition.amountPerUpgrade * purchases;
++  const incrementalAmount = purchases === 0 ? 0 : definition.amountPerUpgrade;
++  const baseline = purchases === 0 && definition.effectKind !== "none";
++  return {
++    effectKind: definition.effectKind, totalAmount, incrementalAmount,
++    totalDescription: baseline ? "Baseline" : benefitDescription(definition, totalAmount),
++    incrementalDescription: baseline ? "Baseline" : benefitDescription(definition, incrementalAmount),
++  };
++}
+diff --git a/packages/balance-config/src/room-upgrades.test.ts b/packages/balance-config/src/room-upgrades.test.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/balance-config/src/room-upgrades.test.ts
+@@ -0,0 +1,192 @@
++import { describe, expect, it } from "vitest";
++import { getEmployeeTrainingPercent } from "./employee-training";
++import { PROTOTYPE_BALANCE_RELEASE } from "./prototype-balance";
++import {
++  ROOM_UPGRADE_CATALOG,
++  getCurrentRoomUpgradeDefinition,
++  getRoomUpgradeAmount,
++  getRoomUpgradeCleanlinessDecayMultiplier,
++  getRoomUpgradeCost,
++  getRoomUpgradeDefinition,
++  getRoomUpgradeDurationMultiplier,
++  getRoomUpgradeLevelBenefit,
++  getRoomUpgradePerPurchaseLabel,
++  getRoomUpgradePoints,
++  getRoomUpgradePurchaseCount,
++  getRoomUpgradeRevenueMultiplier,
++} from "./room-upgrades";
++
++const approvedPrices: Readonly<Record<string, readonly number[]>> = {
++  "room.examination": [90, 140, 210, 300],
++  "room.waiting": [110, 170, 250, 360],
++  "room.bathroom": [70, 110, 170, 250],
++  "room.minor_procedure": [220, 330, 480, 680],
++  "room.ultrasound": [240, 360, 525, 715],
++  "room.xray": [190, 280, 400, 560],
++  "room.ct": [400, 600, 880, 1200],
++  "room.phlebotomy": [140, 210, 305, 415],
++  "room.evs_closet": [120, 180, 260, 360],
++  "room.endoscopy": [365, 545, 800, 1090],
++  "room.periop_recovery": [225, 340, 495, 675],
++  "room.training": [165, 245, 360, 490],
++  "room.coffee_kiosk": [125, 190, 275, 375],
++  "room.glp1_telehealth_suite": [300, 450, 660, 900],
++  "room.ambulatory_or": [600, 900, 1320, 1800],
++  "room.laboratory": [450, 675, 990, 1350],
++  "room.pharmacy": [300, 450, 660, 900],
++  "room.maintenance_workshop": [200, 300, 440, 600],
++  "room.staff_break": [225, 340, 495, 675],
++  "room.surgeon_office": [175, 265, 385, 525],
++  "room.vending": [115, 170, 250, 340],
++  "room.reading": [450, 675, 990, 1350],
++  "room.mri": [600, 900, 1300, 1800],
++  "room.pediatric_waiting": [150, 225, 325, 450],
++  "room.pediatric_examination": [150, 225, 325, 450],
++  "room.wound_ostomy": [250, 375, 550, 750],
++  "room.founder_office": [300, 500, 750, 1000],
++  "room.executive_office": [500, 750, 1100, 1500],
++  "room.gift_shop": [200, 300, 450, 600],
++  "room.indoor_garden": [200, 300, 450, 600],
++  "room.staff_gym": [250, 375, 550, 750],
++};
++
++describe("approved room-upgrade catalog", () => {
++  it("covers all 25 current/legacy definitions and nine inactive future rows exactly once", () => {
++    const ids = ROOM_UPGRADE_CATALOG.map((definition) => definition.roomDefinitionId);
++    expect(ids).toHaveLength(34);
++    expect(new Set(ids).size).toBe(ids.length);
++    expect(
++      ROOM_UPGRADE_CATALOG.filter((definition) => definition.status !== "future")
++        .map((definition) => definition.roomDefinitionId).sort(),
++    ).toEqual(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.map((definition) => definition.id).sort());
++    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status === "current" && definition.upgradeCosts.length === 4)).toHaveLength(22);
++    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.status === "future")).toHaveLength(9);
++    expect(ids).not.toContain("room.call_room");
++  });
++
++  it("retains every accepted four-purchase price sequence and agrees with current balance prices", () => {
++    for (const [id, prices] of Object.entries(approvedPrices)) {
++      const definition = getRoomUpgradeDefinition(id)!;
++      expect(definition.upgradeCosts, id).toEqual(prices);
++      if (definition.status === "current") {
++        expect([2, 3, 4, 5].map((level) => getRoomUpgradeCost(id, level)), id).toEqual(prices);
++        const currentRoom = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find((room) => room.id === id)!;
++        expect(currentRoom.upgradeCosts, id).toEqual(prices);
++        expect(currentRoom.maximumUpgradeLevel, id).toBe(5);
++      }
++    }
++  });
++
++  it("rejects invalid purchases and keeps unbuilt or retired room metadata inactive", () => {
++    const currentIds = new Set(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.map((room) => room.id));
++    for (const definition of ROOM_UPGRADE_CATALOG.filter((entry) => entry.status !== "current")) {
++      if (definition.status === "future") expect(currentIds.has(definition.roomDefinitionId)).toBe(false);
++      expect(getCurrentRoomUpgradeDefinition(definition.roomDefinitionId)).toBeNull();
++      expect(getRoomUpgradeCost(definition.roomDefinitionId, 2)).toBeNull();
++      expect(getRoomUpgradeAmount(definition.roomDefinitionId, 5)).toBe(0);
++      expect(getRoomUpgradeRevenueMultiplier(definition.roomDefinitionId, 5)).toBe(1);
++      expect(getRoomUpgradeDurationMultiplier(definition.roomDefinitionId, 5, "administration_duration_reduction_percent")).toBe(1);
++      expect(getRoomUpgradePoints(definition.roomDefinitionId, 5, "founder_office_morale_points")).toBe(0);
++    }
++    for (const id of ["room.front_desk", "room.hallway", "room.unknown", "constructor", "__proto__"]) {
++      expect(getRoomUpgradeCost(id, 2)).toBeNull();
++      expect(getRoomUpgradeAmount(id, 5)).toBe(0);
++    }
++    for (const invalidLevel of [0, 1, 2.5, 6, NaN, Infinity, -Infinity]) {
++      expect(getRoomUpgradeCost("room.examination", invalidLevel)).toBeNull();
++    }
++    expect(getRoomUpgradeDefinition("room.unknown")).toBeNull();
++  });
++
++  it("preserves historical Imaging Control investment without offering it new purchases or bonuses", () => {
++    const legacy = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find((room) => room.id === "room.imaging_control")!;
++    expect(legacy.maximumUpgradeLevel).toBe(5);
++    expect(legacy.upgradeCosts).toEqual([90, 140, 210, 300]);
++    expect(getRoomUpgradeDefinition(legacy.id)).toMatchObject({ status: "retired", effectKind: "none", upgradeCosts: [] });
++    expect(getRoomUpgradeLevelBenefit(legacy.id, 5)?.totalDescription).toBe("No upgrades");
++  });
++
++  it("replaces arbitrary tier workload/speed while retaining base workload and Reading economics", () => {
++    for (const definition of PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions) {
++      expect(definition.workloadLimitContributionPerUpgradeLevel, definition.id).toBe(0);
++      expect(definition.serviceDurationReductionPercentPerUpgradeLevel, definition.id).toBe(0);
++    }
++    expect(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find((room) => room.id === "room.examination")?.workloadLimitContribution).toBe(2);
++    expect(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find((room) => room.id === "room.reading")).toMatchObject({
++      constructionCost: 1800, upkeepPerExpenseInterval: 24, upkeepPerUpgradeLevel: 0,
++      maximumInstances: 4, width: 4, height: 4,
++    });
++  });
++
++  it("records the future Founder's Office as the sole appearance exception", () => {
++    expect(ROOM_UPGRADE_CATALOG.filter((definition) => definition.appearanceChanges).map((definition) => definition.roomDefinitionId)).toEqual(["room.founder_office"]);
++    expect(getRoomUpgradeDefinition("room.founder_office")?.status).toBe("future");
++    expect(getRoomUpgradePerPurchaseLabel("room.founder_office")).toBe("+2 staff morale points; improved office appearance");
++    expect(getRoomUpgradeLevelBenefit("room.executive_office", 5)?.totalDescription).toBe("Administrative work takes 20% less time");
++  });
++});
++
++describe("room-upgrade numeric and label helpers", () => {
++  it("adds each purchase against the baseline and bounds malformed levels", () => {
++    expect([0, 1, 2, 3, 4, 5, 6, 100].map(getRoomUpgradePurchaseCount)).toEqual([0, 0, 1, 2, 3, 4, 4, 4]);
++    expect([NaN, Infinity, -Infinity].map(getRoomUpgradePurchaseCount)).toEqual([0, 0, 0]);
++    expect(getRoomUpgradePurchaseCount(2.9)).toBe(1);
++    expect([1, 2, 3, 4, 5].map((level) => getRoomUpgradeAmount("room.ct", level))).toEqual([0, 6, 12, 18, 24]);
++    expect([1, 2, 3, 4, 5].map((level) => getRoomUpgradeRevenueMultiplier("room.ct", level))).toEqual([1, 1.06, 1.12, 1.18, 1.24]);
++    expect(getRoomUpgradeRevenueMultiplier("room.reading", 5)).toBe(1);
++    expect(getRoomUpgradeRevenueMultiplier("room.ct", 100)).toBe(1.24);
++  });
++
++  it("retains 4.5/4/3.5/3-minute reads and scopes room timing to its own work", () => {
++    expect([2, 3, 4, 5].map((level) => 5 * getRoomUpgradeDurationMultiplier("room.reading", level, "reading_duration_reduction_percent"))).toEqual([4.5, 4, 3.5, 3]);
++    expect(getRoomUpgradeDurationMultiplier("room.reading", 5, "repair_duration_reduction_percent")).toBe(1);
++    expect(getRoomUpgradeDurationMultiplier("room.ct", 5, "reading_duration_reduction_percent")).toBe(1);
++    expect(getRoomUpgradeDurationMultiplier("room.training", 5, "training_duration_reduction_percent")).toBe(0.6);
++    expect(getRoomUpgradeDurationMultiplier("room.evs_closet", 5, "cleaning_duration_reduction_percent")).toBe(0.6);
++    expect(getRoomUpgradeDurationMultiplier("room.maintenance_workshop", 5, "repair_duration_reduction_percent")).toBe(0.6);
++    expect(getRoomUpgradeDurationMultiplier("room.surgeon_office", 5, "quality_review_duration_reduction_percent")).toBe(0.6);
++  });
++
++  it("composes independent employee and room duration reductions multiplicatively", () => {
++    const trainedRadiologistMultiplier = 1 - getEmployeeTrainingPercent("staff.radiologist", 5) / 100;
++    const readingRoomMultiplier = getRoomUpgradeDurationMultiplier("room.reading", 5, "reading_duration_reduction_percent");
++    const duration = 5 * readingRoomMultiplier * trainedRadiologistMultiplier;
++    expect(duration).toBeCloseTo(1.8);
++    expect(duration).toBeGreaterThan(0);
++    expect(duration).not.toBe(5 * (1 - 0.4 - 0.4));
++  });
++
++  it("keeps cleanliness decay separate from cleaning duration and satisfaction/morale witnesses", () => {
++    expect(getRoomUpgradeCleanlinessDecayMultiplier("room.bathroom", 5)).toBe(0.6);
++    expect(getRoomUpgradeCleanlinessDecayMultiplier("room.evs_closet", 5)).toBe(1);
++    expect(getRoomUpgradeDurationMultiplier("room.bathroom", 5, "cleaning_duration_reduction_percent")).toBe(1);
++    expect(getRoomUpgradePoints("room.examination", 5, "examination_satisfaction_points")).toBe(8);
++    expect(getRoomUpgradePoints("room.examination", 5, "waiting_satisfaction_points")).toBe(0);
++    expect(getRoomUpgradePoints("room.waiting", 5, "waiting_satisfaction_points")).toBe(8);
++    expect(getRoomUpgradePoints("room.periop_recovery", 5, "recovery_satisfaction_points")).toBe(8);
++    expect(getRoomUpgradePoints("room.coffee_kiosk", 5, "daily_coffee_morale_points")).toBe(4);
++    expect(getRoomUpgradePoints("room.staff_break", 5, "break_morale_points")).toBe(8);
++    expect(getRoomUpgradePoints("room.ct", 5, "examination_satisfaction_points")).toBe(0);
++  });
++
++  it("describes the total tier benefit separately from a single additional purchase", () => {
++    expect(getRoomUpgradePerPurchaseLabel("room.examination")).toBe("+2 satisfaction points after examination");
++    expect(getRoomUpgradeLevelBenefit("room.examination", 1)).toMatchObject({ totalAmount: 0, incrementalAmount: 0, totalDescription: "Baseline" });
++    expect(getRoomUpgradeLevelBenefit("room.examination", 5)).toMatchObject({
++      totalAmount: 8, incrementalAmount: 2,
++      totalDescription: "+8 satisfaction points after examination",
++      incrementalDescription: "+2 satisfaction points after examination",
++    });
++    expect(getRoomUpgradeLevelBenefit("room.reading", 5)).toMatchObject({
++      totalAmount: 40, incrementalAmount: 10,
++      totalDescription: "Scan reading takes 40% less time",
++      incrementalDescription: "Scan reading takes 10% less time",
++    });
++    expect(getRoomUpgradePerPurchaseLabel("room.coffee_kiosk")).toBe("+1 staff morale point from daily coffee");
++    expect(getRoomUpgradeLevelBenefit("room.coffee_kiosk", 5)?.totalDescription).toBe("+4 staff morale points from daily coffee");
++    expect(getRoomUpgradePerPurchaseLabel("room.laboratory")).toBe("+6% paid laboratory-processing revenue");
++    expect(getRoomUpgradePerPurchaseLabel("room.front_desk")).toBe("No upgrades");
++    expect(getRoomUpgradeLevelBenefit("room.unknown", 2)).toBeNull();
++    expect(getRoomUpgradePerPurchaseLabel("room.unknown")).toBeNull();
++  });
++});

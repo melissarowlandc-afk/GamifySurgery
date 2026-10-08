@@ -1,0 +1,112 @@
+diff --git a/packages/game-domain/src/diagnostic-timing.ts b/packages/game-domain/src/diagnostic-timing.ts
+--- a/packages/game-domain/src/diagnostic-timing.ts
++++ b/packages/game-domain/src/diagnostic-timing.ts
+@@ -326,7 +326,9 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+       draft.readingUpgradeWork.acceptedAtTick <= handoff.atTick && draft.readingUpgradeWork.executionEnabledAtTick <= handoff.atTick &&
+       (draft.readingUpgradeWork.readyAtTick ?? ready) <= handoff.atTick;
+     let starts = canInherit ? Math.min(ready, handoff.atTick) : ready;
+-    const maximumAttempts = [...calendar.intervals.values()].reduce((total, intervals) => total + intervals.length, draft.readingUpgradeWork ? 3 : 1) + [...calendar.actors.values()].reduce((total, intervals) => total + intervals.length, 1);
++    // A release and its rounded boundary each need an availability pass.
++    const availabilityChanges = [...calendar.intervals.values(), ...calendar.actors.values()].reduce((total, intervals) => total + intervals.length, 0);
++    const maximumAttempts = 2 * (availabilityChanges + 2);
+     for (let attempt = 0; attempt < maximumAttempts; attempt++) {
+       const employeePaths = employeeIds.map((employeeId) => {
+         const employee = state.employees.find((entry) => entry.id === employeeId)!;
+@@ -338,13 +340,9 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+       const walkingMinutes = Math.max(0, ...[patientPath, founderPath, ...employeePaths.map((entry) => entry.path)].map((entry) => Math.ceil(Math.max(0, entry.length - 1) / tilesPerTick)));
+       const slot = resource ? firstSlot(calendar, resource, starts, walkingMinutes + workMinutes) : starts;
+       if (slot !== starts) { starts = slot; continue; }
+-      if (draft.readingUpgradeWork) {
+-        const continuous = handoff && resource && walkingMinutes === 0 && starts === handoff.atTick &&
+-          resource.roomInstanceId === handoff.resource.roomInstanceId && resource.stationId === handoff.resource.stationId &&
+-          draft.readingUpgradeWork.acceptedAtTick <= starts && (draft.readingUpgradeWork.readyAtTick ?? ready) <= starts;
+-        const observedStart = continuous ? starts : Math.ceil(Math.max(state.facilityTick, starts));
+-        if (observedStart !== starts) { starts = observedStart; continue; }
+-      }
++      const continuous = canInherit && walkingMinutes === 0 && starts === handoff!.atTick;
++      const observedStart = continuous ? starts : Math.ceil(Math.max(state.facilityTick, starts));
++      if (observedStart !== starts) { starts = observedStart; continue; }
+       const ends = starts + walkingMinutes + workMinutes;
+       let afterNext = starts;
+       for (const actorId of [...employeeIds, ...(resource?.provider?.kind === "founder" ? ["founder"] : [])]) {
+@@ -553,7 +551,10 @@ function projectReadingCalendar(state: GameState, context: DomainContext, calend
+     const compatible = !request.preferred || resourceCandidates(predicted, context, request.draft.requirement!).some(resource =>
+       resource.roomInstanceId === request.preferred!.roomInstanceId && resource.stationId === request.preferred!.stationId &&
+       resource.employeeIds.join(":") === request.preferred!.employeeIds.join(":"));
+-    const preferred = token?.resource ?? (isDiagnosticResourceWaitingForTraining(predicted, request.preferred) || !compatible ? null : request.preferred);
++    const effectivePreferred = isDiagnosticResourceWaitingForTraining(predicted, request.preferred) || !compatible ? null : request.preferred;
++    if (token && effectivePreferred && (token.resource.roomInstanceId !== effectivePreferred.roomInstanceId ||
++      token.resource.stationId !== effectivePreferred.stationId || token.resource.employeeIds.join(":") !== effectivePreferred.employeeIds.join(":"))) return null;
++    const preferred = token?.resource ?? effectivePreferred;
+     const work = request.draft.readingUpgradeWork;
+     const phase = schedulePhase(predicted, context, trial, request.draft, token ? request.ready : Math.max(boundary, request.ready), request.origin, preferred,
+       request.remaining, request.operationId ?? request.key.orderId, false,
+@@ -564,6 +565,10 @@ function projectReadingCalendar(state: GameState, context: DomainContext, calend
+       return null;
+     }
+     working.intervals = trial.intervals; working.actors = trial.actors;
++    // The event boundary gates reservations, not the original dependency-ready queue clock.
++    const forecastReady = Math.min(phase.forecast.startsAtTick - phase.forecast.walkingMinutes, Math.max(state.facilityTick, request.ready));
++    phase.forecast.readyAtTick = forecastReady;
++    phase.forecast.queueMinutes = phase.forecast.startsAtTick - phase.forecast.walkingMinutes - forecastReady;
+     return accept(request, phase);
+   };
+   while (events.size && (pending.length || active.length)) {
+diff --git a/packages/game-domain/tests/room-upgrade-reading.test.ts b/packages/game-domain/tests/room-upgrade-reading.test.ts
+--- a/packages/game-domain/tests/room-upgrade-reading.test.ts
++++ b/packages/game-domain/tests/room-upgrade-reading.test.ts
+@@ -117,6 +117,54 @@ function trainingTick(f: ReturnType<typeof fixture>, at: number) {
+ }
+ 
+ describe("Reading forecasts share execution order and future training cohorts", () => {
++  it.each([false, true])("keeps a compatible preferred reader when another station offers a token, reverse=%s", (reverse) => {
++    const f = fixture(2, 2), a = linkedStart(f, prepare(f, "preferred.a", 0));
++    const bRead = prepare(f, "preferred.b", 1), next = prepare(f, "preferred.next", 1);
++    f.state.facilityTick = 2;
++    const b = linkedStart(f, bRead), nextJob = linkedStart(f, next);
++    if (reverse) f.state.serviceOperations.reverse();
++    f.state.facilityTick = 3;
++    const forecast = previewRead(f, next);
++    expect(forecast.forecast).toMatchObject({ startsAtTick: 6.5, endsAtTick: 11 });
++    expect(forecast.resource!.employeeIds).toEqual([f.state.employees[1]!.id]);
++    advance(f, 5); expect(a.completedAtFacilityTick).toBe(4.5); expect(nextJob.phaseStartedAtFacilityTick).toBeNull();
++    advance(f, 7); expect(b.completedAtFacilityTick).toBe(6.5);
++    expect(nextJob.phaseStartedAtFacilityTick).toBe(6.5); expect(nextJob.phaseEndsAtFacilityTick).toBe(11);
++    expect(nextJob.diagnosticPhaseWork!.resource!.employeeIds).toEqual([f.state.employees[1]!.id]);
++  });
++
++  it.each([false, true])("keeps ordinary legacy manual30 on integer boundaries after a marked read, interrupted=%s", (interrupted) => {
++    const f = fixture(), first = linkedStart(f, prepare(f, "ordinary.marked")), manualRead = prepare(f, "ordinary.manual");
++    const manual: ServiceOperationState = { ...clone(first), id: "ordinary.legacy.manual", actorId: "ordinary.legacy.manual", diagnosticPhaseWork: undefined,
++      status: "waiting_for_resources", startedAtFacilityTick: null, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null,
++      reservedEmployeeIds: [], reservedRoomInstanceIds: [],
++      frozenOperationPhases: [{ id: "manual30", durationMinutes: 30, roomDefinitionId: "room.reading", staffRoleDefinitionIds: ["staff.radiologist"] }] };
++    f.state.serviceOperations.push(manual);
++    manualRead.phase.readingUpgradeWork = undefined; manualRead.phase.durationMinutes = manualRead.phase.remainingMinutes = 30;
++    manualRead.phase.serviceOperationId = manual.id;
++    if (interrupted) f.state.employeeDiscussions = { conflict: { employeeId: f.reader.id, lifecycle: "open" } as any };
++    const quote = previewRead(f, manualRead);
++    expect(quote.forecast).toMatchObject({ startsAtTick: 5, endsAtTick: 35 });
++    expect(Number.isSafeInteger(quote.forecast.startsAtTick)).toBe(true); expect(Number.isSafeInteger(quote.forecast.endsAtTick)).toBe(true);
++    expect(quote.durationMinutes).toBe(30); expect(manual.frozenOperationPhases![0]!.durationMinutes).toBe(30);
++    expect(first.phaseEndsAtFacilityTick).toBe(4.5);
++  });
++
++  it.each([20, 21])("reports dependency-ready queue time independently of the future reservation event, now=%s", (now) => {
++    const f = fixture(1); f.state.facilityTick = now;
++    const busyRead = prepare(f, `queue.busy.${now}`), busy = linkedStart(f, busyRead);
++    busy.diagnosticPhaseWork = undefined;
++    busy.frozenOperationPhases = [{ id: "manual200", durationMinutes: 200, roomDefinitionId: "room.reading", staffRoleDefinitionIds: ["staff.radiologist"] }];
++    busy.phaseEndsAtFacilityTick = now + 200;
++    const read = accept(f, `queue.next.${now}`), dependency = read.plan.phases.find(phase => phase.id === read.phase.dependsOn[0])!;
++    completeDependencies(read.plan, dependency, now);
++    Object.assign(dependency, { kind: "acquisition", mode: "external", patientPresent: false, requirement: null, resource: null,
++      durationMinutes: 70, remainingMinutes: 70, status: "pending", startedAtTick: null, completedAtTick: null });
++    const work = clone(read.phase.readingUpgradeWork), quote = previewRead(f, read);
++    expect(quote.forecast).toMatchObject({ readyAtTick: now + 70, startsAtTick: now + 200, endsAtTick: now + 205, queueMinutes: 130, walkingMinutes: 0 });
++    expect(quote.readingUpgradeWork).toEqual(work); expect(quote.status).toBe("pending"); expect(quote.startedAtTick).toBeNull();
++  });
++
+   it.each(["original", "reverse", "shuffle"] as const)("orders late factories by original readiness, array=%s", (order) => {
+     const f = fixture(), first = linkedStart(f, prepare(f, "late.first")), a = prepare(f, "late.a");
+     f.state.facilityTick = 1;

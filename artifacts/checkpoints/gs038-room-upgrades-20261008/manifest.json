@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "gs038-room-upgrades-20261008",
+  "preparedDate": "2026-10-08",
+  "intakeHead": "2b4cb481a8abe8a525e76242c600d7e51267eef7",
+  "recoveryOnly": true,
+  "cleanRunnableCheckout": false,
+  "remoteVerifiedAtPreparation": false,
+  "publicReleaseAuthorized": false,
+  "clinicalContentAdded": false,
+  "privateEvidenceExcluded": true,
+  "canonicalComparison": "UTF-8 text with CRLF normalized to LF; archive payload byte hashes are exact",
+  "patchTargets": 80,
+  "taskOwnedFiles": 15,
+  "manifestSelfHashExcluded": true,
+  "payloads": [
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "documents/GS038_HANDOFF_AT_ACCEPTANCE.md",
+      "bytes": 3117,
+      "sha256": "4494817d2cf4019ea1a4b870904a064c006e43f846fdda901b1235a0316943b0"
+    },
+    {
+      "path": "documents/gs038-all-room-upgrades.md",
+      "bytes": 74457,
+      "sha256": "f69cc48e091b5c3542c8c5ae5268ec6f5e14875e1d80d61a9b64bc2e13d5b301"
+    },
+    {
+      "path": "files/apps/player/src/facility/roomUpgradeAppearance.test.ts",
+      "bytes": 5279,
+      "sha256": "c97569ae57e69dfd3c84674509c44c8414bdcb2891d82dea2392fbf4d7fe0374"
+    },
+    {
+      "path": "files/apps/player/src/session/facilityDuration.test.ts",
+      "bytes": 657,
+      "sha256": "09f84ad1576e0b8bd04780beab8cfa982a9b8936deccd85c4bc9da7854a28e56"
+    },
+    {
+      "path": "files/apps/player/src/session/facilityDuration.ts",
+      "bytes": 640,
+      "sha256": "e3473b348ffa8a3db5ad6971e39dc075ef218b0ffc49f3f85c7e3ea8d040637d"
+    },
+    {
+      "path": "files/packages/balance-config/src/room-upgrades.test.ts",
+      "bytes": 11830,
+      "sha256": "961ccc47aba3412155cd9938391c8c08db17e4e567d690e96d9ed18c5b7e811f"
+    },
+    {
+      "path": "files/packages/balance-config/src/room-upgrades.ts",
+      "bytes": 12215,
+      "sha256": "32ea7ff05335dd208270ddb2aee5eb5125044447dacae121868ceea43f6d972d"
+    },
+    {
+      "path": "files/packages/game-domain/src/room-upgrade-experience.ts",
+      "bytes": 11961,
+      "sha256": "65daec94594f763ada54e1e40d93478dad580a6df701e4e0d5c51bb524c321d2"
+    },
+    {
+      "path": "files/packages/game-domain/src/room-upgrade-reading.ts",
+      "bytes": 8213,
+      "sha256": "7fa966c1e738e0059a24c305afb3973e8ca6e8284ebfcfa779eaec89e7fe6547"
+    },
+    {
+      "path": "files/packages/game-domain/src/room-upgrade-support.ts",
+      "bytes": 9049,
+      "sha256": "29da1590758afc63f89f9661d804f37e9755a348630f04989025185f445a6b16"
+    },
+    {
+      "path": "files/packages/game-domain/src/room-upgrades.ts",
+      "bytes": 6026,
+      "sha256": "ebc96f6188332fcd723d89adabe671044522a552de800d4cc6388a4803156d23"
+    },
+    {
+      "path": "files/packages/game-domain/tests/room-upgrade-experience.test.ts",
+      "bytes": 38317,
+      "sha256": "96b6f9d843926119e3e6bb36534d5bc6e4e1c463e1ff832d89116d602e439068"
+    },
+    {
+      "path": "files/packages/game-domain/tests/room-upgrade-reading.test.ts",
+      "bytes": 63815,
+      "sha256": "67a6c76bec2ee77b2569038ec42028fc7d5a181db1b3c0086834fa4e3a21e048"
+    },
+    {
+      "path": "files/packages/game-domain/tests/room-upgrade-revenue.test.ts",
+      "bytes": 32491,
+      "sha256": "36a4dfaef5de29c491c47dd6fa9aa2d0e5d6fce6c2e273a3218832bcd7bee073"
+    },
+    {
+      "path": "files/packages/game-domain/tests/room-upgrade-support.test.ts",
+      "bytes": 35086,
+      "sha256": "64fd93638484f5dc48561ace6ce6065cba067ae9eb020ce6d65f7b0dfce7b48a"
+    },
+    {
+      "path": "files/tests/e2e/fixtures/roomUpgradeScenario.ts",
+      "bytes": 10176,
+      "sha256": "de83a322fd4b3549d0e401c611bca83d5d2df66a37eb3b7c2483d90d460cd1fc"
+    },
+    {
+      "path": "files/tests/e2e/room-upgrades.spec.ts",
+      "bytes": 24392,
+      "sha256": "44b6fcffd56e9f242a7fa6af8c884d4d240a5a1f82898bd5ea96aaca5f1b5a22"
+    },
+    {
+      "path": "patches/01-catalog.patch",
+      "bytes": 34630,
+      "sha256": "7dde31a2db11dd7071bb735f7cd5e6ff62729570fc981f2345e19d1e220549ac"
+    },
+    {
+      "path": "patches/02-revenue.patch",
+      "bytes": 122165,
+      "sha256": "87d9c4ce0e26b59b137912aca06d86ae5f8c55e6eef1854acc3ed4c2cbace0e2"
+    },
+    {
+      "path": "patches/03-support.patch",
+      "bytes": 77999,
+      "sha256": "2b252fcf79ce5917f345a220371612f67dc15e1e15e72c53c788ba2f9b1cf296"
+    },
+    {
+      "path": "patches/04-experience.patch",
+      "bytes": 86390,
+      "sha256": "c5f68cb2840ac692fc429e30c942a4a5fe63b59d6036cee0b93d4303cd218767"
+    },
+    {
+      "path": "patches/05-reading.patch",
+      "bytes": 133784,
+      "sha256": "8c8ba1ea85bdc837d84601fa671f0c2e38844f3687e3efcb622430e79f375ddb"
+    },
+    {
+      "path": "patches/06-ui.patch",
+      "bytes": 63983,
+      "sha256": "aefeadcc6a23bedffeb8027bc65816529a0e953872229eadc040d711899ce41e"
+    },
+    {
+      "path": "patches/07-reading-correction.patch",
+      "bytes": 71349,
+      "sha256": "2734a51e9cb50806794ffe818f997aad59b59c5ec5c8109b1397e8a7fc6cfac8"
+    },
+    {
+      "path": "patches/08-browser.patch",
+      "bytes": 32172,
+      "sha256": "5ca84852ff31c5460e6e0edbc2b6d904ff8091f642556238b712d25d7f76edb7"
+    },
+    {
+      "path": "patches/09-browser-readiness.patch",
+      "bytes": 1274,
+      "sha256": "afee10249487d3e603d9b47f3df3209e94145fd9c5a5c881d8376384234c6051"
+    },
+    {
+      "path": "patches/10-reading-final.patch",
+      "bytes": 9620,
+      "sha256": "d091e06348ef07241e9365a27624d59d2fbe920e879c0a4fe40d09f0bec5f464"
+    },
+    {
+      "path": "patches/11-browser-active-reader.patch",
+      "bytes": 8664,
+      "sha256": "fca6730fa27bbb6aced54d51f3e9efd8ccfbfafb308c7437098bedf33283fbca"
+    },
+    {
+      "path": "patches/12-browser-visual.patch",
+      "bytes": 3339,
+      "sha256": "0447f9f4ee0869a2260e1936d60a68fbb6672869d691a99f31e4b55bc03e1211"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4954,
+      "sha256": "e83b218cf7512f6dd33fa2c6f4abd5917b1ca7ac7728ac9c81a6f4736113a13f"
+    },
+    {
+      "path": "recovery/OWNED_FILE_STATUS.json",
+      "bytes": 4384,
+      "sha256": "e3a3fa63ced484c3707877ef9fb604beb9c05faa02db8cedb50dfc7a12a6ab4f"
+    },
+    {
+      "path": "recovery/PATCH_CONTRACTS.json",
+      "bytes": 35974,
+      "sha256": "bd5ae8bd7e75a136883d4fe2df54d5a928bb48c5072dcec28f3de35b0c31689f"
+    },
+    {
+      "path": "VALIDATION_SUMMARY.json",
+      "bytes": 2932,
+      "sha256": "01fa3ecb54e11a56b5d9a238f97f47753510ca3e29f91e2388377c3d25782687"
+    },
+    {
+      "path": "verify-checkpoint.mjs",
+      "bytes": 6241,
+      "sha256": "9b1cf009784dd82137d2b378f7e9dc0df1619bbc00bb9f013354ff7a5467ec5f"
+    }
+  ]
+}

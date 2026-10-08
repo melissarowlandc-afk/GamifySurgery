@@ -1,0 +1,1698 @@
+diff --git a/packages/game-domain/src/room-upgrade-reading.ts b/packages/game-domain/src/room-upgrade-reading.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/game-domain/src/room-upgrade-reading.ts
+@@ -0,0 +1,90 @@
++import { getRoomUpgradeDurationMultiplier } from "@gamify-surgery/balance-config";
++import type { DiagnosticOrderPhase, DiagnosticOrderPlan, GameState, RoomUpgradeLevel, RoomUpgradeReadingWork } from "./types";
++
++const copy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
++const id = (value: unknown): value is string => typeof value === "string" && value.length > 0;
++const integer = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value >= 0;
++export const isReadingWorkMinute = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= Number.MAX_SAFE_INTEGER;
++/** Tolerance only for subtraction/addition of absolute work clocks. */
++export const readingMinutesEqual = (a: number, b: number, absoluteTick = 0): boolean =>
++  Math.abs(a - b) <= Math.max(1e-9, Number.EPSILON * Math.max(Math.abs(a), Math.abs(b), absoluteTick) * 4);
++
++/** Independent raw factors, with a minimum only on new full work. */
++export function getReadingUpgradeMinutes(employeeReductionPercent: number, upgradeLevel: number): number {
++  return Math.max(1, 5 * (1 - employeeReductionPercent / 100) * getRoomUpgradeDurationMultiplier("room.reading", upgradeLevel, "reading_duration_reduction_percent"));
++}
++
++export function createReadingUpgradeWork(state: GameState, employeeReductionPercent: number, roomInstanceId: string): RoomUpgradeReadingWork {
++  return { version: "room-upgrade-reading.v1", baselineMinutes: 5, employeeReductionPercent,
++    acceptedAtTick: state.facilityTick, executionEnabledAtTick: null, readyAtTick: null,
++    acceptedRooms: state.rooms.filter((room) => room.roomDefinitionId === "room.reading").sort((a, b) => a.id.localeCompare(b.id))
++      .map((room) => ({ roomInstanceId: room.id, upgradeLevel: room.upgradeLevel })),
++    quotedRoomInstanceId: roomInstanceId, boundRoomInstanceId: null, boundUpgradeLevel: null, durationMinutes: null };
++}
++
++export function getReadingAcceptedLevel(work: RoomUpgradeReadingWork, roomInstanceId: string): RoomUpgradeLevel {
++  return work.acceptedRooms.find((room) => room.roomInstanceId === roomInstanceId)?.upgradeLevel ?? 1;
++}
++
++export function quoteReadingUpgradeWork(work: RoomUpgradeReadingWork, roomInstanceId: string): number {
++  return work.durationMinutes ?? getReadingUpgradeMinutes(work.employeeReductionPercent, getReadingAcceptedLevel(work, roomInstanceId));
++}
++
++export function bindReadingUpgradeWork(work: RoomUpgradeReadingWork, roomInstanceId: string): number {
++  if (work.durationMinutes === null) {
++    work.boundRoomInstanceId = work.quotedRoomInstanceId = roomInstanceId;
++    work.boundUpgradeLevel = getReadingAcceptedLevel(work, roomInstanceId);
++    work.durationMinutes = getReadingUpgradeMinutes(work.employeeReductionPercent, work.boundUpgradeLevel);
++  }
++  return work.durationMinutes;
++}
++
++export function enableReadingPhase(plan: DiagnosticOrderPlan, phase: DiagnosticOrderPhase, tick: number): void {
++  const work = phase.readingUpgradeWork;
++  if (!work) return;
++  work.executionEnabledAtTick ??= tick;
++  if (phase.dependsOn.every((dependency) => plan.phases.some((entry) => entry.id === dependency && entry.status === "completed" && entry.completedAtTick !== null))) {
++    work.readyAtTick = Math.max(work.acceptedAtTick, work.executionEnabledAtTick,
++      ...phase.dependsOn.map((dependency) => plan.phases.find((entry) => entry.id === dependency)!.completedAtTick!));
++  }
++}
++
++/** Absence is legacy. Malformed opt-in fields must fail, never disappear. */
++export function normalizeReadingUpgradeWork(value: unknown): RoomUpgradeReadingWork | null {
++  if (value === undefined) return null;
++  const fail = (): never => { throw new Error("The saved Reading upgrade work is invalid."); };
++  if (typeof value !== "object" || value === null || Array.isArray(value)) return fail();
++  const raw = value as Record<string, unknown>;
++  if (Object.keys(raw).some((key) => !["version", "baselineMinutes", "employeeReductionPercent", "acceptedAtTick", "executionEnabledAtTick", "readyAtTick", "acceptedRooms", "quotedRoomInstanceId", "boundRoomInstanceId", "boundUpgradeLevel", "durationMinutes"].includes(key)) ||
++    raw.version !== "room-upgrade-reading.v1" || raw.baselineMinutes !== 5 ||
++    typeof raw.employeeReductionPercent !== "number" || !Number.isFinite(raw.employeeReductionPercent) || raw.employeeReductionPercent < 0 || raw.employeeReductionPercent > 40 ||
++    !integer(raw.acceptedAtTick) || !(raw.executionEnabledAtTick === null || integer(raw.executionEnabledAtTick) && raw.executionEnabledAtTick >= raw.acceptedAtTick) ||
++    !(raw.readyAtTick === null || isReadingWorkMinute(raw.readyAtTick) && raw.executionEnabledAtTick !== null && raw.readyAtTick >= (raw.executionEnabledAtTick as number)) ||
++    !id(raw.quotedRoomInstanceId) || !Array.isArray(raw.acceptedRooms) || !raw.acceptedRooms.every((room) =>
++      typeof room === "object" && room !== null && !Array.isArray(room) && Object.keys(room).every((key) => ["roomInstanceId", "upgradeLevel"].includes(key)) &&
++      id(room.roomInstanceId) && Number.isSafeInteger(room.upgradeLevel) && room.upgradeLevel >= 1 && room.upgradeLevel <= 5) ||
++    new Set(raw.acceptedRooms.map((room) => room.roomInstanceId)).size !== raw.acceptedRooms.length) return fail();
++  const work = raw as unknown as RoomUpgradeReadingWork;
++  if (work.boundRoomInstanceId === null) {
++    if (work.boundUpgradeLevel !== null || work.durationMinutes !== null) return fail();
++  } else if (!id(work.boundRoomInstanceId) || work.quotedRoomInstanceId !== work.boundRoomInstanceId ||
++    work.boundUpgradeLevel !== getReadingAcceptedLevel(work, work.boundRoomInstanceId) || work.readyAtTick === null ||
++    !isReadingWorkMinute(work.durationMinutes) || work.durationMinutes !== getReadingUpgradeMinutes(work.employeeReductionPercent, work.boundUpgradeLevel)) return fail();
++  return copy(work);
++}
++
++/** Checks readiness against actual plan witnesses, including pre-enactment absence. */
++export function isReadingPlanWorkValid(plan: DiagnosticOrderPlan): boolean {
++  return plan.phases.every((phase) => {
++    const work = phase.readingUpgradeWork;
++    if (!work) return true;
++    if (phase.kind !== "interpretation" || phase.mode !== "local" || phase.patientPresent || phase.requirement?.roomDefinitionId !== "room.reading" ||
++      work.acceptedAtTick !== plan.createdAtTick) return false;
++    const dependencies = phase.dependsOn.map((dependency) => plan.phases.find((entry) => entry.id === dependency)!);
++    const ready = work.executionEnabledAtTick !== null && dependencies.every((dependency) => dependency.status === "completed" && dependency.completedAtTick !== null)
++      ? Math.max(work.acceptedAtTick, work.executionEnabledAtTick, ...dependencies.map((dependency) => dependency.completedAtTick!)) : null;
++    return work.readyAtTick === ready && (phase.startedAtTick === null || ready !== null && phase.startedAtTick >= ready && work.durationMinutes !== null) &&
++      phase.durationMinutes === quoteReadingUpgradeWork(work, work.quotedRoomInstanceId) &&
++      (work.durationMinutes !== null || phase.remainingMinutes === phase.durationMinutes);
++  });
++}
+diff --git a/packages/game-domain/tests/room-upgrade-reading.test.ts b/packages/game-domain/tests/room-upgrade-reading.test.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/game-domain/tests/room-upgrade-reading.test.ts
+@@ -0,0 +1,574 @@
++import { describe, expect, it } from "vitest";
++import {
++  advanceEmployeeTraining, advanceLevelThreeSupport, advanceServiceOperations, bindReadingUpgradeWork, createReadingUpgradeWork,
++  deserializeGameState, enableReadingPhase, forecastDiagnosticOrderPlan, gameReducer, getEmployeeTrainingPlaces,
++  getQueuedEmployeeTrainingDepartures, getRadiologistReadingStation, getReadingUpgradeMinutes,
++  interruptServiceOperationsForEmployeeDismissal, interruptServiceOperationsForRoomSale, isEmployeeAwayForTraining,
++  normalizeDiagnosticOrderPlan, normalizeReadingUpgradeWork, planDiagnosticOrder, quoteReadingUpgradeWork,
++  reconcileReadingStations, requestEmployeeTraining, serializeGameState, startDiagnosticProcessingOperation, startRetailPurchase,
++  type DiagnosticOrderPhase, type DiagnosticOrderPlan, type EmployeeState, type GameState, type RoomUpgradeLevel, type ServiceOperationState,
++} from "../src";
++import { advanceDiagnosticOrders, replaceDiagnosticOrderPlan } from "../src/diagnostic-orders";
++import { pending, timingFixture } from "./diagnostic-timing-fixtures";
++
++type Fixture = ReturnType<typeof timingFixture>;
++const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
++let sequence = 0;
++function fixture(level: RoomUpgradeLevel = 2, readers = 1) {
++  const f = timingFixture();
++  f.state.serviceAppointmentsEnabled = false;
++  f.state.cashCents = 1_000_000; f.state.cash = 10_000;
++  f.state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
++  f.state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER;
++  f.state.environment.nextLitterSpawnTick = Number.MAX_SAFE_INTEGER;
++  f.state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
++  const room = f.addRoom("room.reading", "staff.radiologist", readers).room;
++  room.upgradeLevel = level;
++  reconcileReadingStations(f.state);
++  for (const employee of f.state.employees) {
++    const post = getRadiologistReadingStation(f.state, employee, f.context)!;
++    employee.location = { ...post.location }; employee.path = [{ ...post.location }]; employee.pathIndex = 0;
++  }
++  return { ...f, room, reader: f.state.employees[0]! };
++}
++function accept(f: Fixture, id = `reading.${sequence++}`) {
++  const quote = planDiagnosticOrder(f.state, { orderId: id, encounterId: f.encounter.id,
++    serviceId: "service.ultrasound", allowedRouteIds: ["route.ultrasound.outsourced"] }, f.context);
++  if (quote.kind !== "planned") throw new Error(quote.reason);
++  return { plan: quote.plan, phase: quote.plan.phases.find((phase) => phase.kind === "interpretation")! };
++}
++function completeDependencies(plan: DiagnosticOrderPlan, phase: DiagnosticOrderPhase, at: number) {
++  for (const id of phase.dependsOn) {
++    const dependency = plan.phases.find((entry) => entry.id === id)!;
++    completeDependencies(plan, dependency, at);
++    Object.assign(dependency, { status: "completed", startedAtTick: at, completedAtTick: at, remainingMinutes: 0 });
++  }
++}
++function prepare(f: Fixture, id?: string, readerIndex?: number) {
++  const read = accept(f, id);
++  completeDependencies(read.plan, read.phase, f.state.facilityTick);
++  enableReadingPhase(read.plan, read.phase, f.state.facilityTick);
++  if (readerIndex !== undefined) {
++    const reader = f.state.employees.filter((employee) => employee.staffRoleDefinitionId === "staff.radiologist")[readerIndex]!;
++    const post = getRadiologistReadingStation(f.state, reader, f.context)!;
++    read.phase.resource = { roomInstanceId: post.roomInstanceId, roomDefinitionId: "room.reading", stationId: post.station.id,
++      employeeIds: [reader.id], provider: null, patientAnchor: post.location, staffAnchor: post.location };
++    read.phase.readingUpgradeWork!.quotedRoomInstanceId = post.roomInstanceId;
++    read.phase.durationMinutes = read.phase.remainingMinutes = quoteReadingUpgradeWork(read.phase.readingUpgradeWork!, post.roomInstanceId);
++  }
++  return read;
++}
++function start(f: Fixture, read: ReturnType<typeof accept>) {
++  const id = startDiagnosticProcessingOperation(f.state, read.plan, read.phase.id, f.context);
++  expect(id).not.toBeNull();
++  return f.state.serviceOperations.find((entry) => entry.id === id)!;
++}
++function advance(f: Fixture, at: number) { f.state.facilityTick = at; advanceServiceOperations(f.state, f.context); }
++function sync(f: Fixture, read: ReturnType<typeof accept>, job: ServiceOperationState) {
++  const work = job.diagnosticPhaseWork!;
++  Object.assign(read.phase, { readingUpgradeWork: clone(work.readingUpgradeWork), durationMinutes: work.durationMinutes,
++    remainingMinutes: work.remainingMinutes, resource: clone(work.resource), serviceOperationId: job.id,
++    startedAtTick: job.phaseStartedAtFacilityTick, completedAtTick: job.completedAtFacilityTick,
++    status: job.status === "completed" ? "completed" : job.phaseStartedAtFacilityTick === null ? "queued" : "active" });
++  const refreshed = forecastDiagnosticOrderPlan(f.state, read.plan, f.context).plan;
++  read.plan = refreshed; read.phase = refreshed.phases.find((phase) => phase.kind === "interpretation")!;
++  if (job.status === "completed") read.plan.resultReady.reachedAtTick = job.completedAtFacilityTick;
++  f.encounter.pendingResult = pending(read.plan);
++  return read;
++}
++function roundtrip(f: Fixture): GameState { return deserializeGameState(serializeGameState(f.state), f.context); }
++function addCopy(f: ReturnType<typeof fixture>, level: RoomUpgradeLevel, employeeId = "reader.copy") {
++  const room = { ...f.room, id: `room.reading.copy.${sequence++}`, x: 8, y: 21, upgradeLevel: level };
++  f.state.rooms.push(room);
++  f.state.doors.push({ id: `door.${room.id}`, roomId: room.id, side: "west", offset: 1, exterior: false });
++  const employee: EmployeeState = { ...clone(f.reader), id: employeeId, homeRoomInstanceId: room.id, readingStationId: undefined, facilityTask: null, training: null };
++  f.state.employees.push(employee);
++  reconcileReadingStations(f.state);
++  const post = getRadiologistReadingStation(f.state, employee, f.context)!;
++  employee.location = { ...post.location }; employee.path = [{ ...post.location }]; employee.pathIndex = 0;
++  return { room, employee, post };
++}
++
++describe("accepted local Reading upgrades", () => {
++  it.each([1, 2, 3, 4, 5] as const)("quotes and executes level %i without extra billing", (level) => {
++    const f = fixture(level), read = prepare(f), expected = 5 * (1 - (level - 1) / 10);
++    expect(read.phase.durationMinutes).toBe(expected);
++    const job = start(f, read);
++    expect(job.phaseEndsAtFacilityTick).toBe(expected);
++    expect(job.diagnosticPhaseWork!.readingUpgradeWork).toMatchObject({ baselineMinutes: 5, acceptedAtTick: 0, boundUpgradeLevel: level });
++    const cash = f.state.cashCents;
++    advance(f, Math.ceil(expected));
++    expect(job.completedAtFacilityTick).toBe(expected);
++    expect(f.state.cashCents).toBe(cash); expect(f.state.serviceIncomeReceipts).toHaveLength(0);
++    advance(f, 10); expect(f.state.serviceIncomeReceipts).toHaveLength(0);
++  });
++
++  it("combines the original raw staff factor with the actual room before rounding", () => {
++    const f = fixture(2); f.reader.trainingLevel = 3;
++    const read = prepare(f), job = start(f, read);
++    expect(read.phase.durationMinutes).toBeCloseTo(3.6);
++    expect(job.phaseEndsAtFacilityTick).toBeCloseTo(3.6);
++    expect(getReadingUpgradeMinutes(100, 5)).toBe(1);
++    const work = createReadingUpgradeWork(f.state, 7.5, f.room.id);
++    expect(quoteReadingUpgradeWork(work, f.room.id)).toBeCloseTo(4.1625);
++  });
++
++  it.each([1, 2, 3, 4, 5] as const)("retains a fractional category mean at room level %i", (level) => {
++    const f = fixture(level, 2); f.reader.trainingLevel = 2; f.state.employees[1]!.trainingLevel = 3;
++    const read = prepare(f, undefined, 0), expected = 5 * 0.85 * (1 - (level - 1) / 10), job = start(f, read);
++    expect(read.phase.readingUpgradeWork!.employeeReductionPercent).toBe(15);
++    expect(read.phase.durationMinutes).toBeCloseTo(expected); expect(job.phaseEndsAtFacilityTick).toBeCloseTo(expected);
++  });
++
++  it("freezes purchases and category skill at original acceptance, before a late factory", () => {
++    const f = fixture(2), read = prepare(f);
++    f.room.upgradeLevel = 5; f.reader.trainingLevel = 5; f.state.facilityTick = 5;
++    const job = start(f, read);
++    expect(job.diagnosticPhaseWork!.durationMinutes).toBe(4.5);
++    expect(job.phaseStartedAtFacilityTick).toBe(5); expect(job.phaseEndsAtFacilityTick).toBe(9.5);
++    expect(job.diagnosticPhaseWork!.readingUpgradeWork!.acceptedAtTick).toBe(0);
++  });
++
++  it("uses the accepted alternate copy at first actual seating, coherently quoted while unbound", () => {
++    const f = fixture(2), copy = addCopy(f, 5), read = prepare(f, undefined, 0);
++    // The initially preferred employee cannot leave their current other duty.
++    f.reader.facilityTask = { kind: "refill_water", targetId: f.room.id, startedAtFacilityTick: 0, workMinutesRemaining: 10 };
++    copy.employee.facilityTask = { kind: "refill_water", targetId: copy.room.id, startedAtFacilityTick: 0, workMinutesRemaining: 10 };
++    const job = start(f, read);
++    expect(job.status).toBe("waiting_for_resources");
++    read.phase.serviceOperationId = job.id;
++    f.reader.homeRoomInstanceId = null;
++    copy.employee.facilityTask = null;
++    const forecast = forecastDiagnosticOrderPlan(f.state, read.plan, f.context).plan;
++    const quoted = forecast.phases.find((phase) => phase.kind === "interpretation")!;
++    expect(quoted.durationMinutes).toBe(3); expect(quoted.remainingMinutes).toBe(3);
++    expect(quoted.readingUpgradeWork).toMatchObject({ quotedRoomInstanceId: copy.room.id, durationMinutes: null, boundRoomInstanceId: null });
++    expect(normalizeDiagnosticOrderPlan(forecast)).not.toBeNull();
++    advance(f, 1);
++    expect(job.diagnosticPhaseWork!.resource!.roomInstanceId).toBe(copy.room.id);
++    expect(job.diagnosticPhaseWork!.durationMinutes).toBe(3);
++  });
++
++  it("binds a post-acceptance copy at neutral level 1 and never rescales bound work", () => {
++    const f = fixture(5), read = prepare(f), copy = addCopy(f, 5);
++    f.reader.homeRoomInstanceId = null;
++    const job = start(f, read);
++    expect(job.diagnosticPhaseWork!.durationMinutes).toBe(5);
++    expect(job.diagnosticPhaseWork!.readingUpgradeWork).toMatchObject({ boundRoomInstanceId: copy.room.id, boundUpgradeLevel: 1 });
++    expect(normalizeReadingUpgradeWork(job.diagnosticPhaseWork!.readingUpgradeWork)).not.toBeNull();
++    copy.room.upgradeLevel = 2; copy.employee.trainingLevel = 5;
++    expect(bindReadingUpgradeWork(job.diagnosticPhaseWork!.readingUpgradeWork!, f.room.id)).toBe(5);
++    advance(f, 5); expect(job.completedAtFacilityTick).toBe(5);
++  });
++
++  it.each([false, true, "shuffle"] as const)("drains three 4.5-minute reads at 5/9/14 independently of array order: %s", (order) => {
++    const f = fixture(), reads = [0, 1, 2].map((n) => prepare(f, `backlog.${n}`)), jobs = reads.map((read) => start(f, read));
++    if (order === true) f.state.serviceOperations.reverse();
++    if (order === "shuffle") f.state.serviceOperations = [jobs[1]!, jobs[2]!, jobs[0]!];
++    const events: Array<[number, number]> = [], seen = new Set<string>();
++    for (let at = 1; at <= 14; at++) {
++      advance(f, at);
++      for (const job of jobs) if (job.status === "completed" && !seen.has(job.id)) { seen.add(job.id); events.push([at, job.completedAtFacilityTick!]); }
++    }
++    expect(events).toEqual([[5, 4.5], [9, 9], [14, 13.5]]);
++    expect(jobs.map((job) => job.phaseStartedAtFacilityTick)).toEqual([0, 4.5, 9]);
++  });
++
++  it("preserves four simultaneous stations and queues the fifth", () => {
++    const f = fixture(2, 4);
++    const jobs = [0, 1, 2, 3, 4].map((n) => start(f, prepare(f, `parallel.${n}`, n % 4)));
++    expect(jobs.filter((job) => job.status === "in_service")).toHaveLength(4);
++    expect(new Set(jobs.slice(0, 4).map((job) => job.diagnosticPhaseWork!.resource!.stationId)).size).toBe(4);
++    advance(f, 5); expect(jobs[4]!.phaseStartedAtFacilityTick).toBe(4.5);
++  });
++
++  it("inherits its private station proof through multiple subminute resumed jobs", () => {
++    const f = fixture(), jobs = [0, 1, 2, 3].map((n) => start(f, prepare(f, `small.${n}`)));
++    for (const job of jobs.slice(1)) {
++      bindReadingUpgradeWork(job.diagnosticPhaseWork!.readingUpgradeWork!, f.room.id);
++      job.diagnosticPhaseWork!.remainingMinutes = 0.1;
++    }
++    advance(f, 5);
++    expect(jobs.every((job) => job.status === "completed")).toBe(true);
++    expect(jobs.map((job) => job.completedAtFacilityTick)).toEqual([4.5, 4.6, 4.699999999999999, 4.799999999999999]);
++  });
++
++  it.each([false, true])("keeps exact preview and execution for a real active backlog, competing activity=%s", (conflict) => {
++    const f = fixture(), first = start(f, prepare(f, "forecast.first")), read = prepare(f, "forecast.second"), second = start(f, read);
++    read.phase.serviceOperationId = second.id;
++    if (conflict) f.state.employeeDiscussions = { conflict: { employeeId: f.reader.id, lifecycle: "open" } as any };
++    f.state.facilityTick = 1;
++    const forecast = forecastDiagnosticOrderPlan(f.state, read.plan, f.context).plan.phases.find((phase) => phase.kind === "interpretation")!;
++    expect(forecast.forecast.startsAtTick).toBe(conflict ? 5 : 4.5);
++    expect(forecast.forecast.endsAtTick).toBe(conflict ? 9.5 : 9);
++    advance(f, 5);
++    expect(first.completedAtFacilityTick).toBe(4.5); expect(second.phaseStartedAtFacilityTick).toBe(forecast.forecast.startsAtTick);
++    expect(second.phaseEndsAtFacilityTick).toBe(forecast.forecast.endsAtTick);
++  });
++
++  it("has the same observed backlog through real ADVANCE_TICK and reload", () => {
++    const f = fixture(), jobs = [0, 1, 2].map((n) => start(f, prepare(f, `reducer.${n}`)));
++    let state = f.state;
++    const events: Array<[number, number]> = [], seen = new Set<string>();
++    for (let at = 1; at <= 14; at++) {
++      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `reading.tick.${sequence++}` }, f.context);
++      if (at === 5 || at === 9) state = deserializeGameState(serializeGameState(state), f.context);
++      for (const job of state.serviceOperations) if (job.diagnosticPhaseWork && job.status === "completed" && !seen.has(job.id)) {
++        seen.add(job.id); events.push([at, job.completedAtFacilityTick!]);
++      }
++    }
++    expect(events).toEqual([[5, 4.5], [9, 9], [14, 13.5]]);
++    expect(state.serviceIncomeReceipts).toHaveLength(0); expect(jobs).toHaveLength(3);
++  });
++});
++
++describe("Reading completion gives queued training its whole-minute boundary", () => {
++  it.each([false, true])("releases two due readers before selecting one free place, reversed=%s", (reverse) => {
++    const f = fixture(2, 2); f.addRoom("room.training");
++    f.addRoom("room.coffee_kiosk"); f.addRoom("room.break_room");
++    const places = getEmployeeTrainingPlaces(f.state, f.context);
++    const occupied = clone(f.reader); occupied.id = "occupied.trainee"; occupied.facilityTask = null;
++    occupied.staffRoleDefinitionId = "staff.phlebotomist"; occupied.homeRoomInstanceId = f.addRoom("room.phlebotomy").room.id;
++    f.state.employees.push(occupied);
++    requestEmployeeTraining(f.state, occupied.id, f.context);
++    Object.assign(occupied.training!, { stage: "training", roomInstanceId: places[0]!.roomInstanceId, placeId: places[0]!.placeId,
++      startedAtFacilityTick: 0, remainingMinutes: 40 });
++    occupied.training!.roomUpgradeWork = undefined;
++    occupied.location = { ...places[0]!.location }; occupied.path = [{ ...occupied.location }];
++    const readers = f.state.employees.slice(0, 2);
++    const jobs = [0, 1, 2, 3].map((n) => start(f, prepare(f, `training.${n}`, n % 2)));
++    requestEmployeeTraining(f.state, readers[1]!.id, f.context); // Earlier request wins, despite ID/resource order.
++    requestEmployeeTraining(f.state, readers[0]!.id, f.context);
++    if (reverse) f.state.serviceOperations.reverse();
++    advance(f, 5);
++    expect(isEmployeeAwayForTraining(readers[1]!)).toBe(true);
++    expect(isEmployeeAwayForTraining(readers[0]!)).toBe(false);
++    expect(jobs[2]!.phaseStartedAtFacilityTick).toBe(4.5);
++    expect(jobs[3]!.status).toBe("waiting_for_resources");
++    readers[1]!.morale = 0;
++    expect(startRetailPurchase(f.state, "income.coffee", "employee", readers[1]!.id, f.context)).toBeNull();
++    advanceLevelThreeSupport(f.state, f.context);
++    expect(readers[1]!.facilityTask).toBeNull();
++    const another = start(f, prepare(f, "intervening.attempt"));
++    expect(another.reservedEmployeeIds).not.toContain(readers[1]!.id);
++    advanceEmployeeTraining(f.state, f.context);
++    expect(readers[1]!.training!.stage).toBe("walking_to_training");
++    expect(readers[0]!.training!.stage).toBe("queued");
++    expect(occupied.training!.remainingMinutes).toBe(35);
++    expect(f.state.employees.filter((employee) => employee.training?.roomInstanceId)).toHaveLength(2);
++  });
++
++  it("projects a genuinely finishing seat at observing tick 5, with no double progress", () => {
++    const f = fixture(); f.addRoom("room.training");
++    const home = f.addRoom("room.phlebotomy").room;
++    const places = getEmployeeTrainingPlaces(f.state, f.context);
++    for (let n = 0; n < 2; n++) {
++      const employee = clone(f.reader); employee.id = `occupied.${n}`; employee.facilityTask = null;
++      employee.staffRoleDefinitionId = "staff.phlebotomist"; employee.homeRoomInstanceId = home.id;
++      f.state.employees.push(employee); requestEmployeeTraining(f.state, employee.id, f.context);
++      Object.assign(employee.training!, { stage: "training", roomInstanceId: places[n]!.roomInstanceId, placeId: places[n]!.placeId,
++        startedAtFacilityTick: 0, remainingMinutes: n === 0 ? 5 : 60, roomUpgradeWork: undefined });
++      employee.location = { ...places[n]!.location }; employee.path = [{ ...employee.location }];
++    }
++    const first = start(f, prepare(f, "freed.0")), second = start(f, prepare(f, "freed.1"));
++    requestEmployeeTraining(f.state, f.reader.id, f.context);
++    f.state.facilityTick = 1;
++    expect(getQueuedEmployeeTrainingDepartures(f.state, f.context, 5, new Set([first.id]), true).map((entry) => entry.employeeId)).toEqual([f.reader.id]);
++    const preview = forecastDiagnosticOrderPlan(f.state, prepare(f, "preview.after.freed", 0).plan, f.context);
++    expect(preview.plan.phases.find((phase) => phase.kind === "interpretation")!.forecast.startsAtTick).toBeGreaterThan(60);
++    advance(f, 5); expect(second.status).toBe("waiting_for_resources");
++    expect(f.state.employees[1]!.training!.stage).toBe("training"); // Projection did not mutate the real seat.
++    advanceEmployeeTraining(f.state, f.context);
++    expect(f.state.employees[1]!.training!.stage).toBe("returning");
++    expect(f.state.employees[2]!.training!.remainingMinutes).toBe(55);
++    expect(f.reader.training!.stage).toBe("walking_to_training");
++  });
++
++  it("does not free a blocked or just-arrived nominal seat", () => {
++    const f = fixture(); const room = f.addRoom("room.training").room;
++    requestEmployeeTraining(f.state, f.reader.id, f.context); advanceEmployeeTraining(f.state, f.context);
++    const session = f.reader.training!;
++    session.remainingMinutes = 1; session.stage = "walking_to_training";
++    const places = getEmployeeTrainingPlaces(f.state, f.context), spare = addCopy(f, 1).employee;
++    requestEmployeeTraining(f.state, spare.id, f.context);
++    const projected = getQueuedEmployeeTrainingDepartures(f.state, f.context, 5, new Set(), true);
++    expect(projected[0]!.place.placeId).not.toBe(session.placeId);
++    session.stage = "training"; session.startedAtFacilityTick = 0; f.reader.location = { ...places[0]!.location };
++    f.state.doors = f.state.doors.filter((door) => door.roomId !== room.id);
++    expect(getQueuedEmployeeTrainingDepartures(f.state, f.context, 5, new Set(), true)).toEqual([]);
++  });
++});
++
++describe("Reading continuity exclusions and actual readiness", () => {
++  it.each(["late_factory", "late_acceptance", "late_enablement", "late_dependency"] as const)("uses original witnesses at the exact-end cutoff: %s", (kind) => {
++    const f = fixture(), first = start(f, prepare(f, "cutoff.first"));
++    let read = accept(f, "cutoff.second");
++    if (kind !== "late_enablement") enableReadingPhase(read.plan, read.phase, 0);
++    completeDependencies(read.plan, read.phase, kind === "late_dependency" ? 5 : 0);
++    f.state.facilityTick = 5;
++    if (kind === "late_acceptance") read = prepare(f, "cutoff.new");
++    const second = start(f, read);
++    advance(f, 5);
++    expect(first.completedAtFacilityTick).toBe(4.5);
++    expect(second.phaseStartedAtFacilityTick).toBe(kind === "late_factory" ? 4.5 : 5);
++    expect(second.diagnosticPhaseWork!.readingUpgradeWork!.readyAtTick).toBe(kind === "late_factory" ? 0 : 5);
++  });
++
++  it("does not use a dependency forecast or enact a feedback-pending plan", () => {
++    const f = fixture(), read = accept(f);
++    completeDependencies(read.plan, read.phase, 0);
++    f.encounter.pendingResult = pending(read.plan);
++    const step = f.encounter.steps[0]!;
++    step.status = "feedback_pending";
++    step.result = { ...step.result, diagnosticTiming: clone(read.plan) } as NonNullable<typeof step.result>;
++    const actions = { walkingPath: () => [], startMovement: () => {}, roomAt: () => null, releaseCare: () => {}, careCompleted: () => {} };
++    advanceDiagnosticOrders(f.state, f.context, actions);
++    expect(f.state.serviceOperations).toHaveLength(0);
++    expect(f.encounter.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "interpretation")!.readingUpgradeWork!.executionEnabledAtTick).toBeNull();
++    f.state.facilityTick = 5; step.status = "result_pending";
++    advanceDiagnosticOrders(f.state, f.context, actions);
++    const job = f.state.serviceOperations.find((entry) => entry.diagnosticPhaseWork)!;
++    expect(job.phaseStartedAtFacilityTick).toBe(5);
++    expect(job.diagnosticPhaseWork!.readingUpgradeWork!.executionEnabledAtTick).toBe(5);
++    expect(job.diagnosticPhaseWork!.readingUpgradeWork!.readyAtTick).toBe(5);
++
++    const other = accept(f); other.phase.forecast.readyAtTick = 0;
++    expect(startDiagnosticProcessingOperation(f.state, other.plan, other.phase.id, f.context)).toBeNull();
++  });
++
++  it("never reconstructs a carry token from completed history or an idle gap", () => {
++    const f = fixture(), first = start(f, prepare(f, "idle.first")), queuedBeforeCompletion = prepare(f, "idle.next");
++    advance(f, 5); expect(first.completedAtFacilityTick).toBe(4.5);
++    f.state = roundtrip(f);
++    const second = start(f, queuedBeforeCompletion);
++    expect(second.phaseStartedAtFacilityTick).toBe(5);
++    advance(f, 10); f.state.facilityTick = 12;
++    const third = start(f, prepare(f)); expect(third.phaseStartedAtFacilityTick).toBe(12);
++  });
++
++  it("keeps different desks independent and cannot donate a reader's fraction to another desk", () => {
++    const f = fixture(2, 2), first = start(f, prepare(f, "different.0", 0));
++    const otherReader = f.state.employees[1]!;
++    otherReader.facilityTask = { kind: "refill_water", targetId: f.room.id, startedAtFacilityTick: 0, workMinutesRemaining: 5 };
++    const second = start(f, prepare(f, "different.1", 1));
++    f.state.facilityTick = 5; otherReader.facilityTask = null;
++    advance(f, 5); expect(first.completedAtFacilityTick).toBe(4.5);
++    expect(second.phaseStartedAtFacilityTick).toBe(5);
++    expect(second.diagnosticPhaseWork!.resource!.employeeIds).toEqual([otherReader.id]);
++  });
++
++  it.each(["retail", "discussion", "praise", "movement"] as const)("does not carry through a competing activity or physical interruption: %s", (kind) => {
++    const f = fixture(), first = start(f, prepare(f, "conflict.0")), second = start(f, prepare(f, "conflict.1"));
++    if (kind === "retail") f.state.retailOperations.push({ id: "conflict.retail", status: "queued", actorKind: "employee", actorId: f.reader.id } as any);
++    if (kind === "discussion") f.state.employeeDiscussions = { conflict: { employeeId: f.reader.id, lifecycle: "open" } as any };
++    if (kind === "praise") f.state.environment.founderActivity = { kind: "praise_employee", targetId: f.reader.id } as any;
++    if (kind === "movement") {
++      f.reader.path = [{ x: 7, y: 4 }, { ...f.reader.location }]; f.reader.pathIndex = 1; f.reader.lastMovedAtFacilityTick = 5;
++    }
++    advance(f, 5);
++    expect(first.completedAtFacilityTick).toBe(4.5);
++    expect(second.phaseStartedAtFacilityTick).toBe(5);
++  });
++
++  it("does not backdate a moved reader that only reaches the actual station on the observing tick", () => {
++    const f = fixture(); f.reader.location = { x: 7, y: 4 }; f.reader.path = [{ ...f.reader.location }];
++    const first = start(f, prepare(f, "arriving.0")), second = start(f, prepare(f, "arriving.1"));
++    expect(first.status).toBe("walking_to_service");
++    f.reader.location = { ...first.diagnosticPhaseWork!.resource!.staffAnchor };
++    f.reader.pathIndex = f.reader.path.length - 1; f.reader.lastMovedAtFacilityTick = 5;
++    advance(f, 5);
++    expect(first.phaseStartedAtFacilityTick).toBe(5); expect(first.phaseEndsAtFacilityTick).toBe(9.5);
++    expect(second.status).toBe("waiting_for_resources");
++  });
++
++  it("starts a fresh segment after room sale, then may hand off only its new actual remainder", () => {
++    const f = fixture(), read = prepare(f), first = start(f, read), copy = addCopy(f, 5);
++    f.state.facilityTick = 4;
++    interruptServiceOperationsForRoomSale(f.state, f.room.id, "room.reading", f.context);
++    f.state.rooms = f.state.rooms.filter((room) => room.id !== f.room.id);
++    f.state.employees = f.state.employees.filter((employee) => employee.id !== f.reader.id);
++    expect(first.diagnosticPhaseWork!.remainingMinutes).toBe(0.5);
++    advance(f, 5); expect(first.phaseStartedAtFacilityTick).toBe(5); expect(first.phaseEndsAtFacilityTick).toBe(5.5);
++    const next = start(f, prepare(f)); advance(f, 6);
++    expect(next.diagnosticPhaseWork!.resource!.roomInstanceId).toBe(copy.room.id);
++    expect(next.phaseStartedAtFacilityTick).toBe(5.5); // Only the new continuous segment donates its endpoint.
++  });
++
++  it("keeps queued training working when both places remain occupied", () => {
++    const f = fixture(); f.addRoom("room.training");
++    const home = f.addRoom("room.phlebotomy").room;
++    const places = getEmployeeTrainingPlaces(f.state, f.context);
++    for (let n = 0; n < 2; n++) {
++      const employee = clone(f.reader); employee.id = `full.${n}`; employee.facilityTask = null; f.state.employees.push(employee);
++      employee.staffRoleDefinitionId = "staff.phlebotomist"; employee.homeRoomInstanceId = home.id;
++      requestEmployeeTraining(f.state, employee.id, f.context);
++      Object.assign(employee.training!, { stage: "training", roomInstanceId: places[n]!.roomInstanceId, placeId: places[n]!.placeId,
++        startedAtFacilityTick: 0, remainingMinutes: 60, roomUpgradeWork: undefined });
++      employee.location = { ...places[n]!.location }; employee.path = [{ ...employee.location }];
++    }
++    const first = start(f, prepare(f, "full.first", 0)), second = start(f, prepare(f, "full.second", 0));
++    requestEmployeeTraining(f.state, f.reader.id, f.context);
++    advance(f, 5); advanceEmployeeTraining(f.state, f.context);
++    expect(first.completedAtFacilityTick).toBe(4.5); expect(second.phaseStartedAtFacilityTick).toBe(4.5);
++    expect(f.reader.training!.stage).toBe("queued");
++  });
++
++  it("keeps reconstructed walking integral around fractional start, interruption, walking resume and reload", () => {
++    const f = fixture(); f.reader.location = { x: 7, y: 4 }; f.reader.path = [{ ...f.reader.location }];
++    const first = start(f, prepare(f, "walk.first")), read = prepare(f, "walk.second"), second = start(f, read);
++    f.reader.location = { ...first.diagnosticPhaseWork!.resource!.staffAnchor }; f.reader.pathIndex = f.reader.path.length - 1; f.reader.lastMovedAtFacilityTick = 2;
++    advance(f, 2); advance(f, 7); expect(second.phaseStartedAtFacilityTick).toBe(6.5);
++    f.state.facilityTick = 8; interruptServiceOperationsForEmployeeDismissal(f.state, new Set([f.reader.id]));
++    expect(second.diagnosticPhaseWork!.remainingMinutes).toBe(3);
++    f.reader.location = { x: 7, y: 4 }; f.reader.path = [{ ...f.reader.location }]; f.reader.pathIndex = 0;
++    advance(f, 9); expect(second.status).toBe("walking_to_service");
++    sync(f, read, second);
++    expect(Number.isSafeInteger(read.phase.forecast.walkingMinutes)).toBe(true);
++    expect(normalizeDiagnosticOrderPlan(read.plan)).not.toBeNull();
++    f.state = roundtrip(f);
++    const reader = f.state.employees[0]!, resumed = f.state.serviceOperations.find((operation) => operation.id === second.id)!;
++    reader.location = { ...resumed.diagnosticPhaseWork!.resource!.staffAnchor }; reader.pathIndex = reader.path.length - 1; reader.lastMovedAtFacilityTick = 10;
++    advance(f, 10); expect(resumed.phaseStartedAtFacilityTick).toBe(10); expect(resumed.phaseEndsAtFacilityTick).toBe(13);
++  });
++});
++
++describe("strict fractional Reading persistence", () => {
++  it("roundtrips unbound acceptance across every live and history carrier", () => {
++    const f = fixture(), { encounter } = f, { plan } = accept(f), source = plan.sources[0]!;
++    encounter.pendingResult = pending(clone(plan)); encounter.steps[0]!.result = pending(clone(plan));
++    encounter.testOnlyContinuation = { version: "test-only-continuation.v1", originatingNodeIndex: 0, serviceId: source.serviceId!, routeId: source.routeId!,
++      routeDisplayName: source.routeDisplayName, incomeLineId: "income.ultrasound", externalRemainder: "Frozen protocol", status: "waiting_for_service",
++      serviceOperationId: null, scheduledAtFacilityTick: 0, completedAtFacilityTick: null, diagnosticTiming: clone(plan) };
++    encounter.terminalTestOrder = { version: "terminal-test-order.v1", caseId: encounter.frozenCase.id, nodeId: "node.fixture", questionVariantId: "question.fixture",
++      choiceId: "choice.fixture", choiceLabel: "Fixture image", serviceId: source.serviceId!, routeId: source.routeId!, routeDisplayName: source.routeDisplayName,
++      externalRemainder: null, status: "onsite_service", serviceOperationId: null, scheduledAtFacilityTick: 0, diagnosticTiming: clone(plan) };
++    encounter.stagedResultOrder = { version: "staged-result-order.v1", originatingNodeIndex: 0, caseId: encounter.frozenCase.id, nodeId: "node.fixture", questionVariantId: "question.fixture",
++      choiceId: "choice.fixture", choiceLabel: "Fixture image", status: "waiting_for_component", remainderMode: "external_processing", currentComponentIndex: 0,
++      components: [{ componentId: "image", serviceId: source.serviceId!, routeId: source.routeId!, routeDisplayName: source.routeDisplayName, incomeLineId: "income.ultrasound", quoteFee: 50,
++        operationPhases: [{ id: "scan", roomDefinitionId: "room.ultrasound", durationMinutes: 45, staffRoleDefinitionIds: ["staff.imaging_technician"] }],
++        externalRemainder: "Frozen protocol", status: "waiting_for_service", serviceOperationId: null, diagnosticTiming: clone(plan) }],
++      remainder: pending(clone(plan)), diagnosticTiming: clone(plan) };
++    const restored = roundtrip(f).encounters[encounter.id]!;
++    for (const carrier of [restored.pendingResult, restored.steps[0]!.result, restored.testOnlyContinuation, restored.terminalTestOrder,
++      restored.stagedResultOrder, restored.stagedResultOrder!.remainder, restored.stagedResultOrder!.components[0]]) {
++      expect(carrier!.diagnosticTiming).toEqual(plan);
++    }
++  });
++
++  it("synchronizes first actual alternate binding to every carrier once", () => {
++    const f = fixture(), copy = addCopy(f, 5), read = prepare(f, undefined, 0);
++    f.encounter.pendingResult = pending(clone(read.plan)); f.encounter.steps[0]!.result = pending(clone(read.plan));
++    f.reader.homeRoomInstanceId = null;
++    const job = start(f, read);
++    read.phase.serviceOperationId = job.id;
++    replaceDiagnosticOrderPlan(f.encounter, read.plan);
++    advanceDiagnosticOrders(f.state, f.context, { walkingPath: () => [], startMovement: () => {}, roomAt: () => null, releaseCare: () => {}, careCompleted: () => {} });
++    for (const carrier of [f.encounter.pendingResult, f.encounter.steps[0]!.result]) {
++      const phase = carrier!.diagnosticTiming!.phases.find((phase) => phase.kind === "interpretation")!;
++      expect(phase.durationMinutes).toBe(3); expect(phase.readingUpgradeWork!.boundRoomInstanceId).toBe(copy.room.id);
++      expect(phase.readingUpgradeWork).toEqual(job.diagnosticPhaseWork!.readingUpgradeWork);
++    }
++    expect(roundtrip(f).serviceOperations[0]!.diagnosticPhaseWork!.durationMinutes).toBe(3);
++  });
++
++  it("roundtrips queued work and then a start4.5/end9 segment with the linked carrier", () => {
++    const f = fixture(); start(f, prepare(f, "queued.first")); const read = prepare(f, "queued.second"), job = start(f, read);
++    sync(f, read, job); expect(roundtrip(f).encounters[f.encounter.id]!.pendingResult!.diagnosticTiming!.phases.find((phase) => phase.kind === "interpretation")!.status).toBe("queued");
++    advance(f, 5); sync(f, read, job);
++    const restored = roundtrip(f), saved = restored.serviceOperations.find((operation) => operation.id === job.id)!;
++    expect(saved.phaseStartedAtFacilityTick).toBe(4.5); expect(saved.phaseEndsAtFacilityTick).toBe(9);
++    expect(restored.encounters[f.encounter.id]!.pendingResult!.dueTick % 1).toBe(0);
++  });
++  it("roundtrips an accepted plan, then an active bound phase/operation and integer pending clocks", () => {
++    const f = fixture(), read = prepare(f), job = start(f, read);
++    sync(f, read, job);
++    expect(roundtrip(f).serviceOperations[0]!.diagnosticPhaseWork).toEqual(job.diagnosticPhaseWork);
++    advance(f, 5); sync(f, read, job);
++    expect(roundtrip(f).encounters[f.encounter.id]!.pendingResult!.diagnosticTiming!.resultReady.reachedAtTick).toBe(4.5);
++  });
++
++  it.each([0, 0.5])("keeps a partial remainder %s through loss, reload and a different reader/copy", (remainder) => {
++    const f = fixture(), read = prepare(f), job = start(f, read), copy = addCopy(f, 5);
++    // Freeze a valid resumed segment ending 4.5; the interruption occurs at4 or5.
++    f.state.facilityTick = remainder ? 4 : 5;
++    interruptServiceOperationsForEmployeeDismissal(f.state, new Set([f.reader.id]));
++    f.state.employees = f.state.employees.filter((employee) => employee.id !== f.reader.id);
++    expect(job.diagnosticPhaseWork!.remainingMinutes).toBe(remainder);
++    const restored = roundtrip(f); f.state = restored;
++    const resumed = restored.serviceOperations[0]!;
++    advance(f, restored.facilityTick + 1);
++    expect(resumed.diagnosticPhaseWork!.durationMinutes).toBe(4.5);
++    expect(resumed.diagnosticPhaseWork!.resource!.roomInstanceId).toBe(copy.room.id);
++    expect(resumed.phaseEndsAtFacilityTick! - resumed.phaseStartedAtFacilityTick!).toBe(remainder);
++    advance(f, restored.facilityTick + 1); expect(resumed.status).toBe("completed");
++  });
++
++  it.each([
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.baselineMinutes = 6; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.employeeReductionPercent = -1; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.durationMinutes = 3; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.remainingMinutes = -0.1; },
++    (raw: any) => { raw.serviceOperations[0].phaseEndsAtFacilityTick = 4; },
++    (raw: any) => { raw.serviceOperations[0].lastMovedAtFacilityTick = 0.5; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.acceptedAtTick = 1; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.executionEnabledAtTick = null; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.durationMinutes += 1e-10; },
++    (raw: any) => { raw.serviceOperations[0].frozenOperationPhases[0].id = "other.phase"; },
++    (raw: any) => { raw.serviceOperations[0].diagnosticPhaseWork.readingUpgradeWork.boundUpgradeLevel = 1; },
++  ])("rejects malformed marked work explicitly (%#)", (mutate) => {
++    const f = fixture(), job = start(f, prepare(f));
++    const raw = JSON.parse(serializeGameState(f.state)); mutate(raw);
++    expect(() => deserializeGameState(JSON.stringify(raw), f.context)).toThrow(/reading|diagnostic/i);
++    expect(job.status).toBe("in_service");
++  });
++
++  it.each([NaN, Infinity, -Infinity])("rejects nonfinite marker inputs directly: %s", (invalid) => {
++    const f = fixture(), work = createReadingUpgradeWork(f.state, 0, f.room.id);
++    for (const key of ["employeeReductionPercent", "acceptedAtTick", "executionEnabledAtTick", "readyAtTick", "durationMinutes"]) {
++      expect(() => normalizeReadingUpgradeWork({ ...work, [key]: invalid })).toThrow(/reading/i);
++    }
++  });
++
++  it.each(["acceptance", "readiness", "pre_enactment", "binding", "resource", "source_integer", "walking_integer"] as const)("rejects cross-field carrier/witness contradictions: %s", (kind) => {
++    const f = fixture(), read = prepare(f), job = start(f, read); sync(f, read, job);
++    const raw = JSON.parse(serializeGameState(f.state)), plan = raw.encounters[f.encounter.id].pendingResult.diagnosticTiming;
++    const phase = plan.phases.find((phase: any) => phase.kind === "interpretation");
++    if (kind === "acceptance") plan.createdAtTick = 1;
++    if (kind === "readiness") phase.readingUpgradeWork.readyAtTick = 1;
++    if (kind === "pre_enactment") {
++      raw.encounters[f.encounter.id].steps[0].status = "feedback_pending";
++      raw.encounters[f.encounter.id].steps[0].result = clone(raw.encounters[f.encounter.id].pendingResult);
++    }
++    if (kind === "binding") {
++      const work = raw.serviceOperations[0].diagnosticPhaseWork;
++      work.readingUpgradeWork.acceptedRooms[0].upgradeLevel = 3; work.readingUpgradeWork.boundUpgradeLevel = 3;
++      work.readingUpgradeWork.durationMinutes = work.durationMinutes = work.remainingMinutes = 4;
++      raw.serviceOperations[0].frozenOperationPhases[0].durationMinutes = 4; raw.serviceOperations[0].phaseEndsAtFacilityTick = 4;
++    }
++    if (kind === "resource") phase.resource.employeeIds[0] = "different.employee";
++    if (kind === "source_integer") plan.sources[0].inclusiveDurationMinutes += 0.5;
++    if (kind === "walking_integer") phase.forecast.walkingMinutes = 0.5;
++    expect(() => deserializeGameState(JSON.stringify(raw), f.context)).toThrow(/reading|diagnostic/i);
++  });
++
++  it("keeps a historical paid manual30-minute read outside the upgrade clock", () => {
++    const f = fixture(5), job = start(f, prepare(f));
++    delete job.diagnosticPhaseWork;
++    job.actorId = "manual.saved"; job.quoteFee = 40;
++    job.frozenOperationPhases![0]!.durationMinutes = 30; job.phaseEndsAtFacilityTick = 30;
++    f.reader.trainingLevel = 5;
++    const restored = roundtrip(f); f.state = restored;
++    advance(f, 29); expect(restored.serviceOperations[0]!.status).toBe("in_service");
++    advance(f, 30); expect(restored.serviceOperations[0]!.completedAtFacilityTick).toBe(30);
++    expect(restored.serviceOperations[0]!.frozenOperationPhases![0]!.durationMinutes).toBe(30);
++    expect(restored.serviceIncomeReceipts).toHaveLength(1);
++  });
++
++  it("keeps legacy absence and its frozen integer five minutes after a new factory", () => {
++    const f = fixture(5), read = prepare(f);
++    delete read.phase.readingUpgradeWork; read.phase.durationMinutes = read.phase.remainingMinutes = 5;
++    const job = start(f, read);
++    expect(job.diagnosticPhaseWork!.readingUpgradeWork).toBeUndefined();
++    expect(job.phaseEndsAtFacilityTick).toBe(5); expect(roundtrip(f).serviceOperations[0]!.diagnosticPhaseWork!.readingUpgradeWork).toBeUndefined();
++  });
++});
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -171,6 +171,22 @@ export interface DiagnosticResourceRequirement {
+   stationKind: "reading" | "periop_bed" | null;
+ }
+ 
++/** Opt-in five-minute local reading contract; never added to legacy work. */
++export interface RoomUpgradeReadingWork {
++  version: "room-upgrade-reading.v1";
++  baselineMinutes: 5;
++  employeeReductionPercent: number;
++  acceptedAtTick: number;
++  executionEnabledAtTick: number | null;
++  /** Actual completed dependencies, never their forecast. */
++  readyAtTick: number | null;
++  acceptedRooms: Array<{ roomInstanceId: string; upgradeLevel: RoomUpgradeLevel }>;
++  quotedRoomInstanceId: string;
++  boundRoomInstanceId: string | null;
++  boundUpgradeLevel: RoomUpgradeLevel | null;
++  durationMinutes: number | null;
++}
++
+ export interface DiagnosticOrderPhase {
+   id: string;
+   componentId: string | null;
+@@ -201,6 +217,7 @@ export interface DiagnosticOrderPhase {
+   serviceOperationId: string | null;
+   /** Phase identity inside a linked multi-phase physical operation. */
+   operationPhaseId: string | null;
++  readingUpgradeWork?: RoomUpgradeReadingWork;
+ }
+ 
+ export interface DiagnosticOrderMilestone {
+@@ -259,6 +276,7 @@ export interface DiagnosticPhaseWork {
+   durationMinutes: number;
+   remainingMinutes: number;
+   resource: DiagnosticResourceChoice | null;
++  readingUpgradeWork?: RoomUpgradeReadingWork;
+ }
+ 
+ /** Binding of frozen diagnostic patient work to the existing physical engine. */
+diff --git a/packages/game-domain/src/diagnostic-timing.ts b/packages/game-domain/src/diagnostic-timing.ts
+--- a/packages/game-domain/src/diagnostic-timing.ts
++++ b/packages/game-domain/src/diagnostic-timing.ts
+@@ -13,9 +13,10 @@ import {
+ } from "@gamify-surgery/balance-config";
+ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+-import { getNewPeriopServiceOperationPhases, straightServiceVisitorSidewalkPath } from "./service-operations";
++import { getNewPeriopServiceOperationPhases, hasReadingStationContinuity, straightServiceVisitorSidewalkPath } from "./service-operations";
+ import { getDoorCells } from "./doors";
+-import { getEmployeeTrainingAvailability, getEmployeeTrainingHomeLocation, isDiagnosticResourceWaitingForTraining } from "./employee-training";
++import { getEmployeeTrainingAvailability, getEmployeeTrainingHomeLocation, getQueuedEmployeeTrainingDepartures, isDiagnosticResourceWaitingForTraining, type EmployeeTrainingDeparture } from "./employee-training";
++import { createReadingUpgradeWork, isReadingPlanWorkValid, isReadingWorkMinute, normalizeReadingUpgradeWork, quoteReadingUpgradeWork, readingMinutesEqual } from "./room-upgrade-reading";
+ import { getEmployeeTrainingWorkMinutes, getEmployeeTrainingWorkPercent, getServiceOperationTrainingMinutes, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
+ import { createRoomUpgradeRevenueQuote, isRoomUpgradeRevenueQuoteValid } from "./room-upgrades";
+ import { createRoomUpgradeRecoveryQuote, isRoomUpgradeRecoveryQuoteValid } from "./room-upgrade-experience";
+@@ -75,15 +76,17 @@ export type DiagnosticTimingQuote =
+ 
+ type Interval = { starts: number; ends: number };
+ type ActorInterval = Interval & { destination: GridPoint };
+-type OperationCompletion = { endsAtTick: number; phases: Map<string, number>; blocked: boolean };
++type OperationCompletion = { endsAtTick: number; phases: Map<string, number>; blocked: boolean;
++  readingQuote?: { roomInstanceId: string; durationMinutes: number }; readingForecast?: DiagnosticOrderPhase["forecast"] };
+ type Calendar = {
+   intervals: Map<string, Interval[]>;
+   actors: Map<string, ActorInterval[]>;
+   /** Occupied beds/transfer rooms must be claimed before future chains are seeded. */
+   heldResources: Map<string, Set<string>>;
+   operationCompletions: Map<string, OperationCompletion>;
++  readingHandoffs: Map<string, { resource: DiagnosticResourceChoice; atTick: number }>;
+ };
+-type DraftPhase = Pick<DiagnosticOrderPhase, "id" | "componentId" | "kind" | "mode" | "patientPresent" | "durationMinutes" | "dependsOn" | "requirement">;
++type DraftPhase = Pick<DiagnosticOrderPhase, "id" | "componentId" | "kind" | "mode" | "patientPresent" | "durationMinutes" | "dependsOn" | "requirement" | "readingUpgradeWork">;
+ const copy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+ const activeOperation = (operation: ServiceOperationState) => operation.status !== "completed" && operation.status !== "cancelled";
+ 
+@@ -91,7 +94,7 @@ function cloneCalendar(calendar: Calendar): Calendar {
+   return { intervals: new Map([...calendar.intervals].map(([key, intervals]) => [key, copy(intervals)])),
+     actors: new Map([...calendar.actors].map(([key, intervals]) => [key, copy(intervals)])),
+     heldResources: new Map([...calendar.heldResources].map(([key, owners]) => [key, new Set(owners)])),
+-    operationCompletions: calendar.operationCompletions };
++    operationCompletions: calendar.operationCompletions, readingHandoffs: new Map(calendar.readingHandoffs) };
+ }
+ 
+ function holdResource(calendar: Calendar, key: string, ownerId: string): void {
+@@ -291,8 +294,12 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+     const patientPath = !workHasArrived && draft.patientPresent && resource ? path(state, context, patientOrigin, resource.patientAnchor, resource.roomInstanceId) : [];
+     if (!workHasArrived && draft.patientPresent && resource && patientPath.length === 0) return [];
+     const employeeIds = resource ? [...resource.employeeIds, ...(resource.provider?.kind === "employee" ? [resource.provider.employeeId] : [])] : [];
+-    let starts = ready;
+-    const maximumAttempts = [...calendar.intervals.values()].reduce((total, intervals) => total + intervals.length, 1) + [...calendar.actors.values()].reduce((total, intervals) => total + intervals.length, 1);
++    const handoff = resource ? calendar.readingHandoffs.get(resource.employeeIds[0]!) : null;
++    const canInherit = draft.readingUpgradeWork?.readyAtTick !== null && draft.readingUpgradeWork?.readyAtTick !== undefined && handoff && resource &&
++      resource.roomInstanceId === handoff.resource.roomInstanceId && resource.stationId === handoff.resource.stationId &&
++      draft.readingUpgradeWork.readyAtTick <= handoff.atTick;
++    let starts = canInherit ? Math.min(ready, handoff.atTick) : ready;
++    const maximumAttempts = [...calendar.intervals.values()].reduce((total, intervals) => total + intervals.length, draft.readingUpgradeWork ? 3 : 1) + [...calendar.actors.values()].reduce((total, intervals) => total + intervals.length, 1);
+     for (let attempt = 0; attempt < maximumAttempts; attempt++) {
+       const employeePaths = employeeIds.map((employeeId) => {
+         const employee = state.employees.find((entry) => entry.id === employeeId)!;
+@@ -304,6 +311,13 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+       const walkingMinutes = Math.max(0, ...[patientPath, founderPath, ...employeePaths.map((entry) => entry.path)].map((entry) => Math.ceil(Math.max(0, entry.length - 1) / tilesPerTick)));
+       const slot = resource ? firstSlot(calendar, resource, starts, walkingMinutes + workMinutes) : starts;
+       if (slot !== starts) { starts = slot; continue; }
++      if (draft.readingUpgradeWork) {
++        const continuous = handoff && resource && walkingMinutes === 0 && starts === handoff.atTick &&
++          resource.roomInstanceId === handoff.resource.roomInstanceId && resource.stationId === handoff.resource.stationId &&
++          draft.readingUpgradeWork.acceptedAtTick <= starts && (draft.readingUpgradeWork.readyAtTick ?? ready) <= starts;
++        const observedStart = continuous ? starts : Math.ceil(Math.max(state.facilityTick, starts));
++        if (observedStart !== starts) { starts = observedStart; continue; }
++      }
+       const ends = starts + walkingMinutes + workMinutes;
+       let afterNext = starts;
+       for (const actorId of [...employeeIds, ...(resource?.provider?.kind === "founder" ? ["founder"] : [])]) {
+@@ -325,9 +339,13 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
+   const startsAtTick = option.starts + option.walkingMinutes;
+   const endsAtTick = startsAtTick + option.workMinutes;
+   if (option.resource) reserve(calendar, option.resource, option.starts, endsAtTick);
++  if (draft.readingUpgradeWork && option.resource) {
++    calendar.readingHandoffs.set(option.resource.employeeIds[0]!, { resource: option.resource, atTick: endsAtTick });
++  }
++  const forecastReady = Math.min(ready, option.starts);
+   return { ...copy(draft), resource: option.resource ? copy(option.resource) : null,
+     ...(initialTiming ? { durationMinutes: option.workMinutes } : {}),
+-    forecast: { readyAtTick: ready, startsAtTick, endsAtTick, queueMinutes: option.starts - ready, walkingMinutes: option.walkingMinutes,
++    forecast: { readyAtTick: forecastReady, startsAtTick, endsAtTick, queueMinutes: option.starts - forecastReady, walkingMinutes: option.walkingMinutes,
+       patientPath: option.patientPath, employeePaths: option.employeePaths, founderPath: option.founderPath, tilesPerTick },
+     status: "pending", remainingMinutes: option.workMinutes, startedAtTick: null, completedAtTick: null, serviceOperationId: null, operationPhaseId: null };
+ }
+@@ -416,12 +434,47 @@ function externalWalk(state: GameState, context: DomainContext, origin: GridPoin
+ }
+ 
+ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: string, encounterId: string): Calendar {
+-  const calendar: Calendar = { intervals: new Map(), actors: new Map(), heldResources: new Map(), operationCompletions: new Map() };
++  const calendar: Calendar = { intervals: new Map(), actors: new Map(), heldResources: new Map(), operationCompletions: new Map(), readingHandoffs: new Map() };
+   const now = state.facilityTick;
+   const operations = state.serviceOperations.filter(activeOperation).sort((a, b) =>
+     Number(b.phaseEndsAtFacilityTick !== null) - Number(a.phaseEndsAtFacilityTick !== null) || a.createdAtFacilityTick - b.createdAtFacilityTick || a.id.localeCompare(b.id));
+   const trackedIds = new Set(operations.map((operation) => operation.id));
+   const operationCompletions = calendar.operationCompletions;
++  // Forecast the same released cohort and observing boundary as execution.
++  // Only hypothetical session copies are changed; no real seat/progress moves.
++  const readingCohort = operations.filter((operation) => operation.phaseEndsAtFacilityTick !== null &&
++    hasReadingStationContinuity(state, operation, context, operation.phaseEndsAtFacilityTick));
++  const projectedState = { ...state, employees: state.employees.map((employee) => ({ ...employee, training: employee.training ? copy(employee.training) : employee.training })) };
++  const departures = new Map<string, EmployeeTrainingDeparture>();
++  const released = new Set<string>();
++  const boundaries = [...new Set([now, ...readingCohort.map((operation) => Math.max(now, Math.ceil(operation.phaseEndsAtFacilityTick!)))])].sort((a, b) => a - b);
++  for (const boundary of boundaries) {
++    for (const operation of readingCohort) if (Math.ceil(operation.phaseEndsAtFacilityTick!) <= boundary) released.add(operation.id);
++    for (const departure of departures.values()) {
++      const employee = projectedState.employees.find((entry) => entry.id === departure.employeeId)!;
++      const session = employee.training!;
++      if (departure.completedAtTick <= boundary) { session.stage = "returning"; session.roomInstanceId = null; session.placeId = null; }
++      else if (departure.seatedAtTick <= boundary) {
++        session.stage = "training"; session.lastProgressAtFacilityTick = departure.seatedAtTick;
++        session.remainingMinutes = departure.completedAtTick - departure.seatedAtTick; employee.location = departure.place.location;
++      }
++    }
++    for (const departure of getQueuedEmployeeTrainingDepartures(projectedState, context, boundary, released, true)) {
++      if (departures.has(departure.employeeId)) continue;
++      departures.set(departure.employeeId, departure);
++      const employee = projectedState.employees.find((entry) => entry.id === departure.employeeId)!;
++      employee.training!.stage = "walking_to_training";
++      employee.training!.roomInstanceId = departure.place.roomInstanceId;
++      employee.training!.placeId = departure.place.placeId;
++      const ending = readingCohort.find((operation) => operation.reservedEmployeeIds.includes(employee.id) && Math.ceil(operation.phaseEndsAtFacilityTick!) === boundary);
++      const starts = ending?.phaseEndsAtFacilityTick ?? boundary;
++      calendar.intervals.set(`employee:${employee.id}`, [{ starts, ends: departure.availableAtTick }]);
++      calendar.actors.set(employee.id, [{ starts, ends: departure.availableAtTick, destination: departure.homeLocation }]);
++    }
++  }
++  for (const operation of readingCohort) if (Math.ceil(operation.phaseEndsAtFacilityTick!) >= now && !departures.has(operation.reservedEmployeeIds[0]!)) {
++    calendar.readingHandoffs.set(operation.reservedEmployeeIds[0]!, { resource: copy(operation.diagnosticPhaseWork!.resource!), atTick: operation.phaseEndsAtFacilityTick! });
++  }
+   for (const operation of state.serviceOperations.filter((entry) => entry.diagnosticPhysicalWork)) {
+     const witnessed = operation.diagnosticPhysicalWork!.phaseWitnesses.filter((witness) => witness.completedAtFacilityTick !== null);
+     if (witnessed.length) operationCompletions.set(operation.id, { endsAtTick: Math.max(...witnessed.map((witness) => witness.completedAtFacilityTick!)),
+@@ -492,7 +545,9 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+     const movingActors = [operation, ...state.employees.filter((employee) => operation.reservedEmployeeIds.includes(employee.id)),
+       ...(state.environment.founderActivity?.targetId === operation.id ? [state.environment.founderActivity] : [])];
+     const walking = Math.max(0, ...movingActors.map((actor) => Math.ceil(Math.max(0, actor.path.length - 1 - actor.pathIndex) / context.balanceRelease.facility.characterTravelTilesPerTick)));
+-    const endsAtTick = Math.max(now, operation.phaseEndsAtFacilityTick ?? now + walking + (operation.saleTransfer?.remainingPhaseMinutes ?? operation.diagnosticPhaseWork?.remainingMinutes ?? operation.diagnosticPhysicalWork?.remainingPhaseMinutes ?? phase.durationMinutes));
++    const exactReadingEnd = calendar.readingHandoffs.has(operation.reservedEmployeeIds[0]!) && operation.diagnosticPhaseWork?.readingUpgradeWork;
++    const endsAtTick = operation.diagnosticPhaseWork?.readingUpgradeWork && operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null
++      ? operation.phaseEndsAtFacilityTick : Math.max(now, operation.phaseEndsAtFacilityTick ?? now + walking + (operation.saleTransfer?.remainingPhaseMinutes ?? operation.diagnosticPhaseWork?.remainingMinutes ?? operation.diagnosticPhysicalWork?.remainingPhaseMinutes ?? phase.durationMinutes));
+     const resource = operation.diagnosticPhaseWork?.resource ?? operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource ?? {
+       roomInstanceId: room.id, roomDefinitionId: room.roomDefinitionId, stationId: operation.periopBedReservation?.roomInstanceId === room.id ? operation.periopBedReservation.bedId : null,
+       employeeIds: [...operation.reservedEmployeeIds], provider: operation.providerReservation,
+@@ -501,7 +556,7 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+       staffAnchor: room.roomDefinitionId === "room.periop_recovery" ? getRoomSharedStaffAnchor(room, definition) : room.roomDefinitionId === "room.phlebotomy" ?
+         getRoomCareAnchor(room, definition, "clinician") : getRoomNavigationAnchor(room, definition, "staff"),
+     };
+-    reserve(calendar, resource, now, endsAtTick);
++    reserve(calendar, resource, now, operation.diagnosticPhaseWork?.readingUpgradeWork && !exactReadingEnd ? Math.max(now, Math.ceil(endsAtTick)) : endsAtTick);
+     currentClaims.set(operation.id, { resource, endsAtTick });
+   }
+   const scheduleOperation = (operation: ServiceOperationState) => {
+@@ -524,6 +579,8 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+       for (const roomId of operation.transitionHeldRoomInstanceIds ?? []) clearHeldRoom(roomId, operation.path.slice(operation.pathIndex), now);
+     }
+     let blocked = false;
++    let readingQuote: OperationCompletion["readingQuote"];
++    let readingForecast: OperationCompletion["readingForecast"];
+     for (let index = startIndex; index < frozen.length; index += 1) {
+       const phase = frozen[index]!;
+       const requirement = operation.diagnosticPhaseWork ? processingRequirement(operation.diagnosticPhaseWork.kind) : requirementForOperation(phase);
+@@ -539,13 +596,20 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+           resource.roomInstanceId === operation.periopBedReservation!.roomInstanceId && resource.stationId === operation.periopBedReservation!.bedId) : null;
+         if (requirement.stationKind === "periop_bed" && operation.periopBedReservation && !heldBed) { blocked = true; break; }
+         const acceptedResource = operation.diagnosticPhysicalWork?.phaseBindings[index]?.resource ?? (isCurrent ? operation.diagnosticPhaseWork?.resource ?? heldBed : heldBed);
+-        const replaceStaff = isDiagnosticResourceWaitingForTraining(state, acceptedResource);
++        const replaceStaff = isDiagnosticResourceWaitingForTraining(state, acceptedResource) || Boolean(operation.diagnosticPhaseWork?.readingUpgradeWork && acceptedResource &&
++          !resourceCandidates(state, context, requirement).some((resource) => resource.roomInstanceId === acceptedResource.roomInstanceId &&
++            resource.stationId === acceptedResource.stationId && resource.employeeIds.join(":") === acceptedResource.employeeIds.join(":")));
+         const retainBed = replaceStaff && requirement.stationKind === "periop_bed" && Boolean(heldBed ?? acceptedResource);
++        const reading = operation.diagnosticPhaseWork?.readingUpgradeWork;
+         const scheduled = schedulePhase(state, context, calendar, { id: operation.id + ":" + phase.id, componentId: null, kind: "retained", mode: "local",
+-          patientPresent: operation.actorKind !== "remote", durationMinutes: phase.durationMinutes, dependsOn: [], requirement }, ready, actorOrigin,
++          patientPresent: operation.actorKind !== "remote", durationMinutes: phase.durationMinutes, dependsOn: [], requirement,
++          ...(reading ? { readingUpgradeWork: reading } : {}) }, ready, actorOrigin,
+           replaceStaff ? retainBed ? heldBed ?? acceptedResource : null : acceptedResource, remaining, operation.id, false,
+-          operation.trainingTiming?.phases[index]?.boundPercent === null ? (resource) => getServiceOperationTrainingMinutes(state, operation, index, resource?.provider ?? null) : undefined, retainBed);
++          reading?.durationMinutes === null ? (resource) => quoteReadingUpgradeWork(reading, resource!.roomInstanceId) :
++            operation.trainingTiming?.phases[index]?.boundPercent === null ? (resource) => getServiceOperationTrainingMinutes(state, operation, index, resource?.provider ?? null) : undefined, retainBed);
+         if (!scheduled) { blocked = true; break; }
++        if (reading?.durationMinutes === null && scheduled.resource) readingQuote = { roomInstanceId: scheduled.resource.roomInstanceId, durationMinutes: scheduled.durationMinutes };
++        if (reading) readingForecast = scheduled.forecast;
+         const movementStarts = scheduled.forecast.readyAtTick + scheduled.forecast.queueMinutes;
+         if (index === startIndex) for (const roomId of [...(operation.transitionHeldRoomInstanceIds ?? []), ...(waitingForNext ? operation.reservedRoomInstanceIds : [])]) {
+           clearHeldRoom(roomId, scheduled.forecast.patientPath, movementStarts);
+@@ -571,7 +635,8 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
+       const remainingWalking = workFinished ? Math.ceil(Math.max(0, operation.path.length - 1 - operation.pathIndex) / context.balanceRelease.facility.characterTravelTilesPerTick) : 0;
+       if (!blocked) releaseHold(calendar, key, operation.id, now, ready + remainingWalking);
+     }
+-    operationCompletions.set(operation.id, { endsAtTick: ready, phases: phaseCompletions, blocked });
++    operationCompletions.set(operation.id, { endsAtTick: ready, phases: phaseCompletions, blocked,
++      ...(readingQuote ? { readingQuote } : {}), ...(readingForecast ? { readingForecast } : {}) });
+   };
+   // Legacy acquisitions already have frozen clocks and concrete workers.
+   const orderedEncounters = Object.values(state.encounters).sort((a, b) => a.waiting.arrivedAtTick - b.waiting.arrivedAtTick || a.id.localeCompare(b.id));
+@@ -625,9 +690,10 @@ export interface DiagnosticOrderForecast {
+ }
+ 
+ function setForecastEnd(phase: DiagnosticOrderPhase, end: number, createdAtTick: number): void {
+-  const starts = Math.max(createdAtTick, end - Math.min(phase.durationMinutes, Math.max(0, end - createdAtTick)));
++  const starts = phase.readingUpgradeWork && phase.startedAtTick !== null ? phase.startedAtTick :
++    Math.max(createdAtTick, end - Math.min(phase.readingUpgradeWork ? phase.remainingMinutes : phase.durationMinutes, Math.max(0, end - createdAtTick)));
+   const ready = Math.min(starts, phase.forecast.readyAtTick);
+-  const walking = Math.min(phase.forecast.walkingMinutes, starts - ready);
++  const walking = Math.min(phase.forecast.walkingMinutes, Math.floor(starts - ready));
+   phase.forecast = { ...phase.forecast, readyAtTick: ready, startsAtTick: starts, endsAtTick: end,
+     queueMinutes: starts - ready - walking, walkingMinutes: walking };
+ }
+@@ -653,7 +719,12 @@ function forecastFrozenPlan(state: GameState, frozenPlan: DiagnosticOrderPlan, c
+       const end = phase.operationPhaseId ? linked.phases.get(phase.operationPhaseId) : linked.endsAtTick;
+       if (linked.blocked && (!phase.operationPhaseId || end === undefined)) { blocked.add(phase.id); continue; }
+       const completion = end ?? linked.endsAtTick;
+-      setForecastEnd(phase, completion, plan.createdAtTick);
++      if (phase.readingUpgradeWork?.durationMinutes === null && linked.readingQuote) {
++        phase.readingUpgradeWork.quotedRoomInstanceId = linked.readingQuote.roomInstanceId;
++        phase.durationMinutes = phase.remainingMinutes = linked.readingQuote.durationMinutes;
++      }
++      if (phase.readingUpgradeWork && linked.readingForecast) phase.forecast = copy(linked.readingForecast);
++      else setForecastEnd(phase, completion, plan.createdAtTick);
+       ends.set(phase.id, completion);
+       if (phase.patientPresent) origin = phase.resource?.patientAnchor ?? phase.forecast.patientPath.at(-1) ?? origin;
+       continue;
+@@ -669,12 +740,20 @@ function forecastFrozenPlan(state: GameState, frozenPlan: DiagnosticOrderPlan, c
+       continue;
+     }
+     const remaining = Math.max(0, phase.remainingMinutes - elapsed);
+-    const replaceStaff = phase.status !== "active" && isDiagnosticResourceWaitingForTraining(state, phase.resource);
++    const replaceStaff = phase.status !== "active" && (isDiagnosticResourceWaitingForTraining(state, phase.resource) || Boolean(phase.readingUpgradeWork && phase.resource && phase.requirement &&
++      !resourceCandidates(state, context, phase.requirement).some((resource) => resource.roomInstanceId === phase.resource!.roomInstanceId &&
++        resource.stationId === phase.resource!.stationId && resource.employeeIds.join(":") === phase.resource!.employeeIds.join(":"))));
+     const retainBed = replaceStaff && phase.requirement?.stationKind === "periop_bed";
+     const preferred = replaceStaff && !retainBed ? null : phase.resource;
+-    const scheduled = schedulePhase(state, context, calendar, phase, ready, origin, preferred, remaining, plan.orderId, phase.status === "active", undefined, retainBed);
++    const reading = phase.readingUpgradeWork;
++    const scheduled = schedulePhase(state, context, calendar, phase, ready, origin, preferred, remaining, plan.orderId, phase.status === "active",
++      reading?.durationMinutes === null ? (resource) => quoteReadingUpgradeWork(reading, resource!.roomInstanceId) : undefined, retainBed);
+     if (!scheduled) { blocked.add(phase.id); continue; }
+     phase.forecast = scheduled.forecast;
++    if (reading?.durationMinutes === null && scheduled.resource) {
++      reading.quotedRoomInstanceId = scheduled.resource.roomInstanceId;
++      phase.durationMinutes = phase.remainingMinutes = scheduled.durationMinutes;
++    }
+     // A cleared choice may be forecast against compatible capacity without
+     // allocating or changing the persisted choice used by the executor.
+     ends.set(phase.id, phase.forecast.endsAtTick);
+@@ -801,16 +880,25 @@ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingR
+     const append = (kind: DraftPhase["kind"], mode: DraftPhase["mode"], durationMinutes: number, patientPresent: boolean,
+       requirement: DiagnosticResourceRequirement | null, dependsOn: string[], suffix: string, preferred?: DiagnosticResourceChoice | null): DiagnosticOrderPhase | null => {
+       const ready = Math.max(state.facilityTick, ...dependsOn.map((id) => plan.phases.find((phase) => phase.id === id)!.forecast.endsAtTick));
++      const readingWork = kind === "interpretation" && mode === "local" && requirement?.roomDefinitionId === "room.reading"
++        ? createReadingUpgradeWork(state, getEmployeeTrainingWorkPercent(trainingCategories,
++          { kind, roomDefinitionId: requirement.roomDefinitionId, staffRoleDefinitionIds: requirement.staffRoleDefinitionIds }, null), "provisional.reading") : undefined;
+       const effectiveMinutes = (resource: DiagnosticResourceChoice | null) => {
+         const provider = resource?.provider;
+         const providerRole = provider?.kind === "employee" ? state.employees.find((employee) => employee.id === provider.employeeId)?.staffRoleDefinitionId ?? null : null;
+-        return getEmployeeTrainingWorkMinutes(durationMinutes, getEmployeeTrainingWorkPercent(trainingCategories,
+-          { kind, roomDefinitionId: requirement?.roomDefinitionId ?? null, staffRoleDefinitionIds: requirement?.staffRoleDefinitionIds ?? [] }, providerRole));
++        const percent = getEmployeeTrainingWorkPercent(trainingCategories,
++          { kind, roomDefinitionId: requirement?.roomDefinitionId ?? null, staffRoleDefinitionIds: requirement?.staffRoleDefinitionIds ?? [] }, providerRole);
++        return readingWork ? quoteReadingUpgradeWork(readingWork, resource!.roomInstanceId)
++          : getEmployeeTrainingWorkMinutes(durationMinutes, percent);
+       };
+-      const phase = scheduleNewPhase(state, context, calendar, { id: `${prefix}.${suffix}`, componentId, kind, mode, durationMinutes, patientPresent, requirement, dependsOn },
++      const phase = scheduleNewPhase(state, context, calendar, { id: `${prefix}.${suffix}`, componentId, kind, mode, durationMinutes, patientPresent, requirement, dependsOn,
++        ...(readingWork ? { readingUpgradeWork: readingWork } : {}) },
+         ready, patientLocation, requirement?.stationKind === "periop_bed" ? selectedBed : preferred,
+         mode === "local" && requirement ? effectiveMinutes : undefined);
+       if (phase) {
++        if (phase.readingUpgradeWork) {
++          phase.readingUpgradeWork.quotedRoomInstanceId = phase.resource!.roomInstanceId;
++        }
+         plan.phases.push(phase);
+         if (phase.patientPresent && phase.resource) patientLocation = phase.resource.patientAnchor;
+         if (kind === "preparation" && phase.resource?.stationId) selectedBed = phase.resource;
+@@ -1030,13 +1118,18 @@ function validRequirement(value: unknown): value is DiagnosticResourceRequiremen
+     (value.stationKind === null || oneOf(value.stationKind, ["reading", "periop_bed"]));
+ }
+ 
+-function validPhase(value: unknown): value is DiagnosticOrderPhase {
+-  if (!record(value) || !only(value, ["id", "componentId", "kind", "mode", "patientPresent", "durationMinutes", "dependsOn", "requirement", "resource", "forecast", "status", "remainingMinutes", "startedAtTick", "completedAtTick", "serviceOperationId", "operationPhaseId"]) ||
++function validPhase(value: unknown, readingClocks = false): value is DiagnosticOrderPhase {
++  if (!record(value)) return false;
++  const reading = normalizeReadingUpgradeWork(value.readingUpgradeWork);
++  const workMinute = reading ? isReadingWorkMinute : minute;
++  const clock = readingClocks ? isReadingWorkMinute : minute;
++  const workClock = (candidate: unknown) => candidate === null || workMinute(candidate);
++  if (!only(value, ["id", "componentId", "kind", "mode", "patientPresent", "durationMinutes", "dependsOn", "requirement", "resource", "forecast", "status", "remainingMinutes", "startedAtTick", "completedAtTick", "serviceOperationId", "operationPhaseId", "readingUpgradeWork"]) ||
+     !textId(value.id) || !nullableId(value.componentId) || !oneOf(value.kind, ["collection", "acquisition", "preparation", "procedure", "recovery", "interpretation", "laboratory_processing", "pathology", "retained", "patient_departure", "patient_return"]) ||
+-    !oneOf(value.mode, ["local", "external"]) || typeof value.patientPresent !== "boolean" || !minute(value.durationMinutes) || (value.durationMinutes === 0 && value.kind !== "patient_return" && value.kind !== "patient_departure") ||
++    !oneOf(value.mode, ["local", "external"]) || typeof value.patientPresent !== "boolean" || !workMinute(value.durationMinutes) || (value.durationMinutes === 0 && value.kind !== "patient_return" && value.kind !== "patient_departure") ||
+     !stringList(value.dependsOn) || !(value.requirement === null || validRequirement(value.requirement)) || !(value.resource === null || validResource(value.resource)) ||
+-    !oneOf(value.status, ["pending", "queued", "active", "completed", "cancelled"]) || !minute(value.remainingMinutes) || value.remainingMinutes > value.durationMinutes ||
+-    !nullableMinute(value.startedAtTick) || !nullableMinute(value.completedAtTick) || !nullableId(value.serviceOperationId) || !nullableId(value.operationPhaseId)) return false;
++    !oneOf(value.status, ["pending", "queued", "active", "completed", "cancelled"]) || !workMinute(value.remainingMinutes) || value.remainingMinutes > value.durationMinutes ||
++    !workClock(value.startedAtTick) || !workClock(value.completedAtTick) || !nullableId(value.serviceOperationId) || !nullableId(value.operationPhaseId)) return false;
+   if ((value.kind === "interpretation" || value.kind === "laboratory_processing" || value.kind === "pathology") && value.patientPresent ||
+     value.mode === "external" && (value.requirement !== null || value.resource !== null) ||
+     value.resource !== null && (value.requirement === null || value.resource.roomDefinitionId !== value.requirement.roomDefinitionId)) return false;
+@@ -1044,9 +1137,9 @@ function validPhase(value: unknown): value is DiagnosticOrderPhase {
+     value.completedAtTick !== null && value.status !== "completed" || value.startedAtTick !== null && value.completedAtTick !== null && value.completedAtTick < value.startedAtTick) return false;
+   const forecast = value.forecast;
+   return record(forecast) && only(forecast, ["readyAtTick", "startsAtTick", "endsAtTick", "queueMinutes", "walkingMinutes", "patientPath", "employeePaths", "founderPath", "tilesPerTick"]) &&
+-    minute(forecast.readyAtTick) && minute(forecast.startsAtTick) && minute(forecast.endsAtTick) && minute(forecast.queueMinutes) && minute(forecast.walkingMinutes) &&
+-    forecast.startsAtTick === forecast.readyAtTick + forecast.queueMinutes + forecast.walkingMinutes && forecast.endsAtTick >= forecast.startsAtTick &&
+-    forecast.endsAtTick - forecast.startsAtTick <= value.durationMinutes && points(forecast.patientPath) && points(forecast.founderPath) && minute(forecast.tilesPerTick) && forecast.tilesPerTick > 0 &&
++    clock(forecast.readyAtTick) && clock(forecast.startsAtTick) && clock(forecast.endsAtTick) && clock(forecast.queueMinutes) && minute(forecast.walkingMinutes) &&
++    readingMinutesEqual(forecast.startsAtTick, forecast.readyAtTick + forecast.queueMinutes + forecast.walkingMinutes) && forecast.endsAtTick >= forecast.startsAtTick &&
++    forecast.endsAtTick - forecast.startsAtTick <= value.durationMinutes + (reading ? 1e-9 : 0) && points(forecast.patientPath) && points(forecast.founderPath) && minute(forecast.tilesPerTick) && forecast.tilesPerTick > 0 &&
+     Array.isArray(forecast.employeePaths) && forecast.employeePaths.every((entry) => record(entry) && only(entry, ["employeeId", "path"]) && textId(entry.employeeId) && points(entry.path));
+ }
+ 
+@@ -1071,7 +1164,7 @@ export function normalizeDiagnosticOrderPlan(value: unknown): DiagnosticOrderPla
+   if (!record(value) || !only(value, ["version", "timingVersion", "orderId", "encounterId", "createdAtTick", "execution", "sources", "phases", "resultReady", "visualResultReady", "careComplete"]) ||
+     value.version !== "diagnostic-order.v1" || value.timingVersion !== "diagnostic-timing.v1" || !textId(value.orderId) || !textId(value.encounterId) || !minute(value.createdAtTick) ||
+     !oneOf(value.execution, ["supported", "preview_only"]) || !Array.isArray(value.sources) || value.sources.length === 0 || !value.sources.every(validSource) ||
+-    !Array.isArray(value.phases) || value.phases.length === 0 || !value.phases.every(validPhase)) return null;
++    !Array.isArray(value.phases) || value.phases.length === 0 || !value.phases.every((phase) => validPhase(phase, (value.phases as unknown[]).some((entry) => record(entry) && entry.readingUpgradeWork !== undefined)))) return null;
+   const phases = value.phases as DiagnosticOrderPhase[];
+   for (const source of value.sources as DiagnosticOrderPlan["sources"]) {
+     if (source.roomUpgradeRecovery && !phases.some((phase) => phase.componentId === source.componentId &&
+@@ -1088,21 +1181,29 @@ export function normalizeDiagnosticOrderPlan(value: unknown): DiagnosticOrderPla
+     // the structural dependency graph remains authoritative during resumption.
+     previous.add(phase.id);
+   }
++  if (!isReadingPlanWorkValid(value as unknown as DiagnosticOrderPlan)) return null;
++  const clock = phases.some((phase) => phase.readingUpgradeWork) ? isReadingWorkMinute : minute;
+   const validMilestone = (candidate: unknown): boolean => record(candidate) && only(candidate, ["afterPhaseIds", "forecastAtTick", "reachedAtTick"]) &&
+     stringList(candidate.afterPhaseIds) && candidate.afterPhaseIds.length > 0 && candidate.afterPhaseIds.every((id) => previous.has(id)) &&
+-    minute(candidate.forecastAtTick) && (candidate.forecastAtTick === Math.max(...candidate.afterPhaseIds.map((id) => phases.find((phase) => phase.id === id)!.forecast.endsAtTick)) ||
++    clock(candidate.forecastAtTick) && (candidate.forecastAtTick === Math.max(...candidate.afterPhaseIds.map((id) => phases.find((phase) => phase.id === id)!.forecast.endsAtTick)) ||
+       candidate.reachedAtTick !== null && candidate.forecastAtTick === candidate.reachedAtTick) &&
+-    nullableMinute(candidate.reachedAtTick) && (candidate.reachedAtTick === null || candidate.reachedAtTick >= createdAtTick &&
++    (candidate.reachedAtTick === null || clock(candidate.reachedAtTick)) && (candidate.reachedAtTick === null || candidate.reachedAtTick >= createdAtTick &&
+       candidate.afterPhaseIds.every((id) => { const phase = phases.find((entry) => entry.id === id)!; return phase.status === "completed" && phase.completedAtTick! <= (candidate.reachedAtTick as number); }));
+   if (!validMilestone(value.resultReady) || !validMilestone(value.careComplete) || !(value.visualResultReady === null || validMilestone(value.visualResultReady))) return null;
+   return copy(value) as unknown as DiagnosticOrderPlan;
+ }
+ 
+ export function normalizeDiagnosticPhaseWork(value: unknown): DiagnosticPhaseWork | null {
+-  if (!record(value) || !only(value, ["version", "orderId", "encounterId", "phaseId", "kind", "billing", "durationMinutes", "remainingMinutes", "resource"]) ||
++  if (!record(value)) return null;
++  const reading = normalizeReadingUpgradeWork(value.readingUpgradeWork);
++  const workMinute = reading ? isReadingWorkMinute : minute;
++  if (!only(value, ["version", "orderId", "encounterId", "phaseId", "kind", "billing", "durationMinutes", "remainingMinutes", "resource", "readingUpgradeWork"]) ||
+     value.version !== "diagnostic-phase-work.v1" || !textId(value.orderId) || !textId(value.encounterId) || !textId(value.phaseId) ||
+-    !oneOf(value.kind, ["interpretation", "laboratory_processing", "pathology"]) || value.billing !== "none" || !minute(value.durationMinutes) || value.durationMinutes === 0 ||
+-    !minute(value.remainingMinutes) || value.remainingMinutes > value.durationMinutes || !(value.resource === null || validResource(value.resource))) return null;
++    !oneOf(value.kind, ["interpretation", "laboratory_processing", "pathology"]) || value.billing !== "none" || !workMinute(value.durationMinutes) || value.durationMinutes === 0 ||
++    !workMinute(value.remainingMinutes) || value.remainingMinutes > value.durationMinutes || !(value.resource === null || validResource(value.resource))) return null;
++  if (reading && (value.kind !== "interpretation" || reading.readyAtTick === null ||
++    value.durationMinutes !== quoteReadingUpgradeWork(reading, reading.quotedRoomInstanceId) ||
++    reading.durationMinutes === null && value.remainingMinutes !== value.durationMinutes)) return null;
+   if (value.resource !== null && (value.resource.provider !== null || value.resource.employeeIds.length !== 1 ||
+     (value.kind === "interpretation" ? value.resource.roomDefinitionId !== "room.reading" || value.resource.stationId === null : value.resource.roomDefinitionId !== "room.laboratory" || value.resource.stationId !== null))) return null;
+   return copy(value) as unknown as DiagnosticPhaseWork;
+diff --git a/packages/game-domain/src/diagnostic-orders.ts b/packages/game-domain/src/diagnostic-orders.ts
+--- a/packages/game-domain/src/diagnostic-orders.ts
++++ b/packages/game-domain/src/diagnostic-orders.ts
+@@ -2,6 +2,7 @@ import { getServiceIncomeForRoute } from "@gamify-surgery/balance-config";
+ import type { DecisionNode } from "@gamify-surgery/clinical-content";
+ import { forecastDiagnosticOrderPlan, getDiagnosticOrderPlans, hasOutstandingDiagnosticWork } from "./diagnostic-timing";
+ import { startDiagnosticAcquisitionOperation, startDiagnosticProcessingOperation } from "./service-operations";
++import { enableReadingPhase } from "./room-upgrade-reading";
+ import type { DiagnosticChoicePlanning } from "./diagnostic-order-requests";
+ import type { DiagnosticOrderPhase, DiagnosticOrderPlan, DomainContext, EncounterState, GameState, GridPoint, PatientMovementKind, PendingResult, ServiceOperationState } from "./types";
+ 
+@@ -13,7 +14,7 @@ export function createDiagnosticPendingResult(state: GameState, encounter: Encou
+   diagnostic: DiagnosticChoicePlanning, plan: DiagnosticOrderPlan): PendingResult {
+   const gate = node.resultGateAfter;
+   const source = plan.sources[0]!;
+-  const total = Math.max(plan.resultReady.forecastAtTick, plan.careComplete.forecastAtTick);
++  const total = Math.ceil(Math.max(plan.resultReady.forecastAtTick, plan.careComplete.forecastAtTick));
+   return {
+     diagnosticTiming: copy(plan), operationId: plan.orderId,
+     gateId: gate?.id ?? `gate.${plan.orderId}`, originatingNodeIndex: encounter.currentNodeIndex,
+@@ -39,7 +40,7 @@ export function replaceDiagnosticOrderPlan(encounter: EncounterState, plan: Diag
+     if (carrier?.diagnosticTiming?.orderId === plan.orderId) {
+       carrier.diagnosticTiming = copy(plan);
+       if ("dueTick" in carrier && carrier.deliveredAtTick === null) {
+-        carrier.dueTick = Math.max(plan.resultReady.forecastAtTick, plan.careComplete.forecastAtTick);
++        carrier.dueTick = Math.ceil(Math.max(plan.resultReady.forecastAtTick, plan.careComplete.forecastAtTick));
+         carrier.durationTicks = Math.max(0, carrier.dueTick - carrier.scheduledAtTick);
+       }
+     }
+@@ -92,6 +93,10 @@ function synchronizeOperationPhase(state: GameState, phase: DiagnosticOrderPhase
+   } else if (operation.diagnosticPhaseWork) {
+     phase.resource = copy(operation.diagnosticPhaseWork.resource);
+     phase.remainingMinutes = operation.diagnosticPhaseWork.remainingMinutes;
++    if (operation.diagnosticPhaseWork.readingUpgradeWork) {
++      phase.readingUpgradeWork = copy(operation.diagnosticPhaseWork.readingUpgradeWork);
++      phase.durationMinutes = operation.diagnosticPhaseWork.durationMinutes;
++    }
+     phase.startedAtTick = operation.phaseStartedAtFacilityTick;
+     if (operation.status === "completed" && operation.completedAtFacilityTick !== null) {
+       completePhase(phase, operation.completedAtFacilityTick);
+@@ -139,6 +144,7 @@ export function advanceDiagnosticOrders(state: GameState, context: DomainContext
+     if (!encounter || !hasOutstandingDiagnosticWork(frozenPlan) || !canRunPlan(encounter, frozenPlan)) continue;
+     let plan = copy(frozenPlan);
+     const careWasComplete = plan.careComplete.reachedAtTick !== null;
++    for (const phase of plan.phases) enableReadingPhase(plan, phase, state.facilityTick);
+     for (const phase of plan.phases) {
+       if (finished(phase) || phase.status === "cancelled") continue;
+       if (phase.serviceOperationId) {
+@@ -146,6 +152,7 @@ export function advanceDiagnosticOrders(state: GameState, context: DomainContext
+         if (phase.serviceOperationId || finished(phase)) continue;
+       }
+       if (!phase.dependsOn.every((id) => plan.phases.some((entry) => entry.id === id && finished(entry)))) continue;
++      enableReadingPhase(plan, phase, state.facilityTick);
+       const dependenciesAt = Math.max(plan.createdAtTick, ...phase.dependsOn.map((id) => plan.phases.find((entry) => entry.id === id)!.completedAtTick!));
+       if (phase.kind === "patient_departure" || phase.kind === "patient_return") {
+         if (phase.status === "active") {
+@@ -205,11 +212,20 @@ export function advanceDiagnosticOrders(state: GameState, context: DomainContext
+       }
+     }
+     plan = forecastDiagnosticOrderPlan(state, plan, context).plan;
++    for (const phase of plan.phases) {
++      const operation = state.serviceOperations.find((entry) => entry.id === phase.serviceOperationId);
++      const work = operation?.diagnosticPhaseWork;
++      if (work?.readingUpgradeWork?.durationMinutes === null && phase.readingUpgradeWork) {
++        work.readingUpgradeWork = copy(phase.readingUpgradeWork);
++        work.durationMinutes = work.remainingMinutes = phase.durationMinutes;
++        operation!.frozenOperationPhases![0]!.durationMinutes = phase.durationMinutes;
++      }
++    }
+     replaceDiagnosticOrderPlan(encounter, plan);
+     if (!careWasComplete && plan.careComplete.reachedAtTick !== null) {
+       if (encounter.testOnlyContinuation?.diagnosticTiming?.orderId === plan.orderId) {
+         encounter.testOnlyContinuation.status = "completed";
+-        encounter.testOnlyContinuation.completedAtFacilityTick = plan.careComplete.reachedAtTick;
++        encounter.testOnlyContinuation.completedAtFacilityTick = Math.ceil(plan.careComplete.reachedAtTick);
+       }
+       actions.careCompleted(encounter);
+     }
+diff --git a/packages/game-domain/src/service-operations.ts b/packages/game-domain/src/service-operations.ts
+--- a/packages/game-domain/src/service-operations.ts
++++ b/packages/game-domain/src/service-operations.ts
+@@ -31,7 +31,8 @@ import type {
+   ServiceOperationState,
+ } from "./types";
+ import { recordLevelThreeRoomUse } from "./level-three-support";
+-import { isDiagnosticResourceWaitingForTraining, isEmployeeAwayForTraining } from "./employee-training";
++import { earmarkQueuedEmployeeTrainingDepartures, getQueuedEmployeeTrainingDepartures, isDiagnosticResourceWaitingForTraining, isEmployeeAwayForTraining } from "./employee-training";
++import { bindReadingUpgradeWork, enableReadingPhase, quoteReadingUpgradeWork } from "./room-upgrade-reading";
+ import { bindServiceOperationTraining, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
+ import { bindServiceOperationRoomRevenue, cloneRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote } from "./room-upgrades";
+ import { bindServiceOperationRecoveryExperience, cloneRoomUpgradeRecoveryQuote, completeServiceOperationRecoveryExperience, completeWaitingRoomExperience, createRoomUpgradeRecoveryQuote } from "./room-upgrade-experience";
+@@ -852,7 +853,9 @@ function diagnosticPhysicalChoiceCompatible(state: GameState, operation: Service
+ 
+ function queueDiagnosticProcessing(state: GameState, operation: ServiceOperationState): void {
+   const work = operation.diagnosticPhaseWork!;
+-  if (operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null) work.remainingMinutes = Math.max(0, operation.phaseEndsAtFacilityTick - state.facilityTick);
++  if (operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null) work.remainingMinutes = work.readingUpgradeWork && operation.phaseStartedAtFacilityTick !== null
++    ? Math.max(0, work.remainingMinutes - Math.max(0, state.facilityTick - operation.phaseStartedAtFacilityTick))
++    : Math.max(0, operation.phaseEndsAtFacilityTick - state.facilityTick);
+   releaseResources(state, operation);
+   work.resource = null;
+   operation.status = "waiting_for_resources";
+@@ -863,21 +866,31 @@ function queueDiagnosticProcessing(state: GameState, operation: ServiceOperation
+   operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
+ }
+ 
+-function tryReserveDiagnosticProcessing(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
++interface ReadingHandoff { resource: DiagnosticResourceChoice; atTick: number }
++
++function tryReserveDiagnosticProcessing(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext, handoff?: ReadingHandoff): boolean {
+   const work = operation.diagnosticPhaseWork!;
++  if (work.readingUpgradeWork && (work.readingUpgradeWork.readyAtTick === null || (handoff?.atTick ?? state.facilityTick) < work.readingUpgradeWork.readyAtTick)) return false;
+   const choices = diagnosticProcessingChoices(state, operation, context);
+   if (work.resource && (isDiagnosticResourceWaitingForTraining(state, work.resource) || !choices.some((choice) => sameDiagnosticChoice(choice, work.resource!)))) work.resource = null;
+   const clinical = getClinicalResourceReservations(state, context);
++  const departures = work.kind === "interpretation" ? getQueuedEmployeeTrainingDepartures(state, context, state.facilityTick, new Set(), true) : [];
+   for (const resource of choices.filter((choice) => !work.resource || sameDiagnosticChoice(choice, work.resource))) {
++    if (handoff && !sameDiagnosticChoice(resource, handoff.resource)) continue;
+     const employee = state.employees.find((candidate) => candidate.id === resource.employeeIds[0])!;
+     if (isEmployeeAwayForTraining(employee) || employee.facilityTask || clinical.employeeIds.has(employee.id) || getActiveServiceOperationEmployeeIds(state).has(employee.id) || clinical.roomIds.has(resource.roomInstanceId) ||
+-      (clinical.roomDefinitionCounts.get(resource.roomDefinitionId) ?? 0) > 0) continue;
++      (clinical.roomDefinitionCounts.get(resource.roomDefinitionId) ?? 0) > 0 || departures.some((departure) => departure.employeeId === employee.id)) continue;
+     const roomBusy = state.serviceOperations.some((other) => other.id !== operation.id && active(other) && operationRoomIds(other).includes(resource.roomInstanceId) &&
+       !(work.kind === "interpretation" && other.diagnosticPhaseWork?.kind === "interpretation" && other.diagnosticPhaseWork.resource?.stationId !== resource.stationId));
+     if (roomBusy) continue;
+     const employeePath = findCareAwareFacilityPath(state, context, employee.location, resource.staffAnchor, new Set([resource.roomInstanceId]));
+-    if (!employeePath.length) continue;
++    if (!employeePath.length || handoff && (employeePath.length !== 1 || !samePoint(employee.location, resource.staffAnchor))) continue;
+     work.resource = resource;
++    if (work.readingUpgradeWork?.durationMinutes === null) {
++      work.readingUpgradeWork.quotedRoomInstanceId = resource.roomInstanceId;
++      work.durationMinutes = work.remainingMinutes = quoteReadingUpgradeWork(work.readingUpgradeWork, resource.roomInstanceId);
++      operation.frozenOperationPhases![0]!.durationMinutes = work.durationMinutes;
++    }
+     operation.reservedRoomInstanceIds = [resource.roomInstanceId];
+     operation.reservedEmployeeIds = [employee.id];
+     operation.path = [];
+@@ -888,7 +901,7 @@ function tryReserveDiagnosticProcessing(state: GameState, operation: ServiceOper
+     employee.pathIndex = 0;
+     employee.lastMovedAtFacilityTick = state.facilityTick;
+     employee.facilityTask = { kind: "perform_service", targetId: operation.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: Number.MAX_SAFE_INTEGER };
+-    if (resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
++    if (resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line, handoff?.atTick);
+     return true;
+   }
+   return false;
+@@ -1417,6 +1430,9 @@ function resourcesArrived(state: GameState, operation: ServiceOperationState, li
+     const employee = state.employees.find((candidate) => candidate.id === id);
+     if (!employee || employee.facilityTask?.targetId !== operation.id ||
+         employee.pathIndex < employee.path.length - 1) return false;
++    if (operation.diagnosticPhaseWork?.readingUpgradeWork && (!operation.diagnosticPhaseWork.resource ||
++      !samePoint(employee.location, operation.diagnosticPhaseWork.resource.staffAnchor) ||
++      !samePoint(employee.path.at(-1) ?? null, operation.diagnosticPhaseWork.resource.staffAnchor))) return false;
+     const phase = operation.providerReservation?.kind === "employee" &&
+       operation.providerReservation.employeeId === employee.id
+       ? phases.find((candidate) => candidate.providerRoleDefinitionIds?.includes(employee.staffRoleDefinitionId))
+@@ -1723,8 +1739,15 @@ function credit(state: GameState, operation: ServiceOperationState): void {
+   state.cash = state.cashCents / 100;
+ }
+ 
+-function beginPhase(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine): void {
++function beginPhase(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, readingStart?: number): void {
+   const phase = operationPhases(operation, line)[operation.phaseIndex]!;
++  const reading = operation.diagnosticPhaseWork?.readingUpgradeWork;
++  if (reading && reading.durationMinutes === null) {
++    const work = operation.diagnosticPhaseWork!;
++    work.durationMinutes = work.remainingMinutes = bindReadingUpgradeWork(reading, work.resource!.roomInstanceId);
++    phase.durationMinutes = work.durationMinutes;
++  }
++  const starts = reading ? readingStart ?? state.facilityTick : state.facilityTick;
+   if (operation.actorKind === "encounter" && !operation.diagnosticPhaseWork && phase.roomDefinitionId !== null) {
+     const encounter = state.encounters[operation.actorId];
+     if (encounter) completeWaitingRoomExperience(encounter, state.facilityTick);
+@@ -1732,8 +1755,8 @@ function beginPhase(state: GameState, operation: ServiceOperationState, line: Se
+   bindServiceOperationRecoveryExperience(state, operation);
+   bindServiceOperationRoomRevenue(state, operation);
+   operation.status = "in_service";
+-  operation.phaseStartedAtFacilityTick = state.facilityTick;
+-  operation.phaseEndsAtFacilityTick = state.facilityTick +
++  operation.phaseStartedAtFacilityTick = starts;
++  operation.phaseEndsAtFacilityTick = starts +
+     (operation.diagnosticPhaseWork?.remainingMinutes ?? operation.saleTransfer?.remainingPhaseMinutes ?? operation.diagnosticPhysicalWork?.remainingPhaseMinutes ?? phase.durationMinutes);
+   if (operation.diagnosticPhysicalWork) {
+     operation.diagnosticPhysicalWork.remainingPhaseMinutes = operation.phaseEndsAtFacilityTick - state.facilityTick;
+@@ -1741,7 +1764,7 @@ function beginPhase(state: GameState, operation: ServiceOperationState, line: Se
+     if (witness.startedAtFacilityTick === null) witness.startedAtFacilityTick = state.facilityTick;
+   }
+   operation.saleTransfer = undefined;
+-  if (operation.startedAtFacilityTick === null) operation.startedAtFacilityTick = state.facilityTick;
++  if (operation.startedAtFacilityTick === null) operation.startedAtFacilityTick = starts;
+ }
+ 
+ function releaseCompletedPhase(
+@@ -1937,7 +1960,7 @@ function moveToNextPhase(
+     releaseCompletedPhase(state, operation, line, context);
+     operation.phaseIndex += 1;
+     releaseResources(state, operation);
+-    operation.completedAtFacilityTick = state.facilityTick;
++    operation.completedAtFacilityTick = operation.diagnosticPhaseWork?.readingUpgradeWork ? operation.phaseEndsAtFacilityTick : state.facilityTick;
+     if (operation.diagnosticPhysicalWork) {
+       operation.status = "completed";
+     } else if (operation.actorKind === "visitor") {
+@@ -2152,6 +2175,8 @@ export function startDiagnosticProcessingOperation(
+     phase.status === "completed" || phase.status === "cancelled" ||
+     !phase.dependsOn.every((id) => plan.phases.find((entry) => entry.id === id)?.status === "completed")) return null;
+   const line = getServiceIncomeLine(phase.kind === "interpretation" ? "income.image_read" : "income.laboratory_processing")!;
++  // A late factory inherits the original accepted inputs, never current bonuses.
++  enableReadingPhase(plan, phase, state.facilityTick);
+   const operation = createOperation(state, line, "remote", plan.encounterId, undefined, context);
+   if (!operation) return null;
+   operation.quoteFee = 0;
+@@ -2165,6 +2190,7 @@ export function startDiagnosticProcessingOperation(
+   operation.diagnosticPhaseWork = { version: "diagnostic-phase-work.v1", orderId: plan.orderId, encounterId: plan.encounterId,
+     phaseId: phase.id, kind: phase.kind, billing: "none", durationMinutes: phase.durationMinutes, remainingMinutes: phase.remainingMinutes,
+     resource: phase.resource ? JSON.parse(JSON.stringify(phase.resource)) as DiagnosticResourceChoice : null };
++  if (phase.readingUpgradeWork) operation.diagnosticPhaseWork.readingUpgradeWork = JSON.parse(JSON.stringify(phase.readingUpgradeWork));
+   state.serviceOperations.push(operation);
+   tryReserveDiagnosticProcessing(state, operation, line, context);
+   return operation.id;
+@@ -2224,6 +2250,75 @@ function scheduleArrivals(state: GameState, context: DomainContext): void {
+   }
+ }
+ 
++/** Concrete seated continuity, shared with the nonmutating Reading forecast. */
++export function hasReadingStationContinuity(state: GameState, operation: ServiceOperationState, context: DomainContext, end: number): boolean {
++  const resource = operation.diagnosticPhaseWork?.resource;
++  const employee = resource ? state.employees.find((entry) => entry.id === resource.employeeIds[0]) : null;
++  const line = operationIncomeLine(operation);
++  if (!operation.diagnosticPhaseWork?.readingUpgradeWork || operation.status !== "in_service" || !resource || !employee || !line ||
++    employee.lastMovedAtFacilityTick > Math.floor(end) || isEmployeeAwayForTraining(employee) ||
++    !resourcesArrived(state, operation, line, context) || !validateReservedResources(state, operation, context) ||
++    !diagnosticProcessingChoices(state, operation, context).some((choice) => sameDiagnosticChoice(choice, resource))) return false;
++  if (state.serviceOperations.some((other) => other.id !== operation.id && active(other) && other.reservedEmployeeIds.includes(employee.id)) ||
++    state.retailOperations.some((trip) => !["completed", "cancelled", "abandoned"].includes(trip.status) && (trip.servingEmployeeId === employee.id || trip.actorKind === "employee" && trip.actorId === employee.id)) ||
++    Object.values(state.employeeDiscussions ?? {}).some((discussion) => discussion.employeeId === employee.id && discussion.lifecycle !== "resolved" && discussion.lifecycle !== "cancelled") ||
++    state.environment.founderActivity?.kind === "praise_employee" && state.environment.founderActivity.targetId === employee.id) return false;
++  return true;
++}
++
++const readingOrder = (a: ServiceOperationState, b: ServiceOperationState): number => {
++  const aw = a.diagnosticPhaseWork!, bw = b.diagnosticPhaseWork!;
++  return (aw.readingUpgradeWork?.readyAtTick ?? a.createdAtFacilityTick) - (bw.readingUpgradeWork?.readyAtTick ?? b.createdAtFacilityTick) ||
++    (aw.readingUpgradeWork?.acceptedAtTick ?? a.createdAtFacilityTick) - (bw.readingUpgradeWork?.acceptedAtTick ?? b.createdAtFacilityTick) ||
++    aw.orderId.localeCompare(bw.orderId) || aw.phaseId.localeCompare(bw.phaseId) || a.id.localeCompare(b.id);
++};
++
++/** Reading alone drains exact seated handoffs; all observation/travel stays integral. */
++function advanceDiagnosticReading(state: GameState, context: DomainContext): void {
++  const reads = state.serviceOperations.filter((operation) => operation.diagnosticPhaseWork?.kind === "interpretation" && active(operation)).sort(readingOrder);
++  for (const operation of reads) {
++    const resource = operation.diagnosticPhaseWork!.resource;
++    const line = operationIncomeLine(operation)!;
++    if ((operation.status === "in_service" || operation.status === "walking_to_service") &&
++      (!resource || !diagnosticProcessingChoices(state, operation, context).some((choice) => sameDiagnosticChoice(choice, resource)) ||
++        !validateReservedResources(state, operation, context) || operation.status === "in_service" && operation.diagnosticPhaseWork!.readingUpgradeWork && !resourcesArrived(state, operation, line, context))) {
++      queueDiagnosticProcessing(state, operation);
++    }
++    if (operation.status === "walking_to_service" && resourcesArrived(state, operation, line, context)) beginPhase(state, operation, line);
++  }
++  const due = reads.filter((operation) => operation.status === "in_service" && operation.phaseEndsAtFacilityTick !== null && operation.phaseEndsAtFacilityTick <= state.facilityTick)
++    .sort((a, b) => a.phaseEndsAtFacilityTick! - b.phaseEndsAtFacilityTick! || readingOrder(a, b));
++  const tokens: Array<ReadingHandoff & { source: ServiceOperationState }> = [];
++  for (const operation of due) {
++    const end = operation.phaseEndsAtFacilityTick!;
++    if (Math.ceil(end) === state.facilityTick && hasReadingStationContinuity(state, operation, context, end)) {
++      tokens.push({ resource: JSON.parse(JSON.stringify(operation.diagnosticPhaseWork!.resource)), atTick: end, source: operation });
++    }
++    moveToNextPhase(state, operation, operationIncomeLine(operation)!, context);
++  }
++  if (due.length) earmarkQueuedEmployeeTrainingDepartures(state, context);
++  // An inherited token is proof from this dispatch, even though our own
++  // zero-distance reservation updates the integer last-movement bookkeeping.
++  while (tokens.length) {
++    tokens.sort((a, b) => a.atTick - b.atTick || readingOrder(a.source, b.source));
++    const token = tokens.shift()!;
++    const successor = reads.find((operation) => operation.status === "waiting_for_resources" &&
++      operation.diagnosticPhaseWork!.readingUpgradeWork?.readyAtTick !== null && operation.diagnosticPhaseWork!.readingUpgradeWork?.readyAtTick !== undefined &&
++      operation.diagnosticPhaseWork!.readingUpgradeWork!.readyAtTick! <= token.atTick &&
++      tryReserveDiagnosticProcessing(state, operation, operationIncomeLine(operation)!, context, token));
++    if (!successor || successor.status !== "in_service" || successor.phaseEndsAtFacilityTick! > state.facilityTick) continue;
++    const end = successor.phaseEndsAtFacilityTick!;
++    moveToNextPhase(state, successor, operationIncomeLine(successor)!, context);
++    tokens.push({ ...token, atTick: end, source: successor });
++  }
++  for (const operation of reads) if (operation.status === "waiting_for_resources") {
++    tryReserveDiagnosticProcessing(state, operation, operationIncomeLine(operation)!, context);
++    if ((operation as ServiceOperationState).status === "in_service" && operation.phaseEndsAtFacilityTick! <= state.facilityTick) {
++      moveToNextPhase(state, operation, operationIncomeLine(operation)!, context);
++    }
++  }
++}
++
+ export function advanceServiceOperations(
+   state: GameState,
+   context: DomainContext,
+@@ -2246,10 +2341,12 @@ export function advanceServiceOperations(
+       commitPeriopCoveragePlan(state, roomId, planPeriopCoverage(state, roomId, context));
+     }
+   }
++  advanceDiagnosticReading(state, context);
+   for (const operation of state.serviceOperations) {
+     const line = operationIncomeLine(operation);
+     if (!line?.operation) continue;
+     if (operation.status === "completed" || operation.status === "cancelled") continue;
++    if (operation.diagnosticPhaseWork?.kind === "interpretation") continue;
+     if (operation.diagnosticPhaseWork) {
+       const resource = operation.diagnosticPhaseWork.resource;
+       if ((operation.status === "in_service" || operation.status === "walking_to_service") &&
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -56,6 +56,7 @@ import { getUnboundRoomUpgradeSupportMinutes, isRoomUpgradeSupportRemaining, nor
+ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
+ import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
++import { isReadingWorkMinute, readingMinutesEqual } from "./room-upgrade-reading";
+ import { getDefaultDoorOffset } from "./doors";
+ import { findDeterministicFacilityPath, getRoomCareStations, getRoomNavigationAnchor } from "./spatial";
+ import type {
+@@ -797,6 +798,7 @@ function normalizeServiceOperations(
+       : undefined;
+     const diagnosticPhysicalWork = isRecord(raw) && raw.diagnosticPhysicalWork !== undefined ? normalizeDiagnosticPhysicalWork(raw.diagnosticPhysicalWork) : undefined;
+     const markedDiagnostic = Boolean(diagnosticPhaseWork || diagnosticPhysicalWork);
++    const markedReading = Boolean(diagnosticPhaseWork?.readingUpgradeWork);
+     if (isRecord(raw) && raw.diagnosticPhysicalWork !== undefined && (!diagnosticPhysicalWork || diagnosticPhaseWork || raw.actorKind !== "encounter" ||
+       raw.actorId !== diagnosticPhysicalWork.encounterId || diagnosticPhysicalWork.billing === "none" && raw.quoteFee !== 0)) {
+       throw new Error("The saved diagnostic physical work marker is invalid.");
+@@ -835,8 +837,9 @@ function normalizeServiceOperations(
+       !raw.reservedRoomInstanceIds.every((id) => typeof id === "string") || !raw.reservedEmployeeIds.every((id) => typeof id === "string") || !raw.path.every(isGridPoint) ||
+       raw.createdAtFacilityTick < 0 || raw.waitDeadlineFacilityTick < 0 || raw.lastMovedAtFacilityTick < 0 || raw.pathIndex < 0 ||
+       (raw.status === "completed" && diagnosticPhaseWork && diagnosticPhaseWork.remainingMinutes !== 0) ||
+-      [raw.startedAtFacilityTick, raw.completedAtFacilityTick, raw.cancelledAtFacilityTick, raw.phaseStartedAtFacilityTick, raw.phaseEndsAtFacilityTick].some((tick) =>
+-        tick !== null && (typeof tick !== "number" || !Number.isSafeInteger(tick) || tick < 0)))) {
++      [raw.startedAtFacilityTick, raw.completedAtFacilityTick, raw.phaseStartedAtFacilityTick, raw.phaseEndsAtFacilityTick].some((tick) =>
++        tick !== null && (markedReading ? !isReadingWorkMinute(tick) : typeof tick !== "number" || !Number.isSafeInteger(tick) || tick < 0)) ||
++      raw.cancelledAtFacilityTick !== null && (typeof raw.cancelledAtFacilityTick !== "number" || !Number.isSafeInteger(raw.cancelledAtFacilityTick) || raw.cancelledAtFacilityTick < 0))) {
+       throw new Error("The saved diagnostic service operation is invalid.");
+     }
+     const path = raw.path.filter(isGridPoint).map((point) => ({ ...point }));
+@@ -869,6 +872,7 @@ function normalizeServiceOperations(
+         : undefined;
+     const nullableTick = (value: unknown) =>
+       typeof value === "number" && Number.isSafeInteger(value) ? value : null;
++    const nullableWorkTick = (value: unknown) => markedReading && isReadingWorkMinute(value) ? value : nullableTick(value);
+     const testChoiceOrder =
+       isRecord(raw.testChoiceOrder) &&
+       raw.testChoiceOrder.version === "test-choice-order.v1" &&
+@@ -901,7 +905,7 @@ function normalizeServiceOperations(
+     const frozenOperationPhases = rawFrozenPhases.filter(isRecord).flatMap((phase) =>
+       typeof phase.id === "string" &&
+       (phase.roomDefinitionId === null || typeof phase.roomDefinitionId === "string") &&
+-      typeof phase.durationMinutes === "number" && Number.isSafeInteger(phase.durationMinutes) && phase.durationMinutes > 0 &&
++      typeof phase.durationMinutes === "number" && (markedReading ? isReadingWorkMinute(phase.durationMinutes) : Number.isSafeInteger(phase.durationMinutes)) && phase.durationMinutes > 0 &&
+       Array.isArray(phase.staffRoleDefinitionIds) && phase.staffRoleDefinitionIds.every((id) => typeof id === "string") &&
+       (phase.providerRoleDefinitionIds === undefined || (Array.isArray(phase.providerRoleDefinitionIds) && phase.providerRoleDefinitionIds.every((id) => typeof id === "string"))) &&
+       (phase.founderEligible === undefined || phase.founderEligible === true)
+@@ -933,6 +937,26 @@ function normalizeServiceOperations(
+       frozenOperationPhases[0]!.roomStationId !== undefined)) {
+       throw new Error("The saved diagnostic work phase is invalid.");
+     }
++    if (markedReading) {
++      const work = diagnosticPhaseWork!, reading = work.readingUpgradeWork!;
++      const started = raw.phaseStartedAtFacilityTick as number | null, ends = raw.phaseEndsAtFacilityTick as number | null;
++      if (!["waiting_for_resources", "walking_to_service", "in_service", "completed", "cancelled"].includes(raw.status) ||
++        raw.providerReservation !== null || raw.location !== null || raw.path.length !== 0 || raw.phaseIndex !== (raw.status === "completed" ? 1 : 0) ||
++        frozenOperationPhases[0]!.id !== work.phaseId ||
++        raw.createdAtFacilityTick < reading.acceptedAtTick ||
++        (raw.status === "in_service" ? reading.durationMinutes === null || started === null || ends === null || !work.resource ||
++          started < reading.readyAtTick! || !readingMinutesEqual(ends - started, work.remainingMinutes, ends)
++          : raw.status === "completed" ? reading.durationMinutes === null || started === null || ends === null || raw.completedAtFacilityTick !== ends ||
++            started < reading.readyAtTick! || ends < started || ends - started > work.durationMinutes + 1e-9
++            : started !== null || ends !== null) ||
++        (raw.startedAtFacilityTick !== null && (reading.durationMinutes === null || (raw.startedAtFacilityTick as number) < reading.readyAtTick!)) ||
++        (raw.status === "in_service" || raw.status === "walking_to_service") && (!work.resource ||
++          raw.reservedRoomInstanceIds.length !== 1 || raw.reservedRoomInstanceIds[0] !== work.resource.roomInstanceId ||
++          raw.reservedEmployeeIds.length !== 1 || raw.reservedEmployeeIds[0] !== work.resource.employeeIds[0]) ||
++        !["in_service", "walking_to_service"].includes(raw.status) && (raw.reservedRoomInstanceIds.length !== 0 || raw.reservedEmployeeIds.length !== 0)) {
++        throw new Error("The saved Reading work segment is invalid.");
++      }
++    }
+     if (diagnosticPhysicalWork && (rawFrozenPhases.length !== frozenOperationPhases.length || frozenOperationPhases.length !== diagnosticPhysicalWork.phaseBindings.length ||
+       raw.phaseFlowVersion !== 1 ||
+       frozenOperationPhases.some((phase, index) => phase.id !== diagnosticPhysicalWork.phaseBindings[index]!.operationPhaseId ||
+@@ -1042,15 +1066,15 @@ function normalizeServiceOperations(
+       status: raw.status as ServiceOperationState["status"],
+       createdAtFacilityTick: raw.createdAtFacilityTick,
+       waitDeadlineFacilityTick: raw.waitDeadlineFacilityTick,
+-      startedAtFacilityTick: nullableTick(raw.startedAtFacilityTick),
+-      completedAtFacilityTick: nullableTick(raw.completedAtFacilityTick),
++      startedAtFacilityTick: nullableWorkTick(raw.startedAtFacilityTick),
++      completedAtFacilityTick: nullableWorkTick(raw.completedAtFacilityTick),
+       cancelledAtFacilityTick: nullableTick(raw.cancelledAtFacilityTick),
+       quoteFee: raw.quoteFee,
+       ...(roomUpgradeRevenue ? { roomUpgradeRevenue } : {}),
+       ...(roomUpgradeRecovery ? { roomUpgradeRecovery } : {}),
+       phaseIndex: raw.phaseIndex,
+-      phaseStartedAtFacilityTick: nullableTick(raw.phaseStartedAtFacilityTick),
+-      phaseEndsAtFacilityTick: nullableTick(raw.phaseEndsAtFacilityTick),
++      phaseStartedAtFacilityTick: nullableWorkTick(raw.phaseStartedAtFacilityTick),
++      phaseEndsAtFacilityTick: nullableWorkTick(raw.phaseEndsAtFacilityTick),
+       reservedRoomInstanceIds: raw.reservedRoomInstanceIds.filter((id): id is string => typeof id === "string"),
+       reservedEmployeeIds: raw.reservedEmployeeIds.filter((id): id is string => typeof id === "string"),
+       providerReservation,
+@@ -3032,6 +3056,41 @@ function migrateVersionTwo(
+       return normalized ? [[encounterId, normalized]] : [];
+     }),
+   );
++  for (const encounter of Object.values(next.encounters)) {
++    const carriers = [encounter.pendingResult, encounter.testOnlyContinuation, encounter.terminalTestOrder, encounter.stagedResultOrder,
++      encounter.stagedResultOrder?.remainder, ...(encounter.stagedResultOrder?.components ?? []), ...encounter.steps.map((step) => step.result)];
++    for (const carrier of carriers) {
++      const plan = carrier?.diagnosticTiming;
++      if (!plan?.phases.some((phase) => phase.readingUpgradeWork)) continue;
++      const feedbackPending = encounter.steps.some((step) => step.status === "feedback_pending" && step.result?.diagnosticTiming?.orderId === plan.orderId) ||
++        encounter.testOnlyContinuation?.diagnosticTiming?.orderId === plan.orderId && encounter.testOnlyContinuation.status === "feedback_pending" ||
++        encounter.stagedResultOrder?.diagnosticTiming?.orderId === plan.orderId && encounter.stagedResultOrder.status === "feedback_pending";
++      for (const phase of plan.phases) {
++        const reading = phase.readingUpgradeWork;
++        if (!reading) continue;
++        if (reading.acceptedAtTick > next.facilityTick || reading.executionEnabledAtTick !== null && (feedbackPending || reading.executionEnabledAtTick > next.facilityTick) ||
++          reading.readyAtTick !== null && reading.readyAtTick > next.facilityTick ||
++          phase.startedAtTick !== null && phase.startedAtTick > next.facilityTick || phase.completedAtTick !== null && phase.completedAtTick > next.facilityTick) {
++          throw new Error("The saved Reading readiness witness is invalid.");
++        }
++        const operation = next.serviceOperations.find((entry) => entry.id === phase.serviceOperationId);
++        if (!operation) continue;
++        const work = operation.diagnosticPhaseWork;
++        if (!work?.readingUpgradeWork || work.orderId !== plan.orderId || work.encounterId !== plan.encounterId || work.phaseId !== phase.id ||
++          JSON.stringify(work.readingUpgradeWork) !== JSON.stringify(reading) || work.durationMinutes !== phase.durationMinutes ||
++          work.remainingMinutes !== phase.remainingMinutes || JSON.stringify(work.resource) !== JSON.stringify(phase.resource) || operation.phaseStartedAtFacilityTick !== phase.startedAtTick ||
++          operation.status === "completed" && operation.completedAtFacilityTick !== phase.completedAtTick) {
++          throw new Error("The saved Reading phase and operation disagree.");
++        }
++      }
++    }
++  }
++  for (const operation of next.serviceOperations) if (operation.diagnosticPhaseWork?.readingUpgradeWork) {
++    const reading = operation.diagnosticPhaseWork.readingUpgradeWork;
++    if (reading.executionEnabledAtTick! > next.facilityTick || reading.readyAtTick! > next.facilityTick ||
++      operation.startedAtFacilityTick !== null && operation.startedAtFacilityTick > next.facilityTick ||
++      operation.completedAtFacilityTick !== null && operation.completedAtFacilityTick > next.facilityTick) throw new Error("The saved Reading work clock is invalid.");
++  }
+   next.patientAmenityTrips = next.patientAmenityTrips.filter((trip) => {
+     const operation = next.serviceOperations.find((candidate) =>
+       trip.actorKind === "encounter"
+diff --git a/packages/game-domain/src/employee-training.ts b/packages/game-domain/src/employee-training.ts
+--- a/packages/game-domain/src/employee-training.ts
++++ b/packages/game-domain/src/employee-training.ts
+@@ -22,8 +22,14 @@ export { getEmployeeTrainingCost, getEmployeeTrainingPercent, getEmployeeTrainin
+   EMPLOYEE_TRAINING_SESSION_MINUTES, EMPLOYEE_TRAINING_CAPACITY } from "@gamify-surgery/balance-config";
+ export type { EmployeeTrainingBenefit, EmployeeTrainingPlaceId } from "@gamify-surgery/balance-config";
+ 
++// These claims survive intervening reservations in one reducer tick only. They
++// are neither saved training progress nor a second training-controller pass.
++const departureClaims = new WeakMap<GameState, { tick: number; departures: EmployeeTrainingDeparture[] }>();
++const departingEmployees = new WeakMap<EmployeeState, { state: GameState; tick: number }>();
++
+ export function isEmployeeAwayForTraining(employee: EmployeeState): boolean {
+-  return Boolean(employee.training && employee.training.stage !== "queued");
++  const departure = departingEmployees.get(employee);
++  return Boolean(employee.training && employee.training.stage !== "queued" || departure && departure.state.facilityTick === departure.tick);
+ }
+ 
+ /** Queued work may use a spare while its initially chosen employee trains. */
+@@ -154,9 +160,10 @@ export function cancelEmployeeTrainingForDismissal(state: GameState, employeeId:
+   employee.training = null;
+ }
+ 
+-function hasCurrentDuty(state: GameState, employee: EmployeeState): boolean {
+-  if (employee.facilityTask || employee.pathIndex < Math.max(0, employee.path.length - 1)) return true;
++function hasCurrentDuty(state: GameState, employee: EmployeeState, atTick = state.facilityTick, released = new Set<string>()): boolean {
++  if (employee.facilityTask && !released.has(employee.facilityTask.targetId ?? "") || employee.pathIndex < Math.max(0, employee.path.length - 1)) return true;
+   if (state.serviceOperations.some((operation) => operation.status !== "completed" && operation.status !== "cancelled" &&
++      !released.has(operation.id) &&
+       (operation.reservedEmployeeIds.includes(employee.id) || operation.providerReservation?.kind === "employee" && operation.providerReservation.employeeId === employee.id))) return true;
+   if (Object.values(state.encounters).some((encounter) => {
+     const pending = encounter.pendingResult;
+@@ -172,7 +179,69 @@ function hasCurrentDuty(state: GameState, employee: EmployeeState): boolean {
+       discussion.lifecycle !== "resolved" && discussion.lifecycle !== "cancelled")) return true;
+   if (state.environment.founderActivity?.kind === "praise_employee" && state.environment.founderActivity.targetId === employee.id) return true;
+   // An automated NP consultation has no facilityTask. Finish its current hour.
+-  return state.facilityTick < (employee.training?.earliestDepartureAtFacilityTick ?? 0);
++  return atTick < (employee.training?.earliestDepartureAtFacilityTick ?? 0);
++}
++
++export interface EmployeeTrainingDeparture {
++  employeeId: string;
++  place: EmployeeTrainingPlace;
++  /** First whole minute ordinary services can reserve the returned employee. */
++  availableAtTick: number;
++  seatedAtTick: number;
++  completedAtTick: number;
++  homeLocation: GridPoint;
++}
++
++/** Shared FIFO selection, with a nonmutating view of genuine seated progress. */
++export function getQueuedEmployeeTrainingDepartures(
++  state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
++  atTick = state.facilityTick, releasedOperationIds = new Set<string>(), projectProgress = false,
++): EmployeeTrainingDeparture[] {
++  const releasedSeats = new Set(state.employees.filter((employee) => {
++    const session = employee.training;
++    if (!projectProgress || session?.stage !== "training") return false;
++    const place = getEmployeeTrainingPlaces(state, context).find((candidate) => candidate.roomInstanceId === session.roomInstanceId && candidate.placeId === session.placeId);
++    return place && isRoomOperationalForFacilityWork(state, place.roomInstanceId, context) && samePoint(employee.location, place.location) &&
++      session.remainingMinutes <= Math.max(0, atTick - session.lastProgressAtFacilityTick);
++  }).map((employee) => employee.id));
++  const places = getEmployeeTrainingPlaces(state, context).map((place) => ({ ...place, employeeId: place.employeeId && releasedSeats.has(place.employeeId) ? null : place.employeeId }));
++  let reserved = state.employees.filter((employee) => employee.training?.roomInstanceId && !releasedSeats.has(employee.id) &&
++    (employee.training.stage === "walking_to_training" || employee.training.stage === "training")).length;
++  const selected: EmployeeTrainingDeparture[] = [];
++  for (const employee of state.employees.filter((entry) => entry.training && (entry.training.stage === "queued" ||
++    entry.training.stage === "walking_to_training" && entry.training.roomInstanceId === null))
++    .sort((a, b) => a.training!.requestSequence - b.training!.requestSequence || a.id.localeCompare(b.id))) {
++    if (reserved >= EMPLOYEE_TRAINING_CAPACITY) break;
++    if (employee.training!.stage === "queued" && hasCurrentDuty(state, employee, atTick, releasedOperationIds)) continue;
++    const place = places.find((candidate) => candidate.employeeId === null && isRoomOperationalForFacilityWork(state, candidate.roomInstanceId, context) &&
++      pathTo(state, employee, candidate.location, context).length > 0);
++    const homeLocation = homeTarget(state, employee, context);
++    if (!place || !homeLocation) continue;
++    const walking = (route: GridPoint[]) => Math.max(1, Math.ceil(Math.max(0, route.length - 1) / context.balanceRelease.facility.characterTravelTilesPerTick));
++    const session = employee.training!;
++    const minutes = session.roomUpgradeWork?.durationMinutes === null
++      ? bindRoomUpgradeSupportWork(JSON.parse(JSON.stringify(session.roomUpgradeWork)), place.roomInstanceId) : session.remainingMinutes;
++    const seatedAtTick = atTick + walking(pathTo(state, employee, place.location, context));
++    const completedAtTick = seatedAtTick + Math.ceil(minutes);
++    selected.push({ employeeId: employee.id, place: { ...place }, homeLocation, seatedAtTick, completedAtTick,
++      availableAtTick: completedAtTick + walking(pathTo(state, { ...employee, location: place.location }, homeLocation, context)) + 1 });
++    place.employeeId = employee.id;
++    reserved += 1;
++  }
++  return selected;
++}
++
++/** Called once after the complete due-Reading cohort has released its duties. */
++export function earmarkQueuedEmployeeTrainingDepartures(state: GameState, context: DomainContext): EmployeeTrainingDeparture[] {
++  const existing = departureClaims.get(state);
++  if (existing?.tick === state.facilityTick) return existing.departures;
++  const departures = getQueuedEmployeeTrainingDepartures(state, context, state.facilityTick, new Set(), true);
++  departureClaims.set(state, { tick: state.facilityTick, departures });
++  for (const departure of departures) {
++    const employee = state.employees.find((entry) => entry.id === departure.employeeId)!;
++    departingEmployees.set(employee, { state, tick: state.facilityTick });
++  }
++  return departures;
+ }
+ 
+ function setPath(state: GameState, employee: EmployeeState, path: GridPoint[]): void {
+@@ -300,16 +369,14 @@ export function advanceEmployeeTraining(state: GameState, context: DomainContext
+     setPath(state, employee, target ? pathTo(state, employee, target, context) : []);
+   }
+ 
+-  let reserved = state.employees.filter((employee) => employee.training?.roomInstanceId &&
+-    (employee.training.stage === "walking_to_training" || employee.training.stage === "training")).length;
+-  const waiting = state.employees.filter((employee) => employee.training && (employee.training.stage === "queued" ||
+-    employee.training.stage === "walking_to_training" && employee.training.roomInstanceId === null))
+-    .sort((a, b) => a.training!.requestSequence - b.training!.requestSequence || a.id.localeCompare(b.id));
+-  for (const employee of waiting) {
+-    if (reserved >= EMPLOYEE_TRAINING_CAPACITY) break;
+-    if (employee.training!.stage === "queued" && hasCurrentDuty(state, employee)) continue;
+-    const place = usablePlaces(state, employee, context).find((candidate) => candidate.employeeId === null);
+-    if (!place) continue;
++  const earmarks = departureClaims.get(state);
++  const heldDepartures = earmarks?.tick === state.facilityTick ? earmarks.departures : [];
++  for (const batch of [heldDepartures, null]) for (const departure of batch ?? getQueuedEmployeeTrainingDepartures(state, context)) {
++    const employee = state.employees.find((entry) => entry.id === departure.employeeId);
++    const place = departure.place;
++    if (!employee?.training || (employee.training.stage !== "queued" && !(employee.training.stage === "walking_to_training" && employee.training.roomInstanceId === null))) continue;
++    if (hasCurrentDuty(state, employee) || !isRoomOperationalForFacilityWork(state, place.roomInstanceId, context) ||
++      getEmployeeTrainingPlaces(state, context).some((candidate) => candidate.roomInstanceId === place.roomInstanceId && candidate.placeId === place.placeId && candidate.employeeId !== null)) continue;
+     const session = employee.training!;
+     if (session.roomUpgradeWork?.durationMinutes === null) {
+       session.remainingMinutes = bindRoomUpgradeSupportWork(session.roomUpgradeWork, place.roomInstanceId);
+@@ -319,8 +386,9 @@ export function advanceEmployeeTraining(state: GameState, context: DomainContext
+     session.placeId = place.placeId;
+     session.lastProgressAtFacilityTick = state.facilityTick;
+     setPath(state, employee, pathTo(state, employee, place.location, context));
+-    reserved += 1;
+   }
++  departureClaims.delete(state);
++  for (const employee of state.employees) departingEmployees.delete(employee);
+ 
+   // A queued NP starts another consult after a missed training opportunity.
+   // Keep its departure boundary current until a place is taken at a payout.
+diff --git a/packages/game-domain/src/index.ts b/packages/game-domain/src/index.ts
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -33,6 +33,7 @@ export * from "./retired-encounters";
+ export * from "./retired-service-history";
+ export * from "./room-capacity";
+ export * from "./room-upgrade-support";
++export * from "./room-upgrade-reading";
+ export * from "./room-upgrade-experience";
+ export * from "./selectors";
+ export * from "./service-operations";
+diff --git a/packages/game-domain/tests/diagnostic-timing.test.ts b/packages/game-domain/tests/diagnostic-timing.test.ts
+--- a/packages/game-domain/tests/diagnostic-timing.test.ts
++++ b/packages/game-domain/tests/diagnostic-timing.test.ts
+@@ -92,7 +92,7 @@ describe("frozen diagnostic timing planner", () => {
+     expect(forecastDiagnosticOrderPlan(fixture.state, plan, fixture.context).blockedPhaseIds).toContain(phaseOf(plan, phaseKind).id);
+   });
+ 
+-  it("retains US45 and CT60 acquisition, adds one30/5 interpretation, and ignores generic upgrade speed", () => {
++  it("retains US45/CT60 acquisition and outside reading30 while Level5 local Reading takes3", () => {
+     const fixture = timingFixture();
+     const us = fixture.addRoom("room.ultrasound", "staff.imaging_technician");
+     const ct = fixture.addRoom("room.ct", "staff.imaging_technician");
+@@ -105,11 +105,11 @@ describe("frozen diagnostic timing planner", () => {
+     fixture.addRoom("room.reading", "staff.radiologist");
+     fixture.state.rooms.forEach((room) => { room.upgradeLevel = 5; });
+     const local = quote(fixture, { serviceId: "service.ct", patientOrigin: ct.anchor });
+-    expect(work(local).map((phase) => phase.durationMinutes)).toEqual([60, 5]);
++    expect(work(local).map((phase) => phase.durationMinutes)).toEqual([60, 3]);
+     expect(phaseOf(local, "interpretation").patientPresent).toBe(false);
+     expect(phaseOf(local, "interpretation").resource?.stationId).toBe("northwest");
+     const offsite = quote(fixture, { serviceId: "service.ct", allowedRouteIds: ["route.ct.outsourced"], patientOrigin: ct.anchor });
+-    expect(work(offsite).map((phase) => phase.durationMinutes)).toEqual([150, 5]);
++    expect(work(offsite).map((phase) => phase.durationMinutes)).toEqual([150, 3]);
+     expect(phaseOf(offsite, "interpretation").mode).toBe("local");
+   });
+ 

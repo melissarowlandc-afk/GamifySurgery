@@ -1,0 +1,47 @@
+diff --git a/tests/e2e/room-upgrades.spec.ts b/tests/e2e/room-upgrades.spec.ts
+--- a/tests/e2e/room-upgrades.spec.ts
++++ b/tests/e2e/room-upgrades.spec.ts
+@@ -237,6 +237,31 @@ async function openMapMenu(page: Page, roomId: string) {
+ 
+ async function captureRoom(page: Page, info: TestInfo, roomId: string, label: string) {
+   await frameRoom(page, roomId);
++  await expect.poll(() => page.evaluate((id) => {
++    const scene = (document.querySelector("[data-testid='facility-canvas']") as any)
++      ?.__facilityGame?.scene?.getScene("facility-scene");
++    const room = scene?.bridge?.viewModel?.rooms?.find((entry: any) => entry.instanceId === id);
++    if (!room || !scene.environmentAtlasReady || scene.environmentAtlasLoadRequested ||
++      scene.characterStillLoadRequested || scene.pendingCharacterStills.size > 0) return false;
++    const records = scene.getTouchupDrawRecords(room);
++    const fixtures = [...scene.fixtureBitmapImages.entries()]
++      .filter(([key]: [string, any]) => key.startsWith(`approved:${id}:`));
++    const staff = scene.bridge.viewModel.staff.filter((employee: any) => employee.location &&
++      employee.location.x >= room.tileX && employee.location.x < room.tileX + room.width &&
++      employee.location.y >= room.tileY && employee.location.y < room.tileY + room.height);
++    return records.length > 0 && records.every((record: any) =>
++      scene.textures.exists(`stitchin-time-art:${record.assetId}`)) &&
++      fixtures.some(([, image]: [string, any]) => image.visible) && staff.every((employee: any) => {
++        const container = scene.characterBitmapContainers.get(`character:staff:${employee.instanceId}`);
++        const actor = container?.getByName("actor");
++        return container?.visible && actor?.visible && actor.getData("gait-still-id") &&
++          scene.textures.exists(actor.texture.key);
++      });
++  }, roomId), { timeout: 30_000, message: `Wait for loaded room and character art before ${label}` }).toBe(true);
++  const readyFrame = await page.evaluate(() => (document.querySelector("[data-testid='facility-canvas']") as any)
++    .__facilityGame.loop.frame);
++  await page.waitForFunction((frame) => (document.querySelector("[data-testid='facility-canvas']") as any)
++    .__facilityGame.loop.frame > frame, readyFrame, { timeout: 5_000 });
+   await page.getByTestId("facility-canvas").screenshot({
+     path: join(evidenceDirectory, `${info.project.name}-${label}.png`), animations: "disabled",
+   });
+@@ -400,5 +425,11 @@ test("Reading, training and revenue purchases preserve old work and new chart or
+     baseFee: 120, candidates: [{ roomInstanceId: ids.revenue, upgradeLevel: 5, multiplier: 1.24 }],
+   });
+   expect(accepted.cashCents).toBe(finalCash);
++  await page.locator(".patient-tab").filter({ hasText: "Upgrade Admitted Patient" }).click();
++  await expect(chart).toBeVisible();
++  const pendingInterpretation = chart.locator(".cs-phases li").filter({ hasText: "Interpretation" }).first();
++  await expect(pendingInterpretation).toContainText("(onsite)");
++  await expect(pendingInterpretation.locator(".cs-phase-progress")).toContainText("min remaining");
++  await pendingInterpretation.scrollIntoViewIfNeeded();
+   await page.screenshot({ path: join(evidenceDirectory, `${info.project.name}-new-upgraded-order.png`), animations: "disabled" });
+ });

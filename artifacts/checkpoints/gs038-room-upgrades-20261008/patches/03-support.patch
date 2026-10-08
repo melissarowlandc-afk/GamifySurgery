@@ -1,0 +1,1178 @@
+diff --git a/packages/game-domain/src/types.ts b/packages/game-domain/src/types.ts
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -1032,6 +1032,32 @@ export interface DoorState {
+   exterior: boolean;
+ }
+ 
++export type RoomUpgradeSupportEffectKind =
++  | "cleaning_duration_reduction_percent"
++  | "repair_duration_reduction_percent"
++  | "quality_review_duration_reduction_percent"
++  | "training_duration_reduction_percent";
++
++/** Optional frozen work contract; unmarked legacy support retains its old terms. */
++export interface RoomUpgradeSupportWork {
++  version: "room-upgrade-support.v1";
++  effectKind: RoomUpgradeSupportEffectKind;
++  baselineMinutes: number;
++  employeeReductionPercent: number;
++  acceptedRooms: Array<{ roomInstanceId: string; upgradeLevel: RoomUpgradeLevel }>;
++  boundRoomInstanceId: string | null;
++  boundUpgradeLevel: RoomUpgradeLevel | null;
++  durationMinutes: number | null;
++}
++
++export interface RoomUpgradeBreakBenefit {
++  version: "room-upgrade-break.v1";
++  roomInstanceId: string;
++  upgradeLevel: RoomUpgradeLevel;
++  baselineMoraleGain: number;
++  moraleGain: number;
++}
++
+ export interface EmployeeFacilityTaskState {
+   kind: "refill_water" | "collect_litter" | "clean_room" | "perform_imaging" | "perform_service" | "cover_periop" | "participate_qi_discussion" | "take_break" | "repair_room" | "review_ambulatory_qi";
+   startedAtFacilityTick: number;
+@@ -1040,6 +1066,9 @@ export interface EmployeeFacilityTaskState {
+   seatId?: LevelThreeBreakSeatId;
+   /** Frozen on new EVS room jobs; legacy jobs restore their baseline quantity. */
+   cleanlinessRestore?: number;
++  /** Allows fractional remaining work only for strictly marked new support jobs. */
++  roomUpgradeWork?: RoomUpgradeSupportWork;
++  roomUpgradeBreakBenefit?: RoomUpgradeBreakBenefit;
+ }
+ 
+ export interface EmployeeTrainingState {
+@@ -1057,6 +1086,7 @@ export interface EmployeeTrainingState {
+   startedAtFacilityTick: number | null;
+   completedAtFacilityTick: number | null;
+   lastProgressAtFacilityTick: number;
++  roomUpgradeWork?: RoomUpgradeSupportWork;
+ }
+ 
+ export interface EmployeeState {
+@@ -1096,6 +1126,7 @@ export interface LevelThreeQiReviewState {
+   completedAtFacilityTick: number | null;
+   /** Accepted work survives clinical preemption and changes in category skill. */
+   trainingWork?: { version: "employee-training-work.v1"; durationMinutes: number; remainingMinutes: number };
++  roomUpgradeWork?: RoomUpgradeSupportWork;
+ }
+ 
+ /** A dismissed employee retained only while their visible exit walk completes. */
+diff --git a/packages/game-domain/src/persistence.ts b/packages/game-domain/src/persistence.ts
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -51,6 +51,7 @@ import { reconcileEmployeeRoomSeats } from "./room-capacity";
+ import { isEmployeeAwayForTraining, normalizeEmployeeTraining, reconcileEmployeeTrainingReservations } from "./employee-training";
+ import { normalizeServiceOperationTraining } from "./employee-training-effects";
+ import { normalizeRoomUpgradeRevenueQuote } from "./room-upgrades";
++import { getUnboundRoomUpgradeSupportMinutes, isRoomUpgradeSupportRemaining, normalizeRoomUpgradeBreakBenefit, normalizeRoomUpgradeSupportWork } from "./room-upgrade-support";
+ import { normalizeRetiredEncounterSummary } from "./retired-encounters";
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
+ import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
+@@ -3131,6 +3132,27 @@ function migrateVersionTwo(
+     const rawFacilityTask = isRecord(candidate.facilityTask)
+       ? candidate.facilityTask
+       : null;
++    const supportEffectKind = rawFacilityTask?.kind === "clean_room" || rawFacilityTask?.kind === "collect_litter"
++      ? "cleaning_duration_reduction_percent" as const : rawFacilityTask?.kind === "repair_room"
++        ? "repair_duration_reduction_percent" as const : rawFacilityTask?.kind === "review_ambulatory_qi"
++          ? "quality_review_duration_reduction_percent" as const : null;
++    if (rawFacilityTask?.roomUpgradeWork !== undefined && !supportEffectKind) throw new Error("The saved room upgrade support task is invalid.");
++    const roomUpgradeWork = supportEffectKind ? normalizeRoomUpgradeSupportWork(rawFacilityTask?.roomUpgradeWork, supportEffectKind) : undefined;
++    if (rawFacilityTask?.roomUpgradeBreakBenefit !== undefined && rawFacilityTask.kind !== "take_break") throw new Error("The saved room upgrade break benefit is invalid.");
++    const roomUpgradeBreakBenefit = normalizeRoomUpgradeBreakBenefit(rawFacilityTask?.roomUpgradeBreakBenefit, rawFacilityTask?.targetId);
++    if ((roomUpgradeWork || roomUpgradeBreakBenefit) && (!rawFacilityTask ||
++      typeof rawFacilityTask.startedAtFacilityTick !== "number" || !Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) ||
++      rawFacilityTask.startedAtFacilityTick < 0 || rawFacilityTask.startedAtFacilityTick > next.facilityTick ||
++      typeof rawFacilityTask.targetId !== "string" ||
++      (roomUpgradeWork ? roomUpgradeWork.durationMinutes === null || !isRoomUpgradeSupportRemaining(roomUpgradeWork, rawFacilityTask.workMinutesRemaining) :
++        typeof rawFacilityTask.workMinutesRemaining !== "number" || !Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) || rawFacilityTask.workMinutesRemaining <= 0) ||
++      (roomUpgradeWork?.effectKind === "cleaning_duration_reduction_percent" && candidate.staffRoleDefinitionId !== "staff.evs_worker") ||
++      (roomUpgradeWork?.effectKind === "repair_duration_reduction_percent" && candidate.staffRoleDefinitionId !== "staff.repair_person") ||
++      (roomUpgradeWork?.effectKind === "quality_review_duration_reduction_percent" && candidate.staffRoleDefinitionId !== "staff.surgeon") ||
++      (roomUpgradeWork && rawFacilityTask.kind === "clean_room" &&
++        (typeof rawFacilityTask.cleanlinessRestore !== "number" || !Number.isFinite(rawFacilityTask.cleanlinessRestore) || rawFacilityTask.cleanlinessRestore < 0)))) {
++      throw new Error("The saved room upgrade support task is invalid.");
++    }
+     const facilityTask =
+       (rawFacilityTask?.kind === "refill_water" ||
+         rawFacilityTask?.kind === "collect_litter" ||
+@@ -3146,7 +3168,7 @@ function migrateVersionTwo(
+       Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) &&
+       rawFacilityTask.startedAtFacilityTick >= 0 &&
+       typeof rawFacilityTask.workMinutesRemaining === "number" &&
+-      Number.isSafeInteger(rawFacilityTask.workMinutesRemaining) &&
++      (roomUpgradeWork ? isRoomUpgradeSupportRemaining(roomUpgradeWork, rawFacilityTask.workMinutesRemaining) : Number.isSafeInteger(rawFacilityTask.workMinutesRemaining)) &&
+       rawFacilityTask.workMinutesRemaining > 0
+         ? {
+             kind: rawFacilityTask.kind as NonNullable<EmployeeState["facilityTask"]>["kind"],
+@@ -3154,6 +3176,8 @@ function migrateVersionTwo(
+               rawFacilityTask.startedAtFacilityTick,
+             workMinutesRemaining:
+               rawFacilityTask.workMinutesRemaining,
++            ...(roomUpgradeWork ? { roomUpgradeWork } : {}),
++            ...(roomUpgradeBreakBenefit ? { roomUpgradeBreakBenefit } : {}),
+             ...(rawFacilityTask.kind === "clean_room" && typeof rawFacilityTask.cleanlinessRestore === "number" &&
+               Number.isFinite(rawFacilityTask.cleanlinessRestore) && rawFacilityTask.cleanlinessRestore >= 0
+               ? { cleanlinessRestore: rawFacilityTask.cleanlinessRestore } : {}),
+@@ -3240,15 +3264,25 @@ function migrateVersionTwo(
+   next.levelThreeQiReviews = Array.isArray(parsed.levelThreeQiReviews)
+     ? parsed.levelThreeQiReviews.flatMap((candidate) => {
+         if (!isRecord(candidate) || typeof candidate.id !== "string" || typeof candidate.receiptId !== "string" ||
+-            (candidate.status !== "queued" && candidate.status !== "in_progress" && candidate.status !== "completed")) return [];
++            (candidate.status !== "queued" && candidate.status !== "in_progress" && candidate.status !== "completed")) {
++          if (isRecord(candidate) && candidate.roomUpgradeWork !== undefined) throw new Error("The saved room upgrade QI work is invalid.");
++          return [];
++        }
+         const surgeonEmployeeId = typeof candidate.surgeonEmployeeId === "string" &&
+           next.employees.some((employee) => employee.id === candidate.surgeonEmployeeId && employee.staffRoleDefinitionId === "staff.surgeon")
+           ? candidate.surgeonEmployeeId : null;
+         const status = candidate.status === "in_progress" && surgeonEmployeeId === null ? "queued" : candidate.status;
+         const work = isRecord(candidate.trainingWork) ? candidate.trainingWork : null;
++        const roomUpgradeWork = normalizeRoomUpgradeSupportWork(candidate.roomUpgradeWork, "quality_review_duration_reduction_percent");
++        if (roomUpgradeWork && (!work ||
++          work.durationMinutes !== (roomUpgradeWork.durationMinutes ?? getUnboundRoomUpgradeSupportMinutes(roomUpgradeWork)) ||
++          !isRoomUpgradeSupportRemaining(roomUpgradeWork, work.remainingMinutes, true) ||
++          (roomUpgradeWork.durationMinutes === null && (candidate.status !== "queued" || work.remainingMinutes !== work.durationMinutes)))) {
++          throw new Error("The saved room upgrade QI work is invalid.");
++        }
+         if (candidate.trainingWork !== undefined && (!work || work.version !== "employee-training-work.v1" ||
+-          typeof work.durationMinutes !== "number" || !Number.isSafeInteger(work.durationMinutes) || work.durationMinutes < 1 ||
+-          typeof work.remainingMinutes !== "number" || !Number.isSafeInteger(work.remainingMinutes) || work.remainingMinutes < 0 || work.remainingMinutes > work.durationMinutes ||
++          typeof work.durationMinutes !== "number" || !(roomUpgradeWork ? Number.isFinite(work.durationMinutes) : Number.isSafeInteger(work.durationMinutes)) || work.durationMinutes < 1 ||
++          typeof work.remainingMinutes !== "number" || !(roomUpgradeWork ? Number.isFinite(work.remainingMinutes) : Number.isSafeInteger(work.remainingMinutes)) || work.remainingMinutes < 0 || work.remainingMinutes > work.durationMinutes ||
+           (candidate.status === "completed" ? work.remainingMinutes !== 0 : work.remainingMinutes === 0))) throw new Error("The saved QI training work is invalid.");
+         return [{
+           id: candidate.id,
+@@ -3259,6 +3293,7 @@ function migrateVersionTwo(
+           startedAtFacilityTick: status !== "queued" && typeof candidate.startedAtFacilityTick === "number" && Number.isSafeInteger(candidate.startedAtFacilityTick) ? candidate.startedAtFacilityTick : null,
+           completedAtFacilityTick: status === "completed" && typeof candidate.completedAtFacilityTick === "number" && Number.isSafeInteger(candidate.completedAtFacilityTick) ? candidate.completedAtFacilityTick : null,
+           ...(work ? { trainingWork: { version: "employee-training-work.v1" as const, durationMinutes: work.durationMinutes as number, remainingMinutes: work.remainingMinutes as number } } : {}),
++          ...(roomUpgradeWork ? { roomUpgradeWork } : {}),
+         }];
+       })
+     : [];
+@@ -3286,6 +3321,10 @@ function migrateVersionTwo(
+       employee.facilityTask = null;
+     } else if (task.kind === "review_ambulatory_qi") {
+       const review = task.targetId ? next.levelThreeQiReviews.find((candidate) => candidate.id === task.targetId) : null;
++      if (review && (task.roomUpgradeWork || review.roomUpgradeWork) &&
++        (!task.roomUpgradeWork || !review.roomUpgradeWork ||
++          JSON.stringify(task.roomUpgradeWork) !== JSON.stringify(review.roomUpgradeWork) ||
++          task.workMinutesRemaining !== review.trainingWork?.remainingMinutes)) throw new Error("The saved room upgrade QI assignment is invalid.");
+       if (!review || review.status !== "in_progress" || review.surgeonEmployeeId !== employee.id) employee.facilityTask = null;
+     }
+   }
+diff --git a/packages/game-domain/src/employee-training.ts b/packages/game-domain/src/employee-training.ts
+--- a/packages/game-domain/src/employee-training.ts
++++ b/packages/game-domain/src/employee-training.ts
+@@ -15,6 +15,7 @@ import { getRadiologistReadingStation } from "./reading-stations";
+ import { getGlp1NursePractitionerStation } from "./staff";
+ import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
+ import { getRoomNavigationAnchor, rotateRoomLocalPoint } from "./spatial";
++import { bindRoomUpgradeSupportWork, createRoomUpgradeSupportWork, isRoomUpgradeSupportRemaining, normalizeRoomUpgradeSupportWork } from "./room-upgrade-support";
+ import type { DiagnosticResourceChoice, DomainContext, EmployeeState, EmployeeTrainingState, GameState, GridPoint, RoomUpgradeLevel } from "./types";
+ 
+ export { getEmployeeTrainingCost, getEmployeeTrainingPercent, getEmployeeTrainingRole,
+@@ -138,6 +139,7 @@ export function requestEmployeeTraining(state: GameState, employeeId: string, co
+     paidAmount: quote.cost, targetLevel: quote.targetLevel, stage: "queued", roomInstanceId: null, placeId: null,
+     remainingMinutes: EMPLOYEE_TRAINING_SESSION_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null,
+     lastProgressAtFacilityTick: state.facilityTick,
++    roomUpgradeWork: createRoomUpgradeSupportWork(state, "training_duration_reduction_percent", EMPLOYEE_TRAINING_SESSION_MINUTES),
+   };
+   state.employeeTrainingSequence = sequence + 1;
+   changeCash(state, -quote.cost);
+@@ -309,6 +311,9 @@ export function advanceEmployeeTraining(state: GameState, context: DomainContext
+     const place = usablePlaces(state, employee, context).find((candidate) => candidate.employeeId === null);
+     if (!place) continue;
+     const session = employee.training!;
++    if (session.roomUpgradeWork?.durationMinutes === null) {
++      session.remainingMinutes = bindRoomUpgradeSupportWork(session.roomUpgradeWork, place.roomInstanceId);
++    }
+     session.stage = "walking_to_training";
+     session.roomInstanceId = place.roomInstanceId;
+     session.placeId = place.placeId;
+@@ -333,6 +338,8 @@ export function normalizeEmployeeTraining(value: unknown, employee: EmployeeStat
+   if (value === undefined || value === null) return null;
+   if (typeof value !== "object") throw new Error("The saved employee training request is invalid.");
+   const raw = value as Record<string, unknown>;
++  const roomUpgradeWork = normalizeRoomUpgradeSupportWork(raw.roomUpgradeWork, "training_duration_reduction_percent");
++  const acceptedDuration = roomUpgradeWork?.durationMinutes ?? EMPLOYEE_TRAINING_SESSION_MINUTES;
+   const integer = (key: string, minimum = 0): boolean => typeof raw[key] === "number" && Number.isSafeInteger(raw[key]) && (raw[key] as number) >= minimum;
+   const tick = (key: string): boolean => integer(key) && (raw[key] as number) <= facilityTick;
+   const nullableTick = (key: string): boolean => raw[key] === null || tick(key);
+@@ -344,11 +351,15 @@ export function normalizeEmployeeTraining(value: unknown, employee: EmployeeStat
+       (raw.roomInstanceId === null) !== (raw.placeId === null) || !integer("requestSequence") || !tick("requestedAtFacilityTick") || !integer("earliestDepartureAtFacilityTick") ||
+       !tick("lastProgressAtFacilityTick") || !nullableTick("startedAtFacilityTick") || !nullableTick("completedAtFacilityTick") ||
+       !integer("paidAmount", 1) || getEmployeeTrainingCost(employee.staffRoleDefinitionId, raw.targetLevel as number) === null ||
+-      !integer("remainingMinutes") || (raw.remainingMinutes as number) > EMPLOYEE_TRAINING_SESSION_MINUTES ||
++      (roomUpgradeWork ? !isRoomUpgradeSupportRemaining(roomUpgradeWork, raw.remainingMinutes, true) : !integer("remainingMinutes")) ||
++      (raw.remainingMinutes as number) > acceptedDuration ||
++      (roomUpgradeWork && (roomUpgradeWork.baselineMinutes !== EMPLOYEE_TRAINING_SESSION_MINUTES ||
++        (raw.stage === "queued" && roomUpgradeWork.boundRoomInstanceId !== null) ||
++        (raw.stage !== "queued" && roomUpgradeWork.durationMinutes === null))) ||
+       (raw.stage === "returning" ? raw.targetLevel !== employee.trainingLevel || raw.remainingMinutes !== 0 ||
+         raw.startedAtFacilityTick === null || raw.completedAtFacilityTick === null || raw.roomInstanceId !== null
+         : raw.targetLevel !== employee.trainingLevel + 1 || raw.remainingMinutes === 0 || raw.completedAtFacilityTick !== null) ||
+-      (raw.startedAtFacilityTick === null && raw.remainingMinutes !== EMPLOYEE_TRAINING_SESSION_MINUTES) ||
++      (raw.startedAtFacilityTick === null && raw.remainingMinutes !== acceptedDuration) ||
+       (raw.stage === "training" && (raw.startedAtFacilityTick === null || raw.roomInstanceId === null)) ||
+       (raw.stage === "queued" && (raw.startedAtFacilityTick !== null || raw.roomInstanceId !== null))) {
+     throw new Error("The saved employee training request is invalid.");
+@@ -358,5 +369,6 @@ export function normalizeEmployeeTraining(value: unknown, employee: EmployeeStat
+     paidAmount: raw.paidAmount as number, targetLevel: raw.targetLevel as EmployeeTrainingState["targetLevel"], stage: raw.stage as EmployeeTrainingState["stage"],
+     roomInstanceId: raw.roomInstanceId as string | null, placeId: raw.placeId as EmployeeTrainingPlaceId | null,
+     remainingMinutes: raw.remainingMinutes as number, startedAtFacilityTick: raw.startedAtFacilityTick as number | null,
+-    completedAtFacilityTick: raw.completedAtFacilityTick as number | null, lastProgressAtFacilityTick: raw.lastProgressAtFacilityTick as number };
++    completedAtFacilityTick: raw.completedAtFacilityTick as number | null, lastProgressAtFacilityTick: raw.lastProgressAtFacilityTick as number,
++    ...(roomUpgradeWork ? { roomUpgradeWork } : {}) };
+ }
+diff --git a/packages/game-domain/src/level-three-support.ts b/packages/game-domain/src/level-three-support.ts
+--- a/packages/game-domain/src/level-three-support.ts
++++ b/packages/game-domain/src/level-three-support.ts
+@@ -5,6 +5,7 @@ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
+ import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
+ import { getRoomNavigableTiles, getRoomNavigationAnchor } from "./spatial";
++import { bindRoomUpgradeSupportWork, createEmployeeRoomUpgradeSupportWork, createRoomUpgradeBreakBenefit, createRoomUpgradeSupportWork } from "./room-upgrade-support";
+ import type { DomainContext, EmployeeState, GameState, GridPoint, LevelThreeBreakSeatId, PlacedRoom } from "./types";
+ 
+ export const LEVEL_THREE_MAINTAINED_ROOM_IDS = [
+@@ -179,7 +180,7 @@ function clearSupportTask(state: GameState, employee: EmployeeState, context: Do
+   if (employee.facilityTask?.kind === "review_ambulatory_qi" && employee.facilityTask.targetId) {
+     const review = state.levelThreeQiReviews.find((candidate) => candidate.id === employee.facilityTask!.targetId);
+     if (review?.status === "in_progress") {
+-      review.trainingWork ??= { version: "employee-training-work.v1", durationMinutes: context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes, remainingMinutes: employee.facilityTask.workMinutesRemaining };
++      review.trainingWork ??= { version: "employee-training-work.v1", durationMinutes: review.roomUpgradeWork?.durationMinutes ?? context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes, remainingMinutes: employee.facilityTask.workMinutesRemaining };
+       review.trainingWork.remainingMinutes = employee.facilityTask.workMinutesRemaining;
+       review.status = "queued";
+       review.surgeonEmployeeId = null;
+@@ -198,7 +199,7 @@ function reconcileSupportAssignments(state: GameState, context: DomainContext):
+     const room = task.targetId ? state.rooms.find((candidate) => candidate.id === task.targetId) : null;
+     const claim = room?.roomDefinitionId === "room.staff_break" && task.seatId
+       ? `${room.id}:${task.seatId}` : null;
+-    if (!claim || claimedBreakSeats.has(claim)) {
++    if (!claim || !room || !isRoomOperationalForFacilityWork(state, room.id, context) || claimedBreakSeats.has(claim)) {
+       employee.facilityTask = null;
+       routeEmployeeHome(state, employee, context);
+       continue;
+@@ -215,7 +216,10 @@ function reconcileSupportAssignments(state: GameState, context: DomainContext):
+       ? state.rooms.find((candidate) => candidate.id === surgeon.homeRoomInstanceId && candidate.roomDefinitionId === "room.surgeon_office")
+       : null;
+     const matchingTask = surgeon?.facilityTask?.kind === "review_ambulatory_qi" && surgeon.facilityTask.targetId === review.id;
+-    if (surgeon && office && matchingTask && isRoomOperationalForFacilityWork(state, office.id, context)) continue;
++    const definition = office ? getRoomDefinition(office.roomDefinitionId, context) : null;
++    const target = office && definition ? getRoomNavigationAnchor(office, definition, "staff") : null;
++    const routedTarget = surgeon?.path.at(-1);
++    if (surgeon && office && matchingTask && target && routedTarget && samePoint(target, routedTarget) && isRoomOperationalForFacilityWork(state, office.id, context)) continue;
+     if (surgeon?.facilityTask?.kind === "review_ambulatory_qi" && surgeon.facilityTask.targetId === review.id) {
+       if (review.trainingWork) review.trainingWork.remainingMinutes = surgeon.facilityTask.workMinutesRemaining;
+       surgeon.facilityTask = null;
+@@ -237,14 +241,16 @@ function progressTasks(state: GameState, context: DomainContext): void {
+       continue;
+     }
+     if (employee.pathIndex < Math.max(0, employee.path.length - 1)) continue;
+-    task.workMinutesRemaining -= 1;
++    const endpoint = employee.path.at(-1);
++    if (!endpoint || !samePoint(employee.location, endpoint)) continue;
++    task.workMinutesRemaining = Math.max(0, task.workMinutesRemaining - 1);
+     if (task.kind === "review_ambulatory_qi") {
+       const review = state.levelThreeQiReviews.find((candidate) => candidate.id === task.targetId);
+       if (review?.trainingWork) review.trainingWork.remainingMinutes = Math.max(0, task.workMinutesRemaining);
+     }
+     if (task.workMinutesRemaining > 0) continue;
+     if (task.kind === "take_break") {
+-      employee.morale = Math.min(100, employee.morale + tuning.breakMoraleGain);
++      employee.morale = Math.min(100, employee.morale + (task.roomUpgradeBreakBenefit?.moraleGain ?? tuning.breakMoraleGain));
+       employee.lastBreakAtFacilityTick = state.facilityTick;
+     } else if (task.kind === "repair_room" && task.targetId) {
+       const room = state.rooms.find((candidate) => candidate.id === task.targetId);
+@@ -288,7 +294,9 @@ function enqueueQi(state: GameState, context: DomainContext): void {
+   for (const receipt of state.serviceIncomeReceipts) {
+     if (receipt.incomeLineId !== "income.ambulatory_operation" && receipt.incomeLineId !== "income.ambulatory_operation_extended") continue;
+     if (reviewedReceiptIds.has(receipt.id)) continue;
+-    const durationMinutes = getEmployeeTrainingWorkMinutes(context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes, getEmployeeRoleTrainingPercent(state, "staff.surgeon"));
++    const baselineMinutes = context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes;
++    const employeeReductionPercent = getEmployeeRoleTrainingPercent(state, "staff.surgeon");
++    const durationMinutes = getEmployeeTrainingWorkMinutes(baselineMinutes, employeeReductionPercent);
+     state.levelThreeQiReviews.push({
+       id: `level-three-qi.${state.levelThreeQiReviewSequence++}`,
+       receiptId: receipt.id,
+@@ -298,13 +306,16 @@ function enqueueQi(state: GameState, context: DomainContext): void {
+       startedAtFacilityTick: null,
+       completedAtFacilityTick: null,
+       trainingWork: { version: "employee-training-work.v1", durationMinutes, remainingMinutes: durationMinutes },
++      roomUpgradeWork: createRoomUpgradeSupportWork(state, "quality_review_duration_reduction_percent", baselineMinutes, employeeReductionPercent),
+     });
+     reviewedReceiptIds.add(receipt.id);
+   }
+ }
+ 
+ function routeTask(state: GameState, employee: EmployeeState, target: GridPoint, allowedRoomId: string, context: DomainContext): boolean {
+-  const path = findCareAwareFacilityPath(state, context, employee.location, target, new Set([allowedRoomId]));
++  const allowedRooms = new Set([allowedRoomId]);
++  const ordinary = findCareAwareFacilityPath(state, context, employee.location, target, allowedRooms);
++  const path = ordinary.length > 0 ? ordinary : findRouteFromDisplacedLocationToPoint(state, context, employee.location, target, allowedRooms);
+   if (path.length === 0 || !samePoint(path.at(-1)!, target)) return false;
+   employee.path = path;
+   employee.pathIndex = 0;
+@@ -330,7 +341,11 @@ function assignRepairs(state: GameState, context: DomainContext): void {
+     const definition = getRoomDefinition(room.roomDefinitionId, context);
+     if (!repairer || !definition || !routeTask(state, repairer, getRoomNavigationAnchor(room, definition, "staff"), room.id, context)) continue;
+     room.maintenance!.status = "out_of_service";
+-    repairer.facilityTask = { kind: "repair_room", targetId: room.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: getEmployeeTrainingWorkMinutes(tuning.repairDurationMinutes, getEmployeeRoleTrainingPercent(state, "staff.repair_person")) };
++    const employeeReductionPercent = getEmployeeRoleTrainingPercent(state, "staff.repair_person");
++    const roomUpgradeWork = createEmployeeRoomUpgradeSupportWork(state, repairer, "repair_duration_reduction_percent", tuning.repairDurationMinutes, employeeReductionPercent, context);
++    repairer.facilityTask = { kind: "repair_room", targetId: room.id, startedAtFacilityTick: state.facilityTick,
++      workMinutesRemaining: roomUpgradeWork?.durationMinutes ?? getEmployeeTrainingWorkMinutes(tuning.repairDurationMinutes, employeeReductionPercent),
++      ...(roomUpgradeWork ? { roomUpgradeWork } : {}) };
+   }
+ }
+ 
+@@ -343,10 +358,16 @@ function assignQi(state: GameState, context: DomainContext): void {
+   const definition = office ? getRoomDefinition(office.roomDefinitionId, context) : null;
+   if (!surgeon || office?.roomDefinitionId !== "room.surgeon_office" || !definition || !isRoomOperationalForFacilityWork(state, office.id, context)) return;
+   if (!routeTask(state, surgeon, getRoomNavigationAnchor(office, definition, "staff"), office.id, context)) return;
++  if (review.roomUpgradeWork?.durationMinutes === null) {
++    const durationMinutes = bindRoomUpgradeSupportWork(review.roomUpgradeWork, office.id);
++    review.trainingWork = { version: "employee-training-work.v1", durationMinutes, remainingMinutes: durationMinutes };
++  }
+   review.status = "in_progress";
+   review.surgeonEmployeeId = surgeon.id;
+   review.startedAtFacilityTick = state.facilityTick;
+-  surgeon.facilityTask = { kind: "review_ambulatory_qi", targetId: review.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: review.trainingWork?.remainingMinutes ?? context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes };
++  surgeon.facilityTask = { kind: "review_ambulatory_qi", targetId: review.id, startedAtFacilityTick: state.facilityTick,
++    workMinutesRemaining: review.trainingWork?.remainingMinutes ?? context.balanceRelease.environment.levelThreeSupport.qiReviewDurationMinutes,
++    ...(review.roomUpgradeWork ? { roomUpgradeWork: review.roomUpgradeWork } : {}) };
+ }
+ 
+ function assignBreaks(state: GameState, context: DomainContext): void {
+@@ -360,7 +381,8 @@ function assignBreaks(state: GameState, context: DomainContext): void {
+       const seat = LEVEL_THREE_BREAK_SEATS.find((candidate) => !occupied.has(`${room.id}:${candidate.id}`));
+       const target = seat ? targetForBreakSeat(state, room, seat.id, context) : null;
+       if (!seat || !target || !routeTask(state, employee, target, room.id, context)) continue;
+-      employee.facilityTask = { kind: "take_break", targetId: room.id, seatId: seat.id, startedAtFacilityTick: state.facilityTick, workMinutesRemaining: tuning.breakDurationMinutes };
++      employee.facilityTask = { kind: "take_break", targetId: room.id, seatId: seat.id, startedAtFacilityTick: state.facilityTick,
++        workMinutesRemaining: tuning.breakDurationMinutes, roomUpgradeBreakBenefit: createRoomUpgradeBreakBenefit(room, tuning.breakMoraleGain) };
+       occupied.add(`${room.id}:${seat.id}`);
+       break;
+     }
+diff --git a/packages/game-domain/src/reducer.ts b/packages/game-domain/src/reducer.ts
+--- a/packages/game-domain/src/reducer.ts
++++ b/packages/game-domain/src/reducer.ts
+@@ -32,6 +32,7 @@ import {
+ import { materializePatientName } from "./patientText";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
+ import { bindRoomUpgradeRevenueQuote, cloneRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote, getRoomUpgradeQuotedFee } from "./room-upgrades";
++import { createEmployeeRoomUpgradeSupportWork, getBestOperationalCoffeeUpgradeMorale } from "./room-upgrade-support";
+ import {
+   findCareAwareFacilityPath,
+   isProtectedCareRoom,
+@@ -6575,6 +6576,8 @@ function advanceEmployeeFacilityTasks(
+     if (!task) {
+       continue;
+     }
++    // Level-three support owns these work clocks and their completion effects.
++    if (task.kind === "take_break" || task.kind === "repair_room" || task.kind === "review_ambulatory_qi") continue;
+     if (
+       (mode === "non_refill" && task.kind === "refill_water") ||
+       (mode === "refill_only" && task.kind !== "refill_water")
+@@ -6582,6 +6585,9 @@ function advanceEmployeeFacilityTasks(
+     if (employee.pathIndex < employee.path.length - 1) {
+       continue;
+     }
++    const endpoint = employee.path.at(-1);
++    if ((task.kind === "collect_litter" || task.kind === "clean_room") &&
++      (!endpoint || employee.location.x !== endpoint.x || employee.location.y !== endpoint.y)) continue;
+ 
+     if (task.kind === "perform_imaging") {
+       const stillReserved = Object.values(state.encounters).some(
+@@ -6781,6 +6787,8 @@ function maybeAssignEvsTasks(state: GameState, context: DomainContext): void {
+     worker.path = selected.path;
+     worker.pathIndex = 0;
+     worker.lastMovedAtFacilityTick = state.facilityTick;
++    const baselineMinutes = "spawnedAtFacilityTick" in selected.target ? config.founderInteractionMinutes : config.evsRoomCleanupMinutes;
++    const roomUpgradeWork = createEmployeeRoomUpgradeSupportWork(state, worker, "cleaning_duration_reduction_percent", baselineMinutes, 0, context);
+     worker.facilityTask = {
+       kind:
+         "spawnedAtFacilityTick" in selected.target
+@@ -6788,10 +6796,8 @@ function maybeAssignEvsTasks(state: GameState, context: DomainContext): void {
+           : "clean_room",
+       targetId: selected.target.id,
+       startedAtFacilityTick: state.facilityTick,
+-      workMinutesRemaining:
+-        "spawnedAtFacilityTick" in selected.target
+-          ? context.balanceRelease.environment.founderInteractionMinutes
+-          : config.evsRoomCleanupMinutes,
++      workMinutesRemaining: roomUpgradeWork?.durationMinutes ?? baselineMinutes,
++      ...(roomUpgradeWork ? { roomUpgradeWork } : {}),
+       ...("spawnedAtFacilityTick" in selected.target ? {} : {
+         cleanlinessRestore: config.evsRoomCleanlinessRestore * (1 + getEmployeeRoleTrainingPercent(state, "staff.evs_worker") / 100),
+       }),
+@@ -6914,9 +6920,10 @@ function maybeApplyCoffeeMorale(state: GameState, context: DomainContext): void
+   ) {
+     return;
+   }
++  const roomUpgradeMorale = getBestOperationalCoffeeUpgradeMorale(state, context);
+   for (const employee of state.employees) {
+     employee.morale = clamp(
+-      employee.morale + context.balanceRelease.environment.coffeeMoraleBonusPerDay,
++      employee.morale + context.balanceRelease.environment.coffeeMoraleBonusPerDay + roomUpgradeMorale,
+       0,
+       100,
+     );
+diff --git a/packages/game-domain/src/index.ts b/packages/game-domain/src/index.ts
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -31,6 +31,7 @@ export * from "./retail-operations";
+ export * from "./retired-encounters";
+ export * from "./retired-service-history";
+ export * from "./room-capacity";
++export * from "./room-upgrade-support";
+ export * from "./selectors";
+ export * from "./service-operations";
+ export * from "./spatial";
+diff --git a/packages/game-domain/src/room-upgrade-support.ts b/packages/game-domain/src/room-upgrade-support.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/game-domain/src/room-upgrade-support.ts
+@@ -0,0 +1,142 @@
++import { getRoomUpgradeDurationMultiplier, getRoomUpgradePoints } from "@gamify-surgery/balance-config";
++import { isRoomOperationalForFacilityWork } from "./selectors";
++import type {
++  DomainContext, EmployeeState, GameState, PlacedRoom, RoomUpgradeBreakBenefit,
++  RoomUpgradeLevel, RoomUpgradeSupportEffectKind, RoomUpgradeSupportWork,
++} from "./types";
++
++const supportRoomIds: Record<RoomUpgradeSupportEffectKind, string> = {
++  cleaning_duration_reduction_percent: "room.evs_closet",
++  repair_duration_reduction_percent: "room.maintenance_workshop",
++  quality_review_duration_reduction_percent: "room.surgeon_office",
++  training_duration_reduction_percent: "room.training",
++};
++
++/** Freeze installed alternatives before a paid request or queued review waits. */
++export function createRoomUpgradeSupportWork(
++  state: GameState,
++  effectKind: RoomUpgradeSupportEffectKind,
++  baselineMinutes: number,
++  employeeReductionPercent = 0,
++): RoomUpgradeSupportWork {
++  return {
++    version: "room-upgrade-support.v1", effectKind, baselineMinutes, employeeReductionPercent,
++    acceptedRooms: state.rooms.filter((room) => room.roomDefinitionId === supportRoomIds[effectKind])
++      .sort((left, right) => left.id.localeCompare(right.id))
++      .map((room) => ({ roomInstanceId: room.id, upgradeLevel: room.upgradeLevel })),
++    boundRoomInstanceId: null, boundUpgradeLevel: null, durationMinutes: null,
++  };
++}
++
++function effectiveMinutes(work: RoomUpgradeSupportWork, level: RoomUpgradeLevel): number {
++  return Math.max(1, work.baselineMinutes *
++    getRoomUpgradeDurationMultiplier(supportRoomIds[work.effectKind], level, work.effectKind) *
++    (1 - work.employeeReductionPercent / 100));
++}
++
++/** A replacement installed after acceptance contributes no new bonus. */
++export function bindRoomUpgradeSupportWork(work: RoomUpgradeSupportWork, roomInstanceId: string): number {
++  if (work.durationMinutes !== null) return work.durationMinutes;
++  const level = work.acceptedRooms.find((room) => room.roomInstanceId === roomInstanceId)?.upgradeLevel ?? 1;
++  work.boundRoomInstanceId = roomInstanceId;
++  work.boundUpgradeLevel = level;
++  work.durationMinutes = effectiveMinutes(work, level);
++  return work.durationMinutes;
++}
++
++/** EVS/repairs freeze only the actual worker's operational home room. */
++export function createEmployeeRoomUpgradeSupportWork(
++  state: GameState, employee: EmployeeState, effectKind: RoomUpgradeSupportEffectKind,
++  baselineMinutes: number, employeeReductionPercent: number, context: DomainContext,
++): RoomUpgradeSupportWork | null {
++  const home = state.rooms.find((room) => room.id === employee.homeRoomInstanceId && room.roomDefinitionId === supportRoomIds[effectKind]);
++  if (!home || !isRoomOperationalForFacilityWork(state, home.id, context)) return null;
++  const work = createRoomUpgradeSupportWork(state, effectKind, baselineMinutes, employeeReductionPercent);
++  bindRoomUpgradeSupportWork(work, home.id);
++  return work;
++}
++
++/** New breaks use one actual room and retain their accepted gain through upgrades. */
++export function createRoomUpgradeBreakBenefit(room: PlacedRoom, baselineMoraleGain: number): RoomUpgradeBreakBenefit {
++  return {
++    version: "room-upgrade-break.v1", roomInstanceId: room.id, upgradeLevel: room.upgradeLevel,
++    baselineMoraleGain,
++    moraleGain: baselineMoraleGain + getRoomUpgradePoints("room.staff_break", room.upgradeLevel, "break_morale_points"),
++  };
++}
++
++/** The existing daily clinic witness remains the sole coffee application guard. */
++export function getBestOperationalCoffeeUpgradeMorale(state: GameState, context: DomainContext): number {
++  const kiosk = state.rooms.filter((room) => room.roomDefinitionId === "room.coffee_kiosk" && isRoomOperationalForFacilityWork(state, room.id, context))
++    .sort((left, right) => right.upgradeLevel - left.upgradeLevel || left.id.localeCompare(right.id))[0];
++  return kiosk ? getRoomUpgradePoints(kiosk.roomDefinitionId, kiosk.upgradeLevel, "daily_coffee_morale_points") : 0;
++}
++
++function record(value: unknown): value is Record<string, unknown> {
++  return value !== null && typeof value === "object" && !Array.isArray(value);
++}
++
++function only(raw: Record<string, unknown>, fields: readonly string[]): boolean {
++  return Object.keys(raw).every((key) => fields.includes(key));
++}
++
++function level(value: unknown): value is RoomUpgradeLevel {
++  return value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
++}
++
++function id(value: unknown): value is string { return typeof value === "string" && value.length > 0; }
++
++/** Legacy unbound employee work used this integer duration before room binding. */
++export function getUnboundRoomUpgradeSupportMinutes(work: RoomUpgradeSupportWork): number {
++  const minutes = work.baselineMinutes * (1 - work.employeeReductionPercent / 100);
++  return Math.max(1, Math.ceil(minutes - Number.EPSILON * Math.max(1, Math.abs(minutes)) * 4));
++}
++
++export function isRoomUpgradeSupportRemaining(work: RoomUpgradeSupportWork, remaining: unknown, allowZero = false): remaining is number {
++  return typeof remaining === "number" && Number.isFinite(remaining) &&
++    remaining >= (allowZero ? 0 : Number.MIN_VALUE) &&
++    remaining <= (work.durationMinutes ?? getUnboundRoomUpgradeSupportMinutes(work));
++}
++
++/** New opt-in markers are strict; malformed accepted work must not disappear. */
++export function normalizeRoomUpgradeSupportWork(value: unknown, expectedEffectKind: RoomUpgradeSupportEffectKind): RoomUpgradeSupportWork | undefined {
++  if (value === undefined) return undefined;
++  const invalid = (): never => { throw new Error("The saved room upgrade support work is invalid."); };
++  if (!record(value) || !only(value, ["version", "effectKind", "baselineMinutes", "employeeReductionPercent", "acceptedRooms", "boundRoomInstanceId", "boundUpgradeLevel", "durationMinutes"]) ||
++    value.version !== "room-upgrade-support.v1" || value.effectKind !== expectedEffectKind ||
++    typeof value.baselineMinutes !== "number" || !Number.isSafeInteger(value.baselineMinutes) || value.baselineMinutes < 1 ||
++    typeof value.employeeReductionPercent !== "number" || !Number.isFinite(value.employeeReductionPercent) || value.employeeReductionPercent < 0 || value.employeeReductionPercent > 40 ||
++    ((expectedEffectKind === "cleaning_duration_reduction_percent" || expectedEffectKind === "training_duration_reduction_percent") && value.employeeReductionPercent !== 0) ||
++    !Array.isArray(value.acceptedRooms)) return invalid();
++  const acceptedRooms = value.acceptedRooms.map((room: unknown) => {
++    if (!record(room) || !only(room, ["roomInstanceId", "upgradeLevel"]) || !id(room.roomInstanceId) || !level(room.upgradeLevel)) return invalid();
++    return { roomInstanceId: room.roomInstanceId, upgradeLevel: room.upgradeLevel };
++  });
++  if (new Set(acceptedRooms.map((room) => room.roomInstanceId)).size !== acceptedRooms.length) return invalid();
++  const work: RoomUpgradeSupportWork = {
++    version: "room-upgrade-support.v1", effectKind: expectedEffectKind,
++    baselineMinutes: value.baselineMinutes, employeeReductionPercent: value.employeeReductionPercent,
++    acceptedRooms, boundRoomInstanceId: null, boundUpgradeLevel: null, durationMinutes: null,
++  };
++  if (value.boundRoomInstanceId === null && value.boundUpgradeLevel === null && value.durationMinutes === null) return work;
++  if (!id(value.boundRoomInstanceId) || !level(value.boundUpgradeLevel) ||
++    typeof value.durationMinutes !== "number" || !Number.isFinite(value.durationMinutes) || value.durationMinutes < 1 ||
++    value.boundUpgradeLevel !== (acceptedRooms.find((room) => room.roomInstanceId === value.boundRoomInstanceId)?.upgradeLevel ?? 1) ||
++    value.durationMinutes !== effectiveMinutes(work, value.boundUpgradeLevel)) return invalid();
++  work.boundRoomInstanceId = value.boundRoomInstanceId;
++  work.boundUpgradeLevel = value.boundUpgradeLevel;
++  work.durationMinutes = value.durationMinutes;
++  return work;
++}
++
++export function normalizeRoomUpgradeBreakBenefit(value: unknown, targetRoomId: unknown): RoomUpgradeBreakBenefit | undefined {
++  if (value === undefined) return undefined;
++  const invalid = (): never => { throw new Error("The saved room upgrade break benefit is invalid."); };
++  if (!record(value) || !only(value, ["version", "roomInstanceId", "upgradeLevel", "baselineMoraleGain", "moraleGain"]) ||
++    value.version !== "room-upgrade-break.v1" || !id(value.roomInstanceId) || value.roomInstanceId !== targetRoomId || !level(value.upgradeLevel) ||
++    typeof value.baselineMoraleGain !== "number" || !Number.isSafeInteger(value.baselineMoraleGain) || value.baselineMoraleGain < 0 ||
++    typeof value.moraleGain !== "number" || !Number.isSafeInteger(value.moraleGain) ||
++    value.moraleGain !== value.baselineMoraleGain + getRoomUpgradePoints("room.staff_break", value.upgradeLevel, "break_morale_points")) return invalid();
++  return { version: "room-upgrade-break.v1", roomInstanceId: value.roomInstanceId, upgradeLevel: value.upgradeLevel,
++    baselineMoraleGain: value.baselineMoraleGain, moraleGain: value.moraleGain };
++}
+diff --git a/packages/game-domain/tests/room-upgrade-support.test.ts b/packages/game-domain/tests/room-upgrade-support.test.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/game-domain/tests/room-upgrade-support.test.ts
+@@ -0,0 +1,590 @@
++import { describe, expect, it } from "vitest";
++import {
++  PROTOTYPE_DOMAIN_CONTEXT, advanceEmployeeMovement, advanceLevelThreeSupport,
++  deserializeGameState, gameReducer, getEmployeeTrainingPlaces, getRoomDefinition,
++  getRoomNavigationAnchor, isRoomOperationalForFacilityWork, requestEmployeeTraining,
++  serializeGameState, type EmployeeState, type GameState, type PlacedRoom,
++  type RoomUpgradeLevel,
++} from "../src";
++import { addTrainingEmployee, advanceTrainingMinutes, reachTrainingStage, trainingFixture } from "./employee-training-fixtures";
++
++const levels = [1, 2, 3, 4, 5] as const;
++const supportMinutes = [30, 27, 24, 21, 18];
++let sequence = 0;
++const reload = (state: GameState): GameState => deserializeGameState(serializeGameState(state));
++
++function fixture(): GameState {
++  const state = trainingFixture();
++  state.rooms = state.rooms.filter((room) => room.roomDefinitionId === "room.front_desk");
++  state.doors = state.doors.filter((door) => door.roomId === "room.instance.founder_desk");
++  state.rooms.push(...Array.from({ length: 17 }, (_, index) => ({
++    id: `room.support.hall.${15 + index}`, roomDefinitionId: "room.hallway", x: 32, y: 15 + index,
++    orientation: 0 as const, doorSide: null, upgradeLevel: 1 as const, cleanliness: 100,
++  })));
++  state.retailNextOpportunityTicks["founder:founder"] = Number.MAX_SAFE_INTEGER;
++  state.environment.nextAmbientPedestrianTick = Number.MAX_SAFE_INTEGER;
++  return state;
++}
++
++function room(state: GameState, id: string, definitionId: string, y = 24, upgradeLevel: RoomUpgradeLevel = 1): PlacedRoom {
++  const definition = getRoomDefinition(definitionId)!;
++  const placed: PlacedRoom = {
++    id, roomDefinitionId: definitionId, x: 32 - definition.width, y,
++    orientation: 0, doorSide: null, upgradeLevel, cleanliness: 100,
++  };
++  state.rooms.push(placed);
++  state.doors.push({ id: `door.${id}`, roomId: id, side: "east", offset: 1, exterior: false });
++  return placed;
++}
++
++function employee(state: GameState, id: string): EmployeeState {
++  return state.employees.find((candidate) => candidate.id === id)!;
++}
++
++function seated(state: GameState, id: string): void {
++  const staff = employee(state, id);
++  staff.location = { ...staff.path.at(-1)! };
++  staff.pathIndex = staff.path.length - 1;
++  staff.lastMovedAtFacilityTick = state.facilityTick;
++}
++
++function support(state: GameState, minutes = 1): void {
++  for (let minute = 0; minute < minutes; minute++) {
++    state.facilityTick++;
++    advanceLevelThreeSupport(state, PROTOTYPE_DOMAIN_CONTEXT);
++    advanceEmployeeMovement(state, PROTOTYPE_DOMAIN_CONTEXT);
++  }
++}
++
++function tick(state: GameState, minutes = 1): GameState {
++  for (let minute = 0; minute < minutes; minute++) state = gameReducer(state,
++    { type: "ADVANCE_TICK", operationId: `support.upgrade.tick.${sequence++}` });
++  return state;
++}
++
++function ambulatoryReceipt(state: GameState): void {
++  state.serviceIncomeReceipts.push({
++    id: "receipt.support.or", transactionKey: "receipt.support.or", incomeLineId: "income.ambulatory_operation",
++    catalogVersion: 1, routeId: null, actorKind: "visitor", actorId: "visitor.support.or",
++    grossAmount: 900, stockCost: 0, netCashDelta: 900, completedAtFacilityTick: state.facilityTick,
++  });
++}
++
++function repairFixture(level: RoomUpgradeLevel = 1, staffLevel: RoomUpgradeLevel = 1): GameState {
++  const state = fixture();
++  room(state, "room.workshop.used", "room.maintenance_workshop", 20, level);
++  room(state, "room.workshop.unused", "room.maintenance_workshop", 16, 5);
++  const target = room(state, "room.repair.target", "room.pharmacy", 24, 5);
++  target.maintenance = { status: "due", completedUses: 8, dueAtFacilityTick: 0, outOfServiceAtFacilityTick: 0, appliedUseKeys: ["use.support"] };
++  addTrainingEmployee(state, "employee.repair", "staff.repair_person", "room.workshop.used").trainingLevel = staffLevel;
++  return state;
++}
++
++function qiFixture(level: RoomUpgradeLevel = 1, staffLevel: RoomUpgradeLevel = 1): GameState {
++  const state = fixture();
++  room(state, "room.office.used", "room.surgeon_office", 24, level);
++  room(state, "room.office.unused", "room.surgeon_office", 20, 5);
++  addTrainingEmployee(state, "employee.surgeon", "staff.surgeon", "room.office.used").trainingLevel = staffLevel;
++  ambulatoryReceipt(state);
++  return state;
++}
++
++function breakFixture(level: RoomUpgradeLevel = 1): GameState {
++  const state = fixture();
++  room(state, "room.break.used", "room.staff_break", 24, level);
++  room(state, "room.break.unused", "room.staff_break", 19, 5);
++  addTrainingEmployee(state, "employee.break", "staff.evs_worker", "room.break.used").morale = 50;
++  return state;
++}
++
++describe("accepted room upgrades in actual support work", () => {
++  it.each(levels)("repairs use only the actual home workshop at Level %s", (level) => {
++    const state = repairFixture(level);
++    support(state);
++    const staff = employee(state, "employee.repair");
++    const duration = supportMinutes[level - 1]!;
++    expect(staff.facilityTask).toMatchObject({ kind: "repair_room", workMinutesRemaining: duration,
++      roomUpgradeWork: { boundRoomInstanceId: "room.workshop.used", boundUpgradeLevel: level, durationMinutes: duration } });
++    expect(isRoomOperationalForFacilityWork(state, "room.workshop.unused")).toBe(true);
++    while (staff.pathIndex < staff.path.length - 1) {
++      support(state);
++      expect(staff.facilityTask?.workMinutesRemaining).toBe(duration);
++    }
++    support(state, duration - 1);
++    expect(staff.facilityTask?.workMinutesRemaining).toBe(1);
++    expect(state.rooms.find((candidate) => candidate.id === "room.repair.target")?.maintenance?.status).toBe("out_of_service");
++    support(state);
++    expect(staff.facilityTask).toBeNull();
++    expect(state.rooms.find((candidate) => candidate.id === "room.repair.target")?.maintenance).toMatchObject({ status: "operational", completedUses: 0, appliedUseKeys: ["use.support"] });
++  });
++
++  it.each(levels)("QI uses the performing surgeon's office at Level %s", (level) => {
++    const state = qiFixture(level);
++    const initialCash = state.cash;
++    support(state);
++    const duration = supportMinutes[level - 1]!;
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "in_progress",
++      trainingWork: { durationMinutes: duration, remainingMinutes: duration },
++      roomUpgradeWork: { boundRoomInstanceId: "room.office.used", boundUpgradeLevel: level } });
++    support(state, duration - 1);
++    expect(state.levelThreeQiReviews[0]?.trainingWork?.remainingMinutes).toBe(1);
++    support(state);
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "completed", trainingWork: { remainingMinutes: 0 } });
++    support(state, 5);
++    expect(state.levelThreeQiReviews).toHaveLength(1);
++    expect(state.cash).toBe(initialCash);
++  });
++
++  it.each(levels)("paid training uses its selected room at Level %s, with unchanged price and learning", (level) => {
++    let state = trainingFixture();
++    state.rooms.find((candidate) => candidate.id === "room.test.training")!.upgradeLevel = level;
++    addTrainingEmployee(state, "employee.training");
++    state = gameReducer(state, { type: "TRAIN_EMPLOYEE", employeeId: "employee.training", operationId: `support.train.${level}` });
++    expect(employee(state, "employee.training").training).toMatchObject({ stage: "queued", paidAmount: 75, remainingMinutes: 60,
++      roomUpgradeWork: { durationMinutes: null, acceptedRooms: [{ roomInstanceId: "room.test.training", upgradeLevel: level }] } });
++    reachTrainingStage(state, "employee.training", "training");
++    const duration = [60, 54, 48, 42, 36][level - 1]!;
++    expect(employee(state, "employee.training").training).toMatchObject({ remainingMinutes: duration,
++      roomUpgradeWork: { boundRoomInstanceId: "room.test.training", boundUpgradeLevel: level, durationMinutes: duration } });
++    advanceTrainingMinutes(state, duration - 1);
++    expect(employee(state, "employee.training").trainingLevel).toBe(1);
++    advanceTrainingMinutes(state);
++    expect(employee(state, "employee.training")).toMatchObject({ trainingLevel: 2, training: { stage: "returning", remainingMinutes: 0 } });
++    state = reload(state);
++    expect(state.cash).toBe(24_925);
++    expect(employee(state, "employee.training").trainingLevel).toBe(2);
++  });
++
++  it.each(levels)("a completed break freezes one actual room's Level %s gain", (level) => {
++    let state = breakFixture(level);
++    support(state);
++    expect(employee(state, "employee.break").facilityTask).toMatchObject({ kind: "take_break", workMinutesRemaining: 30,
++      roomUpgradeBreakBenefit: { roomInstanceId: "room.break.used", upgradeLevel: level, moraleGain: 5 + 2 * (level - 1) } });
++    state.rooms.find((candidate) => candidate.id === "room.break.used")!.upgradeLevel = 5;
++    state = reload(state);
++    support(state, 45);
++    expect(employee(state, "employee.break").morale).toBe(55 + 2 * (level - 1));
++    const completedAt = employee(state, "employee.break").lastBreakAtFacilityTick;
++    support(state, 100);
++    expect(employee(state, "employee.break").morale).toBe(55 + 2 * (level - 1));
++    expect(employee(state, "employee.break").lastBreakAtFacilityTick).toBe(completedAt);
++  });
++
++  it.each(levels)("coffee applies one best operational Level %s kiosk once per day and survives reload", (level) => {
++    let state = fixture();
++    room(state, "room.coffee.first", "room.coffee_kiosk", 24, level);
++    room(state, "room.coffee.copy", "room.coffee_kiosk", 20, level);
++    room(state, "room.coffee.blocked", "room.coffee_kiosk", 16, 5);
++    state.doors = state.doors.filter((door) => door.roomId !== "room.coffee.blocked");
++    addTrainingEmployee(state, "employee.coffee").morale = 50;
++    expect(isRoomOperationalForFacilityWork(state, "room.coffee.blocked")).toBe(false);
++    state = tick(state);
++    const expected = 52 + level - 1;
++    expect(employee(state, "employee.coffee").morale).toBe(expected);
++    expect(state.environment.coffeeMoraleAppliedDayNumber).toBe(1);
++    state.rooms.find((candidate) => candidate.id === "room.coffee.first")!.upgradeLevel = 5;
++    state = reload(state);
++    state = tick(state, 5);
++    expect(employee(state, "employee.coffee").morale).toBe(expected);
++    const minutesPerDay = (PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock.dayEndHour - PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clock.dayStartHour) * 60;
++    state.facilityTick = minutesPerDay;
++    state = tick(state);
++    expect(employee(state, "employee.coffee").morale).toBe(expected + 6);
++    expect(state.environment.coffeeMoraleAppliedDayNumber).toBe(2);
++  });
++
++  it.each(levels)("EVS room cleaning retains exact Level %s work and separate learned restoration", (level) => {
++    let state = fixture();
++    room(state, "room.evs.used", "room.evs_closet", 20, level);
++    room(state, "room.evs.unused", "room.evs_closet", 16, 5);
++    room(state, "room.clean.target", "room.training", 24, 5).cleanliness = 39;
++    addTrainingEmployee(state, "employee.evs", "staff.evs_worker", "room.evs.used").trainingLevel = 5;
++    state = tick(state);
++    const duration = [5, 4.5, 4, 3.5, 3][level - 1]!;
++    const task = employee(state, "employee.evs").facilityTask!;
++    expect(task).toMatchObject({ kind: "clean_room", targetId: "room.clean.target", workMinutesRemaining: duration,
++      roomUpgradeWork: { boundRoomInstanceId: "room.evs.used", boundUpgradeLevel: level, employeeReductionPercent: 0 } });
++    expect(task.cleanlinessRestore).toBe(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.evsRoomCleanlinessRestore * 1.4);
++    state.rooms.find((candidate) => candidate.id === "room.evs.used")!.upgradeLevel = 5;
++    employee(state, "employee.evs").trainingLevel = 1;
++    seated(state, "employee.evs");
++    state = tick(state, Math.ceil(duration) - 1);
++    expect(employee(state, "employee.evs").facilityTask?.workMinutesRemaining).toBeCloseTo(duration - Math.ceil(duration) + 1);
++    state = reload(state);
++    state = tick(state);
++    expect(employee(state, "employee.evs").facilityTask).toBeNull();
++    expect(state.rooms.find((candidate) => candidate.id === "room.clean.target")!.cleanliness).toBe(39 + task.cleanlinessRestore!);
++    expect(state.environment.lastEvsRoomCleanupAtTick).toBe(state.facilityTick);
++  });
++});
++
++describe("frozen support work through queues, upgrades and reassignment", () => {
++  it("uses the actual selected Training Room rather than the best copy, with two global places", () => {
++    const state = fixture();
++    room(state, "room.a.training.used", "room.training", 24, 2);
++    room(state, "room.z.training.unused", "room.training", 20, 5);
++    for (const id of ["first", "second", "third"]) {
++      addTrainingEmployee(state, id); requestEmployeeTraining(state, id);
++    }
++    advanceTrainingMinutes(state);
++    expect(getEmployeeTrainingPlaces(state).filter((place) => place.employeeId)).toHaveLength(2);
++    expect(employee(state, "third").training?.stage).toBe("queued");
++    expect(employee(state, "first").training).toMatchObject({ remainingMinutes: 54,
++      roomUpgradeWork: { boundRoomInstanceId: "room.a.training.used", boundUpgradeLevel: 2 } });
++    expect(employee(state, "second").training?.roomUpgradeWork?.durationMinutes).toBe(54);
++  });
++
++  it("combines repair staff and actual workshop percentages before rounding, preserving 21.6 work on reload", () => {
++    let state = repairFixture(2, 3);
++    support(state);
++    expect(employee(state, "employee.repair").facilityTask).toMatchObject({ workMinutesRemaining: 21.6,
++      roomUpgradeWork: { baselineMinutes: 30, employeeReductionPercent: 20, boundUpgradeLevel: 2, durationMinutes: 21.6 } });
++    seated(state, "employee.repair");
++    support(state, 3);
++    expect(employee(state, "employee.repair").facilityTask?.workMinutesRemaining).toBeCloseTo(18.6);
++    state.rooms.find((candidate) => candidate.id === "room.workshop.used")!.upgradeLevel = 5;
++    employee(state, "employee.repair").trainingLevel = 5;
++    employee(state, "employee.repair").homeRoomInstanceId = "room.workshop.unused";
++    state = reload(state);
++    expect(employee(state, "employee.repair").facilityTask).toMatchObject({ roomUpgradeWork: { durationMinutes: 21.6, boundUpgradeLevel: 2 } });
++    support(state, 18);
++    expect(employee(state, "employee.repair").facilityTask?.workMinutesRemaining).toBeCloseTo(0.6);
++    state = reload(state);
++    support(state);
++    expect(employee(state, "employee.repair").facilityTask).toBeNull();
++    expect(state.rooms.find((candidate) => candidate.id === "room.repair.target")?.maintenance?.status).toBe("operational");
++  });
++
++  it("freezes queued training at payment, binds one place, and preserves partial work through room replacement", () => {
++    let state = trainingFixture();
++    const trainingRoom = state.rooms.find((candidate) => candidate.id === "room.test.training")!;
++    trainingRoom.upgradeLevel = 2;
++    for (const id of ["employee.first", "employee.second", "employee.third"]) {
++      addTrainingEmployee(state, id);
++      requestEmployeeTraining(state, id);
++    }
++    advanceTrainingMinutes(state);
++    expect(getEmployeeTrainingPlaces(state).filter((place) => place.employeeId)).toHaveLength(2);
++    expect(employee(state, "employee.third").training?.stage).toBe("queued");
++    trainingRoom.upgradeLevel = 5;
++    state = reload(state);
++    reachTrainingStage(state, "employee.first", "training");
++    expect(employee(state, "employee.first").training?.remainingMinutes).toBe(54);
++    advanceTrainingMinutes(state, 10);
++    const remaining = employee(state, "employee.first").training!.remainingMinutes;
++    state.rooms = state.rooms.filter((candidate) => candidate.id !== "room.test.training");
++    state.doors = state.doors.filter((door) => door.roomId !== "room.test.training");
++    state = reload(state);
++    advanceTrainingMinutes(state, 5);
++    expect(employee(state, "employee.first").training?.remainingMinutes).toBe(remaining);
++    room(state, "room.training.replacement", "room.training", 24, 5);
++    reachTrainingStage(state, "employee.first", "training");
++    expect(employee(state, "employee.first").training).toMatchObject({ remainingMinutes: remaining,
++      roomUpgradeWork: { boundRoomInstanceId: "room.test.training", boundUpgradeLevel: 2, durationMinutes: 54 } });
++    advanceTrainingMinutes(state, remaining);
++    expect(employee(state, "employee.first").trainingLevel).toBe(2);
++    // The originally queued third employee uses the post-acceptance replacement
++    // at baseline, rather than receiving a bonus purchased after its payment.
++    for (let minute = 0; employee(state, "employee.third").training?.roomInstanceId === null && minute < 90; minute++) advanceTrainingMinutes(state);
++    expect(employee(state, "employee.third").training?.roomUpgradeWork).toMatchObject({ boundRoomInstanceId: "room.training.replacement", boundUpgradeLevel: 1, durationMinutes: 60 });
++    expect(getEmployeeTrainingPlaces(state).filter((place) => place.employeeId).length).toBeLessThanOrEqual(2);
++    expect(state.cash).toBe(24_775);
++  });
++
++  it("does not consume seated training work when an employee is displaced from the reserved stool", () => {
++    const state = trainingFixture();
++    state.rooms.find((candidate) => candidate.id === "room.test.training")!.upgradeLevel = 5;
++    addTrainingEmployee(state, "employee.displaced"); requestEmployeeTraining(state, "employee.displaced");
++    reachTrainingStage(state, "employee.displaced", "training");
++    const staff = employee(state, "employee.displaced");
++    staff.location = { x: 32, y: 27 }; staff.path = [{ ...staff.location }]; staff.pathIndex = 0;
++    advanceTrainingMinutes(state);
++    expect(staff.training).toMatchObject({ stage: "walking_to_training", remainingMinutes: 36 });
++    reachTrainingStage(state, staff.id, "training");
++    expect(staff.training?.remainingMinutes).toBe(36);
++  });
++
++  it("preserves fractional QI work through care preemption, category changes, reload and an actual office reassignment", () => {
++    let state = qiFixture(2, 3);
++    support(state); support(state, 3);
++    const review = state.levelThreeQiReviews[0]!;
++    expect(review.trainingWork?.remainingMinutes).toBeCloseTo(18.6);
++    state.serviceOperations.push({
++      id: "service.support.demand", incomeLineId: "income.ambulatory_operation", catalogVersion: 1,
++      actorKind: "visitor", actorId: "visitor.support.demand", displayName: "Waiting", appearance: null,
++      status: "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + 60,
++      startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: 900,
++      phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null,
++      reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null,
++      location: { x: 32, y: 27 }, path: [{ x: 32, y: 27 }], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick,
++      cancellationReason: null,
++      frozenOperationPhases: [{ id: "operation", roomDefinitionId: "room.ambulatory_or", durationMinutes: 120,
++        staffRoleDefinitionIds: ["staff.or_nurse"], providerRoleDefinitionIds: ["staff.surgeon"] }],
++    });
++    support(state);
++    expect(review.status).toBe("queued");
++    expect(employee(state, "employee.surgeon").facilityTask).toBeNull();
++    state.serviceOperations = [];
++    employee(state, "employee.surgeon").trainingLevel = 5;
++    employee(state, "employee.surgeon").homeRoomInstanceId = "room.office.unused";
++    state.rooms = state.rooms.filter((candidate) => candidate.id !== "room.office.used");
++    state.doors = state.doors.filter((door) => door.roomId !== "room.office.used");
++    state = reload(state);
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "queued", roomUpgradeWork: { durationMinutes: 21.6, boundUpgradeLevel: 2 } });
++    support(state);
++    expect(employee(state, "employee.surgeon").facilityTask?.workMinutesRemaining).toBeCloseTo(18.6);
++    seated(state, "employee.surgeon");
++    support(state, 18);
++    state = reload(state);
++    expect(state.levelThreeQiReviews[0]?.trainingWork?.remainingMinutes).toBeCloseTo(0.6);
++    support(state);
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "completed", trainingWork: { durationMinutes: 21.6, remainingMinutes: 0 } });
++  });
++
++  it("freezes employee skill and installed office alternatives while QI is queued before first assignment", () => {
++    let state = qiFixture(2, 3);
++    const staff = employee(state, "employee.surgeon");
++    staff.facilityTask = { kind: "perform_service", targetId: "existing.care", startedAtFacilityTick: 0, workMinutesRemaining: 10 };
++    support(state);
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "queued", roomUpgradeWork: { employeeReductionPercent: 20, durationMinutes: null } });
++    state.rooms.find((candidate) => candidate.id === "room.office.used")!.upgradeLevel = 5;
++    staff.trainingLevel = 5;
++    state = reload(state);
++    employee(state, staff.id).facilityTask = null;
++    support(state);
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ trainingWork: { durationMinutes: 21.6, remainingMinutes: 21.6 },
++      roomUpgradeWork: { employeeReductionPercent: 20, boundUpgradeLevel: 2 } });
++  });
++});
++
++describe("support clocks, completion witnesses and legacy compatibility", () => {
++  it.each(["take_break", "repair_room", "review_ambulatory_qi"] as const)(
++    "ADVANCE_TICK advances %s once per minute and completes its effect exactly once", (kind) => {
++      let state = kind === "take_break" ? breakFixture() : kind === "repair_room" ? repairFixture() : qiFixture();
++      const id = kind === "take_break" ? "employee.break" : kind === "repair_room" ? "employee.repair" : "employee.surgeon";
++      state = tick(state);
++      expect(employee(state, id).facilityTask).toMatchObject({ kind, workMinutesRemaining: 30 });
++      seated(state, id);
++      employee(state, id).facilityTask!.workMinutesRemaining = 2;
++      if (kind === "review_ambulatory_qi") state.levelThreeQiReviews[0]!.trainingWork!.remainingMinutes = 2;
++      state = reload(state);
++      state = tick(state);
++      expect(employee(state, id).facilityTask?.workMinutesRemaining).toBe(1);
++      if (kind === "take_break") expect(employee(state, id).morale).toBe(50);
++      if (kind === "repair_room") expect(state.rooms.find((candidate) => candidate.id === "room.repair.target")?.maintenance?.status).toBe("out_of_service");
++      if (kind === "review_ambulatory_qi") expect(state.levelThreeQiReviews[0]?.status).toBe("in_progress");
++      state = tick(state);
++      expect(employee(state, id).facilityTask).toBeNull();
++      const completedAt = state.facilityTick;
++      state = reload(state);
++      state = tick(state, 5);
++      if (kind === "take_break") expect(employee(state, id)).toMatchObject({ morale: 55, lastBreakAtFacilityTick: completedAt });
++      if (kind === "repair_room") expect(state.rooms.find((candidate) => candidate.id === "room.repair.target")?.maintenance).toMatchObject({ status: "operational", completedUses: 0 });
++      if (kind === "review_ambulatory_qi") {
++        expect(state.levelThreeQiReviews).toHaveLength(1);
++        expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "completed", completedAtFacilityTick: completedAt, trainingWork: { remainingMinutes: 0 } });
++      }
++    },
++  );
++
++  it.each(levels)("retains exact Level %s EVS litter work while observing completion on whole-minute ticks", (level) => {
++    let state = fixture();
++    room(state, "room.evs.used", "room.evs_closet", 20, level);
++    room(state, "room.evs.unused", "room.evs_closet", 16, 5);
++    addTrainingEmployee(state, "employee.evs", "staff.evs_worker", "room.evs.used");
++    state.environment.litterItems.push({ id: "litter.support", roomId: "room.support.hall.27", location: { x: 32, y: 27 }, spawnedAtFacilityTick: 0 });
++    state = tick(state);
++    const duration = [2, 1.8, 1.6, 1.4, 1.2][level - 1]!;
++    expect(employee(state, "employee.evs").facilityTask).toMatchObject({ kind: "collect_litter", workMinutesRemaining: duration,
++      roomUpgradeWork: { boundRoomInstanceId: "room.evs.used", durationMinutes: duration } });
++    seated(state, "employee.evs");
++    state = tick(state);
++    expect(employee(state, "employee.evs").facilityTask?.workMinutesRemaining).toBeCloseTo(duration - 1);
++    expect(state.environment.litterItems).toHaveLength(1);
++    state = reload(state);
++    expect(employee(state, "employee.evs").facilityTask?.workMinutesRemaining).toBeCloseTo(duration - 1);
++    state = tick(state);
++    expect(state.environment.litterItems).toHaveLength(0);
++    const completedAt = state.environment.lastLitterCleanupAtTick;
++    state = reload(state); state = tick(state);
++    expect(state.environment.lastLitterCleanupAtTick).toBe(completedAt);
++    expect(Number.isInteger(state.facilityTick)).toBe(true);
++  });
++
++  it("uses the best later-listed operational coffee copy without summing outlets", () => {
++    let state = fixture();
++    room(state, "room.coffee.lower", "room.coffee_kiosk", 24, 1);
++    room(state, "room.coffee.higher", "room.coffee_kiosk", 20, 5);
++    addTrainingEmployee(state, "employee.coffee").morale = 50;
++    state = tick(state);
++    expect(employee(state, "employee.coffee").morale).toBe(56);
++  });
++
++  it("keeps newly accepted support work above the one-minute minimum", () => {
++    let state = fixture();
++    room(state, "room.evs.used", "room.evs_closet", 20, 5);
++    addTrainingEmployee(state, "employee.evs", "staff.evs_worker", "room.evs.used");
++    state.environment.litterItems.push({ id: "litter.minimum", roomId: "room.support.hall.27", location: { x: 32, y: 27 }, spawnedAtFacilityTick: 0 });
++    const context = structuredClone(PROTOTYPE_DOMAIN_CONTEXT);
++    context.balanceRelease.environment.founderInteractionMinutes = 1;
++    state = gameReducer(state, { type: "ADVANCE_TICK", operationId: "support.minimum" }, context);
++    expect(employee(state, "employee.evs").facilityTask).toMatchObject({ workMinutesRemaining: 1,
++      roomUpgradeWork: { baselineMinutes: 1, durationMinutes: 1, boundUpgradeLevel: 5 } });
++  });
++
++  it("leaves founder litter cleanup at its existing two-minute baseline despite an upgraded EVS closet", () => {
++    let state = fixture();
++    room(state, "room.evs.upgraded", "room.evs_closet", 20, 5);
++    state.environment.founderLocation = { x: 32, y: 27 };
++    state.environment.litterItems.push({ id: "litter.founder", roomId: "room.support.hall.27", location: { x: 32, y: 27 }, spawnedAtFacilityTick: 0 });
++    state = gameReducer(state, { type: "COLLECT_LITTER", litterId: "litter.founder", operationId: "support.founder.cleanup" });
++    expect(state.operationReceipts["support.founder.cleanup"]?.status).toBe("applied");
++    expect(state.environment.founderActivity).toMatchObject({ kind: "collect_litter", workMinutesRemaining: 2 });
++  });
++
++  it("waits for the actual EVS endpoint rather than consuming work at a stale path index", () => {
++    let state = fixture();
++    room(state, "room.evs.used", "room.evs_closet", 20, 2);
++    room(state, "room.clean.target", "room.training", 24).cleanliness = 39;
++    addTrainingEmployee(state, "employee.evs", "staff.evs_worker", "room.evs.used");
++    state = tick(state);
++    const staff = employee(state, "employee.evs");
++    staff.pathIndex = staff.path.length - 1;
++    // The saved index claims arrival, but the physical location still differs.
++    staff.location = { ...staff.path[0]! };
++    state = tick(state);
++    expect(employee(state, staff.id).facilityTask?.workMinutesRemaining).toBe(4.5);
++  });
++
++  it("clamps completed break and daily coffee gains at 100", () => {
++    const breakState = breakFixture(5);
++    employee(breakState, "employee.break").morale = 99;
++    support(breakState, 45);
++    expect(employee(breakState, "employee.break").morale).toBe(100);
++    let coffeeState = fixture();
++    room(coffeeState, "room.coffee", "room.coffee_kiosk", 24, 5);
++    addTrainingEmployee(coffeeState, "employee.coffee").morale = 99;
++    coffeeState = tick(coffeeState);
++    expect(employee(coffeeState, "employee.coffee").morale).toBe(100);
++  });
++
++  it("keeps legacy queued and active training at its saved hour and remaining work", () => {
++    let state = trainingFixture();
++    addTrainingEmployee(state, "employee.legacy"); requestEmployeeTraining(state, "employee.legacy");
++    delete employee(state, "employee.legacy").training!.roomUpgradeWork;
++    state.rooms.find((candidate) => candidate.id === "room.test.training")!.upgradeLevel = 5;
++    state = reload(state);
++    reachTrainingStage(state, "employee.legacy", "training");
++    expect(employee(state, "employee.legacy").training?.remainingMinutes).toBe(60);
++    advanceTrainingMinutes(state, 17);
++    state = reload(state);
++    expect(employee(state, "employee.legacy").training).toMatchObject({ remainingMinutes: 43 });
++    expect(employee(state, "employee.legacy").training?.roomUpgradeWork).toBeUndefined();
++    advanceTrainingMinutes(state, 43);
++    expect(employee(state, "employee.legacy").trainingLevel).toBe(2);
++  });
++
++  it("keeps legacy GS037 QI training work without adding a room bonus", () => {
++    let state = qiFixture(5, 5);
++    state.levelThreeQiReviews.push({
++      id: "level-three-qi.12", receiptId: "receipt.support.or", status: "queued", surgeonEmployeeId: null,
++      enqueuedAtFacilityTick: 0, startedAtFacilityTick: null, completedAtFacilityTick: null,
++      trainingWork: { version: "employee-training-work.v1", durationMinutes: 18, remainingMinutes: 9 },
++    });
++    state = reload(state);
++    support(state);
++    expect(employee(state, "employee.surgeon").facilityTask?.workMinutesRemaining).toBe(9);
++    expect(state.levelThreeQiReviews[0]?.roomUpgradeWork).toBeUndefined();
++    state = reload(state);
++    support(state, 9);
++    expect(state.levelThreeQiReviews[0]).toMatchObject({ status: "completed", trainingWork: { durationMinutes: 18, remainingMinutes: 0 } });
++  });
++
++  it("keeps legacy repair and break tasks at their saved terms after upgrades", () => {
++    let repairState = repairFixture(5, 5);
++    const target = repairState.rooms.find((candidate) => candidate.id === "room.repair.target")!;
++    target.maintenance!.status = "out_of_service";
++    const repairer = employee(repairState, "employee.repair");
++    const point = getRoomNavigationAnchor(target, getRoomDefinition(target.roomDefinitionId)!, "staff");
++    repairer.location = point; repairer.path = [point]; repairer.pathIndex = 0;
++    repairer.facilityTask = { kind: "repair_room", targetId: target.id, startedAtFacilityTick: 0, workMinutesRemaining: 10 };
++    repairState = reload(repairState);
++    repairState = tick(repairState);
++    expect(employee(repairState, repairer.id).facilityTask?.workMinutesRemaining).toBe(9);
++    expect(employee(repairState, repairer.id).facilityTask?.roomUpgradeWork).toBeUndefined();
++    let breakState = breakFixture();
++    support(breakState);
++    delete employee(breakState, "employee.break").facilityTask!.roomUpgradeBreakBenefit;
++    breakState.rooms.find((candidate) => candidate.id === "room.break.used")!.upgradeLevel = 5;
++    breakState = reload(breakState);
++    support(breakState, 45);
++    expect(employee(breakState, "employee.break").morale).toBe(55);
++  });
++});
++
++describe("strict optional support save contracts", () => {
++  it.each(["version", "kind", "employee_percent", "duplicate_room", "bound_level", "duration", "unknown_field", "remaining"])(
++    "refuses malformed marked repair %s rather than dropping accepted work", (problem) => {
++      const state = repairFixture(2, 3); support(state);
++      const raw = JSON.parse(serializeGameState(state));
++      const task = raw.employees[0].facilityTask;
++      const work = task.roomUpgradeWork;
++      if (problem === "version") work.version = "room-upgrade-support.v99";
++      if (problem === "kind") work.effectKind = "reading_duration_reduction_percent";
++      if (problem === "employee_percent") work.employeeReductionPercent = 100;
++      if (problem === "duplicate_room") work.acceptedRooms.push({ ...work.acceptedRooms[0] });
++      if (problem === "bound_level") work.boundUpgradeLevel = 5;
++      if (problem === "duration") work.durationMinutes = 21;
++      if (problem === "unknown_field") work.extraBonus = 1;
++      if (problem === "remaining") task.workMinutesRemaining = work.durationMinutes + 1;
++      expect(() => deserializeGameState(JSON.stringify(raw))).toThrow("saved room upgrade");
++    },
++  );
++
++  it.each(["version", "duration", "remaining", "missing_work"])("refuses malformed marked QI %s", (problem) => {
++    const state = qiFixture(2, 3); support(state);
++    const raw = JSON.parse(serializeGameState(state));
++    const review = raw.levelThreeQiReviews[0];
++    if (problem === "version") review.roomUpgradeWork.version = "future";
++    if (problem === "duration") review.trainingWork.durationMinutes = 22;
++    if (problem === "remaining") review.trainingWork.remainingMinutes = 30;
++    if (problem === "missing_work") delete review.trainingWork;
++    expect(() => deserializeGameState(JSON.stringify(raw))).toThrow("saved room upgrade");
++  });
++
++  it("rejects mismatched new QI task/review remaining work", () => {
++    const state = qiFixture(2, 3); support(state);
++    const raw = JSON.parse(serializeGameState(state));
++    raw.employees[0].facilityTask.workMinutesRemaining = 20.6;
++    expect(() => deserializeGameState(JSON.stringify(raw))).toThrow("saved room upgrade QI assignment");
++  });
++
++  it.each(["version", "level", "employee_percent", "early_binding", "missing_active_binding"])("refuses malformed paid training room %s", (problem) => {
++    const state = trainingFixture();
++    state.rooms.find((candidate) => candidate.id === "room.test.training")!.upgradeLevel = 2;
++    addTrainingEmployee(state, "employee.invalid"); requestEmployeeTraining(state, "employee.invalid");
++    const raw = JSON.parse(serializeGameState(state));
++    const work = raw.employees[0].training.roomUpgradeWork;
++    if (problem === "version") work.version = "future";
++    if (problem === "level") work.acceptedRooms[0].upgradeLevel = 6;
++    if (problem === "employee_percent") work.employeeReductionPercent = 10;
++    if (problem === "early_binding") {
++      work.boundRoomInstanceId = "room.test.training"; work.boundUpgradeLevel = 2; work.durationMinutes = 54;
++    }
++    if (problem === "missing_active_binding") {
++      raw.employees[0].training.stage = "walking_to_training";
++    }
++    expect(() => deserializeGameState(JSON.stringify(raw))).toThrow(/saved (room upgrade|employee training)/);
++  });
++
++  it("refuses a malformed frozen break gain and never permits fractions on unmarked legacy task work", () => {
++    const state = breakFixture(2); support(state);
++    const raw = JSON.parse(serializeGameState(state));
++    raw.employees[0].facilityTask.roomUpgradeBreakBenefit.moraleGain = 99;
++    expect(() => deserializeGameState(JSON.stringify(raw))).toThrow("saved room upgrade break benefit");
++    delete raw.employees[0].facilityTask.roomUpgradeBreakBenefit;
++    raw.employees[0].facilityTask.workMinutesRemaining = 2.5;
++    const restored = deserializeGameState(JSON.stringify(raw));
++    expect(restored.employees[0]?.facilityTask).toBeNull();
++  });
++});

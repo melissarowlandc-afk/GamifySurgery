@@ -1,0 +1,90 @@
+{
+  "acceptedAtUtc": "2026-10-08T03:37:39.0408499Z",
+  "status": "complete",
+  "reviewedValidation": {
+    "productionDiagnosticBrowser": {
+      "failed": 0,
+      "passed": 10
+    },
+    "upgradeBrowser": {
+      "log": "browser/parent-upgrades-visual-final-browser.log",
+      "failed": 0,
+      "projects": [
+        "desktop-chrome",
+        "phone-chrome"
+      ],
+      "passed": 4
+    },
+    "existingManagementTrainingBrowser": {
+      "failed": 0,
+      "passed": 1
+    },
+    "privateCloneReplayRoundingProbes": {
+      "failed": 0,
+      "passed": 5
+    },
+    "playerFull": {
+      "failed": 1,
+      "limit": "unchanged outside-thyroid pending label assertion, reproduced with pre-M4A source",
+      "files": 111,
+      "passed": 844
+    },
+    "domain": {
+      "failed": 0,
+      "files": 96,
+      "passed": 3157
+    },
+    "privateFullTrainingReplay": {
+      "failed": 0,
+      "finalFacilityTick": 144,
+      "allThreeEmployeesTrainingLevel": 2,
+      "exactPayment": 250,
+      "passed": 1
+    },
+    "balance": {
+      "failed": 0,
+      "files": 7,
+      "passed": 66
+    },
+    "boundaries": "original rules and launcher PASS with private64MiB git ls-files buffer; standard command ENOBUFS",
+    "productionBuild": "PASS",
+    "types": "all workspaces PASS",
+    "existingReadingCapBrowser": {
+      "failed": 0,
+      "passed": 2
+    }
+  },
+  "retainedAssertionLimits": [
+    "full player outside-thyroid label",
+    "original Build Mode retired Imaging Control access",
+    "original training actor-array iteration order; exact order-normalized private replay passes"
+  ],
+  "workers": {
+    "reading_upgrade_review": "bounded Astra read-only Reading clock/forecast approval",
+    "upgrade_catalog": "catalog/support/Reading implementation and corrections",
+    "upgrade_runtime_map": "revenue/experience/UI/browser tests and evidence"
+  },
+  "clinicalContentAdded": false,
+  "ownerSaveAccess": false,
+  "freshBackupChecks": {
+    "patchContractsReconstructed": 80,
+    "sourceDriftSinceAcceptance": [
+      {
+        "file": "apps/player/src/session/viewModels.ts",
+        "expected": "c4ef918561e5d227c00e05712c919525e74c7fbfe7e3f657e48df04fdb055f5f",
+        "current": "f332c1d10e3303ab3dd7c09c27e6e0cff47b4ddd25ded2be39302969c41d13d5"
+      },
+      {
+        "file": "apps/player/src/facility/FacilityCanvas.tsx",
+        "expected": "fd1384875e08db5f5e5bd5942f4ef6cbf1b56537c2916f18084812069c33a714",
+        "current": "4eb4432da9b64915ab1ebf38e21f589574234bfbe20bac70cc133f445ae32def"
+      },
+      {
+        "file": "apps/player/src/facility/FacilityScene.ts",
+        "expected": "be733380a0b148c1091e81f82e5af480d3907bf12170a9b43b5ecc40f10727b1",
+        "current": "8b3ab41cbd06059b2e2327d7e5faf84931ca7dd5c61c347039ce2f50cec678d1"
+      }
+    ],
+    "scope": "Historical accepted owned patches are frozen; later concurrent live edits are excluded. No full shared-tree rerun claimed."
+  }
+}

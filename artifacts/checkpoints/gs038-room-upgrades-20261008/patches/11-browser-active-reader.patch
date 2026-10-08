@@ -1,0 +1,138 @@
+diff --git a/tests/e2e/room-upgrades.spec.ts b/tests/e2e/room-upgrades.spec.ts
+--- a/tests/e2e/room-upgrades.spec.ts
++++ b/tests/e2e/room-upgrades.spec.ts
+@@ -2,7 +2,8 @@ import { mkdirSync } from "node:fs";
+ import { join, resolve } from "node:path";
+ import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
+ import {
+-  deserializeGameState, getDiagnosticOrderPlans, getFacilityAccessValidation,
++  PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, getDiagnosticOrderPlans, getFacilityAccessValidation,
++  getRadiologistReadingStation,
+   getWorkloadSnapshot, serializeGameState, type GameState,
+ } from "@gamify-surgery/game-domain";
+ import { PROFILE_KEY, getProfile, startClinic } from "./helpers";
+@@ -60,6 +61,14 @@ async function readState(page: Page): Promise<GameState> {
+   return deserializeGameState(campaign.serializedState);
+ }
+ 
++function readerAssignments(state: GameState) {
++  return state.employees.filter((employee) => employee.staffRoleDefinitionId === "staff.radiologist")
++    .map((employee) => ({
++      employeeId: employee.id, roomInstanceId: employee.homeRoomInstanceId,
++      stationId: employee.readingStationId,
++    })).sort((a, b) => a.employeeId.localeCompare(b.employeeId));
++}
++
+ async function resumeCampaign(page: Page, name: string): Promise<void> {
+   const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
+   if (await resume.isVisible()) await resume.click();
+@@ -108,8 +117,16 @@ async function install(page: Page, name: string) {
+   expect(frozen.fee).toMatchObject({ amount: 120, quote: { candidates: [{ upgradeLevel: 1 }] } });
+   expect(frozen.reading).toMatchObject({ duration: 5, work: { boundUpgradeLevel: 1 } });
+   expect(frozen.training).toMatchObject({ duration: 60, work: { boundUpgradeLevel: 1 } });
++  const readers = readerAssignments(installed);
++  expect(readers.map((reader) => reader.employeeId)).toEqual(
++    [1, 2, 3, 4].map((number) => `employee.upgrades.reader.${number}`),
++  );
++  expect(readers.map((reader) => reader.stationId).sort()).toEqual([
++    "northeast", "northwest", "southeast", "southwest",
++  ]);
++  expect(readers.every((reader) => reader.roomInstanceId === ids.reading)).toBe(true);
+   return {
+-    name, marker, campaignId: installed.campaignId, frozen,
++    name, marker, campaignId: installed.campaignId, frozen, readers,
+     capacity: getWorkloadSnapshot(installed).routineLimit,
+     patient: structuredClone(installed.encounters[ids.admittedPatient]!),
+   };
+@@ -121,6 +138,7 @@ async function expectPreserved(page: Page, baseline: Installed, patientUnchanged
+   expect(state.campaignId).toBe(baseline.campaignId);
+   expect(state.paused).toBe(true);
+   expect(getRoomUpgradeFrozenQuantities(state)).toEqual(baseline.frozen);
++  expect(readerAssignments(state)).toEqual(baseline.readers);
+   expect(getWorkloadSnapshot(state).routineLimit).toBe(baseline.capacity);
+   if (patientUnchanged) expect(state.encounters[ids.admittedPatient]).toEqual(baseline.patient);
+   expect(state.rooms.find((room) => room.id === ids.waitingCopy)?.upgradeLevel).toBe(1);
+@@ -239,16 +257,48 @@ async function reloadAndCheck(page: Page, baseline: Installed, expectedCash: num
+   return state;
+ }
+ 
+-async function expectFourReaderPosts(page: Page) {
+-  await expect.poll(() => page.evaluate(() => {
+-    const scene = (document.querySelector("[data-testid='facility-canvas']") as any)
+-      ?.__facilityGame?.scene?.getScene("facility-scene");
+-    return scene?.bridge?.viewModel?.staff?.filter((staff: any) => staff.staffRoleDefinitionId === "staff.radiologist")
+-      .map((staff: any) => `${staff.supportRole}:${staff.supportId}`).sort();
+-  })).toEqual([
+-    "reading-radiologist:northeast", "reading-radiologist:northwest",
+-    "reading-radiologist:southeast", "reading-radiologist:southwest",
+-  ]);
++async function expectFourReaderPosts(page: Page, baseline: Installed) {
++  const state = await expectPreserved(page, baseline);
++  const read = state.serviceOperations.find((operation) => operation.id === baseline.frozen.reading.id)!;
++  expect(read).toMatchObject({ status: "in_service", reservedRoomInstanceIds: [ids.reading] });
++  const resource = read.diagnosticPhaseWork!.resource!;
++  expect(resource.employeeIds).toHaveLength(1);
++  expect(resource.employeeIds).toEqual(read.reservedEmployeeIds);
++  const reader = state.employees.find((employee) => employee.id === resource.employeeIds[0])!;
++  const station = getRadiologistReadingStation(state, reader, PROTOTYPE_DOMAIN_CONTEXT)!;
++  expect(resource.roomInstanceId).toBe(ids.reading);
++  expect(station.roomInstanceId).toBe(ids.reading);
++  expect(station.station.id).toBe(resource.stationId);
++  expect(resource.stationId).toBe(reader.readingStationId);
++  expect(resource.staffAnchor).toEqual(station.location);
++  expect(reader.location).toEqual(resource.staffAnchor);
++  expect(reader.path.at(-1)).toEqual(resource.staffAnchor);
++  expect(reader.pathIndex).toBe(reader.path.length - 1);
++  expect(reader.facilityTask).toMatchObject({ kind: "perform_service", targetId: read.id });
++  // Idle staff can be between furniture contacts. Saved post assignments and
++  // live identities stay fixed; the reader actually doing work must be seated.
++  await expect.poll(() => page.evaluate((readerId) => {
++    const host = document.querySelector("[data-testid='facility-canvas']") as any;
++    const scene = host?.__facilityGame?.scene?.getScene("facility-scene");
++    const staff = scene?.bridge?.viewModel?.staff ?? [];
++    const active = staff.find((employee: any) => employee.instanceId === readerId);
++    const actor = host?.__facilityGaitSnapshot?.()[`character:staff:${readerId}`];
++    return {
++      readers: staff.filter((employee: any) => employee.staffRoleDefinitionId === "staff.radiologist")
++        .map((employee: any) => ({ employeeId: employee.instanceId, roomInstanceId: employee.homeRoomInstanceId }))
++        .sort((a: any, b: any) => a.employeeId.localeCompare(b.employeeId)),
++      active: active && { location: active.location, moving: active.moving,
++        supportRole: active.supportRole, supportId: active.supportId, supportRoomInstanceId: active.supportRoomInstanceId },
++      actor: actor && { visible: actor.visible, pose: actor.pose,
++        supportRole: actor.supportRole, supportId: actor.supportId, supportRoomInstanceId: actor.supportRoomInstanceId },
++    };
++  }, reader.id)).toEqual({
++    readers: baseline.readers.map(({ employeeId, roomInstanceId }) => ({ employeeId, roomInstanceId })),
++    active: { location: resource.staffAnchor, moving: false, supportRole: "reading-radiologist",
++      supportId: resource.stationId, supportRoomInstanceId: ids.reading },
++    actor: { visible: true, pose: "seated", supportRole: "reading-radiologist",
++      supportId: resource.stationId, supportRoomInstanceId: ids.reading },
++  });
+ }
+ 
+ test("satisfaction upgrades use ordinary list/menu controls, refund Undo and preserve the admitted patient across reload", async ({ page }, info) => {
+@@ -294,7 +344,7 @@ test("satisfaction upgrades use ordinary list/menu controls, refund Undo and pre
+ test("Reading, training and revenue purchases preserve old work and new chart orders use the upgraded rooms", async ({ page }, info) => {
+   const baseline = await install(page, "GS038 work upgrades");
+   await captureRoom(page, info, ids.reading, "reading-before");
+-  await expectFourReaderPosts(page);
++  await expectFourReaderPosts(page, baseline);
+   await page.getByRole("button", { name: "Enter Management Mode", exact: true }).click();
+   const readerRole = page.locator("[data-staff-role-id='staff.radiologist']");
+   await expect(readerRole).toContainText("4/4");
+@@ -317,13 +367,13 @@ test("Reading, training and revenue purchases preserve old work and new chart or
+   const finalCash = originalCash - (3465 + 1260 + 1840) * 100;
+   expect((await readState(page)).cashCents).toBe(finalCash);
+   await exitBuild(page);
+-  await expectFourReaderPosts(page);
++  await expectFourReaderPosts(page, baseline);
+   await captureRoom(page, info, ids.reading, "reading-after");
+   const restored = await reloadAndCheck(page, baseline, finalCash);
+   for (const roomId of [ids.reading, ids.training, ids.revenue]) {
+     expect(restored.rooms.find((room) => room.id === roomId)?.upgradeLevel).toBe(5);
+   }
+-  await expectFourReaderPosts(page);
++  await expectFourReaderPosts(page, baseline);
+   await page.getByRole("button", { name: "Enter Management Mode", exact: true }).click();
+   const reception = page.locator("[data-staff-role-id='staff.receptionist']");
+   const toggle = reception.locator(".staff-role-toggle");
