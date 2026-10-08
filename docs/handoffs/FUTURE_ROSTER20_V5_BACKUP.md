@@ -9,3 +9,6 @@ Fresh backup audit verifies exact owner-approved source/pose/control evidence, a
 Fresh historical integration/roster/chair checks stop on a later concurrent `appearance.ts` hash change. Independent backup verification confirms all frozen art, the append-only integration and every other protected input; this unrelated selection edit is excluded. No historical baseline or validator was weakened. The checkpoint preserves exact recovery inputs and postimages; it does not claim a clean runnable aggregate checkout or fresh whole-game validation.
 
 Status: scoped checkpoint prepared on `beta`; remote commit verification will be appended after push. No merge, release, deployment or Pages publication. Original art review receipts remain frozen; owner approval/runtime-integration receipts are authoritative for the current integrated state. The canonical local playtest origin and existing profile/saves are unchanged.
+
+## Verified remote checkpoint
+Checkpoint `3a8da556b9de586f5f8e763fb154d0ccffc155f4` was pushed to `origin/beta` and confirmed by `git ls-remote`. Commit scope exactly matched the audited 1,675-path manifest; every staged Git blob matched the original file bytes. The follow-up receipt records this verification only.

@@ -1859,3 +1859,7 @@ for Codex's next integrated checkpoint. Secret/privacy/clinical/source scans
 clean; no clinical content changed. No merge, release or Pages publication.
 Owner pathway unchanged (START_GAME.cmd → http://127.0.0.1:4173); owner
 storage untouched.
+
+
+## GS-033 batch 5 GitHub backup verified — 2026-10-07
+Owner requested "Push to GitHub". Checkpoint 3a8da556b9de586f5f8e763fb154d0ccffc155f4 is on origin/beta, verified with git ls-remote. Scope: 1,675 audited paths containing 20 characters / 160 standing and seated poses, immutable native sources, owner approval, contacts/chair/gallery evidence, new public cohort PNGs and exact integration recovery archive. Local approved integration is 245 identities / 1,990 assets / 120 adult patients / 16 radiologists; four APP/executive identities remain inactive pending their future roles. All 1,990 runtime PNGs and preserved prior catalog/registry/provenance entries independently verified; six recovery patches passed byte-exact forward/reverse contracts. Later concurrent appearance.ts changes cause the historical full-source guard to stop; that selection work is excluded and no guard was weakened. Shared live runtime files and other dirty gameplay/clinical work remain unstaged. This is a recovery checkpoint, not a clean aggregate gameplay checkout. Exact scope/recovery: docs/handoffs/FUTURE_ROSTER20_V5_BACKUP.md and artifacts/checkpoints/future-roster20-v5-20261007/. No merge, release, deployment or Pages publication. Owner pathway unchanged: START_GAME.cmd -> http://127.0.0.1:4173, same profile/saves.
